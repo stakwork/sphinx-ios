@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Image, Text, TouchableOpacity} from 'react-native';
+import {View, Image, TouchableOpacity} from 'react-native';
 import AppText from '../../components/AppText';
 import styles from './styles';
 
@@ -20,7 +20,7 @@ const Login = () => {
         </AppText>
       </View>
       <TouchableOpacity style={styles.button}>
-        <Text style={styles.login}>Login</Text>
+        <AppText style={styles.login}>Login</AppText>
       </TouchableOpacity>
       <View style={styles.signupContainer}>
         <AppText style={styles.question}>New here? </AppText>

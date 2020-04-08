@@ -24,6 +24,13 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     backgroundColor: '#6977F7',
     justifyContent: 'center',
+    shadowColor: 'rgb(105, 119, 247)',
+    shadowOffset: {
+      width: 0,
+      height: 10,
+    },
+    elevation: 25,
+    shadowOpacity: 0.2,
   },
   login: {
     fontSize: 18,

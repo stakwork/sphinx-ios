@@ -1,1 +1,1 @@
-July 23 at 7am PST
+July 27 at 7am PST

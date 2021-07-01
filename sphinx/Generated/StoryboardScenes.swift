@@ -123,6 +123,9 @@ internal enum StoryboardScene {
     internal enum NewUserSignup: StoryboardType {
         internal static let storyboardName = "NewUserSignup"
         
+        
+        internal static let newUserSignupOptionsViewController = SceneType<NewUserSignupOptionsViewController>(storyboard: NewUserSignup.self, identifier: "NewUserSignupOptionsViewController")
+        
         internal static let newUserSignupDescriptionViewController = SceneType<NewUserSignupDescriptionViewController>(storyboard: NewUserSignup.self, identifier: "NewUserSignupDescriptionViewController")
         
         internal static let newUserSignupFormViewController = SceneType<NewUserSignupFormViewController>(storyboard: NewUserSignup.self, identifier: "NewUserSignupFormViewController")

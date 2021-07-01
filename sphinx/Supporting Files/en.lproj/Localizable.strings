@@ -152,6 +152,8 @@
 
 
 //SIGNUP NEW USER
+"signup.signup-options.connection-code-button" = "I Have a Connection Code";
+"signup.signup-options.lite-node-button" = "Buy A Lite Node ($2.99)";
 "signup.description.continue" = "Continue";
 "signup.description.label" = "Paste your connection code\ninto Sphinx";
 "signup.description.paste" = "Paste";

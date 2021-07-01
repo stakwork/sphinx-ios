@@ -13,6 +13,7 @@ class SignupHelper {
     
     public enum SignupStep: Int {
         case Start
+        case NewUserSelected
         case IPAndTokenSet
         case InviterContactCreated
         case PINSet

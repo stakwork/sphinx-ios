@@ -527,6 +527,7 @@
 		F3197C0E267FA2C800330F79 /* lightningNetwork.gif in Resources */ = {isa = PBXBuildFile; fileRef = F3241A31267CBB12007A6454 /* lightningNetwork.gif */; };
 		F3197C112680F50300330F79 /* RestoreUserFormViewController+FormSubmissionUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3197C102680F50300330F79 /* RestoreUserFormViewController+FormSubmissionUtils.swift */; };
 		F3197C1326811DE400330F79 /* RestoreUserFormViewController+KeychainRestorationUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3197C1226811DE400330F79 /* RestoreUserFormViewController+KeychainRestorationUtils.swift */; };
+		F331199B268E375B005082EB /* NewUserSignupOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F331199A268E375B005082EB /* NewUserSignupOptionsViewController.swift */; };
 		F33846E3267ACF6A0041F1EA /* InitialWelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33846E1267ACF6A0041F1EA /* InitialWelcomeViewController.swift */; };
 		F33846E7267B0FA00041F1EA /* Welcome.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F33846E9267B0FA00041F1EA /* Welcome.storyboard */; };
 		F33846EF267B15800041F1EA /* WelcomeCompleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33846EE267B15800041F1EA /* WelcomeCompleteViewController.swift */; };
@@ -1195,6 +1196,7 @@
 		F3241A2F267CBB12007A6454 /* connecting.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = connecting.gif; sourceTree = "<group>"; };
 		F3241A30267CBB12007A6454 /* ellipse.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = ellipse.gif; sourceTree = "<group>"; };
 		F3241A31267CBB12007A6454 /* lightningNetwork.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = lightningNetwork.gif; sourceTree = "<group>"; };
+		F331199A268E375B005082EB /* NewUserSignupOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewUserSignupOptionsViewController.swift; sourceTree = "<group>"; };
 		F33846E1267ACF6A0041F1EA /* InitialWelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialWelcomeViewController.swift; sourceTree = "<group>"; };
 		F33846E8267B0FA00041F1EA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Welcome.storyboard; sourceTree = "<group>"; };
 		F33846EB267B0FBA0041F1EA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Welcome.strings; sourceTree = "<group>"; };
@@ -2806,6 +2808,7 @@
 				F394ECAC26825D3400529038 /* NewUserSignupFormViewController+FormSubmissionUtils.swift */,
 				F394ECB02683CF5E00529038 /* NewUserGreetingViewController.swift */,
 				F394ECB22683EB5A00529038 /* SphinxDesktopAdViewController.swift */,
+				F331199A268E375B005082EB /* NewUserSignupOptionsViewController.swift */,
 			);
 			path = "New User Signup";
 			sourceTree = "<group>";
@@ -3540,6 +3543,7 @@
 				47CD9508265EC2A4009B06A4 /* CommonModalView.swift in Sources */,
 				475BDD28232AC97500C5BBD6 /* API.swift in Sources */,
 				4703CF852518FA3F007B685C /* FileSentTableViewCell.swift in Sources */,
+				F331199B268E375B005082EB /* NewUserSignupOptionsViewController.swift in Sources */,
 				47DAABCB24913E6E00EF38B0 /* SwipableReplyCell.swift in Sources */,
 				475BDCB7232AC1E800C5BBD6 /* PaymentInvoiceView.swift in Sources */,
 			);
@@ -4127,7 +4131,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 207;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 8297M44YTW;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = sphinx/Info.plist;
@@ -4215,7 +4219,7 @@
 				CODE_SIGN_ENTITLEMENTS = sphinx/sphinx.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 207;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 8297M44YTW;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = sphinx/Info.plist;

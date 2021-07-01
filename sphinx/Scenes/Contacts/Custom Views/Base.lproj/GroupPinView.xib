@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="MaterialIcons-Regular.ttf">
+            <string>MaterialIcons-Regular</string>
+        </array>
+        <array key="Roboto-Regular.ttf">
+            <string>Roboto-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GroupPinView" customModule="sphinx" customModuleProvider="target">
+            <connections>
+                <outlet property="contentView" destination="iN0-l3-epB" id="E6q-2z-CSt"/>
+                <outlet property="privacySwitch" destination="Wd7-u4-O4b" id="3Df-Zg-u5i"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="354" height="65"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Privacy Setting" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nHw-HO-PXI">
+                    <rect key="frame" x="0.0" y="15" width="81" height="14"/>
+                    <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="12"/>
+                    <color key="textColor" name="SecondaryText"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nsg-8K-ysV">
+                    <rect key="frame" x="76" y="7" width="81" height="30"/>
+                    <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="15"/>
+                    <state key="normal" title="help_outline">
+                        <color key="titleColor" name="SecondaryText"/>
+                    </state>
+                    <connections>
+                        <action selector="helpTooltipButtonTouched" destination="-1" eventType="touchUpInside" id="Oar-2d-bYO"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Standard PIN / Privacy PIN" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RSH-gY-dua">
+                    <rect key="frame" x="0.0" y="42.5" width="205" height="20"/>
+                    <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
+                    <color key="textColor" name="Text"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Wd7-u4-O4b">
+                    <rect key="frame" x="305" y="31.5" width="51" height="31"/>
+                    <connections>
+                        <action selector="privacySwitchChanged:" destination="-1" eventType="valueChanged" id="qgW-77-qCD"/>
+                    </connections>
+                </switch>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="nHw-HO-PXI" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="15" id="0VG-TC-nHM"/>
+                <constraint firstAttribute="trailing" secondItem="Wd7-u4-O4b" secondAttribute="trailing" id="B3A-Sc-frc"/>
+                <constraint firstItem="Wd7-u4-O4b" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Nsg-8K-ysV" secondAttribute="trailing" constant="8" symbolic="YES" id="Kuk-hs-WOV"/>
+                <constraint firstItem="RSH-gY-dua" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="cDq-fY-c5A"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="nHw-HO-PXI" secondAttribute="trailing" constant="20" symbolic="YES" id="dEn-0m-omh"/>
+                <constraint firstItem="Nsg-8K-ysV" firstAttribute="leading" secondItem="nHw-HO-PXI" secondAttribute="trailing" constant="-5" id="eup-Va-R7X"/>
+                <constraint firstAttribute="bottom" secondItem="RSH-gY-dua" secondAttribute="bottom" constant="2.5" id="gEh-jb-fgc"/>
+                <constraint firstItem="Wd7-u4-O4b" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="RSH-gY-dua" secondAttribute="trailing" constant="8" symbolic="YES" id="jex-4c-ejD"/>
+                <constraint firstAttribute="bottom" secondItem="Wd7-u4-O4b" secondAttribute="bottom" constant="2.5" id="mKw-sm-veB"/>
+                <constraint firstItem="nHw-HO-PXI" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="o3k-is-3W2"/>
+                <constraint firstItem="Nsg-8K-ysV" firstAttribute="centerY" secondItem="nHw-HO-PXI" secondAttribute="centerY" id="yVW-CS-Jfp"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="139" y="153"/>
+        </view>
+    </objects>
+    <resources>
+        <namedColor name="SecondaryText">
+            <color red="0.55686274509803924" green="0.58823529411764708" blue="0.61176470588235299" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Text">
+            <color red="0.23529411764705882" green="0.24705882352941178" blue="0.25490196078431371" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

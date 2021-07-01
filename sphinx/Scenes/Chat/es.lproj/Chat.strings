@@ -1,0 +1,62 @@
+
+/* Class = "UILabel"; text = "Camera"; ObjectID = "2gk-Fb-5y1"; */
+"2gk-Fb-5y1.text" = "Cámara";
+
+/* Class = "UILabel"; text = "Set a price and enter your message."; ObjectID = "4FV-0A-lup"; */
+"4FV-0A-lup.text" = "Define el precio e ingresa el mensaje.";
+
+/* Class = "UILabel"; text = "Loading Templates..."; ObjectID = "BeD-Td-UVZ"; */
+"BeD-Td-UVZ.text" = "Cargando plantillas...";
+
+/* Class = "UILabel"; text = "SET PRICE"; ObjectID = "EGL-XG-Ej5"; */
+"EGL-XG-Ej5.text" = "PRECIO";
+
+/* Class = "UILabel"; text = "Paid Message"; ObjectID = "F2I-3M-f6u"; */
+"F2I-3M-f6u.text" = "Mensaje pago";
+
+/* Class = "UILabel"; text = "Request"; ObjectID = "HTw-wx-D0f"; */
+"HTw-wx-D0f.text" = "Solicitar";
+
+/* Class = "UILabel"; text = "REQUEST AMOUNT"; ObjectID = "JH8-XK-2TQ"; */
+"JH8-XK-2TQ.text" = "SOLICITAR MONTO";
+
+/* Class = "UILabel"; text = "Send"; ObjectID = "NHj-ji-e9m"; */
+"NHj-ji-e9m.text" = "Enviar";
+
+/* Class = "UIButton"; normalTitle = "CONFIRM"; ObjectID = "RCs-d3-bab"; */
+"RCs-d3-bab.normalTitle" = "CONFIRMAR";
+
+/* Class = "UILabel"; text = "From"; ObjectID = "UY6-eK-1Qs"; */
+"UY6-eK-1Qs.text" = "De";
+
+/* Class = "UILabel"; text = "SEND IMAGE"; ObjectID = "ZEJ-HW-iL9"; */
+"ZEJ-HW-iL9.text" = "ENVIAR IMAGEN";
+
+/* Class = "UITextField"; placeholder = "Search"; ObjectID = "aEd-yg-3LK"; */
+"aEd-yg-3LK.placeholder" = "Buscar";
+
+/* Class = "UIButton"; normalTitle = "CANCEL"; ObjectID = "bqg-tt-jE5"; */
+"bqg-tt-jE5.normalTitle" = "CANCELAR";
+
+/* Class = "UIButton"; normalTitle = "CONFIRM"; ObjectID = "dgR-PH-JGP"; */
+"dgR-PH-JGP.normalTitle" = "CONFIRMAR";
+
+/* Class = "UIButton"; normalTitle = "CONFIRM"; ObjectID = "fwf-Iy-Dpd"; */
+"fwf-Iy-Dpd.normalTitle" = "CONFIRMAR";
+
+/* Class = "UITextField"; placeholder = "No Message"; ObjectID = "mnK-0f-aOi"; */
+"mnK-0f-aOi.placeholder" = "Mensaje Vacío";
+
+/* Class = "UITextField"; placeholder = "Add Message"; ObjectID = "uzk-r4-4Vh"; */
+"uzk-r4-4Vh.placeholder" = "Agregar Mensaje";
+
+/* Class = "UILabel"; text = "Library"; ObjectID = "vqQ-dy-2SC"; */
+"vqQ-dy-2SC.text" = "Librería";
+
+/* Class = "UIButton"; normalTitle = "CONFIRM"; ObjectID = "x1w-R5-F90"; */
+"x1w-R5-F90.normalTitle" = "CONFIRMAR";
+
+/* Class = "UILabel"; text = "REQUEST: "; ObjectID = "ypU-tY-BWb"; */
+"ypU-tY-BWb.text" = "SOLICITAR: ";
+
+"vI1-az-0QI.text" = "Archivo";

@@ -1,0 +1,9 @@
+
+/* Class = "UILabel"; text = "Weekly"; ObjectID = "8qG-zu-P4U"; */
+"8qG-zu-P4U.text" = "Semanalmente";
+
+/* Class = "UILabel"; text = "Monthly"; ObjectID = "D1Q-ch-K0W"; */
+"D1Q-ch-K0W.text" = "Mensualmente";
+
+/* Class = "UILabel"; text = "Daily"; ObjectID = "TC2-KU-45W"; */
+"TC2-KU-45W.text" = "Diariamente";

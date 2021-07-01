@@ -1,0 +1,54 @@
+/* Class = "UILabel"; text = "PROFILE"; ObjectID = "41O-R2-bE7"; */
+"41O-R2-bE7.text" = "PROFILE";
+
+/* Class = "UILabel"; text = "Meeting Server"; ObjectID = "8d4-ou-aLA"; */
+"8d4-ou-aLA.text" = "Meeting Server";
+
+/* Class = "UILabel"; text = "Invite Server"; ObjectID = "9WV-Bo-DnX"; */
+"9WV-Bo-DnX.text" = "Invite Server";
+
+/* Class = "UILabel"; text = "User Name"; ObjectID = "ETI-Y9-dAa"; */
+"ETI-Y9-dAa.text" = "User Name";
+
+/* Class = "UILabel"; text = "Share my profile photo with contacts"; ObjectID = "Esr-uH-D1R"; */
+"Esr-uH-D1R.text" = "Share my profile photo with contacts";
+
+/* Class = "UIButton"; normalTitle = "DONE"; ObjectID = "FfL-nl-BnP"; */
+"FfL-nl-BnP.normalTitle" = "DONE";
+
+/* Class = "UIButton"; normalTitle = "CANCEL"; ObjectID = "Gwy-FV-c0D"; */
+"Gwy-FV-c0D.normalTitle" = "CANCEL";
+
+/* Class = "UILabel"; text = "File Server"; ObjectID = "MsM-st-6dn"; */
+"MsM-st-6dn.text" = "File Server";
+
+"aS3-Fj-p1j.text" = "Sync more devices";
+
+"sX0-os-LQi.normalTitle" = "Backup your key";
+
+/* Class = "UILabel"; text = "Address"; ObjectID = "faG-bF-oVt"; */
+"faG-bF-oVt.text" = "Address";
+
+"0Wh-WY-PvB.text" = "Route Hint";
+
+/* Class = "UILabel"; text = "Default tip amount"; ObjectID = "jJs-A6-b1l"; */
+"jJs-A6-b1l.text" = "Default tip amount";
+
+/* Class = "UILabel"; text = "Appearance"; ObjectID = "p1B-4h-bVu"; */
+"p1B-4h-bVu.text" = "Appearance";
+
+"jxx-Fl-kXP.text" = "Notification Sound";
+
+"X8L-GC-hmH.text" = "Notification Sound";
+
+"gAs-58-jhi.normalTitle" = "CONFIRM";
+
+"gjh-2S-Wpi.text" = "Size";
+
+"WVe-8j-tgh.text" = "Server URL";
+
+"2YG-L7-D9J.text" = "Change PIN";
+
+"rlD-nH-ZkP.text" = "PIN Timeout";
+
+"YQw-Cm-DzX.text" = "Set Privacy PIN";

@@ -1,0 +1,11 @@
+/* Class = "UIButton"; normalTitle = "AUTHORIZE"; ObjectID = "gJV-Mb-BKs"; */
+"gJV-Mb-BKs.normalTitle" = "AUTORIZAR";
+
+/* Class = "UILabel"; text = "sats before reauthorizing"; ObjectID = "hnl-fy-YH4"; */
+"hnl-fy-YH4.text" = "sats antes de reautorizar";
+
+/* Class = "UILabel"; text = "Authorize"; ObjectID = "or5-Hw-Tjf"; */
+"or5-Hw-Tjf.text" = "Autorizar";
+
+/* Class = "UILabel"; text = "to withdraw up to"; ObjectID = "x6U-ec-b6h"; */
+"x6U-ec-b6h.text" = "a retirar hasta";

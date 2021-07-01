@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="MaterialIcons-Regular.ttf">
+            <string>MaterialIcons-Regular</string>
+        </array>
+        <array key="Montserrat-Regular.otf">
+            <string>Montserrat-Regular</string>
+        </array>
+        <array key="Montserrat-SemiBold.otf">
+            <string>Montserrat-SemiBold</string>
+        </array>
+        <array key="Roboto-Regular.ttf">
+            <string>Roboto-Regular</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--Stakwork Authorize View Controller-->
+        <scene sceneID="v3r-1v-fr8">
+            <objects>
+                <viewController storyboardIdentifier="StakworkAuthorizeViewController" id="npL-Wf-nas" customClass="StakworkAuthorizeViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="86X-3l-l0S">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2WA-rH-Ktx">
+                                <rect key="frame" x="89.5" y="303" width="235" height="300"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0bO-cR-BUE">
+                                        <rect key="frame" x="185" y="0.0" width="50" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="0bY-iR-ofG"/>
+                                            <constraint firstAttribute="width" constant="50" id="39O-4k-5PV"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="20"/>
+                                        <state key="normal" title="">
+                                            <color key="titleColor" name="PrimaryRed"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="closeButtonTouched" destination="npL-Wf-nas" eventType="touchUpInside" id="3i4-QB-RmD"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AUTHORIZE WITH" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vdr-Qe-v8u">
+                                        <rect key="frame" x="67.5" y="94.5" width="100.5" height="14"/>
+                                        <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="12"/>
+                                        <color key="textColor" name="SecondaryText"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BEP-Gv-pum">
+                                        <rect key="frame" x="54.5" y="128.5" width="126" height="43.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="stakwork.com" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Hi-cz-QSo">
+                                                <rect key="frame" x="0.0" y="10" width="126" height="23.5"/>
+                                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="20"/>
+                                                <color key="textColor" name="PrimaryText"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="as7-uu-KD0">
+                                                <rect key="frame" x="0.0" y="42.5" width="126" height="1"/>
+                                                <color key="backgroundColor" name="LightDivider"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="1" id="QUE-In-ehb"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="as7-uu-KD0" secondAttribute="trailing" id="8Cs-4D-nlv"/>
+                                            <constraint firstAttribute="bottom" secondItem="6Hi-cz-QSo" secondAttribute="bottom" constant="10" id="DE0-I6-tmo"/>
+                                            <constraint firstAttribute="bottom" secondItem="as7-uu-KD0" secondAttribute="bottom" id="HbI-MG-X8e"/>
+                                            <constraint firstItem="6Hi-cz-QSo" firstAttribute="top" secondItem="BEP-Gv-pum" secondAttribute="top" constant="10" id="KNc-aW-Q9I"/>
+                                            <constraint firstItem="as7-uu-KD0" firstAttribute="leading" secondItem="BEP-Gv-pum" secondAttribute="leading" id="KeD-8h-XNL"/>
+                                            <constraint firstItem="6Hi-cz-QSo" firstAttribute="leading" secondItem="BEP-Gv-pum" secondAttribute="leading" id="m5o-or-btv"/>
+                                            <constraint firstAttribute="trailing" secondItem="6Hi-cz-QSo" secondAttribute="trailing" id="mDj-hm-Uny"/>
+                                        </constraints>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OsM-qt-t4R">
+                                        <rect key="frame" x="23.5" y="220" width="188" height="50"/>
+                                        <color key="backgroundColor" name="PrimaryBlue"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="LOa-jY-Re8"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="180" id="fQX-V4-Bvk"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="12"/>
+                                        <inset key="contentEdgeInsets" minX="60" minY="0.0" maxX="60" maxY="0.0"/>
+                                        <state key="normal" title="AUTHORIZE">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="authorizeButtonTouched" destination="npL-Wf-nas" eventType="touchUpInside" id="6KE-uE-xZk"/>
+                                        </connections>
+                                    </button>
+                                    <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D4R-HA-Viz" customClass="UIActivityIndicatorView">
+                                        <rect key="frame" x="161.5" y="220" width="50" height="50"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="50" id="5UR-Hx-PAW"/>
+                                            <constraint firstAttribute="height" constant="50" id="XjD-cv-eIP"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" name="Body"/>
+                                <constraints>
+                                    <constraint firstItem="Vdr-Qe-v8u" firstAttribute="centerX" secondItem="2WA-rH-Ktx" secondAttribute="centerX" id="0Ne-Il-Eh1"/>
+                                    <constraint firstAttribute="trailing" secondItem="0bO-cR-BUE" secondAttribute="trailing" id="799-3a-hJm"/>
+                                    <constraint firstItem="BEP-Gv-pum" firstAttribute="centerX" secondItem="2WA-rH-Ktx" secondAttribute="centerX" id="8iP-t6-CS1"/>
+                                    <constraint firstItem="BEP-Gv-pum" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="2WA-rH-Ktx" secondAttribute="leading" constant="5" id="CJw-pL-8c9"/>
+                                    <constraint firstItem="BEP-Gv-pum" firstAttribute="top" secondItem="Vdr-Qe-v8u" secondAttribute="bottom" constant="20" id="EQT-Vp-SQJ"/>
+                                    <constraint firstItem="D4R-HA-Viz" firstAttribute="centerY" secondItem="OsM-qt-t4R" secondAttribute="centerY" id="Em4-K9-RA4"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="BEP-Gv-pum" secondAttribute="trailing" constant="5" id="IAW-WV-KNV"/>
+                                    <constraint firstAttribute="trailing" secondItem="OsM-qt-t4R" secondAttribute="trailing" constant="23.5" id="KG7-hg-TUe"/>
+                                    <constraint firstItem="D4R-HA-Viz" firstAttribute="trailing" secondItem="OsM-qt-t4R" secondAttribute="trailing" id="MEg-C3-ln9"/>
+                                    <constraint firstItem="0bO-cR-BUE" firstAttribute="top" secondItem="2WA-rH-Ktx" secondAttribute="top" id="TJM-py-chI"/>
+                                    <constraint firstAttribute="height" constant="300" id="dva-fm-OW4"/>
+                                    <constraint firstAttribute="bottom" secondItem="OsM-qt-t4R" secondAttribute="bottom" constant="30" id="f52-x6-dve"/>
+                                    <constraint firstItem="BEP-Gv-pum" firstAttribute="centerY" secondItem="2WA-rH-Ktx" secondAttribute="centerY" id="h5P-yD-kzg"/>
+                                    <constraint firstItem="OsM-qt-t4R" firstAttribute="leading" secondItem="2WA-rH-Ktx" secondAttribute="leading" constant="23.5" id="knr-kW-n2X"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="8Ns-E8-n97" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="2WA-rH-Ktx" secondAttribute="trailing" constant="20" id="FOD-RQ-Eb3"/>
+                            <constraint firstItem="2WA-rH-Ktx" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="8Ns-E8-n97" secondAttribute="leading" constant="10" id="YbL-Kk-jKZ"/>
+                            <constraint firstItem="2WA-rH-Ktx" firstAttribute="centerX" secondItem="8Ns-E8-n97" secondAttribute="centerX" id="iCL-tR-CpV"/>
+                            <constraint firstItem="2WA-rH-Ktx" firstAttribute="centerY" secondItem="8Ns-E8-n97" secondAttribute="centerY" id="pZT-wp-exS"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="8Ns-E8-n97"/>
+                    </view>
+                    <size key="freeformSize" width="414" height="896"/>
+                    <connections>
+                        <outlet property="authorizeButton" destination="OsM-qt-t4R" id="v1f-SN-RdS"/>
+                        <outlet property="authorizeWithLabel" destination="Vdr-Qe-v8u" id="smt-hc-mzc"/>
+                        <outlet property="containerView" destination="2WA-rH-Ktx" id="AOh-6X-Scq"/>
+                        <outlet property="hostContainer" destination="BEP-Gv-pum" id="l5S-hw-3At"/>
+                        <outlet property="hostLabel" destination="6Hi-cz-QSo" id="tU0-v2-ZUM"/>
+                        <outlet property="loadingWheel" destination="D4R-HA-Viz" id="xLZ-mh-81B"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2WU-9S-EfV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="17" y="157"/>
+        </scene>
+    </scenes>
+    <resources>
+        <namedColor name="Body">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="LightDivider">
+            <color red="0.86274509803921573" green="0.8784313725490196" blue="0.8901960784313725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="PrimaryBlue">
+            <color red="0.38039215686274508" green="0.54117647058823526" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="PrimaryRed">
+            <color red="0.92941176470588238" green="0.45490196078431372" blue="0.45490196078431372" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="PrimaryText">
+            <color red="0.16078431372549021" green="0.17254901960784313" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="SecondaryText">
+            <color red="0.55686274509803924" green="0.58823529411764708" blue="0.61176470588235299" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

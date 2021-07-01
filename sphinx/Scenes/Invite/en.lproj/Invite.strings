@@ -1,0 +1,74 @@
+/* Class = "UITextField"; placeholder = "Set Your Name"; ObjectID = "1ma-e3-9jK"; */
+"1ma-e3-9jK.placeholder" = "Set Your Name";
+
+/* Class = "UILabel"; text = "Select Image"; ObjectID = "2P2-S1-noc"; */
+"2P2-S1-noc.text" = "Select Image";
+
+/* Class = "UIButton"; normalTitle = "New to Sphinx"; ObjectID = "3rN-VK-zKy"; */
+"3rN-VK-zKy.normalTitle" = "New to Sphinx";
+
+/* Class = "UILabel"; text = "ADD FRIEND"; ObjectID = "4Mg-Nw-7iA"; */
+"4Mg-Nw-7iA.text" = "ADD FRIEND";
+
+/* Class = "UILabel"; text = "INCLUDE A MESSAGE..."; ObjectID = "DsE-7M-zzl"; */
+"DsE-7M-zzl.text" = "INCLUDE A MESSAGE...";
+
+/* Class = "UIButton"; normalTitle = "Already on Sphinx"; ObjectID = "Mi0-in-ems"; */
+"Mi0-in-ems.normalTitle" = "Already on Sphinx";
+
+/* Class = "UILabel"; text = "FINISH"; ObjectID = "Oe8-KJ-BtX"; */
+"Oe8-KJ-BtX.text" = "FINISH";
+
+/* Class = "UITextField"; placeholder = "Enter code..."; ObjectID = "QEu-hq-fQQ"; */
+"QEu-hq-fQQ.placeholder" = "Enter code...";
+
+/* Class = "UILabel"; text = "Restore from Keychain"; ObjectID = "RQP-ey-bcd"; */
+"RQP-ey-bcd.text" = "Restore from Keychain";
+
+/* Class = "UILabel"; text = "SHARE"; ObjectID = "UO4-zg-C4j"; */
+"UO4-zg-C4j.text" = "SHARE";
+
+/* Class = "UIButton"; normalTitle = "NEXT"; ObjectID = "URL-hB-8Yz"; */
+"URL-hB-8Yz.normalTitle" = "NEXT";
+
+/* Class = "UILabel"; text = "Welcome"; ObjectID = "VS5-RC-luB"; */
+"VS5-RC-luB.text" = "Welcome";
+
+/* Class = "UILabel"; text = "You're ready\nto use Sphinx!"; ObjectID = "c8r-pr-tER"; */
+"c8r-pr-tER.text" = "You're ready\nto use Sphinx!";
+
+/* Class = "UIButton"; normalTitle = "NEXT"; ObjectID = "fJ5-mk-nZs"; */
+"fJ5-mk-nZs.normalTitle" = "NEXT";
+
+/* Class = "UITextView"; text = "Welcome to Sphinx!"; ObjectID = "iUT-7o-yHP"; */
+"iUT-7o-yHP.text" = "Welcome to Sphinx!";
+
+/* Class = "UIButton"; normalTitle = "Create Invitation"; ObjectID = "k95-oK-Zox"; */
+"k95-oK-Zox.normalTitle" = "Create Invitation";
+
+/* Class = "UILabel"; text = "ESTIMATED COST"; ObjectID = "kW7-Wb-3DM"; */
+"kW7-Wb-3DM.text" = "ESTIMATED COST";
+
+/* Class = "UILabel"; text = "Your Name"; ObjectID = "klr-jZ-Odd"; */
+"klr-jZ-Odd.text" = "Your Name";
+
+/* Class = "UILabel"; text = "TAP TO COPY"; ObjectID = "pgo-lA-YWw"; */
+"pgo-lA-YWw.text" = "TAP TO COPY";
+
+/* Class = "UILabel"; text = "ADD FRIEND"; ObjectID = "rLb-IH-R1w"; */
+"rLb-IH-R1w.text" = "ADD FRIEND";
+
+/* Class = "UILabel"; text = "SHARE INVITATION CODE"; ObjectID = "vd2-aU-H2Y"; */
+"vd2-aU-H2Y.text" = "SHARE INVITATION CODE";
+
+/* Class = "UILabel"; text = "\"Welcome to Sphinx!\""; ObjectID = "vl8-eB-4he"; */
+"vl8-eB-4he.text" = "\"Welcome to Sphinx!\"";
+
+/* Class = "UILabel"; text = "You've been invited\nto join Sphinx!"; ObjectID = "xrd-8B-iyR"; */
+"xrd-8B-iyR.text" = "You've been invited\nto join Sphinx!";
+
+/* Class = "UILabel"; text = "NICKNAME"; ObjectID = "xrn-Sz-iM3"; */
+"xrn-Sz-iM3.text" = "NICKNAME";
+
+/* Class = "UILabel"; text = "Get Started"; ObjectID = "zc0-Xh-U1c"; */
+"zc0-Xh-U1c.text" = "Get Started";

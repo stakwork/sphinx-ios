@@ -1,0 +1,21 @@
+
+/* Class = "UIButton"; normalTitle = "CONFIRM"; ObjectID = "4kd-55-TFX"; */
+"4kd-55-TFX.normalTitle" = "CONFIRMAR";
+
+/* Class = "UILabel"; text = "Generate Invoice"; ObjectID = "Eej-fz-fO1"; */
+"Eej-fz-fO1.text" = "Generar solicitud";
+
+/* Class = "UIButton"; normalTitle = "Share"; ObjectID = "R9A-Rd-gNX"; */
+"R9A-Rd-gNX.normalTitle" = "Compartir";
+
+/* Class = "UILabel"; text = "Amount: "; ObjectID = "VB7-rS-zTG"; */
+"VB7-rS-zTG.text" = "Importe: ";
+
+/* Class = "UILabel"; text = "PAID"; ObjectID = "daJ-Bf-qdS"; */
+"daJ-Bf-qdS.text" = "PAGADO";
+
+/* Class = "UIButton"; normalTitle = "Copy"; ObjectID = "t6Q-AH-Dpt"; */
+"t6Q-AH-Dpt.normalTitle" = "Copiar";
+
+/* Class = "UILabel"; text = "PUBLIC KEY"; ObjectID = "xtc-ef-mNL"; */
+"xtc-ef-mNL.text" = "CLAVE PÚBLICA";

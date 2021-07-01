@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="MaterialIcons-Regular.ttf">
+            <string>MaterialIcons-Regular</string>
+        </array>
+        <array key="Roboto-Regular.ttf">
+            <string>Roboto-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SubscriptionTimeIntervalView" customModule="sphinx" customModuleProvider="target">
+            <connections>
+                <outlet property="contentView" destination="iN0-l3-epB" id="n8Q-6r-UMo"/>
+                <outlet property="firstCheckbox" destination="if2-AB-dva" id="i4c-0T-NX9"/>
+                <outlet property="firstLabel" destination="TC2-KU-45W" id="mhi-vf-Rio"/>
+                <outlet property="secondCheckbox" destination="Nle-yr-2LE" id="CbC-3l-alq"/>
+                <outlet property="secondLabel" destination="8qG-zu-P4U" id="iMo-ku-ICM"/>
+                <outlet property="thirdCheckbox" destination="cdI-0A-dNL" id="zin-5N-kP4"/>
+                <outlet property="thirdLabel" destination="D1Q-ch-K0W" id="FL7-P3-XfS"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="200"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S99-IK-J5v">
+                    <rect key="frame" x="0.0" y="25" width="414" height="50"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="if2-AB-dva">
+                            <rect key="frame" x="30" y="13" width="24.5" height="24.5"/>
+                            <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="21"/>
+                            <color key="textColor" name="SecondaryText"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Daily" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TC2-KU-45W">
+                            <rect key="frame" x="69.5" y="15" width="38" height="20"/>
+                            <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
+                            <color key="textColor" name="SecondaryText"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pOu-RN-VMh">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="34"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="optionButtonTouched:" destination="-1" eventType="touchUpInside" id="K5N-b1-OkE"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="TC2-KU-45W" firstAttribute="centerY" secondItem="if2-AB-dva" secondAttribute="centerY" id="3a9-Jo-Fjc"/>
+                        <constraint firstItem="if2-AB-dva" firstAttribute="centerY" secondItem="S99-IK-J5v" secondAttribute="centerY" id="H3O-d4-xV9"/>
+                        <constraint firstItem="if2-AB-dva" firstAttribute="leading" secondItem="S99-IK-J5v" secondAttribute="leading" constant="30" id="Kco-QP-VZB"/>
+                        <constraint firstItem="TC2-KU-45W" firstAttribute="leading" secondItem="if2-AB-dva" secondAttribute="trailing" constant="15" id="Qv4-Rd-cQU"/>
+                        <constraint firstItem="pOu-RN-VMh" firstAttribute="leading" secondItem="S99-IK-J5v" secondAttribute="leading" id="Spy-eJ-lC9"/>
+                        <constraint firstAttribute="height" constant="50" id="Tx3-v4-vLa"/>
+                        <constraint firstItem="pOu-RN-VMh" firstAttribute="top" secondItem="S99-IK-J5v" secondAttribute="top" id="dko-EE-oCd"/>
+                        <constraint firstAttribute="trailing" secondItem="pOu-RN-VMh" secondAttribute="trailing" id="h0x-6L-3rb"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r4p-Gb-Ris">
+                    <rect key="frame" x="0.0" y="75" width="414" height="50"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nle-yr-2LE">
+                            <rect key="frame" x="30" y="13" width="24.5" height="24.5"/>
+                            <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="21"/>
+                            <color key="textColor" name="SecondaryText"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weekly" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8qG-zu-P4U">
+                            <rect key="frame" x="69.5" y="15" width="54" height="20"/>
+                            <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
+                            <color key="textColor" name="SecondaryText"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zck-at-Pgf">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="optionButtonTouched:" destination="-1" eventType="touchUpInside" id="CGJ-hA-dav"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="Zck-at-Pgf" secondAttribute="trailing" id="0Tn-M7-Lv7"/>
+                        <constraint firstItem="Zck-at-Pgf" firstAttribute="top" secondItem="r4p-Gb-Ris" secondAttribute="top" id="9cd-SL-nHM"/>
+                        <constraint firstAttribute="height" constant="50" id="SSg-Dt-G7I"/>
+                        <constraint firstItem="Nle-yr-2LE" firstAttribute="leading" secondItem="r4p-Gb-Ris" secondAttribute="leading" constant="30" id="bpn-bw-E4b"/>
+                        <constraint firstItem="8qG-zu-P4U" firstAttribute="leading" secondItem="Nle-yr-2LE" secondAttribute="trailing" constant="15" id="lYT-TR-Jh2"/>
+                        <constraint firstItem="Zck-at-Pgf" firstAttribute="leading" secondItem="r4p-Gb-Ris" secondAttribute="leading" id="tWx-2y-2Fk"/>
+                        <constraint firstItem="Nle-yr-2LE" firstAttribute="centerY" secondItem="r4p-Gb-Ris" secondAttribute="centerY" id="vlZ-Ra-eS4"/>
+                        <constraint firstAttribute="bottom" secondItem="Zck-at-Pgf" secondAttribute="bottom" id="wfT-Uj-62g"/>
+                        <constraint firstItem="8qG-zu-P4U" firstAttribute="centerY" secondItem="Nle-yr-2LE" secondAttribute="centerY" id="zVN-nM-gwk"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o5R-wO-IXF">
+                    <rect key="frame" x="0.0" y="125" width="414" height="50"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cdI-0A-dNL">
+                            <rect key="frame" x="30" y="13" width="24.5" height="24.5"/>
+                            <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="21"/>
+                            <color key="textColor" name="SecondaryText"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Monthly" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D1Q-ch-K0W">
+                            <rect key="frame" x="69.5" y="15" width="61.5" height="20"/>
+                            <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
+                            <color key="textColor" name="SecondaryText"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ugd-4p-GWm">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="optionButtonTouched:" destination="-1" eventType="touchUpInside" id="NcM-LO-WNv"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="ugd-4p-GWm" firstAttribute="top" secondItem="o5R-wO-IXF" secondAttribute="top" id="5ww-0w-3io"/>
+                        <constraint firstItem="cdI-0A-dNL" firstAttribute="leading" secondItem="o5R-wO-IXF" secondAttribute="leading" constant="30" id="9nh-uW-CxT"/>
+                        <constraint firstAttribute="height" constant="50" id="Jk1-LT-dZk"/>
+                        <constraint firstAttribute="bottom" secondItem="ugd-4p-GWm" secondAttribute="bottom" id="b9m-9O-xvC"/>
+                        <constraint firstItem="ugd-4p-GWm" firstAttribute="leading" secondItem="o5R-wO-IXF" secondAttribute="leading" id="dLN-d3-hyb"/>
+                        <constraint firstItem="D1Q-ch-K0W" firstAttribute="leading" secondItem="cdI-0A-dNL" secondAttribute="trailing" constant="15" id="duk-MG-aYN"/>
+                        <constraint firstItem="cdI-0A-dNL" firstAttribute="centerY" secondItem="o5R-wO-IXF" secondAttribute="centerY" id="pT9-cW-xgd"/>
+                        <constraint firstItem="D1Q-ch-K0W" firstAttribute="centerY" secondItem="cdI-0A-dNL" secondAttribute="centerY" id="wnY-qx-JY4"/>
+                        <constraint firstAttribute="trailing" secondItem="ugd-4p-GWm" secondAttribute="trailing" id="yvB-qY-oaB"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" name="Body"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="r4p-Gb-Ris" secondAttribute="trailing" id="OiL-yH-rYa"/>
+                <constraint firstAttribute="trailing" secondItem="S99-IK-J5v" secondAttribute="trailing" id="Tcd-M9-yD1"/>
+                <constraint firstItem="S99-IK-J5v" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Tx7-Ry-SMV"/>
+                <constraint firstItem="r4p-Gb-Ris" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="VTw-hL-JbV"/>
+                <constraint firstAttribute="trailing" secondItem="o5R-wO-IXF" secondAttribute="trailing" id="h41-yJ-W4l"/>
+                <constraint firstItem="o5R-wO-IXF" firstAttribute="top" secondItem="r4p-Gb-Ris" secondAttribute="bottom" id="kCY-jc-eQZ"/>
+                <constraint firstItem="S99-IK-J5v" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="25" id="l8o-Mh-bUY"/>
+                <constraint firstItem="o5R-wO-IXF" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="wsr-VQ-kwO"/>
+                <constraint firstItem="r4p-Gb-Ris" firstAttribute="top" secondItem="S99-IK-J5v" secondAttribute="bottom" id="wz9-lY-65l"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="137.68115942028987" y="122.87946428571428"/>
+        </view>
+    </objects>
+    <resources>
+        <namedColor name="Body">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="SecondaryText">
+            <color red="0.55686274509803924" green="0.58823529411764708" blue="0.61176470588235299" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

@@ -1,2 +1,14 @@
 # sphinx-ios
-Client app for communication over the lightning network.
+
+
+# Setup
+
+## CocoaPods
+
+- This repository uses CocoaPods submodules. After cloning run:
+
+```
+pod install
+```
+
+- Set a valid API KEY for Giphy library on info.plist file

@@ -1,0 +1,9 @@
+
+/* Class = "UIButton"; normalTitle = "Big"; ObjectID = "YVn-ix-g9Q"; */
+"YVn-ix-g9Q.normalTitle" = "Grande";
+
+/* Class = "UIButton"; normalTitle = "Small"; ObjectID = "bFw-d1-vd8"; */
+"bFw-d1-vd8.normalTitle" = "Chico";
+
+/* Class = "UIButton"; normalTitle = "Medium"; ObjectID = "tPS-mJ-Jxa"; */
+"tPS-mJ-Jxa.normalTitle" = "Mediano";

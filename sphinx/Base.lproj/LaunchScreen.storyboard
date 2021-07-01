@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="EHf-IW-A2E">
+            <objects>
+                <viewController id="01J-lp-oVM" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splashBackground" translatesAutoresizingMaskIntoConstraints="NO" id="tkf-E5-8NX">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="whiteIcon" translatesAutoresizingMaskIntoConstraints="NO" id="54Z-bm-hqF">
+                                <rect key="frame" x="150" y="264" width="114" height="114"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="114" id="W1g-eL-hmJ"/>
+                                    <constraint firstAttribute="width" constant="114" id="yvy-Y2-cM0"/>
+                                </constraints>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sphinxLabel" translatesAutoresizingMaskIntoConstraints="NO" id="cb3-EG-dzG">
+                                <rect key="frame" x="113.5" y="770" width="187" height="22"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="187" id="aAg-Dh-cou"/>
+                                    <constraint firstAttribute="height" constant="22" id="ga1-Sc-x1L"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="54Z-bm-hqF" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="220" id="1Hn-Fv-Kg8"/>
+                            <constraint firstAttribute="bottom" secondItem="tkf-E5-8NX" secondAttribute="bottom" id="BNq-Gt-P7m"/>
+                            <constraint firstItem="54Z-bm-hqF" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="LPA-WG-a9E"/>
+                            <constraint firstItem="cb3-EG-dzG" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="Qhq-IU-p75"/>
+                            <constraint firstItem="tkf-E5-8NX" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="W0h-Yi-hbr"/>
+                            <constraint firstItem="tkf-E5-8NX" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="a0C-Tt-FcT"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="cb3-EG-dzG" secondAttribute="bottom" constant="70" id="evJ-bI-mgg"/>
+                            <constraint firstItem="tkf-E5-8NX" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="rnT-Gf-0DK"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <size key="freeformSize" width="414" height="896"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="53" y="375"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="sphinxLabel" width="187.5" height="22"/>
+        <image name="splashBackground" width="414" height="734.5"/>
+        <image name="whiteIcon" width="114" height="114"/>
+    </resources>
+</document>

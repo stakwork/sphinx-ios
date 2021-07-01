@@ -1,0 +1,12 @@
+
+/* Class = "UILabel"; text = "Processing payment..."; ObjectID = "8g0-gq-jaf"; */
+"8g0-gq-jaf.text" = "Procesando...";
+
+/* Class = "UILabel"; text = "Purchase Succeeded"; ObjectID = "DbX-b0-czT"; */
+"DbX-b0-czT.text" = "Compra exitosa";
+
+/* Class = "UILabel"; text = "PAY"; ObjectID = "l1j-i5-mZA"; */
+"l1j-i5-mZA.text" = "PAGAR";
+
+/* Class = "UILabel"; text = "Purchase Denied"; ObjectID = "sRP-LE-M0I"; */
+"sRP-LE-M0I.text" = "Compra denegada";

@@ -1,0 +1,25 @@
+/* Class = "UILabel"; text = "ADDRESS BOOK"; ObjectID = "0QV-li-AOO"; */
+"0QV-li-AOO.text" = "CONTACTOS";
+
+/* Class = "UILabel"; text = "Address *"; ObjectID = "39P-Xw-u5x"; */
+"39P-Xw-u5x.text" = "Dirección *";
+
+"vHf-rK-nEW.text" = "Pista de Ruta";
+
+/* Class = "UILabel"; text = "Nickname *"; ObjectID = "7eV-VN-bp2"; */
+"7eV-VN-bp2.text" = "Alias *";
+
+/* Class = "UIButton"; normalTitle = "SUBSCRIBE"; ObjectID = "OiJ-fJ-jK3"; */
+"OiJ-fJ-jK3.normalTitle" = "SUSCRIBIRSE";
+
+/* Class = "UILabel"; text = "Email *"; ObjectID = "WXR-op-lDc"; */
+"WXR-op-lDc.text" = "PIN grupal *";
+
+/* Class = "UILabel"; text = "NEW CONTACT"; ObjectID = "fLm-O4-dUI"; */
+"fLm-O4-dUI.text" = "NUEVO CONTACTO";
+
+/* Class = "UITextField"; placeholder = "Search"; ObjectID = "hvF-Lr-QK6"; */
+"hvF-Lr-QK6.placeholder" = "Buscar";
+
+/* Class = "UILabel"; text = "SAVE TO CONTACTS"; ObjectID = "o1h-CK-PTE"; */
+"o1h-CK-PTE.text" = "SALVAR";

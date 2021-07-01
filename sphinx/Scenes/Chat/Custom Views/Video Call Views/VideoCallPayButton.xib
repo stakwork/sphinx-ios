@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Montserrat-SemiBold.otf">
+            <string>Montserrat-SemiBold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="VideoCallPayButton" customModule="sphinx" customModuleProvider="target">
+            <connections>
+                <outlet property="amountLabel" destination="aKH-EJ-qOY" id="LNj-Dd-8f0"/>
+                <outlet property="contentView" destination="iN0-l3-epB" id="d05-D7-KWz"/>
+                <outlet property="paymentButtonContainer" destination="ZQp-68-sRb" id="Tfm-ot-Dww"/>
+                <outlet property="paymentButtonIcon" destination="3Ij-DR-DOd" id="1qu-v4-1lE"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="46"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZQp-68-sRb">
+                    <rect key="frame" x="273" y="0.0" width="87" height="46"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="invoice-pay-button" translatesAutoresizingMaskIntoConstraints="NO" id="3Ij-DR-DOd">
+                            <rect key="frame" x="55" y="13.5" width="19" height="19"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="19" id="Mm7-Wz-bvx"/>
+                                <constraint firstAttribute="width" constant="19" id="NCc-TO-53G"/>
+                            </constraints>
+                        </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CVc-Ac-0fh">
+                            <rect key="frame" x="0.0" y="0.0" width="87" height="46"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="buttonTouched" destination="-1" eventType="touchUpInside" id="p33-4V-Mkx"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="25" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aKH-EJ-qOY">
+                            <rect key="frame" x="24" y="15" width="16" height="16.5"/>
+                            <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="14"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" name="PrimaryGreen"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="CVc-Ac-0fh" secondAttribute="trailing" id="1vc-s1-Gf4"/>
+                        <constraint firstItem="CVc-Ac-0fh" firstAttribute="leading" secondItem="ZQp-68-sRb" secondAttribute="leading" id="63e-Nr-aFK"/>
+                        <constraint firstAttribute="trailing" secondItem="3Ij-DR-DOd" secondAttribute="trailing" constant="13" id="GK6-tS-W1a"/>
+                        <constraint firstItem="3Ij-DR-DOd" firstAttribute="centerY" secondItem="ZQp-68-sRb" secondAttribute="centerY" id="R0C-89-bLP"/>
+                        <constraint firstItem="3Ij-DR-DOd" firstAttribute="leading" secondItem="aKH-EJ-qOY" secondAttribute="trailing" constant="15" id="ShG-iV-UA4"/>
+                        <constraint firstItem="CVc-Ac-0fh" firstAttribute="top" secondItem="ZQp-68-sRb" secondAttribute="top" id="eiv-CP-6lP"/>
+                        <constraint firstItem="aKH-EJ-qOY" firstAttribute="centerY" secondItem="3Ij-DR-DOd" secondAttribute="centerY" id="gfX-Xb-b4e"/>
+                        <constraint firstItem="aKH-EJ-qOY" firstAttribute="leading" secondItem="ZQp-68-sRb" secondAttribute="leading" constant="24" id="k56-pw-BNp"/>
+                        <constraint firstAttribute="height" constant="46" id="vtS-pb-Frg"/>
+                        <constraint firstAttribute="bottom" secondItem="CVc-Ac-0fh" secondAttribute="bottom" id="wJH-Ct-Evv"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="6uo-Td-rbu"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="ZQp-68-sRb" secondAttribute="trailing" constant="15" id="UF8-a0-9sV"/>
+                <constraint firstItem="ZQp-68-sRb" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="weh-5k-pS2"/>
+                <constraint firstAttribute="bottom" secondItem="ZQp-68-sRb" secondAttribute="bottom" id="zos-nf-qh2"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="139" y="128"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="invoice-pay-button" width="19" height="19"/>
+        <namedColor name="PrimaryGreen">
+            <color red="0.28627450980392155" green="0.78823529411764703" blue="0.59607843137254901" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Montserrat-Regular.otf">
+            <string>Montserrat-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SubscriptionFormTableHeaderView" customModule="sphinx" customModuleProvider="target">
+            <connections>
+                <outlet property="contentView" destination="iN0-l3-epB" id="067-GU-nJY"/>
+                <outlet property="titleLabel" destination="tLH-aS-0MI" id="LJR-DR-dgc"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="36"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AMOUNT" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tLH-aS-0MI">
+                    <rect key="frame" x="30" y="12" width="43" height="12"/>
+                    <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="10"/>
+                    <color key="textColor" name="SecondaryText"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zL7-HT-gpt">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="1"/>
+                    <color key="backgroundColor" name="LightDivider"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="J40-fi-eoz"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Jm-g1-pCV">
+                    <rect key="frame" x="0.0" y="35" width="414" height="1"/>
+                    <color key="backgroundColor" name="LightDivider"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="BdA-Y4-BA5"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" name="AddressBookHeader"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="zL7-HT-gpt" secondAttribute="trailing" id="AYJ-J3-gA3"/>
+                <constraint firstItem="tLH-aS-0MI" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="30" id="E57-iO-fey"/>
+                <constraint firstItem="tLH-aS-0MI" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Mgl-PN-JQa"/>
+                <constraint firstAttribute="trailing" secondItem="0Jm-g1-pCV" secondAttribute="trailing" id="Uyu-zF-Tom"/>
+                <constraint firstItem="zL7-HT-gpt" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="ZJx-2z-w3Z"/>
+                <constraint firstAttribute="bottom" secondItem="0Jm-g1-pCV" secondAttribute="bottom" id="hsf-MC-qdN"/>
+                <constraint firstItem="0Jm-g1-pCV" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="oVi-JH-oXD"/>
+                <constraint firstItem="zL7-HT-gpt" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="rzi-ck-MiP"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="141" y="-75"/>
+        </view>
+    </objects>
+    <resources>
+        <namedColor name="AddressBookHeader">
+            <color red="0.95686274509803926" green="0.95686274509803926" blue="0.95686274509803926" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="LightDivider">
+            <color red="0.86274509803921573" green="0.8784313725490196" blue="0.8901960784313725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="SecondaryText">
+            <color red="0.55686274509803924" green="0.58823529411764708" blue="0.61176470588235299" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

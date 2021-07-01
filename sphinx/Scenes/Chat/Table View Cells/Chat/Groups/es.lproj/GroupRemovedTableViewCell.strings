@@ -1,0 +1,6 @@
+
+/* Class = "UILabel"; text = "The admin has removed \nyou from this group"; ObjectID = "bMf-V2-wL4"; */
+"bMf-V2-wL4.text" = "El administrador te ha \neliminado de esta tribu";
+
+/* Class = "UIButton"; normalTitle = "Delete group"; ObjectID = "o85-do-HbP"; */
+"o85-do-HbP.normalTitle" = "Elminar tribu";

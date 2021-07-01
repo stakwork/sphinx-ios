@@ -1,0 +1,9 @@
+
+/* Class = "UIButton"; normalTitle = "Light"; ObjectID = "eDT-he-L0Q"; */
+"eDT-he-L0Q.normalTitle" = "Claro";
+
+/* Class = "UIButton"; normalTitle = "Dark"; ObjectID = "mNb-Ed-DhZ"; */
+"mNb-Ed-DhZ.normalTitle" = "Oscuro";
+
+/* Class = "UIButton"; normalTitle = "System"; ObjectID = "uWS-ao-oEr"; */
+"uWS-ao-oEr.normalTitle" = "Sistema";

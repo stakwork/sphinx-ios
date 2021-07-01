@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Roboto-Regular.ttf">
+            <string>Roboto-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AudioRecordingTooltip" customModule="sphinx" customModuleProvider="target">
+            <connections>
+                <outlet property="bottomArrow" destination="h4W-G0-Jkx" id="avq-ee-yBI"/>
+                <outlet property="bubbleView" destination="VNH-lm-PaB" id="OLc-ts-M0i"/>
+                <outlet property="contentView" destination="iN0-l3-epB" id="SQh-oS-geM"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="62"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VNH-lm-PaB">
+                    <rect key="frame" x="200" y="15.5" width="209" height="31"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hold to record, release to send" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wm3-Tt-zSS">
+                            <rect key="frame" x="16" y="8" width="177.5" height="15.5"/>
+                            <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="13"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" red="0.4392156862745098" green="0.58431372549019611" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="31" id="G4T-QE-dxe"/>
+                        <constraint firstItem="Wm3-Tt-zSS" firstAttribute="centerY" secondItem="VNH-lm-PaB" secondAttribute="centerY" id="J5H-tm-5Jx"/>
+                        <constraint firstItem="Wm3-Tt-zSS" firstAttribute="centerX" secondItem="VNH-lm-PaB" secondAttribute="centerX" id="gTn-kS-yto"/>
+                        <constraint firstAttribute="width" constant="209" id="rM4-la-eLc"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h4W-G0-Jkx">
+                    <rect key="frame" x="379" y="39.5" width="10" height="12"/>
+                    <color key="backgroundColor" red="0.4392156862745098" green="0.58431372549019611" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="10" id="DKi-0u-hAe"/>
+                        <constraint firstAttribute="height" constant="12" id="uSo-Io-SzF"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="h4W-G0-Jkx" firstAttribute="top" secondItem="VNH-lm-PaB" secondAttribute="bottom" constant="-7" id="0yX-7r-p3r"/>
+                <constraint firstItem="VNH-lm-PaB" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="IPW-9Q-z21"/>
+                <constraint firstAttribute="trailing" secondItem="h4W-G0-Jkx" secondAttribute="trailing" constant="25" id="LVJ-94-Cl6"/>
+                <constraint firstAttribute="trailing" secondItem="VNH-lm-PaB" secondAttribute="trailing" constant="5" id="s5M-Hm-m3d"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="139" y="109"/>
+        </view>
+    </objects>
+</document>

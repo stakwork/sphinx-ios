@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FullScreenImageView" customModule="sphinx" customModuleProvider="target">
+            <connections>
+                <outlet property="contentView" destination="iN0-l3-epB" id="Fq8-vj-s2E"/>
+                <outlet property="imageScrollView" destination="la4-Et-EsP" id="HBs-d5-qvJ"/>
+                <outlet property="loadingWheel" destination="rwZ-T3-umJ" id="WbI-ye-CtS"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view hidden="YES" alpha="0.0" contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="800"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="la4-Et-EsP" customClass="CustomImageScrollView" customModule="sphinx" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="800"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <viewLayoutGuide key="contentLayoutGuide" id="wbh-qh-ukF"/>
+                    <viewLayoutGuide key="frameLayoutGuide" id="zxc-R8-RHv"/>
+                </scrollView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rwZ-T3-umJ" customClass="UIActivityIndicatorView">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="800"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="rwZ-T3-umJ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="8jK-cX-1rk"/>
+                <constraint firstAttribute="trailing" secondItem="la4-Et-EsP" secondAttribute="trailing" id="Bqq-Zz-5sZ"/>
+                <constraint firstAttribute="bottom" secondItem="rwZ-T3-umJ" secondAttribute="bottom" id="Uxl-OB-bTY"/>
+                <constraint firstItem="la4-Et-EsP" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="ZOW-D7-96b"/>
+                <constraint firstAttribute="trailing" secondItem="rwZ-T3-umJ" secondAttribute="trailing" id="jcO-bI-EBb"/>
+                <constraint firstItem="rwZ-T3-umJ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="vOn-Ig-wyD"/>
+                <constraint firstItem="la4-Et-EsP" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="wSr-IO-X6f"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="138.40579710144928" y="107.8125"/>
+        </view>
+    </objects>
+</document>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="MaterialIcons-Regular.ttf">
+            <string>MaterialIcons-Regular</string>
+        </array>
+        <array key="Montserrat-SemiBold.otf">
+            <string>Montserrat-SemiBold</string>
+        </array>
+        <array key="Roboto-Regular.ttf">
+            <string>Roboto-Regular</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--History View Controller-->
+        <scene sceneID="6fb-Rr-Hrr">
+            <objects>
+                <viewController storyboardIdentifier="HistoryViewController" id="9Yp-5A-uEO" customClass="HistoryViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="68p-cE-xNs">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="3DK-E3-uhv">
+                                <rect key="frame" x="0.0" y="50" width="375" height="617"/>
+                                <color key="backgroundColor" name="Body"/>
+                            </tableView>
+                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rOa-A2-lDe" customClass="UIActivityIndicatorView">
+                                <rect key="frame" x="0.0" y="50" width="375" height="617"/>
+                                <color key="backgroundColor" name="Body"/>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No transactions found" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="stK-eH-Bki">
+                                <rect key="frame" x="123" y="326" width="129" height="15.5"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="13"/>
+                                <color key="textColor" name="Text"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FbI-HP-vDg">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TRANSACTIONS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qdx-XD-Mbl">
+                                        <rect key="frame" x="134" y="17" width="107" height="16.5"/>
+                                        <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="14"/>
+                                        <color key="textColor" name="Text"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gke-5N-nH2">
+                                        <rect key="frame" x="338.5" y="13.5" width="23" height="23.5"/>
+                                        <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="20"/>
+                                        <color key="textColor" name="PrimaryRed"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qxh-0m-oz9">
+                                        <rect key="frame" x="325" y="0.0" width="50" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="50" id="slw-tE-EMR"/>
+                                        </constraints>
+                                        <connections>
+                                            <action selector="closeButtonTouched" destination="9Yp-5A-uEO" eventType="touchUpInside" id="ac9-Kg-jva"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" name="Body"/>
+                                <constraints>
+                                    <constraint firstItem="Qdx-XD-Mbl" firstAttribute="centerY" secondItem="FbI-HP-vDg" secondAttribute="centerY" id="3UB-0j-gNG"/>
+                                    <constraint firstAttribute="height" constant="50" id="8U4-rf-QTP"/>
+                                    <constraint firstItem="Gke-5N-nH2" firstAttribute="centerY" secondItem="Qxh-0m-oz9" secondAttribute="centerY" id="DH3-mS-178"/>
+                                    <constraint firstAttribute="bottom" secondItem="Qxh-0m-oz9" secondAttribute="bottom" id="FiW-t6-mYC"/>
+                                    <constraint firstItem="Gke-5N-nH2" firstAttribute="centerX" secondItem="Qxh-0m-oz9" secondAttribute="centerX" id="KDk-Of-AZ0"/>
+                                    <constraint firstItem="Qxh-0m-oz9" firstAttribute="top" secondItem="FbI-HP-vDg" secondAttribute="top" id="SMP-Mu-jGE"/>
+                                    <constraint firstItem="Qdx-XD-Mbl" firstAttribute="centerX" secondItem="FbI-HP-vDg" secondAttribute="centerX" id="URe-Gc-78B"/>
+                                    <constraint firstAttribute="trailing" secondItem="Qxh-0m-oz9" secondAttribute="trailing" id="gEr-Yk-NOy"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" name="Body"/>
+                        <constraints>
+                            <constraint firstItem="3DK-E3-uhv" firstAttribute="top" secondItem="FbI-HP-vDg" secondAttribute="bottom" id="2Yc-Hw-Xas"/>
+                            <constraint firstItem="rOa-A2-lDe" firstAttribute="top" secondItem="FbI-HP-vDg" secondAttribute="bottom" id="4Us-Xz-ahA"/>
+                            <constraint firstItem="stK-eH-Bki" firstAttribute="centerY" secondItem="pim-D8-zmm" secondAttribute="centerY" id="82I-Ag-gVe"/>
+                            <constraint firstItem="FbI-HP-vDg" firstAttribute="top" secondItem="pim-D8-zmm" secondAttribute="top" id="HEM-yK-ecP"/>
+                            <constraint firstItem="rOa-A2-lDe" firstAttribute="trailing" secondItem="pim-D8-zmm" secondAttribute="trailing" id="MFy-ej-Mb7"/>
+                            <constraint firstItem="3DK-E3-uhv" firstAttribute="trailing" secondItem="pim-D8-zmm" secondAttribute="trailing" id="PVm-oW-LYA"/>
+                            <constraint firstItem="stK-eH-Bki" firstAttribute="centerX" secondItem="pim-D8-zmm" secondAttribute="centerX" id="Sdh-FU-ZnS"/>
+                            <constraint firstItem="FbI-HP-vDg" firstAttribute="trailing" secondItem="pim-D8-zmm" secondAttribute="trailing" id="fYb-fH-CME"/>
+                            <constraint firstItem="3DK-E3-uhv" firstAttribute="bottom" secondItem="68p-cE-xNs" secondAttribute="bottom" id="kdI-uf-eat"/>
+                            <constraint firstItem="rOa-A2-lDe" firstAttribute="leading" secondItem="pim-D8-zmm" secondAttribute="leading" id="o10-A1-xBf"/>
+                            <constraint firstItem="rOa-A2-lDe" firstAttribute="bottom" secondItem="68p-cE-xNs" secondAttribute="bottom" id="w9d-1E-Tap"/>
+                            <constraint firstItem="FbI-HP-vDg" firstAttribute="leading" secondItem="pim-D8-zmm" secondAttribute="leading" id="yME-tZ-kk6"/>
+                            <constraint firstItem="3DK-E3-uhv" firstAttribute="leading" secondItem="pim-D8-zmm" secondAttribute="leading" id="yqh-gC-P4L"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="pim-D8-zmm"/>
+                    </view>
+                    <connections>
+                        <outlet property="headerView" destination="FbI-HP-vDg" id="JMq-1I-iCV"/>
+                        <outlet property="historyTableView" destination="3DK-E3-uhv" id="NjG-BR-KhS"/>
+                        <outlet property="loadingWheel" destination="rOa-A2-lDe" id="spH-WL-WDJ"/>
+                        <outlet property="noResultsLabel" destination="stK-eH-Bki" id="QtJ-In-tg4"/>
+                        <outlet property="viewTitle" destination="Qdx-XD-Mbl" id="Tnn-al-qxJ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Qhg-Hd-V3l" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1420" y="-621.13943028485767"/>
+        </scene>
+    </scenes>
+    <resources>
+        <namedColor name="Body">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="PrimaryRed">
+            <color red="0.92941176470588238" green="0.45490196078431372" blue="0.45490196078431372" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Text">
+            <color red="0.23529411764705882" green="0.24705882352941178" blue="0.25490196078431371" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

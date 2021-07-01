@@ -1,0 +1,15 @@
+
+/* Class = "UIButton"; normalTitle = "CANCEL"; ObjectID = "GbQ-xN-c4F"; */
+"GbQ-xN-c4F.normalTitle" = "CANCELAR";
+
+/* Class = "UILabel"; text = "Pay until"; ObjectID = "MtN-hi-VeI"; */
+"MtN-hi-VeI.text" = "Pagar hasta";
+
+/* Class = "UILabel"; text = "Payments"; ObjectID = "XDq-qi-RaU"; */
+"XDq-qi-RaU.text" = "Pagos";
+
+/* Class = "UIButton"; normalTitle = "DONE"; ObjectID = "Zh5-LL-F2J"; */
+"Zh5-LL-F2J.normalTitle" = "CONFIRMAR";
+
+/* Class = "UILabel"; text = "Make"; ObjectID = "dIl-Hs-vmD"; */
+"dIl-Hs-vmD.text" = "Realizar";

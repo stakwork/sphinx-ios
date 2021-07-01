@@ -1,0 +1,33 @@
+
+/* Class = "UIButton"; normalTitle = "DONE"; ObjectID = "8Et-S7-VDq"; */
+"8Et-S7-VDq.normalTitle" = "CONFIRMAR";
+
+/* Class = "UIButton"; normalTitle = "Send Message"; ObjectID = "VUd-ZZ-tSV"; */
+"VUd-ZZ-tSV.normalTitle" = "Enviar mensaje";
+
+/* Class = "UITextView"; text = "Describe your problem here..."; ObjectID = "bKo-Co-okt"; */
+"bKo-Co-okt.text" = "Describe tu problem aquí...";
+
+/* Class = "UILabel"; text = "SUPPORT"; ObjectID = "gKM-ns-Slb"; */
+"gKM-ns-Slb.text" = "SOPORTE";
+
+/* Class = "UIButton"; normalTitle = "CANCEL"; ObjectID = "mmQ-nD-ZJe"; */
+"mmQ-nD-ZJe.normalTitle" = "CANCELAR";
+
+/* Class = "UIButton"; normalTitle = "Support"; ObjectID = "qb1-rZ-TSG"; */
+"qb1-rZ-TSG.normalTitle" = "Soporte";
+
+/* Class = "UIButton"; normalTitle = "Copy Logs"; ObjectID = "rQP-gW-ald"; */
+"rQP-gW-ald.normalTitle" = "Copiar Registros";
+
+"oxd-6a-boA.text" = "AGREGAR SATS";
+
+"naX-fJ-3cb.text" = "A";
+
+"4Q5-5T-a5h.normalTitle" = "COPIAR";
+
+"it3-mD-nqd.text" = "Por favor envíe entre 0.0005 y 0.005 Bitcoin. Una vez que la transacción se haya confirmado, el monto se adherirá a su cuenta.";
+
+"rHy-Kt-UHY.text" = "ABRIR";
+
+"mhE-Dp-blS.text" = "Creando dirección...";

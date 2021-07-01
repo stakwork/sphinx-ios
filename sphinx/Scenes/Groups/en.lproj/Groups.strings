@@ -1,0 +1,112 @@
+
+/* Class = "UILabel"; text = "NEW PUBLIC GROUP"; ObjectID = "09K-rw-bxW"; */
+"09K-rw-bxW.text" = "NEW TRIBE";
+
+/* Class = "UIButton"; normalTitle = "Private Group"; ObjectID = "0jO-Oq-zlh"; */
+"0jO-Oq-zlh.normalTitle" = "Private Group";
+
+/* Class = "UILabel"; text = "Price per Message"; ObjectID = "1AU-Kq-NxC"; */
+"1AU-Kq-NxC.text" = "Price per Message";
+
+/* Class = "UIButton"; normalTitle = "NEXT"; ObjectID = "2pl-oP-RXu"; */
+"2pl-oP-RXu.normalTitle" = "NEXT";
+
+/* Class = "UILabel"; text = "Uploaded: 0%"; ObjectID = "2zj-we-RkJ"; */
+"2zj-we-RkJ.text" = "Uploaded: 0%";
+
+/* Class = "UILabel"; text = "Description *"; ObjectID = "3RB-pb-8A5"; */
+"3RB-pb-8A5.text" = "Description *";
+
+/* Class = "UITextField"; placeholder = "Search Group Members"; ObjectID = "3Rf-Vh-ZtY"; */
+"3Rf-Vh-ZtY.placeholder" = "Search Group Members";
+
+/* Class = "UILabel"; text = "Pay Group Members"; ObjectID = "7HA-dj-Isx"; */
+"7HA-dj-Isx.text" = "Pay Group Members";
+
+/* Class = "UIButton"; normalTitle = "DONE"; ObjectID = "COk-lR-gi7"; */
+"COk-lR-gi7.normalTitle" = "DONE";
+
+/* Class = "UILabel"; text = "JOIN PUBLIC GROUP"; ObjectID = "FSe-ea-ym5"; */
+"FSe-ea-ym5.text" = "JOIN TRIBE";
+
+/* Class = "UIButton"; normalTitle = "CANCEL"; ObjectID = "JYV-Fj-Rzu"; */
+"JYV-Fj-Rzu.normalTitle" = "CANCEL";
+
+/* Class = "UITextField"; placeholder = "Search People"; ObjectID = "K3Z-8Q-JIa"; */
+"K3Z-8Q-JIa.placeholder" = "Search People";
+
+/* Class = "UILabel"; text = "NEW GROUP"; ObjectID = "NhF-8s-bSd"; */
+"NhF-8s-bSd.text" = "NEW GROUP";
+
+/* Class = "UILabel"; text = "Group Details"; ObjectID = "O1K-P2-cv9"; */
+"O1K-P2-cv9.text" = "Group Details";
+
+/* Class = "UILabel"; text = "Uploading Image..."; ObjectID = "Qmc-Nz-Qwz"; */
+"Qmc-Nz-Qwz.text" = "Uploading Image...";
+
+/* Class = "UIButton"; normalTitle = "Public Group"; ObjectID = "Uer-jc-pey"; */
+"Uer-jc-pey.normalTitle" = "Public Group";
+
+/* Class = "UIButton"; normalTitle = "NEXT"; ObjectID = "b5K-e6-WAd"; */
+"b5K-e6-WAd.normalTitle" = "NEXT";
+
+/* Class = "UITextField"; placeholder = "Group Name"; ObjectID = "blf-J3-yxP"; */
+"blf-J3-yxP.placeholder" = "Group Name";
+
+/* Class = "UILabel"; text = "Time to Stake: (hours)"; ObjectID = "bwz-DD-5Qu"; */
+"bwz-DD-5Qu.text" = "Time to Stake: (hours)";
+
+/* Class = "UILabel"; text = "Loading Group info..."; ObjectID = "c99-Vi-65m"; */
+"c99-Vi-65m.text" = "Loading Tribe info...";
+
+/* Class = "UIButton"; normalTitle = "CREATE GROUP"; ObjectID = "cf2-1k-Ril"; */
+"cf2-1k-Ril.normalTitle" = "CREATE TRIBE";
+
+/* Class = "UILabel"; text = "Select Contacts"; ObjectID = "cgj-ca-WOq"; */
+"cgj-ca-WOq.text" = "Select Contacts";
+
+/* Class = "UILabel"; text = "Tags"; ObjectID = "dbS-d6-I3s"; */
+"dbS-d6-I3s.text" = "Tags";
+
+/* Class = "UILabel"; text = "Amount to Stake:"; ObjectID = "gVi-4b-hTN"; */
+"gVi-4b-hTN.text" = "Amount to Stake:";
+
+/* Class = "UIButton"; normalTitle = "JOIN GROUP"; ObjectID = "jpH-eJ-Dbz"; */
+"jpH-eJ-Dbz.normalTitle" = "JOIN TRIBE";
+
+/* Class = "UIButton"; normalTitle = "DONE"; ObjectID = "m8D-yB-Qoq"; */
+"m8D-yB-Qoq.normalTitle" = "DONE";
+
+/* Class = "UILabel"; text = "Price per Message:"; ObjectID = "osg-OM-VAr"; */
+"osg-OM-VAr.text" = "Price per Message:";
+
+/* Class = "UILabel"; text = "Price to Join:"; ObjectID = "qvX-dy-6Gx"; */
+"qvX-dy-6Gx.text" = "Price to Join:";
+
+/* Class = "UILabel"; text = "Price to Join"; ObjectID = "rC4-MQ-7tj"; */
+"rC4-MQ-7tj.text" = "Price to Join";
+
+/* Class = "UILabel"; text = "Group Image"; ObjectID = "rTn-ps-L7c"; */
+"rTn-ps-L7c.text" = "Image";
+
+/* Class = "UILabel"; text = "Amount to Stake"; ObjectID = "tF7-eB-zYG"; */
+"tF7-eB-zYG.text" = "Amount to Stake";
+
+/* Class = "UILabel"; text = "Name *"; ObjectID = "tKb-aq-70S"; */
+"tKb-aq-70S.text" = "Name *";
+
+/* Class = "UILabel"; text = "Time to Stake (hours)"; ObjectID = "tvJ-jS-VqC"; */
+"tvJ-jS-VqC.text" = "Time to Stake (hours)";
+
+"xZk-s2-JIf.text" = "App Url";
+
+"XEl-j5-cm2.text" = "Feed Url";
+
+/* Class = "UILabel"; text = "New Group Chat"; ObjectID = "uMU-CU-DoL"; */
+"uMU-CU-DoL.text" = "New Group Chat";
+
+"IjR-gq-j9u.text" = "List on tribes.sphinx.chat?";
+
+"9fz-nc-HRb.text" = "Approve each membership request?";
+
+"9fa-JQ-04V.text" = "Uploading image...";

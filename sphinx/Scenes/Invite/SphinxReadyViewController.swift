@@ -79,7 +79,7 @@ class SphinxReadyViewController: UIViewController {
     @IBAction func nextButtonTouched() {
         loading = true
         
-        if let inviteString:String = UserDefaults.Keys.inviteString.get() {
+        if let inviteString: String = UserDefaults.Keys.inviteString.get() {
             API.sharedInstance.finishInvite(inviteString: inviteString, callback: { success in
                 if success {
                     self.joinDefaultTribe()

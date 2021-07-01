@@ -26,6 +26,11 @@ extension UIWindow {
         }
     }
     
+    func setDarkStyle() {
+        UserDefaults.Keys.appAppearence.set(UIWindow.Style.Dark.rawValue)
+        setStyle()
+    }
+    
     public static func getSavedStyle() -> UIUserInterfaceStyle? {
         let style = UserDefaults.Keys.appAppearence.get(defaultValue: UIWindow.Style.System.rawValue)
         if style == UIWindow.Style.Dark.rawValue {

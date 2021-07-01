@@ -175,9 +175,9 @@ class ChatListViewController: RootViewController, ChatListHeaderDelegate {
         initialLoad()
     }
     
-    func initialLoad() {
+    func initialLoad(_ fromBackgroundReload: Bool = false) {
         chatListViewModel.updateContactsAndChats()
-        chatListObjectsArray = contactsService.getChatListObjects()
+        chatListObjectsArray = contactsService.getChatListObjects(fromBackgroundReload)
         loadDataSource()
         
         refreshControl.endRefreshing()

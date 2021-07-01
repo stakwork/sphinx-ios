@@ -1,0 +1,5 @@
+/* Class = "UIButton"; normalTitle = "AUTHORIZE"; ObjectID = "NTY-E1-Rbf"; */
+"NTY-E1-Rbf.normalTitle" = "AUTORIZAR";
+
+/* Class = "UILabel"; text = "Do you want to authorize with"; ObjectID = "PLf-Qq-gka"; */
+"PLf-Qq-gka.text" = "¿Quieres autorizar a";

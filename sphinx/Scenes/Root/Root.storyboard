@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="gtU-O4-w6U">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19115.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="gtU-O4-w6U">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19107.4"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -20,6 +20,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </containerView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="g9Y-yT-Y61"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="bSB-uS-oRG" firstAttribute="top" secondItem="XcD-uz-L0g" secondAttribute="top" id="7Cy-XU-EC8"/>
@@ -27,7 +28,6 @@
                             <constraint firstItem="bSB-uS-oRG" firstAttribute="leading" secondItem="g9Y-yT-Y61" secondAttribute="leading" id="OKn-fl-BbJ"/>
                             <constraint firstItem="bSB-uS-oRG" firstAttribute="bottom" secondItem="XcD-uz-L0g" secondAttribute="bottom" id="hQg-KR-KdB"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="g9Y-yT-Y61"/>
                     </view>
                     <connections>
                         <outlet property="container" destination="bSB-uS-oRG" id="NAb-WY-e7f"/>

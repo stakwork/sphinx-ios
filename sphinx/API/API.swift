@@ -48,9 +48,9 @@ typealias LowestPriceCallback = ((Double) -> ())
 typealias PayInviteCallback = ((JSON) -> ())
 
 //Attachments
-typealias askAuthenticationCallback = ((String?, String?) -> ())
-typealias signChallengeCallback = ((String?) -> ())
-typealias verifyAuthenticationCallback = ((String?) -> ())
+typealias AskAuthenticationCallback = ((String?, String?) -> ())
+typealias SignChallengeCallback = ((String?) -> ())
+typealias VerifyAuthenticationCallback = ((String?) -> ())
 typealias UploadAttachmentCallback = ((Bool, NSDictionary?) -> ())
 typealias MediaInfoCallback = ((Int, String?, Int?) -> ())
 

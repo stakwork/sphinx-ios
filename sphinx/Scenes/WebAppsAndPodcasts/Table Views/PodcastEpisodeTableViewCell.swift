@@ -10,9 +10,10 @@ import UIKit
 
 protocol PodcastEpisodeRowDelegate : class {
     func shouldStartDownloading(episode: PodcastEpisode, cell: PodcastEpisodeTableViewCell)
+    func shouldDeleteFile(episode: PodcastEpisode, cell: PodcastEpisodeTableViewCell)
 }
 
-class PodcastEpisodeTableViewCell: UITableViewCell {
+class PodcastEpisodeTableViewCell: SwipableCell {
     
     weak var delegate: PodcastEpisodeRowDelegate?
     
@@ -37,6 +38,10 @@ class PodcastEpisodeTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        numberOfButtons = .oneButton
+        button3 = button1
+        button1.tintColorDidChange()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -80,7 +85,10 @@ class PodcastEpisodeTableViewCell: UITableViewCell {
         downloadButton.setTitleColor(UIColor.Sphinx.Text, for: .normal)
         
         self.contentView.alpha = episode.isAvailable() ? 1.0 : 0.5
-        
+
+        // Disable swipe actions if the episode hasn't been downloaded yet.
+        recognizer?.isEnabled = episode.downloaded
+
         if episode.downloaded {
             downloadButton.setTitle("", for: .normal)
             downloadButton.setTitleColor(UIColor.Sphinx.PrimaryGreen, for: .normal)
@@ -115,5 +123,10 @@ class PodcastEpisodeTableViewCell: UITableViewCell {
     
     @IBAction func downloadButtonTouched() {
         self.delegate?.shouldStartDownloading(episode: episode, cell: self)
+    }
+    
+    
+    @IBAction func deleteButtonTouched() {
+        delegate?.shouldDeleteFile(episode: episode, cell: self)
     }
 }

@@ -445,12 +445,6 @@ class PodcastPlayerHelper {
     }
     
     func didEndEpisode() {
-        if isPlaying() {
-            getCurrentEpisode()?.shouldDeleteFile(deleteCompletion: ({
-                self.delegate?.shouldUpdateEpisodeInfo?()
-            }))
-        }
-        
         shouldPause()
         delegate?.shouldUpdatePlayButton?()
         
@@ -491,6 +485,12 @@ class PodcastPlayerHelper {
             shouldPlay()
         }
         chat?.updateMetaData()
+    }
+    
+    func shouldDeleteEpisode(episode: PodcastEpisode) {
+        episode.shouldDeleteFile(deleteCompletion: ({
+            self.delegate?.shouldUpdateEpisodeInfo?()
+        }))
     }
     
     func shouldPause() {

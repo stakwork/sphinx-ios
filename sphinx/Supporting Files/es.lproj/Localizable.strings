@@ -131,6 +131,39 @@
 "new.contact" = "Nuevo Contacto";
 "invalid.pubkey" = "Clave Pública inválida";
 
+//WELCOME
+"welcome.initial.title" = "Bienvenido";
+"welcome.final.title" = "Bienvenido!";
+"welcome.final.subtitle" = "Ya estas conectado.";
+"welcome.final.continue" = "Continuar";
+"welcome.connecting" = "Conectando...";
+
+
+//RESTORE EXISTING USER
+"restore.keychain" = "Restaurar desde keychain";
+"restore.description.continue" = "Continuar";
+"restore.description.label" = "Copiá tus claves desde\nla app de escritorio y pegalas aquí.";
+"restore.copy.keys" = "Copiá tus claves";
+"restore.form.paste.keys.placeholder" = "Pegá tus claves...";
+"submit" = "Enviar";
+"restore.invalid-code.relay-qr-code" = "Parece que estas utilizando un código de conexión de Sphinx Relay. Para restaurar una cuenta existente, debes ingresar un código de restauración.";
+
+
+//SIGNUP NEW USER
+"signup.description.continue" = "Continuar";
+"signup.description.label" = "Pegá tu código de conexión\nen Sphinx";
+"signup.description.paste" = "Pegá";
+"signup.description.connection-code" = "código de conexión";
+"signup.form.paste.code.placeholder" = "Pegá tu código de conexión...";
+"signup.submit" = "Enviar";
+"signup.greeting.headline" = "Ahora estás en Lightning Network!";
+"signup.greeting.continue" = "Continuar";
+"signup.desktop-ad.headline" = "Ya tienes Sphinx para escritorio?";
+"signup.desktop-ad.sphinx-on-desktop" = "Sphinx para escritorio?";
+"signup.desktop-ad.get-now" = "Obtener ahora";
+"signup.desktop-ad.skip" = "Más tarde";
+"signup.invalid-code.restore-key" = "Parece que estas utilizando un código de restauración de una cuenta existente. Intentá seleccionando \"Usuario Existente\" en la pantalla de bienvenida.";
+
 //INVITE
 "add.people" = "Agregar";
 "create.group" = "Crear Grupo";
@@ -154,7 +187,7 @@
 "confirm.delete.keychain" = "¿Estás seguro que deseas borrar permanentemente este nodo de Keychain? Verifica no estas conectado a este nodo en otro dispositivo, ya que esta acción borrará la información haciendo que tu conexión en el otro dispositivo se pierda.";
 "error.restoring.keychain" = "Ocurrió un problema restaurando desde Keychain.";
 "tor.connection.failed" = "Error conectando a Tor";
-"establishing.tor.circuit" = "Estableciendo circuito con Tor...";
+"establishing.tor.circuit" = "Estableciendo circuito con Tor. Por favor espera...";
 "wait.tor.request" = "Por favor espera. Este proceso puede tardar algunos minutos...";
 "invalid.code.pubkey" = "Parece que has ingresado una clave pública, para registrarte necesitarás un código de invitación. Obtenlo en https://sphinx.chat";
 "invalid.code.invoice" = "Parece que has ingresado una solicitud de pago, para registrarte necesitarás un código de invitación. Obtenlo en https://sphinx.chat";
@@ -183,9 +216,9 @@
 "contact.pin.error" = "No puedes usar tu PIN principal como PIN de grupo";
 "set.privacy.pin" = "Establecer PIN Privado";
 "change.privacy.pin" = "Cambiar PIN Privado";
-"privacy.pin.set" = "Su PIN Privado ha sido establecido";
-"privacy.pin.changed" = "Su PIN Privado ha sido modificado";
-"pins.must.be.different" = "Su PIN y si PIN Privado no pueden ser iguales";
+"privacy.pin.set" = "Tu PIN Privado ha sido establecido";
+"privacy.pin.changed" = "Tu PIN Privado ha sido modificado";
+"pins.must.be.different" = "Tu PIN y tu PIN Privado no pueden ser iguales";
 "privacy.pin.tooltip" = "Cuando la configuración de privacidad está activada, el contacto solo estará visible si se utilizó el PIN Privado para ingresar en Sphinx. Primero debes setear el PIN Privado desde el Perfil para user esta funcionalidad";
 "pin.change" = "Cambio de PIN";
 "confirm.pin.change" = "¿Estás seguro que deseas cambiar tu PIN?";
@@ -316,6 +349,11 @@
 "no.camera.available" = "No hay cámara disponible en este dispositivo";
 "redeem.sats.from" = "Canjear %d sats de:";
 "keysend.received" = "Has receibido un pago de %d sats";
+"people.message.placeholder" = "Mensaje inicial para ";
+"authorization.succeeded" = "Autorización exitosa. Por favor vuelve a la página web para completar tu pérfil.";
+"authorization.failed" = "Fallo en la autorización";
+"already.connected" = "Ya estas conectado con esta persona";
+"price.to.meet" = "Precio para conectar: ";
 
 //TRANSACTION MESSAGE
 "purchase.succeeded" = "Compra exitosa";
@@ -332,6 +370,7 @@
 "invite.expired" = " Caducado";
 "invite.signup.complete" = " Registro completo";
 "new.user" = "Nuevo Usuario";
+"existing.user" = "Usuario Existente";
 "invite.expired.title" = "Invitación caducada";
 "invite.expired.message" = "La invitación caduca en 24 horas. Por favor crea una nueva.";
 "invite.pending.title" = "Invitación pendiente";

@@ -113,11 +113,11 @@ public final class ContactsService {
         }
     }
     
-    public func getChatListObjects() -> [ChatListCommonObject] {
+    public func getChatListObjects(_ forceLastMessageReload: Bool = false) -> [ChatListCommonObject] {
         let filteredContacts =  contacts.filter { !$0.isOwner && !$0.shouldBeExcluded()}
         let chatListObjectsCount = filteredContacts.count + chats.count
         
-        if chatListObjectsCount == chatListObjects.count && chatsCount == chats.count && chatListObjectsCount > 0 {
+        if chatListObjectsCount == chatListObjects.count && chatsCount == chats.count && chatListObjectsCount > 0 && !forceLastMessageReload {
             chatListObjects = orderChatListObjects(objects: chatListObjects)
             return chatListObjects
         }
@@ -206,7 +206,14 @@ public final class ContactsService {
         })
     }
     
-    public func createContact(nickname: String, pubKey: String, routeHint: String? = nil, photoUrl: String? = nil, pin: String? = nil, callback: @escaping (Bool) -> ()) {
+    public func createContact(nickname: String,
+                              pubKey: String,
+                              routeHint: String? = nil,
+                              photoUrl: String? = nil,
+                              pin: String? = nil,
+                              contactKey: String? = nil,
+                              callback: @escaping (Bool) -> ()) {
+        
         var parameters = [String : AnyObject]()
         parameters["alias"] = nickname as AnyObject
         parameters["public_key"] = pubKey as AnyObject
@@ -218,6 +225,10 @@ public final class ContactsService {
         
         if let routeHint = routeHint {
             parameters["route_hint"] = routeHint as AnyObject
+        }
+        
+        if let contactKey = contactKey {
+            parameters["contact_key"] = contactKey as AnyObject
         }
         
         API.sharedInstance.createContact(params: parameters, callback: { contact in

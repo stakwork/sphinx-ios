@@ -84,8 +84,6 @@ internal enum StoryboardScene {
     internal enum Invite: StoryboardType {
         internal static let storyboardName = "Invite"
         
-        internal static let inviteCodeViewController = SceneType<InviteCodeViewController>(storyboard: Invite.self, identifier: "InviteCodeViewController")
-        
         internal static let inviteWelcomeViewController = SceneType<InviteWelcomeViewController>(storyboard: Invite.self, identifier: "InviteWelcomeViewController")
         
         internal static let setProfileImageViewController = SceneType<SetProfileImageViewController>(storyboard: Invite.self, identifier: "SetProfileImageViewController")
@@ -102,6 +100,38 @@ internal enum StoryboardScene {
         
         internal static let keychainRestoreViewController = SceneType<KeychainRestoreViewController>(storyboard: Invite.self, identifier: "KeychainRestoreViewController")
     }
+    
+    internal enum Welcome: StoryboardType {
+        internal static let storyboardName = "Welcome"
+        
+        internal static let initialWelcomeViewController = SceneType<InitialWelcomeViewController>(storyboard: Welcome.self, identifier: "InitialWelcomeViewController")
+        
+        internal static let welcomeCompleteViewController = SceneType<WelcomeCompleteViewController>(storyboard: Welcome.self, identifier: "WelcomeCompleteViewController")
+    }
+    
+    internal enum RestoreUser: StoryboardType {
+        internal static let storyboardName = "RestoreUser"
+        
+        internal static let restoreUserDescriptionViewController = SceneType<RestoreUserDescriptionViewController>(storyboard: RestoreUser.self, identifier: "RestoreUserDescriptionViewController")
+        
+        internal static let restoreUserFormViewController = SceneType<RestoreUserFormViewController>(storyboard: RestoreUser.self, identifier: "RestoreUserFormViewController")
+        
+        internal static let restoreUserConnectingViewController = SceneType<RestoreUserConnectingViewController>(storyboard: RestoreUser.self, identifier: "RestoreUserConnectingViewController")
+    }
+    
+    
+    internal enum NewUserSignup: StoryboardType {
+        internal static let storyboardName = "NewUserSignup"
+        
+        internal static let newUserSignupDescriptionViewController = SceneType<NewUserSignupDescriptionViewController>(storyboard: NewUserSignup.self, identifier: "NewUserSignupDescriptionViewController")
+        
+        internal static let newUserSignupFormViewController = SceneType<NewUserSignupFormViewController>(storyboard: NewUserSignup.self, identifier: "NewUserSignupFormViewController")
+        
+        internal static let newUserGreetingViewController = SceneType<NewUserGreetingViewController>(storyboard: NewUserSignup.self, identifier: "NewUserGreetingViewController")
+        
+        internal static let sphinxDesktopAdViewController = SceneType<SphinxDesktopAdViewController>(storyboard: NewUserSignup.self, identifier: "SphinxDesktopAdViewController")
+    }
+    
     
     internal enum Contacts: StoryboardType {
         internal static let storyboardName = "Contacts"
@@ -150,6 +180,13 @@ internal enum StoryboardScene {
         internal static let storyboardName = "Stakwork"
         
         internal static let stakworkAuthorizeViewController = SceneType<StakworkAuthorizeViewController>(storyboard: Stakwork.self, identifier: "StakworkAuthorizeViewController")
+    }
+    
+    internal enum People: StoryboardType {
+        
+        internal static let storyboardName = "People"
+        
+        internal static let peopleModalsViewController = SceneType<PeopleModalsViewController>(storyboard: People.self, identifier: "PeopleModalsViewController")
     }
     
     internal enum WebApps: StoryboardType {

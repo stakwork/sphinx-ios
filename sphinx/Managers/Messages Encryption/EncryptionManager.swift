@@ -107,7 +107,7 @@ class EncryptionManager {
 
         if let privateKey = privateKey, let publicKey = publicKey {
             saveKeysOnKeychain()
-            sendPublicKeyToServer()
+            sendPublicKeyToServer(completion: completion)
             return (privateKey, publicKey)
         }
         
@@ -118,6 +118,8 @@ class EncryptionManager {
                 
                 ownPublicKey = publicKey.reference
                 ownPrivateKey = privateKey.reference
+                
+                completion?()
                 
                 return (privateKey, publicKey)
             }

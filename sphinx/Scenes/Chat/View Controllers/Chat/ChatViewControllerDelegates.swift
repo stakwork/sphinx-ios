@@ -535,6 +535,11 @@ extension ChatViewController: UIGestureRecognizerDelegate {
 }
 
 extension ChatViewController : MessageOptionsVCDelegate {
+    
+    func shouldResendMessage(message: TransactionMessage) {
+        sendMessage(provisionalMessage: message, text: message.getMessageContent(), completion: { _ in })
+    }
+    
     func shouldRemoveWindow() {
         WindowsManager.sharedInstance.removeMessageOptions()
         fetchNewData()

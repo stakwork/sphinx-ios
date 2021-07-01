@@ -36,8 +36,10 @@ extension UserDefaults {
         public static let signupStep = DefaultKey<Int>("signupStep")
         public static let paymentProcessedInvites = DefaultKey<[String]>("paymentProcessedInvites")
         public static let didJustRestore = DefaultKey<Bool>("didJustRestore")
-        public static let authQuery = DefaultKey<String>("authQuery")
+        public static let challengeQuery = DefaultKey<String>("challengeQuery")
         public static let redeemSatsQuery = DefaultKey<String>("redeemSatsQuery")
+        public static let authQuery = DefaultKey<String>("authQuery")
+        public static let personQuery = DefaultKey<String>("personQuery")
         
         public static let previousIP = DefaultKey<String>("previousIP")
         

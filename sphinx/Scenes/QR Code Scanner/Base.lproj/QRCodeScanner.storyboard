@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -419,6 +419,7 @@
                                 </constraints>
                             </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="1hb-xh-QGT"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="4rx-mg-UQ2" firstAttribute="top" secondItem="6RI-Q4-hKu" secondAttribute="bottom" id="0Ia-Hy-WcI"/>
@@ -452,7 +453,6 @@
                             <constraint firstItem="0c8-b8-U72" firstAttribute="top" secondItem="4rx-mg-UQ2" secondAttribute="bottom" id="x8Z-T3-ErV"/>
                             <constraint firstItem="3QP-Ct-EoI" firstAttribute="top" secondItem="XcV-dh-iOV" secondAttribute="top" id="xSX-EP-sI8"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="1hb-xh-QGT"/>
                     </view>
                     <connections>
                         <outlet property="addressField" destination="Y8I-bB-gmm" id="2vk-z9-YN1"/>

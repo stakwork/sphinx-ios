@@ -44,7 +44,7 @@ class SignupHelper {
     }
     
     public static func isLogged() -> Bool {
-        return step == SignupHelper.SignupStep.SignupComplete.rawValue
+        return step >= SignupHelper.SignupStep.SignupComplete.rawValue
     }
     
     public static func completeSignup() {
@@ -67,7 +67,6 @@ class SignupHelper {
         UserDefaults.Keys.inviterRouteHint.set(invite["route_hint"].stringValue)
         UserDefaults.Keys.welcomeMessage.set(invite["message"].stringValue)
         UserDefaults.Keys.inviteAction.set(invite["action"].stringValue)
-
     }
     
     public static func getInviter() -> Inviter? {

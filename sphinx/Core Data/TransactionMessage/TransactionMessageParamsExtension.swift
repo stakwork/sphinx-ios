@@ -18,6 +18,7 @@ extension TransactionMessage {
                                  mediaKey: String? = nil,
                                  price: Int? = nil,
                                  botAmount: Int = 0,
+                                 priceToMeet: Int? = nil,
                                  replyingMessage: TransactionMessage? = nil) -> [String: AnyObject]? {
         
         var parameters = [String : AnyObject]()
@@ -44,6 +45,8 @@ extension TransactionMessage {
         
         if pricePerMessage + escrowAmount + botAmount > 0 {
             parameters["amount"] = pricePerMessage + escrowAmount + botAmount as AnyObject?
+        } else if let priceToMeet = priceToMeet, priceToMeet > 0 {
+            parameters["amount"] = priceToMeet as AnyObject?
         }
         
         if let replyingMessage = replyingMessage, let replyUUID = replyingMessage.uuid, !replyUUID.isEmpty {

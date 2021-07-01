@@ -196,8 +196,9 @@ class SetPinCodeViewController: UIViewController {
             UserData.sharedInstance.save(pin: getPinString())
             
             SignupHelper.step = SignupHelper.SignupStep.PINSet.rawValue
-            let nicknameVC = SetNickNameViewController.instantiate(rootViewController: rootViewController)
-            self.navigationController?.pushViewController(nicknameVC, animated: true)
+            
+            let newUserGreetingVC = NewUserGreetingViewController.instantiate(rootViewController: rootViewController)
+            self.navigationController?.pushViewController(newUserGreetingVC, animated: true)
         }
     }
 }

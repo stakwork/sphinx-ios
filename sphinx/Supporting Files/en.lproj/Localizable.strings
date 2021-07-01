@@ -132,6 +132,41 @@
 "new.contact" = "New Contact";
 "invalid.pubkey" = "Invalid Public Key";
 
+
+//WELCOME
+"welcome.initial.title" = "Welcome";
+"welcome.final.title" = "Welcome!";
+"welcome.final.subtitle" = "Your app is now connected.";
+"welcome.final.continue" = "Continue";
+"welcome.connecting" = "Connecting...";
+
+
+//RESTORE EXISTING USER
+"restore.keychain" = "Restore from keychain";
+"restore.description.continue" = "Continue";
+"restore.description.label" = "Copy your keys from your\ndesktop app and paste it here.";
+"restore.copy.keys" = "Copy your keys";
+"restore.form.paste.keys.placeholder" = "Paste your keys...";
+"submit" = "Submit";
+"restore.invalid-code.relay-qr-code" = "This looks like a connection code from the Sphinx Relay app. To restore an existing account, you need to enter your backup string.";
+
+
+//SIGNUP NEW USER
+"signup.description.continue" = "Continue";
+"signup.description.label" = "Paste your connection code\ninto Sphinx";
+"signup.description.paste" = "Paste";
+"signup.description.connection-code" = "connection code";
+"signup.form.paste.code.placeholder" = "Paste your connection code...";
+"signup.submit" = "Submit";
+"signup.greeting.headline" = "You are now on the Lightning Network!";
+"signup.greeting.continue" = "Continue";
+"signup.desktop-ad.headline" = "Don't you have Sphinx for desktop?";
+"signup.desktop-ad.sphinx-on-desktop" = "Sphinx for desktop?";
+"signup.desktop-ad.get-now" = "Get It Now";
+"signup.desktop-ad.skip" = "Skip";
+"signup.invalid-code.restore-key" = "This looks like a restoration key string from an existing Sphinx node. Try selecting \"Existing User\" from the Welcome screen.";
+
+
 //INVITE
 "add.people" = "Add People";
 "create.group" = "Create Group";
@@ -155,11 +190,12 @@
 "confirm.delete.keychain" = "Are you sure you want to permanently delete this node from keychain? Double check you are not connected to this node from other device, since this will remove the info from keychain causing that connection to be lost.";
 "error.restoring.keychain" = "There was an error restoring from Keychain.";
 "tor.connection.failed" = "Tor connection error";
-"establishing.tor.circuit" = "Establishing Tor circuit...";
+"establishing.tor.circuit" = "Establishing Tor circuit. Please wait...";
 "wait.tor.request" = "Please wait. This process could take a few minutes...";
-"invalid.code.pubkey" = "This looks like a pubkey, to sign up you'll need an invite code from https://sphinx.chat";
-"invalid.code.invoice" = "This looks like an invoice, to sign up you'll need an invite code from https://sphinx.chat";
-"invalid.code" = "We don't recognize this code, to sign up you'll need an invite code from https://sphinx.chat";
+"invalid.code.pubkey" = "This looks like a node public key. To sign up, you'll need an invite code from https://sphinx.chat";
+"invalid.code.invoice" = "This looks like an invoice, to sign up you'll need an invite code from 
+https://sphinx.chat";
+"invalid.code" = "We don't recognize this code. To sign up, you'll need an invite code from https://sphinx.chat";
 "wrong.restore.string" = "This restore code couldn’t be decrypted. Make sure to select any punctuation at the end of the string.";
 
 //PROFILE
@@ -317,6 +353,11 @@
 "no.camera.available" = "No camera available in this device";
 "redeem.sats.from" = "Redeem %d sats from:";
 "keysend.received" = "You have received a payment of %d sats";
+"people.message.placeholder" = "Initial message to ";
+"authorization.succeeded" = "Authorization Succeeded. Please go back to the website to complete your profile.";
+"authorization.failed" = "Authorization Failed";
+"already.connected" = "You are already connected with this person";
+"price.to.meet" = "Price to meet: ";
 
 //TRANSACTION MESSAGE
 "purchase.succeeded" = "Purchase Succeeded";
@@ -333,6 +374,7 @@
 "invite.expired" = " Expired";
 "invite.signup.complete" = " Signup complete";
 "new.user" = "New user";
+"existing.user" = "Existing user";
 "invite.expired.title" = "Invite expired";
 "invite.expired.message" = "Invites expire after 24 hours. Please create a new invitation.";
 "invite.pending.title" = "Pending invite";

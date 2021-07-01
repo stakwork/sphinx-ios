@@ -123,3 +123,9 @@ extension ChatListViewController : QRCodeScannerDelegate {
         navigationController?.present(groupDetailsVC, animated: true, completion: nil)
     }
 }
+
+extension ChatListViewController : WindowsManagerDelegate {
+    func didDismissCoveringWindows() {
+        goToChat()
+    }
+}

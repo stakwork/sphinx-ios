@@ -21,6 +21,15 @@ extension TransactionMessage {
         case Reply
         case Save
         case Boost
+        case Resend
+    }
+    
+    
+    public struct ActionsMenuOption {
+        var tag: MessageActionsItem
+        var materialIconName: String?
+        var iconImage: String?
+        var label: String
     }
     
     //Sender and Receiver info
@@ -407,8 +416,8 @@ extension TransactionMessage {
         return invoice?.getAmountString() ?? "0"
     }
     
-    func getActionsMenuOptions() -> [(tag: MessageActionsItem, icon: String?, iconImage: String?, label: String)] {
-        var options = [(tag: MessageActionsItem, icon: String?, iconImage: String?, label: String)]()
+    func getActionsMenuOptions() -> [ActionsMenuOption] {
+        var options = [ActionsMenuOption]()
         
         if isPodcastBoost() {
             return options
@@ -416,35 +425,62 @@ extension TransactionMessage {
         
         if let messageContent = messageContent, messageContent != "" && !isGiphy() {
             if !messageContent.isVideoCallLink && !messageContent.isEncryptedString() {
-                options.append((MessageActionsItem.Copy, "", nil, "copy.text".localized))
+                options.append(
+                    .init(tag: MessageActionsItem.Copy, materialIconName: "", iconImage: nil, label: "copy.text".localized)
+                )
             }
             
             if !messageContent.isVideoCallLink && messageContent.stringLinks.count > 0 {
-                options.append((MessageActionsItem.CopyLink, "link", nil, "copy.link".localized))
+                options.append(
+                    .init(tag: MessageActionsItem.CopyLink, materialIconName: "link", iconImage: nil, label:  "copy.link".localized)
+                )
             }
             
             if messageContent.pubKeyMatches.count > 0 {
-                options.append((MessageActionsItem.CopyPubKey, "supervisor_account", nil, "copy.pub.key".localized))
+                options.append(
+                    .init(tag: MessageActionsItem.CopyPubKey, materialIconName: "supervisor_account", iconImage: nil, label:  "copy.pub.key".localized)
+                )
             }
             
             if messageContent.isVideoCallLink {
-                options.append((MessageActionsItem.CopyCallLink, "link", nil, "copy.call.link".localized))
+                options.append(
+                    .init(tag: MessageActionsItem.CopyCallLink, materialIconName: "link", iconImage: nil, label:  "copy.call.link".localized)
+                )
             }
         }
         if (isTextMessage() || isAttachment()) && !(uuid ?? "").isEmpty {
-            options.append((MessageActionsItem.Reply, "", nil, "reply".localized))
+            options.append(
+                .init(tag: MessageActionsItem.Reply, materialIconName: "", iconImage: nil, label:  "reply".localized)
+            )
         }
         
         if canBeDownloaded() {
-            options.append((MessageActionsItem.Save, "", nil, "save.file".localized))
+            options.append(
+                .init(tag: MessageActionsItem.Save, materialIconName: "", iconImage: nil, label: "save.file".localized)
+            )
         }
         
         if (!isInvoice() || (isInvoice() && !isPaid())) && canBeDeleted() {
-            options.append((MessageActionsItem.Delete, "delete", nil, "delete.message".localized))
+            options.append(
+                .init(tag: MessageActionsItem.Delete, materialIconName: "delete", iconImage: nil, label:  "delete.message".localized)
+            )
         }
         
         if shouldAllowBoost() {
-            options.append((MessageActionsItem.Boost, nil, "boostIconGreen", "Boost"))
+            options.append(
+                .init(tag: MessageActionsItem.Boost, materialIconName: nil, iconImage: "boostIconGreen", label: "Boost")
+            )
+        }
+        
+        if (isTextMessage() && status == TransactionMessageStatus.failed.rawValue) {
+            options.append(
+                .init(
+                    tag: MessageActionsItem.Resend,
+                    materialIconName: "redo",
+                    iconImage: nil,
+                    label: "Resend"
+                )
+            )
         }
         
         return options

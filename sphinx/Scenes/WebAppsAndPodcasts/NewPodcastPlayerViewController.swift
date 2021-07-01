@@ -85,6 +85,11 @@ class NewPodcastPlayerViewController: UIViewController {
 }
 
 extension NewPodcastPlayerViewController : PodcastEpisodesDSDelegate {
+    func deleteTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {
+        playerHelper.shouldDeleteEpisode(episode: episode)
+        reload(indexPath.row)
+    }
+    
     func didTapEpisodeAt(index: Int) {
         tableHeaderView?.didTapEpisodeAt(index: index)
     }

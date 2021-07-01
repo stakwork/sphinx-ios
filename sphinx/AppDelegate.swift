@@ -193,6 +193,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if isUserLogged {
             mainCoordinator.presentInitialDrawer()
         } else {
+            window?.setDarkStyle()
             mainCoordinator.presentSignUpScreen()
         }
 
@@ -284,7 +285,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if let currentVC = currentVC as? ChatViewController {
                 currentVC.initialLoad()
             } else if let currentVC = currentVC as? ChatListViewController {
-                currentVC.initialLoad()
+                currentVC.initialLoad(true)
             }
         }
     }

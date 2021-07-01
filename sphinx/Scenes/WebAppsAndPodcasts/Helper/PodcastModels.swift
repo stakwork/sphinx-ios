@@ -51,15 +51,14 @@ class PodcastEpisode {
     }
     
     func shouldDeleteFile(deleteCompletion: @escaping () -> ()) {
-        if self.downloaded && !ConnectivityHelper.isConnectedToInternet {
+        if self.downloaded {
             if let fileName = URL(string: url ?? "")?.lastPathComponent {
                 let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent(fileName)
+                
                 if FileManager.default.fileExists(atPath: path.path) {
-                    AlertHelper.showTwoOptionsAlert(title: "delete.episode.title".localized, message: "delete.episode.title".localized, confirm: {
-                        try? FileManager.default.removeItem(at: path)
-                        self.downloaded = false
-                        deleteCompletion()
-                    })
+                    try? FileManager.default.removeItem(at: path)
+                    self.downloaded = false
+                    deleteCompletion()
                 }
             }
         }

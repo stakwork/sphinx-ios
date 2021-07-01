@@ -26,7 +26,7 @@ class SetNickNameViewController: SetDataViewController {
     
     var loading = false {
         didSet {
-            LoadingWheelHelper.toggleLoadingWheel(loading: loading, loadingWheel: loadingWheel, loadingWheelColor: UIColor.Sphinx.Text, view: view)
+            LoadingWheelHelper.toggleLoadingWheel(loading: loading, loadingWheel: loadingWheel, loadingWheelColor: UIColor.white, view: view)
         }
     }
     

@@ -11,7 +11,7 @@ import Alamofire
 import SwiftyJSON
 
 extension API {
-    public func askAuthentication(callback: @escaping askAuthenticationCallback) {
+    public func askAuthentication(callback: @escaping AskAuthenticationCallback) {
         let url = "\(API.kAttachmentsServerUrl)/ask"
         
         guard let request = createRequest(url, params: nil, method: "GET") else {
@@ -35,7 +35,7 @@ extension API {
         }
     }
     
-    public func signChallenge(challenge: String, callback: @escaping signChallengeCallback) {
+    public func signChallenge(challenge: String, callback: @escaping SignChallengeCallback) {
         guard let request = getURLRequest(route: "/signer/\(challenge)", method: "GET") else {
             callback(nil)
             return
@@ -59,7 +59,7 @@ extension API {
         }
     }
     
-    public func verifyAuthentication(id: String, sig: String, callback: @escaping verifyAuthenticationCallback) {
+    public func verifyAuthentication(id: String, sig: String, callback: @escaping VerifyAuthenticationCallback) {
         let hexEncodedPubKey = UserContact.getOwner()?.publicKey ?? ""
         let url = "\(API.kAttachmentsServerUrl)/verify?id=\(id)&sig=\(sig)&pubkey=\(hexEncodedPubKey)"
         

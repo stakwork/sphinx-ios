@@ -89,6 +89,8 @@ public extension UIColor {
         public static let LinkSentButtonColor = color("LinkSentButtonColor")
         public static let LinkReceivedButtonColor = color("LinkReceivedButtonColor")
         
+        public static let OnboardingPlaceholderText = color("OnboardingPlaceholderText")
+        
         private static func color(_ name: String) -> UIColor {
             return UIColor(named: name, in: Bundle.main, compatibleWith: nil) ?? UIColor.magenta
             

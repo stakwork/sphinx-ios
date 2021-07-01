@@ -12,6 +12,7 @@ import UIKit
     func shouldDeleteMessage(message: TransactionMessage)
     func shouldReplyToMessage(message: TransactionMessage)
     func shouldBoostMessage(message: TransactionMessage)
+    func shouldResendMessage(message: TransactionMessage)
     func shouldRemoveWindow()
 }
 
@@ -139,6 +140,12 @@ class MessageOptionsViewController: UIViewController {
 }
 
 extension MessageOptionsViewController : MessageOptionsDelegate {
+    func shouldResendMessage() {
+        if let message = message {
+            delegate?.shouldResendMessage(message: message)
+        }
+    }
+    
     func shouldDismiss() {
         shouldDismissViewController()
     }

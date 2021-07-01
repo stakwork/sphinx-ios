@@ -31,6 +31,14 @@ class DeepLinksHandlerHelper {
             return false
         }
         
+        if WindowsManager.sharedInstance.showAuth() {
+            return false
+        }
+        
+        if WindowsManager.sharedInstance.showPersonModal(delegate: vc as? WindowsManagerDelegate) {
+            return false
+        }
+        
         return false
     }
     
@@ -53,10 +61,16 @@ class DeepLinksHandlerHelper {
                     shouldSetVC = true
                     break
                 case "challenge":
-                    UserDefaults.Keys.authQuery.set(query)
+                    UserDefaults.Keys.challengeQuery.set(query)
                     shouldSetVC = true
                 case "redeem_sats":
                     UserDefaults.Keys.redeemSatsQuery.set(query)
+                    shouldSetVC = true
+                case "auth":
+                    UserDefaults.Keys.authQuery.set(query)
+                    shouldSetVC = true
+                case "person":
+                    UserDefaults.Keys.personQuery.set(query)
                     shouldSetVC = true
                     break
                 default:

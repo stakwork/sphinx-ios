@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		12075275C652A9404FC48EBC /* Pods_sphinx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 487E10CEB3D07B0840A84681 /* Pods_sphinx.framework */; };
 		470125C02373255C0013C57B /* TransactionMessage+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470125BF2373255C0013C57B /* TransactionMessage+CoreDataProperties.swift */; };
 		470396D82535D12D007F9C23 /* PodcastEpisodeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470396D62535D12D007F9C23 /* PodcastEpisodeTableViewCell.swift */; };
 		470396D92535D12D007F9C23 /* PodcastEpisodeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 470396D72535D12D007F9C23 /* PodcastEpisodeTableViewCell.xib */; };
@@ -57,7 +58,6 @@
 		471940B1233951BB00F1BF5B /* QRCodeDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471940B0233951BB00F1BF5B /* QRCodeDetailViewModel.swift */; };
 		471940B3233952D400F1BF5B /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471940B2233952D400F1BF5B /* UIImage.swift */; };
 		471F3ABB255ADECB00E2AC79 /* PodcastLiveDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471F3ABA255ADECB00E2AC79 /* PodcastLiveDataSource.swift */; };
-		471F3ABD255C6E2F00E2AC79 /* InviteActionsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471F3ABC255C6E2F00E2AC79 /* InviteActionsHelper.swift */; };
 		471FACD823E9B65C007DE1C8 /* EmailHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471FACD723E9B65C007DE1C8 /* EmailHelper.swift */; };
 		471FACDA23E9BE48007DE1C8 /* SupportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471FACD923E9BE48007DE1C8 /* SupportViewController.swift */; };
 		4724BC1325474B440012BD76 /* WebApps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4724BC1525474B440012BD76 /* WebApps.storyboard */; };
@@ -123,8 +123,6 @@
 		47468FD723353C880072124A /* LeftMenuOptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47468FD623353C880072124A /* LeftMenuOptionTableViewCell.swift */; };
 		47468FD923353E460072124A /* MediaLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47468FD823353E460072124A /* MediaLoader.swift */; };
 		47468FDC233554680072124A /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47468FDB233554680072124A /* ProfileViewController.swift */; };
-		47468FE42335648F0072124A /* InviteCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47468FE32335648F0072124A /* InviteCodeViewController.swift */; };
-		47468FE6233564A20072124A /* InviteWelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47468FE5233564A20072124A /* InviteWelcomeViewController.swift */; };
 		47468FEB233905AD0072124A /* NewContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47468FEA233905AD0072124A /* NewContactViewController.swift */; };
 		47484B94251255CF00F82AAC /* MessageWebViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47484B92251255CF00F82AAC /* MessageWebViewTableViewCell.swift */; };
 		47484B95251255CF00F82AAC /* MessageWebViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47484B93251255CF00F82AAC /* MessageWebViewTableViewCell.xib */; };
@@ -339,7 +337,6 @@
 		478C3D5724A947920003A1A4 /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478C3D5624A947920003A1A4 /* UIApplication.swift */; };
 		478DCF982343D24D009A03D6 /* SetProfileImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478DCF972343D24D009A03D6 /* SetProfileImageViewController.swift */; };
 		478DCF9A2343D258009A03D6 /* SetNickNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478DCF992343D258009A03D6 /* SetNickNameViewController.swift */; };
-		478DCF9C2343D266009A03D6 /* SphinxReadyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478DCF9B2343D266009A03D6 /* SphinxReadyViewController.swift */; };
 		478DCF9E2343D7AC009A03D6 /* SetDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478DCF9D2343D7AC009A03D6 /* SetDataViewController.swift */; };
 		478DCFA02344E5EF009A03D6 /* CameraHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478DCF9F2344E5EF009A03D6 /* CameraHelper.swift */; };
 		478F07D624E3229B00EE32A3 /* GiphyHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478F07D524E3229B00EE32A3 /* GiphyHelper.swift */; };
@@ -423,6 +420,12 @@
 		47AAFC80238EC5AA00E30BDA /* NewQRScannerProcessingCodeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47AAFC7F238EC5AA00E30BDA /* NewQRScannerProcessingCodeExtension.swift */; };
 		47AAFC82238EFCE600E30BDA /* APIAttachmentsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47AAFC81238EFCE600E30BDA /* APIAttachmentsExtension.swift */; };
 		47AAFC85238F00AD00E30BDA /* AttachmentsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47AAFC84238F00AD00E30BDA /* AttachmentsManager.swift */; };
+		47ACBC05265E9C9300D2FE47 /* People.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 47ACBC04265E9C9300D2FE47 /* People.storyboard */; };
+		47ACBC0E265E9CB200D2FE47 /* PeopleModalsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47ACBC0D265E9CB200D2FE47 /* PeopleModalsViewController.swift */; };
+		47ACBC15265E9CE600D2FE47 /* AuthExternalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47ACBC14265E9CE600D2FE47 /* AuthExternalView.swift */; };
+		47ACBC22265E9D0800D2FE47 /* PersonModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47ACBC21265E9D0800D2FE47 /* PersonModalView.swift */; };
+		47ACBC2E265EA35D00D2FE47 /* AuthExternalView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47ACBC30265EA35D00D2FE47 /* AuthExternalView.xib */; };
+		47ACBC3E265EA69200D2FE47 /* PersonModalView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47ACBC40265EA69200D2FE47 /* PersonModalView.xib */; };
 		47AE291E239019D700EBA4D6 /* ChatAttachmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47AE291D239019D700EBA4D6 /* ChatAttachmentViewController.swift */; };
 		47AF0D2F254AFE4900C98398 /* ChatHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47AF0D2E254AFE4900C98398 /* ChatHeaderView.xib */; };
 		47AF0D31254B236C00C98398 /* BoostButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47AF0D30254B236C00C98398 /* BoostButtonView.swift */; };
@@ -449,12 +452,13 @@
 		47BE854B246492FD00BE4AE8 /* KeychainRestoreTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47BE8549246492FD00BE4AE8 /* KeychainRestoreTableViewCell.xib */; };
 		47BE85502465E09B00BE4AE8 /* BiometricAuthenticationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47BE854F2465E09B00BE4AE8 /* BiometricAuthenticationHelper.swift */; };
 		47BF7D4B25A8A59100593489 /* APIVersionsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47BF7D4A25A8A59100593489 /* APIVersionsExtension.swift */; };
-		47C8936E24561E1200080AAC /* InviteCodeViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C8936D24561E1200080AAC /* InviteCodeViewControllerExtension.swift */; };
 		47CBB4EB23E9D9BE00743CBE /* APILogsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CBB4EA23E9D9BE00743CBE /* APILogsExtension.swift */; };
 		47CC7CE223E3611600730E6F /* APITransactionsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CC7CE123E3611600730E6F /* APITransactionsExtension.swift */; };
 		47CC7CE523E361B800730E6F /* PaymentTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CC7CE423E361B800730E6F /* PaymentTransaction.swift */; };
 		47CC7CE923E4718600730E6F /* ImageFullScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CC7CE823E4718600730E6F /* ImageFullScreenViewController.swift */; };
 		47CC7CEB23E4AA2100730E6F /* TransactionCommonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CC7CEA23E4AA2100730E6F /* TransactionCommonTableViewCell.swift */; };
+		47CD9508265EC2A4009B06A4 /* CommonModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CD9507265EC2A4009B06A4 /* CommonModalView.swift */; };
+		47CD9510265EC70E009B06A4 /* APIPeopleExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CD950F265EC70E009B06A4 /* APIPeopleExtension.swift */; };
 		47D0046125E7F3EC00E74063 /* Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D0046025E7F3EC00E74063 /* Download.swift */; };
 		47D0046325E7F66400E74063 /* DownloadService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D0046225E7F66400E74063 /* DownloadService.swift */; };
 		47D03DF42510ED9C0077A968 /* FileInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D03DF32510ED9C0077A968 /* FileInfoView.swift */; };
@@ -518,8 +522,28 @@
 		47FDDB1C2562D77200BBF15F /* boost_animation.json in Resources */ = {isa = PBXBuildFile; fileRef = 47FDDB1B2562D77100BBF15F /* boost_animation.json */; };
 		47FE9A3C23BF751C0090913F /* ChatViewControllerAttachmentDelegateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FE9A3B23BF751C0090913F /* ChatViewControllerAttachmentDelegateExtension.swift */; };
 		47FE9A3E23C381A20090913F /* UITapGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FE9A3D23C381A20090913F /* UITapGestureRecognizer.swift */; };
-		6F1D5E76F320120FE1810F04 /* Pods_sphinx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D466C80565E4E3383314511 /* Pods_sphinx.framework */; };
+		F3197C0C267FA2C200330F79 /* connecting.gif in Resources */ = {isa = PBXBuildFile; fileRef = F3241A2F267CBB12007A6454 /* connecting.gif */; };
+		F3197C0D267FA2C800330F79 /* ellipse.gif in Resources */ = {isa = PBXBuildFile; fileRef = F3241A30267CBB12007A6454 /* ellipse.gif */; };
+		F3197C0E267FA2C800330F79 /* lightningNetwork.gif in Resources */ = {isa = PBXBuildFile; fileRef = F3241A31267CBB12007A6454 /* lightningNetwork.gif */; };
+		F3197C112680F50300330F79 /* RestoreUserFormViewController+FormSubmissionUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3197C102680F50300330F79 /* RestoreUserFormViewController+FormSubmissionUtils.swift */; };
+		F3197C1326811DE400330F79 /* RestoreUserFormViewController+KeychainRestorationUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3197C1226811DE400330F79 /* RestoreUserFormViewController+KeychainRestorationUtils.swift */; };
+		F33846E3267ACF6A0041F1EA /* InitialWelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33846E1267ACF6A0041F1EA /* InitialWelcomeViewController.swift */; };
+		F33846E7267B0FA00041F1EA /* Welcome.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F33846E9267B0FA00041F1EA /* Welcome.storyboard */; };
+		F33846EF267B15800041F1EA /* WelcomeCompleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33846EE267B15800041F1EA /* WelcomeCompleteViewController.swift */; };
+		F34BFED7267B350D003F6D55 /* RestoreUserDescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34BFED6267B350D003F6D55 /* RestoreUserDescriptionViewController.swift */; };
+		F34BFED9267B3522003F6D55 /* RestoreUserFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34BFED8267B3522003F6D55 /* RestoreUserFormViewController.swift */; };
+		F34BFEDB267B3552003F6D55 /* RestoreUserConnectingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34BFEDA267B3552003F6D55 /* RestoreUserConnectingViewController.swift */; };
+		F34BFEDF267B3C30003F6D55 /* RestoreUser.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F34BFEDE267B3C30003F6D55 /* RestoreUser.storyboard */; };
+		F394ECA12682064100529038 /* NewUserSignup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F394ECA32682064100529038 /* NewUserSignup.storyboard */; };
+		F394ECA92682099000529038 /* NewUserSignupDescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F394ECA82682098F00529038 /* NewUserSignupDescriptionViewController.swift */; };
+		F394ECAB2682218F00529038 /* NewUserSignupFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F394ECAA2682218F00529038 /* NewUserSignupFormViewController.swift */; };
+		F394ECAD26825D3400529038 /* NewUserSignupFormViewController+FormSubmissionUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F394ECAC26825D3400529038 /* NewUserSignupFormViewController+FormSubmissionUtils.swift */; };
+		F394ECB12683CF5E00529038 /* NewUserGreetingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F394ECB02683CF5E00529038 /* NewUserGreetingViewController.swift */; };
+		F394ECB32683EB5A00529038 /* SphinxDesktopAdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F394ECB22683EB5A00529038 /* SphinxDesktopAdViewController.swift */; };
 		F3C92B272671FB6C005F0A42 /* readme.md in Resources */ = {isa = PBXBuildFile; fileRef = F3C92B262671FB6C005F0A42 /* readme.md */; };
+		F3D0401E268BAA9700D54A94 /* SphinxReadyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D0401D268BAA9700D54A94 /* SphinxReadyViewController.swift */; };
+		F3D04020268BAB7500D54A94 /* InviteWelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D0401F268BAB7400D54A94 /* InviteWelcomeViewController.swift */; };
+		F3D04027268BABFF00D54A94 /* InviteActionsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D04026268BABFF00D54A94 /* InviteActionsHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -540,7 +564,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		40529865B123F00521C8B57E /* Pods-sphinx.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sphinx.release.xcconfig"; path = "Target Support Files/Pods-sphinx/Pods-sphinx.release.xcconfig"; sourceTree = "<group>"; };
 		470125BF2373255C0013C57B /* TransactionMessage+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TransactionMessage+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		470396D62535D12D007F9C23 /* PodcastEpisodeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastEpisodeTableViewCell.swift; sourceTree = "<group>"; };
 		470396D72535D12D007F9C23 /* PodcastEpisodeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PodcastEpisodeTableViewCell.xib; sourceTree = "<group>"; };
@@ -598,7 +621,6 @@
 		471940B0233951BB00F1BF5B /* QRCodeDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeDetailViewModel.swift; sourceTree = "<group>"; };
 		471940B2233952D400F1BF5B /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		471F3ABA255ADECB00E2AC79 /* PodcastLiveDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastLiveDataSource.swift; sourceTree = "<group>"; };
-		471F3ABC255C6E2F00E2AC79 /* InviteActionsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteActionsHelper.swift; sourceTree = "<group>"; };
 		471FACD723E9B65C007DE1C8 /* EmailHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailHelper.swift; sourceTree = "<group>"; };
 		471FACD923E9BE48007DE1C8 /* SupportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportViewController.swift; sourceTree = "<group>"; };
 		4724BC1425474B440012BD76 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/WebApps.storyboard; sourceTree = "<group>"; };
@@ -671,8 +693,6 @@
 		47468FD623353C880072124A /* LeftMenuOptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftMenuOptionTableViewCell.swift; sourceTree = "<group>"; };
 		47468FD823353E460072124A /* MediaLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaLoader.swift; sourceTree = "<group>"; };
 		47468FDB233554680072124A /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
-		47468FE32335648F0072124A /* InviteCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteCodeViewController.swift; sourceTree = "<group>"; };
-		47468FE5233564A20072124A /* InviteWelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteWelcomeViewController.swift; sourceTree = "<group>"; };
 		47468FEA233905AD0072124A /* NewContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewContactViewController.swift; sourceTree = "<group>"; };
 		47484B92251255CF00F82AAC /* MessageWebViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageWebViewTableViewCell.swift; sourceTree = "<group>"; };
 		47484B93251255CF00F82AAC /* MessageWebViewTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageWebViewTableViewCell.xib; sourceTree = "<group>"; };
@@ -916,7 +936,6 @@
 		478C3D5624A947920003A1A4 /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
 		478DCF972343D24D009A03D6 /* SetProfileImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetProfileImageViewController.swift; sourceTree = "<group>"; };
 		478DCF992343D258009A03D6 /* SetNickNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetNickNameViewController.swift; sourceTree = "<group>"; };
-		478DCF9B2343D266009A03D6 /* SphinxReadyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SphinxReadyViewController.swift; sourceTree = "<group>"; };
 		478DCF9D2343D7AC009A03D6 /* SetDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetDataViewController.swift; sourceTree = "<group>"; };
 		478DCF9F2344E5EF009A03D6 /* CameraHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraHelper.swift; sourceTree = "<group>"; };
 		478EA44925641F9E00DDE0E0 /* sphinx 23.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 23.xcdatamodel"; sourceTree = "<group>"; };
@@ -1056,6 +1075,16 @@
 		47AAFC7F238EC5AA00E30BDA /* NewQRScannerProcessingCodeExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewQRScannerProcessingCodeExtension.swift; sourceTree = "<group>"; };
 		47AAFC81238EFCE600E30BDA /* APIAttachmentsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIAttachmentsExtension.swift; sourceTree = "<group>"; };
 		47AAFC84238F00AD00E30BDA /* AttachmentsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentsManager.swift; sourceTree = "<group>"; };
+		47ACBC04265E9C9300D2FE47 /* People.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = People.storyboard; sourceTree = "<group>"; };
+		47ACBC0D265E9CB200D2FE47 /* PeopleModalsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleModalsViewController.swift; sourceTree = "<group>"; };
+		47ACBC14265E9CE600D2FE47 /* AuthExternalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthExternalView.swift; sourceTree = "<group>"; };
+		47ACBC21265E9D0800D2FE47 /* PersonModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonModalView.swift; sourceTree = "<group>"; };
+		47ACBC2F265EA35D00D2FE47 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AuthExternalView.xib; sourceTree = "<group>"; };
+		47ACBC38265EA35F00D2FE47 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/AuthExternalView.strings; sourceTree = "<group>"; };
+		47ACBC3A265EA36100D2FE47 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/AuthExternalView.strings; sourceTree = "<group>"; };
+		47ACBC3F265EA69200D2FE47 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PersonModalView.xib; sourceTree = "<group>"; };
+		47ACBC45265EA69600D2FE47 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PersonModalView.strings; sourceTree = "<group>"; };
+		47ACBC47265EA69600D2FE47 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/PersonModalView.strings; sourceTree = "<group>"; };
 		47AE291D239019D700EBA4D6 /* ChatAttachmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatAttachmentViewController.swift; sourceTree = "<group>"; };
 		47AE291F23905D7D00EBA4D6 /* sphinx 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 3.xcdatamodel"; sourceTree = "<group>"; };
 		47AF0D2E254AFE4900C98398 /* ChatHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatHeaderView.xib; sourceTree = "<group>"; };
@@ -1085,12 +1114,13 @@
 		47BE8549246492FD00BE4AE8 /* KeychainRestoreTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KeychainRestoreTableViewCell.xib; sourceTree = "<group>"; };
 		47BE854F2465E09B00BE4AE8 /* BiometricAuthenticationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricAuthenticationHelper.swift; sourceTree = "<group>"; };
 		47BF7D4A25A8A59100593489 /* APIVersionsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIVersionsExtension.swift; sourceTree = "<group>"; };
-		47C8936D24561E1200080AAC /* InviteCodeViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteCodeViewControllerExtension.swift; sourceTree = "<group>"; };
 		47CBB4EA23E9D9BE00743CBE /* APILogsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APILogsExtension.swift; sourceTree = "<group>"; };
 		47CC7CE123E3611600730E6F /* APITransactionsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APITransactionsExtension.swift; sourceTree = "<group>"; };
 		47CC7CE423E361B800730E6F /* PaymentTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentTransaction.swift; sourceTree = "<group>"; };
 		47CC7CE823E4718600730E6F /* ImageFullScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFullScreenViewController.swift; sourceTree = "<group>"; };
 		47CC7CEA23E4AA2100730E6F /* TransactionCommonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCommonTableViewCell.swift; sourceTree = "<group>"; };
+		47CD9507265EC2A4009B06A4 /* CommonModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonModalView.swift; sourceTree = "<group>"; };
+		47CD950F265EC70E009B06A4 /* APIPeopleExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIPeopleExtension.swift; sourceTree = "<group>"; };
 		47D0045C25E690B700E74063 /* sphinx 27.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 27.xcdatamodel"; sourceTree = "<group>"; };
 		47D0046025E7F3EC00E74063 /* Download.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Download.swift; sourceTree = "<group>"; };
 		47D0046225E7F66400E74063 /* DownloadService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadService.swift; sourceTree = "<group>"; };
@@ -1159,10 +1189,36 @@
 		47FDDB1B2562D77100BBF15F /* boost_animation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = boost_animation.json; sourceTree = "<group>"; };
 		47FE9A3B23BF751C0090913F /* ChatViewControllerAttachmentDelegateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewControllerAttachmentDelegateExtension.swift; sourceTree = "<group>"; };
 		47FE9A3D23C381A20090913F /* UITapGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITapGestureRecognizer.swift; sourceTree = "<group>"; };
-		4D454199AA908A3961F93697 /* Pods-sphinx.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sphinx.debug.xcconfig"; path = "Target Support Files/Pods-sphinx/Pods-sphinx.debug.xcconfig"; sourceTree = "<group>"; };
-		7D466C80565E4E3383314511 /* Pods_sphinx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_sphinx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		487E10CEB3D07B0840A84681 /* Pods_sphinx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_sphinx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F3197C102680F50300330F79 /* RestoreUserFormViewController+FormSubmissionUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RestoreUserFormViewController+FormSubmissionUtils.swift"; sourceTree = "<group>"; };
+		F3197C1226811DE400330F79 /* RestoreUserFormViewController+KeychainRestorationUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RestoreUserFormViewController+KeychainRestorationUtils.swift"; sourceTree = "<group>"; };
+		F3241A2F267CBB12007A6454 /* connecting.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = connecting.gif; sourceTree = "<group>"; };
+		F3241A30267CBB12007A6454 /* ellipse.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = ellipse.gif; sourceTree = "<group>"; };
+		F3241A31267CBB12007A6454 /* lightningNetwork.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = lightningNetwork.gif; sourceTree = "<group>"; };
+		F33846E1267ACF6A0041F1EA /* InitialWelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialWelcomeViewController.swift; sourceTree = "<group>"; };
+		F33846E8267B0FA00041F1EA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Welcome.storyboard; sourceTree = "<group>"; };
+		F33846EB267B0FBA0041F1EA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Welcome.strings; sourceTree = "<group>"; };
+		F33846ED267B0FBB0041F1EA /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Welcome.strings; sourceTree = "<group>"; };
+		F33846EE267B15800041F1EA /* WelcomeCompleteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeCompleteViewController.swift; sourceTree = "<group>"; };
+		F34BFED6267B350D003F6D55 /* RestoreUserDescriptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreUserDescriptionViewController.swift; sourceTree = "<group>"; };
+		F34BFED8267B3522003F6D55 /* RestoreUserFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreUserFormViewController.swift; sourceTree = "<group>"; };
+		F34BFEDA267B3552003F6D55 /* RestoreUserConnectingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreUserConnectingViewController.swift; sourceTree = "<group>"; };
+		F34BFEDE267B3C30003F6D55 /* RestoreUser.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RestoreUser.storyboard; sourceTree = "<group>"; };
+		F394ECA22682064100529038 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/NewUserSignup.storyboard; sourceTree = "<group>"; };
+		F394ECA52682064400529038 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/NewUserSignup.strings; sourceTree = "<group>"; };
+		F394ECA72682064800529038 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/NewUserSignup.strings; sourceTree = "<group>"; };
+		F394ECA82682098F00529038 /* NewUserSignupDescriptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewUserSignupDescriptionViewController.swift; sourceTree = "<group>"; };
+		F394ECAA2682218F00529038 /* NewUserSignupFormViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewUserSignupFormViewController.swift; sourceTree = "<group>"; };
+		F394ECAC26825D3400529038 /* NewUserSignupFormViewController+FormSubmissionUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NewUserSignupFormViewController+FormSubmissionUtils.swift"; sourceTree = "<group>"; };
+		F394ECB02683CF5E00529038 /* NewUserGreetingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewUserGreetingViewController.swift; sourceTree = "<group>"; };
+		F394ECB22683EB5A00529038 /* SphinxDesktopAdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SphinxDesktopAdViewController.swift; sourceTree = "<group>"; };
 		F3C92B262671FB6C005F0A42 /* readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = readme.md; sourceTree = "<group>"; };
 		F3C92B282671FCFD005F0A42 /* .Tor.version */ = {isa = PBXFileReference; lastKnownFileType = text; name = .Tor.version; path = Carthage/Build/.Tor.version; sourceTree = "<group>"; };
+		F3D0401D268BAA9700D54A94 /* SphinxReadyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SphinxReadyViewController.swift; sourceTree = "<group>"; };
+		F3D0401F268BAB7400D54A94 /* InviteWelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteWelcomeViewController.swift; sourceTree = "<group>"; };
+		F3D04026268BABFF00D54A94 /* InviteActionsHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteActionsHelper.swift; sourceTree = "<group>"; };
+		FDF1E0A8EFE1D98BD5A99505 /* Pods-sphinx.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sphinx.release.xcconfig"; path = "Target Support Files/Pods-sphinx/Pods-sphinx.release.xcconfig"; sourceTree = "<group>"; };
+		FED99A42AA0C9CE8FD759E82 /* Pods-sphinx.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sphinx.debug.xcconfig"; path = "Target Support Files/Pods-sphinx/Pods-sphinx.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1171,7 +1227,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4703CF932519425E007B685C /* PDFKit.framework in Frameworks */,
-				6F1D5E76F320120FE1810F04 /* Pods_sphinx.framework in Frameworks */,
+				12075275C652A9404FC48EBC /* Pods_sphinx.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1198,9 +1254,18 @@
 				F3C92B282671FCFD005F0A42 /* .Tor.version */,
 				47D03DF02510EA170077A968 /* PDFKit.framework */,
 				47308E1925013DE100FFAC6F /* Tor.framework */,
-				7D466C80565E4E3383314511 /* Pods_sphinx.framework */,
+				487E10CEB3D07B0840A84681 /* Pods_sphinx.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3ACE5CA0290E9247A1816D92 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				FED99A42AA0C9CE8FD759E82 /* Pods-sphinx.debug.xcconfig */,
+				FDF1E0A8EFE1D98BD5A99505 /* Pods-sphinx.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 		470331B324E6C5D900224F25 /* Libraries Extensions */ = {
@@ -1337,14 +1402,6 @@
 				47FA18BF2425381500469C8F /* CreateInvoiceDetailsViewController.swift */,
 			);
 			path = "QR Code Details";
-			sourceTree = "<group>";
-		};
-		471F3ABE255C6E3C00E2AC79 /* Helpers */ = {
-			isa = PBXGroup;
-			children = (
-				471F3ABC255C6E2F00E2AC79 /* InviteActionsHelper.swift */,
-			);
-			path = Helpers;
 			sourceTree = "<group>";
 		};
 		471FACD623E89E19007DE1C8 /* Managers */ = {
@@ -1549,20 +1606,19 @@
 		47468FE0233564370072124A /* Invite */ = {
 			isa = PBXGroup;
 			children = (
-				4797E7D824B8F53000D13270 /* Invite.storyboard */,
-				47BE8547246492E200BE4AE8 /* Table View Cells */,
-				47E300E0234B83CA00DB56DB /* Custom Views */,
-				47C8936F24561E2200080AAC /* Invite Code VC */,
-				471F3ABE255C6E3C00E2AC79 /* Helpers */,
-				47468FE5233564A20072124A /* InviteWelcomeViewController.swift */,
-				478DCF972343D24D009A03D6 /* SetProfileImageViewController.swift */,
-				478DCF992343D258009A03D6 /* SetNickNameViewController.swift */,
-				478DCF9D2343D7AC009A03D6 /* SetDataViewController.swift */,
-				478DCF9B2343D266009A03D6 /* SphinxReadyViewController.swift */,
 				47AA08C2234B8CF2002C69E2 /* AddFriendViewController.swift */,
 				47AA08C4234B96BF002C69E2 /* ConfirmAddFriendViewController.swift */,
-				47AA08C6234BB8E0002C69E2 /* ShareInviteCodeViewController.swift */,
+				F3D0401F268BAB7400D54A94 /* InviteWelcomeViewController.swift */,
 				47BE85452464928800BE4AE8 /* KeychainRestoreViewController.swift */,
+				478DCF9D2343D7AC009A03D6 /* SetDataViewController.swift */,
+				478DCF992343D258009A03D6 /* SetNickNameViewController.swift */,
+				478DCF972343D24D009A03D6 /* SetProfileImageViewController.swift */,
+				47AA08C6234BB8E0002C69E2 /* ShareInviteCodeViewController.swift */,
+				F3D0401D268BAA9700D54A94 /* SphinxReadyViewController.swift */,
+				47E300E0234B83CA00DB56DB /* Custom Views */,
+				F3D04025268BABFF00D54A94 /* Helpers */,
+				4797E7D824B8F53000D13270 /* Invite.storyboard */,
+				47BE8547246492E200BE4AE8 /* Table View Cells */,
 			);
 			path = Invite;
 			sourceTree = "<group>";
@@ -1614,20 +1670,24 @@
 		4756DE0C232ABDED001BAFD6 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				47935FBA24A1047F00B39ADB /* Stakwork Login */,
-				4733C7DF23C4DE97006A2C51 /* Groups */,
-				47FA43F723748828005D8C63 /* Subscriptions */,
-				471940AB2339512C00F1BF5B /* QR Code Details */,
-				47468FE7233905820072124A /* Contacts */,
-				47468FE0233564370072124A /* Invite */,
-				47468FDA233554540072124A /* Profile */,
-				47468FCF23313EF90072124A /* Pin */,
-				475BDD82232C084E00C5BBD6 /* History */,
-				475BDD79232C01F500C5BBD6 /* QR Code Scanner */,
-				475BDD67232BEFEC00C5BBD6 /* Root */,
-				475BDD62232BEE7C00C5BBD6 /* Left Menu */,
+				F394EC9E268205E000529038 /* New User Signup */,
 				4756DE12232AC0F9001BAFD6 /* Chat */,
+				47468FE7233905820072124A /* Contacts */,
+				4733C7DF23C4DE97006A2C51 /* Groups */,
+				475BDD82232C084E00C5BBD6 /* History */,
+				47468FE0233564370072124A /* Invite */,
+				475BDD62232BEE7C00C5BBD6 /* Left Menu */,
+				47ACBC09265E9C9900D2FE47 /* People */,
+				47468FCF23313EF90072124A /* Pin */,
+				47468FDA233554540072124A /* Profile */,
+				471940AB2339512C00F1BF5B /* QR Code Details */,
+				475BDD79232C01F500C5BBD6 /* QR Code Scanner */,
+				F33846F0267B16130041F1EA /* Restore User */,
+				475BDD67232BEFEC00C5BBD6 /* Root */,
+				47935FBA24A1047F00B39ADB /* Stakwork Login */,
+				47FA43F723748828005D8C63 /* Subscriptions */,
 				4789E24624EDB709003991BE /* WebAppsAndPodcasts */,
+				F33846E0267ACEF50041F1EA /* Welcome */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -1912,6 +1972,7 @@
 				4703CFA025278C40007B685C /* APIRedeemSatsExtension.swift */,
 				4794CA76252F5D66007C5022 /* APIPodcastExtension.swift */,
 				47BF7D4A25A8A59100593489 /* APIVersionsExtension.swift */,
+				47CD950F265EC70E009B06A4 /* APIPeopleExtension.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -1919,6 +1980,7 @@
 		475BDD35232ACF8700C5BBD6 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F3241A2E267CBB12007A6454 /* Gifs */,
 				47AF0D3A254C9EEC00C98398 /* Animation */,
 				4797E8B624BE26D600D13270 /* Sounds */,
 				475BDD36232ACF9700C5BBD6 /* Fonts */,
@@ -2156,7 +2218,7 @@
 				4779F183232AA0F300D35E81 /* sphinxUITests */,
 				4779F15F232AA0F200D35E81 /* Products */,
 				29CA57C9FD66D9C3750CE036 /* Frameworks */,
-				67D5E7FFF2CAD8E721DB5DAB /* Pods */,
+				3ACE5CA0290E9247A1816D92 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -2457,6 +2519,36 @@
 			path = Attachments;
 			sourceTree = "<group>";
 		};
+		47ACBC09265E9C9900D2FE47 /* People */ = {
+			isa = PBXGroup;
+			children = (
+				47ACBC13265E9CC200D2FE47 /* View Controllers */,
+				47ACBC12265E9CBB00D2FE47 /* Custom Views */,
+				47ACBC04265E9C9300D2FE47 /* People.storyboard */,
+			);
+			path = People;
+			sourceTree = "<group>";
+		};
+		47ACBC12265E9CBB00D2FE47 /* Custom Views */ = {
+			isa = PBXGroup;
+			children = (
+				47CD9507265EC2A4009B06A4 /* CommonModalView.swift */,
+				47ACBC14265E9CE600D2FE47 /* AuthExternalView.swift */,
+				47ACBC30265EA35D00D2FE47 /* AuthExternalView.xib */,
+				47ACBC21265E9D0800D2FE47 /* PersonModalView.swift */,
+				47ACBC40265EA69200D2FE47 /* PersonModalView.xib */,
+			);
+			path = "Custom Views";
+			sourceTree = "<group>";
+		};
+		47ACBC13265E9CC200D2FE47 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				47ACBC0D265E9CB200D2FE47 /* PeopleModalsViewController.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
 		47AF0D3A254C9EEC00C98398 /* Animation */ = {
 			isa = PBXGroup;
 			children = (
@@ -2536,15 +2628,6 @@
 				47BE8549246492FD00BE4AE8 /* KeychainRestoreTableViewCell.xib */,
 			);
 			path = "Table View Cells";
-			sourceTree = "<group>";
-		};
-		47C8936F24561E2200080AAC /* Invite Code VC */ = {
-			isa = PBXGroup;
-			children = (
-				47468FE32335648F0072124A /* InviteCodeViewController.swift */,
-				47C8936D24561E1200080AAC /* InviteCodeViewControllerExtension.swift */,
-			);
-			path = "Invite Code VC";
 			sourceTree = "<group>";
 		};
 		47CC7CE323E3619E00730E6F /* Models */ = {
@@ -2681,13 +2764,58 @@
 			path = "Custom Views";
 			sourceTree = "<group>";
 		};
-		67D5E7FFF2CAD8E721DB5DAB /* Pods */ = {
+		F3241A2E267CBB12007A6454 /* Gifs */ = {
 			isa = PBXGroup;
 			children = (
-				4D454199AA908A3961F93697 /* Pods-sphinx.debug.xcconfig */,
-				40529865B123F00521C8B57E /* Pods-sphinx.release.xcconfig */,
+				F3241A2F267CBB12007A6454 /* connecting.gif */,
+				F3241A30267CBB12007A6454 /* ellipse.gif */,
+				F3241A31267CBB12007A6454 /* lightningNetwork.gif */,
 			);
-			path = Pods;
+			path = Gifs;
+			sourceTree = "<group>";
+		};
+		F33846E0267ACEF50041F1EA /* Welcome */ = {
+			isa = PBXGroup;
+			children = (
+				F33846E1267ACF6A0041F1EA /* InitialWelcomeViewController.swift */,
+				F33846EE267B15800041F1EA /* WelcomeCompleteViewController.swift */,
+				F33846E9267B0FA00041F1EA /* Welcome.storyboard */,
+			);
+			path = Welcome;
+			sourceTree = "<group>";
+		};
+		F33846F0267B16130041F1EA /* Restore User */ = {
+			isa = PBXGroup;
+			children = (
+				F34BFEDE267B3C30003F6D55 /* RestoreUser.storyboard */,
+				F34BFEDA267B3552003F6D55 /* RestoreUserConnectingViewController.swift */,
+				F34BFED6267B350D003F6D55 /* RestoreUserDescriptionViewController.swift */,
+				F34BFED8267B3522003F6D55 /* RestoreUserFormViewController.swift */,
+				F3197C102680F50300330F79 /* RestoreUserFormViewController+FormSubmissionUtils.swift */,
+				F3197C1226811DE400330F79 /* RestoreUserFormViewController+KeychainRestorationUtils.swift */,
+			);
+			path = "Restore User";
+			sourceTree = "<group>";
+		};
+		F394EC9E268205E000529038 /* New User Signup */ = {
+			isa = PBXGroup;
+			children = (
+				F394ECA32682064100529038 /* NewUserSignup.storyboard */,
+				F394ECA82682098F00529038 /* NewUserSignupDescriptionViewController.swift */,
+				F394ECAA2682218F00529038 /* NewUserSignupFormViewController.swift */,
+				F394ECAC26825D3400529038 /* NewUserSignupFormViewController+FormSubmissionUtils.swift */,
+				F394ECB02683CF5E00529038 /* NewUserGreetingViewController.swift */,
+				F394ECB22683EB5A00529038 /* SphinxDesktopAdViewController.swift */,
+			);
+			path = "New User Signup";
+			sourceTree = "<group>";
+		};
+		F3D04025268BABFF00D54A94 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				F3D04026268BABFF00D54A94 /* InviteActionsHelper.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2697,12 +2825,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4779F189232AA0F300D35E81 /* Build configuration list for PBXNativeTarget "sphinx" */;
 			buildPhases = (
-				38E2478139A8D352725B7342 /* [CP] Check Pods Manifest.lock */,
+				74D5802228AED9FB0AFE86CA /* [CP] Check Pods Manifest.lock */,
 				B1CEA61D0D10FAAE61042C57 /* [CP] Prepare Artifacts */,
 				4779F15A232AA0F200D35E81 /* Sources */,
 				4779F15B232AA0F200D35E81 /* Frameworks */,
 				4779F15C232AA0F200D35E81 /* Resources */,
-				EB2BC940255B2FC64504563E /* [CP] Embed Pods Frameworks */,
+				5EF20FB23EDF8BAF61C119AC /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2757,7 +2885,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 1020;
 				LastUpgradeCheck = 1220;
-				ORGANIZATIONNAME = "Tomas Timinskas";
+				ORGANIZATIONNAME = sphinx;
 				TargetAttributes = {
 					4779F15D232AA0F200D35E81 = {
 						CreatedOnToolsVersion = 10.2.1;
@@ -2827,14 +2955,17 @@
 				470F5CAD243E8823007E054F /* VideoCallPayButton.xib in Resources */,
 				475BDD4A232AD00D00C5BBD6 /* MyriadPro-Regular.otf in Resources */,
 				47D46A29237B1D030005A548 /* SubscriptionFormTableViewCell.xib in Resources */,
+				F34BFEDF267B3C30003F6D55 /* RestoreUser.storyboard in Resources */,
 				4724BC1325474B440012BD76 /* WebApps.storyboard in Resources */,
 				4785C10724D4A6A0004E2D6C /* AppSizeView.xib in Resources */,
 				4797E78724B8ED7700D13270 /* LoadingMoreTableViewCell.xib in Resources */,
 				4712BB4323D755EA00DDCC3B /* GroupAddMemberTableViewCell.xib in Resources */,
 				475BDD4B232AD00D00C5BBD6 /* Roboto-Bold.ttf in Resources */,
+				F394ECA12682064100529038 /* NewUserSignup.storyboard in Resources */,
 				475BDD4C232AD00D00C5BBD6 /* Roboto-Light.ttf in Resources */,
 				475BDD6B232BEFFC00C5BBD6 /* Root.storyboard in Resources */,
 				47484B95251255CF00F82AAC /* MessageWebViewTableViewCell.xib in Resources */,
+				47ACBC3E265EA69200D2FE47 /* PersonModalView.xib in Resources */,
 				4787F8822474623F00CCE8B9 /* GroupTagCollectionViewCell.xib in Resources */,
 				475BDD4D232AD00D00C5BBD6 /* Roboto-Medium.ttf in Resources */,
 				47183CB82548B75B00E6FD19 /* EpisodesHeaderView.xib in Resources */,
@@ -2854,8 +2985,10 @@
 				4797E80024B8F9E000D13270 /* SubscriptionEndRuleView.xib in Resources */,
 				4797E7DD24B8F73200D13270 /* Contacts.storyboard in Resources */,
 				476A10B923A7E9E500817892 /* ContactTableViewCell.xib in Resources */,
+				F3197C0E267FA2C800330F79 /* lightningNetwork.gif in Resources */,
 				4797E78024B8EC1800D13270 /* GroupRemovedTableViewCell.xib in Resources */,
 				47949BD824AA168D000D697B /* Roboto-Italic.ttf in Resources */,
+				F33846E7267B0FA00041F1EA /* Welcome.storyboard in Resources */,
 				47AF0D33254B238B00C98398 /* BoostButtonView.xib in Resources */,
 				475BDD04232AC24600C5BBD6 /* MessageReceivedTableViewCell.xib in Resources */,
 				475BDCB2232AC1E800C5BBD6 /* NewKeyPadView.xib in Resources */,
@@ -2902,9 +3035,11 @@
 				47904C0D24BF352300710E7A /* bells.caf in Resources */,
 				475BDD23232AC71000C5BBD6 /* Colors.xcassets in Resources */,
 				47183CB42548AA5100E6FD19 /* PodcastPlayerView.xib in Resources */,
+				F3197C0D267FA2C800330F79 /* ellipse.gif in Resources */,
 				4789E26224F04752003991BE /* SettingsTabsView.xib in Resources */,
 				4797E81524BBA54300D13270 /* ChatAccessoryView.xib in Resources */,
 				473842F52391970B00AA640F /* FullScreenImageView.xib in Resources */,
+				47ACBC2E265EA35D00D2FE47 /* AuthExternalView.xib in Resources */,
 				4797E8A824BDF7E900D13270 /* InvoiceReceivedTableViewCell.xib in Resources */,
 				4797E7EB24B8F84D00D13270 /* Subscription.storyboard in Resources */,
 				4785C10024D1EE1F004E2D6C /* GroupRequestTableViewCell.xib in Resources */,
@@ -2932,6 +3067,7 @@
 				4797E7C824B8F47200D13270 /* Profile.storyboard in Resources */,
 				4735D5C42411416B00BEE3D4 /* LinkPreviewView.xib in Resources */,
 				4797E7B324B8F2EF00D13270 /* QRCodeScanner.storyboard in Resources */,
+				47ACBC05265E9C9300D2FE47 /* People.storyboard in Resources */,
 				47DAABD02491411400EF38B0 /* MessageReplyView.xib in Resources */,
 				47904C1324BF352300710E7A /* tweet.caf in Resources */,
 				47183CC02549E1BE00E6FD19 /* PodcastBoostSentTableViewCell.xib in Resources */,
@@ -2939,6 +3075,7 @@
 				4797E7F224B8F99800D13270 /* SubscriptionAmountView.xib in Resources */,
 				4797E88C24BCFC7600D13270 /* DeletedMessageSentTableViewCell.xib in Resources */,
 				4797E7E424B8F7E100D13270 /* QRCodeDetail.storyboard in Resources */,
+				F3197C0C267FA2C200330F79 /* connecting.gif in Resources */,
 				475154B42423E7FE00477384 /* VideoCallSentTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2960,7 +3097,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		38E2478139A8D352725B7342 /* [CP] Check Pods Manifest.lock */ = {
+		5EF20FB23EDF8BAF61C119AC /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-sphinx/Pods-sphinx-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-sphinx/Pods-sphinx-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-sphinx/Pods-sphinx-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		74D5802228AED9FB0AFE86CA /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2999,23 +3153,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-sphinx/Pods-sphinx-artifacts.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		EB2BC940255B2FC64504563E /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-sphinx/Pods-sphinx-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-sphinx/Pods-sphinx-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-sphinx/Pods-sphinx-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -3028,10 +3165,13 @@
 				475BDD77232BF91A00C5BBD6 /* ContactsService.swift in Sources */,
 				4735D5C22411416000BEE3D4 /* LinkPreviewView.swift in Sources */,
 				47F258C72539F57E00122A5A /* PodcastRowAudioPlayer.swift in Sources */,
+				F394ECB12683CF5E00529038 /* NewUserGreetingViewController.swift in Sources */,
 				478F07D624E3229B00EE32A3 /* GiphyHelper.swift in Sources */,
+				F3D0401E268BAA9700D54A94 /* SphinxReadyViewController.swift in Sources */,
 				470F5CA9243E6C00007E054F /* CustomPipViewCoordinator.swift in Sources */,
 				47308E0324FEE6E600FFAC6F /* SocketTypes.swift in Sources */,
 				47CC7CE523E361B800730E6F /* PaymentTransaction.swift in Sources */,
+				F33846E3267ACF6A0041F1EA /* InitialWelcomeViewController.swift in Sources */,
 				470F5CAF243E8881007E054F /* VideoCallPayButton.swift in Sources */,
 				47183CBF2549E1BE00E6FD19 /* PodcastBoostSentTableViewCell.swift in Sources */,
 				47B46F66254AFE1C007F61CD /* ChatHeaderView.swift in Sources */,
@@ -3068,10 +3208,12 @@
 				4712BB4723D898DD00DDCC3B /* PlayAudioHelper.swift in Sources */,
 				474FE33323F5A22A00C06FC8 /* AVViewController.swift in Sources */,
 				47904C1B24BF3C7A00710E7A /* NotificationSoundViewController.swift in Sources */,
+				F394ECAB2682218F00529038 /* NewUserSignupFormViewController.swift in Sources */,
 				47FA44192375A682005D8C63 /* SubscriptionCommonView.swift in Sources */,
 				4789E25224EDB77B003991BE /* WebAppHelper.swift in Sources */,
 				475BDD2E232ACA9000C5BBD6 /* UserDefaults.swift in Sources */,
 				475BDCB3232AC1E800C5BBD6 /* NewKeyPadView.swift in Sources */,
+				47ACBC15265E9CE600D2FE47 /* AuthExternalView.swift in Sources */,
 				47F2289E23672A5E001429A4 /* ImagePickerManager.swift in Sources */,
 				47949BD624AA12C7000D697B /* CommonDeletedMessageTableViewCell.swift in Sources */,
 				47A79D3A2444A15C005CD72F /* MessageOptionsView.swift in Sources */,
@@ -3108,7 +3250,6 @@
 				47D46A2C237B1D140005A548 /* SubscriptionFormButtonTableViewCell.swift in Sources */,
 				47893A9C240D8783002F675B /* Int.swift in Sources */,
 				47FA18CF2434D21A00469C8F /* TransactionMessageQueriesExtension.swift in Sources */,
-				47C8936E24561E1200080AAC /* InviteCodeViewControllerExtension.swift in Sources */,
 				475BDD1A232AC47C00C5BBD6 /* ChatListViewLogicExtension.swift in Sources */,
 				47893A9224095C74002F675B /* AudioBubbleView.swift in Sources */,
 				47949BCF24AA1031000D697B /* DeletedMessageSentTableViewCell.swift in Sources */,
@@ -3154,6 +3295,7 @@
 				47D46A34237C83900005A548 /* UserInvite+CoreDataProperties.swift in Sources */,
 				47352E4C2440FEB800E5CC7F /* WindowsManager.swift in Sources */,
 				47183CB22548AA4400E6FD19 /* PodcastPlayerView.swift in Sources */,
+				F34BFED7267B350D003F6D55 /* RestoreUserDescriptionViewController.swift in Sources */,
 				47FA440923749D0B005D8C63 /* SubscriptionFormTableHeaderView.swift in Sources */,
 				47893A8B24095A30002F675B /* AudioSentTableViewCell.swift in Sources */,
 				47FA440223748EB6005D8C63 /* SubscriptionFormViewControllerExtensions.swift in Sources */,
@@ -3168,6 +3310,7 @@
 				475799FA23F1AA4F00507E68 /* SymmetricEncryptionManager.swift in Sources */,
 				475BDCE9232AC23B00C5BBD6 /* PaymentSentTableViewCell.swift in Sources */,
 				47AAFC7C2387070D00E30BDA /* APIWalletExtension.swift in Sources */,
+				47ACBC0E265E9CB200D2FE47 /* PeopleModalsViewController.swift in Sources */,
 				475BDD61232AE46B00C5BBD6 /* CoreDataManager.swift in Sources */,
 				47F35D4C2373156A0042A58F /* sphinx.xcdatamodeld in Sources */,
 				4787F8812474623F00CCE8B9 /* GroupTagCollectionViewCell.swift in Sources */,
@@ -3177,9 +3320,10 @@
 				47669F4623D1FBA500C17A77 /* GroupMembersDataSource.swift in Sources */,
 				479EAB6323E30BAC001013AB /* HistoryDataSource.swift in Sources */,
 				4764B2AA2375DF51009508BA /* SubscriptionManager.swift in Sources */,
-				478DCF9C2343D266009A03D6 /* SphinxReadyViewController.swift in Sources */,
+				F34BFEDB267B3552003F6D55 /* RestoreUserConnectingViewController.swift in Sources */,
 				4756DE0F232ABF90001BAFD6 /* MainCoordinator.swift in Sources */,
 				47FA44152374B6EA005D8C63 /* SubscriptionTimeIntervalView.swift in Sources */,
+				47ACBC22265E9D0800D2FE47 /* PersonModalView.swift in Sources */,
 				47FA18CC2434C66C00469C8F /* TransactionMessageMediaExtension.swift in Sources */,
 				475BDD32232ACBB900C5BBD6 /* UIFont.swift in Sources */,
 				47669F4F23D63D5000C17A77 /* GroupActionMessageTableViewCell.swift in Sources */,
@@ -3196,6 +3340,7 @@
 				47AF0D4C2551883400C98398 /* PodcastModels.swift in Sources */,
 				47BE85502465E09B00BE4AE8 /* BiometricAuthenticationHelper.swift in Sources */,
 				474FE33123F5A07700C06FC8 /* CachingPlayerItem.swift in Sources */,
+				F3197C112680F50300330F79 /* RestoreUserFormViewController+FormSubmissionUtils.swift in Sources */,
 				47893AA0240D8ED0002F675B /* IntermitentAlphaAnimatedView.swift in Sources */,
 				475BDD70232BF09E00C5BBD6 /* StoryboardScenes.swift in Sources */,
 				4734D3C7241A828B00D6957E /* CommonDirectPaymentTableViewCell.swift in Sources */,
@@ -3210,6 +3355,8 @@
 				4785C0FF24D1EE1F004E2D6C /* GroupRequestTableViewCell.swift in Sources */,
 				473E5DE32575696C00697EEA /* PickerViewController.swift in Sources */,
 				4789E24A24EDB73B003991BE /* WebAppViewController.swift in Sources */,
+				F3D04027268BABFF00D54A94 /* InviteActionsHelper.swift in Sources */,
+				F3D04020268BAB7500D54A94 /* InviteWelcomeViewController.swift in Sources */,
 				475154B32423E7FE00477384 /* VideoCallSentTableViewCell.swift in Sources */,
 				475BDCBD232AC1F000C5BBD6 /* ChatListDataSource.swift in Sources */,
 				47AA08C3234B8CF2002C69E2 /* AddFriendViewController.swift in Sources */,
@@ -3238,6 +3385,7 @@
 				475BDD21232AC64900C5BBD6 /* UIColor.swift in Sources */,
 				4779F162232AA0F200D35E81 /* AppDelegate.swift in Sources */,
 				4726A40D24C09C38005A66B4 /* ChatListHeader.swift in Sources */,
+				F3197C1326811DE400330F79 /* RestoreUserFormViewController+KeychainRestorationUtils.swift in Sources */,
 				4785C10224D4A0BE004E2D6C /* Constants.swift in Sources */,
 				475BDD73232BF76B00C5BBD6 /* UserData.swift in Sources */,
 				47308E1424FEE6E700FFAC6F /* SocketIOClientSpec.swift in Sources */,
@@ -3253,6 +3401,7 @@
 				47D46A33237C83900005A548 /* Chat+CoreDataClass.swift in Sources */,
 				47D46A35237C83900005A548 /* Chat+CoreDataProperties.swift in Sources */,
 				4707089224AE16DF00A98DCA /* MediaDownloader.swift in Sources */,
+				F394ECA92682099000529038 /* NewUserSignupDescriptionViewController.swift in Sources */,
 				475BDCE7232AC23B00C5BBD6 /* MessageSentTableViewCell.swift in Sources */,
 				475BDD2A232AC9E200C5BBD6 /* Date.swift in Sources */,
 				475723A7247EB5DA001ADC7E /* AudioPlayerHelper.swift in Sources */,
@@ -3271,14 +3420,17 @@
 				4733C7E523C4DF4C006A2C51 /* GroupContactsViewController.swift in Sources */,
 				4787F87224743D7C00CCE8B9 /* NewPublicGroupViewControllerExtension.swift in Sources */,
 				47E194CE2350DB0E004B86A1 /* SphinxSocketManager.swift in Sources */,
+				F394ECAD26825D3400529038 /* NewUserSignupFormViewController+FormSubmissionUtils.swift in Sources */,
 				4703CF892518FFB1007B685C /* FileReceivedTableViewCell.swift in Sources */,
 				47AAFC85238F00AD00E30BDA /* AttachmentsManager.swift in Sources */,
 				471FACDA23E9BE48007DE1C8 /* SupportViewController.swift in Sources */,
 				47669F4423D1F93700C17A77 /* GroupDetailsViewController.swift in Sources */,
 				47F258C32539DA2700122A5A /* CommonPodcastCommentTableViewCell.swift in Sources */,
 				47D03DF42510ED9C0077A968 /* FileInfoView.swift in Sources */,
+				F33846EF267B15800041F1EA /* WelcomeCompleteViewController.swift in Sources */,
 				475BDD6A232BEFFC00C5BBD6 /* RootViewController.swift in Sources */,
 				47308E1724FEE6E700FFAC6F /* SocketAckEmitter.swift in Sources */,
+				F34BFED9267B3522003F6D55 /* RestoreUserFormViewController.swift in Sources */,
 				47FA43FD23748A76005D8C63 /* SubscriptionFormDataSource.swift in Sources */,
 				4789E26C24F05481003991BE /* ProfileViewControllerRelayExtension.swift in Sources */,
 				473633E625558EFE007405F2 /* PodcastSatsView.swift in Sources */,
@@ -3296,7 +3448,6 @@
 				470396D82535D12D007F9C23 /* PodcastEpisodeTableViewCell.swift in Sources */,
 				4726F0A625791CF900E20EA9 /* TribeLinkPreviewView.swift in Sources */,
 				4734D3D4241AADD900D6957E /* PaymentTemplateCollectionViewCell.swift in Sources */,
-				471F3ABD255C6E2F00E2AC79 /* InviteActionsHelper.swift in Sources */,
 				47FA18C8242D35F700469C8F /* CommonGroupContactsViewController.swift in Sources */,
 				47949BD324AA1044000D697B /* DeletedMessageReceivedTableViewCell.swift in Sources */,
 				47308E0B24FEE6E600FFAC6F /* SocketEngineSpec.swift in Sources */,
@@ -3306,7 +3457,6 @@
 				475BDD7F232C01FE00C5BBD6 /* QRCodeScannerView.swift in Sources */,
 				476EB46823C4F1AE009745E2 /* GroupContactCollectionViewCell.swift in Sources */,
 				47771C72259B8D9300990467 /* GroupsPinManager.swift in Sources */,
-				47468FE6233564A20072124A /* InviteWelcomeViewController.swift in Sources */,
 				47FA18D42434D47D00469C8F /* TransactionMessageInfoGetterExtension.swift in Sources */,
 				470396DC2535D2EB007F9C23 /* PodcastEpisodesDataSource.swift in Sources */,
 				475BDCE1232AC23B00C5BBD6 /* ExpiredInvoiceSentTableViewCell.swift in Sources */,
@@ -3344,8 +3494,8 @@
 				47D46A32237C83900005A548 /* UserContact+CoreDataProperties.swift in Sources */,
 				475BDD90232C087A00C5BBD6 /* TransactionPaymentSentTableViewCell.swift in Sources */,
 				474FE32623F588C000C06FC8 /* VideoSentTableViewCell.swift in Sources */,
+				47CD9510265EC70E009B06A4 /* APIPeopleExtension.swift in Sources */,
 				470F5CB2243FA2D0007E054F /* VideoCallManager.swift in Sources */,
-				47468FE42335648F0072124A /* InviteCodeViewController.swift in Sources */,
 				47308E0F24FEE6E700FFAC6F /* SocketAnyEvent.swift in Sources */,
 				4794CA77252F5D66007C5022 /* APIPodcastExtension.swift in Sources */,
 				4787F8742474490200CCE8B9 /* GroupTagsViewController.swift in Sources */,
@@ -3366,6 +3516,7 @@
 				47468FD5233162D40072124A /* AlertHelper.swift in Sources */,
 				47893A9624095DF6002F675B /* CommonAudioTableViewCell.swift in Sources */,
 				47669F4223CF7EE900C17A77 /* GroupsManager.swift in Sources */,
+				F394ECB32683EB5A00529038 /* SphinxDesktopAdViewController.swift in Sources */,
 				47F258CA253DD42500122A5A /* PinTimeSlider.swift in Sources */,
 				47AAFC742387062700E30BDA /* APIUsersExtension.swift in Sources */,
 				4734D3CB241AA7A000D6957E /* PaymentTemplatesDataSource.swift in Sources */,
@@ -3386,6 +3537,7 @@
 				47484B972512690D00F82AAC /* BotWebView.swift in Sources */,
 				4787F86F24741EB900CCE8B9 /* NewPublicGroupViewController.swift in Sources */,
 				47FA18DC24362F1D00469C8F /* AttachmentPriceView.swift in Sources */,
+				47CD9508265EC2A4009B06A4 /* CommonModalView.swift in Sources */,
 				475BDD28232AC97500C5BBD6 /* API.swift in Sources */,
 				4703CF852518FA3F007B685C /* FileSentTableViewCell.swift in Sources */,
 				47DAABCB24913E6E00EF38B0 /* SwipableReplyCell.swift in Sources */,
@@ -3801,6 +3953,46 @@
 			name = InvoiceReceivedTableViewCell.xib;
 			sourceTree = "<group>";
 		};
+		47ACBC30265EA35D00D2FE47 /* AuthExternalView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				47ACBC2F265EA35D00D2FE47 /* Base */,
+				47ACBC38265EA35F00D2FE47 /* en */,
+				47ACBC3A265EA36100D2FE47 /* es */,
+			);
+			name = AuthExternalView.xib;
+			sourceTree = "<group>";
+		};
+		47ACBC40265EA69200D2FE47 /* PersonModalView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				47ACBC3F265EA69200D2FE47 /* Base */,
+				47ACBC45265EA69600D2FE47 /* en */,
+				47ACBC47265EA69600D2FE47 /* es */,
+			);
+			name = PersonModalView.xib;
+			sourceTree = "<group>";
+		};
+		F33846E9267B0FA00041F1EA /* Welcome.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F33846E8267B0FA00041F1EA /* Base */,
+				F33846EB267B0FBA0041F1EA /* en */,
+				F33846ED267B0FBB0041F1EA /* es */,
+			);
+			name = Welcome.storyboard;
+			sourceTree = "<group>";
+		};
+		F394ECA32682064100529038 /* NewUserSignup.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F394ECA22682064100529038 /* Base */,
+				F394ECA52682064400529038 /* en */,
+				F394ECA72682064800529038 /* es */,
+			);
+			name = NewUserSignup.storyboard;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -3928,7 +4120,7 @@
 		};
 		4779F18A232AA0F300D35E81 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4D454199AA908A3961F93697 /* Pods-sphinx.debug.xcconfig */;
+			baseConfigurationReference = FED99A42AA0C9CE8FD759E82 /* Pods-sphinx.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = sphinx/sphinx.entitlements;
@@ -4017,7 +4209,7 @@
 		};
 		4779F18B232AA0F300D35E81 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 40529865B123F00521C8B57E /* Pods-sphinx.release.xcconfig */;
+			baseConfigurationReference = FDF1E0A8EFE1D98BD5A99505 /* Pods-sphinx.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = sphinx/sphinx.entitlements;

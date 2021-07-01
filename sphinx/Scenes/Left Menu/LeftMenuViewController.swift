@@ -19,14 +19,14 @@ class LeftMenuViewController: UIViewController {
     @IBOutlet weak var balanceLabel: UILabel!
     @IBOutlet weak var unitLabel: UILabel!
     @IBOutlet weak var optionsTableView: UITableView!
-    @IBOutlet weak var addSatsButton: UIButton!
+    @IBOutlet weak var buyKarmaButton: UIButton!
     
     let buttonsCount = 2
     
     let menuOptions:[MenuOption] = [
-        MenuOption(iconCharacter: "", optionTitle: "menu.dashboard".localized),
-        MenuOption(iconCharacter: "", optionTitle: "menu.contacts".localized),
-        MenuOption(iconCharacter: "", optionTitle: "menu.profile".localized)
+        MenuOption(iconCharacter: "", optionTitle: "left-menu.dashboard".localized),
+        MenuOption(iconCharacter: "", optionTitle: "left-menu.contacts".localized),
+        MenuOption(iconCharacter: "", optionTitle: "left-menu.profile".localized)
     ]
     
     let kMenuRowHeight: CGFloat = 65
@@ -52,11 +52,14 @@ class LeftMenuViewController: UIViewController {
         super.viewDidLoad()
         
         walletIcon.tintColorDidChange()
+        
         profileImageView.layer.cornerRadius = profileImageView.frame.size.height / 2
         profileImageView.clipsToBounds = true
         
-        addSatsButton.layer.cornerRadius = addSatsButton.frame.size.height / 2
-        addSatsButton.clipsToBounds = true
+        
+        buyKarmaButton.setTitle("left-menu.buy-karma-button".localized, for: .normal)
+        buyKarmaButton.layer.cornerRadius = buyKarmaButton.frame.size.height / 2
+        buyKarmaButton.clipsToBounds = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -159,15 +162,15 @@ extension LeftMenuViewController : UITableViewDelegate {
         let option = menuOptions[indexPath.row]
         
         switch (option.optionTitle) {
-        case "menu.profile".localized:
+        case "left-menu.profile".localized:
             let profile = ProfileViewController.instantiate(rootViewController: rootViewController, delegate: self)
             goTo(vc: profile)
             break
-        case "menu.contacts".localized:
+        case "left-menu.contacts".localized:
             let addressBook = AddressBookViewController.instantiate(rootViewController: rootViewController)
             goTo(vc: addressBook)
             break
-        case "menu.dashboard".localized:
+        case "left-menu.dashboard".localized:
             let chatList = ChatListViewController.instantiate(rootViewController: rootViewController, delegate: self)
             goTo(vc: chatList)
             break

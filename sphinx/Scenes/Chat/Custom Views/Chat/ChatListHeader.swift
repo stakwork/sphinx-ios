@@ -78,14 +78,14 @@ class ChatListHeader: UIView {
     }
     
     func showBalance() {
-        smallUnitLabel.text = "sat"
+        smallUnitLabel.text = "chat-header.balance.unit".localized
         smallBalanceLabel.text = walletBalanceService.balance.formattedWithSeparator
         
         shouldCheckAppVersions()
     }
     
     func updateBalance() {
-        smallUnitLabel.text = "sat"
+        smallUnitLabel.text = "chat-header.balance.unit".localized
         walletBalanceService.updateBalance(labels: [smallBalanceLabel])
     }
     

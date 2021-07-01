@@ -36,9 +36,9 @@
 "verifying.new.ip" = "Verificando la nueva URL...";
 
 //LeftMenu
-"menu.dashboard" = "Inicio";
-"menu.contacts" = "Contactos";
-"menu.profile" = "Perfil";
+"left-menu.dashboard" = "Inicio";
+"left-menu.contacts" = "Contactos";
+"left-menu.profile" = "Perfil";
 
 "support.describe.problem" = "Describe tu problema aquí...";
 "support.logs.copied" = "Registros copiados al portapapeles";

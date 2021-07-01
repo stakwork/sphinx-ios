@@ -26,8 +26,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WELCOME" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p6F-1X-ODn">
-                                <rect key="frame" x="127.5" y="259" width="159" height="37"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WELCOME" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p6F-1X-ODn">
+                                <rect key="frame" x="30" y="259" width="354" height="37"/>
                                 <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="30"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -105,6 +105,8 @@
                             <constraint firstItem="1Je-kU-F5i" firstAttribute="centerY" secondItem="5EZ-qb-Rvc" secondAttribute="centerY" id="9Zs-AN-Bda"/>
                             <constraint firstItem="1Je-kU-F5i" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="30" id="GXY-L3-ve1"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="1Je-kU-F5i" secondAttribute="trailing" constant="30" id="Pvx-Fe-tpU"/>
+                            <constraint firstItem="p6F-1X-ODn" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="30" id="UGx-4i-ARo"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="p6F-1X-ODn" secondAttribute="trailing" constant="30" id="ds2-5u-NHv"/>
                             <constraint firstItem="p6F-1X-ODn" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="o5E-st-f3K"/>
                             <constraint firstItem="1Je-kU-F5i" firstAttribute="top" secondItem="p6F-1X-ODn" secondAttribute="bottom" constant="80" id="ySH-Om-C86"/>
                         </constraints>

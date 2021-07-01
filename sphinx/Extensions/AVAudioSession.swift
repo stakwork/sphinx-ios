@@ -3,7 +3,7 @@
 //  sphinx
 //
 //  Created by Tomas Timinskas on 03/03/2020.
-//  Copyright © 2020 Tomas Timinskas. All rights reserved.
+//  Copyright © 2020 Sphinx. All rights reserved.
 //
 
 import AVFoundation

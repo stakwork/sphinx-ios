@@ -80,14 +80,15 @@
                                             <constraint firstAttribute="height" constant="1" id="78X-49-Lpb"/>
                                         </constraints>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CCI-OS-jEn">
-                                        <rect key="frame" x="73" y="115" width="76" height="24"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CCI-OS-jEn">
+                                        <rect key="frame" x="73" y="115" width="128" height="32"/>
                                         <color key="backgroundColor" name="PrimaryBlue"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="24" id="8XO-uc-aX3"/>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="76" id="KxP-Ve-4qe"/>
+                                            <constraint firstAttribute="height" constant="32" id="8XO-uc-aX3"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="88" id="KxP-Ve-4qe"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="8"/>
+                                        <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="13"/>
+                                        <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
                                         <state key="normal" title="Buy 1000 Karma">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>

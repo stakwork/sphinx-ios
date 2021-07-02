@@ -528,6 +528,7 @@
 		F3197C112680F50300330F79 /* RestoreUserFormViewController+FormSubmissionUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3197C102680F50300330F79 /* RestoreUserFormViewController+FormSubmissionUtils.swift */; };
 		F3197C1326811DE400330F79 /* RestoreUserFormViewController+KeychainRestorationUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3197C1226811DE400330F79 /* RestoreUserFormViewController+KeychainRestorationUtils.swift */; };
 		F331199B268E375B005082EB /* NewUserSignupOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F331199A268E375B005082EB /* NewUserSignupOptionsViewController.swift */; };
+		F331199D268E93FB005082EB /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F331199C268E93FB005082EB /* StoreKit.framework */; };
 		F33846E3267ACF6A0041F1EA /* InitialWelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33846E1267ACF6A0041F1EA /* InitialWelcomeViewController.swift */; };
 		F33846E7267B0FA00041F1EA /* Welcome.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F33846E9267B0FA00041F1EA /* Welcome.storyboard */; };
 		F33846EF267B15800041F1EA /* WelcomeCompleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33846EE267B15800041F1EA /* WelcomeCompleteViewController.swift */; };
@@ -1197,6 +1198,7 @@
 		F3241A30267CBB12007A6454 /* ellipse.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = ellipse.gif; sourceTree = "<group>"; };
 		F3241A31267CBB12007A6454 /* lightningNetwork.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = lightningNetwork.gif; sourceTree = "<group>"; };
 		F331199A268E375B005082EB /* NewUserSignupOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewUserSignupOptionsViewController.swift; sourceTree = "<group>"; };
+		F331199C268E93FB005082EB /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		F33846E1267ACF6A0041F1EA /* InitialWelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialWelcomeViewController.swift; sourceTree = "<group>"; };
 		F33846E8267B0FA00041F1EA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Welcome.storyboard; sourceTree = "<group>"; };
 		F33846EB267B0FBA0041F1EA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Welcome.strings; sourceTree = "<group>"; };
@@ -1228,6 +1230,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F331199D268E93FB005082EB /* StoreKit.framework in Frameworks */,
 				4703CF932519425E007B685C /* PDFKit.framework in Frameworks */,
 				12075275C652A9404FC48EBC /* Pods_sphinx.framework in Frameworks */,
 			);
@@ -1253,6 +1256,7 @@
 		29CA57C9FD66D9C3750CE036 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F331199C268E93FB005082EB /* StoreKit.framework */,
 				F3C92B282671FCFD005F0A42 /* .Tor.version */,
 				47D03DF02510EA170077A968 /* PDFKit.framework */,
 				47308E1925013DE100FFAC6F /* Tor.framework */,

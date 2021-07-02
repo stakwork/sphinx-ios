@@ -380,7 +380,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SRd-tw-xdf" userLabel="Content Container">
-                                <rect key="frame" x="104.5" y="360" width="205" height="176"/>
+                                <rect key="frame" x="104.5" y="359.5" width="205" height="177"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fkl-aB-1qC">
                                         <rect key="frame" x="0.0" y="0.0" width="205" height="127"/>
@@ -391,7 +391,7 @@
                                         <imageReference key="image" image="connecting.gif"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CONNECTING..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Gm-HH-f9y">
-                                        <rect key="frame" x="36" y="155" width="133.5" height="21"/>
+                                        <rect key="frame" x="35" y="155" width="135.5" height="22"/>
                                         <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="18"/>
                                         <color key="textColor" name="Text"/>
                                         <nil key="highlightedColor"/>
@@ -458,7 +458,7 @@ Lightning Network!</string>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tcI-kF-ZRP">
-                                        <rect key="frame" x="309.5" y="19" width="24.5" height="24.5"/>
+                                        <rect key="frame" x="313" y="20.5" width="21" height="21"/>
                                         <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="21"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>

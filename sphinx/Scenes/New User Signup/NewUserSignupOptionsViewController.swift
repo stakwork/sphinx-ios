@@ -35,14 +35,12 @@ class NewUserSignupOptionsViewController: UIViewController {
 
         setupButton(
             connectionCodeButton,
-            withTitle: "signup.signup-options.connection-code-button".localized,
-            andBackgroundColor: UIColor.Sphinx.PrimaryBlue
+            withTitle: "signup.signup-options.connection-code-button".localized
         )
         
         setupButton(
             purchaseLiteNodeButton,
-            withTitle: "signup.signup-options.lite-node-button".localized,
-            andBackgroundColor: UIColor.Sphinx.PrimaryGreen
+            withTitle: "signup.signup-options.lite-node-button".localized
         )
     }
     
@@ -66,15 +64,14 @@ extension NewUserSignupOptionsViewController {
  
     private func setupButton(
         _ button: UIButton,
-        withTitle title: String,
-        andBackgroundColor backgroundColor: UIColor
+        withTitle title: String
     ) {
         
         button.setTitle(title, for: .normal)
         button.layer.cornerRadius = button.frame.size.height / 2
         button.clipsToBounds = true
         
-        button.addShadow(location: .bottom, color: backgroundColor, opacity: 0.2, radius: 2.0)
+        button.addShadow(location: .bottom, opacity: 0.2, radius: 2.0)
     }
 }
     

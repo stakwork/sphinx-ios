@@ -542,7 +542,7 @@
 		F394ECAD26825D3400529038 /* NewUserSignupFormViewController+FormSubmissionUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F394ECAC26825D3400529038 /* NewUserSignupFormViewController+FormSubmissionUtils.swift */; };
 		F394ECB12683CF5E00529038 /* NewUserGreetingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F394ECB02683CF5E00529038 /* NewUserGreetingViewController.swift */; };
 		F394ECB32683EB5A00529038 /* SphinxDesktopAdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F394ECB22683EB5A00529038 /* SphinxDesktopAdViewController.swift */; };
-		F3C92B272671FB6C005F0A42 /* readme.md in Resources */ = {isa = PBXBuildFile; fileRef = F3C92B262671FB6C005F0A42 /* readme.md */; };
+		F3C92B272671FB6C005F0A42 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F3C92B262671FB6C005F0A42 /* README.md */; };
 		F3D0401E268BAA9700D54A94 /* SphinxReadyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D0401D268BAA9700D54A94 /* SphinxReadyViewController.swift */; };
 		F3D04020268BAB7500D54A94 /* InviteWelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D0401F268BAB7400D54A94 /* InviteWelcomeViewController.swift */; };
 		F3D04027268BABFF00D54A94 /* InviteActionsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D04026268BABFF00D54A94 /* InviteActionsHelper.swift */; };
@@ -1216,7 +1216,7 @@
 		F394ECAC26825D3400529038 /* NewUserSignupFormViewController+FormSubmissionUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NewUserSignupFormViewController+FormSubmissionUtils.swift"; sourceTree = "<group>"; };
 		F394ECB02683CF5E00529038 /* NewUserGreetingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewUserGreetingViewController.swift; sourceTree = "<group>"; };
 		F394ECB22683EB5A00529038 /* SphinxDesktopAdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SphinxDesktopAdViewController.swift; sourceTree = "<group>"; };
-		F3C92B262671FB6C005F0A42 /* readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = readme.md; sourceTree = "<group>"; };
+		F3C92B262671FB6C005F0A42 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		F3C92B282671FCFD005F0A42 /* .Tor.version */ = {isa = PBXFileReference; lastKnownFileType = text; name = .Tor.version; path = Carthage/Build/.Tor.version; sourceTree = "<group>"; };
 		F3D0401D268BAA9700D54A94 /* SphinxReadyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SphinxReadyViewController.swift; sourceTree = "<group>"; };
 		F3D0401F268BAB7400D54A94 /* InviteWelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteWelcomeViewController.swift; sourceTree = "<group>"; };
@@ -2218,7 +2218,7 @@
 		4779F155232AA0F200D35E81 = {
 			isa = PBXGroup;
 			children = (
-				F3C92B262671FB6C005F0A42 /* readme.md */,
+				F3C92B262671FB6C005F0A42 /* README.md */,
 				4779F160232AA0F200D35E81 /* sphinx */,
 				4779F178232AA0F300D35E81 /* sphinxTests */,
 				4779F183232AA0F300D35E81 /* sphinxUITests */,
@@ -3010,7 +3010,7 @@
 				4779F16C232AA0F300D35E81 /* Assets.xcassets in Resources */,
 				4787F87E24745BBD00CCE8B9 /* GroupTagView.xib in Resources */,
 				47904C1024BF352300710E7A /* synth.caf in Resources */,
-				F3C92B272671FB6C005F0A42 /* readme.md in Resources */,
+				F3C92B272671FB6C005F0A42 /* README.md in Resources */,
 				47904C0E24BF352300710E7A /* popcorn.caf in Resources */,
 				470F4C49257E708400288A9B /* TribeMemberInfoView.xib in Resources */,
 				4797E77224B8E51E00D13270 /* Chat.storyboard in Resources */,

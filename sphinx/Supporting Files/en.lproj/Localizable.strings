@@ -311,7 +311,7 @@ https://sphinx.chat";
 "amount.too.low" = "Amount too low";
 "amount.too.high" = "Amount too high";
 "onchain.amount.too.low" = "Amount too low. Minimum 250000 sats";
-"chat-header.balance.unit" = "karm";
+"chat-header.balance.unit" = "karma";
 
 "users" = "users";
 "optional.message.placeholder" = "Optional Message...";

@@ -527,6 +527,7 @@
 		F3197C0E267FA2C800330F79 /* lightningNetwork.gif in Resources */ = {isa = PBXBuildFile; fileRef = F3241A31267CBB12007A6454 /* lightningNetwork.gif */; };
 		F3197C112680F50300330F79 /* RestoreUserFormViewController+FormSubmissionUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3197C102680F50300330F79 /* RestoreUserFormViewController+FormSubmissionUtils.swift */; };
 		F3197C1326811DE400330F79 /* RestoreUserFormViewController+KeychainRestorationUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3197C1226811DE400330F79 /* RestoreUserFormViewController+KeychainRestorationUtils.swift */; };
+		F31CF2662691489800AAB621 /* StoreKitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31CF2652691489800AAB621 /* StoreKitService.swift */; };
 		F331199B268E375B005082EB /* NewUserSignupOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F331199A268E375B005082EB /* NewUserSignupOptionsViewController.swift */; };
 		F331199D268E93FB005082EB /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F331199C268E93FB005082EB /* StoreKit.framework */; };
 		F33119A0268E9C1B005082EB /* XcodeStoreKitConfiguration.storekit in Resources */ = {isa = PBXBuildFile; fileRef = F331199F268E9C1B005082EB /* XcodeStoreKitConfiguration.storekit */; };
@@ -1196,6 +1197,7 @@
 		487E10CEB3D07B0840A84681 /* Pods_sphinx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_sphinx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F3197C102680F50300330F79 /* RestoreUserFormViewController+FormSubmissionUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RestoreUserFormViewController+FormSubmissionUtils.swift"; sourceTree = "<group>"; };
 		F3197C1226811DE400330F79 /* RestoreUserFormViewController+KeychainRestorationUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RestoreUserFormViewController+KeychainRestorationUtils.swift"; sourceTree = "<group>"; };
+		F31CF2652691489800AAB621 /* StoreKitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitService.swift; sourceTree = "<group>"; };
 		F3241A2F267CBB12007A6454 /* connecting.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = connecting.gif; sourceTree = "<group>"; };
 		F3241A30267CBB12007A6454 /* ellipse.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = ellipse.gif; sourceTree = "<group>"; };
 		F3241A31267CBB12007A6454 /* lightningNetwork.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = lightningNetwork.gif; sourceTree = "<group>"; };
@@ -2789,6 +2791,7 @@
 			isa = PBXGroup;
 			children = (
 				F331199F268E9C1B005082EB /* XcodeStoreKitConfiguration.storekit */,
+				F31CF2652691489800AAB621 /* StoreKitService.swift */,
 				F33119A4268FA096005082EB /* XcodeStoreKitTestCertificate.cer */,
 			);
 			path = StoreKit;
@@ -3301,6 +3304,7 @@
 				473633EA25559945007405F2 /* LogarithmicSlider.swift in Sources */,
 				475BDCA5232AC1D600C5BBD6 /* TransactionMessageRow.swift in Sources */,
 				47AA08C7234BB8E0002C69E2 /* ShareInviteCodeViewController.swift in Sources */,
+				F31CF2662691489800AAB621 /* StoreKitService.swift in Sources */,
 				475BDCFB232AC24600C5BBD6 /* PaidInvoiceReceivedTableViewCell.swift in Sources */,
 				47B6F527258A917C00D64A41 /* AddSatsViewController.swift in Sources */,
 				4789E26E24F406F3003991BE /* RelayURLUpdateHelper.swift in Sources */,

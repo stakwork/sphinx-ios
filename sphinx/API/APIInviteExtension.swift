@@ -176,4 +176,13 @@ extension API {
             }
         }
     }
+    
+    
+    public func validateLiteNodePurchase(
+        using receiptString: String,
+        then completionHandler: @escaping NodePurchaseValidationCallback
+    ) {
+        // TODO: Implement real request logic 
+        completionHandler(.success(()))
+    }
 }

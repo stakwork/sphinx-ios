@@ -46,6 +46,7 @@ typealias AppVersionsCallback = ((String) -> ())
 typealias SignupWithCodeCallback = ((JSON, String, String) -> ())
 typealias LowestPriceCallback = ((Double) -> ())
 typealias PayInviteCallback = ((JSON) -> ())
+typealias NodePurchaseValidationCallback = ((Result<Void, Never>) -> ())
 
 //Attachments
 typealias AskAuthenticationCallback = ((String?, String?) -> ())

@@ -47,7 +47,7 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="50"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ADD FRIEND" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Mg-Nw-7iA">
-                                        <rect key="frame" x="165.66666666666666" y="17" width="82.666666666666657" height="16.333333333333329"/>
+                                        <rect key="frame" x="161.66666666666666" y="16.333333333333336" width="90.666666666666657" height="17.333333333333336"/>
                                         <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="14"/>
                                         <color key="textColor" name="Text"/>
                                         <nil key="highlightedColor"/>
@@ -159,7 +159,7 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="50"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ADD FRIEND" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rLb-IH-R1w">
-                                        <rect key="frame" x="165.66666666666666" y="17" width="82.666666666666657" height="16.333333333333329"/>
+                                        <rect key="frame" x="161.66666666666666" y="16.333333333333336" width="90.666666666666657" height="17.333333333333336"/>
                                         <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="14"/>
                                         <color key="textColor" name="Text"/>
                                         <nil key="highlightedColor"/>
@@ -196,7 +196,7 @@
                                 <rect key="frame" x="0.0" y="120" width="414" height="90"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NICKNAME" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xrn-Sz-iM3">
-                                        <rect key="frame" x="181" y="18.666666666666657" width="52.333333333333343" height="12"/>
+                                        <rect key="frame" x="178.66666666666666" y="18.666666666666657" width="57" height="12"/>
                                         <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="10"/>
                                         <color key="textColor" name="Text"/>
                                         <nil key="highlightedColor"/>
@@ -235,7 +235,7 @@
                                 <rect key="frame" x="0.0" y="224" width="414" height="160"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="INCLUDE A MESSAGE..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DsE-7M-zzl">
-                                        <rect key="frame" x="151.33333333333334" y="18.666666666666657" width="111.33333333333334" height="12"/>
+                                        <rect key="frame" x="148.33333333333334" y="18.666666666666657" width="117.33333333333334" height="12"/>
                                         <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="10"/>
                                         <color key="textColor" name="Text"/>
                                         <nil key="highlightedColor"/>
@@ -666,7 +666,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xrd-8B-iyR">
-                                <rect key="frame" x="98.333333333333329" y="79" width="217.66666666666669" height="58.333333333333343"/>
+                                <rect key="frame" x="102" y="79" width="210" height="66"/>
                                 <string key="text">You've been invited
 to join Sphinx!</string>
                                 <fontDescription key="fontDescription" name="Roboto-Light" family="Roboto" pointSize="25"/>
@@ -688,7 +688,7 @@ to join Sphinx!</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&quot;Welcome to Sphinx!&quot;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vl8-eB-4he">
-                                <rect key="frame" x="124.00000000000001" y="531" width="166.33333333333337" height="20"/>
+                                <rect key="frame" x="125.66666666666667" y="531" width="162.66666666666663" height="20"/>
                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
                                 <color key="textColor" name="OnboardingSecondaryText"/>
                                 <nil key="highlightedColor"/>
@@ -697,7 +697,7 @@ to join Sphinx!</string>
                                 <rect key="frame" x="30" y="772" width="354" height="62"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Get Started" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zc0-Xh-U1c">
-                                        <rect key="frame" x="133" y="21" width="88" height="20"/>
+                                        <rect key="frame" x="133.66666666666666" y="21" width="86.666666666666657" height="20"/>
                                         <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="17"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -851,7 +851,7 @@ to join Sphinx!</string>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tomi" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3gm-OB-nXu">
-                                <rect key="frame" x="180.66666666666666" y="104" width="53" height="30"/>
+                                <rect key="frame" x="179" y="104" width="56.333333333333343" height="30"/>
                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="25"/>
                                 <color key="textColor" name="OnboardingSecondaryText"/>
                                 <nil key="highlightedColor"/>
@@ -871,7 +871,7 @@ to join Sphinx!</string>
                                 </connections>
                             </button>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Uploaded: 0%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FYW-sZ-2rd">
-                                <rect key="frame" x="171.33333333333334" y="586.66666666666663" width="71.333333333333343" height="13"/>
+                                <rect key="frame" x="173.66666666666666" y="586.66666666666663" width="67" height="13"/>
                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="11"/>
                                 <color key="textColor" name="OnboardingSecondaryText"/>
                                 <nil key="highlightedColor"/>
@@ -939,7 +939,7 @@ to join Sphinx!</string>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="klr-jZ-Odd">
-                                <rect key="frame" x="165" y="317" width="84" height="20"/>
+                                <rect key="frame" x="164.66666666666666" y="317" width="85" height="20"/>
                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
                                 <color key="textColor" name="OnboardingSecondaryText"/>
                                 <nil key="highlightedColor"/>

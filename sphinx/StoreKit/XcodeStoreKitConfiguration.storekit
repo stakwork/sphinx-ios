@@ -22,17 +22,17 @@
     {
       "displayPrice" : "0.99",
       "familyShareable" : false,
-      "internalID" : "EE5C81E8",
+      "internalID" : "12DA1422",
       "localizations" : [
         {
-          "description" : "Use Sphinx without running your own node.",
-          "displayName" : "Lite Node",
+          "description" : "",
+          "displayName" : "",
           "locale" : "en_US"
         }
       ],
-      "productID" : "com.gl.sphinx.liteNode",
+      "productID" : "com.gl.sphinx.liteSphinxNode",
       "referenceName" : "Lite Node",
-      "type" : "NonConsumable"
+      "type" : "Consumable"
     }
   ],
   "settings" : {

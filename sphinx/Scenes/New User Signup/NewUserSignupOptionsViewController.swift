@@ -54,7 +54,6 @@ class NewUserSignupOptionsViewController: UIViewController {
         super.viewDidLoad()
 
         storeKitService.delegate = self
-        SKPaymentQueue.default().add(self)
 
         setupButton(
             connectionCodeButton,
@@ -87,8 +86,7 @@ class NewUserSignupOptionsViewController: UIViewController {
             preconditionFailure()
         }
         
-        let payment = SKPayment(product: product)
-        SKPaymentQueue.default().add(payment)
+        storeKitService.purchase(product)
     }
 }
 
@@ -109,7 +107,7 @@ extension NewUserSignupOptionsViewController {
     
     
     private func fetchProductsInformation() {
-        guard SKPaymentQueue.canMakePayments() else {
+        guard storeKitService.isAuthorizedForPayments else {
             purchaseLiteNodeButton.isEnabled = false
             return
         }
@@ -124,6 +122,34 @@ extension NewUserSignupOptionsViewController {
 
 // MARK: -  StoreKitServiceDelegate
 extension NewUserSignupOptionsViewController: StoreKitServiceDelegate {
+    
+    func storeKitServiceDidObserveTransactionUpdate(
+        on queue: SKPaymentQueue,
+        updatedTransactions transactions: [SKPaymentTransaction]
+    ) {
+        for transaction in transactions {
+            switch transaction.transactionState {
+            case .purchasing:
+                // Do not block the UI. Allow the user to continue using the app.
+                break
+            case .purchased:
+                // The purchase was successful.
+                validateReceipt(transaction: transaction)
+            case .restored:
+                break
+            case .deferred:
+                break
+            case .failed:
+                AlertHelper.showAlert(
+                    title: "Lite Node Purchase",
+                    message: "Payment Failed"
+                )
+            @unknown default:
+                print("Unknown transaction state: \(transaction.transactionState)")
+            }
+        }
+    }
+    
     
     func storeKitServiceDidReceiveResponse(_ response: SKProductsResponse) {
         DispatchQueue.main.async { [weak self] in
@@ -142,9 +168,13 @@ extension NewUserSignupOptionsViewController: StoreKitServiceDelegate {
     func storeKitServiceDidReceiveMessage(_ message: String) {
         
     }
+}
     
+
+
+extension NewUserSignupOptionsViewController {
     
-    func stopPurchaseProgress() {
+    private func stopPurchaseProgress() {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             
@@ -153,7 +183,7 @@ extension NewUserSignupOptionsViewController: StoreKitServiceDelegate {
     }
     
     
-    func validateReceipt(transaction: SKPaymentTransaction) {
+    private func validateReceipt(transaction: SKPaymentTransaction) {
         guard let receiptURL = storeKitService.receiptURL else {
             stopPurchaseProgress()
             return
@@ -181,7 +211,12 @@ extension NewUserSignupOptionsViewController: StoreKitServiceDelegate {
                 
                 switch result {
                 case .success:
-                    // TODO: Present Invite Code
+                    /**
+                     * TODO: Handle success
+                     *
+                     *  - Logic to signupWithCode, generateToken, etc…
+                     *  - Transition to `NewUserGreetingViewController`
+                     */
                     AlertHelper.showAlert(
                         title: "Lite Node Purchase",
                         message: "Receipt Validation Succeeded"
@@ -194,42 +229,6 @@ extension NewUserSignupOptionsViewController: StoreKitServiceDelegate {
                         message: "Receipt Validation Failed"
                     )
                 }
-            }
-        }
-    }
-}
-
-
-
-// MARK: - SKPaymentTransactionObserver
-
-extension NewUserSignupOptionsViewController: SKPaymentTransactionObserver {
-
-    func paymentQueue(
-        _ queue: SKPaymentQueue,
-        updatedTransactions transactions: [SKPaymentTransaction]
-    ) {
-        for transaction in transactions {
-            switch transaction.transactionState {
-            case .purchasing:
-                validateReceipt(transaction: transaction)
-//                transactionState = .purchasing
-            case .purchased:
-//                transactionState = .purchased
-                queue.finishTransaction(transaction)
-            case .restored:
-//                transactionState = .restored
-                queue.finishTransaction(transaction)
-            case .failed, .deferred:
-//                transactionState = .failed
-                queue.finishTransaction(transaction)
-                AlertHelper.showAlert(
-                    title: "Lite Node Purchase",
-                    message: "Payment Failed"
-                )
-            default:
-                print("Unknown transaction state: \(transaction.transactionState)")
-                queue.finishTransaction(transaction)
             }
         }
     }

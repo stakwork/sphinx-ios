@@ -8,7 +8,8 @@
 
 import UIKit
 
-class NewUserSignupFormViewController: UIViewController {
+
+class NewUserSignupFormViewController: UIViewController, ConnectionCodeSignupHandling {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var codeTextField: UITextField!
@@ -19,8 +20,6 @@ class NewUserSignupFormViewController: UIViewController {
 
     var rootViewController: RootViewController!
     
-    let userData = UserData.sharedInstance
-    let onionConnector = SphinxOnionConnector.sharedInstance
     let authenticationHelper = BiometricAuthenticationHelper()
     let newMessageBubbleHelper = NewMessageBubbleHelper()
     
@@ -55,7 +54,7 @@ class NewUserSignupFormViewController: UIViewController {
     @IBAction func backButtonTapped(_ sender: UIButton) {
         SignupHelper.step = SignupHelper.SignupStep.Start.rawValue
         
-        self.navigationController?.popToRootViewController(animated: true)
+        navigationController?.popToRootViewController(animated: true)
     }
 }
 

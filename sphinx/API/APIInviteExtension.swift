@@ -182,7 +182,9 @@ extension API {
         using receiptString: String,
         then completionHandler: @escaping NodePurchaseValidationCallback
     ) {
-        // TODO: Implement real request logic 
-        completionHandler(.success(()))
+        // TODO: Implement real request logic
+        let inviteCode = "Fake Invite Code"
+        
+        completionHandler(.success(inviteCode))
     }
 }

@@ -47,13 +47,13 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="50"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ADD FRIEND" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Mg-Nw-7iA">
-                                        <rect key="frame" x="161.66666666666666" y="16.333333333333336" width="90.666666666666657" height="17.333333333333336"/>
+                                        <rect key="frame" x="165.66666666666666" y="17" width="82.666666666666657" height="16.333333333333329"/>
                                         <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="14"/>
                                         <color key="textColor" name="Text"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FfO-6n-Zdd">
-                                        <rect key="frame" x="379" y="15" width="20" height="20"/>
+                                        <rect key="frame" x="377.66666666666669" y="13.333333333333334" width="23" height="23.333333333333329"/>
                                         <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="20"/>
                                         <color key="textColor" name="PrimaryRed"/>
                                         <nil key="highlightedColor"/>
@@ -159,13 +159,13 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="50"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ADD FRIEND" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rLb-IH-R1w">
-                                        <rect key="frame" x="161.66666666666666" y="16.333333333333336" width="90.666666666666657" height="17.333333333333336"/>
+                                        <rect key="frame" x="165.66666666666666" y="17" width="82.666666666666657" height="16.333333333333329"/>
                                         <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="14"/>
                                         <color key="textColor" name="Text"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KJJ-BA-YCD">
-                                        <rect key="frame" x="379" y="15" width="20" height="20"/>
+                                        <rect key="frame" x="377.66666666666669" y="13.333333333333334" width="23" height="23.333333333333329"/>
                                         <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="20"/>
                                         <color key="textColor" name="PrimaryRed"/>
                                         <nil key="highlightedColor"/>
@@ -398,13 +398,13 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="50"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SHARE INVITATION CODE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vd2-aU-H2Y">
-                                        <rect key="frame" x="116.33333333333333" y="16.333333333333336" width="181.33333333333337" height="17.333333333333336"/>
+                                        <rect key="frame" x="124.00000000000001" y="17" width="166.33333333333337" height="16.333333333333329"/>
                                         <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="14"/>
                                         <color key="textColor" name="Text"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9um-Qd-G1B">
-                                        <rect key="frame" x="379" y="15" width="20" height="20"/>
+                                        <rect key="frame" x="377.66666666666669" y="13.333333333333334" width="23" height="23.333333333333329"/>
                                         <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="20"/>
                                         <color key="textColor" name="PrimaryRed"/>
                                         <nil key="highlightedColor"/>
@@ -603,7 +603,7 @@
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="luo-XS-Wk8">
-                                        <rect key="frame" x="379" y="15" width="20" height="20"/>
+                                        <rect key="frame" x="377.66666666666669" y="13.333333333333334" width="23" height="23.333333333333329"/>
                                         <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="20"/>
                                         <color key="textColor" name="PrimaryRed"/>
                                         <nil key="highlightedColor"/>
@@ -666,7 +666,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xrd-8B-iyR">
-                                <rect key="frame" x="102" y="79" width="210" height="66"/>
+                                <rect key="frame" x="98.333333333333329" y="79" width="217.66666666666669" height="58.333333333333343"/>
                                 <string key="text">You've been invited
 to join Sphinx!</string>
                                 <fontDescription key="fontDescription" name="Roboto-Light" family="Roboto" pointSize="25"/>
@@ -703,7 +703,7 @@ to join Sphinx!</string>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a2B-zo-IOc">
-                                        <rect key="frame" x="314" y="21" width="20" height="20"/>
+                                        <rect key="frame" x="311" y="19.333333333333371" width="23" height="23.333333333333329"/>
                                         <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="20"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -811,22 +811,22 @@ to join Sphinx!</string>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yxf-Mg-rql">
-                                <rect key="frame" x="119.33333333333333" y="501.66666666666674" width="175.33333333333337" height="50"/>
+                                <rect key="frame" x="119" y="501.66666666666674" width="176" height="50"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iub-5J-uVa">
-                                        <rect key="frame" x="15.000000000000014" y="13.333333333333314" width="23" height="23"/>
+                                        <rect key="frame" x="15" y="11.333333333333314" width="24" height="27"/>
                                         <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="23"/>
                                         <color key="textColor" name="OnboardingSecondaryText"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select Image" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2P2-S1-noc">
-                                        <rect key="frame" x="53.000000000000021" y="15.333333333333314" width="93.333333333333314" height="19"/>
+                                        <rect key="frame" x="53.66666666666665" y="15.333333333333314" width="93.333333333333314" height="19"/>
                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3jW-Xq-ykf">
-                                        <rect key="frame" x="0.0" y="0.0" width="175.33333333333334" height="50"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="176" height="50"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1018,7 +1018,7 @@ to join Sphinx!</string>
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c8r-pr-tER">
-                                <rect key="frame" x="114.66666666666669" y="333.33333333333331" width="185" height="79.333333333333314"/>
+                                <rect key="frame" x="111" y="338" width="192" height="70"/>
                                 <string key="text">You're ready
 to use Sphinx!</string>
                                 <fontDescription key="fontDescription" name="Roboto-Light" family="Roboto" pointSize="30"/>
@@ -1029,13 +1029,13 @@ to use Sphinx!</string>
                                 <rect key="frame" x="30" y="772" width="354" height="62"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FINISH" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oe8-KJ-BtX">
-                                        <rect key="frame" x="153" y="22.333333333333371" width="48.333333333333343" height="17.333333333333329"/>
+                                        <rect key="frame" x="154.66666666666666" y="22.333333333333371" width="44.666666666666657" height="17.333333333333329"/>
                                         <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="14"/>
                                         <color key="textColor" red="0.23529411764705882" green="0.24705882352941178" blue="0.25490196078431371" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UX6-zd-Lml">
-                                        <rect key="frame" x="314" y="21" width="20" height="20"/>
+                                        <rect key="frame" x="311" y="19.333333333333371" width="23" height="23.333333333333329"/>
                                         <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="20"/>
                                         <color key="textColor" red="0.69019607843137254" green="0.71764705882352942" blue="0.73725490196078436" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -1062,13 +1062,13 @@ to use Sphinx!</string>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OZX-cW-9xl">
-                                <rect key="frame" x="207" y="462.66666666666669" width="0.0" height="0.0"/>
+                                <rect key="frame" x="207" y="458" width="0.0" height="0.0"/>
                                 <fontDescription key="fontDescription" name="Roboto-Light" family="Roboto" pointSize="17"/>
                                 <color key="textColor" name="Body"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WVO-5n-4Eq" customClass="UIActivityIndicatorView">
-                                <rect key="frame" x="182" y="492.66666666666674" width="50" height="50"/>
+                                <rect key="frame" x="182" y="488" width="50" height="50"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="3lX-bQ-uvX"/>

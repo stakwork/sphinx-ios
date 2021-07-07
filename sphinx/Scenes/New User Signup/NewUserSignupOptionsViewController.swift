@@ -10,7 +10,8 @@ import UIKit
 import StoreKit
 
 
-class NewUserSignupOptionsViewController: UIViewController {
+class NewUserSignupOptionsViewController: UIViewController, ConnectionCodeSignupHandling {
+    @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var screenHeadlineLabel: UILabel!
     @IBOutlet weak var connectionCodeButtonContainer: UIView!
     @IBOutlet weak var connectionCodeButton: UIButton!
@@ -19,10 +20,13 @@ class NewUserSignupOptionsViewController: UIViewController {
     @IBOutlet weak var purchaseLoadingSpinner: UIActivityIndicatorView!
     
     
-    private var rootViewController: RootViewController!
+    internal var rootViewController: RootViewController!
     
-    
+
+    let newMessageBubbleHelper = NewMessageBubbleHelper()
     let storeKitService = StoreKitService.shared
+
+    var generateTokenRetries = 0
     
     
     var isPurchaseProcessing: Bool = false {
@@ -68,7 +72,27 @@ class NewUserSignupOptionsViewController: UIViewController {
     
     
     override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
         fetchProductsInformation()
+    }
+    
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        storeKitService.delegate = nil
+    }
+}
+ 
+
+// MARK: - Action Handling
+extension NewUserSignupOptionsViewController {
+    
+    @IBAction func backButtonTapped(_ sender: UIButton) {
+        SignupHelper.step = SignupHelper.SignupStep.Start.rawValue
+        
+        navigationController?.popToRootViewController(animated: true)
     }
     
     
@@ -91,6 +115,7 @@ class NewUserSignupOptionsViewController: UIViewController {
 }
 
 
+// MARK: - Private Helpers
 extension NewUserSignupOptionsViewController {
  
     private func setupButton(
@@ -116,8 +141,67 @@ extension NewUserSignupOptionsViewController {
             matchingIdentifiers: [StoreKitService.ProductIdentifiers.buyLiteNode]
         )
     }
-}
+
     
+    private func stopPurchaseProgress() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            
+            self.isPurchaseProcessing = false
+        }
+    }
+    
+    
+    private func validateReceipt(forPurchasedTransaction transaction: SKPaymentTransaction) {
+        guard let receiptURL = storeKitService.receiptURL else {
+            // TODO: Properly handle this and provide feedback to the user
+            stopPurchaseProgress()
+            return
+        }
+        
+        guard let receiptData = try? storeKitService.getReceiptData(at: receiptURL) else {
+            // TODO: Properly handle this and provide feedback to the user
+            stopPurchaseProgress()
+            return
+        }
+        
+        let receiptString = receiptData.base64EncodedString(options: [])
+                
+        /**
+         * TODO: Make a Request to a HUB endpoint with the receipt and
+         * invoice (obtained from first HUB request).
+         *
+         *  - The HUB will return the invite if the receipt is validated.
+         *  - From there, we need to handle/indicate the response to the user as appropriate.
+         */
+        API.sharedInstance.validateLiteNodePurchase(using: receiptString) { result in
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                
+                self.stopPurchaseProgress()
+                
+                switch result {
+                case .success(let connectionCode):
+                    /**
+                     * TODO: Handle success
+                     *
+                     *  - Logic to signupWithCode, generateToken, etc…
+                     *  - Transition to `NewUserGreetingViewController`
+                     */
+                    self.signup(withConnectionCode: connectionCode)
+                    break
+                case .failure:
+                    // TODO: Properly handle this and provide feedback to the user.
+                    AlertHelper.showAlert(
+                        title: "Lite Node Purchase",
+                        message: "Receipt Validation Failed"
+                    )
+                }
+            }
+        }
+    }
+}
+
 
 
 // MARK: -  StoreKitServiceDelegate
@@ -134,10 +218,12 @@ extension NewUserSignupOptionsViewController: StoreKitServiceDelegate {
                 break
             case .purchased:
                 // The purchase was successful.
-                validateReceipt(transaction: transaction)
+                validateReceipt(forPurchasedTransaction: transaction)
             case .restored:
                 break
             case .deferred:
+                // A transaction is in the queue, but its final status
+                // is pending external action such as Ask to Buy.
                 break
             case .failed:
                 AlertHelper.showAlert(
@@ -169,67 +255,18 @@ extension NewUserSignupOptionsViewController: StoreKitServiceDelegate {
         
     }
 }
-    
 
 
+// MARK: - ConnectionCodeSignupHandling
 extension NewUserSignupOptionsViewController {
     
-    private func stopPurchaseProgress() {
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            
-            self.isPurchaseProcessing = false
-        }
-    }
-    
-    
-    private func validateReceipt(transaction: SKPaymentTransaction) {
-        guard let receiptURL = storeKitService.receiptURL else {
-            stopPurchaseProgress()
-            return
-        }
+    func handleSignupConnectionError(message: String) {
+        // Pop the "Connecting" VC
+        navigationController?.popViewController(animated: true)
         
-        guard let receiptData = try? storeKitService.getReceiptData(at: receiptURL) else {
-            stopPurchaseProgress()
-            return
-        }
-        
-        let receiptString = receiptData.base64EncodedString(options: [])
-                
-        /**
-         * TODO: Make a Request to a HUB endpoint with the receipt and
-         * invoice (obtained from first HUB request).
-         *
-         *  - The HUB will return the invite if the receipt is validated.
-         *  - From there, we need to handle/indicate the response to the user as appropriate.
-         */
-        API.sharedInstance.validateLiteNodePurchase(using: receiptString) { result in
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                
-                self.stopPurchaseProgress()
-                
-                switch result {
-                case .success:
-                    /**
-                     * TODO: Handle success
-                     *
-                     *  - Logic to signupWithCode, generateToken, etc…
-                     *  - Transition to `NewUserGreetingViewController`
-                     */
-                    AlertHelper.showAlert(
-                        title: "Lite Node Purchase",
-                        message: "Receipt Validation Succeeded"
-                    )
-                    break
-                case .failure:
-                    // TODO: Handle failure
-                    AlertHelper.showAlert(
-                        title: "Lite Node Purchase",
-                        message: "Receipt Validation Failed"
-                    )
-                }
-            }
-        }
+        SignupHelper.resetInviteInfo()
+        SignupHelper.step = SignupHelper.SignupStep.NewUserSelected.rawValue
+
+        newMessageBubbleHelper.showGenericMessageView(text: message)
     }
 }

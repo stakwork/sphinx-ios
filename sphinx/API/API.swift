@@ -46,7 +46,7 @@ typealias AppVersionsCallback = ((String) -> ())
 typealias SignupWithCodeCallback = ((JSON, String, String) -> ())
 typealias LowestPriceCallback = ((Double) -> ())
 typealias PayInviteCallback = ((JSON) -> ())
-typealias NodePurchaseValidationCallback = ((Result<Void, Never>) -> ())
+typealias NodePurchaseValidationCallback = ((Result<API.SphinxInviteCode, Never>) -> ())
 
 //Attachments
 typealias AskAuthenticationCallback = ((String?, String?) -> ())
@@ -55,8 +55,10 @@ typealias VerifyAuthenticationCallback = ((String?) -> ())
 typealias UploadAttachmentCallback = ((Bool, NSDictionary?) -> ())
 typealias MediaInfoCallback = ((Int, String?, Int?) -> ())
 
-class API {
 
+class API {
+    typealias SphinxInviteCode = String
+    
     class var sharedInstance : API {
         struct Static {
             static let instance = API()

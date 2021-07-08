@@ -112,6 +112,21 @@ extension StoreKitService {
     
         SKPaymentQueue.default().add(payment)
     }
+    
+    
+    func getPurchaseReceipt() -> String? {
+        guard let receiptURL = receiptURL else {
+            // TODO: Properly handle this
+            return nil
+        }
+        
+        guard let receiptData = try? getReceiptData(at: receiptURL) else {
+            // TODO: Properly handle this
+            return nil
+        }
+        
+        return receiptData.base64EncodedString(options: [])
+    }
 }
 
 

@@ -21,6 +21,7 @@ class NewUserSignupOptionsViewController: UIViewController, ConnectionCodeSignup
     
     
     internal var rootViewController: RootViewController!
+    internal var hubNodeInvoice: API.HUBNodeInvoice?
     
 
     let newMessageBubbleHelper = NewMessageBubbleHelper()
@@ -110,7 +111,7 @@ extension NewUserSignupOptionsViewController {
             preconditionFailure()
         }
         
-        storeKitService.purchase(product)
+        startPurchase(for: product)
     }
 }
 
@@ -143,7 +144,15 @@ extension NewUserSignupOptionsViewController {
     }
 
     
-    private func stopPurchaseProgress() {
+    private func stopPurchaseProgressIndicator() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            
+            self.isPurchaseProcessing = false
+        }
+    }
+    
+    private func startPurchaseProgressIndicator() {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             
@@ -152,34 +161,65 @@ extension NewUserSignupOptionsViewController {
     }
     
     
-    private func validateReceipt(forPurchasedTransaction transaction: SKPaymentTransaction) {
-        guard let receiptURL = storeKitService.receiptURL else {
+    private func startPurchase(for product: SKProduct) {
+        startPurchaseProgressIndicator()
+        
+        // Get a fake invoice for a pre-assigned node from HUB
+        API.sharedInstance.generateLiteNodeHUBInvoice { [weak self] result in
+            guard let self = self else { return }
+            
+            self.stopPurchaseProgressIndicator()
+            
+            switch result {
+            case .success(let invoice):
+                self.hubNodeInvoice = invoice
+                
+                // Place a purchase on the AppStore to generate an AppStore receipt.
+                self.storeKitService.purchase(product)
+            case .failure(let error):
+                self.hubNodeInvoice = nil
+                
+                var alertMessage: String
+                
+                if case .nodeHUBInvoiceGenerationFailure(let message) = error {
+                    alertMessage = message
+                } else {
+                    alertMessage = "Purchase Eligibility Failed"
+                }
+                
+                AlertHelper.showAlert(
+                    title: "Lite Node Purchase",
+                    message: alertMessage
+                )
+            }
+        }
+    }
+    
+    
+    /// Makes a Request to a HUB endpoint with the App Store receipt and
+    /// invoice (obtained from first HUB request).
+    ///
+    /// The HUB will return the invite if the receipt is validated.
+    private func generateConnectionCode(
+        fromPurchasedNodeInvoice hubNodeInvoice: API.HUBNodeInvoice
+    ) {
+        startPurchaseProgressIndicator()
+
+        guard let receiptString = storeKitService.getPurchaseReceipt() else {
             // TODO: Properly handle this and provide feedback to the user
-            stopPurchaseProgress()
+            stopPurchaseProgressIndicator()
             return
         }
-        
-        guard let receiptData = try? storeKitService.getReceiptData(at: receiptURL) else {
-            // TODO: Properly handle this and provide feedback to the user
-            stopPurchaseProgress()
-            return
-        }
-        
-        let receiptString = receiptData.base64EncodedString(options: [])
-                
-        /**
-         * TODO: Make a Request to a HUB endpoint with the receipt and
-         * invoice (obtained from first HUB request).
-         *
-         *  - The HUB will return the invite if the receipt is validated.
-         *  - From there, we need to handle/indicate the response to the user as appropriate.
-         */
-        API.sharedInstance.validateLiteNodePurchase(using: receiptString) { result in
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                
-                self.stopPurchaseProgress()
-                
+
+        API.sharedInstance.validateLiteNodePurchase(
+            withAppStoreReceipt: receiptString,
+            and: hubNodeInvoice
+        ) { [weak self] result in
+            guard let self = self else { return }
+            
+            self.stopPurchaseProgressIndicator()
+
+            DispatchQueue.main.async {
                 switch result {
                 case .success(let connectionCode):
                     /**
@@ -191,7 +231,7 @@ extension NewUserSignupOptionsViewController {
                     self.signup(withConnectionCode: connectionCode)
                     break
                 case .failure:
-                    // TODO: Properly handle this and provide feedback to the user.
+                    // TODO: Parse out an actual error message here and present
                     AlertHelper.showAlert(
                         title: "Lite Node Purchase",
                         message: "Receipt Validation Failed"
@@ -217,8 +257,16 @@ extension NewUserSignupOptionsViewController: StoreKitServiceDelegate {
                 // Do not block the UI. Allow the user to continue using the app.
                 break
             case .purchased:
-                // The purchase was successful.
-                validateReceipt(forPurchasedTransaction: transaction)
+                // The purchase was successful. See if it matches the node purchase
+                // we currently have in progress
+                guard
+                    let hubNodeInvoice = hubNodeInvoice,
+                    transaction.payment.productIdentifier == liteNodePurchaseProduct?.productIdentifier
+                else {
+                    break
+                }
+                
+                generateConnectionCode(fromPurchasedNodeInvoice: hubNodeInvoice)
             case .restored:
                 break
             case .deferred:

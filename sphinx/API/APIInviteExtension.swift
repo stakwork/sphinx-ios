@@ -111,9 +111,17 @@ extension API {
             }
         }
     }
+}
+
+
+// MARK: - HUB calls
+extension API {
     
-    //HUB calls
-    public func signupWithCode(inviteString: String, callback: @escaping SignupWithCodeCallback, errorCallback: @escaping EmptyCallback) {
+    public func signupWithCode(
+        inviteString: String,
+        callback: @escaping SignupWithCodeCallback,
+        errorCallback: @escaping EmptyCallback
+    ) {
         let url = "\(API.kHUBServerUrl)/api/v1/signup"
         
         let parameters: [String : AnyObject] = ["invite_string" : inviteString as AnyObject]
@@ -178,13 +186,126 @@ extension API {
     }
     
     
+    public func generateLiteNodeHUBInvoice(
+        then completionHandler: @escaping NodePurchaseInvoiceCallback
+    ) {
+        let urlPath = "\(API.kHUBServerUrl)/api/v1/nodes/purchase"
+
+        guard let request = getURLRequest(
+            route: urlPath,
+            method: "POST"
+        ) else {
+            completionHandler(.failure(.failedToCreateRequest(urlPath: urlPath)))
+            return
+        }
+        
+        sphinxRequest(request) { response in
+            switch response.result {
+            case .success(let data):
+                guard let json = data as? Dictionary<String, Any> else {
+                    completionHandler(.failure(.unexpectedResponseData))
+                    return
+                }
+                
+                guard
+                    let json = data as? Dictionary<String, Any>,
+                    let success = json["success", default: false] as? Bool,
+                    success == true
+                else {
+                    guard
+                        let error = json["error"] as? Dictionary<String, Any>,
+                        let errorMessage = error["message"] as? String
+                    else {
+                        completionHandler(.failure(.unexpectedResponseData))
+                        return
+                    }
+                    
+                    completionHandler(
+                        .failure(.nodeHUBInvoiceGenerationFailure(message: errorMessage))
+                    )
+                    
+                    return
+                }
+                
+                guard
+                    let response = json["response"] as? Dictionary<String, Any>,
+                    let invoice = response["invoice"] as? String
+                else {
+                    completionHandler(.failure(.unexpectedResponseData))
+                    return
+                }
+                
+                completionHandler(.success(invoice))
+            case .failure(let error):
+                completionHandler(.failure(.networkError(error)))
+                return
+            }
+        }
+    }
+    
+    
     public func validateLiteNodePurchase(
-        using receiptString: String,
+        withAppStoreReceipt receiptString: String,
+        and hubNodeInvoice: HUBNodeInvoice,
         then completionHandler: @escaping NodePurchaseValidationCallback
     ) {
-        // TODO: Implement real request logic
-        let inviteCode = "Fake Invite Code"
+        let urlPath = "\(API.kHUBServerUrl)/api/v1/nodes/validate_purchase"
+
+        let parameters: [String: AnyObject] = [
+            "receipt": receiptString as AnyObject,
+            "invoice": hubNodeInvoice as AnyObject
+        ]
         
-        completionHandler(.success(inviteCode))
+        guard let request = getURLRequest(
+            route: urlPath,
+            params: parameters as NSDictionary?,
+            method: "POST"
+        ) else {
+            completionHandler(.failure(.failedToCreateRequest(urlPath: urlPath)))
+            return
+        }
+        
+        sphinxRequest(request) { response in
+            switch response.result {
+            case .success(let data):
+                guard let json = data as? Dictionary<String, Any> else {
+                    completionHandler(.failure(.unexpectedResponseData))
+                    return
+                }
+                
+                guard
+                    let json = data as? Dictionary<String, Any>,
+                    let success = json["success", default: false] as? Bool,
+                    success == true
+                else {
+                    guard
+                        let error = json["error"] as? Dictionary<String, Any>,
+                        let errorMessage = error["message"] as? String
+                    else {
+                        completionHandler(.failure(.unexpectedResponseData))
+                        return
+                    }
+                    
+                    completionHandler(
+                        .failure(.nodeHUBInvoiceGenerationFailure(message: errorMessage))
+                    )
+                    
+                    return
+                }
+                
+                guard
+                    let response = json["response"] as? Dictionary<String, Any>,
+                    let inviteCode = response["invite_code"] as? String
+                else {
+                    completionHandler(.failure(.unexpectedResponseData))
+                    return
+                }
+                
+                completionHandler(.success(inviteCode))
+            case .failure(let error):
+                completionHandler(.failure(.networkError(error)))
+                return
+            }
+        }
     }
 }

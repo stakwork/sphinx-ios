@@ -2,7 +2,6 @@
 //  StoreKitService.swift
 //  sphinx
 //
-//  Created by Brian Sipple on 7/3/21.
 //  Copyright © 2021 sphinx. All rights reserved.
 //
 
@@ -38,9 +37,6 @@ final class StoreKitService: NSObject {
     }
     
     
-//    let productIdentifiers: [ProductIdentifier]
-    
-    
     /// Valid products that are available for sale in the App Store.
     private var availableProducts = [SKProduct]()
     
@@ -55,16 +51,11 @@ final class StoreKitService: NSObject {
     private var productRequest: SKProductsRequest?
     
     
-    /// Keeps track of all valid products (these products are available for sale in the App Store) and of all invalid product identifiers.
-    //    private var storeResponse = [Section]()
-    
-    
     weak var delegate: StoreKitServiceDelegate?
     
     
     // MARK: - Init
     private override init() {}
-
 }
 
 
@@ -126,6 +117,12 @@ extension StoreKitService {
         }
         
         return receiptData.base64EncodedString(options: [])
+    }
+    
+    
+    func restoreProducts() {
+        print("Restoring products ...")
+        SKPaymentQueue.default().restoreCompletedTransactions()
     }
 }
 

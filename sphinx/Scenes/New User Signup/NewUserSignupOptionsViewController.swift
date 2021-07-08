@@ -75,6 +75,7 @@ class NewUserSignupOptionsViewController: UIViewController, ConnectionCodeSignup
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
+        purchaseLiteNodeButton.isEnabled = liteNodePurchaseProduct != nil
         fetchProductsInformation()
     }
     
@@ -174,6 +175,8 @@ extension NewUserSignupOptionsViewController {
             case .success(let invoice):
                 self.hubNodeInvoice = invoice
                 
+                print("Successfully generated Lite Node Hub Invoice: \(invoice)")
+
                 // Place a purchase on the AppStore to generate an AppStore receipt.
                 self.storeKitService.purchase(product)
             case .failure(let error):
@@ -188,7 +191,7 @@ extension NewUserSignupOptionsViewController {
                 }
                 
                 AlertHelper.showAlert(
-                    title: "Lite Node Purchase",
+                    title: "Lite Node Purchase Failed",
                     message: alertMessage
                 )
             }
@@ -206,8 +209,13 @@ extension NewUserSignupOptionsViewController {
         startPurchaseProgressIndicator()
 
         guard let receiptString = storeKitService.getPurchaseReceipt() else {
-            // TODO: Properly handle this and provide feedback to the user
             stopPurchaseProgressIndicator()
+            
+            AlertHelper.showAlert(
+                title: "Lite Node Purchase Failed",
+                message: "An AppStore purchase receipt could not be found."
+            )
+            
             return
         }
 
@@ -222,26 +230,22 @@ extension NewUserSignupOptionsViewController {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let connectionCode):
-                    /**
-                     * TODO: Handle success
-                     *
-                     *  - Logic to signupWithCode, generateToken, etc…
-                     *  - Transition to `NewUserGreetingViewController`
-                     */
+                    print("Successfully generated Lite Node Connection Code: \(connectionCode)")
                     self.signup(withConnectionCode: connectionCode)
-                    break
-                case .failure:
-                    // TODO: Parse out an actual error message here and present
+                case .failure(let error):
                     AlertHelper.showAlert(
-                        title: "Lite Node Purchase",
-                        message: "Receipt Validation Failed"
+                        title: "Lite Node Purchase Failed",
+                        message: """
+                        AppStore Receipt Validation Failed.
+                        
+                        Error: \(error.localizedDescription)
+                        """
                     )
                 }
             }
         }
     }
 }
-
 
 
 // MARK: -  StoreKitServiceDelegate
@@ -251,37 +255,19 @@ extension NewUserSignupOptionsViewController: StoreKitServiceDelegate {
         on queue: SKPaymentQueue,
         updatedTransactions transactions: [SKPaymentTransaction]
     ) {
-        for transaction in transactions {
-            switch transaction.transactionState {
-            case .purchasing:
-                // Do not block the UI. Allow the user to continue using the app.
-                break
-            case .purchased:
-                // The purchase was successful. See if it matches the node purchase
-                // we currently have in progress
-                guard
-                    let hubNodeInvoice = hubNodeInvoice,
+        guard
+            let hubNodeInvoice = hubNodeInvoice,
+            transactions.contains(
+                where: { transaction in
+                    transaction.transactionState == .purchased &&
                     transaction.payment.productIdentifier == liteNodePurchaseProduct?.productIdentifier
-                else {
-                    break
                 }
-                
-                generateConnectionCode(fromPurchasedNodeInvoice: hubNodeInvoice)
-            case .restored:
-                break
-            case .deferred:
-                // A transaction is in the queue, but its final status
-                // is pending external action such as Ask to Buy.
-                break
-            case .failed:
-                AlertHelper.showAlert(
-                    title: "Lite Node Purchase",
-                    message: "Payment Failed"
-                )
-            @unknown default:
-                print("Unknown transaction state: \(transaction.transactionState)")
-            }
+            )
+        else {
+            return
         }
+        
+        generateConnectionCode(fromPurchasedNodeInvoice: hubNodeInvoice)
     }
     
     

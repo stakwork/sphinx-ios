@@ -190,9 +190,10 @@ extension API {
         then completionHandler: @escaping NodePurchaseInvoiceCallback
     ) {
         let urlPath = "\(API.kHUBServerUrl)/api/v1/nodes/purchase"
-
-        guard let request = getURLRequest(
-            route: urlPath,
+        
+        guard let request = createRequest(
+            urlPath,
+            params: nil,
             method: "POST"
         ) else {
             completionHandler(.failure(.failedToCreateRequest(urlPath: urlPath)))
@@ -256,8 +257,8 @@ extension API {
             "invoice": hubNodeInvoice as AnyObject
         ]
         
-        guard let request = getURLRequest(
-            route: urlPath,
+        guard let request = createRequest(
+            urlPath,
             params: parameters as NSDictionary?,
             method: "POST"
         ) else {

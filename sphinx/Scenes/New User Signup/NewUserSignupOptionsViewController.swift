@@ -2,7 +2,6 @@
 //  NewUserSignupOptionsViewController.swift
 //  sphinx
 //
-//  Created by Brian Sipple on 7/1/21.
 //  Copyright © 2021 sphinx. All rights reserved.
 //
 

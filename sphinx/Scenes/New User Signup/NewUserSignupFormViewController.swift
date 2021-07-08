@@ -2,7 +2,6 @@
 //  NewUserSignupFormViewController.swift
 //  sphinx
 //
-//  Created by Brian Sipple on 6/22/21.
 //  Copyright © 2021 sphinx. All rights reserved.
 //
 

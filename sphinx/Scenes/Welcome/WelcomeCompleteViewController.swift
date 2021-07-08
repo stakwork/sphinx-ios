@@ -2,7 +2,6 @@
 //  WelcomeCompleteViewController.swift
 //  sphinx
 //
-//  Created by Brian Sipple on 6/17/21.
 //  Copyright © 2021 Tomas Timinskas. All rights reserved.
 //
 

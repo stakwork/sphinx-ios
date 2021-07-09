@@ -540,6 +540,7 @@
 		F34BFEDB267B3552003F6D55 /* RestoreUserConnectingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34BFEDA267B3552003F6D55 /* RestoreUserConnectingViewController.swift */; };
 		F34BFEDF267B3C30003F6D55 /* RestoreUser.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F34BFEDE267B3C30003F6D55 /* RestoreUser.storyboard */; };
 		F358212D2695D11500A314F1 /* ConnectionCodeSignupHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = F358212C2695D11500A314F1 /* ConnectionCodeSignupHandling.swift */; };
+		F358212F2698BE6800A314F1 /* API+Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F358212E2698BE6700A314F1 /* API+Errors.swift */; };
 		F394ECA12682064100529038 /* NewUserSignup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F394ECA32682064100529038 /* NewUserSignup.storyboard */; };
 		F394ECA92682099000529038 /* NewUserSignupDescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F394ECA82682098F00529038 /* NewUserSignupDescriptionViewController.swift */; };
 		F394ECAB2682218F00529038 /* NewUserSignupFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F394ECAA2682218F00529038 /* NewUserSignupFormViewController.swift */; };
@@ -1216,6 +1217,7 @@
 		F34BFEDA267B3552003F6D55 /* RestoreUserConnectingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreUserConnectingViewController.swift; sourceTree = "<group>"; };
 		F34BFEDE267B3C30003F6D55 /* RestoreUser.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RestoreUser.storyboard; sourceTree = "<group>"; };
 		F358212C2695D11500A314F1 /* ConnectionCodeSignupHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionCodeSignupHandling.swift; sourceTree = "<group>"; };
+		F358212E2698BE6700A314F1 /* API+Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+Errors.swift"; sourceTree = "<group>"; };
 		F394ECA22682064100529038 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/NewUserSignup.storyboard; sourceTree = "<group>"; };
 		F394ECA52682064400529038 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/NewUserSignup.strings; sourceTree = "<group>"; };
 		F394ECA72682064800529038 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/NewUserSignup.strings; sourceTree = "<group>"; };
@@ -1973,6 +1975,7 @@
 			isa = PBXGroup;
 			children = (
 				475BDD27232AC97500C5BBD6 /* API.swift */,
+				F358212E2698BE6700A314F1 /* API+Errors.swift */,
 				47AAFC732387062700E30BDA /* APIUsersExtension.swift */,
 				47AAFC752387063300E30BDA /* APIMessagesExtension.swift */,
 				47AAFC772387063F00E30BDA /* APISubscriptionsExtension.swift */,
@@ -3244,6 +3247,7 @@
 				475BDCB3232AC1E800C5BBD6 /* NewKeyPadView.swift in Sources */,
 				47ACBC15265E9CE600D2FE47 /* AuthExternalView.swift in Sources */,
 				47F2289E23672A5E001429A4 /* ImagePickerManager.swift in Sources */,
+				F358212F2698BE6800A314F1 /* API+Errors.swift in Sources */,
 				47949BD624AA12C7000D697B /* CommonDeletedMessageTableViewCell.swift in Sources */,
 				47A79D3A2444A15C005CD72F /* MessageOptionsView.swift in Sources */,
 				475BDCBE232AC1F000C5BBD6 /* ChatDataSource.swift in Sources */,

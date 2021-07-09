@@ -57,15 +57,6 @@ typealias UploadAttachmentCallback = ((Bool, NSDictionary?) -> ())
 typealias MediaInfoCallback = ((Int, String?, Int?) -> ())
 
 
-extension API {
-    enum HUBError: Swift.Error {
-        case failedToCreateRequest(urlPath: String)
-        case unexpectedResponseData
-        case networkError(AFError)
-        case nodeHUBInvoiceGenerationFailure(message: String)
-    }
-}
-
 class API {
     typealias HUBNodeInvoice = String
     typealias SphinxInviteCode = String

@@ -267,7 +267,7 @@
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <connections>
                         <outlet property="balanceLabel" destination="jUZ-jZ-gCS" id="6zs-Bh-jRR"/>
-                        <outlet property="buyKarmaButton" destination="CCI-OS-jEn" id="8Qj-pf-TOf"/>
+                        <outlet property="karmaPurchaseButton" destination="CCI-OS-jEn" id="8Qj-pf-TOf"/>
                         <outlet property="nameLabel" destination="3SJ-Nf-Lei" id="vuF-5h-HxF"/>
                         <outlet property="optionsTableView" destination="sYi-el-T55" id="mmi-wA-Or2"/>
                         <outlet property="profileImageView" destination="kde-Nt-Qid" id="sne-ok-ZUT"/>

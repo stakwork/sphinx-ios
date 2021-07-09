@@ -19,7 +19,7 @@ class LeftMenuViewController: UIViewController {
     @IBOutlet weak var balanceLabel: UILabel!
     @IBOutlet weak var unitLabel: UILabel!
     @IBOutlet weak var optionsTableView: UITableView!
-    @IBOutlet weak var buyKarmaButton: UIButton!
+    @IBOutlet weak var karmaPurchaseButton: UIButton!
     
     let buttonsCount = 2
     
@@ -57,9 +57,9 @@ class LeftMenuViewController: UIViewController {
         profileImageView.clipsToBounds = true
         
         
-        buyKarmaButton.setTitle("left-menu.buy-karma-button".localized, for: .normal)
-        buyKarmaButton.layer.cornerRadius = buyKarmaButton.frame.size.height / 2
-        buyKarmaButton.clipsToBounds = true
+        karmaPurchaseButton.setTitle("left-menu.buy-karma-button".localized, for: .normal)
+        karmaPurchaseButton.layer.cornerRadius = karmaPurchaseButton.frame.size.height / 2
+        karmaPurchaseButton.clipsToBounds = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -67,6 +67,7 @@ class LeftMenuViewController: UIViewController {
         
         configureProfile()
         configureTable()
+        configureKarmaPurchaseButton()
         walletBalanceService.updateBalance(labels: [balanceLabel])
     }
     
@@ -90,6 +91,19 @@ class LeftMenuViewController: UIViewController {
         optionsTableView.dataSource = self
         optionsTableView.reloadData()
     }
+    
+    
+    func configureKarmaPurchaseButton() {
+        if
+            let currentOwner = UserContact.getOwner(),
+            currentOwner.isVirtualNode()
+        {
+            karmaPurchaseButton.isHidden = false
+        } else {
+            karmaPurchaseButton.isHidden = true
+        }
+    }
+    
     
     func goToChatList() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate

@@ -93,7 +93,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
-                                            <action selector="addSatsButtonTouched" destination="5hS-8z-Ih2" eventType="touchUpInside" id="zOQ-z5-P2F"/>
+                                            <action selector="karmaPurchaseButtonTapped" destination="5hS-8z-Ih2" eventType="touchUpInside" id="zOQ-z5-P2F"/>
                                         </connections>
                                     </button>
                                 </subviews>

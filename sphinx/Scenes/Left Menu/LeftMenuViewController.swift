@@ -7,6 +7,7 @@
 
 import UIKit
 import KYDrawerController
+import StoreKit
 
 class LeftMenuViewController: UIViewController {
     
@@ -21,6 +22,8 @@ class LeftMenuViewController: UIViewController {
     @IBOutlet weak var optionsTableView: UITableView!
     @IBOutlet weak var karmaPurchaseButton: UIButton!
     
+    let storeKitService = StoreKitService.shared
+
     let buttonsCount = 2
     
     let menuOptions:[MenuOption] = [
@@ -42,6 +45,21 @@ class LeftMenuViewController: UIViewController {
         }
     }
     
+    
+    var canUserBuyKarmaForNode: Bool {
+        UserContact.getOwner()?.isVirtualNode() ?? false
+    }
+    
+    var karmaPurchaseProduct: SKProduct? {
+        didSet {
+            karmaPurchaseButton.isHidden = (
+                karmaPurchaseProduct == nil ||
+                canUserBuyKarmaForNode == false
+            )
+        }
+    }
+    
+    
     static func instantiate(rootViewController : RootViewController) -> LeftMenuViewController {
         let viewController = StoryboardScene.LeftMenu.leftMenuViewController.instantiate()
         viewController.rootViewController = rootViewController
@@ -51,6 +69,7 @@ class LeftMenuViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        storeKitService.requestDelegate = self
         walletIcon.tintColorDidChange()
         
         profileImageView.layer.cornerRadius = profileImageView.frame.size.height / 2
@@ -94,14 +113,14 @@ class LeftMenuViewController: UIViewController {
     
     
     func configureKarmaPurchaseButton() {
-        if
-            let currentOwner = UserContact.getOwner(),
-            currentOwner.isVirtualNode()
-        {
-            karmaPurchaseButton.isHidden = false
-        } else {
+        guard canUserBuyKarmaForNode else {
             karmaPurchaseButton.isHidden = true
+            return
         }
+        
+        storeKitService.fetchProducts(matchingIdentifiers: [
+            StoreKitService.ProductIdentifiers.add1000Karma,
+        ])
     }
     
     
@@ -140,13 +159,13 @@ class LeftMenuViewController: UIViewController {
         GroupsPinManager.sharedInstance.logout()
     }
     
-    @IBAction func addSatsButtonTouched() {
-        let addSatsVC = AddSatsViewController.instantiate(rootViewController: rootViewController)
-        let navigationC = UINavigationController(rootViewController: addSatsVC)
-        navigationC.setNavigationBarHidden(true, animated: false)
-        navigationC.modalPresentationStyle = .overCurrentContext
-        rootViewController.presentViewController(vc: navigationC)
-        closeLeftMenu()
+    
+    @IBAction func karmaPurchaseButtonTapped() {
+        guard let karmaPurchaseProduct = karmaPurchaseProduct else {
+            preconditionFailure()
+        }
+        
+        storeKitService.purchase(karmaPurchaseProduct)
     }
 }
 
@@ -262,4 +281,26 @@ extension LeftMenuViewController : MenuDelegate {
 
 extension LeftMenuViewController : KYDrawerControllerDelegate {
     func drawerController(_ drawerController: KYDrawerController, didChangeState state: KYDrawerController.DrawerState) {}
+}
+
+
+// MARK: -  StoreKitServiceRequestDelegate
+extension LeftMenuViewController: StoreKitServiceRequestDelegate {
+    
+    func storeKitServiceDidReceiveResponse(_ response: SKProductsResponse) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            
+            self.karmaPurchaseProduct = response
+                .products
+                .first(where: {
+                    $0.productIdentifier == StoreKitService.ProductIdentifiers.add1000Karma
+                }
+            )
+        }
+    }
+    
+    
+    func storeKitServiceDidReceiveMessage(_ message: String) {
+    }
 }

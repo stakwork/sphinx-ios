@@ -57,7 +57,8 @@ class NewUserSignupOptionsViewController: UIViewController, ConnectionCodeSignup
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        storeKitService.delegate = self
+        storeKitService.requestDelegate = self
+        storeKitService.transactionObserverDelegate = self
 
         setupButton(
             connectionCodeButton,
@@ -82,7 +83,7 @@ class NewUserSignupOptionsViewController: UIViewController, ConnectionCodeSignup
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        storeKitService.delegate = nil
+        storeKitService.requestDelegate = nil
     }
 }
  
@@ -247,8 +248,8 @@ extension NewUserSignupOptionsViewController {
 }
 
 
-// MARK: -  StoreKitServiceDelegate
-extension NewUserSignupOptionsViewController: StoreKitServiceDelegate {
+// MARK: -  StoreKitServiceTransactionObserverDelegate
+extension NewUserSignupOptionsViewController: StoreKitServiceTransactionObserverDelegate {
     
     func storeKitServiceDidObserveTransactionUpdate(
         on queue: SKPaymentQueue,
@@ -268,8 +269,11 @@ extension NewUserSignupOptionsViewController: StoreKitServiceDelegate {
         
         generateConnectionCode(fromPurchasedNodeInvoice: hubNodeInvoice)
     }
+}
     
-    
+ 
+// MARK: -  StoreKitServiceRequestDelegate
+extension NewUserSignupOptionsViewController: StoreKitServiceRequestDelegate {
     func storeKitServiceDidReceiveResponse(_ response: SKProductsResponse) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
@@ -285,7 +289,6 @@ extension NewUserSignupOptionsViewController: StoreKitServiceDelegate {
     
     
     func storeKitServiceDidReceiveMessage(_ message: String) {
-        
     }
 }
 

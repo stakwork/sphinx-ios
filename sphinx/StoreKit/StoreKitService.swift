@@ -9,23 +9,27 @@ import Foundation
 import StoreKit
 
 
-// MARK: - StoreKitServiceDelegate
+// MARK: - StoreKitServiceRequestDelegate
 
-protocol StoreKitServiceDelegate: AnyObject {
+protocol StoreKitServiceRequestDelegate: AnyObject {
     
     /// Provides the delegate with the App Store's response.
     func storeKitServiceDidReceiveResponse(_ response: SKProductsResponse)
     
     /// Provides the delegate with the error encountered during the product request.
     func storeKitServiceDidReceiveMessage(_ message: String)
-    
+}
 
+
+// MARK: - StoreKitServiceTransactionObserverDelegate
+
+protocol StoreKitServiceTransactionObserverDelegate: AnyObject {
+    
     func storeKitServiceDidObserveTransactionUpdate(
         on queue: SKPaymentQueue,
         updatedTransactions transactions: [SKPaymentTransaction]
     )
 }
-
 
 
 final class StoreKitService: NSObject {
@@ -51,7 +55,8 @@ final class StoreKitService: NSObject {
     private var productRequest: SKProductsRequest?
     
     
-    weak var delegate: StoreKitServiceDelegate?
+    weak var requestDelegate: StoreKitServiceRequestDelegate?
+    weak var transactionObserverDelegate: StoreKitServiceTransactionObserverDelegate?
     
     
     // MARK: - Init
@@ -136,7 +141,7 @@ extension StoreKitService: SKProductsRequestDelegate {
         _ request: SKProductsRequest,
         didReceive response: SKProductsResponse
     ) {
-        delegate?.storeKitServiceDidReceiveResponse(response)
+        requestDelegate?.storeKitServiceDidReceiveResponse(response)
     }
 }
 
@@ -149,7 +154,7 @@ extension StoreKitService: SKRequestDelegate {
         print("Error: \(error.localizedDescription)")
         
         DispatchQueue.main.async {
-            self.delegate?.storeKitServiceDidReceiveMessage(error.localizedDescription)
+            self.requestDelegate?.storeKitServiceDidReceiveMessage(error.localizedDescription)
         }
     }
 }
@@ -163,7 +168,7 @@ extension StoreKitService: SKPaymentTransactionObserver {
         _ queue: SKPaymentQueue,
         updatedTransactions transactions: [SKPaymentTransaction]
     ) {
-        delegate?.storeKitServiceDidObserveTransactionUpdate(
+        transactionObserverDelegate?.storeKitServiceDidObserveTransactionUpdate(
             on: queue,
             updatedTransactions: transactions
         )

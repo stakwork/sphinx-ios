@@ -209,7 +209,6 @@ extension API {
                 }
                 
                 guard
-                    let json = data as? Dictionary<String, Any>,
                     let success = json["success", default: false] as? Bool,
                     success == true
                 else {
@@ -222,7 +221,7 @@ extension API {
                     }
                     
                     completionHandler(
-                        .failure(.nodeHUBInvoiceGenerationFailure(message: errorMessage))
+                        .failure(.nodeInvoiceGenerationFailure(message: errorMessage))
                     )
                     
                     return
@@ -288,7 +287,7 @@ extension API {
                     }
                     
                     completionHandler(
-                        .failure(.nodeHUBInvoiceGenerationFailure(message: errorMessage))
+                        .failure(.nodeInvoiceGenerationFailure(message: errorMessage))
                     )
                     
                     return

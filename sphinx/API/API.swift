@@ -42,10 +42,11 @@ typealias PodcastInfoCallback = ((JSON) -> ())
 typealias OnchainAddressCallback = ((String) -> ())
 typealias AppVersionsCallback = ((String) -> ())
 
-//HUB calls
+// HUB calls
 typealias SignupWithCodeCallback = ((JSON, String, String) -> ())
 typealias LowestPriceCallback = ((Double) -> ())
 typealias PayInviteCallback = ((JSON) -> ())
+typealias KarmaPurchaseValidationCallback = (Result<Void, API.HUBError>) -> ()
 typealias NodePurchaseInvoiceCallback = (Result<API.HUBNodeInvoice, API.HUBError>) -> ()
 typealias NodePurchaseValidationCallback = (Result<API.SphinxInviteCode, API.HUBError>) -> ()
 

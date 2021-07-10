@@ -70,6 +70,8 @@ class LeftMenuViewController: UIViewController {
         super.viewDidLoad()
         
         storeKitService.requestDelegate = self
+        storeKitService.transactionObserverDelegate = self
+        
         walletIcon.tintColorDidChange()
         
         profileImageView.layer.cornerRadius = profileImageView.frame.size.height / 2
@@ -283,24 +285,3 @@ extension LeftMenuViewController : KYDrawerControllerDelegate {
     func drawerController(_ drawerController: KYDrawerController, didChangeState state: KYDrawerController.DrawerState) {}
 }
 
-
-// MARK: -  StoreKitServiceRequestDelegate
-extension LeftMenuViewController: StoreKitServiceRequestDelegate {
-    
-    func storeKitServiceDidReceiveResponse(_ response: SKProductsResponse) {
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            
-            self.karmaPurchaseProduct = response
-                .products
-                .first(where: {
-                    $0.productIdentifier == StoreKitService.ProductIdentifiers.add1000Karma
-                }
-            )
-        }
-    }
-    
-    
-    func storeKitServiceDidReceiveMessage(_ message: String) {
-    }
-}

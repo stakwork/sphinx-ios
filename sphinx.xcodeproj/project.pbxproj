@@ -438,8 +438,6 @@
 		47B46F66254AFE1C007F61CD /* ChatHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B46F65254AFE1C007F61CD /* ChatHeaderView.swift */; };
 		47B690DD24A2CF6000F07B73 /* AppAppearenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B690DC24A2CF6000F07B73 /* AppAppearenceView.swift */; };
 		47B690E124A2E00800F07B73 /* UIWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B690E024A2E00800F07B73 /* UIWindow.swift */; };
-		47B6F525258A833600D64A41 /* AddSatsAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B6F524258A833600D64A41 /* AddSatsAppViewController.swift */; };
-		47B6F527258A917C00D64A41 /* AddSatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B6F526258A917C00D64A41 /* AddSatsViewController.swift */; };
 		47B9A63F233BAEE500D2B022 /* AddressBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B9A63E233BAEE500D2B022 /* AddressBookViewController.swift */; };
 		47B9A645233BB54B00D2B022 /* AddressBookDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B9A644233BB54B00D2B022 /* AddressBookDataSource.swift */; };
 		47B9A648233BB6AE00D2B022 /* AddressBookHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B9A647233BB6AE00D2B022 /* AddressBookHeaderView.swift */; };
@@ -522,6 +520,8 @@
 		47FDDB1C2562D77200BBF15F /* boost_animation.json in Resources */ = {isa = PBXBuildFile; fileRef = 47FDDB1B2562D77100BBF15F /* boost_animation.json */; };
 		47FE9A3C23BF751C0090913F /* ChatViewControllerAttachmentDelegateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FE9A3B23BF751C0090913F /* ChatViewControllerAttachmentDelegateExtension.swift */; };
 		47FE9A3E23C381A20090913F /* UITapGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FE9A3D23C381A20090913F /* UITapGestureRecognizer.swift */; };
+		F30884A72699123600CADDEB /* LeftMenuViewController+KarmaPurchaseUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30884A62699123600CADDEB /* LeftMenuViewController+KarmaPurchaseUtils.swift */; };
+		F30884A92699181200CADDEB /* API+KarmaPurchaseUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30884A82699181200CADDEB /* API+KarmaPurchaseUtils.swift */; };
 		F3197C0C267FA2C200330F79 /* connecting.gif in Resources */ = {isa = PBXBuildFile; fileRef = F3241A2F267CBB12007A6454 /* connecting.gif */; };
 		F3197C0D267FA2C800330F79 /* ellipse.gif in Resources */ = {isa = PBXBuildFile; fileRef = F3241A30267CBB12007A6454 /* ellipse.gif */; };
 		F3197C0E267FA2C800330F79 /* lightningNetwork.gif in Resources */ = {isa = PBXBuildFile; fileRef = F3241A31267CBB12007A6454 /* lightningNetwork.gif */; };
@@ -1106,8 +1106,6 @@
 		47B690DC24A2CF6000F07B73 /* AppAppearenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAppearenceView.swift; sourceTree = "<group>"; };
 		47B690E024A2E00800F07B73 /* UIWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIWindow.swift; sourceTree = "<group>"; };
 		47B6F3D923A13671004C7B08 /* sphinx 5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 5.xcdatamodel"; sourceTree = "<group>"; };
-		47B6F524258A833600D64A41 /* AddSatsAppViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSatsAppViewController.swift; sourceTree = "<group>"; };
-		47B6F526258A917C00D64A41 /* AddSatsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSatsViewController.swift; sourceTree = "<group>"; };
 		47B9A63E233BAEE500D2B022 /* AddressBookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressBookViewController.swift; sourceTree = "<group>"; };
 		47B9A644233BB54B00D2B022 /* AddressBookDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressBookDataSource.swift; sourceTree = "<group>"; };
 		47B9A647233BB6AE00D2B022 /* AddressBookHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressBookHeaderView.swift; sourceTree = "<group>"; };
@@ -1197,6 +1195,8 @@
 		47FE9A3B23BF751C0090913F /* ChatViewControllerAttachmentDelegateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewControllerAttachmentDelegateExtension.swift; sourceTree = "<group>"; };
 		47FE9A3D23C381A20090913F /* UITapGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITapGestureRecognizer.swift; sourceTree = "<group>"; };
 		487E10CEB3D07B0840A84681 /* Pods_sphinx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_sphinx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F30884A62699123600CADDEB /* LeftMenuViewController+KarmaPurchaseUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LeftMenuViewController+KarmaPurchaseUtils.swift"; sourceTree = "<group>"; };
+		F30884A82699181200CADDEB /* API+KarmaPurchaseUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+KarmaPurchaseUtils.swift"; sourceTree = "<group>"; };
 		F3197C102680F50300330F79 /* RestoreUserFormViewController+FormSubmissionUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RestoreUserFormViewController+FormSubmissionUtils.swift"; sourceTree = "<group>"; };
 		F3197C1226811DE400330F79 /* RestoreUserFormViewController+KeychainRestorationUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RestoreUserFormViewController+KeychainRestorationUtils.swift"; sourceTree = "<group>"; };
 		F31CF2652691489800AAB621 /* StoreKitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitService.swift; sourceTree = "<group>"; };
@@ -1976,20 +1976,21 @@
 			children = (
 				475BDD27232AC97500C5BBD6 /* API.swift */,
 				F358212E2698BE6700A314F1 /* API+Errors.swift */,
-				47AAFC732387062700E30BDA /* APIUsersExtension.swift */,
-				47AAFC752387063300E30BDA /* APIMessagesExtension.swift */,
-				47AAFC772387063F00E30BDA /* APISubscriptionsExtension.swift */,
-				47AAFC79238706EA00E30BDA /* APIInviteExtension.swift */,
-				47AAFC7B2387070D00E30BDA /* APIWalletExtension.swift */,
+				F30884A82699181200CADDEB /* API+KarmaPurchaseUtils.swift */,
 				47AAFC81238EFCE600E30BDA /* APIAttachmentsExtension.swift */,
 				476A10BA23A91FCE00817892 /* APIChatsExtension.swift */,
 				47669F3C23CF622000C17A77 /* APIGroupsExtension.swift */,
-				47CC7CE123E3611600730E6F /* APITransactionsExtension.swift */,
+				47AAFC79238706EA00E30BDA /* APIInviteExtension.swift */,
 				47CBB4EA23E9D9BE00743CBE /* APILogsExtension.swift */,
-				4703CFA025278C40007B685C /* APIRedeemSatsExtension.swift */,
-				4794CA76252F5D66007C5022 /* APIPodcastExtension.swift */,
-				47BF7D4A25A8A59100593489 /* APIVersionsExtension.swift */,
+				47AAFC752387063300E30BDA /* APIMessagesExtension.swift */,
 				47CD950F265EC70E009B06A4 /* APIPeopleExtension.swift */,
+				4794CA76252F5D66007C5022 /* APIPodcastExtension.swift */,
+				4703CFA025278C40007B685C /* APIRedeemSatsExtension.swift */,
+				47AAFC772387063F00E30BDA /* APISubscriptionsExtension.swift */,
+				47CC7CE123E3611600730E6F /* APITransactionsExtension.swift */,
+				47AAFC732387062700E30BDA /* APIUsersExtension.swift */,
+				47BF7D4A25A8A59100593489 /* APIVersionsExtension.swift */,
+				47AAFC7B2387070D00E30BDA /* APIWalletExtension.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -2048,10 +2049,10 @@
 			children = (
 				4797E76024B8DDE400D13270 /* LeftMenu.storyboard */,
 				475BDD63232BEEAB00C5BBD6 /* LeftMenuViewController.swift */,
+				F30884A62699123600CADDEB /* LeftMenuViewController+KarmaPurchaseUtils.swift */,
 				47468FD623353C880072124A /* LeftMenuOptionTableViewCell.swift */,
 				47E300DE234B81F800DB56DB /* LeftMenuAddFriendTableViewCell.swift */,
 				471FACD923E9BE48007DE1C8 /* SupportViewController.swift */,
-				47B6F523258A832000D64A41 /* Add Sats */,
 			);
 			path = "Left Menu";
 			sourceTree = "<group>";
@@ -2590,15 +2591,6 @@
 				47F258CB253DD43400122A5A /* PinTimeSlider.xib */,
 			);
 			path = "Custom Views";
-			sourceTree = "<group>";
-		};
-		47B6F523258A832000D64A41 /* Add Sats */ = {
-			isa = PBXGroup;
-			children = (
-				47B6F524258A833600D64A41 /* AddSatsAppViewController.swift */,
-				47B6F526258A917C00D64A41 /* AddSatsViewController.swift */,
-			);
-			path = "Add Sats";
 			sourceTree = "<group>";
 		};
 		47B9A640233BB50900D2B022 /* Table View Cells */ = {
@@ -3264,7 +3256,6 @@
 				47AAFC7E238D7C8D00E30BDA /* PaymentRequestDecoder.swift in Sources */,
 				47B9A63F233BAEE500D2B022 /* AddressBookViewController.swift in Sources */,
 				475BDCFC232AC24600C5BBD6 /* InvoiceSentTableViewCell.swift in Sources */,
-				47B6F525258A833600D64A41 /* AddSatsAppViewController.swift in Sources */,
 				47FE9A3C23BF751C0090913F /* ChatViewControllerAttachmentDelegateExtension.swift in Sources */,
 				475BDD08232AC24600C5BBD6 /* MessageReceivedTableViewCell.swift in Sources */,
 				4734D3C9241AA24C00D6957E /* PaymentTemplateViewController.swift in Sources */,
@@ -3313,7 +3304,6 @@
 				47AA08C7234BB8E0002C69E2 /* ShareInviteCodeViewController.swift in Sources */,
 				F31CF2662691489800AAB621 /* StoreKitService.swift in Sources */,
 				475BDCFB232AC24600C5BBD6 /* PaidInvoiceReceivedTableViewCell.swift in Sources */,
-				47B6F527258A917C00D64A41 /* AddSatsViewController.swift in Sources */,
 				4789E26E24F406F3003991BE /* RelayURLUpdateHelper.swift in Sources */,
 				475BDD5C232AE26E00C5BBD6 /* TransactionMessage+CoreDataClass.swift in Sources */,
 				475723A9247EBB56001ADC7E /* CustomAudioPlayer.swift in Sources */,
@@ -3386,6 +3376,7 @@
 				475BDD5F232AE26E00C5BBD6 /* UserContact+CoreDataClass.swift in Sources */,
 				477D9694244DFCED00830406 /* GifOverlayView.swift in Sources */,
 				475922F923E0B4EE00B73626 /* DelayPerformertHelper.swift in Sources */,
+				F30884A72699123600CADDEB /* LeftMenuViewController+KarmaPurchaseUtils.swift in Sources */,
 				4785C0FF24D1EE1F004E2D6C /* GroupRequestTableViewCell.swift in Sources */,
 				473E5DE32575696C00697EEA /* PickerViewController.swift in Sources */,
 				4789E24A24EDB73B003991BE /* WebAppViewController.swift in Sources */,
@@ -3403,6 +3394,7 @@
 				47E300DF234B81F800DB56DB /* LeftMenuAddFriendTableViewCell.swift in Sources */,
 				471940B1233951BB00F1BF5B /* QRCodeDetailViewModel.swift in Sources */,
 				475BDCBA232AC1E800C5BBD6 /* ChatAccessoryView.swift in Sources */,
+				F30884A92699181200CADDEB /* API+KarmaPurchaseUtils.swift in Sources */,
 				4787F8982478112F00CCE8B9 /* ChatAvatarView.swift in Sources */,
 				47308E0E24FEE6E700FFAC6F /* SocketIOClientConfiguration.swift in Sources */,
 				47308E1124FEE6E700FFAC6F /* SocketIOClientOption.swift in Sources */,

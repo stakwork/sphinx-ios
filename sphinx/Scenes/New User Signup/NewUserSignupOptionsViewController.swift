@@ -184,7 +184,7 @@ extension NewUserSignupOptionsViewController {
                 
                 var alertMessage: String
                 
-                if case .nodeHUBInvoiceGenerationFailure(let message) = error {
+                if case .nodeInvoiceGenerationFailure(let message) = error {
                     alertMessage = message
                 } else {
                     alertMessage = "Purchase Eligibility Failed"

@@ -96,12 +96,6 @@ extension StoreKitService {
         productRequest?.start()
     }
     
-    
-    func getReceiptData(at url: URL) throws -> Data {
-        return try Data(contentsOf: url, options: [.alwaysMapped])
-    }
-    
-    
     /// Create and add a payment request to the payment queue.
     func purchase(_ product: SKProduct) {
         let payment = SKMutablePayment(product: product)
@@ -131,6 +125,14 @@ extension StoreKitService {
     }
 }
 
+
+// MARK: -  Private Helpers
+extension StoreKitService {
+    
+    private func getReceiptData(at url: URL) throws -> Data {
+        return try Data(contentsOf: url, options: [.alwaysMapped])
+    }
+}
 
 
 

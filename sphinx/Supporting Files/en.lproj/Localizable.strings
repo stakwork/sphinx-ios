@@ -172,7 +172,7 @@
 "create.group" = "Create Group";
 "whoops" = "Whoops!";
 "welcome" = "Welcome";
-"contact.support" = "Something went wrong.\n\nPlease contact our support at\nsupport@sphinx.chat";
+"contact.support" = "Something went wrong.\n\nPlease contact our support at\nsupport@stakwork.com";
 "paste.invite.text" = "Paste the invitation text\nor scan the QR code";
 "invalid.pin" = "Invalid PIN";
 "message.from.friend" = "A message\nfrom your friend..";

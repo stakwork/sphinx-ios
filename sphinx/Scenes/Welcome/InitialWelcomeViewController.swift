@@ -45,8 +45,6 @@ class InitialWelcomeViewController: UIViewController {
     
     
     @IBAction func newUserButtonTapped(_ sender: UIButton) {
-        SignupHelper.step = SignupHelper.SignupStep.NewUserSelected.rawValue
-        
         let nextVC = NewUserSignupOptionsViewController
             .instantiate(rootViewController: rootViewController)
         

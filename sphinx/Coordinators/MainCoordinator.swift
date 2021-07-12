@@ -22,8 +22,6 @@ final class MainCoordinator: NSObject {
         switch(SignupHelper.step) {
         case SignupHelper.SignupStep.Start.rawValue:
             presentInitialWelcomeViewController()
-        case SignupHelper.SignupStep.NewUserSelected.rawValue:
-            presentNewUserSignupOptionsViewController()
         case SignupHelper.SignupStep.IPAndTokenSet.rawValue:
             presentInviteWelcomeViewController()
         case SignupHelper.SignupStep.InviterContactCreated.rawValue:

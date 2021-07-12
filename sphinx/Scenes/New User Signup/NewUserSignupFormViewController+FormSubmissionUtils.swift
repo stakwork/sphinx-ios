@@ -105,7 +105,6 @@ extension NewUserSignupFormViewController {
         navigationController?.popViewController(animated: true)
 
         SignupHelper.resetInviteInfo()
-        SignupHelper.step = SignupHelper.SignupStep.NewUserSelected.rawValue
 
         codeTextField.text = ""
         newMessageBubbleHelper.showGenericMessageView(text: message)

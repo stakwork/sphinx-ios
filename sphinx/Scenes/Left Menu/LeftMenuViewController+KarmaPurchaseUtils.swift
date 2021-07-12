@@ -50,14 +50,34 @@ extension LeftMenuViewController: StoreKitServiceTransactionObserverDelegate {
         finalizeKarmaPurchase()
     }
     
-    func storeKitServiceDidObserveTransactionRemovedFromQueue() {}
+    func storeKitServiceDidObserveTransactionRemovedFromQueue() {
+        stopPurchaseProgressIndicator()
+    }
 }
     
 
 extension LeftMenuViewController {
     
+    func stopPurchaseProgressIndicator() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            
+            self.isPurchaseProcessing = false
+        }
+    }
+    
+    func startPurchaseProgressIndicator() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            
+            self.isPurchaseProcessing = true
+        }
+    }
+    
     func finalizeKarmaPurchase() {
         guard let receiptString = storeKitService.getPurchaseReceipt() else {
+            stopPurchaseProgressIndicator()
+            
             AlertHelper.showAlert(
                 title: "Karma Purchase Failed",
                 message: "An AppStore purchase receipt could not be found."
@@ -67,9 +87,12 @@ extension LeftMenuViewController {
         }
         
         guard
-            let ownerPubKey = UserContact.getOwner()?.publicKey,
-            let routeHint = UserContact.getOwner()?.routeHint
+            let owner = UserContact.getOwner(),
+            let ownerPubKey = owner.publicKey,
+            let routeHint = owner.routeHint
         else {
+            stopPurchaseProgressIndicator()
+            
             AlertHelper.showAlert(
                 title: "Karma Purchase Failed",
                 message: "Node Address Information Invalid"
@@ -84,6 +107,8 @@ extension LeftMenuViewController {
             andRouteHint: routeHint
         ) { result in
             DispatchQueue.main.async {
+                self.stopPurchaseProgressIndicator()
+                
                 switch result {
                 case .success:
                     print("Successfully purchased Karma")

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19115.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19107.5"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -96,6 +96,9 @@
                                             <action selector="karmaPurchaseButtonTapped" destination="5hS-8z-Ih2" eventType="touchUpInside" id="zOQ-z5-P2F"/>
                                         </connections>
                                     </button>
+                                    <activityIndicatorView opaque="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="Ape-yQ-iXr">
+                                        <rect key="frame" x="211" y="121" width="20" height="20"/>
+                                    </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -106,8 +109,10 @@
                                     <constraint firstItem="3SJ-Nf-Lei" firstAttribute="top" secondItem="kde-Nt-Qid" secondAttribute="top" constant="-3" id="Cfy-qT-5hU"/>
                                     <constraint firstItem="CCI-OS-jEn" firstAttribute="leading" secondItem="jUZ-jZ-gCS" secondAttribute="leading" constant="-2" id="IsY-Wu-7na"/>
                                     <constraint firstItem="jUZ-jZ-gCS" firstAttribute="leading" secondItem="3SJ-Nf-Lei" secondAttribute="leading" id="LVd-6N-8FL"/>
+                                    <constraint firstItem="Ape-yQ-iXr" firstAttribute="leading" secondItem="CCI-OS-jEn" secondAttribute="trailing" constant="10" id="MYv-QJ-xS8"/>
                                     <constraint firstItem="1ZU-UV-KSf" firstAttribute="centerY" secondItem="Wrd-rU-q9k" secondAttribute="centerY" id="Pjh-XD-olR"/>
                                     <constraint firstItem="3SJ-Nf-Lei" firstAttribute="leading" secondItem="kde-Nt-Qid" secondAttribute="trailing" constant="15" id="T6j-zT-G3O"/>
+                                    <constraint firstItem="Ape-yQ-iXr" firstAttribute="centerY" secondItem="CCI-OS-jEn" secondAttribute="centerY" id="UQU-dT-Rf5"/>
                                     <constraint firstItem="V5c-F3-MFj" firstAttribute="leading" secondItem="RD4-u3-Oj6" secondAttribute="leading" id="VgH-Pf-Qfv"/>
                                     <constraint firstAttribute="trailing" secondItem="V5c-F3-MFj" secondAttribute="trailing" id="WTb-8U-KXO"/>
                                     <constraint firstItem="jUZ-jZ-gCS" firstAttribute="top" secondItem="3SJ-Nf-Lei" secondAttribute="bottom" constant="15" id="YGS-M9-ihV"/>
@@ -125,7 +130,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="LeftMenuOptionTableViewCell" rowHeight="65" id="GYM-YU-Tti" customClass="LeftMenuOptionTableViewCell" customModule="sphinx" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="375" height="65"/>
+                                        <rect key="frame" x="0.0" y="24.5" width="375" height="65"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="GYM-YU-Tti" id="TPO-b3-x9c">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="65"/>
@@ -163,7 +168,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="LeftMenuAddFriendTableViewCell" rowHeight="75" id="rzE-Fi-AKD" customClass="LeftMenuAddFriendTableViewCell" customModule="sphinx" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="115" width="375" height="75"/>
+                                        <rect key="frame" x="0.0" y="89.5" width="375" height="75"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="rzE-Fi-AKD" id="7EK-42-luc">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="75"/>
@@ -271,6 +276,7 @@
                         <outlet property="nameLabel" destination="3SJ-Nf-Lei" id="vuF-5h-HxF"/>
                         <outlet property="optionsTableView" destination="sYi-el-T55" id="mmi-wA-Or2"/>
                         <outlet property="profileImageView" destination="kde-Nt-Qid" id="sne-ok-ZUT"/>
+                        <outlet property="purchaseLoadingSpinner" destination="Ape-yQ-iXr" id="YT6-7i-D31"/>
                         <outlet property="unitLabel" destination="1ZU-UV-KSf" id="yu6-aM-Wro"/>
                         <outlet property="walletIcon" destination="Wrd-rU-q9k" id="rpr-Ou-nDt"/>
                     </connections>

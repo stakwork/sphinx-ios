@@ -21,6 +21,13 @@ class LeftMenuViewController: UIViewController {
     @IBOutlet weak var unitLabel: UILabel!
     @IBOutlet weak var optionsTableView: UITableView!
     @IBOutlet weak var karmaPurchaseButton: UIButton!
+    @IBOutlet weak var purchaseLoadingSpinner: UIActivityIndicatorView!
+    
+    var isPurchaseProcessing: Bool = false {
+        didSet {
+            LoadingWheelHelper.toggleLoadingWheel(loading: isPurchaseProcessing, loadingWheel: purchaseLoadingSpinner, loadingWheelColor: UIColor.Sphinx.Text, view: view)
+        }
+    }
     
     let storeKitService = StoreKitService.shared
 
@@ -166,7 +173,7 @@ class LeftMenuViewController: UIViewController {
         guard let karmaPurchaseProduct = karmaPurchaseProduct else {
             preconditionFailure()
         }
-        
+        startPurchaseProgressIndicator()
         storeKitService.purchase(karmaPurchaseProduct)
     }
 }

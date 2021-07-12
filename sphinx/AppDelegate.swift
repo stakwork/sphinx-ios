@@ -308,9 +308,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     func getNewData(completion: @escaping (UIBackgroundFetchResult) -> ()) {
         let chatListViewModel = ChatListViewModel(contactsService: ContactsService())
         chatListViewModel.loadFriends {
-            chatListViewModel.syncMessages(fromPush: true, progressCallback: { _ in }, completion: { (_, count) in
+            chatListViewModel.syncMessages(fromPush: true, progressCallback: { _ in }, completion: { (_, newMessagesCount, _) in
                 DispatchQueue.main.async {
-                    if (count > 0) {
+                    if (newMessagesCount > 0) {
                         self.reloadMessagesUI()
                         completion(.newData)
                     }

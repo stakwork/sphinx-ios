@@ -127,8 +127,8 @@ class ChatListViewController: RootViewController, ChatListHeaderDelegate {
         self.chatListViewModel.syncMessages(progressCallback: { message in
             self.loading = false
             self.newBubbleHelper.showLoadingWheel(text: message)
-        }) { (_,_) in
-            self.updateContactsAndReload()
+        }) { (_,_, isRestoring) in
+            self.updateContactsAndReload(forceLastMessageReload: isRestoring)
             self.finishLoading()
         }
     }
@@ -167,17 +167,20 @@ class ChatListViewController: RootViewController, ChatListHeaderDelegate {
         loadingRefresh = false
     }
     
-    func updateContactsAndReload(shouldReload: Bool = false) {
+    func updateContactsAndReload(
+        shouldReload: Bool = false,
+        forceLastMessageReload: Bool = false
+    ) {
         if shouldReload {
             loadFriendAndReload()
             return
         }
-        initialLoad()
+        initialLoad(forceLastMessageReload)
     }
     
-    func initialLoad(_ fromBackgroundReload: Bool = false) {
+    func initialLoad(_ forceLastMessageReload: Bool = false) {
         chatListViewModel.updateContactsAndChats()
-        chatListObjectsArray = contactsService.getChatListObjects(fromBackgroundReload)
+        chatListObjectsArray = contactsService.getChatListObjects(forceLastMessageReload)
         loadDataSource()
         
         refreshControl.endRefreshing()

@@ -113,14 +113,13 @@ extension LeftMenuViewController {
                 case .success:
                     print("Successfully purchased Karma")
                     
-                // TODO: How should the UI update or provide any user feedback here?
-                case .failure(let error):
+                case .failure(_):
                     AlertHelper.showAlert(
                         title: "Karma Purchase Failed",
                         message: """
-                        AppStore Receipt Validation Failed.
+                        Receipt Validation Failed.
                         
-                        Error: \(error.localizedDescription)
+                        Please contact support at support@stakwork.com
                         """
                     )
                 }

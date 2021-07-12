@@ -49,6 +49,8 @@ extension LeftMenuViewController: StoreKitServiceTransactionObserverDelegate {
         
         finalizeKarmaPurchase()
     }
+    
+    func storeKitServiceDidObserveTransactionRemovedFromQueue() {}
 }
     
 

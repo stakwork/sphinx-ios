@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19115.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19107.5"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -123,8 +123,8 @@
                                     <constraint firstItem="qxM-LP-3Ff" firstAttribute="leading" secondItem="lJe-dQ-jeM" secondAttribute="leading" id="wO9-Lu-MYa"/>
                                 </constraints>
                             </view>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="MvN-Zq-v0Y">
-                                <rect key="frame" x="183" y="605" width="48" height="48"/>
+                            <activityIndicatorView opaque="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="MvN-Zq-v0Y">
+                                <rect key="frame" x="183" y="555" width="48" height="48"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="48" id="F5o-cL-1Mt"/>
                                     <constraint firstAttribute="height" constant="48" id="huv-JF-KeG"/>
@@ -137,7 +137,7 @@
                         <constraints>
                             <constraint firstItem="lJe-dQ-jeM" firstAttribute="centerX" secondItem="rex-6b-D9n" secondAttribute="centerX" id="0UT-ow-Ehh"/>
                             <constraint firstItem="LIl-wz-9W7" firstAttribute="top" secondItem="ddQ-Tj-FpK" secondAttribute="top" id="4BX-zl-aHS"/>
-                            <constraint firstItem="MvN-Zq-v0Y" firstAttribute="top" secondItem="lJe-dQ-jeM" secondAttribute="bottom" constant="80" id="AoL-R2-LQw"/>
+                            <constraint firstItem="MvN-Zq-v0Y" firstAttribute="top" secondItem="lJe-dQ-jeM" secondAttribute="bottom" constant="30" id="AoL-R2-LQw"/>
                             <constraint firstItem="lJe-dQ-jeM" firstAttribute="centerY" secondItem="rex-6b-D9n" secondAttribute="centerY" id="Gm2-3X-ZfC"/>
                             <constraint firstItem="MvN-Zq-v0Y" firstAttribute="centerX" secondItem="rex-6b-D9n" secondAttribute="centerX" id="JZY-qp-xcr"/>
                             <constraint firstItem="ddQ-Tj-FpK" firstAttribute="trailing" secondItem="lJe-dQ-jeM" secondAttribute="trailing" constant="30" id="OUx-gh-5hP"/>

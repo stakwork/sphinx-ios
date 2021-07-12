@@ -29,6 +29,8 @@ protocol StoreKitServiceTransactionObserverDelegate: AnyObject {
         on queue: SKPaymentQueue,
         updatedTransactions transactions: [SKPaymentTransaction]
     )
+    
+    func storeKitServiceDidObserveTransactionRemovedFromQueue()
 }
 
 
@@ -199,6 +201,8 @@ extension StoreKitService: SKPaymentTransactionObserver {
         _ queue: SKPaymentQueue,
         removedTransactions transactions: [SKPaymentTransaction]
     ) {
+        transactionObserverDelegate?.storeKitServiceDidObserveTransactionRemovedFromQueue()
+        
         for transaction in transactions {
             print("\(transaction.payment.productIdentifier) was removed from the payment queue.")
         }

@@ -31,7 +31,7 @@ class NewUserSignupOptionsViewController: UIViewController, ConnectionCodeSignup
     
     var isPurchaseProcessing: Bool = false {
         didSet {
-            purchaseLoadingSpinner.isHidden = isPurchaseProcessing == false
+            LoadingWheelHelper.toggleLoadingWheel(loading: isPurchaseProcessing, loadingWheel: purchaseLoadingSpinner, loadingWheelColor: UIColor.Sphinx.Text, view: view)
         }
     }
 
@@ -157,7 +157,7 @@ extension NewUserSignupOptionsViewController {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             
-            self.isPurchaseProcessing = false
+            self.isPurchaseProcessing = true
         }
     }
     
@@ -169,17 +169,15 @@ extension NewUserSignupOptionsViewController {
         API.sharedInstance.generateLiteNodeHUBInvoice { [weak self] result in
             guard let self = self else { return }
             
-            self.stopPurchaseProgressIndicator()
-            
             switch result {
             case .success(let invoice):
                 self.hubNodeInvoice = invoice
                 
                 print("Successfully generated Lite Node Hub Invoice: \(invoice)")
-
                 // Place a purchase on the AppStore to generate an AppStore receipt.
                 self.storeKitService.purchase(product)
             case .failure(let error):
+                self.stopPurchaseProgressIndicator()
                 self.hubNodeInvoice = nil
                 
                 var alertMessage: String
@@ -268,6 +266,10 @@ extension NewUserSignupOptionsViewController: StoreKitServiceTransactionObserver
         }
         
         generateConnectionCode(fromPurchasedNodeInvoice: hubNodeInvoice)
+    }
+    
+    func storeKitServiceDidObserveTransactionRemovedFromQueue() {
+        stopPurchaseProgressIndicator()
     }
 }
     

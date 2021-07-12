@@ -274,6 +274,7 @@
 "encryption.error" = "Error de Encriptación";
 "cannot.load.message.data" = "Error al cargar mensaje";
 "pay.to.unlock.msg" = "Paga para desbloquear";
+"paid-message.payment-not-supported" = "Paid items not supported on iOS";
 "loading.paid.message" = "Cargando mensaje...";
 "copy.text" = "Copiar Texto";
 "copy.link" = "Copiar Enlace";

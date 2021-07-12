@@ -278,6 +278,7 @@ https://sphinx.chat";
 "encryption.error" = "Encryption error";
 "cannot.load.message.data" = "Can't load message data";
 "pay.to.unlock.msg" = "Pay to unlock Message";
+"paid-message.payment-not-supported" = "Paid items not supported on iOS";
 "loading.paid.message" = "Loading message...";
 "copy.text" = "Copy Text";
 "copy.link" = "Copy Link";

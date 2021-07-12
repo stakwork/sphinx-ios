@@ -10,6 +10,7 @@
 "generic.success.title" = "Success";
 "generic.error.title" = "Error";
 "generic.error.message" = "There was an error. Please try again later.";
+"generic.contact-support" = "Please contact support at support@stakwork.com";
 "confirm" = "Confirm";
 "verify" = "Verify";
 "warning" = "Warning";
@@ -26,7 +27,6 @@
 "name.unknown" = "Unknown";
 "name.unknown.initials" = "UK";
 "today" = "Today";
-
 "connected.to.node" = "Connected to Node";
 "socket.disconnected" = "Live updates unavailable";
 "unable.to.connect" = "Unable to connect to Node";
@@ -34,19 +34,26 @@
 "network.connection.lost" = "The network connection is lost.\nPlease check your network and try again later.";
 "reverting.ip" = "New URL test failed, restoring previous setting...";
 "verifying.new.ip" = "Testing new URL...";
+"error.url.request.creation.failed" = "URL Request Creation Failed";
+"error.unexpected.api.response" = "Unexpected API Response";
+"error.network" = "Network Error:";
+"error.node.invoice.generation.failed" = "Node Invoice Generation Failed. Error Message:";
+"error.karma.receipt.validation.failed" = "Karma Receipt Validation Failed. Error Message:";
+"error.app-store-purchase-receipt-not-found" = "An AppStore purchase receipt could not be found.";
+"error.app-store-receipt-validation-failed" = "An AppStore receipt validation failed.";
 
 // LEFT MENU
 "left-menu.dashboard" = "Dashboard";
 "left-menu.contacts" = "Contacts";
 "left-menu.profile" = "Profile";
 "left-menu.buy-karma-button" = "Buy 1000 Karma";
-
 "support.describe.problem" = "Describe your problem here...";
 "support.logs.copied" = "Logs copied to clipboard";
 "message.sent" = "Your message has been sent";
-
 "copy" = "COPY";
 "copied" = "COPIED";
+"left-menu.karma-purchase-failed" = "Karma Purchase Failed";
+"left-menu.node-address-invalid" = "Node Address Information Invalid";
 
 //GROUPS
 "unselect.all.upper" = "UNSELECT ALL";
@@ -133,14 +140,12 @@
 "new.contact" = "New Contact";
 "invalid.pubkey" = "Invalid Public Key";
 
-
 //WELCOME
 "welcome.initial.title" = "Welcome";
 "welcome.final.title" = "Welcome!";
 "welcome.final.subtitle" = "Your app is now connected.";
 "welcome.final.continue" = "Continue";
 "welcome.connecting" = "Connecting...";
-
 
 //RESTORE EXISTING USER
 "restore.keychain" = "Restore from keychain";
@@ -150,7 +155,6 @@
 "restore.form.paste.keys.placeholder" = "Paste your keys...";
 "submit" = "Submit";
 "restore.invalid-code.relay-qr-code" = "This looks like a connection code from the Sphinx Relay app. To restore an existing account, you need to enter your backup string.";
-
 
 //SIGNUP NEW USER
 "signup.signup-options.connection-code-button" = "I Have a Connection Code";
@@ -168,14 +172,17 @@
 "signup.desktop-ad.get-now" = "Get It Now";
 "signup.desktop-ad.skip" = "Skip";
 "signup.invalid-code.restore-key" = "This looks like a restoration key string from an existing Sphinx node. Try selecting \"Existing User\" from the Welcome screen.";
-
+"signup.error-validation-invite-code" = "An error occurred while validating the invite code.";
+"signup.error-generating-token" = "An error occurred while generating a token for this invite code.";
+"signup.purchase-eligibility-failed" = "Purchase Eligibility Failed";
+"signup.lite-node-purchase-failed" = "Lite Node Purchase Failed";
 
 //INVITE
 "add.people" = "Add People";
 "create.group" = "Create Group";
 "whoops" = "Whoops!";
 "welcome" = "Welcome";
-"contact.support" = "Something went wrong.\n\nPlease contact our support at\nsupport@sphinx.chat";
+"contact.support" = "Something went wrong.\n\nPlease contact our support at\nsupport@stakwork.com";
 "paste.invite.text" = "Paste the invitation text\nor scan the QR code";
 "invalid.pin" = "Invalid PIN";
 "message.from.friend" = "A message\nfrom your friend..";
@@ -196,8 +203,7 @@
 "establishing.tor.circuit" = "Establishing Tor circuit. Please wait...";
 "wait.tor.request" = "Please wait. This process could take a few minutes...";
 "invalid.code.pubkey" = "This looks like a node public key. To sign up, you'll need an invite code from https://sphinx.chat";
-"invalid.code.invoice" = "This looks like an invoice, to sign up you'll need an invite code from 
-https://sphinx.chat";
+"invalid.code.invoice" = "This looks like an invoice, to sign up you'll need an invite code from https://sphinx.chat";
 "invalid.code" = "We don't recognize this code. To sign up, you'll need an invite code from https://sphinx.chat";
 "wrong.restore.string" = "This restore code couldn’t be decrypted. Make sure to select any punctuation at the end of the string.";
 
@@ -312,7 +318,6 @@ https://sphinx.chat";
 "amount.too.high" = "Amount too high";
 "onchain.amount.too.low" = "Amount too low. Minimum 250000 sats";
 "chat-header.balance.unit" = "karma";
-
 "users" = "users";
 "optional.message.placeholder" = "Optional Message...";
 "price.required" = "Price is required";

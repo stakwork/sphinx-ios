@@ -26,15 +26,15 @@ extension API.HUBError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .failedToCreateRequest:
-            return "URL Request Creation Failed"
+            return "error.url.request.creation.failed".localized
         case .unexpectedResponseData:
-            return "Unexpected API Response"
+            return "error.unexpected.api.response".localized
         case .networkError(let error):
-            return "Network Error: \(error.localizedDescription)"
+            return "\("error.network".localized) \(error.localizedDescription)"
         case .nodeInvoiceGenerationFailure(message: let message):
-            return "Node Invoice Generation Failed. Error Message: \(message)"
+            return "\("error.node.invoice.generation.failed".localized) \(message)"
         case .karmaReceiptValidationFailure(message: let message):
-            return "Karma Receipt Validation Failed. Error Message: \(message)"
+            return "\("error.karma.receipt.validation.failed".localized) \(message)"
         }
     }
 }

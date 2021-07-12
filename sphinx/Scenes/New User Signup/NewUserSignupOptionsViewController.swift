@@ -185,11 +185,11 @@ extension NewUserSignupOptionsViewController {
                 if case .nodeInvoiceGenerationFailure(let message) = error {
                     alertMessage = message
                 } else {
-                    alertMessage = "Purchase Eligibility Failed"
+                    alertMessage = "signup.purchase-eligibility-failed".localized
                 }
                 
                 AlertHelper.showAlert(
-                    title: "Lite Node Purchase Failed",
+                    title: "signup.lite-node-purchase-failed".localized,
                     message: alertMessage
                 )
             }
@@ -210,8 +210,8 @@ extension NewUserSignupOptionsViewController {
             stopPurchaseProgressIndicator()
             
             AlertHelper.showAlert(
-                title: "Lite Node Purchase Failed",
-                message: "An AppStore purchase receipt could not be found."
+                title: "signup.lite-node-purchase-failed".localized,
+                message: "error.app-store-purchase-receipt-not-found".localized
             )
             
             return
@@ -232,9 +232,9 @@ extension NewUserSignupOptionsViewController {
                     self.signup(withConnectionCode: connectionCode)
                 case .failure(let error):
                     AlertHelper.showAlert(
-                        title: "Lite Node Purchase Failed",
+                        title: "signup.lite-node-purchase-failed".localized,
                         message: """
-                        AppStore Receipt Validation Failed.
+                        \("error.app-store-receipt-validation-failed".localized)
                         
                         Error: \(error.localizedDescription)
                         """

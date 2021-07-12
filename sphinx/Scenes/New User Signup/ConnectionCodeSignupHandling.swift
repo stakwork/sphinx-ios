@@ -82,7 +82,7 @@ extension ConnectionCodeSignupHandling {
             
                 // TODO: Compute (and localize) the right  message here
                 self.handleSignupConnectionError(
-                    message: "An error occurred while validating the invite code."
+                    message: "signup.error-validation-invite-code".localized
                 )
             }
         )
@@ -132,8 +132,7 @@ extension ConnectionCodeSignupHandling {
                 self?.generateTokenAndProceed(pubkey: pubkey, token: token, password: password)
             }
         } else {
-            // TODO: Compute (and localize) the right  message here
-            handleSignupConnectionError(message: "An error occurred while generating a token for this invite code.")
+            handleSignupConnectionError(message: "signup.error-generating-token".localized)
         }
     }
     

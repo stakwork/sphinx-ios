@@ -79,8 +79,8 @@ extension LeftMenuViewController {
             stopPurchaseProgressIndicator()
             
             AlertHelper.showAlert(
-                title: "Karma Purchase Failed",
-                message: "An AppStore purchase receipt could not be found."
+                title: "left-menu.karma-purchase-failed".localized,
+                message: "error.app-store-purchase-receipt-not-found".localized
             )
             
             return
@@ -94,8 +94,8 @@ extension LeftMenuViewController {
             stopPurchaseProgressIndicator()
             
             AlertHelper.showAlert(
-                title: "Karma Purchase Failed",
-                message: "Node Address Information Invalid"
+                title: "left-menu.karma-purchase-failed".localized,
+                message: "left-menu.node-address-invalid".localized
             )
             
             return
@@ -115,11 +115,11 @@ extension LeftMenuViewController {
                     
                 case .failure(_):
                     AlertHelper.showAlert(
-                        title: "Karma Purchase Failed",
+                        title: "left-menu.karma-purchase-failed".localized,
                         message: """
-                        Receipt Validation Failed.
+                        \("error.app-store-receipt-validation-failed".localized)
                         
-                        Please contact support at support@stakwork.com
+                        \("generic.contact-support".localized)
                         """
                     )
                 }

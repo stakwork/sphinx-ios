@@ -245,16 +245,12 @@
                                     <constraint firstItem="jrf-33-PtF" firstAttribute="top" secondItem="ud9-s1-gND" secondAttribute="top" id="rHe-nt-jkt"/>
                                 </constraints>
                             </view>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="YEZ-T2-Cad">
-                                <rect key="frame" x="197" y="564" width="20" height="37"/>
-                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="0qf-AI-cJJ"/>
                         <color key="backgroundColor" name="OnboardingBG"/>
                         <constraints>
                             <constraint firstItem="fDG-gL-ISu" firstAttribute="centerX" secondItem="Wxr-Ep-Fyf" secondAttribute="centerX" id="8bh-BP-pYK"/>
                             <constraint firstItem="kyJ-OL-ajs" firstAttribute="top" secondItem="0qf-AI-cJJ" secondAttribute="top" id="8he-M9-MsM"/>
-                            <constraint firstItem="YEZ-T2-Cad" firstAttribute="top" secondItem="fDG-gL-ISu" secondAttribute="bottom" constant="30" id="MOm-Y7-SbK"/>
                             <constraint firstItem="fDG-gL-ISu" firstAttribute="centerY" secondItem="Wxr-Ep-Fyf" secondAttribute="centerY" id="Pp2-Lw-e70"/>
                             <constraint firstItem="3SZ-Qm-n32" firstAttribute="centerX" secondItem="Wxr-Ep-Fyf" secondAttribute="centerX" id="bUx-uk-N3L"/>
                             <constraint firstItem="ud9-s1-gND" firstAttribute="centerX" secondItem="0qf-AI-cJJ" secondAttribute="centerX" id="eaI-xi-Fp7"/>
@@ -264,11 +260,6 @@
                             <constraint firstItem="kyJ-OL-ajs" firstAttribute="leading" secondItem="0qf-AI-cJJ" secondAttribute="leading" id="wS9-FH-ChP"/>
                             <constraint firstItem="3SZ-Qm-n32" firstAttribute="bottom" secondItem="fDG-gL-ISu" secondAttribute="top" constant="-28" id="zqB-35-vaA"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="YEZ-T2-Cad"/>
-                            </mask>
-                        </variation>
                     </view>
                     <connections>
                         <outlet property="backButton" destination="kyJ-OL-ajs" id="Ive-wz-kLk"/>
@@ -276,7 +267,6 @@
                         <outlet property="codeTextFieldContainer" destination="VGD-h9-ePJ" id="Ldn-SS-rIr"/>
                         <outlet property="keychainRestoreButtonContainer" destination="ud9-s1-gND" id="fw6-bg-U96"/>
                         <outlet property="keychainRestoreLabel" destination="gEt-df-nc9" id="khS-Rq-Fnu"/>
-                        <outlet property="loadingWheel" destination="YEZ-T2-Cad" id="fLX-u6-6CU"/>
                         <outlet property="submitButton" destination="YxI-0V-WDa" id="fEk-6P-xhC"/>
                         <outlet property="submitButtonArrow" destination="rLK-0A-RFT" id="LBU-8s-tbO"/>
                         <outlet property="submitButtonContainer" destination="5KL-xE-zzC" id="Jyg-ia-5uh"/>

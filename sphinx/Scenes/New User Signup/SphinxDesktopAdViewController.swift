@@ -2,7 +2,6 @@
 //  SphinxDesktopAdViewController.swift
 //  sphinx
 //
-//  Created by Brian Sipple on 6/23/21.
 //  Copyright © 2021 sphinx. All rights reserved.
 //
 

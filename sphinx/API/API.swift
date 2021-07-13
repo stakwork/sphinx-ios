@@ -42,10 +42,13 @@ typealias PodcastInfoCallback = ((JSON) -> ())
 typealias OnchainAddressCallback = ((String) -> ())
 typealias AppVersionsCallback = ((String) -> ())
 
-//HUB calls
+// HUB calls
 typealias SignupWithCodeCallback = ((JSON, String, String) -> ())
 typealias LowestPriceCallback = ((Double) -> ())
 typealias PayInviteCallback = ((JSON) -> ())
+typealias KarmaPurchaseValidationCallback = (Result<Void, API.HUBError>) -> ()
+typealias NodePurchaseInvoiceCallback = (Result<API.HUBNodeInvoice, API.HUBError>) -> ()
+typealias NodePurchaseValidationCallback = (Result<API.SphinxInviteCode, API.HUBError>) -> ()
 
 //Attachments
 typealias AskAuthenticationCallback = ((String?, String?) -> ())
@@ -54,8 +57,11 @@ typealias VerifyAuthenticationCallback = ((String?) -> ())
 typealias UploadAttachmentCallback = ((Bool, NSDictionary?) -> ())
 typealias MediaInfoCallback = ((Int, String?, Int?) -> ())
 
-class API {
 
+class API {
+    typealias HUBNodeInvoice = String
+    typealias SphinxInviteCode = String
+    
     class var sharedInstance : API {
         struct Static {
             static let instance = API()

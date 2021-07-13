@@ -55,10 +55,6 @@ internal enum StoryboardScene {
         internal static let leftMenuViewController = SceneType<LeftMenuViewController>(storyboard: LeftMenu.self, identifier: "LeftMenuViewController")
         
         internal static let supportViewController = SceneType<SupportViewController>(storyboard: LeftMenu.self, identifier: "SupportViewController")
-        
-        internal static let addSatsAppViewController = SceneType<AddSatsAppViewController>(storyboard: LeftMenu.self, identifier: "AddSatsAppViewController")
-        
-        internal static let addSatsViewController = SceneType<AddSatsViewController>(storyboard: LeftMenu.self, identifier: "AddSatsViewController")
     }
     
     internal enum QRCodeScanner: StoryboardType {
@@ -122,6 +118,9 @@ internal enum StoryboardScene {
     
     internal enum NewUserSignup: StoryboardType {
         internal static let storyboardName = "NewUserSignup"
+        
+        
+        internal static let newUserSignupOptionsViewController = SceneType<NewUserSignupOptionsViewController>(storyboard: NewUserSignup.self, identifier: "NewUserSignupOptionsViewController")
         
         internal static let newUserSignupDescriptionViewController = SceneType<NewUserSignupDescriptionViewController>(storyboard: NewUserSignup.self, identifier: "NewUserSignupDescriptionViewController")
         

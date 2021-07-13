@@ -2,7 +2,6 @@
 //  RestoreUserFormViewController+FormSubmissionUtils.swift
 //  sphinx
 //
-//  Created by Brian Sipple on 6/17/21.
 //  Copyright © 2021 sphinx. All rights reserved.
 //
 

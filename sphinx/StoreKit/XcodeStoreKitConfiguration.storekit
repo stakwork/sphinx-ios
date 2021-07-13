@@ -1,0 +1,48 @@
+{
+  "identifier" : "2DAD6B9E",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "0.33",
+      "familyShareable" : false,
+      "internalID" : "44FAA65A",
+      "localizations" : [
+        {
+          "description" : "Buy karma to send to your favorite creators.",
+          "displayName" : "1000 karma",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.gl.sphinx.1000karma",
+      "referenceName" : "1000 karma",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : false,
+      "internalID" : "12DA1422",
+      "localizations" : [
+        {
+          "description" : "",
+          "displayName" : "",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.gl.sphinx.liteSphinxNode",
+      "referenceName" : "Lite Node",
+      "type" : "Consumable"
+    }
+  ],
+  "settings" : {
+
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 1,
+    "minor" : 1
+  }
+}

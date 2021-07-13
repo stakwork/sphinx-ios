@@ -10,6 +10,7 @@
 "generic.success.title" = "Éxito";
 "generic.error.title" = "Error";
 "generic.error.message" = "Ha habido un problema. Por favor vuelva a intentarlo más tarde.";
+"generic.contact-support" = "Por favor contacta con soporte en support@stakwork.com";
 "confirm" = "Confirmar";
 "verify" = "Verificar";
 "warning" = "Atención";
@@ -26,7 +27,6 @@
 "name.unknown" = "Desconocido";
 "name.unknown.initials" = "D";
 "today" = "Hoy";
-
 "connected.to.node" = "Conectado al Nodo";
 "socket.disconnected" = "Actualizaciones en tiempo real\nno disponibles";
 "unable.to.connect" = "No es posible conectarse al Nodo";
@@ -34,17 +34,26 @@
 "network.connection.lost" = "No hay conexión de red.\nPor favor verifique su red y vuelva a intentarlo.";
 "reverting.ip" = "La verificación de la nueva URL ha fallado, restaurando configuración previa...";
 "verifying.new.ip" = "Verificando la nueva URL...";
+"error.url.request.creation.failed" = "Solicitud de creación de URL fallida";
+"error.unexpected.api.response" = "Respuesta no identificada";
+"error.network" = "Errro de red:";
+"error.node.invoice.generation.failed" = "Generación de Invoice de nodo fallida. Mensaje de error:";
+"error.karma.receipt.validation.failed" = "Validación de recibo de karma fallida. Mensaje de error:";
+"error.app-store-purchase-receipt-not-found" = "No se encontró el recivo de compra de AppStore";
+"error.app-store-receipt-validation-failed" = "Falló la validación de recibo de AppStore.";
 
 //LeftMenu
-"menu.dashboard" = "Inicio";
-"menu.contacts" = "Contactos";
-"menu.profile" = "Perfil";
-
+"left-menu.dashboard" = "Inicio";
+"left-menu.contacts" = "Contactos";
+"left-menu.profile" = "Perfil";
+"left-menu.buy-karma-button" = "Comprar 1000 Karma";
 "support.describe.problem" = "Describe tu problema aquí...";
 "support.logs.copied" = "Registros copiados al portapapeles";
 "message.sent" = "Su mensaje ha sido enviado";
 "copy" = "COPIAR";
 "copied" = "COPIADO";
+"left-menu.karma-purchase-failed" = "Falló la compra de Karma";
+"left-menu.node-address-invalid" = "Información de dirección del Nodo inválida.";
 
 //GROUPS
 "unselect.all.upper" = "DESELECCIONAR TODOS";
@@ -138,7 +147,6 @@
 "welcome.final.continue" = "Continuar";
 "welcome.connecting" = "Conectando...";
 
-
 //RESTORE EXISTING USER
 "restore.keychain" = "Restaurar desde keychain";
 "restore.description.continue" = "Continuar";
@@ -148,8 +156,9 @@
 "submit" = "Enviar";
 "restore.invalid-code.relay-qr-code" = "Parece que estas utilizando un código de conexión de Sphinx Relay. Para restaurar una cuenta existente, debes ingresar un código de restauración.";
 
-
 //SIGNUP NEW USER
+"signup.signup-options.connection-code-button" = "Tengo un código de conexión";
+"signup.signup-options.lite-node-button" = "Comprar un Lite Node ($2.99)";
 "signup.description.continue" = "Continuar";
 "signup.description.label" = "Pegá tu código de conexión\nen Sphinx";
 "signup.description.paste" = "Pegá";
@@ -163,6 +172,10 @@
 "signup.desktop-ad.get-now" = "Obtener ahora";
 "signup.desktop-ad.skip" = "Más tarde";
 "signup.invalid-code.restore-key" = "Parece que estas utilizando un código de restauración de una cuenta existente. Intentá seleccionando \"Usuario Existente\" en la pantalla de bienvenida.";
+"signup.error-validation-invite-code" = "Ocurrió un error durante la validación del código de conexión.";
+"signup.error-generating-token" = "Ocurrió un error durante la generación del token de verificación";
+"signup.purchase-eligibility-failed" = "Falló la elegibilidad de la compra";
+"signup.lite-node-purchase-failed" = "Falló la elegibilidad de la compra";
 
 //INVITE
 "add.people" = "Agregar";
@@ -170,7 +183,7 @@
 "whoops" = "Ups!";
 "welcome" = "Bienvenido";
 "contact.support" = "Ha habido un problema.\n\nPor favor contacta con soporte en\nsupport@stakwork.com";
-"paste.invite.text" = "Pega el código de invitación\no escanea el código QR";
+"paste.invite.text" = "Pega el código de conexión\no escanea el código QR";
 "invalid.pin" = "PIN Inválido";
 "message.from.friend" = "Un mensaje\nde tu amigo...";
 "skip.upper" = "OMITIR";
@@ -189,9 +202,9 @@
 "tor.connection.failed" = "Error conectando a Tor";
 "establishing.tor.circuit" = "Estableciendo circuito con Tor. Por favor espera...";
 "wait.tor.request" = "Por favor espera. Este proceso puede tardar algunos minutos...";
-"invalid.code.pubkey" = "Parece que has ingresado una clave pública, para registrarte necesitarás un código de invitación. Obtenlo en https://sphinx.chat";
-"invalid.code.invoice" = "Parece que has ingresado una solicitud de pago, para registrarte necesitarás un código de invitación. Obtenlo en https://sphinx.chat";
-"invalid.code" = "El código ingresado no es válido, para registrarte necesitarás un código de invitación. Obtenlo en https://sphinx.chat";
+"invalid.code.pubkey" = "Parece que has ingresado una clave pública, para registrarte necesitarás un código de conexión. Obtenlo en https://sphinx.chat";
+"invalid.code.invoice" = "Parece que has ingresado una solicitud de pago, para registrarte necesitarás un código de conexión. Obtenlo en https://sphinx.chat";
+"invalid.code" = "El código ingresado no es válido, para registrarte necesitarás un código de conexión. Obtenlo en https://sphinx.chat";
 "wrong.restore.string" = "Este código de restauración no puede ser desencriptado. Asegurate de seleccionar cualquier puntuación al final del mismo.";
 
 //PROFILE
@@ -243,7 +256,7 @@
 "invoice" = "Solicitud";
 "confirm.pay.invoice" = "¿Estás seguro que deseas pagar esta solicitud?";
 
-//CHAT
+// CHAT
 "payment.failed.upper" = "PAGO FALLIDO";
 "microphone.permission.denied" = "Has denegado los permisos de uso de micrófono. Dirigete a Configuración -> Sphinx y actívalos nuevamente para poder enviar mensajes de audio.";
 "chat.muted.message" = "La conversación está ahora silenciada. No recibirás notificaciones para las mensajes entrantes en esta conversación.";
@@ -304,7 +317,7 @@
 "amount.too.low" = "Importe demasiado bajo";
 "amount.too.high" = "Importe demasiado alto";
 "onchain.amount.too.low" = "Importe demasiado bajo. Mínimo 250000 sats";
-
+"chat-header.balance.unit" = "karma";
 "users" = "users";
 "optional.message.placeholder" = "Mensaje opcional...";
 "price.required" = "Precio requerido";

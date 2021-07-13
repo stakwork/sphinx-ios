@@ -42,6 +42,12 @@ final class MainCoordinator: NSObject {
         presentSignupVC(vc: initialWelcomeVC)
     }
     
+    
+    func presentNewUserSignupOptionsViewController() {
+        let vc = InitialWelcomeViewController.instantiate(rootViewController: rootViewController)
+        presentSignupVC(vc: vc)
+    }
+    
     func presentInviteWelcomeViewController() {
         if let inviter = SignupHelper.getInviter() {
             let inviteWelcome = InviteWelcomeViewController.instantiate(rootViewController: rootViewController, inviter: inviter)

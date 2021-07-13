@@ -45,13 +45,11 @@ class InitialWelcomeViewController: UIViewController {
     
     
     @IBAction func newUserButtonTapped(_ sender: UIButton) {
-        SignupHelper.step = SignupHelper.SignupStep.Start.rawValue
-        
-        let newUserSignupDescriptionVC = NewUserSignupDescriptionViewController
+        let nextVC = NewUserSignupOptionsViewController
             .instantiate(rootViewController: rootViewController)
         
-        self.navigationController?
-            .pushViewController(newUserSignupDescriptionVC, animated: true)
+        navigationController?
+            .pushViewController(nextVC, animated: true)
     }
     
     
@@ -59,7 +57,7 @@ class InitialWelcomeViewController: UIViewController {
         let restoreExistingUserDescriptionVC = RestoreUserDescriptionViewController
             .instantiate(rootViewController: rootViewController)
         
-        self.navigationController?
+        navigationController?
             .pushViewController(restoreExistingUserDescriptionVC, animated: true)
     }
 }

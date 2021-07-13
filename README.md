@@ -1,4 +1,4 @@
-# sphinx-ios
+# Sphinx iOS
 
 
 # Setup
@@ -11,4 +11,6 @@
 pod install
 ```
 
-- Set a valid API KEY for Giphy library on info.plist file
+## Info.plist Configuration
+
+- Set a valid `GIPHY_API_KEY` value for the Giphy library.

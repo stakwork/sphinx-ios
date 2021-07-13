@@ -438,8 +438,6 @@
 		47B46F66254AFE1C007F61CD /* ChatHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B46F65254AFE1C007F61CD /* ChatHeaderView.swift */; };
 		47B690DD24A2CF6000F07B73 /* AppAppearenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B690DC24A2CF6000F07B73 /* AppAppearenceView.swift */; };
 		47B690E124A2E00800F07B73 /* UIWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B690E024A2E00800F07B73 /* UIWindow.swift */; };
-		47B6F525258A833600D64A41 /* AddSatsAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B6F524258A833600D64A41 /* AddSatsAppViewController.swift */; };
-		47B6F527258A917C00D64A41 /* AddSatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B6F526258A917C00D64A41 /* AddSatsViewController.swift */; };
 		47B9A63F233BAEE500D2B022 /* AddressBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B9A63E233BAEE500D2B022 /* AddressBookViewController.swift */; };
 		47B9A645233BB54B00D2B022 /* AddressBookDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B9A644233BB54B00D2B022 /* AddressBookDataSource.swift */; };
 		47B9A648233BB6AE00D2B022 /* AddressBookHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B9A647233BB6AE00D2B022 /* AddressBookHeaderView.swift */; };
@@ -522,11 +520,18 @@
 		47FDDB1C2562D77200BBF15F /* boost_animation.json in Resources */ = {isa = PBXBuildFile; fileRef = 47FDDB1B2562D77100BBF15F /* boost_animation.json */; };
 		47FE9A3C23BF751C0090913F /* ChatViewControllerAttachmentDelegateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FE9A3B23BF751C0090913F /* ChatViewControllerAttachmentDelegateExtension.swift */; };
 		47FE9A3E23C381A20090913F /* UITapGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FE9A3D23C381A20090913F /* UITapGestureRecognizer.swift */; };
+		F30884A72699123600CADDEB /* LeftMenuViewController+KarmaPurchaseUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30884A62699123600CADDEB /* LeftMenuViewController+KarmaPurchaseUtils.swift */; };
+		F30884A92699181200CADDEB /* API+KarmaPurchaseUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30884A82699181200CADDEB /* API+KarmaPurchaseUtils.swift */; };
 		F3197C0C267FA2C200330F79 /* connecting.gif in Resources */ = {isa = PBXBuildFile; fileRef = F3241A2F267CBB12007A6454 /* connecting.gif */; };
 		F3197C0D267FA2C800330F79 /* ellipse.gif in Resources */ = {isa = PBXBuildFile; fileRef = F3241A30267CBB12007A6454 /* ellipse.gif */; };
 		F3197C0E267FA2C800330F79 /* lightningNetwork.gif in Resources */ = {isa = PBXBuildFile; fileRef = F3241A31267CBB12007A6454 /* lightningNetwork.gif */; };
 		F3197C112680F50300330F79 /* RestoreUserFormViewController+FormSubmissionUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3197C102680F50300330F79 /* RestoreUserFormViewController+FormSubmissionUtils.swift */; };
 		F3197C1326811DE400330F79 /* RestoreUserFormViewController+KeychainRestorationUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3197C1226811DE400330F79 /* RestoreUserFormViewController+KeychainRestorationUtils.swift */; };
+		F31CF2662691489800AAB621 /* StoreKitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31CF2652691489800AAB621 /* StoreKitService.swift */; };
+		F331199B268E375B005082EB /* NewUserSignupOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F331199A268E375B005082EB /* NewUserSignupOptionsViewController.swift */; };
+		F331199D268E93FB005082EB /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F331199C268E93FB005082EB /* StoreKit.framework */; };
+		F33119A0268E9C1B005082EB /* XcodeStoreKitConfiguration.storekit in Resources */ = {isa = PBXBuildFile; fileRef = F331199F268E9C1B005082EB /* XcodeStoreKitConfiguration.storekit */; };
+		F33119A5268FA097005082EB /* XcodeStoreKitTestCertificate.cer in Resources */ = {isa = PBXBuildFile; fileRef = F33119A4268FA096005082EB /* XcodeStoreKitTestCertificate.cer */; };
 		F33846E3267ACF6A0041F1EA /* InitialWelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33846E1267ACF6A0041F1EA /* InitialWelcomeViewController.swift */; };
 		F33846E7267B0FA00041F1EA /* Welcome.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F33846E9267B0FA00041F1EA /* Welcome.storyboard */; };
 		F33846EF267B15800041F1EA /* WelcomeCompleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33846EE267B15800041F1EA /* WelcomeCompleteViewController.swift */; };
@@ -534,13 +539,15 @@
 		F34BFED9267B3522003F6D55 /* RestoreUserFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34BFED8267B3522003F6D55 /* RestoreUserFormViewController.swift */; };
 		F34BFEDB267B3552003F6D55 /* RestoreUserConnectingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34BFEDA267B3552003F6D55 /* RestoreUserConnectingViewController.swift */; };
 		F34BFEDF267B3C30003F6D55 /* RestoreUser.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F34BFEDE267B3C30003F6D55 /* RestoreUser.storyboard */; };
+		F358212D2695D11500A314F1 /* ConnectionCodeSignupHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = F358212C2695D11500A314F1 /* ConnectionCodeSignupHandling.swift */; };
+		F358212F2698BE6800A314F1 /* API+Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F358212E2698BE6700A314F1 /* API+Errors.swift */; };
 		F394ECA12682064100529038 /* NewUserSignup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F394ECA32682064100529038 /* NewUserSignup.storyboard */; };
 		F394ECA92682099000529038 /* NewUserSignupDescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F394ECA82682098F00529038 /* NewUserSignupDescriptionViewController.swift */; };
 		F394ECAB2682218F00529038 /* NewUserSignupFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F394ECAA2682218F00529038 /* NewUserSignupFormViewController.swift */; };
 		F394ECAD26825D3400529038 /* NewUserSignupFormViewController+FormSubmissionUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F394ECAC26825D3400529038 /* NewUserSignupFormViewController+FormSubmissionUtils.swift */; };
 		F394ECB12683CF5E00529038 /* NewUserGreetingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F394ECB02683CF5E00529038 /* NewUserGreetingViewController.swift */; };
 		F394ECB32683EB5A00529038 /* SphinxDesktopAdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F394ECB22683EB5A00529038 /* SphinxDesktopAdViewController.swift */; };
-		F3C92B272671FB6C005F0A42 /* readme.md in Resources */ = {isa = PBXBuildFile; fileRef = F3C92B262671FB6C005F0A42 /* readme.md */; };
+		F3C92B272671FB6C005F0A42 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F3C92B262671FB6C005F0A42 /* README.md */; };
 		F3D0401E268BAA9700D54A94 /* SphinxReadyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D0401D268BAA9700D54A94 /* SphinxReadyViewController.swift */; };
 		F3D04020268BAB7500D54A94 /* InviteWelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D0401F268BAB7400D54A94 /* InviteWelcomeViewController.swift */; };
 		F3D04027268BABFF00D54A94 /* InviteActionsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D04026268BABFF00D54A94 /* InviteActionsHelper.swift */; };
@@ -1099,8 +1106,6 @@
 		47B690DC24A2CF6000F07B73 /* AppAppearenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAppearenceView.swift; sourceTree = "<group>"; };
 		47B690E024A2E00800F07B73 /* UIWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIWindow.swift; sourceTree = "<group>"; };
 		47B6F3D923A13671004C7B08 /* sphinx 5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 5.xcdatamodel"; sourceTree = "<group>"; };
-		47B6F524258A833600D64A41 /* AddSatsAppViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSatsAppViewController.swift; sourceTree = "<group>"; };
-		47B6F526258A917C00D64A41 /* AddSatsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSatsViewController.swift; sourceTree = "<group>"; };
 		47B9A63E233BAEE500D2B022 /* AddressBookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressBookViewController.swift; sourceTree = "<group>"; };
 		47B9A644233BB54B00D2B022 /* AddressBookDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressBookDataSource.swift; sourceTree = "<group>"; };
 		47B9A647233BB6AE00D2B022 /* AddressBookHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressBookHeaderView.swift; sourceTree = "<group>"; };
@@ -1190,11 +1195,18 @@
 		47FE9A3B23BF751C0090913F /* ChatViewControllerAttachmentDelegateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewControllerAttachmentDelegateExtension.swift; sourceTree = "<group>"; };
 		47FE9A3D23C381A20090913F /* UITapGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITapGestureRecognizer.swift; sourceTree = "<group>"; };
 		487E10CEB3D07B0840A84681 /* Pods_sphinx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_sphinx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F30884A62699123600CADDEB /* LeftMenuViewController+KarmaPurchaseUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LeftMenuViewController+KarmaPurchaseUtils.swift"; sourceTree = "<group>"; };
+		F30884A82699181200CADDEB /* API+KarmaPurchaseUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+KarmaPurchaseUtils.swift"; sourceTree = "<group>"; };
 		F3197C102680F50300330F79 /* RestoreUserFormViewController+FormSubmissionUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RestoreUserFormViewController+FormSubmissionUtils.swift"; sourceTree = "<group>"; };
 		F3197C1226811DE400330F79 /* RestoreUserFormViewController+KeychainRestorationUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RestoreUserFormViewController+KeychainRestorationUtils.swift"; sourceTree = "<group>"; };
+		F31CF2652691489800AAB621 /* StoreKitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitService.swift; sourceTree = "<group>"; };
 		F3241A2F267CBB12007A6454 /* connecting.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = connecting.gif; sourceTree = "<group>"; };
 		F3241A30267CBB12007A6454 /* ellipse.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = ellipse.gif; sourceTree = "<group>"; };
 		F3241A31267CBB12007A6454 /* lightningNetwork.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = lightningNetwork.gif; sourceTree = "<group>"; };
+		F331199A268E375B005082EB /* NewUserSignupOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewUserSignupOptionsViewController.swift; sourceTree = "<group>"; };
+		F331199C268E93FB005082EB /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		F331199F268E9C1B005082EB /* XcodeStoreKitConfiguration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = XcodeStoreKitConfiguration.storekit; sourceTree = "<group>"; };
+		F33119A4268FA096005082EB /* XcodeStoreKitTestCertificate.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = XcodeStoreKitTestCertificate.cer; sourceTree = "<group>"; };
 		F33846E1267ACF6A0041F1EA /* InitialWelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialWelcomeViewController.swift; sourceTree = "<group>"; };
 		F33846E8267B0FA00041F1EA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Welcome.storyboard; sourceTree = "<group>"; };
 		F33846EB267B0FBA0041F1EA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Welcome.strings; sourceTree = "<group>"; };
@@ -1204,6 +1216,8 @@
 		F34BFED8267B3522003F6D55 /* RestoreUserFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreUserFormViewController.swift; sourceTree = "<group>"; };
 		F34BFEDA267B3552003F6D55 /* RestoreUserConnectingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreUserConnectingViewController.swift; sourceTree = "<group>"; };
 		F34BFEDE267B3C30003F6D55 /* RestoreUser.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RestoreUser.storyboard; sourceTree = "<group>"; };
+		F358212C2695D11500A314F1 /* ConnectionCodeSignupHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionCodeSignupHandling.swift; sourceTree = "<group>"; };
+		F358212E2698BE6700A314F1 /* API+Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+Errors.swift"; sourceTree = "<group>"; };
 		F394ECA22682064100529038 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/NewUserSignup.storyboard; sourceTree = "<group>"; };
 		F394ECA52682064400529038 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/NewUserSignup.strings; sourceTree = "<group>"; };
 		F394ECA72682064800529038 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/NewUserSignup.strings; sourceTree = "<group>"; };
@@ -1212,7 +1226,7 @@
 		F394ECAC26825D3400529038 /* NewUserSignupFormViewController+FormSubmissionUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NewUserSignupFormViewController+FormSubmissionUtils.swift"; sourceTree = "<group>"; };
 		F394ECB02683CF5E00529038 /* NewUserGreetingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewUserGreetingViewController.swift; sourceTree = "<group>"; };
 		F394ECB22683EB5A00529038 /* SphinxDesktopAdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SphinxDesktopAdViewController.swift; sourceTree = "<group>"; };
-		F3C92B262671FB6C005F0A42 /* readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = readme.md; sourceTree = "<group>"; };
+		F3C92B262671FB6C005F0A42 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		F3C92B282671FCFD005F0A42 /* .Tor.version */ = {isa = PBXFileReference; lastKnownFileType = text; name = .Tor.version; path = Carthage/Build/.Tor.version; sourceTree = "<group>"; };
 		F3D0401D268BAA9700D54A94 /* SphinxReadyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SphinxReadyViewController.swift; sourceTree = "<group>"; };
 		F3D0401F268BAB7400D54A94 /* InviteWelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteWelcomeViewController.swift; sourceTree = "<group>"; };
@@ -1226,6 +1240,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F331199D268E93FB005082EB /* StoreKit.framework in Frameworks */,
 				4703CF932519425E007B685C /* PDFKit.framework in Frameworks */,
 				12075275C652A9404FC48EBC /* Pods_sphinx.framework in Frameworks */,
 			);
@@ -1251,6 +1266,7 @@
 		29CA57C9FD66D9C3750CE036 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F331199C268E93FB005082EB /* StoreKit.framework */,
 				F3C92B282671FCFD005F0A42 /* .Tor.version */,
 				47D03DF02510EA170077A968 /* PDFKit.framework */,
 				47308E1925013DE100FFAC6F /* Tor.framework */,
@@ -1959,20 +1975,22 @@
 			isa = PBXGroup;
 			children = (
 				475BDD27232AC97500C5BBD6 /* API.swift */,
-				47AAFC732387062700E30BDA /* APIUsersExtension.swift */,
-				47AAFC752387063300E30BDA /* APIMessagesExtension.swift */,
-				47AAFC772387063F00E30BDA /* APISubscriptionsExtension.swift */,
-				47AAFC79238706EA00E30BDA /* APIInviteExtension.swift */,
-				47AAFC7B2387070D00E30BDA /* APIWalletExtension.swift */,
+				F358212E2698BE6700A314F1 /* API+Errors.swift */,
+				F30884A82699181200CADDEB /* API+KarmaPurchaseUtils.swift */,
 				47AAFC81238EFCE600E30BDA /* APIAttachmentsExtension.swift */,
 				476A10BA23A91FCE00817892 /* APIChatsExtension.swift */,
 				47669F3C23CF622000C17A77 /* APIGroupsExtension.swift */,
-				47CC7CE123E3611600730E6F /* APITransactionsExtension.swift */,
+				47AAFC79238706EA00E30BDA /* APIInviteExtension.swift */,
 				47CBB4EA23E9D9BE00743CBE /* APILogsExtension.swift */,
-				4703CFA025278C40007B685C /* APIRedeemSatsExtension.swift */,
-				4794CA76252F5D66007C5022 /* APIPodcastExtension.swift */,
-				47BF7D4A25A8A59100593489 /* APIVersionsExtension.swift */,
+				47AAFC752387063300E30BDA /* APIMessagesExtension.swift */,
 				47CD950F265EC70E009B06A4 /* APIPeopleExtension.swift */,
+				4794CA76252F5D66007C5022 /* APIPodcastExtension.swift */,
+				4703CFA025278C40007B685C /* APIRedeemSatsExtension.swift */,
+				47AAFC772387063F00E30BDA /* APISubscriptionsExtension.swift */,
+				47CC7CE123E3611600730E6F /* APITransactionsExtension.swift */,
+				47AAFC732387062700E30BDA /* APIUsersExtension.swift */,
+				47BF7D4A25A8A59100593489 /* APIVersionsExtension.swift */,
+				47AAFC7B2387070D00E30BDA /* APIWalletExtension.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -2031,10 +2049,10 @@
 			children = (
 				4797E76024B8DDE400D13270 /* LeftMenu.storyboard */,
 				475BDD63232BEEAB00C5BBD6 /* LeftMenuViewController.swift */,
+				F30884A62699123600CADDEB /* LeftMenuViewController+KarmaPurchaseUtils.swift */,
 				47468FD623353C880072124A /* LeftMenuOptionTableViewCell.swift */,
 				47E300DE234B81F800DB56DB /* LeftMenuAddFriendTableViewCell.swift */,
 				471FACD923E9BE48007DE1C8 /* SupportViewController.swift */,
-				47B6F523258A832000D64A41 /* Add Sats */,
 			);
 			path = "Left Menu";
 			sourceTree = "<group>";
@@ -2212,7 +2230,7 @@
 		4779F155232AA0F200D35E81 = {
 			isa = PBXGroup;
 			children = (
-				F3C92B262671FB6C005F0A42 /* readme.md */,
+				F3C92B262671FB6C005F0A42 /* README.md */,
 				4779F160232AA0F200D35E81 /* sphinx */,
 				4779F178232AA0F300D35E81 /* sphinxTests */,
 				4779F183232AA0F300D35E81 /* sphinxUITests */,
@@ -2236,24 +2254,25 @@
 			isa = PBXGroup;
 			children = (
 				47E61581237DC7F400630FD1 /* sphinx.entitlements */,
-				470331B324E6C5D900224F25 /* Libraries Extensions */,
-				471FACD623E89E19007DE1C8 /* Managers */,
-				475BDD96232C311B00C5BBD6 /* Helpers */,
-				475BDD74232BF90C00C5BBD6 /* Services */,
-				475BDD71232BF76100C5BBD6 /* Configuration */,
-				475BDD6E232BF09400C5BBD6 /* Generated */,
-				475BDD4F232AE1C400C5BBD6 /* Core Data */,
-				475BDD26232AC96C00C5BBD6 /* API */,
-				475BDD1F232AC63E00C5BBD6 /* Extensions */,
-				4756DE0D232ABF7F001BAFD6 /* Coordinators */,
-				47651C3323DB4A3800CBC605 /* Custom Classes */,
-				4756DE0C232ABDED001BAFD6 /* Scenes */,
-				475BDD35232ACF8700C5BBD6 /* Supporting Files */,
+				4779F170232AA0F300D35E81 /* Info.plist */,
 				4779F161232AA0F200D35E81 /* AppDelegate.swift */,
 				4779F16B232AA0F300D35E81 /* Assets.xcassets */,
 				475BDD22232AC71000C5BBD6 /* Colors.xcassets */,
+				475BDD26232AC96C00C5BBD6 /* API */,
+				475BDD71232BF76100C5BBD6 /* Configuration */,
+				4756DE0D232ABF7F001BAFD6 /* Coordinators */,
+				475BDD4F232AE1C400C5BBD6 /* Core Data */,
+				47651C3323DB4A3800CBC605 /* Custom Classes */,
+				475BDD1F232AC63E00C5BBD6 /* Extensions */,
+				475BDD6E232BF09400C5BBD6 /* Generated */,
+				475BDD96232C311B00C5BBD6 /* Helpers */,
 				4779F16D232AA0F300D35E81 /* LaunchScreen.storyboard */,
-				4779F170232AA0F300D35E81 /* Info.plist */,
+				470331B324E6C5D900224F25 /* Libraries Extensions */,
+				471FACD623E89E19007DE1C8 /* Managers */,
+				4756DE0C232ABDED001BAFD6 /* Scenes */,
+				475BDD74232BF90C00C5BBD6 /* Services */,
+				F331199E268E99FE005082EB /* StoreKit */,
+				475BDD35232ACF8700C5BBD6 /* Supporting Files */,
 			);
 			path = sphinx;
 			sourceTree = "<group>";
@@ -2574,15 +2593,6 @@
 			path = "Custom Views";
 			sourceTree = "<group>";
 		};
-		47B6F523258A832000D64A41 /* Add Sats */ = {
-			isa = PBXGroup;
-			children = (
-				47B6F524258A833600D64A41 /* AddSatsAppViewController.swift */,
-				47B6F526258A917C00D64A41 /* AddSatsViewController.swift */,
-			);
-			path = "Add Sats";
-			sourceTree = "<group>";
-		};
 		47B9A640233BB50900D2B022 /* Table View Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -2774,6 +2784,16 @@
 			path = Gifs;
 			sourceTree = "<group>";
 		};
+		F331199E268E99FE005082EB /* StoreKit */ = {
+			isa = PBXGroup;
+			children = (
+				F331199F268E9C1B005082EB /* XcodeStoreKitConfiguration.storekit */,
+				F31CF2652691489800AAB621 /* StoreKitService.swift */,
+				F33119A4268FA096005082EB /* XcodeStoreKitTestCertificate.cer */,
+			);
+			path = StoreKit;
+			sourceTree = "<group>";
+		};
 		F33846E0267ACEF50041F1EA /* Welcome */ = {
 			isa = PBXGroup;
 			children = (
@@ -2800,12 +2820,14 @@
 		F394EC9E268205E000529038 /* New User Signup */ = {
 			isa = PBXGroup;
 			children = (
-				F394ECA32682064100529038 /* NewUserSignup.storyboard */,
+				F358212C2695D11500A314F1 /* ConnectionCodeSignupHandling.swift */,
+				F394ECB02683CF5E00529038 /* NewUserGreetingViewController.swift */,
 				F394ECA82682098F00529038 /* NewUserSignupDescriptionViewController.swift */,
 				F394ECAA2682218F00529038 /* NewUserSignupFormViewController.swift */,
 				F394ECAC26825D3400529038 /* NewUserSignupFormViewController+FormSubmissionUtils.swift */,
-				F394ECB02683CF5E00529038 /* NewUserGreetingViewController.swift */,
+				F331199A268E375B005082EB /* NewUserSignupOptionsViewController.swift */,
 				F394ECB22683EB5A00529038 /* SphinxDesktopAdViewController.swift */,
+				F394ECA32682064100529038 /* NewUserSignup.storyboard */,
 			);
 			path = "New User Signup";
 			sourceTree = "<group>";
@@ -2950,6 +2972,7 @@
 				4789E25324EEB8D8003991BE /* AuthorizeAppView.xib in Resources */,
 				47904C1124BF352300710E7A /* tri-tone.caf in Resources */,
 				475BDD49232AD00D00C5BBD6 /* Montserrat-SemiBold.otf in Resources */,
+				F33119A5268FA097005082EB /* XcodeStoreKitTestCertificate.cer in Resources */,
 				4780783023916CA800187906 /* PictureSentTableViewCell.xib in Resources */,
 				47893A9424095C80002F675B /* AudioBubbleView.xib in Resources */,
 				470F5CAD243E8823007E054F /* VideoCallPayButton.xib in Resources */,
@@ -3003,7 +3026,7 @@
 				4779F16C232AA0F300D35E81 /* Assets.xcassets in Resources */,
 				4787F87E24745BBD00CCE8B9 /* GroupTagView.xib in Resources */,
 				47904C1024BF352300710E7A /* synth.caf in Resources */,
-				F3C92B272671FB6C005F0A42 /* readme.md in Resources */,
+				F3C92B272671FB6C005F0A42 /* README.md in Resources */,
 				47904C0E24BF352300710E7A /* popcorn.caf in Resources */,
 				470F4C49257E708400288A9B /* TribeMemberInfoView.xib in Resources */,
 				4797E77224B8E51E00D13270 /* Chat.storyboard in Resources */,
@@ -3036,6 +3059,7 @@
 				475BDD23232AC71000C5BBD6 /* Colors.xcassets in Resources */,
 				47183CB42548AA5100E6FD19 /* PodcastPlayerView.xib in Resources */,
 				F3197C0D267FA2C800330F79 /* ellipse.gif in Resources */,
+				F33119A0268E9C1B005082EB /* XcodeStoreKitConfiguration.storekit in Resources */,
 				4789E26224F04752003991BE /* SettingsTabsView.xib in Resources */,
 				4797E81524BBA54300D13270 /* ChatAccessoryView.xib in Resources */,
 				473842F52391970B00AA640F /* FullScreenImageView.xib in Resources */,
@@ -3215,6 +3239,7 @@
 				475BDCB3232AC1E800C5BBD6 /* NewKeyPadView.swift in Sources */,
 				47ACBC15265E9CE600D2FE47 /* AuthExternalView.swift in Sources */,
 				47F2289E23672A5E001429A4 /* ImagePickerManager.swift in Sources */,
+				F358212F2698BE6800A314F1 /* API+Errors.swift in Sources */,
 				47949BD624AA12C7000D697B /* CommonDeletedMessageTableViewCell.swift in Sources */,
 				47A79D3A2444A15C005CD72F /* MessageOptionsView.swift in Sources */,
 				475BDCBE232AC1F000C5BBD6 /* ChatDataSource.swift in Sources */,
@@ -3231,7 +3256,6 @@
 				47AAFC7E238D7C8D00E30BDA /* PaymentRequestDecoder.swift in Sources */,
 				47B9A63F233BAEE500D2B022 /* AddressBookViewController.swift in Sources */,
 				475BDCFC232AC24600C5BBD6 /* InvoiceSentTableViewCell.swift in Sources */,
-				47B6F525258A833600D64A41 /* AddSatsAppViewController.swift in Sources */,
 				47FE9A3C23BF751C0090913F /* ChatViewControllerAttachmentDelegateExtension.swift in Sources */,
 				475BDD08232AC24600C5BBD6 /* MessageReceivedTableViewCell.swift in Sources */,
 				4734D3C9241AA24C00D6957E /* PaymentTemplateViewController.swift in Sources */,
@@ -3278,8 +3302,8 @@
 				473633EA25559945007405F2 /* LogarithmicSlider.swift in Sources */,
 				475BDCA5232AC1D600C5BBD6 /* TransactionMessageRow.swift in Sources */,
 				47AA08C7234BB8E0002C69E2 /* ShareInviteCodeViewController.swift in Sources */,
+				F31CF2662691489800AAB621 /* StoreKitService.swift in Sources */,
 				475BDCFB232AC24600C5BBD6 /* PaidInvoiceReceivedTableViewCell.swift in Sources */,
-				47B6F527258A917C00D64A41 /* AddSatsViewController.swift in Sources */,
 				4789E26E24F406F3003991BE /* RelayURLUpdateHelper.swift in Sources */,
 				475BDD5C232AE26E00C5BBD6 /* TransactionMessage+CoreDataClass.swift in Sources */,
 				475723A9247EBB56001ADC7E /* CustomAudioPlayer.swift in Sources */,
@@ -3352,6 +3376,7 @@
 				475BDD5F232AE26E00C5BBD6 /* UserContact+CoreDataClass.swift in Sources */,
 				477D9694244DFCED00830406 /* GifOverlayView.swift in Sources */,
 				475922F923E0B4EE00B73626 /* DelayPerformertHelper.swift in Sources */,
+				F30884A72699123600CADDEB /* LeftMenuViewController+KarmaPurchaseUtils.swift in Sources */,
 				4785C0FF24D1EE1F004E2D6C /* GroupRequestTableViewCell.swift in Sources */,
 				473E5DE32575696C00697EEA /* PickerViewController.swift in Sources */,
 				4789E24A24EDB73B003991BE /* WebAppViewController.swift in Sources */,
@@ -3369,6 +3394,7 @@
 				47E300DF234B81F800DB56DB /* LeftMenuAddFriendTableViewCell.swift in Sources */,
 				471940B1233951BB00F1BF5B /* QRCodeDetailViewModel.swift in Sources */,
 				475BDCBA232AC1E800C5BBD6 /* ChatAccessoryView.swift in Sources */,
+				F30884A92699181200CADDEB /* API+KarmaPurchaseUtils.swift in Sources */,
 				4787F8982478112F00CCE8B9 /* ChatAvatarView.swift in Sources */,
 				47308E0E24FEE6E700FFAC6F /* SocketIOClientConfiguration.swift in Sources */,
 				47308E1124FEE6E700FFAC6F /* SocketIOClientOption.swift in Sources */,
@@ -3395,6 +3421,7 @@
 				47CC7CEB23E4AA2100730E6F /* TransactionCommonTableViewCell.swift in Sources */,
 				47308E1324FEE6E700FFAC6F /* SocketRawView.swift in Sources */,
 				4789E25B24EF07E2003991BE /* KeyboardEventsViewController.swift in Sources */,
+				F358212D2695D11500A314F1 /* ConnectionCodeSignupHandling.swift in Sources */,
 				4703CF97251D23E5007B685C /* LinkPreviewUIImage.swift in Sources */,
 				47AF0D31254B236C00C98398 /* BoostButtonView.swift in Sources */,
 				47822C70244A02010011D832 /* CommonPaidMessageTableViewCell.swift in Sources */,
@@ -3540,6 +3567,7 @@
 				47CD9508265EC2A4009B06A4 /* CommonModalView.swift in Sources */,
 				475BDD28232AC97500C5BBD6 /* API.swift in Sources */,
 				4703CF852518FA3F007B685C /* FileSentTableViewCell.swift in Sources */,
+				F331199B268E375B005082EB /* NewUserSignupOptionsViewController.swift in Sources */,
 				47DAABCB24913E6E00EF38B0 /* SwipableReplyCell.swift in Sources */,
 				475BDCB7232AC1E800C5BBD6 /* PaymentInvoiceView.swift in Sources */,
 			);
@@ -4127,7 +4155,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 207;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 8297M44YTW;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = sphinx/Info.plist;
@@ -4215,7 +4243,7 @@
 				CODE_SIGN_ENTITLEMENTS = sphinx/sphinx.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 207;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 8297M44YTW;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = sphinx/Info.plist;

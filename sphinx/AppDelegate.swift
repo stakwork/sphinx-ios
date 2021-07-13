@@ -8,6 +8,7 @@
 
 import UIKit
 import UserNotifications
+import StoreKit
 import SDWebImage
 import Alamofire
 import GiphyUISDK
@@ -39,7 +40,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return .portrait
     }
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+    ) -> Bool {
         notificationUserInfo = nil
 
         Constants.setSize()
@@ -56,11 +60,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         UNUserNotificationCenter.current().delegate = self
 
+        SKPaymentQueue.default().add(StoreKitService.shared)
+    
         setInitialVC(launchingApp: true)
         connectTor()
 
         return true
     }
+    
 
     func connectTor() {
         if !SignupHelper.isLogged() { return }
@@ -150,6 +157,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         setMessagesAsSeen()
         setBadge(application: application)
+
+        SKPaymentQueue.default().remove(StoreKitService.shared)
 
         CoreDataManager.sharedManager.saveContext()
     }

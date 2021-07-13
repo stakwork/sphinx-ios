@@ -71,7 +71,7 @@ class PaidAttachmentView: UIView {
         //  ⚠️ Tentatively denying purchase ability in order to comply with our current App Store review approval needs.
 //        let isDenied = status == TransactionMessage.TransactionMessageType.purchaseDeny
 //        let borderColor = isDenied ? UIColor.Sphinx.PrimaryRed : UIColor.Sphinx.PrimaryGreen
-        let borderColor = UIColor.gray
+        let borderColor = UIColor.Sphinx.SecondaryText
         
         roundCorners(
             corners: [.bottomLeft, .bottomRight],

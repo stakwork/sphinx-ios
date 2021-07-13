@@ -1273,7 +1273,7 @@
                                             <constraint firstItem="8pr-Gd-17G" firstAttribute="top" secondItem="sTY-At-Biw" secondAttribute="top" id="toP-0D-XaJ"/>
                                         </constraints>
                                     </view>
-                                    <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q7Q-fj-N1d">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q7Q-fj-N1d">
                                         <rect key="frame" x="30" y="200" width="315" height="50"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="paidMessageIcon" translatesAutoresizingMaskIntoConstraints="NO" id="XfG-gf-ncn">
@@ -1550,6 +1550,7 @@
                         <outlet property="loadingWheel" destination="ysP-UC-48h" id="OLo-2L-ycv"/>
                         <outlet property="optionsContainer" destination="pZM-JO-pNJ" id="GPr-Ir-RU5"/>
                         <outlet property="optionsContainerBottomConstraint" destination="nsL-VV-8z2" id="vI8-rc-Ew4"/>
+                        <outlet property="paidMessageOptionContainer" destination="q7Q-fj-N1d" id="ruw-Be-xUv"/>
                         <outlet property="paidMessagePreviewVCContainer" destination="Er9-t6-GE3" id="Rxd-sI-SgU"/>
                         <outlet property="previewImageView" destination="y2W-O9-BIt" id="Lfa-Co-wgM"/>
                         <outlet property="priceLabel" destination="EGL-XG-Ej5" id="O8u-Er-dA3"/>

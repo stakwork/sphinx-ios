@@ -36,6 +36,7 @@ class ChatAttachmentViewController: UIViewController, BackCameraVC {
     @IBOutlet weak var optionsContainer: UIView!
     @IBOutlet weak var optionsContainerBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var accessoryViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var paidMessageOptionContainer: UIView!
     @IBOutlet weak var requestOptionContainer: UIView!
     @IBOutlet weak var sendOptionContainer: UIView!
     @IBOutlet weak var sendOptionTitle: UILabel!
@@ -112,6 +113,7 @@ class ChatAttachmentViewController: UIViewController, BackCameraVC {
         
         headerContainer.addShadow(offset: CGSize(width: 0, height: 3), opacity: 0.2)
 
+        paidMessageOptionContainer.alpha = isButtonDisabled(option: .Message) ? 0.4 : 1.0
         requestOptionContainer.alpha = isButtonDisabled(option: .Request) ? 0.4 : 1.0
         sendOptionContainer.alpha = isButtonDisabled(option: .Send) ? 0.4 : 1.0
         

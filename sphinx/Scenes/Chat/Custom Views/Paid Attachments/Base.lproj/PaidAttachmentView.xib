@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19115.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19107.5"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -42,7 +42,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hwp-R1-WZq" userLabel="Payments Not Supported View">
                     <rect key="frame" x="0.0" y="0.0" width="220" height="50"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Paid items not supported on iOS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5BU-tN-VN4">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Paid items not supported" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5BU-tN-VN4">
                             <rect key="frame" x="10" y="0.0" width="200" height="50"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <fontDescription key="fontDescription" name="Roboto-Italic" family="Roboto" pointSize="11"/>
@@ -55,7 +55,7 @@
                         <constraint firstItem="5BU-tN-VN4" firstAttribute="centerY" secondItem="Hwp-R1-WZq" secondAttribute="centerY" id="Av9-lS-nPR"/>
                         <constraint firstItem="5BU-tN-VN4" firstAttribute="leading" secondItem="Hwp-R1-WZq" secondAttribute="leading" constant="10" id="Ra9-KP-eNl"/>
                         <constraint firstAttribute="bottom" secondItem="5BU-tN-VN4" secondAttribute="bottom" id="WCq-7O-VNq"/>
-                        <constraint firstAttribute="trailing" secondItem="5BU-tN-VN4" secondAttribute="trailing" constant="10" id="jUm-nn-OEC"/>
+                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="5BU-tN-VN4" secondAttribute="trailing" constant="10" id="jUm-nn-OEC"/>
                         <constraint firstItem="5BU-tN-VN4" firstAttribute="top" secondItem="Hwp-R1-WZq" secondAttribute="top" id="sC1-di-Zf8"/>
                         <constraint firstItem="5BU-tN-VN4" firstAttribute="centerX" secondItem="Hwp-R1-WZq" secondAttribute="centerX" id="xG8-p1-Z6q"/>
                     </constraints>

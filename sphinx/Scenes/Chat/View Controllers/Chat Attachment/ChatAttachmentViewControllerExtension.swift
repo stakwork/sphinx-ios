@@ -25,6 +25,8 @@ extension ChatAttachmentViewController {
                 return false
             }
             return true
+        case OptionsButton.Message:
+            return true
         default:
             break
         }

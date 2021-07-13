@@ -112,7 +112,7 @@ extension LeftMenuViewController {
                 switch result {
                 case .success:
                     print("Successfully purchased Karma")
-                    
+                    self.closeLeftMenu()
                 case .failure(_):
                     AlertHelper.showAlert(
                         title: "left-menu.karma-purchase-failed".localized,

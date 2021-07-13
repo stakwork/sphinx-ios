@@ -172,8 +172,8 @@
 "signup.desktop-ad.get-now" = "Get It Now";
 "signup.desktop-ad.skip" = "Skip";
 "signup.invalid-code.restore-key" = "This looks like a restoration key string from an existing Sphinx node. Try selecting \"Existing User\" from the Welcome screen.";
-"signup.error-validation-invite-code" = "An error occurred while validating the invite code.";
-"signup.error-generating-token" = "An error occurred while generating a token for this invite code.";
+"signup.error-validation-invite-code" = "An error occurred while validating the connection code.";
+"signup.error-generating-token" = "An error occurred while generating a token for this connection code.";
 "signup.purchase-eligibility-failed" = "Purchase Eligibility Failed";
 "signup.lite-node-purchase-failed" = "Lite Node Purchase Failed";
 
@@ -202,9 +202,9 @@
 "tor.connection.failed" = "Tor connection error";
 "establishing.tor.circuit" = "Establishing Tor circuit. Please wait...";
 "wait.tor.request" = "Please wait. This process could take a few minutes...";
-"invalid.code.pubkey" = "This looks like a node public key. To sign up, you'll need an invite code from https://sphinx.chat";
-"invalid.code.invoice" = "This looks like an invoice, to sign up you'll need an invite code from https://sphinx.chat";
-"invalid.code" = "We don't recognize this code. To sign up, you'll need an invite code from https://sphinx.chat";
+"invalid.code.pubkey" = "This looks like a node public key. To sign up, you'll need an connection code from https://sphinx.chat";
+"invalid.code.invoice" = "This looks like an invoice, to sign up you'll need an connection code from https://sphinx.chat";
+"invalid.code" = "We don't recognize this code. To sign up, you'll need an connection code from https://sphinx.chat";
 "wrong.restore.string" = "This restore code couldn’t be decrypted. Make sure to select any punctuation at the end of the string.";
 
 //PROFILE

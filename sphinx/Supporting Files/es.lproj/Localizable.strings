@@ -172,7 +172,7 @@
 "signup.desktop-ad.get-now" = "Obtener ahora";
 "signup.desktop-ad.skip" = "Más tarde";
 "signup.invalid-code.restore-key" = "Parece que estas utilizando un código de restauración de una cuenta existente. Intentá seleccionando \"Usuario Existente\" en la pantalla de bienvenida.";
-"signup.error-validation-invite-code" = "Ocurrió un error durante la validación del código de invitación.";
+"signup.error-validation-invite-code" = "Ocurrió un error durante la validación del código de conexión.";
 "signup.error-generating-token" = "Ocurrió un error durante la generación del token de verificación";
 "signup.purchase-eligibility-failed" = "Falló la elegibilidad de la compra";
 "signup.lite-node-purchase-failed" = "Falló la elegibilidad de la compra";
@@ -183,7 +183,7 @@
 "whoops" = "Ups!";
 "welcome" = "Bienvenido";
 "contact.support" = "Ha habido un problema.\n\nPor favor contacta con soporte en\nsupport@stakwork.com";
-"paste.invite.text" = "Pega el código de invitación\no escanea el código QR";
+"paste.invite.text" = "Pega el código de conexión\no escanea el código QR";
 "invalid.pin" = "PIN Inválido";
 "message.from.friend" = "Un mensaje\nde tu amigo...";
 "skip.upper" = "OMITIR";
@@ -202,9 +202,9 @@
 "tor.connection.failed" = "Error conectando a Tor";
 "establishing.tor.circuit" = "Estableciendo circuito con Tor. Por favor espera...";
 "wait.tor.request" = "Por favor espera. Este proceso puede tardar algunos minutos...";
-"invalid.code.pubkey" = "Parece que has ingresado una clave pública, para registrarte necesitarás un código de invitación. Obtenlo en https://sphinx.chat";
-"invalid.code.invoice" = "Parece que has ingresado una solicitud de pago, para registrarte necesitarás un código de invitación. Obtenlo en https://sphinx.chat";
-"invalid.code" = "El código ingresado no es válido, para registrarte necesitarás un código de invitación. Obtenlo en https://sphinx.chat";
+"invalid.code.pubkey" = "Parece que has ingresado una clave pública, para registrarte necesitarás un código de conexión. Obtenlo en https://sphinx.chat";
+"invalid.code.invoice" = "Parece que has ingresado una solicitud de pago, para registrarte necesitarás un código de conexión. Obtenlo en https://sphinx.chat";
+"invalid.code" = "El código ingresado no es válido, para registrarte necesitarás un código de conexión. Obtenlo en https://sphinx.chat";
 "wrong.restore.string" = "Este código de restauración no puede ser desencriptado. Asegurate de seleccionar cualquier puntuación al final del mismo.";
 
 //PROFILE

@@ -237,6 +237,8 @@ extension NewUserSignupOptionsViewController {
                         \("error.app-store-receipt-validation-failed".localized)
                         
                         Error: \(error.localizedDescription)
+                        
+                        \("generic.contact-support".localized)
                         """
                     )
                 }

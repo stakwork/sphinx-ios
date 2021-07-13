@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19115.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19107.5"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -1273,7 +1273,7 @@
                                             <constraint firstItem="8pr-Gd-17G" firstAttribute="top" secondItem="sTY-At-Biw" secondAttribute="top" id="toP-0D-XaJ"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q7Q-fj-N1d">
+                                    <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q7Q-fj-N1d">
                                         <rect key="frame" x="30" y="200" width="315" height="50"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="paidMessageIcon" translatesAutoresizingMaskIntoConstraints="NO" id="XfG-gf-ncn">
@@ -1296,7 +1296,7 @@
                                                     <constraint firstAttribute="height" constant="1" id="Z9K-G0-0YJ"/>
                                                 </constraints>
                                             </view>
-                                            <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rFX-qw-uWn">
+                                            <button opaque="NO" userInteractionEnabled="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rFX-qw-uWn">
                                                 <rect key="frame" x="0.0" y="0.0" width="315" height="50"/>
                                                 <connections>
                                                     <action selector="optionButtonTouched:" destination="o9k-rj-cJf" eventType="touchUpInside" id="nTd-Yh-2cb"/>
@@ -1446,7 +1446,6 @@
                                     <constraint firstItem="pyi-ey-kuS" firstAttribute="top" secondItem="pZM-JO-pNJ" secondAttribute="top" id="SPC-Bc-njc"/>
                                     <constraint firstItem="q7Q-fj-N1d" firstAttribute="top" secondItem="sTY-At-Biw" secondAttribute="bottom" id="T1C-Hk-dxu"/>
                                     <constraint firstItem="t0U-Er-KVu" firstAttribute="leading" secondItem="pZM-JO-pNJ" secondAttribute="leading" constant="30" id="TK7-5U-pfC"/>
-                                    <constraint firstItem="q7Q-fj-N1d" firstAttribute="top" secondItem="t0U-Er-KVu" secondAttribute="bottom" constant="50" id="ZC0-XJ-egw"/>
                                     <constraint firstAttribute="trailing" secondItem="t0U-Er-KVu" secondAttribute="trailing" constant="30" id="bUW-4l-HdA"/>
                                     <constraint firstAttribute="trailing" secondItem="5wc-G9-WhC" secondAttribute="trailing" constant="30" id="fP3-Ts-AC2"/>
                                     <constraint firstAttribute="trailing" secondItem="9Lj-Ah-LMM" secondAttribute="trailing" constant="30" id="jOO-vv-ycd"/>

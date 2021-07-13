@@ -119,6 +119,10 @@ class ChatAttachmentViewController: UIViewController, BackCameraVC {
         addSwipeToDismiss()
         
         imagePickerManager.configurePicker(vc: self)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
         UIView.animate(withDuration: 0.2, animations: {
             self.view.alpha = 1.0

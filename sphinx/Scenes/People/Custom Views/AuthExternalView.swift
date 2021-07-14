@@ -56,14 +56,29 @@ class AuthExternalView: CommonModalView {
             if let object = object, let token = object["token"] as? String, let info = object["info"] as? [String: AnyObject] {
                 self.authInfo?.token = token
                 self.authInfo?.info = info
+                self.signBase64()
+            }
+        })
+    }
+    
+    func signBase64() {
+        API.sharedInstance.signBase64(b64: "U3BoaW54IFZlcmlmaWNhdGlvbg==", callback: { sig in
+            if let sig = sig {
+                self.authInfo?.verificationSignature = sig
                 self.authorize()
             }
         })
     }
     
     func authorize() {
-        if let host = authInfo?.host, let challenge = authInfo?.challenge, let token = authInfo?.token, var info = authInfo?.info {
+        if let host = authInfo?.host,
+           let challenge = authInfo?.challenge,
+           let verificationSignature = authInfo?.verificationSignature,
+           let token = authInfo?.token,
+           var info = authInfo?.info {
+            
             info["url"] = UserData.sharedInstance.getNodeIP() as AnyObject
+            info["verification_signature"] = verificationSignature as AnyObject
             
             API.sharedInstance.authorizeExternal(host: host, challenge: challenge, token: token, params: info, callback: { success in
                 self.authorizationDone(success: success, host: host)

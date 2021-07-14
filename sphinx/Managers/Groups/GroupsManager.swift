@@ -212,15 +212,6 @@ class GroupsManager {
         return [bitcoingTag, lightningTag, sphinxTag, cryptoTag, techTag, altcoinsTag, musicTag, podcastTag]
     }
     
-    func validateGroupJoinLink(string: String) -> (Bool, String) {
-        if let url = URL(string: string), let query = url.query, let action = url.getLinkAction() {
-            if action == "tribe" {
-                return (true, query)
-            }
-        }
-        return (false, "")
-    }
-    
     func getGroupInfo(query: String) -> TribeInfo? {
         var tribeInfo = TribeInfo()
         

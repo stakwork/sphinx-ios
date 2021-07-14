@@ -23,6 +23,7 @@ class CommonModalView: UIView, ModalViewInterface {
         var challenge : String? = nil
         var token : String? = nil
         var pubkey : String? = nil
+        var verificationSignature : String? = nil
         var ts : Int? = nil
         var info : [String: AnyObject] = [:]
         var personInfo : JSON = JSON()

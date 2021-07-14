@@ -13,6 +13,7 @@ import SwiftyJSON
 extension API {
     
     typealias VerifyExternalCallback = ((Bool, NSDictionary?) -> ())
+    typealias SignVerifyCallback = ((String?) -> ())
     typealias GetPersonInoCallback = ((Bool, JSON?) -> ())
     
     public func verifyExternal(callback: @escaping VerifyExternalCallback) {
@@ -31,6 +32,30 @@ extension API {
                 }
             case .failure(_):
                 callback(false, nil)
+            }
+        }
+    }
+    
+    public func signBase64(b64: String, callback: @escaping SignVerifyCallback) {
+        guard let request = getURLRequest(route: "/signer/\(b64)", method: "GET") else {
+            callback(nil)
+            return
+        }
+        
+        sphinxRequest(request) { response in
+            switch response.result {
+            case .success(let data):
+                if let json = data as? NSDictionary {
+                    if let success = json["success"] as? Bool, let response = json["response"] as? NSDictionary, success {
+                        if let sig = response["sig"] as? String {
+                            callback(sig)
+                            return
+                        }
+                    }
+                }
+                callback(nil)
+            case .failure(_):
+                callback(nil)
             }
         }
     }

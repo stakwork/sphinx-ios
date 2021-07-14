@@ -118,9 +118,8 @@ extension ChatListViewController : QRCodeScannerDelegate {
         goToChat()
     }
     
-    func shouldPresentGroupDetailsWith(query: String) {
-        let groupDetailsVC = JoinGroupDetailsViewController.instantiate(qrString: query, delegate: self)
-        navigationController?.present(groupDetailsVC, animated: true, completion: nil)
+    func didScanDeepLink() {
+        handleLinkQueries()
     }
 }
 

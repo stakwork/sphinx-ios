@@ -12,6 +12,8 @@ class PictureReceivedTableViewCell: CommonPictureTableViewCell, MessageRowProtoc
     
     @IBOutlet weak var errorMessageLabel: UILabel!
     @IBOutlet weak var errorContainer: UIView!
+    @IBOutlet weak var lockedPaidItemOverlayView: UIView!
+    @IBOutlet weak var lockedPaidItemOverlayLabel: UILabel!
     @IBOutlet weak var paidAttachmentView: PaidAttachmentView!
     @IBOutlet weak var separatorLine: UIView!
     
@@ -48,14 +50,29 @@ class PictureReceivedTableViewCell: CommonPictureTableViewCell, MessageRowProtoc
         
         gifOverlayView.alpha = 0.0
         pdfInfoView.isHidden = true
+        lockedPaidItemOverlayView.isHidden = true
+        
+        if messageRow.transactionMessage.isVideo() {
+            lockedPaidItemOverlayLabel.text = "pay.to.unlock.video".localized.uppercased()
+        } else {
+            lockedPaidItemOverlayLabel.text = "pay.to.unlock.image".localized.uppercased()
+        }
         
         let hasContent = messageRow.transactionMessage.hasMessageContent()
         let ratio = GiphyHelper.getAspectRatioFrom(message: messageRow.transactionMessage.messageContent ?? "")
         let bubbleHeight = messageRow.transactionMessage.isPDF() ? PictureSentTableViewCell.kPDFBubbleHeight : PictureSentTableViewCell.kPictureBubbleHeight
         let bubbleSize = CGSize(width: PictureSentTableViewCell.kPictureBubbleHeight, height: bubbleHeight / CGFloat(ratio))
+        
+        if messageRow.transactionMessage.isPaidAttachment() {
+            lockedPaidItemOverlayView.isHidden = false
+        }
+        
         bubbleView.showIncomingPictureBubble(messageRow: messageRow, size: bubbleSize)
+        
         configureReplyBubble(bubbleView: bubbleView, bubbleSize: bubbleSize, incoming: true)
+        
         tryLoadingImage(messageRow: messageRow, bubbleSize: bubbleSize)
+        
         messageBubbleView.clearBubbleView()
         
         separatorLine.isHidden = !hasContent
@@ -98,6 +115,8 @@ class PictureReceivedTableViewCell: CommonPictureTableViewCell, MessageRowProtoc
     }
     
     override func imageLoadingFailed() {
+        lockedPaidItemOverlayView.isHidden = true
+        
         super.imageLoadingFailed()
     }
     
@@ -105,11 +124,23 @@ class PictureReceivedTableViewCell: CommonPictureTableViewCell, MessageRowProtoc
         super.toggleLoadingImage(loading: loading)
     }
     
-    override func loadImageInBubble(messageRow: TransactionMessageRow, size: CGSize, image: UIImage? = nil, gifData: Data? = nil) {
+    override func loadImageInBubble(
+        messageRow: TransactionMessageRow,
+        size: CGSize,
+        image: UIImage? = nil,
+        gifData: Data? = nil
+    ) {
         super.loadImageInBubble(messageRow: messageRow, size: size)
+    
         toggleLoadingImage(loading: false)
         pictureImageView.image = nil
-        bubbleView.showIncomingPictureBubble(messageRow: messageRow, size: size, image: image, gifData: gifData)
+        
+        bubbleView.showIncomingPictureBubble(
+            messageRow: messageRow,
+            size: size,
+            image: image,
+            gifData: gifData
+        )
     }
 }
 

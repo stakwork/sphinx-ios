@@ -73,12 +73,34 @@ class PictureBubbleView: CommonBubbleView {
         
         let imageOrGifAvailable = image != nil || gifData != nil
         
-        if imageOrGifAvailable {
-            addStaticImageInBubble(image: image, gifData: gifData, frame: rect, path: bezierPath, contentMode: contentMode, strokeColor: bubbleColors.1)
-            
-            if messageRow.transactionMessage.isVideo() {
-                addVideoLayerBubble(frame: rect, path: bezierPath)
+        guard imageOrGifAvailable else {
+            if messageRow.transactionMessage.isPaidAttachment() {
+                let placeholderName = messageRow.transactionMessage.isVideo() ?
+                    "paidVideoBlurredPlaceholder"
+                    : "paidImageBlurredPlaceholder"
+                
+                addStaticImageInBubble(
+                    image: UIImage(named: placeholderName),
+                    frame: rect,
+                    path: bezierPath,
+                    contentMode: contentMode,
+                    strokeColor: bubbleColors.1
+                )
             }
+            return
+        }
+        
+        addStaticImageInBubble(
+            image: image,
+            gifData: gifData,
+            frame: rect,
+            path: bezierPath,
+            contentMode: contentMode,
+            strokeColor: bubbleColors.1
+        )
+        
+        if messageRow.transactionMessage.isVideo() {
+            addVideoLayerBubble(frame: rect, path: bezierPath)
         }
     }
     

@@ -31,22 +31,8 @@ class TransactionCommonTableViewCell : UITableViewCell {
         
         self.transaction = transaction
         
-        let userId = UserData.sharedInstance.getUserId()
-        
         if let users = transaction.getUsers() {
             addressLabel.text = users
-        } else if let paymentRequest = transaction.paymentRequest, let message = TransactionMessage.getInvoiceWith(paymentRequestString: paymentRequest) {
-            if message.senderId == userId {
-                addressLabel.text = message.getMessageReceiverNickname()
-            } else {
-                addressLabel.text = message.getMessageSenderNickname()
-            }
-        } else if let paymentHash = transaction.paymentHash, let message = TransactionMessage.getInvoiceWith(paymentRequestString: paymentHash) {
-            if message.senderId == userId {
-                addressLabel.text = message.getMessageReceiverNickname()
-            } else {
-                addressLabel.text = message.getMessageSenderNickname()
-            }
         } else {
             addressLabel.text = "-"
         }

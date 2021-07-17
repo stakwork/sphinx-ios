@@ -176,6 +176,7 @@
 "signup.error-generating-token" = "An error occurred while generating a token for this connection code.";
 "signup.purchase-eligibility-failed" = "Purchase Eligibility Failed";
 "signup.lite-node-purchase-failed" = "Lite Node Purchase Failed";
+"signup.products-fetch-failed" = "IAP products not available";
 
 //INVITE
 "add.people" = "Add People";

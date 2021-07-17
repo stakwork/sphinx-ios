@@ -175,7 +175,8 @@
 "signup.error-validation-invite-code" = "Ocurrió un error durante la validación del código de conexión.";
 "signup.error-generating-token" = "Ocurrió un error durante la generación del token de verificación";
 "signup.purchase-eligibility-failed" = "Falló la elegibilidad de la compra";
-"signup.lite-node-purchase-failed" = "Falló la elegibilidad de la compra";
+"signup.lite-node-purchase-failed" = "Falló la compra del Lite Node";
+"signup.products-fetch-failed" = "Products IAP no disponibles";
 
 //INVITE
 "add.people" = "Agregar";

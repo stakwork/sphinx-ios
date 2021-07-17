@@ -36,11 +36,7 @@ class NewUserSignupOptionsViewController: UIViewController, ConnectionCodeSignup
     }
 
     
-    var liteNodePurchaseProduct: SKProduct? {
-        didSet {
-            purchaseLiteNodeButton.isEnabled = liteNodePurchaseProduct != nil
-        }
-    }
+    var liteNodePurchaseProduct: SKProduct?
     
     
     static func instantiate(
@@ -75,7 +71,7 @@ class NewUserSignupOptionsViewController: UIViewController, ConnectionCodeSignup
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        purchaseLiteNodeButton.isEnabled = liteNodePurchaseProduct != nil
+        startPurchaseProgressIndicator()
         fetchProductsInformation()
     }
     
@@ -109,9 +105,12 @@ extension NewUserSignupOptionsViewController {
     
     @IBAction func purchaseLiteNodeButtonTapped(_ sender: UIButton) {
         guard let product = liteNodePurchaseProduct else {
-            preconditionFailure()
+            AlertHelper.showAlert(
+                title: "generic.error.title".localized,
+                message: "signup.products-fetch-failed".localized
+            )
+            return
         }
-        
         startPurchase(for: product)
     }
 }
@@ -134,11 +133,11 @@ extension NewUserSignupOptionsViewController {
     
     
     private func fetchProductsInformation() {
+        stopPurchaseProgressIndicator()
+        
         guard storeKitService.isAuthorizedForPayments else {
-            purchaseLiteNodeButton.isEnabled = false
             return
         }
-        
         storeKitService.fetchProducts(
             matchingIdentifiers: [StoreKitService.ProductIdentifiers.buyLiteNode]
         )
@@ -293,6 +292,10 @@ extension NewUserSignupOptionsViewController: StoreKitServiceRequestDelegate {
     
     
     func storeKitServiceDidReceiveMessage(_ message: String) {
+        AlertHelper.showAlert(
+            title: "generic.error.title".localized,
+            message: "signup.products-fetch-failed".localized
+        )
     }
 }
 

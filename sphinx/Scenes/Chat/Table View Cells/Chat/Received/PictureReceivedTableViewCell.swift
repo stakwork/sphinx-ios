@@ -63,10 +63,6 @@ class PictureReceivedTableViewCell: CommonPictureTableViewCell, MessageRowProtoc
         let bubbleHeight = messageRow.transactionMessage.isPDF() ? PictureSentTableViewCell.kPDFBubbleHeight : PictureSentTableViewCell.kPictureBubbleHeight
         let bubbleSize = CGSize(width: PictureSentTableViewCell.kPictureBubbleHeight, height: bubbleHeight / CGFloat(ratio))
         
-        if messageRow.transactionMessage.isPaidAttachment() {
-            lockedPaidItemOverlayView.isHidden = false
-        }
-        
         bubbleView.showIncomingPictureBubble(messageRow: messageRow, size: bubbleSize)
         
         configureReplyBubble(bubbleView: bubbleView, bubbleSize: bubbleSize, incoming: true)
@@ -90,6 +86,12 @@ class PictureReceivedTableViewCell: CommonPictureTableViewCell, MessageRowProtoc
         }
         
         paidAttachmentView.configure(messageRow: messageRow, delegate: self)
+        
+        if messageRow.shouldShowPaidAttachmentView() &&
+           !messageRow.transactionMessage.isAttachmentAvailable() {
+            
+            lockedPaidItemOverlayView.isHidden = false
+        }
     }
     
     func configureStatus() {

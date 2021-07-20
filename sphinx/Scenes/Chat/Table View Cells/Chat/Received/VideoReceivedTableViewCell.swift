@@ -9,9 +9,11 @@
 import UIKit
 
 class VideoReceivedTableViewCell: CommonVideoTableViewCell, MessageRowProtocol {
-
+    
     @IBOutlet weak var errorContainer: UIView!
     @IBOutlet weak var errorMessageLabel: UILabel!
+    @IBOutlet weak var lockedPaidItemOverlayView: UIView!
+    @IBOutlet weak var lockedPaidItemOverlayLabel: UILabel!
     @IBOutlet weak var paidAttachmentView: PaidAttachmentView!
     @IBOutlet weak var separatorLine: UIView!
     
@@ -20,19 +22,63 @@ class VideoReceivedTableViewCell: CommonVideoTableViewCell, MessageRowProtocol {
         
         paidAttachmentView.clipsToBounds = true
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
     
     override func configureMessageRow(messageRow: TransactionMessageRow, contact: UserContact?, chat: Chat?) {
         super.configureMessageRow(messageRow: messageRow, contact: contact, chat: chat)
-
+        
+        configureImageAndMessage()
         commonConfigurationForMessages()
         configureStatus()
+    }
+    
+    
+    func configurePayment() {
+        guard let messageRow = messageRow else {
+            paidAttachmentView.isHidden = true
+            return
+        }
+        
+        paidAttachmentView.configure(messageRow: messageRow, delegate: self)
+        
+        if messageRow.shouldShowPaidAttachmentView() &&
+            !messageRow.transactionMessage.isAttachmentAvailable() {
+            
+            lockedPaidItemOverlayView.isHidden = false
+        }
+    }
+    
+    func configureStatus() {
+        guard let messageRow = messageRow else {
+            return
+        }
+        
+        configureLockSign()
+        
+        let expired = messageRow.transactionMessage.isMediaExpired()
+        errorMessageLabel.text = "media.terms.expired".localized
+        errorContainer.alpha = expired ? 1.0 : 0.0
+    }
+    
+    
+    func configureImageAndMessage() {
+        guard let messageRow = messageRow else {
+            return
+        }
         
         let hasContent = messageRow.transactionMessage.hasMessageContent()
-        let bubbleSize = CGSize(width: PictureSentTableViewCell.kPictureBubbleHeight, height: PictureSentTableViewCell.kPictureBubbleHeight)
+        let bubbleSize = CGSize(
+            width: PictureSentTableViewCell.kPictureBubbleHeight,
+            height: PictureSentTableViewCell.kPictureBubbleHeight
+        )
+        
+        lockedPaidItemOverlayView.isHidden = true
+        lockedPaidItemOverlayLabel.text = "pay.to.unlock.video".localized.uppercased()
+        lockedPaidItemOverlayLabel.addTextSpacing(value: 2)
+        
         bubbleView.showIncomingPictureBubble(messageRow: messageRow, size: bubbleSize)
         configureReplyBubble(bubbleView: bubbleView, bubbleSize: bubbleSize, incoming: true)
         tryLoadingVideo(messageRow: messageRow, bubbleSize: bubbleSize)
@@ -46,35 +92,14 @@ class VideoReceivedTableViewCell: CommonVideoTableViewCell, MessageRowProtocol {
         }
         
         configurePayment()
-
+        
         if messageRow.shouldShowRightLine {
             addRightLine()
         }
-
+        
         if messageRow.shouldShowLeftLine {
             addLeftLine()
         }
-    }
-    
-    func configurePayment() {
-        guard let messageRow = messageRow else {
-            paidAttachmentView.isHidden = true
-            return
-        }
-        
-        paidAttachmentView.configure(messageRow: messageRow, delegate: self)
-    }
-    
-    func configureStatus() {
-        guard let messageRow = messageRow else {
-            return
-        }
-        
-        configureLockSign()
-        
-        let expired = messageRow.transactionMessage.isMediaExpired()
-        errorMessageLabel.text = "media.terms.expired".localized
-        errorContainer.alpha = expired ? 1.0 : 0.0
     }
     
     func tryLoadingVideo(messageRow: TransactionMessageRow, bubbleSize: CGSize) {

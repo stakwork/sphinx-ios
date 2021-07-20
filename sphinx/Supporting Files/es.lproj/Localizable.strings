@@ -288,6 +288,8 @@
 "encryption.error" = "Error de Encriptación";
 "cannot.load.message.data" = "Error al cargar mensaje";
 "pay.to.unlock.msg" = "Paga para desbloquear";
+"pay.to.unlock.image" = "Paga para desbloquear\nla Imagen";
+"pay.to.unlock.video" = "Paga para desbloquear\nel Video";
 "paid-message.payment-not-supported" = "Items pagos no soportados en dispositivos Apple";
 "loading.paid.message" = "Cargando mensaje...";
 "copy.text" = "Copiar Texto";

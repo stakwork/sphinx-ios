@@ -100,9 +100,12 @@ class CommonPictureTableViewCell : CommonReplyTableViewCell {
     
     func imageLoadingFailed() {
         toggleLoadingImage(loading: false)
-        pictureImageView.image = UIImage(named: "imageNotAvailable")
         pictureImageView.alpha = 1.0
         pictureImageView.tintColorDidChange()
+        
+        if !(messageRow?.transactionMessage?.isPaidAttachment() ?? false) {
+            pictureImageView.image = UIImage(named: "imageNotAvailable")
+        }
     }
     
     func configureLockSign() {

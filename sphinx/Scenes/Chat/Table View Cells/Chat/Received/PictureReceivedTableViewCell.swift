@@ -50,9 +50,10 @@ class PictureReceivedTableViewCell: CommonPictureTableViewCell, MessageRowProtoc
         
         gifOverlayView.alpha = 0.0
         pdfInfoView.isHidden = true
+        
         lockedPaidItemOverlayView.isHidden = true
         lockedPaidItemOverlayLabel.text = "pay.to.unlock.image".localized.uppercased()
-        
+        lockedPaidItemOverlayLabel.addTextSpacing(value: 2)
         
         let hasContent = messageRow.transactionMessage.hasMessageContent()
         let ratio = GiphyHelper.getAspectRatioFrom(message: messageRow.transactionMessage.messageContent ?? "")

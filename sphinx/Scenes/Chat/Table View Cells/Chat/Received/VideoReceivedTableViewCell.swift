@@ -77,6 +77,7 @@ class VideoReceivedTableViewCell: CommonVideoTableViewCell, MessageRowProtocol {
         
         lockedPaidItemOverlayView.isHidden = true
         lockedPaidItemOverlayLabel.text = "pay.to.unlock.video".localized.uppercased()
+        lockedPaidItemOverlayLabel.addTextSpacing(value: 2)
         
         bubbleView.showIncomingPictureBubble(messageRow: messageRow, size: bubbleSize)
         configureReplyBubble(bubbleView: bubbleView, bubbleSize: bubbleSize, incoming: true)

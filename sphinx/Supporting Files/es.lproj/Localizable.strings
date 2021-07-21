@@ -176,7 +176,7 @@
 "signup.error-generating-token" = "Ocurrió un error durante la generación del token de verificación";
 "signup.purchase-eligibility-failed" = "Falló la elegibilidad de la compra";
 "signup.lite-node-purchase-failed" = "Falló la compra del Lite Node";
-"signup.products-fetch-failed" = "Products IAP no disponibles";
+"signup.products-fetch-failed" = "Productos In App Purchases no disponibles";
 
 //INVITE
 "add.people" = "Agregar";
@@ -290,7 +290,7 @@
 "pay.to.unlock.msg" = "Paga para desbloquear";
 "pay.to.unlock.image" = "Paga para desbloquear\nla Imagen";
 "pay.to.unlock.video" = "Paga para desbloquear\nel Video";
-"paid-message.payment-not-supported" = "Items pagos no soportados en dispositivos Apple";
+"paid-message.payment-not-supported" = "Items pagos no disponibles en éste dispositivo";
 "loading.paid.message" = "Cargando mensaje...";
 "copy.text" = "Copiar Texto";
 "copy.link" = "Copiar Enlace";

@@ -176,7 +176,7 @@
 "signup.error-generating-token" = "An error occurred while generating a token for this connection code.";
 "signup.purchase-eligibility-failed" = "Purchase Eligibility Failed";
 "signup.lite-node-purchase-failed" = "Lite Node Purchase Failed";
-"signup.products-fetch-failed" = "IAP products not available";
+"signup.products-fetch-failed" = "In App Purchases products not available";
 
 //INVITE
 "add.people" = "Add People";
@@ -290,7 +290,7 @@
 "pay.to.unlock.msg" = "Pay to unlock Message";
 "pay.to.unlock.image" = "Pay to unlock\nImage";
 "pay.to.unlock.video" = "Pay to unlock\nVideo";
-"paid-message.payment-not-supported" = "Paid items not supported on Apple devices";
+"paid-message.payment-not-supported" = "Paid items not available on this device";
 "loading.paid.message" = "Loading message...";
 "copy.text" = "Copy Text";
 "copy.link" = "Copy Link";

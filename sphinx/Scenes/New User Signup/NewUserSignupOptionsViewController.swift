@@ -65,13 +65,7 @@ class NewUserSignupOptionsViewController: UIViewController, ConnectionCodeSignup
             purchaseLiteNodeButton,
             withTitle: "signup.signup-options.lite-node-button".localized
         )
-    }
-    
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-        startPurchaseProgressIndicator()
+        
         fetchProductsInformation()
     }
     
@@ -133,7 +127,7 @@ extension NewUserSignupOptionsViewController {
     
     
     private func fetchProductsInformation() {
-        stopPurchaseProgressIndicator()
+        startPurchaseProgressIndicator()
         
         guard storeKitService.isAuthorizedForPayments else {
             return
@@ -287,6 +281,8 @@ extension NewUserSignupOptionsViewController: StoreKitServiceRequestDelegate {
                     $0.productIdentifier == StoreKitService.ProductIdentifiers.buyLiteNode
                 }
             )
+            
+            self.stopPurchaseProgressIndicator()
         }
     }
     
@@ -294,8 +290,9 @@ extension NewUserSignupOptionsViewController: StoreKitServiceRequestDelegate {
     func storeKitServiceDidReceiveMessage(_ message: String) {
         AlertHelper.showAlert(
             title: "generic.error.title".localized,
-            message: "signup.products-fetch-failed".localized
+            message: "\("signup.products-fetch-failed".localized)\n Error: \(message)"
         )
+        stopPurchaseProgressIndicator()
     }
 }
 

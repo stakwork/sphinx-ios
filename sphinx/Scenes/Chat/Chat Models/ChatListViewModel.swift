@@ -28,8 +28,6 @@ final class ChatListViewModel: NSObject {
     }
     
     func endBackgroundTask() {
-        restoringMessages = false
-        
         UIApplication.shared.endBackgroundTask(backgroundTask)
         backgroundTask = UIBackgroundTaskIdentifier.invalid
     }
@@ -98,7 +96,7 @@ final class ChatListViewModel: NSObject {
         API.sharedInstance.getAllMessages(page: page, date: date, callback: { messages in
             self.addMessages(messages: messages, completion: { (_, _) in
                 if messages.count < ChatListViewModel.kMessagesPerPage {
-                    self.endBackgroundTask()
+                    self.didEndRestore()
                     
                     completion(0,0, true)
                     
@@ -108,10 +106,15 @@ final class ChatListViewModel: NSObject {
                 }
             })
         }, errorCallback: {
-            self.endBackgroundTask()
+            self.didEndRestore()
             
             completion(0,0, true)
         })
+    }
+    
+    func didEndRestore() {
+        endBackgroundTask()
+        restoringMessages = false
     }
     
     func askForNotificationPermissions() {

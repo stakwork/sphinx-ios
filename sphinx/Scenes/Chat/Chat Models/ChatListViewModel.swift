@@ -12,7 +12,27 @@ final class ChatListViewModel: NSObject {
     
     private var contactsService: ContactsService!
     
+    private var restoringMessages = false
+    
     public static let kMessagesPerPage: Int = 200
+    
+    var backgroundTask: UIBackgroundTaskIdentifier = UIBackgroundTaskIdentifier.invalid
+    
+    func registerBackgroundTask() {
+        restoringMessages = true
+        
+        backgroundTask = UIApplication.shared.beginBackgroundTask (expirationHandler: { [unowned self] in
+            self.endBackgroundTask()
+        })
+        assert(backgroundTask != UIBackgroundTaskIdentifier.invalid)
+    }
+    
+    func endBackgroundTask() {
+        restoringMessages = false
+        
+        UIApplication.shared.endBackgroundTask(backgroundTask)
+        backgroundTask = UIBackgroundTaskIdentifier.invalid
+    }
     
     init(contactsService: ContactsService) {
         self.contactsService = contactsService
@@ -58,7 +78,13 @@ final class ChatListViewModel: NSObject {
     }
     
     func syncMessages(chatId: Int? = nil, fromPush: Bool = false, progressCallback: @escaping (String) -> (), completion: @escaping (Int, Int, Bool) -> ()) {
+        if restoringMessages {
+            return
+        }
+        
         if isRestoring(chatId: chatId) {
+            registerBackgroundTask()
+            
             askForNotificationPermissions()
             progressCallback("fetching.old.messages".localized)
             getAllMessages(page: 1, date: Date(), completion: completion)
@@ -72,6 +98,8 @@ final class ChatListViewModel: NSObject {
         API.sharedInstance.getAllMessages(page: page, date: date, callback: { messages in
             self.addMessages(messages: messages, completion: { (_, _) in
                 if messages.count < ChatListViewModel.kMessagesPerPage {
+                    self.endBackgroundTask()
+                    
                     completion(0,0, true)
                     
                     SphinxSocketManager.sharedInstance.connectWebsocket(forceConnect: true)
@@ -80,6 +108,8 @@ final class ChatListViewModel: NSObject {
                 }
             })
         }, errorCallback: {
+            self.endBackgroundTask()
+            
             completion(0,0, true)
         })
     }

@@ -84,10 +84,16 @@ final class MainCoordinator: NSObject {
     
     func presentInitialDrawer() {
         let leftViewController = LeftMenuViewController.instantiate(rootViewController: rootViewController)
-        let mainViewController = ChatListViewController.instantiate(rootViewController: rootViewController, delegate: leftViewController)
+//        let mainViewController = ChatListViewController.instantiate(rootViewController: rootViewController, delegate: leftViewController)
+        let mainViewController = DashboardRootViewController.instantiate(
+            rootViewController: rootViewController,
+            leftMenuDelegate:  leftViewController
+        )
         let navigationController = UINavigationController(rootViewController: mainViewController)
         
+//
         UserData.sharedInstance.saveNewNodeOnKeychain()
+        
         runBackgroundProcesses()
 
         drawerController = KYDrawerController(drawerDirection: .left, drawerWidth: 270.0)
@@ -95,7 +101,7 @@ final class MainCoordinator: NSObject {
         drawerController.screenEdgePanGestureEnabled = false
         drawerController.mainViewController = navigationController
         drawerController.drawerViewController = leftViewController
-        
+//
         drawerController.setDrawerState(.opened, animated: false)
         drawerController.setDrawerState(.closed, animated: false)
         

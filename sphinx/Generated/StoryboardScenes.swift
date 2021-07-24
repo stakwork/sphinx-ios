@@ -49,6 +49,34 @@ internal enum StoryboardScene {
         internal static let paidMessagePreviewViewController = SceneType<PaidMessagePreviewViewController>(storyboard: Chat.self, identifier: "PaidMessagePreviewViewController")
     }
     
+    internal enum Dashboard: StoryboardType {
+        internal static let storyboardName = "Dashboard"
+        
+        internal static let dashboardRootViewController = SceneType<DashboardRootViewController>(storyboard: Dashboard.self, identifier: "DashboardRootViewController")
+        
+        
+        internal static let feedsListViewController = SceneType<FeedsListViewController>(
+            storyboard: Dashboard.self,
+            identifier: "FeedsListViewController"
+        )
+        
+        
+        internal static let friendsListViewController = SceneType<FriendsListViewController>(
+            storyboard: Dashboard.self,
+            identifier: "FriendsListViewController"
+        )
+        
+        
+        internal static let tribesListViewController = SceneType<TribesListViewController>(
+            storyboard: Dashboard.self,
+            identifier: "TribesListViewController"
+        )
+        
+        
+        
+        
+    }
+    
     internal enum LeftMenu: StoryboardType {
         internal static let storyboardName = "LeftMenu"
         

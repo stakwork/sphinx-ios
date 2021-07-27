@@ -97,13 +97,13 @@
                                         <rect key="frame" x="6" y="6" width="402" height="39"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lwz-zX-pkx">
-                                                <rect key="frame" x="10" y="9" width="21" height="21"/>
+                                                <rect key="frame" x="10" y="7.5" width="24.5" height="24.5"/>
                                                 <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="21"/>
                                                 <color key="textColor" name="PlaceholderText"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ef7-It-4Rs">
-                                                <rect key="frame" x="41" y="0.0" width="361" height="39"/>
+                                                <rect key="frame" x="44.5" y="0.0" width="357.5" height="39"/>
                                                 <color key="textColor" name="Text"/>
                                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
@@ -125,7 +125,7 @@
                                         </constraints>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" name="LightBG"/>
+                                <color key="backgroundColor" name="DashboardHeader"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="18l-RX-1R6"/>
                                     <constraint firstAttribute="bottom" secondItem="52N-Az-4on" secondAttribute="bottom" constant="5" id="2aK-GL-9NT"/>
@@ -190,10 +190,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="dzz-g3-aBT" userLabel="Feed Filter Chips Collection View">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="0.0"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="120"/>
+                                <color key="backgroundColor" name="DashboardHeader"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" id="iz5-Ld-ceM"/>
+                                    <constraint firstAttribute="height" constant="120" id="iz5-Ld-ceM"/>
                                 </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="919-Hk-DD6">
                                     <size key="itemSize" width="128" height="128"/>
@@ -204,11 +204,8 @@
                                 <cells/>
                             </collectionView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="5OV-DV-l47" userLabel="Feed Content Collection View">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="0.0"/>
+                                <rect key="frame" x="0.0" y="120" width="414" height="742"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" id="fT5-ro-t13"/>
-                                </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="YRI-Fv-dgK">
                                     <size key="itemSize" width="128" height="128"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -222,6 +219,7 @@
                         <color key="backgroundColor" name="DashboardMainContentBG"/>
                         <constraints>
                             <constraint firstItem="dzz-g3-aBT" firstAttribute="leading" secondItem="tx3-BZ-TC2" secondAttribute="leading" id="1Ab-LX-OBr"/>
+                            <constraint firstItem="H6q-JS-SpG" firstAttribute="bottom" secondItem="5OV-DV-l47" secondAttribute="bottom" id="Ksx-xf-kVK"/>
                             <constraint firstItem="5OV-DV-l47" firstAttribute="top" secondItem="dzz-g3-aBT" secondAttribute="bottom" id="SiQ-gA-0bn"/>
                             <constraint firstItem="5OV-DV-l47" firstAttribute="trailing" secondItem="tx3-BZ-TC2" secondAttribute="trailing" id="c0e-ZT-9iP"/>
                             <constraint firstAttribute="trailing" secondItem="dzz-g3-aBT" secondAttribute="trailing" id="cRq-vu-6YV"/>
@@ -309,9 +307,6 @@
         </namedColor>
         <namedColor name="HeaderBG">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="LightBG">
-            <color red="0.94901960784313721" green="0.95294117647058818" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="MainBottomIcons">
             <color red="0.37254901960784315" green="0.38823529411764707" blue="0.40784313725490196" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

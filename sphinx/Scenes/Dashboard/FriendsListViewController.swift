@@ -2,7 +2,6 @@
 //  FriendsListViewController.swift
 //  FriendsListViewController
 //
-//  Created by Brian Sipple on 7/22/21.
 //  Copyright © 2021 sphinx. All rights reserved.
 //
 

@@ -40,21 +40,33 @@
                                         <rect key="frame" x="0.0" y="0.0" width="103.5" height="58"/>
                                         <color key="tintColor" name="MainBottomIcons"/>
                                         <state key="normal" image="bottomBar1"/>
+                                        <connections>
+                                            <action selector="bottomBarButtonTouched:" destination="28a-MN-hzt" eventType="touchUpInside" id="34z-AL-EK4"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yJZ-iT-Aoq">
                                         <rect key="frame" x="103.5" y="0.0" width="103.5" height="58"/>
                                         <color key="tintColor" name="MainBottomIcons"/>
                                         <state key="normal" image="bottomBar2"/>
+                                        <connections>
+                                            <action selector="bottomBarButtonTouched:" destination="28a-MN-hzt" eventType="touchUpInside" id="0wJ-3e-b4h"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F8U-3b-9bJ">
                                         <rect key="frame" x="207" y="0.0" width="103.5" height="58"/>
                                         <color key="tintColor" name="MainBottomIcons"/>
                                         <state key="normal" image="bottomBar3"/>
+                                        <connections>
+                                            <action selector="bottomBarButtonTouched:" destination="28a-MN-hzt" eventType="touchUpInside" id="4tA-1U-UD6"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yY0-bJ-XOQ">
                                         <rect key="frame" x="310.5" y="0.0" width="103.5" height="58"/>
                                         <color key="tintColor" name="MainBottomIcons"/>
                                         <state key="normal" image="bottomBar4"/>
+                                        <connections>
+                                            <action selector="bottomBarButtonTouched:" destination="28a-MN-hzt" eventType="touchUpInside" id="nHo-PK-U6G"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" name="HeaderBG"/>
@@ -177,20 +189,50 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Feeds List" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vkv-fy-ABL">
-                                <rect key="frame" x="168" y="437.5" width="78" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="dzz-g3-aBT" userLabel="Feed Filter Chips Collection View">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="0.0"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" id="iz5-Ld-ceM"/>
+                                </constraints>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="919-Hk-DD6">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="5OV-DV-l47" userLabel="Feed Content Collection View">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="0.0"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" id="fT5-ro-t13"/>
+                                </constraints>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="YRI-Fv-dgK">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="H6q-JS-SpG"/>
                         <color key="backgroundColor" name="DashboardMainContentBG"/>
                         <constraints>
-                            <constraint firstItem="Vkv-fy-ABL" firstAttribute="centerY" secondItem="tx3-BZ-TC2" secondAttribute="centerY" id="FSa-aj-FX3"/>
-                            <constraint firstItem="Vkv-fy-ABL" firstAttribute="centerX" secondItem="tx3-BZ-TC2" secondAttribute="centerX" id="TqM-8R-U5B"/>
+                            <constraint firstItem="dzz-g3-aBT" firstAttribute="leading" secondItem="tx3-BZ-TC2" secondAttribute="leading" id="1Ab-LX-OBr"/>
+                            <constraint firstItem="5OV-DV-l47" firstAttribute="top" secondItem="dzz-g3-aBT" secondAttribute="bottom" id="SiQ-gA-0bn"/>
+                            <constraint firstItem="5OV-DV-l47" firstAttribute="trailing" secondItem="tx3-BZ-TC2" secondAttribute="trailing" id="c0e-ZT-9iP"/>
+                            <constraint firstAttribute="trailing" secondItem="dzz-g3-aBT" secondAttribute="trailing" id="cRq-vu-6YV"/>
+                            <constraint firstItem="dzz-g3-aBT" firstAttribute="top" secondItem="tx3-BZ-TC2" secondAttribute="top" id="shf-SJ-TZ0"/>
+                            <constraint firstItem="5OV-DV-l47" firstAttribute="leading" secondItem="tx3-BZ-TC2" secondAttribute="leading" id="w4n-wv-HLn"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="feedContentChipCollectionView" destination="5OV-DV-l47" id="OHr-qk-5kg"/>
+                        <outlet property="feedFilterChipCollectionView" destination="dzz-g3-aBT" id="ORI-e6-5pL"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Im3-nc-2bi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

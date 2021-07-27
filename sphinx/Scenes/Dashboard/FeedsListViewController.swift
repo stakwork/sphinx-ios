@@ -2,14 +2,16 @@
 //  FeedsListViewController.swift
 //  FeedsListViewController
 //
-//  Created by Brian Sipple on 7/22/21.
 //  Copyright © 2021 sphinx. All rights reserved.
 //
 
 import UIKit
 
 class FeedsListViewController: UIViewController {
-
+    @IBOutlet weak var feedFilterChipCollectionView: UICollectionView!
+    @IBOutlet weak var feedContentChipCollectionView: UICollectionView!
+    
+    
     static func instantiate() -> FeedsListViewController {
         let viewController = StoryboardScene.Dashboard.feedsListViewController.instantiate()
         

@@ -546,7 +546,6 @@
 		F373BF0326A9CEDD0093C886 /* FeedsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F373BF0226A9CEDD0093C886 /* FeedsListViewController.swift */; };
 		F373BF0526A9CF180093C886 /* FriendsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F373BF0426A9CF180093C886 /* FriendsListViewController.swift */; };
 		F373BF0726A9CF220093C886 /* TribesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F373BF0626A9CF220093C886 /* TribesListViewController.swift */; };
-		F373BF0926AABBE50093C886 /* DashboardNavigationTabsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F373BF0826AABBE50093C886 /* DashboardNavigationTabsView.swift */; };
 		F373BF0C26AAFB990093C886 /* CustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = F373BF0B26AAFB990093C886 /* CustomSegmentedControl.swift */; };
 		F394ECA12682064100529038 /* NewUserSignup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F394ECA32682064100529038 /* NewUserSignup.storyboard */; };
 		F394ECA92682099000529038 /* NewUserSignupDescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F394ECA82682098F00529038 /* NewUserSignupDescriptionViewController.swift */; };
@@ -555,6 +554,7 @@
 		F394ECB12683CF5E00529038 /* NewUserGreetingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F394ECB02683CF5E00529038 /* NewUserGreetingViewController.swift */; };
 		F394ECB32683EB5A00529038 /* SphinxDesktopAdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F394ECB22683EB5A00529038 /* SphinxDesktopAdViewController.swift */; };
 		F3C92B272671FB6C005F0A42 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F3C92B262671FB6C005F0A42 /* README.md */; };
+		F3CE637726AFC44D006E37A0 /* DashboardRootViewController+DelegateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CE637626AFC44C006E37A0 /* DashboardRootViewController+DelegateUtils.swift */; };
 		F3D0401E268BAA9700D54A94 /* SphinxReadyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D0401D268BAA9700D54A94 /* SphinxReadyViewController.swift */; };
 		F3D04020268BAB7500D54A94 /* InviteWelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D0401F268BAB7400D54A94 /* InviteWelcomeViewController.swift */; };
 		F3D04027268BABFF00D54A94 /* InviteActionsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D04026268BABFF00D54A94 /* InviteActionsHelper.swift */; };
@@ -1230,7 +1230,6 @@
 		F373BF0226A9CEDD0093C886 /* FeedsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedsListViewController.swift; sourceTree = "<group>"; };
 		F373BF0426A9CF180093C886 /* FriendsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsListViewController.swift; sourceTree = "<group>"; };
 		F373BF0626A9CF220093C886 /* TribesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TribesListViewController.swift; sourceTree = "<group>"; };
-		F373BF0826AABBE50093C886 /* DashboardNavigationTabsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardNavigationTabsView.swift; sourceTree = "<group>"; };
 		F373BF0B26AAFB990093C886 /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
 		F394ECA22682064100529038 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/NewUserSignup.storyboard; sourceTree = "<group>"; };
 		F394ECA52682064400529038 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/NewUserSignup.strings; sourceTree = "<group>"; };
@@ -1242,6 +1241,7 @@
 		F394ECB22683EB5A00529038 /* SphinxDesktopAdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SphinxDesktopAdViewController.swift; sourceTree = "<group>"; };
 		F3C92B262671FB6C005F0A42 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		F3C92B282671FCFD005F0A42 /* .Tor.version */ = {isa = PBXFileReference; lastKnownFileType = text; name = .Tor.version; path = Carthage/Build/.Tor.version; sourceTree = "<group>"; };
+		F3CE637626AFC44C006E37A0 /* DashboardRootViewController+DelegateUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DashboardRootViewController+DelegateUtils.swift"; sourceTree = "<group>"; };
 		F3D0401D268BAA9700D54A94 /* SphinxReadyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SphinxReadyViewController.swift; sourceTree = "<group>"; };
 		F3D0401F268BAB7400D54A94 /* InviteWelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteWelcomeViewController.swift; sourceTree = "<group>"; };
 		F3D04026268BABFF00D54A94 /* InviteActionsHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteActionsHelper.swift; sourceTree = "<group>"; };
@@ -2837,11 +2837,11 @@
 			children = (
 				F373BEFE26A9CB790093C886 /* Dashboard.storyboard */,
 				F373BF0026A9CE1B0093C886 /* DashboardRootViewController.swift */,
-				F373BF0A26AAFB6B0093C886 /* Custom Segmented Control */,
-				F373BF0826AABBE50093C886 /* DashboardNavigationTabsView.swift */,
+				F3CE637626AFC44C006E37A0 /* DashboardRootViewController+DelegateUtils.swift */,
 				F373BF0226A9CEDD0093C886 /* FeedsListViewController.swift */,
 				F373BF0426A9CF180093C886 /* FriendsListViewController.swift */,
 				F373BF0626A9CF220093C886 /* TribesListViewController.swift */,
+				F373BF0A26AAFB6B0093C886 /* Custom Segmented Control */,
 			);
 			path = Dashboard;
 			sourceTree = "<group>";
@@ -3369,7 +3369,6 @@
 				47935FB3249EC3BE00B39ADB /* OrientationHandlerViewController.swift in Sources */,
 				475154BB2423FA4100477384 /* JoinVideoCallView.swift in Sources */,
 				475BDD19232AC47C00C5BBD6 /* ChatViewController.swift in Sources */,
-				F373BF0926AABBE50093C886 /* DashboardNavigationTabsView.swift in Sources */,
 				4780782F23916CA800187906 /* PictureSentTableViewCell.swift in Sources */,
 				47B690DD24A2CF6000F07B73 /* AppAppearenceView.swift in Sources */,
 				4785C10424D4A633004E2D6C /* AppSizeView.swift in Sources */,
@@ -3569,6 +3568,7 @@
 				470F5CB2243FA2D0007E054F /* VideoCallManager.swift in Sources */,
 				47308E0F24FEE6E700FFAC6F /* SocketAnyEvent.swift in Sources */,
 				4794CA77252F5D66007C5022 /* APIPodcastExtension.swift in Sources */,
+				F3CE637726AFC44D006E37A0 /* DashboardRootViewController+DelegateUtils.swift in Sources */,
 				4787F8742474490200CCE8B9 /* GroupTagsViewController.swift in Sources */,
 				475BDCE0232AC23B00C5BBD6 /* PaidInvoiceSentTableViewCell.swift in Sources */,
 				47AF0D37254C98D100C98398 /* BoostFireworksAnimationView.swift in Sources */,

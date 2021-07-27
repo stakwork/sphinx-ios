@@ -2,7 +2,6 @@
 //  DashboardRootViewController.swift
 //  DashboardRootViewController
 //
-//  Created by Brian Sipple on 7/22/21.
 //  Copyright © 2021 sphinx. All rights reserved.
 //
 
@@ -11,8 +10,6 @@ import UIKit
 
 class DashboardRootViewController: UIViewController {
     @IBOutlet weak var bottomBarContainer: UIView!
-//    @IBOutlet weak var chatListTableView: UITableView!
-//    @IBOutlet weak var navigationTabsView: DashboardNavigationTabsView!
     @IBOutlet weak var headerView: ChatListHeader!
     @IBOutlet weak var searchBar: UIView!
     @IBOutlet weak var searchTextField: UITextField!
@@ -22,35 +19,33 @@ class DashboardRootViewController: UIViewController {
     @IBOutlet weak var dashboardNavigationTabs: CustomSegmentedControl! {
         didSet {
             dashboardNavigationTabs.setButtonTitles([
-                "Feed",
-                "Friends",
-                "Tribes"
+                "dashboard.tabs.feed".localized,
+                "dashboard.tabs.friends".localized,
+                "dashboard.tabs.tribe".localized,
             ])
-//            dashboardNavigationTabs.selectorViewColor = .orange
-//            dashboardNavigationTabs.activeTextColor = .orange
             dashboardNavigationTabs.delegate = self
         }
     }
     
 
-    private var rootViewController: RootViewController!
-    private weak var leftMenuDelegate: MenuDelegate?
+    internal var rootViewController: RootViewController!
+    internal weak var leftMenuDelegate: MenuDelegate?
 
     
-    private lazy var feedsListViewController = {
+    internal lazy var feedsListViewController = {
         FeedsListViewController.instantiate()
     }()
     
-    private lazy var friendsListViewController = {
+    internal lazy var friendsListViewController = {
         FriendsListViewController.instantiate()
     }()
     
-    private lazy var tribesListViewController = {
+    internal lazy var tribesListViewController = {
         TribesListViewController.instantiate()
     }()
     
     
-    private var activeTab: DashboardTab? {
+    internal var activeTab: DashboardTab? {
         didSet {
             guard let newActiveTab = activeTab else { return }
             
@@ -68,11 +63,9 @@ class DashboardRootViewController: UIViewController {
         }
     }
 
-    
-    var socketManager = SphinxSocketManager.sharedInstance
-    var onionConnecter = SphinxOnionConnector.sharedInstance
-    
-    
+
+    internal let onionConnecter = SphinxOnionConnector.sharedInstance
+
     
     static func instantiate(
         rootViewController: RootViewController,
@@ -94,15 +87,20 @@ class DashboardRootViewController: UIViewController {
                 loadingWheel: headerView.loadingWheel,
                 loadingWheelColor: UIColor.white,
                 views: [
+                    searchBarContainer,
                     mainContentContainerView,
                     bottomBarContainer,
-                    searchBarContainer
                 ]
             )
         }
     }
+}
     
 
+// MARK: -  Lifecycle Methods
+
+extension DashboardRootViewController {
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -110,8 +108,7 @@ class DashboardRootViewController: UIViewController {
         searchTextField.delegate = self
         activeTab = .feed
         
-//        listenForEvents()
-        isLoading = true
+        listenForEvents()
     }
     
     
@@ -119,7 +116,6 @@ class DashboardRootViewController: UIViewController {
         super.viewWillAppear(animated)
         
         rootViewController.setStatusBarColor(light: true)
-        socketManager.setDelegate(delegate: self)
         configureHeader()
     }
     
@@ -127,63 +123,32 @@ class DashboardRootViewController: UIViewController {
         super.viewDidAppear(animated)
         
         headerView.showBalance()
-//        initialLoad()
-//        handleDeepLinksAndPush()
     }
-    
-    
-    func handleLinkQueries() {
-        if DeepLinksHandlerHelper.didHandleLinkQuery(
-            vc: self,
-            rootViewController: rootViewController,
-            delegate: self
-        ) {
-            isLoading = false
-        }
-    }
-    
-    
-    func leftMenuButtonTouched() {
-//        shouldReloadFriends = false
-        leftMenuDelegate?.shouldOpenLeftMenu()
-    }
-    
-    
+}
+
+
+// MARK: -  Action Handling
+extension DashboardRootViewController {
+
     @IBAction func bottomBarButtonTouched(_ sender: UIButton) {
-//        switch (bottomBarButtons(rawValue: sender.tag)!) {
-//        case bottomBarButtons.receive:
-//            requestButtonTouched()
-//        case bottomBarButtons.transactions:
-//            historyButtonTouched()
-//        case bottomBarButtons.code:
-//            scannerTouched()
-//        case bottomBarButtons.send:
-//            sendButtonTouched()
-//        }
-    }
-    
-    
-    private func mainContentViewController(forActiveTab activeTab: DashboardTab) -> UIViewController {
-        switch activeTab {
-        case .feed:
-            return feedsListViewController
-        case .friends:
-            return friendsListViewController
-        case .tribes:
-            return tribesListViewController
+        guard let button = BottomBarButton(rawValue: sender.tag) else {
+            preconditionFailure()
         }
-//        switch activeTab {
-//        case .feed:
-//            return FeedsListViewController.instantiate()
-//        case .friends:
-//            return FriendsListViewController.instantiate()
-//        case .tribes:
-//            return TribesListViewController.instantiate()
-//        }
+        
+        switch button {
+        case .receiveSats:
+            requestSatsButtonTouched()
+        case .transactionsHistory:
+            transactionsHistoryButtonTouched()
+        case .scanQRCode:
+            scanQRCodeButtonTouched()
+        case .sendSats:
+            sendSatsButtonTouched()
+        }
     }
     
     
-    func scannerTouched() {
+    func scanQRCodeButtonTouched() {
         let viewController = NewQRScannerViewController.instantiate(
             rootViewController: rootViewController
         )
@@ -200,7 +165,7 @@ class DashboardRootViewController: UIViewController {
     }
     
     
-    func historyButtonTouched() {
+    func transactionsHistoryButtonTouched() {
         let viewController = HistoryViewController.instantiate(
             rootViewController: rootViewController
         )
@@ -209,7 +174,7 @@ class DashboardRootViewController: UIViewController {
     }
     
     
-    func sendButtonTouched() {
+    func sendSatsButtonTouched() {
         // TODO: Why do we need to couple the `chatViewModel` to the `instantiate` method here?
         
 //        let viewController = CreateInvoiceViewController.instantiate(
@@ -222,7 +187,7 @@ class DashboardRootViewController: UIViewController {
 //        self.presentNavigationControllerWith(vc: viewController)
     }
     
-    func requestButtonTouched() {
+    func requestSatsButtonTouched() {
         // TODO: Why do we need to couple the `chatViewModel` to the `instantiate` method here?
         
 //        let viewController = CreateInvoiceViewController.instantiate(
@@ -233,9 +198,25 @@ class DashboardRootViewController: UIViewController {
 //
 //        self.presentNavigationControllerWith(vc: viewController)
     }
+}
+
+
+// MARK: -  Private Helpers
+extension DashboardRootViewController {
+    
+    private func mainContentViewController(forActiveTab activeTab: DashboardTab) -> UIViewController {
+        switch activeTab {
+        case .feed:
+            return feedsListViewController
+        case .friends:
+            return friendsListViewController
+        case .tribes:
+            return tribesListViewController
+        }
+    }
     
     
-    func configureHeader() {
+    private func configureHeader() {
         headerView.delegate = self
         
         searchBarContainer.addShadow(location: VerticalLocation.bottom, opacity: 0.15, radius: 3.0)
@@ -247,70 +228,30 @@ class DashboardRootViewController: UIViewController {
     }
     
     
-    func listenForEvents() {
+    internal func listenForEvents() {
         headerView.listenForEvents()
-        
-        NotificationCenter.default.addObserver(forName: .onGroupDeleted, object: nil, queue: OperationQueue.main) { (n: Notification) in
-//            self.initialLoad()
-        }
     }
     
     
-    func resetSearchField() {
+    internal func resetSearchField() {
         searchTextField?.text = ""
     }
-}
+    
+    
+    internal func handleLinkQueries() {
+        if DeepLinksHandlerHelper.didHandleLinkQuery(
+            vc: self,
+            rootViewController: rootViewController,
+            delegate: self
+        ) {
+            isLoading = false
+        }
+    }
 
-extension DashboardRootViewController: ChatListHeaderDelegate {
-    
-}
-
-
-extension DashboardRootViewController: SocketManagerDelegate {
-
-    func didReceiveMessage(message: TransactionMessage, shouldSync: Bool) {
-//        updateContactsAndReload(shouldReload: shouldSync)
-    }
-    
-    func didReceiveConfirmation(message: TransactionMessage) {
-//        updateContactsAndReload(shouldReload: false)
-    }
-    
-    func didReceivePurchaseUpdate(message: TransactionMessage) {
-//        updateContactsAndReload(shouldReload: false)
-    }
-    
-    func shouldShowAlert(message: String) {
-        AlertHelper.showAlert(title: "Hey!", message: message)
-    }
-    
-    func didUpdateContact(contact: UserContact) {
-//        chatListDataSource?.updateContactAndReload(object: contact)
-    }
-    
-    func didUpdateChat(chat: Chat) {
-//        chatListDataSource?.updateChatAndReload(object: chat)
-    }
-    
-    func didReceiveOrUpdateGroup() {
-//        loadFriendAndReload()
-    }
-}
-
-extension DashboardRootViewController: CustomSegmentedControlDelegate {
-    
-    func segmentedControlDidSwitch(
-        _ segmentedControl: CustomSegmentedControl,
-        to index: Int
-    ) {
-        activeTab = DashboardTab(rawValue: index)!
-        print("segmentedControl index changed to \(index)")
-    }
 }
 
 
 extension DashboardRootViewController {
-    
     enum DashboardTab: Int, Hashable {
         case feed
         case friends
@@ -319,72 +260,13 @@ extension DashboardRootViewController {
 }
 
 
-
-// MARK: - UITextFieldDelegate for handling search input
-extension DashboardRootViewController: UITextFieldDelegate {
-   
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        view.endEditing(true)
-        return true
-    }
-    
-    
-    func textFieldShouldClear(_ textField: UITextField) -> Bool {
-//        chatListObjectsArray = contactsService.getChatListObjects()
-//        loadDataSource()
-        
-        return true
-    }
-    
-    func textField(
-        _ textField: UITextField,
-        shouldChangeCharactersIn range: NSRange,
-        replacementString string: String
-    ) -> Bool {
-        var currentString = (textField.text ?? "") as NSString
-    
-        currentString = currentString.replacingCharacters(
-            in: range,
-            with: string
-        ) as NSString
-
-//        chatListObjectsArray = contactsService.getObjectsWith(
-//            searchString: currentString
-//        )
-        
-//        loadDataSource()
-        return true
-    }
-}
-
-extension DashboardRootViewController: NewContactVCDelegate {
-    func shouldReloadContacts(reload: Bool) {
-        if reload {
-//            loadFriendAndReload()
-        }
-    }
-}
-
-extension DashboardRootViewController: QRCodeScannerDelegate {
-    func shouldGoToChat() {
-//        goToChat()
-    }
-    
-    func didScanDeepLink() {
-        handleLinkQueries()
-    }
-}
-
-extension DashboardRootViewController: WindowsManagerDelegate {
-    func didDismissCoveringWindows() {
-//        goToChat()
+extension DashboardRootViewController {
+    enum BottomBarButton: Int, Hashable {
+        case receiveSats
+        case transactionsHistory
+        case scanQRCode
+        case sendSats
     }
 }
 
 
-extension DashboardRootViewController: PaymentInvoiceDelegate {
-    func willDismissPresentedView(paymentCreated: Bool) {
-        rootViewController.setStatusBarColor(light: true)
-        headerView.updateBalance()
-    }
-}

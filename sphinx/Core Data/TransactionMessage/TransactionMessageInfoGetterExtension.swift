@@ -383,6 +383,14 @@ extension TransactionMessage {
         return type == TransactionMessageType.directPayment.rawValue
     }
     
+    func isPodcastPayment() -> Bool {
+        let feedIDString1 = "{\"feedID\":"
+        let feedIDString2 = "{\"feedID\":"
+        
+        return (chat == nil &&
+                    (messageContent?.contains(feedIDString1) ?? false || messageContent?.contains(feedIDString2) ?? false))
+    }
+    
     func canBeDeleted() -> Bool {
         return isOutgoing() || (self.chat?.isMyPublicGroup() ?? false)
     }

@@ -46,7 +46,7 @@
 // DASHBOARD
 "dashboard.tabs.feed" = "Feed";
 "dashboard.tabs.friends" = "Friends";
-"dashboard.tabs.tribe" = "Tribe";
+"dashboard.tabs.tribes" = "Tribes";
 
 // LEFT MENU
 "left-menu.dashboard" = "Dashboard";

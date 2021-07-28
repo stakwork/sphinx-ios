@@ -561,6 +561,11 @@
 		F3D0401E268BAA9700D54A94 /* SphinxReadyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D0401D268BAA9700D54A94 /* SphinxReadyViewController.swift */; };
 		F3D04020268BAB7500D54A94 /* InviteWelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D0401F268BAB7400D54A94 /* InviteWelcomeViewController.swift */; };
 		F3D04027268BABFF00D54A94 /* InviteActionsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D04026268BABFF00D54A94 /* InviteActionsHelper.swift */; };
+		F3D86DBC26B106F900EB9711 /* FeedContentDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D86DBB26B106F900EB9711 /* FeedContentDataSource.swift */; };
+		F3D86DBE26B109FD00EB9711 /* PodcastFeedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D86DBD26B109FD00EB9711 /* PodcastFeedCollectionViewCell.swift */; };
+		F3D86DC026B14E5E00EB9711 /* PodcastFeedCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F3D86DBF26B14E5E00EB9711 /* PodcastFeedCollectionViewCell.xib */; };
+		F3D86DC226B157D400EB9711 /* PodcastFeedCollectionViewSectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = F3D86DC126B157D400EB9711 /* PodcastFeedCollectionViewSectionHeader.xib */; };
+		F3D86DC426B157F600EB9711 /* PodcastFeedCollectionViewSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D86DC326B157F600EB9711 /* PodcastFeedCollectionViewSectionHeader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1251,6 +1256,11 @@
 		F3D0401D268BAA9700D54A94 /* SphinxReadyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SphinxReadyViewController.swift; sourceTree = "<group>"; };
 		F3D0401F268BAB7400D54A94 /* InviteWelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteWelcomeViewController.swift; sourceTree = "<group>"; };
 		F3D04026268BABFF00D54A94 /* InviteActionsHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteActionsHelper.swift; sourceTree = "<group>"; };
+		F3D86DBB26B106F900EB9711 /* FeedContentDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedContentDataSource.swift; sourceTree = "<group>"; };
+		F3D86DBD26B109FD00EB9711 /* PodcastFeedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastFeedCollectionViewCell.swift; sourceTree = "<group>"; };
+		F3D86DBF26B14E5E00EB9711 /* PodcastFeedCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PodcastFeedCollectionViewCell.xib; sourceTree = "<group>"; };
+		F3D86DC126B157D400EB9711 /* PodcastFeedCollectionViewSectionHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PodcastFeedCollectionViewSectionHeader.xib; sourceTree = "<group>"; };
+		F3D86DC326B157F600EB9711 /* PodcastFeedCollectionViewSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastFeedCollectionViewSectionHeader.swift; sourceTree = "<group>"; };
 		FDF1E0A8EFE1D98BD5A99505 /* Pods-sphinx.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sphinx.release.xcconfig"; path = "Target Support Files/Pods-sphinx/Pods-sphinx.release.xcconfig"; sourceTree = "<group>"; };
 		FED99A42AA0C9CE8FD759E82 /* Pods-sphinx.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sphinx.debug.xcconfig"; path = "Target Support Files/Pods-sphinx/Pods-sphinx.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -2844,7 +2854,7 @@
 				F373BEFE26A9CB790093C886 /* Dashboard.storyboard */,
 				F373BF0026A9CE1B0093C886 /* DashboardRootViewController.swift */,
 				F3CE637626AFC44C006E37A0 /* DashboardRootViewController+DelegateUtils.swift */,
-				F3CE637826AFD42C006E37A0 /* Feeds */,
+				F3CE637826AFD42C006E37A0 /* Podcast Feeds */,
 				F373BF0426A9CF180093C886 /* FriendsListViewController.swift */,
 				F373BF0626A9CF220093C886 /* TribesListViewController.swift */,
 				F373BF0A26AAFB6B0093C886 /* Custom Segmented Control */,
@@ -2875,20 +2885,21 @@
 			path = "New User Signup";
 			sourceTree = "<group>";
 		};
-		F3CE637826AFD42C006E37A0 /* Feeds */ = {
+		F3CE637826AFD42C006E37A0 /* Podcast Feeds */ = {
 			isa = PBXGroup;
 			children = (
-				F3CE637D26AFF856006E37A0 /* Filter Chips */,
 				F373BF0226A9CEDD0093C886 /* FeedsListViewController.swift */,
+				F3D86DBA26B106C000EB9711 /* Feed Content */,
+				F3CE637D26AFF856006E37A0 /* Filter Chips */,
 			);
-			path = Feeds;
+			path = "Podcast Feeds";
 			sourceTree = "<group>";
 		};
 		F3CE637D26AFF856006E37A0 /* Filter Chips */ = {
 			isa = PBXGroup;
 			children = (
-				F3CE637926AFD443006E37A0 /* FeedFilterChipDataSource.swift */,
 				F3CE637B26AFE822006E37A0 /* FeedFilterChipCollectionViewCell.swift */,
+				F3CE637926AFD443006E37A0 /* FeedFilterChipDataSource.swift */,
 				F3CE638026AFF93F006E37A0 /* FeedFilterChipCollectionViewCell.xib */,
 			);
 			path = "Filter Chips";
@@ -2900,6 +2911,18 @@
 				F3D04026268BABFF00D54A94 /* InviteActionsHelper.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		F3D86DBA26B106C000EB9711 /* Feed Content */ = {
+			isa = PBXGroup;
+			children = (
+				F3D86DBB26B106F900EB9711 /* FeedContentDataSource.swift */,
+				F3D86DBD26B109FD00EB9711 /* PodcastFeedCollectionViewCell.swift */,
+				F3D86DC326B157F600EB9711 /* PodcastFeedCollectionViewSectionHeader.swift */,
+				F3D86DC126B157D400EB9711 /* PodcastFeedCollectionViewSectionHeader.xib */,
+				F3D86DBF26B14E5E00EB9711 /* PodcastFeedCollectionViewCell.xib */,
+			);
+			path = "Feed Content";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -3115,6 +3138,7 @@
 				475BDCFE232AC24600C5BBD6 /* DirectPaymentReceivedTableViewCell.xib in Resources */,
 				475BDCEA232AC23B00C5BBD6 /* PaymentSentTableViewCell.xib in Resources */,
 				4797E80E24B8FBC200D13270 /* Stakwork.storyboard in Resources */,
+				F3D86DC026B14E5E00EB9711 /* PodcastFeedCollectionViewCell.xib in Resources */,
 				475154B82423F09900477384 /* VideoCallBubbleView.xib in Resources */,
 				47771C73259B9B9400990467 /* GroupPinView.xib in Resources */,
 				47904C2024BF403400710E7A /* NotificationSoundTableViewCell.xib in Resources */,
@@ -3147,6 +3171,7 @@
 				475BDD8E232C087A00C5BBD6 /* TransactionPaymentSentTableViewCell.xib in Resources */,
 				475BDCB8232AC1E800C5BBD6 /* PaymentInvoiceView.xib in Resources */,
 				4797E79E24B8EF3600D13270 /* ExpiredInvoiceReceivedTableViewCell.xib in Resources */,
+				F3D86DC226B157D400EB9711 /* PodcastFeedCollectionViewSectionHeader.xib in Resources */,
 				475BDCFD232AC24600C5BBD6 /* PaymentReceivedTableViewCell.xib in Resources */,
 				4703CF862518FA3F007B685C /* FileSentTableViewCell.xib in Resources */,
 				4797E7C124B8F3FA00D13270 /* Pin.storyboard in Resources */,
@@ -3473,9 +3498,11 @@
 				47AA08C5234B96BF002C69E2 /* ConfirmAddFriendViewController.swift in Sources */,
 				47CC7CE923E4718600730E6F /* ImageFullScreenViewController.swift in Sources */,
 				474FE32A23F588D400C06FC8 /* VideoReceivedTableViewCell.swift in Sources */,
+				F3D86DBC26B106F900EB9711 /* FeedContentDataSource.swift in Sources */,
 				4703CF9025190138007B685C /* CommonFileTableViewCell.swift in Sources */,
 				471940AA23393CE700F1BF5B /* LAContext.swift in Sources */,
 				478DCF9A2343D258009A03D6 /* SetNickNameViewController.swift in Sources */,
+				F3D86DC426B157F600EB9711 /* PodcastFeedCollectionViewSectionHeader.swift in Sources */,
 				47D46A28237B1D030005A548 /* SubscriptionFormTableViewCell.swift in Sources */,
 				475BDD21232AC64900C5BBD6 /* UIColor.swift in Sources */,
 				4779F162232AA0F200D35E81 /* AppDelegate.swift in Sources */,
@@ -3585,6 +3612,7 @@
 				47E300E4234B83EC00DB56DB /* AddFriendRowButton.swift in Sources */,
 				4712BB4923D89A5100DDCC3B /* ClipboardHelper.swift in Sources */,
 				475BDCD1232AC23100C5BBD6 /* InvoiceCommonChatTableViewCell.swift in Sources */,
+				F3D86DBE26B109FD00EB9711 /* PodcastFeedCollectionViewCell.swift in Sources */,
 				47468FD923353E460072124A /* MediaLoader.swift in Sources */,
 				475BDC9E232AC1C500C5BBD6 /* ChatHelper.swift in Sources */,
 				47183CB62548B74E00E6FD19 /* EpisodesHeaderView.swift in Sources */,

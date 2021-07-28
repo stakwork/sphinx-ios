@@ -12,7 +12,7 @@ class FeedFilterChipDataSource: NSObject {
     var mediaTypes: [String]
     
     
-    let kCellHeight: CGFloat = 88.0
+    let kCellHeight: CGFloat = 38.0
     let kCellWidth: CGFloat = 108.0
     
     
@@ -78,8 +78,8 @@ extension FeedFilterChipDataSource: UICollectionViewDelegateFlowLayout {
     ) -> CGSize {
         CGSize(width: kCellWidth, height: kCellHeight)
     }
-    
-    
+
+
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,

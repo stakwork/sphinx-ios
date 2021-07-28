@@ -21,7 +21,7 @@ class DashboardRootViewController: UIViewController {
             dashboardNavigationTabs.setButtonTitles([
                 "dashboard.tabs.feed".localized,
                 "dashboard.tabs.friends".localized,
-                "dashboard.tabs.tribe".localized,
+                "dashboard.tabs.tribes".localized,
             ])
             dashboardNavigationTabs.delegate = self
         }

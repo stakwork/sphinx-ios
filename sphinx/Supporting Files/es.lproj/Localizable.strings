@@ -42,6 +42,11 @@
 "error.app-store-purchase-receipt-not-found" = "No se encontró el recivo de compra de AppStore";
 "error.app-store-receipt-validation-failed" = "Falló la validación de recibo de AppStore.";
 
+// DASHBOARD
+"dashboard.tabs.feed" = "Feed";
+"dashboard.tabs.friends" = "Friends";
+"dashboard.tabs.tribes" = "Tribes";
+
 //LeftMenu
 "left-menu.dashboard" = "Inicio";
 "left-menu.contacts" = "Contactos";

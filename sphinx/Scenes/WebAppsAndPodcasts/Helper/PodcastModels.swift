@@ -10,21 +10,52 @@ import Foundation
 import SwiftyJSON
 
 struct PodcastFeed {
-    var chatId:Int? = nil
-    var id:Int? = nil
-    var title: String? = nil
-    var description: String? = nil
-    var author: String? = nil
-    var image: String? = nil
+    var chatId: Int? = nil
+    var id: Int
+    var title: String
+    var description: String
+    var author: String
+    var image: String
     
     var model: PodcastModel? = nil
     var episodes: [PodcastEpisode] = []
     var destinations: [PodcastDestination] = []
 }
 
+extension PodcastFeed: Hashable {
+    
+    static func == (lhs: PodcastFeed, rhs: PodcastFeed) -> Bool {
+        lhs.id == rhs.id
+    }
+    
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+}
+
+
 class PodcastEpisode {
-    var id:Int? = nil
-    var title: String? = nil
+    init(
+        id: Int,
+        title: String,
+        description: String? = nil,
+        url: String? = nil,
+        image: String? = nil,
+        link: String? = nil,
+        downloaded: Bool = false
+    ) {
+        self.id = id
+        self.title = title
+        self.description = description
+        self.url = url
+        self.image = image
+        self.link = link
+        self.downloaded = downloaded
+    }
+    
+    var id: Int
+    var title: String
     var description: String? = nil
     var url: String? = nil
     var image: String? = nil
@@ -64,6 +95,22 @@ class PodcastEpisode {
         }
     }
 }
+
+
+
+extension PodcastEpisode: Hashable {
+    
+    static func == (lhs: PodcastEpisode, rhs: PodcastEpisode) -> Bool {
+        lhs.id == rhs.id
+    }
+    
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+//        id.hash(into: &hasher)
+    }
+}
+
 
 struct PodcastDestination {
     var address: String? = nil

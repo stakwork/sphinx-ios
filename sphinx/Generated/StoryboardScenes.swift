@@ -73,6 +73,16 @@ internal enum StoryboardScene {
         )
         
         
+        internal static let feedFilterChipsCollectionViewController = SceneType<FeedFilterChipsCollectionViewController>(
+            storyboard: Dashboard.self,
+            identifier: "FeedFilterChipsCollectionViewController"
+        )
+        
+        
+        internal static let feedContentCollectionViewController = SceneType<FeedContentCollectionViewController>(
+            storyboard: Dashboard.self,
+            identifier: "FeedContentCollectionViewController"
+        )
         
         
     }

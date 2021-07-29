@@ -38,3 +38,13 @@ class FeedFilterChipCollectionViewCell: UICollectionViewCell {
         self.mediaType = mediaType
     }
 }
+
+
+// MARK: - Static Properties
+extension FeedFilterChipCollectionViewCell {
+    static let reuseID = "FeedFilterChipCollectionViewCell"
+
+    static let nib: UINib = {
+        UINib(nibName: "FeedFilterChipCollectionViewCell", bundle: nil)
+    }()
+}

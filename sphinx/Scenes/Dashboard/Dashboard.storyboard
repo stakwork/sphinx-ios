@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19142.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19150" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19129"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19134"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -184,7 +185,7 @@
         <!--Feeds List View Controller-->
         <scene sceneID="HH5-9P-gGz">
             <objects>
-                <viewController storyboardIdentifier="FeedsListViewController" id="BAa-Sw-qxt" customClass="FeedsListViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FeedsListViewController-old" id="BAa-Sw-qxt" customClass="FeedsListViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="tx3-BZ-TC2">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -235,6 +236,115 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Im3-nc-2bi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2529" y="1945"/>
+        </scene>
+        <!--Feeds List View Controller-->
+        <scene sceneID="mR6-dD-8wi">
+            <objects>
+                <viewController storyboardIdentifier="FeedsListViewController" id="izJ-JO-cwu" customClass="FeedsListViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="XKi-k6-l8l">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uch-ef-QEI" userLabel="Feed Filter Chips Collection View Container">
+                                <rect key="frame" x="0.0" y="44" width="414" height="60"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="ESK-Bh-21Q"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hwZ-I8-IJL" userLabel="Feed Content Collection View Container">
+                                <rect key="frame" x="0.0" y="104" width="414" height="758"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="WTi-oO-T6C"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="hwZ-I8-IJL" firstAttribute="trailing" secondItem="XKi-k6-l8l" secondAttribute="trailing" id="HqO-ac-ImJ"/>
+                            <constraint firstAttribute="trailing" secondItem="uch-ef-QEI" secondAttribute="trailing" id="JQo-3y-eJ0"/>
+                            <constraint firstAttribute="bottom" secondItem="hwZ-I8-IJL" secondAttribute="bottom" constant="34" id="OeK-DB-JwB"/>
+                            <constraint firstItem="hwZ-I8-IJL" firstAttribute="top" secondItem="uch-ef-QEI" secondAttribute="bottom" id="SaV-S8-dfI"/>
+                            <constraint firstItem="hwZ-I8-IJL" firstAttribute="leading" secondItem="XKi-k6-l8l" secondAttribute="leading" id="ZVQ-eT-xbl"/>
+                            <constraint firstItem="uch-ef-QEI" firstAttribute="top" secondItem="XKi-k6-l8l" secondAttribute="top" constant="44" id="cES-32-j7E"/>
+                            <constraint firstItem="uch-ef-QEI" firstAttribute="leading" secondItem="XKi-k6-l8l" secondAttribute="leading" id="vbS-Dv-mch"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="feedContentCollectionViewContainer" destination="hwZ-I8-IJL" id="2cP-rV-d8t"/>
+                        <outlet property="filterChipCollectionViewContainer" destination="uch-ef-QEI" id="9F2-yw-j0X"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="N05-mx-jox" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2530" y="2721"/>
+        </scene>
+        <!--Feed Filter Chips Collection View Controller-->
+        <scene sceneID="tKT-jp-7IA">
+            <objects>
+                <collectionViewController storyboardIdentifier="FeedFilterChipsCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="QGs-A9-cwQ" customClass="FeedFilterChipsCollectionViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="jmh-7h-cdI">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="eWa-VJ-OOo">
+                            <size key="itemSize" width="128" height="128"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="FeedFilterChipCollectionViewCell" reuseIdentifier="FeedFilterChipCollectionViewCell" id="gAe-dL-p3M" customClass="FeedFilterChipCollectionViewCell" customModule="sphinx" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="T3a-le-cfa">
+                                    <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </collectionViewCellContentView>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="QGs-A9-cwQ" id="bEK-M1-Cw9"/>
+                            <outlet property="delegate" destination="QGs-A9-cwQ" id="P4H-Ra-848"/>
+                        </connections>
+                    </collectionView>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Icu-n7-UUo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2530" y="3471"/>
+        </scene>
+        <!--Feed Content Collection View Controller-->
+        <scene sceneID="Ycq-O7-bTT">
+            <objects>
+                <collectionViewController storyboardIdentifier="FeedContentCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="bdw-5E-YTV" customClass="FeedContentCollectionViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="owa-fC-ffZ">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="GhL-Cj-xhy">
+                            <size key="itemSize" width="128" height="128"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="xDJ-pv-rgj">
+                                <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="O3A-jG-C8O">
+                                    <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </collectionViewCellContentView>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="bdw-5E-YTV" id="ab3-2V-1BP"/>
+                            <outlet property="delegate" destination="bdw-5E-YTV" id="Hqp-T7-4p7"/>
+                        </connections>
+                    </collectionView>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IeO-rD-8pI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1775" y="3471"/>
         </scene>
         <!--Friends List View Controller-->
         <scene sceneID="Qrr-QA-DV0">

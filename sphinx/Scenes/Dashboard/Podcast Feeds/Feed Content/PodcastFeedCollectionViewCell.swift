@@ -7,26 +7,44 @@ import UIKit
 
 protocol PodcastFeedCollectionViewCellDelegate: class {
 
-    func collectionViewCell(
-        _ cell: PodcastFeedCollectionViewCell,
-        didSelect podcastFeed: PodcastFeed
+//    func collectionViewCell(
+//        _ cell: PodcastFeedCollectionViewCell,
+//        didSelect podcastFeed: PodcastFeed
+//    )
+    func collectionViewCellDidSelect(
+        _ cell: PodcastFeedCollectionViewCell
     )
+}
+
+
+protocol DashboardPodcastCollectionViewItem {
+    var imageName: String { get }
+    var title: String { get }
+    var subtitle: String { get }
 }
 
 
 class PodcastFeedCollectionViewCell: UICollectionViewCell {
     
-    weak var delegate: PodcastFeedCollectionViewCellDelegate?
+//    weak var delegate: PodcastFeedCollectionViewCellDelegate?
     
     @IBOutlet weak var podcastImageView: UIImageView!
     @IBOutlet weak var podcastNameLabel: UILabel!
     @IBOutlet weak var podcastTitleLabel: UILabel!
     
     
-    var podcastFeed: PodcastFeed! {
+//    var podcastFeed: PodcastFeed! {
+//        didSet {
+//            DispatchQueue.main.async { [weak self] in
+//                self?.updateViewsWithPodcastFeed()
+//            }
+//        }
+//    }
+    
+    var item: DashboardPodcastCollectionViewItem! {
         didSet {
             DispatchQueue.main.async { [weak self] in
-                self?.updateViewsWithPodcastFeed()
+                self?.updateViewsWithItem()
             }
         }
     }
@@ -39,17 +57,35 @@ class PodcastFeedCollectionViewCell: UICollectionViewCell {
     }
     
   
-    func configure(withPodcastFeed podcastFeed: PodcastFeed) {
-        self.podcastFeed = podcastFeed
+//    func configure(withPodcastFeed podcastFeed: PodcastFeed) {
+//        self.podcastFeed = podcastFeed
+//    }
+//
+    
+      func configure(withItem dataItem: DashboardPodcastCollectionViewItem) {
+          self.item = dataItem
+      }
+    
+//    private func updateViewsWithPodcastFeed() {
+//        podcastImageView.image = UIImage(named: podcastFeed.image)
+//        podcastNameLabel.text = podcastFeed.title
+//        podcastTitleLabel.text = podcastFeed.episodes.last?.title
+//    }
+    
+    private func updateViewsWithItem() {
+        podcastImageView.image = UIImage(named: item.imageName)
+        podcastNameLabel.text = item.title
+        podcastTitleLabel.text = item.subtitle
     }
-    
-    
-    private func updateViewsWithPodcastFeed() {
-        if let imageName = podcastFeed.image {
-            podcastImageView.image = UIImage(named: imageName)
-        }
+}
 
-        podcastNameLabel.text = podcastFeed.title
-        podcastTitleLabel.text = podcastFeed.episodes.last?.title
-    }
+
+
+// MARK: - Static Properties
+extension PodcastFeedCollectionViewCell {
+    static let reuseID = "PodcastFeedCollectionViewCell"
+
+    static let nib: UINib = {
+        UINib(nibName: "PodcastFeedCollectionViewCell", bundle: nil)
+    }()
 }

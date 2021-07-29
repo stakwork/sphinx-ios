@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19142.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19150" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19129"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19134"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -24,22 +24,27 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="4aX-st-Aff">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                    <rect key="frame" x="10" y="0.0" width="394" height="50"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="Listen Now" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lmV-U5-tqg">
-                            <rect key="frame" x="0.0" y="13.5" width="101" height="23.5"/>
-                            <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="20"/>
-                            <nil key="textColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="keyboard_arrow_right" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="di5-5h-YVa">
-                            <rect key="frame" x="111" y="13" width="23.5" height="24"/>
-                            <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="24"/>
-                            <nil key="textColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="right" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" text="playlist_play" textAlignment="right" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hHt-8D-yWm">
-                            <rect key="frame" x="144.5" y="11" width="269.5" height="28"/>
+                        <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="751" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="ofj-sj-jbM">
+                            <rect key="frame" x="0.0" y="13" width="212" height="24"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="Listen Now" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lmV-U5-tqg">
+                                    <rect key="frame" x="0.0" y="0.0" width="101" height="24"/>
+                                    <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="20"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="keyboard_arrow_right" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="di5-5h-YVa">
+                                    <rect key="frame" x="111" y="0.0" width="101" height="24"/>
+                                    <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="24"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="right" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="249" text="playlist_play" textAlignment="right" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hHt-8D-yWm">
+                            <rect key="frame" x="222" y="11" width="172" height="28"/>
                             <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="28"/>
                             <color key="textColor" name="WashedOutReceivedText"/>
                             <nil key="highlightedColor"/>
@@ -49,8 +54,8 @@
             </subviews>
             <viewLayoutGuide key="safeArea" id="ETB-r9-sFE"/>
             <constraints>
-                <constraint firstItem="4aX-st-Aff" firstAttribute="leading" secondItem="ETB-r9-sFE" secondAttribute="leading" id="5vr-Zy-9mX"/>
-                <constraint firstItem="ETB-r9-sFE" firstAttribute="trailing" secondItem="4aX-st-Aff" secondAttribute="trailing" id="Rc7-mr-ksa"/>
+                <constraint firstItem="4aX-st-Aff" firstAttribute="leading" secondItem="ETB-r9-sFE" secondAttribute="leading" constant="10" id="5vr-Zy-9mX"/>
+                <constraint firstItem="ETB-r9-sFE" firstAttribute="trailing" secondItem="4aX-st-Aff" secondAttribute="trailing" constant="10" id="Rc7-mr-ksa"/>
                 <constraint firstItem="4aX-st-Aff" firstAttribute="bottom" secondItem="ETB-r9-sFE" secondAttribute="bottom" id="c8T-AI-lK4"/>
                 <constraint firstItem="4aX-st-Aff" firstAttribute="top" secondItem="Yp2-hm-eWM" secondAttribute="top" id="srj-9h-JRr"/>
             </constraints>

@@ -2,38 +2,23 @@ import UIKit
 
 
 class FeedFilterChipsCollectionViewController: UICollectionViewController {
-//    @IBOutlet private var collectionView: UICollectionView!
-
 
     var mediaTypes: [String] = []
-    weak var cellDelegate: FeedFilterChipCollectionViewCellDelegate?
-    var sectionSpacing: CGFloat = 20.0
-
+    var activeFilterMediaType: String?
+    
+    var onCellSelected: ((String) -> Void)!
+    
 
     private var currentDataSnapshot: DataSourceSnapshot!
     private var dataSource: DataSource!
-    private let itemContentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10)
     
-//
-//    init(
-//        mediaTypes: [String],
-//        cellDelegate: FeedFilterChipCollectionViewCellDelegate,
-//        sectionSpacing: CGFloat = 20.0
-//    ) {
-//        super.init()
-//
-//        self.mediaTypes = mediaTypes
-//        self.cellDelegate = cellDelegate
-//        self.sectionSpacing = sectionSpacing
-//    }
-//
-//
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-
+    private let itemContentInsets = NSDirectionalEdgeInsets(
+        top: 0,
+        leading: 10,
+        bottom: 0,
+        trailing: 10
+    )
 }
-
 
 
 // MARK: - Instantiation
@@ -41,14 +26,14 @@ extension FeedFilterChipsCollectionViewController {
 
     static func instantiate(
         mediaTypes: [String],
-        cellDelegate: FeedFilterChipCollectionViewCellDelegate,
-        sectionSpacing: CGFloat = 20.0
+        activeFilterMediaType: String? = nil,
+        onCellSelected: @escaping ((String) -> Void)  = { _ in }
     ) -> FeedFilterChipsCollectionViewController {
         let viewController = StoryboardScene.Dashboard.feedFilterChipsCollectionViewController.instantiate()
 
         viewController.mediaTypes = mediaTypes
-        viewController.cellDelegate = cellDelegate
-        viewController.sectionSpacing = sectionSpacing
+        viewController.activeFilterMediaType = activeFilterMediaType
+        viewController.onCellSelected = onCellSelected
 
         return viewController
     }
@@ -76,7 +61,8 @@ extension FeedFilterChipsCollectionViewController {
         super.viewDidLoad()
         
         collectionView.collectionViewLayout = makeLayout()
-
+        collectionView.backgroundColor = .Sphinx.DashboardHeader
+        
         registerViews(for: collectionView)
         configure(collectionView)
         configureDataSource(for: collectionView)
@@ -84,35 +70,10 @@ extension FeedFilterChipsCollectionViewController {
 }
 
 
-// MARK: - Event Handling
-private extension FeedFilterChipsCollectionViewController {
-}
-
-
-// MARK: - Navigation
-private extension FeedFilterChipsCollectionViewController {
-}
-
-
-
 // MARK: - Layout Composition
 extension FeedFilterChipsCollectionViewController {
 
-//    func makeSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
-//        let headerSize = NSCollectionLayoutSize(
-//            widthDimension: .fractionalWidth(1),
-//            heightDimension: .estimated(80)
-//        )
-//
-//        return NSCollectionLayoutBoundarySupplementaryItem(
-//            layoutSize: headerSize,
-//            elementKind: UICollectionView.elementKindSectionHeader,
-//            alignment: .top
-//        )
-//    }
-
-
-    func makeLayoutSection() -> NSCollectionLayoutSection {
+    func makeFilterChipsLayoutSection() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
             heightDimension: .fractionalHeight(1.0)
@@ -125,29 +86,32 @@ extension FeedFilterChipsCollectionViewController {
             widthDimension: .estimated(108.0),
             heightDimension: .absolute(38.0)
         )
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-
+        let group = NSCollectionLayoutGroup.horizontal(
+            layoutSize: groupSize,
+            subitems: [item]
+        )
 
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
-
+        
         return section
     }
 
 
     func makeSectionProvider() -> UICollectionViewCompositionalLayoutSectionProvider {
         { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
-            self.makeLayoutSection()
+            self.makeFilterChipsLayoutSection()
         }
     }
 
 
     func makeLayout() -> UICollectionViewLayout {
-        let configuration = UICollectionViewCompositionalLayoutConfiguration()
-        configuration.interSectionSpacing = sectionSpacing
-
-        let layout = UICollectionViewCompositionalLayout(sectionProvider: makeSectionProvider())
-        layout.configuration = configuration
+        let layoutConfiguration = UICollectionViewCompositionalLayoutConfiguration()        
+        let layout = UICollectionViewCompositionalLayout(
+            sectionProvider: makeSectionProvider()
+        )
+        
+        layout.configuration = layoutConfiguration
 
         return layout
     }
@@ -162,12 +126,6 @@ extension FeedFilterChipsCollectionViewController {
             FeedFilterChipCollectionViewCell.nib,
             forCellWithReuseIdentifier: FeedFilterChipCollectionViewCell.reuseID
         )
-//
-//        collectionView.register(
-//            ReusableHeaderView.nib,
-//            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-//            withReuseIdentifier: ReusableHeaderView.reuseID
-//        )
     }
 
 
@@ -190,16 +148,15 @@ extension FeedFilterChipsCollectionViewController {
             cellProvider: makeCellProvider(for: collectionView)
         )
 
-//        dataSource.supplementaryViewProvider = makeSupplementaryViewProvider(for: collectionView)
-
         return dataSource
     }
 
 
     func configureDataSource(for collectionView: UICollectionView) {
         dataSource = makeDataSource(for: collectionView)
-        let snapshot = makeSnapshot(withInitial: mediaTypes)
-
+        
+        let snapshot = makeSnapshotForCurrentState()
+        
         dataSource.apply(snapshot, animatingDifferences: false)
     }
 }
@@ -211,82 +168,42 @@ extension FeedFilterChipsCollectionViewController {
     func makeCellProvider(
         for collectionView: UICollectionView
     ) -> DataSource.CellProvider {
-        { (collectionView, indexPath, mediaType) -> UICollectionViewCell in
-            let section = CollectionViewSection.allCases[indexPath.section]
-
-            switch section {
-            case .all:
-                guard let cell = collectionView.dequeueReusableCell(
+        { (collectionView, indexPath, dataItem) -> UICollectionViewCell? in
+            guard let cell = collectionView
+                .dequeueReusableCell(
                     withReuseIdentifier: CollectionViewCell.reuseID,
                     for: indexPath
-                ) as? CollectionViewCell else { preconditionFailure() }
-
-                cell.delegate = self.cellDelegate
-                cell.mediaType = mediaType
-
-                return cell
+                ) as? CollectionViewCell
+            else {
+                return nil
             }
+
+            cell.mediaType = dataItem
+            cell.isMediaTypeActive = dataItem == self.activeFilterMediaType
+
+            return cell
         }
     }
-
-
-//    func makeSupplementaryViewProvider(
-//        for collectionView: UICollectionView
-//    ) -> DataSource.SupplementaryViewProvider {
-//        {
-//            (collectionView: UICollectionView, kind: String, indexPath: IndexPath)
-//        -> UICollectionReusableView? in
-//            switch kind {
-//            case UICollectionView.elementKindSectionHeader:
-//                guard let headerView = collectionView.dequeueReusableSupplementaryView(
-//                    ofKind: kind,
-//                    withReuseIdentifier: ReusableHeaderView.reuseID,
-//                    for: indexPath
-//                ) as? ReusableHeaderView else { preconditionFailure() }
-//
-//                let section = CollectionViewSection.allCases[indexPath.section]
-//
-//                headerView.render(withTitle: section.displayName)
-//
-//                return headerView
-//            default:
-//                return UICollectionReusableView()
-//            }
-//        }
-//    }
 }
 
 
 // MARK: - Data Source Snapshot
 extension FeedFilterChipsCollectionViewController {
 
-    func update(
-        _ snapshot: inout DataSourceSnapshot,
-        withNew mediaTypes: [String]
-    ) {
-        CollectionViewSection.allCases.forEach { section in
-            snapshot.appendSections([section])
-            snapshot.appendItems(mediaTypes, toSection: section)
-        }
-    }
-
-
-    func makeSnapshot(withInitial mediaTypes: [String]) -> DataSourceSnapshot {
+    func makeSnapshotForCurrentState() -> DataSourceSnapshot {
         var snapshot = DataSourceSnapshot()
-        update(&snapshot, withNew: mediaTypes)
+
+        snapshot.appendSections(CollectionViewSection.allCases)
+        snapshot.appendItems(mediaTypes, toSection: .all)
 
         return snapshot
     }
 
 
-    func updateSnapshot(
-        of dataSource: DataSource,
-        withNew mediaTypes: [String],
-        animate: Bool = true
-    ) {
-        let snapshot = makeSnapshot(withInitial: mediaTypes)
+    func updateSnapshot(shouldAnimate: Bool = true) {
+        let snapshot = makeSnapshotForCurrentState()
 
-        dataSource.apply(snapshot, animatingDifferences: animate)
+        dataSource.apply(snapshot, animatingDifferences: shouldAnimate)
     }
 }
 
@@ -298,7 +215,17 @@ private extension FeedFilterChipsCollectionViewController {
 
 // MARK: - `UICollectionViewDelegate` Methods
 extension FeedFilterChipsCollectionViewController {
+    
+    override func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath
+    ) {
+        guard let item = dataSource.itemIdentifier(for: indexPath) else {
+            return
+        }
 
-
+        onCellSelected(item)
+    }
 }
+
 

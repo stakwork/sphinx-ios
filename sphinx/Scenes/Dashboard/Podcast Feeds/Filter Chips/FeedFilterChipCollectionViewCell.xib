@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19142.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19150" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19129"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19134"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -25,6 +25,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
+                <color key="backgroundColor" name="DashboardFilterChipBackground"/>
                 <constraints>
                     <constraint firstItem="TYW-cx-2jA" firstAttribute="centerX" secondItem="HIs-Dr-pOt" secondAttribute="centerX" id="O38-5X-HyH"/>
                     <constraint firstItem="TYW-cx-2jA" firstAttribute="centerY" secondItem="HIs-Dr-pOt" secondAttribute="centerY" id="cZ9-ib-nil"/>
@@ -37,6 +38,9 @@
         </collectionViewCell>
     </objects>
     <resources>
+        <namedColor name="DashboardFilterChipBackground">
+            <color red="0.94901960784313721" green="0.95294117647058818" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="GreenBorder">
             <color red="0.18431372549019609" green="0.70196078431372544" blue="0.47450980392156861" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

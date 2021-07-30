@@ -633,11 +633,11 @@ class PodcastPlayerHelper {
         
         playingCenter.nowPlayingInfo = [
             MPMediaItemPropertyMediaType: "\(MPMediaType.podcast)",
-            MPMediaItemPropertyPodcastTitle: podcast.title ?? "",
+            MPMediaItemPropertyPodcastTitle: podcast.title,
             MPMediaItemPropertyArtwork: artwork,
-            MPMediaItemPropertyPodcastPersistentID: "\(podcast.id ?? 0)",
-            MPMediaItemPropertyTitle: episode.title ?? "",
-            MPMediaItemPropertyArtist: podcast.author ?? "",
+            MPMediaItemPropertyPodcastPersistentID: podcast.id,
+            MPMediaItemPropertyTitle: episode.title,
+            MPMediaItemPropertyArtist: podcast.author,
             MPMediaItemPropertyPlaybackDuration: "\(duration)",
             MPNowPlayingInfoPropertyElapsedPlaybackTime: "\(currentTime)",
             MPMediaItemPropertyAlbumTrackCount: "\(getEpisodes().count)",

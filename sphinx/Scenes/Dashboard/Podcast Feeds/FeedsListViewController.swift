@@ -76,16 +76,12 @@ private let samplePodcastEpisodes: [PodcastEpisode] = [
 
 
 class FeedsListViewController: UIViewController {
-//    @IBOutlet weak var feedFilterChipCollectionView: UICollectionView!
-//    @IBOutlet weak var feedContentCollectionView: UICollectionView!
-    
     @IBOutlet weak var filterChipCollectionViewContainer: UIView!
-//    @IBOutlet weak var latestEpisodesCollectionViewContainer: UIView!
     @IBOutlet weak var feedContentCollectionViewContainer: UIView!
     
+    private var filterChipCollectionViewController: FeedFilterChipsCollectionViewController!
+    private var feedContentCollectionViewController: FeedContentCollectionViewController!
     
-//    var feedFilterChipDataSource: FeedFilterChipDataSource!
-//    var feedContentDataSource: FeedContentDataSource!
     
     // TODO: These should probably be strongly-typed and dynamically generated in some way.
     var mediaTypes: [String] = []
@@ -112,7 +108,6 @@ class FeedsListViewController: UIViewController {
 
 
 // MARK: -  Private Helpers
-
 extension FeedsListViewController {
     
     private func loadData() {
@@ -142,44 +137,40 @@ extension FeedsListViewController {
     private func getSubscribedPodcastFeeds() -> [PodcastFeed] {
         samplePodcastFeeds
     }
+
     
+    private func handleFilterChipCellSelection(_ mediaType: String) {
+        AlertHelper.showAlert(
+            title: "Selected Media Type",
+            message: mediaType
+        )
+        
+        filterChipCollectionViewController.activeFilterMediaType = mediaType
+        filterChipCollectionViewController.updateSnapshot()
+    }
     
-    private func handleContentCellSelection(cellItem: DashboardPodcastCollectionViewItem) {
-        AlertHelper.showAlert(title: "Selected Content Item", message: cellItem.title)
+    private func handleLatestEpisodeCellSelection(_ podcastEpisode: PodcastEpisode) {
+        AlertHelper.showAlert(
+            title: "Selected Podcast Episode",
+            message: podcastEpisode.title
+        )
+    }
+    
+    private func handleLatestFeedCellSelection(_ podcastFeed: PodcastFeed) {
+        AlertHelper.showAlert(
+            title: "Selected Podcast Feed",
+            message: podcastFeed.title
+        )
     }
     
     
-    
-    
     private func configureFilterChipCollectionView() {
-//        feedFilterChipCollectionView.registerCell(FeedFilterChipCollectionViewCell.self)
-//
-//        feedFilterChipDataSource = FeedFilterChipDataSource(
-//            collectionView: feedFilterChipCollectionView,
-//            mediaTypes: mediaTypes,
-//            cellDelegate: self
-//        )
-//
-//        feedFilterChipCollectionView.delegate = feedFilterChipDataSource
-//        feedFilterChipCollectionView.dataSource = feedFilterChipDataSource
-//        feedFilterChipCollectionView.reloadData()
-
-        
-        let filterChipCollectionViewController = FeedFilterChipsCollectionViewController
+        filterChipCollectionViewController = FeedFilterChipsCollectionViewController
             .instantiate(
                 mediaTypes: mediaTypes,
-                cellDelegate: self
+                activeFilterMediaType: mediaTypes[1],
+                onCellSelected: handleFilterChipCellSelection(_:)
             )
-        
-//        let filterChipCollectionViewController = FeedFilterChipsCollectionViewController(
-//            mediaTypes: mediaTypes,
-//            cellDelegate: self
-//        )
-        
-//        let filterChipCollectionViewController = FeedFilterChipsCollectionViewController()
-//
-//        filterChipCollectionViewController.mediaTypes = mediaTypes
-//        filterChipCollectionViewController.cellDelegate = self
         
         addChildVC(
             child: filterChipCollectionViewController,
@@ -189,53 +180,17 @@ extension FeedsListViewController {
     
     
     private func configureFeedContentCollectionView() {
-        let feedContentCollectionViewController = FeedContentCollectionViewController
+        feedContentCollectionViewController = FeedContentCollectionViewController
             .instantiate(
                 latestPodcastEpisodes: latestPodcastEpisodes,
                 subscribedPodcastFeeds: subscribedPodcastFeeds,
-                onItemSelected: handleContentCellSelection(cellItem:)
+                onPodcastEpisodeCellSelected: handleLatestEpisodeCellSelection(_:),
+                onPodcastFeedCellSelected: handleLatestFeedCellSelection(_:)
             )
-        
-//        let feedContentCollectionViewController = FeedContentCollectionViewController(
-//            newEpisodePodcastFeeds: newEpisodePodcastFeeds,
-//            subscribedPodcastFeeds: subscribedPodcastFeeds,
-//            cellDelegate: self
-//        )
-        
-//        let feedContentCollectionViewController = FeedContentCollectionViewController()
-//
-//        feedContentCollectionViewController.newEpisodePodcastFeeds = newEpisodePodcastFeeds
-//        feedContentCollectionViewController.subscribedPodcastFeeds = subscribedPodcastFeeds
-//        feedContentCollectionViewController.cellDelegate = self
         
         addChildVC(
             child: feedContentCollectionViewController,
             container: feedContentCollectionViewContainer
         )
     }
-
 }
-
-
-extension FeedsListViewController: FeedFilterChipCollectionViewCellDelegate {
-    
-    func collectionViewCell(
-        _ cell: FeedFilterChipCollectionViewCell,
-        didSelectMediaType mediaType: String
-    ) {
-        AlertHelper.showAlert(title: "Selected Media Type", message: mediaType)
-    }
-}
-
-
-//extension FeedsListViewController: PodcastFeedCollectionViewCellDelegate {
-//    func collectionViewCell(
-//        _ cell: PodcastFeedCollectionViewCell,
-//        didSelect podcastFeed: PodcastFeed
-//    ) {
-//        AlertHelper.showAlert(
-//            title: "Selected Podcast Feed",
-//            message: podcastFeed.title
-//        )
-//    }
-//}

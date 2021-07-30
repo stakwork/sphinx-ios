@@ -5,17 +5,6 @@
 
 import UIKit
 
-protocol PodcastFeedCollectionViewCellDelegate: class {
-
-//    func collectionViewCell(
-//        _ cell: PodcastFeedCollectionViewCell,
-//        didSelect podcastFeed: PodcastFeed
-//    )
-    func collectionViewCellDidSelect(
-        _ cell: PodcastFeedCollectionViewCell
-    )
-}
-
 
 protocol DashboardPodcastCollectionViewItem {
     var imageName: String { get }
@@ -25,21 +14,10 @@ protocol DashboardPodcastCollectionViewItem {
 
 
 class PodcastFeedCollectionViewCell: UICollectionViewCell {
-    
-//    weak var delegate: PodcastFeedCollectionViewCellDelegate?
-    
     @IBOutlet weak var podcastImageView: UIImageView!
     @IBOutlet weak var podcastNameLabel: UILabel!
     @IBOutlet weak var podcastTitleLabel: UILabel!
     
-    
-//    var podcastFeed: PodcastFeed! {
-//        didSet {
-//            DispatchQueue.main.async { [weak self] in
-//                self?.updateViewsWithPodcastFeed()
-//            }
-//        }
-//    }
     
     var item: DashboardPodcastCollectionViewItem! {
         didSet {
@@ -56,21 +34,11 @@ class PodcastFeedCollectionViewCell: UICollectionViewCell {
         podcastImageView.clipsToBounds = true
     }
     
-  
-//    func configure(withPodcastFeed podcastFeed: PodcastFeed) {
-//        self.podcastFeed = podcastFeed
-//    }
-//
     
-      func configure(withItem dataItem: DashboardPodcastCollectionViewItem) {
-          self.item = dataItem
-      }
+    func configure(withItem dataItem: DashboardPodcastCollectionViewItem) {
+        self.item = dataItem
+    }
     
-//    private func updateViewsWithPodcastFeed() {
-//        podcastImageView.image = UIImage(named: podcastFeed.image)
-//        podcastNameLabel.text = podcastFeed.title
-//        podcastTitleLabel.text = podcastFeed.episodes.last?.title
-//    }
     
     private func updateViewsWithItem() {
         podcastImageView.image = UIImage(named: item.imageName)
@@ -84,7 +52,7 @@ class PodcastFeedCollectionViewCell: UICollectionViewCell {
 // MARK: - Static Properties
 extension PodcastFeedCollectionViewCell {
     static let reuseID = "PodcastFeedCollectionViewCell"
-
+    
     static let nib: UINib = {
         UINib(nibName: "PodcastFeedCollectionViewCell", bundle: nil)
     }()

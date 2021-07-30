@@ -23,33 +23,57 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="4aX-st-Aff">
+                <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="4aX-st-Aff">
                     <rect key="frame" x="10" y="0.0" width="394" height="50"/>
                     <subviews>
-                        <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="751" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="ofj-sj-jbM">
-                            <rect key="frame" x="0.0" y="13" width="212" height="24"/>
+                        <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="751" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="ofj-sj-jbM">
+                            <rect key="frame" x="0.0" y="0.0" width="135" height="50"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="Listen Now" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lmV-U5-tqg">
-                                    <rect key="frame" x="0.0" y="0.0" width="101" height="24"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Listen Now" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lmV-U5-tqg">
+                                    <rect key="frame" x="0.0" y="13.5" width="101" height="23.5"/>
                                     <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="20"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="keyboard_arrow_right" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="di5-5h-YVa">
-                                    <rect key="frame" x="111" y="0.0" width="101" height="24"/>
+                                    <rect key="frame" x="111" y="13" width="24" height="24"/>
                                     <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="24"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
                         </stackView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="right" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="249" text="playlist_play" textAlignment="right" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hHt-8D-yWm">
-                            <rect key="frame" x="222" y="11" width="172" height="28"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="249" text="playlist" textAlignment="natural" lineBreakMode="clip" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hHt-8D-yWm">
+                            <rect key="frame" x="179.5" y="0.0" width="140" height="50"/>
                             <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="28"/>
                             <color key="textColor" name="WashedOutReceivedText"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hd0-8P-gDr">
+                            <rect key="frame" x="254" y="0.0" width="140" height="50"/>
+                            <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="28"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" title="playlist">
+                                <color key="titleColor" name="WashedOutReceivedText"/>
+                            </state>
+                            <connections>
+                                <action selector="trailingButtonTapped" destination="Yp2-hm-eWM" eventType="touchUpInside" id="6gO-Az-OLl"/>
+                            </connections>
+                        </button>
                     </subviews>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="hHt-8D-yWm" secondAttribute="trailing" id="Fwq-U3-WVS"/>
+                        <constraint firstItem="hHt-8D-yWm" firstAttribute="top" secondItem="4aX-st-Aff" secondAttribute="top" id="Opl-lD-NZq"/>
+                        <constraint firstAttribute="bottom" secondItem="Hd0-8P-gDr" secondAttribute="bottom" id="Pv8-zB-obz"/>
+                        <constraint firstAttribute="bottom" secondItem="hHt-8D-yWm" secondAttribute="bottom" id="mFb-Ru-5eJ"/>
+                        <constraint firstItem="Hd0-8P-gDr" firstAttribute="top" secondItem="4aX-st-Aff" secondAttribute="top" id="pXB-kd-eRf"/>
+                        <constraint firstAttribute="trailing" secondItem="Hd0-8P-gDr" secondAttribute="trailing" id="zrM-EJ-HOU"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="subviews">
+                            <exclude reference="hHt-8D-yWm"/>
+                        </mask>
+                    </variation>
                 </stackView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="ETB-r9-sFE"/>

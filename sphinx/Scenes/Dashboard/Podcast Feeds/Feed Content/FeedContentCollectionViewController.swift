@@ -2,40 +2,24 @@ import UIKit
 
 
 class FeedContentCollectionViewController: UICollectionViewController {
-//    @IBOutlet private var collectionView: UICollectionView!
-
     var latestPodcastEpisodes: [PodcastEpisode]!
     var subscribedPodcastFeeds: [PodcastFeed]!
-//    weak var cellDelegate: PodcastFeedCollectionViewCellDelegate?
-    var sectionSpacing: CGFloat!
-    var onItemSelected: ((DashboardPodcastCollectionViewItem) -> Void)!
+    var interSectionSpacing: CGFloat!
+
+    var onPodcastEpisodeCellSelected: ((PodcastEpisode) -> Void)!
+    var onPodcastFeedCellSelected: ((PodcastFeed) -> Void)!
 
 
     private var currentDataSnapshot: DataSourceSnapshot!
     private var dataSource: DataSource!
-    private let itemContentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 0, trailing: 10)
     
-//
-//    init(
-//        latestPodcastEpisodes: [PodcastFeed],
-//        subscribedPodcastFeeds: [PodcastFeed],
-//        cellDelegate: PodcastFeedCollectionViewCellDelegate,
-//        sectionSpacing: CGFloat = 20.0
-//    ) {
-//        super.init()
-//
-//        self.newEpisodePodcastFeeds = newEpisodePodcastFeeds
-//        self.subscribedPodcastFeeds = subscribedPodcastFeeds
-//        self.cellDelegate = cellDelegate
-//        self.sectionSpacing = sectionSpacing
-//    }
-//
-//
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
+    private let itemContentInsets = NSDirectionalEdgeInsets(
+        top: 10,
+        leading: 10,
+        bottom: 0,
+        trailing: 10
+    )
 }
-
 
 
 // MARK: - Instantiation
@@ -44,15 +28,17 @@ extension FeedContentCollectionViewController {
     static func instantiate(
         latestPodcastEpisodes: [PodcastEpisode] = [],
         subscribedPodcastFeeds: [PodcastFeed] = [],
-        sectionSpacing: CGFloat = 20.0,
-        onItemSelected: @escaping ((DashboardPodcastCollectionViewItem) -> Void) = { _ in }
+                interSectionSpacing: CGFloat = 20.0,
+        onPodcastEpisodeCellSelected: @escaping ((PodcastEpisode) -> Void) = { _ in },
+        onPodcastFeedCellSelected: @escaping ((PodcastFeed) -> Void) = { _ in }
     ) -> FeedContentCollectionViewController {
         let viewController = StoryboardScene.Dashboard.feedContentCollectionViewController.instantiate()
 
         viewController.latestPodcastEpisodes = latestPodcastEpisodes
         viewController.subscribedPodcastFeeds = subscribedPodcastFeeds
-        viewController.sectionSpacing = sectionSpacing
-        viewController.onItemSelected = onItemSelected
+        viewController.interSectionSpacing =         interSectionSpacing
+        viewController.onPodcastEpisodeCellSelected = onPodcastEpisodeCellSelected
+        viewController.onPodcastFeedCellSelected = onPodcastFeedCellSelected
         
         return viewController
     }
@@ -104,17 +90,6 @@ extension FeedContentCollectionViewController {
 }
 
 
-// MARK: - Event Handling
-private extension FeedContentCollectionViewController {
-}
-
-
-// MARK: - Navigation
-private extension FeedContentCollectionViewController {
-}
-
-
-
 // MARK: - Layout Composition
 extension FeedContentCollectionViewController {
 
@@ -164,11 +139,15 @@ extension FeedContentCollectionViewController {
 
 
     func makeLayout() -> UICollectionViewLayout {
-        let configuration = UICollectionViewCompositionalLayoutConfiguration()
-        configuration.interSectionSpacing = sectionSpacing
-
-        let layout = UICollectionViewCompositionalLayout(sectionProvider: makeSectionProvider())
-        layout.configuration = configuration
+        let layoutConfiguration = UICollectionViewCompositionalLayoutConfiguration()
+        
+        layoutConfiguration.interSectionSpacing = interSectionSpacing
+        
+        let layout = UICollectionViewCompositionalLayout(
+            sectionProvider: makeSectionProvider()
+        )
+        
+        layout.configuration = layoutConfiguration
 
         return layout
     }
@@ -220,41 +199,11 @@ extension FeedContentCollectionViewController {
     func configureDataSource(for collectionView: UICollectionView) {
         dataSource = makeDataSource(for: collectionView)
         
-        let snapshot = makeSnapshotWithInitialData(
-            latestPodcastEpisodes: latestPodcastEpisodes,
-            subscribedPodcastFeeds: subscribedPodcastFeeds
-        )
-
+        let snapshot = makeSnapshotForCurrentState()
+        
         dataSource.apply(snapshot, animatingDifferences: false)
     }
 }
-
-
-extension PodcastEpisode: DashboardPodcastCollectionViewItem {
-//    var title: String {
-//        title ?? "Untitled Episode"
-//    }
-    
-    var imageName: String {
-        image ?? "podcastTagIcon"
-    }
-    
-    var subtitle: String {
-        description ?? ""
-    }
-}
-
-
-extension PodcastFeed: DashboardPodcastCollectionViewItem {
-    var imageName: String {
-        image
-    }
-    
-    var subtitle: String {
-        description
-    }
-}
-
 
 // MARK: - Data Source View Providers
 extension FeedContentCollectionViewController {
@@ -262,41 +211,22 @@ extension FeedContentCollectionViewController {
     func makeCellProvider(
         for collectionView: UICollectionView
     ) -> DataSource.CellProvider {
-        { (collectionView, indexPath, mediaType) -> UICollectionViewCell in
+        { (collectionView, indexPath, dataItem) -> UICollectionViewCell in
             guard
                 let cell = collectionView.dequeueReusableCell(
                     withReuseIdentifier: CollectionViewCell.reuseID,
                     for: indexPath
-                ) as? CollectionViewCell,
-                let section = CollectionViewSection(rawValue: indexPath.section)
+                ) as? CollectionViewCell
             else {
                 preconditionFailure()
             }
             
-//            var feed: PodcastFeed
-//
-//            switch section {
-//            case .latestPodcastEpisodes:
-//                feed = self.latestPodcastEpisodes[indexPath.row]
-//            case .subscribedPodcastFeeds:
-//                feed = self.subscribedPodcastFeeds[indexPath.row]
-//            }
-//
-//            cell.delegate = self.cellDelegate
-//            cell.configure(withPodcastFeed: feed)
-
-            var cellItem: DashboardPodcastCollectionViewItem
-            
-            switch section {
-            case .latestPodcastEpisodes:
-                cellItem = self.latestPodcastEpisodes[indexPath.row]
-            case .subscribedPodcastFeeds:
-                cellItem = self.subscribedPodcastFeeds[indexPath.row]
+            switch dataItem {
+            case .latestPodcastEpisode(let episode):
+                cell.configure(withItem: episode)
+            case .subscribedPodcastFeed(let feed):
+                cell.configure(withItem: feed)
             }
-            
-//            cell.delegate = self.cellDelegate
-            cell.configure(withItem: cellItem)
-
             
             return cell
         }
@@ -337,11 +267,9 @@ extension FeedContentCollectionViewController {
 // MARK: - Data Source Snapshot
 extension FeedContentCollectionViewController {
 
-    func update(
-        _ snapshot: inout DataSourceSnapshot,
-        withLatestPodcastEpisodes latestPodcastEpisodes: [PodcastEpisode],
-        andSubscribedPodcastFeeds subscribedPodcastFeeds: [PodcastFeed]
-    ) {
+    func makeSnapshotForCurrentState() -> DataSourceSnapshot {
+        var snapshot = DataSourceSnapshot()
+
         snapshot.appendSections(CollectionViewSection.allCases)
 
         let latestPodcastEpisodeItems = latestPodcastEpisodes
@@ -359,38 +287,22 @@ extension FeedContentCollectionViewController {
             subscribedPodcastFeedItems,
             toSection: CollectionViewSection.subscribedPodcastFeeds
         )
-    }
-
-
-    func makeSnapshotWithInitialData(
-        latestPodcastEpisodes: [PodcastEpisode],
-        subscribedPodcastFeeds: [PodcastFeed]
-    ) -> DataSourceSnapshot {
-        var snapshot = DataSourceSnapshot()
         
-        update(
-            &snapshot,
-            withLatestPodcastEpisodes: latestPodcastEpisodes,
-            andSubscribedPodcastFeeds: subscribedPodcastFeeds
-        )
-
         return snapshot
     }
 
-//
-//    func updateSnapshot(
-//        of dataSource: DataSource,
-//        withlatestPodcastEpisodes latestPodcastEpisodes: [PodcastFeed],
-//        andSubscribedPodcastFeeds subscribedPodcastFeeds: [PodcastFeed],
-//        shouldAnimate: Bool = true
-//    ) {
-//        let snapshot = makeSnapshotWithInitialData(
-//            latestPodcastEpisodes: latestPodcastEpisodes,
-//            subscribedPodcastFeeds: subscribedPodcastFeeds
-//        )
-//
-//        dataSource.apply(snapshot, animatingDifferences: shouldAnimate)
-//    }
+
+    func updateSnapshot(shouldAnimate: Bool = true) {
+        let snapshot = makeSnapshotForCurrentState()
+
+        dataSource.apply(snapshot, animatingDifferences: shouldAnimate)
+    }
+}
+
+
+
+// MARK: - Event Handling
+private extension FeedContentCollectionViewController {
 }
 
 
@@ -401,7 +313,42 @@ private extension FeedContentCollectionViewController {
 
 // MARK: - `UICollectionViewDelegate` Methods
 extension FeedContentCollectionViewController {
+    
+    override func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath
+    ) {
+        guard let item = dataSource.itemIdentifier(for: indexPath) else {
+            return
+        }
 
-
+        switch item {
+        case .latestPodcastEpisode(let podcastEpisode):
+            onPodcastEpisodeCellSelected(podcastEpisode)
+        case .subscribedPodcastFeed(let podcastFeed):
+            onPodcastFeedCellSelected(podcastFeed)
+        }
+    }
 }
 
+
+extension PodcastEpisode: DashboardPodcastCollectionViewItem {
+    var imageName: String {
+        image ?? "podcastTagIcon"
+    }
+    
+    var subtitle: String {
+        description ?? ""
+    }
+}
+
+
+extension PodcastFeed: DashboardPodcastCollectionViewItem {
+    var imageName: String {
+        image
+    }
+    
+    var subtitle: String {
+        description
+    }
+}

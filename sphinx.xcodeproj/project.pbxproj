@@ -555,13 +555,11 @@
 		F394ECB32683EB5A00529038 /* SphinxDesktopAdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F394ECB22683EB5A00529038 /* SphinxDesktopAdViewController.swift */; };
 		F3C92B272671FB6C005F0A42 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F3C92B262671FB6C005F0A42 /* README.md */; };
 		F3CE637726AFC44D006E37A0 /* DashboardRootViewController+DelegateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CE637626AFC44C006E37A0 /* DashboardRootViewController+DelegateUtils.swift */; };
-		F3CE637A26AFD443006E37A0 /* FeedFilterChipDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CE637926AFD443006E37A0 /* FeedFilterChipDataSource.swift */; };
 		F3CE637C26AFE823006E37A0 /* FeedFilterChipCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CE637B26AFE822006E37A0 /* FeedFilterChipCollectionViewCell.swift */; };
 		F3CE638126AFF93F006E37A0 /* FeedFilterChipCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F3CE638026AFF93F006E37A0 /* FeedFilterChipCollectionViewCell.xib */; };
 		F3D0401E268BAA9700D54A94 /* SphinxReadyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D0401D268BAA9700D54A94 /* SphinxReadyViewController.swift */; };
 		F3D04020268BAB7500D54A94 /* InviteWelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D0401F268BAB7400D54A94 /* InviteWelcomeViewController.swift */; };
 		F3D04027268BABFF00D54A94 /* InviteActionsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D04026268BABFF00D54A94 /* InviteActionsHelper.swift */; };
-		F3D86DBC26B106F900EB9711 /* FeedContentDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D86DBB26B106F900EB9711 /* FeedContentDataSource.swift */; };
 		F3D86DBE26B109FD00EB9711 /* PodcastFeedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D86DBD26B109FD00EB9711 /* PodcastFeedCollectionViewCell.swift */; };
 		F3D86DC026B14E5E00EB9711 /* PodcastFeedCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F3D86DBF26B14E5E00EB9711 /* PodcastFeedCollectionViewCell.xib */; };
 		F3D86DC226B157D400EB9711 /* PodcastFeedCollectionViewSectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = F3D86DC126B157D400EB9711 /* PodcastFeedCollectionViewSectionHeader.xib */; };
@@ -1252,13 +1250,11 @@
 		F3C92B262671FB6C005F0A42 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		F3C92B282671FCFD005F0A42 /* .Tor.version */ = {isa = PBXFileReference; lastKnownFileType = text; name = .Tor.version; path = Carthage/Build/.Tor.version; sourceTree = "<group>"; };
 		F3CE637626AFC44C006E37A0 /* DashboardRootViewController+DelegateUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DashboardRootViewController+DelegateUtils.swift"; sourceTree = "<group>"; };
-		F3CE637926AFD443006E37A0 /* FeedFilterChipDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedFilterChipDataSource.swift; sourceTree = "<group>"; };
 		F3CE637B26AFE822006E37A0 /* FeedFilterChipCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedFilterChipCollectionViewCell.swift; sourceTree = "<group>"; };
 		F3CE638026AFF93F006E37A0 /* FeedFilterChipCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedFilterChipCollectionViewCell.xib; sourceTree = "<group>"; };
 		F3D0401D268BAA9700D54A94 /* SphinxReadyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SphinxReadyViewController.swift; sourceTree = "<group>"; };
 		F3D0401F268BAB7400D54A94 /* InviteWelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteWelcomeViewController.swift; sourceTree = "<group>"; };
 		F3D04026268BABFF00D54A94 /* InviteActionsHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteActionsHelper.swift; sourceTree = "<group>"; };
-		F3D86DBB26B106F900EB9711 /* FeedContentDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedContentDataSource.swift; sourceTree = "<group>"; };
 		F3D86DBD26B109FD00EB9711 /* PodcastFeedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastFeedCollectionViewCell.swift; sourceTree = "<group>"; };
 		F3D86DBF26B14E5E00EB9711 /* PodcastFeedCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PodcastFeedCollectionViewCell.xib; sourceTree = "<group>"; };
 		F3D86DC126B157D400EB9711 /* PodcastFeedCollectionViewSectionHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PodcastFeedCollectionViewSectionHeader.xib; sourceTree = "<group>"; };
@@ -2903,7 +2899,6 @@
 			isa = PBXGroup;
 			children = (
 				F3CE637B26AFE822006E37A0 /* FeedFilterChipCollectionViewCell.swift */,
-				F3CE637926AFD443006E37A0 /* FeedFilterChipDataSource.swift */,
 				F3CE638026AFF93F006E37A0 /* FeedFilterChipCollectionViewCell.xib */,
 				F3EF52C426B2823700F06668 /* FeedFilterChipsCollectionViewController.swift */,
 			);
@@ -2922,7 +2917,6 @@
 			isa = PBXGroup;
 			children = (
 				F3EF52C626B28DBD00F06668 /* FeedContentCollectionViewController.swift */,
-				F3D86DBB26B106F900EB9711 /* FeedContentDataSource.swift */,
 				F3D86DBD26B109FD00EB9711 /* PodcastFeedCollectionViewCell.swift */,
 				F3D86DC326B157F600EB9711 /* PodcastFeedCollectionViewSectionHeader.swift */,
 				F3D86DC126B157D400EB9711 /* PodcastFeedCollectionViewSectionHeader.xib */,
@@ -3397,7 +3391,6 @@
 				475E41612382E28800928931 /* UIButton.swift in Sources */,
 				47308E0124FEE6E600FFAC6F /* SocketExtensions.swift in Sources */,
 				475E416C23858D4900928931 /* Subscription+CoreDataClass.swift in Sources */,
-				F3CE637A26AFD443006E37A0 /* FeedFilterChipDataSource.swift in Sources */,
 				473633EA25559945007405F2 /* LogarithmicSlider.swift in Sources */,
 				475BDCA5232AC1D600C5BBD6 /* TransactionMessageRow.swift in Sources */,
 				47AA08C7234BB8E0002C69E2 /* ShareInviteCodeViewController.swift in Sources */,
@@ -3504,7 +3497,6 @@
 				47AA08C5234B96BF002C69E2 /* ConfirmAddFriendViewController.swift in Sources */,
 				47CC7CE923E4718600730E6F /* ImageFullScreenViewController.swift in Sources */,
 				474FE32A23F588D400C06FC8 /* VideoReceivedTableViewCell.swift in Sources */,
-				F3D86DBC26B106F900EB9711 /* FeedContentDataSource.swift in Sources */,
 				4703CF9025190138007B685C /* CommonFileTableViewCell.swift in Sources */,
 				471940AA23393CE700F1BF5B /* LAContext.swift in Sources */,
 				478DCF9A2343D258009A03D6 /* SetNickNameViewController.swift in Sources */,

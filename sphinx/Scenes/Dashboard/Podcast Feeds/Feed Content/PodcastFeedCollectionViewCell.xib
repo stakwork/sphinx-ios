@@ -28,7 +28,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="160" height="160"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="5Sq-GQ-zBf" secondAttribute="height" multiplier="1:1" id="0im-OP-et5"/>
-                            <constraint firstAttribute="width" constant="160" id="dhv-5Y-tE8"/>
                         </constraints>
                         <imageReference key="image" image="podcastTagIcon"/>
                     </imageView>

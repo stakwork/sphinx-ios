@@ -5,37 +5,60 @@
 
 import UIKit
 
-protocol FeedFilterChipCollectionViewCellDelegate: class {
-
-    func collectionViewCell(
-        _ cell: FeedFilterChipCollectionViewCell,
-        didSelectMediaType mediaType: String
-    )
-}
-
 
 class FeedFilterChipCollectionViewCell: UICollectionViewCell {
-    
-    weak var delegate: FeedFilterChipCollectionViewCellDelegate?
-    
     @IBOutlet weak var filterLabel: UILabel!
     
     
     var mediaType: String! {
         didSet {
-            filterLabel.text = mediaType
+            DispatchQueue.main.async { [weak self] in
+                self?.updateViewsWithItem()
+            }
         }
     }
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
-        contentView.layer.cornerRadius = contentView.frame.size.height / 2
+    var isMediaTypeActive: Bool = false {
+        didSet {
+            DispatchQueue.main.async { [weak self] in
+                self?.updateViewsFromActiveState()
+            }
+        }
     }
     
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
   
+        contentView.clipsToBounds = true
+
+        contentView.layer.cornerRadius = max(
+            contentView.frame.height,
+            contentView.frame.width
+        ) / 2.0
+        
+        contentView.layer.cornerCurve = .continuous
+    }
+    
+    
     func configure(withMediaType mediaType: String) {
         self.mediaType = mediaType
+    }
+    
+    
+    private func updateViewsWithItem() {
+        filterLabel.text = mediaType
+    }
+    
+    
+    private func updateViewsFromActiveState() {
+        contentView.backgroundColor = isMediaTypeActive ?
+            .Sphinx.BodyInverted
+            : .Sphinx.DashboardFilterChipBackground
+        
+        filterLabel.textColor = isMediaTypeActive ?
+            .Sphinx.DashboardFilterChipActiveText
+            : .Sphinx.BodyInverted
     }
 }
 
@@ -43,7 +66,7 @@ class FeedFilterChipCollectionViewCell: UICollectionViewCell {
 // MARK: - Static Properties
 extension FeedFilterChipCollectionViewCell {
     static let reuseID = "FeedFilterChipCollectionViewCell"
-
+    
     static let nib: UINib = {
         UINib(nibName: "FeedFilterChipCollectionViewCell", bundle: nil)
     }()

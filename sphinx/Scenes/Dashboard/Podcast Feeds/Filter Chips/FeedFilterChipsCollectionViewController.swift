@@ -3,16 +3,17 @@ import UIKit
 
 class FeedFilterChipsCollectionViewController: UICollectionViewController {
 
-    var mediaTypes: [String] = []
-    var activeFilterMediaType: String?
+    var contentFilterOptions: [CellDataItemType] = []
+    var activeFilterOption: CellDataItemType?
     
-    var onCellSelected: ((String) -> Void)!
+    var onCellSelected: ((CellDataItemType) -> Void)!
     
 
     private var currentDataSnapshot: DataSourceSnapshot!
     private var dataSource: DataSource!
     
-    private let itemContentInsets = NSDirectionalEdgeInsets(
+    private let itemContentInsets = NSDirectionalEdgeInsets.zero
+    private let sectionContentInsets = NSDirectionalEdgeInsets(
         top: 0,
         leading: 10,
         bottom: 0,
@@ -25,14 +26,14 @@ class FeedFilterChipsCollectionViewController: UICollectionViewController {
 extension FeedFilterChipsCollectionViewController {
 
     static func instantiate(
-        mediaTypes: [String],
-        activeFilterMediaType: String? = nil,
-        onCellSelected: @escaping ((String) -> Void)  = { _ in }
+        contentFilterOptions: [CellDataItemType],
+        activeFilterOption: CellDataItemType? = nil,
+        onCellSelected: @escaping ((CellDataItemType) -> Void)  = { _ in }
     ) -> FeedFilterChipsCollectionViewController {
         let viewController = StoryboardScene.Dashboard.feedFilterChipsCollectionViewController.instantiate()
 
-        viewController.mediaTypes = mediaTypes
-        viewController.activeFilterMediaType = activeFilterMediaType
+        viewController.contentFilterOptions = contentFilterOptions
+        viewController.activeFilterOption = activeFilterOption
         viewController.onCellSelected = onCellSelected
 
         return viewController
@@ -47,7 +48,7 @@ extension FeedFilterChipsCollectionViewController {
     }
 
     typealias CollectionViewCell = FeedFilterChipCollectionViewCell
-    typealias CellDataItemType = String
+    typealias CellDataItemType = FeedsListViewController.ContentFilterOption
     typealias DataSource = UICollectionViewDiffableDataSource<CollectionViewSection, CellDataItemType>
     typealias DataSourceSnapshot = NSDiffableDataSourceSnapshot<CollectionViewSection, CellDataItemType>
 }
@@ -79,7 +80,7 @@ extension FeedFilterChipsCollectionViewController {
             heightDimension: .fractionalHeight(1.0)
         )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = itemContentInsets
+//        item.contentInsets = itemContentInsets
 
 
         let groupSize = NSCollectionLayoutSize(
@@ -93,6 +94,8 @@ extension FeedFilterChipsCollectionViewController {
 
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
+        section.interGroupSpacing = 8
+        section.contentInsets = sectionContentInsets
         
         return section
     }
@@ -132,7 +135,6 @@ extension FeedFilterChipsCollectionViewController {
     func configure(_ collectionView: UICollectionView) {
         collectionView.alwaysBounceVertical = true
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.backgroundColor = .clear
         collectionView.delegate = self
     }
 }
@@ -178,8 +180,8 @@ extension FeedFilterChipsCollectionViewController {
                 return nil
             }
 
-            cell.mediaType = dataItem
-            cell.isMediaTypeActive = dataItem == self.activeFilterMediaType
+            cell.filterOption = dataItem
+            cell.isFilterOptionActive = dataItem == self.activeFilterOption
 
             return cell
         }
@@ -194,7 +196,7 @@ extension FeedFilterChipsCollectionViewController {
         var snapshot = DataSourceSnapshot()
 
         snapshot.appendSections(CollectionViewSection.allCases)
-        snapshot.appendItems(mediaTypes, toSection: .all)
+        snapshot.appendItems(contentFilterOptions, toSection: .all)
 
         return snapshot
     }

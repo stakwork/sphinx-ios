@@ -1716,14 +1716,14 @@
 		4756DE0C232ABDED001BAFD6 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				F373BEFD26A9CA340093C886 /* Dashboard */,
-				F394EC9E268205E000529038 /* New User Signup */,
 				4756DE12232AC0F9001BAFD6 /* Chat */,
 				47468FE7233905820072124A /* Contacts */,
+				F373BEFD26A9CA340093C886 /* Dashboard */,
 				4733C7DF23C4DE97006A2C51 /* Groups */,
 				475BDD82232C084E00C5BBD6 /* History */,
 				47468FE0233564370072124A /* Invite */,
 				475BDD62232BEE7C00C5BBD6 /* Left Menu */,
+				F394EC9E268205E000529038 /* New User Signup */,
 				47ACBC09265E9C9900D2FE47 /* People */,
 				47468FCF23313EF90072124A /* Pin */,
 				47468FDA233554540072124A /* Profile */,
@@ -2854,10 +2854,10 @@
 				F373BEFE26A9CB790093C886 /* Dashboard.storyboard */,
 				F373BF0026A9CE1B0093C886 /* DashboardRootViewController.swift */,
 				F3CE637626AFC44C006E37A0 /* DashboardRootViewController+DelegateUtils.swift */,
-				F3CE637826AFD42C006E37A0 /* Podcast Feeds */,
 				F373BF0426A9CF180093C886 /* FriendsListViewController.swift */,
 				F373BF0626A9CF220093C886 /* TribesListViewController.swift */,
 				F373BF0A26AAFB6B0093C886 /* Custom Segmented Control */,
+				F3CE637826AFD42C006E37A0 /* Podcast Feeds */,
 			);
 			path = Dashboard;
 			sourceTree = "<group>";

@@ -190,14 +190,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uch-ef-QEI" userLabel="Feed Filter Chips Collection View Container">
-                                <rect key="frame" x="0.0" y="44" width="414" height="60"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="ESK-Bh-21Q"/>
+                                    <constraint firstAttribute="height" constant="60" id="K9r-1J-17V"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hwZ-I8-IJL" userLabel="Feed Content Collection View Container">
-                                <rect key="frame" x="0.0" y="104" width="414" height="758"/>
+                                <rect key="frame" x="0.0" y="60" width="414" height="836"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                         </subviews>
@@ -206,10 +206,10 @@
                         <constraints>
                             <constraint firstItem="hwZ-I8-IJL" firstAttribute="trailing" secondItem="XKi-k6-l8l" secondAttribute="trailing" id="HqO-ac-ImJ"/>
                             <constraint firstAttribute="trailing" secondItem="uch-ef-QEI" secondAttribute="trailing" id="JQo-3y-eJ0"/>
-                            <constraint firstAttribute="bottom" secondItem="hwZ-I8-IJL" secondAttribute="bottom" constant="34" id="OeK-DB-JwB"/>
+                            <constraint firstItem="uch-ef-QEI" firstAttribute="top" secondItem="XKi-k6-l8l" secondAttribute="top" id="LEy-IU-cng"/>
+                            <constraint firstAttribute="bottom" secondItem="hwZ-I8-IJL" secondAttribute="bottom" id="OeK-DB-JwB"/>
                             <constraint firstItem="hwZ-I8-IJL" firstAttribute="top" secondItem="uch-ef-QEI" secondAttribute="bottom" id="SaV-S8-dfI"/>
                             <constraint firstItem="hwZ-I8-IJL" firstAttribute="leading" secondItem="XKi-k6-l8l" secondAttribute="leading" id="ZVQ-eT-xbl"/>
-                            <constraint firstItem="uch-ef-QEI" firstAttribute="top" secondItem="XKi-k6-l8l" secondAttribute="top" constant="44" id="cES-32-j7E"/>
                             <constraint firstItem="uch-ef-QEI" firstAttribute="leading" secondItem="XKi-k6-l8l" secondAttribute="leading" id="vbS-Dv-mch"/>
                         </constraints>
                     </view>

@@ -46,6 +46,11 @@
 "dashboard.tabs.feed" = "Feed";
 "dashboard.tabs.friends" = "Friends";
 "dashboard.tabs.tribes" = "Tribes";
+"dashboard.feeds.filters.all" = "All";
+"dashboard.feeds.filters.listen" = "Listen";
+"dashboard.feeds.filters.watch" = "Watch";
+"dashboard.feeds.filters.read" = "Read";
+"dashboard.feeds.filters.play" = "Play";
 
 //LeftMenu
 "left-menu.dashboard" = "Inicio";

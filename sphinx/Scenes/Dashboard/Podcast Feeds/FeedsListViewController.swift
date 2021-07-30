@@ -83,9 +83,7 @@ class FeedsListViewController: UIViewController {
     private var feedContentCollectionViewController: FeedContentCollectionViewController!
     
     
-    // TODO: These should probably be strongly-typed and dynamically generated in some way.
-    var mediaTypes: [String] = []
-    
+    var contentFilterOptions: [ContentFilterOption] = []
     var latestPodcastEpisodes: [PodcastEpisode] = []
     var subscribedPodcastFeeds: [PodcastFeed] = []
     
@@ -111,21 +109,14 @@ class FeedsListViewController: UIViewController {
 extension FeedsListViewController {
     
     private func loadData() {
-        mediaTypes = getFeedMediaTypes()
+        contentFilterOptions = getContentFilterOptions()
         latestPodcastEpisodes = getLatestPodcastEpisodes()
         subscribedPodcastFeeds = getSubscribedPodcastFeeds()
     }
     
-    
     // TODO: These should probably be strongly-typed and dynamically generated in some way.
-    private func getFeedMediaTypes() -> [String] {
-        [
-            "All",
-            "Listen",
-            "Watch",
-            "Read",
-            "Play",
-        ]
+    private func getContentFilterOptions() -> [ContentFilterOption] {
+        ContentFilterOption.allCases
     }
     
     
@@ -139,13 +130,13 @@ extension FeedsListViewController {
     }
 
     
-    private func handleFilterChipCellSelection(_ mediaType: String) {
+    private func handleFilterChipCellSelection(_ filterOption: ContentFilterOption) {
         AlertHelper.showAlert(
-            title: "Selected Media Type",
-            message: mediaType
+            title: "Selected Filter Option",
+            message: filterOption.titleForDisplay
         )
         
-        filterChipCollectionViewController.activeFilterMediaType = mediaType
+        filterChipCollectionViewController.activeFilterOption = filterOption
         filterChipCollectionViewController.updateSnapshot()
     }
     
@@ -167,10 +158,11 @@ extension FeedsListViewController {
     private func configureFilterChipCollectionView() {
         filterChipCollectionViewController = FeedFilterChipsCollectionViewController
             .instantiate(
-                mediaTypes: mediaTypes,
-                activeFilterMediaType: mediaTypes[1],
+                contentFilterOptions: contentFilterOptions,
+                activeFilterOption: contentFilterOptions[1],
                 onCellSelected: handleFilterChipCellSelection(_:)
             )
+        
         
         addChildVC(
             child: filterChipCollectionViewController,
@@ -194,3 +186,37 @@ extension FeedsListViewController {
         )
     }
 }
+
+
+extension FeedsListViewController {
+    enum ContentFilterOption {
+        case all
+        case listen
+        case watch
+        case read
+        case play
+    }
+}
+
+
+extension FeedsListViewController.ContentFilterOption {
+    
+    var titleForDisplay: String {
+        switch self {
+        case .all:
+            return "dashboard.feeds.filters.all".localized
+        case .listen:
+            return "dashboard.feeds.filters.listen".localized
+        case .watch:
+            return "dashboard.feeds.filters.watch".localized
+        case .read:
+            return "dashboard.feeds.filters.read".localized
+        case .play:
+            return "dashboard.feeds.filters.play".localized
+        }
+    }
+}
+
+
+extension FeedsListViewController.ContentFilterOption: CaseIterable {}
+extension FeedsListViewController.ContentFilterOption: Hashable {}

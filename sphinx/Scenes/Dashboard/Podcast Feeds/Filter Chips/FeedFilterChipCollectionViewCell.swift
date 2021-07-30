@@ -10,7 +10,7 @@ class FeedFilterChipCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var filterLabel: UILabel!
     
     
-    var mediaType: String! {
+    var filterOption: FeedsListViewController.ContentFilterOption! {
         didSet {
             DispatchQueue.main.async { [weak self] in
                 self?.updateViewsWithItem()
@@ -18,7 +18,7 @@ class FeedFilterChipCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    var isMediaTypeActive: Bool = false {
+    var isFilterOptionActive: Bool = false {
         didSet {
             DispatchQueue.main.async { [weak self] in
                 self?.updateViewsFromActiveState()
@@ -31,32 +31,31 @@ class FeedFilterChipCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
   
         contentView.clipsToBounds = true
-
-        contentView.layer.cornerRadius = max(
-            contentView.frame.height,
-            contentView.frame.width
-        ) / 2.0
-        
         contentView.layer.cornerCurve = .continuous
     }
     
     
-    func configure(withMediaType mediaType: String) {
-        self.mediaType = mediaType
+    override func didMoveToSuperview() {
+        super.didMoveToSuperview()
+        
+        contentView.layer.cornerRadius = max(
+            contentView.frame.height,
+            contentView.frame.width
+        ) / 2.0
     }
     
     
     private func updateViewsWithItem() {
-        filterLabel.text = mediaType
+        filterLabel.text = filterOption.titleForDisplay
     }
     
     
     private func updateViewsFromActiveState() {
-        contentView.backgroundColor = isMediaTypeActive ?
+        contentView.backgroundColor = isFilterOptionActive ?
             .Sphinx.BodyInverted
             : .Sphinx.DashboardFilterChipBackground
         
-        filterLabel.textColor = isMediaTypeActive ?
+        filterLabel.textColor = isFilterOptionActive ?
             .Sphinx.DashboardFilterChipActiveText
             : .Sphinx.BodyInverted
     }

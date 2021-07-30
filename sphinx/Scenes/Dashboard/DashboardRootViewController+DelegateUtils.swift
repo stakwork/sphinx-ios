@@ -1,7 +1,6 @@
 import UIKit
 
 
-
 // MARK: - UITextFieldDelegate for handling search input
 extension DashboardRootViewController: UITextFieldDelegate {
    
@@ -13,8 +12,9 @@ extension DashboardRootViewController: UITextFieldDelegate {
     
     
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
-        return true
+        true
     }
+    
     
     func textField(
         _ textField: UITextField,

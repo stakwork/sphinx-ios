@@ -3,9 +3,7 @@ import UIKit
 
 class FeedFilterChipsCollectionViewController: UICollectionViewController {
 
-    var contentFilterOptions: [CellDataItemType] = []
-    var activeFilterOption: CellDataItemType?
-    
+    var contentFilterOptions: Set<CellDataItemType>!
     var onCellSelected: ((CellDataItemType) -> Void)!
     
 
@@ -13,12 +11,6 @@ class FeedFilterChipsCollectionViewController: UICollectionViewController {
     private var dataSource: DataSource!
     
     private let itemContentInsets = NSDirectionalEdgeInsets.zero
-    private let sectionContentInsets = NSDirectionalEdgeInsets(
-        top: 0,
-        leading: 10,
-        bottom: 0,
-        trailing: 10
-    )
 }
 
 
@@ -26,14 +18,12 @@ class FeedFilterChipsCollectionViewController: UICollectionViewController {
 extension FeedFilterChipsCollectionViewController {
 
     static func instantiate(
-        contentFilterOptions: [CellDataItemType],
-        activeFilterOption: CellDataItemType? = nil,
+        contentFilterOptions: Set<CellDataItemType>,
         onCellSelected: @escaping ((CellDataItemType) -> Void)  = { _ in }
     ) -> FeedFilterChipsCollectionViewController {
         let viewController = StoryboardScene.Dashboard.feedFilterChipsCollectionViewController.instantiate()
 
         viewController.contentFilterOptions = contentFilterOptions
-        viewController.activeFilterOption = activeFilterOption
         viewController.onCellSelected = onCellSelected
 
         return viewController
@@ -74,25 +64,40 @@ extension FeedFilterChipsCollectionViewController {
 // MARK: - Layout Composition
 extension FeedFilterChipsCollectionViewController {
 
+    var sectionContentInsets: NSDirectionalEdgeInsets {
+        let containerHeight = view.frame.height
+        
+        return .init(
+//            top: containerHeight / 4,
+            top: 0,
+            leading: 10,
+//            bottom: containerHeight / 4,
+            bottom: 0,
+            trailing: 10
+        )
+    }
+    
+    
     func makeFilterChipsLayoutSection() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
             heightDimension: .fractionalHeight(1.0)
         )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-//        item.contentInsets = itemContentInsets
 
 
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .estimated(108.0),
             heightDimension: .absolute(38.0)
         )
+
         let group = NSCollectionLayoutGroup.horizontal(
             layoutSize: groupSize,
             subitems: [item]
         )
-
+        
         let section = NSCollectionLayoutSection(group: group)
+        
         section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
         section.interGroupSpacing = 8
         section.contentInsets = sectionContentInsets
@@ -181,7 +186,7 @@ extension FeedFilterChipsCollectionViewController {
             }
 
             cell.filterOption = dataItem
-            cell.isFilterOptionActive = dataItem == self.activeFilterOption
+//            cell.isFilterOptionActive = dataItem == self.activeFilterOption
 
             return cell
         }
@@ -191,12 +196,17 @@ extension FeedFilterChipsCollectionViewController {
 
 // MARK: - Data Source Snapshot
 extension FeedFilterChipsCollectionViewController {
-
+    
+    var sortedContentFilterOptions: [CellDataItemType] {
+        Array(contentFilterOptions).sorted(by: { $0.displayOrder < $1.displayOrder })
+    }
+    
+    
     func makeSnapshotForCurrentState() -> DataSourceSnapshot {
         var snapshot = DataSourceSnapshot()
 
         snapshot.appendSections(CollectionViewSection.allCases)
-        snapshot.appendItems(contentFilterOptions, toSection: .all)
+        snapshot.appendItems(sortedContentFilterOptions, toSection: .all)
 
         return snapshot
     }

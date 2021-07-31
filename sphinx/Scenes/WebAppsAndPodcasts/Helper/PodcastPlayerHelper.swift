@@ -150,14 +150,6 @@ class PodcastPlayerHelper {
         chat?.savePodcastFeed(json: json)
         self.chat = chat
         
-//        var podcastFeed = PodcastFeed()
-//        podcastFeed.chatId = chat?.id
-//        podcastFeed.id = json["id"].intValue
-//        podcastFeed.title = json["title"].stringValue
-//        podcastFeed.description = json["description"].stringValue
-//        podcastFeed.author = json["author"].stringValue
-//        podcastFeed.image = json["image"].stringValue
-        
         var podcastFeed = PodcastFeed(
             chatId: chat?.id,
             id: json["id"].intValue,
@@ -181,14 +173,6 @@ class PodcastPlayerHelper {
             
             episode.downloaded = DownloadService.sharedInstance.isEpisodeDownloaded(episode)
 
-//            let episode = PodcastEpisode()
-//            episode.id = e["id"].intValue
-//            episode.title = e["title"].stringValue
-//            episode.description = e["description"].stringValue
-//            episode.image = e["image"].stringValue
-//            episode.link = e["link"].stringValue
-//            episode.url = e["enclosureUrl"].stringValue
-//            episode.downloaded = DownloadService.sharedInstance.isEpisodeDownloaded(episode)
             episodes.append(episode)
         }
         

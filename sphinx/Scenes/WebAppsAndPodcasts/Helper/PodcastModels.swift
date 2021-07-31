@@ -97,7 +97,6 @@ class PodcastEpisode {
 }
 
 
-
 extension PodcastEpisode: Hashable {
     
     static func == (lhs: PodcastEpisode, rhs: PodcastEpisode) -> Bool {
@@ -107,7 +106,6 @@ extension PodcastEpisode: Hashable {
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
-//        id.hash(into: &hasher)
     }
 }
 

@@ -27,8 +27,11 @@
                 </subviews>
                 <color key="backgroundColor" name="DashboardFilterChipBackground"/>
                 <constraints>
+                    <constraint firstAttribute="leading" secondItem="HIs-Dr-pOt" secondAttribute="leading" id="FNp-cR-SOF"/>
                     <constraint firstItem="TYW-cx-2jA" firstAttribute="centerX" secondItem="HIs-Dr-pOt" secondAttribute="centerX" id="O38-5X-HyH"/>
                     <constraint firstItem="TYW-cx-2jA" firstAttribute="centerY" secondItem="HIs-Dr-pOt" secondAttribute="centerY" id="cZ9-ib-nil"/>
+                    <constraint firstAttribute="top" secondItem="HIs-Dr-pOt" secondAttribute="top" id="u43-ON-B2y"/>
+                    <constraint firstAttribute="top" secondItem="HIs-Dr-pOt" secondAttribute="top" id="ulP-ty-nyT"/>
                 </constraints>
             </collectionViewCellContentView>
             <connections>

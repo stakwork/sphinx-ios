@@ -17,15 +17,6 @@ class FeedFilterChipCollectionViewCell: UICollectionViewCell {
             }
         }
     }
-    
-    var isFilterOptionActive: Bool = false {
-        didSet {
-            DispatchQueue.main.async { [weak self] in
-                self?.updateViewsFromActiveState()
-            }
-        }
-    }
-    
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -44,18 +35,39 @@ class FeedFilterChipCollectionViewCell: UICollectionViewCell {
         ) / 2.0
     }
     
+    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
+        let targetSize = CGSize(width: layoutAttributes.frame.width, height: 0)
+        let modifiedAttributes = super.preferredLayoutAttributesFitting(layoutAttributes)
+        
+        modifiedAttributes.frame.size = contentView
+            .systemLayoutSizeFitting(
+                targetSize, withHorizontalFittingPriority: .defaultLow,
+                verticalFittingPriority: .required
+            )
+        
+        return modifiedAttributes
+    }
+    
     
     private func updateViewsWithItem() {
         filterLabel.text = filterOption.titleForDisplay
+        
+        contentView.backgroundColor = filterOption.isActive ?
+            .Sphinx.BodyInverted
+            : .Sphinx.DashboardFilterChipBackground
+        
+        filterLabel.textColor = filterOption.isActive ?
+            .Sphinx.DashboardFilterChipActiveText
+            : .Sphinx.BodyInverted
     }
     
     
     private func updateViewsFromActiveState() {
-        contentView.backgroundColor = isFilterOptionActive ?
+        contentView.backgroundColor = filterOption.isActive ?
             .Sphinx.BodyInverted
             : .Sphinx.DashboardFilterChipBackground
         
-        filterLabel.textColor = isFilterOptionActive ?
+        filterLabel.textColor = filterOption.isActive ?
             .Sphinx.DashboardFilterChipActiveText
             : .Sphinx.BodyInverted
     }

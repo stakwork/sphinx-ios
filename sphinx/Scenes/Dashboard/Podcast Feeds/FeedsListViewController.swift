@@ -83,7 +83,7 @@ class FeedsListViewController: UIViewController {
     private var feedContentCollectionViewController: FeedContentCollectionViewController!
     
     
-    var contentFilterOptions: [ContentFilterOption] = []
+    var contentFilterOptions: Set<ContentFilterOption> = .init(ContentFilterOption.allCases)
     var latestPodcastEpisodes: [PodcastEpisode] = []
     var subscribedPodcastFeeds: [PodcastFeed] = []
     
@@ -109,14 +109,12 @@ class FeedsListViewController: UIViewController {
 extension FeedsListViewController {
     
     private func loadData() {
-        contentFilterOptions = getContentFilterOptions()
         latestPodcastEpisodes = getLatestPodcastEpisodes()
         subscribedPodcastFeeds = getSubscribedPodcastFeeds()
     }
     
-    // TODO: These should probably be strongly-typed and dynamically generated in some way.
     private func getContentFilterOptions() -> [ContentFilterOption] {
-        ContentFilterOption.allCases
+        Array(ContentFilterOption.allCases)
     }
     
     
@@ -131,14 +129,17 @@ extension FeedsListViewController {
 
     
     private func handleFilterChipCellSelection(_ filterOption: ContentFilterOption) {
-        AlertHelper.showAlert(
-            title: "Selected Filter Option",
-            message: filterOption.titleForDisplay
-        )
+        var updatedOption = filterOption
+        updatedOption.isActive.toggle()
         
-        filterChipCollectionViewController.activeFilterOption = filterOption
+        var newOptions = Set(ContentFilterOption.allCases)
+        newOptions.remove(filterOption)
+        newOptions.insert(updatedOption)
+        
+        filterChipCollectionViewController.contentFilterOptions = newOptions
         filterChipCollectionViewController.updateSnapshot()
     }
+    
     
     private func handleLatestEpisodeCellSelection(_ podcastEpisode: PodcastEpisode) {
         AlertHelper.showAlert(
@@ -159,7 +160,6 @@ extension FeedsListViewController {
         filterChipCollectionViewController = FeedFilterChipsCollectionViewController
             .instantiate(
                 contentFilterOptions: contentFilterOptions,
-                activeFilterOption: contentFilterOptions[1],
                 onCellSelected: handleFilterChipCellSelection(_:)
             )
         
@@ -189,34 +189,48 @@ extension FeedsListViewController {
 
 
 extension FeedsListViewController {
-    enum ContentFilterOption {
-        case all
-        case listen
-        case watch
-        case read
-        case play
+    struct ContentFilterOption {
+        let id = UUID()
+        
+        var titleForDisplay: String
+        var isActive: Bool = false
+        var displayOrder: Int
+        
+        static var all: Self = .init(
+            titleForDisplay: "dashboard.feeds.filters.all".localized,
+            displayOrder: 1
+        )
+        static var listen: Self = .init(
+            titleForDisplay: "dashboard.feeds.filters.listen".localized,
+            displayOrder: 2
+        )
+        static var watch: Self = .init(
+            titleForDisplay: "dashboard.feeds.filters.watch".localized,
+            displayOrder: 3
+        )
+        static var read: Self = .init(
+            titleForDisplay: "dashboard.feeds.filters.read".localized,
+            displayOrder: 4
+        )
+        static var play: Self = .init(
+            titleForDisplay: "dashboard.feeds.filters.play".localized,
+            displayOrder: 5
+        )
     }
 }
 
 
-extension FeedsListViewController.ContentFilterOption {
-    
-    var titleForDisplay: String {
-        switch self {
-        case .all:
-            return "dashboard.feeds.filters.all".localized
-        case .listen:
-            return "dashboard.feeds.filters.listen".localized
-        case .watch:
-            return "dashboard.feeds.filters.watch".localized
-        case .read:
-            return "dashboard.feeds.filters.read".localized
-        case .play:
-            return "dashboard.feeds.filters.play".localized
-        }
+extension FeedsListViewController.ContentFilterOption: CaseIterable {
+    static var allCases: [Self] {
+        [
+        .all,
+        .listen,
+        .watch,
+        .read,
+        .play,
+        ]
     }
 }
 
-
-extension FeedsListViewController.ContentFilterOption: CaseIterable {}
 extension FeedsListViewController.ContentFilterOption: Hashable {}
+extension FeedsListViewController.ContentFilterOption: Identifiable {}

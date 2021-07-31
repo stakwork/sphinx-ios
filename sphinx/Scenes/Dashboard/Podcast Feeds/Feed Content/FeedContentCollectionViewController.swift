@@ -28,7 +28,7 @@ extension FeedContentCollectionViewController {
     static func instantiate(
         latestPodcastEpisodes: [PodcastEpisode] = [],
         subscribedPodcastFeeds: [PodcastFeed] = [],
-                interSectionSpacing: CGFloat = 20.0,
+        interSectionSpacing: CGFloat = 20.0,
         onPodcastEpisodeCellSelected: @escaping ((PodcastEpisode) -> Void) = { _ in },
         onPodcastFeedCellSelected: @escaping ((PodcastFeed) -> Void) = { _ in }
     ) -> FeedContentCollectionViewController {
@@ -36,7 +36,7 @@ extension FeedContentCollectionViewController {
 
         viewController.latestPodcastEpisodes = latestPodcastEpisodes
         viewController.subscribedPodcastFeeds = subscribedPodcastFeeds
-        viewController.interSectionSpacing =         interSectionSpacing
+        viewController.interSectionSpacing = interSectionSpacing
         viewController.onPodcastEpisodeCellSelected = onPodcastEpisodeCellSelected
         viewController.onPodcastFeedCellSelected = onPodcastFeedCellSelected
         
@@ -124,6 +124,7 @@ extension FeedContentCollectionViewController {
 
 
         let section = NSCollectionLayoutSection(group: group)
+
         section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
         section.boundarySupplementaryItems = [makeSectionHeader()]
 
@@ -211,14 +212,14 @@ extension FeedContentCollectionViewController {
     func makeCellProvider(
         for collectionView: UICollectionView
     ) -> DataSource.CellProvider {
-        { (collectionView, indexPath, dataItem) -> UICollectionViewCell in
+        { (collectionView, indexPath, dataItem) -> UICollectionViewCell? in
             guard
                 let cell = collectionView.dequeueReusableCell(
                     withReuseIdentifier: CollectionViewCell.reuseID,
                     for: indexPath
                 ) as? CollectionViewCell
             else {
-                preconditionFailure()
+                return nil
             }
             
             switch dataItem {
@@ -236,9 +237,15 @@ extension FeedContentCollectionViewController {
     func makeSupplementaryViewProvider(
         for collectionView: UICollectionView
     ) -> DataSource.SupplementaryViewProvider {
-        {
-            (collectionView: UICollectionView, kind: String, indexPath: IndexPath)
-        -> UICollectionReusableView? in
+        { (
+            collectionView: UICollectionView,
+            kind: String,
+            indexPath: IndexPath
+        ) -> UICollectionReusableView? in
+            guard let section = CollectionViewSection(rawValue: indexPath.section) else {
+                return nil
+            }
+            
             switch kind {
             case UICollectionView.elementKindSectionHeader:
                 guard let headerView = collectionView.dequeueReusableSupplementaryView(
@@ -246,18 +253,14 @@ extension FeedContentCollectionViewController {
                     withReuseIdentifier: ReusableHeaderView.reuseID,
                     for: indexPath
                 ) as? ReusableHeaderView else {
-                    preconditionFailure()
+                    return nil
                 }
                 
-                guard let section = CollectionViewSection(rawValue: indexPath.section) else {
-                    preconditionFailure("Unknown section index: \(indexPath.section)")
-                }
-
                 headerView.render(withTitle: section.titleForDisplay)
 
                 return headerView
             default:
-                return UICollectionReusableView()
+                return nil
             }
         }
     }

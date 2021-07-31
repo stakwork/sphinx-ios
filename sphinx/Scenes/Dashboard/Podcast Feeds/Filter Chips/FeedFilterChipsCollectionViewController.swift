@@ -11,6 +11,7 @@ class FeedFilterChipsCollectionViewController: UICollectionViewController {
     private var dataSource: DataSource!
     
     private let itemContentInsets = NSDirectionalEdgeInsets.zero
+    private let itemHeight = 38.0
 }
 
 
@@ -66,13 +67,12 @@ extension FeedFilterChipsCollectionViewController {
 
     var sectionContentInsets: NSDirectionalEdgeInsets {
         let containerHeight = view.frame.height
+        let totalSpace = containerHeight - itemHeight
         
         return .init(
-//            top: containerHeight / 4,
-            top: 0,
+            top: totalSpace / 4,
             leading: 10,
-//            bottom: containerHeight / 4,
-            bottom: 0,
+            bottom: totalSpace / 4,
             trailing: 10
         )
     }
@@ -88,7 +88,7 @@ extension FeedFilterChipsCollectionViewController {
 
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .estimated(108.0),
-            heightDimension: .absolute(38.0)
+            heightDimension: .absolute(itemHeight)
         )
 
         let group = NSCollectionLayoutGroup.horizontal(
@@ -186,7 +186,6 @@ extension FeedFilterChipsCollectionViewController {
             }
 
             cell.filterOption = dataItem
-//            cell.isFilterOptionActive = dataItem == self.activeFilterOption
 
             return cell
         }

@@ -14,7 +14,7 @@ private let samplePodcastFeeds: [PodcastFeed] = [
         title: "Sample Podcast 1",
         description: "Sample Podcast 1 Description",
         author: "Satoshi Nakamoto",
-        image: "cashAppIcon",
+        image: "appPinIcon",
         model: nil,
         episodes: [],
         destinations: []
@@ -36,7 +36,7 @@ private let samplePodcastFeeds: [PodcastFeed] = [
         title: "Sample Podcast 3",
         description: "Sample Podcast 3 Description",
         author: "Satoshi Nakamoto",
-        image: "cashAppIcon",
+        image: "whiteIcon",
         model: nil,
         episodes: [],
         destinations: []
@@ -59,7 +59,7 @@ private let samplePodcastEpisodes: [PodcastEpisode] = [
         title: "Sample Episode 2",
         description: "Sample Episode 2 Description",
         url: "",
-        image: "cashAppIcon",
+        image: "appPinIcon",
         link: "",
         downloaded: false
     ),
@@ -68,7 +68,7 @@ private let samplePodcastEpisodes: [PodcastEpisode] = [
         title: "Sample Episode 3",
         description: "Sample Episode 3 Description",
         url: "",
-        image: "cashAppIcon",
+        image: "welcomeLogo",
         link: "",
         downloaded: false
     ),
@@ -83,7 +83,8 @@ class FeedsListViewController: UIViewController {
     private var feedContentCollectionViewController: FeedContentCollectionViewController!
     
     
-    var contentFilterOptions: Set<ContentFilterOption> = .init(ContentFilterOption.allCases)
+    var contentFilterOptions: [ContentFilterOption] = []
+    var activeFilterOption: ContentFilterOption = .allContent
     var latestPodcastEpisodes: [PodcastEpisode] = []
     var subscribedPodcastFeeds: [PodcastFeed] = []
     
@@ -109,12 +110,24 @@ class FeedsListViewController: UIViewController {
 extension FeedsListViewController {
     
     private func loadData() {
+        contentFilterOptions = getContentFilterOptions()
         latestPodcastEpisodes = getLatestPodcastEpisodes()
         subscribedPodcastFeeds = getSubscribedPodcastFeeds()
     }
     
+    
     private func getContentFilterOptions() -> [ContentFilterOption] {
-        Array(ContentFilterOption.allCases)
+        ContentFilterOption
+            .allCases
+            .map {
+                var startingOption = $0
+                
+                if startingOption.id == activeFilterOption.id {
+                    startingOption.isActive = true
+                }
+                
+                return startingOption
+            }
     }
     
     
@@ -128,13 +141,17 @@ extension FeedsListViewController {
     }
 
     
-    private func handleFilterChipCellSelection(_ filterOption: ContentFilterOption) {
+    private func handleFilterChipActivation(
+        _ filterOption: ContentFilterOption
+    ) {
         var updatedOption = filterOption
-        updatedOption.isActive.toggle()
-        
-        var newOptions = Set(ContentFilterOption.allCases)
-        newOptions.remove(filterOption)
-        newOptions.insert(updatedOption)
+        updatedOption.isActive = true
+        activeFilterOption = updatedOption
+
+        let newOptions = ContentFilterOption
+            .allCases
+            .filter { $0.id != activeFilterOption.id }
+            + [activeFilterOption]
         
         filterChipCollectionViewController.contentFilterOptions = newOptions
         filterChipCollectionViewController.updateSnapshot()
@@ -159,8 +176,8 @@ extension FeedsListViewController {
     private func configureFilterChipCollectionView() {
         filterChipCollectionViewController = FeedFilterChipsCollectionViewController
             .instantiate(
-                contentFilterOptions: contentFilterOptions,
-                onCellSelected: handleFilterChipCellSelection(_:)
+                contentFilterOptions: Array(contentFilterOptions),
+                onCellSelected: handleFilterChipActivation(_:)
             )
         
         
@@ -186,51 +203,3 @@ extension FeedsListViewController {
         )
     }
 }
-
-
-extension FeedsListViewController {
-    struct ContentFilterOption {
-        let id = UUID()
-        
-        var titleForDisplay: String
-        var isActive: Bool = false
-        var displayOrder: Int
-        
-        static var all: Self = .init(
-            titleForDisplay: "dashboard.feeds.filters.all".localized,
-            displayOrder: 1
-        )
-        static var listen: Self = .init(
-            titleForDisplay: "dashboard.feeds.filters.listen".localized,
-            displayOrder: 2
-        )
-        static var watch: Self = .init(
-            titleForDisplay: "dashboard.feeds.filters.watch".localized,
-            displayOrder: 3
-        )
-        static var read: Self = .init(
-            titleForDisplay: "dashboard.feeds.filters.read".localized,
-            displayOrder: 4
-        )
-        static var play: Self = .init(
-            titleForDisplay: "dashboard.feeds.filters.play".localized,
-            displayOrder: 5
-        )
-    }
-}
-
-
-extension FeedsListViewController.ContentFilterOption: CaseIterable {
-    static var allCases: [Self] {
-        [
-        .all,
-        .listen,
-        .watch,
-        .read,
-        .play,
-        ]
-    }
-}
-
-extension FeedsListViewController.ContentFilterOption: Hashable {}
-extension FeedsListViewController.ContentFilterOption: Identifiable {}

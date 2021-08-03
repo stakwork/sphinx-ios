@@ -1,9 +1,11 @@
 import UIKit
 
 
-class FeedFilterChipsCollectionViewController: UICollectionViewController {
 
-    var contentFilterOptions: Set<CellDataItemType>!
+class FeedFilterChipsCollectionViewController: UICollectionViewController {
+    typealias ContentFilterOption = FeedsListViewController.ContentFilterOption
+    
+    var contentFilterOptions: [ContentFilterOption]!
     var onCellSelected: ((CellDataItemType) -> Void)!
     
 
@@ -19,7 +21,7 @@ class FeedFilterChipsCollectionViewController: UICollectionViewController {
 extension FeedFilterChipsCollectionViewController {
 
     static func instantiate(
-        contentFilterOptions: Set<CellDataItemType>,
+        contentFilterOptions: [CellDataItemType],
         onCellSelected: @escaping ((CellDataItemType) -> Void)  = { _ in }
     ) -> FeedFilterChipsCollectionViewController {
         let viewController = StoryboardScene.Dashboard.feedFilterChipsCollectionViewController.instantiate()
@@ -39,7 +41,7 @@ extension FeedFilterChipsCollectionViewController {
     }
 
     typealias CollectionViewCell = FeedFilterChipCollectionViewCell
-    typealias CellDataItemType = FeedsListViewController.ContentFilterOption
+    typealias CellDataItemType = ContentFilterOption
     typealias DataSource = UICollectionViewDiffableDataSource<CollectionViewSection, CellDataItemType>
     typealias DataSourceSnapshot = NSDiffableDataSourceSnapshot<CollectionViewSection, CellDataItemType>
 }
@@ -197,7 +199,7 @@ extension FeedFilterChipsCollectionViewController {
 extension FeedFilterChipsCollectionViewController {
     
     var sortedContentFilterOptions: [CellDataItemType] {
-        Array(contentFilterOptions).sorted(by: { $0.displayOrder < $1.displayOrder })
+        contentFilterOptions.sorted(by: { $0.displayOrder < $1.displayOrder })
     }
     
     

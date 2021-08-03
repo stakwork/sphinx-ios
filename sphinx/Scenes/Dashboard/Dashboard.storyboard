@@ -197,7 +197,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hwZ-I8-IJL" userLabel="Feed Content Collection View Container">
-                                <rect key="frame" x="0.0" y="70" width="414" height="826"/>
+                                <rect key="frame" x="0.0" y="60" width="414" height="836"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                         </subviews>
@@ -208,7 +208,7 @@
                             <constraint firstAttribute="trailing" secondItem="uch-ef-QEI" secondAttribute="trailing" id="JQo-3y-eJ0"/>
                             <constraint firstItem="uch-ef-QEI" firstAttribute="top" secondItem="XKi-k6-l8l" secondAttribute="top" id="LEy-IU-cng"/>
                             <constraint firstAttribute="bottom" secondItem="hwZ-I8-IJL" secondAttribute="bottom" id="OeK-DB-JwB"/>
-                            <constraint firstItem="hwZ-I8-IJL" firstAttribute="top" secondItem="uch-ef-QEI" secondAttribute="bottom" constant="10" id="SaV-S8-dfI"/>
+                            <constraint firstItem="hwZ-I8-IJL" firstAttribute="top" secondItem="uch-ef-QEI" secondAttribute="bottom" id="SaV-S8-dfI"/>
                             <constraint firstItem="hwZ-I8-IJL" firstAttribute="leading" secondItem="XKi-k6-l8l" secondAttribute="leading" id="ZVQ-eT-xbl"/>
                             <constraint firstItem="uch-ef-QEI" firstAttribute="leading" secondItem="XKi-k6-l8l" secondAttribute="leading" id="vbS-Dv-mch"/>
                         </constraints>
@@ -230,7 +230,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" name="DashboardHeader"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="eWa-VJ-OOo">
+                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="eWa-VJ-OOo">
                             <size key="itemSize" width="128" height="128"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -254,12 +254,12 @@
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="owa-fC-ffZ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="ListBG"/>
                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="GhL-Cj-xhy">
                             <size key="itemSize" width="128" height="128"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="10" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells/>
                         <connections>
@@ -340,6 +340,9 @@
         </namedColor>
         <namedColor name="DashboardSearch">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="ListBG">
+            <color red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="MainBottomIcons">
             <color red="0.37254901960784315" green="0.38823529411764707" blue="0.40784313725490196" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

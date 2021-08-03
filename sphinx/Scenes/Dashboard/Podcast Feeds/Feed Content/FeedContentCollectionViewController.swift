@@ -14,7 +14,7 @@ class FeedContentCollectionViewController: UICollectionViewController {
     private var dataSource: DataSource!
     
     private let itemContentInsets = NSDirectionalEdgeInsets(
-        top: 10,
+        top: 0,
         leading: 10,
         bottom: 0,
         trailing: 10
@@ -28,7 +28,7 @@ extension FeedContentCollectionViewController {
     static func instantiate(
         latestPodcastEpisodes: [PodcastEpisode] = [],
         subscribedPodcastFeeds: [PodcastFeed] = [],
-        interSectionSpacing: CGFloat = 20.0,
+        interSectionSpacing: CGFloat = 10.0,
         onPodcastEpisodeCellSelected: @escaping ((PodcastEpisode) -> Void) = { _ in },
         onPodcastFeedCellSelected: @escaping ((PodcastFeed) -> Void) = { _ in }
     ) -> FeedContentCollectionViewController {
@@ -81,8 +81,6 @@ extension FeedContentCollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        collectionView.collectionViewLayout = makeLayout()
-
         registerViews(for: collectionView)
         configure(collectionView)
         configureDataSource(for: collectionView)
@@ -127,6 +125,7 @@ extension FeedContentCollectionViewController {
 
         section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
         section.boundarySupplementaryItems = [makeSectionHeader()]
+//        section.contentInsets = .init(top: 21, leading: 0, bottom: 21, trailing: 0)
 
         return section
     }
@@ -173,9 +172,12 @@ extension FeedContentCollectionViewController {
 
 
     func configure(_ collectionView: UICollectionView) {
+        collectionView.collectionViewLayout = makeLayout()
+        
+        collectionView.backgroundColor = .Sphinx.ListBG
         collectionView.alwaysBounceVertical = true
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.backgroundColor = .clear
+        collectionView.contentInset = .init(top: 20, left: 0, bottom: 0, right: 0)
         collectionView.delegate = self
     }
 }

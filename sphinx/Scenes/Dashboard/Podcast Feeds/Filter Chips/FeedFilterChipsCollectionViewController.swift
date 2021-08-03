@@ -54,9 +54,6 @@ extension FeedFilterChipsCollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        collectionView.collectionViewLayout = makeLayout()
-        collectionView.backgroundColor = .Sphinx.DashboardHeader
-        
         registerViews(for: collectionView)
         configure(collectionView)
         configureDataSource(for: collectionView)
@@ -140,8 +137,10 @@ extension FeedFilterChipsCollectionViewController {
 
 
     func configure(_ collectionView: UICollectionView) {
-        collectionView.alwaysBounceVertical = true
-        collectionView.showsVerticalScrollIndicator = false
+        collectionView.collectionViewLayout = makeLayout()
+        
+        collectionView.backgroundColor = .Sphinx.DashboardHeader
+        collectionView.isScrollEnabled = false
         collectionView.delegate = self
     }
 }

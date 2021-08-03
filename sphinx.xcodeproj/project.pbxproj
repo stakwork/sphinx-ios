@@ -564,6 +564,7 @@
 		F3D86DC026B14E5E00EB9711 /* PodcastFeedCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F3D86DBF26B14E5E00EB9711 /* PodcastFeedCollectionViewCell.xib */; };
 		F3D86DC226B157D400EB9711 /* PodcastFeedCollectionViewSectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = F3D86DC126B157D400EB9711 /* PodcastFeedCollectionViewSectionHeader.xib */; };
 		F3D86DC426B157F600EB9711 /* PodcastFeedCollectionViewSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D86DC326B157F600EB9711 /* PodcastFeedCollectionViewSectionHeader.swift */; };
+		F3DFB78A26B87C0C00E76FBD /* FeedsListViewController+ContentFilterOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3DFB78926B87C0B00E76FBD /* FeedsListViewController+ContentFilterOption.swift */; };
 		F3EF52C526B2823700F06668 /* FeedFilterChipsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3EF52C426B2823700F06668 /* FeedFilterChipsCollectionViewController.swift */; };
 		F3EF52C726B28DBE00F06668 /* FeedContentCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3EF52C626B28DBD00F06668 /* FeedContentCollectionViewController.swift */; };
 /* End PBXBuildFile section */
@@ -1259,6 +1260,7 @@
 		F3D86DBF26B14E5E00EB9711 /* PodcastFeedCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PodcastFeedCollectionViewCell.xib; sourceTree = "<group>"; };
 		F3D86DC126B157D400EB9711 /* PodcastFeedCollectionViewSectionHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PodcastFeedCollectionViewSectionHeader.xib; sourceTree = "<group>"; };
 		F3D86DC326B157F600EB9711 /* PodcastFeedCollectionViewSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastFeedCollectionViewSectionHeader.swift; sourceTree = "<group>"; };
+		F3DFB78926B87C0B00E76FBD /* FeedsListViewController+ContentFilterOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedsListViewController+ContentFilterOption.swift"; sourceTree = "<group>"; };
 		F3EF52C426B2823700F06668 /* FeedFilterChipsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedFilterChipsCollectionViewController.swift; sourceTree = "<group>"; };
 		F3EF52C626B28DBD00F06668 /* FeedContentCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedContentCollectionViewController.swift; sourceTree = "<group>"; };
 		FDF1E0A8EFE1D98BD5A99505 /* Pods-sphinx.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sphinx.release.xcconfig"; path = "Target Support Files/Pods-sphinx/Pods-sphinx.release.xcconfig"; sourceTree = "<group>"; };
@@ -2889,6 +2891,7 @@
 			isa = PBXGroup;
 			children = (
 				F373BF0226A9CEDD0093C886 /* FeedsListViewController.swift */,
+				F3DFB78926B87C0B00E76FBD /* FeedsListViewController+ContentFilterOption.swift */,
 				F3D86DBA26B106C000EB9711 /* Feed Content */,
 				F3CE637D26AFF856006E37A0 /* Filter Chips */,
 			);
@@ -3309,6 +3312,7 @@
 				47308E0424FEE6E600FFAC6F /* SocketParsable.swift in Sources */,
 				475723A5247EB5D1001ADC7E /* AudioRecorderHelper.swift in Sources */,
 				47822C6D2449EEEE0011D832 /* PaidMessageReceivedTableViewCell.swift in Sources */,
+				F3DFB78A26B87C0C00E76FBD /* FeedsListViewController+ContentFilterOption.swift in Sources */,
 				47935FBE24A1070800B39ADB /* StakworkAuthorizeViewController.swift in Sources */,
 				4787F86D247410C500CCE8B9 /* JoinGroupDetailsViewController.swift in Sources */,
 				47A79D3824424D19005CD72F /* UITableViewCell.swift in Sources */,

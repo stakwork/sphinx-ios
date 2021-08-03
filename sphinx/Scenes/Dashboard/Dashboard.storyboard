@@ -34,7 +34,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yxo-is-Yxg" userLabel="Search Bar Container">
-                                <rect key="frame" x="0.0" y="154" width="414" height="64"/>
+                                <rect key="frame" x="0.0" y="142" width="414" height="64"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="52N-Az-4on">
                                         <rect key="frame" x="6" y="10" width="402" height="44"/>
@@ -78,14 +78,14 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="875-dS-sJM" customClass="CustomSegmentedControl" customModule="sphinx" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="94" width="414" height="60"/>
+                                <rect key="frame" x="0.0" y="94" width="414" height="48"/>
                                 <color key="backgroundColor" name="DashboardHeader"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="6E0-rD-gcM"/>
+                                    <constraint firstAttribute="height" constant="48" id="6E0-rD-gcM"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wUN-0d-ubm" userLabel="Main Content Container View">
-                                <rect key="frame" x="0.0" y="218" width="414" height="586"/>
+                                <rect key="frame" x="0.0" y="206" width="414" height="598"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U1o-Ky-NBS" userLabel="Bottom Bar Container">

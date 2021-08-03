@@ -21,11 +21,19 @@ class CustomSegmentedControl: UIView {
     private var buttons: [UIButton]!
     private var selectorView: UIView!
     
-    var buttonTextColor: UIColor = .Sphinx.DashboardWashedOutText
+
     var buttonBackgroundColor: UIColor = .clear
-    var selectorViewColor: UIColor = .Sphinx.PrimaryBlue
+    var buttonTextColor: UIColor = .Sphinx.DashboardWashedOutText
     var activeTextColor: UIColor = .white
+    var buttonTitleFont = UIFont(
+        name: "Roboto-Medium",
+        size: UIDevice.current.isIpad ? 20.0 : 16.0
+    )!
     
+    var selectorViewColor: UIColor = .Sphinx.PrimaryBlue
+    var selectorWidthRatio: CGFloat = 0.8
+    
+
     weak var delegate: CustomSegmentedControlDelegate?
     
     public private(set) var selectedIndex: Int = 0
@@ -65,12 +73,8 @@ class CustomSegmentedControl: UIView {
         let button = buttons[newIndex]
         button.setTitleColor(activeTextColor, for: .normal)
 
-        let selectorPosition = (
-            frame.width / CGFloat(buttonTitles.count)
-        ) * CGFloat(newIndex)
-        
         UIView.animate(withDuration: 0.2) {
-            self.selectorView.frame.origin.x = selectorPosition
+            self.selectorView.frame.origin.x = self.selectorPosition
         }
     }
     
@@ -82,14 +86,10 @@ class CustomSegmentedControl: UIView {
             if button == sender {
                 selectedIndex = buttonIndex
                 
-                let selectorPosition = (
-                    frame.width / CGFloat(buttonTitles.count)
-                ) * CGFloat(buttonIndex)
-                
                 delegate?.segmentedControlDidSwitch(self, to: selectedIndex)
                 
                 UIView.animate(withDuration: 0.3) {
-                    self.selectorView.frame.origin.x = selectorPosition
+                    self.selectorView.frame.origin.x = self.selectorPosition
                 }
                 
                 button.setTitleColor(activeTextColor, for: .normal)
@@ -125,12 +125,36 @@ extension CustomSegmentedControl {
     }
     
     
-    private func configureSelectorView() {
-        let selectorWidth = frame.width / CGFloat(self.buttonTitles.count)
+    var selectorWidth: CGFloat {
+        (
+            frame.width / CGFloat(self.buttonTitles.count)
+        ) * selectorWidthRatio
+    }
+    
+    
+    var selectorPosition: CGFloat {
+        let selectedTabStartX = (
+            frame.width / CGFloat(buttonTitles.count)
+        ) * CGFloat(selectedIndex)
+
+        let offset = (
+            selectorWidth * (1.0 - selectorWidthRatio)
+        ) * 0.5
         
+        return selectedTabStartX + offset
+    }
+    
+    
+    private func configureSelectorView() {
         selectorView = UIView(
-            frame: CGRect(x: 0, y: self.frame.height, width: selectorWidth, height: 2)
+            frame: CGRect(
+                x: selectorPosition,
+                y: self.frame.height,
+                width: selectorWidth,
+                height: 2
+            )
         )
+        
         selectorView.backgroundColor = selectorViewColor
 
         addSubview(selectorView)
@@ -147,13 +171,15 @@ extension CustomSegmentedControl {
             let button = UIButton(type: .system)
             
             button.setTitle(buttonTitle, for: .normal)
+            button.setTitleColor(buttonTextColor, for: .normal)
+            button.titleLabel?.font = buttonTitleFont
+            
             button.addTarget(
                 self,
                 action: #selector(CustomSegmentedControl.buttonAction(sender:)),
                 for: .touchUpInside
             )
             
-            button.setTitleColor(buttonTextColor, for: .normal)
             buttons.append(button)
         }
         

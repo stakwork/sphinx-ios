@@ -31,21 +31,21 @@ class CustomSegmentedControl: UIView {
     )!
     
     var selectorViewColor: UIColor = .Sphinx.PrimaryBlue
-    var selectorWidthRatio: CGFloat = 0.8
+    var selectorWidthRatio: CGFloat = 0.667
     
 
     weak var delegate: CustomSegmentedControlDelegate?
     
-    public private(set) var selectedIndex: Int = 0
+    private(set) var selectedIndex: Int = 0
     
     
     convenience init(
         frame: CGRect,
-        buttonTitle: [String]
+        buttonTitles: [String]
     ) {
         self.init(frame: frame)
         
-        self.buttonTitles = buttonTitle
+        self.buttonTitles = buttonTitles
     }
     
     
@@ -138,7 +138,8 @@ extension CustomSegmentedControl {
         ) * CGFloat(selectedIndex)
 
         let offset = (
-            selectorWidth * (1.0 - selectorWidthRatio)
+            frame.width / CGFloat(self.buttonTitles.count)
+            - selectorWidth
         ) * 0.5
         
         return selectedTabStartX + offset

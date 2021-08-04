@@ -22,9 +22,9 @@ class CustomSegmentedControl: UIView {
     private var selectorView: UIView!
     
 
-    var buttonBackgroundColor: UIColor = .clear
+    var buttonBackgroundColor: UIColor = .Sphinx.DashboardHeader
     var buttonTextColor: UIColor = .Sphinx.DashboardWashedOutText
-    var activeTextColor: UIColor = .white
+    var activeTextColor: UIColor = .Sphinx.PrimaryText
     var buttonTitleFont = UIFont(
         name: "Roboto-Medium",
         size: UIDevice.current.isIpad ? 20.0 : 16.0

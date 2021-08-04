@@ -2,6 +2,7 @@ import UIKit
 
 
 class FeedContentCollectionViewController: UICollectionViewController {
+    
     var latestPodcastEpisodes: [PodcastEpisode]!
     var subscribedPodcastFeeds: [PodcastFeed]!
     var interSectionSpacing: CGFloat!

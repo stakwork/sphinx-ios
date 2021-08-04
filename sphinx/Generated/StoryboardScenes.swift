@@ -61,9 +61,15 @@ internal enum StoryboardScene {
         )
         
         
-        internal static let friendsListViewController = SceneType<FriendsListViewController>(
+        internal static let contactChatsContainerViewController = SceneType<ContactChatsContainerViewController>(
             storyboard: Dashboard.self,
-            identifier: "FriendsListViewController"
+            identifier: "ContactChatsContainerViewController"
+        )
+        
+        
+        internal static let contactChatsCollectionViewController = SceneType<ContactChatsListViewController>(
+            storyboard: Dashboard.self,
+            identifier: "ContactChatsCollectionViewController"
         )
         
         

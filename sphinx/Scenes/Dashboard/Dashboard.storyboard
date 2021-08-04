@@ -40,13 +40,13 @@
                                         <rect key="frame" x="6" y="10" width="402" height="44"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lwz-zX-pkx">
-                                                <rect key="frame" x="10" y="11.5" width="21" height="21"/>
+                                                <rect key="frame" x="10" y="10" width="24.5" height="24.5"/>
                                                 <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="21"/>
                                                 <color key="textColor" name="PlaceholderText"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ef7-It-4Rs">
-                                                <rect key="frame" x="41" y="0.0" width="361" height="44"/>
+                                                <rect key="frame" x="44.5" y="0.0" width="357.5" height="44"/>
                                                 <color key="textColor" name="Text"/>
                                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
@@ -181,6 +181,24 @@
             </objects>
             <point key="canvasLocation" x="-1650" y="1149"/>
         </scene>
+        <!--Contact Chats Container View Controller-->
+        <scene sceneID="qKk-C4-9MQ">
+            <objects>
+                <viewController storyboardIdentifier="ContactChatsContainerViewController" id="Nnq-TE-Byc" customClass="ContactChatsContainerViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="aa3-I2-cdN">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="D5f-b5-Sze"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <connections>
+                        <outlet property="contactChatsListContainerView" destination="aa3-I2-cdN" id="YKW-5N-C6w"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JVv-FI-3jd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1660" y="1890"/>
+        </scene>
         <!--Feeds List View Controller-->
         <scene sceneID="mR6-dD-8wi">
             <objects>
@@ -220,7 +238,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="N05-mx-jox" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2420" y="1945"/>
+            <point key="canvasLocation" x="-3635" y="1945"/>
         </scene>
         <!--Feed Filter Chips Collection View Controller-->
         <scene sceneID="tKT-jp-7IA">
@@ -245,7 +263,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Icu-n7-UUo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3255" y="2703"/>
+            <point key="canvasLocation" x="-4122" y="2642"/>
         </scene>
         <!--Feed Content Collection View Controller-->
         <scene sceneID="Ycq-O7-bTT">
@@ -270,34 +288,62 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IeO-rD-8pI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2283" y="2702"/>
+            <point key="canvasLocation" x="-3151" y="2641"/>
         </scene>
-        <!--Friends List View Controller-->
-        <scene sceneID="Qrr-QA-DV0">
+        <!--Contact Chats List View Controller-->
+        <scene sceneID="2fZ-Ti-QgD">
             <objects>
-                <viewController storyboardIdentifier="FriendsListViewController" id="iwe-lR-Voe" customClass="FriendsListViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="ZQK-pj-sVz">
+                <collectionViewController storyboardIdentifier="ContactChatsCollectionViewController" id="8l3-PI-ySH" customClass="ContactChatsListViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="Q15-Ve-1KU">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="8Ft-Ue-2TN">
+                            <size key="itemSize" width="128" height="128"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells/>
+                        <connections>
+                            <outlet property="dataSource" destination="8l3-PI-ySH" id="x6N-f7-pQr"/>
+                            <outlet property="delegate" destination="8l3-PI-ySH" id="rhG-Wr-6fQ"/>
+                        </connections>
+                    </collectionView>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pav-qX-VgU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1651" y="2679"/>
+        </scene>
+        <!--Contact Chats List View Controller-->
+        <scene sceneID="uk9-tV-NXv">
+            <objects>
+                <viewController storyboardIdentifier="ContactChatsListViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="UPh-RM-i7f" customClass="ContactChatsListViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="eh6-e4-IEm">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Friends List" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Vw-h1-yfa">
-                                <rect key="frame" x="163" y="437.5" width="88" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="H26-5T-76S">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="JO6-v1-fUW"/>
-                        <color key="backgroundColor" name="DashboardMainContentBG"/>
+                        <viewLayoutGuide key="safeArea" id="MJa-M7-DWZ"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="9Vw-h1-yfa" firstAttribute="centerX" secondItem="ZQK-pj-sVz" secondAttribute="centerX" id="AtD-0c-ajL"/>
-                            <constraint firstItem="9Vw-h1-yfa" firstAttribute="centerY" secondItem="ZQK-pj-sVz" secondAttribute="centerY" id="e3Q-Wn-ST2"/>
+                            <constraint firstItem="H26-5T-76S" firstAttribute="leading" secondItem="MJa-M7-DWZ" secondAttribute="leading" id="KQN-5M-orO"/>
+                            <constraint firstItem="MJa-M7-DWZ" firstAttribute="trailing" secondItem="H26-5T-76S" secondAttribute="trailing" id="gfL-Qo-Qba"/>
+                            <constraint firstItem="H26-5T-76S" firstAttribute="top" secondItem="MJa-M7-DWZ" secondAttribute="top" id="m8x-wd-33U"/>
+                            <constraint firstItem="MJa-M7-DWZ" firstAttribute="bottom" secondItem="H26-5T-76S" secondAttribute="bottom" id="pSw-o1-7Zu"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="tableView" destination="H26-5T-76S" id="aa2-4G-d4j"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="cEv-WR-PP6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YFK-ah-Ss2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1651" y="1945"/>
+            <point key="canvasLocation" x="-1651" y="3507"/>
         </scene>
         <!--Tribes List View Controller-->
         <scene sceneID="F0L-4Z-eFf">
@@ -324,7 +370,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xRF-7K-F3k" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-752" y="1945"/>
+            <point key="canvasLocation" x="109" y="1945"/>
         </scene>
     </scenes>
     <resources>

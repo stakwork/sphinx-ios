@@ -1,0 +1,260 @@
+import UIKit
+
+
+class ContactChatsListViewController: UICollectionViewController {
+
+    var chats: [Chat] = []
+    var interSectionSpacing: CGFloat = 20.0
+
+
+    private var currentDataSnapshot: DataSourceSnapshot!
+    private var dataSource: DataSource!
+
+    private let itemContentInsets = NSDirectionalEdgeInsets(
+        top: 0,
+        leading: 10,
+        bottom: 0,
+        trailing: 10
+    )
+}
+
+
+// MARK: - Instantiation
+extension ContactChatsListViewController {
+
+    static func instantiate(
+        chats: [Chat] = [],
+        interSectionSpacing: CGFloat = 20.0
+    ) -> ContactChatsListViewController {
+        let viewController = StoryboardScene.Dashboard.contactChatsCollectionViewController.instantiate()
+        
+        viewController.chats = chats
+        viewController.interSectionSpacing = interSectionSpacing
+
+        return viewController
+    }
+}
+
+
+// MARK: - Layout & Data Structure
+extension ContactChatsListViewController {
+    enum CollectionViewSection: Int, CaseIterable {
+        case all
+    }
+
+    typealias CollectionViewCell = ContactChatListCollectionViewCell
+    typealias CellDataItem = Chat
+    typealias DataSource = UICollectionViewDiffableDataSource<CollectionViewSection, CellDataItem>
+    typealias DataSourceSnapshot = NSDiffableDataSourceSnapshot<CollectionViewSection, CellDataItem>
+}
+
+
+// MARK: - Lifecycle
+extension ContactChatsListViewController {
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        registerViews(for: collectionView)
+        configure(collectionView)
+        configureDataSource(for: collectionView)
+    }
+}
+
+
+// MARK: - Event Handling
+private extension ContactChatsListViewController {
+}
+
+
+// MARK: - Navigation
+private extension ContactChatsListViewController {
+}
+
+
+
+// MARK: - Layout Composition
+extension ContactChatsListViewController {
+
+    func makeSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
+        let headerSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .estimated(80)
+        )
+
+        return NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerSize,
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top
+        )
+    }
+
+
+    func makeListSection() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .fractionalHeight(1)
+        )
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        item.contentInsets = itemContentInsets
+
+
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .absolute(90)
+        )
+        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
+
+
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .none
+//        section.boundarySupplementaryItems = [makeSectionHeader()]
+
+        return section
+    }
+
+
+    func makeSectionProvider() -> UICollectionViewCompositionalLayoutSectionProvider {
+        { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
+            switch CollectionViewSection(rawValue: sectionIndex) {
+            case .all:
+                return self.makeListSection()
+            case nil:
+                return nil
+            }
+        }
+    }
+
+
+    func makeLayout() -> UICollectionViewLayout {
+        let layoutConfiguration = UICollectionViewCompositionalLayoutConfiguration()
+
+        layoutConfiguration.interSectionSpacing = interSectionSpacing
+
+        let layout = UICollectionViewCompositionalLayout(
+            sectionProvider: makeSectionProvider()
+        )
+
+        layout.configuration = layoutConfiguration
+
+        return layout
+    }
+}
+
+
+// MARK: - Collection View Configuration and View Registration
+extension ContactChatsListViewController {
+
+    func registerViews(for collectionView: UICollectionView) {
+        collectionView.register(
+            CollectionViewCell.nib,
+            forCellWithReuseIdentifier: CollectionViewCell.reuseID
+        )
+    }
+
+
+    func configure(_ collectionView: UICollectionView) {
+        collectionView.collectionViewLayout = makeLayout()
+
+        collectionView.alwaysBounceVertical = true
+        collectionView.showsVerticalScrollIndicator = true
+        collectionView.backgroundColor = .clear
+        
+        collectionView.delegate = self
+    }
+}
+
+
+
+// MARK: - Data Source Configuration
+extension ContactChatsListViewController {
+
+    func makeDataSource(for collectionView: UICollectionView) -> DataSource {
+        let dataSource = DataSource(
+            collectionView: collectionView,
+            cellProvider: makeCellProvider(for: collectionView)
+        )
+
+        dataSource.supplementaryViewProvider = makeSupplementaryViewProvider(for: collectionView)
+
+        return dataSource
+    }
+
+
+    func configureDataSource(for collectionView: UICollectionView) {
+        dataSource = makeDataSource(for: collectionView)
+
+        let snapshot = makeSnapshotForCurrentState()
+
+        dataSource.apply(snapshot, animatingDifferences: false)
+    }
+}
+
+
+// MARK: - Data Source View Providers
+extension ContactChatsListViewController {
+
+    func makeCellProvider(for collectionView: UICollectionView) -> DataSource.CellProvider {
+        { (collectionView, indexPath, chat) -> UICollectionViewCell? in
+            let section = CollectionViewSection.allCases[indexPath.section]
+
+            switch section {
+            case .all:
+                guard let cell = collectionView.dequeueReusableCell(
+                    withReuseIdentifier: CollectionViewCell.reuseID,
+                    for: indexPath
+                ) as? CollectionViewCell else { return nil }
+
+                cell.chat = chat
+
+                return cell
+            }
+        }
+    }
+
+
+    func makeSupplementaryViewProvider(for collectionView: UICollectionView) -> DataSource.SupplementaryViewProvider {
+        return {
+            (collectionView: UICollectionView, kind: String, indexPath: IndexPath)
+        -> UICollectionReusableView? in
+            switch kind {
+            case UICollectionView.elementKindSectionHeader:
+                return UICollectionReusableView()
+            default:
+                return UICollectionReusableView()
+            }
+        }
+    }
+}
+
+
+// MARK: - Data Source Snapshot
+extension ContactChatsListViewController {
+
+    func makeSnapshotForCurrentState() -> DataSourceSnapshot {
+        var snapshot = DataSourceSnapshot()
+
+        snapshot.appendSections(CollectionViewSection.allCases)
+        snapshot.appendItems(chats, toSection: .all)
+
+        return snapshot
+    }
+
+
+    func updateSnapshot(shouldAnimate: Bool = true) {
+        let snapshot = makeSnapshotForCurrentState()
+
+        dataSource.apply(snapshot, animatingDifferences: shouldAnimate)
+    }
+}
+
+
+// MARK: - Event Handling
+private extension ContactChatsListViewController {
+}
+
+
+// MARK: - Private Helpers
+private extension ContactChatsListViewController {
+}
+

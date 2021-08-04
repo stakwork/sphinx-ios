@@ -36,7 +36,7 @@ extension FeedFilterChipsCollectionViewController {
 
 // MARK: - Layout & Data Structure
 extension FeedFilterChipsCollectionViewController {
-    enum CollectionViewSection: CaseIterable {
+    enum CollectionViewSection: Int, CaseIterable {
         case all
     }
 

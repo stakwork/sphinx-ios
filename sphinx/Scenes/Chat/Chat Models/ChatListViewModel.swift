@@ -10,7 +10,7 @@ import SwiftyJSON
 
 final class ChatListViewModel: NSObject {
     
-    private var contactsService: ContactsService!
+    var contactsService: ContactsService!
     
     public static let kMessagesPerPage: Int = 200
     

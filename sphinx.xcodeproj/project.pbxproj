@@ -522,6 +522,8 @@
 		47FE9A3E23C381A20090913F /* UITapGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FE9A3D23C381A20090913F /* UITapGestureRecognizer.swift */; };
 		F30884A72699123600CADDEB /* LeftMenuViewController+KarmaPurchaseUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30884A62699123600CADDEB /* LeftMenuViewController+KarmaPurchaseUtils.swift */; };
 		F30884A92699181200CADDEB /* API+KarmaPurchaseUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30884A82699181200CADDEB /* API+KarmaPurchaseUtils.swift */; };
+		F313024626BA62B300A1396E /* ContactChatsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F313024526BA62B200A1396E /* ContactChatsListViewController.swift */; };
+		F313024826BA994B00A1396E /* ContactChatsContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F313024726BA994B00A1396E /* ContactChatsContainerViewController.swift */; };
 		F3197C0C267FA2C200330F79 /* connecting.gif in Resources */ = {isa = PBXBuildFile; fileRef = F3241A2F267CBB12007A6454 /* connecting.gif */; };
 		F3197C0D267FA2C800330F79 /* ellipse.gif in Resources */ = {isa = PBXBuildFile; fileRef = F3241A30267CBB12007A6454 /* ellipse.gif */; };
 		F3197C0E267FA2C800330F79 /* lightningNetwork.gif in Resources */ = {isa = PBXBuildFile; fileRef = F3241A31267CBB12007A6454 /* lightningNetwork.gif */; };
@@ -535,6 +537,10 @@
 		F33846E3267ACF6A0041F1EA /* InitialWelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33846E1267ACF6A0041F1EA /* InitialWelcomeViewController.swift */; };
 		F33846E7267B0FA00041F1EA /* Welcome.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F33846E9267B0FA00041F1EA /* Welcome.storyboard */; };
 		F33846EF267B15800041F1EA /* WelcomeCompleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33846EE267B15800041F1EA /* WelcomeCompleteViewController.swift */; };
+		F3446B9326BABAB400855516 /* ContactChatListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3446B9126BABAB400855516 /* ContactChatListCollectionViewCell.swift */; };
+		F3446B9426BABAB400855516 /* ContactChatListCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F3446B9226BABAB400855516 /* ContactChatListCollectionViewCell.xib */; };
+		F3446B9626BAC6F700855516 /* ContactChatListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3446B9526BAC6F700855516 /* ContactChatListTableViewCell.swift */; };
+		F3446B9826BAC73800855516 /* ContactChatListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F3446B9726BAC73800855516 /* ContactChatListTableViewCell.xib */; };
 		F34BFED7267B350D003F6D55 /* RestoreUserDescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34BFED6267B350D003F6D55 /* RestoreUserDescriptionViewController.swift */; };
 		F34BFED9267B3522003F6D55 /* RestoreUserFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34BFED8267B3522003F6D55 /* RestoreUserFormViewController.swift */; };
 		F34BFEDB267B3552003F6D55 /* RestoreUserConnectingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34BFEDA267B3552003F6D55 /* RestoreUserConnectingViewController.swift */; };
@@ -544,7 +550,6 @@
 		F373BEFF26A9CB790093C886 /* Dashboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F373BEFE26A9CB790093C886 /* Dashboard.storyboard */; };
 		F373BF0126A9CE1B0093C886 /* DashboardRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F373BF0026A9CE1B0093C886 /* DashboardRootViewController.swift */; };
 		F373BF0326A9CEDD0093C886 /* FeedsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F373BF0226A9CEDD0093C886 /* FeedsListViewController.swift */; };
-		F373BF0526A9CF180093C886 /* FriendsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F373BF0426A9CF180093C886 /* FriendsListViewController.swift */; };
 		F373BF0726A9CF220093C886 /* TribesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F373BF0626A9CF220093C886 /* TribesListViewController.swift */; };
 		F373BF0C26AAFB990093C886 /* CustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = F373BF0B26AAFB990093C886 /* CustomSegmentedControl.swift */; };
 		F394ECA12682064100529038 /* NewUserSignup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F394ECA32682064100529038 /* NewUserSignup.storyboard */; };
@@ -1213,6 +1218,8 @@
 		487E10CEB3D07B0840A84681 /* Pods_sphinx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_sphinx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F30884A62699123600CADDEB /* LeftMenuViewController+KarmaPurchaseUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LeftMenuViewController+KarmaPurchaseUtils.swift"; sourceTree = "<group>"; };
 		F30884A82699181200CADDEB /* API+KarmaPurchaseUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+KarmaPurchaseUtils.swift"; sourceTree = "<group>"; };
+		F313024526BA62B200A1396E /* ContactChatsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactChatsListViewController.swift; sourceTree = "<group>"; };
+		F313024726BA994B00A1396E /* ContactChatsContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactChatsContainerViewController.swift; sourceTree = "<group>"; };
 		F3197C102680F50300330F79 /* RestoreUserFormViewController+FormSubmissionUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RestoreUserFormViewController+FormSubmissionUtils.swift"; sourceTree = "<group>"; };
 		F3197C1226811DE400330F79 /* RestoreUserFormViewController+KeychainRestorationUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RestoreUserFormViewController+KeychainRestorationUtils.swift"; sourceTree = "<group>"; };
 		F31CF2652691489800AAB621 /* StoreKitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitService.swift; sourceTree = "<group>"; };
@@ -1228,6 +1235,10 @@
 		F33846EB267B0FBA0041F1EA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Welcome.strings; sourceTree = "<group>"; };
 		F33846ED267B0FBB0041F1EA /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Welcome.strings; sourceTree = "<group>"; };
 		F33846EE267B15800041F1EA /* WelcomeCompleteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeCompleteViewController.swift; sourceTree = "<group>"; };
+		F3446B9126BABAB400855516 /* ContactChatListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactChatListCollectionViewCell.swift; sourceTree = "<group>"; };
+		F3446B9226BABAB400855516 /* ContactChatListCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactChatListCollectionViewCell.xib; sourceTree = "<group>"; };
+		F3446B9526BAC6F700855516 /* ContactChatListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactChatListTableViewCell.swift; sourceTree = "<group>"; };
+		F3446B9726BAC73800855516 /* ContactChatListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactChatListTableViewCell.xib; sourceTree = "<group>"; };
 		F34BFED6267B350D003F6D55 /* RestoreUserDescriptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreUserDescriptionViewController.swift; sourceTree = "<group>"; };
 		F34BFED8267B3522003F6D55 /* RestoreUserFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreUserFormViewController.swift; sourceTree = "<group>"; };
 		F34BFEDA267B3552003F6D55 /* RestoreUserConnectingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreUserConnectingViewController.swift; sourceTree = "<group>"; };
@@ -1237,7 +1248,6 @@
 		F373BEFE26A9CB790093C886 /* Dashboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Dashboard.storyboard; sourceTree = "<group>"; };
 		F373BF0026A9CE1B0093C886 /* DashboardRootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardRootViewController.swift; sourceTree = "<group>"; };
 		F373BF0226A9CEDD0093C886 /* FeedsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedsListViewController.swift; sourceTree = "<group>"; };
-		F373BF0426A9CF180093C886 /* FriendsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsListViewController.swift; sourceTree = "<group>"; };
 		F373BF0626A9CF220093C886 /* TribesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TribesListViewController.swift; sourceTree = "<group>"; };
 		F373BF0B26AAFB990093C886 /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
 		F394ECA22682064100529038 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/NewUserSignup.storyboard; sourceTree = "<group>"; };
@@ -2807,6 +2817,19 @@
 			path = "Custom Views";
 			sourceTree = "<group>";
 		};
+		F313024426BA628D00A1396E /* Friends */ = {
+			isa = PBXGroup;
+			children = (
+				F313024526BA62B200A1396E /* ContactChatsListViewController.swift */,
+				F3446B9126BABAB400855516 /* ContactChatListCollectionViewCell.swift */,
+				F3446B9526BAC6F700855516 /* ContactChatListTableViewCell.swift */,
+				F3446B9726BAC73800855516 /* ContactChatListTableViewCell.xib */,
+				F3446B9226BABAB400855516 /* ContactChatListCollectionViewCell.xib */,
+				F313024726BA994B00A1396E /* ContactChatsContainerViewController.swift */,
+			);
+			path = Friends;
+			sourceTree = "<group>";
+		};
 		F3241A2E267CBB12007A6454 /* Gifs */ = {
 			isa = PBXGroup;
 			children = (
@@ -2856,7 +2879,7 @@
 				F373BEFE26A9CB790093C886 /* Dashboard.storyboard */,
 				F373BF0026A9CE1B0093C886 /* DashboardRootViewController.swift */,
 				F3CE637626AFC44C006E37A0 /* DashboardRootViewController+DelegateUtils.swift */,
-				F373BF0426A9CF180093C886 /* FriendsListViewController.swift */,
+				F313024426BA628D00A1396E /* Friends */,
 				F373BF0626A9CF220093C886 /* TribesListViewController.swift */,
 				F373BF0A26AAFB6B0093C886 /* Custom Segmented Control */,
 				F3CE637826AFD42C006E37A0 /* Podcast Feeds */,
@@ -2922,8 +2945,8 @@
 				F3EF52C626B28DBD00F06668 /* FeedContentCollectionViewController.swift */,
 				F3D86DBD26B109FD00EB9711 /* PodcastFeedCollectionViewCell.swift */,
 				F3D86DC326B157F600EB9711 /* PodcastFeedCollectionViewSectionHeader.swift */,
-				F3D86DC126B157D400EB9711 /* PodcastFeedCollectionViewSectionHeader.xib */,
 				F3D86DBF26B14E5E00EB9711 /* PodcastFeedCollectionViewCell.xib */,
+				F3D86DC126B157D400EB9711 /* PodcastFeedCollectionViewSectionHeader.xib */,
 			);
 			path = "Feed Content";
 			sourceTree = "<group>";
@@ -3071,6 +3094,7 @@
 				4785C10724D4A6A0004E2D6C /* AppSizeView.xib in Resources */,
 				4797E78724B8ED7700D13270 /* LoadingMoreTableViewCell.xib in Resources */,
 				4712BB4323D755EA00DDCC3B /* GroupAddMemberTableViewCell.xib in Resources */,
+				F3446B9826BAC73800855516 /* ContactChatListTableViewCell.xib in Resources */,
 				475BDD4B232AD00D00C5BBD6 /* Roboto-Bold.ttf in Resources */,
 				F394ECA12682064100529038 /* NewUserSignup.storyboard in Resources */,
 				475BDD4C232AD00D00C5BBD6 /* Roboto-Light.ttf in Resources */,
@@ -3149,6 +3173,7 @@
 				47904C0D24BF352300710E7A /* bells.caf in Resources */,
 				475BDD23232AC71000C5BBD6 /* Colors.xcassets in Resources */,
 				47183CB42548AA5100E6FD19 /* PodcastPlayerView.xib in Resources */,
+				F3446B9426BABAB400855516 /* ContactChatListCollectionViewCell.xib in Resources */,
 				F3197C0D267FA2C800330F79 /* ellipse.gif in Resources */,
 				F33119A0268E9C1B005082EB /* XcodeStoreKitConfiguration.storekit in Resources */,
 				4789E26224F04752003991BE /* SettingsTabsView.xib in Resources */,
@@ -3304,7 +3329,6 @@
 				476A10C023AABDE300817892 /* ChatListDelegatesExtension.swift in Sources */,
 				4703CF8C25190032007B685C /* FileBubbleView.swift in Sources */,
 				47F258C02539DA1600122A5A /* PodcastCommentReceivedTableViewCell.swift in Sources */,
-				F373BF0526A9CF180093C886 /* FriendsListViewController.swift in Sources */,
 				47468FEB233905AD0072124A /* NewContactViewController.swift in Sources */,
 				4707089624AE466D00A98DCA /* ChatChatListExtension.swift in Sources */,
 				477C57E5234545D700BB4E04 /* SetPinCodeViewController.swift in Sources */,
@@ -3388,6 +3412,7 @@
 				473BC88D25F287340070E519 /* PodcastNewEpisodeViewController.swift in Sources */,
 				47FA18C224253BDD00469C8F /* InvoiceManager.swift in Sources */,
 				47771C6E259B848300990467 /* GroupPinView.swift in Sources */,
+				F313024626BA62B300A1396E /* ContactChatsListViewController.swift in Sources */,
 				47468FD323314EE80072124A /* PinCodeViewController.swift in Sources */,
 				470DB25423FAE43400D29FA5 /* SphinxCache.swift in Sources */,
 				47393E682461F6F600E6F93E /* KeychainManager.swift in Sources */,
@@ -3399,6 +3424,7 @@
 				475BDCA5232AC1D600C5BBD6 /* TransactionMessageRow.swift in Sources */,
 				47AA08C7234BB8E0002C69E2 /* ShareInviteCodeViewController.swift in Sources */,
 				F31CF2662691489800AAB621 /* StoreKitService.swift in Sources */,
+				F313024826BA994B00A1396E /* ContactChatsContainerViewController.swift in Sources */,
 				475BDCFB232AC24600C5BBD6 /* PaidInvoiceReceivedTableViewCell.swift in Sources */,
 				4789E26E24F406F3003991BE /* RelayURLUpdateHelper.swift in Sources */,
 				475BDD5C232AE26E00C5BBD6 /* TransactionMessage+CoreDataClass.swift in Sources */,
@@ -3418,6 +3444,7 @@
 				47183CB22548AA4400E6FD19 /* PodcastPlayerView.swift in Sources */,
 				F34BFED7267B350D003F6D55 /* RestoreUserDescriptionViewController.swift in Sources */,
 				47FA440923749D0B005D8C63 /* SubscriptionFormTableHeaderView.swift in Sources */,
+				F3446B9626BAC6F700855516 /* ContactChatListTableViewCell.swift in Sources */,
 				47893A8B24095A30002F675B /* AudioSentTableViewCell.swift in Sources */,
 				47FA440223748EB6005D8C63 /* SubscriptionFormViewControllerExtensions.swift in Sources */,
 				478DCF982343D24D009A03D6 /* SetProfileImageViewController.swift in Sources */,
@@ -3484,6 +3511,7 @@
 				47AA08C3234B8CF2002C69E2 /* AddFriendViewController.swift in Sources */,
 				479608F4256EAEB400A68FC1 /* MessageBoostView.swift in Sources */,
 				475154B62423F08A00477384 /* VideoCallBubbleView.swift in Sources */,
+				F3446B9326BABAB400855516 /* ContactChatListCollectionViewCell.swift in Sources */,
 				475BDD34232ACC4800C5BBD6 /* UIView.swift in Sources */,
 				474A667D24929D45002C2D10 /* CommonReplyTableViewCell.swift in Sources */,
 				476EB47523C50662009745E2 /* GroupContactTableViewCell.swift in Sources */,

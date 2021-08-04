@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19150" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19134"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -144,13 +144,13 @@
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tomas A Timinskas" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="00q-f7-buW">
-                        <rect key="frame" x="75" y="20.5" width="146.5" height="20"/>
+                        <rect key="frame" x="75" y="20.5" width="150.5" height="20"/>
                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
                         <color key="textColor" name="PrimaryText"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="lock" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sxq-G5-8oi">
-                        <rect key="frame" x="223.5" y="24" width="28" height="13"/>
+                        <rect key="frame" x="227.5" y="24" width="15" height="13"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="13" id="DhP-7f-orS"/>
                         </constraints>
@@ -243,8 +243,8 @@
                     <constraint firstAttribute="trailing" secondItem="b7u-UJ-Ze0" secondAttribute="trailing" id="zD2-ZV-edf"/>
                 </constraints>
             </tableViewCellContentView>
-            <color key="backgroundColor" name="HeaderBG"/>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <color key="backgroundColor" name="HeaderBG"/>
             <connections>
                 <outlet property="badgeLabel" destination="xKt-LK-K9d" id="YQn-dE-qJC"/>
                 <outlet property="badgeView" destination="tmA-Cn-bCP" id="gnG-Ub-bmL"/>

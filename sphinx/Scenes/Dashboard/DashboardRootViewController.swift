@@ -36,8 +36,10 @@ class DashboardRootViewController: UIViewController {
         FeedsListViewController.instantiate()
     }()
     
-    internal lazy var friendsListViewController = {
-        FriendsListViewController.instantiate()
+    internal lazy var contactChatsContainerViewController = {
+        ContactChatsContainerViewController.instantiate(
+            viewModel: ChatListViewModel(contactsService: ContactsService())
+        )
     }()
     
     internal lazy var tribesListViewController = {
@@ -209,7 +211,7 @@ extension DashboardRootViewController {
         case .feed:
             return feedsListViewController
         case .friends:
-            return friendsListViewController
+            return contactChatsContainerViewController
         case .tribes:
             return tribesListViewController
         }

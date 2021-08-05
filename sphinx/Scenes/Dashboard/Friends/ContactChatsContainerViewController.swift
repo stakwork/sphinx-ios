@@ -36,6 +36,8 @@ private let sampleChats: [Chat] = {
         chat.contactIds = []
         chat.pendingContactIds = []
         
+        try? managedObjectContext.save()
+        
         return chat
     }
 }()

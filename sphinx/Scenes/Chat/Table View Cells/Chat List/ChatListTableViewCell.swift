@@ -140,10 +140,7 @@ class ChatListTableViewCell: UITableViewCell {
     }
     
     func makeImagesCircular(images: [UIView]) {
-        for image in images {
-            image.layer.cornerRadius = image.frame.size.width/2
-            image.clipsToBounds = true
-        }
+        images.forEach { $0.makeCircular() }
     }
     
     func resetPriceLayouts() {

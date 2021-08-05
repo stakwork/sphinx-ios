@@ -2,9 +2,8 @@ import UIKit
 
 
 class ContactChatsListViewController: UICollectionViewController {
-
     var chats: [Chat] = []
-    var interSectionSpacing: CGFloat = 20.0
+    var onChatSelected: ((Chat) -> Void)?
 
 
     private var currentDataSnapshot: DataSourceSnapshot!
@@ -12,9 +11,9 @@ class ContactChatsListViewController: UICollectionViewController {
 
     private let itemContentInsets = NSDirectionalEdgeInsets(
         top: 0,
-        leading: 10,
+        leading: 0,
         bottom: 0,
-        trailing: 10
+        trailing: 0
     )
 }
 
@@ -24,12 +23,12 @@ extension ContactChatsListViewController {
 
     static func instantiate(
         chats: [Chat] = [],
-        interSectionSpacing: CGFloat = 20.0
+        onChatSelected: ((Chat) -> Void)? = nil
     ) -> ContactChatsListViewController {
         let viewController = StoryboardScene.Dashboard.contactChatsCollectionViewController.instantiate()
         
         viewController.chats = chats
-        viewController.interSectionSpacing = interSectionSpacing
+        viewController.onChatSelected = onChatSelected
 
         return viewController
     }
@@ -108,7 +107,6 @@ extension ContactChatsListViewController {
 
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .none
-//        section.boundarySupplementaryItems = [makeSectionHeader()]
 
         return section
     }
@@ -128,8 +126,6 @@ extension ContactChatsListViewController {
 
     func makeLayout() -> UICollectionViewLayout {
         let layoutConfiguration = UICollectionViewCompositionalLayoutConfiguration()
-
-        layoutConfiguration.interSectionSpacing = interSectionSpacing
 
         let layout = UICollectionViewCompositionalLayout(
             sectionProvider: makeSectionProvider()
@@ -158,7 +154,7 @@ extension ContactChatsListViewController {
 
         collectionView.alwaysBounceVertical = true
         collectionView.showsVerticalScrollIndicator = true
-        collectionView.backgroundColor = .clear
+        collectionView.backgroundColor = .Sphinx.DashboardHeader
         
         collectionView.delegate = self
     }
@@ -258,3 +254,18 @@ private extension ContactChatsListViewController {
 private extension ContactChatsListViewController {
 }
 
+
+// MARK: - `UICollectionViewDelegate` Methods
+extension ContactChatsListViewController {
+    
+    override func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath
+    ) {
+        guard let chat = dataSource.itemIdentifier(for: indexPath) else {
+            return
+        }
+        
+        onChatSelected?(chat)
+    }
+}

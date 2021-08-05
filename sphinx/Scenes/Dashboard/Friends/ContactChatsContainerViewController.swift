@@ -2,31 +2,49 @@ import UIKit
 
 
 private let sampleChats: [Chat] = {
-   let managedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext
+    let managedObjectContext = CoreDataManager
+        .sharedManager
+        .persistentContainer
+        .viewContext
     
-    let chat1 = Chat(context: managedObjectContext)
-    let chat2 = Chat(context: managedObjectContext)
-    let chat3 = Chat(context: managedObjectContext)
-    let chat4 = Chat(context: managedObjectContext)
-    
-    
-    chat1.image = UIImage(named: "profile_avatar")!
-    chat1.name = "Contact 1"
-    
-    
-    return [
-        chat1,
-        chat1,
-        chat1,
-        chat1,
-    ]
+    return (1...4).map { sampleChatNumber in
+        var chat = Chat(context: managedObjectContext)
+        
+        chat.id = sampleChatNumber
+        chat.uuid = "Contact \(sampleChatNumber)"
+        chat.name = "Contact \(sampleChatNumber)"
+        chat.photoUrl = nil
+        chat.image = UIImage(named: "profile_avatar")!
+        chat.type = 1
+        chat.status = 1
+        chat.createdAt = Date()
+        chat.muted = false
+        chat.seen = Bool.random()
+        chat.host = nil
+        chat.groupKey = nil
+        chat.ownerPubkey = nil
+        chat.priceToJoin = nil
+        chat.pricePerMessage = nil
+        chat.escrowAmount = nil
+        chat.unlisted = false
+        chat.privateTribe = false
+        chat.myAlias = nil
+        chat.myPhotoUrl = nil
+        chat.webAppLastDate = nil
+        chat.pin = nil
+        chat.podcastFeed = nil
+        chat.contactIds = []
+        chat.pendingContactIds = []
+        
+        return chat
+    }
 }()
 
 
 
 class ContactChatsContainerViewController: UIViewController {
     @IBOutlet weak var contactChatsListContainerView: UIView!
-
+    
     var viewModel: ChatListViewModel!
     
     private var contactChatsListViewController: ContactChatsListViewController!
@@ -34,7 +52,7 @@ class ContactChatsContainerViewController: UIViewController {
     private let refreshControl = UIRefreshControl()
     private let socketManager = SphinxSocketManager.sharedInstance
     private let onionConnector = SphinxOnionConnector.sharedInstance
-
+    
     
     private var chatListObjectsArray = [ChatListCommonObject]() {
         didSet {
@@ -45,33 +63,33 @@ class ContactChatsContainerViewController: UIViewController {
                     .compactMap{ $0 as? UserContact }
                     .compactMap { $0.getConversation() }
                 
-//                self.contactChatsListViewController.chats = chats
+                //                self.contactChatsListViewController.chats = chats
                 self.contactChatsListViewController.chats = sampleChats
                 self.contactChatsListViewController.updateSnapshot()
             }
         }
     }
-
+    
     
     var isLoading = false {
         didSet {
-//            LoadingWheelHelper.toggleLoadingWheel(
-//                loading: isLoading || onionConnector.isConnecting(),
-//                loadingWheel: headerView.loadingWheel,
-//                loadingWheelColor: UIColor.white,
-//                views: [chatListTableView, bottomBarContainer, searchBarContainer]
-//            )
+            //            LoadingWheelHelper.toggleLoadingWheel(
+            //                loading: isLoading || onionConnector.isConnecting(),
+            //                loadingWheel: headerView.loadingWheel,
+            //                loadingWheelColor: UIColor.white,
+            //                views: [chatListTableView, bottomBarContainer, searchBarContainer]
+            //            )
         }
     }
     
     
     var loadingRefresh = false {
         didSet {
-//            LoadingWheelHelper.toggleLoadingWheel(
-//                loading: loadingRefresh || onionConnector.isConnecting(),
-//                loadingWheel: headerView.loadingWheel,
-//                loadingWheelColor: UIColor.white
-//            )
+            //            LoadingWheelHelper.toggleLoadingWheel(
+            //                loading: loadingRefresh || onionConnector.isConnecting(),
+            //                loadingWheel: headerView.loadingWheel,
+            //                loadingWheelColor: UIColor.white
+            //            )
         }
     }
 }
@@ -105,12 +123,12 @@ extension ContactChatsContainerViewController {
         configureContactChatsCollectionView()
         loadInitialData()
         
-//        chatListTableView.refreshControl = refreshControl
-//        refreshControl.addTarget(self, action: #selector(refreshOnPull(sender:)), for: .valueChanged)
+        //        chatListTableView.refreshControl = refreshControl
+        //        refreshControl.addTarget(self, action: #selector(refreshOnPull(sender:)), for: .valueChanged)
         
-//        searchTextField.delegate = self
+        //        searchTextField.delegate = self
         
-//        isLoading = true
+        //        isLoading = true
     }
 }
 
@@ -154,50 +172,50 @@ extension ContactChatsContainerViewController {
     }
     
     
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(animated)
-//
-//        if shouldReloadFriends {
-//            loading = true
-//            loadFriendAndReload()
-//        } else {
-//            initialLoad()
-//        }
-//    }
+    //    override func viewDidAppear(_ animated: Bool) {
+    //        super.viewDidAppear(animated)
+    //
+    //        if shouldReloadFriends {
+    //            loading = true
+    //            loadFriendAndReload()
+    //        } else {
+    //            initialLoad()
+    //        }
+    //    }
     
     
-//    func handleDeepLinksAndPush() {
-//        goToChat()
-//    }
+    //    func handleDeepLinksAndPush() {
+    //        goToChat()
+    //    }
     
     
     
-//    func goToChat() {
-//        if let chatId = UserDefaults.Keys.chatId.get(defaultValue: -1), let chat = Chat.getChatWith(id: chatId) {
-//            presentChatVC(object: chat, fromPush: true)
-//        }
-//        if let contactId = UserDefaults.Keys.contactId.get(defaultValue: -1), let contact = UserContact.getContactWith(id: contactId) {
-//            presentChatVC(object: contact, fromPush: true)
-//        }
-//        UserDefaults.Keys.contactId.removeValue()
-//        UserDefaults.Keys.chatId.removeValue()
-//    }
+    //    func goToChat() {
+    //        if let chatId = UserDefaults.Keys.chatId.get(defaultValue: -1), let chat = Chat.getChatWith(id: chatId) {
+    //            presentChatVC(object: chat, fromPush: true)
+    //        }
+    //        if let contactId = UserDefaults.Keys.contactId.get(defaultValue: -1), let contact = UserContact.getContactWith(id: contactId) {
+    //            presentChatVC(object: contact, fromPush: true)
+    //        }
+    //        UserDefaults.Keys.contactId.removeValue()
+    //        UserDefaults.Keys.chatId.removeValue()
+    //    }
     
     
-//    @objc func refreshOnPull(sender: UIRefreshControl) {
-//        loadFriendAndReload()
-//        loadingRefresh = false
-//    }
-//
+    //    @objc func refreshOnPull(sender: UIRefreshControl) {
+    //        loadFriendAndReload()
+    //        loadingRefresh = false
+    //    }
+    //
     
-//    func initialLoad(_ forceLastMessageReload: Bool = false) {
-//        chatListViewModel.updateContactsAndChats()
-//        chatListObjectsArray = contactsService.getChatListObjects(forceLastMessageReload)
-//        refreshControl.endRefreshing()
-//    }
-
+    //    func initialLoad(_ forceLastMessageReload: Bool = false) {
+    //        chatListViewModel.updateContactsAndChats()
+    //        chatListObjectsArray = contactsService.getChatListObjects(forceLastMessageReload)
+    //        refreshControl.endRefreshing()
+    //    }
+    
     func finishLoading() {
-//        newBubbleHelper.hideLoadingWheel()
+        //        newBubbleHelper.hideLoadingWheel()
         isLoading = false
     }
     
@@ -207,7 +225,7 @@ extension ContactChatsContainerViewController {
         
         viewModel.syncMessages(progressCallback: { message in
             self.isLoading = false
-//            self.newBubbleHelper.showLoadingWheel(text: message)
+            //            self.newBubbleHelper.showLoadingWheel(text: message)
         }) { (_,_, isRestoring) in
             self.updateContactsAndReload(forceLastMessageReload: isRestoring)
             self.finishLoading()
@@ -216,10 +234,10 @@ extension ContactChatsContainerViewController {
     
     
     func loadFriendsAndReloadMessages() {
-//        loadingRefresh = true
+        //        loadingRefresh = true
         
         viewModel.loadFriends() {
-//            self.userId = UserData.sharedInstance.getUserId()
+            //            self.userId = UserData.sharedInstance.getUserId()
             self.loadMessages()
         }
     }
@@ -262,11 +280,11 @@ extension ContactChatsContainerViewController: SocketManagerDelegate {
     }
     
     func didUpdateContact(contact: UserContact) {
-//        chatListDataSource?.updateContactAndReload(object: contact)
+        //        chatListDataSource?.updateContactAndReload(object: contact)
     }
     
     func didUpdateChat(chat: Chat) {
-//        chatListDataSource?.updateChatAndReload(object: chat)
+        //        chatListDataSource?.updateChatAndReload(object: chat)
     }
     
     func didReceiveOrUpdateGroup() {

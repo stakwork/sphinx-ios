@@ -55,7 +55,7 @@ class ContactChatListCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var lockSign: UILabel!
     @IBOutlet weak var signLabel: UILabel!
     @IBOutlet weak var muteImageView: UIImageView!
-    @IBOutlet weak var nameRightConstraint: NSLayoutConstraint!
+//    @IBOutlet weak var nameRightConstraint: NSLayoutConstraint!
     @IBOutlet weak var unreadMessageBadgeContainer: UIView!
     @IBOutlet weak var unreadMessageBadgeLabel: UILabel!
     
@@ -117,6 +117,7 @@ extension ContactChatListCollectionViewCell {
         }
         
         nameLabel.text = chat.getName()
+        muteImageView.isHidden = chat.isMuted() == false
         
         configureLastMessage(for: chat)
         configureBadgeView(with: chat)
@@ -127,13 +128,11 @@ extension ContactChatListCollectionViewCell {
     
     private func configureBadgeView(with chat: Chat) {
         guard hasUnreadMessages else {
-//            unreadMessageBadgeContainer.isHidden = true
             unreadMessageBadgeContainer.alpha = 0
             return
         }
         
         unreadMessageBadgeContainer.alpha = 1
-//        unreadMessageBadgeContainer.isHidden = false
         unreadMessageBadgeLabel.text = unreadMessageCount > 99 ? "99+" : "\(unreadMessageCount)"
         
         if chat.isMuted() {

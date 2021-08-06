@@ -72,12 +72,16 @@ internal enum StoryboardScene {
             identifier: "ContactChatsCollectionViewController"
         )
         
-        
-        internal static let tribesListViewController = SceneType<TribesListViewController>(
+        internal static let tribeChatsContainerViewController = SceneType<TribeChatsContainerViewController>(
             storyboard: Dashboard.self,
-            identifier: "TribesListViewController"
+            identifier: "TribeChatsContainerViewController"
         )
         
+        
+        internal static let tribeChatsListViewController = SceneType<TribeChatsListViewController>(
+            storyboard: Dashboard.self,
+            identifier: "TribeChatsListViewController"
+        )
         
         internal static let feedFilterChipsCollectionViewController = SceneType<FeedFilterChipsCollectionViewController>(
             storyboard: Dashboard.self,

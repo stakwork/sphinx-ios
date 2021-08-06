@@ -18,6 +18,18 @@ final class ChatListViewModel: NSObject {
         self.contactsService = contactsService
     }
     
+    
+    var allChats: [Chat] { contactsService.chats }
+    
+    var contactChats: [Chat] {
+        allChats.filter { $0.isConversation() }
+    }
+    
+    var tribeChats: [Chat] {
+        allChats.filter { $0.isPublicGroup() }
+    }
+    
+    
     func loadFriends(fromPush: Bool = false, completion: @escaping () -> ()) {
         if let contactsService = contactsService {
             API.sharedInstance.getContacts(fromPush: fromPush, callback: {(contacts, chats, subscriptions) -> () in

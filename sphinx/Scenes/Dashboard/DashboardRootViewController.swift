@@ -8,7 +8,7 @@
 import UIKit
 
 
-class DashboardRootViewController: UIViewController {
+class DashboardRootViewController: RootViewController {
     @IBOutlet weak var bottomBarContainer: UIView!
     @IBOutlet weak var headerView: ChatListHeader!
     @IBOutlet weak var searchBar: UIView!
@@ -31,19 +31,32 @@ class DashboardRootViewController: UIViewController {
     internal var rootViewController: RootViewController!
     internal weak var leftMenuDelegate: MenuDelegate?
 
+    internal let onionConnector = SphinxOnionConnector.sharedInstance
+    internal let socketManager = SphinxSocketManager.sharedInstance
+    internal let refreshControl = UIRefreshControl()
+
     
     internal lazy var feedsListViewController = {
         FeedsListViewController.instantiate()
     }()
     
-    internal lazy var contactChatsContainerViewController = {
+    
+    internal lazy var chatsListViewModel: ChatListViewModel = {
+        ChatListViewModel(contactsService: contactsService)
+    }()
+    
+    internal lazy var contactChatsContainerViewController: ContactChatsContainerViewController = {
         ContactChatsContainerViewController.instantiate(
-            viewModel: ChatListViewModel(contactsService: ContactsService())
+            chats: chatsListViewModel.contactChats,
+            chatSelectionDelegate: self
         )
     }()
     
-    internal lazy var tribesListViewController = {
-        TribesListViewController.instantiate()
+    internal lazy var tribeChatsContainerViewController: TribeChatsContainerViewController = {
+        TribeChatsContainerViewController.instantiate(
+            chats: chatsListViewModel.tribeChats,
+            chatSelectionDelegate: self
+        )
     }()
     
     
@@ -65,10 +78,6 @@ class DashboardRootViewController: UIViewController {
         }
     }
 
-
-    internal let onionConnecter = SphinxOnionConnector.sharedInstance
-
-    
     static func instantiate(
         rootViewController: RootViewController,
         leftMenuDelegate: MenuDelegate
@@ -85,7 +94,7 @@ class DashboardRootViewController: UIViewController {
     var isLoading = false {
         didSet {
             LoadingWheelHelper.toggleLoadingWheel(
-                loading: isLoading || onionConnecter.isConnecting(),
+                loading: isLoading || onionConnector.isConnecting(),
                 loadingWheel: headerView.loadingWheel,
                 loadingWheelColor: UIColor.white,
                 views: [
@@ -100,7 +109,6 @@ class DashboardRootViewController: UIViewController {
     
 
 // MARK: -  Lifecycle Methods
-
 extension DashboardRootViewController {
     
     override func viewDidLoad() {
@@ -117,9 +125,10 @@ extension DashboardRootViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        rootViewController.setStatusBarColor(light: true)
         configureHeader()
+        socketManager.setDelegate(delegate: self)
     }
+    
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -213,7 +222,7 @@ extension DashboardRootViewController {
         case .friends:
             return contactChatsContainerViewController
         case .tribes:
-            return tribesListViewController
+            return tribeChatsContainerViewController
         }
     }
     
@@ -249,6 +258,29 @@ extension DashboardRootViewController {
             isLoading = false
         }
     }
+    
+    
+    internal func loadContactsAndSyncMessages() {
+        chatsListViewModel.loadFriends() { [weak self] in
+            guard let self = self else { return }
+            
+            self.chatsListViewModel.syncMessages(progressCallback: { message in
+                self.isLoading = false
+                //            self.newBubbleHelper.showLoadingWheel(text: message)
+            }) { (_,_, isRestoring) in
+                if isRestoring {
+//                    self.viewModel.updateContactsAndChats()
+                }
+                self.finishLoading()
+            }
+        }
+    }
+    
+    
+    internal func finishLoading() {
+        //        newBubbleHelper.hideLoadingWheel()
+        isLoading = false
+    }
 
 }
 
@@ -270,5 +302,3 @@ extension DashboardRootViewController {
         case sendSats
     }
 }
-
-

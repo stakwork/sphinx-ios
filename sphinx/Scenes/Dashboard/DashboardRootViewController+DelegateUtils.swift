@@ -30,7 +30,7 @@ extension DashboardRootViewController: UITextFieldDelegate {
 
         // TODO: This is probably a good place to feed the current search string into
         // the ViewModel for the currently displayed VC. Or perform
-        // some update and feed the results of that to said ViewModel.
+        // some update and feed the results of that to said chatsListViewModel.
         
 //        chatListObjectsArray = contactsService.getObjectsWith(
 //            searchString: currentString
@@ -88,5 +88,49 @@ extension DashboardRootViewController: ChatListHeaderDelegate {
     
     func leftMenuButtonTouched() {
         leftMenuDelegate?.shouldOpenLeftMenu()
+    }
+}
+
+
+
+extension DashboardRootViewController: SocketManagerDelegate {
+    
+    func didReceiveMessage(message: TransactionMessage, shouldSync: Bool) {
+        if shouldSync {
+            loadContactsAndSyncMessages()
+        } else {
+            chatsListViewModel.updateContactsAndChats()
+        }
+    }
+    
+    
+    func didReceiveConfirmation(message: TransactionMessage) {
+        chatsListViewModel.updateContactsAndChats()
+    }
+    
+    func didReceivePurchaseUpdate(message: TransactionMessage) {
+        chatsListViewModel.updateContactsAndChats()
+    }
+    
+    
+    func didUpdateContact(contact: UserContact) {
+        if activeTab == .friends {
+            contactChatsContainerViewController.chats = chatsListViewModel.contactChats
+        } else if activeTab == .tribes {
+            tribeChatsContainerViewController.chats = chatsListViewModel.tribeChats
+        }
+    }
+    
+    func didUpdateChat(chat: Chat) {
+        if activeTab == .friends {
+            contactChatsContainerViewController.chats = chatsListViewModel.contactChats
+        } else if activeTab == .tribes {
+            tribeChatsContainerViewController.chats = chatsListViewModel.tribeChats
+        }
+    }
+    
+    
+    func didReceiveOrUpdateGroup() {
+        loadContactsAndSyncMessages()
     }
 }

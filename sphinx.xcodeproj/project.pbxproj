@@ -543,7 +543,7 @@
 		F34BFED9267B3522003F6D55 /* RestoreUserFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34BFED8267B3522003F6D55 /* RestoreUserFormViewController.swift */; };
 		F34BFEDB267B3552003F6D55 /* RestoreUserConnectingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34BFEDA267B3552003F6D55 /* RestoreUserConnectingViewController.swift */; };
 		F34BFEDF267B3C30003F6D55 /* RestoreUser.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F34BFEDE267B3C30003F6D55 /* RestoreUser.storyboard */; };
-		F3531C3D26BD505F00E9586C /* DashboardChatSelectionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3531C3C26BD505F00E9586C /* DashboardChatSelectionDelegate.swift */; };
+		F3531C3D26BD505F00E9586C /* DashboardChatsListDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3531C3C26BD505F00E9586C /* DashboardChatsListDelegate.swift */; };
 		F3531C3F26BD511300E9586C /* DashboardRootViewController+DashboardChatSelectionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3531C3E26BD511300E9586C /* DashboardRootViewController+DashboardChatSelectionDelegate.swift */; };
 		F3531C4326BD85FA00E9586C /* TribeChatsContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3531C4226BD85FA00E9586C /* TribeChatsContainerViewController.swift */; };
 		F3531C4526BD878E00E9586C /* TribeChatsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3531C4426BD878E00E9586C /* TribeChatsListViewController.swift */; };
@@ -1242,7 +1242,7 @@
 		F34BFED8267B3522003F6D55 /* RestoreUserFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreUserFormViewController.swift; sourceTree = "<group>"; };
 		F34BFEDA267B3552003F6D55 /* RestoreUserConnectingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreUserConnectingViewController.swift; sourceTree = "<group>"; };
 		F34BFEDE267B3C30003F6D55 /* RestoreUser.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RestoreUser.storyboard; sourceTree = "<group>"; };
-		F3531C3C26BD505F00E9586C /* DashboardChatSelectionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardChatSelectionDelegate.swift; sourceTree = "<group>"; };
+		F3531C3C26BD505F00E9586C /* DashboardChatsListDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardChatsListDelegate.swift; sourceTree = "<group>"; };
 		F3531C3E26BD511300E9586C /* DashboardRootViewController+DashboardChatSelectionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DashboardRootViewController+DashboardChatSelectionDelegate.swift"; sourceTree = "<group>"; };
 		F3531C4226BD85FA00E9586C /* TribeChatsContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TribeChatsContainerViewController.swift; sourceTree = "<group>"; };
 		F3531C4426BD878E00E9586C /* TribeChatsListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TribeChatsListViewController.swift; sourceTree = "<group>"; };
@@ -2886,7 +2886,7 @@
 			isa = PBXGroup;
 			children = (
 				F373BEFE26A9CB790093C886 /* Dashboard.storyboard */,
-				F3531C3C26BD505F00E9586C /* DashboardChatSelectionDelegate.swift */,
+				F3531C3C26BD505F00E9586C /* DashboardChatsListDelegate.swift */,
 				F373BF0026A9CE1B0093C886 /* DashboardRootViewController.swift */,
 				F3531C3E26BD511300E9586C /* DashboardRootViewController+DashboardChatSelectionDelegate.swift */,
 				F3CE637626AFC44C006E37A0 /* DashboardRootViewController+DelegateUtils.swift */,
@@ -3514,7 +3514,7 @@
 				473E5DE32575696C00697EEA /* PickerViewController.swift in Sources */,
 				4789E24A24EDB73B003991BE /* WebAppViewController.swift in Sources */,
 				F3D04027268BABFF00D54A94 /* InviteActionsHelper.swift in Sources */,
-				F3531C3D26BD505F00E9586C /* DashboardChatSelectionDelegate.swift in Sources */,
+				F3531C3D26BD505F00E9586C /* DashboardChatsListDelegate.swift in Sources */,
 				F3D04020268BAB7500D54A94 /* InviteWelcomeViewController.swift in Sources */,
 				475154B32423E7FE00477384 /* VideoCallSentTableViewCell.swift in Sources */,
 				475BDCBD232AC1F000C5BBD6 /* ChatListDataSource.swift in Sources */,

@@ -49,9 +49,7 @@ class ContactChatsContainerViewController: UIViewController {
     
     
     private var contactChatsListViewController: ContactChatsListViewController!
-    private weak var chatSelectionDelegate: DashboardChatSelectionDelegate?
-    
-    private let refreshControl = UIRefreshControl()
+    private weak var chatsListDelegate: DashboardChatsListDelegate?
     
     
     var chats: [Chat] = [] {
@@ -95,7 +93,7 @@ extension ContactChatsContainerViewController {
     
     static func instantiate(
         chats: [Chat] = [],
-        chatSelectionDelegate: DashboardChatSelectionDelegate
+        chatsListDelegate: DashboardChatsListDelegate
     ) -> ContactChatsContainerViewController {
         let viewController = StoryboardScene
             .Dashboard
@@ -103,7 +101,7 @@ extension ContactChatsContainerViewController {
             .instantiate()
         
         viewController.chats = chats
-        viewController.chatSelectionDelegate = chatSelectionDelegate
+        viewController.chatsListDelegate = chatsListDelegate
         
         return viewController
     }
@@ -126,7 +124,12 @@ extension ContactChatsContainerViewController {
 private extension ContactChatsContainerViewController {
     
     func handleChatSelection(_ chat: Chat) {
-        chatSelectionDelegate?.viewController(self, didSelectChat: chat)
+        chatsListDelegate?.viewController(self, didSelectChat: chat)
+    }
+    
+    
+    func handleChatsListRefresh(refreshControl: UIRefreshControl) {
+        chatsListDelegate?.viewControllerDidRefreshChats(self, using: refreshControl)
     }
 }
 
@@ -138,9 +141,9 @@ extension ContactChatsContainerViewController {
         contactChatsListViewController = ContactChatsListViewController
             .instantiate(
                 chats: chats,
-                onChatSelected: handleChatSelection(_:)
+                onChatSelected: handleChatSelection(_:),
+                onRefresh: handleChatsListRefresh(refreshControl:)
             )
-        
         
         addChildVC(
             child: contactChatsListViewController,

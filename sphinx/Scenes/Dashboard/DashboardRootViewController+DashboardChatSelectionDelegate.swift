@@ -2,9 +2,12 @@ import UIKit
 
 
 
-extension DashboardRootViewController: DashboardChatSelectionDelegate {
+extension DashboardRootViewController: DashboardChatsListDelegate {
     
-    func viewController(_ viewController: UIViewController, didSelectChat chat: Chat) {
+    func viewController(
+        _ viewController: UIViewController,
+        didSelectChat chat: Chat
+    ) {
 //        API.sharedInstance.cleanMessagesRequest()
 //
 //        if let contact = object as? UserContact, contact.isPending() {
@@ -28,30 +31,17 @@ extension DashboardRootViewController: DashboardChatSelectionDelegate {
         
         presentChatDetailsVC(chat: chat)
     }
-}
-
-
-
-extension DashboardRootViewController {
     
-    func presentChatDetailsVC(
-        chat: Chat,
-        animated: Bool = true,
-        fromPush: Bool = false
+    
+    func viewControllerDidRefreshChats(
+        _ viewController: UIViewController,
+        using refreshControl: UIRefreshControl
     ) {
-//        shouldReloadFriends = false
-        let contact = chat.getContact()
+        loadContactsAndSyncMessages()
+//        loadingRefresh = false
         
-        let chatVC = ChatViewController.instantiate(
-            contact: contact,
-            chat: chat,
-            preventFetching: !fromPush,
-            contactsService: contactsService,
-            rootViewController: rootViewController
-        )
-        
-        navigationController?.pushViewController(chatVC, animated: animated)
-        
-        resetSearchField()
+        refreshControl.endRefreshing()
     }
+    
+
 }

@@ -48,14 +48,14 @@ class DashboardRootViewController: RootViewController {
     internal lazy var contactChatsContainerViewController: ContactChatsContainerViewController = {
         ContactChatsContainerViewController.instantiate(
             chats: chatsListViewModel.contactChats,
-            chatSelectionDelegate: self
+            chatsListDelegate: self
         )
     }()
     
     internal lazy var tribeChatsContainerViewController: TribeChatsContainerViewController = {
         TribeChatsContainerViewController.instantiate(
             chats: chatsListViewModel.tribeChats,
-            chatSelectionDelegate: self
+            chatsListDelegate: self
         )
     }()
     
@@ -78,18 +78,6 @@ class DashboardRootViewController: RootViewController {
         }
     }
 
-    static func instantiate(
-        rootViewController: RootViewController,
-        leftMenuDelegate: MenuDelegate
-    ) -> DashboardRootViewController {
-        let viewController = StoryboardScene.Dashboard.dashboardRootViewController.instantiate()
-        
-        viewController.rootViewController = rootViewController
-        viewController.leftMenuDelegate = leftMenuDelegate
-        
-        return viewController
-    }
-    
     
     var isLoading = false {
         didSet {
@@ -107,6 +95,23 @@ class DashboardRootViewController: RootViewController {
     }
 }
     
+
+// MARK: - Instantiation
+extension DashboardRootViewController {
+
+    static func instantiate(
+        rootViewController: RootViewController,
+        leftMenuDelegate: MenuDelegate
+    ) -> DashboardRootViewController {
+        let viewController = StoryboardScene.Dashboard.dashboardRootViewController.instantiate()
+        
+        viewController.rootViewController = rootViewController
+        viewController.leftMenuDelegate = leftMenuDelegate
+        
+        return viewController
+    }
+}
+
 
 // MARK: -  Lifecycle Methods
 extension DashboardRootViewController {
@@ -282,6 +287,27 @@ extension DashboardRootViewController {
         isLoading = false
     }
 
+    
+    internal func presentChatDetailsVC(
+        chat: Chat,
+        animated: Bool = true,
+        fromPush: Bool = false
+    ) {
+//        shouldReloadFriends = false
+        let contact = chat.getContact()
+        
+        let chatVC = ChatViewController.instantiate(
+            contact: contact,
+            chat: chat,
+            preventFetching: !fromPush,
+            contactsService: contactsService,
+            rootViewController: rootViewController
+        )
+        
+        navigationController?.pushViewController(chatVC, animated: animated)
+        
+        resetSearchField()
+    }
 }
 
 

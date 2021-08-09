@@ -4,6 +4,7 @@ import UIKit
 class ContactChatsListViewController: UICollectionViewController {
     var chats: [Chat] = []
     var onChatSelected: ((Chat) -> Void)?
+    var onRefresh: ((UIRefreshControl) -> Void)?
 
 
     private var currentDataSnapshot: DataSourceSnapshot!
@@ -23,12 +24,14 @@ extension ContactChatsListViewController {
 
     static func instantiate(
         chats: [Chat] = [],
-        onChatSelected: ((Chat) -> Void)? = nil
+        onChatSelected: ((Chat) -> Void)? = nil,
+        onRefresh: ((UIRefreshControl) -> Void)? = nil
     ) -> ContactChatsListViewController {
         let viewController = StoryboardScene.Dashboard.contactChatsCollectionViewController.instantiate()
         
         viewController.chats = chats
         viewController.onChatSelected = onChatSelected
+        viewController.onRefresh = onRefresh
 
         return viewController
     }
@@ -63,6 +66,10 @@ extension ContactChatsListViewController {
 
 // MARK: - Event Handling
 private extension ContactChatsListViewController {
+    
+    @objc func handleRefreshOnPull(refreshControl: UIRefreshControl) {
+        onRefresh?(refreshControl)
+    }
 }
 
 
@@ -157,6 +164,13 @@ extension ContactChatsListViewController {
         collectionView.backgroundColor = .Sphinx.DashboardHeader
         
         collectionView.delegate = self
+        
+        collectionView.refreshControl = UIRefreshControl()
+        collectionView.refreshControl!.addTarget(
+            self,
+            action: #selector(handleRefreshOnPull(refreshControl:)),
+            for: .valueChanged
+        )
     }
 }
 

@@ -40,13 +40,13 @@
                                         <rect key="frame" x="6" y="10" width="402" height="44"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lwz-zX-pkx">
-                                                <rect key="frame" x="10" y="10" width="24.5" height="24.5"/>
+                                                <rect key="frame" x="10" y="11.5" width="21" height="21"/>
                                                 <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="21"/>
                                                 <color key="textColor" name="PlaceholderText"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ef7-It-4Rs">
-                                                <rect key="frame" x="44.5" y="0.0" width="357.5" height="44"/>
+                                                <rect key="frame" x="41" y="0.0" width="361" height="44"/>
                                                 <color key="textColor" name="Text"/>
                                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>

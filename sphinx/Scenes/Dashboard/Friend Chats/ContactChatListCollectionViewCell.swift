@@ -15,7 +15,7 @@ private let sampleLastMessage: TransactionMessage = {
     message.senderId = 1
     message.amount = 1
     message.amountMsat = 1
-    message.type = 1
+    message.type = TransactionMessage.TransactionMessageType.message.rawValue
     message.status = 1
     message.date = Date()
     message.expirationDate = nil
@@ -24,7 +24,7 @@ private let sampleLastMessage: TransactionMessage = {
     message.messageContent = "This is a sample last message that should ultimately be read dynamically."
     message.seen = false
     message.encrypted = true
-    message.senderAlias = nil
+    message.senderAlias = "<Sender>"
     message.senderPic = nil
     message.uuid = UUID().uuidString
     message.replyUUID = UUID().uuidString
@@ -36,7 +36,6 @@ private let sampleLastMessage: TransactionMessage = {
     message.mediaFileName = nil
     message.mediaFileSize = 1024
     message.muid = nil
-    
     
     return message
 }()
@@ -53,7 +52,6 @@ class ContactChatListCollectionViewCell: UICollectionViewCell {
     //    @IBOutlet weak var nameTopConstraint: NSLayoutConstraint!
     //    @IBOutlet weak var messageBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var lockSign: UILabel!
-    @IBOutlet weak var signLabel: UILabel!
     @IBOutlet weak var muteImageView: UIImageView!
 //    @IBOutlet weak var nameRightConstraint: NSLayoutConstraint!
     @IBOutlet weak var unreadMessageBadgeContainer: UIView!
@@ -118,6 +116,8 @@ extension ContactChatListCollectionViewCell {
         
         nameLabel.text = chat.getName()
         muteImageView.isHidden = chat.isMuted() == false
+//        lockSign.isHidden = chat.hasEncryptionKey() == false
+
         
         configureLastMessage(for: chat)
         configureBadgeView(with: chat)
@@ -171,11 +171,36 @@ extension ContactChatListCollectionViewCell {
     }
     
     
+//    func configureLastMessage(object: ChatListCommonObject) {
+//        if let lastMessage = object.lastMessage {
+//            messageLabel.isHidden = false
+//            dateLabel.isHidden = false
+//
+//            let newMessage = lastMessage.isNewUnseenMessage()
+//            messageLabel.font = newMessage ? Constants.kNewMessagePreviewFont : Constants.kMessagePreviewFont
+//            messageLabel.textColor = newMessage ? UIColor.Sphinx.TextMessages : UIColor.Sphinx.SecondaryText
+//
+//            messageLabel.text = lastMessage.getMessageDescription(dashboard: true)
+//            dateLabel.text = lastMessage.date.getLastMessageDateFormat()
+//            nameTopConstraint.constant = Constants.kChatListNamePosition
+//        } else {
+//            messageLabel.isHidden = true
+//            dateLabel.isHidden = true
+//            nameTopConstraint.constant = 0
+//        }
+//        messageLabel.adjustsFontSizeToFitWidth = false;
+//        messageLabel.lineBreakMode = NSLineBreakMode.byTruncatingTail
+//        messageBottomConstraint.constant = Constants.kChatListMessagePosition
+//
+//        nameLabel.superview?.layoutIfNeeded()
+//    }
+//
+    
     private func configureLastMessage(for chat: Chat) {
         let lastMessage = sampleLastMessage
         
         if true {
-            //        if let lastMessage = chat.lastMessage {
+//        if let lastMessage = chat.lastMessage {
             messageLabel.isHidden = false
             dateLabel.isHidden = false
             
@@ -192,11 +217,11 @@ extension ContactChatListCollectionViewCell {
             
             //            nameTopConstraint.constant = Constants.kChatListNamePosition
         } else {
-//            messageLabel.isHidden = true
-//            dateLabel.isHidden = true
+            messageLabel.isHidden = true
+            dateLabel.isHidden = true
             
-            messageLabel.alpha = 0
-            dateLabel.alpha = 0
+//            messageLabel.alpha = 0
+//            dateLabel.alpha = 0
             //            nameTopConstraint.constant = 0
         }
         

@@ -1,45 +1,5 @@
 import UIKit
 
-private let sampleLastMessage: TransactionMessage = {
-    let managedObjectContext = CoreDataManager
-        .sharedManager
-        .persistentContainer
-        .viewContext
-    
-    let message = TransactionMessage(context: managedObjectContext)
-    
-    message.id = -11
-    message.createdAt = Date()
-    message.updatedAt = Date()
-    message.receiverId = 1
-    message.senderId = 1
-    message.amount = 1
-    message.amountMsat = 1
-    message.type = TransactionMessage.TransactionMessageType.message.rawValue
-    message.status = 1
-    message.date = Date()
-    message.expirationDate = nil
-    message.paymentHash = "xxxxxxxx"
-    message.invoice = "xxxxxxxx"
-    message.messageContent = "This is a sample last message that should ultimately be read dynamically."
-    message.seen = false
-    message.encrypted = true
-    message.senderAlias = "<Sender>"
-    message.senderPic = nil
-    message.uuid = UUID().uuidString
-    message.replyUUID = UUID().uuidString
-    message.originalMuid = UUID().uuidString
-    message.chat = nil
-    message.mediaKey = nil
-    message.mediaType = nil
-    message.mediaToken = nil
-    message.mediaFileName = nil
-    message.mediaFileSize = 1024
-    message.muid = nil
-    
-    return message
-}()
-
 
 class ContactChatListCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var contactImageContainer: UIView!
@@ -77,7 +37,6 @@ extension ContactChatListCollectionViewCell {
     override func didMoveToSuperview() {
         super.didMoveToSuperview()
     }
-    
 }
 
 
@@ -122,14 +81,14 @@ extension ContactChatListCollectionViewCell {
         lockSign.isHidden = chat.hasEncryptionKey() == false
 
         
-        renderLastMessage(with: chat)
-        renderBadgeView(with: chat)
-        renderContactImageViews(with: chat)
+        renderLastMessage(for: chat)
+        renderBadgeView(for: chat)
+        renderContactImageViews(for: chat)
     }
     
     
     
-    private func renderBadgeView(with chat: Chat) {
+    private func renderBadgeView(for chat: Chat) {
         guard hasUnreadMessages else {
             unreadMessageBadgeContainer.alpha = 0
             return
@@ -150,7 +109,7 @@ extension ContactChatListCollectionViewCell {
     }
     
     
-    private func renderContactImageViews(with chat: Chat) {
+    private func renderContactImageViews(for chat: Chat) {
         if let image = chat.getImage() {
             contactInitialsLabel.isHidden = true
             contactImageView.isHidden = false
@@ -189,11 +148,12 @@ extension ContactChatListCollectionViewCell {
     }
     
     
-    private func renderLastMessage(with chat: Chat) {
-        let lastMessage = sampleLastMessage
-        
-        if true {
-//        if let lastMessage = chat.lastMessage {
+    private func renderLastMessage(for chat: Chat) {
+        if chat.lastMessage == nil {
+            chat.updateLastMessage()
+        }
+
+        if let lastMessage = chat.lastMessage {
             messageLabel.isHidden = false
             dateLabel.isHidden = false
             
@@ -212,10 +172,7 @@ extension ContactChatListCollectionViewCell {
             dateLabel.isHidden = true
         }
     }
-    
 }
-
-
 
 
 // MARK: - Static Properties

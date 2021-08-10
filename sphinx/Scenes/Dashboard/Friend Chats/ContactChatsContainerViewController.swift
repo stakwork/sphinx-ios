@@ -1,49 +1,6 @@
 import UIKit
 
 
-//private let sampleChats: [Chat] = {
-//    let managedObjectContext = CoreDataManager
-//        .sharedManager
-//        .persistentContainer
-//        .viewContext
-//
-//    return (1...4).map { sampleChatNumber in
-//        var chat = Chat(context: managedObjectContext)
-//
-//        chat.id = sampleChatNumber
-//        chat.uuid = "Contact \(sampleChatNumber)"
-//        chat.name = "Contact \(sampleChatNumber)"
-//        chat.photoUrl = nil
-//        chat.image = UIImage(named: "profile_avatar")!
-//        chat.type = 1
-//        chat.status = 1
-//        chat.createdAt = Date()
-//        chat.muted = Bool.random()
-//        chat.seen = Bool.random()
-//        chat.host = nil
-//        chat.groupKey = nil
-//        chat.ownerPubkey = nil
-//        chat.priceToJoin = nil
-//        chat.pricePerMessage = nil
-//        chat.escrowAmount = nil
-//        chat.unlisted = false
-//        chat.privateTribe = false
-//        chat.myAlias = nil
-//        chat.myPhotoUrl = nil
-//        chat.webAppLastDate = nil
-//        chat.pin = nil
-//        chat.podcastFeed = nil
-//        chat.contactIds = []
-//        chat.pendingContactIds = []
-//
-//        try? managedObjectContext.save()
-//
-//        return chat
-//    }
-//}()
-//
-
-
 class ContactChatsContainerViewController: UIViewController {
     @IBOutlet weak var contactChatsListContainerView: UIView!
     

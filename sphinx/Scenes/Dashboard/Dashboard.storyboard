@@ -147,14 +147,14 @@
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="fzQ-ek-GLy"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="HeaderBG"/>
                         <constraints>
                             <constraint firstItem="fzQ-ek-GLy" firstAttribute="trailing" secondItem="wUN-0d-ubm" secondAttribute="trailing" id="3Go-vy-318"/>
                             <constraint firstItem="U1o-Ky-NBS" firstAttribute="leading" secondItem="fzQ-ek-GLy" secondAttribute="leading" id="9aB-yQ-Uzr"/>
                             <constraint firstItem="U1o-Ky-NBS" firstAttribute="top" secondItem="wUN-0d-ubm" secondAttribute="bottom" id="B80-wB-M2Z"/>
                             <constraint firstItem="LVT-UQ-uni" firstAttribute="top" secondItem="fzQ-ek-GLy" secondAttribute="top" id="F9P-zV-KUc"/>
                             <constraint firstItem="fzQ-ek-GLy" firstAttribute="trailing" secondItem="U1o-Ky-NBS" secondAttribute="trailing" id="QYz-OZ-il3"/>
-                            <constraint firstItem="LVT-UQ-uni" firstAttribute="leading" secondItem="fzQ-ek-GLy" secondAttribute="leading" id="cya-Ci-DC6"/>
+                            <constraint firstItem="LVT-UQ-uni" firstAttribute="leading" secondItem="04F-3T-MXy" secondAttribute="leading" id="cya-Ci-DC6"/>
                             <constraint firstItem="875-dS-sJM" firstAttribute="top" secondItem="LVT-UQ-uni" secondAttribute="bottom" id="d5N-xu-Czf"/>
                             <constraint firstItem="Yxo-is-Yxg" firstAttribute="top" secondItem="875-dS-sJM" secondAttribute="bottom" id="ij3-lY-BRC"/>
                             <constraint firstItem="Yxo-is-Yxg" firstAttribute="leading" secondItem="fzQ-ek-GLy" secondAttribute="leading" id="k52-X2-PNK"/>
@@ -162,7 +162,7 @@
                             <constraint firstItem="fzQ-ek-GLy" firstAttribute="trailing" secondItem="875-dS-sJM" secondAttribute="trailing" id="vTA-fb-0lP"/>
                             <constraint firstItem="fzQ-ek-GLy" firstAttribute="bottom" secondItem="U1o-Ky-NBS" secondAttribute="bottom" id="wLl-Ng-wzd"/>
                             <constraint firstItem="wUN-0d-ubm" firstAttribute="top" secondItem="Yxo-is-Yxg" secondAttribute="bottom" id="xS0-nE-gfu"/>
-                            <constraint firstItem="fzQ-ek-GLy" firstAttribute="trailing" secondItem="LVT-UQ-uni" secondAttribute="trailing" id="xTb-QH-NNc"/>
+                            <constraint firstAttribute="trailing" secondItem="LVT-UQ-uni" secondAttribute="trailing" id="xTb-QH-NNc"/>
                             <constraint firstItem="875-dS-sJM" firstAttribute="leading" secondItem="fzQ-ek-GLy" secondAttribute="leading" id="yQl-Jl-Buj"/>
                             <constraint firstItem="wUN-0d-ubm" firstAttribute="leading" secondItem="fzQ-ek-GLy" secondAttribute="leading" id="zpO-Oo-510"/>
                         </constraints>
@@ -370,6 +370,9 @@
             <color red="0.94901960784313721" green="0.95294117647058818" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="DashboardSearch">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="HeaderBG">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="ListBG">

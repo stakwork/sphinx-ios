@@ -544,7 +544,7 @@
 		F34BFEDB267B3552003F6D55 /* RestoreUserConnectingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34BFEDA267B3552003F6D55 /* RestoreUserConnectingViewController.swift */; };
 		F34BFEDF267B3C30003F6D55 /* RestoreUser.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F34BFEDE267B3C30003F6D55 /* RestoreUser.storyboard */; };
 		F3531C3D26BD505F00E9586C /* DashboardChatsListDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3531C3C26BD505F00E9586C /* DashboardChatsListDelegate.swift */; };
-		F3531C3F26BD511300E9586C /* DashboardRootViewController+DashboardChatSelectionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3531C3E26BD511300E9586C /* DashboardRootViewController+DashboardChatSelectionDelegate.swift */; };
+		F3531C3F26BD511300E9586C /* DashboardRootViewController+DashboardChatsListDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3531C3E26BD511300E9586C /* DashboardRootViewController+DashboardChatsListDelegate.swift */; };
 		F3531C4326BD85FA00E9586C /* TribeChatsContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3531C4226BD85FA00E9586C /* TribeChatsContainerViewController.swift */; };
 		F3531C4526BD878E00E9586C /* TribeChatsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3531C4426BD878E00E9586C /* TribeChatsListViewController.swift */; };
 		F358212D2695D11500A314F1 /* ConnectionCodeSignupHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = F358212C2695D11500A314F1 /* ConnectionCodeSignupHandling.swift */; };
@@ -1243,7 +1243,7 @@
 		F34BFEDA267B3552003F6D55 /* RestoreUserConnectingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreUserConnectingViewController.swift; sourceTree = "<group>"; };
 		F34BFEDE267B3C30003F6D55 /* RestoreUser.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RestoreUser.storyboard; sourceTree = "<group>"; };
 		F3531C3C26BD505F00E9586C /* DashboardChatsListDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardChatsListDelegate.swift; sourceTree = "<group>"; };
-		F3531C3E26BD511300E9586C /* DashboardRootViewController+DashboardChatSelectionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DashboardRootViewController+DashboardChatSelectionDelegate.swift"; sourceTree = "<group>"; };
+		F3531C3E26BD511300E9586C /* DashboardRootViewController+DashboardChatsListDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DashboardRootViewController+DashboardChatsListDelegate.swift"; sourceTree = "<group>"; };
 		F3531C4226BD85FA00E9586C /* TribeChatsContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TribeChatsContainerViewController.swift; sourceTree = "<group>"; };
 		F3531C4426BD878E00E9586C /* TribeChatsListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TribeChatsListViewController.swift; sourceTree = "<group>"; };
 		F358212C2695D11500A314F1 /* ConnectionCodeSignupHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionCodeSignupHandling.swift; sourceTree = "<group>"; };
@@ -2888,7 +2888,7 @@
 				F373BEFE26A9CB790093C886 /* Dashboard.storyboard */,
 				F3531C3C26BD505F00E9586C /* DashboardChatsListDelegate.swift */,
 				F373BF0026A9CE1B0093C886 /* DashboardRootViewController.swift */,
-				F3531C3E26BD511300E9586C /* DashboardRootViewController+DashboardChatSelectionDelegate.swift */,
+				F3531C3E26BD511300E9586C /* DashboardRootViewController+DashboardChatsListDelegate.swift */,
 				F3CE637626AFC44C006E37A0 /* DashboardRootViewController+DelegateUtils.swift */,
 				F373BF0A26AAFB6B0093C886 /* Custom Segmented Control */,
 				F313024426BA628D00A1396E /* Friend Chats */,
@@ -3646,7 +3646,7 @@
 				4787F885247462F600CCE8B9 /* TagsAddedDataSource.swift in Sources */,
 				4787F8902475970400CCE8B9 /* ConnectivityHelper.swift in Sources */,
 				47FA18CA2433AEDA00469C8F /* AttachmentPriceViewController.swift in Sources */,
-				F3531C3F26BD511300E9586C /* DashboardRootViewController+DashboardChatSelectionDelegate.swift in Sources */,
+				F3531C3F26BD511300E9586C /* DashboardRootViewController+DashboardChatsListDelegate.swift in Sources */,
 				474FE32D23F588E400C06FC8 /* CommonVideoTableViewCell.swift in Sources */,
 				47308E0C24FEE6E700FFAC6F /* SocketEnginePacketType.swift in Sources */,
 				474A136324E5807C007C7528 /* SphinxOnionConnector.swift in Sources */,

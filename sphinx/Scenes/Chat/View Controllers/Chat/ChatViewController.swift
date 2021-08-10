@@ -71,8 +71,15 @@ class ChatViewController: KeyboardHandlerViewController {
         }
     }
     
-    static func instantiate(contact: UserContact? = nil, chat: Chat? = nil, preventFetching: Bool = false, contactsService: ContactsService, rootViewController : RootViewController) -> ChatViewController {
+    static func instantiate(
+        contact: UserContact? = nil,
+        chat: Chat? = nil,
+        preventFetching: Bool = false,
+        contactsService: ContactsService,
+        rootViewController: RootViewController
+    ) -> ChatViewController {
         let viewController = StoryboardScene.Chat.chatViewController.instantiate()
+        
         viewController.contact = contact
         viewController.chat = chat ?? contact?.getConversation()
         viewController.preventFetching = preventFetching
@@ -80,6 +87,7 @@ class ChatViewController: KeyboardHandlerViewController {
         viewController.contactsService = contactsService
         viewController.chatViewModel = ChatViewModel()
         viewController.chatListViewModel = ChatListViewModel(contactsService: contactsService)
+        
         return viewController
     }
     

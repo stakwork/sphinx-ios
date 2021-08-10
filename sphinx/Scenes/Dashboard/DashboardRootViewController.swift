@@ -75,6 +75,8 @@ class DashboardRootViewController: RootViewController {
                 child: newViewController,
                 container: mainContentContainerView
             )
+            
+            loadDataOnTabChange(to: newActiveTab)
         }
     }
 
@@ -270,15 +272,35 @@ extension DashboardRootViewController {
         chatsListViewModel.loadFriends() { [weak self] in
             guard let self = self else { return }
             
-            self.chatsListViewModel.syncMessages(progressCallback: { message in
-                self.isLoading = false
-                //            self.newBubbleHelper.showLoadingWheel(text: message)
-            }) { (_,_, isRestoring) in
+            self.chatsListViewModel.syncMessages(
+                progressCallback: { message in
+                    self.isLoading = false
+                    //                self.newBubbleHelper.showLoadingWheel(text: message)
+                }
+            ) { (_,_, isRestoring) in
                 if isRestoring {
 //                    self.viewModel.updateContactsAndChats()
                 }
                 self.finishLoading()
             }
+        }
+    }
+    
+    
+    internal func loadDataOnTabChange(to activeTab: DashboardTab) {
+        switch activeTab {
+        case .feed:
+            break
+        case .friends:
+//            chatsListViewModel.loadFriends { [weak self] in
+//                guard let self = self else { return }
+//                self.contactChatsContainerViewController.chats = self.chatsListViewModel.contactChats
+//            }
+            chatsListViewModel.updateContactsAndChats()
+            contactChatsContainerViewController.chats = chatsListViewModel.contactChats
+        case .tribes:
+            chatsListViewModel.updateContactsAndChats()
+            tribeChatsContainerViewController.chats = chatsListViewModel.contactChats
         }
     }
     

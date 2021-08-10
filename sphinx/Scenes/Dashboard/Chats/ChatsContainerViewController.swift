@@ -1,11 +1,11 @@
 import UIKit
 
 
-class ContactChatsContainerViewController: UIViewController {
-    @IBOutlet weak var contactChatsListContainerView: UIView!
+class ChatsContainerViewController: UIViewController {
+    @IBOutlet weak var chatsListContainerView: UIView!
     
     
-    private var contactChatsListViewController: ContactChatsListViewController!
+    private var chatsCollectionViewController: ChatsCollectionViewController!
     private weak var chatsListDelegate: DashboardChatsListDelegate?
     
     
@@ -14,8 +14,8 @@ class ContactChatsContainerViewController: UIViewController {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
                 
-                self.contactChatsListViewController.chats = self.chats
-                self.contactChatsListViewController.updateSnapshot()
+                self.chatsCollectionViewController.chats = self.chats
+                self.chatsCollectionViewController.updateSnapshot()
             }
         }
     }
@@ -46,15 +46,15 @@ class ContactChatsContainerViewController: UIViewController {
 
 
 // MARK: - Instantiation
-extension ContactChatsContainerViewController {
+extension ChatsContainerViewController {
     
     static func instantiate(
         chats: [Chat] = [],
         chatsListDelegate: DashboardChatsListDelegate
-    ) -> ContactChatsContainerViewController {
+    ) -> ChatsContainerViewController {
         let viewController = StoryboardScene
             .Dashboard
-            .contactChatsContainerViewController
+            .chatsContainerViewController
             .instantiate()
         
         viewController.chats = chats
@@ -66,7 +66,7 @@ extension ContactChatsContainerViewController {
 
 
 // MARK: - Lifecycle
-extension ContactChatsContainerViewController {
+extension ChatsContainerViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,7 +78,7 @@ extension ContactChatsContainerViewController {
 
 
 // MARK: - Event Handling
-private extension ContactChatsContainerViewController {
+private extension ChatsContainerViewController {
     
     func handleChatSelection(_ chat: Chat) {
         chatsListDelegate?.viewController(self, didSelectChat: chat)
@@ -92,10 +92,10 @@ private extension ContactChatsContainerViewController {
 
 
 // MARK: - Private Helpers
-extension ContactChatsContainerViewController {
+extension ChatsContainerViewController {
     
     private func configureContactChatsCollectionView() {
-        contactChatsListViewController = ContactChatsListViewController
+        chatsCollectionViewController = ChatsCollectionViewController
             .instantiate(
                 chats: chats,
                 onChatSelected: handleChatSelection(_:),
@@ -103,8 +103,8 @@ extension ContactChatsContainerViewController {
             )
         
         addChildVC(
-            child: contactChatsListViewController,
-            container: contactChatsListContainerView
+            child: chatsCollectionViewController,
+            container: chatsListContainerView
         )
     }
     

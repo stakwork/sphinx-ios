@@ -1,7 +1,7 @@
 import UIKit
 
 
-class ContactChatsListViewController: UICollectionViewController {
+class ChatsCollectionViewController: UICollectionViewController {
     var chats: [Chat] = []
     var onChatSelected: ((Chat) -> Void)?
     var onRefresh: ((UIRefreshControl) -> Void)?
@@ -20,14 +20,14 @@ class ContactChatsListViewController: UICollectionViewController {
 
 
 // MARK: - Instantiation
-extension ContactChatsListViewController {
+extension ChatsCollectionViewController {
 
     static func instantiate(
         chats: [Chat] = [],
         onChatSelected: ((Chat) -> Void)? = nil,
         onRefresh: ((UIRefreshControl) -> Void)? = nil
-    ) -> ContactChatsListViewController {
-        let viewController = StoryboardScene.Dashboard.contactChatsCollectionViewController.instantiate()
+    ) -> ChatsCollectionViewController {
+        let viewController = StoryboardScene.Dashboard.chatsCollectionViewController.instantiate()
         
         viewController.chats = chats
         viewController.onChatSelected = onChatSelected
@@ -39,7 +39,7 @@ extension ContactChatsListViewController {
 
 
 // MARK: - Layout & Data Structure
-extension ContactChatsListViewController {
+extension ChatsCollectionViewController {
     enum CollectionViewSection: Int, CaseIterable {
         case all
     }
@@ -52,7 +52,7 @@ extension ContactChatsListViewController {
 
 
 // MARK: - Lifecycle
-extension ContactChatsListViewController {
+extension ChatsCollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,7 +65,7 @@ extension ContactChatsListViewController {
 
 
 // MARK: - Event Handling
-private extension ContactChatsListViewController {
+private extension ChatsCollectionViewController {
     
     @objc func handleRefreshOnPull(refreshControl: UIRefreshControl) {
         onRefresh?(refreshControl)
@@ -74,13 +74,13 @@ private extension ContactChatsListViewController {
 
 
 // MARK: - Navigation
-private extension ContactChatsListViewController {
+private extension ChatsCollectionViewController {
 }
 
 
 
 // MARK: - Layout Composition
-extension ContactChatsListViewController {
+extension ChatsCollectionViewController {
 
     func makeSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
         let headerSize = NSCollectionLayoutSize(
@@ -146,7 +146,7 @@ extension ContactChatsListViewController {
 
 
 // MARK: - Collection View Configuration and View Registration
-extension ContactChatsListViewController {
+extension ChatsCollectionViewController {
 
     func registerViews(for collectionView: UICollectionView) {
         collectionView.register(
@@ -177,7 +177,7 @@ extension ContactChatsListViewController {
 
 
 // MARK: - Data Source Configuration
-extension ContactChatsListViewController {
+extension ChatsCollectionViewController {
 
     func makeDataSource(for collectionView: UICollectionView) -> DataSource {
         let dataSource = DataSource(
@@ -202,7 +202,7 @@ extension ContactChatsListViewController {
 
 
 // MARK: - Data Source View Providers
-extension ContactChatsListViewController {
+extension ChatsCollectionViewController {
 
     func makeCellProvider(for collectionView: UICollectionView) -> DataSource.CellProvider {
         { (collectionView, indexPath, chat) -> UICollectionViewCell? in
@@ -239,7 +239,7 @@ extension ContactChatsListViewController {
 
 
 // MARK: - Data Source Snapshot
-extension ContactChatsListViewController {
+extension ChatsCollectionViewController {
 
     func makeSnapshotForCurrentState() -> DataSourceSnapshot {
         var snapshot = DataSourceSnapshot()
@@ -260,17 +260,17 @@ extension ContactChatsListViewController {
 
 
 // MARK: - Event Handling
-private extension ContactChatsListViewController {
+private extension ChatsCollectionViewController {
 }
 
 
 // MARK: - Private Helpers
-private extension ContactChatsListViewController {
+private extension ChatsCollectionViewController {
 }
 
 
 // MARK: - `UICollectionViewDelegate` Methods
-extension ContactChatsListViewController {
+extension ChatsCollectionViewController {
     
     override func collectionView(
         _ collectionView: UICollectionView,

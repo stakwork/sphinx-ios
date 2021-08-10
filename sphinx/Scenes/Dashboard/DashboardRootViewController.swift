@@ -45,15 +45,15 @@ class DashboardRootViewController: RootViewController {
         ChatListViewModel(contactsService: contactsService)
     }()
     
-    internal lazy var contactChatsContainerViewController: ContactChatsContainerViewController = {
-        ContactChatsContainerViewController.instantiate(
+    internal lazy var contactChatsContainerViewController: ChatsContainerViewController = {
+        ChatsContainerViewController.instantiate(
             chats: chatsListViewModel.contactChats,
             chatsListDelegate: self
         )
     }()
     
-    internal lazy var tribeChatsContainerViewController: TribeChatsContainerViewController = {
-        TribeChatsContainerViewController.instantiate(
+    internal lazy var tribeChatsContainerViewController: ChatsContainerViewController = {
+        ChatsContainerViewController.instantiate(
             chats: chatsListViewModel.tribeChats,
             chatsListDelegate: self
         )
@@ -292,15 +292,11 @@ extension DashboardRootViewController {
         case .feed:
             break
         case .friends:
-//            chatsListViewModel.loadFriends { [weak self] in
-//                guard let self = self else { return }
-//                self.contactChatsContainerViewController.chats = self.chatsListViewModel.contactChats
-//            }
             chatsListViewModel.updateContactsAndChats()
             contactChatsContainerViewController.chats = chatsListViewModel.contactChats
         case .tribes:
             chatsListViewModel.updateContactsAndChats()
-            tribeChatsContainerViewController.chats = chatsListViewModel.contactChats
+            tribeChatsContainerViewController.chats = chatsListViewModel.tribeChats
         }
     }
     

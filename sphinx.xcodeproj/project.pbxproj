@@ -522,8 +522,8 @@
 		47FE9A3E23C381A20090913F /* UITapGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FE9A3D23C381A20090913F /* UITapGestureRecognizer.swift */; };
 		F30884A72699123600CADDEB /* LeftMenuViewController+KarmaPurchaseUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30884A62699123600CADDEB /* LeftMenuViewController+KarmaPurchaseUtils.swift */; };
 		F30884A92699181200CADDEB /* API+KarmaPurchaseUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30884A82699181200CADDEB /* API+KarmaPurchaseUtils.swift */; };
-		F313024626BA62B300A1396E /* ContactChatsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F313024526BA62B200A1396E /* ContactChatsListViewController.swift */; };
-		F313024826BA994B00A1396E /* ContactChatsContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F313024726BA994B00A1396E /* ContactChatsContainerViewController.swift */; };
+		F313024626BA62B300A1396E /* ChatsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F313024526BA62B200A1396E /* ChatsCollectionViewController.swift */; };
+		F313024826BA994B00A1396E /* ChatsContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F313024726BA994B00A1396E /* ChatsContainerViewController.swift */; };
 		F3197C0C267FA2C200330F79 /* connecting.gif in Resources */ = {isa = PBXBuildFile; fileRef = F3241A2F267CBB12007A6454 /* connecting.gif */; };
 		F3197C0D267FA2C800330F79 /* ellipse.gif in Resources */ = {isa = PBXBuildFile; fileRef = F3241A30267CBB12007A6454 /* ellipse.gif */; };
 		F3197C0E267FA2C800330F79 /* lightningNetwork.gif in Resources */ = {isa = PBXBuildFile; fileRef = F3241A31267CBB12007A6454 /* lightningNetwork.gif */; };
@@ -545,8 +545,6 @@
 		F34BFEDF267B3C30003F6D55 /* RestoreUser.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F34BFEDE267B3C30003F6D55 /* RestoreUser.storyboard */; };
 		F3531C3D26BD505F00E9586C /* DashboardChatsListDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3531C3C26BD505F00E9586C /* DashboardChatsListDelegate.swift */; };
 		F3531C3F26BD511300E9586C /* DashboardRootViewController+DashboardChatsListDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3531C3E26BD511300E9586C /* DashboardRootViewController+DashboardChatsListDelegate.swift */; };
-		F3531C4326BD85FA00E9586C /* TribeChatsContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3531C4226BD85FA00E9586C /* TribeChatsContainerViewController.swift */; };
-		F3531C4526BD878E00E9586C /* TribeChatsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3531C4426BD878E00E9586C /* TribeChatsListViewController.swift */; };
 		F358212D2695D11500A314F1 /* ConnectionCodeSignupHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = F358212C2695D11500A314F1 /* ConnectionCodeSignupHandling.swift */; };
 		F358212F2698BE6800A314F1 /* API+Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F358212E2698BE6700A314F1 /* API+Errors.swift */; };
 		F373BEFF26A9CB790093C886 /* Dashboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F373BEFE26A9CB790093C886 /* Dashboard.storyboard */; };
@@ -1219,8 +1217,8 @@
 		487E10CEB3D07B0840A84681 /* Pods_sphinx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_sphinx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F30884A62699123600CADDEB /* LeftMenuViewController+KarmaPurchaseUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LeftMenuViewController+KarmaPurchaseUtils.swift"; sourceTree = "<group>"; };
 		F30884A82699181200CADDEB /* API+KarmaPurchaseUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+KarmaPurchaseUtils.swift"; sourceTree = "<group>"; };
-		F313024526BA62B200A1396E /* ContactChatsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactChatsListViewController.swift; sourceTree = "<group>"; };
-		F313024726BA994B00A1396E /* ContactChatsContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactChatsContainerViewController.swift; sourceTree = "<group>"; };
+		F313024526BA62B200A1396E /* ChatsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsCollectionViewController.swift; sourceTree = "<group>"; };
+		F313024726BA994B00A1396E /* ChatsContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatsContainerViewController.swift; sourceTree = "<group>"; };
 		F3197C102680F50300330F79 /* RestoreUserFormViewController+FormSubmissionUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RestoreUserFormViewController+FormSubmissionUtils.swift"; sourceTree = "<group>"; };
 		F3197C1226811DE400330F79 /* RestoreUserFormViewController+KeychainRestorationUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RestoreUserFormViewController+KeychainRestorationUtils.swift"; sourceTree = "<group>"; };
 		F31CF2652691489800AAB621 /* StoreKitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitService.swift; sourceTree = "<group>"; };
@@ -1244,8 +1242,6 @@
 		F34BFEDE267B3C30003F6D55 /* RestoreUser.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RestoreUser.storyboard; sourceTree = "<group>"; };
 		F3531C3C26BD505F00E9586C /* DashboardChatsListDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardChatsListDelegate.swift; sourceTree = "<group>"; };
 		F3531C3E26BD511300E9586C /* DashboardRootViewController+DashboardChatsListDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DashboardRootViewController+DashboardChatsListDelegate.swift"; sourceTree = "<group>"; };
-		F3531C4226BD85FA00E9586C /* TribeChatsContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TribeChatsContainerViewController.swift; sourceTree = "<group>"; };
-		F3531C4426BD878E00E9586C /* TribeChatsListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TribeChatsListViewController.swift; sourceTree = "<group>"; };
 		F358212C2695D11500A314F1 /* ConnectionCodeSignupHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionCodeSignupHandling.swift; sourceTree = "<group>"; };
 		F358212E2698BE6700A314F1 /* API+Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+Errors.swift"; sourceTree = "<group>"; };
 		F373BEFE26A9CB790093C886 /* Dashboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Dashboard.storyboard; sourceTree = "<group>"; };
@@ -2819,15 +2815,15 @@
 			path = "Custom Views";
 			sourceTree = "<group>";
 		};
-		F313024426BA628D00A1396E /* Friend Chats */ = {
+		F313024426BA628D00A1396E /* Chats */ = {
 			isa = PBXGroup;
 			children = (
+				F313024526BA62B200A1396E /* ChatsCollectionViewController.swift */,
+				F313024726BA994B00A1396E /* ChatsContainerViewController.swift */,
 				F3446B9126BABAB400855516 /* ContactChatListCollectionViewCell.swift */,
-				F313024726BA994B00A1396E /* ContactChatsContainerViewController.swift */,
-				F313024526BA62B200A1396E /* ContactChatsListViewController.swift */,
 				F3446B9226BABAB400855516 /* ContactChatListCollectionViewCell.xib */,
 			);
-			path = "Friend Chats";
+			path = Chats;
 			sourceTree = "<group>";
 		};
 		F3241A2E267CBB12007A6454 /* Gifs */ = {
@@ -2873,15 +2869,6 @@
 			path = "Restore User";
 			sourceTree = "<group>";
 		};
-		F3531C4126BD83AF00E9586C /* Tribe Chats */ = {
-			isa = PBXGroup;
-			children = (
-				F3531C4226BD85FA00E9586C /* TribeChatsContainerViewController.swift */,
-				F3531C4426BD878E00E9586C /* TribeChatsListViewController.swift */,
-			);
-			path = "Tribe Chats";
-			sourceTree = "<group>";
-		};
 		F373BEFD26A9CA340093C886 /* Dashboard */ = {
 			isa = PBXGroup;
 			children = (
@@ -2891,9 +2878,8 @@
 				F3531C3E26BD511300E9586C /* DashboardRootViewController+DashboardChatsListDelegate.swift */,
 				F3CE637626AFC44C006E37A0 /* DashboardRootViewController+DelegateUtils.swift */,
 				F373BF0A26AAFB6B0093C886 /* Custom Segmented Control */,
-				F313024426BA628D00A1396E /* Friend Chats */,
+				F313024426BA628D00A1396E /* Chats */,
 				F3CE637826AFD42C006E37A0 /* Podcast Feeds */,
-				F3531C4126BD83AF00E9586C /* Tribe Chats */,
 			);
 			path = Dashboard;
 			sourceTree = "<group>";
@@ -3422,7 +3408,7 @@
 				473BC88D25F287340070E519 /* PodcastNewEpisodeViewController.swift in Sources */,
 				47FA18C224253BDD00469C8F /* InvoiceManager.swift in Sources */,
 				47771C6E259B848300990467 /* GroupPinView.swift in Sources */,
-				F313024626BA62B300A1396E /* ContactChatsListViewController.swift in Sources */,
+				F313024626BA62B300A1396E /* ChatsCollectionViewController.swift in Sources */,
 				47468FD323314EE80072124A /* PinCodeViewController.swift in Sources */,
 				470DB25423FAE43400D29FA5 /* SphinxCache.swift in Sources */,
 				47393E682461F6F600E6F93E /* KeychainManager.swift in Sources */,
@@ -3434,13 +3420,12 @@
 				475BDCA5232AC1D600C5BBD6 /* TransactionMessageRow.swift in Sources */,
 				47AA08C7234BB8E0002C69E2 /* ShareInviteCodeViewController.swift in Sources */,
 				F31CF2662691489800AAB621 /* StoreKitService.swift in Sources */,
-				F313024826BA994B00A1396E /* ContactChatsContainerViewController.swift in Sources */,
+				F313024826BA994B00A1396E /* ChatsContainerViewController.swift in Sources */,
 				475BDCFB232AC24600C5BBD6 /* PaidInvoiceReceivedTableViewCell.swift in Sources */,
 				4789E26E24F406F3003991BE /* RelayURLUpdateHelper.swift in Sources */,
 				475BDD5C232AE26E00C5BBD6 /* TransactionMessage+CoreDataClass.swift in Sources */,
 				475723A9247EBB56001ADC7E /* CustomAudioPlayer.swift in Sources */,
 				473842F7239197E700AA640F /* FullScreenImageView.swift in Sources */,
-				F3531C4526BD878E00E9586C /* TribeChatsListViewController.swift in Sources */,
 				475BDD1B232AC47C00C5BBD6 /* ChatListViewController.swift in Sources */,
 				47AAFC82238EFCE600E30BDA /* APIAttachmentsExtension.swift in Sources */,
 				4787F878247449DC00CCE8B9 /* GroupTagTableViewCell.swift in Sources */,
@@ -3529,7 +3514,6 @@
 				47E300DF234B81F800DB56DB /* LeftMenuAddFriendTableViewCell.swift in Sources */,
 				471940B1233951BB00F1BF5B /* QRCodeDetailViewModel.swift in Sources */,
 				475BDCBA232AC1E800C5BBD6 /* ChatAccessoryView.swift in Sources */,
-				F3531C4326BD85FA00E9586C /* TribeChatsContainerViewController.swift in Sources */,
 				F30884A92699181200CADDEB /* API+KarmaPurchaseUtils.swift in Sources */,
 				4787F8982478112F00CCE8B9 /* ChatAvatarView.swift in Sources */,
 				47308E0E24FEE6E700FFAC6F /* SocketIOClientConfiguration.swift in Sources */,

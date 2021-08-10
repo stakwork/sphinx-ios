@@ -151,16 +151,31 @@ extension ContactChatListCollectionViewCell {
     
     
     private func renderContactImageViews(with chat: Chat) {
-        if let avatarImage = chat.image {
-            contactImageView.isHidden = false
+        if let image = chat.getImage() {
             contactInitialsLabel.isHidden = true
-            contactImageView.image = avatarImage
+            contactImageView.isHidden = false
+            contactImageView.image = image
         } else {
-            contactImageView.isHidden = true
             contactInitialsLabel.isHidden = false
+            contactImageView.isHidden = true
             renderContactInitialsLabel(for: chat)
+            
+            if
+                let imageURLPath = chat.getPhotoUrl()?.removeDuplicatedProtocol(),
+                let imageURL = URL(string: imageURLPath)
+            {
+                contactImageView.sd_setImage(
+                    with: imageURL,
+                    placeholderImage: UIImage(named: "profile_avatar"),
+                    options: .lowPriority,
+                    progress: nil,
+                    completed: { [unowned self] (_,_,_,_) in
+                        self.contactInitialsLabel.isHidden = true
+                        self.contactImageView.isHidden = false
+                    }
+                )
+            }
         }
-        
     }
     
     

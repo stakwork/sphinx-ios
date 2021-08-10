@@ -44,6 +44,7 @@
                                     </label>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NIy-iN-zSg">
                                         <rect key="frame" x="0.0" y="0.0" width="45" height="45"/>
+                                        <imageReference key="image" image="profile_avatar"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -170,6 +171,7 @@
     </objects>
     <resources>
         <image name="muteOnIcon" width="18" height="18"/>
+        <image name="profile_avatar" width="45" height="45"/>
         <namedColor name="Body">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

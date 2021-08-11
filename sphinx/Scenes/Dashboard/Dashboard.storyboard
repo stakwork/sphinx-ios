@@ -46,7 +46,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ef7-It-4Rs">
-                                                <rect key="frame" x="41" y="0.0" width="361" height="44"/>
+                                                <rect key="frame" x="41" y="0.0" width="351" height="44"/>
                                                 <color key="textColor" name="Text"/>
                                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
@@ -63,7 +63,7 @@
                                             <constraint firstItem="Lwz-zX-pkx" firstAttribute="leading" secondItem="52N-Az-4on" secondAttribute="leading" constant="10" id="2JJ-Ys-Dew"/>
                                             <constraint firstItem="ef7-It-4Rs" firstAttribute="top" secondItem="52N-Az-4on" secondAttribute="top" id="Bna-jz-7zd"/>
                                             <constraint firstItem="Lwz-zX-pkx" firstAttribute="centerY" secondItem="52N-Az-4on" secondAttribute="centerY" id="DoB-G7-cEI"/>
-                                            <constraint firstAttribute="trailing" secondItem="ef7-It-4Rs" secondAttribute="trailing" id="bwb-bK-CCX"/>
+                                            <constraint firstAttribute="trailing" secondItem="ef7-It-4Rs" secondAttribute="trailing" constant="10" id="bwb-bK-CCX"/>
                                             <constraint firstItem="ef7-It-4Rs" firstAttribute="leading" secondItem="Lwz-zX-pkx" secondAttribute="trailing" constant="10" id="gqE-96-sVN"/>
                                         </constraints>
                                     </view>

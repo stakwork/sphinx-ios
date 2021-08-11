@@ -177,9 +177,9 @@ extension ChatListCollectionViewCell {
 
 // MARK: - Static Properties
 extension ChatListCollectionViewCell {
-    static let reuseID = "ContactChatListCollectionViewCell"
+    static let reuseID = "ChatListCollectionViewCell"
     
     static let nib: UINib = {
-        UINib(nibName: "ContactChatListCollectionViewCell", bundle: nil)
+        UINib(nibName: "ChatListCollectionViewCell", bundle: nil)
     }()
 }

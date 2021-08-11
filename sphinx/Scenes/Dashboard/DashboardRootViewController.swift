@@ -34,6 +34,7 @@ class DashboardRootViewController: RootViewController {
     internal let onionConnector = SphinxOnionConnector.sharedInstance
     internal let socketManager = SphinxSocketManager.sharedInstance
     internal let refreshControl = UIRefreshControl()
+    internal let newBubbleHelper = NewMessageBubbleHelper()
 
     
     internal lazy var feedsListViewController = {
@@ -59,23 +60,19 @@ class DashboardRootViewController: RootViewController {
     }()
     
     
-    internal var activeTab: DashboardTab? {
+    internal var activeTab: DashboardTab = .feed {
         didSet {
-            guard let newActiveTab = activeTab else { return }
-            
-            let newViewController = mainContentViewController(forActiveTab: newActiveTab)
-            
-            if let oldActiveTab = oldValue {
-                let oldViewController = mainContentViewController(forActiveTab: oldActiveTab)
-                oldViewController.removeFromParent()
-            }
+            let newViewController = mainContentViewController(forActiveTab: activeTab)
+            let oldViewController = mainContentViewController(forActiveTab: oldValue)
+
+            oldViewController.removeFromParent()
             
             addChildVC(
                 child: newViewController,
                 container: mainContentContainerView
             )
             
-            loadDataOnTabChange(to: newActiveTab)
+            loadDataOnTabChange(to: activeTab)
         }
     }
 
@@ -133,6 +130,7 @@ extension DashboardRootViewController {
         
         rootViewController.setStatusBarColor(light: true)
         socketManager.setDelegate(delegate: self)
+        
         configureHeader()
     }
     
@@ -274,14 +272,15 @@ extension DashboardRootViewController {
             self.chatsListViewModel.syncMessages(
                 progressCallback: { message in
                     self.isLoading = false
-                    //                self.newBubbleHelper.showLoadingWheel(text: message)
+                    self.newBubbleHelper.showLoadingWheel(text: message)
+                },
+                completion: { (_,_, isRestoring) in
+                    if isRestoring {
+                        self.chatsListViewModel.updateContactsAndChats()
+                    }
+                    self.finishLoading()
                 }
-            ) { (_,_, isRestoring) in
-                if isRestoring {
-//                    self.viewModel.updateContactsAndChats()
-                }
-                self.finishLoading()
-            }
+            )
         }
     }
     
@@ -291,9 +290,15 @@ extension DashboardRootViewController {
         case .feed:
             break
         case .friends:
+            // TODO: Maybe call `loadContactsAndSyncMessages` here instead, and then set the
+            // new `chats` on the active tab
+            // controller within the completion handler there?
             chatsListViewModel.updateContactsAndChats()
             contactChatsContainerViewController.chats = chatsListViewModel.contactChats
         case .tribes:
+            // TODO: Maybe call `loadContactsAndSyncMessages` here instead, and then set the
+            // new `chats` on the active tab
+            // controller within the completion handler there?
             chatsListViewModel.updateContactsAndChats()
             tribeChatsContainerViewController.chats = chatsListViewModel.tribeChats
         }
@@ -301,7 +306,7 @@ extension DashboardRootViewController {
     
     
     internal func finishLoading() {
-        //        newBubbleHelper.hideLoadingWheel()
+        newBubbleHelper.hideLoadingWheel()
         isLoading = false
     }
 

@@ -53,7 +53,6 @@ extension ChatsContainerViewController {
 }
 
 
-
 // MARK: - Event Handling
 private extension ChatsContainerViewController {
     

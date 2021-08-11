@@ -1,7 +1,7 @@
 import UIKit
 
 
-// MARK: - UITextFieldDelegate for handling search input
+// MARK: - `UITextFieldDelegate` for handling search input
 extension DashboardRootViewController: UITextFieldDelegate {
    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -12,7 +12,20 @@ extension DashboardRootViewController: UITextFieldDelegate {
     
     
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
-        true
+        switch activeTab {
+        case .feed:
+            break
+        case .friends:
+            contactChatsContainerViewController.chats = contactsService
+                .getChatListObjects()
+                .compactMap { $0 as? Chat }
+        case .tribes:
+            tribeChatsContainerViewController.chats = contactsService
+                .getChatListObjects()
+                .compactMap { $0 as? Chat }
+        }
+        
+        return true
     }
     
     
@@ -21,21 +34,27 @@ extension DashboardRootViewController: UITextFieldDelegate {
         shouldChangeCharactersIn range: NSRange,
         replacementString string: String
     ) -> Bool {
-        var currentString = (textField.text ?? "") as NSString
+        var searchString = (textField.text ?? "") as NSString
     
-        currentString = currentString.replacingCharacters(
+        searchString = searchString.replacingCharacters(
             in: range,
             with: string
         ) as NSString
+        
 
-        // TODO: This is probably a good place to feed the current search string into
-        // the ViewModel for the currently displayed VC. Or perform
-        // some update and feed the results of that to said chatsListViewModel.
-        
-//        chatListObjectsArray = contactsService.getObjectsWith(
-//            searchString: currentString
-//        )
-        
+        switch activeTab {
+        case .feed:
+            break
+        case .friends:
+            contactChatsContainerViewController.chats = contactsService
+                .getChatsWith(searchString: searchString as String)
+                .filter { $0.isConversation() }
+        case .tribes:
+            tribeChatsContainerViewController.chats = contactsService
+                .getChatsWith(searchString: searchString as String)
+                .filter { $0.isPublicGroup() }
+        }
+            
         return true
     }
 }

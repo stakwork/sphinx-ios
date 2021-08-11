@@ -186,7 +186,7 @@ extension DashboardRootViewController {
         )
         
         viewController.delegate = self
-        viewController.currentMode = NewQRScannerViewController.Mode.ScanAndProcess
+        viewController.currentMode = .ScanAndProcess
         
         let navigationController = UINavigationController(
             rootViewController: viewController
@@ -202,33 +202,29 @@ extension DashboardRootViewController {
             rootViewController: rootViewController
         )
         
-        self.presentNavigationControllerWith(vc: viewController)
+        presentNavigationControllerWith(vc: viewController)
     }
     
     
     func sendSatsButtonTouched() {
-        // TODO: Why do we need to couple the `chatViewModel` to the `instantiate` method here?
-        
-//        let viewController = CreateInvoiceViewController.instantiate(
-//            viewModel: chatViewModel,
-//            delegate: self,
-//            paymentMode: CreateInvoiceViewController.paymentMode.send,
-//            rootViewController: rootViewController
-//        )
-//
-//        self.presentNavigationControllerWith(vc: viewController)
+        let viewController = CreateInvoiceViewController.instantiate(
+            viewModel: ChatViewModel(),
+            delegate: self,
+            paymentMode: CreateInvoiceViewController.paymentMode.send,
+            rootViewController: rootViewController
+        )
+
+        presentNavigationControllerWith(vc: viewController)
     }
     
     func requestSatsButtonTouched() {
-        // TODO: Why do we need to couple the `chatViewModel` to the `instantiate` method here?
-        
-//        let viewController = CreateInvoiceViewController.instantiate(
-//            viewModel: chatViewModel,
-//            delegate: self,
-//            rootViewController: rootViewController
-//        )
-//
-//        self.presentNavigationControllerWith(vc: viewController)
+        let viewController = CreateInvoiceViewController.instantiate(
+            viewModel: ChatViewModel(),
+            delegate: self,
+            rootViewController: rootViewController
+        )
+
+        presentNavigationControllerWith(vc: viewController)
     }
 }
 

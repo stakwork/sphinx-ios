@@ -143,6 +143,21 @@ extension DashboardRootViewController {
 }
 
 
+// MARK: -  Public Methods
+extension DashboardRootViewController {
+    //    func goToChat() {
+    //        if let chatId = UserDefaults.Keys.chatId.get(defaultValue: -1), let chat = Chat.getChatWith(id: chatId) {
+    //            presentChatVC(object: chat, fromPush: true)
+    //        }
+    //        if let contactId = UserDefaults.Keys.contactId.get(defaultValue: -1), let contact = UserContact.getContactWith(id: contactId) {
+    //            presentChatVC(object: contact, fromPush: true)
+    //        }
+    //        UserDefaults.Keys.contactId.removeValue()
+    //        UserDefaults.Keys.chatId.removeValue()
+    //    }
+}
+
+
 // MARK: -  Action Handling
 extension DashboardRootViewController {
 

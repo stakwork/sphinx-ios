@@ -50,6 +50,11 @@ extension ChatsContainerViewController {
         
         configureContactChatsCollectionView()
     }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
 }
 
 
@@ -83,28 +88,5 @@ extension ChatsContainerViewController {
             container: chatsListContainerView
         )
     }
-    
-    
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-    
-    
-    //    func handleDeepLinksAndPush() {
-    //        goToChat()
-    //    }
-    
-    
-    //    func goToChat() {
-    //        if let chatId = UserDefaults.Keys.chatId.get(defaultValue: -1), let chat = Chat.getChatWith(id: chatId) {
-    //            presentChatVC(object: chat, fromPush: true)
-    //        }
-    //        if let contactId = UserDefaults.Keys.contactId.get(defaultValue: -1), let contact = UserContact.getContactWith(id: contactId) {
-    //            presentChatVC(object: contact, fromPush: true)
-    //        }
-    //        UserDefaults.Keys.contactId.removeValue()
-    //        UserDefaults.Keys.chatId.removeValue()
-    //    }
 }
 

@@ -269,7 +269,7 @@ private extension ChatsCollectionViewController {
 }
 
 
-// MARK: - `UICollectionViewDelegate` Methods
+// MARK: - `UICollectionViewDelegate`
 extension ChatsCollectionViewController {
     
     override func collectionView(

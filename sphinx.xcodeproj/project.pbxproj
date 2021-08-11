@@ -557,6 +557,7 @@
 		F394ECAD26825D3400529038 /* NewUserSignupFormViewController+FormSubmissionUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F394ECAC26825D3400529038 /* NewUserSignupFormViewController+FormSubmissionUtils.swift */; };
 		F394ECB12683CF5E00529038 /* NewUserGreetingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F394ECB02683CF5E00529038 /* NewUserGreetingViewController.swift */; };
 		F394ECB32683EB5A00529038 /* SphinxDesktopAdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F394ECB22683EB5A00529038 /* SphinxDesktopAdViewController.swift */; };
+		F3A35CA826C43508007D35BD /* DashboardRootViewController+SocketManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3A35CA726C43508007D35BD /* DashboardRootViewController+SocketManagerDelegate.swift */; };
 		F3C92B272671FB6C005F0A42 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F3C92B262671FB6C005F0A42 /* README.md */; };
 		F3CE637726AFC44D006E37A0 /* DashboardRootViewController+DelegateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CE637626AFC44C006E37A0 /* DashboardRootViewController+DelegateUtils.swift */; };
 		F3CE637C26AFE823006E37A0 /* FeedFilterChipCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CE637B26AFE822006E37A0 /* FeedFilterChipCollectionViewCell.swift */; };
@@ -1256,6 +1257,7 @@
 		F394ECAC26825D3400529038 /* NewUserSignupFormViewController+FormSubmissionUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NewUserSignupFormViewController+FormSubmissionUtils.swift"; sourceTree = "<group>"; };
 		F394ECB02683CF5E00529038 /* NewUserGreetingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewUserGreetingViewController.swift; sourceTree = "<group>"; };
 		F394ECB22683EB5A00529038 /* SphinxDesktopAdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SphinxDesktopAdViewController.swift; sourceTree = "<group>"; };
+		F3A35CA726C43508007D35BD /* DashboardRootViewController+SocketManagerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DashboardRootViewController+SocketManagerDelegate.swift"; sourceTree = "<group>"; };
 		F3C92B262671FB6C005F0A42 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		F3C92B282671FCFD005F0A42 /* .Tor.version */ = {isa = PBXFileReference; lastKnownFileType = text; name = .Tor.version; path = Carthage/Build/.Tor.version; sourceTree = "<group>"; };
 		F3CE637626AFC44C006E37A0 /* DashboardRootViewController+DelegateUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DashboardRootViewController+DelegateUtils.swift"; sourceTree = "<group>"; };
@@ -2877,8 +2879,9 @@
 				F373BF0026A9CE1B0093C886 /* DashboardRootViewController.swift */,
 				F3531C3E26BD511300E9586C /* DashboardRootViewController+DashboardChatsListDelegate.swift */,
 				F3CE637626AFC44C006E37A0 /* DashboardRootViewController+DelegateUtils.swift */,
-				F373BF0A26AAFB6B0093C886 /* Custom Segmented Control */,
+				F3A35CA726C43508007D35BD /* DashboardRootViewController+SocketManagerDelegate.swift */,
 				F313024426BA628D00A1396E /* Chats */,
+				F373BF0A26AAFB6B0093C886 /* Custom Segmented Control */,
 				F3CE637826AFD42C006E37A0 /* Podcast Feeds */,
 			);
 			path = Dashboard;
@@ -3632,6 +3635,7 @@
 				47FA18CA2433AEDA00469C8F /* AttachmentPriceViewController.swift in Sources */,
 				F3531C3F26BD511300E9586C /* DashboardRootViewController+DashboardChatsListDelegate.swift in Sources */,
 				474FE32D23F588E400C06FC8 /* CommonVideoTableViewCell.swift in Sources */,
+				F3A35CA826C43508007D35BD /* DashboardRootViewController+SocketManagerDelegate.swift in Sources */,
 				47308E0C24FEE6E700FFAC6F /* SocketEnginePacketType.swift in Sources */,
 				474A136324E5807C007C7528 /* SphinxOnionConnector.swift in Sources */,
 				47AAFC782387063F00E30BDA /* APISubscriptionsExtension.swift in Sources */,

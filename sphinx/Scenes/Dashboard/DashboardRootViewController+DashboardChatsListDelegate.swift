@@ -8,7 +8,7 @@ extension DashboardRootViewController: DashboardChatsListDelegate {
         _ viewController: UIViewController,
         didSelectChat chat: Chat
     ) {
-        presentChatDetailsVC(chat: chat)
+        presentChatDetailsVC(for: chat)
     }
     
     

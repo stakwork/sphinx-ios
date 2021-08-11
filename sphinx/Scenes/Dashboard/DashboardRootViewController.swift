@@ -145,7 +145,8 @@ extension DashboardRootViewController {
 
 // MARK: -  Public Methods
 extension DashboardRootViewController {
-    //    func goToChat() {
+    
+    //    public func goToChat() {
     //        if let chatId = UserDefaults.Keys.chatId.get(defaultValue: -1), let chat = Chat.getChatWith(id: chatId) {
     //            presentChatVC(object: chat, fromPush: true)
     //        }
@@ -235,7 +236,9 @@ extension DashboardRootViewController {
 // MARK: -  Private Helpers
 extension DashboardRootViewController {
     
-    private func mainContentViewController(forActiveTab activeTab: DashboardTab) -> UIViewController {
+    private func mainContentViewController(
+        forActiveTab activeTab: DashboardTab
+    ) -> UIViewController {
         switch activeTab {
         case .feed:
             return feedsListViewController
@@ -337,22 +340,21 @@ extension DashboardRootViewController {
 
     
     internal func presentChatDetailsVC(
-        chat: Chat,
-        animated: Bool = true,
-        fromPush: Bool = false
+        for chat: Chat,
+        shouldAnimate: Bool = true,
+        shouldFetchNewChatData: Bool = true
     ) {
-//        shouldReloadFriends = false
         let contact = chat.getContact()
         
         let chatVC = ChatViewController.instantiate(
             contact: contact,
             chat: chat,
-            preventFetching: !fromPush,
+            preventFetching: shouldFetchNewChatData == false,
             contactsService: contactsService,
             rootViewController: rootViewController
         )
         
-        navigationController?.pushViewController(chatVC, animated: animated)
+        navigationController?.pushViewController(chatVC, animated: shouldAnimate)
         
         resetSearchField()
     }

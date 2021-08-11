@@ -1,7 +1,7 @@
 import UIKit
 
 
-class ContactChatListCollectionViewCell: UICollectionViewCell {
+class ChatListCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var contactImageContainer: UIView!
     @IBOutlet weak var contactImageView: UIImageView!
     @IBOutlet weak var contactInitialsLabel: UILabel!
@@ -25,7 +25,7 @@ class ContactChatListCollectionViewCell: UICollectionViewCell {
 
 
 // MARK: -  Lifecycle
-extension ContactChatListCollectionViewCell {
+extension ChatListCollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -41,7 +41,7 @@ extension ContactChatListCollectionViewCell {
 
 
 // MARK: -  Computeds
-extension ContactChatListCollectionViewCell {
+extension ChatListCollectionViewCell {
     
     var unreadMessageCount: Int {
         chat?.getConversation()?.getReceivedUnseenMessagesCount() ?? 0
@@ -53,7 +53,7 @@ extension ContactChatListCollectionViewCell {
 
 
 // MARK: -  Private Helpers
-extension ContactChatListCollectionViewCell {
+extension ChatListCollectionViewCell {
     
     func setupViews() {
         backgroundColor = .Sphinx.DashboardHeader
@@ -176,7 +176,7 @@ extension ContactChatListCollectionViewCell {
 
 
 // MARK: - Static Properties
-extension ContactChatListCollectionViewCell {
+extension ChatListCollectionViewCell {
     static let reuseID = "ContactChatListCollectionViewCell"
     
     static let nib: UINib = {

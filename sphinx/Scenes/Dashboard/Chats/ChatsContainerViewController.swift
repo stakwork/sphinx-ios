@@ -19,29 +19,6 @@ class ChatsContainerViewController: UIViewController {
             }
         }
     }
-    
-    
-    var isLoading = false {
-        didSet {
-            //            LoadingWheelHelper.toggleLoadingWheel(
-            //                loading: isLoading || onionConnector.isConnecting(),
-            //                loadingWheel: headerView.loadingWheel,
-            //                loadingWheelColor: UIColor.white,
-            //                views: [chatListTableView, bottomBarContainer, searchBarContainer]
-            //            )
-        }
-    }
-    
-    
-    var loadingRefresh = false {
-        didSet {
-            //            LoadingWheelHelper.toggleLoadingWheel(
-            //                loading: loadingRefresh || onionConnector.isConnecting(),
-            //                loadingWheel: headerView.loadingWheel,
-            //                loadingWheelColor: UIColor.white
-            //            )
-        }
-    }
 }
 
 
@@ -130,13 +107,5 @@ extension ChatsContainerViewController {
     //        UserDefaults.Keys.contactId.removeValue()
     //        UserDefaults.Keys.chatId.removeValue()
     //    }
-    
-    
-    //    @objc func refreshOnPull(sender: UIRefreshControl) {
-    //        loadFriendAndReload()
-    //        loadingRefresh = false
-    //    }
-    //
-    
 }
 

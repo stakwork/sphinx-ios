@@ -537,8 +537,8 @@
 		F33846E3267ACF6A0041F1EA /* InitialWelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33846E1267ACF6A0041F1EA /* InitialWelcomeViewController.swift */; };
 		F33846E7267B0FA00041F1EA /* Welcome.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F33846E9267B0FA00041F1EA /* Welcome.storyboard */; };
 		F33846EF267B15800041F1EA /* WelcomeCompleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33846EE267B15800041F1EA /* WelcomeCompleteViewController.swift */; };
-		F3446B9326BABAB400855516 /* ContactChatListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3446B9126BABAB400855516 /* ContactChatListCollectionViewCell.swift */; };
-		F3446B9426BABAB400855516 /* ContactChatListCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F3446B9226BABAB400855516 /* ContactChatListCollectionViewCell.xib */; };
+		F3446B9326BABAB400855516 /* ChatListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3446B9126BABAB400855516 /* ChatListCollectionViewCell.swift */; };
+		F3446B9426BABAB400855516 /* ChatListCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F3446B9226BABAB400855516 /* ChatListCollectionViewCell.xib */; };
 		F34BFED7267B350D003F6D55 /* RestoreUserDescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34BFED6267B350D003F6D55 /* RestoreUserDescriptionViewController.swift */; };
 		F34BFED9267B3522003F6D55 /* RestoreUserFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34BFED8267B3522003F6D55 /* RestoreUserFormViewController.swift */; };
 		F34BFEDB267B3552003F6D55 /* RestoreUserConnectingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34BFEDA267B3552003F6D55 /* RestoreUserConnectingViewController.swift */; };
@@ -1234,8 +1234,8 @@
 		F33846EB267B0FBA0041F1EA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Welcome.strings; sourceTree = "<group>"; };
 		F33846ED267B0FBB0041F1EA /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Welcome.strings; sourceTree = "<group>"; };
 		F33846EE267B15800041F1EA /* WelcomeCompleteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeCompleteViewController.swift; sourceTree = "<group>"; };
-		F3446B9126BABAB400855516 /* ContactChatListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactChatListCollectionViewCell.swift; sourceTree = "<group>"; };
-		F3446B9226BABAB400855516 /* ContactChatListCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactChatListCollectionViewCell.xib; sourceTree = "<group>"; };
+		F3446B9126BABAB400855516 /* ChatListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListCollectionViewCell.swift; sourceTree = "<group>"; };
+		F3446B9226BABAB400855516 /* ChatListCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatListCollectionViewCell.xib; sourceTree = "<group>"; };
 		F34BFED6267B350D003F6D55 /* RestoreUserDescriptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreUserDescriptionViewController.swift; sourceTree = "<group>"; };
 		F34BFED8267B3522003F6D55 /* RestoreUserFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreUserFormViewController.swift; sourceTree = "<group>"; };
 		F34BFEDA267B3552003F6D55 /* RestoreUserConnectingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreUserConnectingViewController.swift; sourceTree = "<group>"; };
@@ -2818,10 +2818,10 @@
 		F313024426BA628D00A1396E /* Chats */ = {
 			isa = PBXGroup;
 			children = (
+				F3446B9126BABAB400855516 /* ChatListCollectionViewCell.swift */,
 				F313024526BA62B200A1396E /* ChatsCollectionViewController.swift */,
 				F313024726BA994B00A1396E /* ChatsContainerViewController.swift */,
-				F3446B9126BABAB400855516 /* ContactChatListCollectionViewCell.swift */,
-				F3446B9226BABAB400855516 /* ContactChatListCollectionViewCell.xib */,
+				F3446B9226BABAB400855516 /* ChatListCollectionViewCell.xib */,
 			);
 			path = Chats;
 			sourceTree = "<group>";
@@ -3169,7 +3169,7 @@
 				47904C0D24BF352300710E7A /* bells.caf in Resources */,
 				475BDD23232AC71000C5BBD6 /* Colors.xcassets in Resources */,
 				47183CB42548AA5100E6FD19 /* PodcastPlayerView.xib in Resources */,
-				F3446B9426BABAB400855516 /* ContactChatListCollectionViewCell.xib in Resources */,
+				F3446B9426BABAB400855516 /* ChatListCollectionViewCell.xib in Resources */,
 				F3197C0D267FA2C800330F79 /* ellipse.gif in Resources */,
 				F33119A0268E9C1B005082EB /* XcodeStoreKitConfiguration.storekit in Resources */,
 				4789E26224F04752003991BE /* SettingsTabsView.xib in Resources */,
@@ -3506,7 +3506,7 @@
 				47AA08C3234B8CF2002C69E2 /* AddFriendViewController.swift in Sources */,
 				479608F4256EAEB400A68FC1 /* MessageBoostView.swift in Sources */,
 				475154B62423F08A00477384 /* VideoCallBubbleView.swift in Sources */,
-				F3446B9326BABAB400855516 /* ContactChatListCollectionViewCell.swift in Sources */,
+				F3446B9326BABAB400855516 /* ChatListCollectionViewCell.swift in Sources */,
 				475BDD34232ACC4800C5BBD6 /* UIView.swift in Sources */,
 				474A667D24929D45002C2D10 /* CommonReplyTableViewCell.swift in Sources */,
 				476EB47523C50662009745E2 /* GroupContactTableViewCell.swift in Sources */,

@@ -40,7 +40,6 @@ class DashboardRootViewController: RootViewController {
         FeedsListViewController.instantiate()
     }()
     
-    
     internal lazy var chatsListViewModel: ChatListViewModel = {
         ChatListViewModel(contactsService: contactsService)
     }()

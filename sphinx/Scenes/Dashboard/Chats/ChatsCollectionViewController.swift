@@ -44,7 +44,7 @@ extension ChatsCollectionViewController {
         case all
     }
 
-    typealias CollectionViewCell = ContactChatListCollectionViewCell
+    typealias CollectionViewCell = ChatListCollectionViewCell
     typealias CellDataItem = Chat
     typealias DataSource = UICollectionViewDiffableDataSource<CollectionViewSection, CellDataItem>
     typealias DataSourceSnapshot = NSDiffableDataSourceSnapshot<CollectionViewSection, CellDataItem>

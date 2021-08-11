@@ -261,6 +261,16 @@ extension DashboardRootViewController {
     
     internal func listenForEvents() {
         headerView.listenForEvents()
+        
+        NotificationCenter
+            .default
+            .addObserver(
+                forName: .onGroupDeleted,
+                object: nil,
+                queue: .main
+            ) { [weak self] (_notification: Notification) in
+                self?.loadContactsAndSyncMessages()
+            }
     }
     
     

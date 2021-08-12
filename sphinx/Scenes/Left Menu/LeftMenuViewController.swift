@@ -207,15 +207,16 @@ extension LeftMenuViewController : UITableViewDelegate {
         case "left-menu.profile".localized:
             let profile = ProfileViewController.instantiate(rootViewController: rootViewController, delegate: self)
             goTo(vc: profile)
-            break
         case "left-menu.contacts".localized:
             let addressBook = AddressBookViewController.instantiate(rootViewController: rootViewController)
             goTo(vc: addressBook)
-            break
         case "left-menu.dashboard".localized:
-            let chatList = ChatListViewController.instantiate(rootViewController: rootViewController, delegate: self)
-            goTo(vc: chatList)
-            break
+            let dashboardRootVC = DashboardRootViewController.instantiate(
+                rootViewController: rootViewController,
+                leftMenuDelegate: self
+            )
+            
+            goTo(vc: dashboardRootVC)
         default:
             break
         }

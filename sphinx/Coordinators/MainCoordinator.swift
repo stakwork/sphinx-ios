@@ -82,6 +82,7 @@ final class MainCoordinator: NSObject {
         rootViewController.setInitialViewController(navigationController)
     }
     
+    
     func presentInitialDrawer() {
         let leftViewController = LeftMenuViewController.instantiate(rootViewController: rootViewController)
         let mainViewController = DashboardRootViewController.instantiate(

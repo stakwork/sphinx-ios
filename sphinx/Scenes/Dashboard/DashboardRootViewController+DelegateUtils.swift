@@ -59,15 +59,6 @@ extension DashboardRootViewController: UITextFieldDelegate {
     }
 }
 
-// TODO: Is there going to be a place for adding new contacts / tribes on the friends and tribes tab views?
-//extension DashboardRootViewController: NewContactVCDelegate {
-//    func shouldReloadContacts(reload: Bool) {
-//        if reload {
-////            loadFriendAndReload()
-//        }
-//    }
-//}
-
 
 extension DashboardRootViewController: QRCodeScannerDelegate {
     func didScanDeepLink() {

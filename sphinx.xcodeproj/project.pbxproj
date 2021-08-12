@@ -199,8 +199,6 @@
 		475BDD0E232AC25100C5BBD6 /* DayHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 475BDD0C232AC25100C5BBD6 /* DayHeaderTableViewCell.xib */; };
 		475BDD18232AC47C00C5BBD6 /* CreateInvoiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475BDD10232AC47C00C5BBD6 /* CreateInvoiceViewController.swift */; };
 		475BDD19232AC47C00C5BBD6 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475BDD11232AC47C00C5BBD6 /* ChatViewController.swift */; };
-		475BDD1A232AC47C00C5BBD6 /* ChatListViewLogicExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475BDD12232AC47C00C5BBD6 /* ChatListViewLogicExtension.swift */; };
-		475BDD1B232AC47C00C5BBD6 /* ChatListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475BDD13232AC47C00C5BBD6 /* ChatListViewController.swift */; };
 		475BDD1C232AC47C00C5BBD6 /* KeyboardHandlerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475BDD14232AC47C00C5BBD6 /* KeyboardHandlerViewController.swift */; };
 		475BDD1D232AC47C00C5BBD6 /* ChatViewControllerDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475BDD15232AC47C00C5BBD6 /* ChatViewControllerDelegates.swift */; };
 		475BDD1E232AC47C00C5BBD6 /* PayInvoiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475BDD16232AC47C00C5BBD6 /* PayInvoiceViewController.swift */; };
@@ -258,7 +256,6 @@
 		476A10B923A7E9E500817892 /* ContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 476A10B723A7E9E500817892 /* ContactTableViewCell.xib */; };
 		476A10BB23A91FCE00817892 /* APIChatsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476A10BA23A91FCE00817892 /* APIChatsExtension.swift */; };
 		476A10BE23AA8C8E00817892 /* SubscriptionDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476A10BD23AA8C8E00817892 /* SubscriptionDetailsViewController.swift */; };
-		476A10C023AABDE300817892 /* ChatListDelegatesExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476A10BF23AABDE300817892 /* ChatListDelegatesExtension.swift */; };
 		476EB46823C4F1AE009745E2 /* GroupContactCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476EB46623C4F1AE009745E2 /* GroupContactCollectionViewCell.swift */; };
 		476EB46923C4F1AE009745E2 /* GroupContactCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 476EB46723C4F1AE009745E2 /* GroupContactCollectionViewCell.xib */; };
 		476EB47023C50640009745E2 /* GroupAddedContactsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476EB46F23C50640009745E2 /* GroupAddedContactsDataSource.swift */; };
@@ -557,6 +554,7 @@
 		F394ECAD26825D3400529038 /* NewUserSignupFormViewController+FormSubmissionUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F394ECAC26825D3400529038 /* NewUserSignupFormViewController+FormSubmissionUtils.swift */; };
 		F394ECB12683CF5E00529038 /* NewUserGreetingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F394ECB02683CF5E00529038 /* NewUserGreetingViewController.swift */; };
 		F394ECB32683EB5A00529038 /* SphinxDesktopAdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F394ECB22683EB5A00529038 /* SphinxDesktopAdViewController.swift */; };
+		F39767C826C5A85F00DDFC0A /* LeftMenuDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F39767C726C5A85F00DDFC0A /* LeftMenuDelegate.swift */; };
 		F3A35CA826C43508007D35BD /* DashboardRootViewController+SocketManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3A35CA726C43508007D35BD /* DashboardRootViewController+SocketManagerDelegate.swift */; };
 		F3C92B272671FB6C005F0A42 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F3C92B262671FB6C005F0A42 /* README.md */; };
 		F3CE637726AFC44D006E37A0 /* DashboardRootViewController+DelegateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CE637626AFC44C006E37A0 /* DashboardRootViewController+DelegateUtils.swift */; };
@@ -802,8 +800,6 @@
 		475BDD0C232AC25100C5BBD6 /* DayHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DayHeaderTableViewCell.xib; sourceTree = "<group>"; };
 		475BDD10232AC47C00C5BBD6 /* CreateInvoiceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateInvoiceViewController.swift; sourceTree = "<group>"; };
 		475BDD11232AC47C00C5BBD6 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
-		475BDD12232AC47C00C5BBD6 /* ChatListViewLogicExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatListViewLogicExtension.swift; sourceTree = "<group>"; };
-		475BDD13232AC47C00C5BBD6 /* ChatListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatListViewController.swift; sourceTree = "<group>"; };
 		475BDD14232AC47C00C5BBD6 /* KeyboardHandlerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardHandlerViewController.swift; sourceTree = "<group>"; };
 		475BDD15232AC47C00C5BBD6 /* ChatViewControllerDelegates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewControllerDelegates.swift; sourceTree = "<group>"; };
 		475BDD16232AC47C00C5BBD6 /* PayInvoiceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayInvoiceViewController.swift; sourceTree = "<group>"; };
@@ -863,7 +859,6 @@
 		476A10BA23A91FCE00817892 /* APIChatsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIChatsExtension.swift; sourceTree = "<group>"; };
 		476A10BC23A9207700817892 /* sphinx 6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 6.xcdatamodel"; sourceTree = "<group>"; };
 		476A10BD23AA8C8E00817892 /* SubscriptionDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionDetailsViewController.swift; sourceTree = "<group>"; };
-		476A10BF23AABDE300817892 /* ChatListDelegatesExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListDelegatesExtension.swift; sourceTree = "<group>"; };
 		476EB46623C4F1AE009745E2 /* GroupContactCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupContactCollectionViewCell.swift; sourceTree = "<group>"; };
 		476EB46723C4F1AE009745E2 /* GroupContactCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GroupContactCollectionViewCell.xib; sourceTree = "<group>"; };
 		476EB46F23C50640009745E2 /* GroupAddedContactsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupAddedContactsDataSource.swift; sourceTree = "<group>"; };
@@ -1257,6 +1252,7 @@
 		F394ECAC26825D3400529038 /* NewUserSignupFormViewController+FormSubmissionUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NewUserSignupFormViewController+FormSubmissionUtils.swift"; sourceTree = "<group>"; };
 		F394ECB02683CF5E00529038 /* NewUserGreetingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewUserGreetingViewController.swift; sourceTree = "<group>"; };
 		F394ECB22683EB5A00529038 /* SphinxDesktopAdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SphinxDesktopAdViewController.swift; sourceTree = "<group>"; };
+		F39767C726C5A85F00DDFC0A /* LeftMenuDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftMenuDelegate.swift; sourceTree = "<group>"; };
 		F3A35CA726C43508007D35BD /* DashboardRootViewController+SocketManagerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DashboardRootViewController+SocketManagerDelegate.swift"; sourceTree = "<group>"; };
 		F3C92B262671FB6C005F0A42 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		F3C92B282671FCFD005F0A42 /* .Tor.version */ = {isa = PBXFileReference; lastKnownFileType = text; name = .Tor.version; path = Carthage/Build/.Tor.version; sourceTree = "<group>"; };
@@ -1790,16 +1786,16 @@
 		475BDC93232AC15200C5BBD6 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				473258AA241BD6E7006E6602 /* Common */,
-				477D9697244E0BF600830406 /* Chat List */,
-				477D9698244E0C0200830406 /* Chat */,
-				477D9699244E0C1B00830406 /* Chat Attachment */,
-				475BDD14232AC47C00C5BBD6 /* KeyboardHandlerViewController.swift */,
 				475BDD10232AC47C00C5BBD6 /* CreateInvoiceViewController.swift */,
+				4789E25A24EF07E2003991BE /* KeyboardEventsViewController.swift */,
+				475BDD14232AC47C00C5BBD6 /* KeyboardHandlerViewController.swift */,
+				47352E492440F54300E5CC7F /* MessageOptionsViewController.swift */,
 				475BDD16232AC47C00C5BBD6 /* PayInvoiceViewController.swift */,
 				4734D3C8241AA24C00D6957E /* PaymentTemplateViewController.swift */,
-				47352E492440F54300E5CC7F /* MessageOptionsViewController.swift */,
-				4789E25A24EF07E2003991BE /* KeyboardEventsViewController.swift */,
+				477D9698244E0C0200830406 /* Chat */,
+				477D9699244E0C1B00830406 /* Chat Attachment */,
+				477D9697244E0BF600830406 /* Chat List */,
+				473258AA241BD6E7006E6602 /* Common */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -2090,12 +2086,13 @@
 		475BDD62232BEE7C00C5BBD6 /* Left Menu */ = {
 			isa = PBXGroup;
 			children = (
-				4797E76024B8DDE400D13270 /* LeftMenu.storyboard */,
+				47E300DE234B81F800DB56DB /* LeftMenuAddFriendTableViewCell.swift */,
+				F39767C726C5A85F00DDFC0A /* LeftMenuDelegate.swift */,
+				47468FD623353C880072124A /* LeftMenuOptionTableViewCell.swift */,
 				475BDD63232BEEAB00C5BBD6 /* LeftMenuViewController.swift */,
 				F30884A62699123600CADDEB /* LeftMenuViewController+KarmaPurchaseUtils.swift */,
-				47468FD623353C880072124A /* LeftMenuOptionTableViewCell.swift */,
-				47E300DE234B81F800DB56DB /* LeftMenuAddFriendTableViewCell.swift */,
 				471FACD923E9BE48007DE1C8 /* SupportViewController.swift */,
+				4797E76024B8DDE400D13270 /* LeftMenu.storyboard */,
 			);
 			path = "Left Menu";
 			sourceTree = "<group>";
@@ -2341,9 +2338,6 @@
 		477D9697244E0BF600830406 /* Chat List */ = {
 			isa = PBXGroup;
 			children = (
-				475BDD13232AC47C00C5BBD6 /* ChatListViewController.swift */,
-				475BDD12232AC47C00C5BBD6 /* ChatListViewLogicExtension.swift */,
-				476A10BF23AABDE300817892 /* ChatListDelegatesExtension.swift */,
 			);
 			path = "Chat List";
 			sourceTree = "<group>";
@@ -3325,7 +3319,6 @@
 				47308DFF24FEE6E600FFAC6F /* SocketStringReader.swift in Sources */,
 				475BDCC9232AC21400C5BBD6 /* AddContactTableViewCell.swift in Sources */,
 				475154B02423E79E00477384 /* CommonVideoCallTableViewCell.swift in Sources */,
-				476A10C023AABDE300817892 /* ChatListDelegatesExtension.swift in Sources */,
 				4703CF8C25190032007B685C /* FileBubbleView.swift in Sources */,
 				47F258C02539DA1600122A5A /* PodcastCommentReceivedTableViewCell.swift in Sources */,
 				47468FEB233905AD0072124A /* NewContactViewController.swift in Sources */,
@@ -3393,7 +3386,6 @@
 				47D46A2C237B1D140005A548 /* SubscriptionFormButtonTableViewCell.swift in Sources */,
 				47893A9C240D8783002F675B /* Int.swift in Sources */,
 				47FA18CF2434D21A00469C8F /* TransactionMessageQueriesExtension.swift in Sources */,
-				475BDD1A232AC47C00C5BBD6 /* ChatListViewLogicExtension.swift in Sources */,
 				47893A9224095C74002F675B /* AudioBubbleView.swift in Sources */,
 				47949BCF24AA1031000D697B /* DeletedMessageSentTableViewCell.swift in Sources */,
 				4789E25F24F033B8003991BE /* SettingsTabsView.swift in Sources */,
@@ -3429,7 +3421,6 @@
 				475BDD5C232AE26E00C5BBD6 /* TransactionMessage+CoreDataClass.swift in Sources */,
 				475723A9247EBB56001ADC7E /* CustomAudioPlayer.swift in Sources */,
 				473842F7239197E700AA640F /* FullScreenImageView.swift in Sources */,
-				475BDD1B232AC47C00C5BBD6 /* ChatListViewController.swift in Sources */,
 				47AAFC82238EFCE600E30BDA /* APIAttachmentsExtension.swift in Sources */,
 				4787F878247449DC00CCE8B9 /* GroupTagTableViewCell.swift in Sources */,
 				47D03DF82510F3D20077A968 /* URLResponse.swift in Sources */,
@@ -3619,6 +3610,7 @@
 				477DB72824B4BBF200D6323F /* GroupRemovedTableViewCell.swift in Sources */,
 				47A06CA624A3AC9A00BE468C /* DeepLinksHandlerHelper.swift in Sources */,
 				478DCF9E2343D7AC009A03D6 /* SetDataViewController.swift in Sources */,
+				F39767C826C5A85F00DDFC0A /* LeftMenuDelegate.swift in Sources */,
 				479A03E92583A7180093DB30 /* LocalNetworkPermissionService.swift in Sources */,
 				471FACD823E9B65C007DE1C8 /* EmailHelper.swift in Sources */,
 				47904C1F24BF403400710E7A /* NotificationSoundTableViewCell.swift in Sources */,

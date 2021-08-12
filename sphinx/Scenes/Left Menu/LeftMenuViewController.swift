@@ -135,11 +135,19 @@ class LeftMenuViewController: UIViewController {
     
     func goToChatList() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        if let centerVC = appDelegate.getCurrentVC(), centerVC.isKind(of: ChatViewController.self) {
+        
+        if
+            let centerVC = appDelegate.getCurrentVC(),
+            centerVC.isKind(of: DashboardRootViewController.self
+        ) {
             centerVC.navigationController?.popViewController(animated: false)
         } else {
-            let chatList = ChatListViewController.instantiate(rootViewController: rootViewController, delegate: self)
-            goTo(vc: chatList)
+            let dashboardRootVC = DashboardRootViewController.instantiate(
+                rootViewController: rootViewController,
+                leftMenuDelegate: self
+            )
+            
+            goTo(vc: dashboardRootVC)
         }
     }
     
@@ -275,7 +283,7 @@ extension LeftMenuViewController : AddFriendRowButtonDelegate {
     }
 }
 
-extension LeftMenuViewController : MenuDelegate {
+extension LeftMenuViewController : LeftMenuDelegate {
     func shouldOpenLeftMenu() {
         if let drawer = rootViewController?.getDrawer() {
             drawer.setDrawerState(.opened, animated: true)

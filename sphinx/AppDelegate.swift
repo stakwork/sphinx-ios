@@ -241,10 +241,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func isOnChatList() -> Bool {
-        if let _ = getCurrentVC() as? ChatListViewController {
-            return true
-        }
-        return false
+        getCurrentVC() is DashboardRootViewController
     }
 
     func hideAccessoryView() {
@@ -277,13 +274,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if let currentVC = currentVC as? ChatViewController {
                 UserDefaults.Keys.chatId.removeValue()
                 currentVC.fetchNewData()
-            } else if let currentVC = currentVC as? ChatListViewController {
-                let shouldTakeToChat = UserDefaults.Keys.chatId.get(defaultValue: -1) >= 0
+            } else if let dashboardRootVC = currentVC as? DashboardRootViewController {
+                let shouldDeepLinkIntoChatDetails = UserDefaults.Keys.chatId.get(defaultValue: -1) >= 0
 
-                if shouldTakeToChat {
-                    currentVC.handleDeepLinksAndPush()
+                if shouldDeepLinkIntoChatDetails {
+                    dashboardRootVC.handleDeepLinksAndPush()
                 } else {
-                    currentVC.loadFriendAndReload()
+                    dashboardRootVC.loadContactsAndSyncMessages()
                 }
             }
         }
@@ -293,8 +290,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let currentVC = getCurrentVC() {
             if let currentVC = currentVC as? ChatViewController {
                 currentVC.initialLoad()
-            } else if let currentVC = currentVC as? ChatListViewController {
-                currentVC.initialLoad(true)
+            } else if let dashboardRootVC = currentVC as? DashboardRootViewController {
+                dashboardRootVC.loadContactsAndSyncMessages()
             }
         }
     }
@@ -304,8 +301,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func setMessagesAsSeen() {
-        if let roowVController = window?.rootViewController as? RootViewController,
-           let currentVC = roowVController.getLastCenterViewController() as? ChatViewController,
+        if let rootVController = window?.rootViewController as? RootViewController,
+           let currentVC = rootVController.getLastCenterViewController() as? ChatViewController,
            let currentChat = currentVC.chat {
             currentChat.setChatMessagesAsSeen()
         }

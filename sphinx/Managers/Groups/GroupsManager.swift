@@ -91,8 +91,12 @@ class GroupsManager {
             
             let tribeInfo = getGroupInfo(query: joinTribeQuery)
             
-            if let uuid = tribeInfo?.uuid, let chat = Chat.getChatWith(uuid: uuid), let chatLitsVC = vc as? ChatListViewController {
-                chatLitsVC.presentChatVC(object: chat, animated: true)
+            if
+                let uuid = tribeInfo?.uuid,
+                let chat = Chat.getChatWith(uuid: uuid),
+                let dashboardRootVC = vc as? DashboardRootViewController
+            {
+                dashboardRootVC.presentChatDetailsVC(for: chat, shouldAnimate: true)
                 return true
             }
             

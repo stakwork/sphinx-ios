@@ -273,7 +273,7 @@ class API {
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             let centerVC = appDelegate.getCurrentVC()
 
-            if centerVC?.isKind(of: ChatListViewController.self) ?? false {
+            if centerVC?.isKind(of: DashboardRootViewController.self) ?? false {
                 self.messageBubbleHelper.showGenericMessageView(text: "network.connection.lost".localized, delay: 3)
             }
 

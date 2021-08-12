@@ -27,15 +27,15 @@ class DashboardRootViewController: RootViewController {
         }
     }
     
-
+    
     internal var rootViewController: RootViewController!
-    internal weak var leftMenuDelegate: MenuDelegate?
-
+    internal weak var leftMenuDelegate: LeftMenuDelegate?
+    
     internal let onionConnector = SphinxOnionConnector.sharedInstance
     internal let socketManager = SphinxSocketManager.sharedInstance
     internal let refreshControl = UIRefreshControl()
     internal let newBubbleHelper = NewMessageBubbleHelper()
-
+    
     
     internal lazy var feedsListViewController = {
         FeedsListViewController.instantiate()
@@ -64,7 +64,7 @@ class DashboardRootViewController: RootViewController {
         didSet {
             let newViewController = mainContentViewController(forActiveTab: activeTab)
             let oldViewController = mainContentViewController(forActiveTab: oldValue)
-
+            
             oldViewController.removeFromParent()
             
             addChildVC(
@@ -75,7 +75,7 @@ class DashboardRootViewController: RootViewController {
             loadDataOnTabChange(to: activeTab)
         }
     }
-
+    
     
     var isLoading = false {
         didSet {
@@ -92,14 +92,14 @@ class DashboardRootViewController: RootViewController {
         }
     }
 }
-    
+
 
 // MARK: - Instantiation
 extension DashboardRootViewController {
-
+    
     static func instantiate(
         rootViewController: RootViewController,
-        leftMenuDelegate: MenuDelegate
+        leftMenuDelegate: LeftMenuDelegate
     ) -> DashboardRootViewController {
         let viewController = StoryboardScene.Dashboard.dashboardRootViewController.instantiate()
         
@@ -146,22 +146,28 @@ extension DashboardRootViewController {
 // MARK: -  Public Methods
 extension DashboardRootViewController {
     
-    //    public func goToChat() {
-    //        if let chatId = UserDefaults.Keys.chatId.get(defaultValue: -1), let chat = Chat.getChatWith(id: chatId) {
-    //            presentChatVC(object: chat, fromPush: true)
-    //        }
-    //        if let contactId = UserDefaults.Keys.contactId.get(defaultValue: -1), let contact = UserContact.getContactWith(id: contactId) {
-    //            presentChatVC(object: contact, fromPush: true)
-    //        }
-    //        UserDefaults.Keys.contactId.removeValue()
-    //        UserDefaults.Keys.chatId.removeValue()
-    //    }
+    public func handleDeepLinksAndPush() {
+        deepLinkIntoChatDetails()
+        handleLinkQueries()
+    }
+
+    
+    public func deepLinkIntoChatDetails() {
+        if
+            let chatId = UserDefaults.Keys.chatId.get(defaultValue: -1),
+            let chat = Chat.getChatWith(id: chatId)
+        {
+            presentChatDetailsVC(for: chat, shouldFetchNewChatData: true)
+        }
+
+        UserDefaults.Keys.chatId.removeValue()
+    }
 }
 
 
 // MARK: -  Action Handling
 extension DashboardRootViewController {
-
+    
     @IBAction func bottomBarButtonTouched(_ sender: UIButton) {
         guard let button = BottomBarButton(rawValue: sender.tag) else {
             preconditionFailure()
@@ -213,7 +219,7 @@ extension DashboardRootViewController {
             paymentMode: CreateInvoiceViewController.paymentMode.send,
             rootViewController: rootViewController
         )
-
+        
         presentNavigationControllerWith(vc: viewController)
     }
     
@@ -223,7 +229,7 @@ extension DashboardRootViewController {
             delegate: self,
             rootViewController: rootViewController
         )
-
+        
         presentNavigationControllerWith(vc: viewController)
     }
 }
@@ -251,7 +257,7 @@ extension DashboardRootViewController {
         
         searchBarContainer.addShadow(location: VerticalLocation.bottom, opacity: 0.15, radius: 3.0)
         bottomBarContainer.addShadow(location: VerticalLocation.top, opacity: 0.2, radius: 3.0)
-
+        
         searchBar.layer.borderColor = UIColor.Sphinx.Divider.resolvedCGColor(with: self.view)
         searchBar.layer.borderWidth = 1
         searchBar.layer.cornerRadius = searchBar.frame.height / 2
@@ -333,7 +339,7 @@ extension DashboardRootViewController {
         newBubbleHelper.hideLoadingWheel()
         isLoading = false
     }
-
+    
     
     internal func presentChatDetailsVC(
         for chat: Chat,

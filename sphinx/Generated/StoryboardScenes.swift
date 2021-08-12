@@ -28,8 +28,6 @@ internal enum StoryboardScene {
         internal static let storyboardName = "Chat"
         internal static let chatViewController = SceneType<ChatViewController>(storyboard: Chat.self, identifier: "ChatViewController")
 
-        internal static let chatListViewController = SceneType<ChatListViewController>(storyboard: Chat.self, identifier: "ChatListViewController")
-
         internal static let createInvoiceViewController = SceneType<CreateInvoiceViewController>(storyboard: Chat.self, identifier: "CreateInvoiceViewController")
 
         internal static let payInvoiceViewController = SceneType<PayInvoiceViewController>(storyboard: Chat.self, identifier: "PayInvoiceViewController")

@@ -117,6 +117,6 @@ final class MainCoordinator: NSObject {
     }
 }
 
-extension MainCoordinator : MenuDelegate {
+extension MainCoordinator : LeftMenuDelegate {
     func shouldOpenLeftMenu() {}
 }

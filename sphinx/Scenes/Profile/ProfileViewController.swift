@@ -10,7 +10,7 @@ import UIKit
 
 class ProfileViewController: KeyboardEventsViewController {
     
-    private weak var delegate: MenuDelegate?
+    private weak var delegate: LeftMenuDelegate?
     
     @IBOutlet weak var viewTitle: UILabel!
     @IBOutlet weak var profileImageView: UIImageView!
@@ -84,7 +84,7 @@ class ProfileViewController: KeyboardEventsViewController {
         case RelayUrl
     }
     
-    static func instantiate(rootViewController : RootViewController, delegate: MenuDelegate) -> ProfileViewController {
+    static func instantiate(rootViewController : RootViewController, delegate: LeftMenuDelegate) -> ProfileViewController {
         let viewController = StoryboardScene.Profile.profileViewController.instantiate()
         viewController.rootViewController = rootViewController
         viewController.contactsService = rootViewController.contactsService

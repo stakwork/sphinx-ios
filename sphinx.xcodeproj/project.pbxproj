@@ -166,12 +166,7 @@
 		475BDCB7232AC1E800C5BBD6 /* PaymentInvoiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475BDCAE232AC1E800C5BBD6 /* PaymentInvoiceView.swift */; };
 		475BDCB8232AC1E800C5BBD6 /* PaymentInvoiceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 475BDCAF232AC1E800C5BBD6 /* PaymentInvoiceView.xib */; };
 		475BDCBA232AC1E800C5BBD6 /* ChatAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475BDCB1232AC1E800C5BBD6 /* ChatAccessoryView.swift */; };
-		475BDCBD232AC1F000C5BBD6 /* ChatListDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475BDCBB232AC1F000C5BBD6 /* ChatListDataSource.swift */; };
 		475BDCBE232AC1F000C5BBD6 /* ChatDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475BDCBC232AC1F000C5BBD6 /* ChatDataSource.swift */; };
-		475BDCC6232AC21400C5BBD6 /* ChatListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 475BDCC2232AC21300C5BBD6 /* ChatListTableViewCell.xib */; };
-		475BDCC7232AC21400C5BBD6 /* ChatListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475BDCC3232AC21400C5BBD6 /* ChatListTableViewCell.swift */; };
-		475BDCC8232AC21400C5BBD6 /* AddContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 475BDCC4232AC21400C5BBD6 /* AddContactTableViewCell.xib */; };
-		475BDCC9232AC21400C5BBD6 /* AddContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475BDCC5232AC21400C5BBD6 /* AddContactTableViewCell.swift */; };
 		475BDCD0232AC23100C5BBD6 /* ExpiredInvoiceCommonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475BDCCD232AC23100C5BBD6 /* ExpiredInvoiceCommonTableViewCell.swift */; };
 		475BDCD1232AC23100C5BBD6 /* InvoiceCommonChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475BDCCE232AC23100C5BBD6 /* InvoiceCommonChatTableViewCell.swift */; };
 		475BDCD2232AC23100C5BBD6 /* CommonChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475BDCCF232AC23100C5BBD6 /* CommonChatTableViewCell.swift */; };
@@ -767,12 +762,7 @@
 		475BDCAE232AC1E800C5BBD6 /* PaymentInvoiceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentInvoiceView.swift; sourceTree = "<group>"; };
 		475BDCAF232AC1E800C5BBD6 /* PaymentInvoiceView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PaymentInvoiceView.xib; sourceTree = "<group>"; };
 		475BDCB1232AC1E800C5BBD6 /* ChatAccessoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatAccessoryView.swift; sourceTree = "<group>"; };
-		475BDCBB232AC1F000C5BBD6 /* ChatListDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatListDataSource.swift; sourceTree = "<group>"; };
 		475BDCBC232AC1F000C5BBD6 /* ChatDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatDataSource.swift; sourceTree = "<group>"; };
-		475BDCC2232AC21300C5BBD6 /* ChatListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatListTableViewCell.xib; sourceTree = "<group>"; };
-		475BDCC3232AC21400C5BBD6 /* ChatListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatListTableViewCell.swift; sourceTree = "<group>"; };
-		475BDCC4232AC21400C5BBD6 /* AddContactTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddContactTableViewCell.xib; sourceTree = "<group>"; };
-		475BDCC5232AC21400C5BBD6 /* AddContactTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContactTableViewCell.swift; sourceTree = "<group>"; };
 		475BDCCD232AC23100C5BBD6 /* ExpiredInvoiceCommonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpiredInvoiceCommonTableViewCell.swift; sourceTree = "<group>"; };
 		475BDCCE232AC23100C5BBD6 /* InvoiceCommonChatTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InvoiceCommonChatTableViewCell.swift; sourceTree = "<group>"; };
 		475BDCCF232AC23100C5BBD6 /* CommonChatTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonChatTableViewCell.swift; sourceTree = "<group>"; };
@@ -1794,7 +1784,6 @@
 				4734D3C8241AA24C00D6957E /* PaymentTemplateViewController.swift */,
 				477D9698244E0C0200830406 /* Chat */,
 				477D9699244E0C1B00830406 /* Chat Attachment */,
-				477D9697244E0BF600830406 /* Chat List */,
 				473258AA241BD6E7006E6602 /* Common */,
 			);
 			path = "View Controllers";
@@ -1804,7 +1793,6 @@
 			isa = PBXGroup;
 			children = (
 				4734D3CC241AA8CB00D6957E /* Payment Templates */,
-				475BDCC1232AC20700C5BBD6 /* Chat List */,
 				475BDCBF232AC1FD00C5BBD6 /* Chat */,
 			);
 			path = "Table View Cells";
@@ -1815,7 +1803,6 @@
 			children = (
 				4734D3CD241AA8D400D6957E /* Payment Templates */,
 				475BDCBC232AC1F000C5BBD6 /* ChatDataSource.swift */,
-				475BDCBB232AC1F000C5BBD6 /* ChatListDataSource.swift */,
 			);
 			path = "Data Sources";
 			sourceTree = "<group>";
@@ -1879,17 +1866,6 @@
 				475BDCCA232AC21C00C5BBD6 /* Headers */,
 			);
 			path = Chat;
-			sourceTree = "<group>";
-		};
-		475BDCC1232AC20700C5BBD6 /* Chat List */ = {
-			isa = PBXGroup;
-			children = (
-				475BDCC5232AC21400C5BBD6 /* AddContactTableViewCell.swift */,
-				475BDCC4232AC21400C5BBD6 /* AddContactTableViewCell.xib */,
-				475BDCC3232AC21400C5BBD6 /* ChatListTableViewCell.swift */,
-				475BDCC2232AC21300C5BBD6 /* ChatListTableViewCell.xib */,
-			);
-			path = "Chat List";
 			sourceTree = "<group>";
 		};
 		475BDCCA232AC21C00C5BBD6 /* Headers */ = {
@@ -2333,13 +2309,6 @@
 				4779F186232AA0F300D35E81 /* Info.plist */,
 			);
 			path = sphinxUITests;
-			sourceTree = "<group>";
-		};
-		477D9697244E0BF600830406 /* Chat List */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "Chat List";
 			sourceTree = "<group>";
 		};
 		477D9698244E0C0200830406 /* Chat */ = {
@@ -3126,7 +3095,6 @@
 				47904C0C24BF352300710E7A /* aurora.caf in Resources */,
 				47D46A2D237B1D140005A548 /* SubscriptionFormButtonTableViewCell.xib in Resources */,
 				475BDD91232C087A00C5BBD6 /* TransactionPaymentReceivedTableViewCell.xib in Resources */,
-				475BDCC8232AC21400C5BBD6 /* AddContactTableViewCell.xib in Resources */,
 				47BE854B246492FD00BE4AE8 /* KeychainRestoreTableViewCell.xib in Resources */,
 				4797E75E24B8DDE400D13270 /* LeftMenu.storyboard in Resources */,
 				4779F16C232AA0F300D35E81 /* Assets.xcassets in Resources */,
@@ -3153,7 +3121,6 @@
 				47A79D402444EEFF005CD72F /* MessageOptionView.xib in Resources */,
 				F3CE638126AFF93F006E37A0 /* FeedFilterChipCollectionViewCell.xib in Resources */,
 				47F258CC253DD43400122A5A /* PinTimeSlider.xib in Resources */,
-				475BDCC6232AC21400C5BBD6 /* ChatListTableViewCell.xib in Resources */,
 				47183CBC2549DF0200E6FD19 /* PodcastBoostReceivedTableViewCell.xib in Resources */,
 				475BDCFE232AC24600C5BBD6 /* DirectPaymentReceivedTableViewCell.xib in Resources */,
 				475BDCEA232AC23B00C5BBD6 /* PaymentSentTableViewCell.xib in Resources */,
@@ -3317,7 +3284,6 @@
 				47669F3D23CF622000C17A77 /* APIGroupsExtension.swift in Sources */,
 				475BDCE5232AC23B00C5BBD6 /* DirectPaymentSentTableViewCell.swift in Sources */,
 				47308DFF24FEE6E600FFAC6F /* SocketStringReader.swift in Sources */,
-				475BDCC9232AC21400C5BBD6 /* AddContactTableViewCell.swift in Sources */,
 				475154B02423E79E00477384 /* CommonVideoCallTableViewCell.swift in Sources */,
 				4703CF8C25190032007B685C /* FileBubbleView.swift in Sources */,
 				47F258C02539DA1600122A5A /* PodcastCommentReceivedTableViewCell.swift in Sources */,
@@ -3496,7 +3462,6 @@
 				F3531C3D26BD505F00E9586C /* DashboardChatsListDelegate.swift in Sources */,
 				F3D04020268BAB7500D54A94 /* InviteWelcomeViewController.swift in Sources */,
 				475154B32423E7FE00477384 /* VideoCallSentTableViewCell.swift in Sources */,
-				475BDCBD232AC1F000C5BBD6 /* ChatListDataSource.swift in Sources */,
 				47AA08C3234B8CF2002C69E2 /* AddFriendViewController.swift in Sources */,
 				479608F4256EAEB400A68FC1 /* MessageBoostView.swift in Sources */,
 				475154B62423F08A00477384 /* VideoCallBubbleView.swift in Sources */,
@@ -3585,7 +3550,6 @@
 				475BDD95232C2F9100C5BBD6 /* UILabel.swift in Sources */,
 				47904C2224BF54DA00710E7A /* NotificationSoundHelper.swift in Sources */,
 				473258AC241BD700006E6602 /* CommonPaymentViewController.swift in Sources */,
-				475BDCC7232AC21400C5BBD6 /* ChatListTableViewCell.swift in Sources */,
 				475BDD2C232ACA0700C5BBD6 /* String.swift in Sources */,
 				47F7273825791D8600A794B9 /* ContactLinkPreviewView.swift in Sources */,
 				476A10BE23AA8C8E00817892 /* SubscriptionDetailsViewController.swift in Sources */,

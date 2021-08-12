@@ -255,11 +255,18 @@ extension DashboardRootViewController {
     private func configureHeader() {
         headerView.delegate = self
         
-        searchBarContainer.addShadow(location: VerticalLocation.bottom, opacity: 0.15, radius: 3.0)
-        bottomBarContainer.addShadow(location: VerticalLocation.top, opacity: 0.2, radius: 3.0)
+        searchBarContainer.addShadow(
+            location: VerticalLocation.bottom,
+            opacity: 0.15,
+            radius: 3.0
+        )
         
-        searchBar.layer.borderColor = UIColor.Sphinx.Divider.resolvedCGColor(with: self.view)
-        searchBar.layer.borderWidth = 1
+        bottomBarContainer.addShadow(
+            location: VerticalLocation.top,
+            opacity: 0.2,
+            radius: 3.0
+        )
+        
         searchBar.layer.cornerRadius = searchBar.frame.height / 2
     }
     

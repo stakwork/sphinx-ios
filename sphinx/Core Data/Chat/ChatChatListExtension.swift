@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-extension Chat : ChatListCommonObject {
+extension Chat: ChatListCommonObject {
     
     public func getObjectId() -> Int {
         return self.id

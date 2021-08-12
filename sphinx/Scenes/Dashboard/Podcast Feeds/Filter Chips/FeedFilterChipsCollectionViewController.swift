@@ -140,6 +140,12 @@ extension FeedFilterChipsCollectionViewController {
         collectionView.collectionViewLayout = makeLayout()
         
         collectionView.backgroundColor = .Sphinx.DashboardHeader
+        collectionView.addShadow(
+            location: VerticalLocation.bottom,
+            opacity: 0.4,
+            radius: 3.0
+        )
+        
         collectionView.isScrollEnabled = false
         collectionView.delegate = self
     }

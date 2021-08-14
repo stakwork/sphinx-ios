@@ -34,33 +34,28 @@ extension DashboardRootViewController: SocketManagerDelegate {
             loadContactsAndSyncMessages()
         } else {
             chatsListViewModel.updateContactsAndChats()
+            loadContactsAndSyncMessages()
         }
     }
     
     
     func didReceiveConfirmation(message: TransactionMessage) {
         chatsListViewModel.updateContactsAndChats()
+        updateCurrentViewControllerData()
     }
     
     func didReceivePurchaseUpdate(message: TransactionMessage) {
         chatsListViewModel.updateContactsAndChats()
+        updateCurrentViewControllerData()
     }
     
     
     func didUpdateContact(contact: UserContact) {
-        if activeTab == .friends {
-            contactChatsContainerViewController.chats = chatsListViewModel.contactChats
-        } else if activeTab == .tribes {
-            tribeChatsContainerViewController.chats = chatsListViewModel.tribeChats
-        }
+        updateCurrentViewControllerData()
     }
     
     func didUpdateChat(chat: Chat) {
-        if activeTab == .friends {
-            contactChatsContainerViewController.chats = chatsListViewModel.contactChats
-        } else if activeTab == .tribes {
-            tribeChatsContainerViewController.chats = chatsListViewModel.tribeChats
-        }
+        updateCurrentViewControllerData()
     }
     
     

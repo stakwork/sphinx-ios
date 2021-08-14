@@ -14,10 +14,29 @@ class ChatsContainerViewController: UIViewController {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
                 
-                self.chatsCollectionViewController.chats = self.chats
-                self.chatsCollectionViewController.updateSnapshot()
+                self.chatsCollectionViewController.chats = self.chats.sorted(by: Self.sortChatsForList)
+                self.chatsCollectionViewController.updateSnapshot(shouldAnimate: true)
             }
         }
+    }
+    
+    
+    private static func sortChatsForList(_ firstChat: Chat, secondChat: Chat) -> Bool {
+        if firstChat.isPending() || secondChat.isPending() {
+            return firstChat.isPending() && !secondChat.isPending()
+        }
+        
+        if let firstChatDate = firstChat.getOrderDate() {
+            if let secondChatDate = secondChat.getOrderDate() {
+                return firstChatDate > secondChatDate
+            } else {
+                return true
+            }
+        } else if let _ = secondChat.getOrderDate() {
+            return false
+        }
+        
+        return firstChat.getName().lowercased() < secondChat.getName().lowercased()
     }
 }
 
@@ -34,7 +53,7 @@ extension ChatsContainerViewController {
             .chatsContainerViewController
             .instantiate()
         
-        viewController.chats = chats
+        viewController.chats = chats.sorted(by: sortChatsForList)
         viewController.chatsListDelegate = chatsListDelegate
         
         return viewController

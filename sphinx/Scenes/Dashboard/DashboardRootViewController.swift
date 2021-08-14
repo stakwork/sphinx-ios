@@ -36,7 +36,6 @@ class DashboardRootViewController: RootViewController {
     internal let refreshControl = UIRefreshControl()
     internal let newBubbleHelper = NewMessageBubbleHelper()
     
-    
     internal lazy var feedsListViewController = {
         FeedsListViewController.instantiate()
     }()
@@ -121,7 +120,10 @@ extension DashboardRootViewController {
         searchTextField.delegate = self
         activeTab = .feed
         
+        setupHeaderViews()
         listenForEvents()
+        
+        isLoading = true
     }
     
     
@@ -130,15 +132,17 @@ extension DashboardRootViewController {
         
         rootViewController.setStatusBarColor(light: true)
         socketManager.setDelegate(delegate: self)
-        
-        configureHeader()
+        headerView.delegate = self
     }
     
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        headerView.updateBalance()
         headerView.showBalance()
+        
+        loadDataOnTabChange(to: activeTab)
     }
 }
 
@@ -252,9 +256,7 @@ extension DashboardRootViewController {
     }
     
     
-    private func configureHeader() {
-        headerView.delegate = self
-        
+    internal func setupHeaderViews() {
         searchBarContainer.addShadow(
             location: VerticalLocation.bottom,
             opacity: 0.15,
@@ -303,6 +305,9 @@ extension DashboardRootViewController {
     
     
     internal func loadContactsAndSyncMessages() {
+        isLoading = true
+        headerView.updateBalance()
+        
         chatsListViewModel.loadFriends() { [weak self] in
             guard let self = self else { return }
             
@@ -322,27 +327,32 @@ extension DashboardRootViewController {
     }
     
     
-    internal func loadDataOnTabChange(to activeTab: DashboardTab) {
+    internal func updateCurrentViewControllerData() {
         switch activeTab {
         case .feed:
             break
         case .friends:
-            // TODO: Maybe call `loadContactsAndSyncMessages` here instead, and then set the
-            // new `chats` on the active tab
-            // controller within the completion handler there?
-            chatsListViewModel.updateContactsAndChats()
             contactChatsContainerViewController.chats = chatsListViewModel.contactChats
         case .tribes:
-            // TODO: Maybe call `loadContactsAndSyncMessages` here instead, and then set the
-            // new `chats` on the active tab
-            // controller within the completion handler there?
-            chatsListViewModel.updateContactsAndChats()
             tribeChatsContainerViewController.chats = chatsListViewModel.tribeChats
         }
     }
     
     
+    internal func loadDataOnTabChange(to activeTab: DashboardTab) {
+        switch activeTab {
+        case .feed:
+            finishLoading()
+        case .friends:
+            loadContactsAndSyncMessages()
+        case .tribes:
+            loadContactsAndSyncMessages()
+        }
+    }
+    
+    
     internal func finishLoading() {
+        updateCurrentViewControllerData()
         newBubbleHelper.hideLoadingWheel()
         isLoading = false
     }

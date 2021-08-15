@@ -54,7 +54,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="walletIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Wrd-rU-q9k">
-                                        <rect key="frame" x="143.5" y="80" width="23" height="19"/>
+                                        <rect key="frame" x="137.5" y="80" width="23" height="19"/>
                                         <color key="tintColor" name="PlaceholderText"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="23" id="IbY-ae-QGC"/>
@@ -62,13 +62,13 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jUZ-jZ-gCS">
-                                        <rect key="frame" x="75" y="81" width="9" height="17"/>
+                                        <rect key="frame" x="75" y="81" width="8" height="17"/>
                                         <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="14"/>
                                         <color key="textColor" name="Text"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="karm" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1ZU-UV-KSf">
-                                        <rect key="frame" x="92" y="81" width="36.5" height="17.5"/>
+                                        <rect key="frame" x="91" y="81.5" width="31.5" height="16.5"/>
                                         <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="14"/>
                                         <color key="textColor" name="SecondaryText"/>
                                         <nil key="highlightedColor"/>
@@ -81,7 +81,7 @@
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CCI-OS-jEn">
-                                        <rect key="frame" x="73" y="115" width="128" height="32"/>
+                                        <rect key="frame" x="73" y="115" width="117" height="32"/>
                                         <color key="backgroundColor" name="PrimaryBlue"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="32" id="8XO-uc-aX3"/>
@@ -97,7 +97,7 @@
                                         </connections>
                                     </button>
                                     <activityIndicatorView opaque="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="Ape-yQ-iXr">
-                                        <rect key="frame" x="211" y="121" width="20" height="20"/>
+                                        <rect key="frame" x="200" y="121" width="20" height="20"/>
                                     </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -143,7 +143,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HAQ-va-tsh">
-                                                    <rect key="frame" x="75" y="23" width="31.5" height="19"/>
+                                                    <rect key="frame" x="75" y="23" width="30" height="19"/>
                                                     <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
                                                     <color key="textColor" name="Text"/>
                                                     <nil key="highlightedColor"/>

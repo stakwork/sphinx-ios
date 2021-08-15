@@ -43,9 +43,28 @@ extension ChatsCollectionViewController {
     enum CollectionViewSection: Int, CaseIterable {
         case all
     }
+    
+    enum DataSourceItem: Hashable {
+        case chat(Chat)
+        
+        static func == (lhs: DataSourceItem, rhs: DataSourceItem) -> Bool {
+            switch (lhs, rhs) {
+            case (.chat(let chatA), .chat(let chatB)):
+                return chatA.uuid == chatB.uuid
+            }
+         }
+
+        func hash(into hasher: inout Hasher) {
+            switch self {
+            case .chat(let chat):
+                hasher.combine(chat.uuid)
+            }
+        }
+    }
+
 
     typealias CollectionViewCell = ChatListCollectionViewCell
-    typealias CellDataItem = Chat
+    typealias CellDataItem = DataSourceItem
     typealias DataSource = UICollectionViewDiffableDataSource<CollectionViewSection, CellDataItem>
     typealias DataSourceSnapshot = NSDiffableDataSourceSnapshot<CollectionViewSection, CellDataItem>
 }
@@ -205,7 +224,7 @@ extension ChatsCollectionViewController {
 extension ChatsCollectionViewController {
 
     func makeCellProvider(for collectionView: UICollectionView) -> DataSource.CellProvider {
-        { (collectionView, indexPath, chat) -> UICollectionViewCell? in
+        { (collectionView, indexPath, chatItem) -> UICollectionViewCell? in
             let section = CollectionViewSection.allCases[indexPath.section]
 
             switch section {
@@ -215,7 +234,11 @@ extension ChatsCollectionViewController {
                     for: indexPath
                 ) as? CollectionViewCell else { return nil }
 
-                cell.chat = chat
+                switch chatItem {
+                case .chat(let chat):
+                    cell.chat = chat
+                }
+                //                cell.chat = chat
 
                 return cell
             }
@@ -241,18 +264,30 @@ extension ChatsCollectionViewController {
 // MARK: - Data Source Snapshot
 extension ChatsCollectionViewController {
 
-    func makeSnapshotForCurrentState() -> DataSourceSnapshot {
+    func makeSnapshotForCurrentState(
+        shouldForceReload: Bool = false
+    ) -> DataSourceSnapshot {
         var snapshot = DataSourceSnapshot()
 
         snapshot.appendSections(CollectionViewSection.allCases)
-        snapshot.appendItems(chats, toSection: .all)
+
+        let items = chats.map { DataSourceItem.chat($0) }
+        
+        snapshot.appendItems(items, toSection: .all)
+        
+        if shouldForceReload {
+            snapshot.reloadItems(items)
+        }
 
         return snapshot
     }
 
 
-    func updateSnapshot(shouldAnimate: Bool = true) {
-        let snapshot = makeSnapshotForCurrentState()
+    func updateSnapshot(
+        shouldAnimate: Bool = true,
+        shouldForceReload: Bool = false
+    ) {
+        let snapshot = makeSnapshotForCurrentState(shouldForceReload: shouldForceReload)
 
         dataSource.apply(snapshot, animatingDifferences: shouldAnimate)
     }
@@ -276,10 +311,11 @@ extension ChatsCollectionViewController {
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
-        guard let chat = dataSource.itemIdentifier(for: indexPath) else {
-            return
+        switch dataSource.itemIdentifier(for: indexPath) {
+        case .chat(let chat):
+            onChatSelected?(chat)
+        case .none:
+            break
         }
-        
-        onChatSelected?(chat)
     }
 }

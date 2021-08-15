@@ -15,7 +15,7 @@ class ChatsContainerViewController: UIViewController {
                 guard let self = self else { return }
                 
                 self.chatsCollectionViewController.chats = self.chats.sorted(by: Self.sortChatsForList)
-                self.chatsCollectionViewController.updateSnapshot(shouldAnimate: true)
+                self.chatsCollectionViewController.updateSnapshot(shouldAnimate: true, shouldForceReload: true)
             }
         }
     }

@@ -10,7 +10,11 @@ import UIKit
 
 class DeepLinksHandlerHelper {
     
-    static func didHandleLinkQuery(vc: UIViewController, rootViewController: RootViewController, delegate: PaymentInvoiceDelegate? = nil) -> Bool {
+    static func didHandleLinkQuery(
+        vc: UIViewController,
+        rootViewController: RootViewController,
+        delegate: PaymentInvoiceDelegate? = nil
+    ) -> Bool {
         if SubscriptionManager.sharedInstance.goToSubscriptionDetails(vc: vc, rootViewController: rootViewController) {
             return true
         }
@@ -19,7 +23,10 @@ class DeepLinksHandlerHelper {
             return true
         }
         
-        if GroupsManager.sharedInstance.goToGroupDetails(vc: vc, rootViewController: rootViewController) {
+        if GroupsManager.sharedInstance.goToGroupDetails(
+            vc: vc,
+            rootViewController: rootViewController
+        ) {
             return true
         }
         

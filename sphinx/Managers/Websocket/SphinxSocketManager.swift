@@ -221,7 +221,10 @@ extension SphinxSocketManager {
     }
     
     func togglePaidInvoiceIfNeeded(string: String) {
-        if let vc = delegate as? ChatListViewController, let presentedVC = vc.presentedViewController as? UINavigationController {
+        if
+            let vc = delegate as? DashboardRootViewController,
+            let presentedVC = vc.presentedViewController as? UINavigationController
+        {
             let viewControllers = presentedVC.viewControllers
             if viewControllers.count > 1 {
                 if let invoiceDetailsVC = viewControllers[1] as? QRCodeDetailViewController {
@@ -404,7 +407,7 @@ extension SphinxSocketManager {
     }
     
     func shouldUpdateObjectsOnView(contact: UserContact? = nil, chat: Chat? = nil) -> Bool {
-        if let _ = delegate as? ChatListViewController {
+        if delegate is DashboardRootViewController {
             return true
         }
         
@@ -439,7 +442,7 @@ extension SphinxSocketManager {
             return false
         }
         
-        if outgoing || delegate is ChatListViewController {
+        if outgoing || delegate is DashboardRootViewController {
             return false
         }
         

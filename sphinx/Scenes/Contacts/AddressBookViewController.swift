@@ -56,8 +56,15 @@ class AddressBookViewController: UIViewController {
     }
     
     @IBAction func backButtonTouched() {
-        if let drawer = rootViewController?.getDrawer(), let leftVC = drawer.drawerViewController as? LeftMenuViewController {
-            let chatList = ChatListViewController.instantiate(rootViewController: rootViewController, delegate: leftVC)
+        if
+            let drawer = rootViewController?.getDrawer(),
+            let leftVC = drawer.drawerViewController as? LeftMenuViewController
+        {
+            let chatList = DashboardRootViewController.instantiate(
+                rootViewController: rootViewController,
+                leftMenuDelegate: leftVC
+            )
+            
             rootViewController.setCenterViewController(vc: chatList)
         }
     }

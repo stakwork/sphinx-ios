@@ -31,6 +31,8 @@ public extension UIColor {
         public static let ChatListSelected = color("ChatListSelected")
         
         public static let DashboardHeader = color("DashboardHeader")
+        public static let DashboardFilterChipActiveText = color("DashboardFilterChipActiveText")
+        public static let DashboardFilterChipBackground = color("DashboardFilterChipBackground")
         public static let DashboardSearch = color("DashboardSearch")
         public static let DashboardWashedOutText = color("DashboardWashedOutText")
         

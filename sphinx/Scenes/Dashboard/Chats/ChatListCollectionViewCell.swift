@@ -68,6 +68,8 @@ extension ChatListCollectionViewCell {
         nameLabel.text = ""
         messageLabel.text = ""
         dateLabel.text = ""
+        lockSign.isHidden = true
+        muteImageView.isHidden = true
     }
     
     

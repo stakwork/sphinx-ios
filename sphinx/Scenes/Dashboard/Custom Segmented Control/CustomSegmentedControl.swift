@@ -54,26 +54,27 @@ class CustomSegmentedControl: UIView {
         
         backgroundColor = buttonBackgroundColor
         
-        updateView()
+        setupInitialViews()
     }
     
     
-    public func setButtonTitles(_ newButtonTitles: [String]) {
-        buttonTitles = newButtonTitles
+    public func configureFromOutlet(
+        buttonTitles: [String],
+        initialIndex: Int = 0,
+        delegate: CustomSegmentedControlDelegate?
+    ) {
+        self.buttonTitles = buttonTitles
+        self.selectedIndex = initialIndex
+        self.delegate = delegate
         
-        updateView()
+        setupInitialViews()
+        updateButtonsOnIndexChange()
     }
     
     
-    public func setIndex(to newIndex: Int) {
-        buttons.forEach({ $0.setTitleColor(buttonTextColor, for: .normal) })
-        
-        selectedIndex = newIndex
-
-        let button = buttons[newIndex]
-        button.setTitleColor(activeTextColor, for: .normal)
-
-        UIView.animate(withDuration: 0.2) {
+    private func updateButtonsOnIndexChange() {
+        UIView.animate(withDuration: 0.3) {
+            self.buttons[self.selectedIndex].setTitleColor(self.activeTextColor, for: .normal)
             self.selectorView.frame.origin.x = self.selectorPosition
         }
     }
@@ -85,14 +86,10 @@ class CustomSegmentedControl: UIView {
             
             if button == sender {
                 selectedIndex = buttonIndex
-                
+
                 delegate?.segmentedControlDidSwitch(self, to: selectedIndex)
                 
-                UIView.animate(withDuration: 0.3) {
-                    self.selectorView.frame.origin.x = self.selectorPosition
-                }
-                
-                button.setTitleColor(activeTextColor, for: .normal)
+                updateButtonsOnIndexChange()
             }
         }
     }
@@ -101,7 +98,7 @@ class CustomSegmentedControl: UIView {
 // MARK: -  View Configuration
 extension CustomSegmentedControl {
     
-    private func updateView() {
+    private func setupInitialViews() {
         createButtons()
         configureSelectorView()
         configureStackView()
@@ -125,14 +122,14 @@ extension CustomSegmentedControl {
     }
     
     
-    var selectorWidth: CGFloat {
+    private var selectorWidth: CGFloat {
         (
             frame.width / CGFloat(self.buttonTitles.count)
         ) * selectorWidthRatio
     }
     
     
-    var selectorPosition: CGFloat {
+    private var selectorPosition: CGFloat {
         let selectedTabStartX = (
             frame.width / CGFloat(buttonTitles.count)
         ) * CGFloat(selectedIndex)
@@ -184,6 +181,6 @@ extension CustomSegmentedControl {
             buttons.append(button)
         }
         
-        buttons[0].setTitleColor(activeTextColor, for: .normal)
+        buttons[selectedIndex].setTitleColor(activeTextColor, for: .normal)
     }
 }

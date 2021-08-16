@@ -18,12 +18,15 @@ class DashboardRootViewController: RootViewController {
     
     @IBOutlet weak var dashboardNavigationTabs: CustomSegmentedControl! {
         didSet {
-            dashboardNavigationTabs.setButtonTitles([
-                "dashboard.tabs.feed".localized,
-                "dashboard.tabs.friends".localized,
-                "dashboard.tabs.tribes".localized,
-            ])
-            dashboardNavigationTabs.delegate = self
+            dashboardNavigationTabs.configureFromOutlet(
+                buttonTitles: [
+                    "dashboard.tabs.feed".localized,
+                    "dashboard.tabs.friends".localized,
+                    "dashboard.tabs.tribes".localized,
+                ],
+                initialIndex: 1,
+                delegate: self
+            )
         }
     }
     
@@ -59,7 +62,7 @@ class DashboardRootViewController: RootViewController {
     }()
     
     
-    internal var activeTab: DashboardTab = .feed {
+    internal var activeTab: DashboardTab = .friends {
         didSet {
             let newViewController = mainContentViewController(forActiveTab: activeTab)
             let oldViewController = mainContentViewController(forActiveTab: oldValue)
@@ -118,7 +121,7 @@ extension DashboardRootViewController {
         
         navigationController?.isNavigationBarHidden = true
         searchTextField.delegate = self
-        activeTab = .feed
+        activeTab = .friends
         
         setupHeaderViews()
         listenForEvents()
@@ -142,6 +145,7 @@ extension DashboardRootViewController {
         headerView.updateBalance()
         headerView.showBalance()
         
+        handleDeepLinksAndPush()
         loadDataOnTabChange(to: activeTab)
     }
 }
@@ -304,7 +308,10 @@ extension DashboardRootViewController {
     }
     
     
-    internal func loadContactsAndSyncMessages() {
+    internal func loadContactsAndSyncMessages(
+        // TODO: Pass this into `finishLoading` to be more efficient with force reloading
+        shouldForceReloadOfViewsOnFinish: Bool = false
+    ) {
         isLoading = true
         headerView.updateBalance()
         
@@ -327,14 +334,24 @@ extension DashboardRootViewController {
     }
     
     
-    internal func updateCurrentViewControllerData() {
+    internal func updateCurrentViewControllerData(
+        shouldForceReload: Bool = false
+    ) {
         switch activeTab {
         case .feed:
             break
         case .friends:
-            contactChatsContainerViewController.chats = chatsListViewModel.contactChats
+            contactChatsContainerViewController.updateWithNewChats(
+                chatsListViewModel.contactChats,
+                shouldAnimate: true,
+                shouldForceReload: shouldForceReload
+            )
         case .tribes:
-            tribeChatsContainerViewController.chats = chatsListViewModel.tribeChats
+            tribeChatsContainerViewController.updateWithNewChats(
+                chatsListViewModel.tribeChats,
+                shouldAnimate: true,
+                shouldForceReload: shouldForceReload
+            )
         }
     }
     

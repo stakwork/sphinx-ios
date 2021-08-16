@@ -275,9 +275,9 @@ extension ChatsCollectionViewController {
         
         snapshot.appendItems(items, toSection: .all)
         
-        if shouldForceReload {
-            snapshot.reloadItems(items)
-        }
+//        if shouldForceReload {
+//            snapshot.reloadItems(items)
+//        }
 
         return snapshot
     }
@@ -285,11 +285,70 @@ extension ChatsCollectionViewController {
 
     func updateSnapshot(
         shouldAnimate: Bool = true,
-        shouldForceReload: Bool = false
+        shouldForceReload: Bool = false,
+        animationDelay: TimeInterval = 0.5
     ) {
-        let snapshot = makeSnapshotForCurrentState(shouldForceReload: shouldForceReload)
+//        var snapshot = makeSnapshotForCurrentState(shouldForceReload: shouldForceReload)
+        
+        var snapshot = DataSourceSnapshot()
 
-        dataSource.apply(snapshot, animatingDifferences: shouldAnimate)
+        snapshot.appendSections(CollectionViewSection.allCases)
+
+        let items = chats.map { DataSourceItem.chat($0) }
+        
+        snapshot.appendItems(items, toSection: .all)
+
+  
+//        if shouldForceReload {
+//            snapshot.reloadItems(items)
+//        }
+//
+//        dataSource.apply(snapshot, animatingDifferences: shouldAnimate)
+        
+        
+//        if shouldForceReload {
+////            snapshot.reloadItems(items)
+////            dataSource.apply(snapshot, animatingDifferences: false)
+//
+//            DispatchQueue.main.async {
+//                snapshot.reloadItems(items)
+////                self.dataSource.apply(snapshot, animatingDifferences: shouldAnimate)
+//                self.dataSource.apply(snapshot, animatingDifferences: false)
+////                snapshot.reloadItems(items)
+//            }
+//
+//        } else {
+//            dataSource.apply(snapshot, animatingDifferences: shouldAnimate)
+//        }
+//        dataSource.apply(snapshot, animatingDifferences: shouldAnimate)
+        
+        
+//        if shouldForceReload {
+////            snapshot.reloadItems(items)
+////            dataSource.apply(snapshot, animatingDifferences: false)
+//
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+//                snapshot.reloadItems(items)
+//                self.dataSource.apply(snapshot, animatingDifferences: false)
+//            }
+//        } else {
+//
+//        dataSource.apply(snapshot, animatingDifferences: shouldAnimate)
+//        }
+        
+        if shouldForceReload {
+            snapshot.reloadItems(items)
+        }
+        
+        if shouldAnimate {
+//            dataSource.apply(snapshot, animatingDifferences: false)
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + animationDelay) {
+                self.dataSource.apply(snapshot, animatingDifferences: true)
+            }
+        } else {
+            dataSource.apply(snapshot, animatingDifferences: false)
+        }
     }
 }
 

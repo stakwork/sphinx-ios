@@ -16,13 +16,21 @@ extension DashboardRootViewController: UITextFieldDelegate {
         case .feed:
             break
         case .friends:
-            contactChatsContainerViewController.chats = contactsService
-                .getChatListObjects()
-                .compactMap { $0 as? Chat }
+            contactChatsContainerViewController.updateWithNewChats(
+                contactsService
+                    .getChatListObjects()
+                    .compactMap { $0 as? Chat },
+                shouldAnimate: true,
+                shouldForceReload: true
+            )
         case .tribes:
-            tribeChatsContainerViewController.chats = contactsService
-                .getChatListObjects()
-                .compactMap { $0 as? Chat }
+            tribeChatsContainerViewController.updateWithNewChats(
+                contactsService
+                    .getChatListObjects()
+                    .compactMap { $0 as? Chat },
+                shouldAnimate: true,
+                shouldForceReload: true
+            )
         }
         
         return true
@@ -46,13 +54,21 @@ extension DashboardRootViewController: UITextFieldDelegate {
         case .feed:
             break
         case .friends:
-            contactChatsContainerViewController.chats = contactsService
-                .getChatsWith(searchString: searchString as String)
-                .filter { $0.isConversation() }
+            contactChatsContainerViewController.updateWithNewChats(
+                contactsService
+                    .getChatsWith(searchString: searchString as String)
+                    .filter { $0.isConversation() },
+                shouldAnimate: true,
+                shouldForceReload: true
+            )
         case .tribes:
-            tribeChatsContainerViewController.chats = contactsService
-                .getChatsWith(searchString: searchString as String)
-                .filter { $0.isPublicGroup() }
+            tribeChatsContainerViewController.updateWithNewChats(
+                contactsService
+                    .getChatsWith(searchString: searchString as String)
+                    .filter { $0.isConversation() },
+                shouldAnimate: true,
+                shouldForceReload: true
+            )
         }
             
         return true
@@ -94,5 +110,25 @@ extension DashboardRootViewController: PaymentInvoiceDelegate {
     func willDismissPresentedView(paymentCreated: Bool) {
         rootViewController.setStatusBarColor(light: true)
         headerView.updateBalance()
+    }
+}
+
+
+
+extension DashboardRootViewController: CustomSegmentedControlDelegate {
+    
+    func segmentedControlDidSwitch(
+        _ segmentedControl: CustomSegmentedControl,
+        to index: Int
+    ) {
+        activeTab = DashboardTab(rawValue: index)!
+    }
+}
+
+
+extension DashboardRootViewController: ChatListHeaderDelegate {
+    
+    func leftMenuButtonTouched() {
+        leftMenuDelegate?.shouldOpenLeftMenu()
     }
 }

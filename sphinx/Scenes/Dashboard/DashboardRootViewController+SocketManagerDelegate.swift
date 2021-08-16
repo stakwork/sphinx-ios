@@ -7,55 +7,32 @@
 import UIKit
 
 
-extension DashboardRootViewController: CustomSegmentedControlDelegate {
-    
-    func segmentedControlDidSwitch(
-        _ segmentedControl: CustomSegmentedControl,
-        to index: Int
-    ) {
-        activeTab = DashboardTab(rawValue: index)!
-    }
-}
-
-
-extension DashboardRootViewController: ChatListHeaderDelegate {
-    
-    func leftMenuButtonTouched() {
-        leftMenuDelegate?.shouldOpenLeftMenu()
-    }
-}
-
-
-
 extension DashboardRootViewController: SocketManagerDelegate {
     
     func didReceiveMessage(message: TransactionMessage, shouldSync: Bool) {
-        if shouldSync {
-            loadContactsAndSyncMessages()
-        } else {
-            chatsListViewModel.updateContactsAndChats()
-            loadContactsAndSyncMessages()
-        }
+        chatsListViewModel.updateContactsAndChats()
+        loadContactsAndSyncMessages()
+        updateCurrentViewControllerData(shouldForceReload: true)
     }
     
     
     func didReceiveConfirmation(message: TransactionMessage) {
         chatsListViewModel.updateContactsAndChats()
-        updateCurrentViewControllerData()
+        updateCurrentViewControllerData(shouldForceReload: true)
     }
     
     func didReceivePurchaseUpdate(message: TransactionMessage) {
         chatsListViewModel.updateContactsAndChats()
-        updateCurrentViewControllerData()
+        updateCurrentViewControllerData(shouldForceReload: true)
     }
     
     
     func didUpdateContact(contact: UserContact) {
-        updateCurrentViewControllerData()
+        updateCurrentViewControllerData(shouldForceReload: true)
     }
     
     func didUpdateChat(chat: Chat) {
-        updateCurrentViewControllerData()
+        updateCurrentViewControllerData(shouldForceReload: true)
     }
     
     

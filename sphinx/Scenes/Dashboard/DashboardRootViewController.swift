@@ -310,10 +310,7 @@ extension DashboardRootViewController {
     }
     
     
-    internal func loadContactsAndSyncMessages(
-        // TODO: Pass this into `finishLoading` to be more efficient with force reloading
-        shouldForceReloadOfViewsOnFinish: Bool = false
-    ) {
+    internal func loadContactsAndSyncMessages() {
         isLoading = true
         headerView.updateBalance()
         

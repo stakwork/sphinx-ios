@@ -9,7 +9,6 @@ extension DashboardRootViewController: DashboardChatsListDelegate {
         didSelectChat chat: Chat
     ) {
         loadContactsAndSyncMessages()
-//        loadContactsAndSyncMessages(shouldForceReloadOfViewsOnFinish: true)
         presentChatDetailsVC(for: chat)
         updateCurrentViewControllerData(shouldForceReload: true)
     }

@@ -32,7 +32,7 @@
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>GIPHY_API_KEY</key>
-	<string>REPLACE_WITH_VALID_API_KEY</string>
+	<string>XevWpaEjg3yzJf5aYm54kLrkM7ByIkAG</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSRequiresIPhoneOS</key>

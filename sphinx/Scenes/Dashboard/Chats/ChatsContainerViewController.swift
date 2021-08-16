@@ -54,8 +54,8 @@ extension ChatsContainerViewController {
     
     public func updateWithNewChats(
         _ chats: [Chat],
-        shouldAnimate: Bool = false,
-        shouldForceReload: Bool = false,
+        shouldAnimateChanges: Bool = false,
+        shouldForceReload: Bool = true,
         animationDelay: TimeInterval = 0.5
     ) {
         self.chats = chats.sorted(by: Self.sortChatsForList)
@@ -65,7 +65,7 @@ extension ChatsContainerViewController {
             
             self.chatsCollectionViewController.chats = self.chats
             self.chatsCollectionViewController.updateSnapshot(
-                shouldAnimate: shouldAnimate,
+                shouldAnimateChanges: shouldAnimateChanges,
                 shouldForceReload: shouldForceReload,
                 animationDelay: animationDelay
             )

@@ -78,6 +78,7 @@ class DashboardRootViewController: RootViewController {
         }
     }
     
+    var didFinishInitialLoading = false
     
     var isLoading = false {
         didSet {
@@ -231,6 +232,7 @@ extension DashboardRootViewController {
         presentNavigationControllerWith(vc: viewController)
     }
     
+    
     func requestSatsButtonTouched() {
         let viewController = CreateInvoiceViewController.instantiate(
             viewModel: ChatViewModel(),
@@ -335,7 +337,8 @@ extension DashboardRootViewController {
     
     
     internal func updateCurrentViewControllerData(
-        shouldForceReload: Bool = false
+        shouldForceReload: Bool = true,
+        shouldAnimateChanges: Bool = false
     ) {
         switch activeTab {
         case .feed:
@@ -343,13 +346,13 @@ extension DashboardRootViewController {
         case .friends:
             contactChatsContainerViewController.updateWithNewChats(
                 chatsListViewModel.contactChats,
-                shouldAnimate: true,
+                shouldAnimateChanges: shouldAnimateChanges,
                 shouldForceReload: shouldForceReload
             )
         case .tribes:
             tribeChatsContainerViewController.updateWithNewChats(
                 chatsListViewModel.tribeChats,
-                shouldAnimate: true,
+                shouldAnimateChanges: shouldAnimateChanges,
                 shouldForceReload: shouldForceReload
             )
         }
@@ -369,7 +372,12 @@ extension DashboardRootViewController {
     
     
     internal func finishLoading() {
-        updateCurrentViewControllerData()
+        defer { didFinishInitialLoading = true }
+        
+        updateCurrentViewControllerData(
+            shouldAnimateChanges: didFinishInitialLoading
+        )
+        
         newBubbleHelper.hideLoadingWheel()
         isLoading = false
     }

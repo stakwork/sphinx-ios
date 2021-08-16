@@ -20,7 +20,7 @@ extension DashboardRootViewController: UITextFieldDelegate {
                 contactsService
                     .getChatListObjects()
                     .compactMap { $0 as? Chat },
-                shouldAnimate: true,
+                shouldAnimateChanges: true,
                 shouldForceReload: true
             )
         case .tribes:
@@ -28,7 +28,7 @@ extension DashboardRootViewController: UITextFieldDelegate {
                 contactsService
                     .getChatListObjects()
                     .compactMap { $0 as? Chat },
-                shouldAnimate: true,
+                shouldAnimateChanges: true,
                 shouldForceReload: true
             )
         }
@@ -58,7 +58,7 @@ extension DashboardRootViewController: UITextFieldDelegate {
                 contactsService
                     .getChatsWith(searchString: searchString as String)
                     .filter { $0.isConversation() },
-                shouldAnimate: true,
+                shouldAnimateChanges: true,
                 shouldForceReload: true
             )
         case .tribes:
@@ -66,7 +66,7 @@ extension DashboardRootViewController: UITextFieldDelegate {
                 contactsService
                     .getChatsWith(searchString: searchString as String)
                     .filter { $0.isConversation() },
-                shouldAnimate: true,
+                shouldAnimateChanges: true,
                 shouldForceReload: true
             )
         }

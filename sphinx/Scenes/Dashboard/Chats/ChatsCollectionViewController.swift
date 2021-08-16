@@ -264,9 +264,7 @@ extension ChatsCollectionViewController {
 // MARK: - Data Source Snapshot
 extension ChatsCollectionViewController {
 
-    func makeSnapshotForCurrentState(
-        shouldForceReload: Bool = false
-    ) -> DataSourceSnapshot {
+    func makeSnapshotForCurrentState() -> DataSourceSnapshot {
         var snapshot = DataSourceSnapshot()
 
         snapshot.appendSections(CollectionViewSection.allCases)
@@ -275,21 +273,16 @@ extension ChatsCollectionViewController {
         
         snapshot.appendItems(items, toSection: .all)
         
-//        if shouldForceReload {
-//            snapshot.reloadItems(items)
-//        }
-
         return snapshot
     }
 
 
     func updateSnapshot(
-        shouldAnimate: Bool = true,
+        shouldAnimateChanges: Bool = true,
         shouldForceReload: Bool = false,
         animationDelay: TimeInterval = 0.5
     ) {
-//        var snapshot = makeSnapshotForCurrentState(shouldForceReload: shouldForceReload)
-        
+//        var snapshot = makeSnapshotForCurrentState()
         var snapshot = DataSourceSnapshot()
 
         snapshot.appendSections(CollectionViewSection.allCases)
@@ -298,51 +291,11 @@ extension ChatsCollectionViewController {
         
         snapshot.appendItems(items, toSection: .all)
 
-  
-//        if shouldForceReload {
-//            snapshot.reloadItems(items)
-//        }
-//
-//        dataSource.apply(snapshot, animatingDifferences: shouldAnimate)
-        
-        
-//        if shouldForceReload {
-////            snapshot.reloadItems(items)
-////            dataSource.apply(snapshot, animatingDifferences: false)
-//
-//            DispatchQueue.main.async {
-//                snapshot.reloadItems(items)
-////                self.dataSource.apply(snapshot, animatingDifferences: shouldAnimate)
-//                self.dataSource.apply(snapshot, animatingDifferences: false)
-////                snapshot.reloadItems(items)
-//            }
-//
-//        } else {
-//            dataSource.apply(snapshot, animatingDifferences: shouldAnimate)
-//        }
-//        dataSource.apply(snapshot, animatingDifferences: shouldAnimate)
-        
-        
-//        if shouldForceReload {
-////            snapshot.reloadItems(items)
-////            dataSource.apply(snapshot, animatingDifferences: false)
-//
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-//                snapshot.reloadItems(items)
-//                self.dataSource.apply(snapshot, animatingDifferences: false)
-//            }
-//        } else {
-//
-//        dataSource.apply(snapshot, animatingDifferences: shouldAnimate)
-//        }
-        
         if shouldForceReload {
             snapshot.reloadItems(items)
         }
         
-        if shouldAnimate {
-//            dataSource.apply(snapshot, animatingDifferences: false)
-            
+        if shouldAnimateChanges {
             DispatchQueue.main.asyncAfter(deadline: .now() + animationDelay) {
                 self.dataSource.apply(snapshot, animatingDifferences: true)
             }

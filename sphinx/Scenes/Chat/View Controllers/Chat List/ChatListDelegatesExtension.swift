@@ -121,6 +121,18 @@ extension ChatListViewController : QRCodeScannerDelegate {
     func didScanDeepLink() {
         handleLinkQueries()
     }
+    
+    func didScanPublicKey(string: String) {
+        let (existing, user) = string.isExistingContactPubkey()
+        if let user = user, existing {
+            UserDefaults.Keys.contactId.set(user.id)
+            goToChat()
+        } else {
+            let newContactVC = NewContactViewController.instantiate(rootViewController: rootViewController, pubkey: string)
+            newContactVC.delegate = self
+            present(newContactVC, animated: true, completion: nil)
+        }
+    }
 }
 
 extension ChatListViewController : WindowsManagerDelegate {

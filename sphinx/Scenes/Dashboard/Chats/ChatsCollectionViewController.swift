@@ -213,9 +213,7 @@ extension ChatsCollectionViewController {
     func configureDataSource(for collectionView: UICollectionView) {
         dataSource = makeDataSource(for: collectionView)
 
-        let snapshot = makeSnapshotForCurrentState()
-
-        dataSource.apply(snapshot, animatingDifferences: false)
+        updateSnapshot(shouldAnimateChanges: false, shouldForceReload: true, animationDelay: 0.0)
     }
 }
 

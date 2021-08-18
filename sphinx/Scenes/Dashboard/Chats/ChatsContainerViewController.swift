@@ -8,27 +8,7 @@ class ChatsContainerViewController: UIViewController {
     private var chatsCollectionViewController: ChatsCollectionViewController!
     private weak var chatsListDelegate: DashboardChatsListDelegate?
     
-  
     private(set) var chats: [Chat] = []
-    
-    
-    private static func sortChatsForList(_ firstChat: Chat, secondChat: Chat) -> Bool {
-        if firstChat.isPending() || secondChat.isPending() {
-            return firstChat.isPending() && !secondChat.isPending()
-        }
-        
-        if let firstChatDate = firstChat.getOrderDate() {
-            if let secondChatDate = secondChat.getOrderDate() {
-                return firstChatDate > secondChatDate
-            } else {
-                return true
-            }
-        } else if let _ = secondChat.getOrderDate() {
-            return false
-        }
-        
-        return firstChat.getName().lowercased() < secondChat.getName().lowercased()
-    }
 }
 
 
@@ -45,8 +25,7 @@ extension ChatsContainerViewController {
             .instantiate()
         
         viewController.chatsListDelegate = chatsListDelegate
-        
-        viewController.updateWithNewChats(chats, animationDelay: 0.0)
+        viewController.chats = chats
         
         return viewController
     }
@@ -58,18 +37,15 @@ extension ChatsContainerViewController {
         shouldForceReload: Bool = true,
         animationDelay: TimeInterval = 0.5
     ) {
-        self.chats = chats.sorted(by: Self.sortChatsForList)
+        self.chats = chats
         
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            
-            self.chatsCollectionViewController.chats = self.chats
-            self.chatsCollectionViewController.updateSnapshot(
-                shouldAnimateChanges: shouldAnimateChanges,
-                shouldForceReload: shouldForceReload,
-                animationDelay: animationDelay
-            )
-        }
+        
+        self.chatsCollectionViewController.chats = chats
+        self.chatsCollectionViewController.updateSnapshot(
+            shouldAnimateChanges: shouldAnimateChanges,
+            shouldForceReload: shouldForceReload,
+            animationDelay: animationDelay
+        )
     }
 }
 

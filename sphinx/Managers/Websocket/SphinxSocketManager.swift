@@ -454,6 +454,14 @@ extension SphinxSocketManager {
             return false
         }
         
+        if message.chat?.isMuted() ?? false {
+            return false
+        }
+        
+        if message.isPodcastPayment() {
+            return false
+        }
+        
         if !outgoing && message.shouldAvoidShowingBubble() {
             return false
         }

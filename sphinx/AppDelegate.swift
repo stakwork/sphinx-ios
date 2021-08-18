@@ -280,7 +280,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 if shouldDeepLinkIntoChatDetails {
                     dashboardRootVC.handleDeepLinksAndPush()
                 } else {
-                    dashboardRootVC.loadContactsAndSyncMessages()
+                    dashboardRootVC.loadContactsAndSyncMessages(
+                        shouldShowHeaderLoadingWheel: true
+                    )
                 }
             }
         }

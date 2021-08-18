@@ -80,10 +80,28 @@ class DashboardRootViewController: RootViewController {
     
     var didFinishInitialLoading = false
     
+    var shouldShowHeaderLoadingWheel = false {
+        didSet {
+            LoadingWheelHelper.toggleLoadingWheel(
+                loading: shouldShowHeaderLoadingWheel,
+                loadingWheel: headerView.loadingWheel,
+                loadingWheelColor: UIColor.white,
+                views: [
+                    searchBarContainer,
+                    mainContentContainerView,
+                    bottomBarContainer,
+                ]
+            )
+        }
+    }
+    
+    
     var isLoading = false {
         didSet {
             LoadingWheelHelper.toggleLoadingWheel(
-                loading: isLoading || onionConnector.isConnecting(),
+                loading:
+                    (isLoading && didFinishInitialLoading == false)
+                    || onionConnector.isConnecting(),
                 loadingWheel: headerView.loadingWheel,
                 loadingWheelColor: UIColor.white,
                 views: [
@@ -147,7 +165,10 @@ extension DashboardRootViewController {
         headerView.showBalance()
         
         handleDeepLinksAndPush()
-        loadDataOnTabChange(to: activeTab)
+        
+        if didFinishInitialLoading {
+            loadDataOnTabChange(to: activeTab)
+        }
     }
 }
 
@@ -310,8 +331,11 @@ extension DashboardRootViewController {
     }
     
     
-    internal func loadContactsAndSyncMessages() {
+    internal func loadContactsAndSyncMessages(
+        shouldShowHeaderLoadingWheel: Bool = false
+    ) {
         isLoading = true
+        self.shouldShowHeaderLoadingWheel = shouldShowHeaderLoadingWheel
         headerView.updateBalance()
         
         chatsListViewModel.loadFriends() { [weak self] in
@@ -335,7 +359,8 @@ extension DashboardRootViewController {
     
     internal func updateCurrentViewControllerData(
         shouldForceReload: Bool = true,
-        shouldAnimateChanges: Bool = false
+        shouldAnimateChanges: Bool = false,
+        animationDelay: TimeInterval = 0.5
     ) {
         switch activeTab {
         case .feed:
@@ -344,13 +369,15 @@ extension DashboardRootViewController {
             contactChatsContainerViewController.updateWithNewChats(
                 chatsListViewModel.contactChats,
                 shouldAnimateChanges: shouldAnimateChanges,
-                shouldForceReload: shouldForceReload
+                shouldForceReload: shouldForceReload,
+                animationDelay: animationDelay
             )
         case .tribes:
             tribeChatsContainerViewController.updateWithNewChats(
                 chatsListViewModel.tribeChats,
                 shouldAnimateChanges: shouldAnimateChanges,
-                shouldForceReload: shouldForceReload
+                shouldForceReload: shouldForceReload,
+                animationDelay: animationDelay
             )
         }
     }
@@ -377,6 +404,7 @@ extension DashboardRootViewController {
         
         newBubbleHelper.hideLoadingWheel()
         isLoading = false
+        shouldShowHeaderLoadingWheel = false
     }
     
     

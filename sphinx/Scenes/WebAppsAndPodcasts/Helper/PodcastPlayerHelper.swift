@@ -150,25 +150,29 @@ class PodcastPlayerHelper {
         chat?.savePodcastFeed(json: json)
         self.chat = chat
         
-        var podcastFeed = PodcastFeed()
-        podcastFeed.chatId = chat?.id
-        podcastFeed.id = json["id"].intValue
-        podcastFeed.title = json["title"].stringValue
-        podcastFeed.description = json["description"].stringValue
-        podcastFeed.author = json["author"].stringValue
-        podcastFeed.image = json["image"].stringValue
+        var podcastFeed = PodcastFeed(
+            chatId: chat?.id,
+            id: json["id"].intValue,
+            title: json["title"].stringValue,
+            description: json["description"].stringValue,
+            author: json["author"].stringValue,
+            image: json["image"].stringValue
+        )
         
         var episodes = [PodcastEpisode]()
         
         for e in json["episodes"].arrayValue {
-            let episode = PodcastEpisode()
-            episode.id = e["id"].intValue
-            episode.title = e["title"].stringValue
-            episode.description = e["description"].stringValue
-            episode.image = e["image"].stringValue
-            episode.link = e["link"].stringValue
-            episode.url = e["enclosureUrl"].stringValue
+            let episode = PodcastEpisode(
+                id: e["id"].intValue,
+                title: e["title"].stringValue,
+                description: e["description"].stringValue,
+                url: e["enclosureUrl"].stringValue,
+                image: e["image"].stringValue,
+                link: e["link"].stringValue
+            )
+            
             episode.downloaded = DownloadService.sharedInstance.isEpisodeDownloaded(episode)
+
             episodes.append(episode)
         }
         
@@ -203,7 +207,9 @@ class PodcastPlayerHelper {
             return nil
         }
         
-        guard let feedID = podcast.id, feedID > 0 else {
+        let feedID = podcast.id
+        
+        guard feedID > 0 else {
             return nil
         }
         
@@ -611,11 +617,11 @@ class PodcastPlayerHelper {
         
         playingCenter.nowPlayingInfo = [
             MPMediaItemPropertyMediaType: "\(MPMediaType.podcast)",
-            MPMediaItemPropertyPodcastTitle: podcast.title ?? "",
+            MPMediaItemPropertyPodcastTitle: podcast.title,
             MPMediaItemPropertyArtwork: artwork,
-            MPMediaItemPropertyPodcastPersistentID: "\(podcast.id ?? 0)",
-            MPMediaItemPropertyTitle: episode.title ?? "",
-            MPMediaItemPropertyArtist: podcast.author ?? "",
+            MPMediaItemPropertyPodcastPersistentID: podcast.id,
+            MPMediaItemPropertyTitle: episode.title,
+            MPMediaItemPropertyArtist: podcast.author,
             MPMediaItemPropertyPlaybackDuration: "\(duration)",
             MPNowPlayingInfoPropertyElapsedPlaybackTime: "\(currentTime)",
             MPMediaItemPropertyAlbumTrackCount: "\(getEpisodes().count)",

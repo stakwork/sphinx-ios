@@ -38,8 +38,9 @@ class PodcastNewEpisodeViewController: UIViewController {
 
         let lastStoredEpisodeId = (chat.podcastPlayer?.lastEpisodeId ?? chat.podcastPlayer?.currentEpisodeId) ?? -1
 
-        if let lastEpisode = chat.podcastPlayer?.podcast?.episodes[0], let lastEpisodeId = lastEpisode.id {
-
+        if let lastEpisode = chat.podcastPlayer?.podcast?.episodes[0] {
+            let lastEpisodeId = lastEpisode.id
+            
             chat.podcastPlayer?.lastEpisodeId = lastEpisodeId
 
             if lastStoredEpisodeId > 0 && lastStoredEpisodeId != lastEpisodeId {

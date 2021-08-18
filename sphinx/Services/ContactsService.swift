@@ -113,7 +113,9 @@ public final class ContactsService {
         }
     }
     
-    public func getChatListObjects(_ forceLastMessageReload: Bool = false) -> [ChatListCommonObject] {
+    public func getChatListObjects(
+        _ forceLastMessageReload: Bool = false
+    ) -> [ChatListCommonObject] {
         let filteredContacts =  contacts.filter { !$0.isOwner && !$0.shouldBeExcluded()}
         let chatListObjectsCount = filteredContacts.count + chats.count
         
@@ -136,6 +138,7 @@ public final class ContactsService {
         chatListObjects = orderChatListObjects(objects: allObject)
         return chatListObjects
     }
+    
     
     func orderChatListObjects(objects: [ChatListCommonObject]) -> [ChatListCommonObject] {
         let orderedObjects = objects.sorted(by: {
@@ -160,6 +163,7 @@ public final class ContactsService {
         return orderedObjects
     }
     
+    
     public func updateProfileImage(userId: Int, profilePicture: String){
         if let contact = UserContact.getContactWith(id: userId) {
             contact.avatarUrl = profilePicture
@@ -167,15 +171,37 @@ public final class ContactsService {
         }
     }
     
-    public func getObjectsWith(searchString: String) -> [ChatListCommonObject] {
+    
+    public func getObjectsWith(
+        searchString: String
+    ) -> [ChatListCommonObject] {
         var allChatListObject = getChatListObjects()
+        
         if searchString != "" {
             allChatListObject =  allChatListObject.filter {
-                return $0.getName().lowercased().contains(searchString.lowercased())
+                $0.getName().lowercased().contains(searchString.lowercased())
             }
         }
         return allChatListObject
     }
+    
+    
+    public func getChatsWith(
+        searchString: String
+    ) -> [Chat] {
+        guard searchString != "" else {
+            return getChatListObjects().compactMap { $0 as? Chat }
+        }
+        
+        return getChatListObjects()
+            .filter {
+                $0.getName().lowercased().contains(searchString.lowercased())
+            }
+            .compactMap {
+                $0 as? Chat
+            }
+    }
+    
     
     public func updateContact(contact: UserContact?, nickname: String? = nil, routeHint: String? = nil, contactKey: String? = nil, callback: @escaping (Bool) -> ()) {
         guard let contact = contact else {

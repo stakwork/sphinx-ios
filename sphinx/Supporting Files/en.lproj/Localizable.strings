@@ -42,6 +42,17 @@
 "error.app-store-purchase-receipt-not-found" = "An AppStore purchase receipt could not be found.";
 "error.app-store-receipt-validation-failed" = "An AppStore receipt validation failed.";
 
+
+// DASHBOARD
+"dashboard.tabs.feed" = "Feed";
+"dashboard.tabs.friends" = "Friends";
+"dashboard.tabs.tribes" = "Tribes";
+"dashboard.feeds.filters.all" = "All";
+"dashboard.feeds.filters.listen" = "Listen";
+"dashboard.feeds.filters.watch" = "Watch";
+"dashboard.feeds.filters.read" = "Read";
+"dashboard.feeds.filters.play" = "Play";
+
 // LEFT MENU
 "left-menu.dashboard" = "Dashboard";
 "left-menu.contacts" = "Contacts";

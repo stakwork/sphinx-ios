@@ -160,7 +160,8 @@ class ChatHeaderView: UIView {
     }
     
     func updateSatsEarned() {
-        if let podcast = chat?.podcastPlayer?.podcast, let feedID = podcast.id, feedID > 0 {
+        if let podcast = chat?.podcastPlayer?.podcast, podcast.id > 0 {
+            let feedID = podcast.id
             let isMyTribe = (chat?.isMyPublicGroup() ?? false)
             let label = isMyTribe ? "earned.sats".localized : "contributed.sats".localized
             let sats = PodcastPaymentsHelper.getSatsEarnedFor(feedID)

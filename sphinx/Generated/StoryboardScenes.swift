@@ -28,8 +28,6 @@ internal enum StoryboardScene {
         internal static let storyboardName = "Chat"
         internal static let chatViewController = SceneType<ChatViewController>(storyboard: Chat.self, identifier: "ChatViewController")
 
-        internal static let chatListViewController = SceneType<ChatListViewController>(storyboard: Chat.self, identifier: "ChatListViewController")
-
         internal static let createInvoiceViewController = SceneType<CreateInvoiceViewController>(storyboard: Chat.self, identifier: "CreateInvoiceViewController")
 
         internal static let payInvoiceViewController = SceneType<PayInvoiceViewController>(storyboard: Chat.self, identifier: "PayInvoiceViewController")
@@ -47,6 +45,43 @@ internal enum StoryboardScene {
         internal static let messageOptionsViewController = SceneType<MessageOptionsViewController>(storyboard: Chat.self, identifier: "MessageOptionsViewController")
         
         internal static let paidMessagePreviewViewController = SceneType<PaidMessagePreviewViewController>(storyboard: Chat.self, identifier: "PaidMessagePreviewViewController")
+    }
+    
+    internal enum Dashboard: StoryboardType {
+        internal static let storyboardName = "Dashboard"
+        
+        internal static let dashboardRootViewController = SceneType<DashboardRootViewController>(storyboard: Dashboard.self, identifier: "DashboardRootViewController")
+        
+        
+        internal static let feedsListViewController = SceneType<FeedsListViewController>(
+            storyboard: Dashboard.self,
+            identifier: "FeedsListViewController"
+        )
+        
+        
+        internal static let chatsContainerViewController = SceneType<ChatsContainerViewController>(
+            storyboard: Dashboard.self,
+            identifier: "ChatsContainerViewController"
+        )
+        
+        
+        internal static let chatsCollectionViewController = SceneType<ChatsCollectionViewController>(
+            storyboard: Dashboard.self,
+            identifier: "ChatsCollectionViewController"
+        )
+        
+        internal static let feedFilterChipsCollectionViewController = SceneType<FeedFilterChipsCollectionViewController>(
+            storyboard: Dashboard.self,
+            identifier: "FeedFilterChipsCollectionViewController"
+        )
+        
+        
+        internal static let feedContentCollectionViewController = SceneType<FeedContentCollectionViewController>(
+            storyboard: Dashboard.self,
+            identifier: "FeedContentCollectionViewController"
+        )
+        
+        
     }
     
     internal enum LeftMenu: StoryboardType {

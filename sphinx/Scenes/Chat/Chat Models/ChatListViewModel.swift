@@ -10,13 +10,29 @@ import SwiftyJSON
 
 final class ChatListViewModel: NSObject {
     
-    private var contactsService: ContactsService!
+    var contactsService: ContactsService!
     
     public static let kMessagesPerPage: Int = 200
     
     init(contactsService: ContactsService) {
         self.contactsService = contactsService
     }
+    
+    
+    var allChats: [Chat] { contactsService.chats }
+    
+    var contactChats: [Chat] {
+        allChats
+            .filter { $0.isConversation() }
+            .sorted(by: Self.sortChatsForList)
+    }
+    
+    var tribeChats: [Chat] {
+        allChats
+            .filter { $0.isPublicGroup() }
+            .sorted(by: Self.sortChatsForList)
+    }
+    
     
     func loadFriends(fromPush: Bool = false, completion: @escaping () -> ()) {
         if let contactsService = contactsService {
@@ -57,13 +73,26 @@ final class ChatListViewModel: NSObject {
         return (lastSeenDate == nil) || (chatId == nil && TransactionMessage.getAllMesagesCount() == 0 && didJustRestore)
     }
     
-    func syncMessages(chatId: Int? = nil, fromPush: Bool = false, progressCallback: @escaping (String) -> (), completion: @escaping (Int, Int, Bool) -> ()) {
+    func syncMessages(
+        chatId: Int? = nil,
+        fromPush: Bool = false,
+        progressCallback: @escaping (String) -> (),
+        completion: @escaping (Int, Int, Bool) -> ()
+    ) {
         if isRestoring(chatId: chatId) {
             askForNotificationPermissions()
             progressCallback("fetching.old.messages".localized)
             getAllMessages(page: 1, date: Date(), completion: completion)
         } else {
-            getMessagesPaginated(fromPush: fromPush, page: 1, prevPageNewMessages: 0, chatId: chatId, date: Date(), progressCallback: progressCallback, completion: completion)
+            getMessagesPaginated(
+                fromPush: fromPush,
+                page: 1,
+                prevPageNewMessages: 0,
+                chatId: chatId,
+                date: Date(),
+                progressCallback: progressCallback,
+                completion: completion
+            )
         }
         UserDefaults.Keys.didJustRestore.set(false)
     }
@@ -91,13 +120,15 @@ final class ChatListViewModel: NSObject {
         }
     }
     
-    func getMessagesPaginated(fromPush: Bool = false,
-                              page: Int,
-                              prevPageNewMessages: Int,
-                              chatId: Int? = nil,
-                              date: Date,
-                              progressCallback: @escaping (String) -> (), completion: @escaping (Int, Int, Bool) -> ()) {
-        
+    func getMessagesPaginated(
+        fromPush: Bool = false,
+        page: Int,
+        prevPageNewMessages: Int,
+        chatId: Int? = nil,
+        date: Date,
+        progressCallback: @escaping (String) -> (),
+        completion: @escaping (Int, Int, Bool) -> ()
+    ) {
         API.sharedInstance.getMessagesPaginated(fromPush: fromPush, page: page, date: date, callback: {(newMessages) -> () in
             if newMessages.count > 0 {
                 if newMessages.count > 100 {
@@ -180,5 +211,27 @@ final class ChatListViewModel: NSObject {
             bubbleHelper.hideLoadingWheel()
             completion(nil)
         })
+    }
+}
+
+
+extension ChatListViewModel {
+    
+    private static func sortChatsForList(_ firstChat: Chat, secondChat: Chat) -> Bool {
+        if firstChat.isPending() || secondChat.isPending() {
+            return firstChat.isPending() && !secondChat.isPending()
+        }
+        
+        if let firstChatDate = firstChat.getOrderDate() {
+            if let secondChatDate = secondChat.getOrderDate() {
+                return firstChatDate > secondChatDate
+            } else {
+                return true
+            }
+        } else if let _ = secondChat.getOrderDate() {
+            return false
+        }
+        
+        return firstChat.getName().lowercased() < secondChat.getName().lowercased()
     }
 }

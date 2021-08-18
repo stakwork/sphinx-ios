@@ -127,15 +127,11 @@ class API {
     }
 
     class func getUrl(route: String) -> String {
-        if route.contains("://") {
-            return route
+        if let url = URL(string: route), let _ = url.scheme {
+            return url.absoluteString
         }
-
-        if route.contains("nodl.it") {
-            return "https://\(route)"
-        } else {
-            return "http://\(route)"
-        }
+        return "https://\(route)"
+        
     }
 
     class func getWebsocketUrl(route: String) -> String {
@@ -273,7 +269,7 @@ class API {
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             let centerVC = appDelegate.getCurrentVC()
 
-            if centerVC?.isKind(of: ChatListViewController.self) ?? false {
+            if centerVC?.isKind(of: DashboardRootViewController.self) ?? false {
                 self.messageBubbleHelper.showGenericMessageView(text: "network.connection.lost".localized, delay: 3)
             }
 

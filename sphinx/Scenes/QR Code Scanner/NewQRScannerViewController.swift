@@ -13,6 +13,7 @@ import AVFoundation
     @objc optional func shouldGoToChat()
     @objc optional func willDismissPresentedView(paymentCreated: Bool)
     @objc optional func didScanDeepLink()
+    @objc optional func didScanPublicKey(string: String)
 }
 
 class NewQRScannerViewController: KeyboardEventsViewController {

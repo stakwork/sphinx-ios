@@ -86,19 +86,36 @@ class GroupsManager {
     
     //tribes
     func goToGroupDetails(vc: UIViewController, rootViewController: RootViewController) -> Bool {
-        if let joinTribeQuery = UserDefaults.Keys.tribeQuery.get(defaultValue: ""), joinTribeQuery != "" {
+        if
+            let joinTribeQuery = UserDefaults.Keys.tribeQuery.get(defaultValue: ""),
+                joinTribeQuery != ""
+        {
             UserDefaults.Keys.tribeQuery.removeValue()
             
             let tribeInfo = getGroupInfo(query: joinTribeQuery)
             
-            if let uuid = tribeInfo?.uuid, let chat = Chat.getChatWith(uuid: uuid), let chatLitsVC = vc as? ChatListViewController {
-                chatLitsVC.presentChatVC(object: chat, animated: true)
+            if
+                let uuid = tribeInfo?.uuid,
+                let chat = Chat.getChatWith(uuid: uuid),
+                let dashboardRootVC = vc as? DashboardRootViewController
+            {
+                dashboardRootVC.presentChatDetailsVC(for: chat, shouldAnimate: true)
                 return true
             }
             
             if let delegate = vc as? NewContactVCDelegate {
-                let groupDetailsVC = JoinGroupDetailsViewController.instantiate(qrString: joinTribeQuery, delegate: delegate)
-                vc.navigationController?.present(groupDetailsVC, animated: true, completion: nil)
+                let groupDetailsVC = JoinGroupDetailsViewController
+                    .instantiate(
+                        qrString: joinTribeQuery,
+                        delegate: delegate
+                    )
+                
+                vc.navigationController?.present(
+                    groupDetailsVC,
+                    animated: true,
+                    completion: nil
+                )
+                
                 return true
             }
         }

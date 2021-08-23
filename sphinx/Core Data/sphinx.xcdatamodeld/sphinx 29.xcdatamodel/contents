@@ -15,7 +15,6 @@
         <attribute name="pendingContactIds" optional="YES" attributeType="Transformable"/>
         <attribute name="photoUrl" optional="YES" attributeType="String"/>
         <attribute name="pin" optional="YES" attributeType="String"/>
-        <attribute name="podcastFeed" optional="YES" attributeType="String"/>
         <attribute name="pricePerMessage" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="priceToJoin" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="privateTribe" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
@@ -26,6 +25,7 @@
         <attribute name="uuid" optional="YES" attributeType="String"/>
         <attribute name="webAppLastDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <relationship name="messages" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TransactionMessage" inverseName="chat" inverseEntity="TransactionMessage"/>
+        <relationship name="podcastFeed" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PodcastFeed" inverseName="chat" inverseEntity="PodcastFeed"/>
         <relationship name="subscription" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Subscription" inverseName="chat" inverseEntity="Subscription"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
@@ -33,9 +33,49 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
-    <entity name="PodcastComment" representedClassName="PodcastComment" syncable="YES" codeGenerationType="class"/>
-    <entity name="PodcastEpisode" representedClassName="PodcastEpisode" syncable="YES" codeGenerationType="class"/>
-    <entity name="PodcastFeed" representedClassName="PodcastFeed" syncable="YES" codeGenerationType="class"/>
+    <entity name="PodcastDestination" representedClassName="PodcastDestination" syncable="YES">
+        <attribute name="address" optional="YES" attributeType="String"/>
+        <attribute name="split" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
+        <relationship name="feed" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PodcastFeed" inverseName="destinations" inverseEntity="PodcastFeed"/>
+    </entity>
+    <entity name="PodcastEpisode" representedClassName="PodcastEpisode" syncable="YES">
+        <attribute name="episodeDescription" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="imageURLPath" optional="YES" attributeType="String"/>
+        <attribute name="isDownloaded" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="linkURLPath" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <attribute name="urlPath" optional="YES" attributeType="String"/>
+        <relationship name="feed" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PodcastFeed" inverseName="episodes" inverseEntity="PodcastFeed"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="PodcastFeed" representedClassName="PodcastFeed" syncable="YES">
+        <attribute name="author" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="imageURLPath" optional="YES" attributeType="String"/>
+        <attribute name="podcastDescription" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <relationship name="chat" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Chat" inverseName="podcastFeed" inverseEntity="Chat"/>
+        <relationship name="destinations" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PodcastDestination" inverseName="feed" inverseEntity="PodcastDestination"/>
+        <relationship name="episodes" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PodcastEpisode" inverseName="feed" inverseEntity="PodcastEpisode"/>
+        <relationship name="model" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="PodcastModel" inverseName="feed" inverseEntity="PodcastModel"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="PodcastModel" representedClassName="PodcastModel" syncable="YES">
+        <attribute name="suggested" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="suggestedSats" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
+        <relationship name="feed" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PodcastFeed" inverseName="model" inverseEntity="PodcastFeed"/>
+    </entity>
     <entity name="Subscription" representedClassName="Subscription" syncable="YES">
         <attribute name="amount" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="count" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
@@ -131,13 +171,14 @@
         </uniquenessConstraints>
     </entity>
     <elements>
-        <element name="Chat" positionX="-54" positionY="135" width="128" height="433"/>
+        <element name="Chat" positionX="-54" positionY="135" width="128" height="419"/>
+        <element name="PodcastEpisode" positionX="-36" positionY="153" width="128" height="149"/>
+        <element name="PodcastFeed" positionX="-45" positionY="144" width="128" height="164"/>
         <element name="Subscription" positionX="-54" positionY="135" width="128" height="223"/>
         <element name="TransactionMessage" positionX="-54" positionY="63" width="128" height="463"/>
         <element name="UserContact" positionX="-63" positionY="-18" width="128" height="358"/>
         <element name="UserInvite" positionX="-54" positionY="135" width="128" height="118"/>
-        <element name="PodcastFeed" positionX="-45" positionY="144" width="128" height="14"/>
-        <element name="PodcastEpisode" positionX="-36" positionY="153" width="128" height="14"/>
-        <element name="PodcastComment" positionX="-27" positionY="162" width="128" height="14"/>
+        <element name="PodcastModel" positionX="-27" positionY="171" width="128" height="89"/>
+        <element name="PodcastDestination" positionX="-18" positionY="180" width="128" height="89"/>
     </elements>
 </model>

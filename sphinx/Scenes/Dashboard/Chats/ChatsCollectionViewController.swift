@@ -44,7 +44,7 @@ extension ChatsCollectionViewController {
         case all
     }
     
-    class DataSourceItem: Hashable {
+    struct DataSourceItem: Hashable {
         
         var objectId: Int
         var messageId: Int?
@@ -222,7 +222,7 @@ extension ChatsCollectionViewController {
 
     func configureDataSource(for collectionView: UICollectionView) {
         dataSource = makeDataSource(for: collectionView)
-
+        
         updateSnapshot()
     }
 }
@@ -268,30 +268,20 @@ extension ChatsCollectionViewController {
 // MARK: - Data Source Snapshot
 extension ChatsCollectionViewController {
 
-    func makeSnapshotForCurrentState() -> DataSourceSnapshot {
-        var snapshot = DataSourceSnapshot()
-
-        snapshot.appendSections(CollectionViewSection.allCases)
-
-        let items = chats.map {
-            DataSourceItem(objectId: $0.getObjectId(), messageId: $0.lastMessage?.id, messageSeen: $0.lastMessage?.seen ?? false)
-        }
-        
-        snapshot.appendItems(items, toSection: .all)
-        
-        return snapshot
-    }
-
-
     func updateSnapshot() {
         var snapshot = DataSourceSnapshot()
-        
+
         snapshot.appendSections(CollectionViewSection.allCases)
 
         let items = chats.map {
-            DataSourceItem(objectId: $0.getObjectId(), messageId: $0.lastMessage?.id, messageSeen: $0.lastMessage?.seen ?? false)
+            
+            DataSourceItem(
+                objectId: $0.getObjectId(),
+                messageId: $0.lastMessage?.id,
+                messageSeen: $0.lastMessage?.seen ?? false
+            )
         }
-        
+
         snapshot.appendItems(items, toSection: .all)
         
         self.dataSource.apply(snapshot, animatingDifferences: true)
@@ -316,10 +306,11 @@ extension ChatsCollectionViewController {
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
-//        guard let selectedChat = dataSource.itemIdentifier(for: indexPath) else {
-//            collectionView.deselectItem(at: indexPath, animated: true)
-//            return
-//        }
+        
+        guard let _ = dataSource.itemIdentifier(for: indexPath) else {
+            collectionView.deselectItem(at: indexPath, animated: true)
+            return
+        }
         
         let selectedChatObject = chats[indexPath.row]
         onChatSelected?(selectedChatObject)

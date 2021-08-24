@@ -340,21 +340,21 @@ extension FeedContentCollectionViewController {
 
 extension PodcastEpisode: DashboardPodcastCollectionViewItem {
     var imageName: String {
-        image ?? "podcastTagIcon"
+        imageURLPath ?? "podcastTagIcon"
     }
     
     var subtitle: String {
-        description ?? ""
+        episodeDescription ?? ""
     }
 }
 
 
 extension PodcastFeed: DashboardPodcastCollectionViewItem {
     var imageName: String {
-        image
+        imageURLPath ?? "podcastTagIcon"
     }
     
     var subtitle: String {
-        description
+        podcastDescription ?? ""
     }
 }

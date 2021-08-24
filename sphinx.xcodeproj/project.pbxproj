@@ -530,6 +530,8 @@
 		F32A696526CFEF600004B8B3 /* PodcastFeed+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32A695B26CFEF5F0004B8B3 /* PodcastFeed+CoreDataProperties.swift */; };
 		F32A696626CFEF600004B8B3 /* PodcastModel+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32A695C26CFEF600004B8B3 /* PodcastModel+CoreDataClass.swift */; };
 		F32A696726CFEF600004B8B3 /* PodcastModel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32A695D26CFEF600004B8B3 /* PodcastModel+CoreDataProperties.swift */; };
+		F32A697926D515AB0004B8B3 /* PodcastFeed+Computeds.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32A697826D515AB0004B8B3 /* PodcastFeed+Computeds.swift */; };
+		F32A697B26D565E50004B8B3 /* PodcastModel+Computeds.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32A697A26D565E50004B8B3 /* PodcastModel+Computeds.swift */; };
 		F331199B268E375B005082EB /* NewUserSignupOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F331199A268E375B005082EB /* NewUserSignupOptionsViewController.swift */; };
 		F331199D268E93FB005082EB /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F331199C268E93FB005082EB /* StoreKit.framework */; };
 		F33119A0268E9C1B005082EB /* XcodeStoreKitConfiguration.storekit in Resources */ = {isa = PBXBuildFile; fileRef = F331199F268E9C1B005082EB /* XcodeStoreKitConfiguration.storekit */; };
@@ -1228,6 +1230,8 @@
 		F32A695B26CFEF5F0004B8B3 /* PodcastFeed+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PodcastFeed+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		F32A695C26CFEF600004B8B3 /* PodcastModel+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PodcastModel+CoreDataClass.swift"; sourceTree = "<group>"; };
 		F32A695D26CFEF600004B8B3 /* PodcastModel+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PodcastModel+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		F32A697826D515AB0004B8B3 /* PodcastFeed+Computeds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PodcastFeed+Computeds.swift"; sourceTree = "<group>"; };
+		F32A697A26D565E50004B8B3 /* PodcastModel+Computeds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PodcastModel+Computeds.swift"; sourceTree = "<group>"; };
 		F331199A268E375B005082EB /* NewUserSignupOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewUserSignupOptionsViewController.swift; sourceTree = "<group>"; };
 		F331199C268E93FB005082EB /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		F331199F268E9C1B005082EB /* XcodeStoreKitConfiguration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = XcodeStoreKitConfiguration.storekit; sourceTree = "<group>"; };
@@ -2827,6 +2831,7 @@
 			children = (
 				F32A695A26CFEF5F0004B8B3 /* PodcastFeed+CoreDataClass.swift */,
 				F32A695B26CFEF5F0004B8B3 /* PodcastFeed+CoreDataProperties.swift */,
+				F32A697826D515AB0004B8B3 /* PodcastFeed+Computeds.swift */,
 			);
 			path = "Podcast Feed";
 			sourceTree = "<group>";
@@ -2845,6 +2850,7 @@
 			children = (
 				F32A695C26CFEF600004B8B3 /* PodcastModel+CoreDataClass.swift */,
 				F32A695D26CFEF600004B8B3 /* PodcastModel+CoreDataProperties.swift */,
+				F32A697A26D565E50004B8B3 /* PodcastModel+Computeds.swift */,
 			);
 			path = "Podcast Model";
 			sourceTree = "<group>";
@@ -3431,6 +3437,7 @@
 				47FA18C224253BDD00469C8F /* InvoiceManager.swift in Sources */,
 				47771C6E259B848300990467 /* GroupPinView.swift in Sources */,
 				F313024626BA62B300A1396E /* ChatsCollectionViewController.swift in Sources */,
+				F32A697926D515AB0004B8B3 /* PodcastFeed+Computeds.swift in Sources */,
 				47468FD323314EE80072124A /* PinCodeViewController.swift in Sources */,
 				470DB25423FAE43400D29FA5 /* SphinxCache.swift in Sources */,
 				47393E682461F6F600E6F93E /* KeychainManager.swift in Sources */,
@@ -3634,6 +3641,7 @@
 				47771C72259B8D9300990467 /* GroupsPinManager.swift in Sources */,
 				47FA18D42434D47D00469C8F /* TransactionMessageInfoGetterExtension.swift in Sources */,
 				470396DC2535D2EB007F9C23 /* PodcastEpisodesDataSource.swift in Sources */,
+				F32A697B26D565E50004B8B3 /* PodcastModel+Computeds.swift in Sources */,
 				475BDCE1232AC23B00C5BBD6 /* ExpiredInvoiceSentTableViewCell.swift in Sources */,
 				47D0046125E7F3EC00E74063 /* Download.swift in Sources */,
 				477DB72824B4BBF200D6323F /* GroupRemovedTableViewCell.swift in Sources */,

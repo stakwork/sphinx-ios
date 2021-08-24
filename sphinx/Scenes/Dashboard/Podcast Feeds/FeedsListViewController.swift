@@ -7,72 +7,72 @@
 
 import UIKit
 
-private let samplePodcastFeeds: [PodcastFeed] = [
-    PodcastFeed(
-        chatId: 1,
-        id: 1,
-        title: "Sample Podcast 1",
-        description: "Sample Podcast 1 Description",
-        author: "Satoshi Nakamoto",
-        image: "appPinIcon",
-        model: nil,
-        episodes: [],
-        destinations: []
-    ),
-    PodcastFeed(
-        chatId: 2,
-        id: 2,
-        title: "Sample Podcast 2",
-        description: "Sample Podcast 1 Description",
-        author: "Satoshi Nakamoto",
-        image: "cashAppIcon",
-        model: nil,
-        episodes: [],
-        destinations: []
-    ),
-    PodcastFeed(
-        chatId: 3,
-        id: 3,
-        title: "Sample Podcast 3",
-        description: "Sample Podcast 3 Description",
-        author: "Satoshi Nakamoto",
-        image: "whiteIcon",
-        model: nil,
-        episodes: [],
-        destinations: []
-    ),
-]
+//private let samplePodcastFeeds: [PodcastFeed] = [
+//    PodcastFeed(
+//        chatId: 1,
+//        id: 1,
+//        title: "Sample Podcast 1",
+//        description: "Sample Podcast 1 Description",
+//        author: "Satoshi Nakamoto",
+//        image: "appPinIcon",
+//        model: nil,
+//        episodes: [],
+//        destinations: []
+//    ),
+//    PodcastFeed(
+//        chatId: 2,
+//        id: 2,
+//        title: "Sample Podcast 2",
+//        description: "Sample Podcast 1 Description",
+//        author: "Satoshi Nakamoto",
+//        image: "cashAppIcon",
+//        model: nil,
+//        episodes: [],
+//        destinations: []
+//    ),
+//    PodcastFeed(
+//        chatId: 3,
+//        id: 3,
+//        title: "Sample Podcast 3",
+//        description: "Sample Podcast 3 Description",
+//        author: "Satoshi Nakamoto",
+//        image: "whiteIcon",
+//        model: nil,
+//        episodes: [],
+//        destinations: []
+//    ),
+//]
 
 
-private let samplePodcastEpisodes: [PodcastEpisode] = [
-    PodcastEpisode(
-        id: 1,
-        title: "Sample Episode 1",
-        description: "Sample Episode 1 Description",
-        url: "",
-        image: "cashAppIcon",
-        link: "",
-        downloaded: false
-    ),
-    PodcastEpisode(
-        id: 2,
-        title: "Sample Episode 2",
-        description: "Sample Episode 2 Description",
-        url: "",
-        image: "appPinIcon",
-        link: "",
-        downloaded: false
-    ),
-    PodcastEpisode(
-        id: 3,
-        title: "Sample Episode 3",
-        description: "Sample Episode 3 Description",
-        url: "",
-        image: "welcomeLogo",
-        link: "",
-        downloaded: false
-    ),
-]
+//private let samplePodcastEpisodes: [PodcastEpisode] = [
+//    PodcastEpisode(
+//        id: 1,
+//        title: "Sample Episode 1",
+//        description: "Sample Episode 1 Description",
+//        url: "",
+//        image: "cashAppIcon",
+//        link: "",
+//        downloaded: false
+//    ),
+//    PodcastEpisode(
+//        id: 2,
+//        title: "Sample Episode 2",
+//        description: "Sample Episode 2 Description",
+//        url: "",
+//        image: "appPinIcon",
+//        link: "",
+//        downloaded: false
+//    ),
+//    PodcastEpisode(
+//        id: 3,
+//        title: "Sample Episode 3",
+//        description: "Sample Episode 3 Description",
+//        url: "",
+//        image: "welcomeLogo",
+//        link: "",
+//        downloaded: false
+//    ),
+//]
 
 
 class FeedsListViewController: UIViewController {
@@ -132,12 +132,12 @@ extension FeedsListViewController {
     
     
     private func getLatestPodcastEpisodes() -> [PodcastEpisode] {
-        samplePodcastEpisodes
+        Self.samplePodcastEpisodes
     }
     
     
     private func getSubscribedPodcastFeeds() -> [PodcastFeed] {
-        samplePodcastFeeds
+        Self.samplePodcastFeeds
     }
 
     
@@ -161,14 +161,14 @@ extension FeedsListViewController {
     private func handleLatestEpisodeCellSelection(_ podcastEpisode: PodcastEpisode) {
         AlertHelper.showAlert(
             title: "Selected Podcast Episode",
-            message: podcastEpisode.title
+            message: podcastEpisode.title ?? "Unknown Title"
         )
     }
     
     private func handleLatestFeedCellSelection(_ podcastFeed: PodcastFeed) {
         AlertHelper.showAlert(
             title: "Selected Podcast Feed",
-            message: podcastFeed.title
+            message: podcastFeed.title ?? "Unknown Title"
         )
     }
     
@@ -202,4 +202,88 @@ extension FeedsListViewController {
             container: feedContentCollectionViewContainer
         )
     }
+}
+
+
+extension FeedsListViewController {
+    
+    static let samplePodcastFeeds: [PodcastFeed] = {
+        let managedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext
+        
+        let feed1 = PodcastFeed(context: managedObjectContext)
+        
+        feed1.id = 1
+        feed1.title = "Sample Podcast 1"
+        feed1.author = "Satoshi Nakamoto"
+        feed1.podcastDescription = "Sample Podcast Description 1"
+        feed1.imageURLPath = "cashAppIcon"
+        feed1.chat = nil
+        feed1.destinations = nil
+        feed1.episodes = []
+        feed1.model = nil
+        
+        let feed2 = PodcastFeed(context: managedObjectContext)
+        
+        feed2.id = 2
+        feed2.title = "Sample Podcast 2"
+        feed2.author = "Satoshi Nakamoto"
+        feed2.imageURLPath = "appPinIcon"
+        feed2.podcastDescription = "Sample Podcast Description 2"
+        feed2.chat = nil
+        feed2.destinations = nil
+        feed2.episodes = []
+        feed2.model = nil
+        
+        let feed3 = PodcastFeed(context: managedObjectContext)
+        
+        feed3.id = 3
+        feed3.title = "Sample Podcast 3"
+        feed3.author = "Satoshi Nakamoto"
+        feed2.imageURLPath = "welcomeLogo"
+        feed3.podcastDescription = "Sample Podcast Description 3"
+        feed3.chat = nil
+        feed3.destinations = nil
+        feed3.episodes = []
+        feed3.model = nil
+        
+        
+        return [
+            feed1,
+            feed2,
+            feed3,
+        ]
+    }()
+    
+    
+    static let samplePodcastEpisodes: [PodcastEpisode] = {
+        let managedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext
+        
+        let episode1 = PodcastEpisode(context: managedObjectContext)
+        
+        episode1.id = 1
+        episode1.title = "Sample Episode 1"
+        episode1.imageURLPath = "cashAppIcon"
+        episode1.episodeDescription = "Sample Episode Description 1"
+        
+        let episode2 = PodcastEpisode(context: managedObjectContext)
+        
+        episode2.id = 2
+        episode2.title = "Sample Episode 2"
+        episode2.imageURLPath = "appPinIcon"
+        episode2.episodeDescription = "Sample Episode Description 2"
+        
+        let episode3 = PodcastEpisode(context: managedObjectContext)
+        
+        episode3.id = 3
+        episode3.title = "Sample Episode 3"
+        episode3.imageURLPath = "welcomeLogo"
+        episode3.episodeDescription = "Sample Episode Description 3"
+        
+        
+        return [
+            episode1,
+            episode2,
+            episode3,
+        ]
+    }()
 }

@@ -41,7 +41,9 @@ class PodcastFeedCollectionViewCell: UICollectionViewCell {
     
     
     private func updateViewsWithItem() {
+        // TODO: This is probably going to have to use SDWebImage and the item's url
         podcastImageView.image = UIImage(named: item.imageName)
+        
         podcastNameLabel.text = item.title
         podcastTitleLabel.text = item.subtitle
     }

@@ -562,8 +562,9 @@ public class Chat: NSManagedObject {
 //        }
 //        saveChat()
 //    }
+//
     
-//    func getPodcastFeed() -> JSON? {
+//    func getPodcastFeedJSON() -> JSON? {
 //        if let data = self.podcastFeed?.data(using: .utf8) {
 //            if let jsonObject = try? JSON(data: data) {
 //                return jsonObject

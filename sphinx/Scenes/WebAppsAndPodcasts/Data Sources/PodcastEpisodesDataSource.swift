@@ -52,7 +52,7 @@ extension PodcastEpisodesDataSource : UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? PodcastEpisodeTableViewCell {
-            let episodes = playerHelper.podcast?.episodes ?? []
+            let episodes = playerHelper.podcast?.episodeArray ?? []
             let episode = episodes[indexPath.row]
             let download = downloadService.activeDownloads[episode.url ?? ""]
             let isPlaying = (playerHelper.currentEpisode == indexPath.row && playerHelper.isPlaying())

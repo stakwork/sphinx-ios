@@ -47,8 +47,8 @@ class PodcastSatsView: UIView {
             if let storedAmount = UserDefaults.standard.value(forKey: "podcast-sats-\(chat.id)") as? Int {
                 setSliderValue(value: storedAmount)
             } else {
-                let suggested = podcast.model?.suggestedSats ?? 0
-                setSliderValue(value: suggested)
+                let suggestedSats = podcast.model?.suggestedSats ?? 0
+                setSliderValue(value: suggestedSats)
             }
         }
     }

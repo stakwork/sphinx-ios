@@ -118,7 +118,7 @@ import SwiftyJSON
 
 //struct PodcastModel {
 //    var type: String? = nil
-//    var suggested: Double? = nil
+//    var suggestedBTC: Double? = nil
 //    var suggestedSats: Int? = nil
 //}
 

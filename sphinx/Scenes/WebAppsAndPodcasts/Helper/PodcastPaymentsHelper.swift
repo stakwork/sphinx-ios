@@ -34,34 +34,59 @@ class PodcastPaymentsHelper {
         var destinations = podcastFeed?.destinations ?? []
         var shouldUpdateMeta = true
         
-        if let clipSenderPubKey = clipSenderPubKey, clipSenderPubKey != myPubKey {
+        if
+            let clipSenderPubKey = clipSenderPubKey,
+            clipSenderPubKey != myPubKey
+        {
             shouldUpdateMeta = false
-            let clipSenderDestination = PodcastDestination(address: clipSenderPubKey, split: 1, type: "node")
-            destinations.append(clipSenderDestination)
+            let clipSenderDestination = PodcastDestination(context: CoreDataManager.sharedManager.persistentContainer.viewContext)
+            
+            clipSenderDestination.address = clipSenderPubKey
+            clipSenderDestination.split = 1
+            clipSenderDestination.type = "node"
+            
+            podcastFeed?.addToDestinations(clipSenderDestination)
         }
         
         if let _ = boostAmount {
             shouldUpdateMeta = false
         }
         
-        if let chatId = podcastFeed?.chatId, let podcastId = podcastFeed?.id, destinations.count > 0 {
-            streamSats(podcastId: podcastId, podcatsDestinations: destinations, updateMeta: shouldUpdateMeta, amount: satsAmt, chatId: chatId, itemId: itemId, currentTime: currentTime, uuid: uuid)
+        if
+            let podcastFeed = podcastFeed,
+            let chatId = podcastFeed.chat?.id,
+            destinations.isEmpty == false
+        {
+            streamSats(
+                podcastId: Int(podcastFeed.id),
+                podcatsDestinations: destinations,
+                updateMeta: shouldUpdateMeta,
+                amount: satsAmt,
+                chatId: chatId,
+                itemId: itemId,
+                currentTime: currentTime,
+                uuid: uuid
+            )
         }
     }
     
     func getPodcastAmount(_ podcastFeed: PodcastFeed?) -> Int {
         var suggestedAmount = (podcastFeed?.model?.suggestedSats) ?? 5
         
-        if let chatId = podcastFeed?.chatId, let savedAmount = UserDefaults.standard.value(forKey: "podcast-sats-\(chatId)") as? Int, chatId > 0 {
+        if
+            let chatId = podcastFeed?.chat?.id,
+            let savedAmount = UserDefaults.standard.value(forKey: "podcast-sats-\(chatId)") as? Int,
+                chatId > 0
+        {
             suggestedAmount = savedAmount
         }
         
         return suggestedAmount
     }
     
+    
     func getAmountFrom(sats: Double, split: Double) -> Int {
-        let desinationAmt = Int(round(sats * (split/100)))
-        return desinationAmt < 1 ? 1 : desinationAmt
+        max(1, Int(round(sats * (split/100))))
     }
     
     func getClipSenderAmt(sats: Double) -> Int {

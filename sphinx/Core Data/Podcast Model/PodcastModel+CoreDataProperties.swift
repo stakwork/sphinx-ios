@@ -17,10 +17,8 @@ extension PodcastModel {
     }
 
     @NSManaged public var type: String?
-    @NSManaged public var suggested: Double?
-    @NSManaged public var suggestedSats: Int64
+    @NSManaged public var suggestedBTC: Double
     @NSManaged public var feed: PodcastFeed?
-
 }
 
 extension PodcastModel : Identifiable {}

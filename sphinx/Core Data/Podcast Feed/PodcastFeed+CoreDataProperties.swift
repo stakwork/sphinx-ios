@@ -21,9 +21,8 @@ extension PodcastFeed {
     @NSManaged public var imageURLPath: String?
     @NSManaged public var chat: Chat?
     @NSManaged public var model: PodcastModel?
-    @NSManaged public var episodes: NSSet?
-    @NSManaged public var destinations: NSSet?
-
+    @NSManaged public var episodes: Set<PodcastEpisode>?
+    @NSManaged public var destinations: Set<PodcastDestination>?
 }
 
 // MARK: Generated accessors for episodes
@@ -36,10 +35,10 @@ extension PodcastFeed {
     @NSManaged public func removeFromEpisodes(_ value: PodcastEpisode)
 
     @objc(addEpisodes:)
-    @NSManaged public func addToEpisodes(_ values: NSSet)
+    @NSManaged public func addToEpisodes(_ values: Set<PodcastEpisode>)
 
     @objc(removeEpisodes:)
-    @NSManaged public func removeFromEpisodes(_ values: NSSet)
+    @NSManaged public func removeFromEpisodes(_ values: Set<PodcastEpisode>)
 
 }
 
@@ -53,10 +52,10 @@ extension PodcastFeed {
     @NSManaged public func removeFromDestinations(_ value: PodcastDestination)
 
     @objc(addDestinations:)
-    @NSManaged public func addToDestinations(_ values: NSSet)
+    @NSManaged public func addToDestinations(_ values: Set<PodcastDestination>)
 
     @objc(removeDestinations:)
-    @NSManaged public func removeFromDestinations(_ values: NSSet)
+    @NSManaged public func removeFromDestinations(_ values: Set<PodcastDestination>)
 
 }
 

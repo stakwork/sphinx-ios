@@ -18,19 +18,16 @@ final class ChatListViewModel: NSObject {
         self.contactsService = contactsService
     }
     
-    
-    var allChats: [Chat] { contactsService.chats }
-    
-    var contactChats: [Chat] {
-        allChats
+    var contactChats: [ChatListCommonObject] {
+        contactsService
+            .getChatListObjects()
             .filter { $0.isConversation() }
-            .sorted(by: Self.sortChatsForList)
     }
     
-    var tribeChats: [Chat] {
-        allChats
+    var tribeChats: [ChatListCommonObject] {
+        contactsService
+            .getChatListObjects()
             .filter { $0.isPublicGroup() }
-            .sorted(by: Self.sortChatsForList)
     }
     
     
@@ -211,27 +208,5 @@ final class ChatListViewModel: NSObject {
             bubbleHelper.hideLoadingWheel()
             completion(nil)
         })
-    }
-}
-
-
-extension ChatListViewModel {
-    
-    private static func sortChatsForList(_ firstChat: Chat, secondChat: Chat) -> Bool {
-        if firstChat.isPending() || secondChat.isPending() {
-            return firstChat.isPending() && !secondChat.isPending()
-        }
-        
-        if let firstChatDate = firstChat.getOrderDate() {
-            if let secondChatDate = secondChat.getOrderDate() {
-                return firstChatDate > secondChatDate
-            } else {
-                return true
-            }
-        } else if let _ = secondChat.getOrderDate() {
-            return false
-        }
-        
-        return firstChat.getName().lowercased() < secondChat.getName().lowercased()
     }
 }

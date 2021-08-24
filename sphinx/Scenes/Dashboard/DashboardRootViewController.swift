@@ -49,14 +49,20 @@ class DashboardRootViewController: RootViewController {
     
     internal lazy var contactChatsContainerViewController: ChatsContainerViewController = {
         ChatsContainerViewController.instantiate(
-            chats: chatsListViewModel.contactChats,
+            chats: chatsListViewModel.contactsService
+                .getChatListObjects()
+                .compactMap { $0 as? Chat }
+                .filter { $0.isConversation() },
             chatsListDelegate: self
         )
     }()
     
     internal lazy var tribeChatsContainerViewController: ChatsContainerViewController = {
         ChatsContainerViewController.instantiate(
-            chats: chatsListViewModel.tribeChats,
+            chats: chatsListViewModel.contactsService
+                .getChatListObjects()
+                .compactMap { $0 as? Chat }
+                .filter { $0.isPublicGroup() },
             chatsListDelegate: self
         )
     }()
@@ -337,10 +343,10 @@ extension DashboardRootViewController {
         isLoading = true
         self.shouldShowHeaderLoadingWheel = shouldShowHeaderLoadingWheel
         headerView.updateBalance()
-        
+
         chatsListViewModel.loadFriends() { [weak self] in
             guard let self = self else { return }
-            
+
             self.chatsListViewModel.syncMessages(
                 progressCallback: { message in
                     self.isLoading = false
@@ -357,27 +363,17 @@ extension DashboardRootViewController {
     }
     
     
-    internal func updateCurrentViewControllerData(
-        shouldForceReload: Bool = true,
-        shouldAnimateChanges: Bool = false,
-        animationDelay: TimeInterval = 0.5
-    ) {
+    internal func updateCurrentViewControllerData() {
         switch activeTab {
         case .feed:
             break
         case .friends:
             contactChatsContainerViewController.updateWithNewChats(
-                chatsListViewModel.contactChats,
-                shouldAnimateChanges: shouldAnimateChanges,
-                shouldForceReload: shouldForceReload,
-                animationDelay: animationDelay
+                chatsListViewModel.contactChats
             )
         case .tribes:
             tribeChatsContainerViewController.updateWithNewChats(
-                chatsListViewModel.tribeChats,
-                shouldAnimateChanges: shouldAnimateChanges,
-                shouldForceReload: shouldForceReload,
-                animationDelay: animationDelay
+                chatsListViewModel.tribeChats
             )
         }
     }
@@ -398,9 +394,7 @@ extension DashboardRootViewController {
     internal func finishLoading() {
         defer { didFinishInitialLoading = true }
         
-        updateCurrentViewControllerData(
-            shouldAnimateChanges: didFinishInitialLoading
-        )
+        updateCurrentViewControllerData()
         
         newBubbleHelper.hideLoadingWheel()
         isLoading = false
@@ -409,11 +403,12 @@ extension DashboardRootViewController {
     
     
     internal func presentChatDetailsVC(
-        for chat: Chat,
+        for chat: Chat?,
+        contact: UserContact? = nil,
         shouldAnimate: Bool = true,
         shouldFetchNewChatData: Bool = true
     ) {
-        let contact = chat.getContact()
+        let contact = contact ?? chat?.getContact()
         
         let chatVC = ChatViewController.instantiate(
             contact: contact,

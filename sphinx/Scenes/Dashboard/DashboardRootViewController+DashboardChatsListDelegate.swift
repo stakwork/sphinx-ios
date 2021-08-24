@@ -6,11 +6,12 @@ extension DashboardRootViewController: DashboardChatsListDelegate {
     
     func viewController(
         _ viewController: UIViewController,
-        didSelectChat chat: Chat
+        didSelectChat chat: Chat?,
+        orContact contact: UserContact?
     ) {
         loadContactsAndSyncMessages()
-        presentChatDetailsVC(for: chat)
-        updateCurrentViewControllerData(shouldForceReload: true)
+        presentChatDetailsVC(for: chat, contact: contact)
+        updateCurrentViewControllerData()
     }
     
     

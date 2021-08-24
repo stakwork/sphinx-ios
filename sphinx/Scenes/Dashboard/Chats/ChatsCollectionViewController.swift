@@ -2,8 +2,8 @@ import UIKit
 
 
 class ChatsCollectionViewController: UICollectionViewController {
-    var chats: [Chat] = []
-    var onChatSelected: ((Chat) -> Void)?
+    var chats: [ChatListCommonObject] = []
+    var onChatSelected: ((ChatListCommonObject) -> Void)?
     var onRefresh: ((UIRefreshControl) -> Void)?
 
 
@@ -23,8 +23,8 @@ class ChatsCollectionViewController: UICollectionViewController {
 extension ChatsCollectionViewController {
 
     static func instantiate(
-        chats: [Chat] = [],
-        onChatSelected: ((Chat) -> Void)? = nil,
+        chats: [ChatListCommonObject] = [],
+        onChatSelected: ((ChatListCommonObject) -> Void)? = nil,
         onRefresh: ((UIRefreshControl) -> Void)? = nil
     ) -> ChatsCollectionViewController {
         let viewController = StoryboardScene.Dashboard.chatsCollectionViewController.instantiate()
@@ -44,21 +44,31 @@ extension ChatsCollectionViewController {
         case all
     }
     
-    enum DataSourceItem: Hashable {
-        case chat(Chat)
+    class DataSourceItem: Hashable {
+        
+        var objectId: Int
+        var messageId: Int?
+        var messageSeen: Bool
+
+        init(objectId: Int, messageId: Int?, messageSeen: Bool) {
+            self.objectId = objectId
+            self.messageId = messageId
+            self.messageSeen = messageSeen
+        }
         
         static func == (lhs: DataSourceItem, rhs: DataSourceItem) -> Bool {
-            switch (lhs, rhs) {
-            case (.chat(let chatA), .chat(let chatB)):
-                return chatA.uuid == chatB.uuid
-            }
+            let isEqual =
+                lhs.objectId == rhs.objectId &&
+                lhs.messageId == rhs.messageId &&
+                lhs.messageSeen == rhs.messageSeen
+            
+            return isEqual
          }
 
         func hash(into hasher: inout Hasher) {
-            switch self {
-            case .chat(let chat):
-                hasher.combine(chat.uuid)
-            }
+            hasher.combine(objectId)
+            hasher.combine(messageId)
+            hasher.combine(messageSeen)
         }
     }
 
@@ -213,7 +223,7 @@ extension ChatsCollectionViewController {
     func configureDataSource(for collectionView: UICollectionView) {
         dataSource = makeDataSource(for: collectionView)
 
-        updateSnapshot(shouldAnimateChanges: false, shouldForceReload: true, animationDelay: 0.0)
+        updateSnapshot()
     }
 }
 
@@ -232,11 +242,7 @@ extension ChatsCollectionViewController {
                     for: indexPath
                 ) as? CollectionViewCell else { return nil }
 
-                switch chatItem {
-                case .chat(let chat):
-                    cell.chat = chat
-                }
-                //                cell.chat = chat
+                cell.chat = self.chats[indexPath.row]
 
                 return cell
             }
@@ -267,7 +273,9 @@ extension ChatsCollectionViewController {
 
         snapshot.appendSections(CollectionViewSection.allCases)
 
-        let items = chats.map { DataSourceItem.chat($0) }
+        let items = chats.map {
+            DataSourceItem(objectId: $0.getObjectId(), messageId: $0.lastMessage?.id, messageSeen: $0.lastMessage?.seen ?? false)
+        }
         
         snapshot.appendItems(items, toSection: .all)
         
@@ -275,31 +283,18 @@ extension ChatsCollectionViewController {
     }
 
 
-    func updateSnapshot(
-        shouldAnimateChanges: Bool = true,
-        shouldForceReload: Bool = false,
-        animationDelay: TimeInterval = 0.5
-    ) {
-//        var snapshot = makeSnapshotForCurrentState()
+    func updateSnapshot() {
         var snapshot = DataSourceSnapshot()
-
+        
         snapshot.appendSections(CollectionViewSection.allCases)
 
-        let items = chats.map { DataSourceItem.chat($0) }
+        let items = chats.map {
+            DataSourceItem(objectId: $0.getObjectId(), messageId: $0.lastMessage?.id, messageSeen: $0.lastMessage?.seen ?? false)
+        }
         
         snapshot.appendItems(items, toSection: .all)
-
-        if shouldForceReload {
-            snapshot.reloadItems(items)
-        }
         
-        if shouldAnimateChanges {
-            DispatchQueue.main.asyncAfter(deadline: .now() + animationDelay) {
-                self.dataSource.apply(snapshot, animatingDifferences: true)
-            }
-        } else {
-            dataSource.apply(snapshot, animatingDifferences: false)
-        }
+        self.dataSource.apply(snapshot, animatingDifferences: true)
     }
 }
 
@@ -321,11 +316,12 @@ extension ChatsCollectionViewController {
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
-        switch dataSource.itemIdentifier(for: indexPath) {
-        case .chat(let chat):
-            onChatSelected?(chat)
-        case .none:
-            break
-        }
+//        guard let selectedChat = dataSource.itemIdentifier(for: indexPath) else {
+//            collectionView.deselectItem(at: indexPath, animated: true)
+//            return
+//        }
+        
+        let selectedChatObject = chats[indexPath.row]
+        onChatSelected?(selectedChatObject)
     }
 }

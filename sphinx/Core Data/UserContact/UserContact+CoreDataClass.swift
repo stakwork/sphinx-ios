@@ -274,7 +274,7 @@ public class UserContact: NSManagedObject {
         return nil
     }
     
-    public func getConversation() -> Chat? {
+    public func getChat() -> Chat? {
         let userId = UserData.sharedInstance.getUserId()
         let predicate = NSPredicate(format: "(contactIds == %@ OR contactIds == %@) AND type = %d", [userId, self.id], [self.id, userId], Chat.ChatType.conversation.rawValue)
         let sortDescriptors = [NSSortDescriptor(key: "id", ascending: false)]
@@ -282,7 +282,7 @@ public class UserContact: NSManagedObject {
         return chat
     }
     
-    public func getConversation(chats: [Chat]) -> Chat? {
+    public func getChat(chats: [Chat]) -> Chat? {
         for chat in chats {
             if chat.getContactIdsArray().contains(self.id) {
                 return chat

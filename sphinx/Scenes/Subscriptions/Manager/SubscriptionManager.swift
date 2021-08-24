@@ -274,7 +274,7 @@ class SubscriptionManager {
             parameters["contact_id"] = contact.id as AnyObject?
         }
         
-        if let chat = contact?.getConversation() {
+        if let chat = contact?.getChat() {
             parameters["chat_id"] = chat.id as AnyObject?
         }
         

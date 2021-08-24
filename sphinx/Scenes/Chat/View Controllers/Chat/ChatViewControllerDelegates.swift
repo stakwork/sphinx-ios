@@ -168,7 +168,7 @@ extension ChatViewController : ChatAccessoryViewDelegate {
     }
     
     func insertSentMessage(message: TransactionMessage, completion: @escaping (Bool) -> ()) {
-        updateViewChat(updatedChat: chat ?? contact?.getConversation())
+        updateViewChat(updatedChat: chat ?? contact?.getChat())
         enableViewAndComplete(success: true, completion: completion)
         chatDataSource?.addMessageAndReload(message: message)
     }
@@ -334,7 +334,7 @@ extension ChatViewController : MessageCellDelegate {
         let (pk, _) = pubkey.pubkeyComponents
         let (existing, user) = pk.isExistingContactPubkey()
         if let user = user, existing {
-            if let chat = user.getConversation() {
+            if let chat = user.getChat() {
                 UserDefaults.Keys.chatId.set(chat.id)
             } else {
                 UserDefaults.Keys.contactId.set(user.id)
@@ -458,7 +458,7 @@ extension ChatViewController : SocketManagerDelegate {
     
     func didUpdateContact(contact: UserContact) {
         self.contact = contact
-        updateViewChat(updatedChat: contact.getConversation())
+        updateViewChat(updatedChat: contact.getChat())
         chatDataSource?.updateContact(contact: contact)
         chatHeaderView.setChatInfo()
     }
@@ -482,7 +482,7 @@ extension ChatViewController : SocketManagerDelegate {
 extension ChatViewController : NewContactVCDelegate {
     func shouldReloadContacts(reload: Bool) {
         contact = UserContact.getContactWith(id: contact?.id ?? -1)
-        updateViewChat(updatedChat: chat ?? contact?.getConversation())
+        updateViewChat(updatedChat: chat ?? contact?.getChat())
         loadData()
     }
 }

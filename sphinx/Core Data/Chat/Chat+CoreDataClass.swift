@@ -530,11 +530,11 @@ public class Chat: NSManagedObject {
         return type == Chat.ChatType.privateGroup.rawValue
     }
     
-    func isPublicGroup() -> Bool {
+    public func isPublicGroup() -> Bool {
         return type == Chat.ChatType.publicGroup.rawValue
     }
     
-    func isConversation() -> Bool {
+    public func isConversation() -> Bool {
         return type == Chat.ChatType.conversation.rawValue
     }
     

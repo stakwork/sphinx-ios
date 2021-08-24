@@ -11,27 +11,27 @@ extension DashboardRootViewController: SocketManagerDelegate {
     
     func didReceiveMessage(message: TransactionMessage, shouldSync: Bool) {
         chatsListViewModel.updateContactsAndChats()
-        updateCurrentViewControllerData(shouldForceReload: true, shouldAnimateChanges: true)
+        updateCurrentViewControllerData()
     }
     
     
     func didReceiveConfirmation(message: TransactionMessage) {
         chatsListViewModel.updateContactsAndChats()
-        updateCurrentViewControllerData(shouldForceReload: true, shouldAnimateChanges: true)
+        updateCurrentViewControllerData()
     }
     
     func didReceivePurchaseUpdate(message: TransactionMessage) {
         chatsListViewModel.updateContactsAndChats()
-        updateCurrentViewControllerData(shouldForceReload: true, shouldAnimateChanges: true)
+        updateCurrentViewControllerData()
     }
     
     
     func didUpdateContact(contact: UserContact) {
-        updateCurrentViewControllerData(shouldForceReload: true, shouldAnimateChanges: true)
+        updateCurrentViewControllerData()
     }
     
     func didUpdateChat(chat: Chat) {
-        updateCurrentViewControllerData(shouldForceReload: true, shouldAnimateChanges: true)
+        updateCurrentViewControllerData()
     }
     
     

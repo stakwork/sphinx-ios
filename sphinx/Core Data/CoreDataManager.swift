@@ -66,7 +66,7 @@ class CoreDataManager {
     }
     
     func deleteContactObjectsFor(_ contact: UserContact) {
-        if let chat = contact.getConversation() {
+        if let chat = contact.getChat() {
             for message in chat.getAllMessages(limit: nil) {
                 MediaLoader.clearMessageMediaCache(message: message)
                 deleteObject(object: message)

@@ -17,19 +17,11 @@ extension DashboardRootViewController: UITextFieldDelegate {
             break
         case .friends:
             contactChatsContainerViewController.updateWithNewChats(
-                contactsService
-                    .getChatListObjects()
-                    .compactMap { $0 as? Chat },
-                shouldAnimateChanges: true,
-                shouldForceReload: true
+                chatsListViewModel.contactChats
             )
         case .tribes:
             tribeChatsContainerViewController.updateWithNewChats(
-                contactsService
-                    .getChatListObjects()
-                    .compactMap { $0 as? Chat },
-                shouldAnimateChanges: true,
-                shouldForceReload: true
+                chatsListViewModel.tribeChats
             )
         }
         
@@ -55,19 +47,11 @@ extension DashboardRootViewController: UITextFieldDelegate {
             break
         case .friends:
             contactChatsContainerViewController.updateWithNewChats(
-                contactsService
-                    .getChatsWith(searchString: searchString as String)
-                    .filter { $0.isConversation() },
-                shouldAnimateChanges: true,
-                shouldForceReload: true
+                chatsListViewModel.contactChats
             )
         case .tribes:
             tribeChatsContainerViewController.updateWithNewChats(
-                contactsService
-                    .getChatsWith(searchString: searchString as String)
-                    .filter { $0.isConversation() },
-                shouldAnimateChanges: true,
-                shouldForceReload: true
+                chatsListViewModel.tribeChats
             )
         }
             

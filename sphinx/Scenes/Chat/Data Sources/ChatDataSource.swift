@@ -114,7 +114,7 @@ class ChatDataSource : NSObject {
     
     func updateContact(contact: UserContact) {
         self.contact = contact
-        self.chat = contact.getConversation()
+        self.chat = contact.getChat()
     }
     
     func resetLastInvoices() {

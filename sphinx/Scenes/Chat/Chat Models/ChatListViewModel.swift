@@ -18,19 +18,16 @@ final class ChatListViewModel: NSObject {
         self.contactsService = contactsService
     }
     
-    
-    var allChats: [Chat] { contactsService.chats }
-    
-    var contactChats: [Chat] {
-        allChats
+    var contactChats: [ChatListCommonObject] {
+        contactsService
+            .getChatListObjects()
             .filter { $0.isConversation() }
-            .sorted(by: Self.sortChatsForList)
     }
     
-    var tribeChats: [Chat] {
-        allChats
+    var tribeChats: [ChatListCommonObject] {
+        contactsService
+            .getChatListObjects()
             .filter { $0.isPublicGroup() }
-            .sorted(by: Self.sortChatsForList)
     }
     
     

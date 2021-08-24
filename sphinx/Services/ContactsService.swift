@@ -116,6 +116,7 @@ public final class ContactsService {
     public func getChatListObjects(
         _ forceLastMessageReload: Bool = false
     ) -> [ChatListCommonObject] {
+        
         let filteredContacts =  contacts.filter { !$0.isOwner && !$0.shouldBeExcluded()}
         let chatListObjectsCount = filteredContacts.count + chats.count
         

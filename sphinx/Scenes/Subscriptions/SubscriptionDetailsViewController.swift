@@ -126,7 +126,7 @@ class SubscriptionDetailsViewController: UIViewController {
     
     func goToChat() {
        if let contact = subscriptionManager.contact {
-            if let chat = contact.getConversation() {
+            if let chat = contact.getChat() {
                 UserDefaults.Keys.chatId.set(chat.id)
             }
             

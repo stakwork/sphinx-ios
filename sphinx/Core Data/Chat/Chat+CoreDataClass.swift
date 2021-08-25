@@ -556,22 +556,6 @@ public class Chat: NSManagedObject {
         return isPublicGroup() && ownerPubkey == UserData.sharedInstance.getUserPubKey()
     }
     
-//    func savePodcastFeed(json: JSON) {
-//        if let strJson = json.rawString() {
-//            self.podcastFeed = strJson
-//        }
-//        saveChat()
-//    }
-//
-    
-//    func getPodcastFeedJSON() -> JSON? {
-//        if let data = self.podcastFeed?.data(using: .utf8) {
-//            if let jsonObject = try? JSON(data: data) {
-//                return jsonObject
-//            }
-//        }
-//        return nil
-//    }
     
     func syncTribeWithServer() {
         DispatchQueue.global().async {

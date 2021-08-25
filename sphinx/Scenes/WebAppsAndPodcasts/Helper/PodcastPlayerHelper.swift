@@ -286,7 +286,7 @@ class PodcastPlayerHelper {
         podcastFeed.model = podcastModel
 
         
-        let destinations = value["destinations"].arrayValue.map {
+        let destinations: [PodcastDestination] = value["destinations"].arrayValue.map {
             let destination = PodcastDestination(context: managedObjectContext)
             
             destination.address = $0["address"].stringValue
@@ -473,7 +473,7 @@ class PodcastPlayerHelper {
         loading = true
         
         currentEpisode = index
-        currentEpisodeId = Int(episode.id) ?? -1
+        currentEpisodeId = Int(episode.id)
         currentTime = resetTime ? 0 : currentTime
         
         loadEpisodeImage()

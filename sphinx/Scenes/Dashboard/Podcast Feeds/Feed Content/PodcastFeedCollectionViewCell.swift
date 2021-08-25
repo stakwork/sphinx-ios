@@ -7,9 +7,9 @@ import UIKit
 
 
 protocol DashboardPodcastCollectionViewItem {
-    var imageName: String { get }
-    var title: String { get }
-    var subtitle: String { get }
+    var imageName: String? { get }
+    var title: String? { get }
+    var subtitle: String? { get }
 }
 
 
@@ -42,7 +42,7 @@ class PodcastFeedCollectionViewCell: UICollectionViewCell {
     
     private func updateViewsWithItem() {
         // TODO: This is probably going to have to use SDWebImage and the item's url
-        podcastImageView.image = UIImage(named: item.imageName)
+        podcastImageView.image = UIImage(named: item.imageName ?? "podcastTagIcon")
         
         podcastNameLabel.text = item.title
         podcastTitleLabel.text = item.subtitle

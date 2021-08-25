@@ -125,7 +125,7 @@ class PodcastPlayerView: UIView {
         liveMessages = [:]
         
         let episodeId = playerHelper.getCurrentEpisode()?.id ?? -1
-        let messages = TransactionMessage.getLiveMessagesFor(chat: chat, episodeId: episodeId)
+        let messages = TransactionMessage.getLiveMessagesFor(chat: chat, episodeId: Int(episodeId))
         
         for m in messages {
             addToLiveMessages(message: m)

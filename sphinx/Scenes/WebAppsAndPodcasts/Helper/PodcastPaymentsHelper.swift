@@ -31,7 +31,7 @@ class PodcastPaymentsHelper {
         let suggestedAmount = getPodcastAmount(podcastFeed)
         let satsAmt = boostAmount ?? suggestedAmount
         let myPubKey = UserData.sharedInstance.getUserPubKey()
-        var destinations = podcastFeed?.destinations ?? []
+        let destinations = podcastFeed?.destinationsArray ?? []
         var shouldUpdateMeta = true
         
         if
@@ -59,7 +59,7 @@ class PodcastPaymentsHelper {
         {
             streamSats(
                 podcastId: Int(podcastFeed.id),
-                podcatsDestinations: destinations,
+                podcastDestinations: destinations,
                 updateMeta: shouldUpdateMeta,
                 amount: satsAmt,
                 chatId: chatId,
@@ -95,7 +95,7 @@ class PodcastPaymentsHelper {
     }
     
     func streamSats(podcastId: Int,
-                    podcatsDestinations: [PodcastDestination],
+                    podcastDestinations: [PodcastDestination],
                     updateMeta: Bool,
                     amount: Int,
                     chatId: Int,
@@ -105,7 +105,7 @@ class PodcastPaymentsHelper {
         
         var destinations = [[String: AnyObject]]()
         
-        for d in podcatsDestinations {
+        for d in podcastDestinations {
             let destinationParams: [String: AnyObject] = ["address": (d.address ?? "") as AnyObject, "split": (d.split ?? 0) as AnyObject, "type": (d.type ?? "") as AnyObject]
             destinations.append(destinationParams)
         }

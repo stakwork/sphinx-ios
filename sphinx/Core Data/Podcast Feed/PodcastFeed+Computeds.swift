@@ -8,4 +8,11 @@ extension PodcastFeed {
         
         return Array(episodes)
     }
+    
+    
+    var destinationsArray: [PodcastDestination] {
+        guard let destinations = destinations else { return [] }
+        
+        return Array(destinations)
+    }
 }

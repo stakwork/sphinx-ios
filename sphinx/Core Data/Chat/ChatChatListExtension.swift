@@ -88,12 +88,8 @@ extension Chat: ChatListCommonObject {
         return image
     }
     
-    public func getConversation() -> Chat? {
+    public func getChat() -> Chat? {
         return self
-    }
-    
-    public func isGroupObject() -> Bool {
-        return true
     }
     
     public func getColor() -> UIColor {

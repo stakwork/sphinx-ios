@@ -5,7 +5,8 @@ protocol DashboardChatsListDelegate: AnyObject {
     
     func viewController(
         _ viewController: UIViewController,
-        didSelectChat chat: Chat
+        didSelectChat chat: Chat?,
+        orContact contact: UserContact?
     )
     
     

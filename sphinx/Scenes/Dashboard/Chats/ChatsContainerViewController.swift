@@ -8,7 +8,7 @@ class ChatsContainerViewController: UIViewController {
     private var chatsCollectionViewController: ChatsCollectionViewController!
     private weak var chatsListDelegate: DashboardChatsListDelegate?
     
-    private(set) var chats: [Chat] = []
+    private(set) var chats: [ChatListCommonObject] = []
 }
 
 
@@ -16,9 +16,10 @@ class ChatsContainerViewController: UIViewController {
 extension ChatsContainerViewController {
     
     static func instantiate(
-        chats: [Chat] = [],
+        chats: [ChatListCommonObject] = [],
         chatsListDelegate: DashboardChatsListDelegate
     ) -> ChatsContainerViewController {
+        
         let viewController = StoryboardScene
             .Dashboard
             .chatsContainerViewController
@@ -32,20 +33,12 @@ extension ChatsContainerViewController {
     
     
     public func updateWithNewChats(
-        _ chats: [Chat],
-        shouldAnimateChanges: Bool = false,
-        shouldForceReload: Bool = true,
-        animationDelay: TimeInterval = 0.5
+        _ chats: [ChatListCommonObject]
     ) {
         self.chats = chats
         
-        
         self.chatsCollectionViewController.chats = chats
-        self.chatsCollectionViewController.updateSnapshot(
-            shouldAnimateChanges: shouldAnimateChanges,
-            shouldForceReload: shouldForceReload,
-            animationDelay: animationDelay
-        )
+        self.chatsCollectionViewController.updateSnapshot()
     }
 }
 
@@ -69,8 +62,12 @@ extension ChatsContainerViewController {
 // MARK: - Event Handling
 private extension ChatsContainerViewController {
     
-    func handleChatSelection(_ chat: Chat) {
-        chatsListDelegate?.viewController(self, didSelectChat: chat)
+    func handleChatSelection(_ chat: ChatListCommonObject) {
+        if let chat = chat as? Chat {
+            chatsListDelegate?.viewController(self, didSelectChat: chat, orContact: nil)
+        } else if let contact = chat as? UserContact {
+            chatsListDelegate?.viewController(self, didSelectChat: nil, orContact: contact)
+        }
     }
     
     

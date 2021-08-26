@@ -63,7 +63,11 @@ extension UserContact : ChatListCommonObject {
         return true
     }
     
-    public func isGroupObject() -> Bool {
+    public func isConversation() -> Bool {
+        return true
+    }
+    
+    public func isPublicGroup() -> Bool {
         return false
     }
     

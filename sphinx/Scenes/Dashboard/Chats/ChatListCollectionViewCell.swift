@@ -15,7 +15,7 @@ class ChatListCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var unreadMessageBadgeLabel: UILabel!
     
     
-    var chat: Chat? {
+    var chat: ChatListCommonObject? {
         didSet {
             guard let chat = chat else { return }
             DispatchQueue.main.async { self.render(with: chat) }
@@ -44,7 +44,7 @@ extension ChatListCollectionViewCell {
 extension ChatListCollectionViewCell {
     
     var unreadMessageCount: Int {
-        chat?.getConversation()?.getReceivedUnseenMessagesCount() ?? 0
+        chat?.getChat()?.getReceivedUnseenMessagesCount() ?? 0
     }
     
     var hasUnreadMessages: Bool { unreadMessageCount > 0 }
@@ -73,13 +73,13 @@ extension ChatListCollectionViewCell {
     }
     
     
-    private func render(with chat: Chat) {
+    private func render(with chat: ChatListCommonObject) {
         if hasUnreadMessages {
             nameLabel.font = nameLabel.font.bold()
         }
         
         nameLabel.text = chat.getName()
-        muteImageView.isHidden = chat.isMuted() == false
+        muteImageView.isHidden = chat.getChat()?.isMuted() == false
         lockSign.isHidden = chat.hasEncryptionKey() == false
 
         
@@ -90,7 +90,7 @@ extension ChatListCollectionViewCell {
     
     
     
-    private func renderBadgeView(for chat: Chat) {
+    private func renderBadgeView(for chat: ChatListCommonObject) {
         guard hasUnreadMessages else {
             unreadMessageBadgeContainer.alpha = 0
             return
@@ -99,19 +99,17 @@ extension ChatListCollectionViewCell {
         unreadMessageBadgeContainer.alpha = 1
         unreadMessageBadgeLabel.text = unreadMessageCount > 99 ? "99+" : "\(unreadMessageCount)"
         
-        if chat.isMuted() {
+        if chat.getChat()?.isMuted() == true {
             unreadMessageBadgeContainer.alpha = 0.2
             unreadMessageBadgeContainer.backgroundColor = .Sphinx.WashedOutReceivedText
-            unreadMessageBadgeLabel.textColor = .Sphinx.WashedOutReceivedText
         } else {
             unreadMessageBadgeContainer.alpha = 1.0
             unreadMessageBadgeContainer.backgroundColor = .Sphinx.PrimaryBlue
-            unreadMessageBadgeLabel.textColor = .Sphinx.PrimaryText
         }
     }
     
     
-    private func renderContactImageViews(for chat: Chat) {
+    private func renderContactImageViews(for chat: ChatListCommonObject) {
         if let image = chat.getImage() {
             contactInitialsLabel.isHidden = true
             contactImageView.isHidden = false
@@ -140,7 +138,7 @@ extension ChatListCollectionViewCell {
     }
     
     
-    private func renderContactInitialsLabel(for chat: Chat) {
+    private func renderContactInitialsLabel(for chat: ChatListCommonObject) {
         let senderInitials = chat.getName().getInitialsFromName()
         let senderColor = chat.getColor()
         
@@ -150,9 +148,9 @@ extension ChatListCollectionViewCell {
     }
     
     
-    private func renderLastMessage(for chat: Chat) {
+    private func renderLastMessage(for chat: ChatListCommonObject) {
         if chat.lastMessage == nil {
-            chat.updateLastMessage()
+            chat.getChat()?.updateLastMessage()
         }
 
         if let lastMessage = chat.lastMessage {

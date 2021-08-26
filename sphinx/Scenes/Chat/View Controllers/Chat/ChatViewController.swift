@@ -60,7 +60,7 @@ class ChatViewController: KeyboardHandlerViewController {
     
     func updateViewChat(updatedChat: Chat?) {
         if let updatedChat = updatedChat {
-            if let contact = self.contact, let vcChat = contact.getConversation(), updatedChat.id == vcChat.id {
+            if let contact = self.contact, let vcChat = contact.getChat(), updatedChat.id == vcChat.id {
                 self.chat = updatedChat
             }
             
@@ -81,7 +81,7 @@ class ChatViewController: KeyboardHandlerViewController {
         let viewController = StoryboardScene.Chat.chatViewController.instantiate()
         
         viewController.contact = contact
-        viewController.chat = chat ?? contact?.getConversation()
+        viewController.chat = chat ?? contact?.getChat()
         viewController.preventFetching = preventFetching
         viewController.rootViewController = rootViewController
         viewController.contactsService = contactsService

@@ -274,7 +274,6 @@ extension ChatsCollectionViewController {
         snapshot.appendSections(CollectionViewSection.allCases)
 
         let items = chats.map {
-            
             DataSourceItem(
                 objectId: $0.getObjectId(),
                 messageId: $0.lastMessage?.id,
@@ -284,7 +283,7 @@ extension ChatsCollectionViewController {
 
         snapshot.appendItems(items, toSection: .all)
         
-        self.dataSource.apply(snapshot, animatingDifferences: true)
+        dataSource.apply(snapshot, animatingDifferences: true)
     }
 }
 

@@ -53,9 +53,9 @@ internal enum StoryboardScene {
         internal static let dashboardRootViewController = SceneType<DashboardRootViewController>(storyboard: Dashboard.self, identifier: "DashboardRootViewController")
         
         
-        internal static let feedsListViewController = SceneType<FeedsListViewController>(
+        internal static let feedsListViewController = SceneType<PodcastFeedsContainerViewController>(
             storyboard: Dashboard.self,
-            identifier: "FeedsListViewController"
+            identifier: "PodcastFeedsContainerViewController"
         )
         
         

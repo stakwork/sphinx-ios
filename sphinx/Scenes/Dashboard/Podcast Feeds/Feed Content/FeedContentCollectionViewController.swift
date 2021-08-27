@@ -1,4 +1,5 @@
 import UIKit
+import CoreData
 
 
 class FeedContentCollectionViewController: UICollectionViewController {
@@ -6,11 +7,12 @@ class FeedContentCollectionViewController: UICollectionViewController {
     var latestPodcastEpisodes: [PodcastEpisode]!
     var subscribedPodcastFeeds: [PodcastFeed]!
     var interSectionSpacing: CGFloat!
+    
+    var onPodcastEpisodeCellSelected: ((NSManagedObjectID) -> Void)!
+    var onPodcastFeedCellSelected: ((NSManagedObjectID) -> Void)!
 
-    var onPodcastEpisodeCellSelected: ((PodcastEpisode) -> Void)!
-    var onPodcastFeedCellSelected: ((PodcastFeed) -> Void)!
-
-
+    private var managedObjectContext: NSManagedObjectContext!
+    private var fetchedResultsController: NSFetchedResultsController<PodcastFeed>!
     private var currentDataSnapshot: DataSourceSnapshot!
     private var dataSource: DataSource!
     
@@ -27,19 +29,20 @@ class FeedContentCollectionViewController: UICollectionViewController {
 extension FeedContentCollectionViewController {
 
     static func instantiate(
-        latestPodcastEpisodes: [PodcastEpisode] = [],
-        subscribedPodcastFeeds: [PodcastFeed] = [],
+        managedObjectContext: NSManagedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext,
+        fetchedResultsController: NSFetchedResultsController<PodcastFeed>,
         interSectionSpacing: CGFloat = 10.0,
-        onPodcastEpisodeCellSelected: @escaping ((PodcastEpisode) -> Void) = { _ in },
-        onPodcastFeedCellSelected: @escaping ((PodcastFeed) -> Void) = { _ in }
+        onPodcastEpisodeCellSelected: @escaping ((NSManagedObjectID) -> Void) = { _ in },
+        onPodcastFeedCellSelected: @escaping ((NSManagedObjectID) -> Void) = { _ in }
     ) -> FeedContentCollectionViewController {
         let viewController = StoryboardScene.Dashboard.feedContentCollectionViewController.instantiate()
 
-        viewController.latestPodcastEpisodes = latestPodcastEpisodes
-        viewController.subscribedPodcastFeeds = subscribedPodcastFeeds
+        viewController.managedObjectContext = managedObjectContext
         viewController.interSectionSpacing = interSectionSpacing
         viewController.onPodcastEpisodeCellSelected = onPodcastEpisodeCellSelected
         viewController.onPodcastFeedCellSelected = onPodcastFeedCellSelected
+        viewController.fetchedResultsController = fetchedResultsController
+        viewController.fetchedResultsController.delegate = viewController
         
         return viewController
     }
@@ -63,8 +66,8 @@ extension FeedContentCollectionViewController {
     }
     
     enum DataSourceItem: Hashable {
-        case latestPodcastEpisode(PodcastEpisode)
-        case subscribedPodcastFeed(PodcastFeed)
+        case latestPodcastEpisode(NSManagedObjectID)
+        case subscribedPodcastFeed(NSManagedObjectID)
     }
     
     typealias ReusableHeaderView = PodcastFeedCollectionViewSectionHeader
@@ -202,10 +205,6 @@ extension FeedContentCollectionViewController {
 
     func configureDataSource(for collectionView: UICollectionView) {
         dataSource = makeDataSource(for: collectionView)
-        
-        let snapshot = makeSnapshotForCurrentState()
-        
-        dataSource.apply(snapshot, animatingDifferences: false)
     }
 }
 
@@ -224,12 +223,29 @@ extension FeedContentCollectionViewController {
             else {
                 return nil
             }
+
             
             switch dataItem {
-            case .latestPodcastEpisode(let episode):
-                cell.configure(withItem: episode)
-            case .subscribedPodcastFeed(let feed):
-                cell.configure(withItem: feed)
+            case .latestPodcastEpisode(let episodeManagedObjectID):
+                guard
+                    let managedObject = try? self.managedObjectContext
+                        .existingObject(with: episodeManagedObjectID),
+                    let podcastEpisode = managedObject as? PodcastEpisode
+                else {
+                    preconditionFailure("PodcastEpisode managed object should be available")
+                }
+                
+                cell.configure(withItem: podcastEpisode)
+            case .subscribedPodcastFeed(let feedManagedObjectID):
+                guard
+                    let managedObject = try? self.managedObjectContext
+                        .existingObject(with: feedManagedObjectID),
+                    let podcastFeed = managedObject as? PodcastFeed
+                else {
+                    preconditionFailure("PodcastFeed managed object should be available")
+                }
+                
+                cell.configure(withItem: podcastFeed)
             }
             
             return cell
@@ -270,53 +286,6 @@ extension FeedContentCollectionViewController {
 }
 
 
-// MARK: - Data Source Snapshot
-extension FeedContentCollectionViewController {
-
-    func makeSnapshotForCurrentState() -> DataSourceSnapshot {
-        var snapshot = DataSourceSnapshot()
-
-        snapshot.appendSections(CollectionViewSection.allCases)
-
-        let latestPodcastEpisodeItems = latestPodcastEpisodes
-            .map { DataSourceItem.latestPodcastEpisode($0) }
-        
-        snapshot.appendItems(
-            latestPodcastEpisodeItems,
-            toSection: CollectionViewSection.latestPodcastEpisodes
-        )
-        
-        let subscribedPodcastFeedItems = subscribedPodcastFeeds
-            .map { DataSourceItem.subscribedPodcastFeed($0) }
-        
-        snapshot.appendItems(
-            subscribedPodcastFeedItems,
-            toSection: CollectionViewSection.subscribedPodcastFeeds
-        )
-        
-        return snapshot
-    }
-
-
-    func updateSnapshot(shouldAnimate: Bool = true) {
-        let snapshot = makeSnapshotForCurrentState()
-
-        dataSource.apply(snapshot, animatingDifferences: shouldAnimate)
-    }
-}
-
-
-
-// MARK: - Event Handling
-private extension FeedContentCollectionViewController {
-}
-
-
-// MARK: - Private Helpers
-private extension FeedContentCollectionViewController {
-}
-
-
 // MARK: - `UICollectionViewDelegate` Methods
 extension FeedContentCollectionViewController {
     
@@ -334,6 +303,65 @@ extension FeedContentCollectionViewController {
         case .subscribedPodcastFeed(let podcastFeed):
             onPodcastFeedCellSelected(podcastFeed)
         }
+    }
+}
+
+
+// MARK: - `NSFetchedResultsControllerDelegate` Methods
+extension FeedContentCollectionViewController: NSFetchedResultsControllerDelegate {
+    
+    func managedObjectID(
+        for itemIdentifier: CellDataItemType,
+        in snapshot: DataSourceSnapshot
+    ) -> NSManagedObjectID {
+        switch itemIdentifier {
+        case .latestPodcastEpisode(let episodeManagedObjectID):
+            return episodeManagedObjectID
+        case .subscribedPodcastFeed(let feedManagedObjectID):
+            return feedManagedObjectID
+        }
+    }
+    
+    
+    /// Called when the contents of the fetched results controller change.
+    ///
+    /// If this method is implemented, no other delegate methods will be invoked.
+    func controller(
+        _ controller: NSFetchedResultsController<NSFetchRequestResult>,
+        didChangeContentWith snapshot: NSDiffableDataSourceSnapshotReference
+    ) {
+        guard let dataSource = dataSource else {
+            assertionFailure("The data source has not implemented snapshot support while it should")
+            return
+        }
+        
+        let changedSnapshot = snapshot as NSDiffableDataSourceSnapshot<String, NSManagedObjectID>
+        var currentSnapshot = dataSource.snapshot() as DataSourceSnapshot
+        
+        guard let sectionIdentifier = changedSnapshot.sectionIdentifiers.first else { return }
+
+        let feeds = changedSnapshot.itemIdentifiers(inSection: sectionIdentifier)
+            .compactMap { changedSnapshot.indexOfItem($0) } // get indices of IDs
+            .map { IndexPath(row: $0, section: 0) } // convert indices to index paths
+            .map { fetchedResultsController.object(at: $0) } // get object by its index path
+        
+        let feedItems = feeds
+            .map { DataSourceItem.subscribedPodcastFeed($0.objectID) }
+        
+        let latestEpisodeItems = feeds
+            .compactMap(\.episodes?.first)
+            .map { DataSourceItem.latestPodcastEpisode($0.objectID) }
+        
+
+        let shouldAnimate = collectionView?.numberOfSections != 0
+        
+        currentSnapshot.appendSections([.subscribedPodcastFeeds])
+        currentSnapshot.appendItems(feedItems, toSection: .subscribedPodcastFeeds)
+        
+        currentSnapshot.appendSections([.latestPodcastEpisodes])
+        currentSnapshot.appendItems(latestEpisodeItems, toSection: .latestPodcastEpisodes)
+
+        dataSource.apply(currentSnapshot, animatingDifferences: shouldAnimate)
     }
 }
 

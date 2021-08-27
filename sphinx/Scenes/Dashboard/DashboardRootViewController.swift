@@ -39,14 +39,24 @@ class DashboardRootViewController: RootViewController {
     internal let refreshControl = UIRefreshControl()
     internal let newBubbleHelper = NewMessageBubbleHelper()
     
-    internal lazy var feedsListViewController = {
-        FeedsListViewController.instantiate()
+    
+    internal lazy var podcastFeedViewModel: PodcastFeedViewModel = {
+        PodcastFeedViewModel()
     }()
     
     internal lazy var chatsListViewModel: ChatListViewModel = {
         ChatListViewModel(contactsService: contactsService)
     }()
     
+    
+    internal lazy var feedsListViewController = {
+        PodcastFeedsContainerViewController.instantiate(
+//            podcastFeedListDelegate: self,
+//            podcastEpisodeListDelegate: self
+        )
+    }()
+    
+
     internal lazy var contactChatsContainerViewController: ChatsContainerViewController = {
         ChatsContainerViewController.instantiate(
             chats: chatsListViewModel.contactsService

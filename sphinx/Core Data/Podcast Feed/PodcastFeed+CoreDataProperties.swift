@@ -9,11 +9,6 @@ import CoreData
 
 
 extension PodcastFeed {
-
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<PodcastFeed> {
-        return NSFetchRequest<PodcastFeed>(entityName: "PodcastFeed")
-    }
-
     @NSManaged public var id: Int64
     @NSManaged public var title: String?
     @NSManaged public var podcastDescription: String?

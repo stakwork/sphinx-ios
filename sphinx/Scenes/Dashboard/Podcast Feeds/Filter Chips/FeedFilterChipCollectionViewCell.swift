@@ -10,7 +10,7 @@ class FeedFilterChipCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var filterLabel: UILabel!
     
     
-    var filterOption: FeedsListViewController.ContentFilterOption! {
+    var filterOption: PodcastFeedsContainerViewController.ContentFilterOption! {
         didSet {
             DispatchQueue.main.async { [weak self] in
                 self?.updateViewsFromItemState()

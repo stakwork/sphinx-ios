@@ -2947,11 +2947,11 @@
 		F3CE637826AFD42C006E37A0 /* Podcast Feeds */ = {
 			isa = PBXGroup;
 			children = (
-				F373BF0226A9CEDD0093C886 /* PodcastFeedsContainerViewController.swift */,
 				F3DFB78926B87C0B00E76FBD /* FeedsListViewController+ContentFilterOption.swift */,
+				F373BF0226A9CEDD0093C886 /* PodcastFeedsContainerViewController.swift */,
+				F3B2518626D81BE800C96D42 /* PodcastFeedViewModel.swift */,
 				F3D86DBA26B106C000EB9711 /* Feed Content */,
 				F3CE637D26AFF856006E37A0 /* Filter Chips */,
-				F3B2518626D81BE800C96D42 /* PodcastFeedViewModel.swift */,
 			);
 			path = "Podcast Feeds";
 			sourceTree = "<group>";

@@ -253,7 +253,7 @@ extension ChatsCollectionViewController {
     func makeSupplementaryViewProvider(for collectionView: UICollectionView) -> DataSource.SupplementaryViewProvider {
         return {
             (collectionView: UICollectionView, kind: String, indexPath: IndexPath)
-        -> UICollectionReusableView? in
+        -> UICollectionReusableView in
             switch kind {
             case UICollectionView.elementKindSectionHeader:
                 return UICollectionReusableView()

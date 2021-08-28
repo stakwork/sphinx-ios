@@ -20,8 +20,6 @@ class PodcastFeedsContainerViewController: UIViewController {
     
     var contentFilterOptions: [ContentFilterOption] = []
     var activeFilterOption: ContentFilterOption = .allContent
-    var latestPodcastEpisodes: [PodcastEpisode] = []
-    var subscribedPodcastFeeds: [PodcastFeed] = []
     
     var fetchedResultsController: NSFetchedResultsController<PodcastFeed>!
     
@@ -55,18 +53,9 @@ class PodcastFeedsContainerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loadData()
+        setupFilterOptions()
         configureFilterChipCollectionView()
         configureFeedContentCollectionView()
-        
-        do {
-            try fetchedResultsController.performFetch()
-        } catch {
-            AlertHelper.showAlert(
-                title: "Data Loading Error",
-                message: "\(error)"
-            )
-        }
     }
 }
 
@@ -74,7 +63,7 @@ class PodcastFeedsContainerViewController: UIViewController {
 // MARK: -  Private Helpers
 extension PodcastFeedsContainerViewController {
     
-    private func loadData() {
+    private func setupFilterOptions() {
         contentFilterOptions = getContentFilterOptions()
     }
     

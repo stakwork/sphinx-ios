@@ -232,7 +232,7 @@ class PodcastPlayerHelper {
         podcastFeed.title = json["title"].stringValue
         podcastFeed.podcastDescription = json["description"].stringValue
         podcastFeed.author = json["author"].stringValue
-        podcastFeed.imageURLPath = json["imageURLPath"].stringValue
+        podcastFeed.imageURLPath = json["image"].stringValue
         
 //        var podcastFeed = PodcastFeed(
 //            chatId: chat?.id,
@@ -248,6 +248,7 @@ class PodcastPlayerHelper {
             
             episode.id = Int64($0["id"].intValue)
             episode.title = $0["title"].stringValue
+//            episode.datePublished = Date(timeIntervalSince1970: $0["datePublished"].doubleValue)
             episode.episodeDescription = $0["description"].stringValue
             episode.urlPath = $0["enclosureUrl"].stringValue
             episode.imageURLPath = $0["image"].stringValue

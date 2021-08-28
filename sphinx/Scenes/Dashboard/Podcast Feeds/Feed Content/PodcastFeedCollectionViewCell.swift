@@ -4,10 +4,11 @@
 //
 
 import UIKit
+import SDWebImage
 
 
 protocol DashboardPodcastCollectionViewItem {
-    var imageName: String? { get }
+    var imageURLPath: String? { get }
     var title: String? { get }
     var subtitle: String? { get }
 }
@@ -26,7 +27,18 @@ class PodcastFeedCollectionViewCell: UICollectionViewCell {
             }
         }
     }
+}
+
+
+extension PodcastFeedCollectionViewCell {
     
+    var imageURL: URL? {
+        item.imageURLPath.flatMap { URL(string: $0) }
+    }
+}
+    
+
+extension PodcastFeedCollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -41,8 +53,19 @@ class PodcastFeedCollectionViewCell: UICollectionViewCell {
     
     
     private func updateViewsWithItem() {
-        // TODO: This is probably going to have to use SDWebImage and the item's url
-        podcastImageView.image = UIImage(named: item.imageName ?? "podcastTagIcon")
+        if let imageURL = imageURL {
+            podcastImageView.sd_setImage(
+                with: imageURL,
+                placeholderImage: UIImage(named: "podcastTagIcon"),
+                options: [.highPriority],
+                progress: nil
+            )
+            
+            podcastImageView.sd_imageIndicator = SDWebImageProgressIndicator.default
+        } else {
+            // TODO: Use  a placeholder here?
+            podcastImageView.image = UIImage(named: "podcastTagIcon")
+        }
         
         podcastNameLabel.text = item.title
         podcastTitleLabel.text = item.subtitle

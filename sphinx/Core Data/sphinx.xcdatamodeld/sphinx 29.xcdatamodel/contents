@@ -40,6 +40,7 @@
         <relationship name="feed" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PodcastFeed" inverseName="destinations" inverseEntity="PodcastFeed"/>
     </entity>
     <entity name="PodcastEpisode" representedClassName="PodcastEpisode" syncable="YES">
+        <attribute name="datePublished" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="episodeDescription" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="imageURLPath" optional="YES" attributeType="String"/>
@@ -171,13 +172,13 @@
     </entity>
     <elements>
         <element name="Chat" positionX="-54" positionY="135" width="128" height="419"/>
-        <element name="PodcastEpisode" positionX="-36" positionY="153" width="128" height="149"/>
+        <element name="PodcastDestination" positionX="-18" positionY="180" width="128" height="89"/>
+        <element name="PodcastEpisode" positionX="-36" positionY="153" width="128" height="14"/>
         <element name="PodcastFeed" positionX="-45" positionY="144" width="128" height="164"/>
+        <element name="PodcastModel" positionX="-27" positionY="171" width="128" height="74"/>
         <element name="Subscription" positionX="-54" positionY="135" width="128" height="223"/>
         <element name="TransactionMessage" positionX="-54" positionY="63" width="128" height="463"/>
         <element name="UserContact" positionX="-63" positionY="-18" width="128" height="358"/>
         <element name="UserInvite" positionX="-54" positionY="135" width="128" height="118"/>
-        <element name="PodcastModel" positionX="-27" positionY="171" width="128" height="74"/>
-        <element name="PodcastDestination" positionX="-18" positionY="180" width="128" height="89"/>
     </elements>
 </model>

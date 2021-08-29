@@ -11,7 +11,11 @@ import Alamofire
 import SwiftyJSON
 
 extension API {
-    func getPodcastFeed(url: String, callback: @escaping PodcastFeedCallback, errorCallback: @escaping EmptyCallback){
+    func getPodcastFeed(
+        url: String,
+        callback: @escaping PodcastFeedCallback,
+        errorCallback: @escaping EmptyCallback
+    ) {
         guard let request = createRequest(url, params: nil, method: "GET") else {
             errorCallback()
             return

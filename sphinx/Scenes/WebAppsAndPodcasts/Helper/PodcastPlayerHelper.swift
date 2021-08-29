@@ -99,13 +99,18 @@ class PodcastPlayerHelper {
         }
     }
     
+    
     func resetPodcast() {
         stopPlaying()
         self.podcast = nil
     }
     
+    
     func loadPodcastFeed(chat: Chat?, callback: @escaping (Bool) -> ()) {
-        if !ConnectivityHelper.isConnectedToInternet || chat?.tribesInfo?.feedUrl == nil {
+        guard
+            ConnectivityHelper.isConnectedToInternet,
+            chat?.tribesInfo?.feedUrl != nil
+        else {
             processLocalPodcastFeed(chat: chat, callback: callback)
             return
         }
@@ -120,9 +125,9 @@ class PodcastPlayerHelper {
             let chatId = chat?.id,
             podcastChatId == chatId && isPlaying()
         {
-            DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: {
+            DelayPerformedHelper.performAfterDelay(seconds: 0.5) {
                 callback(true)
-            })
+            }
             return
         }
         
@@ -130,15 +135,19 @@ class PodcastPlayerHelper {
         
         let tribesServerURL = "https://tribes.sphinx.chat/podcast?url=\(url)"
         
-        API.sharedInstance.getPodcastFeed(url: tribesServerURL, callback: { json in
-            DispatchQueue.main.async {
-//                self.processPodcastFeed(json: json, chat: chat)
-                self.persistPodcastFeed(from: json, for: chat)
-                callback(true)
+        API.sharedInstance.getPodcastFeed(
+            url: tribesServerURL,
+            callback: { json in
+                DispatchQueue.main.async {
+    //                self.processPodcastFeed(json: json, chat: chat)
+                    self.persistPodcastFeed(from: json, for: chat)
+                    callback(true)
+                }
+            },
+            errorCallback: {
+                callback(false)
             }
-        }, errorCallback: {
-            callback(false)
-        })
+        )
     }
     
     
@@ -152,6 +161,7 @@ class PodcastPlayerHelper {
 //            callback(true)
 //        }
     }
+    
     
     // TODO: Figure out what this is supposed to be doing since we should be able to fetch a
     // chat's `feed` from the persistent store.
@@ -248,7 +258,7 @@ class PodcastPlayerHelper {
             
             episode.id = Int64($0["id"].intValue)
             episode.title = $0["title"].stringValue
-//            episode.datePublished = Date(timeIntervalSince1970: $0["datePublished"].doubleValue)
+            episode.datePublished = Date(timeIntervalSince1970: $0["datePublished"].doubleValue)
             episode.episodeDescription = $0["description"].stringValue
             episode.urlPath = $0["enclosureUrl"].stringValue
             episode.imageURLPath = $0["image"].stringValue

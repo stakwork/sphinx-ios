@@ -4,9 +4,19 @@ import Foundation
 extension PodcastFeed {
     
     var episodesArray: [PodcastEpisode] {
-        guard let episodes = episodes else { return [] }
+        guard let episodes = episodes else {
+            return []
+        }
         
-        return Array(episodes)
+        return episodes.sorted { (first, second) in
+            if first.datePublished == nil {
+                return false
+            } else if second.datePublished == nil {
+                return true
+            }
+            
+            return first.datePublished! > second.datePublished!
+        }
     }
     
     

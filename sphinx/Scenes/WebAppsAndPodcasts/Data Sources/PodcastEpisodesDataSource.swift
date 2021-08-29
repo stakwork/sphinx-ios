@@ -56,7 +56,15 @@ extension PodcastEpisodesDataSource : UITableViewDelegate {
             let episode = episodes[indexPath.row]
             let download = downloadService.activeDownloads[episode.urlPath ?? ""]
             let isPlaying = (playerHelper.currentEpisode == indexPath.row && playerHelper.isPlaying())
-            cell.configureWith(podcast: playerHelper.podcast, and: episode, download: download, delegate: self, isLastRow: indexPath.row + 1 == episodes.count, playing: isPlaying)
+            
+            cell.configureWith(
+                podcast: playerHelper.podcast,
+                and: episode,
+                download: download,
+                delegate: self,
+                isLastRow: indexPath.row + 1 == episodes.count,
+                playing: isPlaying
+            )
         }
     }
     

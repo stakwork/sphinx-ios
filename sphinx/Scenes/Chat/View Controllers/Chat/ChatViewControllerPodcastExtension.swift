@@ -10,8 +10,12 @@ import UIKit
 
 extension ChatViewController : PodcastPlayerVCDelegate {
     func loadPodcastFeed() {        
-        podcastPlayerHelper?.loadPodcastFeed(chat: self.chat, callback: { success in
-            if let chat = self.chat, let _ = chat.podcastPlayer?.podcast, success {
+        podcastPlayerHelper?.loadPodcastFeed(chat: chat, callback: { success in
+            if
+                let chat = self.chat,
+                let _ = chat.podcastPlayer?.podcast,
+                success
+            {
                 self.addSmallPlayer(completion: {
                     PodcastNewEpisodeViewController.checkForNewEpisode(chat: chat, rootViewController: self.rootViewController, delegate: self)
                 })

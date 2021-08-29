@@ -17,6 +17,7 @@ extension PodcastEpisode {
     @NSManaged public var id: Int64
     @NSManaged public var title: String?
     @NSManaged public var episodeDescription: String?
+    @NSManaged public var datePublished: Date?
     @NSManaged public var urlPath: String?
     @NSManaged public var imageURLPath: String?
     @NSManaged public var linkURLPath: String?

@@ -450,7 +450,7 @@ extension FeedContentCollectionViewController: NSFetchedResultsControllerDelegat
 
 extension PodcastEpisode: DashboardPodcastCollectionViewItem {
     var subtitle: String? {
-        episodeDescription ?? ""
+        formattedDescription ?? ""
     }
 }
 

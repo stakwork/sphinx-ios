@@ -107,6 +107,8 @@ class PodcastPlayerHelper {
     
     
     func loadPodcastFeed(chat: Chat?, callback: @escaping (Bool) -> ()) {
+        // TODO: Check here to see if we can load a feed from the persistent store instead?
+        
         guard
             ConnectivityHelper.isConnectedToInternet,
             chat?.tribesInfo?.feedUrl != nil
@@ -139,8 +141,11 @@ class PodcastPlayerHelper {
             url: tribesServerURL,
             callback: { json in
                 DispatchQueue.main.async {
-    //                self.processPodcastFeed(json: json, chat: chat)
-                    self.persistPodcastFeed(from: json, for: chat)
+//                    let managedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext
+                        
+//                    self.processPodcastFeed(json: json, chat: chat)
+                    self.persistDataForPodcastFeed(using: json, belongingTo: chat)
+                    
                     callback(true)
                 }
             },
@@ -152,8 +157,15 @@ class PodcastPlayerHelper {
     
     
     func processLocalPodcastFeed(chat: Chat?, callback: @escaping (Bool) -> ()) {
-        if let feed = chat?.podcastFeed {
-            processPodcastFeed(feed, chat: chat)
+        if let podcastFeed = chat?.podcastFeed {
+//            processPodcastFeed(feed, chat: chat)
+//            persistDataForPodcastFeed(feed, using: <#T##JSON#>, belongingTo: <#T##Chat?#>)(feed, chat: chat)
+            
+            if podcastFeed.episodes?.isEmpty == false {
+                CoreDataManager.sharedManager.saveContext()
+                self.chat = chat
+            }
+            
             callback(true)
         }
 //        if let json = chat?.getPodcastFeedJSON() {
@@ -163,75 +175,20 @@ class PodcastPlayerHelper {
     }
     
     
-    // TODO: Figure out what this is supposed to be doing since we should be able to fetch a
-    // chat's `feed` from the persistent store.
-    func processPodcastFeed(_ podcastFeed: PodcastFeed, chat: Chat?) {
-        guard podcastFeed.episodes?.isEmpty == false else { return }
-        
-//        if json["episodes"].arrayValue.count <= 0 {
-//            return
-//        }
-        
-//        chat?.savePodcastFeed(json: json)
-        
-        //    }
-        CoreDataManager.sharedManager.saveContext()
-        self.chat = chat
-        
-//        var podcastFeed = PodcastFeed(
-//            chatId: chat?.id,
-//            id: json["id"].intValue,
-//            title: json["title"].stringValue,
-//            description: json["description"].stringValue,
-//            author: json["author"].stringValue,
-//            image: json["image"].stringValue
-//        )
-        
-//        var episodes = [PodcastEpisode]()
-        
-//        for e in json["episodes"].arrayValue {
-//            let episode = PodcastEpisode(
-//                id: e["id"].intValue,
-//                title: e["title"].stringValue,
-//                description: e["description"].stringValue,
-//                url: e["enclosureUrl"].stringValue,
-//                image: e["image"].stringValue,
-//                link: e["link"].stringValue
-//            )
+//    // TODO: Figure out what this is supposed to be doing since we should be able to fetch a
+//    // chat's `feed` from the persistent store.
+//    func processPodcastFeed(_ podcastFeed: PodcastFeed, chat: Chat?) {
+//        guard podcastFeed.episodes?.isEmpty == false else { return }
 //
-//            episode.downloaded = DownloadService.sharedInstance.isEpisodeDownloaded(episode)
-//
-//            episodes.append(episode)
-//        }
-//
-//        let value = JSON(json["value"])
-//        let model = JSON(value["model"])
-//
-//        var podcastModel = PodcastModel()
-//        podcastModel.type = model["type"].stringValue
-//        let suggestedAmount = model["suggested"].doubleValue
-//        podcastModel.suggested = suggestedAmount
-//        podcastModel.suggestedSats = Int64(Int(round(suggestedAmount * 100000000)))
-//        podcastFeed.model = podcastModel
-//
-//        var destinations = [PodcastDestination]()
-//
-//        for d in value["destinations"].arrayValue {
-//            var destination = PodcastDestination()
-//            destination.address = d["address"].stringValue
-//            destination.type = d["type"].stringValue
-//            destination.split = d["split"].doubleValue
-//
-//            destinations.append(destination)
-//        }
-//        podcastFeed.destinations = destinations
-//        podcastFeed.episodes = episodes
-//
-//        self.podcast = podcastFeed
-    }
+//        CoreDataManager.sharedManager.saveContext()
+//        self.chat = chat
+//    }
     
     
-    func persistPodcastFeed(from json: JSON, for chat: Chat?) {
+    func persistDataForPodcastFeed(
+        using json: JSON,
+        belongingTo chat: Chat?
+    ) {
         guard json["episodes"].arrayValue.isEmpty == false else { return }
         
         let managedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext
@@ -244,15 +201,7 @@ class PodcastPlayerHelper {
         podcastFeed.author = json["author"].stringValue
         podcastFeed.imageURLPath = json["image"].stringValue
         
-//        var podcastFeed = PodcastFeed(
-//            chatId: chat?.id,
-//            id: json["id"].intValue,
-//            title: json["title"].stringValue,
-//            description: json["description"].stringValue,
-//            author: json["author"].stringValue,
-//            image: json["image"].stringValue
-//        )
-        
+
         let episodes: [PodcastEpisode] = json["episodes"].arrayValue.map {
             let episode = PodcastEpisode(context: managedObjectContext)
             
@@ -267,24 +216,8 @@ class PodcastPlayerHelper {
             return episode
         }
         
-//        for e in json["episodes"].arrayValue {
-//            let episode = PodcastEpisode(
-//                id: e["id"].intValue,
-//                title: e["title"].stringValue,
-//                description: e["description"].stringValue,
-//                url: e["enclosureUrl"].stringValue,
-//                image: e["image"].stringValue,
-//                link: e["link"].stringValue
-//            )
-//
-//            episode.downloaded = DownloadService.sharedInstance.isEpisodeDownloaded(episode)
-//
-//            episodes.append(episode)
-//        }
-        
         podcastFeed.addToEpisodes(Set(episodes))
         
-//
         let value = JSON(json["value"])
         let model = JSON(value["model"])
         let podcastModel = PodcastModel(context: managedObjectContext)
@@ -306,17 +239,6 @@ class PodcastPlayerHelper {
             
             return destination
         }
-        
-//        var destinations = [PodcastDestination]()
-//
-//        for d in value["destinations"].arrayValue {
-//            var destination = PodcastDestination()
-//            destination.address = d["address"].stringValue
-//            destination.type = d["type"].stringValue
-//            destination.split = d["split"].doubleValue
-//
-//            destinations.append(destination)
-//        }
         
         podcastFeed.addToDestinations(Set(destinations))
 

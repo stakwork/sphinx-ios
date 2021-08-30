@@ -27,3 +27,12 @@ extension PodcastEpisode {
 }
 
 extension PodcastEpisode: Identifiable {}
+
+
+extension PodcastEpisode {
+    
+    /// Converts the HTML-formatted ``episodeDescription`` string to a standard Swift String
+    var formattedDescription: String {
+        episodeDescription?.attributedStringFromHTML?.string ?? ""
+    }
+}

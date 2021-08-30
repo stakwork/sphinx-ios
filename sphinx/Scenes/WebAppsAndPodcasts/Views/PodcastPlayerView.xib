@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19158" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19141"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -63,8 +63,8 @@
                         <constraint firstAttribute="height" constant="150" id="vhi-xJ-kpQ"/>
                     </constraints>
                 </imageView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UgS-Pv-vWR">
-                    <rect key="frame" x="20" y="54" width="407" height="50"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UgS-Pv-vWR">
+                    <rect key="frame" x="20" y="54" width="50" height="50"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="EaN-jF-gj7"/>
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="a05-02-V8D"/>
@@ -137,7 +137,7 @@
                             <rect key="frame" x="64" y="182" width="114" height="58"/>
                             <subviews>
                                 <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NER-8a-Vfh">
-                                    <rect key="frame" x="30" y="-1" width="54" height="60"/>
+                                    <rect key="frame" x="43.5" y="14" width="27" height="30"/>
                                     <color key="tintColor" name="MainBottomIcons"/>
                                     <state key="normal" image="back15Icon">
                                         <color key="titleColor" name="MainBottomIcons"/>
@@ -153,7 +153,7 @@
                                 <constraint firstItem="NER-8a-Vfh" firstAttribute="centerX" secondItem="28w-L6-a8W" secondAttribute="centerX" id="XTH-V9-7Qj"/>
                             </constraints>
                         </view>
-                        <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hny-dv-u2n">
+                        <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hny-dv-u2n">
                             <rect key="frame" x="178" y="182" width="58" height="58"/>
                             <color key="backgroundColor" name="ReceivedIcon"/>
                             <constraints>
@@ -172,7 +172,7 @@
                             <rect key="frame" x="236" y="182" width="114" height="58"/>
                             <subviews>
                                 <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9D0-xc-N0M">
-                                    <rect key="frame" x="30" y="-1" width="54" height="60"/>
+                                    <rect key="frame" x="43.5" y="14" width="27" height="30"/>
                                     <color key="tintColor" name="MainBottomIcons"/>
                                     <state key="normal" image="forw30Icon">
                                         <color key="titleColor" name="MainBottomIcons"/>
@@ -271,6 +271,7 @@
                     </constraints>
                 </view>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="Btf-dk-gGg"/>
             <color key="backgroundColor" name="HeaderBG"/>
             <constraints>
                 <constraint firstItem="DK5-KL-hVN" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="5wn-nm-p8G"/>
@@ -290,7 +291,6 @@
                 <constraint firstItem="P08-M5-arT" firstAttribute="leading" secondItem="DK5-KL-hVN" secondAttribute="leading" id="zVx-Ui-gi0"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <viewLayoutGuide key="safeArea" id="Btf-dk-gGg"/>
             <point key="canvasLocation" x="137.68115942028987" y="118.52678571428571"/>
         </view>
     </objects>

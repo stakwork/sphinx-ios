@@ -564,6 +564,7 @@
 		F3B2518726D81BE800C96D42 /* PodcastFeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B2518626D81BE800C96D42 /* PodcastFeedViewModel.swift */; };
 		F3B2518926D81C2B00C96D42 /* PodcastFeedService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B2518826D81C2B00C96D42 /* PodcastFeedService.swift */; };
 		F3B2518D26D8DD1800C96D42 /* PodcastFeed+FetchUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B2518C26D8DD1800C96D42 /* PodcastFeed+FetchUtils.swift */; };
+		F3B2518F26DD3F4100C96D42 /* PodcastEpisode+Computeds.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B2518E26DD3F4000C96D42 /* PodcastEpisode+Computeds.swift */; };
 		F3C92B272671FB6C005F0A42 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F3C92B262671FB6C005F0A42 /* README.md */; };
 		F3CE637726AFC44D006E37A0 /* DashboardRootViewController+DelegateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CE637626AFC44C006E37A0 /* DashboardRootViewController+DelegateUtils.swift */; };
 		F3CE637C26AFE823006E37A0 /* FeedFilterChipCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CE637B26AFE822006E37A0 /* FeedFilterChipCollectionViewCell.swift */; };
@@ -1271,6 +1272,7 @@
 		F3B2518626D81BE800C96D42 /* PodcastFeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastFeedViewModel.swift; sourceTree = "<group>"; };
 		F3B2518826D81C2B00C96D42 /* PodcastFeedService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastFeedService.swift; sourceTree = "<group>"; };
 		F3B2518C26D8DD1800C96D42 /* PodcastFeed+FetchUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PodcastFeed+FetchUtils.swift"; sourceTree = "<group>"; };
+		F3B2518E26DD3F4000C96D42 /* PodcastEpisode+Computeds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PodcastEpisode+Computeds.swift"; sourceTree = "<group>"; };
 		F3C92B262671FB6C005F0A42 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		F3C92B282671FCFD005F0A42 /* .Tor.version */ = {isa = PBXFileReference; lastKnownFileType = text; name = .Tor.version; path = Carthage/Build/.Tor.version; sourceTree = "<group>"; };
 		F3CE637626AFC44C006E37A0 /* DashboardRootViewController+DelegateUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DashboardRootViewController+DelegateUtils.swift"; sourceTree = "<group>"; };
@@ -2849,6 +2851,7 @@
 			children = (
 				F32A695626CFEF5F0004B8B3 /* PodcastEpisode+CoreDataClass.swift */,
 				F32A695726CFEF5F0004B8B3 /* PodcastEpisode+CoreDataProperties.swift */,
+				F3B2518E26DD3F4000C96D42 /* PodcastEpisode+Computeds.swift */,
 			);
 			path = "Podcast Episode";
 			sourceTree = "<group>";
@@ -3649,6 +3652,7 @@
 				474FE32223F1CE1700C06FC8 /* CommonPictureTableViewCell.swift in Sources */,
 				47AAFC7A238706EA00E30BDA /* APIInviteExtension.swift in Sources */,
 				475BDD7F232C01FE00C5BBD6 /* QRCodeScannerView.swift in Sources */,
+				F3B2518F26DD3F4100C96D42 /* PodcastEpisode+Computeds.swift in Sources */,
 				476EB46823C4F1AE009745E2 /* GroupContactCollectionViewCell.swift in Sources */,
 				47771C72259B8D9300990467 /* GroupsPinManager.swift in Sources */,
 				47FA18D42434D47D00469C8F /* TransactionMessageInfoGetterExtension.swift in Sources */,

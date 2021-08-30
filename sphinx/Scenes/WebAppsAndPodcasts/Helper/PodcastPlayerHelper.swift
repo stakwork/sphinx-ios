@@ -107,8 +107,6 @@ class PodcastPlayerHelper {
     
     
     func loadPodcastFeed(chat: Chat?, callback: @escaping (Bool) -> ()) {
-        // TODO: Check here to see if we can load a feed from the persistent store instead?
-        
         guard
             ConnectivityHelper.isConnectedToInternet,
             chat?.tribesInfo?.feedUrl != nil
@@ -141,9 +139,6 @@ class PodcastPlayerHelper {
             url: tribesServerURL,
             callback: { json in
                 DispatchQueue.main.async {
-//                    let managedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext
-                        
-//                    self.processPodcastFeed(json: json, chat: chat)
                     self.persistDataForPodcastFeed(using: json, belongingTo: chat)
                     
                     callback(true)
@@ -158,8 +153,6 @@ class PodcastPlayerHelper {
     
     func processLocalPodcastFeed(chat: Chat?, callback: @escaping (Bool) -> ()) {
         if let podcastFeed = chat?.podcastFeed {
-//            processPodcastFeed(feed, chat: chat)
-//            persistDataForPodcastFeed(feed, using: <#T##JSON#>, belongingTo: <#T##Chat?#>)(feed, chat: chat)
             
             if podcastFeed.episodes?.isEmpty == false {
                 CoreDataManager.sharedManager.saveContext()
@@ -168,21 +161,7 @@ class PodcastPlayerHelper {
             
             callback(true)
         }
-//        if let json = chat?.getPodcastFeedJSON() {
-//            processPodcastFeed(json: json, chat: chat)
-//            callback(true)
-//        }
     }
-    
-    
-//    // TODO: Figure out what this is supposed to be doing since we should be able to fetch a
-//    // chat's `feed` from the persistent store.
-//    func processPodcastFeed(_ podcastFeed: PodcastFeed, chat: Chat?) {
-//        guard podcastFeed.episodes?.isEmpty == false else { return }
-//
-//        CoreDataManager.sharedManager.saveContext()
-//        self.chat = chat
-//    }
     
     
     func persistDataForPodcastFeed(

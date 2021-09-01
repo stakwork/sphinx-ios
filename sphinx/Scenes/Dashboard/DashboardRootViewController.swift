@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 
 class DashboardRootViewController: RootViewController {
@@ -34,6 +35,7 @@ class DashboardRootViewController: RootViewController {
     internal var rootViewController: RootViewController!
     internal weak var leftMenuDelegate: LeftMenuDelegate?
     
+    internal var managedObjectContext: NSManagedObjectContext!
     internal let onionConnector = SphinxOnionConnector.sharedInstance
     internal let socketManager = SphinxSocketManager.sharedInstance
     internal let refreshControl = UIRefreshControl()
@@ -51,12 +53,12 @@ class DashboardRootViewController: RootViewController {
     
     internal lazy var feedsListViewController = {
         PodcastFeedsContainerViewController.instantiate(
-//            podcastFeedListDelegate: self,
+            podcastFeedsListDelegate: self
 //            podcastEpisodeListDelegate: self
+            
         )
     }()
     
-
     internal lazy var contactChatsContainerViewController: ChatsContainerViewController = {
         ChatsContainerViewController.instantiate(
             chats: chatsListViewModel.contactsService
@@ -136,12 +138,14 @@ extension DashboardRootViewController {
     
     static func instantiate(
         rootViewController: RootViewController,
-        leftMenuDelegate: LeftMenuDelegate
+        leftMenuDelegate: LeftMenuDelegate,
+        managedObjectContext: NSManagedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext
     ) -> DashboardRootViewController {
         let viewController = StoryboardScene.Dashboard.dashboardRootViewController.instantiate()
         
         viewController.rootViewController = rootViewController
         viewController.leftMenuDelegate = leftMenuDelegate
+        viewController.managedObjectContext = managedObjectContext
         
         return viewController
     }

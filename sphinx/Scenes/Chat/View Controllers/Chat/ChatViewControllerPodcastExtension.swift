@@ -9,6 +9,8 @@
 import UIKit
 
 extension ChatViewController : PodcastPlayerVCDelegate {
+    func shouldDismissPlayerView() {}
+    
     func loadPodcastFeed() {        
         podcastPlayerHelper?.loadPodcastFeed(chat: chat, callback: { success in
             if

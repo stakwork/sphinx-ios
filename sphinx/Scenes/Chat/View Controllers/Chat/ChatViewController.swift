@@ -142,7 +142,7 @@ class ChatViewController: KeyboardHandlerViewController {
         
         navigationController?.interactivePopGestureRecognizer?.delegate = self
         
-        if !firstLoad {
+        if firstLoad == false {
             accessoryView.show()
         }
         addObservers()

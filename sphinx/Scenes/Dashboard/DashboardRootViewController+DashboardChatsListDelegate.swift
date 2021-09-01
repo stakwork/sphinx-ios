@@ -1,5 +1,5 @@
 import UIKit
-
+import CoreData
 
 
 extension DashboardRootViewController: DashboardChatsListDelegate {

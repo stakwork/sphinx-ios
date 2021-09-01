@@ -8,11 +8,12 @@
 
 import UIKit
 
-protocol PodcastPlayerVCDelegate: class {
+protocol PodcastPlayerVCDelegate: AnyObject {
     func willDismissPlayer(playing: Bool)
     func shouldShareClip(comment: PodcastComment)
     func shouldGoToPlayer()
     func shouldSendBoost(message: String, amount: Int, animation: Bool) -> TransactionMessage?
+    func shouldDismissPlayerView()
 }
 
 class NewPodcastPlayerViewController: UIViewController {
@@ -22,13 +23,14 @@ class NewPodcastPlayerViewController: UIViewController {
     @IBOutlet weak var topFixingView: UIView!
     @IBOutlet weak var tableView: UITableView!
     
-    var tableHeaderView: PodcastPlayerView? = nil
+    var tableHeaderView: PodcastPlayerView?
     
-    var chat: Chat! = nil
-    var playerHelper: PodcastPlayerHelper! = nil
+    var chat: Chat!
+    var playerHelper: PodcastPlayerHelper!
     var tableDataSource: PodcastEpisodesDataSource!
     
     let downloadService = DownloadService.sharedInstance
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,13 +55,20 @@ class NewPodcastPlayerViewController: UIViewController {
         }
     }
     
-    static func instantiate(chat: Chat, playerHelper: PodcastPlayerHelper, delegate: PodcastPlayerVCDelegate) -> NewPodcastPlayerViewController {
+    
+    static func instantiate(
+        chat: Chat,
+        playerHelper: PodcastPlayerHelper,
+        delegate: PodcastPlayerVCDelegate
+    ) -> NewPodcastPlayerViewController {
         let viewController = StoryboardScene.WebApps.newPodcastPlayerViewController.instantiate()
         viewController.chat = chat
         viewController.playerHelper = playerHelper
         viewController.delegate = delegate
+    
         return viewController
     }
+    
     
     func preparePlayer() {
         tableHeaderView?.preparePlayer()
@@ -124,8 +133,10 @@ extension NewPodcastPlayerViewController : PodcastEpisodesDSDelegate {
 }
 
 extension NewPodcastPlayerViewController : PodcastPlayerViewDelegate {
+    
     func didTapDismissButton() {
-        self.dismiss(animated: true, completion: nil)
+        delegate?.shouldDismissPlayerView()
+        dismiss(animated: true, completion: nil)
     }
     
     func shouldReloadEpisodesTable() {

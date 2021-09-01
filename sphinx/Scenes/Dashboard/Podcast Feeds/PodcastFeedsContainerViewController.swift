@@ -9,6 +9,20 @@ import UIKit
 import CoreData
 
 
+protocol DashboardPodcastFeedsListDelegate: AnyObject {
+    
+    func viewController(
+        _ viewController: UIViewController,
+        didSelectPodcastFeedWithID podcastFeedID: NSManagedObjectID
+    )
+    
+    func viewController(
+        _ viewController: UIViewController,
+        didSelectPodcastEpisodeWithID podcastEpisodeID: NSManagedObjectID
+    )
+}
+
+
 class PodcastFeedsContainerViewController: UIViewController {
     @IBOutlet weak var filterChipCollectionViewContainer: UIView!
     @IBOutlet weak var feedContentCollectionViewContainer: UIView!
@@ -16,7 +30,7 @@ class PodcastFeedsContainerViewController: UIViewController {
     private var managedObjectContext: NSManagedObjectContext!
     private var filterChipCollectionViewController: FeedFilterChipsCollectionViewController!
     private var feedContentCollectionViewController: FeedContentCollectionViewController!
-    
+    private weak var podcastFeedsListDelegate: DashboardPodcastFeedsListDelegate?
     
     var contentFilterOptions: [ContentFilterOption] = []
     var activeFilterOption: ContentFilterOption = .allContent
@@ -25,7 +39,8 @@ class PodcastFeedsContainerViewController: UIViewController {
     
     
     static func instantiate(
-        managedObjectContext: NSManagedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext
+        managedObjectContext: NSManagedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext,
+        podcastFeedsListDelegate: DashboardPodcastFeedsListDelegate
     ) -> PodcastFeedsContainerViewController {
         let viewController = StoryboardScene.Dashboard.feedsListViewController.instantiate()
         
@@ -33,6 +48,7 @@ class PodcastFeedsContainerViewController: UIViewController {
         viewController.fetchedResultsController = makeFetchedResultsController(
             using: managedObjectContext
         )
+        viewController.podcastFeedsListDelegate = podcastFeedsListDelegate
         
         return viewController
     }
@@ -101,16 +117,16 @@ extension PodcastFeedsContainerViewController {
     
   
     private func handleLatestEpisodeCellSelection(_ managedObjectID: NSManagedObjectID) {
-        AlertHelper.showAlert(
-            title: "Selected Podcast Episode",
-            message: managedObjectID.description
+        podcastFeedsListDelegate?.viewController(
+            self,
+            didSelectPodcastEpisodeWithID: managedObjectID
         )
     }
     
     private func handleLatestFeedCellSelection(_ managedObjectID: NSManagedObjectID) {
-        AlertHelper.showAlert(
-            title: "Selected Podcast Feed",
-            message: managedObjectID.description
+        podcastFeedsListDelegate?.viewController(
+            self,
+            didSelectPodcastFeedWithID: managedObjectID
         )
     }
     

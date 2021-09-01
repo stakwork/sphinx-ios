@@ -564,6 +564,8 @@
 		F3B2518726D81BE800C96D42 /* PodcastFeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B2518626D81BE800C96D42 /* PodcastFeedViewModel.swift */; };
 		F3B2518D26D8DD1800C96D42 /* PodcastFeed+FetchUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B2518C26D8DD1800C96D42 /* PodcastFeed+FetchUtils.swift */; };
 		F3B2518F26DD3F4100C96D42 /* PodcastEpisode+Computeds.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B2518E26DD3F4000C96D42 /* PodcastEpisode+Computeds.swift */; };
+		F3B2519126DD5CE100C96D42 /* PodcastFeedService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B2519026DD5CE100C96D42 /* PodcastFeedService.swift */; };
+		F3B2519526DFA1E800C96D42 /* DashboardRootViewController+DashboardPodcastFeedsListDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B2519426DFA1E800C96D42 /* DashboardRootViewController+DashboardPodcastFeedsListDelegate.swift */; };
 		F3C92B272671FB6C005F0A42 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F3C92B262671FB6C005F0A42 /* README.md */; };
 		F3CE637726AFC44D006E37A0 /* DashboardRootViewController+DelegateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CE637626AFC44C006E37A0 /* DashboardRootViewController+DelegateUtils.swift */; };
 		F3CE637C26AFE823006E37A0 /* FeedFilterChipCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CE637B26AFE822006E37A0 /* FeedFilterChipCollectionViewCell.swift */; };
@@ -1271,6 +1273,8 @@
 		F3B2518626D81BE800C96D42 /* PodcastFeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastFeedViewModel.swift; sourceTree = "<group>"; };
 		F3B2518C26D8DD1800C96D42 /* PodcastFeed+FetchUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PodcastFeed+FetchUtils.swift"; sourceTree = "<group>"; };
 		F3B2518E26DD3F4000C96D42 /* PodcastEpisode+Computeds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PodcastEpisode+Computeds.swift"; sourceTree = "<group>"; };
+		F3B2519026DD5CE100C96D42 /* PodcastFeedService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastFeedService.swift; sourceTree = "<group>"; };
+		F3B2519426DFA1E800C96D42 /* DashboardRootViewController+DashboardPodcastFeedsListDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DashboardRootViewController+DashboardPodcastFeedsListDelegate.swift"; sourceTree = "<group>"; };
 		F3C92B262671FB6C005F0A42 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		F3C92B282671FCFD005F0A42 /* .Tor.version */ = {isa = PBXFileReference; lastKnownFileType = text; name = .Tor.version; path = Carthage/Build/.Tor.version; sourceTree = "<group>"; };
 		F3CE637626AFC44C006E37A0 /* DashboardRootViewController+DelegateUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DashboardRootViewController+DelegateUtils.swift"; sourceTree = "<group>"; };
@@ -2136,8 +2140,9 @@
 			isa = PBXGroup;
 			children = (
 				475BDD75232BF91A00C5BBD6 /* ContactsService.swift */,
-				477C57E6234785ED00BB4E04 /* WalletBalanceService.swift */,
 				479A03E82583A7180093DB30 /* LocalNetworkPermissionService.swift */,
+				F3B2519026DD5CE100C96D42 /* PodcastFeedService.swift */,
+				477C57E6234785ED00BB4E04 /* WalletBalanceService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -2912,6 +2917,7 @@
 				F3531C3C26BD505F00E9586C /* DashboardChatsListDelegate.swift */,
 				F373BF0026A9CE1B0093C886 /* DashboardRootViewController.swift */,
 				F3531C3E26BD511300E9586C /* DashboardRootViewController+DashboardChatsListDelegate.swift */,
+				F3B2519426DFA1E800C96D42 /* DashboardRootViewController+DashboardPodcastFeedsListDelegate.swift */,
 				F3CE637626AFC44C006E37A0 /* DashboardRootViewController+DelegateUtils.swift */,
 				F3A35CA726C43508007D35BD /* DashboardRootViewController+SocketManagerDelegate.swift */,
 				F313024426BA628D00A1396E /* Chats */,
@@ -3433,6 +3439,7 @@
 				4789E25F24F033B8003991BE /* SettingsTabsView.swift in Sources */,
 				47B690E124A2E00800F07B73 /* UIWindow.swift in Sources */,
 				47308E0224FEE6E600FFAC6F /* SSLSecurity.swift in Sources */,
+				F3B2519526DFA1E800C96D42 /* DashboardRootViewController+DashboardPodcastFeedsListDelegate.swift in Sources */,
 				475BDD65232BEEAB00C5BBD6 /* LeftMenuViewController.swift in Sources */,
 				475BDCD2232AC23100C5BBD6 /* CommonChatTableViewCell.swift in Sources */,
 				4712BB4223D755EA00DDCC3B /* GroupAddMemberTableViewCell.swift in Sources */,
@@ -3608,6 +3615,7 @@
 				47308E1524FEE6E700FFAC6F /* SocketIOStatus.swift in Sources */,
 				473842F92391A9DF00AA640F /* KeyboardHelper.swift in Sources */,
 				4780783323916D4900187906 /* PictureReceivedTableViewCell.swift in Sources */,
+				F3B2519126DD5CE100C96D42 /* PodcastFeedService.swift in Sources */,
 				473BC89A260238DC0070E519 /* JSON.swift in Sources */,
 				4733C7E523C4DF4C006A2C51 /* GroupContactsViewController.swift in Sources */,
 				4787F87224743D7C00CCE8B9 /* NewPublicGroupViewControllerExtension.swift in Sources */,

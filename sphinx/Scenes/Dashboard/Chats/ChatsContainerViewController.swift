@@ -37,7 +37,7 @@ extension ChatsContainerViewController {
     ) {
         self.chats = chats
         
-        self.chatsCollectionViewController.chats = chats
+        self.chatsCollectionViewController.chatListObjects = chats
         self.chatsCollectionViewController.updateSnapshot()
     }
 }
@@ -62,14 +62,13 @@ extension ChatsContainerViewController {
 // MARK: - Event Handling
 private extension ChatsContainerViewController {
     
-    func handleChatSelection(_ chat: ChatListCommonObject) {
-        if let chat = chat as? Chat {
+    func handleChatSelection(_ chatListObject: ChatListCommonObject) {
+        if let chat = chatListObject as? Chat {
             chatsListDelegate?.viewController(self, didSelectChat: chat, orContact: nil)
-        } else if let contact = chat as? UserContact {
+        } else if let contact = chatListObject as? UserContact {
             chatsListDelegate?.viewController(self, didSelectChat: nil, orContact: contact)
         }
     }
-    
     
     func handleChatsListRefresh(refreshControl: UIRefreshControl) {
         chatsListDelegate?.viewControllerDidRefreshChats(self, using: refreshControl)
@@ -83,7 +82,7 @@ extension ChatsContainerViewController {
     private func configureContactChatsCollectionView() {
         chatsCollectionViewController = ChatsCollectionViewController
             .instantiate(
-                chats: chats,
+                chatListObjects: chats,
                 onChatSelected: handleChatSelection(_:),
                 onRefresh: handleChatsListRefresh(refreshControl:)
             )

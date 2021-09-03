@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="19G2021" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19197" systemVersion="20G95" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Chat" representedClassName="Chat" syncable="YES">
         <attribute name="contactIds" optional="YES" attributeType="Transformable"/>
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -33,6 +33,9 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
+    <entity name="PodcastComment" representedClassName="PodcastComment" syncable="YES" codeGenerationType="class"/>
+    <entity name="PodcastEpisode" representedClassName="PodcastEpisode" syncable="YES" codeGenerationType="class"/>
+    <entity name="PodcastFeed" representedClassName="PodcastFeed" syncable="YES" codeGenerationType="class"/>
     <entity name="Subscription" representedClassName="Subscription" syncable="YES">
         <attribute name="amount" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="count" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
@@ -133,5 +136,8 @@
         <element name="TransactionMessage" positionX="-54" positionY="63" width="128" height="463"/>
         <element name="UserContact" positionX="-63" positionY="-18" width="128" height="358"/>
         <element name="UserInvite" positionX="-54" positionY="135" width="128" height="118"/>
+        <element name="PodcastFeed" positionX="-45" positionY="144" width="128" height="14"/>
+        <element name="PodcastEpisode" positionX="-36" positionY="153" width="128" height="14"/>
+        <element name="PodcastComment" positionX="-27" positionY="162" width="128" height="14"/>
     </elements>
 </model>

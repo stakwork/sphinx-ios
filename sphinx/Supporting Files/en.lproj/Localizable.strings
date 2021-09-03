@@ -390,13 +390,13 @@
 "pending" = "Pending";
 
 //INVITES
-"invite.looking.available.node" = " Looking for an available node for %@...";
+"invite.looking.available.node" = "Looking for an available node for %@...";
 "invite.payment.sent" = " Payment sent, waiting confirmation";
-"invite.pay" = " Tap to pay and activate the invite";
-"invite.ready" = " Ready! Tap to share. Expires in 24 hrs";
-"invite.signing.on" = " %@ is signing on";
-"invite.expired" = " Expired";
-"invite.signup.complete" = " Signup complete";
+"invite.pay" = "Tap to pay and activate the invite";
+"invite.ready" = "Ready! Tap to share. Expires in 24 hrs";
+"invite.signing.on" = "%@ is signing on";
+"invite.expired" = "Expired";
+"invite.signup.complete" = "Signup complete";
 "new.user" = "New user";
 "existing.user" = "Existing user";
 "invite.expired.title" = "Invite expired";

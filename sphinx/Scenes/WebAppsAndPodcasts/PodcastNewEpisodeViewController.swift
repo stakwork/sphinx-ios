@@ -38,10 +38,10 @@ class PodcastNewEpisodeViewController: UIViewController {
 
         let lastStoredEpisodeId = (chat.podcastPlayer?.lastEpisodeId ?? chat.podcastPlayer?.currentEpisodeId) ?? -1
 
-        if let lastEpisode = chat.podcastPlayer?.podcast?.episodes[0] {
+        if let lastEpisode = chat.podcastPlayer?.podcast?.episodesArray[0] {
             let lastEpisodeId = lastEpisode.id
             
-            chat.podcastPlayer?.lastEpisodeId = lastEpisodeId
+            chat.podcastPlayer?.lastEpisodeId = Int(lastEpisodeId)
 
             if lastStoredEpisodeId > 0 && lastStoredEpisodeId != lastEpisodeId {
                 let podcastNewEpisodeVC = PodcastNewEpisodeViewController.instantiate()
@@ -79,7 +79,7 @@ class PodcastNewEpisodeViewController: UIViewController {
             newEpisodeTitle.font = UIFont(name: "Roboto-Medium", size: 14.0)!
         }
         
-        if let image = episode.image, let url = URL(string: image) {
+        if let imageURLPath = episode.imageURLPath, let url = URL(string: imageURLPath) {
             MediaLoader.asyncLoadImage(imageView: newEpisodeImage, nsUrl: url, placeHolderImage: UIImage(named: "profile_avatar"), completion: { img in
                 self.newEpisodeImage.image = img
             }, errorCompletion: { _ in

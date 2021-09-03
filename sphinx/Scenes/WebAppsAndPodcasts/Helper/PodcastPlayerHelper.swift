@@ -32,37 +32,37 @@ class PodcastPlayerHelper {
     
     var currentEpisode: Int {
         get {
-            return (UserDefaults.standard.value(forKey: "current-episode-\(chat?.id ?? -1)") as? Int) ?? 0
+            return podcast?.currentEpisode ?? 0
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: "current-episode-\(chat?.id ?? -1)")
+            podcast?.currentEpisode = newValue
         }
     }
     
     var currentEpisodeId: Int {
         get {
-            return (UserDefaults.standard.value(forKey: "current-episode-id-\(chat?.id ?? -1)") as? Int) ?? -1
+            return podcast?.currentEpisodeId ?? -1
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: "current-episode-id-\(chat?.id ?? -1)")
+            podcast?.currentEpisodeId = newValue
         }
     }
     
     var lastEpisodeId: Int? {
         get {
-            return (UserDefaults.standard.value(forKey: "last-episode-id-\(chat?.id ?? -1)") as? Int)
+            return podcast?.lastEpisodeId
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: "last-episode-id-\(chat?.id ?? -1)")
+            podcast?.lastEpisodeId = newValue
         }
     }
     
     var currentTime: Int {
         get {
-            return (UserDefaults.standard.value(forKey: "current-time-\(chat?.id ?? -1)") as? Int) ?? 0
+            return podcast?.currentTime ?? 0
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: "current-time-\(chat?.id ?? -1)")
+            podcast?.currentTime = newValue
         }
     }
     
@@ -99,13 +99,19 @@ class PodcastPlayerHelper {
         }
     }
     
+    
     func resetPodcast() {
         stopPlaying()
+        
         self.podcast = nil
     }
     
+    
     func loadPodcastFeed(chat: Chat?, callback: @escaping (Bool) -> ()) {
-        if !ConnectivityHelper.isConnectedToInternet || chat?.tribesInfo?.feedUrl == nil {
+        guard
+            ConnectivityHelper.isConnectedToInternet,
+            chat?.tribesInfo?.feedUrl != nil
+        else {
             processLocalPodcastFeed(chat: chat, callback: callback)
             return
         }
@@ -115,10 +121,14 @@ class PodcastPlayerHelper {
             return
         }
         
-        if let podcastChatId = self.podcast?.chatId, let chatId = chat?.id, podcastChatId == chatId && isPlaying() {
-            DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: {
+        if
+            let podcastChatId = podcast?.chat?.id,
+            let chatId = chat?.id,
+            podcastChatId == chatId && isPlaying()
+        {
+            DelayPerformedHelper.performAfterDelay(seconds: 0.5) {
                 callback(true)
-            })
+            }
             return
         }
         
@@ -126,81 +136,97 @@ class PodcastPlayerHelper {
         
         let tribesServerURL = "https://tribes.sphinx.chat/podcast?url=\(url)"
         
-        API.sharedInstance.getPodcastFeed(url: tribesServerURL, callback: { json in
-            DispatchQueue.main.async {
-                self.processPodcastFeed(json: json, chat: chat)
-                callback(true)
+        API.sharedInstance.getPodcastFeed(
+            url: tribesServerURL,
+            callback: { json in
+                DispatchQueue.main.async {
+                    self.persistDataForPodcastFeed(using: json, belongingTo: chat)
+                    
+                    callback(true)
+                }
+            },
+            errorCallback: {
+                callback(false)
             }
-        }, errorCallback: {
-            callback(false)
-        })
+        )
     }
     
+    
     func processLocalPodcastFeed(chat: Chat?, callback: @escaping (Bool) -> ()) {
-        if let json = chat?.getPodcastFeed() {
-            processPodcastFeed(json: json, chat: chat)
+        if let podcastFeed = chat?.podcastFeed {
+            
+            if podcastFeed.episodes?.isEmpty == false {
+                CoreDataManager.sharedManager.saveContext()
+                self.chat = chat
+            }
+            
             callback(true)
         }
     }
     
-    func processPodcastFeed(json: JSON, chat: Chat?) {
-        if json["episodes"].arrayValue.count <= 0 {
-            return
-        }
-        chat?.savePodcastFeed(json: json)
-        self.chat = chat
+    
+    func persistDataForPodcastFeed(
+        using json: JSON,
+        belongingTo chat: Chat?
+    ) {
+        guard json["episodes"].arrayValue.isEmpty == false else { return }
         
-        var podcastFeed = PodcastFeed(
-            chatId: chat?.id,
-            id: json["id"].intValue,
-            title: json["title"].stringValue,
-            description: json["description"].stringValue,
-            author: json["author"].stringValue,
-            image: json["image"].stringValue
-        )
+        let managedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext
+        let podcastFeed = chat?.podcastFeed ?? PodcastFeed(context: managedObjectContext)
         
-        var episodes = [PodcastEpisode]()
+        podcastFeed.id = Int64(json["id"].intValue)
+        podcastFeed.chat = chat
+        podcastFeed.title = json["title"].stringValue
+        podcastFeed.podcastDescription = json["description"].stringValue
+        podcastFeed.author = json["author"].stringValue
+        podcastFeed.imageURLPath = json["image"].stringValue
         
-        for e in json["episodes"].arrayValue {
-            let episode = PodcastEpisode(
-                id: e["id"].intValue,
-                title: e["title"].stringValue,
-                description: e["description"].stringValue,
-                url: e["enclosureUrl"].stringValue,
-                image: e["image"].stringValue,
-                link: e["link"].stringValue
-            )
-            
-            episode.downloaded = DownloadService.sharedInstance.isEpisodeDownloaded(episode)
 
-            episodes.append(episode)
+        let episodes: [PodcastEpisode] = json["episodes"].arrayValue.map {
+            let episode = PodcastEpisode(context: managedObjectContext)
+            
+            episode.id = Int64($0["id"].intValue)
+            episode.title = $0["title"].stringValue
+            episode.datePublished = Date(timeIntervalSince1970: $0["datePublished"].doubleValue)
+            episode.episodeDescription = $0["description"].stringValue
+            episode.urlPath = $0["enclosureUrl"].stringValue
+            episode.imageURLPath = $0["image"].stringValue
+            episode.linkURLPath = $0["link"].stringValue
+
+            return episode
         }
+        
+        podcastFeed.addToEpisodes(Set(episodes))
         
         let value = JSON(json["value"])
         let model = JSON(value["model"])
+        let podcastModel = PodcastModel(context: managedObjectContext)
         
-        var podcastModel = PodcastModel()
         podcastModel.type = model["type"].stringValue
+
         let suggestedAmount = model["suggested"].doubleValue
-        podcastModel.suggested = suggestedAmount
-        podcastModel.suggestedSats = Int(round(suggestedAmount * 100000000))
+
+        podcastModel.suggestedBTC = suggestedAmount
         podcastFeed.model = podcastModel
+
         
-        var destinations = [PodcastDestination]()
-        
-        for d in value["destinations"].arrayValue {
-            var destination = PodcastDestination()
-            destination.address = d["address"].stringValue
-            destination.type = d["type"].stringValue
-            destination.split = d["split"].doubleValue
+        let destinations: [PodcastDestination] = value["destinations"].arrayValue.map {
+            let destination = PodcastDestination(context: managedObjectContext)
             
-            destinations.append(destination)
+            destination.address = $0["address"].stringValue
+            destination.type = $0["type"].stringValue
+            destination.split = $0["split"].doubleValue
+            
+            return destination
         }
-        podcastFeed.destinations = destinations
-        podcastFeed.episodes = episodes
         
-        self.podcast = podcastFeed
+        podcastFeed.addToDestinations(Set(destinations))
+
+        self.chat = chat
+        podcast = podcastFeed
+        CoreDataManager.sharedManager.saveContext()
     }
+    
     
     func getBoostMessage(amount: Int) -> String? {
         guard let podcast = self.podcast else {
@@ -224,54 +250,39 @@ class PodcastPlayerHelper {
         return "{\"feedID\":\(feedID),\"itemID\":\(itemID),\"ts\":\(currentTime),\"amount\":\(amount)}"
     }
     
+    
     func getEpisodes() -> [PodcastEpisode] {
-        return self.podcast?.episodes ?? []
+        podcast?.episodesArray ?? []
     }
     
+    
     func getCurrentEpisode() -> PodcastEpisode? {
-        let currentEpisodeIndex = getCurrentEpisodeIndex()
-        let podcastFeed = self.podcast
-        if (podcastFeed?.episodes ?? []).count > 0 {
-            let episode = podcastFeed?.episodes[currentEpisodeIndex]
-            return episode
-        }
-        return nil
+        return podcast?.getCurrentEpisode()
     }
     
     func getCurrentEpisodeIndex() -> Int {
-        if currentEpisodeId > 0 {
-            for i in 0..<(self.podcast?.episodes ?? []).count {
-                let e = (self.podcast?.episodes ?? [])[i]
-                if e.id == currentEpisodeId {
-                    return i
-                }
-            }
-        }
-        return currentEpisode
+        return podcast?.getCurrentEpisodeIndex() ?? 0
     }
     
     func getIndexFor(episode: PodcastEpisode) -> Int? {
-        for i in 0..<(self.podcast?.episodes ?? []).count {
-            let e = (self.podcast?.episodes ?? [])[i]
-            if e.id == episode.id {
-                return i
-            }
-        }
-        return nil
+        podcast?.episodesArray.firstIndex(where: { $0.id == episode.id })
     }
+    
     
     func getEpisodeInfo() -> (String, String) {
         let episode = getCurrentEpisode()
-        return (episode?.title ?? "Episode with no title", episode?.image ?? "")
+        
+        return (episode?.title ?? "Episode with no title", episode?.imageURLPath ?? "")
     }
+    
     
     func getImageURL() -> URL? {
         let (_, episodeImage) = getEpisodeInfo()
         if let imageURL = URL(string: episodeImage), !episodeImage.isEmpty {
             return imageURL
         }
-        let podcastImage = self.podcast?.image ?? ""
-        if let imageURL = URL(string: podcastImage), !podcastImage.isEmpty {
+        let urlPath = self.podcast?.imageURLPath ?? ""
+        if let imageURL = URL(string: urlPath), !urlPath.isEmpty {
             return imageURL
         }
         return nil
@@ -282,10 +293,10 @@ class PodcastPlayerHelper {
         let episode = getCurrentEpisode()
         
         var comment = PodcastComment()
-        comment.feedId = podcastFeed?.id
-        comment.itemId = episode?.id
+        comment.feedId = podcastFeed.map(\.id).map(Int.init)
+        comment.itemId = episode.map(\.id).map(Int.init)
         comment.title = episode?.title
-        comment.url = episode?.url
+        comment.url = episode?.urlPath
         
         let currentTime = Int(Double(player?.currentTime().value ?? 0) / Double(player?.currentTime().timescale ?? 1))
         comment.timestamp = currentTime
@@ -342,26 +353,26 @@ class PodcastPlayerHelper {
         guard let podcast = self.podcast else {
             return
         }
-        
-        if podcast.episodes.count <= index {
+
+        if podcast.episodesArray.count <= index {
             return
         }
         
-        let episode = podcast.episodes[index]
+        let episode = podcast.episodesArray[index]
         
         if !episode.isAvailable() {
             completion()
             return
         }
         
-        guard let episodeUrl = episode.url, !episodeUrl.isEmpty else {
+        guard let episodeUrl = episode.urlPath, !episodeUrl.isEmpty else {
             return
         }
         
         loading = true
         
         currentEpisode = index
-        currentEpisodeId = episode.id ?? -1
+        currentEpisodeId = Int(episode.id)
         currentTime = resetTime ? 0 : currentTime
         
         loadEpisodeImage()
@@ -479,10 +490,19 @@ class PodcastPlayerHelper {
         chat?.updateMetaData()
     }
     
+    
     func processPayment(amount: Int? = nil) {
-        let itemId = getCurrentEpisode()?.id ?? 0
-        self.podcastPaymentsHelper.processPaymentsFor(podcastFeed: self.podcast, boostAmount: amount, itemId: itemId, currentTime: self.currentTime)
+        let itemId = Int(getCurrentEpisode()?.id ?? 0)
+        
+        podcastPaymentsHelper
+            .processPaymentsFor(
+                podcastFeed: podcast,
+                boostAmount: amount,
+                itemId: itemId,
+                currentTime: currentTime
+            )
     }
+    
     
     func togglePlayState() {
         if isPlaying() {
@@ -626,7 +646,7 @@ class PodcastPlayerHelper {
             MPNowPlayingInfoPropertyElapsedPlaybackTime: "\(currentTime)",
             MPMediaItemPropertyAlbumTrackCount: "\(getEpisodes().count)",
             MPMediaItemPropertyAlbumTrackNumber: "\(currentEpisode)",
-            MPMediaItemPropertyAssetURL: episode.url ?? ""
+            MPMediaItemPropertyAssetURL: episode.urlPath ?? ""
         ]
     }
     

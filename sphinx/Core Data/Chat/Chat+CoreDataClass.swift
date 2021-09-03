@@ -46,6 +46,7 @@ public class Chat: NSManagedObject {
         if podcastPlayer == nil {
             podcastPlayer = PodcastPlayerHelper()
         }
+        podcastPlayer?.podcast = self.podcastFeed
         return podcastPlayer!
     }
     
@@ -355,7 +356,7 @@ public class Chat: NSManagedObject {
         self.lastMessage = self.getLastMessageToShow()
     }
     
-    func getContact() -> UserContact? {
+    public func getContact() -> UserContact? {
         if self.type == Chat.ChatType.conversation.rawValue {
             let contacts = getContacts(includeOwner: false)
             return contacts.first
@@ -556,21 +557,6 @@ public class Chat: NSManagedObject {
         return isPublicGroup() && ownerPubkey == UserData.sharedInstance.getUserPubKey()
     }
     
-    func savePodcastFeed(json: JSON) {
-        if let strJson = json.rawString() {
-            self.podcastFeed = strJson
-        }
-        saveChat()
-    }
-    
-    func getPodcastFeed() -> JSON? {
-        if let data = self.podcastFeed?.data(using: .utf8) {
-            if let jsonObject = try? JSON(data: data) {
-                return jsonObject
-            }
-        }
-        return nil
-    }
     
     func syncTribeWithServer() {
         DispatchQueue.global().async {

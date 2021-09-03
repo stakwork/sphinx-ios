@@ -104,4 +104,16 @@ extension Chat: ChatListCommonObject {
         let key = "chat-\(self.id)-color"
         UIColor.removeColorFor(key: key)
     }
+    
+    public func getInvite() -> UserInvite? {
+        return nil
+    }
+    
+    public func getContactStatus() -> Int? {
+        return UserContact.Status.Confirmed.rawValue
+    }
+    
+    public func getInviteStatus() -> Int? {
+        return UserInvite.Status.Complete.rawValue
+    }
 }

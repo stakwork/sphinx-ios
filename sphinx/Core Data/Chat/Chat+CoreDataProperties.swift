@@ -36,7 +36,7 @@ extension Chat {
     @NSManaged public var myPhotoUrl: String?
     @NSManaged public var webAppLastDate: Date?
     @NSManaged public var pin: String?
-    @NSManaged public var podcastFeed: String?
+    @NSManaged public var podcastFeed: PodcastFeed?
     @NSManaged public var contactIds: [NSNumber]
     @NSManaged public var pendingContactIds: [NSNumber]
 
@@ -61,3 +61,5 @@ extension Chat {
     @NSManaged public func removeFromMessages(_ values: NSSet)
 
 }
+
+extension Chat : Identifiable {}

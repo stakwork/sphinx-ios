@@ -16,6 +16,9 @@ public protocol ChatListCommonObject: class {
     func isConversation() -> Bool
     func isPublicGroup() -> Bool
     
+    func getContactStatus() -> Int?
+    func getInviteStatus() -> Int?
+    
     func getObjectId() -> Int
     func getOrderDate() -> Date?
     func getName() -> String
@@ -31,6 +34,8 @@ public protocol ChatListCommonObject: class {
     func subscribedToContact() -> Bool
     
     func getChat() -> Chat?
+    func getContact() -> UserContact?
+    func getInvite() -> UserInvite?
     
     var lastMessage : TransactionMessage? { get set }
 }

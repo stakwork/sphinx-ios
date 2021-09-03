@@ -1,105 +1,75 @@
 //
 //  FeedsListViewController.swift
-//  FeedsListViewController
+//  PodcastFeedsContainerViewController
 //
 //  Copyright © 2021 sphinx. All rights reserved.
 //
 
 import UIKit
-
-private let samplePodcastFeeds: [PodcastFeed] = [
-    PodcastFeed(
-        chatId: 1,
-        id: 1,
-        title: "Sample Podcast 1",
-        description: "Sample Podcast 1 Description",
-        author: "Satoshi Nakamoto",
-        image: "appPinIcon",
-        model: nil,
-        episodes: [],
-        destinations: []
-    ),
-    PodcastFeed(
-        chatId: 2,
-        id: 2,
-        title: "Sample Podcast 2",
-        description: "Sample Podcast 1 Description",
-        author: "Satoshi Nakamoto",
-        image: "cashAppIcon",
-        model: nil,
-        episodes: [],
-        destinations: []
-    ),
-    PodcastFeed(
-        chatId: 3,
-        id: 3,
-        title: "Sample Podcast 3",
-        description: "Sample Podcast 3 Description",
-        author: "Satoshi Nakamoto",
-        image: "whiteIcon",
-        model: nil,
-        episodes: [],
-        destinations: []
-    ),
-]
+import CoreData
 
 
-private let samplePodcastEpisodes: [PodcastEpisode] = [
-    PodcastEpisode(
-        id: 1,
-        title: "Sample Episode 1",
-        description: "Sample Episode 1 Description",
-        url: "",
-        image: "cashAppIcon",
-        link: "",
-        downloaded: false
-    ),
-    PodcastEpisode(
-        id: 2,
-        title: "Sample Episode 2",
-        description: "Sample Episode 2 Description",
-        url: "",
-        image: "appPinIcon",
-        link: "",
-        downloaded: false
-    ),
-    PodcastEpisode(
-        id: 3,
-        title: "Sample Episode 3",
-        description: "Sample Episode 3 Description",
-        url: "",
-        image: "welcomeLogo",
-        link: "",
-        downloaded: false
-    ),
-]
+protocol DashboardPodcastFeedsListDelegate: AnyObject {
+    
+    func viewController(
+        _ viewController: UIViewController,
+        didSelectPodcastFeedWithID podcastFeedID: NSManagedObjectID
+    )
+    
+    func viewController(
+        _ viewController: UIViewController,
+        didSelectPodcastEpisodeWithID podcastEpisodeID: NSManagedObjectID
+    )
+}
 
 
-class FeedsListViewController: UIViewController {
+class PodcastFeedsContainerViewController: UIViewController {
     @IBOutlet weak var filterChipCollectionViewContainer: UIView!
     @IBOutlet weak var feedContentCollectionViewContainer: UIView!
     
+    private var managedObjectContext: NSManagedObjectContext!
     private var filterChipCollectionViewController: FeedFilterChipsCollectionViewController!
     private var feedContentCollectionViewController: FeedContentCollectionViewController!
-    
+    private weak var podcastFeedsListDelegate: DashboardPodcastFeedsListDelegate?
     
     var contentFilterOptions: [ContentFilterOption] = []
     var activeFilterOption: ContentFilterOption = .allContent
-    var latestPodcastEpisodes: [PodcastEpisode] = []
-    var subscribedPodcastFeeds: [PodcastFeed] = []
+    
+    var fetchedResultsController: NSFetchedResultsController<PodcastFeed>!
     
     
-    static func instantiate() -> FeedsListViewController {
+    static func instantiate(
+        managedObjectContext: NSManagedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext,
+        podcastFeedsListDelegate: DashboardPodcastFeedsListDelegate
+    ) -> PodcastFeedsContainerViewController {
         let viewController = StoryboardScene.Dashboard.feedsListViewController.instantiate()
         
+        viewController.managedObjectContext = managedObjectContext
+        viewController.fetchedResultsController = makeFetchedResultsController(
+            using: managedObjectContext
+        )
+        viewController.podcastFeedsListDelegate = podcastFeedsListDelegate
+        
         return viewController
+    }
+    
+    
+    static func makeFetchedResultsController(
+        using managedObjectContext: NSManagedObjectContext
+    ) -> NSFetchedResultsController<PodcastFeed> {
+        NSFetchedResultsController(
+            fetchRequest: PodcastFeed.FetchRequests.default(),
+            managedObjectContext: managedObjectContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil
+        )
     }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loadData()
+        setupFilterOptions()
         configureFilterChipCollectionView()
         configureFeedContentCollectionView()
     }
@@ -107,12 +77,10 @@ class FeedsListViewController: UIViewController {
 
 
 // MARK: -  Private Helpers
-extension FeedsListViewController {
+extension PodcastFeedsContainerViewController {
     
-    private func loadData() {
+    private func setupFilterOptions() {
         contentFilterOptions = getContentFilterOptions()
-        latestPodcastEpisodes = getLatestPodcastEpisodes()
-        subscribedPodcastFeeds = getSubscribedPodcastFeeds()
     }
     
     
@@ -131,16 +99,6 @@ extension FeedsListViewController {
     }
     
     
-    private func getLatestPodcastEpisodes() -> [PodcastEpisode] {
-        samplePodcastEpisodes
-    }
-    
-    
-    private func getSubscribedPodcastFeeds() -> [PodcastFeed] {
-        samplePodcastFeeds
-    }
-
-    
     private func handleFilterChipActivation(
         _ filterOption: ContentFilterOption
     ) {
@@ -157,21 +115,20 @@ extension FeedsListViewController {
         filterChipCollectionViewController.updateSnapshot()
     }
     
-    
-    private func handleLatestEpisodeCellSelection(_ podcastEpisode: PodcastEpisode) {
-        AlertHelper.showAlert(
-            title: "Selected Podcast Episode",
-            message: podcastEpisode.title
+  
+    private func handleLatestEpisodeCellSelection(_ managedObjectID: NSManagedObjectID) {
+        podcastFeedsListDelegate?.viewController(
+            self,
+            didSelectPodcastEpisodeWithID: managedObjectID
         )
     }
     
-    private func handleLatestFeedCellSelection(_ podcastFeed: PodcastFeed) {
-        AlertHelper.showAlert(
-            title: "Selected Podcast Feed",
-            message: podcastFeed.title
+    private func handleLatestFeedCellSelection(_ managedObjectID: NSManagedObjectID) {
+        podcastFeedsListDelegate?.viewController(
+            self,
+            didSelectPodcastFeedWithID: managedObjectID
         )
     }
-    
     
     private func configureFilterChipCollectionView() {
         filterChipCollectionViewController = FeedFilterChipsCollectionViewController
@@ -191,8 +148,7 @@ extension FeedsListViewController {
     private func configureFeedContentCollectionView() {
         feedContentCollectionViewController = FeedContentCollectionViewController
             .instantiate(
-                latestPodcastEpisodes: latestPodcastEpisodes,
-                subscribedPodcastFeeds: subscribedPodcastFeeds,
+                fetchedResultsController: fetchedResultsController,
                 onPodcastEpisodeCellSelected: handleLatestEpisodeCellSelection(_:),
                 onPodcastFeedCellSelected: handleLatestFeedCellSelection(_:)
             )
@@ -203,3 +159,4 @@ extension FeedsListViewController {
         )
     }
 }
+

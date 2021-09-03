@@ -281,14 +281,18 @@ class ChatAccessoryView: UIView {
     }
     
     func configurePlayerView(playerHelper: PodcastPlayerHelper, delegate: PodcastPlayerVCDelegate, completion: @escaping () -> ()) {
-        podcastPlayerView.configure(playerHelper: playerHelper, delegate: delegate, completion: {
-            self.podcastPlayerView.showPlayerInfo()
-            self.rebuildSize()
-            
-            self.podcastPlayerView.addShadow(location: .top, color: UIColor.black, opacity: 0.1)
-            self.viewContainer.removeShadow()
-            completion()
-        })
+        podcastPlayerView.configure(
+            playerHelper: playerHelper,
+            delegate: delegate,
+            completion: {
+                self.podcastPlayerView.showPlayerInfo()
+                self.rebuildSize()
+                
+                self.podcastPlayerView.addShadow(location: .top, color: UIColor.black, opacity: 0.1)
+                self.viewContainer.removeShadow()
+                completion()
+            }
+        )
     }
     
     func reloadPlayerView() {

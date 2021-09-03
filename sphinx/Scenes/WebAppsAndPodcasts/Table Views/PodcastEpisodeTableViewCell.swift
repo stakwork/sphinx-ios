@@ -68,7 +68,7 @@ class PodcastEpisodeTableViewCell: SwipableCell {
         
         if let img = PodcastEpisodeTableViewCell.podcastImage {
             loadEpisodeImage(episode: episode, with: img)
-        } else if let image = podcast?.image, let url = URL(string: image) {
+        } else if let imageURLPath = podcast?.imageURLPath, let url = URL(string: imageURLPath) {
             MediaLoader.asyncLoadImage(imageView: episodeImageView, nsUrl: url, placeHolderImage: UIImage(named: "profile_avatar"), completion: { img in
                 PodcastEpisodeTableViewCell.podcastImage = img
                 self.loadEpisodeImage(episode: episode, with: img)
@@ -87,9 +87,9 @@ class PodcastEpisodeTableViewCell: SwipableCell {
         self.contentView.alpha = episode.isAvailable() ? 1.0 : 0.5
 
         // Disable swipe actions if the episode hasn't been downloaded yet.
-        recognizer?.isEnabled = episode.downloaded
+        recognizer?.isEnabled = episode.isDownloaded
 
-        if episode.downloaded {
+        if episode.isDownloaded {
             downloadButton.setTitle("", for: .normal)
             downloadButton.setTitleColor(UIColor.Sphinx.PrimaryGreen, for: .normal)
             return
@@ -105,8 +105,8 @@ class PodcastEpisodeTableViewCell: SwipableCell {
     }
     
     func loadEpisodeImage(episode: PodcastEpisode, with defaultImg: UIImage) {
-        if let image = episode.image, let url = URL(string: image) {
-            MediaLoader.asyncLoadImage(imageView: episodeImageView, nsUrl: url, placeHolderImage: defaultImg, id: episode.id ?? -1, completion: { (img, id) in
+        if let imageURLPath = episode.imageURLPath, let url = URL(string: imageURLPath) {
+            MediaLoader.asyncLoadImage(imageView: episodeImageView, nsUrl: url, placeHolderImage: defaultImg, id: Int(episode.id ?? -1), completion: { (img, id) in
                 if self.isDifferentEpisode(episodeId: id) { return }
                 self.episodeImageView.image = img
             }, errorCompletion: { _ in

@@ -19,13 +19,17 @@ final class ChatListViewModel: NSObject {
     }
     
     var contactChats: [ChatListCommonObject] {
-        contactsService
+        contactsService.reload()
+        
+        return contactsService
             .getChatListObjects()
             .filter { $0.isConversation() }
     }
     
     var tribeChats: [ChatListCommonObject] {
-        contactsService
+        contactsService.reload()
+        
+        return contactsService
             .getChatListObjects()
             .filter { $0.isPublicGroup() }
     }

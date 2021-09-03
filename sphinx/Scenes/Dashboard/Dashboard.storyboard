@@ -181,10 +181,10 @@
             </objects>
             <point key="canvasLocation" x="-1650" y="1149"/>
         </scene>
-        <!--Feeds List View Controller-->
+        <!--Podcast Feeds Container View Controller-->
         <scene sceneID="mR6-dD-8wi">
             <objects>
-                <viewController storyboardIdentifier="FeedsListViewController" id="izJ-JO-cwu" customClass="FeedsListViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PodcastFeedsContainerViewController" id="izJ-JO-cwu" customClass="PodcastFeedsContainerViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="XKi-k6-l8l">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

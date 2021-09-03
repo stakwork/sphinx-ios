@@ -80,4 +80,26 @@ extension UserContact : ChatListCommonObject {
         let key = "\(self.id)-color"
         UIColor.removeColorFor(key: key)
     }
+    
+    public func getContact() -> UserContact? {
+        return self
+    }
+    
+    public func getInvite() -> UserInvite? {
+        return self.invite
+    }
+    
+    public func getContactStatus() -> Int? {
+        return status
+    }
+    
+    public func getInviteStatus() -> Int? {
+        if let invite = invite {
+            if (invite.isPendingPayment() && invite.isPaymentProcessed()) {
+                return UserInvite.Status.ProcessingPayment.rawValue
+            }
+            return invite.status
+        }
+        return nil
+    }
 }

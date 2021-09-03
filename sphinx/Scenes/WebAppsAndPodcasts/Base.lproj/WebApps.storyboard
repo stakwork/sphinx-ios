@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19158" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19141"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -47,6 +47,7 @@
                                 </constraints>
                             </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="OAu-Vf-wXV"/>
                         <color key="backgroundColor" name="Body"/>
                         <constraints>
                             <constraint firstItem="3Ob-bA-MAQ" firstAttribute="leading" secondItem="OAu-Vf-wXV" secondAttribute="leading" id="9ED-tW-U27"/>
@@ -54,7 +55,6 @@
                             <constraint firstAttribute="bottom" secondItem="3Ob-bA-MAQ" secondAttribute="bottom" id="kEg-Ub-TuQ"/>
                             <constraint firstItem="3Ob-bA-MAQ" firstAttribute="top" secondItem="OAu-Vf-wXV" secondAttribute="top" id="yXb-Y9-JOE"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="OAu-Vf-wXV"/>
                     </view>
                     <size key="freeformSize" width="414" height="896"/>
                     <connections>
@@ -85,6 +85,7 @@
                                 <color key="backgroundColor" name="HeaderBG"/>
                             </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="tXh-HS-xjf"/>
                         <color key="backgroundColor" name="HeaderBG"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="POd-Bw-SHI" secondAttribute="bottom" id="5FB-vB-8Xf"/>
@@ -96,7 +97,6 @@
                             <constraint firstItem="XA7-u7-sIe" firstAttribute="top" secondItem="jNn-Xy-qVY" secondAttribute="top" id="nT3-N1-FQD"/>
                             <constraint firstAttribute="trailing" secondItem="XA7-u7-sIe" secondAttribute="trailing" id="pB7-SW-azu"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="tXh-HS-xjf"/>
                     </view>
                     <size key="freeformSize" width="414" height="896"/>
                     <connections>
@@ -115,8 +115,8 @@
                     <view key="view" contentMode="scaleToFill" id="vii-WT-dsT">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="ydP-SX-efz"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
                     <size key="freeformSize" width="414" height="896"/>
                 </viewController>
@@ -137,11 +137,11 @@
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2oa-ee-oSD">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="1"/>
+                                        <viewLayoutGuide key="safeArea" id="zts-rt-iFc"/>
                                         <color key="backgroundColor" name="LightDivider"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="ymD-py-WM3"/>
                                         </constraints>
-                                        <viewLayoutGuide key="safeArea" id="zts-rt-iFc"/>
                                     </view>
                                     <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F61-2C-JK9">
                                         <rect key="frame" x="276" y="0.0" width="138" height="42"/>
@@ -200,6 +200,7 @@
                                 </constraints>
                             </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="2T0-5w-0q0"/>
                         <color key="backgroundColor" white="0.0" alpha="0.39567575636942676" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="nhR-YL-Tqv" firstAttribute="leading" secondItem="2T0-5w-0q0" secondAttribute="leading" id="90h-mD-LgS"/>
@@ -209,7 +210,6 @@
                             <constraint firstItem="nhR-YL-Tqv" firstAttribute="top" secondItem="NT2-zi-kWX" secondAttribute="bottom" id="sEy-8o-UIN"/>
                             <constraint firstAttribute="bottom" secondItem="nhR-YL-Tqv" secondAttribute="bottom" constant="-400" id="yFb-6V-XBF"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="2T0-5w-0q0"/>
                     </view>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="414" height="896"/>
@@ -313,13 +313,13 @@
                                 </constraints>
                             </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="hvA-xh-HIs"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="MqQ-5O-6Vj" firstAttribute="leading" secondItem="cvB-wd-55w" secondAttribute="leading" id="6Dr-RS-G0K"/>
                             <constraint firstAttribute="trailing" secondItem="MqQ-5O-6Vj" secondAttribute="trailing" id="7KH-ws-tDu"/>
                             <constraint firstItem="hvA-xh-HIs" firstAttribute="bottom" secondItem="MqQ-5O-6Vj" secondAttribute="bottom" constant="132" id="QMB-lo-3wX"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="hvA-xh-HIs"/>
                     </view>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="414" height="896"/>

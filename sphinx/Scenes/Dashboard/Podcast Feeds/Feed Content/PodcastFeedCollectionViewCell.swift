@@ -4,12 +4,13 @@
 //
 
 import UIKit
+import SDWebImage
 
 
 protocol DashboardPodcastCollectionViewItem {
-    var imageName: String { get }
-    var title: String { get }
-    var subtitle: String { get }
+    var imageURLPath: String? { get }
+    var title: String? { get }
+    var subtitle: String? { get }
 }
 
 
@@ -26,7 +27,18 @@ class PodcastFeedCollectionViewCell: UICollectionViewCell {
             }
         }
     }
+}
+
+
+extension PodcastFeedCollectionViewCell {
     
+    var imageURL: URL? {
+        item.imageURLPath.flatMap { URL(string: $0) }
+    }
+}
+    
+
+extension PodcastFeedCollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -41,7 +53,15 @@ class PodcastFeedCollectionViewCell: UICollectionViewCell {
     
     
     private func updateViewsWithItem() {
-        podcastImageView.image = UIImage(named: item.imageName)
+        if let imageURL = imageURL {
+            podcastImageView.sd_setImage(
+                with: imageURL,
+                placeholderImage: nil,
+                options: [.highPriority],
+                progress: nil
+            )
+        }
+        
         podcastNameLabel.text = item.title
         podcastTitleLabel.text = item.subtitle
     }

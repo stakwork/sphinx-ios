@@ -37,8 +37,6 @@ extension DashboardRootViewController: DashboardPodcastFeedsListDelegate {
         }
         
         let podcastPlayerHelper = chat.getPodcastPlayer()
-
-        podcastPlayerHelper.goToLastEpisode()
         
         presentPodcastPlayer(
             forPodcastFrom: chat,

@@ -21,26 +21,10 @@ class FeedFilterChipCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-  
-        layer.masksToBounds = false
-        layer.cornerCurve = .continuous
-        
+
         contentView.layer.masksToBounds = true
         contentView.clipsToBounds = true
         contentView.layer.cornerCurve = .continuous
-    }
-    
-    
-    override func didMoveToSuperview() {
-        super.didMoveToSuperview()
-
-        let cornerRadius =  max(
-            contentView.frame.height,
-            contentView.frame.width
-        ) / 2.0
-        
-        layer.cornerRadius = cornerRadius
-        contentView.layer.cornerRadius = cornerRadius
     }
     
 
@@ -49,18 +33,20 @@ class FeedFilterChipCollectionViewCell: UICollectionViewCell {
     ) -> UICollectionViewLayoutAttributes {
         let targetSize = CGSize(width: layoutAttributes.frame.width, height: 0)
         let modifiedAttributes = super.preferredLayoutAttributesFitting(layoutAttributes)
-        
+
         modifiedAttributes.frame.size = contentView
             .systemLayoutSizeFitting(
                 targetSize, withHorizontalFittingPriority: .defaultLow,
                 verticalFittingPriority: .required
             )
-        
+
         return modifiedAttributes
     }
 
     
     private func updateViewsFromItemState() {
+        setCornerRadius()
+        
         filterLabel.text = filterOption.titleForDisplay
         
         contentView.backgroundColor = filterOption.isActive ?
@@ -70,6 +56,15 @@ class FeedFilterChipCollectionViewCell: UICollectionViewCell {
         filterLabel.textColor = filterOption.isActive ?
             .Sphinx.DashboardFilterChipActiveText
             : .Sphinx.BodyInverted
+    }
+    
+    private func setCornerRadius() {
+        let cornerRadius =  min(
+            contentView.frame.height,
+            contentView.frame.width
+        ) / 2.0
+        
+        contentView.layer.cornerRadius = cornerRadius
     }
 }
 

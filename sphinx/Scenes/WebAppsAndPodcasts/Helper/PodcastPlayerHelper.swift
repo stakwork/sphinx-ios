@@ -102,6 +102,7 @@ class PodcastPlayerHelper {
     
     func resetPodcast() {
         stopPlaying()
+        
         self.podcast = nil
     }
     
@@ -171,10 +172,10 @@ class PodcastPlayerHelper {
         guard json["episodes"].arrayValue.isEmpty == false else { return }
         
         let managedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext
-        let podcastFeed = PodcastFeed(context: managedObjectContext)
+        let podcastFeed = chat?.podcastFeed ?? PodcastFeed(context: managedObjectContext)
         
-        podcastFeed.chat = chat
         podcastFeed.id = Int64(json["id"].intValue)
+        podcastFeed.chat = chat
         podcastFeed.title = json["title"].stringValue
         podcastFeed.podcastDescription = json["description"].stringValue
         podcastFeed.author = json["author"].stringValue

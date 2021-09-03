@@ -79,7 +79,7 @@ extension ChatListCollectionViewCell {
         }
         
         nameLabel.text = chat.getName()
-        muteImageView.isHidden = chat.getChat()?.isMuted() == false
+        muteImageView.isHidden = (chat.getChat()?.isMuted() ?? false) == false
         lockSign.isHidden = chat.hasEncryptionKey() == false
 
         

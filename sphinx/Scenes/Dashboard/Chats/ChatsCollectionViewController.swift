@@ -2,7 +2,7 @@ import UIKit
 
 
 class ChatsCollectionViewController: UICollectionViewController {
-    var chats: [ChatListCommonObject] = []
+    var chatListObjects: [ChatListCommonObject] = []
     var onChatSelected: ((ChatListCommonObject) -> Void)?
     var onRefresh: ((UIRefreshControl) -> Void)?
 
@@ -23,13 +23,13 @@ class ChatsCollectionViewController: UICollectionViewController {
 extension ChatsCollectionViewController {
 
     static func instantiate(
-        chats: [ChatListCommonObject] = [],
+        chatListObjects: [ChatListCommonObject] = [],
         onChatSelected: ((ChatListCommonObject) -> Void)? = nil,
         onRefresh: ((UIRefreshControl) -> Void)? = nil
     ) -> ChatsCollectionViewController {
         let viewController = StoryboardScene.Dashboard.chatsCollectionViewController.instantiate()
         
-        viewController.chats = chats
+        viewController.chatListObjects = chatListObjects
         viewController.onChatSelected = onChatSelected
         viewController.onRefresh = onRefresh
 
@@ -49,18 +49,29 @@ extension ChatsCollectionViewController {
         var objectId: Int
         var messageId: Int?
         var messageSeen: Bool
+        var contactStatus: Int?
+        var inviteStatus: Int?
 
-        init(objectId: Int, messageId: Int?, messageSeen: Bool) {
+        init(objectId: Int,
+             messageId: Int?,
+             messageSeen: Bool,
+             contactStatus: Int?,
+             inviteStatus: Int?)
+        {
             self.objectId = objectId
             self.messageId = messageId
             self.messageSeen = messageSeen
+            self.contactStatus = contactStatus
+            self.inviteStatus = inviteStatus
         }
         
         static func == (lhs: DataSourceItem, rhs: DataSourceItem) -> Bool {
             let isEqual =
                 lhs.objectId == rhs.objectId &&
                 lhs.messageId == rhs.messageId &&
-                lhs.messageSeen == rhs.messageSeen
+                lhs.messageSeen == rhs.messageSeen &&
+                lhs.contactStatus == rhs.contactStatus &&
+                lhs.inviteStatus == rhs.inviteStatus
             
             return isEqual
          }
@@ -69,6 +80,8 @@ extension ChatsCollectionViewController {
             hasher.combine(objectId)
             hasher.combine(messageId)
             hasher.combine(messageSeen)
+            hasher.combine(contactStatus)
+            hasher.combine(inviteStatus)
         }
     }
 
@@ -209,6 +222,7 @@ extension ChatsCollectionViewController {
 extension ChatsCollectionViewController {
 
     func makeDataSource(for collectionView: UICollectionView) -> DataSource {
+        
         let dataSource = DataSource(
             collectionView: collectionView,
             cellProvider: makeCellProvider(for: collectionView)
@@ -242,7 +256,7 @@ extension ChatsCollectionViewController {
                     for: indexPath
                 ) as? CollectionViewCell else { return nil }
 
-                cell.chat = self.chats[indexPath.row]
+                cell.chatListObject = self.chatListObjects[indexPath.row]
 
                 return cell
             }
@@ -273,12 +287,16 @@ extension ChatsCollectionViewController {
 
         snapshot.appendSections(CollectionViewSection.allCases)
 
-        let items = chats.map {
+        let items = chatListObjects.map {
+            
             DataSourceItem(
                 objectId: $0.getObjectId(),
                 messageId: $0.lastMessage?.id,
-                messageSeen: $0.lastMessage?.seen ?? false
+                messageSeen: $0.lastMessage?.seen ?? false,
+                contactStatus: $0.getContactStatus(),
+                inviteStatus: $0.getInviteStatus()
             )
+            
         }
 
         snapshot.appendItems(items, toSection: .all)
@@ -311,7 +329,7 @@ extension ChatsCollectionViewController {
             return
         }
         
-        let selectedChatObject = chats[indexPath.row]
+        let selectedChatObject = chatListObjects[indexPath.row]
         onChatSelected?(selectedChatObject)
     }
 }

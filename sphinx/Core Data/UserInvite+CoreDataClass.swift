@@ -21,6 +21,7 @@ public class UserInvite: NSManagedObject {
         case Complete
         case Expired
         case PaymentPending
+        case ProcessingPayment = 100
     }
     
     public static func getInviteInstance(inviteString: String, managedContext: NSManagedObjectContext) -> UserInvite {

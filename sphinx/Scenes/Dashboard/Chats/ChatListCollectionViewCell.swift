@@ -2,6 +2,7 @@ import UIKit
 
 
 class ChatListCollectionViewCell: UICollectionViewCell {
+    
     @IBOutlet weak var contactImageContainer: UIView!
     @IBOutlet weak var contactImageView: UIImageView!
     @IBOutlet weak var contactInitialsLabel: UILabel!
@@ -10,15 +11,21 @@ class ChatListCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var separatorLine: UIView!
     @IBOutlet weak var lockSign: UILabel!
+    @IBOutlet weak var inviteIcon: UILabel!
+    @IBOutlet weak var invitePriceContainer: UIView!
+    @IBOutlet weak var invitePriceLabel: UILabel!
     @IBOutlet weak var muteImageView: UIImageView!
     @IBOutlet weak var unreadMessageBadgeContainer: UIView!
     @IBOutlet weak var unreadMessageBadgeLabel: UILabel!
     
     
-    var chat: ChatListCommonObject? {
+    var chatListObject: ChatListCommonObject? {
         didSet {
-            guard let chat = chat else { return }
-            DispatchQueue.main.async { self.render(with: chat) }
+            guard let chatListObject = chatListObject else { return }
+            DispatchQueue.main.async {
+                self.render(with: chatListObject)
+                
+            }
         }
     }
 }
@@ -44,7 +51,7 @@ extension ChatListCollectionViewCell {
 extension ChatListCollectionViewCell {
     
     var unreadMessageCount: Int {
-        chat?.getChat()?.getReceivedUnseenMessagesCount() ?? 0
+        chatListObject?.getChat()?.getReceivedUnseenMessagesCount() ?? 0
     }
     
     var hasUnreadMessages: Bool { unreadMessageCount > 0 }
@@ -63,6 +70,9 @@ extension ChatListCollectionViewCell {
         contactInitialsLabel.makeCircular()
         unreadMessageBadgeContainer.makeCircular()
         
+        invitePriceContainer.layer.cornerRadius = 2
+        invitePriceContainer.clipsToBounds = true
+        
         // Clear initial contents
         unreadMessageBadgeContainer.alpha = 0
         nameLabel.text = ""
@@ -70,28 +80,50 @@ extension ChatListCollectionViewCell {
         dateLabel.text = ""
         lockSign.isHidden = true
         muteImageView.isHidden = true
+        inviteIcon.isHidden = true
+        invitePriceContainer.isHidden = true
     }
     
     
-    private func render(with chat: ChatListCommonObject) {
-        if hasUnreadMessages {
-            nameLabel.font = nameLabel.font.bold()
+    private func render(with chatListObject: ChatListCommonObject) {
+        
+        if chatListObject.isPending() {
+            
+            let inviteString = String(
+                format: "invite.name".localized,
+                chatListObject.getName()
+            )
+            nameLabel.text = inviteString
+            
+            muteImageView.isHidden = true
+            lockSign.isHidden = true
+            
+        } else {
+            
+            if hasUnreadMessages {
+                nameLabel.font = nameLabel.font.bold()
+            }
+            
+            nameLabel.text = chatListObject.getName()
+            muteImageView.isHidden = (chatListObject.getChat()?.isMuted() ?? false) == false
+            lockSign.isHidden = chatListObject.hasEncryptionKey() == false
         }
         
-        nameLabel.text = chat.getName()
-        muteImageView.isHidden = (chat.getChat()?.isMuted() ?? false) == false
-        lockSign.isHidden = chat.hasEncryptionKey() == false
-
-        
-        renderLastMessage(for: chat)
-        renderBadgeView(for: chat)
-        renderContactImageViews(for: chat)
+        renderLastMessage(for: chatListObject)
+        renderBadgeView(for: chatListObject)
+        renderContactImageViews(for: chatListObject)
+        renderInvitePrice(for: chatListObject)
     }
     
     
     
-    private func renderBadgeView(for chat: ChatListCommonObject) {
+    private func renderBadgeView(for chatListObject: ChatListCommonObject) {
         guard hasUnreadMessages else {
+            unreadMessageBadgeContainer.alpha = 0
+            return
+        }
+        
+        guard chatListObject.isConfirmed() else {
             unreadMessageBadgeContainer.alpha = 0
             return
         }
@@ -99,7 +131,7 @@ extension ChatListCollectionViewCell {
         unreadMessageBadgeContainer.alpha = 1
         unreadMessageBadgeLabel.text = unreadMessageCount > 99 ? "99+" : "\(unreadMessageCount)"
         
-        if chat.getChat()?.isMuted() == true {
+        if chatListObject.getChat()?.isMuted() == true {
             unreadMessageBadgeContainer.alpha = 0.2
             unreadMessageBadgeContainer.backgroundColor = .Sphinx.WashedOutReceivedText
         } else {
@@ -109,38 +141,55 @@ extension ChatListCollectionViewCell {
     }
     
     
-    private func renderContactImageViews(for chat: ChatListCommonObject) {
-        if let image = chat.getImage() {
+    private func renderContactImageViews(for chatListObject: ChatListCommonObject) {
+        if chatListObject.isPending() {
+            
+            contactImageView.tintColor = UIColor.Sphinx.TextMessages
+            contactImageView.tintColorDidChange()
+            contactImageView.layer.cornerRadius = 0
+            contactImageView.clipsToBounds = true
+            
             contactInitialsLabel.isHidden = true
             contactImageView.isHidden = false
-            contactImageView.image = image
-        } else {
-            contactInitialsLabel.isHidden = false
-            contactImageView.isHidden = true
-            renderContactInitialsLabel(for: chat)
+            contactImageView.image = UIImage(named: "inviteQrCode")
             
-            if
-                let imageURLPath = chat.getPhotoUrl()?.removeDuplicatedProtocol(),
-                let imageURL = URL(string: imageURLPath)
-            {
-                contactImageView.sd_setImage(
-                    with: imageURL,
-                    placeholderImage: UIImage(named: "profile_avatar"),
-                    options: .lowPriority,
-                    progress: nil,
-                    completed: { [unowned self] (_,_,_,_) in
-                        self.contactInitialsLabel.isHidden = true
-                        self.contactImageView.isHidden = false
-                    }
-                )
+        } else {
+            
+            contactImageView.layer.cornerRadius = contactImageView.frame.height / 2
+            contactImageView.clipsToBounds = true
+        
+            if let image = chatListObject.getImage() {
+                contactInitialsLabel.isHidden = true
+                contactImageView.isHidden = false
+                contactImageView.image = image
+            } else {
+                contactInitialsLabel.isHidden = false
+                contactImageView.isHidden = true
+                renderContactInitialsLabel(for: chatListObject)
+                
+                if
+                    let imageURLPath = chatListObject.getPhotoUrl()?.removeDuplicatedProtocol(),
+                    let imageURL = URL(string: imageURLPath)
+                {
+                    contactImageView.sd_setImage(
+                        with: imageURL,
+                        placeholderImage: UIImage(named: "profile_avatar"),
+                        options: .lowPriority,
+                        progress: nil,
+                        completed: { [unowned self] (_,_,_,_) in
+                            self.contactInitialsLabel.isHidden = true
+                            self.contactImageView.isHidden = false
+                        }
+                    )
+                }
             }
         }
     }
     
     
-    private func renderContactInitialsLabel(for chat: ChatListCommonObject) {
-        let senderInitials = chat.getName().getInitialsFromName()
-        let senderColor = chat.getColor()
+    private func renderContactInitialsLabel(for chatListObject: ChatListCommonObject) {
+        let senderInitials = chatListObject.getName().getInitialsFromName()
+        let senderColor = chatListObject.getColor()
         
         contactInitialsLabel.backgroundColor = senderColor
         contactInitialsLabel.textColor = .white
@@ -148,28 +197,59 @@ extension ChatListCollectionViewCell {
     }
     
     
-    private func renderLastMessage(for chat: ChatListCommonObject) {
-        if chat.lastMessage == nil {
-            chat.getChat()?.updateLastMessage()
-        }
-
-        if let lastMessage = chat.lastMessage {
-            messageLabel.isHidden = false
-            dateLabel.isHidden = false
+    private func renderLastMessage(for chatListObject: ChatListCommonObject) {
+        if let invite = chatListObject.getInvite(), chatListObject.isPending() {
             
-            messageLabel.font = hasUnreadMessages ?
-                Constants.kNewMessagePreviewFont
-                : Constants.kMessagePreviewFont
+            let (icon, iconColor, text) = invite.getDataForRow()
             
-            messageLabel.textColor = hasUnreadMessages ?
-                .Sphinx.TextMessages
-                : .Sphinx.SecondaryText
+            inviteIcon.text = icon
+            inviteIcon.textColor = iconColor
+            inviteIcon.isHidden = false
             
-            messageLabel.text = lastMessage.getMessageDescription(dashboard: true)
-            dateLabel.text = lastMessage.date.getLastMessageDateFormat()
-        } else {
-            messageLabel.isHidden = true
+            messageLabel.text = text
             dateLabel.isHidden = true
+            
+            messageLabel.font = Constants.kNewMessagePreviewFont
+            messageLabel.textColor = .Sphinx.TextMessages
+            
+        } else {
+            
+            inviteIcon.isHidden = true
+            
+            if chatListObject.lastMessage == nil {
+                chatListObject.getChat()?.updateLastMessage()
+            }
+            
+            if let lastMessage = chatListObject.lastMessage {
+                messageLabel.isHidden = false
+                dateLabel.isHidden = false
+                
+                messageLabel.font = hasUnreadMessages ?
+                    Constants.kNewMessagePreviewFont
+                    : Constants.kMessagePreviewFont
+                
+                messageLabel.textColor = hasUnreadMessages ?
+                    .Sphinx.TextMessages
+                    : .Sphinx.SecondaryText
+                
+                messageLabel.text = lastMessage.getMessageDescription(dashboard: true)
+                dateLabel.text = lastMessage.date.getLastMessageDateFormat()
+            } else {
+                messageLabel.isHidden = true
+                dateLabel.isHidden = true
+            }
+        }
+    }
+    
+    private func renderInvitePrice(for chatListObject: ChatListCommonObject) {
+        if let invite = chatListObject.getInvite(),
+           let price = invite.price,
+           chatListObject.isPending() && invite.isPendingPayment() {
+            
+            invitePriceContainer.isHidden = false
+            invitePriceLabel.text = Int(truncating: price).formattedWithSeparator
+        } else {
+            invitePriceContainer.isHidden = true
         }
     }
 }

@@ -355,7 +355,7 @@ public class Chat: NSManagedObject {
         self.lastMessage = self.getLastMessageToShow()
     }
     
-    func getContact() -> UserContact? {
+    public func getContact() -> UserContact? {
         if self.type == Chat.ChatType.conversation.rawValue {
             let contacts = getContacts(includeOwner: false)
             return contacts.first

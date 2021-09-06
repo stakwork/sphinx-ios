@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -342,6 +342,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="DWY-Qj-w3N"/>
                         <color key="backgroundColor" name="Body"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="ulv-w7-VYJ" secondAttribute="bottom" id="E1B-OT-Ieh"/>
@@ -357,7 +358,6 @@
                             <constraint firstItem="ulv-w7-VYJ" firstAttribute="trailing" secondItem="DWY-Qj-w3N" secondAttribute="trailing" id="oue-fC-Ak6"/>
                             <constraint firstItem="DWY-Qj-w3N" firstAttribute="bottom" secondItem="7aG-u7-2Rh" secondAttribute="bottom" constant="33" id="tnT-Gm-0wv"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="DWY-Qj-w3N"/>
                     </view>
                     <size key="freeformSize" width="414" height="896"/>
                     <connections>
@@ -494,6 +494,7 @@
                                 <color key="sectionIndexTrackingBackgroundColor" name="white"/>
                             </tableView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="7Ji-zF-PEb"/>
                         <color key="backgroundColor" name="Body"/>
                         <constraints>
                             <constraint firstItem="Egm-Jn-D1O" firstAttribute="leading" secondItem="7Ji-zF-PEb" secondAttribute="leading" id="5cB-gs-9Uj"/>
@@ -510,7 +511,6 @@
                             <constraint firstItem="Egm-Jn-D1O" firstAttribute="top" secondItem="7Ji-zF-PEb" secondAttribute="top" id="p52-5e-mee"/>
                             <constraint firstItem="YrV-ig-DSu" firstAttribute="leading" secondItem="7Ji-zF-PEb" secondAttribute="leading" id="pXy-cS-MEB"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="7Ji-zF-PEb"/>
                     </view>
                     <size key="freeformSize" width="414" height="896"/>
                     <connections>

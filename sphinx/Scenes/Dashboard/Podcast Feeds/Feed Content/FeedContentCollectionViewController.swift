@@ -240,7 +240,7 @@ extension FeedContentCollectionViewController {
                     .managedObjectContext
                     .existingObject(with: dataSourceItem)
             else {
-                preconditionFailure("managed object should be available")
+                return nil
             }
             
             if let podcastFeed = managedObject as? PodcastFeed {
@@ -403,27 +403,23 @@ extension FeedContentCollectionViewController: NSFetchedResultsControllerDelegat
         
         
         // We have feeds... now make an episodes section from them...
-        
-        if collectionView?.numberOfSections != CollectionViewSection.allCases.count {
-            changedSnapshot.appendSections([
-                       CollectionViewSection.latestPodcastEpisodes.rawValue,
-//                       CollectionViewSection.subscribedPodcastFeeds.rawValue,
-           ])
-   
-           changedSnapshot.appendItems(
-               changedSnapshot
-                   .itemIdentifiers
-                   .compactMap {
-                       try? fetchedResultsController
-                           .managedObjectContext
-                           .existingObject(with: $0)
-                   }
-                   .compactMap { $0 as? PodcastFeed }
-                   .compactMap { $0.episodes?.first?.objectID }
-               ,
-               toSection: CollectionViewSection.latestPodcastEpisodes.rawValue
-           )
-        }
+        changedSnapshot.appendSections([
+            CollectionViewSection.latestPodcastEpisodes.rawValue,
+       ])
+
+       changedSnapshot.appendItems(
+           changedSnapshot
+               .itemIdentifiers
+               .compactMap {
+                   try? fetchedResultsController
+                       .managedObjectContext
+                       .existingObject(with: $0)
+               }
+               .compactMap { $0 as? PodcastFeed }
+               .compactMap { $0.getCurrentEpisode()?.objectID }
+           ,
+           toSection: CollectionViewSection.latestPodcastEpisodes.rawValue
+       )
         
         changedSnapshot.reloadItems(feedItemIDsToReload)
         
@@ -439,7 +435,7 @@ extension FeedContentCollectionViewController: NSFetchedResultsControllerDelegat
 
 extension PodcastEpisode: DashboardPodcastCollectionViewItem {
     var subtitle: String? {
-        formattedDescription ?? ""
+        formattedDescription
     }
 }
 

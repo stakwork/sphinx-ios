@@ -431,6 +431,10 @@ extension DashboardRootViewController {
     ) {
         let contact = contact ?? chat?.getContact()
         
+        if handleInvite(for: contact) {
+            return
+        }
+        
         let chatVC = ChatViewController.instantiate(
             contact: contact,
             chat: chat,
@@ -442,6 +446,52 @@ extension DashboardRootViewController {
         navigationController?.pushViewController(chatVC, animated: shouldAnimate)
         
         resetSearchField()
+    }
+    
+    private func handleInvite(for contact: UserContact?) -> Bool {
+        if let invite = contact?.invite, (contact?.isPending() ?? false) {
+            
+            if invite.isPendingPayment() {
+                
+                payInvite(invite: invite)
+                
+            } else {
+                
+                let (ready, title, message) = invite.getInviteStatusForAlert()
+                
+                if ready {
+                    goToInviteCodeString(inviteCode: contact?.invite?.inviteString ?? "")
+                } else {
+                    AlertHelper.showAlert(title: title, message: message)
+                }
+                
+            }
+            return true
+        }
+        return false
+    }
+    
+    private func goToInviteCodeString(
+        inviteCode: String
+    ) {
+        guard !inviteCode.isEmpty else {
+            return
+        }
+        let confirmAddfriendVC = ShareInviteCodeViewController.instantiate()
+        confirmAddfriendVC.qrCodeString = inviteCode
+        navigationController?.present(confirmAddfriendVC, animated: true, completion: nil)
+    }
+    
+    private func payInvite(invite: UserInvite) {
+        AlertHelper.showTwoOptionsAlert(title: "pay.invitation".localized, message: "", confirm: {
+            self.chatsListViewModel.payInvite(invite: invite, completion: { contact in
+                if let contact = contact {
+                    self.didUpdateContact(contact: contact)
+                } else {
+                    AlertHelper.showAlert(title: "generic.error.title".localized, message: "payment.failed".localized)
+                }
+            })
+        })
     }
 }
 

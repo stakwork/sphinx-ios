@@ -87,7 +87,11 @@ class NewPodcastPlayerViewController: UIViewController {
             tableDataSource = PodcastEpisodesDataSource(tableView: tableView, playerHelper: playerHelper, delegate: self)
         } else {
             AlertHelper.showAlert(title: "generic.error.title".localized, message: "generic.error.message".localized, completion: {
-                self.dismiss(animated: true, completion: nil)
+                if (self.navigationController?.viewControllers.count ?? 0 > 1) {
+                    self.navigationController?.popViewController(animated: true)
+                } else {
+                    self.dismiss(animated: true, completion: nil)
+                }
             })
         }
     }

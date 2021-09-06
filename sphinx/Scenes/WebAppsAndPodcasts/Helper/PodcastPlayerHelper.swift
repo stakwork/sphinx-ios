@@ -32,37 +32,37 @@ class PodcastPlayerHelper {
     
     var currentEpisode: Int {
         get {
-            return (UserDefaults.standard.value(forKey: "current-episode-\(chat?.id ?? -1)") as? Int) ?? 0
+            return podcast?.currentEpisode ?? 0
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: "current-episode-\(chat?.id ?? -1)")
+            podcast?.currentEpisode = newValue
         }
     }
     
     var currentEpisodeId: Int {
         get {
-            return (UserDefaults.standard.value(forKey: "current-episode-id-\(chat?.id ?? -1)") as? Int) ?? -1
+            return podcast?.currentEpisodeId ?? -1
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: "current-episode-id-\(chat?.id ?? -1)")
+            podcast?.currentEpisodeId = newValue
         }
     }
     
     var lastEpisodeId: Int? {
         get {
-            return (UserDefaults.standard.value(forKey: "last-episode-id-\(chat?.id ?? -1)") as? Int)
+            return podcast?.lastEpisodeId
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: "last-episode-id-\(chat?.id ?? -1)")
+            podcast?.lastEpisodeId = newValue
         }
     }
     
     var currentTime: Int {
         get {
-            return (UserDefaults.standard.value(forKey: "current-time-\(chat?.id ?? -1)") as? Int) ?? 0
+            return podcast?.currentTime ?? 0
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: "current-time-\(chat?.id ?? -1)")
+            podcast?.currentTime = newValue
         }
     }
     
@@ -102,6 +102,7 @@ class PodcastPlayerHelper {
     
     func resetPodcast() {
         stopPlaying()
+        
         self.podcast = nil
     }
     
@@ -171,10 +172,10 @@ class PodcastPlayerHelper {
         guard json["episodes"].arrayValue.isEmpty == false else { return }
         
         let managedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext
-        let podcastFeed = PodcastFeed(context: managedObjectContext)
+        let podcastFeed = chat?.podcastFeed ?? PodcastFeed(context: managedObjectContext)
         
-        podcastFeed.chat = chat
         podcastFeed.id = Int64(json["id"].intValue)
+        podcastFeed.chat = chat
         podcastFeed.title = json["title"].stringValue
         podcastFeed.podcastDescription = json["description"].stringValue
         podcastFeed.author = json["author"].stringValue
@@ -256,26 +257,12 @@ class PodcastPlayerHelper {
     
     
     func getCurrentEpisode() -> PodcastEpisode? {
-        let currentEpisodeIndex = getCurrentEpisodeIndex()
-        let podcastFeed = self.podcast
-        
-        guard
-            let episodes = podcastFeed?.episodesArray,
-            episodes.isEmpty == false
-        else { return nil }
-        
-        return episodes[currentEpisodeIndex]
+        return podcast?.getCurrentEpisode()
     }
-    
     
     func getCurrentEpisodeIndex() -> Int {
-        (podcast.map {
-            $0.episodesArray.firstIndex(where: { $0.id == currentEpisodeId })
-            ?? currentEpisode
-        })
-        ?? currentEpisode
+        return podcast?.getCurrentEpisodeIndex() ?? 0
     }
-    
     
     func getIndexFor(episode: PodcastEpisode) -> Int? {
         podcast?.episodesArray.firstIndex(where: { $0.id == episode.id })

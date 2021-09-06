@@ -51,6 +51,8 @@
 "dashboard.feeds.filters.watch" = "Watch";
 "dashboard.feeds.filters.read" = "Read";
 "dashboard.feeds.filters.play" = "Play";
+"dashboard.feeds.section-headings.following" = "Following";
+"dashboard.feeds.section-headings.directory" = "Directory";
 
 //LeftMenu
 "left-menu.dashboard" = "Inicio";

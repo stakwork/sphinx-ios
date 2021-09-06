@@ -59,6 +59,24 @@ internal enum StoryboardScene {
         )
         
         
+        internal static let podcastFeedSearchContainerViewController = SceneType<PodcastFeedSearchContainerViewController>(
+            storyboard: Dashboard.self,
+            identifier: "PodcastFeedSearchContainerViewController"
+        )
+        
+        
+        internal static let podcastFeedSearchEmptyStateViewController = SceneType<PodcastFeedSearchEmptyStateViewController>(
+            storyboard: Dashboard.self,
+            identifier: "PodcastFeedSearchEmptyStateViewController"
+        )
+        
+        
+        internal static let podcastFeedSearchResultsCollectionViewController = SceneType<PodcastFeedSearchResultsCollectionViewController>(
+            storyboard: Dashboard.self,
+            identifier: "PodcastFeedSearchResultsCollectionViewController"
+        )
+        
+        
         internal static let chatsContainerViewController = SceneType<ChatsContainerViewController>(
             storyboard: Dashboard.self,
             identifier: "ChatsContainerViewController"

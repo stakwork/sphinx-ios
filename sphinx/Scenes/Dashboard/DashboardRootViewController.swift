@@ -55,9 +55,16 @@ class DashboardRootViewController: RootViewController {
         PodcastFeedsContainerViewController.instantiate(
             podcastFeedsListDelegate: self
 //            podcastEpisodeListDelegate: self
-            
         )
     }()
+    
+    
+    internal lazy var feedSearchResultsViewController = {
+        PodcastFeedSearchContainerViewController.instantiate(
+            resultsDelegate: self
+        )
+    }()
+    
     
     internal lazy var contactChatsContainerViewController: ChatsContainerViewController = {
         ChatsContainerViewController.instantiate(
@@ -456,3 +463,6 @@ extension DashboardRootViewController {
         case sendSats
     }
 }
+
+
+extension DashboardRootViewController: PodcastFeedSearchResultsViewControllerDelegate {}

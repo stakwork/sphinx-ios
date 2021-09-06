@@ -179,7 +179,22 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rR2-5U-caA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1650" y="1149"/>
+            <point key="canvasLocation" x="-4487" y="960"/>
+        </scene>
+        <!--Podcast Feed Search Container View Controller-->
+        <scene sceneID="ifQ-5p-cRO">
+            <objects>
+                <viewController storyboardIdentifier="PodcastFeedSearchContainerViewController" id="Mk9-eA-WoW" customClass="PodcastFeedSearchContainerViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="RPx-Rg-omQ">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="oJU-7h-Zd5"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jPy-9I-cKg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-6030" y="1945"/>
         </scene>
         <!--Podcast Feeds Container View Controller-->
         <scene sceneID="mR6-dD-8wi">
@@ -314,6 +329,46 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pav-qX-VgU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1651" y="2550"/>
+        </scene>
+        <!--Podcast Feed Search Empty State View Controller-->
+        <scene sceneID="xdh-VO-aTW">
+            <objects>
+                <viewController storyboardIdentifier="PodcastFeedSearchEmptyStateViewController" id="NmB-cB-3h2" customClass="PodcastFeedSearchEmptyStateViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="VX3-OM-Ef9">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="B4s-0r-vi8"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MQo-iP-nxj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-6404" y="2642"/>
+        </scene>
+        <!--Collection View Controller-->
+        <scene sceneID="qWS-Af-xVJ">
+            <objects>
+                <collectionViewController storyboardIdentifier="PodcastFeedSearchResultsCollectionViewController" id="6rA-gL-oUT" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="5V7-1u-a30">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="LMw-0A-Y2N">
+                            <size key="itemSize" width="128" height="128"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells/>
+                        <connections>
+                            <outlet property="dataSource" destination="6rA-gL-oUT" id="SP6-Cb-U6L"/>
+                            <outlet property="delegate" destination="6rA-gL-oUT" id="HCY-hb-ajP"/>
+                        </connections>
+                    </collectionView>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zCU-VE-Yxf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-5591" y="2640"/>
         </scene>
     </scenes>
     <resources>

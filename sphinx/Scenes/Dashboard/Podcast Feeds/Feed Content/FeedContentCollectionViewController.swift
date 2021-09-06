@@ -3,9 +3,6 @@ import CoreData
 
 
 class FeedContentCollectionViewController: UICollectionViewController {
-    
-//    var latestPodcastEpisodes: [PodcastEpisode]!
-//    var subscribedPodcastFeeds: [PodcastFeed]!
     var interSectionSpacing: CGFloat!
     
     var onPodcastEpisodeCellSelected: ((NSManagedObjectID) -> Void)!
@@ -70,19 +67,11 @@ extension FeedContentCollectionViewController {
         }
     }
     
-//    enum DataSourceItem: Hashable {
-//        case latestPodcastEpisode(NSManagedObjectID)
-//        case subscribedPodcastFeed(NSManagedObjectID)
-//    }
-    
     typealias ReusableHeaderView = PodcastFeedCollectionViewSectionHeader
     typealias CollectionViewCell = PodcastFeedCollectionViewCell
-//    typealias CellDataItemType = DataSourceItem
     typealias CellDataItemType = NSManagedObjectID
-//    typealias DataSource = UICollectionViewDiffableDataSource<CollectionViewSection, CellDataItemType>
     typealias DataSource = UICollectionViewDiffableDataSource<CollectionViewSection.RawValue, CellDataItemType>
     typealias DataSourceSnapshot = NSDiffableDataSourceSnapshot<CollectionViewSection.RawValue, CellDataItemType>
-//    typealias DataSourceSnapshot = NSDiffableDataSourceSnapshot<CollectionViewSection, CellDataItemType>
 }
 
 

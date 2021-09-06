@@ -560,12 +560,20 @@
 		F394ECB12683CF5E00529038 /* NewUserGreetingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F394ECB02683CF5E00529038 /* NewUserGreetingViewController.swift */; };
 		F394ECB32683EB5A00529038 /* SphinxDesktopAdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F394ECB22683EB5A00529038 /* SphinxDesktopAdViewController.swift */; };
 		F39767C826C5A85F00DDFC0A /* LeftMenuDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F39767C726C5A85F00DDFC0A /* LeftMenuDelegate.swift */; };
+		F39F2C7A26E22FC800D357F6 /* PodcastFeedSearchContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F39F2C7926E22FC700D357F6 /* PodcastFeedSearchContainerViewController.swift */; };
+		F39F2C7C26E2363100D357F6 /* PodcastFeedSearchResultsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F39F2C7B26E2363100D357F6 /* PodcastFeedSearchResultsCollectionViewController.swift */; };
+		F39F2C7E26E2367B00D357F6 /* PodcastFeedSearchEmptyStateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F39F2C7D26E2367B00D357F6 /* PodcastFeedSearchEmptyStateViewController.swift */; };
+		F39F2C8126E2805D00D357F6 /* PodcastFeedSearchResultCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F39F2C7F26E2805D00D357F6 /* PodcastFeedSearchResultCollectionViewCell.swift */; };
+		F39F2C8226E2805D00D357F6 /* PodcastFeedSearchResultCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F39F2C8026E2805D00D357F6 /* PodcastFeedSearchResultCollectionViewCell.xib */; };
+		F39F2C8526E2840500D357F6 /* PodcastFeedSearchResultsCollectionViewSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F39F2C8326E2840500D357F6 /* PodcastFeedSearchResultsCollectionViewSectionHeader.swift */; };
+		F39F2C8626E2840500D357F6 /* PodcastFeedSearchResultsCollectionViewSectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = F39F2C8426E2840500D357F6 /* PodcastFeedSearchResultsCollectionViewSectionHeader.xib */; };
 		F3A35CA826C43508007D35BD /* DashboardRootViewController+SocketManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3A35CA726C43508007D35BD /* DashboardRootViewController+SocketManagerDelegate.swift */; };
 		F3B2518726D81BE800C96D42 /* PodcastFeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B2518626D81BE800C96D42 /* PodcastFeedViewModel.swift */; };
 		F3B2518D26D8DD1800C96D42 /* PodcastFeed+FetchUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B2518C26D8DD1800C96D42 /* PodcastFeed+FetchUtils.swift */; };
 		F3B2518F26DD3F4100C96D42 /* PodcastEpisode+Computeds.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B2518E26DD3F4000C96D42 /* PodcastEpisode+Computeds.swift */; };
 		F3B2519126DD5CE100C96D42 /* PodcastFeedService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B2519026DD5CE100C96D42 /* PodcastFeedService.swift */; };
 		F3B2519526DFA1E800C96D42 /* DashboardRootViewController+DashboardPodcastFeedsListDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B2519426DFA1E800C96D42 /* DashboardRootViewController+DashboardPodcastFeedsListDelegate.swift */; };
+		F3B2519C26E118E700C96D42 /* DashboardRootViewController+UITextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B2519B26E118E600C96D42 /* DashboardRootViewController+UITextFieldDelegate.swift */; };
 		F3C92B272671FB6C005F0A42 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F3C92B262671FB6C005F0A42 /* README.md */; };
 		F3CE637726AFC44D006E37A0 /* DashboardRootViewController+DelegateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CE637626AFC44C006E37A0 /* DashboardRootViewController+DelegateUtils.swift */; };
 		F3CE637C26AFE823006E37A0 /* FeedFilterChipCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CE637B26AFE822006E37A0 /* FeedFilterChipCollectionViewCell.swift */; };
@@ -1269,12 +1277,20 @@
 		F394ECB02683CF5E00529038 /* NewUserGreetingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewUserGreetingViewController.swift; sourceTree = "<group>"; };
 		F394ECB22683EB5A00529038 /* SphinxDesktopAdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SphinxDesktopAdViewController.swift; sourceTree = "<group>"; };
 		F39767C726C5A85F00DDFC0A /* LeftMenuDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftMenuDelegate.swift; sourceTree = "<group>"; };
+		F39F2C7926E22FC700D357F6 /* PodcastFeedSearchContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastFeedSearchContainerViewController.swift; sourceTree = "<group>"; };
+		F39F2C7B26E2363100D357F6 /* PodcastFeedSearchResultsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastFeedSearchResultsCollectionViewController.swift; sourceTree = "<group>"; };
+		F39F2C7D26E2367B00D357F6 /* PodcastFeedSearchEmptyStateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastFeedSearchEmptyStateViewController.swift; sourceTree = "<group>"; };
+		F39F2C7F26E2805D00D357F6 /* PodcastFeedSearchResultCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastFeedSearchResultCollectionViewCell.swift; sourceTree = "<group>"; };
+		F39F2C8026E2805D00D357F6 /* PodcastFeedSearchResultCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PodcastFeedSearchResultCollectionViewCell.xib; sourceTree = "<group>"; };
+		F39F2C8326E2840500D357F6 /* PodcastFeedSearchResultsCollectionViewSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastFeedSearchResultsCollectionViewSectionHeader.swift; sourceTree = "<group>"; };
+		F39F2C8426E2840500D357F6 /* PodcastFeedSearchResultsCollectionViewSectionHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PodcastFeedSearchResultsCollectionViewSectionHeader.xib; sourceTree = "<group>"; };
 		F3A35CA726C43508007D35BD /* DashboardRootViewController+SocketManagerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DashboardRootViewController+SocketManagerDelegate.swift"; sourceTree = "<group>"; };
 		F3B2518626D81BE800C96D42 /* PodcastFeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastFeedViewModel.swift; sourceTree = "<group>"; };
 		F3B2518C26D8DD1800C96D42 /* PodcastFeed+FetchUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PodcastFeed+FetchUtils.swift"; sourceTree = "<group>"; };
 		F3B2518E26DD3F4000C96D42 /* PodcastEpisode+Computeds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PodcastEpisode+Computeds.swift"; sourceTree = "<group>"; };
 		F3B2519026DD5CE100C96D42 /* PodcastFeedService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastFeedService.swift; sourceTree = "<group>"; };
 		F3B2519426DFA1E800C96D42 /* DashboardRootViewController+DashboardPodcastFeedsListDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DashboardRootViewController+DashboardPodcastFeedsListDelegate.swift"; sourceTree = "<group>"; };
+		F3B2519B26E118E600C96D42 /* DashboardRootViewController+UITextFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DashboardRootViewController+UITextFieldDelegate.swift"; sourceTree = "<group>"; };
 		F3C92B262671FB6C005F0A42 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		F3C92B282671FCFD005F0A42 /* .Tor.version */ = {isa = PBXFileReference; lastKnownFileType = text; name = .Tor.version; path = Carthage/Build/.Tor.version; sourceTree = "<group>"; };
 		F3CE637626AFC44C006E37A0 /* DashboardRootViewController+DelegateUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DashboardRootViewController+DelegateUtils.swift"; sourceTree = "<group>"; };
@@ -2920,6 +2936,7 @@
 				F3B2519426DFA1E800C96D42 /* DashboardRootViewController+DashboardPodcastFeedsListDelegate.swift */,
 				F3CE637626AFC44C006E37A0 /* DashboardRootViewController+DelegateUtils.swift */,
 				F3A35CA726C43508007D35BD /* DashboardRootViewController+SocketManagerDelegate.swift */,
+				F3B2519B26E118E600C96D42 /* DashboardRootViewController+UITextFieldDelegate.swift */,
 				F313024426BA628D00A1396E /* Chats */,
 				F373BF0A26AAFB6B0093C886 /* Custom Segmented Control */,
 				F3CE637826AFD42C006E37A0 /* Podcast Feeds */,
@@ -2950,6 +2967,20 @@
 			path = "New User Signup";
 			sourceTree = "<group>";
 		};
+		F39F2C7826E22F9200D357F6 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				F39F2C7926E22FC700D357F6 /* PodcastFeedSearchContainerViewController.swift */,
+				F39F2C7D26E2367B00D357F6 /* PodcastFeedSearchEmptyStateViewController.swift */,
+				F39F2C7F26E2805D00D357F6 /* PodcastFeedSearchResultCollectionViewCell.swift */,
+				F39F2C7B26E2363100D357F6 /* PodcastFeedSearchResultsCollectionViewController.swift */,
+				F39F2C8326E2840500D357F6 /* PodcastFeedSearchResultsCollectionViewSectionHeader.swift */,
+				F39F2C8026E2805D00D357F6 /* PodcastFeedSearchResultCollectionViewCell.xib */,
+				F39F2C8426E2840500D357F6 /* PodcastFeedSearchResultsCollectionViewSectionHeader.xib */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
 		F3CE637826AFD42C006E37A0 /* Podcast Feeds */ = {
 			isa = PBXGroup;
 			children = (
@@ -2958,6 +2989,7 @@
 				F3B2518626D81BE800C96D42 /* PodcastFeedViewModel.swift */,
 				F3D86DBA26B106C000EB9711 /* Feed Content */,
 				F3CE637D26AFF856006E37A0 /* Filter Chips */,
+				F39F2C7826E22F9200D357F6 /* Search */,
 			);
 			path = "Podcast Feeds";
 			sourceTree = "<group>";
@@ -3131,6 +3163,7 @@
 				475BDD4A232AD00D00C5BBD6 /* MyriadPro-Regular.otf in Resources */,
 				47D46A29237B1D030005A548 /* SubscriptionFormTableViewCell.xib in Resources */,
 				F34BFEDF267B3C30003F6D55 /* RestoreUser.storyboard in Resources */,
+				F39F2C8626E2840500D357F6 /* PodcastFeedSearchResultsCollectionViewSectionHeader.xib in Resources */,
 				4724BC1325474B440012BD76 /* WebApps.storyboard in Resources */,
 				4785C10724D4A6A0004E2D6C /* AppSizeView.xib in Resources */,
 				4797E78724B8ED7700D13270 /* LoadingMoreTableViewCell.xib in Resources */,
@@ -3176,6 +3209,7 @@
 				47BE854B246492FD00BE4AE8 /* KeychainRestoreTableViewCell.xib in Resources */,
 				4797E75E24B8DDE400D13270 /* LeftMenu.storyboard in Resources */,
 				4779F16C232AA0F300D35E81 /* Assets.xcassets in Resources */,
+				F39F2C8226E2805D00D357F6 /* PodcastFeedSearchResultCollectionViewCell.xib in Resources */,
 				4787F87E24745BBD00CCE8B9 /* GroupTagView.xib in Resources */,
 				47904C1024BF352300710E7A /* synth.caf in Resources */,
 				F3C92B272671FB6C005F0A42 /* README.md in Resources */,
@@ -3356,6 +3390,7 @@
 				47183CBF2549E1BE00E6FD19 /* PodcastBoostSentTableViewCell.swift in Sources */,
 				47B46F66254AFE1C007F61CD /* ChatHeaderView.swift in Sources */,
 				47893AA2240E857F002F675B /* AVAudioSession.swift in Sources */,
+				F39F2C7E26E2367B00D357F6 /* PodcastFeedSearchEmptyStateViewController.swift in Sources */,
 				475BDCD0232AC23100C5BBD6 /* ExpiredInvoiceCommonTableViewCell.swift in Sources */,
 				47308E1024FEE6E700FFAC6F /* SocketIOClient.swift in Sources */,
 				47308E0624FEE6E600FFAC6F /* SocketManagerSpec.swift in Sources */,
@@ -3466,6 +3501,7 @@
 				475BDCA5232AC1D600C5BBD6 /* TransactionMessageRow.swift in Sources */,
 				F3B2518726D81BE800C96D42 /* PodcastFeedViewModel.swift in Sources */,
 				47AA08C7234BB8E0002C69E2 /* ShareInviteCodeViewController.swift in Sources */,
+				F39F2C7A26E22FC800D357F6 /* PodcastFeedSearchContainerViewController.swift in Sources */,
 				F31CF2662691489800AAB621 /* StoreKitService.swift in Sources */,
 				F313024826BA994B00A1396E /* ChatsContainerViewController.swift in Sources */,
 				475BDCFB232AC24600C5BBD6 /* PaidInvoiceReceivedTableViewCell.swift in Sources */,
@@ -3491,6 +3527,7 @@
 				478DCF982343D24D009A03D6 /* SetProfileImageViewController.swift in Sources */,
 				47F258BC2539DA0100122A5A /* PodcastCommentSentTableViewCell.swift in Sources */,
 				47935FB3249EC3BE00B39ADB /* OrientationHandlerViewController.swift in Sources */,
+				F39F2C7C26E2363100D357F6 /* PodcastFeedSearchResultsCollectionViewController.swift in Sources */,
 				475154BB2423FA4100477384 /* JoinVideoCallView.swift in Sources */,
 				475BDD19232AC47C00C5BBD6 /* ChatViewController.swift in Sources */,
 				4780782F23916CA800187906 /* PictureSentTableViewCell.swift in Sources */,
@@ -3617,6 +3654,7 @@
 				4780783323916D4900187906 /* PictureReceivedTableViewCell.swift in Sources */,
 				F3B2519126DD5CE100C96D42 /* PodcastFeedService.swift in Sources */,
 				473BC89A260238DC0070E519 /* JSON.swift in Sources */,
+				F39F2C8526E2840500D357F6 /* PodcastFeedSearchResultsCollectionViewSectionHeader.swift in Sources */,
 				4733C7E523C4DF4C006A2C51 /* GroupContactsViewController.swift in Sources */,
 				4787F87224743D7C00CCE8B9 /* NewPublicGroupViewControllerExtension.swift in Sources */,
 				F3EF52C726B28DBE00F06668 /* FeedContentCollectionViewController.swift in Sources */,
@@ -3677,6 +3715,7 @@
 				47468FD723353C880072124A /* LeftMenuOptionTableViewCell.swift in Sources */,
 				47FA44172374B6F7005D8C63 /* SubscriptionEndRuleView.swift in Sources */,
 				478DCFA02344E5EF009A03D6 /* CameraHelper.swift in Sources */,
+				F39F2C8126E2805D00D357F6 /* PodcastFeedSearchResultCollectionViewCell.swift in Sources */,
 				475BDD18232AC47C00C5BBD6 /* CreateInvoiceViewController.swift in Sources */,
 				471940B3233952D400F1BF5B /* UIImage.swift in Sources */,
 				4787F885247462F600CCE8B9 /* TagsAddedDataSource.swift in Sources */,
@@ -3692,6 +3731,7 @@
 				47893A9A240D5029002F675B /* ChatTableCellProtocols.swift in Sources */,
 				47E300E4234B83EC00DB56DB /* AddFriendRowButton.swift in Sources */,
 				4712BB4923D89A5100DDCC3B /* ClipboardHelper.swift in Sources */,
+				F3B2519C26E118E700C96D42 /* DashboardRootViewController+UITextFieldDelegate.swift in Sources */,
 				475BDCD1232AC23100C5BBD6 /* InvoiceCommonChatTableViewCell.swift in Sources */,
 				F3D86DBE26B109FD00EB9711 /* PodcastFeedCollectionViewCell.swift in Sources */,
 				47468FD923353E460072124A /* MediaLoader.swift in Sources */,

@@ -273,10 +273,10 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kkl-yW-1v2">
-                                        <rect key="frame" x="303.5" y="0.0" width="82.5" height="20"/>
+                                        <rect key="frame" x="298.5" y="0.0" width="87.5" height="20"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NEW EPISODE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bmE-a4-L39">
-                                                <rect key="frame" x="10.5" y="4.5" width="61.5" height="11"/>
+                                                <rect key="frame" x="10.5" y="4.5" width="66.5" height="11"/>
                                                 <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="9"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>

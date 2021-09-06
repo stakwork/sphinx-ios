@@ -5,21 +5,13 @@
 //
     
 import UIKit
+import CoreData
+
 
 
 class PodcastFeedSearchResultsCollectionViewController: UICollectionViewController {
-    var podcastFeeds: [PodcastFeed] = [] {
-        didSet {
-            updateSnapshot(shouldAnimate: true)
-        }
-    }
-    
-    var directorySearchResults: [PodcastFeedSearchResult] = [] {
-        didSet {
-            updateSnapshot(shouldAnimate: true)
-        }
-    }
-    
+    var podcastFeeds: [PodcastFeed]!
+    var directorySearchResults: [PodcastFeedSearchResult]!
     var interSectionSpacing: CGFloat = 20.0
 
 
@@ -32,8 +24,6 @@ class PodcastFeedSearchResultsCollectionViewController: UICollectionViewControll
         bottom: 0,
         trailing: 10
     )
-
-    private static let storyboardName = ""
 }
 
 
@@ -303,6 +293,19 @@ extension PodcastFeedSearchResultsCollectionViewController {
 
         dataSource.apply(snapshot, animatingDifferences: shouldAnimate)
     }
+    
+    
+    func updateWithNew(
+        podcastFeeds: [PodcastFeed],
+        shouldAnimate: Bool = true
+    ) {
+        self.podcastFeeds = podcastFeeds
+
+        dataSource.apply(
+            makeSnapshotForCurrentState(),
+            animatingDifferences: shouldAnimate
+        )
+    }
 }
 
 
@@ -344,4 +347,14 @@ extension PodcastFeedSearchResultsCollectionViewController.DataSourceItem {
             return result
         }
     }
+    
+    var podcastFeedObject: PodcastFeed? {
+        switch self {
+        case .subscribedFeedsResult(let podcastFeed):
+            return podcastFeed
+        case .directoryResult:
+            return nil
+        }
+    }
 }
+

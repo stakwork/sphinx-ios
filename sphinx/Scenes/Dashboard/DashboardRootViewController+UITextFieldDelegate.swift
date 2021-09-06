@@ -86,7 +86,9 @@ extension DashboardRootViewController: UITextFieldDelegate {
 
         switch activeTab {
         case .feed:
-            break
+            feedSearchResultsViewController.updateSearchQuery(
+                with: searchString as String
+            )
         case .friends:
             contactChatsContainerViewController.updateWithNewChats(
                 chatsListViewModel.contactChats

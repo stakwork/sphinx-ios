@@ -7,23 +7,32 @@
 
 import UIKit
 
-class PodcastFeedSearchEmptyStateViewController: UIViewController {
+
+class PodcastFeedSearchEmptyStateViewController: UIViewController {}
+    
+
+// MARK: -  Static Members
+extension PodcastFeedSearchEmptyStateViewController {
+    
+    static func instantiate(
+    ) -> PodcastFeedSearchEmptyStateViewController {
+        let viewController = StoryboardScene
+            .Dashboard
+            .podcastFeedSearchEmptyStateViewController
+            .instantiate()
+
+        return viewController
+    }
+}
+
+
+// MARK: -  Lifecycle
+extension PodcastFeedSearchEmptyStateViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

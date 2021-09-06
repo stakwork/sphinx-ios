@@ -191,6 +191,9 @@
                         <viewLayoutGuide key="safeArea" id="oJU-7h-Zd5"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
+                    <connections>
+                        <outlet property="contentView" destination="RPx-Rg-omQ" id="x28-VA-pwu"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jPy-9I-cKg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -337,18 +340,47 @@
                     <view key="view" contentMode="scaleToFill" id="VX3-OM-Ef9">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="saw-em-W2w">
+                                <rect key="frame" x="127" y="406.5" width="160" height="83.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search over" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ndg-SW-RNS">
+                                        <rect key="frame" x="35" y="0.0" width="90.5" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" name="PlaceholderText"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4 000 000 podcasts" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l4t-u1-si6">
+                                        <rect key="frame" x="2.5" y="31.5" width="155.5" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" name="PlaceholderText"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="on the Podcast Index" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0eu-Sz-ryQ">
+                                        <rect key="frame" x="0.0" y="63" width="160" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" name="PlaceholderText"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="B4s-0r-vi8"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="DashboardMainContentBG"/>
+                        <constraints>
+                            <constraint firstItem="saw-em-W2w" firstAttribute="centerY" secondItem="VX3-OM-Ef9" secondAttribute="centerY" id="BsJ-x2-RZV"/>
+                            <constraint firstItem="saw-em-W2w" firstAttribute="centerX" secondItem="VX3-OM-Ef9" secondAttribute="centerX" id="bNB-zq-ovk"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MQo-iP-nxj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-6404" y="2642"/>
         </scene>
-        <!--Collection View Controller-->
+        <!--Podcast Feed Search Results Collection View Controller-->
         <scene sceneID="qWS-Af-xVJ">
             <objects>
-                <collectionViewController storyboardIdentifier="PodcastFeedSearchResultsCollectionViewController" id="6rA-gL-oUT" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="PodcastFeedSearchResultsCollectionViewController" id="6rA-gL-oUT" customClass="PodcastFeedSearchResultsCollectionViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="5V7-1u-a30">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -378,6 +410,9 @@
         <image name="bottomBar4" width="25" height="25"/>
         <namedColor name="DashboardHeader">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="DashboardMainContentBG">
+            <color red="0.94901960784313721" green="0.95294117647058818" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="DashboardSearch">
             <color red="0.94901960784313721" green="0.95294117647058818" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -13,6 +13,17 @@ import CoreData
 extension PodcastFeed {
 
     public enum Predicates {
+        
+        public static func matching(searchQuery: String) -> NSPredicate {
+            let keyword = "CONTAINS"
+            let formatSpecifier = "%@"
+
+            return NSPredicate(
+                format: "%K \(keyword) \(formatSpecifier)",
+                #keyPath(PodcastFeed.title),
+                searchQuery
+            )
+        }
     }
 }
 
@@ -64,6 +75,16 @@ extension PodcastFeed {
 
             request.sortDescriptors = [PodcastFeed.SortDescriptors.nameAscending]
             request.predicate = nil
+
+            return request
+        }
+        
+        
+        public static func matching(searchQuery: String) -> NSFetchRequest<PodcastFeed> {
+            let request: NSFetchRequest<PodcastFeed> = baseFetchRequest()
+
+            request.sortDescriptors = [PodcastFeed.SortDescriptors.nameAscending]
+            request.predicate = PodcastFeed.Predicates.matching(searchQuery: searchQuery)
 
             return request
         }

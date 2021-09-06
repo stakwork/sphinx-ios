@@ -250,31 +250,6 @@ extension FeedContentCollectionViewController {
             }
             
             return cell
-            
-//            switch dataSourceItem {
-//            case .latestPodcastEpisode(let episodeManagedObjectID):
-//                guard
-//                    let managedObject = try? self.managedObjectContext
-//                        .existingObject(with: episodeManagedObjectID),
-//                    let podcastEpisode = managedObject as? PodcastEpisode
-//                else {
-//                    preconditionFailure("PodcastEpisode managed object should be available")
-//                }
-//
-//                cell.configure(withItem: podcastEpisode)
-//            case .subscribedPodcastFeed(let feedManagedObjectID):
-//                guard
-//                    let managedObject = try? self.managedObjectContext
-//                        .existingObject(with: feedManagedObjectID),
-//                    let podcastFeed = managedObject as? PodcastFeed
-//                else {
-//                    preconditionFailure("PodcastFeed managed object should be available")
-//                }
-//
-//                cell.configure(withItem: podcastFeed)
-//            }
-//
-//            return cell
         }
     }
 
@@ -319,17 +294,6 @@ extension FeedContentCollectionViewController {
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
-//        guard let item = dataSource.itemIdentifier(for: indexPath) else {
-//            return
-//        }
-
-//        switch item {
-//        case .latestPodcastEpisode(let podcastEpisode):
-//            onPodcastEpisodeCellSelected(podcastEpisode)
-//        case .subscribedPodcastFeed(let podcastFeed):
-//            onPodcastFeedCellSelected(podcastFeed)
-//        }
-        
         guard
             let managedObjectID = dataSource.itemIdentifier(for: indexPath),
             let managedObject = try? managedObjectContext
@@ -349,20 +313,7 @@ extension FeedContentCollectionViewController {
 
 // MARK: - `NSFetchedResultsControllerDelegate` Methods
 extension FeedContentCollectionViewController: NSFetchedResultsControllerDelegate {
-    
-//    func managedObjectID(
-//        for dataSourceItem: CellDataItemType,
-//        in snapshot: DataSourceSnapshot
-//    ) -> NSManagedObjectID {
-//        switch dataSourceItem {
-//        case .latestPodcastEpisode(let episodeManagedObjectID):
-//            return episodeManagedObjectID
-//        case .subscribedPodcastFeed(let feedManagedObjectID):
-//            return feedManagedObjectID
-//        }
-//    }
-    
-    
+
     /// Called when the contents of the fetched results controller change.
     ///
     /// If this method is implemented, no other delegate methods will be invoked.

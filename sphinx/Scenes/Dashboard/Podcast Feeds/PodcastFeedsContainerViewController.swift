@@ -1,6 +1,4 @@
-//
-//  FeedsListViewController.swift
-//  PodcastFeedsContainerViewController
+//  PodcastFeedsContainerViewController.swift
 //
 //  Copyright © 2021 sphinx. All rights reserved.
 //

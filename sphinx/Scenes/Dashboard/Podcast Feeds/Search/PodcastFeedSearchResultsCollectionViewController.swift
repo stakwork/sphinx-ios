@@ -14,7 +14,11 @@ class PodcastFeedSearchResultsCollectionViewController: UICollectionViewControll
     var directorySearchResults: [PodcastFeedSearchResult]!
     var interSectionSpacing: CGFloat = 0.0
 
+    var onPodcastFeedCellSelected: ((NSManagedObjectID) -> Void)!
+    var onPodcastDirectoryResultCellSelected: ((PodcastFeedSearchResult) -> Void)!
+    var onPodcastSubscriptionAdded: ((PodcastFeedSearchResult) -> Void)!
 
+    
     private var currentDataSnapshot: DataSourceSnapshot!
     private var dataSource: DataSource!
 
@@ -33,7 +37,10 @@ extension PodcastFeedSearchResultsCollectionViewController {
     static func instantiate(
         podcastFeeds: [PodcastFeed] = [],
         directorySearchResults: [PodcastFeedSearchResult] = [],
-        interSectionSpacing: CGFloat = 0.0
+        interSectionSpacing: CGFloat = 0.0,
+        onPodcastFeedCellSelected: ((NSManagedObjectID) -> Void)!,
+        onPodcastDirectoryResultCellSelected: ((PodcastFeedSearchResult) -> Void)!,
+        onPodcastSubscriptionAdded: ((PodcastFeedSearchResult) -> Void)!
     ) -> PodcastFeedSearchResultsCollectionViewController {
         let viewController = StoryboardScene
             .Dashboard
@@ -43,7 +50,10 @@ extension PodcastFeedSearchResultsCollectionViewController {
         viewController.podcastFeeds = podcastFeeds
         viewController.directorySearchResults = directorySearchResults
         viewController.interSectionSpacing = interSectionSpacing
-
+        viewController.onPodcastFeedCellSelected = onPodcastFeedCellSelected
+        viewController.onPodcastDirectoryResultCellSelected = onPodcastDirectoryResultCellSelected
+        viewController.onPodcastSubscriptionAdded = onPodcastSubscriptionAdded
+        
         return viewController
     }
 }
@@ -225,12 +235,13 @@ extension PodcastFeedSearchResultsCollectionViewController {
 extension PodcastFeedSearchResultsCollectionViewController {
 
     func makeCellProvider(for collectionView: UICollectionView) -> DataSource.CellProvider {
-        { (collectionView, indexPath, dataSourceItem) -> UICollectionViewCell? in
-            guard let cell = collectionView
-                .dequeueReusableCell(
+        { [weak self] (collectionView, indexPath, dataSourceItem) -> UICollectionViewCell? in
+            guard
+                let cell = collectionView.dequeueReusableCell(
                     withReuseIdentifier: CollectionViewCell.reuseID,
                     for: indexPath
-                ) as? CollectionViewCell
+                ) as? CollectionViewCell,
+                let section = CollectionViewSection(rawValue: indexPath.section)
             else {
                 return nil
             }
@@ -244,6 +255,13 @@ extension PodcastFeedSearchResultsCollectionViewController {
                 withItem: dataSourceItem.searchResult,
                 shouldShowSeparator: isLastRow == false
             )
+            
+            switch section {
+            case CollectionViewSection.directoryResults:
+                cell.onSubscriptionButtonTapped = self?.onPodcastSubscriptionAdded
+            case .subscribedFeedsResults:
+                break
+            }
 
             return cell
         }
@@ -320,6 +338,25 @@ extension PodcastFeedSearchResultsCollectionViewController {
 }
 
 
+extension PodcastFeedSearchResultsCollectionViewController {
+    
+//    private func handleSubscriptionButtonPress(indexPath: IndexPath) {
+    private func handleSubscriptionButtonPress(directoryResult: PodcastFeedSearchResult) {
+//        guard
+//            let dataSourceItem = dataSource.itemIdentifier(
+//                for: indexPath
+//            )
+//        else {
+//            return
+//        }
+//
+//        if case let .directoryResult(directorySearchResult) = dataSourceItem {
+//            onPodcastSubscriptionAdded(directorySearchResult)
+//        }
+    }
+}
+
+
 // MARK: - `UICollectionViewDelegate` Methods
 extension PodcastFeedSearchResultsCollectionViewController {
 
@@ -327,11 +364,31 @@ extension PodcastFeedSearchResultsCollectionViewController {
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
-        guard let item = dataSource.itemIdentifier(for: indexPath) else {
+        guard
+            let section = CollectionViewSection(rawValue: indexPath.section),
+            let dataSourceItem = dataSource.itemIdentifier(for: indexPath)
+        else {
             return
         }
 
-        // Do moar here
+        switch section {
+        case .subscribedFeedsResults:
+            guard
+                case let .subscribedFeedsResult(podcastFeed) = dataSourceItem
+            else {
+                preconditionFailure()
+            }
+            
+            onPodcastFeedCellSelected?(podcastFeed.objectID)
+        case .directoryResults:
+            guard
+                case let .directoryResult(directorySearchResult) = dataSourceItem
+            else {
+                preconditionFailure()
+            }
+            
+            onPodcastDirectoryResultCellSelected?(directorySearchResult)
+        }
     }
 }
 

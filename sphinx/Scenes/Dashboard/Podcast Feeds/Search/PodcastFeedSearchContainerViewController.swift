@@ -33,9 +33,12 @@ class PodcastFeedSearchContainerViewController: UIViewController {
     
     
     internal lazy var searchResultsViewController: PodcastFeedSearchResultsCollectionViewController = {
-        PodcastFeedSearchResultsCollectionViewController.instantiate(
-        
-        )
+        PodcastFeedSearchResultsCollectionViewController
+            .instantiate(
+                onPodcastFeedCellSelected: handleFeedCellSelection,
+                onPodcastDirectoryResultCellSelected: handleDirectoryResultCellSelection,
+                onPodcastSubscriptionAdded: handlePodcastDirectorySubscription
+            )
     }()
     
     
@@ -143,6 +146,25 @@ extension PodcastFeedSearchContainerViewController {
             child: emptyStateViewController,
             container: contentView
         )
+    }
+    
+    
+    private func handleFeedCellSelection(_ podcastFeedID: NSManagedObjectID) {
+        // 📝 TODO:  Implement
+    }
+    
+    
+    private func handleDirectoryResultCellSelection(
+        _ directoryResult: PodcastFeedSearchResult
+    ) {
+        // 📝 TODO:  Implement
+    }
+    
+    
+    private func handlePodcastDirectorySubscription(
+        _ directoryResult: PodcastFeedSearchResult
+    ) {
+        // 📝 TODO:  Implement
     }
 }
 

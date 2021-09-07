@@ -26,7 +26,8 @@ class PodcastFeedSearchResultCollectionViewCell: UICollectionViewCell {
     
     private var shouldShowSeparatorLine: Bool = true
     
-    var onSubscriptionButtonTapped: (() -> Void)?
+//    var onSubscriptionButtonTapped: (() -> Void)?
+    var onSubscriptionButtonTapped: ((PodcastFeedSearchResult) -> Void)?
 }
 
 
@@ -81,7 +82,7 @@ extension PodcastFeedSearchResultCollectionViewCell {
 extension PodcastFeedSearchResultCollectionViewCell {
     
     @IBAction func subscriptionButtonTapped(_ sender: UIButton) {
-        onSubscriptionButtonTapped?()
+        onSubscriptionButtonTapped?(item)
     }
 }
 

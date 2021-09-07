@@ -12,7 +12,7 @@ import CoreData
 class PodcastFeedSearchResultsCollectionViewController: UICollectionViewController {
     var podcastFeeds: [PodcastFeed]!
     var directorySearchResults: [PodcastFeedSearchResult]!
-    var interSectionSpacing: CGFloat = 20.0
+    var interSectionSpacing: CGFloat = 0.0
 
 
     private var currentDataSnapshot: DataSourceSnapshot!
@@ -20,9 +20,9 @@ class PodcastFeedSearchResultsCollectionViewController: UICollectionViewControll
 
     private let itemContentInsets = NSDirectionalEdgeInsets(
         top: 0,
-        leading: 10,
+        leading: 0,
         bottom: 0,
-        trailing: 10
+        trailing: 0
     )
 }
 
@@ -33,7 +33,7 @@ extension PodcastFeedSearchResultsCollectionViewController {
     static func instantiate(
         podcastFeeds: [PodcastFeed] = [],
         directorySearchResults: [PodcastFeedSearchResult] = [],
-        interSectionSpacing: CGFloat = 20.0
+        interSectionSpacing: CGFloat = 0.0
     ) -> PodcastFeedSearchResultsCollectionViewController {
         let viewController = StoryboardScene
             .Dashboard
@@ -139,6 +139,7 @@ extension PodcastFeedSearchResultsCollectionViewController {
 
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .none
+        section.boundarySupplementaryItems = [makeSectionHeader()]
 
         return section
     }
@@ -234,7 +235,15 @@ extension PodcastFeedSearchResultsCollectionViewController {
                 return nil
             }
 
-            cell.configure(withItem: dataSourceItem.searchResult)
+            let isLastRow = (
+                indexPath.row == collectionView
+                .numberOfItems(inSection: indexPath.row) - 1
+            )
+            
+            cell.configure(
+                withItem: dataSourceItem.searchResult,
+                shouldShowSeparator: isLastRow == false
+            )
 
             return cell
         }
@@ -251,7 +260,9 @@ extension PodcastFeedSearchResultsCollectionViewController {
                     ofKind: kind,
                     withReuseIdentifier: ReusableHeaderView.reuseID,
                     for: indexPath
-                ) as? ReusableHeaderView else { preconditionFailure() }
+                ) as? ReusableHeaderView else {
+                    preconditionFailure()
+                }
 
                 let section = CollectionViewSection.allCases[indexPath.section]
 

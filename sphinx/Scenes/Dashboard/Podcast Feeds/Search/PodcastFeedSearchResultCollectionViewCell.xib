@@ -64,15 +64,27 @@
                             </button>
                         </subviews>
                     </stackView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aSs-KB-p5h" userLabel="Separator Line">
+                        <rect key="frame" x="104" y="87" width="271" height="1"/>
+                        <color key="backgroundColor" name="Divider"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="lwJ-UE-OS2"/>
+                        </constraints>
+                    </view>
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <color key="backgroundColor" name="HeaderBG"/>
             <constraints>
+                <constraint firstItem="aSs-KB-p5h" firstAttribute="bottom" secondItem="gTV-IL-0wX" secondAttribute="bottom" id="Bn8-Sv-lqc"/>
                 <constraint firstItem="YZH-gu-cCf" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="LYm-bC-zRy"/>
+                <constraint firstAttribute="trailing" secondItem="aSs-KB-p5h" secondAttribute="trailing" id="bC1-ZT-ejG"/>
+                <constraint firstItem="aSs-KB-p5h" firstAttribute="leading" secondItem="eVs-cI-cXS" secondAttribute="leading" id="eOd-02-j31"/>
                 <constraint firstAttribute="trailing" secondItem="YZH-gu-cCf" secondAttribute="trailing" constant="16" id="g7c-YB-8Gs"/>
                 <constraint firstItem="YZH-gu-cCf" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="16" id="znQ-JE-oam"/>
             </constraints>
             <connections>
+                <outlet property="bottomSeparatorView" destination="aSs-KB-p5h" id="uCW-wr-Fbx"/>
                 <outlet property="feedSubscriptionButton" destination="9Ot-Vn-BNC" id="WDN-Dl-fMP"/>
                 <outlet property="feedSubtitleLabel" destination="yP4-Hj-JMW" id="akf-e7-Huu"/>
                 <outlet property="feedThumbnailImageView" destination="UCl-eV-tUB" id="DJm-QB-4Ek"/>
@@ -83,6 +95,12 @@
     </objects>
     <resources>
         <image name="plus" catalog="system" width="128" height="113"/>
+        <namedColor name="Divider">
+            <color red="0.86274509803921573" green="0.8784313725490196" blue="0.8901960784313725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="HeaderBG">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="PrimaryText">
             <color red="0.16078431372549021" green="0.17254901960784313" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

@@ -13,6 +13,7 @@ class PodcastFeedSearchResultCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var feedTitleLabel: UILabel!
     @IBOutlet weak var feedSubtitleLabel: UILabel!
     @IBOutlet weak var feedSubscriptionButton: UIButton!
+    @IBOutlet weak var bottomSeparatorView: UIView!
     
     
     var item: PodcastFeedSearchResult! {
@@ -22,6 +23,8 @@ class PodcastFeedSearchResultCollectionViewCell: UICollectionViewCell {
             }
         }
     }
+    
+    private var shouldShowSeparatorLine: Bool = true
     
     var onSubscriptionButtonTapped: (() -> Void)?
 }
@@ -55,6 +58,8 @@ extension PodcastFeedSearchResultCollectionViewCell {
         
         feedThumbnailImageView.layer.cornerRadius = 6.0
         feedThumbnailImageView.clipsToBounds = true
+        
+        bottomSeparatorView.isHidden = shouldShowSeparatorLine == false
     }
 }
 
@@ -62,8 +67,12 @@ extension PodcastFeedSearchResultCollectionViewCell {
 // MARK: - Public Methods
 extension PodcastFeedSearchResultCollectionViewCell {
     
-    public func configure(withItem searchResult: PodcastFeedSearchResult) {
+    public func configure(
+        withItem searchResult: PodcastFeedSearchResult,
+        shouldShowSeparator: Bool = true
+    ) {
         self.item = searchResult
+        self.shouldShowSeparatorLine = shouldShowSeparator
     }
 }
 
@@ -97,5 +106,7 @@ extension PodcastFeedSearchResultCollectionViewCell {
         
         feedTitleLabel.text = item.title
         feedSubtitleLabel.text = item.subtitle
+        
+        bottomSeparatorView.isHidden = shouldShowSeparatorLine == false
     }
 }

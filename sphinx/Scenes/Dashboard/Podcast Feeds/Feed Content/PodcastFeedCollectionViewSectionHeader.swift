@@ -37,11 +37,3 @@ extension PodcastFeedCollectionViewSectionHeader {
         sectionTitleLabel.text = title
     }
 }
-
-
-// MARK: - Event Handling
-private extension PodcastFeedCollectionViewSectionHeader {
-
-    @IBAction func trailingButtonTapped() {
-    }
-}

@@ -36,14 +36,11 @@ extension PodcastFeedSearchResultsCollectionViewSectionHeader {
 extension PodcastFeedSearchResultsCollectionViewSectionHeader {
 
     func render(withTitle title: String) {
-        sectionTitleLabel.text = title
+        sectionTitleLabel.text = title.uppercased()
     }
 }
 
 
 // MARK: - Event Handling
 private extension PodcastFeedSearchResultsCollectionViewSectionHeader {
-
-    @IBAction func trailingButtonTapped() {
-    }
 }

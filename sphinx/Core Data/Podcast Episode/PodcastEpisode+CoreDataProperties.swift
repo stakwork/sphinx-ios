@@ -23,7 +23,6 @@ extension PodcastEpisode {
     @NSManaged public var linkURLPath: String?
     @NSManaged public var isDownloaded: Bool
     @NSManaged public var feed: PodcastFeed?
-
 }
 
 extension PodcastEpisode: Identifiable {}

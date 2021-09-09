@@ -124,7 +124,17 @@ extension AddressBookDataSource : ContactCellDelegate {
             return
         }
         
-        delegate?.didTapOnContact(contact: contact)
+        if contact.isBlocked() {
+            AlertHelper.showTwoOptionsAlert(
+                title: "address-boox.contact-unblock.alert-title".localized,
+                message: "address-boox.contact-unblock.alert-message".localized,
+                confirm: {
+                    self.shouldUnBlockContact(contact: contact, cell: cell)
+                }
+            )
+        } else {
+            delegate?.didTapOnContact(contact: contact)
+        }
     }
     
     func shouldDeleteContact(contact: UserContact?, cell: UITableViewCell) {
@@ -142,6 +152,50 @@ extension AddressBookDataSource : ContactCellDelegate {
                 self.delegate?.shouldShowAlert(title: "generic.error.title".localized, text: "generic.error.message".localized)
             }
         })
+    }
+    
+    func shouldBlockContact(contact: UserContact?, cell: UITableViewCell) {
+        shouldToggleBlockContact(contact: contact, route: .Block, cell: cell)
+    }
+    
+    func shouldUnBlockContact(contact: UserContact?, cell: UITableViewCell) {
+        shouldToggleBlockContact(contact: contact, route: .Unblock, cell: cell)
+    }
+    
+    func shouldToggleBlockContact(contact: UserContact?, route: API.ToggleBlockRoute, cell: UITableViewCell) {
+        guard let contact = contact else {
+            return
+        }
+        
+        delegate?.shouldToggleInteraction(enable: false)
+        
+        API.sharedInstance.toggleBlockContact(
+            id: contact.id,
+            route: route,
+            callback: { contactJson in
+                
+                if let _ = UserContact.insertContact(contact: contactJson) {
+                    self.updateContactsAndReloadRow(cell: cell)
+                    self.delegate?.shouldToggleInteraction(enable: true)
+                }
+                
+            }, errorCallback: {
+                
+                self.delegate?.shouldToggleInteraction(enable: true)
+                self.delegate?.shouldShowAlert(title: "generic.error.title".localized, text: "generic.error.message".localized)
+                
+            }
+        )
+    }
+    
+    func updateContactsAndReloadRow(cell: UITableViewCell) {
+        reloadContacts()
+        
+        if let indexPath = tableView.indexPath(for: cell) {
+            tableView.reloadRows(at: [indexPath], with: .fade)
+        } else {
+            tableView.reloadData()
+        }
     }
     
     func deleteContactAndRow(contact: UserContact, cell: UITableViewCell) {

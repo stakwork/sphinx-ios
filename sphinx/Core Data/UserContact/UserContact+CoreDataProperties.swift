@@ -37,6 +37,7 @@ extension UserContact {
     @NSManaged public var tipAmount: Int
     @NSManaged public var pin: String?
     @NSManaged public var routeHint: String?
+    @NSManaged public var blocked: Bool
 
 }
 

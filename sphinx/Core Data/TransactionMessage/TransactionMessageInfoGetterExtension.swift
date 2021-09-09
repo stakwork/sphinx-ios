@@ -716,9 +716,16 @@ extension TransactionMessage {
         let messageSender = getMessageSender()
         
         if isPrivateConversation {
-            return (isStandardPIN && !(messageSender?.pin ?? "").isEmpty) || (!isStandardPIN && (messageSender?.pin ?? "").isEmpty)
+            
+            return (isStandardPIN && !(messageSender?.pin ?? "").isEmpty) ||
+                   (!isStandardPIN && (messageSender?.pin ?? "").isEmpty) ||
+                   messageSender?.isBlocked() == true
+            
         } else {
-            return (isStandardPIN && !(chat?.pin ?? "").isEmpty) || (!isStandardPIN && (chat?.pin ?? "").isEmpty)
+            
+            return (isStandardPIN && !(chat?.pin ?? "").isEmpty) ||
+                   (!isStandardPIN && (chat?.pin ?? "").isEmpty)
+            
         }
     }
 }

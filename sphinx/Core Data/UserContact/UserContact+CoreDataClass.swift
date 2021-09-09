@@ -50,6 +50,7 @@ public class UserContact: NSManagedObject {
             let avatarUrl = contact["photo_url"].string
             let isOwner = contact["is_owner"].boolValue
             let fromGroup = contact["from_group"].boolValue
+            let blocked = contact["blocked"].boolValue
             let status = contact["status"].intValue
             let contactKey = contact["contact_key"].string
             let notificationSound = contact["notification_sound"].string
@@ -81,7 +82,7 @@ public class UserContact: NSManagedObject {
                 }
             }
             
-            let contact = UserContact.createObject(id: id, publicKey: publicKey, nodeAlias: nodeAlias, nickname: nickname, avatarUrl: avatarUrl, isOwner: isOwner, fromGroup: fromGroup, status: status, contactKey: contactKey, notificationSound: notificationSound, privatePhoto: privatePhoto, tipAmount: tipAmount, routeHint: routeHint, inviteString: inviteString, welcomeMessage: welcomeMessage, inviteStatus: inviteStatus, invitePrice: invitePrice, date: date)
+            let contact = UserContact.createObject(id: id, publicKey: publicKey, nodeAlias: nodeAlias, nickname: nickname, avatarUrl: avatarUrl, isOwner: isOwner, fromGroup: fromGroup, blocked: blocked, status: status, contactKey: contactKey, notificationSound: notificationSound, privatePhoto: privatePhoto, tipAmount: tipAmount, routeHint: routeHint, inviteString: inviteString, welcomeMessage: welcomeMessage, inviteStatus: inviteStatus, invitePrice: invitePrice, date: date)
             
             return contact
         }
@@ -96,6 +97,7 @@ public class UserContact: NSManagedObject {
                                     avatarUrl: String?,
                                     isOwner: Bool,
                                     fromGroup: Bool,
+                                    blocked: Bool,
                                     status: Int,
                                     contactKey: String?,
                                     notificationSound: String?,
@@ -127,6 +129,7 @@ public class UserContact: NSManagedObject {
         contact.avatarUrl = avatarUrl
         contact.isOwner = isOwner
         contact.fromGroup = fromGroup
+        contact.blocked = blocked
         contact.privatePhoto = privatePhoto
         contact.status = status
         contact.contactKey = contactKey
@@ -315,6 +318,10 @@ public class UserContact: NSManagedObject {
     
     public func isPending() -> Bool {
         return self.status == UserContact.Status.Pending.rawValue
+    }
+    
+    public func isBlocked() -> Bool {
+        return self.blocked
     }
     
     public func shouldBeExcluded() -> Bool {

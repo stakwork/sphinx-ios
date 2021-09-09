@@ -157,6 +157,71 @@ extension API {
         }
     }
     
+    public enum ToggleBlockRoute: Int {
+        case Block
+        case Unblock
+    }
+    
+    public func blockContact(
+        id: Int,
+        callback: @escaping UpdateUserCallback,
+        errorCallback: @escaping EmptyCallback
+    ) {
+        
+        self.toggleBlockContact(
+            id: id,
+            route: .Block,
+            callback: callback,
+            errorCallback: errorCallback
+        )
+    }
+    
+    public func unblockContact(
+        id: Int,
+        callback: @escaping UpdateUserCallback,
+        errorCallback: @escaping EmptyCallback
+    ) {
+        
+        self.toggleBlockContact(
+            id: id,
+            route: .Unblock,
+            callback: callback,
+            errorCallback: errorCallback
+        )
+    }
+    
+    public func toggleBlockContact(
+        id: Int,
+        route: ToggleBlockRoute,
+        callback: @escaping UpdateUserCallback,
+        errorCallback: @escaping EmptyCallback
+    ) {
+        
+        let routeString = (route == .Block) ? "block" : "unblock"
+        
+        guard let request = getURLRequest(route: "/\(routeString)/\(id)", method: "PUT") else {
+            callback(false)
+            return
+        }
+        
+        sphinxRequest(request) { response in
+            switch response.result {
+            case .success(let data):
+                if let json = data as? NSDictionary {
+                    if let success = json["success"] as? Bool,
+                       let response = json["response"], success {
+                        
+                        callback(JSON(response))
+                        return
+                    }
+                }
+                errorCallback()
+            case .failure(_):
+                errorCallback()
+            }
+        }
+    }
+    
     public func checkRoute(chat: Chat?, contact: UserContact?, callback: @escaping SuccessCallback) {
         if (chat?.isPrivateGroup() ?? false) || (chat?.isMyPublicGroup() ?? false) {
             callback(true)

@@ -139,6 +139,12 @@
 "nickname.address.required" = "Alias y dirección son obligatorios";
 "new.contact" = "Nuevo Contacto";
 "invalid.pubkey" = "Clave Pública inválida";
+"address-boox.contact-delete.alert-title" = "Eliminar Contacto";
+"address-boox.contact-delete.alert-message" = "¿Estás seguro que deseas eliminar este contacto?";
+"address-boox.contact-block.alert-title" = "Bloquear Contacto";
+"address-boox.contact-block.alert-message" = "¿Estás seguro que deseas bloquear este contacto?";
+"address-boox.contact-unblock.alert-title" = "Desbloquear Contacto";
+"address-boox.contact-unblock.alert-message" = "¿Estás seguro que deseas desbloquear este contacto?";
 
 //WELCOME
 "welcome.initial.title" = "Bienvenido";

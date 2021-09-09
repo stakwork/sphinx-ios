@@ -114,17 +114,21 @@ public final class ContactsService {
     }
     
     public func getChatListObjects(_ forceLastMessageReload: Bool = false) -> [ChatListCommonObject] {
-        let filteredContacts =  contacts.filter { !$0.isOwner && !$0.shouldBeExcluded()}
-        let chatListObjectsCount = filteredContacts.count + chats.count
+        let filteredContacts =  contacts.filter { !$0.isOwner && !$0.shouldBeExcluded() && !$0.isBlocked()}
+        let filteredChats =  chats.filter { !($0.getContact()?.isBlocked() ?? false) }
+        let chatListObjectsCount = filteredContacts.count + filteredChats.count
         
-        if chatListObjectsCount == chatListObjects.count && chatsCount == chats.count && chatListObjectsCount > 0 && !forceLastMessageReload {
+        if chatListObjectsCount == chatListObjects.count &&
+           chatsCount == filteredChats.count &&
+           chatListObjectsCount > 0 && !forceLastMessageReload {
+            
             chatListObjects = orderChatListObjects(objects: chatListObjects)
             return chatListObjects
         }
         
-        chatsCount = chats.count
+        chatsCount = filteredChats.count
         
-        let chatsWithLastMessages = chats.map{ (chat) -> Chat in
+        let chatsWithLastMessages = filteredChats.map{ (chat) -> Chat in
             chat.lastMessage = chat.getLastMessageToShow()
             return chat
         }

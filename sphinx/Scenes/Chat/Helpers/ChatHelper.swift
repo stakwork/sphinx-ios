@@ -226,7 +226,11 @@ class ChatHelper {
             cell = tableView.dequeueReusableCell(withIdentifier: "GroupRequestTableViewCell", for: indexPath) as! GroupRequestTableViewCell
             break
         case TransactionMessage.TransactionMessageType.botResponse:
-            cell = tableView.dequeueReusableCell(withIdentifier: "MessageWebViewTableViewCell", for: indexPath) as! MessageWebViewTableViewCell
+            if (message.messageContent?.isValidHTML ?? true) {
+                cell = tableView.dequeueReusableCell(withIdentifier: "MessageWebViewTableViewCell", for: indexPath) as! MessageWebViewTableViewCell
+            } else {
+                cell = tableView.dequeueReusableCell(withIdentifier: "MessageReceivedTableViewCell", for: indexPath) as! MessageReceivedTableViewCell
+            }
             break
         default:
             break
@@ -346,7 +350,11 @@ class ChatHelper {
             height = GroupRequestTableViewCell.getRowHeight()
             break
         case TransactionMessage.TransactionMessageType.botResponse:
-            height = MessageWebViewTableViewCell.getRowHeight(messageRow: messageRow)
+            if (message.messageContent?.isValidHTML ?? true) {
+                height = MessageWebViewTableViewCell.getRowHeight(messageRow: messageRow)
+            } else {
+                height = MessageReceivedTableViewCell.getRowHeight(messageRow: messageRow)
+            }
             break
         default:
             break

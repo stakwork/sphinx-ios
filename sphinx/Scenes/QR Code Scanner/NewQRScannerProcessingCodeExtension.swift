@@ -35,6 +35,8 @@ extension NewQRScannerViewController {
             return
         } else if validateInvoice(string: string) {
             return
+        } else if validatePublicKey(string: string) {
+            return
         } else if validateDeepLinks(string: string) {
             return
         }
@@ -49,6 +51,16 @@ extension NewQRScannerViewController {
             DispatchQueue.main.async {
                 self.completeAndShowPRDetails()
             }
+            return true
+        }
+        return false
+    }
+    
+    func validatePublicKey(string: String) -> Bool {
+        if string.isPubKey || string.isVirtualPubKey {
+            dismiss(animated: true, completion: {
+                self.delegate?.didScanPublicKey?(string: string)
+            })
             return true
         }
         return false

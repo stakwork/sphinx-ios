@@ -341,6 +341,10 @@ extension TransactionMessage {
         return type == TransactionMessageType.invoice.rawValue
     }
     
+    func isBotResponse() -> Bool {
+        return type == TransactionMessageType.botResponse.rawValue
+    }
+    
     func isBoosted() -> Bool {
         return self.reactions != nil && (self.reactions?.totalSats ?? 0) > 0
     }
@@ -456,7 +460,7 @@ extension TransactionMessage {
                 )
             }
         }
-        if (isTextMessage() || isAttachment()) && !(uuid ?? "").isEmpty {
+        if (isTextMessage() || isAttachment() || isBotResponse()) && !(uuid ?? "").isEmpty {
             options.append(
                 .init(tag: MessageActionsItem.Reply, materialIconName: "", iconImage: nil, label:  "reply".localized)
             )

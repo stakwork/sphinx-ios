@@ -16,7 +16,9 @@ class CommonReplyTableViewCell: CommonChatTableViewCell {
         if replyBubbleView == nil {
             replyBubbleView = MessageBubbleView()
             replyBubbleView?.isHidden = true
-            allContentView.addSubview(replyBubbleView!)
+            
+            let container = allContentView ?? self.contentView
+            container.addSubview(replyBubbleView!)
             
             replyBubbleView!.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint(item: replyBubbleView!, attribute: NSLayoutConstraint.Attribute.bottom, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view, attribute: NSLayoutConstraint.Attribute.top, multiplier: 1.0, constant: 0.0).isActive = true

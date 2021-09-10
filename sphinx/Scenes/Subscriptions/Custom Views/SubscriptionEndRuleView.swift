@@ -123,7 +123,9 @@ class SubscriptionEndRuleView : SubscriptionCommonView {
         datePicker.minimumDate = Date()
         datePicker.timeZone = TimeZone(abbreviation: "UTC")
         datePicker.date = selectedDate
-        datePicker.preferredDatePickerStyle = .wheels
+        if #available(iOS 13.4, *) {
+            datePicker.preferredDatePickerStyle = .wheels
+        }
         datePicker.addTarget(self, action: #selector(datePickerChanged(picker:)), for: .valueChanged)
         return datePicker
     }

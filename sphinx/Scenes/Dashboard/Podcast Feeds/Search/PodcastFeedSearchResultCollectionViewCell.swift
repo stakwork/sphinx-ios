@@ -106,7 +106,7 @@ extension PodcastFeedSearchResultCollectionViewCell {
         }
         
         feedTitleLabel.text = item.title
-        feedSubtitleLabel.text = item.subtitle
+        feedSubtitleLabel.text = item.podcastDescription
         
         bottomSeparatorView.isHidden = shouldShowSeparatorLine == false
     }

@@ -16,7 +16,7 @@ extension API {
         callback: @escaping PodcastFeedCallback,
         errorCallback: @escaping EmptyCallback
     ) {
-        guard let request = createRequest(url, params: nil, method: "GET") else {
+        guard let request = createRequest(url, bodyParams: nil, method: "GET") else {
             errorCallback()
             return
         }
@@ -37,7 +37,7 @@ extension API {
     
     func getPodcastInfo(podcastId: Int, callback: @escaping PodcastInfoCallback, errorCallback: @escaping EmptyCallback) {
         let url = API.getUrl(route: "https://tribes.sphinx.chat/podcast?id=\(podcastId)")
-        let tribeRequest : URLRequest? = createRequest(url, params: nil, method: "GET")
+        let tribeRequest : URLRequest? = createRequest(url, bodyParams: nil, method: "GET")
         
         guard let request = tribeRequest else {
             errorCallback()

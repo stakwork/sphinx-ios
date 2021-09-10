@@ -101,7 +101,7 @@ extension API {
     
     func getTribeInfo(host: String, uuid: String, callback: @escaping CreateGroupCallback, errorCallback: @escaping EmptyCallback) {
         let url = API.getUrl(route: "https://\(host)/tribes/\(uuid)")
-        let tribeRequest : URLRequest? = createRequest(url, params: nil, method: "GET")
+        let tribeRequest : URLRequest? = createRequest(url, bodyParams: nil, method: "GET")
         
         guard let request = tribeRequest else {
             errorCallback()

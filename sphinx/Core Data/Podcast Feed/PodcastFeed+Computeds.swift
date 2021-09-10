@@ -25,4 +25,15 @@ extension PodcastFeed {
         
         return Array(destinations)
     }
+    
+    
+    var searchResultItem: PodcastFeedSearchResult {
+        .init(
+            id: Int(id),
+            title: title ?? "",
+            podcastDescription: podcastDescription ?? "",
+            author: author ?? "",
+            imageURLPath: imageURLPath
+        )
+    }
 }

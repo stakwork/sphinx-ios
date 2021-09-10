@@ -59,7 +59,7 @@ class DashboardRootViewController: RootViewController {
     }()
     
     
-    internal lazy var feedSearchResultsViewController = {
+    internal lazy var feedSearchResultsContainerViewController = {
         PodcastFeedSearchContainerViewController.instantiate(
             resultsDelegate: self
         )
@@ -92,7 +92,7 @@ class DashboardRootViewController: RootViewController {
             let newViewController = mainContentViewController(forActiveTab: activeTab)
             let oldViewController = mainContentViewController(forActiveTab: oldValue)
             
-            oldViewController.removeFromParent()
+            removeChildVC(child: oldViewController)
             
             addChildVC(
                 child: newViewController,
@@ -100,6 +100,7 @@ class DashboardRootViewController: RootViewController {
             )
             
             loadDataOnTabChange(to: activeTab)
+            feedViewMode = .rootList
         }
     }
     
@@ -137,6 +138,9 @@ class DashboardRootViewController: RootViewController {
             )
         }
     }
+    
+    
+    var feedViewMode: FeedViewMode = .rootList
 }
 
 
@@ -506,6 +510,14 @@ extension DashboardRootViewController {
 
 
 extension DashboardRootViewController {
+    enum FeedViewMode {
+        case rootList
+        case searching
+    }
+}
+
+
+extension DashboardRootViewController {
     enum BottomBarButton: Int, Hashable {
         case receiveSats
         case transactionsHistory
@@ -513,6 +525,8 @@ extension DashboardRootViewController {
         case sendSats
     }
 }
+
+
 
 
 extension DashboardRootViewController: PodcastFeedSearchResultsViewControllerDelegate {}

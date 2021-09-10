@@ -27,7 +27,7 @@ extension API {
         
         guard let request = createRequest(
             urlPath,
-            params: parameters as NSDictionary?,
+            bodyParams: parameters as NSDictionary?,
             method: "POST"
         ) else {
             completionHandler(.failure(.failedToCreateRequest(urlPath: urlPath)))

@@ -10,6 +10,7 @@ import Alamofire
 
 
 extension API {
+    
     enum HUBError: Swift.Error {
         case failedToCreateRequest(urlPath: String)
         case unexpectedResponseData
@@ -18,7 +19,6 @@ extension API {
         case karmaReceiptValidationFailure(message: String)
     }
 }
-
 
 
 extension API.HUBError: LocalizedError {

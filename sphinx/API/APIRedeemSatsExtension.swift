@@ -11,7 +11,7 @@ import Alamofire
 
 extension API {
     func redeemSats(url: String, params: [String: AnyObject], callback: @escaping EmptyCallback, errorCallback: @escaping EmptyCallback){
-        guard let request = createRequest(url, params: params as NSDictionary, method: "POST") else {
+        guard let request = createRequest(url, bodyParams: params as NSDictionary, method: "POST") else {
             errorCallback()
             return
         }

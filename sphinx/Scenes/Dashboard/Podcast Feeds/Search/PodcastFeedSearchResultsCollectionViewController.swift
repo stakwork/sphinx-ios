@@ -59,16 +59,6 @@ extension PodcastFeedSearchResultsCollectionViewController {
 }
 
 
-/// Type to represent that data returned when users search for podcasts.
-struct PodcastFeedSearchResult {
-    var title: String
-    var subtitle: String
-    var imageURLPath: String?
-}
-
-extension PodcastFeedSearchResult: Hashable {}
-
-
 // MARK: - Layout & Data Structure
 extension PodcastFeedSearchResultsCollectionViewController {
     
@@ -120,7 +110,7 @@ extension PodcastFeedSearchResultsCollectionViewController {
     func makeSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
         let headerSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
-            heightDimension: .estimated(80)
+            heightDimension: .estimated(48)
         )
 
         return NSCollectionLayoutBoundarySupplementaryItem(
@@ -198,12 +188,11 @@ extension PodcastFeedSearchResultsCollectionViewController {
     func configure(_ collectionView: UICollectionView) {
         collectionView.collectionViewLayout = makeLayout()
         collectionView.alwaysBounceVertical = true
+        collectionView.backgroundColor = .Sphinx.ListBG
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.backgroundColor = .clear
         collectionView.delegate = self
     }
 }
-
 
 
 // MARK: - Data Source Configuration
@@ -247,8 +236,9 @@ extension PodcastFeedSearchResultsCollectionViewController {
             }
 
             let isLastRow = (
-                indexPath.row == collectionView
-                .numberOfItems(inSection: indexPath.row) - 1
+                indexPath.row == (
+                    collectionView.numberOfItems(inSection: indexPath.section)
+                ) - 1
             )
             
             cell.configure(
@@ -335,6 +325,19 @@ extension PodcastFeedSearchResultsCollectionViewController {
             animatingDifferences: shouldAnimate
         )
     }
+    
+    
+    func updateWithNew(
+        directorySearchResults: [PodcastFeedSearchResult],
+        shouldAnimate: Bool = true
+    ) {
+        self.directorySearchResults = directorySearchResults
+
+        dataSource.apply(
+            makeSnapshotForCurrentState(),
+            animatingDifferences: shouldAnimate
+        )
+    }
 }
 
 
@@ -389,18 +392,6 @@ extension PodcastFeedSearchResultsCollectionViewController {
             
             onPodcastDirectoryResultCellSelected?(directorySearchResult)
         }
-    }
-}
-
-
-extension PodcastFeed {
-    
-    var searchResultItem: PodcastFeedSearchResult {
-        .init(
-            title: title ?? "",
-            subtitle: podcastDescription ?? "",
-            imageURLPath: imageURLPath
-        )
     }
 }
 

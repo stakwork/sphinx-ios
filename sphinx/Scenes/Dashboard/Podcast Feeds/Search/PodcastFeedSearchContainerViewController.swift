@@ -54,7 +54,6 @@ class PodcastFeedSearchContainerViewController: UIViewController {
 
 
 
-
 // MARK: -  Static Properties
 extension PodcastFeedSearchContainerViewController {
     
@@ -86,6 +85,16 @@ extension PodcastFeedSearchContainerViewController {
             cacheName: nil
         )
     }
+    
+    
+    static let apiKey = Bundle
+        .main
+        .object(forInfoDictionaryKey: "PODCAST_INDEX_API_KEY") as! String
+    
+    
+    static let apiSecret = Bundle
+        .main
+        .object(forInfoDictionaryKey: "PODCAST_INDEX_API_SECRET") as! String
 }
 
 
@@ -103,18 +112,36 @@ extension PodcastFeedSearchContainerViewController {
 extension PodcastFeedSearchContainerViewController {
     
     func updateSearchQuery(with searchQuery: String) {
-        defer { isShowingStartingEmptyStateVC = false }
-        
-        if isShowingStartingEmptyStateVC {
-            emptyStateViewController.removeFromParent()
-            
-            addChildVC(
-                child: searchResultsViewController,
-                container: contentView
-            )
+        if searchQuery.isEmpty {
+            presentInitialStateView()
+        } else {
+            presentResultsListView()
+            fetchResults(for: searchQuery)
         }
+    }
+    
+    
+    func presentResultsListView() {
+        isShowingStartingEmptyStateVC = false
         
-        fetchResults(for: searchQuery)
+        removeChildVC(child: emptyStateViewController)
+        
+        addChildVC(
+            child: searchResultsViewController,
+            container: contentView
+        )
+    }
+    
+    
+    func presentInitialStateView() {
+        isShowingStartingEmptyStateVC = true
+        
+        removeChildVC(child: searchResultsViewController)
+        
+        addChildVC(
+            child: emptyStateViewController,
+            container: contentView
+        )
     }
 }
 
@@ -137,9 +164,34 @@ extension PodcastFeedSearchContainerViewController {
             )
         }
         
-        // 📝 TODO:  We'll also need to fetch from the podcast directory at the same time here
+        
+        API.sharedInstance.searchPodcastIndex(
+            matching: searchQuery,
+            apiKey: Self.apiKey,
+            apiSecret: Self.apiSecret
+        ) { [weak self] result in
+            guard let self = self else { return }
+            
+            DispatchQueue.main.async {
+                //                self.stopProgressIndicator()
+                
+                switch result {
+                case .success(let searchResults):
+                    self.searchResultsViewController.updateWithNew(
+                        directorySearchResults: searchResults
+                    )
+                case .failure(_):
+                    AlertHelper.showAlert(
+                        title: "dashboard.feeds.search.error-alert-title".localized,
+                        message: """
+                        \("generic.contact-support".localized)
+                        """
+                    )
+                }
+            }
+        }
     }
-     
+    
     
     private func configureStartingEmptyStateView() {
         addChildVC(
@@ -185,7 +237,7 @@ extension PodcastFeedSearchContainerViewController: NSFetchedResultsControllerDe
         else {
             return
         }
-
+        
         DispatchQueue.main.async { [weak self] in
             self?.searchResultsViewController.updateWithNew(podcastFeeds: foundFeeds)
         }

@@ -126,7 +126,7 @@ extension API {
         
         let parameters: [String : AnyObject] = ["invite_string" : inviteString as AnyObject]
         
-        guard let request = createRequest(url, params: parameters as NSDictionary?, method: "POST") else {
+        guard let request = createRequest(url, bodyParams: parameters as NSDictionary?, method: "POST") else {
             errorCallback()
             return
         }
@@ -158,7 +158,7 @@ extension API {
     public func getLowestPrice(callback: @escaping LowestPriceCallback, errorCallback: @escaping EmptyCallback) {
         let url = "\(API.kHUBServerUrl)/api/v1/nodes/pricing"
         
-        guard let request = createRequest(url, params: nil, method: "GET") else {
+        guard let request = createRequest(url, bodyParams: nil, method: "GET") else {
             errorCallback()
             return
         }
@@ -193,7 +193,7 @@ extension API {
         
         guard let request = createRequest(
             urlPath,
-            params: nil,
+            bodyParams: nil,
             method: "POST"
         ) else {
             completionHandler(.failure(.failedToCreateRequest(urlPath: urlPath)))
@@ -258,7 +258,7 @@ extension API {
         
         guard let request = createRequest(
             urlPath,
-            params: parameters as NSDictionary?,
+            bodyParams: parameters as NSDictionary?,
             method: "POST"
         ) else {
             completionHandler(.failure(.failedToCreateRequest(urlPath: urlPath)))

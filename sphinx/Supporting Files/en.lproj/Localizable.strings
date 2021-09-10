@@ -56,6 +56,11 @@
 "dashboard.feeds.section-headings.directory" = "Directory";
 
 
+// DASHBOARD FEED SEARCH
+"dashboard.feeds.search.error-alert-title" = "An error occurred while searching for Podcast Feeds";
+
+
+
 // LEFT MENU
 "left-menu.dashboard" = "Dashboard";
 "left-menu.contacts" = "Contacts";

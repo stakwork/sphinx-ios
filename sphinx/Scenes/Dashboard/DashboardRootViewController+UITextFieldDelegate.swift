@@ -5,42 +5,27 @@
 //
     
 
-// `UITextFieldDelegate` for handling search input
-
-
 import UIKit
 
 
+// `UITextFieldDelegate` for handling search input
 extension DashboardRootViewController: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if case .feed = activeTab {
-        /**
-             - swap list view with an empty state view stating "Search over 4 000 000 podcasts on the Podcast Index"
-         */
-            feedsListViewController.removeFromParent()
-            
-            addChildVC(
-                child: feedSearchResultsViewController,
-                container: mainContentContainerView
-            )
+            presentFeedSearchView()
         }
     }
     
     
     // The text field calls this method when it
     // is asked to resign the first responder status.
-    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
+    func textFieldDidEndEditing(
+        _ textField: UITextField,
+        reason: UITextField.DidEndEditingReason
+    ) {
         if case .feed = activeTab {
-        /**
-             - swap list view with an empty state view stating "Search over 4 000 000 podcasts on the Podcast Index"
-         */
-            feedSearchResultsViewController.removeFromParent()
-            
-            addChildVC(
-                child: feedsListViewController,
-                container: mainContentContainerView
-            )
+            presentRootFeedsListView()
         }
     }
     
@@ -55,8 +40,9 @@ extension DashboardRootViewController: UITextFieldDelegate {
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
         switch activeTab {
         case .feed:
-            break
-            // TODO: Clear search input
+            feedSearchResultsContainerViewController.updateSearchQuery(
+                with: ""
+            )
         case .friends:
             contactChatsContainerViewController.updateWithNewChats(
                 chatsListViewModel.contactChats
@@ -83,10 +69,13 @@ extension DashboardRootViewController: UITextFieldDelegate {
             with: string
         ) as NSString
         
-
         switch activeTab {
         case .feed:
-            feedSearchResultsViewController.updateSearchQuery(
+            if feedViewMode == .rootList {
+                presentFeedSearchView()
+            }
+            
+            feedSearchResultsContainerViewController.updateSearchQuery(
                 with: searchString as String
             )
         case .friends:
@@ -100,5 +89,32 @@ extension DashboardRootViewController: UITextFieldDelegate {
         }
             
         return true
+    }
+}
+
+
+extension DashboardRootViewController {
+
+    private func presentFeedSearchView() {
+        feedViewMode = .searching
+        
+        feedsListViewController.removeFromParent()
+        
+        addChildVC(
+            child: feedSearchResultsContainerViewController,
+            container: mainContentContainerView
+        )
+    }
+    
+    
+    private func presentRootFeedsListView() {
+        feedViewMode = .rootList
+        
+        feedSearchResultsContainerViewController.removeFromParent()
+        
+        addChildVC(
+            child: feedsListViewController,
+            container: mainContentContainerView
+        )
     }
 }

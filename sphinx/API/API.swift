@@ -57,6 +57,9 @@ typealias VerifyAuthenticationCallback = ((String?) -> ())
 typealias UploadAttachmentCallback = ((Bool, NSDictionary?) -> ())
 typealias MediaInfoCallback = ((Int, String?, Int?) -> ())
 
+// PodcastIndex Search
+typealias PodcastIndexSearchCompletionHandler = (Result<[PodcastFeedSearchResult], API.PodcastIndexSearchError>) -> ()
+
 
 class API {
     typealias HUBNodeInvoice = String
@@ -125,6 +128,9 @@ class API {
             UserDefaults.Keys.meetingServerURL.set(newValue)
         }
     }
+    
+    public static let kPodcastIndexURL = "https://api.podcastindex.org"
+    
 
     class func getUrl(route: String) -> String {
         if let url = URL(string: route), let _ = url.scheme {
@@ -177,7 +183,7 @@ class API {
         if authenticated {
             request = createAuthenticatedRequest(url, params: params, method: method)
         } else {
-            request = createRequest(url, params: params, method: method)
+            request = createRequest(url, bodyParams: params, method: method)
         }
 
         guard let _ = request else {
@@ -290,7 +296,7 @@ class API {
         }
 
         let url = "\(API.kHUBServerUrl)/api/v1/nodes/\(ownerPubKey)"
-        guard let request = createRequest(url, params: nil, method: "GET") else {
+        guard let request = createRequest(url, bodyParams: nil, method: "GET") else {
             return
         }
 
@@ -330,7 +336,8 @@ class API {
     
     func createRequest(
         _ url: String,
-        params: NSDictionary?,
+        bodyParams: NSDictionary?,
+        headers: [String: String] = .init(),
         method: String,
         contentType: String = "application/json",
         token: String? = nil
@@ -353,8 +360,12 @@ class API {
             if let token = token {
                 request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
             }
+            
+            for (key, value) in headers {
+                request.setValue(value, forHTTPHeaderField: key)
+            }
 
-            if let p = params {
+            if let p = bodyParams {
                 do {
                     try request.httpBody = JSONSerialization.data(withJSONObject: p, options: [])
                 } catch let error as NSError {

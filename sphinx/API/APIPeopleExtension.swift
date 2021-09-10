@@ -68,7 +68,7 @@ extension API {
         
         let url = "https://\(host)/verify/\(challenge)?token=\(token)"
         
-        guard let request = createRequest(url, params: params as NSDictionary, method: "POST") else {
+        guard let request = createRequest(url, bodyParams: params as NSDictionary, method: "POST") else {
             callback(false)
             return
         }
@@ -91,7 +91,7 @@ extension API {
         
         let url = "https://\(host)/person/\(pubkey)"
         
-        guard let request = createRequest(url, params: nil, method: "GET") else {
+        guard let request = createRequest(url, bodyParams: nil, method: "GET") else {
             callback(false, nil)
             return
         }

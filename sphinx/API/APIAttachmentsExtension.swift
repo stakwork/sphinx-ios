@@ -14,7 +14,7 @@ extension API {
     public func askAuthentication(callback: @escaping AskAuthenticationCallback) {
         let url = "\(API.kAttachmentsServerUrl)/ask"
         
-        guard let request = createRequest(url, params: nil, method: "GET") else {
+        guard let request = createRequest(url, bodyParams: nil, method: "GET") else {
             callback(nil, nil)
             return
         }
@@ -63,7 +63,7 @@ extension API {
         let hexEncodedPubKey = UserContact.getOwner()?.publicKey ?? ""
         let url = "\(API.kAttachmentsServerUrl)/verify?id=\(id)&sig=\(sig)&pubkey=\(hexEncodedPubKey)"
         
-        guard let request = createRequest(url, params: nil, method: "POST", contentType: "multipart/form-data") else {
+        guard let request = createRequest(url, bodyParams: nil, method: "POST", contentType: "multipart/form-data") else {
             callback(nil)
             return
         }
@@ -92,7 +92,7 @@ extension API {
         
         let url = "\(API.kAttachmentsServerUrl)/media/\(muid)"
         
-        guard let request = createRequest(url, params: nil, method: "GET", token: token) else {
+        guard let request = createRequest(url, bodyParams: nil, method: "GET", token: token) else {
             callback(message.id, nil, nil)
             return
         }
@@ -201,7 +201,7 @@ extension API {
     public func getPaymentTemplates(token: String, callback: @escaping TemplatesCallback, errorCallback: @escaping EmptyCallback) {
         let url = "\(API.kAttachmentsServerUrl)/templates"
         
-        guard let request = createRequest(url, params: nil, method: "GET", token: token) else {
+        guard let request = createRequest(url, bodyParams: nil, method: "GET", token: token) else {
             errorCallback()
             return
         }

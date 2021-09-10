@@ -230,8 +230,8 @@
 "choose.pin.upper" = "ELIGE TU PIN";
 "confirm.pin.upper" = "CONFIRMA TU PIN";
 "pin.doesnt.match" = "El PIN no concuerda";
-"enter.old.pin" = "INGRESE SU PIN ACTUAL";
-"enter.new.pin" = "INGRESE NUEVO PIN";
+"enter.old.pin" = "INGRESA TU PIN ACTUAL";
+"enter.new.pin" = "INGRESA NUEVO PIN";
 "pin.changed" = "Tu PIN ha sido actualizado. Por favor exporta tus claves nuevamente usando el nuevo PIN.";
 "contact.pin.error" = "No puedes usar tu PIN principal como PIN de grupo";
 "set.privacy.pin" = "Establecer PIN Privado";
@@ -305,8 +305,8 @@
 "reply" = "Responder";
 "save.file" = "Descargar";
 "delete.message" = "Eliminar Mensaje";
-"received" = "recibido/a";
-"sent" = "enviado/a";
+"received" = "recibida/o";
+"sent" = "enviada/o";
 "message.x.deleted" = "Mensaje eliminado";
 "payment" = "Pago";
 "picture.capitalize" = "Imagen";
@@ -359,7 +359,7 @@
 "log.into.your.account" = "Ingresar";
 "email.cant.be.sent" = "El correo electrónico no puede ser enviado desde este dispositivo. ";
 "photo.library.denied" = "Has denegado el accesso a tu librería de fotos. Dirigete a Configuración -> Sphinx y actívalo nuevamente.";
-"item.successfully.saved" = "El/La %@ ha sido guardado/a exitosamente.";
+"item.successfully.saved" = "El/La %@ ha sido guardada/o exitosamente.";
 "error.saving.item" = "Ha habido un problema al guardar el/la %@. Por favor vuelve a intentarlo más tarde.";
 "image" = "imagen";
 "video" = "video";
@@ -407,7 +407,7 @@
 "episodes" = "episodios";
 "price.per.minute" = "Precio por minuto: %d sats";
 "contributed.sats" = "Contribuídos: %d sats";
-"earned.sats" = "Recibidod: %d sats";
+"earned.sats" = "Recibidos: %d sats";
 "sats.per.minute" = "Podcast: sats por minuto";
 "suggested.out.range" = "Monto sugerido (%d sats) por encima del máximo";
 "delete.episode.title" = "Borrar Episodio";

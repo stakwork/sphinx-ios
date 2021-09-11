@@ -525,8 +525,3 @@ extension DashboardRootViewController {
         case sendSats
     }
 }
-
-
-
-
-extension DashboardRootViewController: PodcastFeedSearchResultsViewControllerDelegate {}

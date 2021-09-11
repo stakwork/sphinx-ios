@@ -555,6 +555,7 @@
 		F373BF0126A9CE1B0093C886 /* DashboardRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F373BF0026A9CE1B0093C886 /* DashboardRootViewController.swift */; };
 		F373BF0326A9CEDD0093C886 /* PodcastFeedsContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F373BF0226A9CEDD0093C886 /* PodcastFeedsContainerViewController.swift */; };
 		F373BF0C26AAFB990093C886 /* CustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = F373BF0B26AAFB990093C886 /* CustomSegmentedControl.swift */; };
+		F385D49B26ECFEC500A789E8 /* DashboardRootViewController+PodcastFeedSearchResultsViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F385D49A26ECFEC500A789E8 /* DashboardRootViewController+PodcastFeedSearchResultsViewControllerDelegate.swift */; };
 		F394ECA12682064100529038 /* NewUserSignup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F394ECA32682064100529038 /* NewUserSignup.storyboard */; };
 		F394ECA92682099000529038 /* NewUserSignupDescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F394ECA82682098F00529038 /* NewUserSignupDescriptionViewController.swift */; };
 		F394ECAB2682218F00529038 /* NewUserSignupFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F394ECAA2682218F00529038 /* NewUserSignupFormViewController.swift */; };
@@ -1272,6 +1273,7 @@
 		F373BF0026A9CE1B0093C886 /* DashboardRootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardRootViewController.swift; sourceTree = "<group>"; };
 		F373BF0226A9CEDD0093C886 /* PodcastFeedsContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastFeedsContainerViewController.swift; sourceTree = "<group>"; };
 		F373BF0B26AAFB990093C886 /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
+		F385D49A26ECFEC500A789E8 /* DashboardRootViewController+PodcastFeedSearchResultsViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DashboardRootViewController+PodcastFeedSearchResultsViewControllerDelegate.swift"; sourceTree = "<group>"; };
 		F394ECA22682064100529038 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/NewUserSignup.storyboard; sourceTree = "<group>"; };
 		F394ECA52682064400529038 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/NewUserSignup.strings; sourceTree = "<group>"; };
 		F394ECA72682064800529038 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/NewUserSignup.strings; sourceTree = "<group>"; };
@@ -2939,6 +2941,7 @@
 				F3531C3C26BD505F00E9586C /* DashboardChatsListDelegate.swift */,
 				F373BF0026A9CE1B0093C886 /* DashboardRootViewController.swift */,
 				F3531C3E26BD511300E9586C /* DashboardRootViewController+DashboardChatsListDelegate.swift */,
+				F385D49A26ECFEC500A789E8 /* DashboardRootViewController+PodcastFeedSearchResultsViewControllerDelegate.swift */,
 				F3B2519426DFA1E800C96D42 /* DashboardRootViewController+DashboardPodcastFeedsListDelegate.swift */,
 				F3CE637626AFC44C006E37A0 /* DashboardRootViewController+DelegateUtils.swift */,
 				F3A35CA726C43508007D35BD /* DashboardRootViewController+SocketManagerDelegate.swift */,
@@ -3578,6 +3581,7 @@
 				475BDD70232BF09E00C5BBD6 /* StoryboardScenes.swift in Sources */,
 				4734D3C7241A828B00D6957E /* CommonDirectPaymentTableViewCell.swift in Sources */,
 				47BE854A246492FD00BE4AE8 /* KeychainRestoreTableViewCell.swift in Sources */,
+				F385D49B26ECFEC500A789E8 /* DashboardRootViewController+PodcastFeedSearchResultsViewControllerDelegate.swift in Sources */,
 				4733C7E323C4DF30006A2C51 /* GroupNameViewController.swift in Sources */,
 				471940AF2339515A00F1BF5B /* QRCodeDetailViewController.swift in Sources */,
 				4789E24D24EDB758003991BE /* AuthorizeAppView.swift in Sources */,

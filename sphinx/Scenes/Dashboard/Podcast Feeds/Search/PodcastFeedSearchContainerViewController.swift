@@ -202,7 +202,10 @@ extension PodcastFeedSearchContainerViewController {
     
     
     private func handleFeedCellSelection(_ podcastFeedID: NSManagedObjectID) {
-        // 📝 TODO:  Implement
+        resultsDelegate?.viewController(
+            self,
+            didSelectPodcastFeedWithID: podcastFeedID
+        )
     }
     
     

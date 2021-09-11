@@ -165,7 +165,8 @@ extension TransactionMessage {
     
     func getReplyMessageContent() -> String {
         if hasMessageContent() {
-            return getMessageContent()
+            let messageContent = getMessageContent()
+            return messageContent.isValidHTML ? "bot.response.preview".localized : messageContent
         }
         if let fileName = self.mediaFileName {
             return fileName

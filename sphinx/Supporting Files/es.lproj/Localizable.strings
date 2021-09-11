@@ -350,6 +350,7 @@
 "page" = "página";
 "pdf.description" = "PDF - %@ - Página %d de %d";
 "invalid.btc.address" = "Dirección de Bitcoin inválida";
+"bot.response.preview" = "Respuesta de Bot";
 
 //OTHER
 "create.call" = "Crear Llamada";

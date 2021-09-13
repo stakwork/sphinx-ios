@@ -194,7 +194,7 @@ class CommonChatTableViewCell: SwipableReplyCell, RowWithLinkPreviewProtocol {
             linkPreviewView?.roundCorners(corners: corners, radius: 10.0)
             linkPreviewView?.isHidden = true
             
-            self.contentView.addSubview(linkPreviewView!)
+            allContentView.addSubview(linkPreviewView!)
             linkPreviewView?.addConstraintsTo(bubbleView: bubbleView, messageRow: messageRow)
             
             linkPreviewView?.configurePreview(messageRow: messageRow, doneCompletion: { messageId in
@@ -222,7 +222,7 @@ class CommonChatTableViewCell: SwipableReplyCell, RowWithLinkPreviewProtocol {
             if tribeLinkPreviewView == nil {
                 let linkHeight = CommonChatTableViewCell.getLinkPreviewHeight(messageRow: messageRow) - Constants.kBubbleBottomMargin
                 tribeLinkPreviewView = TribeLinkPreviewView(frame: CGRect(x: 0, y: 0, width: Constants.kLinkBubbleMaxWidth, height: linkHeight))
-                contentView.addSubview(tribeLinkPreviewView!)
+                allContentView.addSubview(tribeLinkPreviewView!)
             }
             tribeLinkPreviewView?.isHidden = !messageRow.shouldShowTribeLinkPreview()
             
@@ -258,7 +258,7 @@ class CommonChatTableViewCell: SwipableReplyCell, RowWithLinkPreviewProtocol {
             if contactLinkPreviewView == nil {
                 let linkHeight = CommonChatTableViewCell.getLinkPreviewHeight(messageRow: messageRow) - Constants.kBubbleBottomMargin
                 contactLinkPreviewView = ContactLinkPreviewView(frame: CGRect(x: 0, y: 0, width: Constants.kLinkBubbleMaxWidth, height: linkHeight))
-                contentView.addSubview(contactLinkPreviewView!)
+                allContentView.addSubview(contactLinkPreviewView!)
             }
             contactLinkPreviewView?.addConstraintsTo(bubbleView: bubbleView, messageRow: messageRow)
             contactLinkPreviewView?.configureView(messageRow: messageRow, delegate: self)

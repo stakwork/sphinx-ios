@@ -9,7 +9,7 @@
 import UIKit
 import WebKit
 
-class MessageWebViewTableViewCell: CommonChatTableViewCell, MessageRowProtocol {
+class MessageWebViewTableViewCell: CommonReplyTableViewCell, MessageRowProtocol {
     
     @IBOutlet weak var bubbleView: MessageBubbleView!
     @IBOutlet weak var lockSign: UILabel!
@@ -52,6 +52,7 @@ class MessageWebViewTableViewCell: CommonChatTableViewCell, MessageRowProtocol {
 
         let bubbleSize = bubbleView.showIncomingMessageWebViewBubble(messageRow: messageRow)
         setBubbleWidth(bubbleSize: bubbleSize)
+        configureReplyBubble(bubbleView: bubbleView, bubbleSize: bubbleSize, incoming: true)
         
         commonConfigurationForMessages()
         lockSign.text = messageRow.transactionMessage.encrypted ? "lock" : ""
@@ -114,7 +115,8 @@ class MessageWebViewTableViewCell: CommonChatTableViewCell, MessageRowProtocol {
     
     public static func getRowHeight(messageRow: TransactionMessageRow) -> CGFloat {
         let webViewHeight = messageRow.transactionMessage.getWebViewHeight() ?? kMessageWebViewRowHeight
-       return webViewHeight + (Constants.kLabelMargins * 2) + CommonChatTableViewCell.kBubbleTopMargin + CommonChatTableViewCell.kBubbleBottomMargin
+        let replyTopPading = CommonChatTableViewCell.getReplyTopPadding(message: messageRow.transactionMessage)
+       return webViewHeight + replyTopPading + (Constants.kLabelMargins * 2) + CommonChatTableViewCell.kBubbleTopMargin + CommonChatTableViewCell.kBubbleBottomMargin
     }
 }
 

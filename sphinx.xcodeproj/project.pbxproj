@@ -2864,10 +2864,10 @@
 		F32A694F26CFEECD0004B8B3 /* Podcast Feed */ = {
 			isa = PBXGroup;
 			children = (
+				F32A697826D515AB0004B8B3 /* PodcastFeed+Computeds.swift */,
 				F32A695A26CFEF5F0004B8B3 /* PodcastFeed+CoreDataClass.swift */,
 				F32A695B26CFEF5F0004B8B3 /* PodcastFeed+CoreDataProperties.swift */,
 				F3B2518C26D8DD1800C96D42 /* PodcastFeed+FetchUtils.swift */,
-				F32A697826D515AB0004B8B3 /* PodcastFeed+Computeds.swift */,
 			);
 			path = "Podcast Feed";
 			sourceTree = "<group>";

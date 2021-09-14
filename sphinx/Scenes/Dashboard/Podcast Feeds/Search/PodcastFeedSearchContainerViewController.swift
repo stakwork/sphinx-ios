@@ -36,8 +36,8 @@ class PodcastFeedSearchContainerViewController: UIViewController {
         PodcastFeedSearchResultsCollectionViewController
             .instantiate(
                 onPodcastFeedCellSelected: handleFeedCellSelection,
-                onPodcastDirectoryResultCellSelected: handleDirectoryResultCellSelection,
-                onPodcastSubscriptionAdded: handlePodcastDirectorySubscription
+                onPodcastDirectoryResultCellSelected: handleIndexResultCellSelection,
+                onPodcastSubscriptionSelected: handlePodcastIndexSubscription
             )
     }()
     
@@ -209,17 +209,30 @@ extension PodcastFeedSearchContainerViewController {
     }
     
     
-    private func handleDirectoryResultCellSelection(
-        _ directoryResult: PodcastFeedSearchResult
+    private func handleIndexResultCellSelection(
+        _ searchResult: PodcastFeedSearchResult
     ) {
-        // 📝 TODO:  Implement
+        let podcastFeed = PodcastFeed(
+            from: searchResult,
+            managedObjectContext: managedObjectContext
+        )
+        
+        resultsDelegate?.viewController(
+            self,
+            didSelectPodcastFeedWithID: podcastFeed.objectID
+        )
     }
     
     
-    private func handlePodcastDirectorySubscription(
-        _ directoryResult: PodcastFeedSearchResult
+    private func handlePodcastIndexSubscription(
+        _ searchResult: PodcastFeedSearchResult
     ) {
-        // 📝 TODO:  Implement
+        let _ = PodcastFeed(
+            from: searchResult,
+            managedObjectContext: managedObjectContext
+        )
+
+        CoreDataManager.sharedManager.saveContext()
     }
 }
 

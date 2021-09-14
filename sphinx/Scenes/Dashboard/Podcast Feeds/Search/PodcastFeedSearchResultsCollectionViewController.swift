@@ -16,7 +16,7 @@ class PodcastFeedSearchResultsCollectionViewController: UICollectionViewControll
 
     var onPodcastFeedCellSelected: ((NSManagedObjectID) -> Void)!
     var onPodcastDirectoryResultCellSelected: ((PodcastFeedSearchResult) -> Void)!
-    var onPodcastSubscriptionAdded: ((PodcastFeedSearchResult) -> Void)!
+    var onPodcastSubscriptionSelected: ((PodcastFeedSearchResult) -> Void)!
 
     
     private var currentDataSnapshot: DataSourceSnapshot!
@@ -40,7 +40,7 @@ extension PodcastFeedSearchResultsCollectionViewController {
         interSectionSpacing: CGFloat = 0.0,
         onPodcastFeedCellSelected: ((NSManagedObjectID) -> Void)!,
         onPodcastDirectoryResultCellSelected: ((PodcastFeedSearchResult) -> Void)!,
-        onPodcastSubscriptionAdded: ((PodcastFeedSearchResult) -> Void)!
+        onPodcastSubscriptionSelected: ((PodcastFeedSearchResult) -> Void)!
     ) -> PodcastFeedSearchResultsCollectionViewController {
         let viewController = StoryboardScene
             .Dashboard
@@ -52,7 +52,7 @@ extension PodcastFeedSearchResultsCollectionViewController {
         viewController.interSectionSpacing = interSectionSpacing
         viewController.onPodcastFeedCellSelected = onPodcastFeedCellSelected
         viewController.onPodcastDirectoryResultCellSelected = onPodcastDirectoryResultCellSelected
-        viewController.onPodcastSubscriptionAdded = onPodcastSubscriptionAdded
+        viewController.onPodcastSubscriptionSelected = onPodcastSubscriptionSelected
         
         return viewController
     }
@@ -243,12 +243,13 @@ extension PodcastFeedSearchResultsCollectionViewController {
             
             cell.configure(
                 withItem: dataSourceItem.searchResult,
-                shouldShowSeparator: isLastRow == false
+                shouldShowSeparator: isLastRow == false,
+                shouldShowSubscribeButton: section == CollectionViewSection.directoryResults
             )
             
             switch section {
             case CollectionViewSection.directoryResults:
-                cell.onSubscriptionButtonTapped = self?.onPodcastSubscriptionAdded
+                cell.onSubscriptionButtonTapped = self?.onPodcastSubscriptionSelected
             case .subscribedFeedsResults:
                 break
             }
@@ -354,7 +355,7 @@ extension PodcastFeedSearchResultsCollectionViewController {
 //        }
 //
 //        if case let .directoryResult(directorySearchResult) = dataSourceItem {
-//            onPodcastSubscriptionAdded(directorySearchResult)
+//            onPodcastSubscriptionSelected(directorySearchResult)
 //        }
     }
 }

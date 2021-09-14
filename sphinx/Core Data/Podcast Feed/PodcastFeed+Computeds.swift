@@ -1,4 +1,5 @@
 import Foundation
+import CoreData
 
 
 extension PodcastFeed {
@@ -35,5 +36,23 @@ extension PodcastFeed {
             author: author ?? "",
             imageURLPath: imageURLPath
         )
+    }
+}
+
+
+
+extension PodcastFeed {
+
+    convenience init(
+        from searchResult: PodcastFeedSearchResult,
+        managedObjectContext: NSManagedObjectContext
+    ) {
+        self.init(context: managedObjectContext)
+
+        id = Int64(searchResult.id)
+        title = searchResult.title
+        podcastDescription = searchResult.podcastDescription
+        author = searchResult.author
+        imageURLPath = searchResult.imageURLPath
     }
 }

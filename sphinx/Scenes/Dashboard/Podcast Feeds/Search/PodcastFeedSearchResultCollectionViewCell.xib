@@ -25,7 +25,7 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="YZH-gu-cCf">
-                        <rect key="frame" x="16" y="8" width="343" height="72"/>
+                        <rect key="frame" x="16" y="8" width="343" height="72.5"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="UCl-eV-tUB">
                                 <rect key="frame" x="0.0" y="0.0" width="72" height="72"/>
@@ -35,16 +35,16 @@
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="751" axis="vertical" distribution="equalCentering" alignment="top" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="Zcz-VA-ap1">
-                                <rect key="frame" x="88" y="15" width="217.5" height="42.5"/>
+                                <rect key="frame" x="88" y="0.0" width="217.5" height="72.5"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eVs-cI-cXS">
-                                        <rect key="frame" x="0.0" y="0.0" width="42" height="20"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eVs-cI-cXS">
+                                        <rect key="frame" x="0.0" y="0.0" width="217.5" height="50"/>
                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yP4-Hj-JMW">
-                                        <rect key="frame" x="0.0" y="26" width="34.5" height="16.5"/>
+                                        <rect key="frame" x="0.0" y="56" width="34.5" height="16.5"/>
                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                                         <color key="textColor" name="SecondaryText"/>
                                         <nil key="highlightedColor"/>

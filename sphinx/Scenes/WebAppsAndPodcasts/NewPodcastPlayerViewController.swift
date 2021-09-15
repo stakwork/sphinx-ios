@@ -57,7 +57,7 @@ class NewPodcastPlayerViewController: UIViewController {
     
     
     static func instantiate(
-        chat: Chat,
+        chat: Chat?,
         playerHelper: PodcastPlayerHelper,
         delegate: PodcastPlayerVCDelegate
     ) -> NewPodcastPlayerViewController {
@@ -84,6 +84,7 @@ class NewPodcastPlayerViewController: UIViewController {
         if let _ = playerHelper.podcast {
             tableHeaderView = PodcastPlayerView(playerHelper: playerHelper, chat: chat, delegate: self)
             tableView.tableHeaderView = tableHeaderView!
+            
             tableDataSource = PodcastEpisodesDataSource(tableView: tableView, playerHelper: playerHelper, delegate: self)
         } else {
             AlertHelper.showAlert(title: "generic.error.title".localized, message: "generic.error.message".localized, completion: {

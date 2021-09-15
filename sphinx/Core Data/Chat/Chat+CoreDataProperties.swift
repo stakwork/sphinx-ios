@@ -42,7 +42,6 @@ extension Chat {
 
     @NSManaged public var messages: NSSet?
     @NSManaged public var subscription: Subscription?
-
 }
 
 // MARK: Generated accessors for messages

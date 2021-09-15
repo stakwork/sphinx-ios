@@ -152,6 +152,53 @@ class PodcastPlayerHelper {
     }
     
     
+//    func loadPodcastFeedEpisodes(
+//        for podcastFeed: PodcastFeed,
+//        then completionHandler: @escaping (Bool) -> Void
+//    ) {
+//        guard let feedURLPath = podcastFeed.feedURLPath else {
+//            completionHandler(false)
+//            return
+//        }
+//
+//        API.sharedInstance.getPodcastEpisodes(
+//            byFeedURLPath: feedURLPath
+//        ) { result in
+//            DispatchQueue.main.async {
+//                //                self.stopProgressIndicator()
+//
+//                switch result {
+//                case .success(let searchResults):
+//                    self.searchResultsViewController.updateWithNew(
+//                        directorySearchResults: searchResults
+//                    )
+//                case .failure(_):
+//                    AlertHelper.showAlert(
+//                        title: "dashboard.feeds.search.error-alert-title".localized,
+//                        message: """
+//                        \("generic.contact-support".localized)
+//                        """
+//                    )
+//                }
+//            }
+//        }
+//            callback: { json in
+//                DispatchQueue.main.async {
+//                    self.persistDataForPodcastFeedEpisodes(
+//                        using: json,
+//                        for: podcastFeed
+//                    )
+//
+//                    completionHandler(true)
+//                }
+//            },
+//            errorCallback: {
+//                completionHandler(false)
+//            }
+//        )
+//    }
+    
+    
     func processLocalPodcastFeed(chat: Chat?, callback: @escaping (Bool) -> ()) {
         if let podcastFeed = chat?.podcastFeed {
             
@@ -167,7 +214,27 @@ class PodcastPlayerHelper {
     
     func persistDataForPodcastFeed(
         using json: JSON,
-        belongingTo chat: Chat?
+        for podcastFeed: PodcastFeed
+    ) {
+        guard let managedObjectContext = podcastFeed.managedObjectContext else {
+            preconditionFailure()
+        }
+        
+        let episodes = json["items"].arrayValue.map {
+            PodcastEpisode(
+                jsonPayload: $0,
+                managedObjectContext: managedObjectContext
+            )
+        }
+        
+        podcastFeed.addToEpisodes(Set(episodes))
+        CoreDataManager.sharedManager.saveContext()
+    }
+    
+    
+    func persistDataForPodcastFeed(
+        using json: JSON,
+        belongingTo chat: Chat? = nil
     ) {
         guard json["episodes"].arrayValue.isEmpty == false else { return }
         
@@ -181,19 +248,15 @@ class PodcastPlayerHelper {
         podcastFeed.author = json["author"].stringValue
         podcastFeed.imageURLPath = json["image"].stringValue
         
-
-        let episodes: [PodcastEpisode] = json["episodes"].arrayValue.map {
-            let episode = PodcastEpisode(context: managedObjectContext)
-            
-            episode.id = Int64($0["id"].intValue)
-            episode.title = $0["title"].stringValue
-            episode.datePublished = Date(timeIntervalSince1970: $0["datePublished"].doubleValue)
-            episode.episodeDescription = $0["description"].stringValue
-            episode.urlPath = $0["enclosureUrl"].stringValue
-            episode.imageURLPath = $0["image"].stringValue
-            episode.linkURLPath = $0["link"].stringValue
-
-            return episode
+        if let chat = chat {
+            podcastFeed.feedURLPath = chat.tribesInfo?.feedUrl
+        }
+        
+        let episodes = json["episodes"].arrayValue.map {
+            PodcastEpisode(
+                jsonPayload: $0,
+                managedObjectContext: managedObjectContext
+            )
         }
         
         podcastFeed.addToEpisodes(Set(episodes))

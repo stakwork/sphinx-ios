@@ -57,6 +57,7 @@
     </entity>
     <entity name="PodcastFeed" representedClassName="PodcastFeed" syncable="YES">
         <attribute name="author" optional="YES" attributeType="String"/>
+        <attribute name="feedURLPath" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="imageURLPath" optional="YES" attributeType="String"/>
         <attribute name="podcastDescription" optional="YES" attributeType="String"/>
@@ -174,7 +175,7 @@
         <element name="Chat" positionX="-54" positionY="135" width="128" height="419"/>
         <element name="PodcastDestination" positionX="-18" positionY="180" width="128" height="89"/>
         <element name="PodcastEpisode" positionX="-36" positionY="153" width="128" height="14"/>
-        <element name="PodcastFeed" positionX="-45" positionY="144" width="128" height="164"/>
+        <element name="PodcastFeed" positionX="-45" positionY="144" width="128" height="179"/>
         <element name="PodcastModel" positionX="-27" positionY="171" width="128" height="74"/>
         <element name="Subscription" positionX="-54" positionY="135" width="128" height="223"/>
         <element name="TransactionMessage" positionX="-54" positionY="63" width="128" height="463"/>

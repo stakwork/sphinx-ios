@@ -58,7 +58,13 @@ typealias UploadAttachmentCallback = ((Bool, NSDictionary?) -> ())
 typealias MediaInfoCallback = ((Int, String?, Int?) -> ())
 
 // PodcastIndex Search
-typealias PodcastIndexSearchCompletionHandler = (Result<[PodcastFeedSearchResult], API.PodcastIndexSearchError>) -> ()
+typealias PodcastIndexSearchCompletionHandler = (
+    Result<[PodcastFeedSearchResult], API.PodcastIndexSearchError>
+) -> ()
+
+typealias PodcastIndexEpisodeFetchCompletionHandler = (
+    Result<[PodcastEpisode], API.PodcastIndexSearchError>
+) -> ()
 
 
 class API {

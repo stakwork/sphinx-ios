@@ -545,6 +545,7 @@
 		F34BFED9267B3522003F6D55 /* RestoreUserFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34BFED8267B3522003F6D55 /* RestoreUserFormViewController.swift */; };
 		F34BFEDB267B3552003F6D55 /* RestoreUserConnectingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34BFEDA267B3552003F6D55 /* RestoreUserConnectingViewController.swift */; };
 		F34BFEDF267B3C30003F6D55 /* RestoreUser.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F34BFEDE267B3C30003F6D55 /* RestoreUser.storyboard */; };
+		F352073926F228A7004B2518 /* CodingUserInfoKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = F352073826F228A7004B2518 /* CodingUserInfoKey.swift */; };
 		F3531C3D26BD505F00E9586C /* DashboardChatsListDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3531C3C26BD505F00E9586C /* DashboardChatsListDelegate.swift */; };
 		F3531C3F26BD511300E9586C /* DashboardRootViewController+DashboardChatsListDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3531C3E26BD511300E9586C /* DashboardRootViewController+DashboardChatsListDelegate.swift */; };
 		F358212D2695D11500A314F1 /* ConnectionCodeSignupHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = F358212C2695D11500A314F1 /* ConnectionCodeSignupHandling.swift */; };
@@ -1263,6 +1264,7 @@
 		F34BFED8267B3522003F6D55 /* RestoreUserFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreUserFormViewController.swift; sourceTree = "<group>"; };
 		F34BFEDA267B3552003F6D55 /* RestoreUserConnectingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreUserConnectingViewController.swift; sourceTree = "<group>"; };
 		F34BFEDE267B3C30003F6D55 /* RestoreUser.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RestoreUser.storyboard; sourceTree = "<group>"; };
+		F352073826F228A7004B2518 /* CodingUserInfoKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodingUserInfoKey.swift; sourceTree = "<group>"; };
 		F3531C3C26BD505F00E9586C /* DashboardChatsListDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardChatsListDelegate.swift; sourceTree = "<group>"; };
 		F3531C3E26BD511300E9586C /* DashboardRootViewController+DashboardChatsListDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DashboardRootViewController+DashboardChatsListDelegate.swift"; sourceTree = "<group>"; };
 		F358212C2695D11500A314F1 /* ConnectionCodeSignupHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionCodeSignupHandling.swift; sourceTree = "<group>"; };
@@ -2022,6 +2024,7 @@
 				475E41602382E28800928931 /* UIButton.swift */,
 				476EB47723C51C9E009745E2 /* UICollectionView.swift */,
 				475BDD20232AC64900C5BBD6 /* UIColor.swift */,
+				F352073826F228A7004B2518 /* CodingUserInfoKey.swift */,
 				47935FB4249F8E1900B39ADB /* UIDevice.swift */,
 				475BDD31232ACBB900C5BBD6 /* UIFont.swift */,
 				471940B2233952D400F1BF5B /* UIImage.swift */,
@@ -3688,6 +3691,7 @@
 				479A39DA244F237F00A37899 /* PaidMessagePreviewViewController.swift in Sources */,
 				47308E0D24FEE6E700FFAC6F /* SocketEngine.swift in Sources */,
 				475BDD95232C2F9100C5BBD6 /* UILabel.swift in Sources */,
+				F352073926F228A7004B2518 /* CodingUserInfoKey.swift in Sources */,
 				47904C2224BF54DA00710E7A /* NotificationSoundHelper.swift in Sources */,
 				473258AC241BD700006E6602 /* CommonPaymentViewController.swift in Sources */,
 				475BDD2C232ACA0700C5BBD6 /* String.swift in Sources */,

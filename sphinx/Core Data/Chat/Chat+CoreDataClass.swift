@@ -514,12 +514,12 @@ public class Chat: NSManagedObject {
     }
     
     func updateMetaData() {
-        let stasPerMinute = (UserDefaults.standard.value(forKey: "podcast-sats-\(self.id)") as? Int) ?? 0
+        let satsPerMinute = (UserDefaults.standard.value(forKey: "podcast-sats-\(self.id)") as? Int) ?? 0
         let currentTime = (UserDefaults.standard.value(forKey: "current-time-\(self.id)") as? Int) ?? 0
         let currentEpisode = ((UserDefaults.standard.value(forKey: "current-episode-id-\(self.id)") as? Int) ?? self.podcastPlayer?.currentEpisodeId) ?? -1
         let speed = ((UserDefaults.standard.value(forKey: "player-speed-\(self.id)") as? Float) ?? 0).speedDescription
         
-        let params: [String: AnyObject] = ["meta" :"{\"itemID\":\(currentEpisode),\"sats_per_minute\":\(stasPerMinute),\"ts\":\(currentTime), \"speed\":\(speed)}" as AnyObject]
+        let params: [String: AnyObject] = ["meta" :"{\"itemID\":\(currentEpisode),\"sats_per_minute\":\(satsPerMinute),\"ts\":\(currentTime), \"speed\":\(speed)}" as AnyObject]
         API.sharedInstance.updateChat(chatId: id, params: params, callback: {}, errorCallback: {})
     }
     

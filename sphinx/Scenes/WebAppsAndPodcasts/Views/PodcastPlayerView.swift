@@ -56,7 +56,7 @@ class PodcastPlayerView: UIView {
     }
     
     var playerHelper: PodcastPlayerHelper! = nil
-    var chat: Chat! = nil
+    var chat: Chat?
     
     public enum ControlButtons: Int {
         case PlayerSpeed
@@ -66,7 +66,11 @@ class PodcastPlayerView: UIView {
         case Forward30
     }
     
-    convenience init(playerHelper: PodcastPlayerHelper, chat: Chat, delegate: PodcastPlayerViewDelegate) {
+    convenience init(
+        playerHelper: PodcastPlayerHelper,
+        chat: Chat?,
+        delegate: PodcastPlayerViewDelegate
+    ) {
         let windowWidth = WindowsManager.getWindowWidth()
         let frame = CGRect(x: 0, y: 0, width: windowWidth, height: windowWidth + PodcastPlayerView.kPlayerHeight)
         
@@ -76,7 +80,8 @@ class PodcastPlayerView: UIView {
         self.playerHelper = playerHelper
         self.chat = chat
         self.playerHelper.delegate = self
-        self.setup()
+        
+        setup()
     }
 
     private func setup() {
@@ -122,6 +127,8 @@ class PodcastPlayerView: UIView {
     }
     
     func loadMessages() {
+        guard let chat = chat else { return }
+        
         liveMessages = [:]
         
         let episodeId = playerHelper.getCurrentEpisode()?.id ?? -1

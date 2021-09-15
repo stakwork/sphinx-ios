@@ -99,8 +99,10 @@ extension PodcastEpisodesDataSource : UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "PodcastEpisodeTableViewCell", for: indexPath) as! PodcastEpisodeTableViewCell
-        return cell
+        tableView.dequeueReusableCell(
+            withIdentifier: "PodcastEpisodeTableViewCell",
+            for: indexPath
+        ) as! PodcastEpisodeTableViewCell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

@@ -85,16 +85,6 @@ extension PodcastFeedSearchContainerViewController {
             cacheName: nil
         )
     }
-    
-    
-    static let apiKey = Bundle
-        .main
-        .object(forInfoDictionaryKey: "PODCAST_INDEX_API_KEY") as! String
-    
-    
-    static let apiSecret = Bundle
-        .main
-        .object(forInfoDictionaryKey: "PODCAST_INDEX_API_SECRET") as! String
 }
 
 
@@ -164,11 +154,8 @@ extension PodcastFeedSearchContainerViewController {
             )
         }
         
-        
         API.sharedInstance.searchPodcastIndex(
-            matching: searchQuery,
-            apiKey: Self.apiKey,
-            apiSecret: Self.apiSecret
+            matching: searchQuery
         ) { [weak self] result in
             guard let self = self else { return }
             

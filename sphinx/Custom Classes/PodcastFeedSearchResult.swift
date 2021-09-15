@@ -14,6 +14,7 @@ struct PodcastFeedSearchResult {
     var podcastDescription: String
     var author: String
     var imageURLPath: String?
+    var feedURLPath: String?
 }
 
 extension PodcastFeedSearchResult: Identifiable {}
@@ -30,6 +31,7 @@ extension PodcastFeedSearchResult {
         case podcastDescription = "description"
         case author = "author"
         case imageURLPath = "artwork"
+        case feedURLPath = "url"
     }
 }
 

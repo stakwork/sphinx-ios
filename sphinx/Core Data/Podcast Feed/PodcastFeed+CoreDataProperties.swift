@@ -14,11 +14,13 @@ extension PodcastFeed {
     @NSManaged public var podcastDescription: String?
     @NSManaged public var author: String?
     @NSManaged public var imageURLPath: String?
+    @NSManaged public var feedURLPath: String?
     @NSManaged public var chat: Chat?
     @NSManaged public var model: PodcastModel?
     @NSManaged public var episodes: Set<PodcastEpisode>?
     @NSManaged public var destinations: Set<PodcastDestination>?
 }
+
 
 // MARK: Generated accessors for episodes
 extension PodcastFeed {

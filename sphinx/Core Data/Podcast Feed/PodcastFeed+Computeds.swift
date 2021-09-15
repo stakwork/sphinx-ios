@@ -34,7 +34,8 @@ extension PodcastFeed {
             title: title ?? "",
             podcastDescription: podcastDescription ?? "",
             author: author ?? "",
-            imageURLPath: imageURLPath
+            imageURLPath: imageURLPath,
+            feedURLPath: feedURLPath
         )
     }
 }
@@ -54,5 +55,6 @@ extension PodcastFeed {
         podcastDescription = searchResult.podcastDescription
         author = searchResult.author
         imageURLPath = searchResult.imageURLPath
+        feedURLPath = searchResult.feedURLPath
     }
 }

@@ -24,6 +24,12 @@ class CommonDeletedMessageTableViewCell: CommonChatTableViewCell {
         super.configureRow(messageRow: messageRow, contact: nil, chat: nil)
         
         commonConfigurationForMessages()
+        
+        if messageRow.isFlagged {
+            deletedLabel.text = "chat-row.message-flagged".localized
+        } else {
+            deletedLabel.text = "chat-row.message-deleted".localized
+        }
     }
     
     public static func getRowHeight() -> CGFloat {

@@ -540,6 +540,15 @@ extension ChatViewController : MessageOptionsVCDelegate {
         sendMessage(provisionalMessage: message, text: message.getMessageContent(), completion: { _ in })
     }
     
+    func shouldFlagMessage(message: TransactionMessage) {
+        if message.flag() {
+            chatViewModel.sendFlagMessageFor(message)
+            updateMessageRowFor(message)
+            return
+        }
+        AlertHelper.showAlert(title: "generic.error.title".localized, message: "generic.error.message".localized)
+    }
+    
     func shouldRemoveWindow() {
         WindowsManager.sharedInstance.removeMessageOptions()
         fetchNewData()
@@ -570,7 +579,7 @@ extension ChatViewController : MessageOptionsVCDelegate {
             let updatedMessage = TransactionMessage.insertMessage(m: m).0
             
             if success {
-                self.updateDeletedMessageRow(message: updatedMessage ?? message)
+                self.updateMessageRowFor(updatedMessage ?? message)
                 return
             }
             
@@ -578,8 +587,8 @@ extension ChatViewController : MessageOptionsVCDelegate {
         })
     }
     
-    func updateDeletedMessageRow(message: TransactionMessage) {
-        chatDataSource?.updateDeletedMessage(m: message)
+    func updateMessageRowFor(_ message: TransactionMessage) {
+        chatDataSource?.updateRowForMessage(message)
         PlayAudioHelper.playHaptic()
     }
 }

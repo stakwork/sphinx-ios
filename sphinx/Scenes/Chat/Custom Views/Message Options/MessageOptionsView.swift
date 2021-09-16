@@ -15,6 +15,7 @@ import UIKit
     func shouldSaveFile()
     func shouldBoostMessage()
     func shouldResendMessage()
+    func shouldFlagMessage()
 }
 
 class MessageOptionsView : UIView {
@@ -244,10 +245,11 @@ extension MessageOptionsView : MessageOptionViewDelegate {
             delegate?.shouldBoostMessage()
         case .Resend:
             delegate?.shouldResendMessage()
+        case .Flag:
+            delegate?.shouldFlagMessage()
         default:
             break
         }
-        
         delegate?.shouldDismiss()
     }
 }

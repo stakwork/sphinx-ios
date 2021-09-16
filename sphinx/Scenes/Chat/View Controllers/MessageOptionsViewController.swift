@@ -13,6 +13,7 @@ import UIKit
     func shouldReplyToMessage(message: TransactionMessage)
     func shouldBoostMessage(message: TransactionMessage)
     func shouldResendMessage(message: TransactionMessage)
+    func shouldFlagMessage(message: TransactionMessage)
     func shouldRemoveWindow()
 }
 
@@ -140,12 +141,6 @@ class MessageOptionsViewController: UIViewController {
 }
 
 extension MessageOptionsViewController : MessageOptionsDelegate {
-    func shouldResendMessage() {
-        if let message = message {
-            delegate?.shouldResendMessage(message: message)
-        }
-    }
-    
     func shouldDismiss() {
         shouldDismissViewController()
     }
@@ -172,6 +167,18 @@ extension MessageOptionsViewController : MessageOptionsDelegate {
         MediaDownloader.shouldSaveFile(message: message, completion: { success, alertMessage in
             self.showMediaSaveAlert(success: success, alertMessage: alertMessage)
         })
+    }
+    
+    func shouldResendMessage() {
+        if let message = message {
+            delegate?.shouldResendMessage(message: message)
+        }
+    }
+    
+    func shouldFlagMessage() {
+        if let message = message {
+            delegate?.shouldFlagMessage(message: message)
+        }
     }
     
     func showMediaSaveAlert(success: Bool, alertMessage: String) {

@@ -62,11 +62,17 @@ public final class ContactsService {
         }
     }
     
-    public func insertContact(contact: JSON, pin: String? = nil) {
+    public func insertContact(contact: JSON, pin: String? = nil) -> UserContact? {
         if let c = UserContact.insertContact(contact: contact) {
-            c.pin = pin
-            c.saveContact()
+            
+            if let pin = pin {
+                c.pin = pin
+                c.saveContact()
+            }
+            
+            return c
         }
+        return nil
     }
     
     func removeDeletedContacts(existingContactIds: [Int]) {
@@ -202,7 +208,7 @@ public final class ContactsService {
         
         API.sharedInstance.updateUser(id: contact.id, params: parameters, callback: { contact in
             DispatchQueue.main.async {
-                self.insertContact(contact: contact)
+                let _ = self.insertContact(contact: contact)
                 callback(true)
             }
         }, errorCallback: {
@@ -216,7 +222,7 @@ public final class ContactsService {
                               photoUrl: String? = nil,
                               pin: String? = nil,
                               contactKey: String? = nil,
-                              callback: @escaping (Bool) -> ()) {
+                              callback: @escaping (Bool, UserContact?) -> ()) {
         
         var parameters = [String : AnyObject]()
         parameters["alias"] = nickname as AnyObject
@@ -236,10 +242,10 @@ public final class ContactsService {
         }
         
         API.sharedInstance.createContact(params: parameters, callback: { contact in
-            self.insertContact(contact: contact, pin: pin)
-            callback(true)
+            let c = self.insertContact(contact: contact, pin: pin)
+            callback(true, c)
         }, errorCallback: {
-            callback(false)
+            callback(false, nil)
         })
     }
     

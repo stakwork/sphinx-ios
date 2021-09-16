@@ -101,7 +101,7 @@ class SetProfileImageViewController: SetDataViewController {
         
         API.sharedInstance.updateUser(id: id, params: parameters, callback: { contact in
             self.loading = false
-            self.contactsService.insertContact(contact: contact)
+            let _ = self.contactsService.insertContact(contact: contact)
             self.goToSphinxDesktopAd()
         }, errorCallback: {
             self.loading = false

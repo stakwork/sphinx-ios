@@ -435,7 +435,7 @@ class ChatDataSource : NSObject {
         }
     }
     
-    func updateDeletedMessage(m: TransactionMessage) {
+    func updateRowForMessage(_ m: TransactionMessage) {
         for (index, messageRow) in self.messageRowsArray.enumerated().reversed() {
             if let message = messageRow.transactionMessage {
                 if message.id == m.id {

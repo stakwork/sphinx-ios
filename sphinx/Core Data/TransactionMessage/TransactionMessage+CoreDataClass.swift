@@ -415,6 +415,24 @@ public class TransactionMessage: NSManagedObject {
         }
     }
     
+    func flag() -> Bool {
+        if let uuid = uuid {
+            UserDefaults.standard.set(true, forKey: "\(uuid)-message-flag")
+            
+            return true
+        }
+        return false
+    }
+    
+    func unflag() -> Bool {
+        if let uuid = uuid {
+            UserDefaults.standard.set(false, forKey: "\(uuid)-message-flag")
+            
+            return true
+        }
+        return false
+    }
+    
     func setAsLastMessage() {
         chat?.lastMessage = self
     }

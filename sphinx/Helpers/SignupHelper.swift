@@ -80,7 +80,7 @@ class SignupHelper {
         return nil
     }
     
-    public static func getDefaultInviter() -> JSON {
+    public static func getSupportContact() -> JSON {
         var inviteData = [String : String]()
         inviteData["nickname"] = "Sphinx Support"
         inviteData["pubkey"] = "023d70f2f76d283c6c4e58109ee3a2816eb9d8feb40b23d62469060a2b2867b77f"

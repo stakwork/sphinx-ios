@@ -304,6 +304,7 @@
 "copy.call.link" = "Copiar Enlace";
 "reply" = "Responder";
 "save.file" = "Descargar";
+"flag.item" = "Reportar";
 "delete.message" = "Eliminar Mensaje";
 "received" = "recibida/o";
 "sent" = "enviada/o";
@@ -351,6 +352,8 @@
 "pdf.description" = "PDF - %@ - Página %d de %d";
 "invalid.btc.address" = "Dirección de Bitcoin inválida";
 "bot.response.preview" = "Respuesta de Bot";
+"chat-row.message-deleted" = "Este mensaje ha sido eliminado";
+"chat-row.message-flagged" = "Este mensaje ha sido reportado";
 
 //OTHER
 "create.call" = "Crear Llamada";

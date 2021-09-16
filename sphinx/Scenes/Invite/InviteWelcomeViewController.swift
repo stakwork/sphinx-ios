@@ -72,7 +72,7 @@ class InviteWelcomeViewController: UIViewController {
         
         if let inviter = currentInviter {
             let contactsService = ContactsService()
-            contactsService.createContact(nickname: inviter.nickname, pubKey: inviter.pubkey, routeHint: inviter.routeHint, callback: { success in
+            contactsService.createContact(nickname: inviter.nickname, pubKey: inviter.pubkey, routeHint: inviter.routeHint, callback: { (success, _) in
                 if success {
                     SignupHelper.step = SignupHelper.SignupStep.InviterContactCreated.rawValue
                     

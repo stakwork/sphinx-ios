@@ -286,6 +286,12 @@ class TransactionMessageRow {
         }
     }
     
+    var isFlagged: Bool {
+        get {
+            return (transactionMessage?.isFlagged() ?? false)
+        }
+    }
+    
     var encrypted: Bool {
         get {
             if let message = transactionMessage {

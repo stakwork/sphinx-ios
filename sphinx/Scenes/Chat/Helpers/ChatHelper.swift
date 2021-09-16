@@ -86,10 +86,10 @@ class ChatHelper {
         guard let message = messageRow.transactionMessage else {
             return cell
         }
+        
         let incoming = messageRow.isIncoming()
         
-        let messageStatus = TransactionMessage.TransactionMessageStatus(fromRawValue: Int(message.status))
-        if messageStatus == TransactionMessage.TransactionMessageStatus.deleted {
+        if message.isDeleted() || message.isFlagged() {
             if incoming {
                 cell = tableView.dequeueReusableCell(withIdentifier: "DeletedMessageReceivedTableViewCell", for: indexPath) as! DeletedMessageReceivedTableViewCell
             } else {
@@ -256,7 +256,7 @@ class ChatHelper {
         }
         
         let status = TransactionMessage.TransactionMessageStatus(fromRawValue: Int(message.status))
-        if status == TransactionMessage.TransactionMessageStatus.deleted {
+        if message.isDeleted() || message.isFlagged() {
             return CommonDeletedMessageTableViewCell.getRowHeight()
         }
         

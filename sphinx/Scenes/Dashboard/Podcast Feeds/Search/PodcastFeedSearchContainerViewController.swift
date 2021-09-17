@@ -140,7 +140,9 @@ extension PodcastFeedSearchContainerViewController {
 extension PodcastFeedSearchContainerViewController {
     
     private func fetchResults(for searchQuery: String) {
-        let newFetchRequest = PodcastFeed.FetchRequests.matching(searchQuery: searchQuery)
+        let newFetchRequest = PodcastFeed
+            .FetchRequests
+            .matching(searchQuery: searchQuery)
         
         fetchedResultsController.fetchRequest.sortDescriptors = newFetchRequest.sortDescriptors
         fetchedResultsController.fetchRequest.predicate = newFetchRequest.predicate
@@ -220,6 +222,11 @@ extension PodcastFeedSearchContainerViewController {
         )
 
         CoreDataManager.sharedManager.saveContext()
+
+        // TODO: Make sure that the delegate is calling this.
+//        searchResultsViewController.updateSnapshot(
+//            shouldAnimate: true
+//        )
     }
 }
 

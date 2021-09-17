@@ -15,7 +15,7 @@ extension PodcastFeed {
     public enum Predicates {
         
         public static func matching(searchQuery: String) -> NSPredicate {
-            let keyword = "CONTAINS"
+            let keyword = "CONTAINS[cd]"
             let formatSpecifier = "%@"
 
             return NSPredicate(
@@ -83,8 +83,11 @@ extension PodcastFeed {
         public static func matching(searchQuery: String) -> NSFetchRequest<PodcastFeed> {
             let request: NSFetchRequest<PodcastFeed> = baseFetchRequest()
 
+            request.predicate = PodcastFeed
+                .Predicates
+                .matching(searchQuery: searchQuery)
+
             request.sortDescriptors = [PodcastFeed.SortDescriptors.nameAscending]
-            request.predicate = PodcastFeed.Predicates.matching(searchQuery: searchQuery)
 
             return request
         }

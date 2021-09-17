@@ -64,13 +64,13 @@ extension PodcastFeedSearchResultsCollectionViewController {
     
     enum CollectionViewSection: Int, CaseIterable {
         case subscribedFeedsResults
-        case directoryResults
+        case podcastIndexSearchResults
         
         var titleForDisplay: String {
             switch self {
             case .subscribedFeedsResults:
                 return "dashboard.feeds.section-headings.following".localized
-            case .directoryResults:
+            case .podcastIndexSearchResults:
                 return "dashboard.feeds.section-headings.directory".localized
             }
         }
@@ -79,7 +79,7 @@ extension PodcastFeedSearchResultsCollectionViewController {
     
     enum DataSourceItem: Hashable {
         case subscribedFeedsResult(PodcastFeed)
-        case directoryResult(PodcastFeedSearchResult)
+        case podcastIndexSearchResult(PodcastFeedSearchResult)
     }
 
     
@@ -226,6 +226,7 @@ extension PodcastFeedSearchResultsCollectionViewController {
     func makeCellProvider(for collectionView: UICollectionView) -> DataSource.CellProvider {
         { [weak self] (collectionView, indexPath, dataSourceItem) -> UICollectionViewCell? in
             guard
+                let self = self,
                 let cell = collectionView.dequeueReusableCell(
                     withReuseIdentifier: CollectionViewCell.reuseID,
                     for: indexPath
@@ -243,13 +244,13 @@ extension PodcastFeedSearchResultsCollectionViewController {
             
             cell.configure(
                 withItem: dataSourceItem.searchResult,
-                shouldShowSeparator: isLastRow == false,
-                shouldShowSubscribeButton: section == CollectionViewSection.directoryResults
+                subscriptionState: self.subscriptionState(for: dataSourceItem, in: section),
+                shouldShowSeparator: isLastRow == false
             )
             
             switch section {
-            case CollectionViewSection.directoryResults:
-                cell.onSubscriptionButtonTapped = self?.onPodcastSubscriptionSelected
+            case CollectionViewSection.podcastIndexSearchResults:
+                cell.onSubscriptionButtonTapped = self.onPodcastSubscriptionSelected
             case .subscribedFeedsResults:
                 break
             }
@@ -300,8 +301,8 @@ extension PodcastFeedSearchResultsCollectionViewController {
         )
         
         snapshot.appendItems(
-            directorySearchResults.map { DataSourceItem.directoryResult($0) },
-            toSection: .directoryResults
+            directorySearchResults.map { DataSourceItem.podcastIndexSearchResult($0) },
+            toSection: .podcastIndexSearchResults
         )
 
         return snapshot
@@ -342,25 +343,6 @@ extension PodcastFeedSearchResultsCollectionViewController {
 }
 
 
-extension PodcastFeedSearchResultsCollectionViewController {
-    
-//    private func handleSubscriptionButtonPress(indexPath: IndexPath) {
-    private func handleSubscriptionButtonPress(directoryResult: PodcastFeedSearchResult) {
-//        guard
-//            let dataSourceItem = dataSource.itemIdentifier(
-//                for: indexPath
-//            )
-//        else {
-//            return
-//        }
-//
-//        if case let .directoryResult(directorySearchResult) = dataSourceItem {
-//            onPodcastSubscriptionSelected(directorySearchResult)
-//        }
-    }
-}
-
-
 // MARK: - `UICollectionViewDelegate` Methods
 extension PodcastFeedSearchResultsCollectionViewController {
 
@@ -384,9 +366,9 @@ extension PodcastFeedSearchResultsCollectionViewController {
             }
             
             onPodcastFeedCellSelected?(podcastFeed.objectID)
-        case .directoryResults:
+        case .podcastIndexSearchResults:
             guard
-                case let .directoryResult(directorySearchResult) = dataSourceItem
+                case let .podcastIndexSearchResult(directorySearchResult) = dataSourceItem
             else {
                 preconditionFailure()
             }
@@ -403,7 +385,7 @@ extension PodcastFeedSearchResultsCollectionViewController.DataSourceItem {
         switch self {
         case .subscribedFeedsResult(let podcastFeed):
             return podcastFeed.searchResultItem
-        case .directoryResult(let result):
+        case .podcastIndexSearchResult(let result):
             return result
         }
     }
@@ -412,8 +394,36 @@ extension PodcastFeedSearchResultsCollectionViewController.DataSourceItem {
         switch self {
         case .subscribedFeedsResult(let podcastFeed):
             return podcastFeed
-        case .directoryResult:
+        case .podcastIndexSearchResult:
             return nil
+        }
+    }
+}
+
+
+extension PodcastFeedSearchResultsCollectionViewController {
+    
+    func subscriptionState(
+        for dataSourceItem: DataSourceItem,
+        in section: CollectionViewSection
+    ) -> PodcastFeedSearchResultCollectionViewCell.SubscriptionState {
+        switch section {
+        case .subscribedFeedsResults:
+            return .followedViaTribe
+        case .podcastIndexSearchResults:
+            if dataSource
+                .snapshot()
+                .itemIdentifiers(inSection: .subscribedFeedsResults)
+                .contains(
+                    where: { podcastFeedDataSourceItem in
+                        podcastFeedDataSourceItem.searchResult == dataSourceItem.searchResult
+                    }
+                )
+            {
+                return .subscribedFromPodcastIndex
+            } else {
+                return .subscriptionAvailableFromPodcastIndex
+            }
         }
     }
 }

@@ -35,7 +35,6 @@ extension DashboardRootViewController: DashboardPodcastFeedsListDelegate {
             return
         }
         
-        
         let podcastPlayerHelper: PodcastPlayerHelper
         
         if let chat = podcastFeed.chat {

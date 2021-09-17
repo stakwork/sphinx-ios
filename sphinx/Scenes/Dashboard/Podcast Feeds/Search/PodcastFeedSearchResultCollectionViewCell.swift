@@ -25,6 +25,8 @@ class PodcastFeedSearchResultCollectionViewCell: UICollectionViewCell {
     }
 
     var onSubscriptionButtonTapped: ((PodcastFeedSearchResult) -> Void)?
+    
+    private var subscriptionState: SubscriptionState = .followedViaTribe
 }
 
 
@@ -65,12 +67,18 @@ extension PodcastFeedSearchResultCollectionViewCell {
     
     public func configure(
         withItem searchResult: PodcastFeedSearchResult,
-        shouldShowSeparator: Bool = false,
-        shouldShowSubscribeButton: Bool = false
+        subscriptionState: SubscriptionState,
+        shouldShowSeparator: Bool = false
+//        shouldShowSubscribeButton: Bool = false
     ) {
         bottomSeparatorView.isHidden = shouldShowSeparator == false
-        feedSubscriptionButton.isHidden = shouldShowSubscribeButton == false
+//        feedSubscriptionButton.isHidden = shouldShowSubscribeButton == false
+        
+        if subscriptionState == .followedViaTribe {
+            feedSubscriptionButton.isHidden = true
+        }
 
+        self.subscriptionState = subscriptionState
         item = searchResult
     }
 }
@@ -105,5 +113,31 @@ extension PodcastFeedSearchResultCollectionViewCell {
         
         feedTitleLabel.text = item.title
         feedSubtitleLabel.text = item.podcastDescription
+        
+        switch subscriptionState {
+            
+        case .subscribedFromPodcastIndex:
+            feedSubscriptionButton.setImage(.checkmark, for: .normal)
+            feedSubscriptionButton.isEnabled = false
+        case .subscriptionAvailableFromPodcastIndex:
+//            feedSubscriptionButton.setImage(.add, for: .normal)
+            feedSubscriptionButton.setImage(UIImage(systemName: "plus"), for: .normal)
+//            feedSubscriptionButton.setImage(nil, for: .normal)
+//            feedSubscriptionButton.setTitle("plus", for: .normal)
+            feedSubscriptionButton.isEnabled = true
+        case .followedViaTribe:
+            feedSubscriptionButton.isHidden = true
+            feedSubscriptionButton.isEnabled = false
+        }
+    }
+}
+
+
+extension PodcastFeedSearchResultCollectionViewCell {
+    
+    enum SubscriptionState {
+        case subscribedFromPodcastIndex
+        case subscriptionAvailableFromPodcastIndex
+        case followedViaTribe
     }
 }

@@ -100,15 +100,14 @@ extension PodcastFeedSearchResultCollectionViewCell {
         if let imageURL = imageURL {
             feedThumbnailImageView.sd_setImage(
                 with: imageURL,
-                placeholderImage: UIImage(named: "podcastTagIcon"),
+                placeholderImage: UIImage(named: "podcastPlaceholder"),
                 options: [.highPriority],
                 progress: nil
             )
             
             feedThumbnailImageView.sd_imageIndicator = SDWebImageProgressIndicator.default
         } else {
-            // TODO: What's the recommended placeholder to use here?
-            feedThumbnailImageView.image = UIImage(named: "podcastTagIcon")
+            feedThumbnailImageView.image = UIImage(named: "podcastPlaceholder")
         }
         
         feedTitleLabel.text = item.title

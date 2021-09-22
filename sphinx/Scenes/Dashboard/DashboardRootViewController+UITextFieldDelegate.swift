@@ -24,9 +24,6 @@ extension DashboardRootViewController: UITextFieldDelegate {
         _ textField: UITextField,
         reason: UITextField.DidEndEditingReason
     ) {
-        if case .feed = activeTab {
-            presentRootFeedsListView()
-        }
     }
     
    
@@ -43,6 +40,7 @@ extension DashboardRootViewController: UITextFieldDelegate {
             feedSearchResultsContainerViewController.updateSearchQuery(
                 with: ""
             )
+            presentRootFeedsListView()
         case .friends:
             contactChatsContainerViewController.updateWithNewChats(
                 chatsListViewModel.contactChats

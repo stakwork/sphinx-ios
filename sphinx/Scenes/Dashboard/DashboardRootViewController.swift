@@ -99,7 +99,7 @@ class DashboardRootViewController: RootViewController {
                 container: mainContentContainerView
             )
             
-            searchTextField.text = ""
+            resetSearchField()
             loadDataOnTabChange(to: activeTab)
             feedViewMode = .rootList
         }

@@ -290,6 +290,9 @@
                             <constraint firstItem="oTA-xG-eJf" firstAttribute="centerY" secondItem="U25-4Z-Far" secondAttribute="centerY" id="hXV-29-IBM"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="emptyStateMessageLabel" destination="oTA-xG-eJf" id="Cc2-W0-oTB"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="saU-RZ-2He" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

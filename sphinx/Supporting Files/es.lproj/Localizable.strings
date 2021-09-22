@@ -53,6 +53,7 @@
 "dashboard.feeds.filters.play" = "Play";
 "dashboard.feeds.section-headings.following" = "Following";
 "dashboard.feeds.section-headings.directory" = "Directory";
+"dashboard.feeds.content.empty-state-message" = "No Podcasts Found";
 
 
 // DASHBOARD FEED SEARCH

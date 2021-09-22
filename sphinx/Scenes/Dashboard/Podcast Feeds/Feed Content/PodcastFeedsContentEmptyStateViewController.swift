@@ -8,7 +8,9 @@
 import UIKit
 
 
-class PodcastFeedsContentEmptyStateViewController: UIViewController {}
+class PodcastFeedsContentEmptyStateViewController: UIViewController {
+    @IBOutlet weak var emptyStateMessageLabel: UILabel!
+}
     
 
 // MARK: -  Static Members
@@ -32,7 +34,7 @@ extension PodcastFeedsContentEmptyStateViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        emptyStateMessageLabel.text = "dashboard.feeds.content.empty-state-message".localized
     }
 
 }

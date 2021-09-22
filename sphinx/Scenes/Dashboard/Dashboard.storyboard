@@ -43,13 +43,13 @@
                                         <rect key="frame" x="16" y="16" width="382" height="44"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lwz-zX-pkx">
-                                                <rect key="frame" x="16" y="11.5" width="21" height="21"/>
+                                                <rect key="frame" x="16" y="10" width="24.5" height="24.5"/>
                                                 <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="21"/>
                                                 <color key="textColor" name="PlaceholderText"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ef7-It-4Rs">
-                                                <rect key="frame" x="47" y="0.0" width="319" height="44"/>
+                                                <rect key="frame" x="50.5" y="0.0" width="315.5" height="44"/>
                                                 <color key="textColor" name="Text"/>
                                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
@@ -200,7 +200,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jPy-9I-cKg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-6030" y="1945"/>
+            <point key="canvasLocation" x="-6797" y="1943"/>
         </scene>
         <!--Podcast Feeds Container View Controller-->
         <scene sceneID="mR6-dD-8wi">
@@ -266,7 +266,34 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Icu-n7-UUo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4122" y="2642"/>
+            <point key="canvasLocation" x="-4488" y="2638"/>
+        </scene>
+        <!--Podcast Feeds Content Empty State View Controller-->
+        <scene sceneID="Nvu-Zv-IVl">
+            <objects>
+                <viewController storyboardIdentifier="PodcastFeedsContentEmptyStateViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="rf1-Tn-GFa" customClass="PodcastFeedsContentEmptyStateViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="U25-4Z-Far">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Podcasts Found" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oTA-xG-eJf">
+                                <rect key="frame" x="100" y="434" width="214" height="28"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="24"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="CKZ-um-FHn"/>
+                        <color key="backgroundColor" name="ListBG"/>
+                        <constraints>
+                            <constraint firstItem="oTA-xG-eJf" firstAttribute="centerX" secondItem="U25-4Z-Far" secondAttribute="centerX" id="LfB-iF-kZ0"/>
+                            <constraint firstItem="oTA-xG-eJf" firstAttribute="centerY" secondItem="U25-4Z-Far" secondAttribute="centerY" id="hXV-29-IBM"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="saU-RZ-2He" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3691" y="2640"/>
         </scene>
         <!--Feed Content Collection View Controller-->
         <scene sceneID="Ycq-O7-bTT">
@@ -291,7 +318,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IeO-rD-8pI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3151" y="2641"/>
+            <point key="canvasLocation" x="-2880" y="2640"/>
         </scene>
         <!--Chats Container View Controller-->
         <scene sceneID="qKk-C4-9MQ">
@@ -345,35 +372,35 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="saw-em-W2w">
-                                <rect key="frame" x="112.5" y="330" width="189.5" height="236.5"/>
+                                <rect key="frame" x="111.5" y="330" width="191" height="236.5"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="podcastIndexLogo" translatesAutoresizingMaskIntoConstraints="NO" id="fF4-Ol-xgj">
-                                        <rect key="frame" x="56.5" y="0.0" width="76" height="72"/>
+                                        <rect key="frame" x="57.5" y="0.0" width="76" height="72"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="76" id="4Dn-N7-Xc3"/>
                                             <constraint firstAttribute="height" constant="72" id="Oa0-0g-72C"/>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Co-KV-mYF" userLabel="Spacer">
-                                        <rect key="frame" x="69.5" y="83" width="50" height="50"/>
+                                        <rect key="frame" x="70.5" y="83" width="50" height="50"/>
                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="8"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search over" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ndg-SW-RNS">
-                                        <rect key="frame" x="41.5" y="144" width="106" height="23.5"/>
+                                        <rect key="frame" x="42" y="144" width="107.5" height="23.5"/>
                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="20"/>
                                         <color key="textColor" name="PlaceholderText"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4 000 000 podcasts" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l4t-u1-si6">
-                                        <rect key="frame" x="5.5" y="178.5" width="178" height="23.5"/>
+                                        <rect key="frame" x="6.5" y="178.5" width="178" height="23.5"/>
                                         <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="20"/>
                                         <color key="textColor" name="PlaceholderText"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="on the Podcast Index" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0eu-Sz-ryQ">
-                                        <rect key="frame" x="0.0" y="213" width="189.5" height="23.5"/>
+                                        <rect key="frame" x="0.0" y="213" width="191" height="23.5"/>
                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="20"/>
                                         <color key="textColor" name="PlaceholderText"/>
                                         <nil key="highlightedColor"/>
@@ -391,7 +418,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MQo-iP-nxj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-6404" y="2642"/>
+            <point key="canvasLocation" x="-7171" y="2640"/>
         </scene>
         <!--Podcast Feed Search Results Collection View Controller-->
         <scene sceneID="qWS-Af-xVJ">
@@ -416,7 +443,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zCU-VE-Yxf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-5591" y="2640"/>
+            <point key="canvasLocation" x="-6358" y="2638"/>
         </scene>
     </scenes>
     <resources>

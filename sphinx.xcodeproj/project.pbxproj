@@ -590,6 +590,7 @@
 		F3D86DC226B157D400EB9711 /* PodcastFeedCollectionViewSectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = F3D86DC126B157D400EB9711 /* PodcastFeedCollectionViewSectionHeader.xib */; };
 		F3D86DC426B157F600EB9711 /* PodcastFeedCollectionViewSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D86DC326B157F600EB9711 /* PodcastFeedCollectionViewSectionHeader.swift */; };
 		F3DFB78A26B87C0C00E76FBD /* FeedsListViewController+ContentFilterOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3DFB78926B87C0B00E76FBD /* FeedsListViewController+ContentFilterOption.swift */; };
+		F3E9C02026FB76A100718942 /* PodcastFeedsContentEmptyStateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E9C01E26FB76A100718942 /* PodcastFeedsContentEmptyStateViewController.swift */; };
 		F3EF52C526B2823700F06668 /* FeedFilterChipsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3EF52C426B2823700F06668 /* FeedFilterChipsCollectionViewController.swift */; };
 		F3EF52C726B28DBE00F06668 /* FeedContentCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3EF52C626B28DBD00F06668 /* FeedContentCollectionViewController.swift */; };
 /* End PBXBuildFile section */
@@ -1312,6 +1313,7 @@
 		F3D86DC126B157D400EB9711 /* PodcastFeedCollectionViewSectionHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PodcastFeedCollectionViewSectionHeader.xib; sourceTree = "<group>"; };
 		F3D86DC326B157F600EB9711 /* PodcastFeedCollectionViewSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastFeedCollectionViewSectionHeader.swift; sourceTree = "<group>"; };
 		F3DFB78926B87C0B00E76FBD /* FeedsListViewController+ContentFilterOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedsListViewController+ContentFilterOption.swift"; sourceTree = "<group>"; };
+		F3E9C01E26FB76A100718942 /* PodcastFeedsContentEmptyStateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastFeedsContentEmptyStateViewController.swift; sourceTree = "<group>"; };
 		F3EF52C426B2823700F06668 /* FeedFilterChipsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedFilterChipsCollectionViewController.swift; sourceTree = "<group>"; };
 		F3EF52C626B28DBD00F06668 /* FeedContentCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedContentCollectionViewController.swift; sourceTree = "<group>"; };
 		FDF1E0A8EFE1D98BD5A99505 /* Pods-sphinx.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sphinx.release.xcconfig"; path = "Target Support Files/Pods-sphinx/Pods-sphinx.release.xcconfig"; sourceTree = "<group>"; };
@@ -3030,6 +3032,7 @@
 				F3EF52C626B28DBD00F06668 /* FeedContentCollectionViewController.swift */,
 				F3D86DBD26B109FD00EB9711 /* PodcastFeedCollectionViewCell.swift */,
 				F3D86DC326B157F600EB9711 /* PodcastFeedCollectionViewSectionHeader.swift */,
+				F3E9C01E26FB76A100718942 /* PodcastFeedsContentEmptyStateViewController.swift */,
 				F3D86DBF26B14E5E00EB9711 /* PodcastFeedCollectionViewCell.xib */,
 				F3D86DC126B157D400EB9711 /* PodcastFeedCollectionViewSectionHeader.xib */,
 			);
@@ -3796,6 +3799,7 @@
 				47BE85462464928800BE4AE8 /* KeychainRestoreViewController.swift in Sources */,
 				47F258CE253F6B0100122A5A /* PodcastSmallPlayer.swift in Sources */,
 				476EB47023C50640009745E2 /* GroupAddedContactsDataSource.swift in Sources */,
+				F3E9C02026FB76A100718942 /* PodcastFeedsContentEmptyStateViewController.swift in Sources */,
 				47BA7A9124118F6B0001773F /* CustomSwiftLinkPreview.swift in Sources */,
 				4787F8922475BE3300CCE8B9 /* LoadingWheelHelper.swift in Sources */,
 				47484B972512690D00F82AAC /* BotWebView.swift in Sources */,

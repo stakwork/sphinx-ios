@@ -7,6 +7,7 @@ class FeedContentCollectionViewController: UICollectionViewController {
     
     var onPodcastEpisodeCellSelected: ((NSManagedObjectID) -> Void)!
     var onPodcastFeedCellSelected: ((NSManagedObjectID) -> Void)!
+    var onNewResultsFetched: ((Int) -> Void)!
 
     private var managedObjectContext: NSManagedObjectContext!
     private var fetchedResultsController: NSFetchedResultsController<PodcastFeed>!
@@ -30,14 +31,18 @@ extension FeedContentCollectionViewController {
         fetchedResultsController: NSFetchedResultsController<PodcastFeed>,
         interSectionSpacing: CGFloat = 10.0,
         onPodcastEpisodeCellSelected: @escaping ((NSManagedObjectID) -> Void) = { _ in },
-        onPodcastFeedCellSelected: @escaping ((NSManagedObjectID) -> Void) = { _ in }
+        onPodcastFeedCellSelected: @escaping ((NSManagedObjectID) -> Void) = { _ in },
+        onNewResultsFetched: @escaping ((Int) -> Void) = { _ in }
     ) -> FeedContentCollectionViewController {
         let viewController = StoryboardScene.Dashboard.feedContentCollectionViewController.instantiate()
 
         viewController.managedObjectContext = managedObjectContext
         viewController.interSectionSpacing = interSectionSpacing
+        
         viewController.onPodcastEpisodeCellSelected = onPodcastEpisodeCellSelected
         viewController.onPodcastFeedCellSelected = onPodcastFeedCellSelected
+        viewController.onNewResultsFetched = onNewResultsFetched
+        
         viewController.fetchedResultsController = fetchedResultsController
         viewController.fetchedResultsController.delegate = viewController
         
@@ -380,6 +385,8 @@ extension FeedContentCollectionViewController: NSFetchedResultsControllerDelegat
             changedSnapshot as NSDiffableDataSourceSnapshot<Int, NSManagedObjectID>,
             animatingDifferences: shouldAnimate
         )
+        
+        onNewResultsFetched(changedSnapshot.numberOfItems)
     }
 }
 

@@ -36,6 +36,13 @@ class PodcastFeedsContainerViewController: UIViewController {
     var fetchedResultsController: NSFetchedResultsController<PodcastFeed>!
     
     
+    internal lazy var emptyStateViewController: PodcastFeedsContentEmptyStateViewController = {
+        PodcastFeedsContentEmptyStateViewController.instantiate(
+            
+        )
+    }()
+    
+    
     static func instantiate(
         managedObjectContext: NSManagedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext,
         podcastFeedsListDelegate: DashboardPodcastFeedsListDelegate
@@ -128,13 +135,23 @@ extension PodcastFeedsContainerViewController {
         )
     }
     
+    private func handleNewResultsFetch(_ numberOfItems: Int) {
+        if numberOfItems == 0 {
+            addChildVC(
+                child: emptyStateViewController,
+                container: feedContentCollectionViewContainer
+            )
+        } else {
+            removeChildVC(child: emptyStateViewController)
+        }
+    }
+    
     private func configureFilterChipCollectionView() {
         filterChipCollectionViewController = FeedFilterChipsCollectionViewController
             .instantiate(
                 contentFilterOptions: Array(contentFilterOptions),
                 onCellSelected: handleFilterChipActivation(_:)
             )
-        
         
         addChildVC(
             child: filterChipCollectionViewController,
@@ -148,7 +165,8 @@ extension PodcastFeedsContainerViewController {
             .instantiate(
                 fetchedResultsController: fetchedResultsController,
                 onPodcastEpisodeCellSelected: handleLatestEpisodeCellSelection(_:),
-                onPodcastFeedCellSelected: handleLatestFeedCellSelection(_:)
+                onPodcastFeedCellSelected: handleLatestFeedCellSelection(_:),
+                onNewResultsFetched: handleNewResultsFetch(_:)
             )
         
         addChildVC(

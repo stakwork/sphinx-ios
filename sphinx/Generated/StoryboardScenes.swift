@@ -59,6 +59,11 @@ internal enum StoryboardScene {
         )
         
         
+        internal static let podcastFeedsContentEmptyStateViewController = SceneType<PodcastFeedsContentEmptyStateViewController>(
+            storyboard: Dashboard.self,
+            identifier: "PodcastFeedsContentEmptyStateViewController"
+        )
+        
         internal static let podcastFeedSearchContainerViewController = SceneType<PodcastFeedSearchContainerViewController>(
             storyboard: Dashboard.self,
             identifier: "PodcastFeedSearchContainerViewController"

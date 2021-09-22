@@ -104,8 +104,6 @@ extension PodcastFeedSearchResultCollectionViewCell {
                 options: [.highPriority],
                 progress: nil
             )
-            
-            feedThumbnailImageView.sd_imageIndicator = SDWebImageProgressIndicator.default
         } else {
             feedThumbnailImageView.image = UIImage(named: "podcastPlaceholder")
         }

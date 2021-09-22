@@ -119,10 +119,7 @@ extension PodcastFeedSearchResultCollectionViewCell {
             feedSubscriptionButton.setImage(.checkmark, for: .normal)
             feedSubscriptionButton.isEnabled = false
         case .subscriptionAvailableFromPodcastIndex:
-//            feedSubscriptionButton.setImage(.add, for: .normal)
             feedSubscriptionButton.setImage(UIImage(systemName: "plus"), for: .normal)
-//            feedSubscriptionButton.setImage(nil, for: .normal)
-//            feedSubscriptionButton.setTitle("plus", for: .normal)
             feedSubscriptionButton.isEnabled = true
         case .followedViaTribe:
             feedSubscriptionButton.isHidden = true

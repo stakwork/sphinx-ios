@@ -201,15 +201,18 @@ extension PodcastFeedSearchContainerViewController {
     private func handleIndexResultCellSelection(
         _ searchResult: PodcastFeedSearchResult
     ) {
-        let podcastFeed = PodcastFeed(
-            from: searchResult,
-            managedObjectContext: managedObjectContext
-        )
+        let fetchRequest: NSFetchRequest<PodcastFeed> = PodcastFeed
+            .FetchRequests
+            .matching(id: PodcastFeed.ID(searchResult.id))
         
-        resultsDelegate?.viewController(
-            self,
-            didSelectPodcastFeedWithID: podcastFeed.objectID
-        )
+        let result = try! managedObjectContext.fetch(fetchRequest)
+            
+        if let podcastFeed = result.first {
+            resultsDelegate?.viewController(
+                self,
+                didSelectPodcastFeedWithID: podcastFeed.objectID
+            )
+        }
     }
     
     

@@ -16,8 +16,8 @@ class CoreDataManager {
     
     private init() {}
     
+    
     lazy var persistentContainer: NSPersistentContainer = {
-        
         let container = NSPersistentContainer(name: "sphinx")
         
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
@@ -25,8 +25,23 @@ class CoreDataManager {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         })
+        
+        container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        container.viewContext.shouldDeleteInaccessibleFaults = true
+        
+        // 🔑 Ensures that the `mainContext` is aware of any changes that were made
+        // to the persistent container.
+        //
+        // For example, when we save a background context,
+        // the persistent container is automatically informed of the changes that
+        // were made. And since the `mainContext` is considered to be a child of
+        // the persistent container, it will receive those updates -- merging
+        // any changes, as the name suggests, automatically.
+        container.viewContext.automaticallyMergesChangesFromParent = true
+        
         return container
     }()
+    
     
     func saveContext() {
         let context = CoreDataManager.sharedManager.persistentContainer.viewContext

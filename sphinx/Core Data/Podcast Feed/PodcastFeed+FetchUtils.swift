@@ -24,6 +24,18 @@ extension PodcastFeed {
                 searchQuery
             )
         }
+        
+        
+        public static func matching(id: PodcastFeed.ID) -> NSPredicate {
+            let keyword = "=="
+            let formatSpecifier = "%i"
+
+            return NSPredicate(
+                format: "%K \(keyword) \(formatSpecifier)",
+                "id",
+                id
+            )
+        }
     }
 }
 
@@ -88,6 +100,16 @@ extension PodcastFeed {
                 .matching(searchQuery: searchQuery)
 
             request.sortDescriptors = [PodcastFeed.SortDescriptors.nameAscending]
+
+            return request
+        }
+     
+        
+        public static func matching(id: PodcastFeed.ID) -> NSFetchRequest<PodcastFeed> {
+            let request: NSFetchRequest<PodcastFeed> = baseFetchRequest()
+            
+            request.predicate = Predicates.matching(id: id)
+            request.sortDescriptors = []
 
             return request
         }

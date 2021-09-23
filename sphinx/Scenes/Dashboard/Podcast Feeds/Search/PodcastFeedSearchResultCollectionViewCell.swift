@@ -69,13 +69,12 @@ extension PodcastFeedSearchResultCollectionViewCell {
         withItem searchResult: PodcastFeedSearchResult,
         subscriptionState: SubscriptionState,
         shouldShowSeparator: Bool = false
-//        shouldShowSubscribeButton: Bool = false
     ) {
         bottomSeparatorView.isHidden = shouldShowSeparator == false
-//        feedSubscriptionButton.isHidden = shouldShowSubscribeButton == false
         
         if subscriptionState == .followedViaTribe {
             feedSubscriptionButton.isHidden = true
+            feedSubscriptionButton.isEnabled = false
         }
 
         self.subscriptionState = subscriptionState
@@ -112,12 +111,13 @@ extension PodcastFeedSearchResultCollectionViewCell {
         feedSubtitleLabel.text = item.podcastDescription
         
         switch subscriptionState {
-            
         case .subscribedFromPodcastIndex:
-            feedSubscriptionButton.setImage(.checkmark, for: .normal)
+            feedSubscriptionButton.setImage(UIImage(systemName: "checkmark"), for: .normal)
+            feedSubscriptionButton.isHidden = false
             feedSubscriptionButton.isEnabled = false
         case .subscriptionAvailableFromPodcastIndex:
             feedSubscriptionButton.setImage(UIImage(systemName: "plus"), for: .normal)
+            feedSubscriptionButton.isHidden = false
             feedSubscriptionButton.isEnabled = true
         case .followedViaTribe:
             feedSubscriptionButton.isHidden = true

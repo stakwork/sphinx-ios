@@ -213,6 +213,9 @@ extension PodcastFeedSearchContainerViewController {
                 didSelectPodcastFeedWithID: podcastFeed.objectID
             )
         }
+        
+        // 📝 TODO:  Handle the case where a directory result is selected, but not subscribed to, and
+        // we don't yet have a `PodcastFeed` model for it in the data store.
     }
     
     

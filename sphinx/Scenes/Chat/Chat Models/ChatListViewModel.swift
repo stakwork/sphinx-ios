@@ -35,6 +35,34 @@ final class ChatListViewModel: NSObject {
     }
     
     
+    func contactChats(
+        fromSearchQuery searchQuery: String
+    ) -> [ChatListCommonObject] {
+        contactsService
+            .getChatListObjects()
+            .filter {
+                $0.isConversation() &&
+                $0.getName()
+                    .lowercased()
+                    .starts(with: searchQuery.lowercased())
+            }
+    }
+    
+    
+    func tribeChats(
+        fromSearchQuery searchQuery: String
+    ) -> [ChatListCommonObject] {
+        contactsService
+            .getChatListObjects()
+            .filter {
+                $0.isPublicGroup() &&
+                $0.getName()
+                    .lowercased()
+                    .starts(with: searchQuery.lowercased())
+            }
+    }
+    
+    
     func loadFriends(fromPush: Bool = false, completion: @escaping () -> ()) {
         if let contactsService = contactsService {
             API.sharedInstance.getContacts(fromPush: fromPush, callback: {(contacts, chats, subscriptions) -> () in

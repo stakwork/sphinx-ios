@@ -60,12 +60,12 @@ extension DashboardRootViewController: UITextFieldDelegate {
         shouldChangeCharactersIn range: NSRange,
         replacementString string: String
     ) -> Bool {
-        var searchString = (textField.text ?? "") as NSString
-    
-        searchString = searchString.replacingCharacters(
+        var initialText = (textField.text ?? "") as NSString
+
+        let queryString = initialText.replacingCharacters(
             in: range,
             with: string
-        ) as NSString
+        )
         
         switch activeTab {
         case .feed:
@@ -74,15 +74,17 @@ extension DashboardRootViewController: UITextFieldDelegate {
             }
             
             feedSearchResultsContainerViewController.updateSearchQuery(
-                with: searchString as String
+                with: queryString
             )
         case .friends:
             contactChatsContainerViewController.updateWithNewChats(
-                chatsListViewModel.contactChats
+                chatsListViewModel
+                    .contactChats(fromSearchQuery: queryString)
             )
         case .tribes:
             tribeChatsContainerViewController.updateWithNewChats(
-                chatsListViewModel.tribeChats
+                chatsListViewModel
+                    .tribeChats(fromSearchQuery: queryString)
             )
         }
             

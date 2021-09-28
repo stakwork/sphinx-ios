@@ -45,6 +45,7 @@ class DashboardFeedsContainerViewController: UIViewController {
     
     internal lazy var emptyStateViewController: PodcastFeedsContentEmptyStateViewController = {
         PodcastFeedsContentEmptyStateViewController.instantiate(
+            contentFilterOption: activeFilterOption
         )
     }()
     
@@ -203,6 +204,8 @@ extension DashboardFeedsContainerViewController {
     
     
     private func showEmptyStateViewController() {
+        emptyStateViewController.contentFilterOption = activeFilterOption
+        
         addChildVC(
             child: emptyStateViewController,
             container: feedContentCollectionViewContainer

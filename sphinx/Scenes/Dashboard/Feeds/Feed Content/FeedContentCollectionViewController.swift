@@ -96,14 +96,7 @@ extension FeedContentCollectionViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        do {
-            try fetchedResultsController.performFetch()
-        } catch {
-            AlertHelper.showAlert(
-                title: "Data Loading Error",
-                message: "\(error)"
-            )
-        }
+        fetchItems()
     }
 }
 
@@ -221,6 +214,18 @@ extension FeedContentCollectionViewController {
 
     func configureDataSource(for collectionView: UICollectionView) {
         dataSource = makeDataSource(for: collectionView)
+    }
+    
+    
+    func fetchItems() {
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            AlertHelper.showAlert(
+                title: "Data Loading Error",
+                message: "\(error)"
+            )
+        }
     }
 }
 

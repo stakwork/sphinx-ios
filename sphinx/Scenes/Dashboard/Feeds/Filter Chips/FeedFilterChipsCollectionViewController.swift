@@ -3,7 +3,7 @@ import UIKit
 
 
 class FeedFilterChipsCollectionViewController: UICollectionViewController {
-    typealias ContentFilterOption = PodcastFeedsContainerViewController.ContentFilterOption
+    typealias ContentFilterOption = DashboardFeedsContainerViewController.ContentFilterOption
     
     var contentFilterOptions: [ContentFilterOption]!
     var onCellSelected: ((CellDataItemType) -> Void)!

@@ -98,7 +98,7 @@ extension DashboardRootViewController {
     private func presentFeedSearchView() {
         feedViewMode = .searching
         
-        feedsListViewController.removeFromParent()
+        feedsContainerViewController.removeFromParent()
         
         addChildVC(
             child: feedSearchResultsContainerViewController,
@@ -113,7 +113,7 @@ extension DashboardRootViewController {
         feedSearchResultsContainerViewController.removeFromParent()
         
         addChildVC(
-            child: feedsListViewController,
+            child: feedsContainerViewController,
             container: mainContentContainerView
         )
     }

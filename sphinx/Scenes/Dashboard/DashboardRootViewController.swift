@@ -51,10 +51,9 @@ class DashboardRootViewController: RootViewController {
     }()
     
     
-    internal lazy var feedsListViewController = {
-        PodcastFeedsContainerViewController.instantiate(
-            podcastFeedsListDelegate: self
-//            podcastEpisodeListDelegate: self
+    internal lazy var feedsContainerViewController = {
+        DashboardFeedsContainerViewController.instantiate(
+            feedsListContainerDelegate: self
         )
     }()
     
@@ -306,7 +305,7 @@ extension DashboardRootViewController {
     ) -> UIViewController {
         switch activeTab {
         case .feed:
-            return feedsListViewController
+            return feedsContainerViewController
         case .friends:
             return contactChatsContainerViewController
         case .tribes:

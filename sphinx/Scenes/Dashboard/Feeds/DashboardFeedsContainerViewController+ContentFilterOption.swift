@@ -1,7 +1,7 @@
 import Foundation
 
 
-extension PodcastFeedsContainerViewController {
+extension DashboardFeedsContainerViewController {
     struct ContentFilterOption {
         let id = UUID()
         
@@ -39,7 +39,7 @@ extension PodcastFeedsContainerViewController {
 }
 
 
-extension PodcastFeedsContainerViewController.ContentFilterOption: CaseIterable {
+extension DashboardFeedsContainerViewController.ContentFilterOption: CaseIterable {
     static var allCases: [Self] {
         [
             .allContent,
@@ -52,6 +52,6 @@ extension PodcastFeedsContainerViewController.ContentFilterOption: CaseIterable 
 }
 
 
-extension PodcastFeedsContainerViewController.ContentFilterOption: Hashable {}
+extension DashboardFeedsContainerViewController.ContentFilterOption: Hashable {}
 
-extension PodcastFeedsContainerViewController.ContentFilterOption: Identifiable {}
+extension DashboardFeedsContainerViewController.ContentFilterOption: Identifiable {}

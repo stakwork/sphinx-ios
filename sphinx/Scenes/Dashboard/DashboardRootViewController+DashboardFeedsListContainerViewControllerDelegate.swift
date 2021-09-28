@@ -2,7 +2,7 @@ import UIKit
 import CoreData
 
 
-extension DashboardRootViewController: DashboardPodcastFeedsListDelegate {
+extension DashboardRootViewController: DashboardFeedsListContainerViewControllerDelegate {
     
     func viewController(
         _ viewController: UIViewController,
@@ -107,32 +107,5 @@ extension DashboardRootViewController {
         podcastFeedVC.modalPresentationStyle = .fullScreen
         
         navigationController?.pushViewController(podcastFeedVC, animated: true)
-    }
-}
-
-
-extension DashboardRootViewController: PodcastPlayerVCDelegate {
-    
-    func shouldDismissPlayerView() {
-        navigationController?.popViewController(animated: true)
-    }
-    
-    
-    func willDismissPlayer(playing: Bool) {
-    }
-    
-    
-    func shouldShareClip(comment: PodcastComment) {
-        
-    }
-    
-    
-    func shouldGoToPlayer() {
-        
-    }
-    
-
-    func shouldSendBoost(message: String, amount: Int, animation: Bool) -> TransactionMessage? {
-        nil
     }
 }

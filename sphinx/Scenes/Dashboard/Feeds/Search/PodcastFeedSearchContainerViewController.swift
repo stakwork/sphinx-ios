@@ -37,7 +37,8 @@ class PodcastFeedSearchContainerViewController: UIViewController {
             .instantiate(
                 onPodcastFeedCellSelected: handleFeedCellSelection,
                 onPodcastDirectoryResultCellSelected: handleIndexResultCellSelection,
-                onPodcastSubscriptionSelected: handlePodcastIndexSubscription
+                onPodcastSubscriptionSelected: handlePodcastIndexSubscription,
+                onPodcastSubscriptionCancellationSelected: handlePodcastIndexSubscriptionCancellation
             )
     }()
     
@@ -229,10 +230,27 @@ extension PodcastFeedSearchContainerViewController {
 
         CoreDataManager.sharedManager.saveContext()
 
-        // TODO: Make sure that the delegate is calling this.
-//        searchResultsViewController.updateSnapshot(
-//            shouldAnimate: true
-//        )
+        searchResultsViewController.refreshPodcastIndexResultItem(using: searchResult)
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.searchResultsViewController.collectionView.reloadData()
+        }
+    }
+    
+    
+    private func handlePodcastIndexSubscriptionCancellation(
+        _ searchResult: PodcastFeedSearchResult
+    ) {
+        if let persistedFeed: PodcastFeed = CoreDataManager
+            .sharedManager
+            .getObjectOfTypeWith(id: searchResult.id, entityName: "PodcastFeed")
+        {
+            managedObjectContext.delete(persistedFeed)
+            
+            CoreDataManager.sharedManager.saveContext()
+            
+            searchResultsViewController.refreshPodcastIndexResultItem(using: searchResult)
+        }
     }
 }
 

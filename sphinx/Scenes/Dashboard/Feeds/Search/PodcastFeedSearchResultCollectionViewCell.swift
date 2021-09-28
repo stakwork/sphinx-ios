@@ -24,7 +24,7 @@ class PodcastFeedSearchResultCollectionViewCell: UICollectionViewCell {
         }
     }
 
-    var onSubscriptionButtonTapped: ((PodcastFeedSearchResult) -> Void)?
+    var onSubscriptionButtonTapped: ((PodcastFeedSearchResult, SubscriptionState) -> Void)?
     
     private var subscriptionState: SubscriptionState = .followedViaTribe
 }
@@ -73,8 +73,7 @@ extension PodcastFeedSearchResultCollectionViewCell {
         bottomSeparatorView.isHidden = shouldShowSeparator == false
         
         if subscriptionState == .followedViaTribe {
-            feedSubscriptionButton.isHidden = true
-            feedSubscriptionButton.isEnabled = false
+            disableSubscriptionButton()
         }
 
         self.subscriptionState = subscriptionState
@@ -87,7 +86,7 @@ extension PodcastFeedSearchResultCollectionViewCell {
 extension PodcastFeedSearchResultCollectionViewCell {
     
     @IBAction func subscriptionButtonTapped(_ sender: UIButton) {
-        onSubscriptionButtonTapped?(item)
+        onSubscriptionButtonTapped?(item, subscriptionState)
     }
 }
 
@@ -112,17 +111,22 @@ extension PodcastFeedSearchResultCollectionViewCell {
         
         switch subscriptionState {
         case .subscribedFromPodcastIndex:
-            feedSubscriptionButton.setImage(UIImage(systemName: "checkmark"), for: .normal)
+            feedSubscriptionButton.setImage(UIImage(systemName: "minus.circle"), for: .normal)
             feedSubscriptionButton.isHidden = false
-            feedSubscriptionButton.isEnabled = false
+            feedSubscriptionButton.isEnabled = true
         case .subscriptionAvailableFromPodcastIndex:
             feedSubscriptionButton.setImage(UIImage(systemName: "plus"), for: .normal)
             feedSubscriptionButton.isHidden = false
             feedSubscriptionButton.isEnabled = true
         case .followedViaTribe:
-            feedSubscriptionButton.isHidden = true
-            feedSubscriptionButton.isEnabled = false
+            disableSubscriptionButton()
         }
+    }
+    
+    
+    private func disableSubscriptionButton() {
+        feedSubscriptionButton.isHidden = true
+        feedSubscriptionButton.isEnabled = false
     }
 }
 

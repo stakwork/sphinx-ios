@@ -17,6 +17,7 @@ class PodcastFeedSearchResultsCollectionViewController: UICollectionViewControll
     var onPodcastFeedCellSelected: ((NSManagedObjectID) -> Void)!
     var onPodcastDirectoryResultCellSelected: ((PodcastFeedSearchResult) -> Void)!
     var onPodcastSubscriptionSelected: ((PodcastFeedSearchResult) -> Void)!
+    var onPodcastSubscriptionCancellationSelected: ((PodcastFeedSearchResult) -> Void)!
 
     
     private var currentDataSnapshot: DataSourceSnapshot!
@@ -40,7 +41,8 @@ extension PodcastFeedSearchResultsCollectionViewController {
         interSectionSpacing: CGFloat = 0.0,
         onPodcastFeedCellSelected: ((NSManagedObjectID) -> Void)!,
         onPodcastDirectoryResultCellSelected: ((PodcastFeedSearchResult) -> Void)!,
-        onPodcastSubscriptionSelected: ((PodcastFeedSearchResult) -> Void)!
+        onPodcastSubscriptionSelected: ((PodcastFeedSearchResult) -> Void)!,
+        onPodcastSubscriptionCancellationSelected: ((PodcastFeedSearchResult) -> Void)!
     ) -> PodcastFeedSearchResultsCollectionViewController {
         let viewController = StoryboardScene
             .Dashboard
@@ -53,6 +55,7 @@ extension PodcastFeedSearchResultsCollectionViewController {
         viewController.onPodcastFeedCellSelected = onPodcastFeedCellSelected
         viewController.onPodcastDirectoryResultCellSelected = onPodcastDirectoryResultCellSelected
         viewController.onPodcastSubscriptionSelected = onPodcastSubscriptionSelected
+        viewController.onPodcastSubscriptionCancellationSelected = onPodcastSubscriptionCancellationSelected
         
         return viewController
     }
@@ -248,12 +251,7 @@ extension PodcastFeedSearchResultsCollectionViewController {
                 shouldShowSeparator: isLastRow == false
             )
             
-            switch section {
-            case CollectionViewSection.podcastIndexSearchResults:
-                cell.onSubscriptionButtonTapped = self.onPodcastSubscriptionSelected
-            case .subscribedFeedsResults:
-                break
-            }
+            cell.onSubscriptionButtonTapped = self.handleSubscriptionButtonTap(searchResult:subscriptionState:)
 
             return cell
         }
@@ -340,6 +338,22 @@ extension PodcastFeedSearchResultsCollectionViewController {
             animatingDifferences: shouldAnimate
         )
     }
+    
+    
+    func refreshPodcastIndexResultItem(
+        using searchResult: PodcastFeedSearchResult,
+        shouldAnimate: Bool = true
+    ) {
+        var newSnapshot = makeSnapshotForCurrentState()
+
+        let dataSourceItem = DataSourceItem.podcastIndexSearchResult(searchResult)
+        newSnapshot.reloadItems([dataSourceItem])
+        
+        dataSource.apply(
+            newSnapshot,
+            animatingDifferences: shouldAnimate
+        )
+    }
 }
 
 
@@ -403,7 +417,7 @@ extension PodcastFeedSearchResultsCollectionViewController.DataSourceItem {
 
 extension PodcastFeedSearchResultsCollectionViewController {
     
-    func subscriptionState(
+    private func subscriptionState(
         for dataSourceItem: DataSourceItem,
         in section: CollectionViewSection
     ) -> PodcastFeedSearchResultCollectionViewCell.SubscriptionState {
@@ -424,6 +438,21 @@ extension PodcastFeedSearchResultsCollectionViewController {
             } else {
                 return .subscriptionAvailableFromPodcastIndex
             }
+        }
+    }
+    
+    
+    private func handleSubscriptionButtonTap(
+        searchResult: PodcastFeedSearchResult,
+        subscriptionState: PodcastFeedSearchResultCollectionViewCell.SubscriptionState
+    ) {
+        switch subscriptionState {
+        case .followedViaTribe:
+            break
+        case .subscribedFromPodcastIndex:
+            onPodcastSubscriptionCancellationSelected(searchResult)
+        case .subscriptionAvailableFromPodcastIndex:
+            onPodcastSubscriptionSelected(searchResult)
         }
     }
 }

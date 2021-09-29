@@ -151,54 +151,6 @@ class PodcastPlayerHelper {
         )
     }
     
-    
-//    func loadPodcastFeedEpisodes(
-//        for podcastFeed: PodcastFeed,
-//        then completionHandler: @escaping (Bool) -> Void
-//    ) {
-//        guard let feedURLPath = podcastFeed.feedURLPath else {
-//            completionHandler(false)
-//            return
-//        }
-//
-//        API.sharedInstance.getPodcastEpisodes(
-//            byFeedURLPath: feedURLPath
-//        ) { result in
-//            DispatchQueue.main.async {
-//                //                self.stopProgressIndicator()
-//
-//                switch result {
-//                case .success(let searchResults):
-//                    self.searchResultsViewController.updateWithNew(
-//                        directorySearchResults: searchResults
-//                    )
-//                case .failure(_):
-//                    AlertHelper.showAlert(
-//                        title: "dashboard.feeds.search.error-alert-title".localized,
-//                        message: """
-//                        \("generic.contact-support".localized)
-//                        """
-//                    )
-//                }
-//            }
-//        }
-//            callback: { json in
-//                DispatchQueue.main.async {
-//                    self.persistDataForPodcastFeedEpisodes(
-//                        using: json,
-//                        for: podcastFeed
-//                    )
-//
-//                    completionHandler(true)
-//                }
-//            },
-//            errorCallback: {
-//                completionHandler(false)
-//            }
-//        )
-//    }
-    
-    
     func processLocalPodcastFeed(chat: Chat?, callback: @escaping (Bool) -> ()) {
         if let podcastFeed = chat?.podcastFeed {
             

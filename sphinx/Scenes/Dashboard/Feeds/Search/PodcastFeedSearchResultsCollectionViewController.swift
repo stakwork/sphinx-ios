@@ -315,10 +315,10 @@ extension PodcastFeedSearchResultsCollectionViewController {
     
     
     func updateWithNew(
-        podcastFeeds: [PodcastFeed],
+        followedPodcastFeeds: [PodcastFeed],
         shouldAnimate: Bool = true
     ) {
-        self.podcastFeeds = podcastFeeds
+        self.podcastFeeds = followedPodcastFeeds
 
         dataSource.apply(
             makeSnapshotForCurrentState(),

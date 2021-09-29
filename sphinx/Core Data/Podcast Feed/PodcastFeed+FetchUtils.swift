@@ -36,6 +36,13 @@ extension PodcastFeed {
                 id
             )
         }
+        
+        
+        public static let followedFeeds: NSPredicate = {
+            NSPredicate(
+                format: "isSubscribedFromPodcastIndex == true OR chat != nil"
+            )
+        }()
     }
 }
 
@@ -109,6 +116,16 @@ extension PodcastFeed {
             let request: NSFetchRequest<PodcastFeed> = baseFetchRequest()
             
             request.predicate = Predicates.matching(id: id)
+            request.sortDescriptors = []
+
+            return request
+        }
+        
+        
+        public static func followedFeeds() -> NSFetchRequest<PodcastFeed> {
+            let request: NSFetchRequest<PodcastFeed> = baseFetchRequest()
+            
+            request.predicate = Predicates.followedFeeds
             request.sortDescriptors = []
 
             return request

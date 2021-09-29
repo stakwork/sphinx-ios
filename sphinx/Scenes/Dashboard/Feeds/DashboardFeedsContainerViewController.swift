@@ -69,8 +69,10 @@ class DashboardFeedsContainerViewController: UIViewController {
     static func makeFetchedResultsController(
         using managedObjectContext: NSManagedObjectContext
     ) -> NSFetchedResultsController<PodcastFeed> {
-        NSFetchedResultsController(
-            fetchRequest: PodcastFeed.FetchRequests.default(),
+        let fetchRequest = PodcastFeed.FetchRequests.followedFeeds()
+        
+        return NSFetchedResultsController(
+            fetchRequest: fetchRequest,
             managedObjectContext: managedObjectContext,
             sectionNameKeyPath: nil,
             cacheName: nil

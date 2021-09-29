@@ -202,31 +202,42 @@ extension PodcastFeedSearchContainerViewController {
     private func handleIndexResultCellSelection(
         _ searchResult: PodcastFeedSearchResult
     ) {
-        let fetchRequest: NSFetchRequest<PodcastFeed> = PodcastFeed
+        let existingFeedsFetchRequest: NSFetchRequest<PodcastFeed> = PodcastFeed
             .FetchRequests
             .matching(id: PodcastFeed.ID(searchResult.id))
         
-        let result = try! managedObjectContext.fetch(fetchRequest)
+        let fetchRequestResult = try! managedObjectContext.fetch(existingFeedsFetchRequest)
             
-        if let podcastFeed = result.first {
+        if let existingPodcastFeed = fetchRequestResult.first {
             resultsDelegate?.viewController(
                 self,
-                didSelectPodcastFeedWithID: podcastFeed.objectID
+                didSelectPodcastFeedWithID: existingPodcastFeed.objectID
             )
         }
         
-        // 📝 TODO:  Handle the case where a directory result is selected, but not subscribed to, and
-        // we don't yet have a `PodcastFeed` model for it in the data store.
+        let newPodcastFeed = PodcastFeed(
+            from: searchResult,
+            managedObjectContext: managedObjectContext
+        )
+        
+        newPodcastFeed.isSubscribedFromPodcastIndex = false
+        
+        resultsDelegate?.viewController(
+            self,
+            didSelectPodcastFeedWithID: newPodcastFeed.objectID
+        )
     }
     
     
     private func handlePodcastIndexSubscription(
         _ searchResult: PodcastFeedSearchResult
     ) {
-        let _ = PodcastFeed(
+        let newPodcastFeed = PodcastFeed(
             from: searchResult,
             managedObjectContext: managedObjectContext
         )
+        
+        newPodcastFeed.isSubscribedFromPodcastIndex = true
 
         CoreDataManager.sharedManager.saveContext()
 
@@ -273,7 +284,13 @@ extension PodcastFeedSearchContainerViewController: NSFetchedResultsControllerDe
         }
         
         DispatchQueue.main.async { [weak self] in
-            self?.searchResultsViewController.updateWithNew(podcastFeeds: foundFeeds)
+            self?.searchResultsViewController.updateWithNew(
+                followedPodcastFeeds: foundFeeds
+                    .filter({
+                        $0.isSubscribedFromPodcastIndex ||
+                        $0.chat != nil
+                    })
+            )
         }
     }
 }

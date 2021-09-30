@@ -22,6 +22,7 @@ extension TransactionMessage {
         case Save
         case Boost
         case Resend
+        case Flag
     }
     
     
@@ -165,7 +166,8 @@ extension TransactionMessage {
     
     func getReplyMessageContent() -> String {
         if hasMessageContent() {
-            return getMessageContent()
+            let messageContent = getMessageContent()
+            return messageContent.isValidHTML ? "bot.response.preview".localized : messageContent
         }
         if let fileName = self.mediaFileName {
             return fileName
@@ -292,10 +294,6 @@ extension TransactionMessage {
         return type == TransactionMessageType.attachment.rawValue
     }
     
-    func canBeDownloaded() -> Bool {
-        return (type == TransactionMessageType.attachment.rawValue && getMediaType() != TransactionMessageType.textAttachment.rawValue) || isGiphy()
-    }
-    
     func isVideo() -> Bool {
         return getMediaType() == TransactionMessage.TransactionMessageType.videoAttachment.rawValue
     }
@@ -341,6 +339,10 @@ extension TransactionMessage {
         return type == TransactionMessageType.invoice.rawValue
     }
     
+    func isBotResponse() -> Bool {
+        return type == TransactionMessageType.botResponse.rawValue
+    }
+    
     func isBoosted() -> Bool {
         return self.reactions != nil && (self.reactions?.totalSats ?? 0) > 0
     }
@@ -373,6 +375,16 @@ extension TransactionMessage {
     
     func isDeleted() -> Bool {
         return status == TransactionMessageStatus.deleted.rawValue
+    }
+    
+    func isFlagged() -> Bool {
+        if !isFlagActionAllowed {
+            return false
+        }
+        if let uuid = uuid {
+            return (UserDefaults.standard.value(forKey: "\(uuid)-message-flag") as? Bool) ?? false
+        }
+        return false
     }
     
     func isNotConsecutiveMessage() -> Bool {
@@ -431,56 +443,87 @@ extension TransactionMessage {
             return options
         }
         
-        if let messageContent = messageContent, messageContent != "" && !isGiphy() {
-            if !messageContent.isVideoCallLink && !messageContent.isEncryptedString() {
+        if messageContainText() {
+            
+            if isCopyTextActionAllowed {
                 options.append(
-                    .init(tag: MessageActionsItem.Copy, materialIconName: "", iconImage: nil, label: "copy.text".localized)
+                    .init(
+                        tag: MessageActionsItem.Copy,
+                        materialIconName: "",
+                        iconImage: nil,
+                        label: "copy.text".localized
+                    )
                 )
             }
             
-            if !messageContent.isVideoCallLink && messageContent.stringLinks.count > 0 {
+            if isCopyLinkActionAllowed {
                 options.append(
-                    .init(tag: MessageActionsItem.CopyLink, materialIconName: "link", iconImage: nil, label:  "copy.link".localized)
+                    .init(
+                        tag: MessageActionsItem.CopyLink,
+                        materialIconName: "link",
+                        iconImage: nil,
+                        label:  "copy.link".localized
+                    )
                 )
             }
             
-            if messageContent.pubKeyMatches.count > 0 {
+            if isCopyPublicKeyActionAllowed {
                 options.append(
-                    .init(tag: MessageActionsItem.CopyPubKey, materialIconName: "supervisor_account", iconImage: nil, label:  "copy.pub.key".localized)
+                    .init(
+                        tag: MessageActionsItem.CopyPubKey,
+                        materialIconName: "supervisor_account",
+                        iconImage: nil,
+                        label:  "copy.pub.key".localized
+                    )
                 )
             }
             
-            if messageContent.isVideoCallLink {
+            if isCopyCallLinkActionAllowed {
                 options.append(
-                    .init(tag: MessageActionsItem.CopyCallLink, materialIconName: "link", iconImage: nil, label:  "copy.call.link".localized)
+                    .init(
+                        tag: MessageActionsItem.CopyCallLink,
+                        materialIconName: "link",
+                        iconImage: nil,
+                        label:  "copy.call.link".localized
+                    )
                 )
             }
         }
-        if (isTextMessage() || isAttachment()) && !(uuid ?? "").isEmpty {
+        
+        if isReplyActionAllowed {
             options.append(
-                .init(tag: MessageActionsItem.Reply, materialIconName: "", iconImage: nil, label:  "reply".localized)
+                .init(
+                    tag: MessageActionsItem.Reply,
+                    materialIconName: "",
+                    iconImage: nil,
+                    label:  "reply".localized
+                )
             )
         }
         
-        if canBeDownloaded() {
+        if isDownloadFileActionAllowed {
             options.append(
-                .init(tag: MessageActionsItem.Save, materialIconName: "", iconImage: nil, label: "save.file".localized)
+                .init(
+                    tag: MessageActionsItem.Save,
+                    materialIconName: "",
+                    iconImage: nil,
+                    label: "save.file".localized
+                )
             )
         }
         
-        if (!isInvoice() || (isInvoice() && !isPaid())) && canBeDeleted() {
+        if isBoostActionAllowed {
             options.append(
-                .init(tag: MessageActionsItem.Delete, materialIconName: "delete", iconImage: nil, label:  "delete.message".localized)
+                .init(
+                    tag: MessageActionsItem.Boost,
+                    materialIconName: nil,
+                    iconImage: "boostIconGreen",
+                    label: "Boost"
+                )
             )
         }
         
-        if shouldAllowBoost() {
-            options.append(
-                .init(tag: MessageActionsItem.Boost, materialIconName: nil, iconImage: "boostIconGreen", label: "Boost")
-            )
-        }
-        
-        if (isTextMessage() && status == TransactionMessageStatus.failed.rawValue) {
+        if isResendActionAllowed {
             options.append(
                 .init(
                     tag: MessageActionsItem.Resend,
@@ -491,11 +534,105 @@ extension TransactionMessage {
             )
         }
         
+        if isFlagActionAllowed {
+            options.append(
+                .init(
+                    tag: MessageActionsItem.Flag,
+                    materialIconName: nil,
+                    iconImage: "iconFlagContent",
+                    label:  "flag.item".localized
+                )
+            )
+        }
+        
+        if isDeleteActionAllowed {
+            options.append(
+                .init(
+                    tag: MessageActionsItem.Delete,
+                    materialIconName: "delete",
+                    iconImage: nil,
+                    label:  "delete.message".localized
+                )
+            )
+        }
+        
         return options
     }
     
-    func shouldAllowBoost() -> Bool {
-        return isIncoming() && !isInvoice() && !isDirectPayment() && !(messageContent ?? "").isVideoCallLink && !(uuid ?? "").isEmpty
+    func messageContainText() -> Bool {
+        return messageContent != nil && messageContent != "" && !isGiphy()
+    }
+    
+    var isCopyTextActionAllowed: Bool {
+        get {
+            if let messageContent = messageContent {
+                return !messageContent.isVideoCallLink && !messageContent.isEncryptedString()
+            }
+            return false
+        }
+    }
+    
+    var isCopyLinkActionAllowed: Bool {
+        get {
+            if let messageContent = messageContent {
+                return !messageContent.isVideoCallLink && messageContent.stringLinks.count > 0
+            }
+            return false
+        }
+    }
+    
+    var isCopyPublicKeyActionAllowed: Bool {
+        get {
+            if let messageContent = messageContent {
+                return messageContent.pubKeyMatches.count > 0
+            }
+            return false
+        }
+    }
+    
+    var isCopyCallLinkActionAllowed: Bool {
+        get {
+            if let messageContent = messageContent {
+                return messageContent.isVideoCallLink
+            }
+            return false
+        }
+    }
+    
+    var isReplyActionAllowed: Bool {
+        get {
+            return (isTextMessage() || isAttachment() || isBotResponse()) && !(uuid ?? "").isEmpty
+        }
+    }
+    
+    var isDownloadFileActionAllowed: Bool {
+        get {
+            return (type == TransactionMessageType.attachment.rawValue && getMediaType() != TransactionMessageType.textAttachment.rawValue) || isGiphy()
+        }
+    }
+    
+    var isResendActionAllowed: Bool {
+        get {
+            return (isTextMessage() && status == TransactionMessageStatus.failed.rawValue)
+        }
+    }
+    
+    var isFlagActionAllowed: Bool {
+        get {
+            return isIncoming()
+        }
+    }
+    
+    var isDeleteActionAllowed: Bool {
+        get {
+            return (!isInvoice() || (isInvoice() && !isPaid())) && canBeDeleted()
+        }
+    }
+    
+    var isBoostActionAllowed: Bool {
+        get {
+            return isIncoming() && !isInvoice() && !isDirectPayment() && !(messageContent ?? "").isVideoCallLink && !(uuid ?? "").isEmpty
+        }
     }
     
     func isNewUnseenMessage() -> Bool {
@@ -724,9 +861,16 @@ extension TransactionMessage {
         let messageSender = getMessageSender()
         
         if isPrivateConversation {
-            return (isStandardPIN && !(messageSender?.pin ?? "").isEmpty) || (!isStandardPIN && (messageSender?.pin ?? "").isEmpty)
+            
+            return (isStandardPIN && !(messageSender?.pin ?? "").isEmpty) ||
+                   (!isStandardPIN && (messageSender?.pin ?? "").isEmpty) ||
+                   messageSender?.isBlocked() == true
+            
         } else {
-            return (isStandardPIN && !(chat?.pin ?? "").isEmpty) || (!isStandardPIN && (chat?.pin ?? "").isEmpty)
+            
+            return (isStandardPIN && !(chat?.pin ?? "").isEmpty) ||
+                   (!isStandardPIN && (chat?.pin ?? "").isEmpty)
+            
         }
     }
 }

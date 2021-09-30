@@ -70,7 +70,7 @@ class SetNickNameViewController: SetDataViewController {
         
         API.sharedInstance.updateUser(id: id, params: parameters, callback: { contact in
             self.loading = false
-            self.contactsService.insertContact(contact: contact)
+            let _ = self.contactsService.insertContact(contact: contact)
             self.goToProfilePicture()
         }, errorCallback: {
             AlertHelper.showAlert(title: "generic.error.title".localized, message: "generic.error.message".localized)

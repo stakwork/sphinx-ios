@@ -188,6 +188,13 @@ extension String {
         }
     }
     
+    var isValidHTML: Bool {
+        if self.isEmpty {
+            return false
+        }
+        return (self.range(of: "<(\"[^\"]*\"|'[^']*'|[^'\">])*>", options: .regularExpression) != nil)
+    }
+    
     var percentEscaped: String? {
         return self.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
     }

@@ -413,17 +413,17 @@ class GroupsManager {
                     } else if let cmdPriceIndex = cmd.priceIndex, cmdPriceIndex > 0 {
                         if arr.count - 1 < cmdPriceIndex { continue }
                         
-                        let amount = Int(arr[cmdPriceIndex]) ?? 0
-                        
-                        if let cmdMinPrice = cmd.minPrice, cmdMinPrice > 0 && amount < cmdMinPrice {
-                            failureMessage = "amount.too.low".localized
-                            break
+                        if let amount = Int(arr[cmdPriceIndex]) {
+                            if let cmdMinPrice = cmd.minPrice, cmdMinPrice > 0 && amount < cmdMinPrice {
+                                failureMessage = "amount.too.low".localized
+                                break
+                            }
+                            if let cmdMaxPrice = cmd.maxPrice, cmdMaxPrice > 0 && amount > cmdMaxPrice {
+                                failureMessage = "amount.too.high".localized
+                                break
+                            }
+                            price = amount
                         }
-                        if let cmdMaxPrice = cmd.maxPrice, cmdMaxPrice > 0 && amount > cmdMaxPrice {
-                            failureMessage = "amount.too.high".localized
-                            break
-                        }
-                        price = amount
                     }
                 }
             }

@@ -145,7 +145,7 @@ class ConfirmAddFriendViewController: UIViewController {
             loading = true
 
             API.sharedInstance.createUserInvite(parameters: parameters, callback: { contact in
-                self.contactsService.insertContact(contact: contact)
+                let _ = self.contactsService.insertContact(contact: contact)
 
                 if let invite = contact["invite"].dictionary, let inviteString = invite["invite_string"]?.string, inviteString != "" {
                     self.delegate?.shouldDismissView?()

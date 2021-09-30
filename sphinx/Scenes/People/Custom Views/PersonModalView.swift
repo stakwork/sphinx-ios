@@ -110,7 +110,7 @@ class PersonModalView: CommonModalView {
             let contactKey = authInfo?.personInfo["owner_contact_key"].string ?? ""
             
             let contactsService = ContactsService()
-            contactsService.createContact(nickname: nickname,pubKey: pubkey, routeHint: routeHint, contactKey: contactKey, callback: { success in
+            contactsService.createContact(nickname: nickname,pubKey: pubkey, routeHint: routeHint, contactKey: contactKey, callback: { (success, _) in
                 if success {
                     self.sendInitialMessage()
                     return

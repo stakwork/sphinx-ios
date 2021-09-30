@@ -41,7 +41,7 @@ extension NewContactViewController {
             showErrorAlert(message: "nickname.address.required".localized)
         } else {
             let pin = groupPinContainer.getPin()
-            self.contactsService.createContact(nickname: nickname, pubKey: pubkey, routeHint: routeHint, pin: pin, callback: { success in
+            self.contactsService.createContact(nickname: nickname, pubKey: pubkey, routeHint: routeHint, pin: pin, callback: { (success, _) in
                 self.loading = false
 
                 if success {

@@ -67,7 +67,7 @@ public class PodcastFeed: NSManagedObject {
         let currentEpisodeIndex = getCurrentEpisodeIndex()
         let episodes = self.episodesArray
         
-        guard episodes.isEmpty == false
+        guard !episodes.isEmpty && currentEpisodeIndex < episodes.count
         else { return nil }
         
         return episodes[currentEpisodeIndex]

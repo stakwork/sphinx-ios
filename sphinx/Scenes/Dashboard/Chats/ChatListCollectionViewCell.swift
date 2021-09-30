@@ -62,7 +62,7 @@ extension ChatListCollectionViewCell {
 // MARK: -  Private Helpers
 extension ChatListCollectionViewCell {
     
-    func setupViews() {
+    func setupViews() {        
         backgroundColor = .Sphinx.DashboardHeader
         backgroundView?.backgroundColor = .Sphinx.DashboardHeader
         
@@ -86,6 +86,8 @@ extension ChatListCollectionViewCell {
     
     
     private func render(with chatListObject: ChatListCommonObject) {
+        
+        nameLabel.font = Constants.kChatNameFont
         
         if chatListObject.isPending() {
             

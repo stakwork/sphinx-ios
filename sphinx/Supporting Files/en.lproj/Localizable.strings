@@ -147,6 +147,7 @@
 "already.subscribed" = "You are already subscribed.";
 "value.cannot.empty" = "Value can not be empty";
 "subscribe.upper" = "SUBSCRIBE";
+"unsubscribe.upper" = "UNSUBSCRIBE";
 
 //INVOICE DETAILS
 "x.copied.clipboard" = "%@ copied to clipboard";

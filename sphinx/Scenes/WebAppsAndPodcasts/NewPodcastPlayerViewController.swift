@@ -137,7 +137,14 @@ extension NewPodcastPlayerViewController : PodcastEpisodesDSDelegate {
     }
 }
 
-extension NewPodcastPlayerViewController : PodcastPlayerViewDelegate {
+extension NewPodcastPlayerViewController: PodcastPlayerViewDelegate {
+    
+    func didTapSubscriptionToggleButton() {
+        playerHelper.podcast?.isSubscribedFromPodcastIndex.toggle()
+        
+        CoreDataManager.sharedManager.saveContext()
+    }
+    
     
     func didTapDismissButton() {
         delegate?.shouldDismissPlayerView()

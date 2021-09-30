@@ -8,8 +8,9 @@
 
 import UIKit
 
-protocol PodcastPlayerViewDelegate : class {
+protocol PodcastPlayerViewDelegate: AnyObject {
     func didTapDismissButton()
+    func didTapSubscriptionToggleButton()
     func shouldReloadEpisodesTable()
     func shouldShareClip(comment: PodcastComment)
     func shouldSendBoost(message: String, amount: Int, animation: Bool) -> TransactionMessage?
@@ -17,8 +18,8 @@ protocol PodcastPlayerViewDelegate : class {
     func shouldShowSpeedPicker()
 }
 
+
 class PodcastPlayerView: UIView {
-    
     weak var delegate: PodcastPlayerViewDelegate?
     
     @IBOutlet var contentView: UIView!
@@ -36,6 +37,7 @@ class PodcastPlayerView: UIView {
     @IBOutlet weak var progressLineWidth: NSLayoutConstraint!
     @IBOutlet weak var speedButton: UIButton!
     @IBOutlet weak var playPauseButton: UIButton!
+    @IBOutlet weak var subscriptionToggleButton: UIButton!
     @IBOutlet weak var currentTimeDot: UIView!
     @IBOutlet weak var gestureHandlerView: UIView!
     @IBOutlet weak var boostButtonView: BoostButtonView!
@@ -83,6 +85,12 @@ class PodcastPlayerView: UIView {
         
         setup()
     }
+    
+    private var subscriptionToggleButtonTitle: String {
+        (playerHelper.podcast?.isSubscribedFromPodcastIndex ?? false) ?
+        "unsubscribe.upper".localized
+        : "subscribe.upper".localized
+    }
 
     private func setup() {
         Bundle.main.loadNibNamed("PodcastPlayerView", owner: self, options: nil)
@@ -99,6 +107,14 @@ class PodcastPlayerView: UIView {
         
         playPauseButton.layer.cornerRadius = playPauseButton.frame.size.height / 2
         currentTimeDot.layer.cornerRadius = currentTimeDot.frame.size.height / 2
+        
+        
+        subscriptionToggleButton.setTitle(
+            subscriptionToggleButtonTitle,
+            for: .normal
+        )
+        
+        subscriptionToggleButton.isHidden = chat != nil
         
         showInfo()
         configureControls()
@@ -248,6 +264,15 @@ class PodcastPlayerView: UIView {
     
     @IBAction func dismissButtonTouched() {
         delegate?.didTapDismissButton()
+    }
+    
+    @IBAction func subscriptionToggleButtonTouched() {
+        playerHelper.podcast?.isSubscribedFromPodcastIndex.toggle()
+        
+        subscriptionToggleButton.setTitle(
+            subscriptionToggleButtonTitle,
+            for: .normal
+        )
     }
     
     @IBAction func controlButtonTouched(_ sender: UIButton) {

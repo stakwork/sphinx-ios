@@ -145,6 +145,7 @@
 "already.subscribed" = "Ya estás suscripto.";
 "value.cannot.empty" = "Valor requerido";
 "subscribe.upper" = "SUSCRIBIRSE";
+"unsubscribe.upper" = "UNSUBSCRIBE";
 
 //INVOICE DETAILS
 "x.copied.clipboard" = "%@ copiado al portapapeles";

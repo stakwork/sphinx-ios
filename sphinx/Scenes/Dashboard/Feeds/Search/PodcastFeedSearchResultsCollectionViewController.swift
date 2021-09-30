@@ -320,10 +320,12 @@ extension PodcastFeedSearchResultsCollectionViewController {
     ) {
         self.podcastFeeds = followedPodcastFeeds
 
-        dataSource.apply(
-            makeSnapshotForCurrentState(),
-            animatingDifferences: shouldAnimate
-        )
+        if let dataSource = dataSource {
+            dataSource.apply(
+                makeSnapshotForCurrentState(),
+                animatingDifferences: shouldAnimate
+            )
+        }
     }
     
     
@@ -333,10 +335,12 @@ extension PodcastFeedSearchResultsCollectionViewController {
     ) {
         self.directorySearchResults = directorySearchResults
 
-        dataSource.apply(
-            makeSnapshotForCurrentState(),
-            animatingDifferences: shouldAnimate
-        )
+        if let dataSource = dataSource {
+            dataSource.apply(
+                makeSnapshotForCurrentState(),
+                animatingDifferences: shouldAnimate
+            )
+        }
     }
     
     

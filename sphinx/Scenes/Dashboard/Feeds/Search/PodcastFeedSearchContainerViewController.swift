@@ -25,7 +25,7 @@ class PodcastFeedSearchContainerViewController: UIViewController {
     private weak var resultsDelegate: PodcastFeedSearchResultsViewControllerDelegate?
     
     
-    internal lazy var fetchedResultsController: NSFetchedResultsController = PodcastFeedSearchContainerViewController
+    lazy var fetchedResultsController: NSFetchedResultsController = PodcastFeedSearchContainerViewController
         .makeFetchedResultsController(
             using: managedObjectContext,
             and: PodcastFeed.FetchRequests.default()

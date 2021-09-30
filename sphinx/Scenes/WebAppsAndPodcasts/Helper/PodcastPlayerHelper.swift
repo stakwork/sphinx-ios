@@ -107,6 +107,12 @@ class PodcastPlayerHelper {
     }
     
     
+    func toggleFeedSubscriptionState() {
+        podcast?.isSubscribedFromPodcastIndex.toggle()
+        CoreDataManager.sharedManager.saveContext()
+    }
+    
+    
     func loadPodcastFeed(chat: Chat?, callback: @escaping (Bool) -> ()) {
         guard
             ConnectivityHelper.isConnectedToInternet,

@@ -5,6 +5,10 @@ extension DashboardRootViewController: PodcastPlayerVCDelegate {
     
     func shouldDismissPlayerView() {
         navigationController?.popViewController(animated: true)
+        
+        try? feedSearchResultsContainerViewController
+            .fetchedResultsController
+            .performFetch()
     }
     
     

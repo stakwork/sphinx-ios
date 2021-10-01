@@ -200,6 +200,7 @@ class API {
     }
 
     var errorCounter = 0
+    let successStatusCode = 200
     let unauthorizedStatusCode = 401
     let notFoundStatusCode = 404
     let badGatewayStatusCode = 502
@@ -241,19 +242,12 @@ class API {
 
     func unauthorizedHandledRequest(_ urlRequest: URLRequestConvertible, completionHandler: @escaping (AFDataResponse<Any>) -> Void) -> DataRequest? {
         let request = session()?.request(urlRequest).responseJSON { (response) in
-
-            if let _ = response.response {
-                switch response.result {
-                case .success(_):
-                    self.connectionStatus = .Connected
-                case .failure(_):
-                    self.connectionStatus = .NotConnected
-                }
-            }
-
+            
             let statusCode = response.response?.statusCode ?? -1
 
-            if statusCode == self.unauthorizedStatusCode {
+            if statusCode == self.successStatusCode {
+                self.connectionStatus = .Connected
+            } else if statusCode == self.unauthorizedStatusCode {
                 self.connectionStatus = .Unauthorize
             } else if response.response == nil || statusCode == self.notFoundStatusCode  || statusCode == self.badGatewayStatusCode {
                 self.connectionStatus = response.response == nil ? self.connectionStatus : .NotConnected
@@ -266,6 +260,8 @@ class API {
                 }
                 completionHandler(response)
                 return
+            } else {
+                self.connectionStatus = .NotConnected
             }
             self.errorCounter = 0
 

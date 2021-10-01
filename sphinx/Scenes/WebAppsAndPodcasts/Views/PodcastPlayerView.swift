@@ -36,6 +36,7 @@ class PodcastPlayerView: UIView {
     @IBOutlet weak var progressLine: UIView!
     @IBOutlet weak var progressLineWidth: NSLayoutConstraint!
     @IBOutlet weak var speedButton: UIButton!
+    @IBOutlet weak var dismissButton: UIButton!
     @IBOutlet weak var playPauseButton: UIButton!
     @IBOutlet weak var subscriptionToggleButton: UIButton!
     @IBOutlet weak var currentTimeDot: UIView!
@@ -60,6 +61,7 @@ class PodcastPlayerView: UIView {
     
     var playerHelper: PodcastPlayerHelper! = nil
     var chat: Chat?
+    var dismissButtonStyle: DismissButtonStyle = .downArrow
     
     public enum ControlButtons: Int {
         case PlayerSpeed
@@ -72,6 +74,7 @@ class PodcastPlayerView: UIView {
     convenience init(
         playerHelper: PodcastPlayerHelper,
         chat: Chat?,
+        dismissButtonStyle: DismissButtonStyle = .downArrow,
         delegate: PodcastPlayerViewDelegate
     ) {
         let windowWidth = WindowsManager.getWindowWidth()
@@ -82,6 +85,7 @@ class PodcastPlayerView: UIView {
         self.delegate = delegate
         self.playerHelper = playerHelper
         self.chat = chat
+        self.dismissButtonStyle = dismissButtonStyle
         self.playerHelper.delegate = self
         
         setup()
@@ -118,9 +122,25 @@ class PodcastPlayerView: UIView {
         
         subscriptionToggleButton.isHidden = chat != nil
         
+        setupDismissButton()
         showInfo()
         configureControls()
         addDotGesture()
+    }
+    
+    func setupDismissButton() {
+        switch dismissButtonStyle {
+        case .downArrow:
+            dismissButton.setImage(
+                UIImage(systemName: "chevron.down"),
+                for: .normal
+            )
+        case .backArrow:
+            dismissButton.setImage(
+                UIImage(systemName: "chevron.backward"),
+                for: .normal
+            )
+        }
     }
     
     func showInfo() {
@@ -338,7 +358,7 @@ extension PodcastPlayerView : PodcastPlayerDelegate {
     }
 }
 
-extension PodcastPlayerView : BoostButtonViewDelegate {
+extension PodcastPlayerView: BoostButtonViewDelegate {
     func didTouchButton() {
         let amount = UserContact.kTipAmount
         
@@ -350,5 +370,15 @@ extension PodcastPlayerView : BoostButtonViewDelegate {
                 livePodcastDataSource?.insert(messages: [message])
             }
         }
+    }
+}
+
+
+
+extension PodcastPlayerView {
+    
+    enum DismissButtonStyle {
+        case backArrow
+        case downArrow
     }
 }

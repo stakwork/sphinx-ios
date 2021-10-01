@@ -67,18 +67,7 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
                     case .success(let episodes):
                         podcastPlayerHelper.podcast?.episodes = Set(episodes)
                         
-                        let podcastFeedVC = NewPodcastPlayerViewController.instantiate(
-                            chat: nil,
-                            playerHelper: podcastPlayerHelper,
-                            delegate: self
-                        )
-                    
-                        podcastFeedVC.modalPresentationStyle = .fullScreen
-                    
-                        self.navigationController?.pushViewController(
-                            podcastFeedVC,
-                            animated: true
-                        )
+                        self.presentPodcastPlayer(with: podcastPlayerHelper)
                     case .failure(_):
                         AlertHelper.showAlert(
                             title: "Failed to fetch episodes for feed",
@@ -95,12 +84,13 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
 extension DashboardRootViewController {
     
     internal func presentPodcastPlayer(
-        forPodcastFrom chat: Chat,
+        forPodcastFrom chat: Chat? = nil,
         with podcastPlayerHelper: PodcastPlayerHelper
     ) {
         let podcastFeedVC = NewPodcastPlayerViewController.instantiate(
             chat: chat,
             playerHelper: podcastPlayerHelper,
+            dismissButtonStyle: .backArrow,
             delegate: self
         )
         

@@ -19,22 +19,35 @@ protocol CustomSegmentedControlDelegate: AnyObject {
 class CustomSegmentedControl: UIView {
     private var buttonTitles: [String]!
     private var buttons: [UIButton]!
+    private var buttonTitleBadges: [UIView]!
     private var selectorView: UIView!
     
 
-    var buttonBackgroundColor: UIColor = .Sphinx.DashboardHeader
-    var buttonTextColor: UIColor = .Sphinx.DashboardWashedOutText
-    var activeTextColor: UIColor = .Sphinx.PrimaryText
-    var buttonTitleFont = UIFont(
+    public var buttonBackgroundColor: UIColor = .Sphinx.DashboardHeader
+    public var buttonTextColor: UIColor = .Sphinx.DashboardWashedOutText
+    public var activeTextColor: UIColor = .Sphinx.PrimaryText
+    public var buttonTitleFont = UIFont(
         name: "Roboto-Medium",
         size: UIDevice.current.isIpad ? 20.0 : 16.0
     )!
     
-    var selectorViewColor: UIColor = .Sphinx.PrimaryBlue
-    var selectorWidthRatio: CGFloat = 0.667
+    public var selectorViewColor: UIColor = .Sphinx.PrimaryBlue
+    public var selectorWidthRatio: CGFloat = 0.667
+    
+    
+    /// Indices for tabs that should have a circular badge displayed next to their title.
+    public var indicesOfTitlesWithBadge: [Int] = [] {
+        didSet {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                
+                self.updateTitleBadges()
+            }
+        }
+    }
     
 
-    weak var delegate: CustomSegmentedControlDelegate?
+    public weak var delegate: CustomSegmentedControlDelegate?
     
     private(set) var selectedIndex: Int = 0
     
@@ -47,8 +60,12 @@ class CustomSegmentedControl: UIView {
         
         self.buttonTitles = buttonTitles
     }
-    
-    
+}
+
+
+// MARK: - Lifecycle
+extension CustomSegmentedControl {
+        
     override func draw(_ rect: CGRect) {
         super.draw(rect)
         
@@ -56,29 +73,11 @@ class CustomSegmentedControl: UIView {
         
         setupInitialViews()
     }
-    
-    
-    public func configureFromOutlet(
-        buttonTitles: [String],
-        initialIndex: Int = 0,
-        delegate: CustomSegmentedControlDelegate?
-    ) {
-        self.buttonTitles = buttonTitles
-        self.selectedIndex = initialIndex
-        self.delegate = delegate
-        
-        setupInitialViews()
-        updateButtonsOnIndexChange()
-    }
-    
-    
-    private func updateButtonsOnIndexChange() {
-        UIView.animate(withDuration: 0.3) {
-            self.buttons[self.selectedIndex].setTitleColor(self.activeTextColor, for: .normal)
-            self.selectorView.frame.origin.x = self.selectorPosition
-        }
-    }
-    
+}
+
+
+// MARK: - Action Handling
+extension CustomSegmentedControl {
     
     @objc func buttonAction(sender: UIButton) {
         for (buttonIndex, button) in buttons.enumerated() {
@@ -94,6 +93,26 @@ class CustomSegmentedControl: UIView {
         }
     }
 }
+
+
+// MARK: - Public Methods
+extension CustomSegmentedControl {
+
+    public func configureFromOutlet(
+        buttonTitles: [String],
+        initialIndex: Int = 0,
+        indicesOfTitlesWithBadge: [Int] = [],
+        delegate: CustomSegmentedControlDelegate?
+    ) {
+        self.buttonTitles = buttonTitles
+        self.selectedIndex = initialIndex
+        self.delegate = delegate
+        
+        setupInitialViews()
+        updateButtonsOnIndexChange()
+    }
+}
+
 
 // MARK: -  View Configuration
 extension CustomSegmentedControl {
@@ -182,5 +201,46 @@ extension CustomSegmentedControl {
         }
         
         buttons[selectedIndex].setTitleColor(activeTextColor, for: .normal)
+        
+        createButtonTitleBadges()
+    }
+    
+    
+    private func updateButtonsOnIndexChange() {
+        UIView.animate(withDuration: 0.3) {
+            self.buttons[self.selectedIndex].setTitleColor(self.activeTextColor, for: .normal)
+            self.selectorView.frame.origin.x = self.selectorPosition
+        }
+    }
+    
+    
+    private func updateTitleBadges() {
+        buttonTitleBadges.enumerated().forEach { (badgeIndex, badge) in
+            badge.frame = .init(
+                x: (buttons[badgeIndex].titleLabel?.frame.maxX ?? 0) + 2.5,
+                y: (buttons[badgeIndex].titleLabel?.frame.minY ?? 0) - 2.5,
+                width: 5.0,
+                height: 5.0
+            )
+            
+            badge.isHidden = indicesOfTitlesWithBadge.contains(badgeIndex) == false
+        }
+    }
+        
+    
+    private func createButtonTitleBadges() {
+        buttonTitleBadges = buttons!.map { button in
+            let badgeView = UIView()
+            
+            badgeView.isHidden = true
+            badgeView.backgroundColor = .Sphinx.PrimaryBlue
+            badgeView.makeCircular()
+                
+            return badgeView
+        }
+        
+        buttonTitleBadges.enumerated().forEach { (index, badge) in
+            buttons[index].insertSubview(badge, at: 0)
+        }
     }
 }

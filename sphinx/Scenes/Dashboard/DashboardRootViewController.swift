@@ -67,20 +67,14 @@ class DashboardRootViewController: RootViewController {
     
     internal lazy var contactChatsContainerViewController: ChatsContainerViewController = {
         ChatsContainerViewController.instantiate(
-            chats: chatsListViewModel.contactsService
-                .getChatListObjects()
-                .compactMap { $0 as? Chat }
-                .filter { $0.isConversation() },
+            chats: chatsListViewModel.contactChats,
             chatsListDelegate: self
         )
     }()
     
     internal lazy var tribeChatsContainerViewController: ChatsContainerViewController = {
         ChatsContainerViewController.instantiate(
-            chats: chatsListViewModel.contactsService
-                .getChatListObjects()
-                .compactMap { $0 as? Chat }
-                .filter { $0.isPublicGroup() },
+            chats: chatsListViewModel.tribeChats,
             chatsListDelegate: self
         )
     }()
@@ -485,7 +479,7 @@ extension DashboardRootViewController {
     private func handleInvite(for contact: UserContact?) -> Bool {
         if let invite = contact?.invite, (contact?.isPending() ?? false) {
             
-            if invite.isPendingPayment() {
+            if invite.isPendingPayment() && !invite.isPaymentProcessed() {
                 
                 payInvite(invite: invite)
                 

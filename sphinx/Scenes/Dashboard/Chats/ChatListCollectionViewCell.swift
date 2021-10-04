@@ -246,7 +246,7 @@ extension ChatListCollectionViewCell {
     private func renderInvitePrice(for chatListObject: ChatListCommonObject) {
         if let invite = chatListObject.getInvite(),
            let price = invite.price,
-           chatListObject.isPending() && invite.isPendingPayment() {
+           chatListObject.isPending() && invite.isPendingPayment() && !invite.isPaymentProcessed() {
             
             invitePriceContainer.isHidden = false
             invitePriceLabel.text = Int(truncating: price).formattedWithSeparator

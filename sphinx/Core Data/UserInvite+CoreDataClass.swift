@@ -95,7 +95,7 @@ public class UserInvite: NSManagedObject {
     }
     
     public func isPendingPayment() -> Bool {
-        return status == UserInvite.Status.PaymentPending.rawValue && !self.isPaymentProcessed()
+        return status == UserInvite.Status.PaymentPending.rawValue
     }
     
     public func getInviteStatusForAlert() -> (Bool, String, String) {
@@ -117,9 +117,6 @@ public class UserInvite: NSManagedObject {
     
     public func getDataForRow() -> (String, UIColor, String) {
         let userNickname = self.contact?.nickname ?? "New user"
-        
-//        let hours = Date().getHousDifference(from: Date().addingTimeInterval(-4000))
-//        return ("done", UIColor.Sphinx.PrimaryGreen, " Ready! Tap to share. Expires in \(hours) hrs")
         
         switch(status) {
         case UserInvite.Status.Pending.rawValue:

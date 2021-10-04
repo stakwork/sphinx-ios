@@ -62,9 +62,14 @@ extension ChatListCollectionViewCell {
 // MARK: -  Private Helpers
 extension ChatListCollectionViewCell {
     
-    func setupViews() {        
-        backgroundColor = .Sphinx.DashboardHeader
-        backgroundView?.backgroundColor = .Sphinx.DashboardHeader
+    func setupViews() {
+        let normalStateView = UIView(frame: bounds)
+        normalStateView.backgroundColor = .Sphinx.DashboardHeader
+        self.backgroundView = normalStateView
+
+        let selectedStateView = UIView(frame: bounds)
+        selectedStateView.backgroundColor = .Sphinx.DashboardSearch
+        self.selectedBackgroundView = selectedStateView
         
         contactImageView.makeCircular()
         contactInitialsLabel.makeCircular()

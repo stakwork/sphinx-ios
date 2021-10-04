@@ -323,11 +323,7 @@ extension ChatsCollectionViewController {
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
-        
-        guard let _ = dataSource.itemIdentifier(for: indexPath) else {
-            collectionView.deselectItem(at: indexPath, animated: true)
-            return
-        }
+        collectionView.deselectItem(at: indexPath, animated: true)
         
         let selectedChatObject = chatListObjects[indexPath.row]
         onChatSelected?(selectedChatObject)

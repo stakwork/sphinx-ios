@@ -56,10 +56,12 @@ extension PodcastFeedCollectionViewCell {
         if let imageURL = imageURL {
             podcastImageView.sd_setImage(
                 with: imageURL,
-                placeholderImage: nil,
+                placeholderImage: UIImage(named: "podcastPlaceholder"),
                 options: [.highPriority],
                 progress: nil
             )
+        } else {
+            podcastImageView.image = UIImage(named: "podcastPlaceholder")
         }
         
         podcastNameLabel.text = item.title

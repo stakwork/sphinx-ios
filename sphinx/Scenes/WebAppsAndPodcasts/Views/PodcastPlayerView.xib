@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19158" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19141"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -27,6 +28,7 @@
                 <outlet property="contentView" destination="iN0-l3-epB" id="WkH-Pi-lwg"/>
                 <outlet property="currentTimeDot" destination="Mtu-jO-ZFp" id="RPs-Ww-FWa"/>
                 <outlet property="currentTimeLabel" destination="iDW-iO-P0o" id="6to-ww-AnB"/>
+                <outlet property="dismissButton" destination="UgS-Pv-vWR" id="ngh-kF-LVR"/>
                 <outlet property="durationLabel" destination="w3F-zG-zqr" id="6kB-qM-bEh"/>
                 <outlet property="durationLine" destination="hlq-Ib-TyG" id="K6Y-Vv-GPb"/>
                 <outlet property="episodeImageView" destination="DK5-KL-hVN" id="9M6-al-2cS"/>
@@ -65,15 +67,18 @@
                         <constraint firstAttribute="height" constant="150" id="vhi-xJ-kpQ"/>
                     </constraints>
                 </imageView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UgS-Pv-vWR">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UgS-Pv-vWR" userLabel="Dismiss Button">
                     <rect key="frame" x="20" y="54" width="50" height="50"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="EaN-jF-gj7"/>
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="a05-02-V8D"/>
                     </constraints>
-                    <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="40"/>
-                    <state key="normal" title="keyboard_arrow_down">
+                    <fontDescription key="fontDescription" type="system" pointSize="34"/>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <state key="normal">
                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <imageReference key="image" image="chevron.down" catalog="system" symbolScale="large" renderingMode="template"/>
+                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="20" scale="large" weight="bold"/>
                     </state>
                     <connections>
                         <action selector="dismissButtonTouched" destination="-1" eventType="touchUpInside" id="zFR-QI-jS6"/>
@@ -313,6 +318,7 @@
     </objects>
     <resources>
         <image name="back15Icon" width="27" height="30"/>
+        <image name="chevron.down" catalog="system" width="128" height="72"/>
         <image name="clipIcon" width="28" height="28"/>
         <image name="forw30Icon" width="27" height="30"/>
         <image name="imageFullScreenShadow" width="414" height="105"/>

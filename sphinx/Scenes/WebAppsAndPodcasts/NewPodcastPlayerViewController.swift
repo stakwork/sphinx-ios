@@ -27,6 +27,7 @@ class NewPodcastPlayerViewController: UIViewController {
     
     var chat: Chat!
     var playerHelper: PodcastPlayerHelper!
+    var dismissButtonStyle: PodcastPlayerView.DismissButtonStyle!
     var tableDataSource: PodcastEpisodesDataSource!
     
     let downloadService = DownloadService.sharedInstance
@@ -59,11 +60,14 @@ class NewPodcastPlayerViewController: UIViewController {
     static func instantiate(
         chat: Chat?,
         playerHelper: PodcastPlayerHelper,
+        dismissButtonStyle: PodcastPlayerView.DismissButtonStyle = .backArrow,
         delegate: PodcastPlayerVCDelegate
     ) -> NewPodcastPlayerViewController {
         let viewController = StoryboardScene.WebApps.newPodcastPlayerViewController.instantiate()
+        
         viewController.chat = chat
         viewController.playerHelper = playerHelper
+        viewController.dismissButtonStyle = dismissButtonStyle
         viewController.delegate = delegate
     
         return viewController
@@ -82,7 +86,13 @@ class NewPodcastPlayerViewController: UIViewController {
     
     func showEpisodesTable() {
         if let _ = playerHelper.podcast {
-            tableHeaderView = PodcastPlayerView(playerHelper: playerHelper, chat: chat, delegate: self)
+            tableHeaderView = PodcastPlayerView(
+                playerHelper: playerHelper,
+                chat: chat,
+                dismissButtonStyle: dismissButtonStyle,
+                delegate: self
+            )
+            
             tableView.tableHeaderView = tableHeaderView!
             
             tableDataSource = PodcastEpisodesDataSource(tableView: tableView, playerHelper: playerHelper, delegate: self)

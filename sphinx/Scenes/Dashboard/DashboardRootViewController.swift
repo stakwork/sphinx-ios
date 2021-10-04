@@ -141,6 +141,30 @@ class DashboardRootViewController: RootViewController {
     
     
     var feedViewMode: FeedViewMode = .rootList
+    
+    var indicesOfTabsWithNewMessages: [Int] {
+        var indices = [Int]()
+        
+        if chatsListViewModel
+            .contactChats
+            .contains(
+                where: { $0.getChat()?.getReceivedUnseenMessagesCount() ?? 0 > 0 }
+            )
+        {
+            indices.append(1)
+        }
+        
+        if chatsListViewModel
+            .tribeChats
+            .contains(
+                where: { $0.getChat()?.getReceivedUnseenMessagesCount() ?? 0 > 0 }
+            )
+        {
+            indices.append(2)
+        }
+        
+        return indices
+    }
 }
 
 
@@ -424,6 +448,12 @@ extension DashboardRootViewController {
         newBubbleHelper.hideLoadingWheel()
         isLoading = false
         shouldShowHeaderLoadingWheel = false
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
+            guard let self = self else { return }
+            
+            self.dashboardNavigationTabs.indicesOfTitlesWithBadge = self.indicesOfTabsWithNewMessages
+        }
     }
     
     

@@ -60,7 +60,7 @@ class NewPodcastPlayerViewController: UIViewController {
     static func instantiate(
         chat: Chat?,
         playerHelper: PodcastPlayerHelper,
-        dismissButtonStyle: PodcastPlayerView.DismissButtonStyle = .backArrow,
+        dismissButtonStyle: PodcastPlayerView.DismissButtonStyle,
         delegate: PodcastPlayerVCDelegate
     ) -> NewPodcastPlayerViewController {
         let viewController = StoryboardScene.WebApps.newPodcastPlayerViewController.instantiate()

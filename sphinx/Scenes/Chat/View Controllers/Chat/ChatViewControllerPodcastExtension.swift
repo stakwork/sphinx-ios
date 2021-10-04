@@ -67,7 +67,12 @@ extension ChatViewController : PodcastPlayerVCDelegate {
         }
         accessoryView.hide()
 
-        let podcastFeedVC = NewPodcastPlayerViewController.instantiate(chat: chat, playerHelper: podcastPlayerHelper, delegate: self)
+        let podcastFeedVC = NewPodcastPlayerViewController.instantiate(
+            chat: chat,
+            playerHelper: podcastPlayerHelper,
+            dismissButtonStyle: .downArrow,
+            delegate: self
+        )
         podcastFeedVC.modalPresentationStyle = .fullScreen
         self.present(podcastFeedVC, animated: true, completion: nil)
     }

@@ -413,6 +413,8 @@ extension DashboardRootViewController {
     
     
     internal func updateCurrentViewControllerData() {
+        updateNewMessageBadges()
+        
         switch activeTab {
         case .feed:
             break
@@ -449,6 +451,11 @@ extension DashboardRootViewController {
         isLoading = false
         shouldShowHeaderLoadingWheel = false
         
+        updateNewMessageBadges()
+    }
+    
+    
+    internal func updateNewMessageBadges() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
             guard let self = self else { return }
             

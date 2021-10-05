@@ -222,6 +222,7 @@ extension CustomSegmentedControl {
                 width: 5.0,
                 height: 5.0
             )
+            badge.makeCircular()
             
             badge.isHidden = indicesOfTitlesWithBadge.contains(badgeIndex) == false
         }
@@ -234,7 +235,6 @@ extension CustomSegmentedControl {
             
             badgeView.isHidden = true
             badgeView.backgroundColor = .Sphinx.PrimaryBlue
-            badgeView.makeCircular()
                 
             return badgeView
         }

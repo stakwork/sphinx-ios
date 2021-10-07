@@ -35,45 +35,44 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
             return
         }
         
+        guard let feedURLPath = podcastFeed.feedURLPath else {
+            AlertHelper.showAlert(title: "Failed to find a URL for the feed.", message: "")
+            return
+        }
+        
+        
         let podcastPlayerHelper: PodcastPlayerHelper
         
         if let chat = podcastFeed.chat {
             podcastPlayerHelper = chat.getPodcastPlayer()
-            
-            presentPodcastPlayer(
-                forPodcastFrom: chat,
-                with: podcastPlayerHelper
-            )
         } else {
-            // Load a podcast that was subscribed to by searching the Podcast Index.
+            // Load a podcast that was subscribed to from the Podcast Index.
             // These won't have an associated `chat`, but we can still fetch episodes.
-            
-            guard let feedURLPath = podcastFeed.feedURLPath else {
-                AlertHelper.showAlert(title: "Failed to find a URL for the feed.", message: "")
-                
-                return
-            }
-            
             podcastPlayerHelper = PodcastPlayerHelper()
-            podcastPlayerHelper.podcast = podcastFeed
+        }
+        
+        podcastPlayerHelper.podcast = podcastFeed
+        
             
-            API.sharedInstance.getPodcastEpisodes(
-                byFeedURLPath: feedURLPath
-            ) { [weak self] result in
-                guard let self = self else { return }
-                
-                DispatchQueue.main.async {
-                    switch result {
-                    case .success(let episodes):
-                        podcastPlayerHelper.podcast?.episodes = Set(episodes)
-                        
-                        self.presentPodcastPlayer(with: podcastPlayerHelper)
-                    case .failure(_):
-                        AlertHelper.showAlert(
-                            title: "Failed to fetch episodes for feed",
-                            message: ""
-                        )
-                    }
+        API.sharedInstance.getPodcastEpisodes(
+            byFeedURLPath: feedURLPath
+        ) { [weak self] result in
+            guard let self = self else { return }
+            
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let episodes):
+                    podcastPlayerHelper.podcast?.episodes = Set(episodes)
+                    
+                    self.presentPodcastPlayer(
+                        forPodcastFrom: podcastFeed.chat,
+                        with: podcastPlayerHelper
+                    )
+                case .failure(_):
+                    AlertHelper.showAlert(
+                        title: "Failed to fetch episodes for feed",
+                        message: ""
+                    )
                 }
             }
         }

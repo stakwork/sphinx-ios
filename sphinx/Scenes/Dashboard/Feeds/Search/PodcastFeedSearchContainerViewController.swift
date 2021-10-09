@@ -211,19 +211,19 @@ extension PodcastFeedSearchContainerViewController {
                 self,
                 didSelectPodcastFeedWithID: existingPodcastFeed.objectID
             )
+        } else {
+            let newPodcastFeed = PodcastFeed(
+                from: searchResult,
+                managedObjectContext: managedObjectContext
+            )
+            
+            newPodcastFeed.isSubscribedFromPodcastIndex = false
+            
+            resultsDelegate?.viewController(
+                self,
+                didSelectPodcastFeedWithID: newPodcastFeed.objectID
+            )
         }
-        
-        let newPodcastFeed = PodcastFeed(
-            from: searchResult,
-            managedObjectContext: managedObjectContext
-        )
-        
-        newPodcastFeed.isSubscribedFromPodcastIndex = false
-        
-        resultsDelegate?.viewController(
-            self,
-            didSelectPodcastFeedWithID: newPodcastFeed.objectID
-        )
     }
     
     

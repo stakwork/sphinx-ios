@@ -45,6 +45,7 @@ class NewPodcastPlayerViewController: UIViewController {
         }
     }
     
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
@@ -77,7 +78,10 @@ class NewPodcastPlayerViewController: UIViewController {
     func preparePlayer() {
         tableHeaderView?.preparePlayer()
         tableView.reloadData()
+        
+        updateEpisodesInBackground()
     }
+    
     
     func showPodcastInfo() {
         showEpisodesTable()
@@ -104,6 +108,32 @@ class NewPodcastPlayerViewController: UIViewController {
                     self.dismiss(animated: true, completion: nil)
                 }
             })
+        }
+    }
+    
+    
+    func updateEpisodesInBackground() {
+        DispatchQueue.main.asyncAfter(deadline: .now()) { [weak self] in
+            guard let self = self else { return }
+            guard let feedURLPath = self.playerHelper.podcast?.feedURLPath else { return }
+
+            API.sharedInstance.getPodcastEpisodes(
+                byFeedURLPath: feedURLPath
+            ) { result in
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success(let episodes):
+                        self.playerHelper.podcast?.addToEpisodes(Set(episodes))
+                        CoreDataManager.sharedManager.saveContext()
+                        self.shouldReloadEpisodesTable()
+                    case .failure(_):
+                        AlertHelper.showAlert(
+                            title: "Failed to fetch episodes for feed",
+                            message: ""
+                        )
+                    }
+                }
+            }
         }
     }
 }

@@ -53,29 +53,10 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
         
         podcastPlayerHelper.podcast = podcastFeed
         
-            
-        API.sharedInstance.getPodcastEpisodes(
-            byFeedURLPath: feedURLPath
-        ) { [weak self] result in
-            guard let self = self else { return }
-            
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let episodes):
-                    podcastPlayerHelper.podcast?.episodes = Set(episodes)
-                    
-                    self.presentPodcastPlayer(
-                        forPodcastFrom: podcastFeed.chat,
-                        with: podcastPlayerHelper
-                    )
-                case .failure(_):
-                    AlertHelper.showAlert(
-                        title: "Failed to fetch episodes for feed",
-                        message: ""
-                    )
-                }
-            }
-        }
+        presentPodcastPlayer(
+            forPodcastFrom: podcastFeed.chat,
+            with: podcastPlayerHelper
+        )
     }
     
     

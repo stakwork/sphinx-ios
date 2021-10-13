@@ -27,6 +27,7 @@
         <relationship name="messages" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TransactionMessage" inverseName="chat" inverseEntity="TransactionMessage"/>
         <relationship name="podcastFeed" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PodcastFeed" inverseName="chat" inverseEntity="PodcastFeed"/>
         <relationship name="subscription" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Subscription" inverseName="chat" inverseEntity="Subscription"/>
+        <relationship name="videoFeed" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="VideoFeed" inverseName="chat" inverseEntity="VideoFeed"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="id"/>
@@ -173,8 +174,36 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
+    <entity name="Video" representedClassName="Video" syncable="YES">
+        <attribute name="author" optional="YES" attributeType="String"/>
+        <attribute name="datePublished" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="thumbnailURL" optional="YES" attributeType="URI"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <attribute name="videoDescription" optional="YES" attributeType="String"/>
+        <attribute name="videoID" optional="YES" attributeType="String"/>
+        <relationship name="videoFeed" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="VideoFeed" inverseName="videos" inverseEntity="VideoFeed"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="videoID"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="VideoFeed" representedClassName="VideoFeed" syncable="YES">
+        <attribute name="author" optional="YES" attributeType="String"/>
+        <attribute name="datePublished" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="feedID" optional="YES" attributeType="String"/>
+        <attribute name="feedURL" optional="YES" attributeType="URI"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <relationship name="chat" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Chat" inverseName="videoFeed" inverseEntity="Chat"/>
+        <relationship name="videos" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Video" inverseName="videoFeed" inverseEntity="Video"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="feedID"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
     <elements>
-        <element name="Chat" positionX="-54" positionY="135" width="128" height="419"/>
+        <element name="Chat" positionX="-54" positionY="135" width="128" height="434"/>
         <element name="PodcastDestination" positionX="-18" positionY="180" width="128" height="89"/>
         <element name="PodcastEpisode" positionX="-36" positionY="153" width="128" height="14"/>
         <element name="PodcastFeed" positionX="-45" positionY="144" width="128" height="194"/>
@@ -183,5 +212,7 @@
         <element name="TransactionMessage" positionX="-54" positionY="63" width="128" height="463"/>
         <element name="UserContact" positionX="-63" positionY="-18" width="128" height="358"/>
         <element name="UserInvite" positionX="-54" positionY="135" width="128" height="118"/>
+        <element name="VideoFeed" positionX="-45" positionY="144" width="128" height="134"/>
+        <element name="Video" positionX="-36" positionY="153" width="128" height="134"/>
     </elements>
 </model>

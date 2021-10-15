@@ -408,17 +408,30 @@ public class Chat: NSManagedObject {
         return getContactIdsArray().contains(id)
     }
     
+    
     func updateTribeInfo(completion: @escaping () -> ()) {
-        if let host = host, let uuid = uuid, !host.isEmpty && self.isPublicGroup() {
-            API.sharedInstance.getTribeInfo(host: host, uuid: uuid, callback: { chatJson in
-                self.tribesInfo = GroupsManager.sharedInstance.getTribesInfoFrom(json: chatJson)
-                self.updateChatFromTribesInfo()
-                completion()
-            }, errorCallback: {
-                completion()
-            })
+        if
+            let host = host,
+            let uuid = uuid,
+            host.isEmpty == false,
+            isPublicGroup()
+        {
+            API.sharedInstance.getTribeInfo(
+                host: host,
+                uuid: uuid,
+                callback: { chatJson in
+                    self.tribesInfo = GroupsManager.sharedInstance.getTribesInfoFrom(json: chatJson)
+                    self.updateChatFromTribesInfo()
+                    completion()
+                },
+                errorCallback: {
+                    completion()
+                }
+            )
         }
     }
+    
+    
     
     func getAppUrl() -> String? {
         if let tribeInfo = self.tribesInfo, let appUrl = tribeInfo.appUrl, !appUrl.isEmpty {
@@ -428,7 +441,11 @@ public class Chat: NSManagedObject {
     }
     
     func getFeedUrl() -> String? {
-        if let tribeInfo = self.tribesInfo, let feedUrl = tribeInfo.feedUrl, !feedUrl.isEmpty {
+        if
+            let tribeInfo = self.tribesInfo,
+            let feedUrl = tribeInfo.feedUrl,
+            feedUrl.isEmpty == false
+        {
             return feedUrl
         }
         return nil
@@ -442,26 +459,64 @@ public class Chat: NSManagedObject {
         return (self.pricePerMessage?.intValue ?? 0, self.escrowAmount?.intValue ?? 0)
     }
     
+    
     func updateChatFromTribesInfo() {
-        if self.isMyPublicGroup() {
+        if isMyPublicGroup() {
             return
         }
         
-        self.escrowAmount = NSDecimalNumber(integerLiteral: self.tribesInfo?.amountToStake ?? (self.escrowAmount?.intValue ?? 0))
-        self.pricePerMessage = NSDecimalNumber(integerLiteral: self.tribesInfo?.pricePerMessage ?? (self.pricePerMessage?.intValue ?? 0))
-        self.name = (self.tribesInfo?.name?.isEmpty ?? true) ? self.name : self.tribesInfo!.name
+        escrowAmount = NSDecimalNumber(integerLiteral: tribesInfo?.amountToStake ?? (escrowAmount?.intValue ?? 0))
+        pricePerMessage = NSDecimalNumber(integerLiteral: tribesInfo?.pricePerMessage ?? (pricePerMessage?.intValue ?? 0))
+        name = (tribesInfo?.name?.isEmpty ?? true) ? name : tribesInfo!.name
         
-        let tribeImage = self.tribesInfo?.img ?? self.photoUrl
+        let tribeImage = tribesInfo?.img ?? photoUrl
         
-        if self.photoUrl != tribeImage {
-            self.photoUrl = tribeImage
-            self.image = nil
+        if photoUrl != tribeImage {
+            photoUrl = tribeImage
+            image = nil
         }
         
-        self.saveChat()
-        self.syncTribeWithServer()
-        self.checkForDeletedTribe()
+        if
+            let feedURLPath = tribesInfo?.feedUrl,
+            feedURLPath.isYouTubeRSSFeedURL
+        {
+            syncTribeWithVideoFeedData(using: feedURLPath) { [weak self] in
+                self?.saveChat()
+                self?.syncTribeWithServer()
+                self?.checkForDeletedTribe()
+            }
+        } else {
+            saveChat()
+            syncTribeWithServer()
+            checkForDeletedTribe()
+        }
     }
+    
+    
+    func syncTribeWithVideoFeedData(
+        using feedURLPath: String,
+        then completionHandler: @escaping () -> Void
+    ) {
+        API.sharedInstance.fetchYouTubeRSSFeed(from: feedURLPath) { result in
+            switch result {
+            case .success(let data):
+                let parsingResult = YouTubeXMLParser.parseVideoFeed(from: data)
+                
+                switch parsingResult {
+                case .success(let videoFeed):
+                    videoFeed.chat = self
+                    self.videoFeed = videoFeed
+                case .failure(let error):
+                    print(error)
+                }
+            case .failure(let error):
+                print(error)
+            }
+            
+            completionHandler()
+        }
+    }
+    
     
     func checkForDeletedTribe() {
         if let tribesInfo = self.tribesInfo, tribesInfo.deleted {

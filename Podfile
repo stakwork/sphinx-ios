@@ -20,6 +20,7 @@ target 'sphinx' do
     pod 'Starscream', '~> 3.1'
     pod 'lottie-ios'
     pod 'Tor', podspec: 'https://raw.githubusercontent.com/iCepa/Tor.framework/v405.8.1/Tor.podspec'
+    pod "SwiftyXMLParser", :git => 'https://github.com/yahoojapan/SwiftyXMLParser.git'
     
     post_install do |installer|
       installer.pods_project.targets.each do |target|

@@ -99,7 +99,12 @@ extension API {
         }
     }
     
-    func getTribeInfo(host: String, uuid: String, callback: @escaping CreateGroupCallback, errorCallback: @escaping EmptyCallback) {
+    func getTribeInfo(
+        host: String,
+        uuid: String,
+        callback: @escaping CreateGroupCallback,
+        errorCallback: @escaping EmptyCallback
+    ) {
         let url = API.getUrl(route: "https://\(host)/tribes/\(uuid)")
         let tribeRequest : URLRequest? = createRequest(url, bodyParams: nil, method: "GET")
         

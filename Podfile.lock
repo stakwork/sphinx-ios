@@ -39,6 +39,7 @@ PODS:
   - SwiftyRSA (1.6.0):
     - SwiftyRSA/ObjC (= 1.6.0)
   - SwiftyRSA/ObjC (1.6.0)
+  - SwiftyXMLParser (5.5.0)
   - Tor (405.8.1)
 
 DEPENDENCIES:
@@ -56,6 +57,7 @@ DEPENDENCIES:
   - SwiftLinkPreview (~> 3.1.0)
   - SwiftyJSON
   - SwiftyRSA
+  - SwiftyXMLParser (from `https://github.com/yahoojapan/SwiftyXMLParser.git`)
   - Tor (from `https://raw.githubusercontent.com/iCepa/Tor.framework/v405.8.1/Tor.podspec`)
 
 SPEC REPOS:
@@ -80,8 +82,15 @@ SPEC REPOS:
     - SwiftyRSA
 
 EXTERNAL SOURCES:
+  SwiftyXMLParser:
+    :git: https://github.com/yahoojapan/SwiftyXMLParser.git
   Tor:
     :podspec: https://raw.githubusercontent.com/iCepa/Tor.framework/v405.8.1/Tor.podspec
+
+CHECKOUT OPTIONS:
+  SwiftyXMLParser:
+    :commit: 41900bb1882e704a25d4946f2dbad71b4bb02b8f
+    :git: https://github.com/yahoojapan/SwiftyXMLParser.git
 
 SPEC CHECKSUMS:
   Alamofire: df2f8f826963b08b9a870791ad48e07a10090b2e
@@ -102,8 +111,9 @@ SPEC CHECKSUMS:
   SwiftLinkPreview: 3d924eeaae8d17410a827a4b37675713af1a0a8a
   SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
   SwiftyRSA: 3b9c9179744217951facc6a3e9ae8d8c97061ffa
+  SwiftyXMLParser: 027d9e6fb54a38d95dccec025bcea9693f699c47
   Tor: fad2cec0e7ef5f889fecdaf69e5edd6df0438326
 
-PODFILE CHECKSUM: ac1d27693ceb746f763dc6c440f7aa9efbc774fd
+PODFILE CHECKSUM: 2a745c86b47eb6572b55294534588fc1e6ee963b
 
 COCOAPODS: 1.9.3

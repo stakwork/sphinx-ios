@@ -11,8 +11,12 @@ import Alamofire
 
 extension API {
     
-    enum HUBError: Swift.Error {
+    enum RequestError: Swift.Error {
+        case failedToCreateRequestURL
         case failedToCreateRequest(urlPath: String)
+        case missingResponseData
+        case decodingError(DecodingError)
+        case unknownError(Swift.Error)
         case unexpectedResponseData
         case networkError(AFError)
         case nodeInvoiceGenerationFailure(message: String)
@@ -21,7 +25,7 @@ extension API {
 }
 
 
-extension API.HUBError: LocalizedError {
+extension API.RequestError: LocalizedError {
     
     var errorDescription: String? {
         switch self {
@@ -35,6 +39,14 @@ extension API.HUBError: LocalizedError {
             return "\("error.node.invoice.generation.failed".localized) \(message)"
         case .karmaReceiptValidationFailure(message: let message):
             return "\("error.karma.receipt.validation.failed".localized) \(message)"
+        case .failedToCreateRequestURL:
+            return "error.request.urlCreation.failed".localized
+        case .missingResponseData:
+            return "error.request.missingResponseData".localized
+        case .decodingError(let error):
+            return "\("error.request.decodingFailed".localized) \(error)"
+        case .unknownError(let error):
+            return "\("error.request.unknown".localized) \(error)"
         }
     }
 }

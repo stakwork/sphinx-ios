@@ -13,22 +13,6 @@ import CryptoKit
 
 extension API {
     
-    enum PodcastIndexSearchError: Swift.Error {
-        case failedToCreateRequestURL
-        case failedToCreateRequest(urlPath: String)
-        case missingResponseData
-        case decodingError(DecodingError)
-        case unknownError(Swift.Error)
-        case unexpectedResponseData
-        case networkError(AFError)
-        case nodeInvoiceGenerationFailure(message: String)
-        case karmaReceiptValidationFailure(message: String)
-    }
-}
-
-
-extension API {
-    
     enum PodcastIndexConfig {
         static let apiKey = Bundle
             .main

@@ -521,6 +521,8 @@
 		F3188B7F271792CE00890DDD /* VideoFeed+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3188B7D271792CD00890DDD /* VideoFeed+CoreDataClass.swift */; };
 		F3188B80271792CE00890DDD /* VideoFeed+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3188B7E271792CD00890DDD /* VideoFeed+CoreDataProperties.swift */; };
 		F3188B822717942000890DDD /* VideoFeed+Computeds.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3188B812717942000890DDD /* VideoFeed+Computeds.swift */; };
+		F3188B842717DC7F00890DDD /* API+YouTubeRSSUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3188B832717DC7F00890DDD /* API+YouTubeRSSUtils.swift */; };
+		F3188B8627197B3800890DDD /* YouTubeXMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3188B8527197B3700890DDD /* YouTubeXMLParser.swift */; };
 		F3197C0C267FA2C200330F79 /* connecting.gif in Resources */ = {isa = PBXBuildFile; fileRef = F3241A2F267CBB12007A6454 /* connecting.gif */; };
 		F3197C0D267FA2C800330F79 /* ellipse.gif in Resources */ = {isa = PBXBuildFile; fileRef = F3241A30267CBB12007A6454 /* ellipse.gif */; };
 		F3197C0E267FA2C800330F79 /* lightningNetwork.gif in Resources */ = {isa = PBXBuildFile; fileRef = F3241A31267CBB12007A6454 /* lightningNetwork.gif */; };
@@ -1245,6 +1247,8 @@
 		F3188B7D271792CD00890DDD /* VideoFeed+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VideoFeed+CoreDataClass.swift"; sourceTree = "<group>"; };
 		F3188B7E271792CD00890DDD /* VideoFeed+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VideoFeed+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		F3188B812717942000890DDD /* VideoFeed+Computeds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VideoFeed+Computeds.swift"; sourceTree = "<group>"; };
+		F3188B832717DC7F00890DDD /* API+YouTubeRSSUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+YouTubeRSSUtils.swift"; sourceTree = "<group>"; };
+		F3188B8527197B3700890DDD /* YouTubeXMLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeXMLParser.swift; sourceTree = "<group>"; };
 		F3197C102680F50300330F79 /* RestoreUserFormViewController+FormSubmissionUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RestoreUserFormViewController+FormSubmissionUtils.swift"; sourceTree = "<group>"; };
 		F3197C1226811DE400330F79 /* RestoreUserFormViewController+KeychainRestorationUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RestoreUserFormViewController+KeychainRestorationUtils.swift"; sourceTree = "<group>"; };
 		F31CF2652691489800AAB621 /* StoreKitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitService.swift; sourceTree = "<group>"; };
@@ -2062,6 +2066,7 @@
 			children = (
 				475BDD27232AC97500C5BBD6 /* API.swift */,
 				F358212E2698BE6700A314F1 /* API+HubError.swift */,
+				F3188B832717DC7F00890DDD /* API+YouTubeRSSUtils.swift */,
 				F30884A82699181200CADDEB /* API+KarmaPurchaseUtils.swift */,
 				F360123226E96B31009B8DC0 /* API+PodcastIndexSearchUtils.swift */,
 				47AAFC81238EFCE600E30BDA /* APIAttachmentsExtension.swift */,
@@ -2186,6 +2191,7 @@
 				479A03E82583A7180093DB30 /* LocalNetworkPermissionService.swift */,
 				F3B2519026DD5CE100C96D42 /* PodcastFeedService.swift */,
 				477C57E6234785ED00BB4E04 /* WalletBalanceService.swift */,
+				F3188B8527197B3700890DDD /* YouTubeXMLParser.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -3430,6 +3436,7 @@
 				4735D5C22411416000BEE3D4 /* LinkPreviewView.swift in Sources */,
 				47F258C72539F57E00122A5A /* PodcastRowAudioPlayer.swift in Sources */,
 				F394ECB12683CF5E00529038 /* NewUserGreetingViewController.swift in Sources */,
+				F3188B8627197B3800890DDD /* YouTubeXMLParser.swift in Sources */,
 				478F07D624E3229B00EE32A3 /* GiphyHelper.swift in Sources */,
 				F3D0401E268BAA9700D54A94 /* SphinxReadyViewController.swift in Sources */,
 				470F5CA9243E6C00007E054F /* CustomPipViewCoordinator.swift in Sources */,
@@ -3668,6 +3675,7 @@
 				478DCF9A2343D258009A03D6 /* SetNickNameViewController.swift in Sources */,
 				F3D86DC426B157F600EB9711 /* PodcastFeedCollectionViewSectionHeader.swift in Sources */,
 				47D46A28237B1D030005A548 /* SubscriptionFormTableViewCell.swift in Sources */,
+				F3188B842717DC7F00890DDD /* API+YouTubeRSSUtils.swift in Sources */,
 				475BDD21232AC64900C5BBD6 /* UIColor.swift in Sources */,
 				4779F162232AA0F200D35E81 /* AppDelegate.swift in Sources */,
 				4726A40D24C09C38005A66B4 /* ChatListHeader.swift in Sources */,

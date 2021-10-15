@@ -380,11 +380,13 @@ class GroupsManager {
         tribeInfo.bots = botObjects
     }
     
+    
     func getTribesInfoFrom(json: JSON) -> TribeInfo {
         var tribeInfo = TribeInfo()
         update(tribeInfo: &tribeInfo, from: json)
         return tribeInfo
     }
+    
     
     func calculateBotPrice(chat: Chat?, text: String) -> (Int, String?) {
         guard let tribesInfo = chat?.tribesInfo, text.starts(with: "/") else {

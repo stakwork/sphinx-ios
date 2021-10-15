@@ -46,9 +46,9 @@ typealias AppVersionsCallback = ((String) -> ())
 typealias SignupWithCodeCallback = ((JSON, String, String) -> ())
 typealias LowestPriceCallback = ((Double) -> ())
 typealias PayInviteCallback = ((JSON) -> ())
-typealias KarmaPurchaseValidationCallback = (Result<Void, API.HUBError>) -> ()
-typealias NodePurchaseInvoiceCallback = (Result<API.HUBNodeInvoice, API.HUBError>) -> ()
-typealias NodePurchaseValidationCallback = (Result<API.SphinxInviteCode, API.HUBError>) -> ()
+typealias KarmaPurchaseValidationCallback = (Result<Void, API.RequestError>) -> ()
+typealias NodePurchaseInvoiceCallback = (Result<API.HUBNodeInvoice, API.RequestError>) -> ()
+typealias NodePurchaseValidationCallback = (Result<API.SphinxInviteCode, API.RequestError>) -> ()
 
 //Attachments
 typealias AskAuthenticationCallback = ((String?, String?) -> ())
@@ -59,11 +59,17 @@ typealias MediaInfoCallback = ((Int, String?, Int?) -> ())
 
 // PodcastIndex Search
 typealias PodcastIndexSearchCompletionHandler = (
-    Result<[PodcastFeedSearchResult], API.PodcastIndexSearchError>
+    Result<[PodcastFeedSearchResult], API.RequestError>
 ) -> ()
 
 typealias PodcastIndexEpisodeFetchCompletionHandler = (
-    Result<[PodcastEpisode], API.PodcastIndexSearchError>
+    Result<[PodcastEpisode], API.RequestError>
+) -> ()
+
+
+// YouTube RSS Feeds
+typealias YouTubeRSSFeedFetchCompletionHandler = (
+    Result<Data, API.RequestError>
 ) -> ()
 
 

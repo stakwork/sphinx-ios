@@ -398,6 +398,12 @@ extension String {
         }
     }
     
+    
+    var isYouTubeRSSFeedURL: Bool {
+        starts(with: "https://www.youtube.com/feeds/")
+    }
+    
+    
     var isPodcastComment: Bool {
         get {
             return self.starts(with: PodcastPlayerHelper.kClipPrefix)

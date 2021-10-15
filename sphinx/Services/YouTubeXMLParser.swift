@@ -28,10 +28,16 @@ struct YouTubeXMLParser {
         let feedPayload = xml.feed
         
         if case .failure(let error) = xml {
-            return .failure(.parsingError(error))
+            return .failure(.xmlParsingFailed(error))
         }
-
+        
+        guard let feedID = feedPayload["yt:channelId"].text else {
+            return .failure(.xmlDecodingFailed(reason: "Channel ID not found"))
+        }
+        
         let feed = VideoFeed(context: managedObjectContext)
+
+        feed.feedID = feedID
         
         if
             let linkElements = feedPayload.link.all,
@@ -43,7 +49,6 @@ struct YouTubeXMLParser {
         
         feed.author = feedPayload.author.name
         feed.title = feedPayload.title.text
-        feed.feedID = feedPayload["yt:channelId"].text
         
         if let datePublished = feedPayload.published.text {
             feed.datePublished = Self.dateFormatter.date(from: datePublished)
@@ -57,6 +62,7 @@ struct YouTubeXMLParser {
 extension YouTubeXMLParser {
     
     enum Error: Swift.Error {
-        case parsingError(Swift.Error)
+        case xmlParsingFailed(Swift.Error)
+        case xmlDecodingFailed(reason: String)
     }
 }

@@ -241,7 +241,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="N05-mx-jox" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3635" y="1945"/>
+            <point key="canvasLocation" x="-3994" y="2761"/>
         </scene>
         <!--Feed Filter Chips Collection View Controller-->
         <scene sceneID="tKT-jp-7IA">
@@ -266,7 +266,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Icu-n7-UUo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4488" y="2638"/>
+            <point key="canvasLocation" x="-4845" y="3454"/>
         </scene>
         <!--Podcast Feeds Content Empty State View Controller-->
         <scene sceneID="Nvu-Zv-IVl">
@@ -296,12 +296,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="saU-RZ-2He" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3691" y="2640"/>
+            <point key="canvasLocation" x="-4049" y="3456"/>
         </scene>
-        <!--Feed Content Collection View Controller-->
+        <!--Podcast Feed Collection View Controller-->
         <scene sceneID="Ycq-O7-bTT">
             <objects>
-                <collectionViewController storyboardIdentifier="FeedContentCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="bdw-5E-YTV" customClass="FeedContentCollectionViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="PodcastFeedCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="bdw-5E-YTV" customClass="PodcastFeedCollectionViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="owa-fC-ffZ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -321,7 +321,32 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IeO-rD-8pI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2880" y="2640"/>
+            <point key="canvasLocation" x="-3239" y="3456"/>
+        </scene>
+        <!--Video Feed Collection View Controller-->
+        <scene sceneID="32r-Rk-Gha">
+            <objects>
+                <collectionViewController storyboardIdentifier="VideoFeedCollectionViewController" id="4pN-wi-GqR" customClass="VideoFeedCollectionViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="diG-Rx-ygk">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" name="ListBG"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="DRS-tI-zM9">
+                            <size key="itemSize" width="128" height="128"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells/>
+                        <connections>
+                            <outlet property="dataSource" destination="4pN-wi-GqR" id="vxI-eA-1ZM"/>
+                            <outlet property="delegate" destination="4pN-wi-GqR" id="pdF-iT-mwE"/>
+                        </connections>
+                    </collectionView>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ul1-ff-nrV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2430" y="3453"/>
         </scene>
         <!--Chats Container View Controller-->
         <scene sceneID="qKk-C4-9MQ">

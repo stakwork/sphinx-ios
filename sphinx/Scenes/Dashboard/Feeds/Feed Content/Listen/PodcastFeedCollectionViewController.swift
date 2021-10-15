@@ -2,7 +2,7 @@ import UIKit
 import CoreData
 
 
-class FeedContentCollectionViewController: UICollectionViewController {
+class PodcastFeedCollectionViewController: UICollectionViewController {
     var interSectionSpacing: CGFloat!
     
     var onPodcastEpisodeCellSelected: ((NSManagedObjectID) -> Void)!
@@ -24,17 +24,17 @@ class FeedContentCollectionViewController: UICollectionViewController {
 
 
 // MARK: - Instantiation
-extension FeedContentCollectionViewController {
+extension PodcastFeedCollectionViewController {
 
     static func instantiate(
         managedObjectContext: NSManagedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext,
-        fetchedResultsController: NSFetchedResultsController<PodcastFeed>,
+//        fetchedResultsController: NSFetchedResultsController<PodcastFeed>,
         interSectionSpacing: CGFloat = 10.0,
         onPodcastEpisodeCellSelected: @escaping ((NSManagedObjectID) -> Void) = { _ in },
         onPodcastFeedCellSelected: @escaping ((NSManagedObjectID) -> Void) = { _ in },
         onNewResultsFetched: @escaping ((Int) -> Void) = { _ in }
-    ) -> FeedContentCollectionViewController {
-        let viewController = StoryboardScene.Dashboard.feedContentCollectionViewController.instantiate()
+    ) -> PodcastFeedCollectionViewController {
+        let viewController = StoryboardScene.Dashboard.podcastFeedCollectionViewController.instantiate()
 
         viewController.managedObjectContext = managedObjectContext
         viewController.interSectionSpacing = interSectionSpacing
@@ -43,7 +43,8 @@ extension FeedContentCollectionViewController {
         viewController.onPodcastFeedCellSelected = onPodcastFeedCellSelected
         viewController.onNewResultsFetched = onNewResultsFetched
         
-        viewController.fetchedResultsController = fetchedResultsController
+//        viewController.fetchedResultsController = fetchedResultsController
+        viewController.fetchedResultsController = Self.makeFetchedResultsController(using: managedObjectContext)
         viewController.fetchedResultsController.delegate = viewController
         
         return viewController
@@ -52,7 +53,7 @@ extension FeedContentCollectionViewController {
 
 
 // MARK: - Layout & Data Structure
-extension FeedContentCollectionViewController {
+extension PodcastFeedCollectionViewController {
     
     enum CollectionViewSection: Int, CaseIterable {
         
@@ -72,7 +73,7 @@ extension FeedContentCollectionViewController {
         }
     }
     
-    typealias ReusableHeaderView = PodcastFeedCollectionViewSectionHeader
+    typealias ReusableHeaderView = DashboardFeedCollectionViewSectionHeader
     typealias CollectionViewCell = PodcastFeedCollectionViewCell
     typealias CellDataItemType = NSManagedObjectID
     typealias DataSource = UICollectionViewDiffableDataSource<CollectionViewSection.RawValue, CellDataItemType>
@@ -82,7 +83,7 @@ extension FeedContentCollectionViewController {
 
 
 // MARK: - Lifecycle
-extension FeedContentCollectionViewController {
+extension PodcastFeedCollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -102,7 +103,7 @@ extension FeedContentCollectionViewController {
 
 
 // MARK: - Layout Composition
-extension FeedContentCollectionViewController {
+extension PodcastFeedCollectionViewController {
 
     func makeSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
         let headerSize = NSCollectionLayoutSize(
@@ -168,7 +169,7 @@ extension FeedContentCollectionViewController {
 
 
 // MARK: - Collection View Configuration and View Registration
-extension FeedContentCollectionViewController {
+extension PodcastFeedCollectionViewController {
 
     func registerViews(for collectionView: UICollectionView) {
         collectionView.register(
@@ -198,7 +199,7 @@ extension FeedContentCollectionViewController {
 
 
 // MARK: - Data Source Configuration
-extension FeedContentCollectionViewController {
+extension PodcastFeedCollectionViewController {
 
     func makeDataSource(for collectionView: UICollectionView) -> DataSource {
         let dataSource = DataSource(
@@ -230,7 +231,7 @@ extension FeedContentCollectionViewController {
 }
 
 // MARK: - Data Source View Providers
-extension FeedContentCollectionViewController {
+extension PodcastFeedCollectionViewController {
 
     func makeCellProvider(
         for collectionView: UICollectionView
@@ -297,8 +298,26 @@ extension FeedContentCollectionViewController {
 }
 
 
+// MARK: -  Static Helpers
+extension PodcastFeedCollectionViewController {
+    
+    static func makeFetchedResultsController(
+        using managedObjectContext: NSManagedObjectContext
+    ) -> NSFetchedResultsController<PodcastFeed> {
+        let fetchRequest = PodcastFeed.FetchRequests.followedFeeds()
+        
+        return NSFetchedResultsController(
+            fetchRequest: fetchRequest,
+            managedObjectContext: managedObjectContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil
+        )
+    }
+}
+
+
 // MARK: - `UICollectionViewDelegate` Methods
-extension FeedContentCollectionViewController {
+extension PodcastFeedCollectionViewController {
     
     override func collectionView(
         _ collectionView: UICollectionView,
@@ -322,7 +341,7 @@ extension FeedContentCollectionViewController {
 
 
 // MARK: - `NSFetchedResultsControllerDelegate` Methods
-extension FeedContentCollectionViewController: NSFetchedResultsControllerDelegate {
+extension PodcastFeedCollectionViewController: NSFetchedResultsControllerDelegate {
 
     /// Called when the contents of the fetched results controller change.
     ///

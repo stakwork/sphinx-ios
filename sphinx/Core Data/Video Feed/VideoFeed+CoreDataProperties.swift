@@ -19,7 +19,7 @@ extension VideoFeed {
     @NSManaged public var author: String?
     @NSManaged public var feedURL: URL?
     @NSManaged public var title: String?
-    @NSManaged public var feedID: String?
+    @NSManaged public var feedID: String
     @NSManaged public var datePublished: Date?
     @NSManaged public var chat: Chat?
     @NSManaged public var videos: Set<Video>?

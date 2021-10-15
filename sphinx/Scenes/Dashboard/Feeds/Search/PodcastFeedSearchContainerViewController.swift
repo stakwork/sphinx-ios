@@ -44,9 +44,7 @@ class PodcastFeedSearchContainerViewController: UIViewController {
     
     
     internal lazy var emptyStateViewController: PodcastFeedSearchEmptyStateViewController = {
-        PodcastFeedSearchEmptyStateViewController.instantiate(
-            
-        )
+        PodcastFeedSearchEmptyStateViewController.instantiate()
     }()
     
     

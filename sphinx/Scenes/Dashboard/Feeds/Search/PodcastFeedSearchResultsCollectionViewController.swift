@@ -8,7 +8,6 @@ import UIKit
 import CoreData
 
 
-
 class PodcastFeedSearchResultsCollectionViewController: UICollectionViewController {
     var podcastFeeds: [PodcastFeed]!
     var directorySearchResults: [PodcastFeedSearchResult]!
@@ -460,4 +459,5 @@ extension PodcastFeedSearchResultsCollectionViewController {
         }
     }
 }
+
 

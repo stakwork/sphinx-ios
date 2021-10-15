@@ -18,6 +18,17 @@ protocol DashboardFeedsListContainerViewControllerDelegate: AnyObject {
         _ viewController: UIViewController,
         didSelectPodcastEpisodeWithID podcastEpisodeID: NSManagedObjectID
     )
+    
+    
+    func viewController(
+        _ viewController: UIViewController,
+        didSelectVideoFeedWithID videoFeedID: NSManagedObjectID
+    )
+    
+    func viewController(
+        _ viewController: UIViewController,
+        didSelectVideoEpisodeWithID videoEpisodeID: NSManagedObjectID
+    )
 }
 
 
@@ -27,25 +38,51 @@ class DashboardFeedsContainerViewController: UIViewController {
     
     private var managedObjectContext: NSManagedObjectContext!
     private var filterChipCollectionViewController: FeedFilterChipsCollectionViewController!
-    private var feedContentCollectionViewController: FeedContentCollectionViewController!
+    
     private weak var feedsListContainerDelegate: DashboardFeedsListContainerViewControllerDelegate?
+    
+//    private var podcastFeedCollectionViewController: PodcastFeedCollectionViewController!
+    
     
     var contentFilterOptions: [ContentFilterOption] = []
     
     var activeFilterOption: ContentFilterOption = .allContent {
         didSet {
             DispatchQueue.main.async { [weak self] in
-                self?.handleFilterChipChange()
+                self?.handleFilterChipChange(
+                    from: oldValue,
+                    to: self!.activeFilterOption
+                )
             }
         }
     }
     
-    var fetchedResultsController: NSFetchedResultsController<PodcastFeed>!
+//    var fetchedResultsController: NSFetchedResultsController<PodcastFeed>!
     
     
     internal lazy var emptyStateViewController: PodcastFeedsContentEmptyStateViewController = {
         PodcastFeedsContentEmptyStateViewController.instantiate(
             contentFilterOption: activeFilterOption
+        )
+    }()
+    
+    
+    internal lazy var podcastFeedCollectionViewController: PodcastFeedCollectionViewController = {
+        PodcastFeedCollectionViewController.instantiate(
+            managedObjectContext: managedObjectContext,
+            onPodcastEpisodeCellSelected: handlePodcastEpisodeCellSelection(_:),
+            onPodcastFeedCellSelected: handlePodcastFeedCellSelection(_:),
+            onNewResultsFetched: handleNewResultsFetch(_:)
+        )
+    }()
+    
+    
+    internal lazy var videoFeedCollectionViewController: VideoFeedCollectionViewController = {
+        VideoFeedCollectionViewController.instantiate(
+            managedObjectContext: managedObjectContext,
+            onVideoEpisodeCellSelected: handleVideoEpisodeCellSelection(_:),
+            onVideoFeedCellSelected: handleVideoFeedCellSelection(_:),
+            onNewResultsFetched: handleNewResultsFetch(_:)
         )
     }()
     
@@ -57,27 +94,27 @@ class DashboardFeedsContainerViewController: UIViewController {
         let viewController = StoryboardScene.Dashboard.feedsListViewController.instantiate()
         
         viewController.managedObjectContext = managedObjectContext
-        viewController.fetchedResultsController = makeFetchedResultsController(
-            using: managedObjectContext
-        )
+//        viewController.fetchedResultsController = makeFetchedResultsController(
+//            using: managedObjectContext
+//        )
         viewController.feedsListContainerDelegate = feedsListContainerDelegate
         
         return viewController
     }
     
     
-    static func makeFetchedResultsController(
-        using managedObjectContext: NSManagedObjectContext
-    ) -> NSFetchedResultsController<PodcastFeed> {
-        let fetchRequest = PodcastFeed.FetchRequests.followedFeeds()
-        
-        return NSFetchedResultsController(
-            fetchRequest: fetchRequest,
-            managedObjectContext: managedObjectContext,
-            sectionNameKeyPath: nil,
-            cacheName: nil
-        )
-    }
+//    static func makeFetchedResultsController(
+//        using managedObjectContext: NSManagedObjectContext
+//    ) -> NSFetchedResultsController<PodcastFeed> {
+//        let fetchRequest = PodcastFeed.FetchRequests.followedFeeds()
+//
+//        return NSFetchedResultsController(
+//            fetchRequest: fetchRequest,
+//            managedObjectContext: managedObjectContext,
+//            sectionNameKeyPath: nil,
+//            cacheName: nil
+//        )
+//    }
     
     
     override func viewDidLoad() {
@@ -131,21 +168,6 @@ extension DashboardFeedsContainerViewController {
     }
     
   
-    private func handleLatestEpisodeCellSelection(_ managedObjectID: NSManagedObjectID) {
-        feedsListContainerDelegate?.viewController(
-            self,
-            didSelectPodcastEpisodeWithID: managedObjectID
-        )
-    }
-    
-    private func handleLatestFeedCellSelection(_ managedObjectID: NSManagedObjectID) {
-        feedsListContainerDelegate?.viewController(
-            self,
-            didSelectPodcastFeedWithID: managedObjectID
-        )
-    }
-    
-    
     private func handleNewResultsFetch(_ numberOfItems: Int) {
         if numberOfItems == 0 {
             showEmptyStateViewController()
@@ -155,23 +177,64 @@ extension DashboardFeedsContainerViewController {
     }
     
     
-    private func handleFilterChipChange() {
-        removeEmptyStateViewController()
-        
+    private func mainContentViewController(
+        for filterChip: ContentFilterOption
+    ) -> UIViewController {
         switch activeFilterOption.id {
         case ContentFilterOption.allContent.id:
-            feedContentCollectionViewController.fetchItems()
+            return podcastFeedCollectionViewController
         case ContentFilterOption.listen.id:
-            feedContentCollectionViewController.fetchItems()
+            return podcastFeedCollectionViewController
         case ContentFilterOption.watch.id:
-            showEmptyStateViewController()
+            return videoFeedCollectionViewController
         case ContentFilterOption.read.id:
-            showEmptyStateViewController()
+            return emptyStateViewController
         case ContentFilterOption.play.id:
-            showEmptyStateViewController()
+            return emptyStateViewController
         default:
-            break
+            preconditionFailure()
         }
+    }
+    
+    private func handleFilterChipChange(
+        from oldFilterOption: ContentFilterOption,
+        to activeFilterOption: ContentFilterOption
+    ) {
+        removeEmptyStateViewController()
+        
+        let oldViewController = mainContentViewController(for: oldFilterOption)
+        let newViewController = mainContentViewController(for: activeFilterOption)
+        
+        removeChildVC(child: oldViewController)
+        
+        addChildVC(
+            child: newViewController,
+            container: feedContentCollectionViewContainer
+        )
+        
+        
+//        switch activeFilterOption.id {
+//        case ContentFilterOption.allContent.id:
+//            // ❓ QUESTION: Do we need to call `fetchItems` if that's part of the VC's `viewDidAppear` hook?
+////            podcastFeedCollectionViewController.fetchItems()
+//
+//            // For now, "All" is using the `podcastFeedCollectionViewController`
+//            presentContentViewController(podcastFeedCollectionViewController)
+//        case ContentFilterOption.listen.id:
+////            podcastFeedCollectionViewController.fetchItems()
+//            presentContentViewController(podcastFeedCollectionViewController)
+//        case ContentFilterOption.watch.id:
+////            showEmptyStateViewController()
+////            videoFeedCollectionViewController.fetchItems()
+//            presentContentViewController(videoFeedCollectionViewController)
+//            videoFeedCollectionViewController.fetchItems()
+//        case ContentFilterOption.read.id:
+//            showEmptyStateViewController()
+//        case ContentFilterOption.play.id:
+//            showEmptyStateViewController()
+//        default:
+//            break
+//        }
     }
     
     
@@ -190,18 +253,19 @@ extension DashboardFeedsContainerViewController {
     
     
     private func configureFeedContentCollectionView() {
-        feedContentCollectionViewController = FeedContentCollectionViewController
-            .instantiate(
-                fetchedResultsController: fetchedResultsController,
-                onPodcastEpisodeCellSelected: handleLatestEpisodeCellSelection(_:),
-                onPodcastFeedCellSelected: handleLatestFeedCellSelection(_:),
-                onNewResultsFetched: handleNewResultsFetch(_:)
-            )
+//        feedContentCollectionViewController = PodcastFeedCollectionViewController
+//            .instantiate(
+//                fetchedResultsController: fetchedResultsController,
+//                onPodcastEpisodeCellSelected: handlePodcastEpisodeCellSelection(_:),
+//                onPodcastFeedCellSelected: handlePodcastFeedCellSelection(_:),
+//                onNewResultsFetched: handleNewResultsFetch(_:)
+//            )
         
-        addChildVC(
-            child: feedContentCollectionViewController,
-            container: feedContentCollectionViewContainer
-        )
+//        addChildVC(
+//            child: podcastFeedCollectionViewController,
+//            container: feedContentCollectionViewContainer
+//        )
+        activeFilterOption = .allContent
     }
     
     
@@ -218,5 +282,55 @@ extension DashboardFeedsContainerViewController {
     private func removeEmptyStateViewController() {
         removeChildVC(child: emptyStateViewController)
     }
+    
+    
+    private func presentContentViewController(_ viewController: UIViewController) {
+//        removeChildVC(child: emptyStateViewController)
+        
+        // 📝 TODO:  Remove the "ContentViewController" that's currently being displayed.
+        
+        // 📝 TODO:  Rename `feedContentCollectionViewContainer`?
+        addChildVC(
+            child: viewController,
+            container: feedContentCollectionViewContainer
+        )
+    }
 }
 
+
+// MARK: -  Audio Podcast Selection
+extension DashboardFeedsContainerViewController {
+    
+    private func handlePodcastEpisodeCellSelection(_ managedObjectID: NSManagedObjectID) {
+        feedsListContainerDelegate?.viewController(
+            self,
+            didSelectPodcastEpisodeWithID: managedObjectID
+        )
+    }
+    
+    private func handlePodcastFeedCellSelection(_ managedObjectID: NSManagedObjectID) {
+        feedsListContainerDelegate?.viewController(
+            self,
+            didSelectPodcastFeedWithID: managedObjectID
+        )
+    }
+}
+
+
+// MARK: - Video Selection
+extension DashboardFeedsContainerViewController {
+    
+    private func handleVideoEpisodeCellSelection(_ managedObjectID: NSManagedObjectID) {
+        feedsListContainerDelegate?.viewController(
+            self,
+            didSelectPodcastEpisodeWithID: managedObjectID
+        )
+    }
+    
+    private func handleVideoFeedCellSelection(_ managedObjectID: NSManagedObjectID) {
+        feedsListContainerDelegate?.viewController(
+            self,
+            didSelectPodcastFeedWithID: managedObjectID
+        )
+    }
+}

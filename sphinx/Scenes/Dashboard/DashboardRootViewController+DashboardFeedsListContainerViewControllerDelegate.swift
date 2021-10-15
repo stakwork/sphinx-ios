@@ -77,6 +77,16 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
             }
         }
     }
+    
+    
+    func viewController(_ viewController: UIViewController, didSelectVideoFeedWithID videoFeedID: NSManagedObjectID) {
+        // 📝 TODO:  Implement
+    }
+    
+    
+    func viewController(_ viewController: UIViewController, didSelectVideoEpisodeWithID videoEpisodeID: NSManagedObjectID) {
+        // 📝 TODO:  Implement
+    }
 }
 
 

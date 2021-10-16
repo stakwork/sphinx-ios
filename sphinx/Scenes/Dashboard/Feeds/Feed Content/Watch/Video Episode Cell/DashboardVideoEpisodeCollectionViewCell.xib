@@ -4,9 +4,14 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19141"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="Roboto-Regular.ttf">
+            <string>Roboto-Regular</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -21,28 +26,74 @@
                         <rect key="frame" x="0.0" y="0.0" width="332" height="241"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8aS-Xr-S7c" userLabel="Episode Thumbnail Image">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="podcastIndexLogo" translatesAutoresizingMaskIntoConstraints="NO" id="8aS-Xr-S7c" userLabel="Episode Thumbnail Image">
                                 <rect key="frame" x="0.0" y="0.0" width="332" height="186"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="8aS-Xr-S7c" secondAttribute="height" multiplier="1.78495:1" id="2gi-9Y-4wx"/>
                                 </constraints>
                             </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="FpZ-tB-8if">
+                                <rect key="frame" x="0.0" y="194" width="332" height="46.5"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cashAppIcon" translatesAutoresizingMaskIntoConstraints="NO" id="HcA-9t-mcO" userLabel="Feed Avatar Image">
+                                        <rect key="frame" x="0.0" y="5.5" width="36" height="36"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="36" id="YDs-Vd-emp"/>
+                                            <constraint firstAttribute="height" constant="36" id="upT-M2-rEM"/>
+                                        </constraints>
+                                    </imageView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="PLo-Uf-ljl">
+                                        <rect key="frame" x="48" y="0.0" width="284" height="46.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Podcast Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lVa-sg-vsM" userLabel="Feed Name">
+                                                <rect key="frame" x="0.0" y="0.0" width="284" height="15.5"/>
+                                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="13"/>
+                                                <color key="textColor" name="SecondaryText"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Episode Title with Two Lines of Text" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Zy-p4-LG5" userLabel="Episode Title">
+                                                <rect key="frame" x="0.0" y="15.5" width="284" height="15.5"/>
+                                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="13"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Episode Title with Two Lines of Text" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="apX-E0-d8X" userLabel="Episode Publish Date">
+                                                <rect key="frame" x="0.0" y="31" width="284" height="15.5"/>
+                                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="13"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="8aS-Xr-S7c" firstAttribute="top" secondItem="z3K-nR-7DT" secondAttribute="top" id="8uX-sO-SQG"/>
+                            <constraint firstItem="FpZ-tB-8if" firstAttribute="leading" secondItem="z3K-nR-7DT" secondAttribute="leading" id="IFu-7A-bwE"/>
                             <constraint firstAttribute="trailing" secondItem="8aS-Xr-S7c" secondAttribute="trailing" id="Xsq-hl-358"/>
                             <constraint firstItem="8aS-Xr-S7c" firstAttribute="leading" secondItem="z3K-nR-7DT" secondAttribute="leading" id="beJ-je-e44"/>
+                            <constraint firstItem="FpZ-tB-8if" firstAttribute="top" secondItem="8aS-Xr-S7c" secondAttribute="bottom" constant="8" id="eeT-y7-QOh"/>
+                            <constraint firstAttribute="trailing" secondItem="FpZ-tB-8if" secondAttribute="trailing" id="yNI-gg-qf9"/>
                         </constraints>
                     </view>
                 </subviews>
             </view>
+            <connections>
+                <outlet property="episodePublishDateLabel" destination="1Zy-p4-LG5" id="VGf-Lf-q9b"/>
+                <outlet property="episodeTitleLabel" destination="1Zy-p4-LG5" id="DeB-nk-GjU"/>
+                <outlet property="feedAvatarImageView" destination="HcA-9t-mcO" id="KDC-K8-VU9"/>
+                <outlet property="feedNameLabel" destination="lVa-sg-vsM" id="sBf-PS-5hL"/>
+                <outlet property="thumbnailImageView" destination="8aS-Xr-S7c" id="hGV-KQ-2OS"/>
+            </connections>
             <point key="canvasLocation" x="132" y="106"/>
         </collectionViewCell>
     </objects>
     <resources>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
+        <image name="cashAppIcon" width="160" height="160"/>
+        <image name="podcastIndexLogo" width="76" height="72"/>
+        <namedColor name="SecondaryText">
+            <color red="0.55686274509803924" green="0.58823529411764708" blue="0.61176470588235299" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>

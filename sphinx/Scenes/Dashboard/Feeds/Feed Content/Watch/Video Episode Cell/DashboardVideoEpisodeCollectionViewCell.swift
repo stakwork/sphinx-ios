@@ -9,9 +9,11 @@ import UIKit
 
 
 class DashboardVideoEpisodeCollectionViewCell: UICollectionViewCell {
-    @IBOutlet weak var thumbnailImageView: UIImageView!
-//    @IBOutlet weak var episodeTitleLabel: UILabel!
-//    @IBOutlet weak var feedNameLabel: UILabel!
+    @IBOutlet private weak var thumbnailImageView: UIImageView!
+    @IBOutlet private weak var feedAvatarImageView: UIImageView!
+    @IBOutlet private weak var feedNameLabel: UILabel!
+    @IBOutlet private weak var episodeTitleLabel: UILabel!
+    @IBOutlet private weak var episodePublishDateLabel: UILabel!
     
     
     var videoEpisode: Video! {
@@ -41,6 +43,8 @@ extension DashboardVideoEpisodeCollectionViewCell {
         
         thumbnailImageView.layer.cornerRadius = 8.0
         thumbnailImageView.clipsToBounds = true
+        
+        feedAvatarImageView.makeCircular()
     }
     
     
@@ -62,7 +66,25 @@ extension DashboardVideoEpisodeCollectionViewCell {
             thumbnailImageView.image = UIImage(named: "podcastPlaceholder")
         }
         
-//        episodeTitleLabel.text = videoEpisode.title
+        if
+            // 📝 TODO:  Clean up the logic for computing this
+            let avatarImageURLPath = videoEpisode.videoFeed?.chat?.photoUrl,
+            let avatarImageURL = URL(string: avatarImageURLPath)
+        {
+            feedAvatarImageView.sd_setImage(
+                with: avatarImageURL,
+                placeholderImage: UIImage(named: "profile_avatar"),
+                options: [.highPriority],
+                progress: nil
+            )
+        } else {
+            feedAvatarImageView.image = UIImage(named: "profile_avatar")
+        }
+
+        feedNameLabel.text = videoEpisode.videoFeed?.title ?? "Untitled"
+        episodeTitleLabel.text = videoEpisode.title ?? "Untitled"
+//        episodePublishDateLabel.text = Self.publishDateFormatter.string(from: videoEpisode.datePublished)
+        episodePublishDateLabel.text = "Publish Date"
     }
 }
 

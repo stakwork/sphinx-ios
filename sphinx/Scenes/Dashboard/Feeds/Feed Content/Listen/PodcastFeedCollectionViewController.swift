@@ -28,7 +28,6 @@ extension PodcastFeedCollectionViewController {
 
     static func instantiate(
         managedObjectContext: NSManagedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext,
-//        fetchedResultsController: NSFetchedResultsController<PodcastFeed>,
         interSectionSpacing: CGFloat = 10.0,
         onPodcastEpisodeCellSelected: @escaping ((NSManagedObjectID) -> Void) = { _ in },
         onPodcastFeedCellSelected: @escaping ((NSManagedObjectID) -> Void) = { _ in },

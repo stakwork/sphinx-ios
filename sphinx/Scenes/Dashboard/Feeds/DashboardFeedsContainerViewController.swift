@@ -90,27 +90,10 @@ class DashboardFeedsContainerViewController: UIViewController {
         let viewController = StoryboardScene.Dashboard.feedsListViewController.instantiate()
         
         viewController.managedObjectContext = managedObjectContext
-//        viewController.fetchedResultsController = makeFetchedResultsController(
-//            using: managedObjectContext
-//        )
         viewController.feedsListContainerDelegate = feedsListContainerDelegate
         
         return viewController
     }
-    
-    
-//    static func makeFetchedResultsController(
-//        using managedObjectContext: NSManagedObjectContext
-//    ) -> NSFetchedResultsController<PodcastFeed> {
-//        let fetchRequest = PodcastFeed.FetchRequests.followedFeeds()
-//
-//        return NSFetchedResultsController(
-//            fetchRequest: fetchRequest,
-//            managedObjectContext: managedObjectContext,
-//            sectionNameKeyPath: nil,
-//            cacheName: nil
-//        )
-//    }
     
     
     override func viewDidLoad() {
@@ -207,30 +190,6 @@ extension DashboardFeedsContainerViewController {
             child: newViewController,
             container: feedContentCollectionViewContainer
         )
-        
-        
-//        switch activeFilterOption.id {
-//        case ContentFilterOption.allContent.id:
-//            // ❓ QUESTION: Do we need to call `fetchItems` if that's part of the VC's `viewDidAppear` hook?
-////            podcastFeedCollectionViewController.fetchItems()
-//
-//            // For now, "All" is using the `podcastFeedCollectionViewController`
-//            presentContentViewController(podcastFeedCollectionViewController)
-//        case ContentFilterOption.listen.id:
-////            podcastFeedCollectionViewController.fetchItems()
-//            presentContentViewController(podcastFeedCollectionViewController)
-//        case ContentFilterOption.watch.id:
-////            showEmptyStateViewController()
-////            videoFeedCollectionViewController.fetchItems()
-//            presentContentViewController(videoFeedCollectionViewController)
-//            videoFeedCollectionViewController.fetchItems()
-//        case ContentFilterOption.read.id:
-//            showEmptyStateViewController()
-//        case ContentFilterOption.play.id:
-//            showEmptyStateViewController()
-//        default:
-//            break
-//        }
     }
     
     
@@ -249,18 +208,6 @@ extension DashboardFeedsContainerViewController {
     
     
     private func configureFeedContentCollectionView() {
-//        feedContentCollectionViewController = PodcastFeedCollectionViewController
-//            .instantiate(
-//                fetchedResultsController: fetchedResultsController,
-//                onPodcastEpisodeCellSelected: handlePodcastEpisodeCellSelection(_:),
-//                onPodcastFeedCellSelected: handlePodcastFeedCellSelection(_:),
-//                onNewResultsFetched: handleNewResultsFetch(_:)
-//            )
-        
-//        addChildVC(
-//            child: podcastFeedCollectionViewController,
-//            container: feedContentCollectionViewContainer
-//        )
         activeFilterOption = .allContent
     }
     
@@ -281,11 +228,6 @@ extension DashboardFeedsContainerViewController {
     
     
     private func presentContentViewController(_ viewController: UIViewController) {
-//        removeChildVC(child: emptyStateViewController)
-        
-        // 📝 TODO:  Remove the "ContentViewController" that's currently being displayed.
-        
-        // 📝 TODO:  Rename `feedContentCollectionViewContainer`?
         addChildVC(
             child: viewController,
             container: feedContentCollectionViewContainer

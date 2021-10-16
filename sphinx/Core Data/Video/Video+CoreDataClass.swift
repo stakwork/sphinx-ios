@@ -13,3 +13,9 @@ import CoreData
 public class Video: NSManagedObject {
 
 }
+
+
+extension Video: Identifiable {
+    public var id: String { videoID }
+}
+

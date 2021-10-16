@@ -54,7 +54,57 @@ struct YouTubeXMLParser {
             feed.datePublished = Self.dateFormatter.date(from: datePublished)
         }
         
-        return .success(feed)
+        let videoEntriesResult = Self.parseVideoFeedEntries(
+            from: feedPayload,
+            using: managedObjectContext
+        )
+        
+        switch videoEntriesResult {
+        case .success(let videos):
+            feed.addToVideos(Set(videos))
+            
+            return .success(feed)
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    
+    
+    static func parseVideoFeedEntries(
+        from xmlAccessor: XML.Accessor,
+        using managedObjectContext: NSManagedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext
+    ) -> Result<[Video], Error> {
+        do {
+            return .success(
+                try xmlAccessor.entry.compactMap { videoPayload in
+                    let video = Video(context: managedObjectContext)
+                    
+                    guard let videoID = videoPayload["yt:videoId"].text else {
+                        throw Error.xmlDecodingFailed(reason: "Video ID not found")
+                    }
+                    
+                    video.videoID = videoID
+                    
+                    video.title = videoPayload.title.text
+                    video.author = videoPayload.author.name
+                    video.videoDescription = videoPayload["media:group", "media:description"].text
+                    
+                    if let datePublished = videoPayload.published.text {
+                        video.datePublished = Self.dateFormatter.date(from: datePublished)
+                    }
+                    
+                    if let thumbnailURLPath = videoPayload["media:group", "media:thumbnail"].attributes["url"] {
+                        video.thumbnailURL = URL(string: thumbnailURLPath)
+                    }
+                    
+                    return video
+                }
+            )
+        } catch let parserError as Error {
+            return .failure(parserError)
+        } catch {
+            return .failure(.xmlParsingFailed(error))
+        }
     }
 }
 

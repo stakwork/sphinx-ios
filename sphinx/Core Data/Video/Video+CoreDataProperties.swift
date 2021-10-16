@@ -16,8 +16,8 @@ extension Video {
         return NSFetchRequest<Video>(entityName: "Video")
     }
 
+    @NSManaged public var videoID: String
     @NSManaged public var datePublished: Date?
-    @NSManaged public var videoID: String?
     @NSManaged public var title: String?
     @NSManaged public var author: String?
     @NSManaged public var videoDescription: String?

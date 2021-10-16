@@ -12,7 +12,7 @@ class VideoFeedCollectionViewController: UICollectionViewController {
     var videoFeeds: [VideoFeed]!
     var videoEpisodes: [Video]!
     
-    var interSectionSpacing: CGFloat = 0.0
+    var interSectionSpacing: CGFloat = 20.0
 
     var onVideoEpisodeCellSelected: ((NSManagedObjectID) -> Void)!
     var onVideoFeedCellSelected: ((NSManagedObjectID) -> Void)!
@@ -39,7 +39,7 @@ extension VideoFeedCollectionViewController {
         managedObjectContext: NSManagedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext,
         videoFeeds: [VideoFeed] = [],
         videoEpisodes: [Video] = [],
-        interSectionSpacing: CGFloat = 0.0,
+        interSectionSpacing: CGFloat = 20.0,
         onVideoEpisodeCellSelected: ((NSManagedObjectID) -> Void)!,
         onVideoFeedCellSelected: ((NSManagedObjectID) -> Void)!,
         onNewResultsFetched: @escaping ((Int) -> Void) = { _ in }
@@ -149,11 +149,38 @@ extension VideoFeedCollectionViewController {
         )
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
 
+        
+        let section = NSCollectionLayoutSection(group: group)
+
+        section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
+        section.boundarySupplementaryItems = [makeSectionHeader()]
+        section.contentInsets = .init(top: 11, leading: 0, bottom: 11, trailing: 0)
+
+        return section
+    }
+    
+    
+    func makeVideoEpisodeSectionLayout() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .fractionalHeight(1.0)
+        )
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        item.contentInsets = itemContentInsets
+
+
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .estimated(241.0)
+        )
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+
 
         let section = NSCollectionLayoutSection(group: group)
 
         section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
         section.boundarySupplementaryItems = [makeSectionHeader()]
+        section.contentInsets = .init(top: 11, leading: 0, bottom: 11, trailing: 0)
 
         return section
     }
@@ -161,8 +188,12 @@ extension VideoFeedCollectionViewController {
 
     func makeSectionProvider() -> UICollectionViewCompositionalLayoutSectionProvider {
         { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
-            // 📝 TODO:  Switch on the type of section
-            self.makeVideoFeedSectionLayout()
+            switch CollectionViewSection(rawValue: sectionIndex)! {
+            case .videoEpisodes:
+                return self.makeVideoEpisodeSectionLayout()
+            case .videoFeeds:
+                return self.makeVideoFeedSectionLayout()
+            }
         }
     }
 
@@ -206,10 +237,18 @@ extension VideoFeedCollectionViewController {
 
 
     func configure(_ collectionView: UICollectionView) {
+        collectionView.contentInset = .init(
+            top: interSectionSpacing,
+            left: 0,
+            bottom: 0,
+            right: 0
+        )
+        
         collectionView.collectionViewLayout = makeLayout()
         collectionView.alwaysBounceVertical = true
         collectionView.backgroundColor = .Sphinx.ListBG
         collectionView.showsVerticalScrollIndicator = false
+        
         collectionView.delegate = self
     }
 }
@@ -346,6 +385,7 @@ extension VideoFeedCollectionViewController {
         shouldAnimate: Bool = true
     ) {
         self.videoFeeds = videoFeeds
+        videoEpisodes = videoFeeds.compactMap(\.videosArray.last)
 
         if let dataSource = dataSource {
             dataSource.apply(

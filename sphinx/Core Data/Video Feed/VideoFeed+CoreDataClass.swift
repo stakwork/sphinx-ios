@@ -12,7 +12,7 @@ public class VideoFeed: NSManagedObject {
 
 }
 
+
 extension VideoFeed: Identifiable {
-    
     public var id: String { feedID }
 }

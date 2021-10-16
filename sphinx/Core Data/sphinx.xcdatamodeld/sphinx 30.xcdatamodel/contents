@@ -180,7 +180,7 @@
         <attribute name="thumbnailURL" optional="YES" attributeType="URI"/>
         <attribute name="title" optional="YES" attributeType="String"/>
         <attribute name="videoDescription" optional="YES" attributeType="String"/>
-        <attribute name="videoID" optional="YES" attributeType="String"/>
+        <attribute name="videoID" attributeType="String"/>
         <relationship name="videoFeed" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="VideoFeed" inverseName="videos" inverseEntity="VideoFeed"/>
         <uniquenessConstraints>
             <uniquenessConstraint>

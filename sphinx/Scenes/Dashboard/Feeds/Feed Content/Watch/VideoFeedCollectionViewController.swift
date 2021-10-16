@@ -25,9 +25,9 @@ class VideoFeedCollectionViewController: UICollectionViewController {
 
     private let itemContentInsets = NSDirectionalEdgeInsets(
         top: 0,
-        leading: 0,
+        leading: 10,
         bottom: 0,
-        trailing: 0
+        trailing: 10
     )
 }
 
@@ -154,7 +154,6 @@ extension VideoFeedCollectionViewController {
 
         section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
         section.boundarySupplementaryItems = [makeSectionHeader()]
-        section.contentInsets = .init(top: 0, leading: 24, bottom: 0, trailing: 24)
 
         return section
     }
@@ -189,8 +188,8 @@ extension VideoFeedCollectionViewController {
 
     func registerViews(for collectionView: UICollectionView) {
         collectionView.register(
-            DashboardVideoFeedCollectionViewCell.nib,
-            forCellWithReuseIdentifier: DashboardVideoFeedCollectionViewCell.reuseID
+            DashboardFeedSquaredThumbnailCollectionViewCell.nib,
+            forCellWithReuseIdentifier: DashboardFeedSquaredThumbnailCollectionViewCell.reuseID
         )
         
         collectionView.register(
@@ -270,15 +269,15 @@ extension VideoFeedCollectionViewController {
             case .videoFeeds:
                 guard
                     let feedCell = collectionView.dequeueReusableCell(
-                        withReuseIdentifier: DashboardVideoFeedCollectionViewCell.reuseID,
+                        withReuseIdentifier: DashboardFeedSquaredThumbnailCollectionViewCell.reuseID,
                         for: indexPath
-                    ) as? DashboardVideoFeedCollectionViewCell,
+                    ) as? DashboardFeedSquaredThumbnailCollectionViewCell,
                     case .videoFeed(let videoFeed) = dataSourceItem
                 else {
                     preconditionFailure("Failed to dequeue expected reusable cell type")
                 }
                 
-                feedCell.configure(withVideoFeed: videoFeed)
+                feedCell.configure(withItem: videoFeed)
                 
                 return feedCell
             }
@@ -531,5 +530,22 @@ extension VideoFeedCollectionViewController: NSFetchedResultsControllerDelegate 
             
             self?.onNewResultsFetched(foundFeeds.count)
         }
+    }
+}
+
+
+
+extension VideoFeed: DashboardFeedSquaredThumbnailCollectionViewItem {
+    
+    var imageURLPath: String? {
+        chat?.photoUrl
+    }
+    
+    var placeholderImageName: String? {
+        "podcastPlaceholder"
+    }
+    
+    var subtitle: String? {
+        title
     }
 }

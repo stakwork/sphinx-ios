@@ -43,7 +43,6 @@ extension PodcastFeedCollectionViewController {
         viewController.onPodcastFeedCellSelected = onPodcastFeedCellSelected
         viewController.onNewResultsFetched = onNewResultsFetched
         
-//        viewController.fetchedResultsController = fetchedResultsController
         viewController.fetchedResultsController = Self.makeFetchedResultsController(using: managedObjectContext)
         viewController.fetchedResultsController.delegate = viewController
         
@@ -74,7 +73,7 @@ extension PodcastFeedCollectionViewController {
     }
     
     typealias ReusableHeaderView = DashboardFeedCollectionViewSectionHeader
-    typealias CollectionViewCell = PodcastFeedCollectionViewCell
+    typealias CollectionViewCell = DashboardFeedSquaredThumbnailCollectionViewCell
     typealias CellDataItemType = NSManagedObjectID
     typealias DataSource = UICollectionViewDiffableDataSource<CollectionViewSection.RawValue, CellDataItemType>
     typealias DataSourceSnapshot = NSDiffableDataSourceSnapshot<CollectionViewSection.RawValue, CellDataItemType>
@@ -173,8 +172,8 @@ extension PodcastFeedCollectionViewController {
 
     func registerViews(for collectionView: UICollectionView) {
         collectionView.register(
-            PodcastFeedCollectionViewCell.nib,
-            forCellWithReuseIdentifier: PodcastFeedCollectionViewCell.reuseID
+            DashboardFeedSquaredThumbnailCollectionViewCell.nib,
+            forCellWithReuseIdentifier: DashboardFeedSquaredThumbnailCollectionViewCell.reuseID
         )
 
         collectionView.register(
@@ -415,14 +414,22 @@ extension PodcastFeedCollectionViewController: NSFetchedResultsControllerDelegat
 }
 
 
-extension PodcastEpisode: DashboardPodcastCollectionViewItem {
+extension PodcastEpisode: DashboardFeedSquaredThumbnailCollectionViewItem {
+    var placeholderImageName: String? {
+        "podcastPlaceholder"
+    }
+    
     var subtitle: String? {
         formattedDescription
     }
 }
 
 
-extension PodcastFeed: DashboardPodcastCollectionViewItem {
+extension PodcastFeed: DashboardFeedSquaredThumbnailCollectionViewItem {
+    var placeholderImageName: String? {
+        "podcastPlaceholder"
+    }
+    
     var subtitle: String? {
         podcastDescription ?? ""
     }

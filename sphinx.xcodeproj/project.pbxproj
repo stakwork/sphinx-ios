@@ -525,8 +525,6 @@
 		F3188B8627197B3800890DDD /* YouTubeXMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3188B8527197B3700890DDD /* YouTubeXMLParser.swift */; };
 		F3188B8A2719C7D900890DDD /* VideoFeedCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3188B892719C7D900890DDD /* VideoFeedCollectionViewController.swift */; };
 		F3188B8C2719CAE200890DDD /* VideoFeed+FetchUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3188B8B2719CAE200890DDD /* VideoFeed+FetchUtils.swift */; };
-		F3188B8F2719D9DB00890DDD /* DashboardVideoFeedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3188B8D2719D9DB00890DDD /* DashboardVideoFeedCollectionViewCell.swift */; };
-		F3188B902719D9DB00890DDD /* DashboardVideoFeedCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F3188B8E2719D9DB00890DDD /* DashboardVideoFeedCollectionViewCell.xib */; };
 		F3188B932719DA1600890DDD /* DashboardVideoEpisodeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3188B912719DA1600890DDD /* DashboardVideoEpisodeCollectionViewCell.swift */; };
 		F3188B942719DA1600890DDD /* DashboardVideoEpisodeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F3188B922719DA1600890DDD /* DashboardVideoEpisodeCollectionViewCell.xib */; };
 		F3197C0C267FA2C200330F79 /* connecting.gif in Resources */ = {isa = PBXBuildFile; fileRef = F3241A2F267CBB12007A6454 /* connecting.gif */; };
@@ -599,8 +597,8 @@
 		F3D0401E268BAA9700D54A94 /* SphinxReadyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D0401D268BAA9700D54A94 /* SphinxReadyViewController.swift */; };
 		F3D04020268BAB7500D54A94 /* InviteWelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D0401F268BAB7400D54A94 /* InviteWelcomeViewController.swift */; };
 		F3D04027268BABFF00D54A94 /* InviteActionsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D04026268BABFF00D54A94 /* InviteActionsHelper.swift */; };
-		F3D86DBE26B109FD00EB9711 /* PodcastFeedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D86DBD26B109FD00EB9711 /* PodcastFeedCollectionViewCell.swift */; };
-		F3D86DC026B14E5E00EB9711 /* PodcastFeedCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F3D86DBF26B14E5E00EB9711 /* PodcastFeedCollectionViewCell.xib */; };
+		F3D86DBE26B109FD00EB9711 /* DashboardFeedSquaredThumbnailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D86DBD26B109FD00EB9711 /* DashboardFeedSquaredThumbnailCollectionViewCell.swift */; };
+		F3D86DC026B14E5E00EB9711 /* DashboardFeedSquaredThumbnailCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F3D86DBF26B14E5E00EB9711 /* DashboardFeedSquaredThumbnailCollectionViewCell.xib */; };
 		F3D86DC226B157D400EB9711 /* DashboardFeedCollectionViewSectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = F3D86DC126B157D400EB9711 /* DashboardFeedCollectionViewSectionHeader.xib */; };
 		F3D86DC426B157F600EB9711 /* DashboardFeedCollectionViewSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D86DC326B157F600EB9711 /* DashboardFeedCollectionViewSectionHeader.swift */; };
 		F3DFB78A26B87C0C00E76FBD /* DashboardFeedsContainerViewController+ContentFilterOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3DFB78926B87C0B00E76FBD /* DashboardFeedsContainerViewController+ContentFilterOption.swift */; };
@@ -1257,8 +1255,6 @@
 		F3188B8527197B3700890DDD /* YouTubeXMLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeXMLParser.swift; sourceTree = "<group>"; };
 		F3188B892719C7D900890DDD /* VideoFeedCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoFeedCollectionViewController.swift; sourceTree = "<group>"; };
 		F3188B8B2719CAE200890DDD /* VideoFeed+FetchUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VideoFeed+FetchUtils.swift"; sourceTree = "<group>"; };
-		F3188B8D2719D9DB00890DDD /* DashboardVideoFeedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardVideoFeedCollectionViewCell.swift; sourceTree = "<group>"; };
-		F3188B8E2719D9DB00890DDD /* DashboardVideoFeedCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DashboardVideoFeedCollectionViewCell.xib; sourceTree = "<group>"; };
 		F3188B912719DA1600890DDD /* DashboardVideoEpisodeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardVideoEpisodeCollectionViewCell.swift; sourceTree = "<group>"; };
 		F3188B922719DA1600890DDD /* DashboardVideoEpisodeCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DashboardVideoEpisodeCollectionViewCell.xib; sourceTree = "<group>"; };
 		F3197C102680F50300330F79 /* RestoreUserFormViewController+FormSubmissionUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RestoreUserFormViewController+FormSubmissionUtils.swift"; sourceTree = "<group>"; };
@@ -1337,8 +1333,8 @@
 		F3D0401D268BAA9700D54A94 /* SphinxReadyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SphinxReadyViewController.swift; sourceTree = "<group>"; };
 		F3D0401F268BAB7400D54A94 /* InviteWelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteWelcomeViewController.swift; sourceTree = "<group>"; };
 		F3D04026268BABFF00D54A94 /* InviteActionsHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteActionsHelper.swift; sourceTree = "<group>"; };
-		F3D86DBD26B109FD00EB9711 /* PodcastFeedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastFeedCollectionViewCell.swift; sourceTree = "<group>"; };
-		F3D86DBF26B14E5E00EB9711 /* PodcastFeedCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PodcastFeedCollectionViewCell.xib; sourceTree = "<group>"; };
+		F3D86DBD26B109FD00EB9711 /* DashboardFeedSquaredThumbnailCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardFeedSquaredThumbnailCollectionViewCell.swift; sourceTree = "<group>"; };
+		F3D86DBF26B14E5E00EB9711 /* DashboardFeedSquaredThumbnailCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DashboardFeedSquaredThumbnailCollectionViewCell.xib; sourceTree = "<group>"; };
 		F3D86DC126B157D400EB9711 /* DashboardFeedCollectionViewSectionHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DashboardFeedCollectionViewSectionHeader.xib; sourceTree = "<group>"; };
 		F3D86DC326B157F600EB9711 /* DashboardFeedCollectionViewSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardFeedCollectionViewSectionHeader.swift; sourceTree = "<group>"; };
 		F3DFB78926B87C0B00E76FBD /* DashboardFeedsContainerViewController+ContentFilterOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DashboardFeedsContainerViewController+ContentFilterOption.swift"; sourceTree = "<group>"; };
@@ -2912,10 +2908,8 @@
 		F3188B872719C76F00890DDD /* Listen */ = {
 			isa = PBXGroup;
 			children = (
-				F3D86DBD26B109FD00EB9711 /* PodcastFeedCollectionViewCell.swift */,
 				F3EF52C626B28DBD00F06668 /* PodcastFeedCollectionViewController.swift */,
 				F3E9C01E26FB76A100718942 /* PodcastFeedsContentEmptyStateViewController.swift */,
-				F3D86DBF26B14E5E00EB9711 /* PodcastFeedCollectionViewCell.xib */,
 			);
 			path = Listen;
 			sourceTree = "<group>";
@@ -2925,18 +2919,8 @@
 			children = (
 				F3188B892719C7D900890DDD /* VideoFeedCollectionViewController.swift */,
 				F3188B962719DDA100890DDD /* Video Episode Cell */,
-				F3188B952719DD9900890DDD /* Video Feed Cell */,
 			);
 			path = Watch;
-			sourceTree = "<group>";
-		};
-		F3188B952719DD9900890DDD /* Video Feed Cell */ = {
-			isa = PBXGroup;
-			children = (
-				F3188B8D2719D9DB00890DDD /* DashboardVideoFeedCollectionViewCell.swift */,
-				F3188B8E2719D9DB00890DDD /* DashboardVideoFeedCollectionViewCell.xib */,
-			);
-			path = "Video Feed Cell";
 			sourceTree = "<group>";
 		};
 		F3188B962719DDA100890DDD /* Video Episode Cell */ = {
@@ -2946,6 +2930,15 @@
 				F3188B922719DA1600890DDD /* DashboardVideoEpisodeCollectionViewCell.xib */,
 			);
 			path = "Video Episode Cell";
+			sourceTree = "<group>";
+		};
+		F3188B97271ACE9000890DDD /* Collection View Cells */ = {
+			isa = PBXGroup;
+			children = (
+				F3D86DBD26B109FD00EB9711 /* DashboardFeedSquaredThumbnailCollectionViewCell.swift */,
+				F3D86DBF26B14E5E00EB9711 /* DashboardFeedSquaredThumbnailCollectionViewCell.xib */,
+			);
+			path = "Collection View Cells";
 			sourceTree = "<group>";
 		};
 		F3241A2E267CBB12007A6454 /* Gifs */ = {
@@ -3124,6 +3117,7 @@
 			children = (
 				F3D86DC326B157F600EB9711 /* DashboardFeedCollectionViewSectionHeader.swift */,
 				F3D86DC126B157D400EB9711 /* DashboardFeedCollectionViewSectionHeader.xib */,
+				F3188B97271ACE9000890DDD /* Collection View Cells */,
 				F3188B872719C76F00890DDD /* Listen */,
 				F3188B882719C77900890DDD /* Watch */,
 			);
@@ -3279,7 +3273,6 @@
 				475BDD4C232AD00D00C5BBD6 /* Roboto-Light.ttf in Resources */,
 				475BDD6B232BEFFC00C5BBD6 /* Root.storyboard in Resources */,
 				47484B95251255CF00F82AAC /* MessageWebViewTableViewCell.xib in Resources */,
-				F3188B902719D9DB00890DDD /* DashboardVideoFeedCollectionViewCell.xib in Resources */,
 				47ACBC3E265EA69200D2FE47 /* PersonModalView.xib in Resources */,
 				4787F8822474623F00CCE8B9 /* GroupTagCollectionViewCell.xib in Resources */,
 				475BDD4D232AD00D00C5BBD6 /* Roboto-Medium.ttf in Resources */,
@@ -3345,7 +3338,7 @@
 				475BDCFE232AC24600C5BBD6 /* DirectPaymentReceivedTableViewCell.xib in Resources */,
 				475BDCEA232AC23B00C5BBD6 /* PaymentSentTableViewCell.xib in Resources */,
 				4797E80E24B8FBC200D13270 /* Stakwork.storyboard in Resources */,
-				F3D86DC026B14E5E00EB9711 /* PodcastFeedCollectionViewCell.xib in Resources */,
+				F3D86DC026B14E5E00EB9711 /* DashboardFeedSquaredThumbnailCollectionViewCell.xib in Resources */,
 				475154B82423F09900477384 /* VideoCallBubbleView.xib in Resources */,
 				47771C73259B9B9400990467 /* GroupPinView.xib in Resources */,
 				47904C2024BF403400710E7A /* NotificationSoundTableViewCell.xib in Resources */,
@@ -3751,7 +3744,6 @@
 				47822C70244A02010011D832 /* CommonPaidMessageTableViewCell.swift in Sources */,
 				47D46A33237C83900005A548 /* Chat+CoreDataClass.swift in Sources */,
 				47D46A35237C83900005A548 /* Chat+CoreDataProperties.swift in Sources */,
-				F3188B8F2719D9DB00890DDD /* DashboardVideoFeedCollectionViewCell.swift in Sources */,
 				4707089224AE16DF00A98DCA /* MediaDownloader.swift in Sources */,
 				F394ECA92682099000529038 /* NewUserSignupDescriptionViewController.swift in Sources */,
 				475BDCE7232AC23B00C5BBD6 /* MessageSentTableViewCell.swift in Sources */,
@@ -3853,7 +3845,7 @@
 				4712BB4923D89A5100DDCC3B /* ClipboardHelper.swift in Sources */,
 				F3B2519C26E118E700C96D42 /* DashboardRootViewController+UITextFieldDelegate.swift in Sources */,
 				475BDCD1232AC23100C5BBD6 /* InvoiceCommonChatTableViewCell.swift in Sources */,
-				F3D86DBE26B109FD00EB9711 /* PodcastFeedCollectionViewCell.swift in Sources */,
+				F3D86DBE26B109FD00EB9711 /* DashboardFeedSquaredThumbnailCollectionViewCell.swift in Sources */,
 				47468FD923353E460072124A /* MediaLoader.swift in Sources */,
 				475BDC9E232AC1C500C5BBD6 /* ChatHelper.swift in Sources */,
 				47183CB62548B74E00E6FD19 /* EpisodesHeaderView.swift in Sources */,

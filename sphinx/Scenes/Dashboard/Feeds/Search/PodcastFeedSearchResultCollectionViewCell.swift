@@ -45,7 +45,7 @@ extension PodcastFeedSearchResultCollectionViewCell {
 extension PodcastFeedSearchResultCollectionViewCell {
     
     var imageURL: URL? {
-        item.imageURLPath.flatMap{ URL(string: $0) }
+        item.imageURLPath.flatMap { URL(string: $0) }
     }
 }
     

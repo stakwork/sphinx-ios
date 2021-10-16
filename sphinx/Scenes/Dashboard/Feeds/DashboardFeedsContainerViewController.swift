@@ -41,8 +41,6 @@ class DashboardFeedsContainerViewController: UIViewController {
     
     private weak var feedsListContainerDelegate: DashboardFeedsListContainerViewControllerDelegate?
     
-//    private var podcastFeedCollectionViewController: PodcastFeedCollectionViewController!
-    
     
     var contentFilterOptions: [ContentFilterOption] = []
     
@@ -56,8 +54,6 @@ class DashboardFeedsContainerViewController: UIViewController {
             }
         }
     }
-    
-//    var fetchedResultsController: NSFetchedResultsController<PodcastFeed>!
     
     
     internal lazy var emptyStateViewController: PodcastFeedsContentEmptyStateViewController = {

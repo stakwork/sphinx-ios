@@ -61,7 +61,6 @@
 "dashboard.feeds.search.error-alert-title" = "An error occurred while searching for Podcast Feeds";
 
 
-
 // LEFT MENU
 "left-menu.dashboard" = "Dashboard";
 "left-menu.contacts" = "Contacts";
@@ -437,3 +436,8 @@
 "suggested.out.range" = "Suggested amount (%d sats) is above the maximum";
 "delete.episode.title" = "Delete Episode";
 "delete.episode.message" = "Delete Episode from device memory?";
+
+
+// VIDEOS
+"video" = "video";
+"videos" = "videos";

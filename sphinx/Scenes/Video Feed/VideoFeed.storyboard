@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19158" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19141"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Video Feed Episode Player View Controller-->
+        <scene sceneID="HGa-Uy-YQF">
+            <objects>
+                <viewController storyboardIdentifier="VideoFeedEpisodePlayerViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="KwS-8e-jFl" customClass="VideoFeedEpisodePlayerViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Xgb-0h-roT">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="ANf-hC-GBf"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0ie-K0-cyD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-935" y="-68"/>
+        </scene>
+        <!--Video Feed Episode Player Collection View Controller-->
+        <scene sceneID="2ky-Rw-KY1">
+            <objects>
+                <collectionViewController storyboardIdentifier="VideoFeedEpisodePlayerCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="aNH-56-czi" customClass="VideoFeedEpisodePlayerCollectionViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="d9d-a5-6lL">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="wgX-R9-Tkd">
+                            <size key="itemSize" width="128" height="128"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells/>
+                        <connections>
+                            <outlet property="dataSource" destination="aNH-56-czi" id="DaY-5H-Omr"/>
+                            <outlet property="delegate" destination="aNH-56-czi" id="WGt-9J-hiX"/>
+                        </connections>
+                    </collectionView>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="a7p-RA-1BG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-45" y="-68"/>
+        </scene>
+        <!--Video Feed Episode Player Container View Controller-->
+        <scene sceneID="nvm-GC-JlN">
+            <objects>
+                <viewController storyboardIdentifier="VideoFeedEpisodePlayerContainerViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="wSp-vi-PtY" customClass="VideoFeedEpisodePlayerContainerViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="XGc-YM-n5n">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="09p-ax-ldz">
+                                <rect key="frame" x="0.0" y="44" width="414" height="212"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="212" id="QAv-de-0Hl"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2M7-cJ-xnz">
+                                <rect key="frame" x="0.0" y="256" width="414" height="606"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="QRC-F4-mOP"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="2M7-cJ-xnz" firstAttribute="trailing" secondItem="QRC-F4-mOP" secondAttribute="trailing" id="Aa0-P0-i0V"/>
+                            <constraint firstItem="09p-ax-ldz" firstAttribute="top" secondItem="QRC-F4-mOP" secondAttribute="top" id="Anb-zs-Qy8"/>
+                            <constraint firstItem="QRC-F4-mOP" firstAttribute="bottom" secondItem="2M7-cJ-xnz" secondAttribute="bottom" id="bbN-xl-y67"/>
+                            <constraint firstItem="QRC-F4-mOP" firstAttribute="trailing" secondItem="09p-ax-ldz" secondAttribute="trailing" id="dBZ-YV-nDH"/>
+                            <constraint firstItem="2M7-cJ-xnz" firstAttribute="top" secondItem="09p-ax-ldz" secondAttribute="bottom" id="eTy-eJ-USH"/>
+                            <constraint firstItem="2M7-cJ-xnz" firstAttribute="leading" secondItem="QRC-F4-mOP" secondAttribute="leading" id="hXZ-Wz-rkt"/>
+                            <constraint firstItem="09p-ax-ldz" firstAttribute="leading" secondItem="QRC-F4-mOP" secondAttribute="leading" id="pLN-92-D1f"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="collectionViewContainer" destination="2M7-cJ-xnz" id="AMB-q7-vVw"/>
+                        <outlet property="playerViewContainer" destination="09p-ax-ldz" id="cC0-sy-exP"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="e7M-Xk-rhy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-517" y="-816"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

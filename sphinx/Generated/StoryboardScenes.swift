@@ -265,6 +265,20 @@ internal enum StoryboardScene {
         internal static let podcastNewEpisodeViewController = SceneType<PodcastNewEpisodeViewController>(storyboard: WebApps.self, identifier: "PodcastNewEpisodeViewController")
     }
     
+    
+    internal enum VideoFeed: StoryboardType {
+        internal static let storyboardName = "VideoFeed"
+        
+        
+        internal static let videoFeedEpisodePlayerContainerViewController = SceneType<VideoFeedEpisodePlayerContainerViewController>(storyboard: VideoFeed.self, identifier: "VideoFeedEpisodePlayerContainerViewController")
+        
+        
+        internal static let videoFeedEpisodePlayerViewController = SceneType<VideoFeedEpisodePlayerViewController>(storyboard: VideoFeed.self, identifier: "VideoFeedEpisodePlayerViewController")
+
+        
+        internal static let videoFeedEpisodePlayerCollectionViewController = SceneType<VideoFeedEpisodePlayerCollectionViewController>(storyboard: VideoFeed.self, identifier: "VideoFeedEpisodePlayerCollectionViewController")
+    }
+    
 }
 
 internal protocol StoryboardType {

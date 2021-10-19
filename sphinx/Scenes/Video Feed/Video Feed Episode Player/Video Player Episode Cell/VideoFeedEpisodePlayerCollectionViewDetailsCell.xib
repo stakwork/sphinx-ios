@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19158" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19141"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="VideoFeedEpisodePlayerCollectionViewDetailsCell" reuseIdentifier="VideoFeedEpisodePlayerCollectionViewDetailsCell" translatesAutoresizingMaskIntoConstraints="NO" id="gTV-IL-0wX" customClass="VideoFeedEpisodePlayerCollectionViewDetailsCell" customModule="sphinx" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="300"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="300"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s6I-ox-by3">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="300"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="QHQ-QL-DAo">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="45"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UoA-gv-TkD">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="39P-eb-9Hv">
+                                        <rect key="frame" x="0.0" y="20.5" width="375" height="24.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="keh-8F-jJP">
+                                                <rect key="frame" x="0.0" y="2" width="187.5" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mbd-vx-jG2">
+                                                <rect key="frame" x="187.5" y="2" width="187.5" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="sbQ-FG-2SW">
+                                <rect key="frame" x="0.0" y="45" width="375" height="72"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="QHQ-QL-DAo" secondAttribute="trailing" id="D5t-71-nWg"/>
+                            <constraint firstItem="QHQ-QL-DAo" firstAttribute="top" secondItem="s6I-ox-by3" secondAttribute="top" id="YSZ-7i-JoI"/>
+                            <constraint firstItem="QHQ-QL-DAo" firstAttribute="leading" secondItem="s6I-ox-by3" secondAttribute="leading" id="iAb-HW-5k6"/>
+                            <constraint firstItem="sbQ-FG-2SW" firstAttribute="top" secondItem="QHQ-QL-DAo" secondAttribute="bottom" id="slj-az-Q7e"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="s6I-ox-by3" secondAttribute="trailing" id="0lg-8e-VLe"/>
+                <constraint firstAttribute="bottom" secondItem="s6I-ox-by3" secondAttribute="bottom" id="aqy-18-lMm"/>
+                <constraint firstItem="s6I-ox-by3" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="cxV-eB-2ch"/>
+                <constraint firstItem="s6I-ox-by3" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="lWw-C1-dR8"/>
+            </constraints>
+            <connections>
+                <outlet property="episodeDescriptionLabel" destination="sbQ-FG-2SW" id="z9Q-HZ-Uk3"/>
+                <outlet property="episodePublishDateLabel" destination="mbd-vx-jG2" id="Rxy-nt-iVK"/>
+                <outlet property="episodeTitleLabel" destination="UoA-gv-TkD" id="BSP-IE-qNB"/>
+                <outlet property="episodeViewCountLabel" destination="keh-8F-jJP" id="INq-35-3Sz"/>
+            </connections>
+            <point key="canvasLocation" x="131.15942028985509" y="105.80357142857143"/>
+        </collectionViewCell>
+    </objects>
+</document>

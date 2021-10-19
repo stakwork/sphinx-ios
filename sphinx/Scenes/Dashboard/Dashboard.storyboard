@@ -43,13 +43,13 @@
                                         <rect key="frame" x="16" y="16" width="382" height="44"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lwz-zX-pkx">
-                                                <rect key="frame" x="16" y="11.5" width="21" height="21"/>
+                                                <rect key="frame" x="16" y="10" width="24.5" height="24.5"/>
                                                 <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="21"/>
                                                 <color key="textColor" name="PlaceholderText"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ef7-It-4Rs">
-                                                <rect key="frame" x="47" y="0.0" width="319" height="44"/>
+                                                <rect key="frame" x="50.5" y="0.0" width="315.5" height="44"/>
                                                 <color key="textColor" name="Text"/>
                                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
@@ -400,35 +400,35 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="saw-em-W2w">
-                                <rect key="frame" x="112.5" y="330" width="189.5" height="236.5"/>
+                                <rect key="frame" x="111.5" y="330" width="191" height="236.5"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="podcastIndexLogo" translatesAutoresizingMaskIntoConstraints="NO" id="fF4-Ol-xgj">
-                                        <rect key="frame" x="56.5" y="0.0" width="76" height="72"/>
+                                        <rect key="frame" x="57.5" y="0.0" width="76" height="72"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="76" id="4Dn-N7-Xc3"/>
                                             <constraint firstAttribute="height" constant="72" id="Oa0-0g-72C"/>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Co-KV-mYF" userLabel="Spacer">
-                                        <rect key="frame" x="69.5" y="83" width="50" height="50"/>
+                                        <rect key="frame" x="70.5" y="83" width="50" height="50"/>
                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="8"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search over" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ndg-SW-RNS">
-                                        <rect key="frame" x="41.5" y="144" width="106" height="23.5"/>
+                                        <rect key="frame" x="42" y="144" width="107.5" height="23.5"/>
                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="20"/>
                                         <color key="textColor" name="PlaceholderText"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4 000 000 podcasts" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l4t-u1-si6">
-                                        <rect key="frame" x="5.5" y="178.5" width="178" height="23.5"/>
+                                        <rect key="frame" x="6.5" y="178.5" width="178" height="23.5"/>
                                         <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="20"/>
                                         <color key="textColor" name="PlaceholderText"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="on the Podcast Index" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0eu-Sz-ryQ">
-                                        <rect key="frame" x="0.0" y="213" width="189.5" height="23.5"/>
+                                        <rect key="frame" x="0.0" y="213" width="191" height="23.5"/>
                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="20"/>
                                         <color key="textColor" name="PlaceholderText"/>
                                         <nil key="highlightedColor"/>

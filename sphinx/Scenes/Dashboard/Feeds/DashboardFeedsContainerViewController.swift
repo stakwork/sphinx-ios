@@ -261,9 +261,10 @@ extension DashboardFeedsContainerViewController {
     private func handleVideoEpisodeCellSelection(_ managedObjectID: NSManagedObjectID) {
         feedsListContainerDelegate?.viewController(
             self,
-            didSelectPodcastEpisodeWithID: managedObjectID
+            didSelectVideoEpisodeWithID: managedObjectID
         )
     }
+    
     
     private func handleVideoFeedCellSelection(_ managedObjectID: NSManagedObjectID) {
         feedsListContainerDelegate?.viewController(

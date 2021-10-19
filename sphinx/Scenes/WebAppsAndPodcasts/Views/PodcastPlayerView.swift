@@ -61,7 +61,7 @@ class PodcastPlayerView: UIView {
     
     var playerHelper: PodcastPlayerHelper! = nil
     var chat: Chat?
-    var dismissButtonStyle: DismissButtonStyle = .downArrow
+    var dismissButtonStyle: ModalDismissButtonStyle = .downArrow
     
     public enum ControlButtons: Int {
         case PlayerSpeed
@@ -74,7 +74,7 @@ class PodcastPlayerView: UIView {
     convenience init(
         playerHelper: PodcastPlayerHelper,
         chat: Chat?,
-        dismissButtonStyle: DismissButtonStyle = .downArrow,
+        dismissButtonStyle: ModalDismissButtonStyle = .downArrow,
         delegate: PodcastPlayerViewDelegate
     ) {
         let windowWidth = WindowsManager.getWindowWidth()
@@ -370,15 +370,5 @@ extension PodcastPlayerView: BoostButtonViewDelegate {
                 livePodcastDataSource?.insert(messages: [message])
             }
         }
-    }
-}
-
-
-
-extension PodcastPlayerView {
-    
-    enum DismissButtonStyle {
-        case backArrow
-        case downArrow
     }
 }

@@ -527,6 +527,14 @@
 		F3188B8C2719CAE200890DDD /* VideoFeed+FetchUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3188B8B2719CAE200890DDD /* VideoFeed+FetchUtils.swift */; };
 		F3188B932719DA1600890DDD /* DashboardVideoEpisodeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3188B912719DA1600890DDD /* DashboardVideoEpisodeCollectionViewCell.swift */; };
 		F3188B942719DA1600890DDD /* DashboardVideoEpisodeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F3188B922719DA1600890DDD /* DashboardVideoEpisodeCollectionViewCell.xib */; };
+		F3188B99271CD36D00890DDD /* DashboardRootViewController+VideoPlayerViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3188B98271CD36C00890DDD /* DashboardRootViewController+VideoPlayerViewControllerDelegate.swift */; };
+		F3188B9D271CD6CC00890DDD /* VideoFeedEpisodePlayerCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3188B9B271CD6CC00890DDD /* VideoFeedEpisodePlayerCollectionViewController.swift */; };
+		F3188BA0271CD81D00890DDD /* ModalDismissButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3188B9F271CD81D00890DDD /* ModalDismissButtonStyle.swift */; };
+		F3188BA3271CDA4200890DDD /* VideoFeed.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F3188BA2271CDA4200890DDD /* VideoFeed.storyboard */; };
+		F3188BAD271CF20B00890DDD /* VideoFeedEpisodePlayerCollectionViewDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3188BAB271CF20B00890DDD /* VideoFeedEpisodePlayerCollectionViewDetailsCell.swift */; };
+		F3188BAE271CF20B00890DDD /* VideoFeedEpisodePlayerCollectionViewDetailsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F3188BAC271CF20B00890DDD /* VideoFeedEpisodePlayerCollectionViewDetailsCell.xib */; };
+		F3188BB5271CF34E00890DDD /* VideoFeedEpisodeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F3188BB2271CF27800890DDD /* VideoFeedEpisodeCollectionViewCell.xib */; };
+		F3188BB6271CF35200890DDD /* VideoFeedEpisodeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3188BB1271CF27800890DDD /* VideoFeedEpisodeCollectionViewCell.swift */; };
 		F3197C0C267FA2C200330F79 /* connecting.gif in Resources */ = {isa = PBXBuildFile; fileRef = F3241A2F267CBB12007A6454 /* connecting.gif */; };
 		F3197C0D267FA2C800330F79 /* ellipse.gif in Resources */ = {isa = PBXBuildFile; fileRef = F3241A30267CBB12007A6454 /* ellipse.gif */; };
 		F3197C0E267FA2C800330F79 /* lightningNetwork.gif in Resources */ = {isa = PBXBuildFile; fileRef = F3241A31267CBB12007A6454 /* lightningNetwork.gif */; };
@@ -568,6 +576,9 @@
 		F373BF0126A9CE1B0093C886 /* DashboardRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F373BF0026A9CE1B0093C886 /* DashboardRootViewController.swift */; };
 		F373BF0326A9CEDD0093C886 /* DashboardFeedsContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F373BF0226A9CEDD0093C886 /* DashboardFeedsContainerViewController.swift */; };
 		F373BF0C26AAFB990093C886 /* CustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = F373BF0B26AAFB990093C886 /* CustomSegmentedControl.swift */; };
+		F37D799B271E340900CAB15F /* VideoFeedEpisodePlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37D799A271E340900CAB15F /* VideoFeedEpisodePlayerViewController.swift */; };
+		F37D799F271E753E00CAB15F /* VideoFeedEpisodesSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37D799D271E753E00CAB15F /* VideoFeedEpisodesSectionHeaderView.swift */; };
+		F37D79A0271E753E00CAB15F /* VideoFeedEpisodesSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F37D799E271E753E00CAB15F /* VideoFeedEpisodesSectionHeaderView.xib */; };
 		F385D49B26ECFEC500A789E8 /* DashboardRootViewController+PodcastFeedSearchResultsViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F385D49A26ECFEC500A789E8 /* DashboardRootViewController+PodcastFeedSearchResultsViewControllerDelegate.swift */; };
 		F394ECA12682064100529038 /* NewUserSignup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F394ECA32682064100529038 /* NewUserSignup.storyboard */; };
 		F394ECA92682099000529038 /* NewUserSignupDescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F394ECA82682098F00529038 /* NewUserSignupDescriptionViewController.swift */; };
@@ -602,6 +613,7 @@
 		F3D86DC226B157D400EB9711 /* DashboardFeedCollectionViewSectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = F3D86DC126B157D400EB9711 /* DashboardFeedCollectionViewSectionHeader.xib */; };
 		F3D86DC426B157F600EB9711 /* DashboardFeedCollectionViewSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D86DC326B157F600EB9711 /* DashboardFeedCollectionViewSectionHeader.swift */; };
 		F3DFB78A26B87C0C00E76FBD /* DashboardFeedsContainerViewController+ContentFilterOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3DFB78926B87C0B00E76FBD /* DashboardFeedsContainerViewController+ContentFilterOption.swift */; };
+		F3E357A8271E19EF00B91C54 /* VideoFeedEpisodePlayerContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E357A7271E19EF00B91C54 /* VideoFeedEpisodePlayerContainerViewController.swift */; };
 		F3E9C02026FB76A100718942 /* PodcastFeedsContentEmptyStateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E9C01E26FB76A100718942 /* PodcastFeedsContentEmptyStateViewController.swift */; };
 		F3EF52C526B2823700F06668 /* FeedFilterChipsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3EF52C426B2823700F06668 /* FeedFilterChipsCollectionViewController.swift */; };
 		F3EF52C726B28DBE00F06668 /* PodcastFeedCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3EF52C626B28DBD00F06668 /* PodcastFeedCollectionViewController.swift */; };
@@ -1257,6 +1269,14 @@
 		F3188B8B2719CAE200890DDD /* VideoFeed+FetchUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VideoFeed+FetchUtils.swift"; sourceTree = "<group>"; };
 		F3188B912719DA1600890DDD /* DashboardVideoEpisodeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardVideoEpisodeCollectionViewCell.swift; sourceTree = "<group>"; };
 		F3188B922719DA1600890DDD /* DashboardVideoEpisodeCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DashboardVideoEpisodeCollectionViewCell.xib; sourceTree = "<group>"; };
+		F3188B98271CD36C00890DDD /* DashboardRootViewController+VideoPlayerViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DashboardRootViewController+VideoPlayerViewControllerDelegate.swift"; sourceTree = "<group>"; };
+		F3188B9B271CD6CC00890DDD /* VideoFeedEpisodePlayerCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoFeedEpisodePlayerCollectionViewController.swift; sourceTree = "<group>"; };
+		F3188B9F271CD81D00890DDD /* ModalDismissButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalDismissButtonStyle.swift; sourceTree = "<group>"; };
+		F3188BA2271CDA4200890DDD /* VideoFeed.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = VideoFeed.storyboard; sourceTree = "<group>"; };
+		F3188BAB271CF20B00890DDD /* VideoFeedEpisodePlayerCollectionViewDetailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoFeedEpisodePlayerCollectionViewDetailsCell.swift; sourceTree = "<group>"; };
+		F3188BAC271CF20B00890DDD /* VideoFeedEpisodePlayerCollectionViewDetailsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoFeedEpisodePlayerCollectionViewDetailsCell.xib; sourceTree = "<group>"; };
+		F3188BB1271CF27800890DDD /* VideoFeedEpisodeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoFeedEpisodeCollectionViewCell.swift; sourceTree = "<group>"; };
+		F3188BB2271CF27800890DDD /* VideoFeedEpisodeCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoFeedEpisodeCollectionViewCell.xib; sourceTree = "<group>"; };
 		F3197C102680F50300330F79 /* RestoreUserFormViewController+FormSubmissionUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RestoreUserFormViewController+FormSubmissionUtils.swift"; sourceTree = "<group>"; };
 		F3197C1226811DE400330F79 /* RestoreUserFormViewController+KeychainRestorationUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RestoreUserFormViewController+KeychainRestorationUtils.swift"; sourceTree = "<group>"; };
 		F31CF2652691489800AAB621 /* StoreKitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitService.swift; sourceTree = "<group>"; };
@@ -1301,6 +1321,9 @@
 		F373BF0026A9CE1B0093C886 /* DashboardRootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardRootViewController.swift; sourceTree = "<group>"; };
 		F373BF0226A9CEDD0093C886 /* DashboardFeedsContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardFeedsContainerViewController.swift; sourceTree = "<group>"; };
 		F373BF0B26AAFB990093C886 /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
+		F37D799A271E340900CAB15F /* VideoFeedEpisodePlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoFeedEpisodePlayerViewController.swift; sourceTree = "<group>"; };
+		F37D799D271E753E00CAB15F /* VideoFeedEpisodesSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoFeedEpisodesSectionHeaderView.swift; sourceTree = "<group>"; };
+		F37D799E271E753E00CAB15F /* VideoFeedEpisodesSectionHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoFeedEpisodesSectionHeaderView.xib; sourceTree = "<group>"; };
 		F385D49A26ECFEC500A789E8 /* DashboardRootViewController+PodcastFeedSearchResultsViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DashboardRootViewController+PodcastFeedSearchResultsViewControllerDelegate.swift"; sourceTree = "<group>"; };
 		F394ECA22682064100529038 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/NewUserSignup.storyboard; sourceTree = "<group>"; };
 		F394ECA52682064400529038 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/NewUserSignup.strings; sourceTree = "<group>"; };
@@ -1338,6 +1361,7 @@
 		F3D86DC126B157D400EB9711 /* DashboardFeedCollectionViewSectionHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DashboardFeedCollectionViewSectionHeader.xib; sourceTree = "<group>"; };
 		F3D86DC326B157F600EB9711 /* DashboardFeedCollectionViewSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardFeedCollectionViewSectionHeader.swift; sourceTree = "<group>"; };
 		F3DFB78926B87C0B00E76FBD /* DashboardFeedsContainerViewController+ContentFilterOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DashboardFeedsContainerViewController+ContentFilterOption.swift"; sourceTree = "<group>"; };
+		F3E357A7271E19EF00B91C54 /* VideoFeedEpisodePlayerContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoFeedEpisodePlayerContainerViewController.swift; sourceTree = "<group>"; };
 		F3E9C01E26FB76A100718942 /* PodcastFeedsContentEmptyStateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastFeedsContentEmptyStateViewController.swift; sourceTree = "<group>"; };
 		F3EF52C426B2823700F06668 /* FeedFilterChipsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedFilterChipsCollectionViewController.swift; sourceTree = "<group>"; };
 		F3EF52C626B28DBD00F06668 /* PodcastFeedCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastFeedCollectionViewController.swift; sourceTree = "<group>"; };
@@ -1813,6 +1837,7 @@
 				475BDD67232BEFEC00C5BBD6 /* Root */,
 				47935FBA24A1047F00B39ADB /* Stakwork Login */,
 				47FA43F723748828005D8C63 /* Subscriptions */,
+				F3188BA1271CDA0500890DDD /* Video Feed */,
 				4789E24624EDB709003991BE /* WebAppsAndPodcasts */,
 				F33846E0267ACEF50041F1EA /* Welcome */,
 			);
@@ -2277,6 +2302,7 @@
 			isa = PBXGroup;
 			children = (
 				47651C3423DB4A4F00CBC605 /* TouchUpGestureRecognizer.swift */,
+				F3188B9F271CD81D00890DDD /* ModalDismissButtonStyle.swift */,
 				474FE33023F5A07700C06FC8 /* CachingPlayerItem.swift */,
 				470DB25323FAE43400D29FA5 /* SphinxCache.swift */,
 				47893A9F240D8ED0002F675B /* IntermitentAlphaAnimatedView.swift */,
@@ -2941,6 +2967,46 @@
 			path = "Collection View Cells";
 			sourceTree = "<group>";
 		};
+		F3188B9A271CD6A700890DDD /* Video Feed Episode Player */ = {
+			isa = PBXGroup;
+			children = (
+				F3188B9B271CD6CC00890DDD /* VideoFeedEpisodePlayerCollectionViewController.swift */,
+				F3E357A7271E19EF00B91C54 /* VideoFeedEpisodePlayerContainerViewController.swift */,
+				F37D799A271E340900CAB15F /* VideoFeedEpisodePlayerViewController.swift */,
+				F3188BA6271CF17800890DDD /* Video Player Episode Cell */,
+				F3188BA4271CF15C00890DDD /* VideoFeed Episodes Cell */,
+				F37D799C271E74DA00CAB15F /* VideoFeed Episodes Section Header */,
+			);
+			path = "Video Feed Episode Player";
+			sourceTree = "<group>";
+		};
+		F3188BA1271CDA0500890DDD /* Video Feed */ = {
+			isa = PBXGroup;
+			children = (
+				F3188BA2271CDA4200890DDD /* VideoFeed.storyboard */,
+				F3188B9A271CD6A700890DDD /* Video Feed Episode Player */,
+			);
+			path = "Video Feed";
+			sourceTree = "<group>";
+		};
+		F3188BA4271CF15C00890DDD /* VideoFeed Episodes Cell */ = {
+			isa = PBXGroup;
+			children = (
+				F3188BB1271CF27800890DDD /* VideoFeedEpisodeCollectionViewCell.swift */,
+				F3188BB2271CF27800890DDD /* VideoFeedEpisodeCollectionViewCell.xib */,
+			);
+			path = "VideoFeed Episodes Cell";
+			sourceTree = "<group>";
+		};
+		F3188BA6271CF17800890DDD /* Video Player Episode Cell */ = {
+			isa = PBXGroup;
+			children = (
+				F3188BAB271CF20B00890DDD /* VideoFeedEpisodePlayerCollectionViewDetailsCell.swift */,
+				F3188BAC271CF20B00890DDD /* VideoFeedEpisodePlayerCollectionViewDetailsCell.xib */,
+			);
+			path = "Video Player Episode Cell";
+			sourceTree = "<group>";
+		};
 		F3241A2E267CBB12007A6454 /* Gifs */ = {
 			isa = PBXGroup;
 			children = (
@@ -3035,6 +3101,7 @@
 				F3CE637626AFC44C006E37A0 /* DashboardRootViewController+DelegateUtils.swift */,
 				F385D49A26ECFEC500A789E8 /* DashboardRootViewController+PodcastFeedSearchResultsViewControllerDelegate.swift */,
 				F360A42627030F4400097CE4 /* DashboardRootViewController+PodcastPlayerVCDelegate.swift */,
+				F3188B98271CD36C00890DDD /* DashboardRootViewController+VideoPlayerViewControllerDelegate.swift */,
 				F3A35CA726C43508007D35BD /* DashboardRootViewController+SocketManagerDelegate.swift */,
 				F3B2519B26E118E600C96D42 /* DashboardRootViewController+UITextFieldDelegate.swift */,
 				F313024426BA628D00A1396E /* Chats */,
@@ -3050,6 +3117,15 @@
 				F373BF0B26AAFB990093C886 /* CustomSegmentedControl.swift */,
 			);
 			path = "Custom Segmented Control";
+			sourceTree = "<group>";
+		};
+		F37D799C271E74DA00CAB15F /* VideoFeed Episodes Section Header */ = {
+			isa = PBXGroup;
+			children = (
+				F37D799D271E753E00CAB15F /* VideoFeedEpisodesSectionHeaderView.swift */,
+				F37D799E271E753E00CAB15F /* VideoFeedEpisodesSectionHeaderView.xib */,
+			);
+			path = "VideoFeed Episodes Section Header";
 			sourceTree = "<group>";
 		};
 		F394EC9E268205E000529038 /* New User Signup */ = {
@@ -3249,6 +3325,7 @@
 				47FA440723749D02005D8C63 /* SubscriptionFormTableHeaderView.xib in Resources */,
 				4797E7AC24B8F13800D13270 /* JoinVideoCallView.xib in Resources */,
 				4797E7BA24B8F3B600D13270 /* History.storyboard in Resources */,
+				F3188BB5271CF34E00890DDD /* VideoFeedEpisodeCollectionViewCell.xib in Resources */,
 				477D9692244DFCDA00830406 /* GifOverlayView.xib in Resources */,
 				475BDD48232AD00D00C5BBD6 /* Montserrat-Regular.otf in Resources */,
 				472F9D3F2416BA0200EFC30A /* AudioRecordingTooltip.xib in Resources */,
@@ -3258,6 +3335,7 @@
 				475BDD49232AD00D00C5BBD6 /* Montserrat-SemiBold.otf in Resources */,
 				F33119A5268FA097005082EB /* XcodeStoreKitTestCertificate.cer in Resources */,
 				4780783023916CA800187906 /* PictureSentTableViewCell.xib in Resources */,
+				F3188BA3271CDA4200890DDD /* VideoFeed.storyboard in Resources */,
 				47893A9424095C80002F675B /* AudioBubbleView.xib in Resources */,
 				470F5CAD243E8823007E054F /* VideoCallPayButton.xib in Resources */,
 				475BDD4A232AD00D00C5BBD6 /* MyriadPro-Regular.otf in Resources */,
@@ -3347,6 +3425,7 @@
 				475BDD23232AC71000C5BBD6 /* Colors.xcassets in Resources */,
 				47183CB42548AA5100E6FD19 /* PodcastPlayerView.xib in Resources */,
 				F3446B9426BABAB400855516 /* ChatListCollectionViewCell.xib in Resources */,
+				F3188BAE271CF20B00890DDD /* VideoFeedEpisodePlayerCollectionViewDetailsCell.xib in Resources */,
 				F3197C0D267FA2C800330F79 /* ellipse.gif in Resources */,
 				F33119A0268E9C1B005082EB /* XcodeStoreKitConfiguration.storekit in Resources */,
 				4789E26224F04752003991BE /* SettingsTabsView.xib in Resources */,
@@ -3379,6 +3458,7 @@
 				4797E7D624B8F53000D13270 /* Invite.storyboard in Resources */,
 				4797E78E24B8EDB100D13270 /* ExpiredInvoiceSentTableViewCell.xib in Resources */,
 				4797E7C824B8F47200D13270 /* Profile.storyboard in Resources */,
+				F37D79A0271E753E00CAB15F /* VideoFeedEpisodesSectionHeaderView.xib in Resources */,
 				4735D5C42411416B00BEE3D4 /* LinkPreviewView.xib in Resources */,
 				4797E7B324B8F2EF00D13270 /* QRCodeScanner.storyboard in Resources */,
 				47ACBC05265E9C9300D2FE47 /* People.storyboard in Resources */,
@@ -3482,6 +3562,7 @@
 				47F258C72539F57E00122A5A /* PodcastRowAudioPlayer.swift in Sources */,
 				F394ECB12683CF5E00529038 /* NewUserGreetingViewController.swift in Sources */,
 				F3188B8627197B3800890DDD /* YouTubeXMLParser.swift in Sources */,
+				F37D799F271E753E00CAB15F /* VideoFeedEpisodesSectionHeaderView.swift in Sources */,
 				478F07D624E3229B00EE32A3 /* GiphyHelper.swift in Sources */,
 				F3D0401E268BAA9700D54A94 /* SphinxReadyViewController.swift in Sources */,
 				470F5CA9243E6C00007E054F /* CustomPipViewCoordinator.swift in Sources */,
@@ -3547,6 +3628,7 @@
 				4794CA79252F72D2007C5022 /* PodcastPlayerHelper.swift in Sources */,
 				472F9D3B2412F95100EFC30A /* Data.swift in Sources */,
 				47F258D2253F705800122A5A /* ChatViewControllerPodcastExtension.swift in Sources */,
+				F3188B99271CD36D00890DDD /* DashboardRootViewController+VideoPlayerViewControllerDelegate.swift in Sources */,
 				47AAFC7E238D7C8D00E30BDA /* PaymentRequestDecoder.swift in Sources */,
 				47B9A63F233BAEE500D2B022 /* AddressBookViewController.swift in Sources */,
 				475BDCFC232AC24600C5BBD6 /* InvoiceSentTableViewCell.swift in Sources */,
@@ -3613,6 +3695,7 @@
 				F32A696226CFEF600004B8B3 /* PodcastDestination+CoreDataClass.swift in Sources */,
 				475723A9247EBB56001ADC7E /* CustomAudioPlayer.swift in Sources */,
 				473842F7239197E700AA640F /* FullScreenImageView.swift in Sources */,
+				F3188BAD271CF20B00890DDD /* VideoFeedEpisodePlayerCollectionViewDetailsCell.swift in Sources */,
 				47AAFC82238EFCE600E30BDA /* APIAttachmentsExtension.swift in Sources */,
 				4787F878247449DC00CCE8B9 /* GroupTagTableViewCell.swift in Sources */,
 				47D03DF82510F3D20077A968 /* URLResponse.swift in Sources */,
@@ -3628,6 +3711,7 @@
 				47893A8B24095A30002F675B /* AudioSentTableViewCell.swift in Sources */,
 				47FA440223748EB6005D8C63 /* SubscriptionFormViewControllerExtensions.swift in Sources */,
 				478DCF982343D24D009A03D6 /* SetProfileImageViewController.swift in Sources */,
+				F37D799B271E340900CAB15F /* VideoFeedEpisodePlayerViewController.swift in Sources */,
 				47F258BC2539DA0100122A5A /* PodcastCommentSentTableViewCell.swift in Sources */,
 				47935FB3249EC3BE00B39ADB /* OrientationHandlerViewController.swift in Sources */,
 				F39F2C7C26E2363100D357F6 /* PodcastFeedSearchResultsCollectionViewController.swift in Sources */,
@@ -3670,6 +3754,7 @@
 				47BE85502465E09B00BE4AE8 /* BiometricAuthenticationHelper.swift in Sources */,
 				474FE33123F5A07700C06FC8 /* CachingPlayerItem.swift in Sources */,
 				F3197C112680F50300330F79 /* RestoreUserFormViewController+FormSubmissionUtils.swift in Sources */,
+				F3188BA0271CD81D00890DDD /* ModalDismissButtonStyle.swift in Sources */,
 				47893AA0240D8ED0002F675B /* IntermitentAlphaAnimatedView.swift in Sources */,
 				475BDD70232BF09E00C5BBD6 /* StoryboardScenes.swift in Sources */,
 				4734D3C7241A828B00D6957E /* CommonDirectPaymentTableViewCell.swift in Sources */,
@@ -3730,6 +3815,7 @@
 				475BDD73232BF76B00C5BBD6 /* UserData.swift in Sources */,
 				47308E1424FEE6E700FFAC6F /* SocketIOClientSpec.swift in Sources */,
 				47BB1D5C239572A30049802B /* NewContactDelegatesExtension.swift in Sources */,
+				F3188B9D271CD6CC00890DDD /* VideoFeedEpisodePlayerCollectionViewController.swift in Sources */,
 				47F258D92540F61F00122A5A /* PodcastPaymentsHelper.swift in Sources */,
 				F32A696326CFEF600004B8B3 /* PodcastDestination+CoreDataProperties.swift in Sources */,
 				470F5CA5243E1DA6007E054F /* ChatViewControllerVideoCallExtension.swift in Sources */,
@@ -3763,6 +3849,7 @@
 				4780783323916D4900187906 /* PictureReceivedTableViewCell.swift in Sources */,
 				F3B2519126DD5CE100C96D42 /* PodcastFeedService.swift in Sources */,
 				473BC89A260238DC0070E519 /* JSON.swift in Sources */,
+				F3E357A8271E19EF00B91C54 /* VideoFeedEpisodePlayerContainerViewController.swift in Sources */,
 				F39F2C8526E2840500D357F6 /* PodcastFeedSearchResultsCollectionViewSectionHeader.swift in Sources */,
 				4733C7E523C4DF4C006A2C51 /* GroupContactsViewController.swift in Sources */,
 				4787F87224743D7C00CCE8B9 /* NewPublicGroupViewControllerExtension.swift in Sources */,
@@ -3864,6 +3951,7 @@
 				47AF0D37254C98D100C98398 /* BoostFireworksAnimationView.swift in Sources */,
 				47B9A645233BB54B00D2B022 /* AddressBookDataSource.swift in Sources */,
 				475BDD81232C01FE00C5BBD6 /* NewQRScannerViewController.swift in Sources */,
+				F3188BB6271CF35200890DDD /* VideoFeedEpisodeCollectionViewCell.swift in Sources */,
 				47308E0724FEE6E600FFAC6F /* SocketManager.swift in Sources */,
 				473842F32391719500AA640F /* PictureBubbleView.swift in Sources */,
 				475BDD8F232C087A00C5BBD6 /* TransactionPaymentReceivedTableViewCell.swift in Sources */,

@@ -79,20 +79,32 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
     }
     
     
-    func viewController(_ viewController: UIViewController, didSelectVideoFeedWithID videoFeedID: NSManagedObjectID) {
+    func viewController(
+        _ viewController: UIViewController,
+        didSelectVideoFeedWithID videoFeedID: NSManagedObjectID
+    ) {
         // 📝 TODO:  Implement
     }
     
     
-    func viewController(_ viewController: UIViewController, didSelectVideoEpisodeWithID videoEpisodeID: NSManagedObjectID) {
-        // 📝 TODO:  Implement
+    func viewController(
+        _ viewController: UIViewController,
+        didSelectVideoEpisodeWithID videoEpisodeID: NSManagedObjectID
+    ) {
+        guard
+            let videoEpisode = managedObjectContext.object(with: videoEpisodeID) as? Video
+        else {
+            preconditionFailure()
+        }
+        
+        presentVideoPlayer(for: videoEpisode)
     }
 }
 
 
 extension DashboardRootViewController {
     
-    internal func presentPodcastPlayer(
+    private func presentPodcastPlayer(
         forPodcastFrom chat: Chat? = nil,
         with podcastPlayerHelper: PodcastPlayerHelper
     ) {
@@ -106,5 +118,21 @@ extension DashboardRootViewController {
         podcastFeedVC.modalPresentationStyle = .fullScreen
         
         navigationController?.pushViewController(podcastFeedVC, animated: true)
+    }
+    
+    
+    private func presentVideoPlayer(
+        for videoEpisode: Video
+    ) {
+        let viewController = VideoFeedEpisodePlayerContainerViewController
+            .instantiate(
+                videoPlayerEpisode: videoEpisode,
+                dismissButtonStyle: .backArrow,
+                delegate: self
+            )
+        
+        viewController.modalPresentationStyle = .fullScreen
+        
+        navigationController?.pushViewController(viewController, animated: true)
     }
 }

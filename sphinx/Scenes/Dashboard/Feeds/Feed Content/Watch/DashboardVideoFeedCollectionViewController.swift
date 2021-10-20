@@ -1,4 +1,4 @@
-// VideoFeedCollectionViewController.swift
+// DashboardVideoFeedCollectionViewController.swift
 //
 // Created by CypherPoet.
 // ✌️
@@ -8,7 +8,7 @@ import UIKit
 import CoreData
 
 
-class VideoFeedCollectionViewController: UICollectionViewController {
+class DashboardVideoFeedCollectionViewController: UICollectionViewController {
     var videoFeeds: [VideoFeed]!
     var videoEpisodes: [Video]!
     
@@ -33,7 +33,7 @@ class VideoFeedCollectionViewController: UICollectionViewController {
 
 
 // MARK: - Instantiation
-extension VideoFeedCollectionViewController {
+extension DashboardVideoFeedCollectionViewController {
 
     static func instantiate(
         managedObjectContext: NSManagedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext,
@@ -43,7 +43,7 @@ extension VideoFeedCollectionViewController {
         onVideoEpisodeCellSelected: ((NSManagedObjectID) -> Void)!,
         onVideoFeedCellSelected: ((NSManagedObjectID) -> Void)!,
         onNewResultsFetched: @escaping ((Int) -> Void) = { _ in }
-    ) -> VideoFeedCollectionViewController {
+    ) -> DashboardVideoFeedCollectionViewController {
         let viewController = StoryboardScene
             .Dashboard
             .videoFeedCollectionViewController
@@ -67,7 +67,7 @@ extension VideoFeedCollectionViewController {
 
 
 // MARK: - Layout & Data Structure
-extension VideoFeedCollectionViewController {
+extension DashboardVideoFeedCollectionViewController {
     
     enum CollectionViewSection: Int, CaseIterable {
         case videoEpisodes
@@ -98,7 +98,7 @@ extension VideoFeedCollectionViewController {
 
 
 // MARK: - Lifecycle
-extension VideoFeedCollectionViewController {
+extension DashboardVideoFeedCollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -118,7 +118,7 @@ extension VideoFeedCollectionViewController {
 
 
 // MARK: - Layout Composition
-extension VideoFeedCollectionViewController {
+extension DashboardVideoFeedCollectionViewController {
 
     func makeSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
         let headerSize = NSCollectionLayoutSize(
@@ -215,7 +215,7 @@ extension VideoFeedCollectionViewController {
 
 
 // MARK: - Collection View Configuration and View Registration
-extension VideoFeedCollectionViewController {
+extension DashboardVideoFeedCollectionViewController {
 
     func registerViews(for collectionView: UICollectionView) {
         collectionView.register(
@@ -255,7 +255,7 @@ extension VideoFeedCollectionViewController {
 
 
 // MARK: - Data Source Configuration
-extension VideoFeedCollectionViewController {
+extension DashboardVideoFeedCollectionViewController {
 
     func makeDataSource(for collectionView: UICollectionView) -> DataSource {
         let dataSource = DataSource(
@@ -280,7 +280,7 @@ extension VideoFeedCollectionViewController {
 
 
 // MARK: - Data Source View Providers
-extension VideoFeedCollectionViewController {
+extension DashboardVideoFeedCollectionViewController {
 
     func makeCellProvider(for collectionView: UICollectionView) -> DataSource.CellProvider {
         { (collectionView, indexPath, dataSourceItem) -> UICollectionViewCell in
@@ -352,7 +352,7 @@ extension VideoFeedCollectionViewController {
 
 
 // MARK: - Data Source Snapshot
-extension VideoFeedCollectionViewController {
+extension DashboardVideoFeedCollectionViewController {
 
     func makeSnapshotForCurrentState() -> DataSourceSnapshot {
         var snapshot = DataSourceSnapshot()
@@ -385,7 +385,7 @@ extension VideoFeedCollectionViewController {
         shouldAnimate: Bool = true
     ) {
         self.videoFeeds = videoFeeds
-        videoEpisodes = videoFeeds.compactMap(\.videosArray.last)
+        videoEpisodes = videoFeeds.compactMap(\.videosArray.first)
 
         if let dataSource = dataSource {
             dataSource.apply(
@@ -413,7 +413,7 @@ extension VideoFeedCollectionViewController {
 
 
 // MARK: -  Fetched Result Controller
-extension VideoFeedCollectionViewController {
+extension DashboardVideoFeedCollectionViewController {
     
     static func makeFetchedResultsController(
         using managedObjectContext: NSManagedObjectContext
@@ -443,7 +443,7 @@ extension VideoFeedCollectionViewController {
 
 
 // MARK: - `UICollectionViewDelegate` Methods
-extension VideoFeedCollectionViewController {
+extension DashboardVideoFeedCollectionViewController {
 
     override func collectionView(
         _ collectionView: UICollectionView,
@@ -478,7 +478,7 @@ extension VideoFeedCollectionViewController {
 }
 
 
-extension VideoFeedCollectionViewController: NSFetchedResultsControllerDelegate {
+extension DashboardVideoFeedCollectionViewController: NSFetchedResultsControllerDelegate {
     
     /// Called when the contents of the fetched results controller change.
     ///

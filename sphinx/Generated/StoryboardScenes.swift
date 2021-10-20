@@ -105,7 +105,7 @@ internal enum StoryboardScene {
         )
         
         
-        internal static let videoFeedCollectionViewController = SceneType<VideoFeedCollectionViewController>(
+        internal static let videoFeedCollectionViewController = SceneType<DashboardVideoFeedCollectionViewController>(
             storyboard: Dashboard.self,
             identifier: "VideoFeedCollectionViewController"
         )

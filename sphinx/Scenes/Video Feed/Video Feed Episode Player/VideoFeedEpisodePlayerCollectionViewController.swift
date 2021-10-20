@@ -63,6 +63,7 @@ extension VideoFeedEpisodePlayerCollectionViewController {
         case videoPlayerEpisodeDetails(Video)
         case videoFeedEpisode(Video)
     }
+    
 
     typealias PlayerEpisodeDetailsCell = VideoFeedEpisodePlayerCollectionViewDetailsCell
     typealias FeedEpisodeCell = VideoFeedEpisodeCollectionViewCell
@@ -70,7 +71,6 @@ extension VideoFeedEpisodePlayerCollectionViewController {
     typealias DataSource = UICollectionViewDiffableDataSource<CollectionViewSection, CellDataItem>
     typealias DataSourceSnapshot = NSDiffableDataSourceSnapshot<CollectionViewSection, CellDataItem>
 }
-
 
 
 // MARK: -  Lifecycle
@@ -86,11 +86,10 @@ extension VideoFeedEpisodePlayerCollectionViewController {
 }
 
 
-
 // MARK: - Layout Composition
 extension VideoFeedEpisodePlayerCollectionViewController {
     
-    /// "Contributor Name" and Count Views
+    /// "Contributor Name" and Count of Views
     func makeVideoFeedEpisodesSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
         let headerSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
@@ -102,7 +101,7 @@ extension VideoFeedEpisodePlayerCollectionViewController {
             elementKind: UICollectionView.elementKindSectionHeader,
             alignment: .top
         )
-
+        
         return headerItem
     }
     
@@ -120,7 +119,10 @@ extension VideoFeedEpisodePlayerCollectionViewController {
             widthDimension: .fractionalWidth(1.0),
             heightDimension: .estimated(300)
         )
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        let group = NSCollectionLayoutGroup.horizontal(
+            layoutSize: groupSize,
+            subitems: [item]
+        )
 
         
         let section = NSCollectionLayoutSection(group: group)
@@ -138,6 +140,7 @@ extension VideoFeedEpisodePlayerCollectionViewController {
             heightDimension: .fractionalHeight(1.0)
         )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
         item.contentInsets = .zero
 
 
@@ -145,11 +148,19 @@ extension VideoFeedEpisodePlayerCollectionViewController {
             widthDimension: .fractionalWidth(1.0),
             heightDimension: .estimated(82.9)
         )
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        
+        let group = NSCollectionLayoutGroup.horizontal(
+            layoutSize: groupSize,
+            subitems: [item]
+        )
         
         
-        let section = NSCollectionLayoutSection(group: group)
         let sectionHeader = makeVideoFeedEpisodesSectionHeader()
+        
+        sectionHeader.pinToVisibleBounds = true
+        
+
+        let section = NSCollectionLayoutSection(group: group)
 
         section.orthogonalScrollingBehavior = .none
         section.boundarySupplementaryItems = [sectionHeader]
@@ -335,7 +346,9 @@ extension VideoFeedEpisodePlayerCollectionViewController {
                         }
                         
                         headerView.configure(
-                            withEpisode: self.videoPlayerEpisode
+                            withEpisode: self.videoPlayerEpisode,
+                            onFeedSubscribed: self.onFeedSubscriptionSelected,
+                            onFeedUnsubscribed: self.onFeedSubscriptionCancellationSelected
                         )
                         
                         return headerView
@@ -346,7 +359,6 @@ extension VideoFeedEpisodePlayerCollectionViewController {
         }
     }
 }
-
 
 
 // MARK: - Data Source Snapshot
@@ -416,17 +428,3 @@ extension VideoFeedEpisodePlayerCollectionViewController {
         }
     }
 }
-
-
-// MARK: - `VideoFeedEpisodesSectionHeaderViewDelegate` Methods
-extension VideoFeedEpisodePlayerCollectionViewController: VideoFeedEpisodesSectionHeaderViewDelegate {
-
-    func headerViewDidTapSubscribeButton(
-        _ headerView: VideoFeedEpisodesSectionHeaderView
-    ) {
-        onFeedSubscriptionSelected?()
-    }
-}
-
-
-

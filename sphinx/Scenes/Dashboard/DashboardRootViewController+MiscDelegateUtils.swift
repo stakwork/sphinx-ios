@@ -39,18 +39,6 @@ extension DashboardRootViewController: PaymentInvoiceDelegate {
 }
 
 
-
-extension DashboardRootViewController: CustomSegmentedControlDelegate {
-    
-    func segmentedControlDidSwitch(
-        _ segmentedControl: CustomSegmentedControl,
-        to index: Int
-    ) {
-        activeTab = DashboardTab(rawValue: index)!
-    }
-}
-
-
 extension DashboardRootViewController: ChatListHeaderDelegate {
     
     func leftMenuButtonTouched() {

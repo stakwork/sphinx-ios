@@ -9,11 +9,6 @@ import UIKit
 
 
 class VideoFeedEpisodePlayerCollectionViewDetailsCell: UICollectionViewCell {
-    
-    @IBOutlet private weak var episodeTitleLabel: UILabel!
-    @IBOutlet private weak var episodeViewCountLabel: UILabel!
-    @IBOutlet weak var episodeSubtitleCircularDivider: UIView!
-    @IBOutlet private weak var episodePublishDateLabel: UILabel!
     @IBOutlet private weak var episodeDescriptionLabel: UILabel!
     @IBOutlet private weak var showMoreButton: UIButton!
 
@@ -84,15 +79,10 @@ extension VideoFeedEpisodePlayerCollectionViewDetailsCell {
                 .uppercased(),
             for: .normal
         )
-        episodeSubtitleCircularDivider.makeCircular()
     }
     
     
     private func updateViewsWithVideoEpisode() {
-        episodeTitleLabel.text = videoEpisode.title ?? "Untitled"
-        episodeViewCountLabel.text = "View Count"
-        //        episodePublishDateLabel.text = Self.publishDateFormatter.string(from: videoEpisode.datePublished)
-        episodePublishDateLabel.text = "Publish Date"
-        episodeDescriptionLabel.text = "Episode Description"
+        episodeDescriptionLabel.text = videoEpisode.videoDescription
     }
 }

@@ -20,6 +20,10 @@ protocol VideoFeedEpisodePlayerViewControllerDelegate: AnyObject {
         _ viewController: UIViewController,
         didSelectVideoEpisodeWithID videoEpisodeID: NSManagedObjectID
     )
+    
+    func viewControllerShouldDismiss(
+        _ viewController: UIViewController
+    )
 }
 
 
@@ -36,7 +40,9 @@ class VideoFeedEpisodePlayerContainerViewController: UIViewController {
 
     internal lazy var playerViewController: VideoFeedEpisodePlayerViewController = {
         VideoFeedEpisodePlayerViewController.instantiate(
-            videoPlayerEpisode: videoPlayerEpisode
+            videoPlayerEpisode: videoPlayerEpisode,
+            dismissButtonStyle: dismissButtonStyle,
+            onDismiss: { self.delegate?.viewControllerShouldDismiss(self) }
         )
     }()
     

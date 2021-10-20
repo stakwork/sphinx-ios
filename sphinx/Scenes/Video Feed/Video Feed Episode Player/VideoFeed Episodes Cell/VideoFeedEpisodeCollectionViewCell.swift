@@ -84,9 +84,8 @@ extension VideoFeedEpisodeCollectionViewCell {
         }
 
 
-        episodeTitleLabel.text = videoEpisode.title ?? "Untitled"
-        //        episodePublishDateLabel.text = Self.publishDateFormatter.string(from: videoEpisode.datePublished)
-        episodePublishDateLabel.text = "Publish Date"
+        episodeTitleLabel.text = videoEpisode.titleForDisplay
+        episodePublishDateLabel.text = videoEpisode.publishDateText
     }
 }
 

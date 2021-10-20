@@ -8,14 +8,6 @@
 import UIKit
 
 
-protocol VideoFeedEpisodesSectionHeaderViewDelegate: AnyObject {
-
-    func headerViewDidTapSubscribeButton(
-        _ headerView: VideoFeedEpisodesSectionHeaderView
-    )
-}
-
-
 class VideoFeedEpisodesSectionHeaderView: UICollectionReusableView {
     @IBOutlet private weak var feedAvatarImage: UIImageView!
     @IBOutlet private weak var feedAuthorNameLabel: UILabel!
@@ -31,6 +23,9 @@ class VideoFeedEpisodesSectionHeaderView: UICollectionReusableView {
             }
         }
     }
+    
+    var onFeedSubscribed: (() -> Void)!
+    var onFeedUnsubscribed: (() -> Void)!
 }
 
 
@@ -42,7 +37,6 @@ extension VideoFeedEpisodesSectionHeaderView {
         UINib(nibName: "VideoFeedEpisodesSectionHeaderView", bundle: nil)
     }()
 }
-
 
 
 // MARK: - Lifecycle
@@ -61,24 +55,13 @@ extension VideoFeedEpisodesSectionHeaderView {
 }
 
 
-
 // MARK: - Computeds
 extension VideoFeedEpisodesSectionHeaderView {
 
     private var videoFeed: VideoFeed? { videoFeedEpisode.videoFeed }
     
-
     private var episodeCount: Int {
         videoFeed?.videosArray.count ?? 0
-    }
-    
-
-    private var avatarImageViewURL: URL? {
-        guard let photoURL = videoFeed?.chat?.photoUrl else {
-            return nil
-        }
-        
-        return URL(string: photoURL)
     }
 }
 
@@ -86,17 +69,36 @@ extension VideoFeedEpisodesSectionHeaderView {
 // MARK: - Public Methods
 extension VideoFeedEpisodesSectionHeaderView {
 
-    func configure(withEpisode videoFeedEpisode: Video) {
+    func configure(
+        withEpisode videoFeedEpisode: Video,
+        onFeedSubscribed: (() -> Void)!,
+        onFeedUnsubscribed: (() -> Void)!
+    ) {
         self.videoFeedEpisode = videoFeedEpisode
+        self.onFeedSubscribed = onFeedSubscribed
+        self.onFeedUnsubscribed = onFeedUnsubscribed
     }
 }
 
+
+// MARK: - Action Handling
+extension VideoFeedEpisodesSectionHeaderView {
+    
+    @IBAction private func didTapSubscriptionButton() {
+        onFeedSubscribed()
+    }
+}
 
 
 // MARK: - Private Helpers
 extension VideoFeedEpisodesSectionHeaderView {
 
     private func setupViews() {
+        subscriptionButton.clipsToBounds = true
+        subscriptionButton.roundCorners(
+            corners: .allCorners,
+            radius: subscriptionButton.frame.width / 2.0
+        )
         subscriptionButton.setTitle(
             "video-player.button.subscribe".localized,
             for: .normal
@@ -107,18 +109,18 @@ extension VideoFeedEpisodesSectionHeaderView {
     
     
     private func updateViewsWithVideoEpisode() {
-        if let imageURL = avatarImageViewURL {
+        if let imageURL = videoFeed?.avatarImageURL {
             feedAvatarImage.sd_setImage(
                 with: imageURL,
-                placeholderImage: UIImage(named: "userAvatar"),
+                placeholderImage: videoFeed?.avatarImagePlaceholder,
                 options: [.highPriority],
                 progress: nil
             )
         } else {
-            feedAvatarImage.image = UIImage(named: "userAvatar")
+            feedAvatarImage.image = videoFeed?.avatarImagePlaceholder
         }
         
-        feedAuthorNameLabel.text = videoFeed?.title ?? "Feed Name"
+        feedAuthorNameLabel.text = videoFeed?.author ?? "Unknown Author"
         episodeCountNumberLabel.text = "\(episodeCount)"
 
         episodeCountTextLabel.text = (

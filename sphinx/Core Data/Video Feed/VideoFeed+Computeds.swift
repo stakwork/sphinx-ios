@@ -24,4 +24,12 @@ extension VideoFeed {
         }
     }
     
+    
+    var avatarImageURL: URL? {
+        guard let urlPath = chat?.photoUrl else {
+            return nil
+        }
+        
+        return URL(string: urlPath)
+    }
 }

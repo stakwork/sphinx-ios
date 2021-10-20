@@ -73,8 +73,8 @@ class DashboardFeedsContainerViewController: UIViewController {
     }()
     
     
-    internal lazy var videoFeedCollectionViewController: VideoFeedCollectionViewController = {
-        VideoFeedCollectionViewController.instantiate(
+    internal lazy var videoFeedCollectionViewController: DashboardVideoFeedCollectionViewController = {
+        DashboardVideoFeedCollectionViewController.instantiate(
             managedObjectContext: managedObjectContext,
             onVideoEpisodeCellSelected: handleVideoEpisodeCellSelection(_:),
             onVideoFeedCellSelected: handleVideoFeedCellSelection(_:),

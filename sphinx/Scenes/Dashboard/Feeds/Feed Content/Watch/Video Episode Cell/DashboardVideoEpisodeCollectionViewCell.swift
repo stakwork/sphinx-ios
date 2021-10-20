@@ -11,8 +11,8 @@ import UIKit
 class DashboardVideoEpisodeCollectionViewCell: UICollectionViewCell {
     @IBOutlet private weak var thumbnailImageView: UIImageView!
     @IBOutlet private weak var feedAvatarImageView: UIImageView!
-    @IBOutlet private weak var feedNameLabel: UILabel!
     @IBOutlet private weak var episodeTitleLabel: UILabel!
+    @IBOutlet private weak var feedNameLabel: UILabel!
     @IBOutlet private weak var episodePublishDateLabel: UILabel!
     
     
@@ -23,6 +23,16 @@ class DashboardVideoEpisodeCollectionViewCell: UICollectionViewCell {
             }
         }
     }
+}
+
+
+// MARK: - Static Properties
+extension DashboardVideoEpisodeCollectionViewCell {
+    static let reuseID = "DashboardVideoEpisodeCollectionViewCell"
+    
+    static let nib: UINib = {
+        UINib(nibName: "DashboardVideoEpisodeCollectionViewCell", bundle: nil)
+    }()
 }
 
 
@@ -41,15 +51,28 @@ extension DashboardVideoEpisodeCollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        setupViews()
+    }
+}
+
+
+// MARK: -  Public Methods
+extension DashboardVideoEpisodeCollectionViewCell {
+    
+    func configure(withVideoEpisode videoEpisode: Video) {
+        self.videoEpisode = videoEpisode
+    }
+}
+
+
+// MARK: - Private Helpers
+extension DashboardVideoEpisodeCollectionViewCell {
+    
+    private func setupViews() {
         thumbnailImageView.layer.cornerRadius = 8.0
         thumbnailImageView.clipsToBounds = true
         
         feedAvatarImageView.makeCircular()
-    }
-    
-    
-    func configure(withVideoEpisode videoEpisode: Video) {
-        self.videoEpisode = videoEpisode
     }
     
     
@@ -62,15 +85,11 @@ extension DashboardVideoEpisodeCollectionViewCell {
                 progress: nil
             )
         } else {
-            // 📝 TODO:  Use a video placeholder here
+            // 📝 TODO:  Use a video placeholder here?
             thumbnailImageView.image = UIImage(named: "podcastPlaceholder")
         }
         
-        if
-            // 📝 TODO:  Clean up the logic for computing this
-            let avatarImageURLPath = videoEpisode.videoFeed?.chat?.photoUrl,
-            let avatarImageURL = URL(string: avatarImageURLPath)
-        {
+        if let avatarImageURL = videoEpisode.videoFeed?.avatarImageURL {
             feedAvatarImageView.sd_setImage(
                 with: avatarImageURL,
                 placeholderImage: UIImage(named: "profile_avatar"),
@@ -80,21 +99,9 @@ extension DashboardVideoEpisodeCollectionViewCell {
         } else {
             feedAvatarImageView.image = UIImage(named: "profile_avatar")
         }
-
-        feedNameLabel.text = videoEpisode.videoFeed?.title ?? "Untitled"
-        episodeTitleLabel.text = videoEpisode.title ?? "Untitled"
-//        episodePublishDateLabel.text = Self.publishDateFormatter.string(from: videoEpisode.datePublished)
-        episodePublishDateLabel.text = "Publish Date"
+        
+        feedNameLabel.text = videoEpisode.videoFeed?.titleForDisplay
+        episodeTitleLabel.text = videoEpisode.titleForDisplay
+        episodePublishDateLabel.text = videoEpisode.publishDateText
     }
-}
-
-
-
-// MARK: - Static Properties
-extension DashboardVideoEpisodeCollectionViewCell {
-    static let reuseID = "DashboardVideoEpisodeCollectionViewCell"
-    
-    static let nib: UINib = {
-        UINib(nibName: "DashboardVideoEpisodeCollectionViewCell", bundle: nil)
-    }()
 }

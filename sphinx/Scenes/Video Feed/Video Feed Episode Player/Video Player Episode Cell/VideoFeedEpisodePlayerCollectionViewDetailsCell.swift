@@ -12,9 +12,12 @@ class VideoFeedEpisodePlayerCollectionViewDetailsCell: UICollectionViewCell {
     
     @IBOutlet private weak var episodeTitleLabel: UILabel!
     @IBOutlet private weak var episodeViewCountLabel: UILabel!
+    @IBOutlet weak var episodeSubtitleCircularDivider: UIView!
     @IBOutlet private weak var episodePublishDateLabel: UILabel!
     @IBOutlet private weak var episodeDescriptionLabel: UILabel!
+    @IBOutlet private weak var showMoreButton: UIButton!
 
+    
     var videoEpisode: Video! {
         didSet {
             DispatchQueue.main.async { [weak self] in
@@ -52,9 +55,9 @@ extension VideoFeedEpisodePlayerCollectionViewDetailsCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-//        thumbnailImageView.layer.cornerRadius = 8.0
-//        thumbnailImageView.clipsToBounds = true
+        setupViews()
     }
+    
     
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -74,25 +77,22 @@ extension VideoFeedEpisodePlayerCollectionViewDetailsCell {
 // MARK: - Private Helpers
 extension VideoFeedEpisodePlayerCollectionViewDetailsCell {
     
+    private func setupViews() {
+        showMoreButton.setTitle(
+            "video-player.episode-details.button.show-more"
+                .localized
+                .uppercased(),
+            for: .normal
+        )
+        episodeSubtitleCircularDivider.makeCircular()
+    }
+    
+    
     private func updateViewsWithVideoEpisode() {
-//        if let imageURL = feedImageViewURL {
-//            thumbnailImageView.sd_setImage(
-//                with: imageURL,
-//                placeholderImage: UIImage(named: "podcastPlaceholder"),
-//                options: [.highPriority],
-//                progress: nil
-//            )
-//        } else {
-//            // 📝 TODO:  Use a video placeholder here
-//            thumbnailImageView.image = UIImage(named: "podcastPlaceholder")
-//        }
-//
-//
-//        feedNameLabel.text = videoEpisode.videoFeed?.title ?? "Untitled"
-//        episodeTitleLabel.text = videoEpisode.title ?? "Untitled"
-//        //        episodePublishDateLabel.text = Self.publishDateFormatter.string(from: videoEpisode.datePublished)
-//        episodePublishDateLabel.text = "Publish Date"
+        episodeTitleLabel.text = videoEpisode.title ?? "Untitled"
+        episodeViewCountLabel.text = "View Count"
+        //        episodePublishDateLabel.text = Self.publishDateFormatter.string(from: videoEpisode.datePublished)
+        episodePublishDateLabel.text = "Publish Date"
+        episodeDescriptionLabel.text = "Episode Description"
     }
 }
-
-

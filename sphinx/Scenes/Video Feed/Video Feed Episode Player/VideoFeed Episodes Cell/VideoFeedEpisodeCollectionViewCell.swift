@@ -6,10 +6,13 @@
 
 
 import UIKit
-
+import SDWebImage
 
 
 class VideoFeedEpisodeCollectionViewCell: UICollectionViewCell {
+    @IBOutlet private weak var thumbnailImageView: UIImageView!
+    @IBOutlet private weak var episodeTitleLabel: UILabel!
+    @IBOutlet private weak var episodePublishDateLabel: UILabel!
     
     var videoEpisode: Video! {
         didSet {
@@ -19,7 +22,6 @@ class VideoFeedEpisodeCollectionViewCell: UICollectionViewCell {
         }
     }
 }
-
 
 
 // MARK: - Static Properties
@@ -47,9 +49,11 @@ extension VideoFeedEpisodeCollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-//        thumbnailImageView.layer.cornerRadius = 8.0
-//        thumbnailImageView.clipsToBounds = true
+    }
+    
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
     }
 }
  
@@ -67,23 +71,22 @@ extension VideoFeedEpisodeCollectionViewCell {
 extension VideoFeedEpisodeCollectionViewCell {
     
     private func updateViewsWithVideoEpisode() {
-//        if let imageURL = feedImageViewURL {
-//            thumbnailImageView.sd_setImage(
-//                with: imageURL,
-//                placeholderImage: UIImage(named: "podcastPlaceholder"),
-//                options: [.highPriority],
-//                progress: nil
-//            )
-//        } else {
-//            // 📝 TODO:  Use a video placeholder here
-//            thumbnailImageView.image = UIImage(named: "podcastPlaceholder")
-//        }
-//
-//
-//        feedNameLabel.text = videoEpisode.videoFeed?.title ?? "Untitled"
-//        episodeTitleLabel.text = videoEpisode.title ?? "Untitled"
-//        //        episodePublishDateLabel.text = Self.publishDateFormatter.string(from: videoEpisode.datePublished)
-//        episodePublishDateLabel.text = "Publish Date"
+        if let imageURL = thumbnailImageViewURL {
+            thumbnailImageView.sd_setImage(
+                with: imageURL,
+                placeholderImage: UIImage(named: "podcastPlaceholder"),
+                options: [.highPriority],
+                progress: nil
+            )
+        } else {
+            // 📝 TODO:  Use a video placeholder here
+            thumbnailImageView.image = UIImage(named: "podcastPlaceholder")
+        }
+
+
+        episodeTitleLabel.text = videoEpisode.title ?? "Untitled"
+        //        episodePublishDateLabel.text = Self.publishDateFormatter.string(from: videoEpisode.datePublished)
+        episodePublishDateLabel.text = "Publish Date"
     }
 }
 

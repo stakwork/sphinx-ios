@@ -5,9 +5,12 @@
 //
     
 import UIKit
+import youtube_ios_player_helper
 
 
 class VideoFeedEpisodePlayerViewController: UIViewController {
+    @IBOutlet private weak var videoPlayerView: YTPlayerView!
+    
     var videoPlayerEpisode: Video!
 }
 
@@ -36,6 +39,7 @@ extension VideoFeedEpisodePlayerViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setupViews()
     }
 }
 
@@ -43,4 +47,15 @@ extension VideoFeedEpisodePlayerViewController {
 
 // MARK: -  Private Helpers
 extension VideoFeedEpisodePlayerViewController {
+    
+    private func setupViews() {
+        videoPlayerView.delegate = self
+        videoPlayerView.load(withVideoId: videoPlayerEpisode.videoID)
+    }
+}
+
+
+// MARK: -  YTPlayerViewDelegate
+extension VideoFeedEpisodePlayerViewController: YTPlayerViewDelegate {
+    
 }

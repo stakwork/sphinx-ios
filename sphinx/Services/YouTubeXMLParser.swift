@@ -47,7 +47,7 @@ struct YouTubeXMLParser {
             feed.feedURL = URL(string: feedURLPath)
         }
         
-        feed.author = feedPayload.author.name
+        feed.author = feedPayload.author["name"].text
         feed.title = feedPayload.title.text
         
         if let datePublished = feedPayload.published.text {
@@ -86,7 +86,7 @@ struct YouTubeXMLParser {
                     video.videoID = videoID
                     
                     video.title = videoPayload.title.text
-                    video.author = videoPayload.author.name
+                    video.author = videoPayload.author["name"].text
                     video.videoDescription = videoPayload["media:group", "media:description"].text
                     
                     if let datePublished = videoPayload.published.text {

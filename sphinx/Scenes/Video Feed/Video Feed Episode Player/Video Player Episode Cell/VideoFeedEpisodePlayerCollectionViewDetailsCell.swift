@@ -20,6 +20,14 @@ class VideoFeedEpisodePlayerCollectionViewDetailsCell: UICollectionViewCell {
             }
         }
     }
+    
+    private var viewMode: ViewMode = .fullDetailsCollapsed {
+        didSet {
+            // 📝 TODO:  Implement dynamic resizing around the state change here
+            // (see: https://stackoverflow.com/a/60835843/8859365)
+//            setNeedsLayout()
+        }
+    }
 }
 
 
@@ -38,8 +46,17 @@ extension VideoFeedEpisodePlayerCollectionViewDetailsCell {
 // MARK: - Computeds
 extension VideoFeedEpisodePlayerCollectionViewDetailsCell {
     
-    var thumbnailImageViewURL: URL? {
-        videoEpisode.thumbnailURL
+    var showMoreButtonTitle: String {
+        switch viewMode {
+        case .fullDetailsCollapsed:
+            return "video-player.episode-details.button.show-more"
+                .localized
+                .uppercased()
+        case .fullDetailsExpanded:
+            return "video-player.episode-details.button.show-less"
+                .localized
+                .uppercased()
+        }
     }
 }
 
@@ -69,20 +86,44 @@ extension VideoFeedEpisodePlayerCollectionViewDetailsCell {
 }
 
 
+// MARK: - Action Handling
+extension VideoFeedEpisodePlayerCollectionViewDetailsCell {
+    
+    @IBAction private func didTapShowMoreButton() {
+        switch viewMode {
+        case .fullDetailsCollapsed:
+            viewMode = .fullDetailsExpanded
+        case .fullDetailsExpanded:
+            viewMode = .fullDetailsCollapsed
+        }
+        
+        showMoreButton.setTitle(
+            showMoreButtonTitle,
+            for: .normal
+        )
+    }
+}
+
+
 // MARK: - Private Helpers
 extension VideoFeedEpisodePlayerCollectionViewDetailsCell {
     
     private func setupViews() {
         showMoreButton.setTitle(
-            "video-player.episode-details.button.show-more"
-                .localized
-                .uppercased(),
+            showMoreButtonTitle,
             for: .normal
         )
     }
     
-    
     private func updateViewsWithVideoEpisode() {
         episodeDescriptionLabel.text = videoEpisode.videoDescription
+    }
+}
+
+
+extension VideoFeedEpisodePlayerCollectionViewDetailsCell {
+    enum ViewMode {
+        case fullDetailsCollapsed
+        case fullDetailsExpanded
     }
 }

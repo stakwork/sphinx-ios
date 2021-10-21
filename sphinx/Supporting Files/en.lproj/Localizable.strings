@@ -442,5 +442,6 @@
 "video" = "video";
 "videos" = "videos";
 "video-player.episode-details.button.show-more" = "show more";
+"video-player.episode-details.button.show-less" = "show less";
 "video-player.button.subscribe" = "Subscribe";
 "video-player.button.unsubscribe" = "Unsubscribe";

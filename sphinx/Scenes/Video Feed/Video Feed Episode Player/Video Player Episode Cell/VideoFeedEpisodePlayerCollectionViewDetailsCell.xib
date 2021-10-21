@@ -5,7 +5,6 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19141"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -16,11 +15,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="VideoFeedEpisodePlayerCollectionViewDetailsCell" reuseIdentifier="VideoFeedEpisodePlayerCollectionViewDetailsCell" id="gTV-IL-0wX" customClass="VideoFeedEpisodePlayerCollectionViewDetailsCell" customModule="sphinx" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="300"/>
-            <autoresizingMask key="autoresizingMask"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="VideoFeedEpisodePlayerCollectionViewDetailsCell" reuseIdentifier="VideoFeedEpisodePlayerCollectionViewDetailsCell" translatesAutoresizingMaskIntoConstraints="NO" id="gTV-IL-0wX" customClass="VideoFeedEpisodePlayerCollectionViewDetailsCell" customModule="sphinx" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="95"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="375" height="300"/>
+                <rect key="frame" x="0.0" y="0.0" width="375" height="95"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Episode Description That May potetentially have 3 lines of text" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sbQ-FG-2SW">
@@ -30,17 +28,19 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Ph-df-A9I">
-                        <rect key="frame" x="282" y="45" width="77" height="30"/>
+                        <rect key="frame" x="283" y="45" width="76" height="30"/>
                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="15"/>
                         <color key="tintColor" name="ReceivedIcon"/>
                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                         <state key="normal" title="Show More">
                             <color key="titleColor" name="ReceivedIcon"/>
                         </state>
+                        <connections>
+                            <action selector="didTapShowMoreButton" destination="gTV-IL-0wX" eventType="touchUpInside" id="vkn-tb-cUL"/>
+                        </connections>
                     </button>
                 </subviews>
             </view>
-            <viewLayoutGuide key="safeArea" id="n8I-sL-yVE"/>
             <color key="backgroundColor" name="HeaderBG"/>
             <constraints>
                 <constraint firstItem="sbQ-FG-2SW" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="Vcq-b9-NaY"/>
@@ -51,11 +51,12 @@
                 <constraint firstItem="sbQ-FG-2SW" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="16" id="oOs-5N-RXA"/>
                 <constraint firstAttribute="trailing" secondItem="sbQ-FG-2SW" secondAttribute="trailing" constant="16" id="zPj-h2-C9q"/>
             </constraints>
+            <size key="customSize" width="375" height="95"/>
             <connections>
                 <outlet property="episodeDescriptionLabel" destination="sbQ-FG-2SW" id="z9Q-HZ-Uk3"/>
                 <outlet property="showMoreButton" destination="6Ph-df-A9I" id="iyE-Gu-8Ni"/>
             </connections>
-            <point key="canvasLocation" x="131.15942028985509" y="105.80357142857143"/>
+            <point key="canvasLocation" x="131.15942028985509" y="37.165178571428569"/>
         </collectionViewCell>
     </objects>
     <resources>

@@ -117,7 +117,7 @@ extension VideoFeedEpisodePlayerCollectionViewController {
 
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
-            heightDimension: .estimated(300)
+            heightDimension: .estimated(100.0)
         )
         let group = NSCollectionLayoutGroup.horizontal(
             layoutSize: groupSize,

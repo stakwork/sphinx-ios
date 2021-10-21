@@ -90,7 +90,10 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
         }
 
         // 📝 TODO:  Implement the dedicated `VideoFeed` screen page and go there instead.
-        if let latestEpisode = videoFeed.videosArray.first {
+        if
+            let latestEpisode = videoFeed.videosArray.first,
+            viewController is DashboardFeedsContainerViewController
+        {
             presentVideoPlayer(for: latestEpisode)
         }
     }
@@ -101,12 +104,15 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
         didSelectVideoEpisodeWithID videoEpisodeID: NSManagedObjectID
     ) {
         guard
-            let videoEpisode = managedObjectContext.object(with: videoEpisodeID) as? Video
+            let videoEpisode = managedObjectContext
+                .object(with: videoEpisodeID) as? Video
         else {
             preconditionFailure()
         }
         
-        presentVideoPlayer(for: videoEpisode)
+        if viewController is DashboardFeedsContainerViewController {
+            presentVideoPlayer(for: videoEpisode)
+        }
     }
 }
 

@@ -32,6 +32,9 @@ class VideoFeedEpisodePlayerContainerViewController: UIViewController {
     @IBOutlet weak var collectionViewContainer: UIView!
 
     
+    internal var managedObjectContext: NSManagedObjectContext!
+    
+    
     var videoPlayerEpisode: Video!
     var dismissButtonStyle: ModalDismissButtonStyle!
 
@@ -63,7 +66,8 @@ extension VideoFeedEpisodePlayerContainerViewController {
     static func instantiate(
         videoPlayerEpisode: Video,
         dismissButtonStyle: ModalDismissButtonStyle,
-        delegate: VideoFeedEpisodePlayerViewControllerDelegate
+        delegate: VideoFeedEpisodePlayerViewControllerDelegate,
+        managedObjectContext: NSManagedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext
     ) -> VideoFeedEpisodePlayerContainerViewController {
         let viewController = StoryboardScene
             .VideoFeed
@@ -73,6 +77,7 @@ extension VideoFeedEpisodePlayerContainerViewController {
         viewController.videoPlayerEpisode = videoPlayerEpisode
         viewController.dismissButtonStyle = dismissButtonStyle
         viewController.delegate = delegate
+        viewController.managedObjectContext = managedObjectContext
         
         return viewController
     }
@@ -126,9 +131,20 @@ extension VideoFeedEpisodePlayerContainerViewController {
     private func handleVideoEpisodeCellSelection(
         _ managedObjectID: NSManagedObjectID
     ) {
-        delegate?.viewController(
-            self,
-            didSelectVideoEpisodeWithID: managedObjectID
-        )
+        guard
+            let selectedEpisode = managedObjectContext.object(with: managedObjectID) as? Video
+        else {
+            preconditionFailure()
+        }
+        
+        if selectedEpisode != videoPlayerEpisode {
+            videoPlayerEpisode = selectedEpisode
+            playerViewController.videoPlayerEpisode = videoPlayerEpisode
+            
+            delegate?.viewController(
+                self,
+                didSelectVideoEpisodeWithID: managedObjectID
+            )
+        }
     }
 }

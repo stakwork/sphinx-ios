@@ -17,7 +17,17 @@ class VideoFeedEpisodePlayerViewController: UIViewController {
     @IBOutlet private weak var episodePublishDateLabel: UILabel!
     
     
-    var videoPlayerEpisode: Video!
+    var videoPlayerEpisode: Video! {
+        didSet {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                
+                self.updateVideoPlayer(withNewEpisode: self.videoPlayerEpisode)
+            }
+        }
+    }
+    
+    
     var dismissButtonStyle: ModalDismissButtonStyle = .downArrow
     var onDismiss: (() -> Void)?
 }
@@ -82,7 +92,6 @@ extension VideoFeedEpisodePlayerViewController {
     
     private func setupViews() {
         videoPlayerView.delegate = self
-        videoPlayerView.load(withVideoId: videoPlayerEpisode.videoID)
         
         episodeSubtitleCircularDivider.makeCircular()
         
@@ -107,6 +116,11 @@ extension VideoFeedEpisodePlayerViewController {
                 for: .normal
             )
         }
+    }
+    
+    
+    private func updateVideoPlayer(withNewEpisode video: Video) {
+        videoPlayerView.load(withVideoId: videoPlayerEpisode.videoID)
     }
 }
 

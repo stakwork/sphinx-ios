@@ -14,5 +14,4 @@ extension DashboardRootViewController: VideoFeedEpisodePlayerViewControllerDeleg
     ) {
         navigationController?.popViewController(animated: true)
     }
-    
 }

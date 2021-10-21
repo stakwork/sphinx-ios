@@ -36,13 +36,13 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0ED-Q8-2dC">
-                            <rect key="frame" x="16" y="16.5" width="8.5" height="17.5"/>
+                            <rect key="frame" x="16" y="16" width="9.5" height="18.5"/>
                             <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="15"/>
                             <color key="textColor" name="Text"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Videos" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EXz-8y-bSR">
-                            <rect key="frame" x="27.5" y="7.5" width="276.5" height="35"/>
+                            <rect key="frame" x="28.5" y="7.5" width="275.5" height="35"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="35" id="rZa-dV-UGD"/>
                             </constraints>
@@ -82,7 +82,7 @@
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Feed Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hiR-uB-n4b">
-                            <rect key="frame" x="68" y="22.5" width="120" height="20.5"/>
+                            <rect key="frame" x="68" y="22.5" width="236" height="20.5"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -118,6 +118,11 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="65" id="VsN-Qb-qlA"/>
                     </constraints>
+                    <variation key="default">
+                        <mask key="subviews">
+                            <exclude reference="OTf-3X-F6T"/>
+                        </mask>
+                    </variation>
                 </stackView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EFx-w2-Fri" userLabel="Top Divider">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>

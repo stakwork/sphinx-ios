@@ -11,7 +11,10 @@ import UIKit
 class VideoFeedEpisodesSectionHeaderView: UICollectionReusableView {
     @IBOutlet private weak var feedAvatarImage: UIImageView!
     @IBOutlet private weak var feedAuthorNameLabel: UILabel!
+    
+    // 📝 TODO:  Re-install this in the xib when we're ready to support it
     @IBOutlet private weak var subscriptionButton: UIButton!
+    
     @IBOutlet private weak var episodeCountNumberLabel: UILabel!
     @IBOutlet private weak var episodeCountTextLabel: UILabel!
     

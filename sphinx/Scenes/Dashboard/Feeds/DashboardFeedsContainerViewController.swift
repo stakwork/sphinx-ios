@@ -269,7 +269,7 @@ extension DashboardFeedsContainerViewController {
     private func handleVideoFeedCellSelection(_ managedObjectID: NSManagedObjectID) {
         feedsListContainerDelegate?.viewController(
             self,
-            didSelectPodcastFeedWithID: managedObjectID
+            didSelectVideoFeedWithID: managedObjectID
         )
     }
 }

@@ -83,7 +83,16 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
         _ viewController: UIViewController,
         didSelectVideoFeedWithID videoFeedID: NSManagedObjectID
     ) {
-        // 📝 TODO:  Implement
+        guard
+            let videoFeed = managedObjectContext.object(with: videoFeedID) as? VideoFeed
+        else {
+            preconditionFailure()
+        }
+
+        // 📝 TODO:  Implement the dedicated `VideoFeed` screen page and go there instead.
+        if let latestEpisode = videoFeed.videosArray.first {
+            presentVideoPlayer(for: latestEpisode)
+        }
     }
     
     

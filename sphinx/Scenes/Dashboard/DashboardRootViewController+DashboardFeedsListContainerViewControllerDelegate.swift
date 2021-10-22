@@ -111,9 +111,10 @@ extension DashboardRootViewController {
             delegate: self
         )
         
-        podcastFeedVC.modalPresentationStyle = .fullScreen
+        podcastFeedVC.modalPresentationStyle = .automatic
         
-        navigationController?.pushViewController(podcastFeedVC, animated: true)
+        navigationController?
+            .present(podcastFeedVC, animated: true)
     }
     
     
@@ -127,8 +128,9 @@ extension DashboardRootViewController {
                 delegate: self
             )
         
-        viewController.modalPresentationStyle = .fullScreen
+        viewController.modalPresentationStyle = .automatic
         
-        navigationController?.pushViewController(viewController, animated: true)
+        navigationController?
+            .present(viewController, animated: true)
     }
 }

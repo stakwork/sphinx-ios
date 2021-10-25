@@ -130,7 +130,14 @@ class GroupsManager {
     }
     
     func isGroupInfoValid() -> Bool {
-        return !(newGroupInfo.name ?? "").isEmpty && !(newGroupInfo.description ?? "").isEmpty
+        let name = newGroupInfo.name ?? ""
+        let description = newGroupInfo.description ?? ""
+        let feedUrl = newGroupInfo.feedUrl ?? ""
+        let contentType = newGroupInfo.feedContentType
+        
+        let contentTypeValid = feedUrl.isEmpty || (!feedUrl.isEmpty && contentType != nil)
+        
+        return !name.isEmpty && !description.isEmpty && contentTypeValid
     }
     
     struct TribeInfo {
@@ -152,6 +159,7 @@ class GroupsManager {
         var deleted : Bool = false
         var appUrl : String? = nil
         var feedUrl : String? = nil
+        var feedContentType : FeedContentType? = nil
         var ownerRouteHint : String? = nil
         var bots : [Bot] = []
         
@@ -195,6 +203,37 @@ class GroupsManager {
             }
             
             self.commands = commandObjects
+        }
+    }
+    
+    struct FeedContentType {
+        
+        let id: Int
+        var description: String
+        
+        static var podcast: Self = .init(
+            id: 0,
+            description: "Podcast"
+        )
+        static var video: Self = .init(
+            id: 1,
+            description: "Video"
+        )
+        static var newsletter: Self = .init(
+            id: 2,
+            description: "Newsletter"
+        )
+        
+        static var allCases: [Self] {
+            [
+                .podcast,
+                .video,
+                .newsletter,
+            ]
+        }
+        
+        static var defaultValue: Self {
+            .podcast
         }
     }
 
@@ -289,6 +328,10 @@ class GroupsManager {
         parameters["app_url"] = newGroupInfo.appUrl as AnyObject
         parameters["feed_url"] = newGroupInfo.feedUrl as AnyObject
         
+        if let feedContentType = newGroupInfo.feedContentType {
+            parameters["feed_type"] = feedContentType.id as AnyObject
+        }
+        
         return parameters
     }
     
@@ -351,6 +394,7 @@ class GroupsManager {
         tribeInfo.deleted = json["deleted"].boolValue
         tribeInfo.appUrl = json["app_url"].string ?? tribeInfo.appUrl
         tribeInfo.feedUrl = json["feed_url"].string ?? tribeInfo.feedUrl
+        tribeInfo.feedContentType = json["feed_type"].int?.toFeedContentType ?? tribeInfo.feedContentType
         tribeInfo.ownerRouteHint = json["owner_route_hint"].string ?? tribeInfo.ownerRouteHint
         
         var tags = getGroupTags()
@@ -468,5 +512,11 @@ class GroupsManager {
         }, errorCallback: {
             completion()
         })
+    }
+}
+
+extension Int {
+    var toFeedContentType: GroupsManager.FeedContentType? {
+        return GroupsManager.FeedContentType.allCases.filter { $0.id == self }.first
     }
 }

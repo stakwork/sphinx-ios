@@ -18,6 +18,8 @@ class NewPublicGroupViewController: KeyboardEventsViewController, BackCameraVC {
     @IBOutlet weak var groupImageView: UIImageView!
     @IBOutlet weak var tagsCollectionView: UICollectionView!
     @IBOutlet weak var imageUrlTextField: UITextField!
+    @IBOutlet weak var feedContentTypeButton: UIButton!
+    @IBOutlet weak var feedContentTypeField: UITextField!
     @IBOutlet var formFields: [UITextField]!
     @IBOutlet weak var listOnTribesLabel: UILabel!
     @IBOutlet weak var listOnTribesSwitch: UISwitch!
@@ -196,6 +198,10 @@ class NewPublicGroupViewController: KeyboardEventsViewController, BackCameraVC {
     
     @IBAction func createGroupButtonTouched() {
         uploadImage()
+    }
+    
+    @IBAction func feedContentTypeButtonTouched() {
+        showFeedContentTypePicker()
     }
     
     @IBAction func backButtonTouched() {

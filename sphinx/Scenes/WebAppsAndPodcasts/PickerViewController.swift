@@ -16,9 +16,11 @@ class PickerViewController: UIViewController {
     
     weak var delegate: PickerViewDelegate?
     
+    @IBOutlet weak var pickerTitleLabel: UILabel!
     @IBOutlet weak var pickerView: UIPickerView!
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     
+    var pickerTitle: String = ""
     var values: [String] = []
     var selectedValue: String = ""
     
@@ -27,8 +29,14 @@ class PickerViewController: UIViewController {
         case Done
     }
     
-    static func instantiate(values: [String], selectedValue: String, delegate: PickerViewDelegate) -> PickerViewController {
+    static func instantiate(
+        values: [String],
+        selectedValue: String,
+        title: String = "",
+        delegate: PickerViewDelegate) -> PickerViewController {
+        
         let viewController = StoryboardScene.WebApps.pickerViewController.instantiate()
+        viewController.pickerTitle = title
         viewController.values = values
         viewController.selectedValue = selectedValue
         viewController.delegate = delegate
@@ -49,6 +57,8 @@ class PickerViewController: UIViewController {
     }
     
     func buildPicker() {
+        pickerTitleLabel.text = pickerTitle
+        
         pickerView.delegate = self
         pickerView.dataSource = self
         pickerView.reloadAllComponents()

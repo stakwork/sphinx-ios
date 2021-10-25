@@ -111,6 +111,12 @@ extension NewPublicGroupViewController {
                     }
                 }
                 
+                
+                let feedUrl = chatTribeInfo.feedUrl ?? ""
+                let feedType = (chatTribeInfo.feedContentType ?? GroupsManager.FeedContentType.defaultValue).description
+                feedContentTypeField.text = (feedUrl.isEmpty) ? "" : feedType
+                feedContentTypeButton.isUserInteractionEnabled = !feedType.isEmpty
+                
                 listOnTribesSwitch.isOn = !chatTribeInfo.unlisted
                 privateTribeSwitch.isOn = chatTribeInfo.privateTribe
                 
@@ -178,6 +184,31 @@ extension NewPublicGroupViewController {
             self.dismiss(animated: true)
         }
     }
+    
+    func showFeedContentTypePicker() {
+        let values = GroupsManager.FeedContentType.allCases.map { $0.description }
+        let selectedValue = GroupsManager.FeedContentType.allCases.filter { $0.description == feedContentTypeField.text}.first?.description ?? values.first?.description
+        
+        let pickerVC = PickerViewController.instantiate(
+            values: values,
+            selectedValue: selectedValue ?? "",
+            title: "picker-title.tribe-form.feed-type".localized,
+            delegate: self
+        )
+        
+        self.present(pickerVC, animated: false, completion: nil)
+    }
+}
+
+extension NewPublicGroupViewController : PickerViewDelegate {
+    func didSelectValue(value: String) {
+        let selectedValue = GroupsManager.FeedContentType.allCases.filter { $0.description == value}.first
+        
+        feedContentTypeField.text = selectedValue?.description ?? "-"
+        groupsManager.newGroupInfo.feedContentType = selectedValue
+        
+        toggleConfirmButton()
+    }
 }
 
 extension NewPublicGroupViewController : UITextFieldDelegate {
@@ -224,10 +255,13 @@ extension NewPublicGroupViewController : UITextFieldDelegate {
             }
             break
         case GroupFields.FeedUrl.rawValue:
-            if let url = textField.text, url.isValidURL || url.isEmpty {
-                groupsManager.newGroupInfo.feedUrl = textField.text ?? ""
-            } else {
-                shouldRevertValue()
+            if let url = textField.text {
+                if url.isValidURL || url.isEmpty {
+                    groupsManager.newGroupInfo.feedUrl = textField.text ?? ""
+                } else {
+                    shouldRevertValue()
+                }
+                validateFeedUrl(url)
             }
             break
         default:
@@ -235,6 +269,13 @@ extension NewPublicGroupViewController : UITextFieldDelegate {
         }
         
         toggleConfirmButton()
+    }
+    
+    func validateFeedUrl(_ url: String) {
+        let validUrl = url.isValidURL
+        feedContentTypeButton.isUserInteractionEnabled = validUrl
+        feedContentTypeField.text = validUrl ? feedContentTypeField.text : ""
+        if (validUrl) { showFeedContentTypePicker()}
     }
     
     func completeUrlAndLoadImage(textField: UITextField) {

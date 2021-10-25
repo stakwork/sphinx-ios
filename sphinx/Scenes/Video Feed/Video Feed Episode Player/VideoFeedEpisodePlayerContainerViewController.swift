@@ -35,7 +35,24 @@ class VideoFeedEpisodePlayerContainerViewController: UIViewController {
     internal var managedObjectContext: NSManagedObjectContext!
     
     
-    var videoPlayerEpisode: Video!
+    var videoPlayerEpisode: Video! {
+        didSet {
+            DispatchQueue.main.async { [weak self] in
+                guard
+                    let self = self,
+                    let videoPlayerEpisode = self.videoPlayerEpisode
+                else { return }
+                
+                self.collectionViewController
+                    .updateWithNew(
+                        videoPlayerEpisode: videoPlayerEpisode,
+                        shouldAnimate: true
+                    )
+            }
+        }
+    }
+    
+    
     var dismissButtonStyle: ModalDismissButtonStyle!
 
     weak var delegate: VideoFeedEpisodePlayerViewControllerDelegate?
@@ -92,6 +109,8 @@ extension VideoFeedEpisodePlayerContainerViewController {
         
         configurePlayerView()
         configureCollectionView()
+        
+        updateEpisodesInBackground()
     }
 }
 
@@ -145,6 +164,36 @@ extension VideoFeedEpisodePlayerContainerViewController {
                 self,
                 didSelectVideoEpisodeWithID: managedObjectID
             )
+        }
+    }
+    
+    
+    private func updateEpisodesInBackground() {
+        DispatchQueue
+            .global(qos: .utility)
+            .async { [weak self] in
+                guard
+                    let self = self,
+                    let videoFeed = self.videoPlayerEpisode.videoFeed
+                else { return }
+                
+                API.sharedInstance.fetchYouTubeEpisodes(
+                    for: videoFeed,
+                    then: { result in
+                        switch result {
+                        case .success(let videoEpisodes):
+                            videoFeed.videos = Set(videoEpisodes)
+
+                            let updatedEpisode = videoFeed
+                                .videos?
+                                .first(where: { $0.id == self.videoPlayerEpisode.id })
+                            
+                            self.videoPlayerEpisode = updatedEpisode
+                        case .failure(let error):
+                            print("Failed to fetch video entry data for feed. Error: \(error)")
+                        }
+                    }
+                )
         }
     }
 }

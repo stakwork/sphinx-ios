@@ -113,28 +113,30 @@ class NewPodcastPlayerViewController: UIViewController {
     
     
     func updateEpisodesInBackground() {
-        DispatchQueue.main.asyncAfter(deadline: .now()) { [weak self] in
-            guard let self = self else { return }
-            guard let feedURLPath = self.playerHelper.podcast?.feedURLPath else { return }
+        DispatchQueue
+            .global(qos: .utility)
+            .async { [weak self] in
+                guard let self = self else { return }
+                guard let feedURLPath = self.playerHelper.podcast?.feedURLPath else { return }
 
-            API.sharedInstance.getPodcastEpisodes(
-                byFeedURLPath: feedURLPath
-            ) { result in
-                DispatchQueue.main.async {
-                    switch result {
-                    case .success(let episodes):
-                        self.playerHelper.podcast?.addToEpisodes(Set(episodes))
-                        CoreDataManager.sharedManager.saveContext()
-                        self.shouldReloadEpisodesTable()
-                    case .failure(_):
-                        AlertHelper.showAlert(
-                            title: "Failed to fetch episodes for feed",
-                            message: ""
-                        )
+                API.sharedInstance.getPodcastEpisodes(
+                    byFeedURLPath: feedURLPath
+                ) { result in
+                    DispatchQueue.main.async {
+                        switch result {
+                        case .success(let episodes):
+                            self.playerHelper.podcast?.addToEpisodes(Set(episodes))
+                            CoreDataManager.sharedManager.saveContext()
+                            self.shouldReloadEpisodesTable()
+                        case .failure(_):
+                            AlertHelper.showAlert(
+                                title: "Failed to fetch episodes for feed",
+                                message: ""
+                            )
+                        }
                     }
                 }
             }
-        }
     }
 }
 

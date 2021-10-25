@@ -33,4 +33,33 @@ extension API {
             completionHandler(.success(data))
         }
     }
+    
+    
+    public func fetchYouTubeEpisodes(
+        for videoFeed: VideoFeed,
+        then completionHandler: @escaping ((Result<[Video], Error>) -> Void)
+    ) {
+        guard let urlPath = videoFeed.feedURL?.absoluteString else {
+            preconditionFailure()
+        }
+        
+        fetchYouTubeRSSFeed(
+            from: urlPath,
+            then: { result in
+                switch result {
+                case .success(let data):
+                    let parsingResult = YouTubeXMLParser.parseVideoFeedEntries(from: data)
+                    
+                    switch parsingResult {
+                    case .success(let videoEpisodes):
+                        completionHandler(.success(videoEpisodes))
+                    case .failure(let error):
+                        completionHandler(.failure(error))
+                    }
+                case .failure(let error):
+                    completionHandler(.failure(error))
+                }
+            }
+        )
+    }
 }

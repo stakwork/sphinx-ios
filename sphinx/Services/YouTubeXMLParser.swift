@@ -38,11 +38,12 @@ struct YouTubeXMLParser {
         let feed = VideoFeed(context: managedObjectContext)
 
         feed.feedID = feedID
-        
+
         if
-            let linkElements = feedPayload.link.all,
-            linkElements.count > 1,
-            let feedURLPath = feedPayload.link[1].attributes["href"]
+            let feedURLAccessor = feedPayload
+                .link
+                .first(where: { $0.attributes["rel"] == "self" }),
+            let feedURLPath = feedURLAccessor.attributes["href"]
         {
             feed.feedURL = URL(string: feedURLPath)
         }
@@ -67,6 +68,26 @@ struct YouTubeXMLParser {
         case .failure(let error):
             return .failure(error)
         }
+    }
+    
+    
+    
+    static func parseVideoFeedEntries(
+        from xmlData: Data,
+        using managedObjectContext: NSManagedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext
+    ) -> Result<[Video], Error> {
+        let xml = XML.parse(xmlData)
+        
+        if case .failure(let error) = xml {
+            return .failure(.xmlParsingFailed(error))
+        }
+        
+        let feedPayload = xml.feed
+        
+        return Self.parseVideoFeedEntries(
+            from: feedPayload,
+            using: managedObjectContext
+        )
     }
     
     

@@ -481,7 +481,7 @@ public class Chat: NSManagedObject {
             feedURLPath.isYouTubeRSSFeedURL,
             videoFeed == nil
         {
-            syncTribeWithVideoFeedData(using: feedURLPath) { [weak self] in
+            fetchInitialVideoFeed(using: feedURLPath) { [weak self] in
                 self?.saveChat()
                 self?.syncTribeWithServer()
                 self?.checkForDeletedTribe()
@@ -494,9 +494,9 @@ public class Chat: NSManagedObject {
     }
     
     
-    func syncTribeWithVideoFeedData(
+    func fetchInitialVideoFeed(
         using feedURLPath: String,
-        then completionHandler: @escaping () -> Void
+        then completionHandler: (() -> Void)? = {}
     ) {
         API.sharedInstance.fetchYouTubeRSSFeed(from: feedURLPath) { result in
             switch result {
@@ -514,10 +514,9 @@ public class Chat: NSManagedObject {
                 print(error)
             }
             
-            completionHandler()
+            completionHandler?()
         }
     }
-    
     
     func checkForDeletedTribe() {
         if let tribesInfo = self.tribesInfo, tribesInfo.deleted {

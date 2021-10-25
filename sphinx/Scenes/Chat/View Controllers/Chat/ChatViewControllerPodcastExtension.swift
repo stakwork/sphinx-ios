@@ -11,7 +11,11 @@ import UIKit
 extension ChatViewController : PodcastPlayerVCDelegate {
     func shouldDismissPlayerView() {}
     
-    func loadPodcastFeed() {        
+    func loadPodcastFeed() {
+        if chat?.tribesInfo?.feedContentType?.isPodcast == false {
+            return
+        }
+        
         podcastPlayerHelper?.loadPodcastFeed(chat: chat, callback: { success in
             if
                 let chat = self.chat,

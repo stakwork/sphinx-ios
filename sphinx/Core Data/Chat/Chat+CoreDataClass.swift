@@ -478,7 +478,8 @@ public class Chat: NSManagedObject {
         
         if
             let feedURLPath = tribesInfo?.feedUrl,
-            feedURLPath.isYouTubeRSSFeedURL,
+            let feedContentType = tribesInfo?.feedContentType,
+            feedContentType.isVideo,
             videoFeed == nil
         {
             syncTribeWithVideoFeedData(using: feedURLPath) { [weak self] in

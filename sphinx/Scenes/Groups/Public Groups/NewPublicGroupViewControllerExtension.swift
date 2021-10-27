@@ -115,7 +115,7 @@ extension NewPublicGroupViewController {
                 let feedUrl = chatTribeInfo.feedUrl ?? ""
                 let feedType = (chatTribeInfo.feedContentType ?? GroupsManager.FeedContentType.defaultValue).description
                 feedContentTypeField.text = (feedUrl.isEmpty) ? "" : feedType
-                feedContentTypeButton.isUserInteractionEnabled = !feedType.isEmpty
+                feedContentTypeButton.isUserInteractionEnabled = !feedUrl.isEmpty
                 
                 listOnTribesSwitch.isOn = !chatTribeInfo.unlisted
                 privateTribeSwitch.isOn = chatTribeInfo.privateTribe

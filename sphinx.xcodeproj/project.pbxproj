@@ -57,6 +57,10 @@
 		471940AF2339515A00F1BF5B /* QRCodeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471940AD2339515A00F1BF5B /* QRCodeDetailViewController.swift */; };
 		471940B1233951BB00F1BF5B /* QRCodeDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471940B0233951BB00F1BF5B /* QRCodeDetailViewModel.swift */; };
 		471940B3233952D400F1BF5B /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471940B2233952D400F1BF5B /* UIImage.swift */; };
+		471D8D0E27274AA40024AEAC /* GroupsManager+TribeInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471D8D0D27274AA30024AEAC /* GroupsManager+TribeInfo.swift */; };
+		471D8D1027274AC80024AEAC /* GroupsManager+Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471D8D0F27274AC80024AEAC /* GroupsManager+Tag.swift */; };
+		471D8D1227274ADB0024AEAC /* GroupsManager+Bot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471D8D1127274ADB0024AEAC /* GroupsManager+Bot.swift */; };
+		471D8D1427274AED0024AEAC /* GroupsManager+FeedContentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471D8D1327274AED0024AEAC /* GroupsManager+FeedContentType.swift */; };
 		471F3ABB255ADECB00E2AC79 /* PodcastLiveDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471F3ABA255ADECB00E2AC79 /* PodcastLiveDataSource.swift */; };
 		471FACD823E9B65C007DE1C8 /* EmailHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471FACD723E9B65C007DE1C8 /* EmailHelper.swift */; };
 		471FACDA23E9BE48007DE1C8 /* SupportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471FACD923E9BE48007DE1C8 /* SupportViewController.swift */; };
@@ -698,6 +702,10 @@
 		471940AD2339515A00F1BF5B /* QRCodeDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeDetailViewController.swift; sourceTree = "<group>"; };
 		471940B0233951BB00F1BF5B /* QRCodeDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeDetailViewModel.swift; sourceTree = "<group>"; };
 		471940B2233952D400F1BF5B /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
+		471D8D0D27274AA30024AEAC /* GroupsManager+TribeInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GroupsManager+TribeInfo.swift"; sourceTree = "<group>"; };
+		471D8D0F27274AC80024AEAC /* GroupsManager+Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GroupsManager+Tag.swift"; sourceTree = "<group>"; };
+		471D8D1127274ADB0024AEAC /* GroupsManager+Bot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GroupsManager+Bot.swift"; sourceTree = "<group>"; };
+		471D8D1327274AED0024AEAC /* GroupsManager+FeedContentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GroupsManager+FeedContentType.swift"; sourceTree = "<group>"; };
 		471F3ABA255ADECB00E2AC79 /* PodcastLiveDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastLiveDataSource.swift; sourceTree = "<group>"; };
 		471FACD723E9B65C007DE1C8 /* EmailHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailHelper.swift; sourceTree = "<group>"; };
 		471FACD923E9BE48007DE1C8 /* SupportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportViewController.swift; sourceTree = "<group>"; };
@@ -2331,6 +2339,10 @@
 			children = (
 				47669F4123CF7EE900C17A77 /* GroupsManager.swift */,
 				47771C71259B8D9300990467 /* GroupsPinManager.swift */,
+				471D8D0D27274AA30024AEAC /* GroupsManager+TribeInfo.swift */,
+				471D8D0F27274AC80024AEAC /* GroupsManager+Tag.swift */,
+				471D8D1127274ADB0024AEAC /* GroupsManager+Bot.swift */,
+				471D8D1327274AED0024AEAC /* GroupsManager+FeedContentType.swift */,
 			);
 			path = Groups;
 			sourceTree = "<group>";
@@ -3618,6 +3630,7 @@
 				474FE33323F5A22A00C06FC8 /* AVViewController.swift in Sources */,
 				47904C1B24BF3C7A00710E7A /* NotificationSoundViewController.swift in Sources */,
 				F394ECAB2682218F00529038 /* NewUserSignupFormViewController.swift in Sources */,
+				471D8D1027274AC80024AEAC /* GroupsManager+Tag.swift in Sources */,
 				F32A696626CFEF600004B8B3 /* PodcastModel+CoreDataClass.swift in Sources */,
 				47FA44192375A682005D8C63 /* SubscriptionCommonView.swift in Sources */,
 				4789E25224EDB77B003991BE /* WebAppHelper.swift in Sources */,
@@ -3640,6 +3653,7 @@
 				475BDCB4232AC1E800C5BBD6 /* MessageBubbleView.swift in Sources */,
 				4794CA79252F72D2007C5022 /* PodcastPlayerHelper.swift in Sources */,
 				472F9D3B2412F95100EFC30A /* Data.swift in Sources */,
+				471D8D1427274AED0024AEAC /* GroupsManager+FeedContentType.swift in Sources */,
 				47F258D2253F705800122A5A /* ChatViewControllerPodcastExtension.swift in Sources */,
 				F3188B99271CD36D00890DDD /* DashboardRootViewController+VideoPlayerViewControllerDelegate.swift in Sources */,
 				47AAFC7E238D7C8D00E30BDA /* PaymentRequestDecoder.swift in Sources */,
@@ -3672,6 +3686,7 @@
 				47B690E124A2E00800F07B73 /* UIWindow.swift in Sources */,
 				47308E0224FEE6E600FFAC6F /* SSLSecurity.swift in Sources */,
 				F3B2519526DFA1E800C96D42 /* DashboardRootViewController+DashboardFeedsListContainerViewControllerDelegate.swift in Sources */,
+				471D8D1227274ADB0024AEAC /* GroupsManager+Bot.swift in Sources */,
 				475BDD65232BEEAB00C5BBD6 /* LeftMenuViewController.swift in Sources */,
 				F360123526E96D59009B8DC0 /* PodcastFeedSearchResult.swift in Sources */,
 				475BDCD2232AC23100C5BBD6 /* CommonChatTableViewCell.swift in Sources */,
@@ -3991,6 +4006,7 @@
 				47FA18C5242D26F300469C8F /* GroupPaymentViewController.swift in Sources */,
 				470F5CAB243E7D27007E054F /* Notification.Name.swift in Sources */,
 				47308E0924FEE6E600FFAC6F /* SocketEngineWebsocket.swift in Sources */,
+				471D8D0E27274AA40024AEAC /* GroupsManager+TribeInfo.swift in Sources */,
 				47308E1624FEE6E700FFAC6F /* SocketAckManager.swift in Sources */,
 				4787F87C24745B9B00CCE8B9 /* GroupTagView.swift in Sources */,
 				470F4C46257E6EE400288A9B /* TribeMemberInfoView.swift in Sources */,

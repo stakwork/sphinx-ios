@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19158" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19141"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -144,7 +144,7 @@
                                         </constraints>
                                     </view>
                                     <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F61-2C-JK9">
-                                        <rect key="frame" x="276" y="0.0" width="138" height="42"/>
+                                        <rect key="frame" x="310.5" y="0.0" width="103.5" height="42"/>
                                         <color key="backgroundColor" name="PrimaryBlue"/>
                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="13"/>
                                         <state key="normal" title="DONE">
@@ -154,8 +154,14 @@
                                             <action selector="buttonTouched:" destination="XFD-6s-zUX" eventType="touchUpInside" id="JUo-nD-8vg"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6ev-SD-rO2">
+                                        <rect key="frame" x="103.5" y="1" width="207" height="41"/>
+                                        <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="17"/>
+                                        <color key="textColor" name="Text"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tdi-0T-sPh">
-                                        <rect key="frame" x="0.0" y="0.0" width="138" height="42"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="103.5" height="42"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="13"/>
                                         <state key="normal" title="CANCEL">
@@ -170,15 +176,19 @@
                                 <constraints>
                                     <constraint firstItem="F61-2C-JK9" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="tdi-0T-sPh" secondAttribute="trailing" constant="8" symbolic="YES" id="0DX-cX-DMD"/>
                                     <constraint firstAttribute="trailing" secondItem="F61-2C-JK9" secondAttribute="trailing" id="1eS-3a-A6e"/>
+                                    <constraint firstItem="F61-2C-JK9" firstAttribute="leading" secondItem="6ev-SD-rO2" secondAttribute="trailing" id="1wA-BT-pt8"/>
                                     <constraint firstItem="tdi-0T-sPh" firstAttribute="top" secondItem="NT2-zi-kWX" secondAttribute="top" id="38W-UJ-4t1"/>
                                     <constraint firstAttribute="trailing" secondItem="2oa-ee-oSD" secondAttribute="trailing" id="4LQ-2v-lfS"/>
                                     <constraint firstAttribute="bottom" secondItem="F61-2C-JK9" secondAttribute="bottom" id="5Od-Gh-OYE"/>
                                     <constraint firstItem="tdi-0T-sPh" firstAttribute="leading" secondItem="NT2-zi-kWX" secondAttribute="leading" id="BDK-Xe-Ann"/>
+                                    <constraint firstItem="6ev-SD-rO2" firstAttribute="top" secondItem="2oa-ee-oSD" secondAttribute="bottom" id="PPb-23-Lxm"/>
+                                    <constraint firstAttribute="bottom" secondItem="6ev-SD-rO2" secondAttribute="bottom" id="QD4-XH-pkO"/>
+                                    <constraint firstItem="6ev-SD-rO2" firstAttribute="leading" secondItem="tdi-0T-sPh" secondAttribute="trailing" id="c9K-Nk-Jy0"/>
                                     <constraint firstItem="F61-2C-JK9" firstAttribute="top" secondItem="NT2-zi-kWX" secondAttribute="top" id="eYM-xy-02A"/>
                                     <constraint firstAttribute="bottom" secondItem="tdi-0T-sPh" secondAttribute="bottom" id="em9-IS-q30"/>
-                                    <constraint firstItem="F61-2C-JK9" firstAttribute="width" secondItem="NT2-zi-kWX" secondAttribute="width" multiplier="0.333" id="fEW-Ss-ubt"/>
+                                    <constraint firstItem="F61-2C-JK9" firstAttribute="width" secondItem="NT2-zi-kWX" secondAttribute="width" multiplier="0.25" id="fEW-Ss-ubt"/>
                                     <constraint firstItem="2oa-ee-oSD" firstAttribute="top" secondItem="NT2-zi-kWX" secondAttribute="top" id="qnc-3d-90J"/>
-                                    <constraint firstItem="tdi-0T-sPh" firstAttribute="width" secondItem="NT2-zi-kWX" secondAttribute="width" multiplier="0.333" id="sOW-oI-Tep"/>
+                                    <constraint firstItem="tdi-0T-sPh" firstAttribute="width" secondItem="NT2-zi-kWX" secondAttribute="width" multiplier="0.25" id="sOW-oI-Tep"/>
                                     <constraint firstItem="2oa-ee-oSD" firstAttribute="leading" secondItem="NT2-zi-kWX" secondAttribute="leading" id="v6L-MF-aYl"/>
                                     <constraint firstAttribute="height" constant="42" id="wLo-5r-XKI"/>
                                 </constraints>
@@ -215,6 +225,7 @@
                     <size key="freeformSize" width="414" height="896"/>
                     <connections>
                         <outlet property="bottomConstraint" destination="yFb-6V-XBF" id="RIS-zn-rMA"/>
+                        <outlet property="pickerTitleLabel" destination="6ev-SD-rO2" id="lgz-Fa-tsJ"/>
                         <outlet property="pickerView" destination="B7P-K8-BOE" id="czQ-mm-ucB"/>
                     </connections>
                 </viewController>

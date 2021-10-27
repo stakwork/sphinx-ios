@@ -129,6 +129,7 @@
 "admin.request.approved" = "Has aprobado la\nsolicitud de %@";
 "admin.request.rejected" = "Has denegado la\nsolicitud de %@";
 "waiting.admin.approval" = "Esperando aprobación del administrador";
+"picker-title.tribe-form.feed-type" = "Tipo de Feed";
 
 //SUBSCRIPTIONS
 "leave.lose.unsaved.changed" = "¿Estás seguro que deseas salir? Los cambios no guardado se perderán";

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19158" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19141"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -34,35 +34,35 @@
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="FpZ-tB-8if">
-                                <rect key="frame" x="0.0" y="200" width="332" height="38"/>
+                                <rect key="frame" x="0.0" y="200" width="332" height="53.5"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="userAvatar" translatesAutoresizingMaskIntoConstraints="NO" id="HcA-9t-mcO" userLabel="Feed Avatar Image">
-                                        <rect key="frame" x="0.0" y="1" width="36" height="36"/>
+                                        <rect key="frame" x="0.0" y="9" width="36" height="36"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="36" id="YDs-Vd-emp"/>
                                             <constraint firstAttribute="height" constant="36" id="upT-M2-rEM"/>
                                         </constraints>
                                     </imageView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="PLo-Uf-ljl">
-                                        <rect key="frame" x="48" y="0.0" width="284" height="38"/>
+                                        <rect key="frame" x="48" y="0.0" width="284" height="53.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Episode Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lVa-sg-vsM">
-                                                <rect key="frame" x="0.0" y="0.0" width="284" height="17.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="284" height="18"/>
                                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="15"/>
                                                 <color key="textColor" name="PrimaryText"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="7zp-2S-dUT">
-                                                <rect key="frame" x="0.0" y="22.5" width="284" height="15.5"/>
+                                                <rect key="frame" x="0.0" y="23" width="284" height="30.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Podcast Feed Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Zy-p4-LG5" userLabel="Feed Name">
-                                                        <rect key="frame" x="0.0" y="0.0" width="119" height="15.5"/>
+                                                        <rect key="frame" x="0.0" y="7.5" width="181" height="15.5"/>
                                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="13"/>
                                                         <color key="textColor" name="MainBottomIcons"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ODQ-TY-6Er" userLabel="Circle Divider">
-                                                        <rect key="frame" x="123" y="6.5" width="3" height="3"/>
+                                                        <rect key="frame" x="185" y="14" width="3" height="3"/>
                                                         <color key="backgroundColor" name="MainBottomIcons"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="3" id="Gpy-v7-g54"/>
@@ -70,7 +70,7 @@
                                                         </constraints>
                                                     </view>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Episode Publish Date" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="apX-E0-d8X" userLabel="Episode Publish Date">
-                                                        <rect key="frame" x="130" y="0.0" width="154" height="15.5"/>
+                                                        <rect key="frame" x="192" y="0.0" width="92" height="30.5"/>
                                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="13"/>
                                                         <color key="textColor" name="MainBottomIcons"/>
                                                         <nil key="highlightedColor"/>

@@ -95,6 +95,20 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
             presentVideoPlayer(for: videoEpisode)
         }
     }
+    
+    func viewController(
+        _ viewController: UIViewController,
+        didSelectNewsletterFeedWithID newsletterFeedID: NSManagedObjectID
+    ) {
+        
+    }
+    
+    func viewController(
+        _ viewController: UIViewController,
+        didSelectNewsletterItemWithID newsletterItemID: NSManagedObjectID
+    ) {
+        
+    }
 }
 
 

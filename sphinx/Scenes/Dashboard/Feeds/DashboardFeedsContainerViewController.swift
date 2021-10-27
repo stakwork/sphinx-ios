@@ -29,6 +29,16 @@ protocol DashboardFeedsListContainerViewControllerDelegate: AnyObject {
         _ viewController: UIViewController,
         didSelectVideoEpisodeWithID videoEpisodeID: NSManagedObjectID
     )
+    
+    func viewController(
+        _ viewController: UIViewController,
+        didSelectNewsletterFeedWithID newsletterFeedID: NSManagedObjectID
+    )
+    
+    func viewController(
+        _ viewController: UIViewController,
+        didSelectNewsletterItemWithID newsletterItemID: NSManagedObjectID
+    )
 }
 
 
@@ -78,6 +88,15 @@ class DashboardFeedsContainerViewController: UIViewController {
             managedObjectContext: managedObjectContext,
             onVideoEpisodeCellSelected: handleVideoEpisodeCellSelection(_:),
             onVideoFeedCellSelected: handleVideoFeedCellSelection(_:),
+            onNewResultsFetched: handleNewResultsFetch(_:)
+        )
+    }()
+    
+    internal lazy var newsletterFeedCollectionViewController: DashboardNewsletterFeedCollectionViewController = {
+        DashboardNewsletterFeedCollectionViewController.instantiate(
+            managedObjectContext: managedObjectContext,
+            onVideoEpisodeCellSelected: handleNewsletterItemCellSelection(_:),
+            onVideoFeedCellSelected: handleNewsletterFeedCellSelection(_:),
             onNewResultsFetched: handleNewResultsFetch(_:)
         )
     }()
@@ -167,7 +186,7 @@ extension DashboardFeedsContainerViewController {
         case ContentFilterOption.watch.id:
             return videoFeedCollectionViewController
         case ContentFilterOption.read.id:
-            return emptyStateViewController
+            return newsletterFeedCollectionViewController
         case ContentFilterOption.play.id:
             return emptyStateViewController
         default:
@@ -270,6 +289,25 @@ extension DashboardFeedsContainerViewController {
         feedsListContainerDelegate?.viewController(
             self,
             didSelectVideoFeedWithID: managedObjectID
+        )
+    }
+}
+
+// MARK: - Newsletter Selection
+extension DashboardFeedsContainerViewController {
+    
+    private func handleNewsletterItemCellSelection(_ managedObjectID: NSManagedObjectID) {
+        feedsListContainerDelegate?.viewController(
+            self,
+            didSelectNewsletterItemWithID: managedObjectID
+        )
+    }
+    
+    
+    private func handleNewsletterFeedCellSelection(_ managedObjectID: NSManagedObjectID) {
+        feedsListContainerDelegate?.viewController(
+            self,
+            didSelectNewsletterFeedWithID: managedObjectID
         )
     }
 }

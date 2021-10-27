@@ -160,6 +160,8 @@
 		475154B62423F08A00477384 /* VideoCallBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475154B52423F08A00477384 /* VideoCallBubbleView.swift */; };
 		475154B82423F09900477384 /* VideoCallBubbleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 475154B72423F09900477384 /* VideoCallBubbleView.xib */; };
 		475154BB2423FA4100477384 /* JoinVideoCallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475154BA2423FA4100477384 /* JoinVideoCallView.swift */; };
+		4754FA8A2729ACA3006295A5 /* API+NewsletterFeedRSSUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4754FA892729ACA3006295A5 /* API+NewsletterFeedRSSUtils.swift */; };
+		4754FA8C2729AE08006295A5 /* NewsletterFeedXMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4754FA8B2729AE08006295A5 /* NewsletterFeedXMLParser.swift */; };
 		4756DE0F232ABF90001BAFD6 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4756DE0E232ABF90001BAFD6 /* MainCoordinator.swift */; };
 		475723A5247EB5D1001ADC7E /* AudioRecorderHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475723A4247EB5D1001ADC7E /* AudioRecorderHelper.swift */; };
 		475723A7247EB5DA001ADC7E /* AudioPlayerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475723A6247EB5DA001ADC7E /* AudioPlayerHelper.swift */; };
@@ -827,6 +829,8 @@
 		475154B72423F09900477384 /* VideoCallBubbleView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoCallBubbleView.xib; sourceTree = "<group>"; };
 		475154BA2423FA4100477384 /* JoinVideoCallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinVideoCallView.swift; sourceTree = "<group>"; };
 		475302A424D1B3BB000CC2FE /* sphinx 19.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 19.xcdatamodel"; sourceTree = "<group>"; };
+		4754FA892729ACA3006295A5 /* API+NewsletterFeedRSSUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+NewsletterFeedRSSUtils.swift"; sourceTree = "<group>"; };
+		4754FA8B2729AE08006295A5 /* NewsletterFeedXMLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsletterFeedXMLParser.swift; sourceTree = "<group>"; };
 		4756DE0E232ABF90001BAFD6 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		475723A4247EB5D1001ADC7E /* AudioRecorderHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorderHelper.swift; sourceTree = "<group>"; };
 		475723A6247EB5DA001ADC7E /* AudioPlayerHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerHelper.swift; sourceTree = "<group>"; };
@@ -2158,6 +2162,7 @@
 				475BDD27232AC97500C5BBD6 /* API.swift */,
 				F358212E2698BE6700A314F1 /* API+HubError.swift */,
 				F3188B832717DC7F00890DDD /* API+YouTubeRSSUtils.swift */,
+				4754FA892729ACA3006295A5 /* API+NewsletterFeedRSSUtils.swift */,
 				F30884A82699181200CADDEB /* API+KarmaPurchaseUtils.swift */,
 				F360123226E96B31009B8DC0 /* API+PodcastIndexSearchUtils.swift */,
 				47AAFC81238EFCE600E30BDA /* APIAttachmentsExtension.swift */,
@@ -2285,6 +2290,7 @@
 				F3B2519026DD5CE100C96D42 /* PodcastFeedService.swift */,
 				477C57E6234785ED00BB4E04 /* WalletBalanceService.swift */,
 				F3188B8527197B3700890DDD /* YouTubeXMLParser.swift */,
+				4754FA8B2729AE08006295A5 /* NewsletterFeedXMLParser.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -3724,12 +3730,14 @@
 				47468FDC233554680072124A /* ProfileViewController.swift in Sources */,
 				47D46A2C237B1D140005A548 /* SubscriptionFormButtonTableViewCell.swift in Sources */,
 				47893A9C240D8783002F675B /* Int.swift in Sources */,
+				4754FA8C2729AE08006295A5 /* NewsletterFeedXMLParser.swift in Sources */,
 				47FA18CF2434D21A00469C8F /* TransactionMessageQueriesExtension.swift in Sources */,
 				47893A9224095C74002F675B /* AudioBubbleView.swift in Sources */,
 				47949BCF24AA1031000D697B /* DeletedMessageSentTableViewCell.swift in Sources */,
 				4789E25F24F033B8003991BE /* SettingsTabsView.swift in Sources */,
 				47B690E124A2E00800F07B73 /* UIWindow.swift in Sources */,
 				47308E0224FEE6E600FFAC6F /* SSLSecurity.swift in Sources */,
+				4754FA8A2729ACA3006295A5 /* API+NewsletterFeedRSSUtils.swift in Sources */,
 				F3B2519526DFA1E800C96D42 /* DashboardRootViewController+DashboardFeedsListContainerViewControllerDelegate.swift in Sources */,
 				471D8D1227274ADB0024AEAC /* GroupsManager+Bot.swift in Sources */,
 				475BDD65232BEEAB00C5BBD6 /* LeftMenuViewController.swift in Sources */,

@@ -19,6 +19,7 @@ extension NewsletterFeed {
     @NSManaged public var feedID: String
     @NSManaged public var title: String?
     @NSManaged public var feedDescription: String?
+    @NSManaged public var newsletterURL: URL?
     @NSManaged public var feedURL: URL?
     @NSManaged public var imageURL: URL?
     @NSManaged public var generator: String?

@@ -461,6 +461,21 @@ public class Chat: NSManagedObject {
     
     
     func updateChatFromTribesInfo() {
+        if
+            let feedURLPath = tribesInfo?.feedUrl,
+            let feedContentType = tribesInfo?.feedContentType
+        {
+            if (feedContentType.isVideo && videoFeed == nil) {
+                fetchInitialVideoFeed(using: feedURLPath) { [weak self] in
+                    self?.saveChat()
+                }
+            } else if (feedContentType.isNewsletter && newsletterFeed == nil) {
+                fetchInitialNewsletterFeed(using: feedURLPath) { [weak self] in
+                    self?.saveChat()
+                }
+            }
+        }
+        
         if isMyPublicGroup() {
             return
         }
@@ -476,22 +491,13 @@ public class Chat: NSManagedObject {
             image = nil
         }
         
-        if
-            let feedURLPath = tribesInfo?.feedUrl,
-            let feedContentType = tribesInfo?.feedContentType,
-            feedContentType.isVideo,
-            videoFeed == nil
-        {
-            fetchInitialVideoFeed(using: feedURLPath) { [weak self] in
-                self?.saveChat()
-                self?.syncTribeWithServer()
-                self?.checkForDeletedTribe()
-            }
-        } else {
-            saveChat()
-            syncTribeWithServer()
-            checkForDeletedTribe()
-        }
+        syncAfterUpdate()
+    }
+    
+    func syncAfterUpdate() {
+        saveChat()
+        syncTribeWithServer()
+        checkForDeletedTribe()
     }
     
     
@@ -508,6 +514,30 @@ public class Chat: NSManagedObject {
                 case .success(let videoFeed):
                     videoFeed.chat = self
                     self.videoFeed = videoFeed
+                case .failure(let error):
+                    print(error)
+                }
+            case .failure(let error):
+                print(error)
+            }
+            
+            completionHandler?()
+        }
+    }
+    
+    func fetchInitialNewsletterFeed(
+        using feedURLPath: String,
+        then completionHandler: (() -> Void)? = {}
+    ) {
+        API.sharedInstance.fetchNewsletterRSSFeed(from: feedURLPath) { result in
+            switch result {
+            case .success(let data):
+                let parsingResult = NewsletterFeedXMLParser.parseNewsletterFeed(from: data)
+                
+                switch parsingResult {
+                case .success(let newsletterFeed):
+                    newsletterFeed.chat = self
+                    self.newsletterFeed = newsletterFeed
                 case .failure(let error):
                     print(error)
                 }

@@ -68,6 +68,7 @@
 		4726A40D24C09C38005A66B4 /* ChatListHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4726A40C24C09C38005A66B4 /* ChatListHeader.swift */; };
 		4726A40F24C09C4C005A66B4 /* ChatListHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4726A40E24C09C4C005A66B4 /* ChatListHeader.xib */; };
 		4726F0A625791CF900E20EA9 /* TribeLinkPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4726F0A525791CF900E20EA9 /* TribeLinkPreviewView.swift */; };
+		472782122729A547007D5F1F /* NewsletterFeed+FetchUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472782112729A547007D5F1F /* NewsletterFeed+FetchUtils.swift */; };
 		472F9D3B2412F95100EFC30A /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472F9D3A2412F95100EFC30A /* Data.swift */; };
 		472F9D3D2416B9F300EFC30A /* AudioRecordingTooltip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472F9D3C2416B9F300EFC30A /* AudioRecordingTooltip.swift */; };
 		472F9D3F2416BA0200EFC30A /* AudioRecordingTooltip.xib in Resources */ = {isa = PBXBuildFile; fileRef = 472F9D3E2416BA0200EFC30A /* AudioRecordingTooltip.xib */; };
@@ -105,6 +106,14 @@
 		4734D3D5241AADD900D6957E /* PaymentTemplateCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4734D3D3241AADD900D6957E /* PaymentTemplateCollectionViewCell.xib */; };
 		47352E4A2440F54300E5CC7F /* MessageOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47352E492440F54300E5CC7F /* MessageOptionsViewController.swift */; };
 		47352E4C2440FEB800E5CC7F /* WindowsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47352E4B2440FEB800E5CC7F /* WindowsManager.swift */; };
+		47357A0B2729A11300A49EEE /* NewsletterFeed+Computeds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47357A0A2729A11300A49EEE /* NewsletterFeed+Computeds.swift */; };
+		47357A0D2729A11E00A49EEE /* NewsletterFeed+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47357A0C2729A11E00A49EEE /* NewsletterFeed+CoreDataClass.swift */; };
+		47357A0F2729A12A00A49EEE /* NewsletterFeed+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47357A0E2729A12A00A49EEE /* NewsletterFeed+CoreDataProperties.swift */; };
+		47357A112729A13600A49EEE /* NewsletterFeed+DisplayUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47357A102729A13600A49EEE /* NewsletterFeed+DisplayUtils.swift */; };
+		47357A132729A14D00A49EEE /* NewsletterItem+Computeds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47357A122729A14D00A49EEE /* NewsletterItem+Computeds.swift */; };
+		47357A152729A15800A49EEE /* NewsletterItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47357A142729A15800A49EEE /* NewsletterItem+CoreDataClass.swift */; };
+		47357A172729A16100A49EEE /* NewsletterItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47357A162729A16100A49EEE /* NewsletterItem+CoreDataProperties.swift */; };
+		47357A192729A16C00A49EEE /* NewsletterItem+DisplayUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47357A182729A16C00A49EEE /* NewsletterItem+DisplayUtils.swift */; };
 		4735D5C22411416000BEE3D4 /* LinkPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4735D5C12411416000BEE3D4 /* LinkPreviewView.swift */; };
 		4735D5C42411416B00BEE3D4 /* LinkPreviewView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4735D5C32411416B00BEE3D4 /* LinkPreviewView.xib */; };
 		473633E625558EFE007405F2 /* PodcastSatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473633E525558EFE007405F2 /* PodcastSatsView.swift */; };
@@ -717,6 +726,7 @@
 		4726A44324C8700D005A66B4 /* sphinx 18.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 18.xcdatamodel"; sourceTree = "<group>"; };
 		4726F0A22577BC5B00E20EA9 /* sphinx 24.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 24.xcdatamodel"; sourceTree = "<group>"; };
 		4726F0A525791CF900E20EA9 /* TribeLinkPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TribeLinkPreviewView.swift; sourceTree = "<group>"; };
+		472782112729A547007D5F1F /* NewsletterFeed+FetchUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewsletterFeed+FetchUtils.swift"; sourceTree = "<group>"; };
 		472F9D3A2412F95100EFC30A /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		472F9D3C2416B9F300EFC30A /* AudioRecordingTooltip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecordingTooltip.swift; sourceTree = "<group>"; };
 		472F9D3E2416BA0200EFC30A /* AudioRecordingTooltip.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AudioRecordingTooltip.xib; sourceTree = "<group>"; };
@@ -756,6 +766,15 @@
 		4734D3D3241AADD900D6957E /* PaymentTemplateCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaymentTemplateCollectionViewCell.xib; sourceTree = "<group>"; };
 		47352E492440F54300E5CC7F /* MessageOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageOptionsViewController.swift; sourceTree = "<group>"; };
 		47352E4B2440FEB800E5CC7F /* WindowsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowsManager.swift; sourceTree = "<group>"; };
+		47357A0727299E0900A49EEE /* sphinx 31.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 31.xcdatamodel"; sourceTree = "<group>"; };
+		47357A0A2729A11300A49EEE /* NewsletterFeed+Computeds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewsletterFeed+Computeds.swift"; sourceTree = "<group>"; };
+		47357A0C2729A11E00A49EEE /* NewsletterFeed+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewsletterFeed+CoreDataClass.swift"; sourceTree = "<group>"; };
+		47357A0E2729A12A00A49EEE /* NewsletterFeed+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewsletterFeed+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		47357A102729A13600A49EEE /* NewsletterFeed+DisplayUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewsletterFeed+DisplayUtils.swift"; sourceTree = "<group>"; };
+		47357A122729A14D00A49EEE /* NewsletterItem+Computeds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewsletterItem+Computeds.swift"; sourceTree = "<group>"; };
+		47357A142729A15800A49EEE /* NewsletterItem+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewsletterItem+CoreDataClass.swift"; sourceTree = "<group>"; };
+		47357A162729A16100A49EEE /* NewsletterItem+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewsletterItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		47357A182729A16C00A49EEE /* NewsletterItem+DisplayUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewsletterItem+DisplayUtils.swift"; sourceTree = "<group>"; };
 		4735D5C12411416000BEE3D4 /* LinkPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkPreviewView.swift; sourceTree = "<group>"; };
 		4735D5C32411416B00BEE3D4 /* LinkPreviewView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LinkPreviewView.xib; sourceTree = "<group>"; };
 		473633E525558EFE007405F2 /* PodcastSatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastSatsView.swift; sourceTree = "<group>"; };
@@ -1728,6 +1747,29 @@
 			path = Windows;
 			sourceTree = "<group>";
 		};
+		47357A082729A0BB00A49EEE /* NewsletterFeed */ = {
+			isa = PBXGroup;
+			children = (
+				47357A0A2729A11300A49EEE /* NewsletterFeed+Computeds.swift */,
+				47357A0C2729A11E00A49EEE /* NewsletterFeed+CoreDataClass.swift */,
+				47357A0E2729A12A00A49EEE /* NewsletterFeed+CoreDataProperties.swift */,
+				47357A102729A13600A49EEE /* NewsletterFeed+DisplayUtils.swift */,
+				472782112729A547007D5F1F /* NewsletterFeed+FetchUtils.swift */,
+			);
+			path = NewsletterFeed;
+			sourceTree = "<group>";
+		};
+		47357A092729A0C200A49EEE /* NewsletterItem */ = {
+			isa = PBXGroup;
+			children = (
+				47357A122729A14D00A49EEE /* NewsletterItem+Computeds.swift */,
+				47357A142729A15800A49EEE /* NewsletterItem+CoreDataClass.swift */,
+				47357A162729A16100A49EEE /* NewsletterItem+CoreDataProperties.swift */,
+				47357A182729A16C00A49EEE /* NewsletterItem+DisplayUtils.swift */,
+			);
+			path = NewsletterItem;
+			sourceTree = "<group>";
+		};
 		473633E425558EE5007405F2 /* Custom Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -2171,6 +2213,7 @@
 		475BDD4F232AE1C400C5BBD6 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
+				47F35D4A2373156A0042A58F /* sphinx.xcdatamodeld */,
 				475BDD60232AE46B00C5BBD6 /* CoreDataManager.swift */,
 				47468FCD233131B40072124A /* NSManagedObjectContext.swift */,
 				47AF0D4B2551883400C98398 /* PodcastModels.swift */,
@@ -2183,11 +2226,12 @@
 				F32A695026CFEED70004B8B3 /* Podcast Episode */,
 				F32A694F26CFEECD0004B8B3 /* Podcast Feed */,
 				F32A695126CFEEE70004B8B3 /* Podcast Model */,
-				47F35D4A2373156A0042A58F /* sphinx.xcdatamodeld */,
 				47FA18D02434D39900469C8F /* TransactionMessage */,
 				4707089824AE46FA00A98DCA /* UserContact */,
 				F3188B762717927C00890DDD /* Video */,
 				F3188B782717929B00890DDD /* Video Feed */,
+				47357A082729A0BB00A49EEE /* NewsletterFeed */,
+				47357A092729A0C200A49EEE /* NewsletterItem */,
 			);
 			path = "Core Data";
 			sourceTree = "<group>";
@@ -3656,6 +3700,7 @@
 				471D8D1427274AED0024AEAC /* GroupsManager+FeedContentType.swift in Sources */,
 				47F258D2253F705800122A5A /* ChatViewControllerPodcastExtension.swift in Sources */,
 				F3188B99271CD36D00890DDD /* DashboardRootViewController+VideoPlayerViewControllerDelegate.swift in Sources */,
+				47357A0F2729A12A00A49EEE /* NewsletterFeed+CoreDataProperties.swift in Sources */,
 				47AAFC7E238D7C8D00E30BDA /* PaymentRequestDecoder.swift in Sources */,
 				47B9A63F233BAEE500D2B022 /* AddressBookViewController.swift in Sources */,
 				475BDCFC232AC24600C5BBD6 /* InvoiceSentTableViewCell.swift in Sources */,
@@ -3716,6 +3761,8 @@
 				47AA08C7234BB8E0002C69E2 /* ShareInviteCodeViewController.swift in Sources */,
 				F39F2C7A26E22FC800D357F6 /* PodcastFeedSearchContainerViewController.swift in Sources */,
 				F31CF2662691489800AAB621 /* StoreKitService.swift in Sources */,
+				47357A0B2729A11300A49EEE /* NewsletterFeed+Computeds.swift in Sources */,
+				47357A172729A16100A49EEE /* NewsletterItem+CoreDataProperties.swift in Sources */,
 				F313024826BA994B00A1396E /* ChatsContainerViewController.swift in Sources */,
 				475BDCFB232AC24600C5BBD6 /* PaidInvoiceReceivedTableViewCell.swift in Sources */,
 				4789E26E24F406F3003991BE /* RelayURLUpdateHelper.swift in Sources */,
@@ -3743,6 +3790,7 @@
 				F37D799B271E340900CAB15F /* VideoFeedEpisodePlayerViewController.swift in Sources */,
 				47F258BC2539DA0100122A5A /* PodcastCommentSentTableViewCell.swift in Sources */,
 				47935FB3249EC3BE00B39ADB /* OrientationHandlerViewController.swift in Sources */,
+				47357A192729A16C00A49EEE /* NewsletterItem+DisplayUtils.swift in Sources */,
 				F39F2C7C26E2363100D357F6 /* PodcastFeedSearchResultsCollectionViewController.swift in Sources */,
 				475154BB2423FA4100477384 /* JoinVideoCallView.swift in Sources */,
 				475BDD19232AC47C00C5BBD6 /* ChatViewController.swift in Sources */,
@@ -3811,6 +3859,7 @@
 				47AA08C3234B8CF2002C69E2 /* AddFriendViewController.swift in Sources */,
 				479608F4256EAEB400A68FC1 /* MessageBoostView.swift in Sources */,
 				475154B62423F08A00477384 /* VideoCallBubbleView.swift in Sources */,
+				472782122729A547007D5F1F /* NewsletterFeed+FetchUtils.swift in Sources */,
 				F3446B9326BABAB400855516 /* ChatListCollectionViewCell.swift in Sources */,
 				475BDD34232ACC4800C5BBD6 /* UIView.swift in Sources */,
 				474A667D24929D45002C2D10 /* CommonReplyTableViewCell.swift in Sources */,
@@ -3844,10 +3893,12 @@
 				4785C10224D4A0BE004E2D6C /* Constants.swift in Sources */,
 				475BDD73232BF76B00C5BBD6 /* UserData.swift in Sources */,
 				47308E1424FEE6E700FFAC6F /* SocketIOClientSpec.swift in Sources */,
+				47357A132729A14D00A49EEE /* NewsletterItem+Computeds.swift in Sources */,
 				47BB1D5C239572A30049802B /* NewContactDelegatesExtension.swift in Sources */,
 				F3188B9D271CD6CC00890DDD /* VideoFeedEpisodePlayerCollectionViewController.swift in Sources */,
 				47F258D92540F61F00122A5A /* PodcastPaymentsHelper.swift in Sources */,
 				F32A696326CFEF600004B8B3 /* PodcastDestination+CoreDataProperties.swift in Sources */,
+				47357A152729A15800A49EEE /* NewsletterItem+CoreDataClass.swift in Sources */,
 				470F5CA5243E1DA6007E054F /* ChatViewControllerVideoCallExtension.swift in Sources */,
 				47CC7CEB23E4AA2100730E6F /* TransactionCommonTableViewCell.swift in Sources */,
 				47308E1324FEE6E700FFAC6F /* SocketRawView.swift in Sources */,
@@ -3933,6 +3984,7 @@
 				477DB72824B4BBF200D6323F /* GroupRemovedTableViewCell.swift in Sources */,
 				47A06CA624A3AC9A00BE468C /* DeepLinksHandlerHelper.swift in Sources */,
 				478DCF9E2343D7AC009A03D6 /* SetDataViewController.swift in Sources */,
+				47357A112729A13600A49EEE /* NewsletterFeed+DisplayUtils.swift in Sources */,
 				F39767C826C5A85F00DDFC0A /* LeftMenuDelegate.swift in Sources */,
 				479A03E92583A7180093DB30 /* LocalNetworkPermissionService.swift in Sources */,
 				471FACD823E9B65C007DE1C8 /* EmailHelper.swift in Sources */,
@@ -3951,6 +4003,7 @@
 				47FA18CA2433AEDA00469C8F /* AttachmentPriceViewController.swift in Sources */,
 				F3531C3F26BD511300E9586C /* DashboardRootViewController+DashboardChatsListDelegate.swift in Sources */,
 				474FE32D23F588E400C06FC8 /* CommonVideoTableViewCell.swift in Sources */,
+				47357A0D2729A11E00A49EEE /* NewsletterFeed+CoreDataClass.swift in Sources */,
 				F3A35CA826C43508007D35BD /* DashboardRootViewController+SocketManagerDelegate.swift in Sources */,
 				47308E0C24FEE6E700FFAC6F /* SocketEnginePacketType.swift in Sources */,
 				474A136324E5807C007C7528 /* SphinxOnionConnector.swift in Sources */,
@@ -4908,6 +4961,7 @@
 		47F35D4A2373156A0042A58F /* sphinx.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				47357A0727299E0900A49EEE /* sphinx 31.xcdatamodel */,
 				F32A694E26CFA7740004B8B3 /* sphinx 30.xcdatamodel */,
 				47096CA426EA4BD10065DC54 /* sphinx 29.xcdatamodel */,
 				473BC89B2602434D0070E519 /* sphinx 28.xcdatamodel */,
@@ -4939,7 +4993,7 @@
 				475E4162238588A200928931 /* sphinx 2.xcdatamodel */,
 				47F35D4B2373156A0042A58F /* sphinx.xcdatamodel */,
 			);
-			currentVersion = F32A694E26CFA7740004B8B3 /* sphinx 30.xcdatamodel */;
+			currentVersion = 47357A0727299E0900A49EEE /* sphinx 31.xcdatamodel */;
 			path = sphinx.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

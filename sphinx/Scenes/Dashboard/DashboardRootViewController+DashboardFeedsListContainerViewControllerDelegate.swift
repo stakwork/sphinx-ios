@@ -72,7 +72,7 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
 
         // 📝 TODO:  Implement the dedicated `VideoFeed` screen page and go there instead.
         if
-            let latestEpisode = videoFeed.videosArray.first,
+            let latestEpisode = videoFeed.videosArray.last,
             viewController is DashboardFeedsContainerViewController
         {
             presentVideoPlayer(for: latestEpisode)

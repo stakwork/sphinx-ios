@@ -419,25 +419,3 @@ extension PodcastFeedCollectionViewController: NSFetchedResultsControllerDelegat
         }
     }
 }
-
-
-extension PodcastEpisode: DashboardFeedSquaredThumbnailCollectionViewItem {
-    var placeholderImageName: String? {
-        "podcastPlaceholder"
-    }
-
-    var subtitle: String? {
-        formattedDescription
-    }
-}
-
-
-extension PodcastFeed: DashboardFeedSquaredThumbnailCollectionViewItem {
-    var placeholderImageName: String? {
-        "podcastPlaceholder"
-    }
-
-    var subtitle: String? {
-        podcastDescription ?? ""
-    }
-}

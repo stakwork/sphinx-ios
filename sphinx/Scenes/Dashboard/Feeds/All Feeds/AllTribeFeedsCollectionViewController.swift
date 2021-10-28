@@ -1,4 +1,4 @@
-// DashboardVideoFeedCollectionViewController.swift
+// AllTribeFeedsCollectionViewController.swift
 //
 // Created by CypherPoet.
 // ✌️
@@ -8,18 +8,15 @@ import UIKit
 import CoreData
 
 
-class DashboardVideoFeedCollectionViewController: UICollectionViewController {
-    var videoFeeds: [VideoFeed]!
-    var videoEpisodes: [Video]!
-    
+class AllTribeFeedsCollectionViewController: UICollectionViewController {
+    var tribesWithFeeds: [Chat] = []
     var interSectionSpacing: CGFloat = 20.0
 
-    var onVideoEpisodeCellSelected: ((NSManagedObjectID) -> Void)!
-    var onVideoFeedCellSelected: ((NSManagedObjectID) -> Void)!
+    var onCellSelected: ((NSManagedObjectID) -> Void)!
     var onNewResultsFetched: ((Int) -> Void)!
 
     private var managedObjectContext: NSManagedObjectContext!
-    private var fetchedResultsController: NSFetchedResultsController<VideoFeed>!
+    private var fetchedResultsController: NSFetchedResultsController<Chat>!
     private var currentDataSnapshot: DataSourceSnapshot!
     private var dataSource: DataSource!
 
@@ -33,29 +30,23 @@ class DashboardVideoFeedCollectionViewController: UICollectionViewController {
 
 
 // MARK: - Instantiation
-extension DashboardVideoFeedCollectionViewController {
+extension AllTribeFeedsCollectionViewController {
 
     static func instantiate(
         managedObjectContext: NSManagedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext,
-        videoFeeds: [VideoFeed] = [],
-        videoEpisodes: [Video] = [],
         interSectionSpacing: CGFloat = 20.0,
-        onVideoEpisodeCellSelected: ((NSManagedObjectID) -> Void)!,
-        onVideoFeedCellSelected: ((NSManagedObjectID) -> Void)!,
+        onCellSelected: ((NSManagedObjectID) -> Void)!,
         onNewResultsFetched: @escaping ((Int) -> Void) = { _ in }
-    ) -> DashboardVideoFeedCollectionViewController {
+    ) -> AllTribeFeedsCollectionViewController {
         let viewController = StoryboardScene
             .Dashboard
-            .videoFeedCollectionViewController
+            .allTribeFeedsCollectionViewController
             .instantiate()
 
         viewController.managedObjectContext = managedObjectContext
 
-        viewController.videoFeeds = videoFeeds
-        viewController.videoEpisodes = videoEpisodes
         viewController.interSectionSpacing = interSectionSpacing
-        viewController.onVideoEpisodeCellSelected = onVideoEpisodeCellSelected
-        viewController.onVideoFeedCellSelected = onVideoFeedCellSelected
+        viewController.onCellSelected = onCellSelected
         viewController.onNewResultsFetched = onNewResultsFetched
         
         viewController.fetchedResultsController = Self.makeFetchedResultsController(using: managedObjectContext)
@@ -67,17 +58,14 @@ extension DashboardVideoFeedCollectionViewController {
 
 
 // MARK: - Layout & Data Structure
-extension DashboardVideoFeedCollectionViewController {
+extension AllTribeFeedsCollectionViewController {
     
     enum CollectionViewSection: Int, CaseIterable {
-        case videoEpisodes
-        case videoFeeds
+        case followedFeeds
         
         var titleForDisplay: String {
             switch self {
-            case .videoEpisodes:
-                return "Watch Now"
-            case .videoFeeds:
+            case .followedFeeds:
                 return "Following"
             }
         }
@@ -85,8 +73,8 @@ extension DashboardVideoFeedCollectionViewController {
     
     
     enum DataSourceItem: Hashable {
-        case videoEpisode(Video)
-        case videoFeed(VideoFeed)
+        case tribePodcastFeed(PodcastFeed)
+        case tribeVideoFeed(VideoFeed)
     }
 
     
@@ -98,7 +86,7 @@ extension DashboardVideoFeedCollectionViewController {
 
 
 // MARK: - Lifecycle
-extension DashboardVideoFeedCollectionViewController {
+extension AllTribeFeedsCollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -118,7 +106,7 @@ extension DashboardVideoFeedCollectionViewController {
 
 
 // MARK: - Layout Composition
-extension DashboardVideoFeedCollectionViewController {
+extension AllTribeFeedsCollectionViewController {
 
     func makeSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
         let headerSize = NSCollectionLayoutSize(
@@ -134,7 +122,7 @@ extension DashboardVideoFeedCollectionViewController {
     }
 
 
-    func makeVideoFeedSectionLayout() -> NSCollectionLayoutSection {
+    func makeFollowedFeedsSectionLayout() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
             heightDimension: .fractionalHeight(1.0)
@@ -158,41 +146,13 @@ extension DashboardVideoFeedCollectionViewController {
 
         return section
     }
-    
-    
-    func makeVideoEpisodeSectionLayout() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.0),
-            heightDimension: .fractionalHeight(1.0)
-        )
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = itemContentInsets
-
-
-        let groupSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.0),
-            heightDimension: .estimated(241.0)
-        )
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-
-
-        let section = NSCollectionLayoutSection(group: group)
-
-        section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
-        section.boundarySupplementaryItems = [makeSectionHeader()]
-        section.contentInsets = .init(top: 11, leading: 0, bottom: 11, trailing: 0)
-
-        return section
-    }
 
 
     func makeSectionProvider() -> UICollectionViewCompositionalLayoutSectionProvider {
         { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
             switch CollectionViewSection(rawValue: sectionIndex)! {
-            case .videoEpisodes:
-                return self.makeVideoEpisodeSectionLayout()
-            case .videoFeeds:
-                return self.makeVideoFeedSectionLayout()
+            case .followedFeeds:
+                return self.makeFollowedFeedsSectionLayout()
             }
         }
     }
@@ -215,7 +175,7 @@ extension DashboardVideoFeedCollectionViewController {
 
 
 // MARK: - Collection View Configuration and View Registration
-extension DashboardVideoFeedCollectionViewController {
+extension AllTribeFeedsCollectionViewController {
 
     func registerViews(for collectionView: UICollectionView) {
         collectionView.register(
@@ -223,11 +183,6 @@ extension DashboardVideoFeedCollectionViewController {
             forCellWithReuseIdentifier: DashboardFeedSquaredThumbnailCollectionViewCell.reuseID
         )
         
-        collectionView.register(
-            DashboardVideoEpisodeCollectionViewCell.nib,
-            forCellWithReuseIdentifier: DashboardVideoEpisodeCollectionViewCell.reuseID
-        )
-
         collectionView.register(
             ReusableHeaderView.nib,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
@@ -255,7 +210,7 @@ extension DashboardVideoFeedCollectionViewController {
 
 
 // MARK: - Data Source Configuration
-extension DashboardVideoFeedCollectionViewController {
+extension AllTribeFeedsCollectionViewController {
 
     func makeDataSource(for collectionView: UICollectionView) -> DataSource {
         let dataSource = DataSource(
@@ -280,7 +235,7 @@ extension DashboardVideoFeedCollectionViewController {
 
 
 // MARK: - Data Source View Providers
-extension DashboardVideoFeedCollectionViewController {
+extension AllTribeFeedsCollectionViewController {
 
     func makeCellProvider(for collectionView: UICollectionView) -> DataSource.CellProvider {
         { (collectionView, indexPath, dataSourceItem) -> UICollectionViewCell in
@@ -291,32 +246,25 @@ extension DashboardVideoFeedCollectionViewController {
             }
             
             switch section {
-            case .videoEpisodes:
-                guard
-                    let episodeCell = collectionView.dequeueReusableCell(
-                        withReuseIdentifier: DashboardVideoEpisodeCollectionViewCell.reuseID,
-                        for: indexPath
-                    ) as? DashboardVideoEpisodeCollectionViewCell,
-                    case .videoEpisode(let videoEpisode) = dataSourceItem
-                else {
-                    preconditionFailure("Failed to dequeue expected reusable cell type")
-                }
-                
-                episodeCell.configure(withVideoEpisode: videoEpisode)
-                
-                return episodeCell
-            case .videoFeeds:
+            case .followedFeeds:
                 guard
                     let feedCell = collectionView.dequeueReusableCell(
                         withReuseIdentifier: DashboardFeedSquaredThumbnailCollectionViewCell.reuseID,
                         for: indexPath
-                    ) as? DashboardFeedSquaredThumbnailCollectionViewCell,
-                    case .videoFeed(let videoFeed) = dataSourceItem
+                    ) as? DashboardFeedSquaredThumbnailCollectionViewCell
                 else {
                     preconditionFailure("Failed to dequeue expected reusable cell type")
                 }
                 
-                feedCell.configure(withItem: videoFeed)
+                guard
+                    let feedEntity = dataSourceItem
+                        .feedEntity
+                        as? DashboardFeedSquaredThumbnailCollectionViewItem
+                else {
+                    preconditionFailure("Failed to find entity that conforms to `DashboardFeedSquaredThumbnailCollectionViewItem`")
+                }
+                
+                feedCell.configure(withItem: feedEntity)
                 
                 return feedCell
             }
@@ -352,23 +300,28 @@ extension DashboardVideoFeedCollectionViewController {
 
 
 // MARK: - Data Source Snapshot
-extension DashboardVideoFeedCollectionViewController {
+extension AllTribeFeedsCollectionViewController {
 
     func makeSnapshotForCurrentState() -> DataSourceSnapshot {
         var snapshot = DataSourceSnapshot()
 
         snapshot.appendSections(CollectionViewSection.allCases)
+  
+        let dataSourceItems = tribesWithFeeds.compactMap { tribeChat -> DataSourceItem? in
+            if let podcastFeed = tribeChat.podcastFeed {
+                return DataSourceItem.tribePodcastFeed(podcastFeed)
+            } else if let videoFeed = tribeChat.videoFeed {
+                return DataSourceItem.tribeVideoFeed(videoFeed)
+            } else {
+                return nil
+            }
+        }
         
         snapshot.appendItems(
-            videoFeeds.map { DataSourceItem.videoFeed($0) },
-            toSection: .videoFeeds
+            dataSourceItems,
+            toSection: .followedFeeds
         )
         
-        snapshot.appendItems(
-            videoEpisodes.map { DataSourceItem.videoEpisode($0) },
-            toSection: .videoEpisodes
-        )
-
         return snapshot
     }
 
@@ -381,26 +334,10 @@ extension DashboardVideoFeedCollectionViewController {
     
     
     func updateWithNew(
-        videoFeeds: [VideoFeed],
+        tribes tribesWithFeeds: [Chat],
         shouldAnimate: Bool = true
     ) {
-        self.videoFeeds = videoFeeds
-        videoEpisodes = videoFeeds.compactMap(\.videosArray.last)
-
-        if let dataSource = dataSource {
-            dataSource.apply(
-                makeSnapshotForCurrentState(),
-                animatingDifferences: shouldAnimate
-            )
-        }
-    }
-    
-    
-    func updateWithNew(
-        videoEpisodes: [Video],
-        shouldAnimate: Bool = true
-    ) {
-        self.videoEpisodes = videoEpisodes
+        self.tribesWithFeeds = tribesWithFeeds
 
         if let dataSource = dataSource {
             dataSource.apply(
@@ -413,12 +350,12 @@ extension DashboardVideoFeedCollectionViewController {
 
 
 // MARK: -  Fetched Result Controller
-extension DashboardVideoFeedCollectionViewController {
+extension AllTribeFeedsCollectionViewController {
     
     static func makeFetchedResultsController(
         using managedObjectContext: NSManagedObjectContext
-    ) -> NSFetchedResultsController<VideoFeed> {
-        let fetchRequest = VideoFeed.FetchRequests.followedFeeds()
+    ) -> NSFetchedResultsController<Chat> {
+        let fetchRequest = Chat.FetchRequests.default()
         
         return NSFetchedResultsController(
             fetchRequest: fetchRequest,
@@ -443,42 +380,24 @@ extension DashboardVideoFeedCollectionViewController {
 
 
 // MARK: - `UICollectionViewDelegate` Methods
-extension DashboardVideoFeedCollectionViewController {
+extension AllTribeFeedsCollectionViewController {
 
     override func collectionView(
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
         guard
-            let section = CollectionViewSection(rawValue: indexPath.section),
             let dataSourceItem = dataSource.itemIdentifier(for: indexPath)
         else {
             return
         }
 
-        switch section {
-        case .videoFeeds:
-            guard
-                case let .videoFeed(videoFeed) = dataSourceItem
-            else {
-                preconditionFailure()
-            }
-            
-            onVideoFeedCellSelected?(videoFeed.objectID)
-        case .videoEpisodes:
-            guard
-                case let .videoEpisode(videoEpisode) = dataSourceItem
-            else {
-                preconditionFailure()
-            }
-            
-            onVideoEpisodeCellSelected?(videoEpisode.objectID)
-        }
+        onCellSelected?(dataSourceItem.feedEntity.objectID)
     }
 }
 
 
-extension DashboardVideoFeedCollectionViewController: NSFetchedResultsControllerDelegate {
+extension AllTribeFeedsCollectionViewController: NSFetchedResultsControllerDelegate {
     
     /// Called when the contents of the fetched results controller change.
     ///
@@ -490,17 +409,31 @@ extension DashboardVideoFeedCollectionViewController: NSFetchedResultsController
         guard
             let resultController = controller as? NSFetchedResultsController<NSManagedObject>,
             let firstSection = resultController.sections?.first,
-            let foundFeeds = firstSection.objects as? [VideoFeed]
+            let foundTribes = firstSection.objects as? [Chat]
         else {
             return
         }
         
         DispatchQueue.main.async { [weak self] in
             self?.updateWithNew(
-                videoFeeds: foundFeeds
+                tribes: foundTribes
             )
             
-            self?.onNewResultsFetched(foundFeeds.count)
+            self?.onNewResultsFetched(foundTribes.count)
+        }
+    }
+}
+
+
+// MARK: -  Computeds
+extension AllTribeFeedsCollectionViewController.DataSourceItem {
+    
+    var feedEntity: NSManagedObject {
+        switch self {
+        case .tribePodcastFeed(let podcastFeed):
+            return podcastFeed
+        case .tribeVideoFeed(let videoFeed):
+            return videoFeed
         }
     }
 }

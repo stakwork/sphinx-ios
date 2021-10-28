@@ -266,18 +266,18 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Icu-n7-UUo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4845" y="3454"/>
+            <point key="canvasLocation" x="-5351" y="3521"/>
         </scene>
-        <!--Podcast Feeds Content Empty State View Controller-->
+        <!--Dashboard Feeds Empty State View Controller-->
         <scene sceneID="Nvu-Zv-IVl">
             <objects>
-                <viewController storyboardIdentifier="PodcastFeedsContentEmptyStateViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="rf1-Tn-GFa" customClass="PodcastFeedsContentEmptyStateViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DashboardFeedsEmptyStateViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="rf1-Tn-GFa" customClass="DashboardFeedsEmptyStateViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="U25-4Z-Far">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Podcasts Found" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oTA-xG-eJf">
-                                <rect key="frame" x="100" y="434" width="214" height="28"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Content Found" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oTA-xG-eJf">
+                                <rect key="frame" x="107.5" y="434" width="199" height="28"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -296,7 +296,32 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="saU-RZ-2He" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4049" y="3456"/>
+            <point key="canvasLocation" x="-4554" y="3523"/>
+        </scene>
+        <!--All Tribe Feeds Collection View Controller-->
+        <scene sceneID="Q7A-va-Q5o">
+            <objects>
+                <collectionViewController storyboardIdentifier="AllTribeFeedsCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="GDs-Du-Iow" customClass="AllTribeFeedsCollectionViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="D1n-Ll-UoS">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" name="ListBG"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="HzR-ds-Sjo">
+                            <size key="itemSize" width="128" height="128"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells/>
+                        <connections>
+                            <outlet property="dataSource" destination="GDs-Du-Iow" id="kD8-dP-mJb"/>
+                            <outlet property="delegate" destination="GDs-Du-Iow" id="1v5-6w-oCa"/>
+                        </connections>
+                    </collectionView>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="81G-22-20W" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3729" y="3526"/>
         </scene>
         <!--Podcast Feed Collection View Controller-->
         <scene sceneID="Ycq-O7-bTT">
@@ -321,7 +346,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IeO-rD-8pI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3239" y="3456"/>
+            <point key="canvasLocation" x="-2952" y="3523"/>
         </scene>
         <!--Dashboard Video Feed Collection View Controller-->
         <scene sceneID="32r-Rk-Gha">
@@ -346,7 +371,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ul1-ff-nrV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2430" y="3453"/>
+            <point key="canvasLocation" x="-2146" y="3520"/>
         </scene>
         <!--Chats Container View Controller-->
         <scene sceneID="qKk-C4-9MQ">

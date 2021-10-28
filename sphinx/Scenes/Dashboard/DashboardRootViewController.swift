@@ -41,11 +41,7 @@ class DashboardRootViewController: RootViewController {
     internal let refreshControl = UIRefreshControl()
     internal let newBubbleHelper = NewMessageBubbleHelper()
     
-    
-    internal lazy var podcastFeedViewModel: PodcastFeedViewModel = {
-        PodcastFeedViewModel()
-    }()
-    
+
     internal lazy var chatsListViewModel: ChatListViewModel = {
         ChatListViewModel(contactsService: contactsService)
     }()

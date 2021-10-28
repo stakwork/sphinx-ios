@@ -56,9 +56,18 @@ class DashboardFeedsContainerViewController: UIViewController {
     }
     
     
-    internal lazy var emptyStateViewController: PodcastFeedsContentEmptyStateViewController = {
-        PodcastFeedsContentEmptyStateViewController.instantiate(
+    internal lazy var emptyStateViewController: DashboardFeedsEmptyStateViewController = {
+        DashboardFeedsEmptyStateViewController.instantiate(
             contentFilterOption: activeFilterOption
+        )
+    }()
+    
+    
+    internal lazy var allTribeFeedsCollectionViewController: AllTribeFeedsCollectionViewController = {
+        AllTribeFeedsCollectionViewController.instantiate(
+            managedObjectContext: managedObjectContext,
+            onCellSelected: handleAllFeedsCellSelection(_:),
+            onNewResultsFetched: handleNewResultsFetch(_:)
         )
     }()
     
@@ -87,7 +96,7 @@ class DashboardFeedsContainerViewController: UIViewController {
         managedObjectContext: NSManagedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext,
         feedsListContainerDelegate: DashboardFeedsListContainerViewControllerDelegate
     ) -> DashboardFeedsContainerViewController {
-        let viewController = StoryboardScene.Dashboard.feedsListViewController.instantiate()
+        let viewController = StoryboardScene.Dashboard.feedsContainerViewController.instantiate()
         
         viewController.managedObjectContext = managedObjectContext
         viewController.feedsListContainerDelegate = feedsListContainerDelegate
@@ -161,7 +170,7 @@ extension DashboardFeedsContainerViewController {
     ) -> UIViewController {
         switch activeFilterOption.id {
         case ContentFilterOption.allContent.id:
-            return podcastFeedCollectionViewController
+            return allTribeFeedsCollectionViewController
         case ContentFilterOption.listen.id:
             return podcastFeedCollectionViewController
         case ContentFilterOption.watch.id:
@@ -232,6 +241,25 @@ extension DashboardFeedsContainerViewController {
             child: viewController,
             container: feedContentCollectionViewContainer
         )
+    }
+    
+    
+    private func handleAllFeedsCellSelection(
+        _ managedObjectID: NSManagedObjectID
+    ) {
+        let entity = managedObjectContext.object(with: managedObjectID)
+        
+        if entity is PodcastFeed {
+            feedsListContainerDelegate?.viewController(
+                self,
+                didSelectPodcastFeedWithID: managedObjectID
+            )
+        } else if entity is VideoFeed {
+            feedsListContainerDelegate?.viewController(
+                self,
+                didSelectVideoFeedWithID: managedObjectID
+            )
+        }
     }
 }
 

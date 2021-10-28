@@ -84,3 +84,43 @@ extension DashboardFeedSquaredThumbnailCollectionViewCell {
         UINib(nibName: "DashboardFeedSquaredThumbnailCollectionViewCell", bundle: nil)
     }()
 }
+
+
+// MARK: - DashboardFeedSquaredThumbnailCollectionViewItem - NSManagedObject Conformance
+extension VideoFeed: DashboardFeedSquaredThumbnailCollectionViewItem {
+    
+    var imageURLPath: String? {
+        chat?.photoUrl
+    }
+    
+    var placeholderImageName: String? {
+        "podcastPlaceholder"
+    }
+    
+    var subtitle: String? {
+        title
+    }
+}
+
+
+
+extension PodcastEpisode: DashboardFeedSquaredThumbnailCollectionViewItem {
+    var placeholderImageName: String? {
+        "podcastPlaceholder"
+    }
+
+    var subtitle: String? {
+        formattedDescription
+    }
+}
+
+
+extension PodcastFeed: DashboardFeedSquaredThumbnailCollectionViewItem {
+    var placeholderImageName: String? {
+        "podcastPlaceholder"
+    }
+
+    var subtitle: String? {
+        podcastDescription ?? ""
+    }
+}

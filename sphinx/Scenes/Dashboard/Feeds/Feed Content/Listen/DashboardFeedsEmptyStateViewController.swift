@@ -1,4 +1,4 @@
-// PodcastFeedsContentEmptyStateViewController.swift
+// DashboardFeedsEmptyStateViewController.swift
 //
 // Created by CypherPoet.
 // ✌️
@@ -8,7 +8,7 @@
 import UIKit
 
 
-class PodcastFeedsContentEmptyStateViewController: UIViewController {
+class DashboardFeedsEmptyStateViewController: UIViewController {
     typealias ContentFilterOption = DashboardFeedsContainerViewController.ContentFilterOption
     
     @IBOutlet weak var emptyStateMessageLabel: UILabel!
@@ -18,14 +18,14 @@ class PodcastFeedsContentEmptyStateViewController: UIViewController {
     
 
 // MARK: -  Static Members
-extension PodcastFeedsContentEmptyStateViewController {
+extension DashboardFeedsEmptyStateViewController {
     
     static func instantiate(
         contentFilterOption: ContentFilterOption
-    ) -> PodcastFeedsContentEmptyStateViewController {
+    ) -> DashboardFeedsEmptyStateViewController {
         let viewController = StoryboardScene
             .Dashboard
-            .podcastFeedsContentEmptyStateViewController
+            .dashboardFeedsEmptyStateViewController
             .instantiate()
         
         viewController.contentFilterOption = contentFilterOption
@@ -36,7 +36,7 @@ extension PodcastFeedsContentEmptyStateViewController {
 
 
 // MARK: -  Lifecycle
-extension PodcastFeedsContentEmptyStateViewController {
+extension DashboardFeedsEmptyStateViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,7 +55,7 @@ extension PodcastFeedsContentEmptyStateViewController {
 
 
 // MARK: -  Computeds
-extension PodcastFeedsContentEmptyStateViewController {
+extension DashboardFeedsEmptyStateViewController {
 
     private var emptyStateMessageText: String {
         switch contentFilterOption.id {

@@ -53,16 +53,23 @@ internal enum StoryboardScene {
         internal static let dashboardRootViewController = SceneType<DashboardRootViewController>(storyboard: Dashboard.self, identifier: "DashboardRootViewController")
         
         
-        internal static let feedsListViewController = SceneType<DashboardFeedsContainerViewController>(
+        internal static let feedsContainerViewController = SceneType<DashboardFeedsContainerViewController>(
             storyboard: Dashboard.self,
             identifier: "DashboardFeedsContainerViewController"
         )
         
         
-        internal static let podcastFeedsContentEmptyStateViewController = SceneType<PodcastFeedsContentEmptyStateViewController>(
+        internal static let dashboardFeedsEmptyStateViewController = SceneType<DashboardFeedsEmptyStateViewController>(
             storyboard: Dashboard.self,
-            identifier: "PodcastFeedsContentEmptyStateViewController"
+            identifier: "DashboardFeedsEmptyStateViewController"
         )
+        
+        
+        internal static let allTribeFeedsCollectionViewController = SceneType<AllTribeFeedsCollectionViewController>(
+            storyboard: Dashboard.self,
+            identifier: "AllTribeFeedsCollectionViewController"
+        )
+        
         
         internal static let podcastFeedSearchContainerViewController = SceneType<PodcastFeedSearchContainerViewController>(
             storyboard: Dashboard.self,

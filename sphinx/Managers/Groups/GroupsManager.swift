@@ -130,90 +130,14 @@ class GroupsManager {
     }
     
     func isGroupInfoValid() -> Bool {
-        return !(newGroupInfo.name ?? "").isEmpty && !(newGroupInfo.description ?? "").isEmpty
-    }
-    
-    struct TribeInfo {
-        var name : String? = nil
-        var description : String? = nil
-        var img : String? = nil
-        var groupKey : String? = nil
-        var ownerPubkey : String? = nil
-        var ownerAlias : String? = nil
-        var host : String! = nil
-        var uuid : String! = nil
-        var tags : [Tag] = []
-        var priceToJoin : Int? = nil
-        var pricePerMessage : Int? = nil
-        var amountToStake : Int? = nil
-        var timeToStake : Int? = nil
-        var unlisted : Bool = false
-        var privateTribe : Bool = false
-        var deleted : Bool = false
-        var appUrl : String? = nil
-        var feedUrl : String? = nil
-        var ownerRouteHint : String? = nil
-        var bots : [Bot] = []
+        let name = newGroupInfo.name ?? ""
+        let description = newGroupInfo.description ?? ""
+        let feedUrl = newGroupInfo.feedUrl ?? ""
+        let contentType = newGroupInfo.feedContentType
         
-        var hasLoopoutBot : Bool {
-            get {
-                for bot in bots {
-                    if bot.prefix == "/loopout" {
-                        return true
-                    }
-                }
-                return false
-            }
-        }
-    }
-    
-    struct Tag {
-        var image : String
-        var description : String
-        var selected : Bool = false
+        let contentTypeValid = feedUrl.isEmpty || (!feedUrl.isEmpty && contentType != nil)
         
-        init(image: String, description: String) {
-            self.image = image
-            self.description = description
-        }
-    }
-    
-    struct Bot {
-        var prefix: String = ""
-        var price: Int = 0
-        var commands: [BotCommand] = []
-        
-        init(json: JSON) {
-            self.prefix = json["prefix"].string ?? ""
-            self.price = json["price"].int ?? 0
-            
-            var commandObjects: [BotCommand] = []
-            
-            for cmd in json["commands"].array ?? [] {
-                let commandObject = BotCommand(json: cmd)
-                commandObjects.append(commandObject)
-            }
-            
-            self.commands = commandObjects
-        }
-    }
-
-    struct BotCommand {
-        var command: String? = nil
-        var price: Int? = nil
-        var minPrice: Int? = nil
-        var maxPrice: Int? = nil
-        var priceIndex: Int? = nil
-        var adminOnly: Bool? = nil
-        
-        init(json: JSON) {
-            self.command = json["command"].string
-            self.price = json["price"].int
-            self.minPrice = json["min_price"].int
-            self.maxPrice = json["max_price"].int
-            self.priceIndex = json["price_index"].int
-            self.adminOnly = json["admin_only"].bool
-        }
+        return !name.isEmpty && !description.isEmpty && contentTypeValid
     }
     
     func getGroupTags() -> [Tag] {
@@ -289,6 +213,10 @@ class GroupsManager {
         parameters["app_url"] = newGroupInfo.appUrl as AnyObject
         parameters["feed_url"] = newGroupInfo.feedUrl as AnyObject
         
+        if let feedContentType = newGroupInfo.feedContentType {
+            parameters["feed_type"] = feedContentType.id as AnyObject
+        }
+        
         return parameters
     }
     
@@ -351,6 +279,7 @@ class GroupsManager {
         tribeInfo.deleted = json["deleted"].boolValue
         tribeInfo.appUrl = json["app_url"].string ?? tribeInfo.appUrl
         tribeInfo.feedUrl = json["feed_url"].string ?? tribeInfo.feedUrl
+        tribeInfo.feedContentType = json["feed_type"].int?.toFeedContentType ?? tribeInfo.feedContentType
         tribeInfo.ownerRouteHint = json["owner_route_hint"].string ?? tribeInfo.ownerRouteHint
         
         var tags = getGroupTags()
@@ -468,5 +397,11 @@ class GroupsManager {
         }, errorCallback: {
             completion()
         })
+    }
+}
+
+extension Int {
+    var toFeedContentType: GroupsManager.FeedContentType? {
+        return GroupsManager.FeedContentType.allCases.filter { $0.id == self }.first
     }
 }

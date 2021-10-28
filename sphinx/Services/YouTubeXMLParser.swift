@@ -31,8 +31,12 @@ struct YouTubeXMLParser {
             return .failure(.xmlParsingFailed(error))
         }
         
-        guard let feedID = feedPayload["yt:channelId"].text else {
-            return .failure(.xmlDecodingFailed(reason: "Channel ID not found"))
+        guard
+            // Check for a playlistId first, then fallback to the channelId
+            let feedID = feedPayload["yt:playlistId"].text
+                ?? feedPayload["yt:channelId"].text
+        else {
+            return .failure(.xmlDecodingFailed(reason: "No valid feed ID could be found."))
         }
         
         let feed = VideoFeed(context: managedObjectContext)

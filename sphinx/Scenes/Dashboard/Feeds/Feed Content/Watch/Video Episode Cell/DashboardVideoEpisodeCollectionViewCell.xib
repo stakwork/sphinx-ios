@@ -34,26 +34,26 @@
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="FpZ-tB-8if">
-                                <rect key="frame" x="0.0" y="200" width="332" height="53.5"/>
+                                <rect key="frame" x="0.0" y="200" width="332" height="53"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="userAvatar" translatesAutoresizingMaskIntoConstraints="NO" id="HcA-9t-mcO" userLabel="Feed Avatar Image">
-                                        <rect key="frame" x="0.0" y="9" width="36" height="36"/>
+                                        <rect key="frame" x="0.0" y="8.5" width="36" height="36"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="36" id="YDs-Vd-emp"/>
                                             <constraint firstAttribute="height" constant="36" id="upT-M2-rEM"/>
                                         </constraints>
                                     </imageView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="PLo-Uf-ljl">
-                                        <rect key="frame" x="48" y="0.0" width="284" height="53.5"/>
+                                        <rect key="frame" x="48" y="0.0" width="284" height="53"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Episode Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lVa-sg-vsM">
-                                                <rect key="frame" x="0.0" y="0.0" width="284" height="18"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="284" height="17.5"/>
                                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="15"/>
                                                 <color key="textColor" name="PrimaryText"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="7zp-2S-dUT">
-                                                <rect key="frame" x="0.0" y="23" width="284" height="30.5"/>
+                                                <rect key="frame" x="0.0" y="22.5" width="284" height="30.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Podcast Feed Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Zy-p4-LG5" userLabel="Feed Name">
                                                         <rect key="frame" x="0.0" y="7.5" width="181" height="15.5"/>

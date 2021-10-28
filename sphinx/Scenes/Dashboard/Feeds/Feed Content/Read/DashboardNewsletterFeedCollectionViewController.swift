@@ -174,8 +174,8 @@ extension DashboardNewsletterFeedCollectionViewController {
 
 
         let groupSize = NSCollectionLayoutSize(
-            widthDimension: .absolute(160.0),
-            heightDimension: .absolute(240.0)
+            widthDimension: .fractionalWidth(0.9),
+            heightDimension: .estimated(300.0)
         )
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
 
@@ -225,6 +225,11 @@ extension DashboardNewsletterFeedCollectionViewController {
         collectionView.register(
             DashboardFeedSquaredThumbnailCollectionViewCell.nib,
             forCellWithReuseIdentifier: DashboardFeedSquaredThumbnailCollectionViewCell.reuseID
+        )
+        
+        collectionView.register(
+            DashboardNewsletterItemCollectionViewCell.nib,
+            forCellWithReuseIdentifier: DashboardNewsletterItemCollectionViewCell.reuseID
         )
 
         collectionView.register(
@@ -285,22 +290,42 @@ extension DashboardNewsletterFeedCollectionViewController {
         { (collectionView, indexPath, dataSourceItem) -> UICollectionViewCell in
             
             guard
-                let cell = collectionView.dequeueReusableCell(
-                    withReuseIdentifier: DashboardFeedSquaredThumbnailCollectionViewCell.reuseID,
-                    for: indexPath
-                ) as? DashboardFeedSquaredThumbnailCollectionViewCell
+                let section = CollectionViewSection(rawValue: indexPath.section)
             else {
-                preconditionFailure("Failed to dequeue cell")
+                preconditionFailure("Unexpected Section index path")
             }
-
-            switch dataSourceItem {
-            case .newsletterItem(let newsletterItem):
-                cell.configure(withItem: newsletterItem)
-            case .newsletterFeed(let newsletterFeed):
-                cell.configure(withItem: newsletterFeed)
+            
+            switch section {
+            case .newsletterItems:
+                guard
+                    let itemCell = collectionView.dequeueReusableCell(
+                        withReuseIdentifier: DashboardNewsletterItemCollectionViewCell.reuseID,
+                        for: indexPath
+                    ) as? DashboardNewsletterItemCollectionViewCell,
+                    case .newsletterItem(let newsletterItem) = dataSourceItem
+                else {
+                    preconditionFailure("Failed to dequeue expected reusable cell type")
+                }
+                
+                itemCell.configure(withNewsletterItem: newsletterItem)
+                
+                return itemCell
+                
+            case .newsletterFeeds:
+                guard
+                    let feedCell = collectionView.dequeueReusableCell(
+                        withReuseIdentifier: DashboardFeedSquaredThumbnailCollectionViewCell.reuseID,
+                        for: indexPath
+                    ) as? DashboardFeedSquaredThumbnailCollectionViewCell,
+                    case .newsletterFeed(let newsletterFeed) = dataSourceItem
+                else {
+                    preconditionFailure("Failed to dequeue expected reusable cell type")
+                }
+                
+                feedCell.configure(withItem: newsletterFeed)
+                
+                return feedCell
             }
-
-            return cell
         }
     }
 

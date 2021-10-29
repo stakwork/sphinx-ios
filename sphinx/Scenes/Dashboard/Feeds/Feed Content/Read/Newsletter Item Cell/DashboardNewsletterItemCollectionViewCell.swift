@@ -70,6 +70,7 @@ extension DashboardNewsletterItemCollectionViewCell {
     
     private func updateViewsWithNewsletterItem() {
         if let imageUrl = newsletterItem.newsletterFeed?.imageURL {
+            
             itemImageView.sd_setImage(
                 with: imageUrl,
                 placeholderImage: UIImage(named: "podcastPlaceholder"),

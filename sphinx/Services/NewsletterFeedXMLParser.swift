@@ -83,7 +83,7 @@ struct NewsletterFeedXMLParser {
             return .failure(.xmlParsingFailed(error))
         }
         
-        let feedPayload = xml.feed
+        let feedPayload = xml.rss.channel
         
         return Self.parseNewsletterFeedItems(
             from: feedPayload,
@@ -103,7 +103,9 @@ struct NewsletterFeedXMLParser {
                         throw Error.xmlDecodingFailed(reason: "Item ID not found")
                     }
                     
-                    let item = NewsletterItem(context: managedObjectContext)
+                    let existingItem = NewsletterItem.getNewsletterItemWith(itemID: link)
+                    
+                    let item = existingItem ?? NewsletterItem(context: managedObjectContext)
                     
                     item.itemID = link
                     item.itemUrl = URL(string: link)

@@ -387,6 +387,8 @@
 "error.saving.item" = "Ha habido un problema al guardar el/la %@. Por favor vuelve a intentarlo más tarde.";
 "image" = "imagen";
 "video" = "video";
+"article" = "Artículo";
+"articles" = "Artículos";
 "dismiss" = "Cerrar";
 "invoice.paid" = "Solicitud pagada";
 "amount" = "Monto";

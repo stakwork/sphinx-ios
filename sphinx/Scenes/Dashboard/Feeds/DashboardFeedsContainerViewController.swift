@@ -95,8 +95,8 @@ class DashboardFeedsContainerViewController: UIViewController {
     internal lazy var newsletterFeedCollectionViewController: DashboardNewsletterFeedCollectionViewController = {
         DashboardNewsletterFeedCollectionViewController.instantiate(
             managedObjectContext: managedObjectContext,
-            onVideoEpisodeCellSelected: handleNewsletterItemCellSelection(_:),
-            onVideoFeedCellSelected: handleNewsletterFeedCellSelection(_:),
+            onNewsletterItemCellSelected: handleNewsletterItemCellSelection(_:),
+            onNewsletterFeedCellSelected: handleNewsletterFeedCellSelection(_:),
             onNewResultsFetched: handleNewResultsFetch(_:)
         )
     }()

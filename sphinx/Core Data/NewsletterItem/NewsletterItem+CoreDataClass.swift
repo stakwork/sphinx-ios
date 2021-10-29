@@ -11,7 +11,12 @@ import CoreData
 
 @objc(NewsletterItem)
 public class NewsletterItem: NSManagedObject {
-
+    
+    static func getNewsletterItemWith(itemID: String) -> NewsletterItem? {
+        let predicate = NSPredicate(format: "itemID == %@", itemID)
+        let item:NewsletterItem? = CoreDataManager.sharedManager.getObjectOfTypeWith(predicate: predicate, sortDescriptors: [], entityName: "NewsletterItem")
+        return item
+    }
 }
 
 

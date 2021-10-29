@@ -1,49 +1,39 @@
-// VideoFeedEpisodePlayerCollectionViewController.swift
 //
-// Created by CypherPoet.
-// ✌️
+//  NewsletterFeedItemsCollectionViewController.swift
+//  sphinx
 //
-    
+//  Created by Tomas Timinskas on 28/10/2021.
+//  Copyright © 2021 sphinx. All rights reserved.
+//
 
 import UIKit
 import CoreData
 
+class NewsletterFeedItemsCollectionViewController: UICollectionViewController {
+    
+    var newsletterItems: [NewsletterItem]!
 
-class VideoFeedEpisodePlayerCollectionViewController: UICollectionViewController {
-    var videoPlayerEpisode: Video!
-    var videoFeedEpisodes: [Video]!
-
-    var onVideoEpisodeCellSelected: ((NSManagedObjectID) -> Void)!
-    var onFeedSubscriptionSelected: (() -> Void)!
-    var onFeedSubscriptionCancellationSelected: (() -> Void)!
+    var onNewsletterItemCellSelected: ((NSManagedObjectID) -> Void)!
     
     private var currentDataSnapshot: DataSourceSnapshot!
     private var dataSource: DataSource!
 }
 
-
 // MARK: -  Static Methods
-extension VideoFeedEpisodePlayerCollectionViewController {
+extension NewsletterFeedItemsCollectionViewController {
     
     static func instantiate(
-        videoPlayerEpisode: Video,
-        videoFeedEpisodes: [Video],
-        onVideoEpisodeCellSelected: @escaping ((NSManagedObjectID) -> Void) = { _ in },
-        onFeedSubscriptionSelected: @escaping (() -> Void) = {},
-        onFeedSubscriptionCancellationSelected: @escaping (() -> Void) = {}
-    ) -> VideoFeedEpisodePlayerCollectionViewController {
+        newsletterItems: [NewsletterItem],
+        onNewsletterItemCellSelected: @escaping ((NSManagedObjectID) -> Void) = { _ in }
+    ) -> NewsletterFeedItemsCollectionViewController {
         let viewController = StoryboardScene
-            .VideoFeed
-            .videoFeedEpisodePlayerCollectionViewController
+            .NewsletterFeed
+            .newsletterFeedItemsCollectionViewController
             .instantiate()
         
-        viewController.videoPlayerEpisode = videoPlayerEpisode
-        viewController.videoFeedEpisodes = videoFeedEpisodes
+        viewController.newsletterItems = newsletterItems
+        viewController.onNewsletterItemCellSelected = onNewsletterItemCellSelected
         
-        viewController.onVideoEpisodeCellSelected = onVideoEpisodeCellSelected
-        viewController.onFeedSubscriptionSelected = onFeedSubscriptionSelected
-        viewController.onFeedSubscriptionCancellationSelected = onFeedSubscriptionCancellationSelected
-    
         return viewController
     }
 }
@@ -51,22 +41,18 @@ extension VideoFeedEpisodePlayerCollectionViewController {
 
 
 // MARK: - Layout & Data Structure
-extension VideoFeedEpisodePlayerCollectionViewController {
+extension NewsletterFeedItemsCollectionViewController {
     
     enum CollectionViewSection: Int, CaseIterable {
-        case videoPlayerEpisodeDetails
-        case videoFeedEpisodes
+        case newsletterItems
     }
     
-    
     enum DataSourceItem: Hashable {
-        case videoPlayerEpisodeDetails(Video)
-        case videoFeedEpisode(Video)
+        case newsletterItem(NewsletterItem)
     }
     
 
-    typealias PlayerEpisodeDetailsCell = VideoFeedEpisodePlayerCollectionViewDetailsCell
-    typealias FeedEpisodeCell = VideoFeedEpisodeCollectionViewCell
+    typealias NewsletterItemCell = NewsletterItemCollectionViewCell
     typealias CellDataItem = DataSourceItem
     typealias DataSource = UICollectionViewDiffableDataSource<CollectionViewSection, CellDataItem>
     typealias DataSourceSnapshot = NSDiffableDataSourceSnapshot<CollectionViewSection, CellDataItem>
@@ -74,7 +60,7 @@ extension VideoFeedEpisodePlayerCollectionViewController {
 
 
 // MARK: -  Lifecycle
-extension VideoFeedEpisodePlayerCollectionViewController {
+extension NewsletterFeedItemsCollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,17 +69,24 @@ extension VideoFeedEpisodePlayerCollectionViewController {
         configure(collectionView)
         configureDataSource(for: collectionView)
     }
+    
+    func reloadItems(newsletterItems: [NewsletterItem]) {
+        if (newsletterItems.count > 0 && newsletterItems.count != self.newsletterItems.count) {
+            self.newsletterItems = newsletterItems
+            configureDataSource(for: collectionView)
+        }
+    }
 }
 
 
 // MARK: - Layout Composition
-extension VideoFeedEpisodePlayerCollectionViewController {
+extension NewsletterFeedItemsCollectionViewController {
     
     /// "Contributor Name" and Count of Views
-    func makeVideoFeedEpisodesSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
+    func makeNewsletterItemsSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
         let headerSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
-            heightDimension: .estimated(100)
+            heightDimension: .estimated(50)
         )
         
         let headerItem = NSCollectionLayoutBoundarySupplementaryItem(
@@ -104,37 +97,9 @@ extension VideoFeedEpisodePlayerCollectionViewController {
         
         return headerItem
     }
-    
-
-    func makeVideoFeedEpisodeDetailsSection() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.0),
-            heightDimension: .fractionalHeight(1.0)
-        )
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = .zero
-
-
-        let groupSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.0),
-            heightDimension: .estimated(100.0)
-        )
-        let group = NSCollectionLayoutGroup.horizontal(
-            layoutSize: groupSize,
-            subitems: [item]
-        )
-
-        
-        let section = NSCollectionLayoutSection(group: group)
-
-        section.orthogonalScrollingBehavior = .none
-        section.contentInsets = .zero
-
-        return section
-    }
 
     
-    func makeVideoFeedEpisodesSection() -> NSCollectionLayoutSection {
+    func makeNewsletterItemsSection() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
             heightDimension: .fractionalHeight(1.0)
@@ -143,9 +108,10 @@ extension VideoFeedEpisodePlayerCollectionViewController {
         
         item.contentInsets = .zero
 
+
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
-            heightDimension: .estimated(82.9)
+            heightDimension: .estimated(120.0)
         )
         
         let group = NSCollectionLayoutGroup.horizontal(
@@ -154,7 +120,7 @@ extension VideoFeedEpisodePlayerCollectionViewController {
         )
         
         
-        let sectionHeader = makeVideoFeedEpisodesSectionHeader()
+        let sectionHeader = makeNewsletterItemsSectionHeader()
         
         sectionHeader.pinToVisibleBounds = true
         
@@ -172,10 +138,8 @@ extension VideoFeedEpisodePlayerCollectionViewController {
     func makeSectionProvider() -> UICollectionViewCompositionalLayoutSectionProvider {
         { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
             switch CollectionViewSection(rawValue: sectionIndex)! {
-            case .videoPlayerEpisodeDetails:
-                return self.makeVideoFeedEpisodeDetailsSection()
-            case .videoFeedEpisodes:
-                return self.makeVideoFeedEpisodesSection()
+            case .newsletterItems:
+                return self.makeNewsletterItemsSection()
             }
         }
     }
@@ -198,23 +162,18 @@ extension VideoFeedEpisodePlayerCollectionViewController {
 
 
 // MARK: - Collection View Configuration and View Registration
-extension VideoFeedEpisodePlayerCollectionViewController {
+extension NewsletterFeedItemsCollectionViewController {
 
     func registerViews(for collectionView: UICollectionView) {
         collectionView.register(
-            VideoFeedEpisodesSectionHeaderView.nib,
+            NewsletterItemsSectionCollectionReusableView.nib,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: VideoFeedEpisodesSectionHeaderView.reuseID
+            withReuseIdentifier: NewsletterItemsSectionCollectionReusableView.reuseID
         )
         
         collectionView.register(
-            PlayerEpisodeDetailsCell.nib,
-            forCellWithReuseIdentifier: PlayerEpisodeDetailsCell.reuseID
-        )
-        
-        collectionView.register(
-            FeedEpisodeCell.nib,
-            forCellWithReuseIdentifier: FeedEpisodeCell.reuseID
+            NewsletterItemCell.nib,
+            forCellWithReuseIdentifier: NewsletterItemCell.reuseID
         )
     }
 
@@ -233,7 +192,7 @@ extension VideoFeedEpisodePlayerCollectionViewController {
 
 
 // MARK: - Data Source Configuration
-extension VideoFeedEpisodePlayerCollectionViewController {
+extension NewsletterFeedItemsCollectionViewController {
 
     func makeDataSource(for collectionView: UICollectionView) -> DataSource {
         let dataSource = DataSource(
@@ -260,7 +219,7 @@ extension VideoFeedEpisodePlayerCollectionViewController {
 
 
 // MARK: - Data Source View Providers
-extension VideoFeedEpisodePlayerCollectionViewController {
+extension NewsletterFeedItemsCollectionViewController {
 
     func makeCellProvider(for collectionView: UICollectionView) -> DataSource.CellProvider {
         { (collectionView, indexPath, dataSourceItem) -> UICollectionViewCell in
@@ -271,43 +230,23 @@ extension VideoFeedEpisodePlayerCollectionViewController {
             }
             
             switch section {
-            case .videoPlayerEpisodeDetails:
+            case .newsletterItems:
                 guard
                     let episodeCell = collectionView.dequeueReusableCell(
-                        withReuseIdentifier: PlayerEpisodeDetailsCell.reuseID,
+                        withReuseIdentifier: NewsletterItemCell.reuseID,
                         for: indexPath
-                    ) as? PlayerEpisodeDetailsCell
+                    ) as? NewsletterItemCell
                 else {
                     preconditionFailure("Failed to dequeue expected reusable cell type")
                 }
                 
                 guard
-                    case .videoPlayerEpisodeDetails(let videoEpisode) = dataSourceItem
+                    case .newsletterItem(let newsletterItem) = dataSourceItem
                 else {
                     preconditionFailure("Failed to find expected data source item")
                 }
 
-                episodeCell.configure(withVideoEpisode: videoEpisode)
-
-                return episodeCell
-                
-            case .videoFeedEpisodes:
-                guard
-                    let episodeCell = collectionView.dequeueReusableCell(
-                        withReuseIdentifier: FeedEpisodeCell.reuseID,
-                        for: indexPath
-                    ) as? FeedEpisodeCell
-                else {
-                    preconditionFailure("Failed to dequeue expected reusable cell type")
-                }
-                
-                guard
-                    case .videoFeedEpisode(let videoEpisode) = dataSourceItem
-                else {
-                    preconditionFailure("Failed to find expected data source item")
-                }
-
-                episodeCell.configure(withVideoEpisode: videoEpisode)
+                episodeCell.configure(withNewsletterItem: newsletterItem)
 
                 return episodeCell
             }
@@ -331,24 +270,18 @@ extension VideoFeedEpisodePlayerCollectionViewController {
                 }
             
                 switch section {
-                case .videoPlayerEpisodeDetails:
-                    preconditionFailure()
-                case .videoFeedEpisodes:
+                case .newsletterItems:
                     switch kind {
                     case UICollectionView.elementKindSectionHeader:
                         guard let headerView = collectionView.dequeueReusableSupplementaryView(
                             ofKind: kind,
-                            withReuseIdentifier: VideoFeedEpisodesSectionHeaderView.reuseID,
+                            withReuseIdentifier: NewsletterItemsSectionCollectionReusableView.reuseID,
                             for: indexPath
-                        ) as? VideoFeedEpisodesSectionHeaderView else {
+                        ) as? NewsletterItemsSectionCollectionReusableView else {
                             preconditionFailure()
                         }
                         
-                        headerView.configure(
-                            withEpisode: self.videoPlayerEpisode,
-                            onFeedSubscribed: self.onFeedSubscriptionSelected,
-                            onFeedUnsubscribed: self.onFeedSubscriptionCancellationSelected
-                        )
+                        headerView.configure(withItemsCount: self.newsletterItems.count)
                         
                         return headerView
                     default:
@@ -361,21 +294,17 @@ extension VideoFeedEpisodePlayerCollectionViewController {
 
 
 // MARK: - Data Source Snapshot
-extension VideoFeedEpisodePlayerCollectionViewController {
+extension NewsletterFeedItemsCollectionViewController {
 
     func makeSnapshotForCurrentState() -> DataSourceSnapshot {
         var snapshot = DataSourceSnapshot()
 
         snapshot.appendSections(CollectionViewSection.allCases)
-        
-        snapshot.appendItems(
-            [ DataSourceItem.videoPlayerEpisodeDetails(videoPlayerEpisode) ],
-            toSection: .videoPlayerEpisodeDetails
-        )
+
 
         snapshot.appendItems(
-            videoFeedEpisodes.map { DataSourceItem.videoFeedEpisode($0) },
-            toSection: .videoFeedEpisodes
+            newsletterItems.map { DataSourceItem.newsletterItem($0) },
+            toSection: .newsletterItems
         )
 
         return snapshot
@@ -387,27 +316,11 @@ extension VideoFeedEpisodePlayerCollectionViewController {
 
         dataSource.apply(snapshot, animatingDifferences: shouldAnimate)
     }
-    
-    
-    func updateWithNew(
-        videoPlayerEpisode: Video,
-        shouldAnimate: Bool = true
-    ) {
-        self.videoPlayerEpisode = videoPlayerEpisode
-        self.videoFeedEpisodes = videoPlayerEpisode.videoFeed?.videosArray ?? []
-
-        if let dataSource = dataSource {
-            dataSource.apply(
-                makeSnapshotForCurrentState(),
-                animatingDifferences: shouldAnimate
-            )
-        }
-    }
 }
 
 
 // MARK: - `UICollectionViewDelegate` Methods
-extension VideoFeedEpisodePlayerCollectionViewController {
+extension NewsletterFeedItemsCollectionViewController {
 
     override func collectionView(
         _ collectionView: UICollectionView,
@@ -420,10 +333,8 @@ extension VideoFeedEpisodePlayerCollectionViewController {
         }
         
         switch dataSourceItem {
-        case .videoPlayerEpisodeDetails:
-            break
-        case .videoFeedEpisode(let episode):
-            self.onVideoEpisodeCellSelected(episode.objectID)
+        case .newsletterItem(let newsletterItem):
+            self.onNewsletterItemCellSelected(newsletterItem.objectID)
         }
     }
 }

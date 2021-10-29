@@ -43,7 +43,7 @@ extension API {
             preconditionFailure()
         }
         
-        fetchYouTubeRSSFeed(
+        fetchNewsletterRSSFeed(
             from: urlPath,
             then: { result in
                 switch result {

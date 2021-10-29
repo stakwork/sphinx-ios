@@ -43,8 +43,8 @@ extension DashboardNewsletterFeedCollectionViewController {
         newsletterFeeds: [NewsletterFeed] = [],
         newsletterItems: [NewsletterItem] = [],
         interSectionSpacing: CGFloat = 20.0,
-        onVideoEpisodeCellSelected: ((NSManagedObjectID) -> Void)!,
-        onVideoFeedCellSelected: ((NSManagedObjectID) -> Void)!,
+        onNewsletterItemCellSelected: ((NSManagedObjectID) -> Void)!,
+        onNewsletterFeedCellSelected: ((NSManagedObjectID) -> Void)!,
         onNewResultsFetched: @escaping ((Int) -> Void) = { _ in }
     ) -> DashboardNewsletterFeedCollectionViewController {
         
@@ -58,8 +58,8 @@ extension DashboardNewsletterFeedCollectionViewController {
         viewController.newsletterFeeds = newsletterFeeds
         viewController.newsletterItems = newsletterItems
         viewController.interSectionSpacing = interSectionSpacing
-        viewController.onNewsletterItemCellSelected = onVideoEpisodeCellSelected
-        viewController.onNewsletterFeedCellSelected = onVideoFeedCellSelected
+        viewController.onNewsletterItemCellSelected = onNewsletterItemCellSelected
+        viewController.onNewsletterFeedCellSelected = onNewsletterFeedCellSelected
         viewController.onNewResultsFetched = onNewResultsFetched
         
         viewController.fetchedResultsController = Self.makeFetchedResultsController(using: managedObjectContext)

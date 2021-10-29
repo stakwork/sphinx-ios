@@ -165,6 +165,14 @@
 		4754FA8F2729DD38006295A5 /* DashboardNewsletterFeedCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4754FA8E2729DD38006295A5 /* DashboardNewsletterFeedCollectionViewController.swift */; };
 		4754FA93272ADB02006295A5 /* DashboardNewsletterItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4754FA91272ADB02006295A5 /* DashboardNewsletterItemCollectionViewCell.swift */; };
 		4754FA94272ADB02006295A5 /* DashboardNewsletterItemCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4754FA92272ADB02006295A5 /* DashboardNewsletterItemCollectionViewCell.xib */; };
+		4754FA97272B01E3006295A5 /* NewsletterFeed.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4754FA96272B01E3006295A5 /* NewsletterFeed.storyboard */; };
+		4754FA99272B020E006295A5 /* NewsletterItemDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4754FA98272B020E006295A5 /* NewsletterItemDetailViewController.swift */; };
+		4754FA9B272B1378006295A5 /* NewsletterFeedContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4754FA9A272B1378006295A5 /* NewsletterFeedContainerViewController.swift */; };
+		4754FA9D272B1391006295A5 /* NewsletterFeedItemsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4754FA9C272B1391006295A5 /* NewsletterFeedItemsCollectionViewController.swift */; };
+		4754FAA1272B2040006295A5 /* NewsletterItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4754FA9F272B2040006295A5 /* NewsletterItemCollectionViewCell.swift */; };
+		4754FAA2272B2040006295A5 /* NewsletterItemCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4754FAA0272B2040006295A5 /* NewsletterItemCollectionViewCell.xib */; };
+		4754FAA6272B2060006295A5 /* NewsletterItemsSectionCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4754FAA4272B2060006295A5 /* NewsletterItemsSectionCollectionReusableView.swift */; };
+		4754FAA7272B2060006295A5 /* NewsletterItemsSectionCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4754FAA5272B2060006295A5 /* NewsletterItemsSectionCollectionReusableView.xib */; };
 		4756DE0F232ABF90001BAFD6 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4756DE0E232ABF90001BAFD6 /* MainCoordinator.swift */; };
 		475723A5247EB5D1001ADC7E /* AudioRecorderHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475723A4247EB5D1001ADC7E /* AudioRecorderHelper.swift */; };
 		475723A7247EB5DA001ADC7E /* AudioPlayerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475723A6247EB5DA001ADC7E /* AudioPlayerHelper.swift */; };
@@ -837,6 +845,14 @@
 		4754FA8E2729DD38006295A5 /* DashboardNewsletterFeedCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardNewsletterFeedCollectionViewController.swift; sourceTree = "<group>"; };
 		4754FA91272ADB02006295A5 /* DashboardNewsletterItemCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardNewsletterItemCollectionViewCell.swift; sourceTree = "<group>"; };
 		4754FA92272ADB02006295A5 /* DashboardNewsletterItemCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DashboardNewsletterItemCollectionViewCell.xib; sourceTree = "<group>"; };
+		4754FA96272B01E3006295A5 /* NewsletterFeed.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NewsletterFeed.storyboard; sourceTree = "<group>"; };
+		4754FA98272B020E006295A5 /* NewsletterItemDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsletterItemDetailViewController.swift; sourceTree = "<group>"; };
+		4754FA9A272B1378006295A5 /* NewsletterFeedContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsletterFeedContainerViewController.swift; sourceTree = "<group>"; };
+		4754FA9C272B1391006295A5 /* NewsletterFeedItemsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsletterFeedItemsCollectionViewController.swift; sourceTree = "<group>"; };
+		4754FA9F272B2040006295A5 /* NewsletterItemCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsletterItemCollectionViewCell.swift; sourceTree = "<group>"; };
+		4754FAA0272B2040006295A5 /* NewsletterItemCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewsletterItemCollectionViewCell.xib; sourceTree = "<group>"; };
+		4754FAA4272B2060006295A5 /* NewsletterItemsSectionCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsletterItemsSectionCollectionReusableView.swift; sourceTree = "<group>"; };
+		4754FAA5272B2060006295A5 /* NewsletterItemsSectionCollectionReusableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewsletterItemsSectionCollectionReusableView.xib; sourceTree = "<group>"; };
 		4756DE0E232ABF90001BAFD6 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		475723A4247EB5D1001ADC7E /* AudioRecorderHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorderHelper.swift; sourceTree = "<group>"; };
 		475723A6247EB5DA001ADC7E /* AudioPlayerHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerHelper.swift; sourceTree = "<group>"; };
@@ -1903,6 +1919,37 @@
 			path = "Newsletter Item Cell";
 			sourceTree = "<group>";
 		};
+		4754FA95272B01C8006295A5 /* Newsletter Feed */ = {
+			isa = PBXGroup;
+			children = (
+				4754FAA3272B2048006295A5 /* Newsletter Items Section Header */,
+				4754FA9E272B2000006295A5 /* Newsletter Item Cell */,
+				4754FA96272B01E3006295A5 /* NewsletterFeed.storyboard */,
+				4754FA98272B020E006295A5 /* NewsletterItemDetailViewController.swift */,
+				4754FA9A272B1378006295A5 /* NewsletterFeedContainerViewController.swift */,
+				4754FA9C272B1391006295A5 /* NewsletterFeedItemsCollectionViewController.swift */,
+			);
+			path = "Newsletter Feed";
+			sourceTree = "<group>";
+		};
+		4754FA9E272B2000006295A5 /* Newsletter Item Cell */ = {
+			isa = PBXGroup;
+			children = (
+				4754FA9F272B2040006295A5 /* NewsletterItemCollectionViewCell.swift */,
+				4754FAA0272B2040006295A5 /* NewsletterItemCollectionViewCell.xib */,
+			);
+			path = "Newsletter Item Cell";
+			sourceTree = "<group>";
+		};
+		4754FAA3272B2048006295A5 /* Newsletter Items Section Header */ = {
+			isa = PBXGroup;
+			children = (
+				4754FAA4272B2060006295A5 /* NewsletterItemsSectionCollectionReusableView.swift */,
+				4754FAA5272B2060006295A5 /* NewsletterItemsSectionCollectionReusableView.xib */,
+			);
+			path = "Newsletter Items Section Header";
+			sourceTree = "<group>";
+		};
 		4756DE0C232ABDED001BAFD6 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
@@ -1924,6 +1971,7 @@
 				47935FBA24A1047F00B39ADB /* Stakwork Login */,
 				47FA43F723748828005D8C63 /* Subscriptions */,
 				F3188BA1271CDA0500890DDD /* Video Feed */,
+				4754FA95272B01C8006295A5 /* Newsletter Feed */,
 				4789E24624EDB709003991BE /* WebAppsAndPodcasts */,
 				F33846E0267ACEF50041F1EA /* Welcome */,
 			);
@@ -3502,7 +3550,9 @@
 				47AF0D3C254C9F1000C98398 /* fireworks.json in Resources */,
 				475BDCB6232AC1E800C5BBD6 /* MessageBubbleView.xib in Resources */,
 				475BDD0A232AC24600C5BBD6 /* PaidInvoiceReceivedTableViewCell.xib in Resources */,
+				4754FA97272B01E3006295A5 /* NewsletterFeed.storyboard in Resources */,
 				4797E76B24B8E4C900D13270 /* AddFriendRowButton.xib in Resources */,
+				4754FAA7272B2060006295A5 /* NewsletterItemsSectionCollectionReusableView.xib in Resources */,
 				4797E7F924B8F9C300D13270 /* SubscriptionTimeIntervalView.xib in Resources */,
 				4797E7CF24B8F4DC00D13270 /* AppAppearenceView.xib in Resources */,
 				4797E79D24B8EEC800D13270 /* InvoiceSentTableViewCell.xib in Resources */,
@@ -3528,6 +3578,7 @@
 				F3188BAE271CF20B00890DDD /* VideoFeedEpisodePlayerCollectionViewDetailsCell.xib in Resources */,
 				F3197C0D267FA2C800330F79 /* ellipse.gif in Resources */,
 				F33119A0268E9C1B005082EB /* XcodeStoreKitConfiguration.storekit in Resources */,
+				4754FAA2272B2040006295A5 /* NewsletterItemCollectionViewCell.xib in Resources */,
 				4789E26224F04752003991BE /* SettingsTabsView.xib in Resources */,
 				4797E81524BBA54300D13270 /* ChatAccessoryView.xib in Resources */,
 				473842F52391970B00AA640F /* FullScreenImageView.xib in Resources */,
@@ -3765,6 +3816,7 @@
 				47308E0224FEE6E600FFAC6F /* SSLSecurity.swift in Sources */,
 				4754FA8A2729ACA3006295A5 /* API+NewsletterFeedRSSUtils.swift in Sources */,
 				F3B2519526DFA1E800C96D42 /* DashboardRootViewController+DashboardFeedsListContainerViewControllerDelegate.swift in Sources */,
+				4754FA9B272B1378006295A5 /* NewsletterFeedContainerViewController.swift in Sources */,
 				471D8D1227274ADB0024AEAC /* GroupsManager+Bot.swift in Sources */,
 				475BDD65232BEEAB00C5BBD6 /* LeftMenuViewController.swift in Sources */,
 				F360123526E96D59009B8DC0 /* PodcastFeedSearchResult.swift in Sources */,
@@ -3973,10 +4025,13 @@
 				F3EF52C526B2823700F06668 /* FeedFilterChipsCollectionViewController.swift in Sources */,
 				47E194CE2350DB0E004B86A1 /* SphinxSocketManager.swift in Sources */,
 				F394ECAD26825D3400529038 /* NewUserSignupFormViewController+FormSubmissionUtils.swift in Sources */,
+				4754FAA1272B2040006295A5 /* NewsletterItemCollectionViewCell.swift in Sources */,
 				4703CF892518FFB1007B685C /* FileReceivedTableViewCell.swift in Sources */,
 				47AAFC85238F00AD00E30BDA /* AttachmentsManager.swift in Sources */,
+				4754FAA6272B2060006295A5 /* NewsletterItemsSectionCollectionReusableView.swift in Sources */,
 				471FACDA23E9BE48007DE1C8 /* SupportViewController.swift in Sources */,
 				47669F4423D1F93700C17A77 /* GroupDetailsViewController.swift in Sources */,
+				4754FA9D272B1391006295A5 /* NewsletterFeedItemsCollectionViewController.swift in Sources */,
 				47F258C32539DA2700122A5A /* CommonPodcastCommentTableViewCell.swift in Sources */,
 				47D03DF42510ED9C0077A968 /* FileInfoView.swift in Sources */,
 				F33846EF267B15800041F1EA /* WelcomeCompleteViewController.swift in Sources */,
@@ -4023,6 +4078,7 @@
 				F39767C826C5A85F00DDFC0A /* LeftMenuDelegate.swift in Sources */,
 				479A03E92583A7180093DB30 /* LocalNetworkPermissionService.swift in Sources */,
 				471FACD823E9B65C007DE1C8 /* EmailHelper.swift in Sources */,
+				4754FA99272B020E006295A5 /* NewsletterItemDetailViewController.swift in Sources */,
 				47904C1F24BF403400710E7A /* NotificationSoundTableViewCell.swift in Sources */,
 				470F4C36257A765D00288A9B /* LinkPreviewBubbleView.swift in Sources */,
 				4707089424AE45D400A98DCA /* UserContactChatListExtension.swift in Sources */,

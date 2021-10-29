@@ -68,7 +68,7 @@ typealias PodcastIndexEpisodeFetchCompletionHandler = (
 
 
 // YouTube RSS Feeds
-typealias YouTubeRSSFeedFetchCompletionHandler = (
+typealias RSSFeedFetchCompletionHandler = (
     Result<Data, API.RequestError>
 ) -> ()
 

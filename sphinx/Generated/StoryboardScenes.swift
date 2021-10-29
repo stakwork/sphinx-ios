@@ -117,6 +117,11 @@ internal enum StoryboardScene {
             identifier: "VideoFeedCollectionViewController"
         )
         
+        internal static let newsletterFeedCollectionViewController = SceneType<DashboardNewsletterFeedCollectionViewController>(
+            storyboard: Dashboard.self,
+            identifier: "NewsletterFeedCollectionViewController"
+        )
+        
     }
     
     internal enum LeftMenu: StoryboardType {
@@ -284,6 +289,17 @@ internal enum StoryboardScene {
 
         
         internal static let videoFeedEpisodePlayerCollectionViewController = SceneType<VideoFeedEpisodePlayerCollectionViewController>(storyboard: VideoFeed.self, identifier: "VideoFeedEpisodePlayerCollectionViewController")
+    }
+    
+    internal enum NewsletterFeed: StoryboardType {
+        internal static let storyboardName = "NewsletterFeed"
+        
+        
+        internal static let newsletterItemDetailViewController = SceneType<NewsletterItemDetailViewController>(storyboard: NewsletterFeed.self, identifier: "NewsletterItemDetailViewController")
+        
+        internal static let newsletterFeedContainerViewController = SceneType<NewsletterFeedContainerViewController>(storyboard: NewsletterFeed.self, identifier: "NewsletterFeedContainerViewController")
+        
+        internal static let newsletterFeedItemsCollectionViewController = SceneType<NewsletterFeedItemsCollectionViewController>(storyboard: NewsletterFeed.self, identifier: "NewsletterFeedItemsCollectionViewController")
     }
     
 }

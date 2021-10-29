@@ -1,25 +1,28 @@
-// DashboardVideoFeedCollectionViewController.swift
 //
-// Created by CypherPoet.
-// ✌️
+//  DashboardNewsletterFeedCollectionViewController.swift
+//  sphinx
 //
-    
+//  Created by Tomas Timinskas on 27/10/2021.
+//  Copyright © 2021 sphinx. All rights reserved.
+//
+
 import UIKit
 import CoreData
 
 
-class DashboardVideoFeedCollectionViewController: UICollectionViewController {
-    var videoFeeds: [VideoFeed]!
-    var videoEpisodes: [Video]!
+class DashboardNewsletterFeedCollectionViewController: UICollectionViewController {
+    
+    var newsletterFeeds: [NewsletterFeed]!
+    var newsletterItems: [NewsletterItem]!
     
     var interSectionSpacing: CGFloat = 20.0
 
-    var onVideoEpisodeCellSelected: ((NSManagedObjectID) -> Void)!
-    var onVideoFeedCellSelected: ((NSManagedObjectID) -> Void)!
+    var onNewsletterItemCellSelected: ((NSManagedObjectID) -> Void)!
+    var onNewsletterFeedCellSelected: ((NSManagedObjectID) -> Void)!
     var onNewResultsFetched: ((Int) -> Void)!
 
     private var managedObjectContext: NSManagedObjectContext!
-    private var fetchedResultsController: NSFetchedResultsController<VideoFeed>!
+    private var fetchedResultsController: NSFetchedResultsController<NewsletterFeed>!
     private var currentDataSnapshot: DataSourceSnapshot!
     private var dataSource: DataSource!
 
@@ -33,29 +36,30 @@ class DashboardVideoFeedCollectionViewController: UICollectionViewController {
 
 
 // MARK: - Instantiation
-extension DashboardVideoFeedCollectionViewController {
+extension DashboardNewsletterFeedCollectionViewController {
 
     static func instantiate(
         managedObjectContext: NSManagedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext,
-        videoFeeds: [VideoFeed] = [],
-        videoEpisodes: [Video] = [],
+        newsletterFeeds: [NewsletterFeed] = [],
+        newsletterItems: [NewsletterItem] = [],
         interSectionSpacing: CGFloat = 20.0,
-        onVideoEpisodeCellSelected: ((NSManagedObjectID) -> Void)!,
-        onVideoFeedCellSelected: ((NSManagedObjectID) -> Void)!,
+        onNewsletterItemCellSelected: ((NSManagedObjectID) -> Void)!,
+        onNewsletterFeedCellSelected: ((NSManagedObjectID) -> Void)!,
         onNewResultsFetched: @escaping ((Int) -> Void) = { _ in }
-    ) -> DashboardVideoFeedCollectionViewController {
+    ) -> DashboardNewsletterFeedCollectionViewController {
+        
         let viewController = StoryboardScene
             .Dashboard
-            .videoFeedCollectionViewController
+            .newsletterFeedCollectionViewController
             .instantiate()
 
         viewController.managedObjectContext = managedObjectContext
 
-        viewController.videoFeeds = videoFeeds
-        viewController.videoEpisodes = videoEpisodes
+        viewController.newsletterFeeds = newsletterFeeds
+        viewController.newsletterItems = newsletterItems
         viewController.interSectionSpacing = interSectionSpacing
-        viewController.onVideoEpisodeCellSelected = onVideoEpisodeCellSelected
-        viewController.onVideoFeedCellSelected = onVideoFeedCellSelected
+        viewController.onNewsletterItemCellSelected = onNewsletterItemCellSelected
+        viewController.onNewsletterFeedCellSelected = onNewsletterFeedCellSelected
         viewController.onNewResultsFetched = onNewResultsFetched
         
         viewController.fetchedResultsController = Self.makeFetchedResultsController(using: managedObjectContext)
@@ -67,17 +71,17 @@ extension DashboardVideoFeedCollectionViewController {
 
 
 // MARK: - Layout & Data Structure
-extension DashboardVideoFeedCollectionViewController {
+extension DashboardNewsletterFeedCollectionViewController {
     
     enum CollectionViewSection: Int, CaseIterable {
-        case videoEpisodes
-        case videoFeeds
+        case newsletterItems
+        case newsletterFeeds
         
         var titleForDisplay: String {
             switch self {
-            case .videoEpisodes:
-                return "Watch Now"
-            case .videoFeeds:
+            case .newsletterItems:
+                return "Read Now"
+            case .newsletterFeeds:
                 return "Following"
             }
         }
@@ -85,8 +89,8 @@ extension DashboardVideoFeedCollectionViewController {
     
     
     enum DataSourceItem: Hashable {
-        case videoEpisode(Video)
-        case videoFeed(VideoFeed)
+        case newsletterItem(NewsletterItem)
+        case newsletterFeed(NewsletterFeed)
     }
 
     
@@ -98,7 +102,7 @@ extension DashboardVideoFeedCollectionViewController {
 
 
 // MARK: - Lifecycle
-extension DashboardVideoFeedCollectionViewController {
+extension DashboardNewsletterFeedCollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -118,7 +122,7 @@ extension DashboardVideoFeedCollectionViewController {
 
 
 // MARK: - Layout Composition
-extension DashboardVideoFeedCollectionViewController {
+extension DashboardNewsletterFeedCollectionViewController {
 
     func makeSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
         let headerSize = NSCollectionLayoutSize(
@@ -134,7 +138,7 @@ extension DashboardVideoFeedCollectionViewController {
     }
 
 
-    func makeVideoFeedSectionLayout() -> NSCollectionLayoutSection {
+    func makeNewsletterFeedSectionLayout() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
             heightDimension: .fractionalHeight(1.0)
@@ -160,7 +164,7 @@ extension DashboardVideoFeedCollectionViewController {
     }
     
     
-    func makeVideoEpisodeSectionLayout() -> NSCollectionLayoutSection {
+    func makeNewsletterItemSectionLayout() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
             heightDimension: .fractionalHeight(1.0)
@@ -171,7 +175,7 @@ extension DashboardVideoFeedCollectionViewController {
 
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(0.9),
-            heightDimension: .estimated(241.0)
+            heightDimension: .estimated(300.0)
         )
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
 
@@ -189,10 +193,10 @@ extension DashboardVideoFeedCollectionViewController {
     func makeSectionProvider() -> UICollectionViewCompositionalLayoutSectionProvider {
         { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
             switch CollectionViewSection(rawValue: sectionIndex)! {
-            case .videoEpisodes:
-                return self.makeVideoEpisodeSectionLayout()
-            case .videoFeeds:
-                return self.makeVideoFeedSectionLayout()
+            case .newsletterItems:
+                return self.makeNewsletterItemSectionLayout()
+            case .newsletterFeeds:
+                return self.makeNewsletterFeedSectionLayout()
             }
         }
     }
@@ -215,7 +219,7 @@ extension DashboardVideoFeedCollectionViewController {
 
 
 // MARK: - Collection View Configuration and View Registration
-extension DashboardVideoFeedCollectionViewController {
+extension DashboardNewsletterFeedCollectionViewController {
 
     func registerViews(for collectionView: UICollectionView) {
         collectionView.register(
@@ -224,8 +228,8 @@ extension DashboardVideoFeedCollectionViewController {
         )
         
         collectionView.register(
-            DashboardVideoEpisodeCollectionViewCell.nib,
-            forCellWithReuseIdentifier: DashboardVideoEpisodeCollectionViewCell.reuseID
+            DashboardNewsletterItemCollectionViewCell.nib,
+            forCellWithReuseIdentifier: DashboardNewsletterItemCollectionViewCell.reuseID
         )
 
         collectionView.register(
@@ -255,7 +259,7 @@ extension DashboardVideoFeedCollectionViewController {
 
 
 // MARK: - Data Source Configuration
-extension DashboardVideoFeedCollectionViewController {
+extension DashboardNewsletterFeedCollectionViewController {
 
     func makeDataSource(for collectionView: UICollectionView) -> DataSource {
         let dataSource = DataSource(
@@ -280,10 +284,11 @@ extension DashboardVideoFeedCollectionViewController {
 
 
 // MARK: - Data Source View Providers
-extension DashboardVideoFeedCollectionViewController {
+extension DashboardNewsletterFeedCollectionViewController {
 
     func makeCellProvider(for collectionView: UICollectionView) -> DataSource.CellProvider {
         { (collectionView, indexPath, dataSourceItem) -> UICollectionViewCell in
+            
             guard
                 let section = CollectionViewSection(rawValue: indexPath.section)
             else {
@@ -291,32 +296,33 @@ extension DashboardVideoFeedCollectionViewController {
             }
             
             switch section {
-            case .videoEpisodes:
+            case .newsletterItems:
                 guard
-                    let episodeCell = collectionView.dequeueReusableCell(
-                        withReuseIdentifier: DashboardVideoEpisodeCollectionViewCell.reuseID,
+                    let itemCell = collectionView.dequeueReusableCell(
+                        withReuseIdentifier: DashboardNewsletterItemCollectionViewCell.reuseID,
                         for: indexPath
-                    ) as? DashboardVideoEpisodeCollectionViewCell,
-                    case .videoEpisode(let videoEpisode) = dataSourceItem
+                    ) as? DashboardNewsletterItemCollectionViewCell,
+                    case .newsletterItem(let newsletterItem) = dataSourceItem
                 else {
                     preconditionFailure("Failed to dequeue expected reusable cell type")
                 }
                 
-                episodeCell.configure(withVideoEpisode: videoEpisode)
+                itemCell.configure(withNewsletterItem: newsletterItem)
                 
-                return episodeCell
-            case .videoFeeds:
+                return itemCell
+                
+            case .newsletterFeeds:
                 guard
                     let feedCell = collectionView.dequeueReusableCell(
                         withReuseIdentifier: DashboardFeedSquaredThumbnailCollectionViewCell.reuseID,
                         for: indexPath
                     ) as? DashboardFeedSquaredThumbnailCollectionViewCell,
-                    case .videoFeed(let videoFeed) = dataSourceItem
+                    case .newsletterFeed(let newsletterFeed) = dataSourceItem
                 else {
                     preconditionFailure("Failed to dequeue expected reusable cell type")
                 }
                 
-                feedCell.configure(withItem: videoFeed)
+                feedCell.configure(withItem: newsletterFeed)
                 
                 return feedCell
             }
@@ -352,7 +358,7 @@ extension DashboardVideoFeedCollectionViewController {
 
 
 // MARK: - Data Source Snapshot
-extension DashboardVideoFeedCollectionViewController {
+extension DashboardNewsletterFeedCollectionViewController {
 
     func makeSnapshotForCurrentState() -> DataSourceSnapshot {
         var snapshot = DataSourceSnapshot()
@@ -360,13 +366,13 @@ extension DashboardVideoFeedCollectionViewController {
         snapshot.appendSections(CollectionViewSection.allCases)
         
         snapshot.appendItems(
-            videoFeeds.map { DataSourceItem.videoFeed($0) },
-            toSection: .videoFeeds
+            newsletterFeeds.map { DataSourceItem.newsletterFeed($0) },
+            toSection: .newsletterFeeds
         )
         
         snapshot.appendItems(
-            videoEpisodes.map { DataSourceItem.videoEpisode($0) },
-            toSection: .videoEpisodes
+            newsletterItems.map { DataSourceItem.newsletterItem($0) },
+            toSection: .newsletterItems
         )
 
         return snapshot
@@ -381,11 +387,11 @@ extension DashboardVideoFeedCollectionViewController {
     
     
     func updateWithNew(
-        videoFeeds: [VideoFeed],
+        newsletterFeeds: [NewsletterFeed],
         shouldAnimate: Bool = true
     ) {
-        self.videoFeeds = videoFeeds
-        videoEpisodes = videoFeeds.compactMap(\.videosArray.last)
+        self.newsletterFeeds = newsletterFeeds
+        newsletterItems = newsletterFeeds.compactMap(\.itemsArray.first)
 
         if let dataSource = dataSource {
             dataSource.apply(
@@ -397,10 +403,10 @@ extension DashboardVideoFeedCollectionViewController {
     
     
     func updateWithNew(
-        videoEpisodes: [Video],
+        newsletterItems: [NewsletterItem],
         shouldAnimate: Bool = true
     ) {
-        self.videoEpisodes = videoEpisodes
+        self.newsletterItems = newsletterItems
 
         if let dataSource = dataSource {
             dataSource.apply(
@@ -413,12 +419,12 @@ extension DashboardVideoFeedCollectionViewController {
 
 
 // MARK: -  Fetched Result Controller
-extension DashboardVideoFeedCollectionViewController {
+extension DashboardNewsletterFeedCollectionViewController {
     
     static func makeFetchedResultsController(
         using managedObjectContext: NSManagedObjectContext
-    ) -> NSFetchedResultsController<VideoFeed> {
-        let fetchRequest = VideoFeed.FetchRequests.followedFeeds()
+    ) -> NSFetchedResultsController<NewsletterFeed> {
+        let fetchRequest = NewsletterFeed.FetchRequests.followedFeeds()
         
         return NSFetchedResultsController(
             fetchRequest: fetchRequest,
@@ -443,7 +449,7 @@ extension DashboardVideoFeedCollectionViewController {
 
 
 // MARK: - `UICollectionViewDelegate` Methods
-extension DashboardVideoFeedCollectionViewController {
+extension DashboardNewsletterFeedCollectionViewController {
 
     override func collectionView(
         _ collectionView: UICollectionView,
@@ -457,28 +463,29 @@ extension DashboardVideoFeedCollectionViewController {
         }
 
         switch section {
-        case .videoFeeds:
+        case .newsletterFeeds:
             guard
-                case let .videoFeed(videoFeed) = dataSourceItem
+                case let .newsletterFeed(newsletterFeed) = dataSourceItem
             else {
                 preconditionFailure()
             }
             
-            onVideoFeedCellSelected?(videoFeed.objectID)
-        case .videoEpisodes:
+            onNewsletterFeedCellSelected?(newsletterFeed.objectID)
+            
+        case .newsletterItems:
             guard
-                case let .videoEpisode(videoEpisode) = dataSourceItem
+                case let .newsletterItem(newsletterItem) = dataSourceItem
             else {
                 preconditionFailure()
             }
             
-            onVideoEpisodeCellSelected?(videoEpisode.objectID)
+            onNewsletterItemCellSelected?(newsletterItem.objectID)
         }
     }
 }
 
 
-extension DashboardVideoFeedCollectionViewController: NSFetchedResultsControllerDelegate {
+extension DashboardNewsletterFeedCollectionViewController: NSFetchedResultsControllerDelegate {
     
     /// Called when the contents of the fetched results controller change.
     ///
@@ -490,17 +497,46 @@ extension DashboardVideoFeedCollectionViewController: NSFetchedResultsController
         guard
             let resultController = controller as? NSFetchedResultsController<NSManagedObject>,
             let firstSection = resultController.sections?.first,
-            let foundFeeds = firstSection.objects as? [VideoFeed]
+            let foundFeeds = firstSection.objects as? [NewsletterFeed]
         else {
             return
         }
         
         DispatchQueue.main.async { [weak self] in
             self?.updateWithNew(
-                videoFeeds: foundFeeds
+                newsletterFeeds: foundFeeds
             )
             
             self?.onNewResultsFetched(foundFeeds.count)
         }
+    }
+}
+
+extension NewsletterFeed: DashboardFeedSquaredThumbnailCollectionViewItem {
+    
+    var imageURLPath: String? {
+        imageURL?.absoluteString ?? chat?.photoUrl
+    }
+    
+    var placeholderImageName: String? {
+        "podcastPlaceholder"
+    }
+    
+    var subtitle: String? {
+        feedDescription
+    }
+}
+
+extension NewsletterItem: DashboardFeedSquaredThumbnailCollectionViewItem {
+    var imageURLPath: String? {
+        newsletterFeed?.imageURL?.absoluteString ?? newsletterFeed?.chat?.photoUrl
+    }
+    
+    var placeholderImageName: String? {
+        "podcastPlaceholder"
+    }
+
+    var subtitle: String? {
+        itemDescription
     }
 }

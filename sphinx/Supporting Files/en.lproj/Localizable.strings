@@ -388,6 +388,8 @@
 "error.saving.item" = "There was an error saving %@, please try again later.";
 "image" = "image";
 "video" = "video";
+"article" = "Article";
+"articles" = "Articles";
 "dismiss" = "Dismiss";
 "invoice.paid" = "Invoice Paid";
 "amount" = "Amount";

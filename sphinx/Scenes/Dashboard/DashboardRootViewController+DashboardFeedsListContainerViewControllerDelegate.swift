@@ -2,7 +2,7 @@ import UIKit
 import CoreData
 
 
-extension DashboardRootViewController: DashboardFeedsListContainerViewControllerDelegate {
+extension DashboardRootViewController: DashboardFeedsListContainerViewControllerDelegate, NewsletterFeedContainerViewControllerDelegate {
     
     func viewController(
         _ viewController: UIViewController,
@@ -35,7 +35,7 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
             return
         }
         
-        guard let feedURLPath = podcastFeed.feedURLPath else {
+        guard let _ = podcastFeed.feedURLPath else {
             AlertHelper.showAlert(title: "Failed to find a URL for the feed.", message: "")
             return
         }
@@ -95,6 +95,36 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
             presentVideoPlayer(for: videoEpisode)
         }
     }
+    
+    func viewController(
+        _ viewController: UIViewController,
+        didSelectNewsletterFeedWithID newsletterFeedID: NSManagedObjectID
+    ) {
+        guard
+            let newsletterFeed = managedObjectContext
+                .object(with: newsletterFeedID) as? NewsletterFeed
+        else {
+            preconditionFailure()
+        }
+        
+        if viewController is DashboardFeedsContainerViewController {
+            presentNewsletterFeedVC(for: newsletterFeed)
+        }
+    }
+    
+    func viewController(
+        _ viewController: UIViewController,
+        didSelectNewsletterItemWithID newsletterItemID: NSManagedObjectID
+    ) {
+        guard
+            let newsletterItem = managedObjectContext
+                .object(with: newsletterItemID) as? NewsletterItem
+        else {
+            preconditionFailure()
+        }
+        
+        presentItemWebView(for: newsletterItem)
+    }
 }
 
 
@@ -125,6 +155,35 @@ extension DashboardRootViewController {
             .instantiate(
                 videoPlayerEpisode: videoEpisode,
                 dismissButtonStyle: .backArrow,
+                delegate: self
+            )
+        
+        viewController.modalPresentationStyle = .automatic
+        
+        navigationController?
+            .present(viewController, animated: true)
+    }
+    
+    private func presentItemWebView(
+        for newsletterItem: NewsletterItem
+    ) {
+        let viewController = NewsletterItemDetailViewController
+            .instantiate(
+                newsletterItem: newsletterItem
+            )
+        
+        viewController.modalPresentationStyle = .automatic
+        
+        navigationController?
+            .present(viewController, animated: true)
+    }
+    
+    private func presentNewsletterFeedVC(
+        for newsletterFeed: NewsletterFeed
+    ) {
+        let viewController = NewsletterFeedContainerViewController
+            .instantiate(
+                newsletterFeed: newsletterFeed,
                 delegate: self
             )
         

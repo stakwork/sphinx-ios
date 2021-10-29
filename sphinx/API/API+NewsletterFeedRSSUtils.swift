@@ -1,16 +1,17 @@
-// API+YouTubeRSSUtils.swift
 //
-// Created by CypherPoet.
-// ✌️
+//  API+NewsletterFeedRSSUtils.swift
+//  sphinx
 //
-    
+//  Created by Tomas Timinskas on 27/10/2021.
+//  Copyright © 2021 sphinx. All rights reserved.
+//
+
 import Foundation
 import Alamofire
 
-
 extension API {
     
-    public func fetchYouTubeRSSFeed(
+    public func fetchNewsletterRSSFeed(
         from feedURLPath: String,
         then completionHandler: @escaping RSSFeedFetchCompletionHandler
     ) {
@@ -22,8 +23,7 @@ extension API {
             completionHandler(.failure(.failedToCreateRequest(urlPath: feedURLPath)))
             return
         }
-        
-        
+    
         AF.request(request).responseData { response in
             guard let data = response.data else {
                 completionHandler(.failure(.unexpectedResponseData))
@@ -35,24 +35,24 @@ extension API {
     }
     
     
-    public func fetchYouTubeEpisodes(
-        for videoFeed: VideoFeed,
-        then completionHandler: @escaping ((Result<[Video], Error>) -> Void)
+    public func fetchNewsletterItems(
+        for newsletterFeed: NewsletterFeed,
+        then completionHandler: @escaping ((Result<[NewsletterItem], Error>) -> Void)
     ) {
-        guard let urlPath = videoFeed.feedURL?.absoluteString else {
+        guard let urlPath = newsletterFeed.feedURL?.absoluteString else {
             preconditionFailure()
         }
         
-        fetchYouTubeRSSFeed(
+        fetchNewsletterRSSFeed(
             from: urlPath,
             then: { result in
                 switch result {
                 case .success(let data):
-                    let parsingResult = YouTubeXMLParser.parseVideoFeedEntries(from: data)
+                    let parsingResult = NewsletterFeedXMLParser.parseNewsletterFeedItems(from: data)
                     
                     switch parsingResult {
-                    case .success(let videoEpisodes):
-                        completionHandler(.success(videoEpisodes))
+                    case .success(let newsletterItems):
+                        completionHandler(.success(newsletterItems))
                     case .failure(let error):
                         completionHandler(.failure(error))
                     }

@@ -465,7 +465,7 @@ public class Chat: NSManagedObject {
             let feedURLPath = tribesInfo?.feedUrl,
             let feedContentType = tribesInfo?.feedContentType
         {
-            if (feedContentType.isVideo && videoFeed == nil) {
+            if ((feedContentType.isVideo || feedURLPath.isYouTubeRSSFeedURL) && videoFeed == nil) {
                 fetchInitialVideoFeed(using: feedURLPath) { [weak self] in
                     self?.saveChat()
                 }

@@ -142,19 +142,13 @@ class PodcastPlayerHelper {
         
         chat?.fetchInitialPodcastFeed(using: url) { [weak self] in
             self?.podcast = chat?.podcastFeed
-            self?.chat = chat
-            
+
             callback(true)
         }
     }
     
     func processLocalPodcastFeed(chat: Chat?, callback: @escaping (Bool) -> ()) {
         if let podcastFeed = chat?.podcastFeed {
-            
-            if podcastFeed.episodes?.isEmpty == false {
-                self.chat = chat
-            }
-            
             callback(true)
         }
     }

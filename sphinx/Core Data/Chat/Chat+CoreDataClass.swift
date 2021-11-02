@@ -47,6 +47,8 @@ public class Chat: NSManagedObject {
             podcastPlayer = PodcastPlayerHelper()
         }
         podcastPlayer?.podcast = self.podcastFeed
+        podcastPlayer?.chat = self
+        
         return podcastPlayer!
     }
     

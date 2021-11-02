@@ -56,19 +56,6 @@ class CoreDataManager {
         }
     }
     
-    func persistContext() {
-        let context = CoreDataManager.sharedManager.persistentContainer.viewContext
-        
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-            }
-        }
-    }
-    
     func clearCoreDataStore() {
         let context = CoreDataManager.sharedManager.persistentContainer.viewContext
         context.performAndWait {

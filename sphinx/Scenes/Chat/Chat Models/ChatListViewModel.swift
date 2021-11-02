@@ -134,7 +134,7 @@ final class ChatListViewModel: NSObject {
                     completion(0,0, true)
                     
                     SphinxSocketManager.sharedInstance.connectWebsocket(forceConnect: true)
-                    CoreDataManager.sharedManager.persistContext()
+                    CoreDataManager.sharedManager.saveContext()
                 } else {
                     self.getAllMessages(page: page + 1, date: date, completion: completion)
                 }

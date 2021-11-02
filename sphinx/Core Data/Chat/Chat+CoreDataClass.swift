@@ -38,7 +38,7 @@ public class Chat: NSManagedObject {
     
     var ongoingMessage : String? = nil
     var image : UIImage? = nil
-    var tribesInfo: GroupsManager.TribeInfo? = nil
+    var tribeInfo: GroupsManager.TribeInfo? = nil
     
     var podcastPlayer: PodcastPlayerHelper? = nil
     
@@ -420,7 +420,8 @@ public class Chat: NSManagedObject {
                 host: host,
                 uuid: uuid,
                 callback: { chatJson in
-                    self.tribesInfo = GroupsManager.sharedInstance.getTribesInfoFrom(json: chatJson)
+                    self.tribeInfo = GroupsManager.sharedInstance.getTribesInfoFrom(json: chatJson)
+                    self.fetchFeedContent()
                     self.updateChatFromTribesInfo()
                     completion()
                 },
@@ -434,7 +435,7 @@ public class Chat: NSManagedObject {
     
     
     func getAppUrl() -> String? {
-        if let tribeInfo = self.tribesInfo, let appUrl = tribeInfo.appUrl, !appUrl.isEmpty {
+        if let tribeInfo = self.tribeInfo, let appUrl = tribeInfo.appUrl, !appUrl.isEmpty {
             return appUrl
         }
         return nil
@@ -442,7 +443,7 @@ public class Chat: NSManagedObject {
     
     func getFeedUrl() -> String? {
         if
-            let tribeInfo = self.tribesInfo,
+            let tribeInfo = self.tribeInfo,
             let feedUrl = tribeInfo.feedUrl,
             feedUrl.isEmpty == false
         {
@@ -459,11 +460,22 @@ public class Chat: NSManagedObject {
         return (self.pricePerMessage?.intValue ?? 0, self.escrowAmount?.intValue ?? 0)
     }
     
+    func fetchFeedContentInBackground() {
+        DispatchQueue
+            .global(qos: .utility)
+            .async { [weak self] in
+                guard
+                    let self = self
+                else { return }
+                
+                self.fetchFeedContent()
+            }
+    }
     
-    func updateChatFromTribesInfo() {
+    func fetchFeedContent() {
         if
-            let feedURLPath = tribesInfo?.feedUrl,
-            let feedContentType = tribesInfo?.feedContentType
+            let feedURLPath = tribeInfo?.feedUrl,
+            let feedContentType = tribeInfo?.feedContentType
         {
             if ((feedContentType.isVideo || feedURLPath.isYouTubeRSSFeedURL) && videoFeed == nil) {
                 fetchInitialVideoFeed(using: feedURLPath) { [weak self] in
@@ -473,18 +485,24 @@ public class Chat: NSManagedObject {
                 fetchInitialNewsletterFeed(using: feedURLPath) { [weak self] in
                     self?.saveChat()
                 }
+            } else if (feedContentType.isPodcast && podcastFeed == nil) {
+                fetchInitialPodcastFeed(using: feedURLPath) { [weak self] in
+                    self?.saveChat()
+                }
             }
         }
-        
+    }
+    
+    func updateChatFromTribesInfo() {
         if isMyPublicGroup() {
             return
         }
         
-        escrowAmount = NSDecimalNumber(integerLiteral: tribesInfo?.amountToStake ?? (escrowAmount?.intValue ?? 0))
-        pricePerMessage = NSDecimalNumber(integerLiteral: tribesInfo?.pricePerMessage ?? (pricePerMessage?.intValue ?? 0))
-        name = (tribesInfo?.name?.isEmpty ?? true) ? name : tribesInfo!.name
+        escrowAmount = NSDecimalNumber(integerLiteral: tribeInfo?.amountToStake ?? (escrowAmount?.intValue ?? 0))
+        pricePerMessage = NSDecimalNumber(integerLiteral: tribeInfo?.pricePerMessage ?? (pricePerMessage?.intValue ?? 0))
+        name = (tribeInfo?.name?.isEmpty ?? true) ? name : tribeInfo!.name
         
-        let tribeImage = tribesInfo?.img ?? photoUrl
+        let tribeImage = tribeInfo?.img ?? photoUrl
         
         if photoUrl != tribeImage {
             photoUrl = tribeImage
@@ -500,6 +518,33 @@ public class Chat: NSManagedObject {
         checkForDeletedTribe()
     }
     
+    func fetchInitialPodcastFeed(
+        using feedURLPath: String,
+        then completionHandler: (() -> Void)? = {}
+    ) {
+        let tribesServerURL = "https://tribes.sphinx.chat/podcast?url=\(feedURLPath)"
+        
+        API.sharedInstance.getPodcastFeed(
+            url: tribesServerURL,
+            callback: { json in
+                self.persistDataForPodcastFeed(using: json)
+                completionHandler?()
+            },
+            errorCallback: {
+                completionHandler?()
+            }
+        )
+    }
+    
+    func persistDataForPodcastFeed(
+        using json: JSON
+    ) {
+        if let podcastFeed = PodcastFeedService.parsePodcastFeed(using: json, with: tribeInfo?.feedUrl, existingPodcast: podcastFeed) {
+            podcastFeed.chat = self
+            
+            CoreDataManager.sharedManager.saveContext()
+        }
+    }
     
     func fetchInitialVideoFeed(
         using feedURLPath: String,
@@ -536,7 +581,6 @@ public class Chat: NSManagedObject {
                 
                 switch parsingResult {
                 case .success(let newsletterFeed):
-                    newsletterFeed.chat = self
                     self.newsletterFeed = newsletterFeed
                 case .failure(let error):
                     print(error)
@@ -550,7 +594,7 @@ public class Chat: NSManagedObject {
     }
     
     func checkForDeletedTribe() {
-        if let tribesInfo = self.tribesInfo, tribesInfo.deleted {
+        if let tribeInfo = self.tribeInfo, tribeInfo.deleted {
             if let lastMessage = self.getAllMessages(limit: 1).last, lastMessage.type != TransactionMessage.TransactionMessageType.groupDelete.rawValue {
                 AlertHelper.showAlert(title: "deleted.tribe.title".localized, message: "deleted.tribe.description".localized)
             }

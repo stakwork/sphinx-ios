@@ -176,8 +176,11 @@ class JoinGroupDetailsViewController: KeyboardEventsViewController {
             
             API.sharedInstance.joinTribe(params: params, callback: { chatJson in
                 if let chat = Chat.insertChat(chat: chatJson) {
+                    chat.tribeInfo = tribeInfo
                     chat.pricePerMessage = NSDecimalNumber(floatLiteral: Double(tribeInfo.pricePerMessage ?? 0))
                     chat.saveChat()
+                    
+                    chat.fetchFeedContentInBackground()
                     
                     self.delegate?.shouldReloadContacts?(reload: true)
                     self.closeButtonTouched()

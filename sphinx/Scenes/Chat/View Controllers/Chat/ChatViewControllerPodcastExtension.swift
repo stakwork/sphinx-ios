@@ -12,7 +12,7 @@ extension ChatViewController : PodcastPlayerVCDelegate {
     func shouldDismissPlayerView() {}
     
     func loadPodcastFeed() {
-        if chat?.tribesInfo?.feedContentType?.isPodcast == false {
+        if chat?.tribeInfo?.feedContentType?.isPodcast == false {
             return
         }
         

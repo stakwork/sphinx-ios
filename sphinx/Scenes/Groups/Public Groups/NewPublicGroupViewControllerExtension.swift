@@ -69,7 +69,7 @@ extension NewPublicGroupViewController {
         if let chat = chat {
             formScrollView.alpha = 0.0
             
-            if let chatTribeInfo = chat.tribesInfo {
+            if let chatTribeInfo = chat.tribeInfo {
                 groupsManager.newGroupInfo = chatTribeInfo
                 
                 for field in formFields {
@@ -165,7 +165,7 @@ extension NewPublicGroupViewController {
     func editGroup(id: Int, params: [String: AnyObject]) {
         API.sharedInstance.editGroup(id: id, params: params, callback: { chatJson in
             if let chat = Chat.insertChat(chat: chatJson) {
-                chat.tribesInfo = self.groupsManager.newGroupInfo
+                chat.tribeInfo = self.groupsManager.newGroupInfo
                 self.shouldDismissView(chat: chat)
             } else {
                 self.showErrorAlert()

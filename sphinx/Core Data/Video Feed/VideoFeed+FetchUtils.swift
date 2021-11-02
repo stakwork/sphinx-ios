@@ -11,6 +11,12 @@ import CoreData
 
 // MARK: - Predicates
 extension VideoFeed {
+    
+    static func getVideoFeedWith(feedID: String) -> VideoFeed? {
+        let predicate = NSPredicate(format: "feedID == %@", feedID)
+        let feed:VideoFeed? = CoreDataManager.sharedManager.getObjectOfTypeWith(predicate: predicate, sortDescriptors: [], entityName: "VideoFeed")
+        return feed
+    }
 
     public enum Predicates {
         

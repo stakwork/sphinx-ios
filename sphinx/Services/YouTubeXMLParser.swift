@@ -39,7 +39,8 @@ struct YouTubeXMLParser {
             return .failure(.xmlDecodingFailed(reason: "No valid feed ID could be found."))
         }
         
-        let feed = VideoFeed(context: managedObjectContext)
+        let existingFeed = VideoFeed.getVideoFeedWith(feedID: feedID)
+        let feed = existingFeed ?? VideoFeed(context: managedObjectContext)
 
         feed.feedID = feedID
 

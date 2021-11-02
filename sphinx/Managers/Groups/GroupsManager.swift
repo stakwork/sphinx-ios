@@ -318,14 +318,14 @@ class GroupsManager {
     
     
     func calculateBotPrice(chat: Chat?, text: String) -> (Int, String?) {
-        guard let tribesInfo = chat?.tribesInfo, text.starts(with: "/") else {
+        guard let tribeInfo = chat?.tribeInfo, text.starts(with: "/") else {
             return (0, nil)
         }
         
         var price = 0
         var failureMessage: String? = nil
     
-        for b in tribesInfo.bots {
+        for b in tribeInfo.bots {
             if !text.starts(with: b.prefix) { continue }
             if b.price > 0 {
                 price = b.price

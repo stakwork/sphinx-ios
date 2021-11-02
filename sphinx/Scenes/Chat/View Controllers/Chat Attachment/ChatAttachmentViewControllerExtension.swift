@@ -20,7 +20,7 @@ extension ChatAttachmentViewController {
             if !publicGroup {
                 return false
             }
-            if self.chat?.tribesInfo?.hasLoopoutBot ?? false {
+            if self.chat?.tribeInfo?.hasLoopoutBot ?? false {
                 sendOptionTitle.text = "Send Onchain"
                 return false
             }

@@ -116,13 +116,13 @@ class PodcastPlayerHelper {
     func loadPodcastFeed(chat: Chat?, callback: @escaping (Bool) -> ()) {
         guard
             ConnectivityHelper.isConnectedToInternet,
-            chat?.tribesInfo?.feedUrl != nil
+            chat?.tribeInfo?.feedUrl != nil
         else {
             processLocalPodcastFeed(chat: chat, callback: callback)
             return
         }
         
-        guard let url = chat?.tribesInfo?.feedUrl else {
+        guard let url = chat?.tribeInfo?.feedUrl else {
             callback(false)
             return
         }
@@ -140,21 +140,12 @@ class PodcastPlayerHelper {
         
         resetPodcast()
         
-        let tribesServerURL = "https://tribes.sphinx.chat/podcast?url=\(url)"
-        
-        API.sharedInstance.getPodcastFeed(
-            url: tribesServerURL,
-            callback: { json in
-                DispatchQueue.main.async {
-                    self.persistDataForPodcastFeed(using: json, belongingTo: chat)
-                    
-                    callback(true)
-                }
-            },
-            errorCallback: {
-                callback(false)
-            }
-        )
+        chat?.fetchInitialPodcastFeed(using: url) { [weak self] in
+            self?.podcast = chat?.podcastFeed
+            chat?.saveChat()
+            
+            callback(true)
+        }
     }
     
     func processLocalPodcastFeed(chat: Chat?, callback: @escaping (Bool) -> ()) {
@@ -168,86 +159,6 @@ class PodcastPlayerHelper {
             callback(true)
         }
     }
-    
-    
-    func persistDataForPodcastFeed(
-        using json: JSON,
-        for podcastFeed: PodcastFeed
-    ) {
-        guard let managedObjectContext = podcastFeed.managedObjectContext else {
-            preconditionFailure()
-        }
-        
-        let episodes = json["items"].arrayValue.map {
-            PodcastEpisode(
-                jsonPayload: $0,
-                managedObjectContext: managedObjectContext
-            )
-        }
-        
-        podcastFeed.addToEpisodes(Set(episodes))
-        CoreDataManager.sharedManager.saveContext()
-    }
-    
-    
-    func persistDataForPodcastFeed(
-        using json: JSON,
-        belongingTo chat: Chat? = nil
-    ) {
-        guard json["episodes"].arrayValue.isEmpty == false else { return }
-        
-        let managedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext
-        let podcastFeed = chat?.podcastFeed ?? PodcastFeed(context: managedObjectContext)
-        
-        podcastFeed.id = Int64(json["id"].intValue)
-        podcastFeed.chat = chat
-        podcastFeed.title = json["title"].stringValue
-        podcastFeed.podcastDescription = json["description"].stringValue
-        podcastFeed.author = json["author"].stringValue
-        podcastFeed.imageURLPath = json["image"].stringValue
-        
-        if let chat = chat {
-            podcastFeed.feedURLPath = chat.tribesInfo?.feedUrl
-        }
-        
-        let episodes = json["episodes"].arrayValue.map {
-            PodcastEpisode(
-                jsonPayload: $0,
-                managedObjectContext: managedObjectContext
-            )
-        }
-        
-        podcastFeed.addToEpisodes(Set(episodes))
-        
-        let value = JSON(json["value"])
-        let model = JSON(value["model"])
-        let podcastModel = PodcastModel(context: managedObjectContext)
-        
-        podcastModel.type = model["type"].stringValue
-
-        let suggestedAmount = model["suggested"].doubleValue
-
-        podcastModel.suggestedBTC = suggestedAmount
-        podcastFeed.model = podcastModel
-
-        
-        let destinations: [PodcastDestination] = value["destinations"].arrayValue.map {
-            let destination = PodcastDestination(context: managedObjectContext)
-            
-            destination.address = $0["address"].stringValue
-            destination.type = $0["type"].stringValue
-            destination.split = $0["split"].doubleValue
-            
-            return destination
-        }
-        
-        podcastFeed.addToDestinations(Set(destinations))
-
-        self.chat = chat
-        podcast = podcastFeed
-        CoreDataManager.sharedManager.saveContext()
-    }
-    
     
     func getBoostMessage(amount: Int) -> String? {
         guard let podcast = self.podcast else {

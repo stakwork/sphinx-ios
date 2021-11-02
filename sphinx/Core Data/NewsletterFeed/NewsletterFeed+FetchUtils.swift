@@ -12,6 +12,12 @@ import CoreData
 
 // MARK: - Predicates
 extension NewsletterFeed {
+    
+    static func getNewsletterFeedWith(feedID: String) -> NewsletterFeed? {
+        let predicate = NSPredicate(format: "feedID == %@", feedID)
+        let feed:NewsletterFeed? = CoreDataManager.sharedManager.getObjectOfTypeWith(predicate: predicate, sortDescriptors: [], entityName: "NewsletterFeed")
+        return feed
+    }
 
     public enum Predicates {
         

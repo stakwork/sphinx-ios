@@ -29,7 +29,8 @@ struct NewsletterFeedXMLParser {
             return .failure(.xmlDecodingFailed(reason: "Feed ID not found"))
         }
         
-        let feed = NewsletterFeed(context: managedObjectContext)
+        let existingFeed = NewsletterFeed.getNewsletterFeedWith(feedID: feedURLPath)
+        let feed = existingFeed ?? NewsletterFeed(context: managedObjectContext)
         
         feed.feedURL = URL(string: feedURLPath)
         feed.feedID = feedURLPath

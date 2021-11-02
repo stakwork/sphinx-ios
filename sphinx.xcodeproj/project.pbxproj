@@ -43,6 +43,7 @@
 		4712BB4323D755EA00DDCC3B /* GroupAddMemberTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4712BB4123D755EA00DDCC3B /* GroupAddMemberTableViewCell.xib */; };
 		4712BB4723D898DD00DDCC3B /* PlayAudioHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4712BB4623D898DD00DDCC3B /* PlayAudioHelper.swift */; };
 		4712BB4923D89A5100DDCC3B /* ClipboardHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4712BB4823D89A5100DDCC3B /* ClipboardHelper.swift */; };
+		47158D77273083E200601F00 /* NewsletterFeed.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 47158D79273083E200601F00 /* NewsletterFeed.storyboard */; };
 		47183CB0254893B100E6FD19 /* NewPodcastPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47183CAF254893B100E6FD19 /* NewPodcastPlayerViewController.swift */; };
 		47183CB22548AA4400E6FD19 /* PodcastPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47183CB12548AA4400E6FD19 /* PodcastPlayerView.swift */; };
 		47183CB42548AA5100E6FD19 /* PodcastPlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47183CB32548AA5100E6FD19 /* PodcastPlayerView.xib */; };
@@ -165,7 +166,6 @@
 		4754FA8F2729DD38006295A5 /* DashboardNewsletterFeedCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4754FA8E2729DD38006295A5 /* DashboardNewsletterFeedCollectionViewController.swift */; };
 		4754FA93272ADB02006295A5 /* DashboardNewsletterItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4754FA91272ADB02006295A5 /* DashboardNewsletterItemCollectionViewCell.swift */; };
 		4754FA94272ADB02006295A5 /* DashboardNewsletterItemCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4754FA92272ADB02006295A5 /* DashboardNewsletterItemCollectionViewCell.xib */; };
-		4754FA97272B01E3006295A5 /* NewsletterFeed.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4754FA96272B01E3006295A5 /* NewsletterFeed.storyboard */; };
 		4754FA99272B020E006295A5 /* NewsletterItemDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4754FA98272B020E006295A5 /* NewsletterItemDetailViewController.swift */; };
 		4754FA9B272B1378006295A5 /* NewsletterFeedContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4754FA9A272B1378006295A5 /* NewsletterFeedContainerViewController.swift */; };
 		4754FA9D272B1391006295A5 /* NewsletterFeedItemsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4754FA9C272B1391006295A5 /* NewsletterFeedItemsCollectionViewController.swift */; };
@@ -711,6 +711,9 @@
 		4712BB4123D755EA00DDCC3B /* GroupAddMemberTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GroupAddMemberTableViewCell.xib; sourceTree = "<group>"; };
 		4712BB4623D898DD00DDCC3B /* PlayAudioHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayAudioHelper.swift; sourceTree = "<group>"; };
 		4712BB4823D89A5100DDCC3B /* ClipboardHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardHelper.swift; sourceTree = "<group>"; };
+		47158D78273083E200601F00 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/NewsletterFeed.storyboard; sourceTree = "<group>"; };
+		47158D7B273083E500601F00 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/NewsletterFeed.strings; sourceTree = "<group>"; };
+		47158D7D2730841600601F00 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/NewsletterFeed.strings; sourceTree = "<group>"; };
 		47183CAF254893B100E6FD19 /* NewPodcastPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPodcastPlayerViewController.swift; sourceTree = "<group>"; };
 		47183CB12548AA4400E6FD19 /* PodcastPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastPlayerView.swift; sourceTree = "<group>"; };
 		47183CB32548AA5100E6FD19 /* PodcastPlayerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PodcastPlayerView.xib; sourceTree = "<group>"; };
@@ -846,7 +849,6 @@
 		4754FA8E2729DD38006295A5 /* DashboardNewsletterFeedCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardNewsletterFeedCollectionViewController.swift; sourceTree = "<group>"; };
 		4754FA91272ADB02006295A5 /* DashboardNewsletterItemCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardNewsletterItemCollectionViewCell.swift; sourceTree = "<group>"; };
 		4754FA92272ADB02006295A5 /* DashboardNewsletterItemCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DashboardNewsletterItemCollectionViewCell.xib; sourceTree = "<group>"; };
-		4754FA96272B01E3006295A5 /* NewsletterFeed.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NewsletterFeed.storyboard; sourceTree = "<group>"; };
 		4754FA98272B020E006295A5 /* NewsletterItemDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsletterItemDetailViewController.swift; sourceTree = "<group>"; };
 		4754FA9A272B1378006295A5 /* NewsletterFeedContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsletterFeedContainerViewController.swift; sourceTree = "<group>"; };
 		4754FA9C272B1391006295A5 /* NewsletterFeedItemsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsletterFeedItemsCollectionViewController.swift; sourceTree = "<group>"; };
@@ -1927,7 +1929,7 @@
 			children = (
 				4754FAA3272B2048006295A5 /* Newsletter Items Section Header */,
 				4754FA9E272B2000006295A5 /* Newsletter Item Cell */,
-				4754FA96272B01E3006295A5 /* NewsletterFeed.storyboard */,
+				47158D79273083E200601F00 /* NewsletterFeed.storyboard */,
 				4754FA98272B020E006295A5 /* NewsletterItemDetailViewController.swift */,
 				4754FA9A272B1378006295A5 /* NewsletterFeedContainerViewController.swift */,
 				4754FA9C272B1391006295A5 /* NewsletterFeedItemsCollectionViewController.swift */,
@@ -3561,7 +3563,7 @@
 				47AF0D3C254C9F1000C98398 /* fireworks.json in Resources */,
 				475BDCB6232AC1E800C5BBD6 /* MessageBubbleView.xib in Resources */,
 				475BDD0A232AC24600C5BBD6 /* PaidInvoiceReceivedTableViewCell.xib in Resources */,
-				4754FA97272B01E3006295A5 /* NewsletterFeed.storyboard in Resources */,
+				47158D77273083E200601F00 /* NewsletterFeed.storyboard in Resources */,
 				4797E76B24B8E4C900D13270 /* AddFriendRowButton.xib in Resources */,
 				4754FAA7272B2060006295A5 /* NewsletterItemsSectionCollectionReusableView.xib in Resources */,
 				4797E7F924B8F9C300D13270 /* SubscriptionTimeIntervalView.xib in Resources */,
@@ -4248,6 +4250,16 @@
 				470F4C4F257E708A00288A9B /* es */,
 			);
 			name = TribeMemberInfoView.xib;
+			sourceTree = "<group>";
+		};
+		47158D79273083E200601F00 /* NewsletterFeed.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				47158D78273083E200601F00 /* Base */,
+				47158D7B273083E500601F00 /* en */,
+				47158D7D2730841600601F00 /* es */,
+			);
+			name = NewsletterFeed.storyboard;
 			sourceTree = "<group>";
 		};
 		4724BC1525474B440012BD76 /* WebApps.storyboard */ = {

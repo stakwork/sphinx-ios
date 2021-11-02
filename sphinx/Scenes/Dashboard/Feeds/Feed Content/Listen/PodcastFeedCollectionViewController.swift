@@ -17,9 +17,9 @@ class PodcastFeedCollectionViewController: UICollectionViewController {
 
     private let itemContentInsets = NSDirectionalEdgeInsets(
         top: 0,
-        leading: 10,
+        leading: 12,
         bottom: 0,
-        trailing: 10
+        trailing: 0
     )
 }
 
@@ -149,7 +149,7 @@ extension PodcastFeedCollectionViewController {
 
         section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
         section.boundarySupplementaryItems = [makeSectionHeader()]
-//        section.contentInsets = .init(top: 21, leading: 0, bottom: 21, trailing: 0)
+        section.contentInsets = .init(top: 11, leading: 0, bottom: 11, trailing: 12)
 
         return section
     }

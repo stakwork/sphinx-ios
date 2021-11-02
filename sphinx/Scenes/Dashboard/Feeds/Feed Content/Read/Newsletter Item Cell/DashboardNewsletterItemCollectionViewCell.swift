@@ -60,9 +60,11 @@ extension DashboardNewsletterItemCollectionViewCell {
 extension DashboardNewsletterItemCollectionViewCell {
     
     private func setupViews() {
+        shadowContainer.addShadow(location: .center, opacity: 0.3, radius: 3)
+        
         shadowContainer.layer.cornerRadius = 8.0
+        shadowContainer.layer.masksToBounds = true
         shadowContainer.clipsToBounds = true
-        shadowContainer.addShadow(location: .center)
 
         itemIcon.makeCircular()
     }

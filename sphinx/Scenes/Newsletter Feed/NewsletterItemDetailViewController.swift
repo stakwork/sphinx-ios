@@ -27,6 +27,11 @@ class NewsletterItemDetailViewController: UIViewController {
             loadingWheelContainer.isHidden = !loading
         }
     }
+    
+    @IBAction func closeButtonTouched() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
 }
 
 // MARK: -  Lifecycle
@@ -34,6 +39,13 @@ extension NewsletterItemDetailViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        toggleLoadingWheel(true)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
         loadItem()
     }
 }

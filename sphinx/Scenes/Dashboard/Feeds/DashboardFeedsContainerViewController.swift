@@ -278,6 +278,11 @@ extension DashboardFeedsContainerViewController {
                 self,
                 didSelectVideoFeedWithID: managedObjectID
             )
+        } else if entity is NewsletterFeed {
+            feedsListContainerDelegate?.viewController(
+                self,
+                didSelectNewsletterFeedWithID: managedObjectID
+            )
         }
     }
 }

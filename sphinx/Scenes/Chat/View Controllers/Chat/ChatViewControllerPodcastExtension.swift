@@ -77,7 +77,8 @@ extension ChatViewController : PodcastPlayerVCDelegate {
             dismissButtonStyle: .downArrow,
             delegate: self
         )
-        podcastFeedVC.modalPresentationStyle = .fullScreen
+        podcastFeedVC.modalPresentationStyle = .automatic
+        
         self.present(podcastFeedVC, animated: true, completion: nil)
     }
 }

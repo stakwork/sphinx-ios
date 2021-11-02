@@ -10,7 +10,9 @@ import CoreData
 
 class AllTribeFeedsCollectionViewController: UICollectionViewController {
     var tribesWithFeeds: [Chat] = []
+    
     var interSectionSpacing: CGFloat = 20.0
+    var interCellSpacing: CGFloat = 6.0
 
     var onCellSelected: ((NSManagedObjectID) -> Void)!
     var onNewResultsFetched: ((Int) -> Void)!
@@ -22,9 +24,9 @@ class AllTribeFeedsCollectionViewController: UICollectionViewController {
 
     private let itemContentInsets = NSDirectionalEdgeInsets(
         top: 0,
-        leading: 10,
+        leading: 12,
         bottom: 0,
-        trailing: 10
+        trailing: 0
     )
 }
 
@@ -75,6 +77,7 @@ extension AllTribeFeedsCollectionViewController {
     enum DataSourceItem: Hashable {
         case tribePodcastFeed(PodcastFeed)
         case tribeVideoFeed(VideoFeed)
+        case tribeNewsletterFeed(NewsletterFeed)
     }
 
     
@@ -142,7 +145,7 @@ extension AllTribeFeedsCollectionViewController {
 
         section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
         section.boundarySupplementaryItems = [makeSectionHeader()]
-        section.contentInsets = .init(top: 11, leading: 0, bottom: 11, trailing: 0)
+        section.contentInsets = .init(top: 11, leading: 0, bottom: 11, trailing: 12)
 
         return section
     }
@@ -312,6 +315,8 @@ extension AllTribeFeedsCollectionViewController {
                 return DataSourceItem.tribePodcastFeed(podcastFeed)
             } else if let videoFeed = tribeChat.videoFeed {
                 return DataSourceItem.tribeVideoFeed(videoFeed)
+            } else if let newsletterFeed = tribeChat.newsletterFeed {
+                return DataSourceItem.tribeNewsletterFeed(newsletterFeed)
             } else {
                 return nil
             }
@@ -434,6 +439,8 @@ extension AllTribeFeedsCollectionViewController.DataSourceItem {
             return podcastFeed
         case .tribeVideoFeed(let videoFeed):
             return videoFeed
+        case .tribeNewsletterFeed(let newsletterFeed):
+            return newsletterFeed
         }
     }
 }

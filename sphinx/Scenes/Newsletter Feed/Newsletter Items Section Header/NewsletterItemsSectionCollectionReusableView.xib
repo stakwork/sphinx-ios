@@ -23,18 +23,25 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8lN-3o-pfJ">
-                    <rect key="frame" x="16" y="16" width="19" height="18.5"/>
-                    <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="15"/>
-                    <color key="textColor" name="Text"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Articles" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FVn-C8-cpZ">
                     <rect key="frame" x="38" y="16" width="51.5" height="18"/>
                     <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="15"/>
                     <color key="textColor" name="SecondaryText"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8lN-3o-pfJ">
+                    <rect key="frame" x="16" y="16" width="19" height="18.5"/>
+                    <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="15"/>
+                    <color key="textColor" name="Text"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A3U-4P-Nqc">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="OG3-7C-xAq"/>
+                    </constraints>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="VXr-Tz-HHm"/>
             <color key="backgroundColor" name="Body"/>
@@ -42,7 +49,10 @@
                 <constraint firstItem="FVn-C8-cpZ" firstAttribute="leading" secondItem="8lN-3o-pfJ" secondAttribute="trailing" constant="3" id="26n-CC-ASP"/>
                 <constraint firstItem="8lN-3o-pfJ" firstAttribute="centerY" secondItem="U6b-Vx-4bR" secondAttribute="centerY" id="FYa-yd-7pn"/>
                 <constraint firstItem="8lN-3o-pfJ" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" constant="16" id="P9Q-tG-y2p"/>
+                <constraint firstItem="A3U-4P-Nqc" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" id="SNZ-Ab-as8"/>
                 <constraint firstItem="FVn-C8-cpZ" firstAttribute="centerY" secondItem="8lN-3o-pfJ" secondAttribute="centerY" id="aPn-3L-HZM"/>
+                <constraint firstItem="A3U-4P-Nqc" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" id="d2b-ar-pl4"/>
+                <constraint firstAttribute="trailing" secondItem="A3U-4P-Nqc" secondAttribute="trailing" id="rqL-H0-mc2"/>
             </constraints>
             <connections>
                 <outlet property="articlesLabel" destination="FVn-C8-cpZ" id="W7J-83-o4c"/>

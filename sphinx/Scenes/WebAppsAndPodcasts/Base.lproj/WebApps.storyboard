@@ -77,7 +77,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" contentViewInsetsToSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="POd-Bw-SHI">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="852"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XA7-u7-sIe">
@@ -93,7 +93,7 @@
                             <constraint firstItem="POd-Bw-SHI" firstAttribute="leading" secondItem="jNn-Xy-qVY" secondAttribute="leading" id="MNi-HC-t0J"/>
                             <constraint firstItem="tXh-HS-xjf" firstAttribute="top" secondItem="XA7-u7-sIe" secondAttribute="bottom" id="TTo-h9-YLv"/>
                             <constraint firstItem="POd-Bw-SHI" firstAttribute="trailing" secondItem="jNn-Xy-qVY" secondAttribute="trailing" id="Z64-VX-USf"/>
-                            <constraint firstItem="POd-Bw-SHI" firstAttribute="top" secondItem="jNn-Xy-qVY" secondAttribute="top" id="doG-QJ-NVy"/>
+                            <constraint firstItem="POd-Bw-SHI" firstAttribute="top" secondItem="tXh-HS-xjf" secondAttribute="top" id="doG-QJ-NVy"/>
                             <constraint firstItem="XA7-u7-sIe" firstAttribute="top" secondItem="jNn-Xy-qVY" secondAttribute="top" id="nT3-N1-FQD"/>
                             <constraint firstAttribute="trailing" secondItem="XA7-u7-sIe" secondAttribute="trailing" id="pB7-SW-azu"/>
                         </constraints>
@@ -284,10 +284,10 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kkl-yW-1v2">
-                                        <rect key="frame" x="298.5" y="0.0" width="87.5" height="20"/>
+                                        <rect key="frame" x="303.5" y="0.0" width="82.5" height="20"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NEW EPISODE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bmE-a4-L39">
-                                                <rect key="frame" x="10.5" y="4.5" width="66.5" height="11"/>
+                                                <rect key="frame" x="10.5" y="4.5" width="61.5" height="11"/>
                                                 <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="9"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>

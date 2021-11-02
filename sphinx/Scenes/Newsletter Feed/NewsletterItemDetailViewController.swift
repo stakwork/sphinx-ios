@@ -41,6 +41,8 @@ extension NewsletterItemDetailViewController {
         super.viewDidLoad()
         
         toggleLoadingWheel(true)
+        
+        newsletterItem.saveAsCurrentArticle()
     }
     
     override func viewDidAppear(_ animated: Bool) {

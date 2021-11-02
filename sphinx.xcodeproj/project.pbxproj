@@ -44,6 +44,8 @@
 		4712BB4723D898DD00DDCC3B /* PlayAudioHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4712BB4623D898DD00DDCC3B /* PlayAudioHelper.swift */; };
 		4712BB4923D89A5100DDCC3B /* ClipboardHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4712BB4823D89A5100DDCC3B /* ClipboardHelper.swift */; };
 		47158D77273083E200601F00 /* NewsletterFeed.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 47158D79273083E200601F00 /* NewsletterFeed.storyboard */; };
+		47158D7F2731788F00601F00 /* NewsletterItem+FetchUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47158D7E2731788F00601F00 /* NewsletterItem+FetchUtils.swift */; };
+		47158D81273178C200601F00 /* Video+FetchUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47158D80273178C200601F00 /* Video+FetchUtils.swift */; };
 		47183CB0254893B100E6FD19 /* NewPodcastPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47183CAF254893B100E6FD19 /* NewPodcastPlayerViewController.swift */; };
 		47183CB22548AA4400E6FD19 /* PodcastPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47183CB12548AA4400E6FD19 /* PodcastPlayerView.swift */; };
 		47183CB42548AA5100E6FD19 /* PodcastPlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47183CB32548AA5100E6FD19 /* PodcastPlayerView.xib */; };
@@ -714,6 +716,8 @@
 		47158D78273083E200601F00 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/NewsletterFeed.storyboard; sourceTree = "<group>"; };
 		47158D7B273083E500601F00 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/NewsletterFeed.strings; sourceTree = "<group>"; };
 		47158D7D2730841600601F00 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/NewsletterFeed.strings; sourceTree = "<group>"; };
+		47158D7E2731788F00601F00 /* NewsletterItem+FetchUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewsletterItem+FetchUtils.swift"; sourceTree = "<group>"; };
+		47158D80273178C200601F00 /* Video+FetchUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Video+FetchUtils.swift"; sourceTree = "<group>"; };
 		47183CAF254893B100E6FD19 /* NewPodcastPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPodcastPlayerViewController.swift; sourceTree = "<group>"; };
 		47183CB12548AA4400E6FD19 /* PodcastPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastPlayerView.swift; sourceTree = "<group>"; };
 		47183CB32548AA5100E6FD19 /* PodcastPlayerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PodcastPlayerView.xib; sourceTree = "<group>"; };
@@ -1797,6 +1801,7 @@
 				47357A142729A15800A49EEE /* NewsletterItem+CoreDataClass.swift */,
 				47357A162729A16100A49EEE /* NewsletterItem+CoreDataProperties.swift */,
 				47357A182729A16C00A49EEE /* NewsletterItem+DisplayUtils.swift */,
+				47158D7E2731788F00601F00 /* NewsletterItem+FetchUtils.swift */,
 			);
 			path = NewsletterItem;
 			sourceTree = "<group>";
@@ -3065,6 +3070,7 @@
 				F3188B7A271792C400890DDD /* Video+CoreDataClass.swift */,
 				F3188B79271792C400890DDD /* Video+CoreDataProperties.swift */,
 				F38744E0271FD7CB00E28C84 /* Video+DisplayUtils.swift */,
+				47158D80273178C200601F00 /* Video+FetchUtils.swift */,
 			);
 			path = Video;
 			sourceTree = "<group>";
@@ -3790,6 +3796,7 @@
 				47CC7CE223E3611600730E6F /* APITransactionsExtension.swift in Sources */,
 				476EB47223C5064C009745E2 /* GroupAllContactsDataSource.swift in Sources */,
 				47308E0024FEE6E600FFAC6F /* SocketLogger.swift in Sources */,
+				47158D7F2731788F00601F00 /* NewsletterItem+FetchUtils.swift in Sources */,
 				475BDCB4232AC1E800C5BBD6 /* MessageBubbleView.swift in Sources */,
 				4794CA79252F72D2007C5022 /* PodcastPlayerHelper.swift in Sources */,
 				472F9D3B2412F95100EFC30A /* Data.swift in Sources */,
@@ -4033,6 +4040,7 @@
 				F3E357A8271E19EF00B91C54 /* VideoFeedEpisodePlayerContainerViewController.swift in Sources */,
 				F39F2C8526E2840500D357F6 /* PodcastFeedSearchResultsCollectionViewSectionHeader.swift in Sources */,
 				4733C7E523C4DF4C006A2C51 /* GroupContactsViewController.swift in Sources */,
+				47158D81273178C200601F00 /* Video+FetchUtils.swift in Sources */,
 				4787F87224743D7C00CCE8B9 /* NewPublicGroupViewControllerExtension.swift in Sources */,
 				F3EF52C726B28DBE00F06668 /* PodcastFeedCollectionViewController.swift in Sources */,
 				F3EF52C526B2823700F06668 /* FeedFilterChipsCollectionViewController.swift in Sources */,

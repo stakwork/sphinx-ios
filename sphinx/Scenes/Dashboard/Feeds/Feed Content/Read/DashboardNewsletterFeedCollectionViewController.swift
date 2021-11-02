@@ -13,7 +13,6 @@ import CoreData
 class DashboardNewsletterFeedCollectionViewController: UICollectionViewController {
     
     var newsletterFeeds: [NewsletterFeed]!
-    var newsletterItems: [NewsletterItem]!
     
     var interSectionSpacing: CGFloat = 20.0
 
@@ -56,7 +55,6 @@ extension DashboardNewsletterFeedCollectionViewController {
         viewController.managedObjectContext = managedObjectContext
 
         viewController.newsletterFeeds = newsletterFeeds
-        viewController.newsletterItems = newsletterItems
         viewController.interSectionSpacing = interSectionSpacing
         viewController.onNewsletterItemCellSelected = onNewsletterItemCellSelected
         viewController.onNewsletterFeedCellSelected = onNewsletterFeedCellSelected
@@ -370,8 +368,12 @@ extension DashboardNewsletterFeedCollectionViewController {
             toSection: .newsletterFeeds
         )
         
+        let feedsWithArticles = newsletterFeeds.filter {
+            return $0.itemsArray.count > 0
+        }
+        
         snapshot.appendItems(
-            newsletterItems.map { DataSourceItem.newsletterItem($0) },
+            feedsWithArticles.map { DataSourceItem.newsletterItem($0.nextArticle) },
             toSection: .newsletterItems
         )
 
@@ -391,22 +393,6 @@ extension DashboardNewsletterFeedCollectionViewController {
         shouldAnimate: Bool = true
     ) {
         self.newsletterFeeds = newsletterFeeds
-        newsletterItems = newsletterFeeds.compactMap(\.itemsArray.first)
-
-        if let dataSource = dataSource {
-            dataSource.apply(
-                makeSnapshotForCurrentState(),
-                animatingDifferences: shouldAnimate
-            )
-        }
-    }
-    
-    
-    func updateWithNew(
-        newsletterItems: [NewsletterItem],
-        shouldAnimate: Bool = true
-    ) {
-        self.newsletterItems = newsletterItems
 
         if let dataSource = dataSource {
             dataSource.apply(

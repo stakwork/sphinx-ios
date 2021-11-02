@@ -15,4 +15,8 @@ extension NewsletterItem {
         
         return formatter
     }()
+    
+    func saveAsCurrentArticle() {
+        newsletterFeed?.currentArticleID = itemID
+    }
 }

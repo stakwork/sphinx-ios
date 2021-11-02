@@ -10,6 +10,24 @@ import Foundation
 
 extension NewsletterFeed {
     
+    var identifier: String {
+        get {
+            if let chatId = chat?.id {
+                return String(chatId)
+            }
+            return feedID
+        }
+    }
+    
+    var currentArticleID: String? {
+        get {
+            return (UserDefaults.standard.value(forKey: "current-article-id-\(identifier)") as? String) ?? nil
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "current-article-id-\(identifier)")
+        }
+    }
+    
     var itemsArray: [NewsletterItem] {
         guard let newsletterItems = newsletterItems else {
             return []
@@ -26,6 +44,21 @@ extension NewsletterFeed {
         }
     }
     
+    var nextArticle: NewsletterItem {
+        let nextArticle = currentArticleIndex - 1
+        
+        if itemsArray.count > nextArticle && nextArticle >= 0 {
+            return itemsArray[nextArticle]
+        }
+        return itemsArray.first!
+    }
+    
+    var currentArticleIndex: Int {
+        if let currentAId = currentArticleID {
+            return itemsArray.firstIndex(where: { $0.id == currentAId }) ?? 0
+        }
+        return 0
+    }
     
     var avatarImageURL: URL? {
         guard let urlPath = chat?.photoUrl else {

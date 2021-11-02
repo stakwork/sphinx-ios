@@ -416,6 +416,8 @@ extension PodcastFeedCollectionViewController: NSFetchedResultsControllerDelegat
             self?.updateWithNew(
                 followedPodcastFeeds: foundFeeds
             )
+            
+            self?.onNewResultsFetched(foundFeeds.count)
         }
     }
 }

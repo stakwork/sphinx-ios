@@ -291,8 +291,6 @@ public class TransactionMessage: NSManagedObject {
                              chat: Chat?,
                              message: TransactionMessage) -> TransactionMessage? {
         
-        let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
-        
         message.id = id
         message.uuid = uuid
         message.replyUUID = replyUUID

@@ -142,7 +142,7 @@ class PodcastPlayerHelper {
         
         chat?.fetchInitialPodcastFeed(using: url) { [weak self] in
             self?.podcast = chat?.podcastFeed
-            chat?.saveChat()
+            self?.chat = chat
             
             callback(true)
         }
@@ -152,7 +152,6 @@ class PodcastPlayerHelper {
         if let podcastFeed = chat?.podcastFeed {
             
             if podcastFeed.episodes?.isEmpty == false {
-                CoreDataManager.sharedManager.saveContext()
                 self.chat = chat
             }
             
@@ -569,11 +568,11 @@ class PodcastPlayerHelper {
         
         playingCenter.nowPlayingInfo = [
             MPMediaItemPropertyMediaType: "\(MPMediaType.podcast)",
-            MPMediaItemPropertyPodcastTitle: podcast.title,
+            MPMediaItemPropertyPodcastTitle: podcast.title ?? "",
             MPMediaItemPropertyArtwork: artwork,
             MPMediaItemPropertyPodcastPersistentID: podcast.id,
-            MPMediaItemPropertyTitle: episode.title,
-            MPMediaItemPropertyArtist: podcast.author,
+            MPMediaItemPropertyTitle: episode.title ?? "",
+            MPMediaItemPropertyArtist: podcast.author ?? "",
             MPMediaItemPropertyPlaybackDuration: "\(duration)",
             MPNowPlayingInfoPropertyElapsedPlaybackTime: "\(currentTime)",
             MPMediaItemPropertyAlbumTrackCount: "\(getEpisodes().count)",

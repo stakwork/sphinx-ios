@@ -379,8 +379,11 @@ extension DashboardRootViewController {
     internal func loadContactsAndSyncMessages(
         shouldShowHeaderLoadingWheel: Bool = false
     ) {
-        isLoading = true
+        updateCurrentViewControllerData()
+        
         self.shouldShowHeaderLoadingWheel = shouldShowHeaderLoadingWheel
+        
+        isLoading = true
         headerView.updateBalance()
 
         chatsListViewModel.loadFriends() { [weak self] in

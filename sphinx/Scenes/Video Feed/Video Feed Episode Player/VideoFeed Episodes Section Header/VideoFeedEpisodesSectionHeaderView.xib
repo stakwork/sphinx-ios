@@ -24,10 +24,10 @@
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="3Ot-PD-J13" userLabel="Episode Count Container">
-                    <rect key="frame" x="0.0" y="50" width="320" height="50"/>
+                    <rect key="frame" x="0.0" y="60" width="320" height="40"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GId-NT-Dhb" userLabel="Spacer">
-                            <rect key="frame" x="0.0" y="0.0" width="13" height="50"/>
+                            <rect key="frame" x="0.0" y="0.0" width="13" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="13" id="1C1-wm-JQL"/>
                             </constraints>
@@ -36,13 +36,13 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0ED-Q8-2dC">
-                            <rect key="frame" x="16" y="16.5" width="8.5" height="17.5"/>
+                            <rect key="frame" x="16" y="11" width="9.5" height="18.5"/>
                             <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="15"/>
                             <color key="textColor" name="Text"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Videos" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EXz-8y-bSR">
-                            <rect key="frame" x="27.5" y="7.5" width="276.5" height="35"/>
+                            <rect key="frame" x="28.5" y="2.5" width="275.5" height="35"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="35" id="rZa-dV-UGD"/>
                             </constraints>
@@ -51,7 +51,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P1u-Zd-O2r" userLabel="Spacer">
-                            <rect key="frame" x="307" y="0.0" width="13" height="50"/>
+                            <rect key="frame" x="307" y="0.0" width="13" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="13" id="nz3-2f-dcb"/>
                             </constraints>
@@ -61,12 +61,15 @@
                         </label>
                     </subviews>
                     <color key="backgroundColor" name="ListBG"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="5xB-9S-vLg"/>
+                    </constraints>
                 </stackView>
                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="Lt9-R6-Vke" userLabel="Feed Info Container">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="65"/>
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="htl-fz-qvl" userLabel="Spacer">
-                            <rect key="frame" x="0.0" y="7.5" width="0.0" height="50"/>
+                            <rect key="frame" x="0.0" y="5" width="0.0" height="50"/>
                             <constraints>
                                 <constraint firstAttribute="width" id="SjF-gx-ugp"/>
                             </constraints>
@@ -75,16 +78,16 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="userAvatar" translatesAutoresizingMaskIntoConstraints="NO" id="Pjw-Lk-tVE">
-                            <rect key="frame" x="16" y="14.5" width="36" height="36"/>
+                            <rect key="frame" x="16" y="12" width="36" height="36"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="36" id="Nuz-mw-aJk"/>
                                 <constraint firstAttribute="width" constant="36" id="hVT-Kr-a1d"/>
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Feed Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hiR-uB-n4b">
-                            <rect key="frame" x="68" y="22.5" width="236" height="20.5"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <nil key="textColor"/>
+                            <rect key="frame" x="68" y="20" width="236" height="20"/>
+                            <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
+                            <color key="textColor" name="Text"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OTf-3X-F6T">
@@ -105,7 +108,7 @@
                             </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xid-Jx-Oh9" userLabel="Spacer">
-                            <rect key="frame" x="320" y="7.5" width="0.0" height="50"/>
+                            <rect key="frame" x="320" y="5" width="0.0" height="50"/>
                             <constraints>
                                 <constraint firstAttribute="width" id="m3A-CT-uig"/>
                             </constraints>
@@ -116,7 +119,7 @@
                     </subviews>
                     <color key="backgroundColor" name="HeaderBG"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="65" id="VsN-Qb-qlA"/>
+                        <constraint firstAttribute="height" constant="60" id="VsN-Qb-qlA"/>
                     </constraints>
                     <variation key="default">
                         <mask key="subviews">
@@ -133,11 +136,11 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7XP-qL-e0d" userLabel="Middle Divider">
-                    <rect key="frame" x="0.0" y="65" width="320" height="2"/>
+                    <rect key="frame" x="0.0" y="60" width="320" height="1"/>
                     <viewLayoutGuide key="safeArea" id="pIi-b8-hVb"/>
                     <color key="backgroundColor" name="Shadow"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="2" id="Fps-Od-c2m"/>
+                        <constraint firstAttribute="height" constant="1" id="Fps-Od-c2m"/>
                     </constraints>
                 </view>
             </subviews>

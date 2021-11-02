@@ -598,6 +598,8 @@
 		F360123326E96B31009B8DC0 /* API+PodcastIndexSearchUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F360123226E96B31009B8DC0 /* API+PodcastIndexSearchUtils.swift */; };
 		F360123526E96D59009B8DC0 /* PodcastFeedSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = F360123426E96D59009B8DC0 /* PodcastFeedSearchResult.swift */; };
 		F360A42727030F4400097CE4 /* DashboardRootViewController+PodcastPlayerVCDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F360A42627030F4400097CE4 /* DashboardRootViewController+PodcastPlayerVCDelegate.swift */; };
+		F36C5EBC2730431C00F3D944 /* GeneralVideoFeedXMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F36C5EBB2730431C00F3D944 /* GeneralVideoFeedXMLParser.swift */; };
+		F36C5EBE27304B4600F3D944 /* API+GeneralVideoFeedRSSUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F36C5EBD27304B4600F3D944 /* API+GeneralVideoFeedRSSUtils.swift */; };
 		F373BEFF26A9CB790093C886 /* Dashboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F373BEFE26A9CB790093C886 /* Dashboard.storyboard */; };
 		F373BF0126A9CE1B0093C886 /* DashboardRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F373BF0026A9CE1B0093C886 /* DashboardRootViewController.swift */; };
 		F373BF0326A9CEDD0093C886 /* DashboardFeedsContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F373BF0226A9CEDD0093C886 /* DashboardFeedsContainerViewController.swift */; };
@@ -1375,6 +1377,8 @@
 		F360123226E96B31009B8DC0 /* API+PodcastIndexSearchUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "API+PodcastIndexSearchUtils.swift"; sourceTree = "<group>"; };
 		F360123426E96D59009B8DC0 /* PodcastFeedSearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastFeedSearchResult.swift; sourceTree = "<group>"; };
 		F360A42627030F4400097CE4 /* DashboardRootViewController+PodcastPlayerVCDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DashboardRootViewController+PodcastPlayerVCDelegate.swift"; sourceTree = "<group>"; };
+		F36C5EBB2730431C00F3D944 /* GeneralVideoFeedXMLParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralVideoFeedXMLParser.swift; sourceTree = "<group>"; };
+		F36C5EBD27304B4600F3D944 /* API+GeneralVideoFeedRSSUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "API+GeneralVideoFeedRSSUtils.swift"; sourceTree = "<group>"; };
 		F373BEFE26A9CB790093C886 /* Dashboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Dashboard.storyboard; sourceTree = "<group>"; };
 		F373BF0026A9CE1B0093C886 /* DashboardRootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardRootViewController.swift; sourceTree = "<group>"; };
 		F373BF0226A9CEDD0093C886 /* DashboardFeedsContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardFeedsContainerViewController.swift; sourceTree = "<group>"; };
@@ -2237,6 +2241,7 @@
 				475BDD27232AC97500C5BBD6 /* API.swift */,
 				F358212E2698BE6700A314F1 /* API+HubError.swift */,
 				F3188B832717DC7F00890DDD /* API+YouTubeRSSUtils.swift */,
+				F36C5EBD27304B4600F3D944 /* API+GeneralVideoFeedRSSUtils.swift */,
 				4754FA892729ACA3006295A5 /* API+NewsletterFeedRSSUtils.swift */,
 				F30884A82699181200CADDEB /* API+KarmaPurchaseUtils.swift */,
 				F360123226E96B31009B8DC0 /* API+PodcastIndexSearchUtils.swift */,
@@ -2366,6 +2371,7 @@
 				477C57E6234785ED00BB4E04 /* WalletBalanceService.swift */,
 				F3188B8527197B3700890DDD /* YouTubeXMLParser.swift */,
 				4754FA8B2729AE08006295A5 /* NewsletterFeedXMLParser.swift */,
+				F36C5EBB2730431C00F3D944 /* GeneralVideoFeedXMLParser.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -4041,6 +4047,7 @@
 				47AAFC85238F00AD00E30BDA /* AttachmentsManager.swift in Sources */,
 				4754FAA6272B2060006295A5 /* NewsletterItemsSectionCollectionReusableView.swift in Sources */,
 				471FACDA23E9BE48007DE1C8 /* SupportViewController.swift in Sources */,
+				F36C5EBE27304B4600F3D944 /* API+GeneralVideoFeedRSSUtils.swift in Sources */,
 				47669F4423D1F93700C17A77 /* GroupDetailsViewController.swift in Sources */,
 				4754FA9D272B1391006295A5 /* NewsletterFeedItemsCollectionViewController.swift in Sources */,
 				47F258C32539DA2700122A5A /* CommonPodcastCommentTableViewCell.swift in Sources */,
@@ -4077,6 +4084,7 @@
 				F3B2518F26DD3F4100C96D42 /* PodcastEpisode+Computeds.swift in Sources */,
 				476EB46823C4F1AE009745E2 /* GroupContactCollectionViewCell.swift in Sources */,
 				47771C72259B8D9300990467 /* GroupsPinManager.swift in Sources */,
+				F36C5EBC2730431C00F3D944 /* GeneralVideoFeedXMLParser.swift in Sources */,
 				47FA18D42434D47D00469C8F /* TransactionMessageInfoGetterExtension.swift in Sources */,
 				470396DC2535D2EB007F9C23 /* PodcastEpisodesDataSource.swift in Sources */,
 				F32A697B26D565E50004B8B3 /* PodcastModel+Computeds.swift in Sources */,

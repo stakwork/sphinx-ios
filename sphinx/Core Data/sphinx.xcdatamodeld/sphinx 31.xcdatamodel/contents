@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18154" systemVersion="20F71" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19461" systemVersion="21A559" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Chat" representedClassName="Chat" syncable="YES">
         <attribute name="contactIds" optional="YES" attributeType="Transformable"/>
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -210,10 +210,13 @@
     <entity name="Video" representedClassName="Video" syncable="YES">
         <attribute name="author" optional="YES" attributeType="String"/>
         <attribute name="datePublished" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="dateUpdated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="itemURL" optional="YES" attributeType="URI"/>
         <attribute name="thumbnailURL" optional="YES" attributeType="URI"/>
         <attribute name="title" optional="YES" attributeType="String"/>
         <attribute name="videoDescription" optional="YES" attributeType="String"/>
         <attribute name="videoID" attributeType="String"/>
+        <attribute name="videoShortDescription" optional="YES" attributeType="String"/>
         <relationship name="videoFeed" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="VideoFeed" inverseName="videos" inverseEntity="VideoFeed"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
@@ -224,8 +227,13 @@
     <entity name="VideoFeed" representedClassName="VideoFeed" syncable="YES">
         <attribute name="author" optional="YES" attributeType="String"/>
         <attribute name="datePublished" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="dateUpdated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="feedDescription" optional="YES" attributeType="String"/>
         <attribute name="feedID" attributeType="String"/>
+        <attribute name="feedOwnerURL" optional="YES" attributeType="URI"/>
         <attribute name="feedURL" optional="YES" attributeType="URI"/>
+        <attribute name="generator" optional="YES" attributeType="String"/>
+        <attribute name="imageURL" optional="YES" attributeType="URI"/>
         <attribute name="title" optional="YES" attributeType="String"/>
         <relationship name="chat" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Chat" inverseName="videoFeed" inverseEntity="Chat"/>
         <relationship name="videos" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Video" inverseName="videoFeed" inverseEntity="Video"/>
@@ -247,7 +255,7 @@
         <element name="TransactionMessage" positionX="-54" positionY="63" width="128" height="463"/>
         <element name="UserContact" positionX="-63" positionY="-18" width="128" height="358"/>
         <element name="UserInvite" positionX="-54" positionY="135" width="128" height="118"/>
-        <element name="Video" positionX="-36" positionY="153" width="128" height="134"/>
-        <element name="VideoFeed" positionX="-45" positionY="144" width="128" height="134"/>
+        <element name="Video" positionX="-36" positionY="153" width="128" height="14"/>
+        <element name="VideoFeed" positionX="-45" positionY="144" width="128" height="14"/>
     </elements>
 </model>

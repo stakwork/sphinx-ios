@@ -102,11 +102,12 @@ struct YouTubeXMLParser {
         do {
             return .success(
                 try xmlAccessor.entry.compactMap { videoPayload in
-                    let video = Video(context: managedObjectContext)
-                    
                     guard let videoID = videoPayload["yt:videoId"].text else {
                         throw Error.xmlDecodingFailed(reason: "Video ID not found")
                     }
+                    
+                    let existingVideo = Video.getVideoWith(videoID: videoID)
+                    let video = existingVideo ?? Video(context: managedObjectContext)
                     
                     video.videoID = videoID
                     

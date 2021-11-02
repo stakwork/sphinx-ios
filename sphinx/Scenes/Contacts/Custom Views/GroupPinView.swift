@@ -64,10 +64,7 @@ class GroupPinView: UIView {
     func setObjectPrivate(pin: String? = nil) {
         self.contact?.pin = pin
         self.contact?.getChat()?.pin = pin
-        self.contact?.saveContact()
-        
         self.chat?.pin = pin
-        self.chat?.saveChat()
     }
     
     func getPin() -> String? {

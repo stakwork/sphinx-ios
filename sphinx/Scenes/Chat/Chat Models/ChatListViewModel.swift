@@ -67,6 +67,7 @@ final class ChatListViewModel: NSObject {
         if let contactsService = contactsService {
             API.sharedInstance.getContacts(fromPush: fromPush, callback: {(contacts, chats, subscriptions) -> () in
                 contactsService.insertObjects(contacts: contacts, chats: chats, subscriptions: subscriptions)
+                CoreDataManager.sharedManager.saveContext()
                 self.forceKeychainSync()
                 completion()
             })
@@ -133,6 +134,7 @@ final class ChatListViewModel: NSObject {
                     completion(0,0, true)
                     
                     SphinxSocketManager.sharedInstance.connectWebsocket(forceConnect: true)
+                    CoreDataManager.sharedManager.persistContext()
                 } else {
                     self.getAllMessages(page: page + 1, date: date, completion: completion)
                 }
@@ -167,6 +169,7 @@ final class ChatListViewModel: NSObject {
                 self.addMessages(messages: newMessages, chatId: chatId, completion: { (newMessagesCount, allMessagesCount) in
                     if newMessages.count < ChatListViewModel.kMessagesPerPage {
                         completion(newMessagesCount, allMessagesCount, false)
+                        CoreDataManager.sharedManager.saveContext()
                     } else {
                         self.getMessagesPaginated(fromPush: fromPush, page: page + 1, prevPageNewMessages: newMessagesCount + prevPageNewMessages, chatId: chatId, date: date, progressCallback: progressCallback, completion: completion)
                     }

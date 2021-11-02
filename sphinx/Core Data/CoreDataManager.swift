@@ -56,6 +56,19 @@ class CoreDataManager {
         }
     }
     
+    func persistContext() {
+        let context = CoreDataManager.sharedManager.persistentContainer.viewContext
+        
+        if context.hasChanges {
+            do {
+                try context.save()
+            } catch {
+                let nserror = error as NSError
+                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+            }
+        }
+    }
+    
     func clearCoreDataStore() {
         let context = CoreDataManager.sharedManager.persistentContainer.viewContext
         context.performAndWait {
@@ -76,7 +89,6 @@ class CoreDataManager {
                 deleteContactObjectsFor(contact)
             }
         }
-        
         saveContext()
     }
     
@@ -100,7 +112,7 @@ class CoreDataManager {
         
         contact.deleteColor()
         deleteObject(object: contact)
-        CoreDataManager.sharedManager.saveContext()
+        saveContext()
     }
     
     func deleteChatObjectsFor(_ chat: Chat) {
@@ -215,6 +227,5 @@ class CoreDataManager {
     func deleteObject(object: NSManagedObject) {
         let managedContext = persistentContainer.viewContext
         managedContext.delete(object)
-        saveContext()
     }
 }

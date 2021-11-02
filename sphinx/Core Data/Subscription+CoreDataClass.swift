@@ -108,14 +108,7 @@ public class Subscription: NSManagedObject {
         subscription.createdAt = createdAt
         subscription.updatedAt = updatedAt
         
-        managedContext.mergePolicy = NSMergePolicy.overwrite
-        
-        do {
-            try managedContext.save()
-            return subscription
-        } catch {
-            return nil
-        }
+        return subscription
     }
     
     public static func parseCron(cron: String) -> String {

@@ -178,7 +178,6 @@ class JoinGroupDetailsViewController: KeyboardEventsViewController {
                 if let chat = Chat.insertChat(chat: chatJson) {
                     chat.tribeInfo = tribeInfo
                     chat.pricePerMessage = NSDecimalNumber(floatLiteral: Double(tribeInfo.pricePerMessage ?? 0))
-                    chat.saveChat()
                     
                     chat.fetchFeedContentInBackground()
                     

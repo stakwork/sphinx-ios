@@ -324,15 +324,7 @@ public class TransactionMessage: NSManagedObject {
             chat.lastMessage = message
         }
         
-        managedContext.mergePolicy = NSMergePolicy.overwrite
-        
-        do {
-            try managedContext.save()
-            return message
-        } catch {
-            print("Error inserting message")
-        }
-        return nil
+        return message
     }
     
     static func createProvisionalMessage(messageContent: String, type: Int, date: Date, chat: Chat?, replyUUID: String? = nil) -> TransactionMessage? {
@@ -374,15 +366,7 @@ public class TransactionMessage: NSManagedObject {
             message.chat = chat
         }
         
-        managedContext.mergePolicy = NSMergePolicy.overwrite
-        
-        do {
-            try managedContext.save()
-            return message
-        } catch {
-            print("Error inserting contact")
-        }
-        return nil
+        return message
     }
     
     static func isDifferentDayMessage(lastMessage: TransactionMessage?, newMessage: TransactionMessage?) -> Bool {
@@ -410,7 +394,6 @@ public class TransactionMessage: NSManagedObject {
         if let paymentHash = self.paymentHash, self.type == TransactionMessage.TransactionMessageType.payment.rawValue {
             if let message = TransactionMessage.getInvoiceWith(paymentHash: paymentHash) {
                 message.status = TransactionMessage.TransactionMessageStatus.confirmed.rawValue
-                message.saveMessage()
             }
         }
     }
@@ -439,10 +422,5 @@ public class TransactionMessage: NSManagedObject {
     
     func setAsSeen() {
         seen = true
-        saveMessage()
-    }
-    
-    func saveMessage() {
-        CoreDataManager.sharedManager.saveContext()
     }
 }

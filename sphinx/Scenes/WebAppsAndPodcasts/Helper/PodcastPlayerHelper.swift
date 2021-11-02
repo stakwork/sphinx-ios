@@ -142,7 +142,6 @@ class PodcastPlayerHelper {
         
         chat?.fetchInitialPodcastFeed(using: url) { [weak self] in
             self?.podcast = chat?.podcastFeed
-            chat?.saveChat()
             
             callback(true)
         }
@@ -152,7 +151,6 @@ class PodcastPlayerHelper {
         if let podcastFeed = chat?.podcastFeed {
             
             if podcastFeed.episodes?.isEmpty == false {
-                CoreDataManager.sharedManager.saveContext()
                 self.chat = chat
             }
             

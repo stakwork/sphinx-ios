@@ -181,7 +181,6 @@ extension TransactionMessage {
                 let (decrypted, message) = EncryptionManager.sharedInstance.decryptMessage(message: messageC)
                 if decrypted {
                     self.messageContent = message
-                    self.saveMessage()
                     return message
                 }
             }

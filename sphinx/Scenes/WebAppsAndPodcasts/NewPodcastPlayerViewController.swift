@@ -126,7 +126,6 @@ class NewPodcastPlayerViewController: UIViewController {
                         switch result {
                         case .success(let episodes):
                             self.playerHelper.podcast?.addToEpisodes(Set(episodes))
-                            CoreDataManager.sharedManager.saveContext()
                             self.shouldReloadEpisodesTable()
                         case .failure(_):
                             AlertHelper.showAlert(

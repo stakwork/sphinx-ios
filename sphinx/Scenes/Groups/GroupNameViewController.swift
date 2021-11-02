@@ -133,9 +133,7 @@ class GroupNameViewController: UIViewController {
     
     func imageUploaded(photoUrl: String?, chat: Chat) {
         if let photoUrl = photoUrl {
-            
             chat.photoUrl = photoUrl
-            CoreDataManager.sharedManager.saveContext()
         }
         self.shouldDismissView()
     }

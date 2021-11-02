@@ -151,7 +151,6 @@ extension ChatViewController : ChatAccessoryViewDelegate {
         }, errorCallback: {
              if let provisionalMessage = provisionalMessage {
                 provisionalMessage.status = TransactionMessage.TransactionMessageStatus.failed.rawValue
-                provisionalMessage.saveMessage()
                 self.insertSentMessage(message: provisionalMessage, completion: completion)
                 self.scrollAfterInsert()
              }

@@ -147,15 +147,8 @@ public class UserContact: NSManagedObject {
                 updateTipAmount(amount: oldTipAmount)
             }
         }
-
-        managedContext.mergePolicy = NSMergePolicy.overwrite
         
-        do {
-            try managedContext.save()
-            return contact
-        } catch {
-            return nil
-        }
+        return contact
     }
 
     public static func getAll() -> [UserContact] {
@@ -230,7 +223,6 @@ public class UserContact: NSManagedObject {
     func updateFromGroup(contact: JSON) -> Bool {
         if self.fromGroup != contact["from_group"].boolValue {
             self.fromGroup = contact["from_group"].boolValue
-            self.saveContact()
             return true
         }
         return false
@@ -336,10 +328,6 @@ public class UserContact: NSManagedObject {
         return !(self.routeHint ?? "").isEmpty
     }
     
-    public func saveContact() {
-        CoreDataManager.sharedManager.saveContext()
-    }
-    
     public static func updateDeviceId(deviceId: String) {
         if let currentDeviceId = UserDefaults.Keys.deviceId.get(defaultValue: ""), currentDeviceId == deviceId {
             return
@@ -362,7 +350,6 @@ public class UserContact: NSManagedObject {
         if let owner = UserContact.getOwner() {
             API.sharedInstance.updateUser(id: id, params: parameters, callback: { success in
                 owner.tipAmount = amount
-                owner.saveContact()
             }, errorCallback: { })
         }
     }

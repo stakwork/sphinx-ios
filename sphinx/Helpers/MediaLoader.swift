@@ -150,7 +150,6 @@ class MediaLoader {
                     if str != "" {
                         DispatchQueue.main.async {
                             messageRow.transactionMessage.messageContent = str
-                            messageRow.transactionMessage.saveMessage()
                             completion(messageId, str)
                         }
                         return

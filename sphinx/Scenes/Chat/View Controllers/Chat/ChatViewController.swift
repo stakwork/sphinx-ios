@@ -153,7 +153,6 @@ class ChatViewController: KeyboardHandlerViewController {
         
         if isMovingFromParent {
             accessoryView.removeKeyboardObservers()
-            CoreDataManager.sharedManager.saveContext()
         }
         
         CustomAudioPlayer.sharedInstance.stopAndReset()

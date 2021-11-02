@@ -361,8 +361,6 @@ extension SphinxSocketManager {
                 chat = chatObject
                 
                 if let chat = chat {
-                    CoreDataManager.sharedManager.saveContext()
-                    
                     if shouldUpdateObjectsOnView(chat: chat) {
                         delegate?.didUpdateChat?(chat: chat)
                     }
@@ -504,7 +502,6 @@ extension SphinxSocketManager {
     
     func setChatSeen(message: TransactionMessage, value: Bool) {
         message.chat?.seen = value
-        message.saveMessage()
     }
     
     func shouldMarkAsSeen(message: TransactionMessage) -> Bool {

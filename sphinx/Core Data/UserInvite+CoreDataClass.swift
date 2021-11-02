@@ -67,15 +67,8 @@ public class UserInvite: NSManagedObject {
         if let contact = UserContact.getContactWith(id: contactId) {
             contact.invite = invite
         }
-
-        managedContext.mergePolicy = NSMergePolicy.overwrite
         
-        do {
-            try managedContext.save()
-            return invite
-        } catch {
-            return nil
-        }
+        return invite
     }
     
     public func isExpired() -> Bool {

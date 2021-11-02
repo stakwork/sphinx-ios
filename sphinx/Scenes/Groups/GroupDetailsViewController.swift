@@ -247,7 +247,6 @@ class GroupDetailsViewController: UIViewController {
     func imageUploaded(photoUrl: String?) {
         if let photoUrl = photoUrl {
             chat.photoUrl = photoUrl
-            CoreDataManager.sharedManager.saveContext()
         }
     }
     
@@ -347,7 +346,6 @@ extension GroupDetailsViewController : TribeMemberInfoDelegate {
         API.sharedInstance.updateChat(chatId: chat.id, params: params, callback: {
             self.chat.myAlias = alias
             self.chat.myPhotoUrl = photoUrl ?? self.chat.myPhotoUrl
-            self.chat.saveChat()
         }, errorCallback: {})
     }
 }

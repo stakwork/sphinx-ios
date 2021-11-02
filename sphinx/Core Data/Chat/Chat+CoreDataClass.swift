@@ -171,15 +171,7 @@ public class Chat: NSManagedObject {
             chat.escrowAmount = NSDecimalNumber(integerLiteral: escrowAmount)
         }
         
-        managedContext.mergePolicy = NSMergePolicy.overwrite
-        
-        do {
-            try managedContext.save()
-            return chat
-        } catch let error{
-            print(error)
-            return nil
-        }
+        return chat
     }
     
     func isMuted() -> Bool {
@@ -312,10 +304,6 @@ public class Chat: NSManagedObject {
             for m in receivedUnseenMessages {
                 m.seen = true
             }
-        }
-        
-        if shouldSave {
-            CoreDataManager.sharedManager.saveContext()
         }
         
         if shouldSync {
@@ -478,16 +466,16 @@ public class Chat: NSManagedObject {
             let feedContentType = tribeInfo?.feedContentType
         {
             if ((feedContentType.isVideo || feedURLPath.isYouTubeRSSFeedURL) && videoFeed == nil) {
-                fetchInitialVideoFeed(using: feedURLPath) { [weak self] in
-                    self?.saveChat()
+                fetchInitialVideoFeed(using: feedURLPath) {
+                    CoreDataManager.sharedManager.saveContext()
                 }
             } else if (feedContentType.isNewsletter && newsletterFeed == nil) {
-                fetchInitialNewsletterFeed(using: feedURLPath) { [weak self] in
-                    self?.saveChat()
+                fetchInitialNewsletterFeed(using: feedURLPath) {
+                    CoreDataManager.sharedManager.saveContext()
                 }
             } else if (feedContentType.isPodcast && podcastFeed == nil) {
-                fetchInitialPodcastFeed(using: feedURLPath) { [weak self] in
-                    self?.saveChat()
+                fetchInitialPodcastFeed(using: feedURLPath) {
+                    CoreDataManager.sharedManager.saveContext()
                 }
             }
         }
@@ -513,7 +501,6 @@ public class Chat: NSManagedObject {
     }
     
     func syncAfterUpdate() {
-        saveChat()
         syncTribeWithServer()
         checkForDeletedTribe()
     }
@@ -541,8 +528,6 @@ public class Chat: NSManagedObject {
     ) {
         if let podcastFeed = PodcastFeedService.parsePodcastFeed(using: json, with: tribeInfo?.feedUrl, existingPodcast: podcastFeed) {
             podcastFeed.chat = self
-            
-            CoreDataManager.sharedManager.saveContext()
         }
     }
     
@@ -697,9 +682,5 @@ public class Chat: NSManagedObject {
     
     func getJoinChatLink() -> String {
         return "sphinx.chat://?action=tribe&uuid=\(self.uuid ?? "")&host=\(self.host ?? "")"
-    }
-    
-    func saveChat() {
-        CoreDataManager.sharedManager.saveContext()
     }
 }

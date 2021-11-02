@@ -67,7 +67,6 @@ public final class ContactsService {
 
             if let pin = pin {
                 c.pin = pin
-                c.saveContact()
             }
 
             return c
@@ -175,7 +174,6 @@ public final class ContactsService {
     public func updateProfileImage(userId: Int, profilePicture: String){
         if let contact = UserContact.getContactWith(id: userId) {
             contact.avatarUrl = profilePicture
-            contact.saveContact()
         }
     }
 

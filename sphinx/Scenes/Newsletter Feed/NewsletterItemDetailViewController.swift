@@ -43,6 +43,7 @@ extension NewsletterItemDetailViewController {
         toggleLoadingWheel(true)
         
         newsletterItem.saveAsCurrentArticle()
+        newsletterItem.newsletterFeed?.chat?.updateWebAppLastDate()
     }
     
     override func viewDidAppear(_ animated: Bool) {

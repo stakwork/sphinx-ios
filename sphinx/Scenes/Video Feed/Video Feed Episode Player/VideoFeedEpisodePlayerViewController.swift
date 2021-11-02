@@ -127,5 +127,9 @@ extension VideoFeedEpisodePlayerViewController {
 
 // MARK: -  YTPlayerViewDelegate
 extension VideoFeedEpisodePlayerViewController: YTPlayerViewDelegate {
-    
+    func playerView(_ playerView: YTPlayerView, didChangeTo state: YTPlayerState) {
+        if (state == .playing) {
+            videoPlayerEpisode?.videoFeed?.chat?.updateWebAppLastDate()
+        }
+    }
 }

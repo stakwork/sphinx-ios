@@ -142,6 +142,7 @@ class PodcastPlayerHelper {
         
         chat?.fetchInitialPodcastFeed(using: url) { [weak self] in
             self?.podcast = chat?.podcastFeed
+            self?.chat = chat
             
             callback(true)
         }
@@ -567,11 +568,11 @@ class PodcastPlayerHelper {
         
         playingCenter.nowPlayingInfo = [
             MPMediaItemPropertyMediaType: "\(MPMediaType.podcast)",
-            MPMediaItemPropertyPodcastTitle: podcast.title,
+            MPMediaItemPropertyPodcastTitle: podcast.title ?? "",
             MPMediaItemPropertyArtwork: artwork,
             MPMediaItemPropertyPodcastPersistentID: podcast.id,
-            MPMediaItemPropertyTitle: episode.title,
-            MPMediaItemPropertyArtist: podcast.author,
+            MPMediaItemPropertyTitle: episode.title ?? "",
+            MPMediaItemPropertyArtist: podcast.author ?? "",
             MPMediaItemPropertyPlaybackDuration: "\(duration)",
             MPNowPlayingInfoPropertyElapsedPlaybackTime: "\(currentTime)",
             MPMediaItemPropertyAlbumTrackCount: "\(getEpisodes().count)",

@@ -109,6 +109,17 @@ struct GeneralVideoFeedXMLParser {
                         video.itemURL = URL(string: videoLink)
                     }
                     
+                    if
+                        let mediaURLString = videoPayload[
+                            "media:group",
+                            "media:content"
+                        ]
+                        .first
+                        .attributes["url"]
+                    {
+                        video.mediaURL = URL(string: mediaURLString)
+                    }
+                    
                     if let titleData = videoPayload["title"].element?.CDATA {
                         video.title = String(data: titleData, encoding: .utf8)
                     }

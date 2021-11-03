@@ -23,6 +23,7 @@ extension Video {
     @NSManaged public var videoDescription: String?
     @NSManaged public var videoShortDescription: String?
     @NSManaged public var itemURL: URL?
+    @NSManaged public var mediaURL: URL?
     @NSManaged public var thumbnailURL: URL?
     @NSManaged public var videoFeed: VideoFeed?
 }

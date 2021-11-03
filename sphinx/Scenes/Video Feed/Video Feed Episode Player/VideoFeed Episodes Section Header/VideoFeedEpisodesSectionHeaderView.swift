@@ -123,7 +123,7 @@ extension VideoFeedEpisodesSectionHeaderView {
             feedAvatarImage.image = videoFeed?.avatarImagePlaceholder
         }
         
-        feedAuthorNameLabel.text = videoFeed?.author ?? "Unknown Author"
+        feedAuthorNameLabel.text = videoFeed?.authorNameForDisplay
         episodeCountNumberLabel.text = "\(episodeCount)"
 
         episodeCountTextLabel.text = (

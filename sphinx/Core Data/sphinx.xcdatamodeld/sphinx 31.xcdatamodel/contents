@@ -212,6 +212,7 @@
         <attribute name="datePublished" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="dateUpdated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="itemURL" optional="YES" attributeType="URI"/>
+        <attribute name="mediaURL" optional="YES" attributeType="URI"/>
         <attribute name="thumbnailURL" optional="YES" attributeType="URI"/>
         <attribute name="title" optional="YES" attributeType="String"/>
         <attribute name="videoDescription" optional="YES" attributeType="String"/>
@@ -255,7 +256,7 @@
         <element name="TransactionMessage" positionX="-54" positionY="63" width="128" height="463"/>
         <element name="UserContact" positionX="-63" positionY="-18" width="128" height="358"/>
         <element name="UserInvite" positionX="-54" positionY="135" width="128" height="118"/>
-        <element name="Video" positionX="-36" positionY="153" width="128" height="14"/>
+        <element name="Video" positionX="-36" positionY="153" width="128" height="194"/>
         <element name="VideoFeed" positionX="-45" positionY="144" width="128" height="14"/>
     </elements>
 </model>

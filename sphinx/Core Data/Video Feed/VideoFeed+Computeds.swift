@@ -32,4 +32,11 @@ extension VideoFeed {
         
         return URL(string: urlPath)
     }
+    
+    
+    var isYouTubeFeed: Bool {
+        guard let feedURL = feedURL else { return false }
+        
+        return feedURL.absoluteString.isYouTubeRSSFeed
+    }
 }

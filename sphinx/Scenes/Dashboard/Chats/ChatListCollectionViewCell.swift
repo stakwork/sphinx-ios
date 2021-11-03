@@ -223,14 +223,7 @@ extension ChatListCollectionViewCell {
             
             inviteIcon.isHidden = true
             
-            if chatListObject.lastMessage == nil {
-                chatListObject.getChat()?.updateLastMessage()
-            }
-            
             if let lastMessage = chatListObject.lastMessage {
-                messageLabel.isHidden = false
-                dateLabel.isHidden = false
-                
                 messageLabel.font = hasUnreadMessages ?
                     Constants.kNewMessagePreviewFont
                     : Constants.kMessagePreviewFont
@@ -241,8 +234,11 @@ extension ChatListCollectionViewCell {
                 
                 messageLabel.text = lastMessage.getMessageDescription(dashboard: true)
                 dateLabel.text = lastMessage.date.getLastMessageDateFormat()
+                
+                messageLabel.superview?.isHidden = false
+                dateLabel.isHidden = false
             } else {
-                messageLabel.isHidden = true
+                messageLabel.superview?.isHidden = true
                 dateLabel.isHidden = true
             }
         }

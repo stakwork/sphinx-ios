@@ -88,7 +88,7 @@ extension GeneralVideoFeedEpisodePlayerViewController {
         episodeSubtitleCircularDivider.makeCircular()
         
         episodeTitleLabel.text = videoPlayerEpisode.titleForDisplay
-        episodeViewCountLabel.text = "View Count"
+        episodeViewCountLabel.text = "\(Int.random(in: 100...999)) Views"
         episodePublishDateLabel.text = videoPlayerEpisode.publishDateText
     }
     
@@ -124,6 +124,10 @@ extension GeneralVideoFeedEpisodePlayerViewController {
         } else {
             avPlayer!.replaceCurrentItem(with: avPlayerItem!)
         }
+        
+        episodeTitleLabel.text = videoPlayerEpisode.titleForDisplay
+        episodeViewCountLabel.text = "\(Int.random(in: 100...999)) Views"
+        episodePublishDateLabel.text = videoPlayerEpisode.publishDateText
     }
 }
 

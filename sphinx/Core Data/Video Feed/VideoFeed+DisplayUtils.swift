@@ -10,7 +10,7 @@ import UIKit
 extension VideoFeed {
     
     var avatarImagePlaceholder: UIImage? {
-        UIImage(named: "userAvatar")
+        UIImage(named: "profile_avatar")
     }
     
     

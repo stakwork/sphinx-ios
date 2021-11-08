@@ -364,7 +364,15 @@ extension DashboardNewsletterFeedCollectionViewController {
         snapshot.appendSections(CollectionViewSection.allCases)
         
         snapshot.appendItems(
-            newsletterFeeds.map { DataSourceItem.newsletterFeed($0) },
+            newsletterFeeds.sorted { (first, second) in
+                guard let firstDate = first.chat?.webAppLastDate else {
+                    return false
+                }
+                guard let secondDate = second.chat?.webAppLastDate else {
+                    return true
+                }
+                return firstDate > secondDate
+            }.map { DataSourceItem.newsletterFeed($0) },
             toSection: .newsletterFeeds
         )
         
@@ -505,7 +513,7 @@ extension NewsletterFeed: DashboardFeedSquaredThumbnailCollectionViewItem {
     }
     
     var placeholderImageName: String? {
-        "podcastPlaceholder"
+        "newsletterPlaceholder"
     }
     
     var subtitle: String? {
@@ -519,7 +527,7 @@ extension NewsletterItem: DashboardFeedSquaredThumbnailCollectionViewItem {
     }
     
     var placeholderImageName: String? {
-        "podcastPlaceholder"
+        "newsletterPlaceholder"
     }
 
     var subtitle: String? {

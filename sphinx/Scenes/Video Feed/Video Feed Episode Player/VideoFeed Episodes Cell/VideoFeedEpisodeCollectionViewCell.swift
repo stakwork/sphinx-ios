@@ -74,13 +74,13 @@ extension VideoFeedEpisodeCollectionViewCell {
         if let imageURL = thumbnailImageViewURL {
             thumbnailImageView.sd_setImage(
                 with: imageURL,
-                placeholderImage: UIImage(named: "podcastPlaceholder"),
+                placeholderImage: UIImage(named: "videoPlaceholder"),
                 options: [.highPriority],
                 progress: nil
             )
         } else {
             // 📝 TODO:  Use a video placeholder here
-            thumbnailImageView.image = UIImage(named: "podcastPlaceholder")
+            thumbnailImageView.image = UIImage(named: "videoPlaceholder")
         }
 
 

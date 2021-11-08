@@ -75,7 +75,7 @@ extension DashboardNewsletterItemCollectionViewCell {
             
             itemImageView.sd_setImage(
                 with: imageUrl,
-                placeholderImage: UIImage(named: "podcastPlaceholder"),
+                placeholderImage: UIImage(named: "newsletterPlaceholder"),
                 options: [.highPriority],
                 progress: nil
             )
@@ -87,7 +87,7 @@ extension DashboardNewsletterItemCollectionViewCell {
                 progress: nil
             )
         } else {
-            itemImageView.image = UIImage(named: "podcastPlaceholder")
+            itemImageView.image = UIImage(named: "newsletterPlaceholder")
             itemIcon.image = UIImage(named: "profile_avatar")
         }
 

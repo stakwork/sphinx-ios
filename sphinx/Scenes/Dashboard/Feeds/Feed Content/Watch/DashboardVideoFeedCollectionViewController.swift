@@ -360,7 +360,15 @@ extension DashboardVideoFeedCollectionViewController {
         snapshot.appendSections(CollectionViewSection.allCases)
         
         snapshot.appendItems(
-            videoFeeds.map { DataSourceItem.videoFeed($0) },
+            videoFeeds.sorted { (first, second) in
+                guard let firstDate = first.chat?.webAppLastDate else {
+                    return false
+                }
+                guard let secondDate = second.chat?.webAppLastDate else {
+                    return true
+                }
+                return firstDate > secondDate
+            }.map { DataSourceItem.videoFeed($0) },
             toSection: .videoFeeds
         )
         

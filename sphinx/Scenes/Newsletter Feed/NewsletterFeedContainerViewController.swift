@@ -71,14 +71,14 @@ extension NewsletterFeedContainerViewController {
         if let imageUrl = newsletterFeed.imageURL {
             feedImageView.sd_setImage(
                 with: imageUrl,
-                placeholderImage: UIImage(named: "podcastPlaceholder"),
+                placeholderImage: UIImage(named: "newsletterPlaceholder"),
                 options: [.highPriority],
                 progress: nil
             )
         } else if let imageUrlString = newsletterFeed.chat?.photoUrl, let imageUrl = URL(string: imageUrlString) {
             feedImageView.sd_setImage(
                 with: imageUrl,
-                placeholderImage: UIImage(named: "podcastPlaceholder"),
+                placeholderImage: UIImage(named: "newsletterPlaceholder"),
                 options: [.highPriority],
                 progress: nil
             )

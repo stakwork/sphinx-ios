@@ -206,7 +206,7 @@ extension VideoFeedEpisodePlayerContainerViewController {
                     then: { result in
                         switch result {
                         case .success(let videoEpisodes):
-                            videoFeed.videos = Set(videoEpisodes)
+                            videoFeed.addToVideos(Set(videoEpisodes))
 
                             let updatedEpisode = videoFeed
                                 .videos?

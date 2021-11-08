@@ -44,13 +44,13 @@ public struct PodcastFeedService {
         podcastFeed.feedURLPath = feedUrl
         
         let episodes = json["episodes"].arrayValue.map {
-            PodcastEpisode(
-                jsonPayload: $0,
+            PodcastEpisode.parseEpisode(
+                using: $0,
                 managedObjectContext: managedObjectContext
             )
         }
         
-        podcastFeed.episodes = Set(episodes)
+        podcastFeed.addToEpisodes(Set(episodes))
         
         let value = JSON(json["value"])
         let model = JSON(value["model"])

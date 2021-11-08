@@ -67,15 +67,13 @@ struct YouTubeXMLParser {
         
         switch videoEntriesResult {
         case .success(let videos):
-            feed.videos = Set(videos)
+            feed.addToVideos(Set(videos))
             
             return .success(feed)
         case .failure(let error):
             return .failure(error)
         }
     }
-    
-    
     
     static func parseVideoFeedEntries(
         from xmlData: Data,
@@ -94,7 +92,6 @@ struct YouTubeXMLParser {
             using: managedObjectContext
         )
     }
-    
     
     static func parseVideoFeedEntries(
         from xmlAccessor: XML.Accessor,

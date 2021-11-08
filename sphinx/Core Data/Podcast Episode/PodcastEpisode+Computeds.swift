@@ -21,34 +21,27 @@ extension PodcastEpisode {
 
 extension PodcastEpisode {
 
-    convenience init(
-        jsonPayload json: JSON,
+    static func parseEpisode(
+        using json: JSON,
         managedObjectContext: NSManagedObjectContext
-    ) {
-        self.init(context: managedObjectContext)
-
-        id = Int64(json["id"].intValue)
-        title = json["title"].stringValue
-        datePublished = Date(timeIntervalSince1970: json["datePublished"].doubleValue)
-        episodeDescription = json["description"].stringValue
-        urlPath = json["enclosureUrl"].stringValue
-        imageURLPath = json["image"].stringValue
-        linkURLPath = json["link"].stringValue
-    }
-}
-
-
-// MARK: - Coding Keys
-extension PodcastEpisode {
-    
-    enum CodingKeys: String, CodingKey {
-        case id = "id"
-        case title = "title"
-        case datePublished = "datePublished"
-        case episodeDescription = "description"
-        case urlPath = "enclosureUrl"
-        case imageURLPath = "image"
-        case linkURLPath = "link"
+    ) -> PodcastEpisode {
+        
+        let all = PodcastEpisode.getAllEpisodes()
+        
+        let id = Int64(json["id"].intValue)
+        let existingEpisode = getPodcastEpisodeWith(id: id)
+        
+        let episode = existingEpisode ?? PodcastEpisode(context: managedObjectContext)
+        
+        episode.id = id
+        episode.title = json["title"].stringValue
+        episode.datePublished = Date(timeIntervalSince1970: json["datePublished"].doubleValue)
+        episode.episodeDescription = json["description"].stringValue
+        episode.urlPath = json["enclosureUrl"].stringValue
+        episode.imageURLPath = json["image"].stringValue
+        episode.linkURLPath = json["link"].stringValue
+        
+        return episode
     }
 }
 

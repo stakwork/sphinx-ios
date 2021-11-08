@@ -151,7 +151,7 @@ extension NewsletterFeedContainerViewController {
                     then: { result in
                         switch result {
                         case .success(let newsletterItems):
-                            newsletterFeed.newsletterItems = Set(newsletterItems)
+                            newsletterFeed.addToNewsletterItems(Set(newsletterItems))
                             
                             DispatchQueue.main.async {
                                 self.collectionViewController.reloadItems(newsletterItems: newsletterItems)

@@ -428,6 +428,7 @@
 		47A79D3A2444A15C005CD72F /* MessageOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A79D392444A15C005CD72F /* MessageOptionsView.swift */; };
 		47A79D3E2444EEF3005CD72F /* MessageOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A79D3D2444EEF3005CD72F /* MessageOptionView.swift */; };
 		47A79D402444EEFF005CD72F /* MessageOptionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47A79D3F2444EEFF005CD72F /* MessageOptionView.xib */; };
+		47A9F5FA2739B21D005396A1 /* PodcastEpisode+FetchUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A9F5F92739B21D005396A1 /* PodcastEpisode+FetchUtils.swift */; };
 		47AA08C3234B8CF2002C69E2 /* AddFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47AA08C2234B8CF2002C69E2 /* AddFriendViewController.swift */; };
 		47AA08C5234B96BF002C69E2 /* ConfirmAddFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47AA08C4234B96BF002C69E2 /* ConfirmAddFriendViewController.swift */; };
 		47AA08C7234BB8E0002C69E2 /* ShareInviteCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47AA08C6234BB8E0002C69E2 /* ShareInviteCodeViewController.swift */; };
@@ -1196,6 +1197,7 @@
 		47A79D392444A15C005CD72F /* MessageOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageOptionsView.swift; sourceTree = "<group>"; };
 		47A79D3D2444EEF3005CD72F /* MessageOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageOptionView.swift; sourceTree = "<group>"; };
 		47A79D3F2444EEFF005CD72F /* MessageOptionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageOptionView.xib; sourceTree = "<group>"; };
+		47A9F5F92739B21D005396A1 /* PodcastEpisode+FetchUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PodcastEpisode+FetchUtils.swift"; sourceTree = "<group>"; };
 		47AA08C2234B8CF2002C69E2 /* AddFriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendViewController.swift; sourceTree = "<group>"; };
 		47AA08C4234B96BF002C69E2 /* ConfirmAddFriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmAddFriendViewController.swift; sourceTree = "<group>"; };
 		47AA08C6234BB8E0002C69E2 /* ShareInviteCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareInviteCodeViewController.swift; sourceTree = "<group>"; };
@@ -3199,6 +3201,7 @@
 				F32A695626CFEF5F0004B8B3 /* PodcastEpisode+CoreDataClass.swift */,
 				F32A695726CFEF5F0004B8B3 /* PodcastEpisode+CoreDataProperties.swift */,
 				F3B2518E26DD3F4000C96D42 /* PodcastEpisode+Computeds.swift */,
+				47A9F5F92739B21D005396A1 /* PodcastEpisode+FetchUtils.swift */,
 			);
 			path = "Podcast Episode";
 			sourceTree = "<group>";
@@ -3988,6 +3991,7 @@
 				475BDCBA232AC1E800C5BBD6 /* ChatAccessoryView.swift in Sources */,
 				F30884A92699181200CADDEB /* API+KarmaPurchaseUtils.swift in Sources */,
 				4787F8982478112F00CCE8B9 /* ChatAvatarView.swift in Sources */,
+				47A9F5FA2739B21D005396A1 /* PodcastEpisode+FetchUtils.swift in Sources */,
 				47308E0E24FEE6E700FFAC6F /* SocketIOClientConfiguration.swift in Sources */,
 				47308E1124FEE6E700FFAC6F /* SocketIOClientOption.swift in Sources */,
 				47FB189B23A299000097695B /* SignupHelper.swift in Sources */,

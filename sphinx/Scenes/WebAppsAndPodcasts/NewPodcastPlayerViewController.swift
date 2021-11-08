@@ -125,7 +125,7 @@ class NewPodcastPlayerViewController: UIViewController {
                     DispatchQueue.main.async {
                         switch result {
                         case .success(let episodes):
-                            self.playerHelper.podcast?.episodes = Set(episodes)
+                            self.playerHelper.podcast?.addToEpisodes(Set(episodes))
                             self.shouldReloadEpisodesTable()
                         case .failure(_):
                             AlertHelper.showAlert(

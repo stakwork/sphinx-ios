@@ -9,7 +9,7 @@
 import Foundation
 import Alamofire
 import CryptoKit
-
+import SwiftyJSON
 
 extension API {
     
@@ -199,16 +199,15 @@ extension API {
     func decodePodcastFeedEpisodes(
         from data: Data
     ) throws -> [PodcastEpisode] {
-        let decoder = JSONDecoder()
         
-        decoder.userInfo[.managedObjectContext] = CoreDataManager.sharedManager.persistentContainer.viewContext
+        let context = CoreDataManager.sharedManager.persistentContainer.viewContext
+        let json = JSON(data)
         
-        let resultsContainer = try decoder.decode(
-            PodcastEpisode.ResultsContainer.self,
-            from: data
-        )
+        let episodes = json["items"].arrayValue.map { e in
+            PodcastEpisode.parseEpisode(using: e, managedObjectContext: context)
+        }
         
-        return resultsContainer.episodes
+        return episodes
     }
 }
     
@@ -221,19 +220,6 @@ extension PodcastFeedSearchResult {
         
         enum CodingKeys: String, CodingKey {
             case feeds = "feeds"
-        }
-    }
-}
-
-
-
-extension PodcastEpisode {
-    
-    fileprivate struct ResultsContainer: Decodable {
-        var episodes: [PodcastEpisode]
-        
-        enum CodingKeys: String, CodingKey {
-            case episodes = "items"
         }
     }
 }

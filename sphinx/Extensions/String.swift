@@ -414,6 +414,10 @@ extension String {
         }
     }
     
+    var isYouTubeRSSFeed: Bool {
+        starts(with: "http://www.youtube.com/feeds")
+    }
+    
     var podcastId: Int {
         get {
             let components = self.components(separatedBy: ":")

@@ -15,4 +15,6 @@ extension VideoFeed {
     
     
     var titleForDisplay: String { title ?? "Untitled" }
+    
+    var authorNameForDisplay: String { author ?? title ?? "Unknown Author" }
 }

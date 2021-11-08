@@ -600,11 +600,14 @@
 		F360123326E96B31009B8DC0 /* API+PodcastIndexSearchUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F360123226E96B31009B8DC0 /* API+PodcastIndexSearchUtils.swift */; };
 		F360123526E96D59009B8DC0 /* PodcastFeedSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = F360123426E96D59009B8DC0 /* PodcastFeedSearchResult.swift */; };
 		F360A42727030F4400097CE4 /* DashboardRootViewController+PodcastPlayerVCDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F360A42627030F4400097CE4 /* DashboardRootViewController+PodcastPlayerVCDelegate.swift */; };
+		F36C5EBC2730431C00F3D944 /* GeneralVideoFeedXMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F36C5EBB2730431C00F3D944 /* GeneralVideoFeedXMLParser.swift */; };
+		F36C5EBE27304B4600F3D944 /* API+GeneralVideoFeedRSSUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F36C5EBD27304B4600F3D944 /* API+GeneralVideoFeedRSSUtils.swift */; };
+		F36C5EC027315EBB00F3D944 /* GeneralVideoFeedEpisodePlayerViewController GeneralVideoFeedEpisodePlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F36C5EBF27315EBB00F3D944 /* GeneralVideoFeedEpisodePlayerViewController GeneralVideoFeedEpisodePlayerViewController.swift */; };
 		F373BEFF26A9CB790093C886 /* Dashboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F373BEFE26A9CB790093C886 /* Dashboard.storyboard */; };
 		F373BF0126A9CE1B0093C886 /* DashboardRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F373BF0026A9CE1B0093C886 /* DashboardRootViewController.swift */; };
 		F373BF0326A9CEDD0093C886 /* DashboardFeedsContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F373BF0226A9CEDD0093C886 /* DashboardFeedsContainerViewController.swift */; };
 		F373BF0C26AAFB990093C886 /* CustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = F373BF0B26AAFB990093C886 /* CustomSegmentedControl.swift */; };
-		F37D799B271E340900CAB15F /* VideoFeedEpisodePlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37D799A271E340900CAB15F /* VideoFeedEpisodePlayerViewController.swift */; };
+		F37D799B271E340900CAB15F /* YouTubeVideoFeedEpisodePlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37D799A271E340900CAB15F /* YouTubeVideoFeedEpisodePlayerViewController.swift */; };
 		F37D799F271E753E00CAB15F /* VideoFeedEpisodesSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37D799D271E753E00CAB15F /* VideoFeedEpisodesSectionHeaderView.swift */; };
 		F37D79A0271E753E00CAB15F /* VideoFeedEpisodesSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F37D799E271E753E00CAB15F /* VideoFeedEpisodesSectionHeaderView.xib */; };
 		F385D49B26ECFEC500A789E8 /* DashboardRootViewController+PodcastFeedSearchResultsViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F385D49A26ECFEC500A789E8 /* DashboardRootViewController+PodcastFeedSearchResultsViewControllerDelegate.swift */; };
@@ -1381,11 +1384,14 @@
 		F360123226E96B31009B8DC0 /* API+PodcastIndexSearchUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "API+PodcastIndexSearchUtils.swift"; sourceTree = "<group>"; };
 		F360123426E96D59009B8DC0 /* PodcastFeedSearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastFeedSearchResult.swift; sourceTree = "<group>"; };
 		F360A42627030F4400097CE4 /* DashboardRootViewController+PodcastPlayerVCDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DashboardRootViewController+PodcastPlayerVCDelegate.swift"; sourceTree = "<group>"; };
+		F36C5EBB2730431C00F3D944 /* GeneralVideoFeedXMLParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralVideoFeedXMLParser.swift; sourceTree = "<group>"; };
+		F36C5EBD27304B4600F3D944 /* API+GeneralVideoFeedRSSUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "API+GeneralVideoFeedRSSUtils.swift"; sourceTree = "<group>"; };
+		F36C5EBF27315EBB00F3D944 /* GeneralVideoFeedEpisodePlayerViewController GeneralVideoFeedEpisodePlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GeneralVideoFeedEpisodePlayerViewController GeneralVideoFeedEpisodePlayerViewController.swift"; sourceTree = "<group>"; };
 		F373BEFE26A9CB790093C886 /* Dashboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Dashboard.storyboard; sourceTree = "<group>"; };
 		F373BF0026A9CE1B0093C886 /* DashboardRootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardRootViewController.swift; sourceTree = "<group>"; };
 		F373BF0226A9CEDD0093C886 /* DashboardFeedsContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardFeedsContainerViewController.swift; sourceTree = "<group>"; };
 		F373BF0B26AAFB990093C886 /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
-		F37D799A271E340900CAB15F /* VideoFeedEpisodePlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoFeedEpisodePlayerViewController.swift; sourceTree = "<group>"; };
+		F37D799A271E340900CAB15F /* YouTubeVideoFeedEpisodePlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeVideoFeedEpisodePlayerViewController.swift; sourceTree = "<group>"; };
 		F37D799D271E753E00CAB15F /* VideoFeedEpisodesSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoFeedEpisodesSectionHeaderView.swift; sourceTree = "<group>"; };
 		F37D799E271E753E00CAB15F /* VideoFeedEpisodesSectionHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoFeedEpisodesSectionHeaderView.xib; sourceTree = "<group>"; };
 		F385D49A26ECFEC500A789E8 /* DashboardRootViewController+PodcastFeedSearchResultsViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DashboardRootViewController+PodcastFeedSearchResultsViewControllerDelegate.swift"; sourceTree = "<group>"; };
@@ -2244,6 +2250,7 @@
 				475BDD27232AC97500C5BBD6 /* API.swift */,
 				F358212E2698BE6700A314F1 /* API+HubError.swift */,
 				F3188B832717DC7F00890DDD /* API+YouTubeRSSUtils.swift */,
+				F36C5EBD27304B4600F3D944 /* API+GeneralVideoFeedRSSUtils.swift */,
 				4754FA892729ACA3006295A5 /* API+NewsletterFeedRSSUtils.swift */,
 				F30884A82699181200CADDEB /* API+KarmaPurchaseUtils.swift */,
 				F360123226E96B31009B8DC0 /* API+PodcastIndexSearchUtils.swift */,
@@ -2373,6 +2380,7 @@
 				477C57E6234785ED00BB4E04 /* WalletBalanceService.swift */,
 				F3188B8527197B3700890DDD /* YouTubeXMLParser.swift */,
 				4754FA8B2729AE08006295A5 /* NewsletterFeedXMLParser.swift */,
+				F36C5EBB2730431C00F3D944 /* GeneralVideoFeedXMLParser.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -3128,7 +3136,8 @@
 			children = (
 				F3188B9B271CD6CC00890DDD /* VideoFeedEpisodePlayerCollectionViewController.swift */,
 				F3E357A7271E19EF00B91C54 /* VideoFeedEpisodePlayerContainerViewController.swift */,
-				F37D799A271E340900CAB15F /* VideoFeedEpisodePlayerViewController.swift */,
+				F37D799A271E340900CAB15F /* YouTubeVideoFeedEpisodePlayerViewController.swift */,
+				F36C5EBF27315EBB00F3D944 /* GeneralVideoFeedEpisodePlayerViewController GeneralVideoFeedEpisodePlayerViewController.swift */,
 				F3188BA6271CF17800890DDD /* Video Player Episode Cell */,
 				F3188BA4271CF15C00890DDD /* VideoFeed Episodes Cell */,
 				F37D799C271E74DA00CAB15F /* VideoFeed Episodes Section Header */,
@@ -3792,6 +3801,7 @@
 				475BDCBE232AC1F000C5BBD6 /* ChatDataSource.swift in Sources */,
 				47308E0824FEE6E600FFAC6F /* SocketEngineClient.swift in Sources */,
 				475BDD89232C086C00C5BBD6 /* HistoryViewController.swift in Sources */,
+				F36C5EC027315EBB00F3D944 /* GeneralVideoFeedEpisodePlayerViewController GeneralVideoFeedEpisodePlayerViewController.swift in Sources */,
 				47FA44132374B6D4005D8C63 /* SubscriptionAmountView.swift in Sources */,
 				47CC7CE223E3611600730E6F /* APITransactionsExtension.swift in Sources */,
 				476EB47223C5064C009745E2 /* GroupAllContactsDataSource.swift in Sources */,
@@ -3892,7 +3902,7 @@
 				47893A8B24095A30002F675B /* AudioSentTableViewCell.swift in Sources */,
 				47FA440223748EB6005D8C63 /* SubscriptionFormViewControllerExtensions.swift in Sources */,
 				478DCF982343D24D009A03D6 /* SetProfileImageViewController.swift in Sources */,
-				F37D799B271E340900CAB15F /* VideoFeedEpisodePlayerViewController.swift in Sources */,
+				F37D799B271E340900CAB15F /* YouTubeVideoFeedEpisodePlayerViewController.swift in Sources */,
 				47F258BC2539DA0100122A5A /* PodcastCommentSentTableViewCell.swift in Sources */,
 				47935FB3249EC3BE00B39ADB /* OrientationHandlerViewController.swift in Sources */,
 				47357A192729A16C00A49EEE /* NewsletterItem+DisplayUtils.swift in Sources */,
@@ -4051,6 +4061,7 @@
 				47AAFC85238F00AD00E30BDA /* AttachmentsManager.swift in Sources */,
 				4754FAA6272B2060006295A5 /* NewsletterItemsSectionCollectionReusableView.swift in Sources */,
 				471FACDA23E9BE48007DE1C8 /* SupportViewController.swift in Sources */,
+				F36C5EBE27304B4600F3D944 /* API+GeneralVideoFeedRSSUtils.swift in Sources */,
 				47669F4423D1F93700C17A77 /* GroupDetailsViewController.swift in Sources */,
 				4754FA9D272B1391006295A5 /* NewsletterFeedItemsCollectionViewController.swift in Sources */,
 				47F258C32539DA2700122A5A /* CommonPodcastCommentTableViewCell.swift in Sources */,
@@ -4087,6 +4098,7 @@
 				F3B2518F26DD3F4100C96D42 /* PodcastEpisode+Computeds.swift in Sources */,
 				476EB46823C4F1AE009745E2 /* GroupContactCollectionViewCell.swift in Sources */,
 				47771C72259B8D9300990467 /* GroupsPinManager.swift in Sources */,
+				F36C5EBC2730431C00F3D944 /* GeneralVideoFeedXMLParser.swift in Sources */,
 				47FA18D42434D47D00469C8F /* TransactionMessageInfoGetterExtension.swift in Sources */,
 				470396DC2535D2EB007F9C23 /* PodcastEpisodesDataSource.swift in Sources */,
 				F32A697B26D565E50004B8B3 /* PodcastModel+Computeds.swift in Sources */,

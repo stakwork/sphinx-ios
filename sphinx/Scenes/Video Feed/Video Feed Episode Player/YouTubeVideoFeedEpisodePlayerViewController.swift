@@ -1,4 +1,4 @@
-// VideoFeedEpisodePlayerViewController.swift
+// YouTubeVideoFeedEpisodePlayerViewController.swift
 //
 // Created by CypherPoet.
 // ✌️
@@ -8,7 +8,7 @@ import UIKit
 import youtube_ios_player_helper
 
 
-class VideoFeedEpisodePlayerViewController: UIViewController {
+class YouTubeVideoFeedEpisodePlayerViewController: UIViewController, VideoFeedEpisodePlayerViewController {
     @IBOutlet private weak var videoPlayerView: YTPlayerView!
     @IBOutlet private weak var dismissButton: UIButton!
     @IBOutlet private weak var episodeTitleLabel: UILabel!
@@ -34,16 +34,16 @@ class VideoFeedEpisodePlayerViewController: UIViewController {
 
 
 // MARK: -  Static Methods
-extension VideoFeedEpisodePlayerViewController {
+extension YouTubeVideoFeedEpisodePlayerViewController {
     
     static func instantiate(
         videoPlayerEpisode: Video,
         dismissButtonStyle: ModalDismissButtonStyle = .downArrow,
         onDismiss: (() -> Void)?
-    ) -> VideoFeedEpisodePlayerViewController {
+    ) -> YouTubeVideoFeedEpisodePlayerViewController {
         let viewController = StoryboardScene
             .VideoFeed
-            .videoFeedEpisodePlayerViewController
+            .youtubeVideoFeedEpisodePlayerViewController
             .instantiate()
         
         viewController.videoPlayerEpisode = videoPlayerEpisode
@@ -56,7 +56,7 @@ extension VideoFeedEpisodePlayerViewController {
 
 
 // MARK: -  Lifecycle
-extension VideoFeedEpisodePlayerViewController {
+extension YouTubeVideoFeedEpisodePlayerViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,12 +74,12 @@ extension VideoFeedEpisodePlayerViewController {
 
 
 // MARK: - Computeds
-extension VideoFeedEpisodePlayerViewController {
+extension YouTubeVideoFeedEpisodePlayerViewController {
 }
 
 
 // MARK: -  Action Handling
-extension VideoFeedEpisodePlayerViewController {
+extension YouTubeVideoFeedEpisodePlayerViewController {
     
     @IBAction func dismissButtonTouched() {
         onDismiss?()
@@ -88,7 +88,7 @@ extension VideoFeedEpisodePlayerViewController {
 
 
 // MARK: -  Private Helpers
-extension VideoFeedEpisodePlayerViewController {
+extension YouTubeVideoFeedEpisodePlayerViewController {
     
     private func setupViews() {
         videoPlayerView.delegate = self
@@ -96,7 +96,7 @@ extension VideoFeedEpisodePlayerViewController {
         episodeSubtitleCircularDivider.makeCircular()
         
         episodeTitleLabel.text = videoPlayerEpisode.titleForDisplay
-        episodeViewCountLabel.text = "View Count"
+        episodeViewCountLabel.text = "\(Int.random(in: 100...999)) Views"
         episodePublishDateLabel.text = videoPlayerEpisode.publishDateText
         
         setupDismissButton()
@@ -121,12 +121,16 @@ extension VideoFeedEpisodePlayerViewController {
     
     private func updateVideoPlayer(withNewEpisode video: Video) {
         videoPlayerView.load(withVideoId: videoPlayerEpisode.videoID)
+        
+        episodeTitleLabel.text = videoPlayerEpisode.titleForDisplay
+        episodeViewCountLabel.text = "\(Int.random(in: 100...999)) Views"
+        episodePublishDateLabel.text = videoPlayerEpisode.publishDateText
     }
 }
 
 
 // MARK: -  YTPlayerViewDelegate
-extension VideoFeedEpisodePlayerViewController: YTPlayerViewDelegate {
+extension YouTubeVideoFeedEpisodePlayerViewController: YTPlayerViewDelegate {
     func playerView(_ playerView: YTPlayerView, didChangeTo state: YTPlayerState) {
         if (state == .playing) {
             videoPlayerEpisode?.videoFeed?.chat?.updateWebAppLastDate()

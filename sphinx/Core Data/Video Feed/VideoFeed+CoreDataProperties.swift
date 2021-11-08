@@ -17,10 +17,16 @@ extension VideoFeed {
     }
 
     @NSManaged public var author: String?
+    @NSManaged public var feedDescription: String?
     @NSManaged public var feedURL: URL?
+    @NSManaged public var feedOwnerURL: URL?
+    @NSManaged public var imageURL: URL?
     @NSManaged public var title: String?
     @NSManaged public var feedID: String
     @NSManaged public var datePublished: Date?
+    @NSManaged public var dateUpdated: Date?
+    @NSManaged public var generator: String?
+    
     @NSManaged public var chat: Chat?
     @NSManaged public var videos: Set<Video>?
 

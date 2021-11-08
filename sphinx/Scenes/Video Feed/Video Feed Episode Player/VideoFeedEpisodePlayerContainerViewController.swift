@@ -27,6 +27,11 @@ protocol VideoFeedEpisodePlayerViewControllerDelegate: AnyObject {
 }
 
 
+protocol VideoFeedEpisodePlayerViewController: UIViewController {
+    var videoPlayerEpisode: Video! { get set }
+}
+
+
 class VideoFeedEpisodePlayerContainerViewController: UIViewController {
     @IBOutlet weak var playerViewContainer: UIView!
     @IBOutlet weak var collectionViewContainer: UIView!
@@ -58,11 +63,18 @@ class VideoFeedEpisodePlayerContainerViewController: UIViewController {
     weak var delegate: VideoFeedEpisodePlayerViewControllerDelegate?
     
 
-    internal lazy var playerViewController: VideoFeedEpisodePlayerViewController = {
-        VideoFeedEpisodePlayerViewController.instantiate(
+    internal lazy var youtubeVideoPlayerViewController: YouTubeVideoFeedEpisodePlayerViewController = {
+        YouTubeVideoFeedEpisodePlayerViewController.instantiate(
             videoPlayerEpisode: videoPlayerEpisode,
             dismissButtonStyle: dismissButtonStyle,
             onDismiss: { self.delegate?.viewControllerShouldDismiss(self) }
+        )
+    }()
+    
+    
+    internal lazy var generalVideoPlayerViewController: GeneralVideoFeedEpisodePlayerViewController = {
+        GeneralVideoFeedEpisodePlayerViewController.instantiate(
+            videoPlayerEpisode: videoPlayerEpisode
         )
     }()
     
@@ -122,6 +134,18 @@ extension VideoFeedEpisodePlayerContainerViewController {
     private var videoFeedEpisodes: [Video] {
         videoPlayerEpisode.videoFeed?.videosArray ?? []
     }
+    
+    private var isVideoFromYouTubeFeed: Bool {
+        guard let videoFeed = videoPlayerEpisode.videoFeed else { return false }
+        
+        return videoFeed.isYouTubeFeed
+    }
+    
+    private var currentVideoPlayerViewController: VideoFeedEpisodePlayerViewController {
+        isVideoFromYouTubeFeed ?
+            youtubeVideoPlayerViewController
+            : generalVideoPlayerViewController
+    }
 }
 
 
@@ -130,7 +154,7 @@ extension VideoFeedEpisodePlayerContainerViewController {
     
     private func configurePlayerView() {
         addChildVC(
-            child: playerViewController,
+            child: currentVideoPlayerViewController,
             container: playerViewContainer
         )
     }
@@ -158,7 +182,7 @@ extension VideoFeedEpisodePlayerContainerViewController {
         
         if selectedEpisode != videoPlayerEpisode {
             videoPlayerEpisode = selectedEpisode
-            playerViewController.videoPlayerEpisode = videoPlayerEpisode
+            currentVideoPlayerViewController.videoPlayerEpisode = videoPlayerEpisode
             
             delegate?.viewController(
                 self,

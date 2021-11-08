@@ -537,23 +537,44 @@ public class Chat: NSManagedObject {
         using feedURLPath: String,
         then completionHandler: (() -> Void)? = {}
     ) {
-        API.sharedInstance.fetchYouTubeRSSFeed(from: feedURLPath) { result in
-            switch result {
-            case .success(let data):
-                let parsingResult = YouTubeXMLParser.parseVideoFeed(from: data)
-                
-                switch parsingResult {
-                case .success(let videoFeed):
-                    videoFeed.chat = self
-                    self.videoFeed = videoFeed
+        if feedURLPath.isYouTubeRSSFeed {
+            API.sharedInstance.fetchYouTubeRSSFeed(from: feedURLPath) { result in
+                switch result {
+                case .success(let data):
+                    let parsingResult = YouTubeXMLParser.parseVideoFeed(from: data)
+                    
+                    switch parsingResult {
+                    case .success(let videoFeed):
+                        videoFeed.chat = self
+                        self.videoFeed = videoFeed
+                    case .failure(let error):
+                        print(error)
+                    }
                 case .failure(let error):
                     print(error)
                 }
-            case .failure(let error):
-                print(error)
+                
+                completionHandler?()
             }
-            
-            completionHandler?()
+        } else {
+            API.sharedInstance.fetchGeneralVideoRSSFeed(from: feedURLPath) { result in
+                switch result {
+                case .success(let data):
+                    let parsingResult = GeneralVideoFeedXMLParser.parseFeed(from: data)
+                    
+                    switch parsingResult {
+                    case .success(let videoFeed):
+                        videoFeed.chat = self
+                        self.videoFeed = videoFeed
+                    case .failure(let error):
+                        print(error)
+                    }
+                case .failure(let error):
+                    print(error)
+                }
+                
+                completionHandler?()
+            }
         }
     }
     

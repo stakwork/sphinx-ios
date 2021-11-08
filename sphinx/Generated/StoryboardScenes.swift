@@ -285,8 +285,11 @@ internal enum StoryboardScene {
         internal static let videoFeedEpisodePlayerContainerViewController = SceneType<VideoFeedEpisodePlayerContainerViewController>(storyboard: VideoFeed.self, identifier: "VideoFeedEpisodePlayerContainerViewController")
         
         
-        internal static let videoFeedEpisodePlayerViewController = SceneType<VideoFeedEpisodePlayerViewController>(storyboard: VideoFeed.self, identifier: "VideoFeedEpisodePlayerViewController")
+        internal static let youtubeVideoFeedEpisodePlayerViewController = SceneType<YouTubeVideoFeedEpisodePlayerViewController>(storyboard: VideoFeed.self, identifier: "YouTubeVideoFeedEpisodePlayerViewController")
 
+        
+        internal static let generalVideoFeedEpisodePlayerViewController = SceneType<GeneralVideoFeedEpisodePlayerViewController>(storyboard: VideoFeed.self, identifier: "GeneralVideoFeedEpisodePlayerViewController")
+        
         
         internal static let videoFeedEpisodePlayerCollectionViewController = SceneType<VideoFeedEpisodePlayerCollectionViewController>(storyboard: VideoFeed.self, identifier: "VideoFeedEpisodePlayerCollectionViewController")
     }

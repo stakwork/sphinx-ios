@@ -67,7 +67,7 @@ struct YouTubeXMLParser {
         
         switch videoEntriesResult {
         case .success(let videos):
-            feed.addToVideos(Set(videos))
+            feed.videos = Set(videos)
             
             return .success(feed)
         case .failure(let error):

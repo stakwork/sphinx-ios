@@ -65,7 +65,7 @@ struct NewsletterFeedXMLParser {
 
         switch newsletterItemsResult {
         case .success(let items):
-            feed.addToNewsletterItems(Set(items))
+            feed.newsletterItems = Set(items)
             return .success(feed)
         case .failure(let error):
             return .failure(error)

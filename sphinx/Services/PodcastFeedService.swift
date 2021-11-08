@@ -50,7 +50,7 @@ public struct PodcastFeedService {
             )
         }
         
-        podcastFeed.addToEpisodes(Set(episodes))
+        podcastFeed.episodes = Set(episodes)
         
         let value = JSON(json["value"])
         let model = JSON(value["model"])

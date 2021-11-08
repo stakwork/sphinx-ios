@@ -374,7 +374,15 @@ extension VideoFeedEpisodePlayerCollectionViewController {
         )
 
         snapshot.appendItems(
-            videoFeedEpisodes.map { DataSourceItem.videoFeedEpisode($0) },
+            videoFeedEpisodes.sorted { (first, second) in
+                guard let firstDate = first.videoFeed?.chat?.webAppLastDate else {
+                    return false
+                }
+                guard let secondDate = second.videoFeed?.chat?.webAppLastDate else {
+                    return true
+                }
+                return firstDate > secondDate
+            }.map { DataSourceItem.videoFeedEpisode($0) },
             toSection: .videoFeedEpisodes
         )
 

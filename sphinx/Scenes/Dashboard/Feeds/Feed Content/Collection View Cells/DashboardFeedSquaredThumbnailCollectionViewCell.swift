@@ -94,7 +94,7 @@ extension VideoFeed: DashboardFeedSquaredThumbnailCollectionViewItem {
     }
     
     var placeholderImageName: String? {
-        "podcastPlaceholder"
+        "videoPlaceholder"
     }
     
     var subtitle: String? {

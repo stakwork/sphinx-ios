@@ -39,11 +39,11 @@ extension NewsletterItemCollectionViewCell {
 extension NewsletterItemCollectionViewCell {
     
     var imageViewURL: URL? {
-        if let url = newsletterItem.newsletterFeed?.imageURL {
-            return url
-        } else if let chatUrl = newsletterItem.newsletterFeed?.chat?.photoUrl, let url = URL(string: chatUrl) {
-            return url
-        }
+//        if let url = newsletterItem.newsletterFeed?.imageURL {
+//            return url
+//        } else if let chatUrl = newsletterItem.newsletterFeed?.chat?.photoUrl, let url = URL(string: chatUrl) {
+//            return url
+//        }
         return nil
     }
 }
@@ -82,13 +82,13 @@ extension NewsletterItemCollectionViewCell {
         if let imageURL = imageViewURL {
             itemImageView.sd_setImage(
                 with: imageURL,
-                placeholderImage: UIImage(named: "podcastPlaceholder"),
+                placeholderImage: UIImage(named: "newsletterPlaceholder"),
                 options: [.highPriority],
                 progress: nil
             )
         } else {
             // 📝 TODO:  Use a newsletter placeholder here
-            itemImageView.image = UIImage(named: "podcastPlaceholder")
+            itemImageView.image = UIImage(named: "newsletterPlaceholder")
         }
 
 

@@ -237,7 +237,15 @@ extension PodcastFeedCollectionViewController {
         snapshot.appendSections(CollectionViewSection.allCases)
 
         snapshot.appendItems(
-            followedPodcastFeeds.map { DataSourceItem.subscribedPodcastFeed($0) },
+            followedPodcastFeeds.sorted { (first, second) in
+                guard let firstDate = first.chat?.webAppLastDate else {
+                    return false
+                }
+                guard let secondDate = second.chat?.webAppLastDate else {
+                    return true
+                }
+                return firstDate > secondDate
+            }.map { DataSourceItem.subscribedPodcastFeed($0) },
             toSection: .subscribedPodcastFeeds
         )
 

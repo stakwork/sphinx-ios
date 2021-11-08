@@ -12,7 +12,7 @@ import UIKit
 extension NewsletterFeed {
     
     var avatarImagePlaceholder: UIImage? {
-        UIImage(named: "userAvatar")
+        UIImage(named: "profile_avatar")
     }
     
     

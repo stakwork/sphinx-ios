@@ -303,7 +303,15 @@ extension NewsletterFeedItemsCollectionViewController {
 
 
         snapshot.appendItems(
-            newsletterItems.map { DataSourceItem.newsletterItem($0) },
+            newsletterItems.sorted { (first, second) in
+                guard let firstDate = first.newsletterFeed?.chat?.webAppLastDate else {
+                    return false
+                }
+                guard let secondDate = second.newsletterFeed?.chat?.webAppLastDate else {
+                    return true
+                }
+                return firstDate > secondDate
+            }.map { DataSourceItem.newsletterItem($0) },
             toSection: .newsletterItems
         )
 

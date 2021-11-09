@@ -31,7 +31,8 @@ class PodcastPaymentsHelper {
         let suggestedAmount = getPodcastAmount(podcastFeed)
         let satsAmt = boostAmount ?? suggestedAmount
         let myPubKey = UserData.sharedInstance.getUserPubKey()
-        let destinations = podcastFeed?.destinationsArray ?? []
+        var destinations = podcastFeed?.destinationsArray ?? []
+        var clipSenderDestination: PodcastDestination? = nil
         var shouldUpdateMeta = true
         
         if
@@ -39,13 +40,15 @@ class PodcastPaymentsHelper {
             clipSenderPubKey != myPubKey
         {
             shouldUpdateMeta = false
-            let clipSenderDestination = PodcastDestination(context: CoreDataManager.sharedManager.persistentContainer.viewContext)
+            clipSenderDestination = PodcastDestination(context: CoreDataManager.sharedManager.persistentContainer.viewContext)
             
-            clipSenderDestination.address = clipSenderPubKey
-            clipSenderDestination.split = 1
-            clipSenderDestination.type = "node"
-            
-            podcastFeed?.addToDestinations(clipSenderDestination)
+            if let clipSenderDestination = clipSenderDestination {
+                clipSenderDestination.address = clipSenderPubKey
+                clipSenderDestination.split = 1
+                clipSenderDestination.type = "node"
+
+                destinations.append(clipSenderDestination)
+            }
         }
         
         if let _ = boostAmount {
@@ -68,6 +71,11 @@ class PodcastPaymentsHelper {
                 uuid: uuid
             )
         }
+        
+        if let clipSenderDestination = clipSenderDestination {
+            CoreDataManager.sharedManager.deleteObject(object: clipSenderDestination)
+        }
+        
     }
     
     func getPodcastAmount(_ podcastFeed: PodcastFeed?) -> Int {

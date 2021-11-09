@@ -78,4 +78,14 @@ public class PodcastFeed: NSManagedObject {
         return self.episodesArray.firstIndex(where: { $0.id == currentEId }) ?? currentEpisode
     }
     
+    func addDestinations(_ destinations: Set<PodcastDestination>) {
+        if let dest = self.destinations {
+            for destination in Array(dest) {
+                CoreDataManager.sharedManager.deleteObject(object: destination)
+            }
+        }
+        
+        self.destinations = destinations
+    }
+    
 }

@@ -25,9 +25,6 @@ extension PodcastEpisode {
         using json: JSON,
         managedObjectContext: NSManagedObjectContext
     ) -> PodcastEpisode {
-        
-        let all = PodcastEpisode.getAllEpisodes()
-        
         let id = Int64(json["id"].intValue)
         let existingEpisode = getPodcastEpisodeWith(id: id)
         

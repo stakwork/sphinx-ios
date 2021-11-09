@@ -74,7 +74,7 @@ public struct PodcastFeedService {
             return destination
         }
         
-        podcastFeed.addToDestinations(Set(destinations))
+        podcastFeed.addDestinations(Set(destinations))
         
         return podcastFeed
     }

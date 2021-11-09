@@ -15,9 +15,4 @@ extension PodcastEpisode {
         let episode:PodcastEpisode? = CoreDataManager.sharedManager.getObjectOfTypeWith(predicate: predicate, sortDescriptors: [], entityName: "PodcastEpisode")
         return episode
     }
-    
-    static func getAllEpisodes() {
-        let episodes:[PodcastEpisode] = CoreDataManager.sharedManager.getAllOfType(entityName: "PodcastEpisode")
-        print(episodes.count)
-    }
 }

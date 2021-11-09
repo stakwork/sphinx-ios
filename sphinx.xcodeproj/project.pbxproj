@@ -649,6 +649,7 @@
 		F3D86DC026B14E5E00EB9711 /* DashboardFeedSquaredThumbnailCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F3D86DBF26B14E5E00EB9711 /* DashboardFeedSquaredThumbnailCollectionViewCell.xib */; };
 		F3D86DC226B157D400EB9711 /* DashboardFeedCollectionViewSectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = F3D86DC126B157D400EB9711 /* DashboardFeedCollectionViewSectionHeader.xib */; };
 		F3D86DC426B157F600EB9711 /* DashboardFeedCollectionViewSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D86DC326B157F600EB9711 /* DashboardFeedCollectionViewSectionHeader.swift */; };
+		F3DC6ACC273A700D00458E09 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3DC6ACB273A700D00458E09 /* LoadingViewController.swift */; };
 		F3DFB78A26B87C0C00E76FBD /* DashboardFeedsContainerViewController+ContentFilterOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3DFB78926B87C0B00E76FBD /* DashboardFeedsContainerViewController+ContentFilterOption.swift */; };
 		F3E357A8271E19EF00B91C54 /* VideoFeedEpisodePlayerContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E357A7271E19EF00B91C54 /* VideoFeedEpisodePlayerContainerViewController.swift */; };
 		F3E9C02026FB76A100718942 /* DashboardFeedsEmptyStateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E9C01E26FB76A100718942 /* DashboardFeedsEmptyStateViewController.swift */; };
@@ -1437,6 +1438,7 @@
 		F3D86DBF26B14E5E00EB9711 /* DashboardFeedSquaredThumbnailCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DashboardFeedSquaredThumbnailCollectionViewCell.xib; sourceTree = "<group>"; };
 		F3D86DC126B157D400EB9711 /* DashboardFeedCollectionViewSectionHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DashboardFeedCollectionViewSectionHeader.xib; sourceTree = "<group>"; };
 		F3D86DC326B157F600EB9711 /* DashboardFeedCollectionViewSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardFeedCollectionViewSectionHeader.swift; sourceTree = "<group>"; };
+		F3DC6ACB273A700D00458E09 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		F3DFB78926B87C0B00E76FBD /* DashboardFeedsContainerViewController+ContentFilterOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DashboardFeedsContainerViewController+ContentFilterOption.swift"; sourceTree = "<group>"; };
 		F3E357A7271E19EF00B91C54 /* VideoFeedEpisodePlayerContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoFeedEpisodePlayerContainerViewController.swift; sourceTree = "<group>"; };
 		F3E9C01E26FB76A100718942 /* DashboardFeedsEmptyStateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardFeedsEmptyStateViewController.swift; sourceTree = "<group>"; };
@@ -2469,6 +2471,7 @@
 				4740538B244CFE0000826533 /* CustomImageScrollView.swift */,
 				4787F88624746A5400CCE8B9 /* AlignedCollectionViewFlowLayout.swift */,
 				47484B962512690D00F82AAC /* BotWebView.swift */,
+				F3DC6ACB273A700D00458E09 /* LoadingViewController.swift */,
 				4703CF96251D23E5007B685C /* LinkPreviewUIImage.swift */,
 				473633E925559945007405F2 /* LogarithmicSlider.swift */,
 				F360123426E96D59009B8DC0 /* PodcastFeedSearchResult.swift */,
@@ -4163,6 +4166,7 @@
 				47AF0D37254C98D100C98398 /* BoostFireworksAnimationView.swift in Sources */,
 				47B9A645233BB54B00D2B022 /* AddressBookDataSource.swift in Sources */,
 				475BDD81232C01FE00C5BBD6 /* NewQRScannerViewController.swift in Sources */,
+				F3DC6ACC273A700D00458E09 /* LoadingViewController.swift in Sources */,
 				F3188BB6271CF35200890DDD /* VideoFeedEpisodeCollectionViewCell.swift in Sources */,
 				47308E0724FEE6E600FFAC6F /* SocketManager.swift in Sources */,
 				473842F32391719500AA640F /* PictureBubbleView.swift in Sources */,

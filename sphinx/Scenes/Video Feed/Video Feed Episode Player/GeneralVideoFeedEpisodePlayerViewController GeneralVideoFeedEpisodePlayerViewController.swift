@@ -3,7 +3,7 @@
 // Created by CypherPoet.
 // ✌️
 //
-    
+
 import UIKit
 import AVKit
 
@@ -98,7 +98,7 @@ extension GeneralVideoFeedEpisodePlayerViewController {
 
         playerViewController.delegate = self
         playerViewController.showsPlaybackControls = true
-        playerViewController.entersFullScreenWhenPlaybackBegins = true
+        playerViewController.entersFullScreenWhenPlaybackBegins = false
         playerViewController.exitsFullScreenWhenPlaybackEnds = true
         
         return playerViewController

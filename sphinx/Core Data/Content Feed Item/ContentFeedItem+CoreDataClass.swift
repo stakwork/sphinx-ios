@@ -25,14 +25,14 @@ public final class ContentFeedItem: NSManagedObject, ContentFeedItemVariant {
 
         itemID = try container.decode(String.self, forKey: .itemID)
         title = try container.decode(String.self, forKey: .title)
-        contentKindValue = try container.decode(ContentFeedKind.RawValue.self, forKey: .contentKindValue)
+        authorName = try container.decode(String.self, forKey: .authorName)
         itemDescription = try container.decode(String.self, forKey: .itemDescription)
         datePublished = try container.decode(Date.self, forKey: .datePublished)
-        enclosureURL = try container.decode(URL.self, forKey: .enclosureURL)
+        enclosureURL = try? container.decode(URL.self, forKey: .enclosureURL)
         enclosureKind = try container.decode(String.self, forKey: .enclosureKind)
         enclosureLength = try container.decode(Int64.self, forKey: .enclosureLength)
-        imageURL = try container.decode(URL.self, forKey: .imageURL)
-        linkURL = try container.decode(URL.self, forKey: .linkURL)
+        imageURL = try? container.decode(URL.self, forKey: .imageURL)
+        linkURL = try? container.decode(URL.self, forKey: .linkURL)
     }
 }
 

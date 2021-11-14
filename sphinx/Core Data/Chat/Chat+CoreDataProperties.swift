@@ -36,7 +36,7 @@ extension Chat {
     @NSManaged public var myPhotoUrl: String?
     @NSManaged public var webAppLastDate: Date?
     @NSManaged public var pin: String?
-    @NSManaged public var podcastFeed: PodcastFeed?
+    @NSManaged public var contentFeed: ContentFeed?
     @NSManaged public var videoFeed: VideoFeed?
     @NSManaged public var newsletterFeed: NewsletterFeed?
     @NSManaged public var contactIds: [NSNumber]
@@ -45,6 +45,7 @@ extension Chat {
     @NSManaged public var messages: NSSet?
     @NSManaged public var subscription: Subscription?
 }
+
 
 // MARK: Generated accessors for messages
 extension Chat {

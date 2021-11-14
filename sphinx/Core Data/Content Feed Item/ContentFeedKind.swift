@@ -7,7 +7,7 @@
 import Foundation
 
 public enum ContentFeedKind: Int16 {
-    case video
-    case podcast
-    case newsletter
+    case video = 1
+    case podcast = 2
+    case newsletter = 3
 }

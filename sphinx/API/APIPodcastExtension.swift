@@ -22,15 +22,20 @@ extension API {
             return
         }
         
-        AF.request(request).responseJSON { (response) in
-            switch response.result {
-            case .success(let data):
-                if let json = data as? NSDictionary {
-                    callback(JSON(json))
-                    return
+        AF.request(request).responseJSON { response in
+            do {
+                if let data = response.data {
+                    let decoder = JSONDecoder()
+                    
+                    decoder.userInfo[.managedObjectContext] = CoreDataManager.sharedManager.persistentContainer.viewContext
+                    
+                    callback(
+                        try decoder.decode(ContentFeed.self, from: data)
+                    )
+                } else {
+                    errorCallback()
                 }
-                errorCallback()
-            case .failure(_):
+            } catch {
                 errorCallback()
             }
         }

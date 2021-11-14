@@ -50,6 +50,15 @@ extension ContentFeed {
     
     @NSManaged
     public var items: Set<ContentFeedItem>?
+    
+    @NSManaged
+    public var chat: Chat?
+    
+    @NSManaged
+    public var paymentDestinations: Set<ContentFeedPaymentDestination>?
+    
+    @NSManaged
+    public var paymentModel: ContentFeedPaymentModel?
 }
 
 
@@ -85,25 +94,29 @@ extension ContentFeed {
 
     @objc(removeItems:)
     @NSManaged public func removeFromItems(_ values: Set<ContentFeedItem>)
+}
+
+
+// MARK: Generated accessors for paymentDestinations
+extension ContentFeed {
+
+    @objc(addPaymentDestinationsObject:)
+    @NSManaged public func addToPaymentDestinations(_ value: ContentFeedPaymentDestination)
+
+    @objc(removePaymentDestinationsObject:)
+    @NSManaged public func removeFromPaymentDestinations(_ value: ContentFeedPaymentDestination)
+
+    @objc(addPaymentDestinations:)
+    @NSManaged public func addToPaymentDestinations(_ values: Set<ContentFeedPaymentDestination>)
+
+    @objc(removePaymentDestinations:)
+    @NSManaged public func removeFromPaymentDestinations(_ values: Set<ContentFeedPaymentDestination>)
 
 }
+
 
 extension ContentFeed : Identifiable {
     public var id: String { feedID }
-}
-
-
-// MARK: -  Computeds
-extension ContentFeed {
-    
-    public var feedKind: ContentFeedKind {
-        get {
-            .init(rawValue: feedKindValue)!
-        }
-        set {
-            feedKindValue = newValue.rawValue
-        }
-    }
 }
 
 
@@ -119,12 +132,19 @@ extension ContentFeed {
         case authorName = "author"
         case imageURL = "imageUrl"
         case feedDescription = "description"
-        case feedURL = "feedUrl"
+        case feedURL = "url"
         case linkURL = "link"
         case datePublished = "datePublished"
         case dateUpdated = "dateUpdated"
         case language = "language"
         case items = "items"
+        case value = "value"
+        
+        
+        enum Value: String, CodingKey {
+            case paymentModel = "model"
+            case paymentDestinations = "destinations"
+        }
     }
 }
 

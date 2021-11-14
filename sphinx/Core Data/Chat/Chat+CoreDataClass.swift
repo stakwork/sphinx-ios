@@ -46,6 +46,7 @@ public class Chat: NSManagedObject {
         if podcastPlayer == nil {
             podcastPlayer = PodcastPlayerHelper()
         }
+        
         podcastPlayer?.podcast = self.podcastFeed
         podcastPlayer?.chat = self
         
@@ -462,6 +463,7 @@ public class Chat: NSManagedObject {
             }
     }
     
+    
     func fetchFeedContent() {
         if
             let feedURLPath = tribeInfo?.feedUrl,
@@ -482,6 +484,7 @@ public class Chat: NSManagedObject {
             }
         }
     }
+    
     
     func updateChatFromTribesInfo() {
         if isMyPublicGroup() {
@@ -511,12 +514,12 @@ public class Chat: NSManagedObject {
         using feedURLPath: String,
         then completionHandler: (() -> Void)? = {}
     ) {
-        let tribesServerURL = "https://tribes.sphinx.chat/podcast?url=\(feedURLPath)"
+        let tribesServerURL = "https://tribes-test.sphinx.chat/feed?url=\(feedURLPath)"
         
         API.sharedInstance.getPodcastFeed(
             url: tribesServerURL,
-            callback: { json in
-                self.persistDataForPodcastFeed(using: json)
+            callback: { feed in
+                feed.chat = self
                 completionHandler?()
             },
             errorCallback: {
@@ -525,13 +528,6 @@ public class Chat: NSManagedObject {
         )
     }
     
-    func persistDataForPodcastFeed(
-        using json: JSON
-    ) {
-        if let podcastFeed = PodcastFeedService.parsePodcastFeed(using: json, with: tribeInfo?.feedUrl, existingPodcast: podcastFeed) {
-            podcastFeed.chat = self
-        }
-    }
     
     func fetchInitialVideoFeed(
         using feedURLPath: String,
@@ -705,5 +701,17 @@ public class Chat: NSManagedObject {
     
     func getJoinChatLink() -> String {
         return "sphinx.chat://?action=tribe&uuid=\(self.uuid ?? "")&host=\(self.host ?? "")"
+    }
+    
+    
+    var podcastFeed: PodcastFeed? {
+        guard
+            let contentFeed = contentFeed,
+            contentFeed.feedKind == .podcast
+        else {
+            return nil
+        }
+        
+        return contentFeed.legacyPodcastFeedModel
     }
 }

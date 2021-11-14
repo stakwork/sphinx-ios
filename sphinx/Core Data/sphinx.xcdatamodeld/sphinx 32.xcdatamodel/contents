@@ -24,6 +24,7 @@
         <attribute name="unlisted" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="uuid" optional="YES" attributeType="String"/>
         <attribute name="webAppLastDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="contentFeed" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ContentFeed" inverseName="chat" inverseEntity="ContentFeed"/>
         <relationship name="messages" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TransactionMessage" inverseName="chat" inverseEntity="TransactionMessage"/>
         <relationship name="newsletterFeed" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NewsletterFeed" inverseName="chat" inverseEntity="NewsletterFeed"/>
         <relationship name="podcastFeed" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PodcastFeed" inverseName="chat" inverseEntity="PodcastFeed"/>
@@ -49,7 +50,10 @@
         <attribute name="linkURL" optional="YES" attributeType="URI"/>
         <attribute name="ownerURL" optional="YES" attributeType="URI"/>
         <attribute name="title" attributeType="String"/>
-        <relationship name="items" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="ContentFeedItem" inverseName="contentFeed" inverseEntity="ContentFeedItem"/>
+        <relationship name="chat" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Chat" inverseName="contentFeed" inverseEntity="Chat"/>
+        <relationship name="items" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ContentFeedItem" inverseName="contentFeed" inverseEntity="ContentFeedItem"/>
+        <relationship name="paymentDestinations" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ContentFeedPaymentDestination" inverseName="feed" inverseEntity="ContentFeedPaymentDestination"/>
+        <relationship name="paymentModel" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ContentFeedPaymentModel" inverseName="feed" inverseEntity="ContentFeedPaymentModel"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="feedID"/>
@@ -57,12 +61,14 @@
         </uniquenessConstraints>
     </entity>
     <entity name="ContentFeedItem" representedClassName="ContentFeedItem" syncable="YES">
+        <attribute name="authorName" optional="YES" attributeType="String"/>
         <attribute name="contentKindValue" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="datePublished" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="enclosureKind" optional="YES" attributeType="String"/>
         <attribute name="enclosureLength" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="enclosureURL" optional="YES" attributeType="URI"/>
         <attribute name="imageURL" optional="YES" attributeType="URI"/>
+        <attribute name="isDownloaded" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="itemDescription" optional="YES" attributeType="String"/>
         <attribute name="itemID" attributeType="String"/>
         <attribute name="linkURL" optional="YES" attributeType="URI"/>
@@ -73,6 +79,19 @@
                 <constraint value="itemID"/>
             </uniquenessConstraint>
         </uniquenessConstraints>
+    </entity>
+    <entity name="ContentFeedPaymentDestination" representedClassName="ContentFeedPaymentDestination" syncable="YES">
+        <attribute name="address" optional="YES" attributeType="String"/>
+        <attribute name="customKey" optional="YES" attributeType="String"/>
+        <attribute name="customValue" optional="YES" attributeType="String"/>
+        <attribute name="split" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
+        <relationship name="feed" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ContentFeed" inverseName="paymentDestinations" inverseEntity="ContentFeed"/>
+    </entity>
+    <entity name="ContentFeedPaymentModel" representedClassName="ContentFeedPaymentModel" syncable="YES">
+        <attribute name="suggestedBTC" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
+        <relationship name="feed" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ContentFeed" inverseName="paymentModel" inverseEntity="ContentFeed"/>
     </entity>
     <entity name="NewsletterFeed" representedClassName="NewsletterFeed" syncable="YES">
         <attribute name="dateUpdated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -284,7 +303,9 @@
         </uniquenessConstraints>
     </entity>
     <elements>
-        <element name="Chat" positionX="-54" positionY="135" width="128" height="449"/>
+        <element name="Chat" positionX="-54" positionY="135" width="128" height="464"/>
+        <element name="ContentFeed" positionX="-45" positionY="153" width="128" height="284"/>
+        <element name="ContentFeedItem" positionX="-27" positionY="162" width="128" height="224"/>
         <element name="NewsletterFeed" positionX="-45" positionY="144" width="128" height="179"/>
         <element name="NewsletterItem" positionX="-36" positionY="153" width="128" height="149"/>
         <element name="PodcastDestination" positionX="-18" positionY="180" width="128" height="89"/>
@@ -297,7 +318,7 @@
         <element name="UserInvite" positionX="-54" positionY="135" width="128" height="118"/>
         <element name="Video" positionX="-36" positionY="153" width="128" height="194"/>
         <element name="VideoFeed" positionX="-45" positionY="144" width="128" height="14"/>
-        <element name="ContentFeed" positionX="-45" positionY="153" width="128" height="239"/>
-        <element name="ContentFeedItem" positionX="-27" positionY="162" width="128" height="194"/>
+        <element name="ContentFeedPaymentModel" positionX="-18" positionY="171" width="128" height="74"/>
+        <element name="ContentFeedPaymentDestination" positionX="-9" positionY="180" width="128" height="119"/>
     </elements>
 </model>

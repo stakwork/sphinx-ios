@@ -24,5 +24,29 @@ extension NewsletterItem {
     @NSManaged public var datePublished: Date?
     @NSManaged public var dateUpdated: Date?
     @NSManaged public var newsletterFeed: NewsletterFeed?
+}
 
+
+// MARK: -  Public Methods
+extension NewsletterItem {
+    
+    public static func convertedFrom(
+        contentFeedItem: ContentFeedItem
+    ) -> Self {
+        guard let managedObjectContext = contentFeedItem.managedObjectContext else {
+            preconditionFailure()
+        }
+
+        let newsletterItem = Self(context: managedObjectContext)
+        
+        newsletterItem.itemID = contentFeedItem.itemID
+        newsletterItem.creator = contentFeedItem.authorName
+        newsletterItem.datePublished = contentFeedItem.datePublished
+        newsletterItem.dateUpdated = contentFeedItem.dateUpdated
+        newsletterItem.itemDescription = contentFeedItem.itemDescription
+        newsletterItem.itemUrl = contentFeedItem.enclosureURL
+        newsletterItem.title = contentFeedItem.title
+        
+        return newsletterItem
+    }
 }

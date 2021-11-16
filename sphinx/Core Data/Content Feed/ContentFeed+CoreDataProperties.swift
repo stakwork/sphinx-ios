@@ -14,6 +14,9 @@ extension ContentFeed {
     
     @NSManaged
     internal var feedKindValue: ContentFeedKind.RawValue
+   
+    @NSManaged
+    internal var mediaKindValue: ContentFeedMediaKind.RawValue
     
     @NSManaged
     public var title: String
@@ -127,6 +130,7 @@ extension ContentFeed {
         case feedID = "id"
         case title = "title"
         case feedKindValue = "feedType"
+        case mediaKindValue = "contentType"
         case ownerURL = "ownerUrl"
         case generator = "generator"
         case authorName = "author"

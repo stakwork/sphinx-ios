@@ -545,6 +545,7 @@
 		F30884A92699181200CADDEB /* API+KarmaPurchaseUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30884A82699181200CADDEB /* API+KarmaPurchaseUtils.swift */; };
 		F313024626BA62B300A1396E /* ChatsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F313024526BA62B200A1396E /* ChatsCollectionViewController.swift */; };
 		F313024826BA994B00A1396E /* ChatsContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F313024726BA994B00A1396E /* ChatsContainerViewController.swift */; };
+		F3138C3C27434D2F00F014BF /* ContentFeedMediaKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3138C3B27434D2F00F014BF /* ContentFeedMediaKind.swift */; };
 		F3188B7B271792C400890DDD /* Video+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3188B79271792C400890DDD /* Video+CoreDataProperties.swift */; };
 		F3188B7C271792C400890DDD /* Video+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3188B7A271792C400890DDD /* Video+CoreDataClass.swift */; };
 		F3188B7F271792CE00890DDD /* VideoFeed+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3188B7D271792CD00890DDD /* VideoFeed+CoreDataClass.swift */; };
@@ -1340,6 +1341,7 @@
 		F30884A82699181200CADDEB /* API+KarmaPurchaseUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+KarmaPurchaseUtils.swift"; sourceTree = "<group>"; };
 		F313024526BA62B200A1396E /* ChatsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsCollectionViewController.swift; sourceTree = "<group>"; };
 		F313024726BA994B00A1396E /* ChatsContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatsContainerViewController.swift; sourceTree = "<group>"; };
+		F3138C3B27434D2F00F014BF /* ContentFeedMediaKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentFeedMediaKind.swift; sourceTree = "<group>"; };
 		F3188B79271792C400890DDD /* Video+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Video+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		F3188B7A271792C400890DDD /* Video+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Video+CoreDataClass.swift"; sourceTree = "<group>"; };
 		F3188B7D271792CD00890DDD /* VideoFeed+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VideoFeed+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -3412,9 +3414,10 @@
 		F3DC6AFD273C889D00458E09 /* Content Feed */ = {
 			isa = PBXGroup;
 			children = (
+				F3DC6B16273F45F200458E09 /* ContentFeed+Computeds.swift */,
 				F3DC6B07273CABED00458E09 /* ContentFeed+CoreDataClass.swift */,
 				F3DC6B08273CABED00458E09 /* ContentFeed+CoreDataProperties.swift */,
-				F3DC6B16273F45F200458E09 /* ContentFeed+Computeds.swift */,
+				F3DC6B05273C9D8600458E09 /* ContentFeedKind.swift */,
 			);
 			path = "Content Feed";
 			sourceTree = "<group>";
@@ -3426,7 +3429,7 @@
 				F3DC6AFF273C88F200458E09 /* ContentFeedItem+CoreDataClass.swift */,
 				F3DC6B01273C9BD000458E09 /* ContentFeedItem+CoreDataProperties.swift */,
 				F3DC6B03273C9D4900458E09 /* ContentFeedItemVariant.swift */,
-				F3DC6B05273C9D8600458E09 /* ContentFeedKind.swift */,
+				F3138C3B27434D2F00F014BF /* ContentFeedMediaKind.swift */,
 			);
 			path = "Content Feed Item";
 			sourceTree = "<group>";
@@ -4009,6 +4012,7 @@
 				479EAB6323E30BAC001013AB /* HistoryDataSource.swift in Sources */,
 				4764B2AA2375DF51009508BA /* SubscriptionManager.swift in Sources */,
 				F34BFEDB267B3552003F6D55 /* RestoreUserConnectingViewController.swift in Sources */,
+				F3138C3C27434D2F00F014BF /* ContentFeedMediaKind.swift in Sources */,
 				4756DE0F232ABF90001BAFD6 /* MainCoordinator.swift in Sources */,
 				47FA44152374B6EA005D8C63 /* SubscriptionTimeIntervalView.swift in Sources */,
 				47ACBC22265E9D0800D2FE47 /* PersonModalView.swift in Sources */,

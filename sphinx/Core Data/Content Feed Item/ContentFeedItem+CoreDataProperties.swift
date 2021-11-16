@@ -18,15 +18,21 @@ extension ContentFeedItem {
     
     @NSManaged
     public var authorName: String?
+
+    @NSManaged
+    internal var feedKindValue: ContentFeedKind.RawValue
     
     @NSManaged
-    internal var contentKindValue: ContentFeedKind.RawValue
+    internal var mediaKindValue: ContentFeedMediaKind.RawValue
     
     @NSManaged
     public var itemDescription: String?
     
     @NSManaged
     public var datePublished: Date?
+    
+    @NSManaged
+    public var dateUpdated: Date?
     
     @NSManaged
     public var enclosureURL: URL?
@@ -69,6 +75,7 @@ extension ContentFeedItem {
         podcastFeedEpisodeModel.title = title
         podcastFeedEpisodeModel.episodeDescription = itemDescription
         podcastFeedEpisodeModel.datePublished = datePublished
+        podcastFeedEpisodeModel.dateUpdated = dateUpdated
         podcastFeedEpisodeModel.urlPath = enclosureURL?.absoluteString
         podcastFeedEpisodeModel.imageURLPath = imageURL?.absoluteString
         podcastFeedEpisodeModel.isDownloaded = isDownloaded
@@ -86,9 +93,11 @@ extension ContentFeedItem {
         case itemID = "id"
         case title = "title"
         case authorName = "author"
-//        case contentKindValue = "contentType"
+        case feedKindValue = "feedType"
+        case mediaKindValue = "contentType"
         case itemDescription = "description"
         case datePublished = "datePublished"
+        case dateUpdated = "dateUpdated"
         case enclosureURL = "enclosureUrl"
         case enclosureKind = "enclosureType"
         case enclosureLength = "enclosureLength"

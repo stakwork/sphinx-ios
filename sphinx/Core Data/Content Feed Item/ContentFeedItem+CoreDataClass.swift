@@ -27,6 +27,8 @@ public final class ContentFeedItem: NSManagedObject, ContentFeedItemVariant {
         title = try container.decode(String.self, forKey: .title)
         authorName = try container.decode(String.self, forKey: .authorName)
         itemDescription = try container.decode(String.self, forKey: .itemDescription)
+        feedKindValue = try container.decode(Int16.self, forKey: .feedKindValue)
+        mediaKindValue = try container.decode(String.self, forKey: .mediaKindValue)
         datePublished = try container.decode(Date.self, forKey: .datePublished)
         enclosureURL = try? container.decode(URL.self, forKey: .enclosureURL)
         enclosureKind = try container.decode(String.self, forKey: .enclosureKind)

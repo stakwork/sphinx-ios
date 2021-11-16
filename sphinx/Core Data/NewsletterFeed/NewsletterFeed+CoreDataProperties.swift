@@ -24,10 +24,47 @@ extension NewsletterFeed {
     @NSManaged public var imageURL: URL?
     @NSManaged public var generator: String?
     @NSManaged public var dateUpdated: Date?
+    @NSManaged public var datePublished: Date?
     @NSManaged public var chat: Chat?
     @NSManaged public var newsletterItems: Set<NewsletterItem>?
 
 }
+
+
+// MARK: -  Public Methods
+extension NewsletterFeed {
+    
+    public static func convertedFrom(
+        contentFeed: ContentFeed
+    ) -> Self {
+        guard let managedObjectContext = contentFeed.managedObjectContext else {
+            preconditionFailure()
+        }
+        
+        let newsletterFeed = Self(context: managedObjectContext)
+        
+        newsletterFeed.feedID = contentFeed.feedID
+        newsletterFeed.title = contentFeed.title
+        newsletterFeed.feedDescription = contentFeed.feedDescription
+        newsletterFeed.datePublished = contentFeed.datePublished
+        newsletterFeed.dateUpdated = contentFeed.dateUpdated
+        newsletterFeed.feedURL = contentFeed.feedURL
+        newsletterFeed.imageURL = contentFeed.imageURL
+        newsletterFeed.generator = contentFeed.generator
+        newsletterFeed.chat = contentFeed.chat
+        
+        newsletterFeed.newsletterItems = Set(
+            contentFeed
+                .items?
+                .map(NewsletterItem.convertedFrom(contentFeedItem:))
+            ?? []
+        )
+        
+        return newsletterFeed
+    }
+}
+
+
 
 // MARK: Generated accessors for NewsletterItems
 extension NewsletterFeed {

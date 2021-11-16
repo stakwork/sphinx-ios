@@ -20,6 +20,19 @@ extension ContentFeed {
     }
     
     
+    public var contentMediaKind: ContentFeedMediaKind {
+        get {
+            .init(rawValue: mediaKindValue)!
+        }
+        set {
+            mediaKindValue = newValue.rawValue
+        }
+    }
+    
+    
+    // 📝 TODO:  Move this functionality to a static method on `PodcastFeed`
+    // so that `ContentFeed` doesn't need to be coupled to all of
+    // the different legacy mappings we're doing.
     public var legacyPodcastFeedModel: PodcastFeed? {
         guard feedKind == .podcast else { return nil }
         

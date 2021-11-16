@@ -9,12 +9,22 @@ import Foundation
 
 extension ContentFeedItem {
     
-    public var contentKind: ContentFeedKind {
+    public var feedKind: ContentFeedKind {
         get {
-            .init(rawValue: contentKindValue)!
+            .init(rawValue: feedKindValue)!
         }
         set {
-            contentKindValue = newValue.rawValue
+            feedKindValue = newValue.rawValue
+        }
+    }
+    
+    
+    public var contentMediaKind: ContentFeedMediaKind {
+        get {
+            .init(rawValue: mediaKindValue)!
+        }
+        set {
+            mediaKindValue = newValue.rawValue
         }
     }
 }

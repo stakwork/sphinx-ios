@@ -65,11 +65,11 @@ extension ContentFeedItem {
         
         let podcastFeedEpisodeModel = PodcastEpisode(context: managedObjectContext)
         
-        podcastFeedEpisodeModel.id = Int64(itemID) ?? 0
+        podcastFeedEpisodeModel.id = Int64(itemID) ?? Int64.random(in: 1...Int64.max)
         podcastFeedEpisodeModel.title = title
         podcastFeedEpisodeModel.episodeDescription = itemDescription
         podcastFeedEpisodeModel.datePublished = datePublished
-        podcastFeedEpisodeModel.urlPath = linkURL?.absoluteString
+        podcastFeedEpisodeModel.urlPath = enclosureURL?.absoluteString
         podcastFeedEpisodeModel.imageURLPath = imageURL?.absoluteString
         podcastFeedEpisodeModel.isDownloaded = isDownloaded
         podcastFeedEpisodeModel.feed = legacyPodcastFeed

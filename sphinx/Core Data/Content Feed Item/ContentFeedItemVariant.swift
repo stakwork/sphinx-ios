@@ -9,7 +9,7 @@ import CoreData
 
 
 protocol ContentFeedItemVariant: NSManagedObject, Decodable {
-    var id: String { get }
+    var itemID: String { get }
     var contentKind: ContentFeedKind { get }
     var title: String { get }
     var itemDescription: String? { get }

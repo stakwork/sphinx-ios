@@ -3422,9 +3422,9 @@
 		F3DC6AFE273C88D400458E09 /* Content Feed Item */ = {
 			isa = PBXGroup;
 			children = (
+				F3DC6B29273FB3A400458E09 /* ContentFeedItem+Computeds.swift */,
 				F3DC6AFF273C88F200458E09 /* ContentFeedItem+CoreDataClass.swift */,
 				F3DC6B01273C9BD000458E09 /* ContentFeedItem+CoreDataProperties.swift */,
-				F3DC6B29273FB3A400458E09 /* ContentFeedItem+Computeds.swift */,
 				F3DC6B03273C9D4900458E09 /* ContentFeedItemVariant.swift */,
 				F3DC6B05273C9D8600458E09 /* ContentFeedKind.swift */,
 			);

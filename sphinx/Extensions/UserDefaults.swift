@@ -40,6 +40,7 @@ extension UserDefaults {
         public static let redeemSatsQuery = DefaultKey<String>("redeemSatsQuery")
         public static let authQuery = DefaultKey<String>("authQuery")
         public static let personQuery = DefaultKey<String>("personQuery")
+        public static let saveQuery = DefaultKey<String>("saveQuery")
         
         public static let previousIP = DefaultKey<String>("previousIP")
         

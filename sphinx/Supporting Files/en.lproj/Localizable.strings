@@ -405,6 +405,13 @@
 "already.connected" = "You are already connected with this person";
 "price.to.meet" = "Price to meet: ";
 
+"people.save-profile" = "Save Profile from:";
+"people.delete-profile" = "Delete Profile from:";
+"people.save-failed" = "Save Profile failed";
+"people.delete-failed" = "Delete Profile failed";
+"people.save-succeed" = "Profile saved successfully";
+"people.delete-succeed" = "Profile deleted successfully";
+
 //TRANSACTION MESSAGE
 "purchase.succeeded" = "Purchase Succeeded";
 "purchase.denied" = "Purchase denied";

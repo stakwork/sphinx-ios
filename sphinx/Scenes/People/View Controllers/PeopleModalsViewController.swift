@@ -24,6 +24,8 @@ class PeopleModalsViewController: KeyboardEventsViewController {
 
     @IBOutlet weak var authExternalView: AuthExternalView!
     @IBOutlet weak var personModalView: PersonModalView!
+    @IBOutlet weak var savePeopleProfileView: SavePeopleProfileView!
+    
     @IBOutlet weak var personModalViewVerticalCenterConstraint: NSLayoutConstraint!
     
     var query: String! = nil
@@ -63,6 +65,8 @@ class PeopleModalsViewController: KeyboardEventsViewController {
                 return authExternalView
             case "person":
                 return personModalView
+            case "save":
+                return savePeopleProfileView
             default:
                 break
             }

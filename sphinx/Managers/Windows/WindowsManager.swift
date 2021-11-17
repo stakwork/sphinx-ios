@@ -141,6 +141,19 @@ class WindowsManager {
         return false
     }
     
+    func showPeopleUpdateModal(delegate: WindowsManagerDelegate? = nil) -> Bool {
+        if let saveQuery = UserDefaults.Keys.saveQuery.get(defaultValue: ""), saveQuery != "" {
+            UserDefaults.Keys.saveQuery.removeValue()
+            
+            self.delegate = delegate
+            
+            let peopleModalsVC = PeopleModalsViewController.instantiate(query: saveQuery)
+            WindowsManager.sharedInstance.showConveringWindowWith(rootVC: peopleModalsVC)
+            return true
+        }
+        return false
+    }
+    
     func showConveringWindowWith(rootVC: UIViewController) {
         let coveringWindow = getCoveringWindowWith(rootVC: rootVC)
         coveringWindow?.isHidden = false

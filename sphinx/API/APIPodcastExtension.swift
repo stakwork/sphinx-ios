@@ -12,9 +12,9 @@ import SwiftyJSON
 
 extension API {
     
-    func getPodcastFeed(
+    func getContentFeed(
         url: String,
-        callback: @escaping PodcastFeedCallback,
+        callback: @escaping ContentFeedCallback,
         errorCallback: @escaping EmptyCallback
     ) {
         guard let request = createRequest(url, bodyParams: nil, method: "GET") else {
@@ -40,6 +40,7 @@ extension API {
             }
         }
     }
+    
     
     func getPodcastInfo(podcastId: Int, callback: @escaping PodcastInfoCallback, errorCallback: @escaping EmptyCallback) {
         let url = API.getUrl(route: "https://tribes.sphinx.chat/podcast?id=\(podcastId)")

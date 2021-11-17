@@ -37,7 +37,7 @@ typealias CreateGroupCallback = ((JSON) -> ())
 typealias GetTransactionsCallback = (([PaymentTransaction]) -> ())
 typealias LogsCallback = ((String) -> ())
 typealias TemplatesCallback = (([ImageTemplate]) -> ())
-typealias PodcastFeedCallback = ((ContentFeed) -> ())
+typealias ContentFeedCallback = ((ContentFeed) -> ())
 typealias PodcastInfoCallback = ((JSON) -> ())
 typealias OnchainAddressCallback = ((String) -> ())
 typealias AppVersionsCallback = ((String) -> ())
@@ -142,6 +142,9 @@ class API {
     }
     
     public static let kPodcastIndexURL = "https://api.podcastindex.org"
+    
+    public static let kTribesServerBaseURL = "https://tribes.sphinx.chat"
+    public static let kTestTribesServerBaseURL = "https://tribes-test.sphinx.chat"
     
 
     class func getUrl(route: String) -> String {

@@ -136,26 +136,30 @@
         <relationship name="feed" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PodcastFeed" inverseName="destinations" inverseEntity="PodcastFeed"/>
     </entity>
     <entity name="PodcastEpisode" representedClassName="PodcastEpisode" syncable="YES">
+        <attribute name="author" optional="YES" attributeType="String"/>
         <attribute name="datePublished" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="dateUpdated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="episodeDescription" optional="YES" attributeType="String"/>
-        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="imageURLPath" optional="YES" attributeType="String"/>
         <attribute name="isDownloaded" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="itemID" attributeType="String"/>
         <attribute name="linkURLPath" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
         <attribute name="urlPath" optional="YES" attributeType="String"/>
         <relationship name="feed" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PodcastFeed" inverseName="episodes" inverseEntity="PodcastFeed"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
-                <constraint value="id"/>
+                <constraint value="itemID"/>
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
     <entity name="PodcastFeed" representedClassName="PodcastFeed" syncable="YES">
         <attribute name="author" optional="YES" attributeType="String"/>
+        <attribute name="datePublished" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="dateUpdated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="feedID" attributeType="String"/>
         <attribute name="feedURLPath" optional="YES" attributeType="String"/>
-        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="generator" optional="YES" attributeType="String"/>
         <attribute name="imageURLPath" optional="YES" attributeType="String"/>
         <attribute name="isSubscribedFromPodcastIndex" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="podcastDescription" optional="YES" attributeType="String"/>
@@ -166,7 +170,7 @@
         <relationship name="model" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="PodcastModel" inverseName="feed" inverseEntity="PodcastModel"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
-                <constraint value="id"/>
+                <constraint value="feedID"/>
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
@@ -280,7 +284,6 @@
         <attribute name="title" optional="YES" attributeType="String"/>
         <attribute name="videoDescription" optional="YES" attributeType="String"/>
         <attribute name="videoID" attributeType="String"/>
-        <attribute name="videoShortDescription" optional="YES" attributeType="String"/>
         <relationship name="videoFeed" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="VideoFeed" inverseName="videos" inverseEntity="VideoFeed"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
@@ -316,14 +319,14 @@
         <element name="NewsletterFeed" positionX="-45" positionY="144" width="128" height="194"/>
         <element name="NewsletterItem" positionX="-36" positionY="153" width="128" height="149"/>
         <element name="PodcastDestination" positionX="-18" positionY="180" width="128" height="89"/>
-        <element name="PodcastEpisode" positionX="-36" positionY="153" width="128" height="179"/>
-        <element name="PodcastFeed" positionX="-45" positionY="144" width="128" height="194"/>
+        <element name="PodcastEpisode" positionX="-36" positionY="153" width="128" height="194"/>
+        <element name="PodcastFeed" positionX="-45" positionY="144" width="128" height="239"/>
         <element name="PodcastModel" positionX="-27" positionY="171" width="128" height="74"/>
         <element name="Subscription" positionX="-54" positionY="135" width="128" height="223"/>
         <element name="TransactionMessage" positionX="-54" positionY="63" width="128" height="463"/>
         <element name="UserContact" positionX="-63" positionY="-18" width="128" height="358"/>
         <element name="UserInvite" positionX="-54" positionY="135" width="128" height="118"/>
-        <element name="Video" positionX="-36" positionY="153" width="128" height="194"/>
+        <element name="Video" positionX="-36" positionY="153" width="128" height="179"/>
         <element name="VideoFeed" positionX="-45" positionY="144" width="128" height="14"/>
     </elements>
 </model>

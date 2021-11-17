@@ -22,3 +22,23 @@ extension PodcastModel {
 }
 
 extension PodcastModel : Identifiable {}
+
+
+// MARK: -  Public Methods
+extension PodcastModel {
+    
+    public static func convertedFrom(
+        contentFeedPaymentModel: ContentFeedPaymentModel
+    ) -> Self {
+        guard let managedObjectContext = contentFeedPaymentModel.managedObjectContext else {
+            preconditionFailure()
+        }
+
+        let podcastModel = Self(context: managedObjectContext)
+        
+        podcastModel.suggestedBTC = contentFeedPaymentModel.suggestedBTC
+        podcastModel.type = contentFeedPaymentModel.type
+        
+        return podcastModel
+    }
+}

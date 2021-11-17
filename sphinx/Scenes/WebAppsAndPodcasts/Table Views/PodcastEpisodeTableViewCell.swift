@@ -106,7 +106,7 @@ class PodcastEpisodeTableViewCell: SwipableCell {
     
     func loadEpisodeImage(episode: PodcastEpisode, with defaultImg: UIImage) {
         if let imageURLPath = episode.imageURLPath, let url = URL(string: imageURLPath) {
-            MediaLoader.asyncLoadImage(imageView: episodeImageView, nsUrl: url, placeHolderImage: defaultImg, id: Int(episode.id ?? -1), completion: { (img, id) in
+            MediaLoader.asyncLoadImage(imageView: episodeImageView, nsUrl: url, placeHolderImage: defaultImg, id: Int(episode.itemID) ?? -1, completion: { (img, id) in
                 if self.isDifferentEpisode(episodeId: id) { return }
                 self.episodeImageView.image = img
             }, errorCompletion: { _ in
@@ -118,7 +118,7 @@ class PodcastEpisodeTableViewCell: SwipableCell {
     }
     
     func isDifferentEpisode(episodeId: Int) -> Bool {
-        return episodeId != self.episode.id
+        return episodeId != Int(episode.itemID)
     }
     
     @IBAction func downloadButtonTouched() {

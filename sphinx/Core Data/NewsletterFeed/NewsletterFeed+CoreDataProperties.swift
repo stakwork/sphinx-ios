@@ -65,7 +65,6 @@ extension NewsletterFeed {
 }
 
 
-
 // MARK: Generated accessors for NewsletterItems
 extension NewsletterFeed {
 

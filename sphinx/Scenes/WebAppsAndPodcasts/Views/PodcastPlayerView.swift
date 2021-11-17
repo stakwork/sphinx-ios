@@ -169,7 +169,7 @@ class PodcastPlayerView: UIView {
         
         liveMessages = [:]
         
-        let episodeId = playerHelper.getCurrentEpisode()?.id ?? -1
+        let episodeId = Int(playerHelper.getCurrentEpisode()?.itemID ?? "") ?? -1
         let messages = TransactionMessage.getLiveMessagesFor(chat: chat, episodeId: Int(episodeId))
         
         for m in messages {

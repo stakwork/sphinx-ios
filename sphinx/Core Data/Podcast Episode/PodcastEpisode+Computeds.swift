@@ -30,7 +30,7 @@ extension PodcastEpisode {
         
         let episode = existingEpisode ?? PodcastEpisode(context: managedObjectContext)
         
-        episode.id = id
+        episode.itemID = "\(id)"
         episode.title = json["title"].stringValue
         episode.datePublished = Date(timeIntervalSince1970: json["datePublished"].doubleValue)
         episode.episodeDescription = json["description"].stringValue

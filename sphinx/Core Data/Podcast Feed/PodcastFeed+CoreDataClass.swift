@@ -13,7 +13,7 @@ public class PodcastFeed: NSManagedObject {
     
     var identifier: Int {
         get {
-            chat?.id ?? Int(id)
+            chat?.id ?? Int(feedID) ?? -1
         }
     }
     
@@ -75,7 +75,10 @@ public class PodcastFeed: NSManagedObject {
     
     func getCurrentEpisodeIndex() -> Int {
         let currentEId = currentEpisodeId
-        return self.episodesArray.firstIndex(where: { $0.id == currentEId }) ?? currentEpisode
+        
+        return episodesArray
+            .firstIndex(where: { Int($0.itemID) ?? -1 == currentEId })
+            ?? currentEpisode
     }
     
     func addDestinations(_ destinations: Set<PodcastDestination>) {

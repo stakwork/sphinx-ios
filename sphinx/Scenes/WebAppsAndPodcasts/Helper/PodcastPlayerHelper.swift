@@ -140,8 +140,10 @@ class PodcastPlayerHelper {
         
         resetPodcast()
         
-        chat?.fetchInitialPodcastFeed(using: url) { [weak self] in
-            self?.podcast = chat?.podcastFeed
+        chat?.fetchContentFeed(at: url) { [weak self] result in
+            if case let .success(contentFeed) = result {
+                self?.podcast = PodcastFeed.convertedFrom(contentFeed: contentFeed)
+            }
 
             callback(true)
         }
@@ -158,13 +160,14 @@ class PodcastPlayerHelper {
             return nil
         }
         
-        let feedID = podcast.id
+        let feedID = Int(podcast.feedID) ?? -1
+        let itemID = Int(getCurrentEpisode()?.itemID ?? "") ?? -1
         
         guard feedID > 0 else {
             return nil
         }
         
-        guard let itemID = getCurrentEpisode()?.id, itemID > 0 else {
+        guard itemID > 0 else {
             return nil
         }
         
@@ -297,7 +300,7 @@ class PodcastPlayerHelper {
         loading = true
         
         currentEpisode = index
-        currentEpisodeId = Int(episode.id)
+        currentEpisodeId = Int(episode.itemID) ?? -1
         currentTime = resetTime ? 0 : currentTime
         
         loadEpisodeImage()
@@ -417,7 +420,7 @@ class PodcastPlayerHelper {
     
     
     func processPayment(amount: Int? = nil) {
-        let itemId = Int(getCurrentEpisode()?.id ?? 0)
+        let itemId = Int(getCurrentEpisode()?.itemID ?? "") ?? -1
         
         podcastPaymentsHelper
             .processPaymentsFor(

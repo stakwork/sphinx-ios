@@ -26,7 +26,7 @@ extension PodcastFeed {
         }
         
         
-        public static func matching(id: PodcastFeed.ID) -> NSPredicate {
+        public static func matching(id: String) -> NSPredicate {
             let keyword = "=="
             let formatSpecifier = "%i"
 
@@ -112,7 +112,7 @@ extension PodcastFeed {
         }
      
         
-        public static func matching(id: PodcastFeed.ID) -> NSFetchRequest<PodcastFeed> {
+        public static func matching(id: String) -> NSFetchRequest<PodcastFeed> {
             let request: NSFetchRequest<PodcastFeed> = baseFetchRequest()
             
             request.predicate = Predicates.matching(id: id)

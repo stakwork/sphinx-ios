@@ -37,6 +37,7 @@ extension Chat {
     @NSManaged public var webAppLastDate: Date?
     @NSManaged public var pin: String?
     @NSManaged public var contentFeed: ContentFeed?
+    @NSManaged public var podcastFeed: PodcastFeed?
     @NSManaged public var videoFeed: VideoFeed?
     @NSManaged public var newsletterFeed: NewsletterFeed?
     @NSManaged public var contactIds: [NSNumber]

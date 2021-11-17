@@ -469,17 +469,32 @@ public class Chat: NSManagedObject {
             let feedURLPath = tribeInfo?.feedUrl,
             let feedContentType = tribeInfo?.feedContentType
         {
-            if ((feedContentType.isVideo || feedURLPath.isYouTubeRSSFeedURL) && videoFeed == nil) {
-                fetchInitialVideoFeed(using: feedURLPath) {
-                    CoreDataManager.sharedManager.saveContext()
+            if (feedContentType.isVideo || feedURLPath.isYouTubeRSSFeedURL) && videoFeed == nil {
+                fetchContentFeed(at: feedURLPath) { result in
+                    if case let .success(fetchedContentFeed) = result {
+                        self.videoFeed = VideoFeed.convertedFrom(
+                            contentFeed: fetchedContentFeed
+                        )
+                        CoreDataManager.sharedManager.saveContext()
+                    }
                 }
-            } else if (feedContentType.isNewsletter && newsletterFeed == nil) {
-                fetchInitialNewsletterFeed(using: feedURLPath) {
-                    CoreDataManager.sharedManager.saveContext()
+            } else if feedContentType.isNewsletter && newsletterFeed == nil {
+                fetchContentFeed(at: feedURLPath) { result in
+                    if case let .success(fetchedContentFeed) = result {
+                        self.newsletterFeed = NewsletterFeed.convertedFrom(
+                            contentFeed: fetchedContentFeed
+                        )
+                        CoreDataManager.sharedManager.saveContext()
+                    }
                 }
-            } else if (feedContentType.isPodcast && podcastFeed == nil) {
-                fetchInitialPodcastFeed(using: feedURLPath) {
-                    CoreDataManager.sharedManager.saveContext()
+            } else if feedContentType.isPodcast && podcastFeed == nil {
+                fetchContentFeed(at: feedURLPath) { result in
+                    if case let .success(fetchedContentFeed) = result {
+                        self.podcastFeed = PodcastFeed.convertedFrom(
+                            contentFeed: fetchedContentFeed
+                        )
+                        CoreDataManager.sharedManager.saveContext()
+                    }
                 }
             }
         }
@@ -510,92 +525,25 @@ public class Chat: NSManagedObject {
         checkForDeletedTribe()
     }
     
-    func fetchInitialPodcastFeed(
-        using feedURLPath: String,
-        then completionHandler: (() -> Void)? = {}
+    
+    func fetchContentFeed(
+        at feedURLPath: String,
+        then completionHandler: ((Result<ContentFeed, Error>) -> Void)? = nil
     ) {
-        let tribesServerURL = "https://tribes-test.sphinx.chat/feed?url=\(feedURLPath)"
+        let tribesServerURL = "\(API.kTestTribesServerBaseURL)/feed?url=\(feedURLPath)"
         
-        API.sharedInstance.getPodcastFeed(
+        API.sharedInstance.getContentFeed(
             url: tribesServerURL,
             callback: { feed in
                 feed.chat = self
-                completionHandler?()
+                completionHandler?(.success(feed))
             },
             errorCallback: {
-                completionHandler?()
+                completionHandler?(.failure((API.RequestError.failedToFetchContentFeed)))
             }
         )
     }
     
-    
-    func fetchInitialVideoFeed(
-        using feedURLPath: String,
-        then completionHandler: (() -> Void)? = {}
-    ) {
-        if feedURLPath.isYouTubeRSSFeed {
-            API.sharedInstance.fetchYouTubeRSSFeed(from: feedURLPath) { result in
-                switch result {
-                case .success(let data):
-                    let parsingResult = YouTubeXMLParser.parseVideoFeed(from: data)
-                    
-                    switch parsingResult {
-                    case .success(let videoFeed):
-                        videoFeed.chat = self
-                        self.videoFeed = videoFeed
-                    case .failure(let error):
-                        print(error)
-                    }
-                case .failure(let error):
-                    print(error)
-                }
-                
-                completionHandler?()
-            }
-        } else {
-            API.sharedInstance.fetchGeneralVideoRSSFeed(from: feedURLPath) { result in
-                switch result {
-                case .success(let data):
-                    let parsingResult = GeneralVideoFeedXMLParser.parseFeed(from: data)
-                    
-                    switch parsingResult {
-                    case .success(let videoFeed):
-                        videoFeed.chat = self
-                        self.videoFeed = videoFeed
-                    case .failure(let error):
-                        print(error)
-                    }
-                case .failure(let error):
-                    print(error)
-                }
-                
-                completionHandler?()
-            }
-        }
-    }
-    
-    func fetchInitialNewsletterFeed(
-        using feedURLPath: String,
-        then completionHandler: (() -> Void)? = {}
-    ) {
-        API.sharedInstance.fetchNewsletterRSSFeed(from: feedURLPath) { result in
-            switch result {
-            case .success(let data):
-                let parsingResult = NewsletterFeedXMLParser.parseNewsletterFeed(from: data)
-                
-                switch parsingResult {
-                case .success(let newsletterFeed):
-                    self.newsletterFeed = newsletterFeed
-                case .failure(let error):
-                    print(error)
-                }
-            case .failure(let error):
-                print(error)
-            }
-            
-            completionHandler?()
-        }
-    }
     
     func checkForDeletedTribe() {
         if let tribeInfo = self.tribeInfo, tribeInfo.deleted {
@@ -701,17 +649,5 @@ public class Chat: NSManagedObject {
     
     func getJoinChatLink() -> String {
         return "sphinx.chat://?action=tribe&uuid=\(self.uuid ?? "")&host=\(self.host ?? "")"
-    }
-    
-    
-    var podcastFeed: PodcastFeed? {
-        guard
-            let contentFeed = contentFeed,
-            contentFeed.feedKind == .podcast
-        else {
-            return nil
-        }
-        
-        return contentFeed.legacyPodcastFeedModel
     }
 }

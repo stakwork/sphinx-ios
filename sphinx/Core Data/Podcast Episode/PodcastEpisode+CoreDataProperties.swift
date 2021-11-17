@@ -14,8 +14,9 @@ extension PodcastEpisode {
         return NSFetchRequest<PodcastEpisode>(entityName: "PodcastEpisode")
     }
 
-    @NSManaged public var id: Int64
+    @NSManaged public var itemID: String
     @NSManaged public var title: String?
+    @NSManaged public var author: String?
     @NSManaged public var episodeDescription: String?
     @NSManaged public var datePublished: Date?
     @NSManaged public var dateUpdated: Date?
@@ -27,3 +28,30 @@ extension PodcastEpisode {
 }
 
 extension PodcastEpisode: Identifiable {}
+
+
+// MARK: -  Public Methods
+extension PodcastEpisode {
+    
+    public static func convertedFrom(
+        contentFeedItem: ContentFeedItem
+    ) -> Self {
+        guard let managedObjectContext = contentFeedItem.managedObjectContext else {
+            preconditionFailure()
+        }
+
+        let podcastEpisode = Self(context: managedObjectContext)
+        
+        podcastEpisode.itemID = contentFeedItem.itemID
+        podcastEpisode.author = contentFeedItem.authorName
+        podcastEpisode.datePublished = contentFeedItem.datePublished
+        podcastEpisode.dateUpdated = contentFeedItem.dateUpdated
+        podcastEpisode.episodeDescription = contentFeedItem.itemDescription
+        podcastEpisode.urlPath = contentFeedItem.enclosureURL?.absoluteString
+        podcastEpisode.linkURLPath = contentFeedItem.linkURL?.absoluteString
+        podcastEpisode.imageURLPath = contentFeedItem.imageURL?.absoluteString
+        podcastEpisode.title = contentFeedItem.title
+        
+        return podcastEpisode
+    }
+}

@@ -18,6 +18,7 @@ extension API {
         case decodingError(DecodingError)
         case unknownError(Swift.Error)
         case unexpectedResponseData
+        case failedToFetchContentFeed
         case networkError(AFError)
         case nodeInvoiceGenerationFailure(message: String)
         case karmaReceiptValidationFailure(message: String)
@@ -47,6 +48,8 @@ extension API.RequestError: LocalizedError {
             return "\("error.request.decodingFailed".localized) \(error)"
         case .unknownError(let error):
             return "\("error.request.unknown".localized) \(error)"
+        case .failedToFetchContentFeed:
+            return "error.request.contentFeedFetch.failed".localized
         }
     }
 }

@@ -30,7 +30,7 @@ extension PodcastFeed {
     
     var searchResultItem: PodcastFeedSearchResult {
         .init(
-            id: Int(id),
+            id: Int(feedID)!,
             title: title ?? "",
             podcastDescription: podcastDescription ?? "",
             author: author ?? "",
@@ -50,7 +50,7 @@ extension PodcastFeed {
     ) {
         self.init(context: managedObjectContext)
 
-        id = Int64(searchResult.id)
+        feedID = "\(searchResult.id)"
         title = searchResult.title
         podcastDescription = searchResult.podcastDescription
         author = searchResult.author

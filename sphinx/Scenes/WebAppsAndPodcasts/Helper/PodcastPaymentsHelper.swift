@@ -61,7 +61,7 @@ class PodcastPaymentsHelper {
             destinations.isEmpty == false
         {
             streamSats(
-                podcastId: Int(podcastFeed.id),
+                podcastId: Int(podcastFeed.feedID)!,
                 podcastDestinations: destinations,
                 updateMeta: shouldUpdateMeta,
                 amount: satsAmt,

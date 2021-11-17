@@ -202,7 +202,7 @@ extension PodcastFeedSearchContainerViewController {
     ) {
         let existingFeedsFetchRequest: NSFetchRequest<PodcastFeed> = PodcastFeed
             .FetchRequests
-            .matching(id: PodcastFeed.ID(searchResult.id))
+            .matching(id: "\(searchResult.id)")
         
         let fetchRequestResult = try! managedObjectContext.fetch(existingFeedsFetchRequest)
             

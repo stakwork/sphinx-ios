@@ -29,8 +29,44 @@ extension VideoFeed {
     
     @NSManaged public var chat: Chat?
     @NSManaged public var videos: Set<Video>?
-
 }
+
+
+// MARK: -  Public Methods
+extension VideoFeed {
+    
+    public static func convertedFrom(
+        contentFeed: ContentFeed
+    ) -> Self {
+        guard let managedObjectContext = contentFeed.managedObjectContext else {
+            preconditionFailure()
+        }
+        
+        let videoFeed = Self(context: managedObjectContext)
+        
+        videoFeed.feedID = contentFeed.feedID
+        videoFeed.title = contentFeed.title
+        videoFeed.author = contentFeed.authorName
+        videoFeed.feedDescription = contentFeed.feedDescription
+        videoFeed.datePublished = contentFeed.datePublished
+        videoFeed.dateUpdated = contentFeed.dateUpdated
+        videoFeed.feedURL = contentFeed.feedURL
+        videoFeed.feedOwnerURL = contentFeed.ownerURL
+        videoFeed.imageURL = contentFeed.imageURL
+        videoFeed.generator = contentFeed.generator
+        videoFeed.chat = contentFeed.chat
+        
+        videoFeed.videos = Set(
+            contentFeed
+                .items?
+                .map(Video.convertedFrom(contentFeedItem:))
+            ?? []
+        )
+        
+        return videoFeed
+    }
+}
+
 
 // MARK: Generated accessors for videos
 extension VideoFeed {

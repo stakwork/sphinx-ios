@@ -198,24 +198,26 @@ extension VideoFeedEpisodePlayerContainerViewController {
             .async { [weak self] in
                 guard
                     let self = self,
-                    let videoFeed = self.videoPlayerEpisode.videoFeed
+                    let videoFeed = self.videoPlayerEpisode.videoFeed,
+                    let feedURL = videoFeed.feedURL
                 else { return }
-                
-                API.sharedInstance.fetchYouTubeEpisodes(
-                    for: videoFeed,
-                    then: { result in
-                        switch result {
-                        case .success(let videoEpisodes):
-                            videoFeed.addToVideos(Set(videoEpisodes))
 
-                            let updatedEpisode = videoFeed
-                                .videos?
-                                .first(where: { $0.id == self.videoPlayerEpisode.id })
-                            
-                            self.videoPlayerEpisode = updatedEpisode
-                        case .failure(let error):
-                            print("Failed to fetch video entry data for feed. Error: \(error)")
-                        }
+                let tribesServerURL = "\(API.kTestTribesServerBaseURL)/feed?url=\(feedURL.absoluteString)"
+
+                API.sharedInstance.getContentFeed(
+                    url: tribesServerURL,
+                    callback: { contentFeed in
+                        videoFeed.addToVideos(
+                            Set(
+                                contentFeed
+                                    .items?
+                                    .map(Video.convertedFrom(contentFeedItem:))
+                                ?? []
+                            )
+                        )
+                    },
+                    errorCallback: {
+                        print("Failed to fetch video entry data for feed.")
                     }
                 )
         }

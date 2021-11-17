@@ -62,27 +62,6 @@ extension ContentFeedItem: Identifiable {
 // MARK: -  Public Methods
 extension ContentFeedItem {
     
-    public func legacyPodcastEpisodeModel(
-        fromLegacyPodcastFeed legacyPodcastFeed: PodcastFeed
-    ) -> PodcastEpisode {
-        guard let managedObjectContext = managedObjectContext else {
-            preconditionFailure()
-        }
-        
-        let podcastFeedEpisodeModel = PodcastEpisode(context: managedObjectContext)
-        
-        podcastFeedEpisodeModel.id = Int64(itemID) ?? Int64.random(in: 1...Int64.max)
-        podcastFeedEpisodeModel.title = title
-        podcastFeedEpisodeModel.episodeDescription = itemDescription
-        podcastFeedEpisodeModel.datePublished = datePublished
-        podcastFeedEpisodeModel.dateUpdated = dateUpdated
-        podcastFeedEpisodeModel.urlPath = enclosureURL?.absoluteString
-        podcastFeedEpisodeModel.imageURLPath = imageURL?.absoluteString
-        podcastFeedEpisodeModel.isDownloaded = isDownloaded
-        podcastFeedEpisodeModel.feed = legacyPodcastFeed
-        
-        return podcastFeedEpisodeModel
-    }
 }
 
 

@@ -143,23 +143,28 @@ extension NewsletterFeedContainerViewController {
             .async { [weak self] in
                 guard
                     let self = self,
-                    let newsletterFeed = self.newsletterFeed
+                    let newsletterFeed = self.newsletterFeed,
+                    let feedURL = newsletterFeed.feedURL
                 else { return }
                 
-                API.sharedInstance.fetchNewsletterItems(
-                    for: newsletterFeed,
-                    then: { result in
-                        switch result {
-                        case .success(let newsletterItems):
-                            newsletterFeed.addToNewsletterItems(Set(newsletterItems))
-                            
-                            DispatchQueue.main.async {
-                                self.collectionViewController.reloadItems(newsletterItems: newsletterItems)
-                            }
-                        case .failure(let error):
-                            print("Failed to fetch newsletter items. Error: \(error)")
-                        }
-                })
+                let tribesServerURL = "\(API.kTestTribesServerBaseURL)/feed?url=\(feedURL.absoluteString)"
+
+                API.sharedInstance.getContentFeed(
+                    url: tribesServerURL,
+                    callback: { contentFeed in
+                        newsletterFeed.addToNewsletterItems(
+                            Set(
+                                contentFeed
+                                    .items?
+                                    .map(NewsletterItem.convertedFrom(contentFeedItem:))
+                                ?? []
+                            )
+                        )
+                    },
+                    errorCallback: {
+                        print("Failed to fetch newsletter items.")
+                    }
+                )
         }
     }
 }

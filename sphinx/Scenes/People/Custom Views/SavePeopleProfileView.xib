@@ -53,15 +53,6 @@
                         <action selector="closeButtonTouched" destination="-1" eventType="touchUpInside" id="8lU-hN-mKn"/>
                     </connections>
                 </button>
-                <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rNa-tS-9qm" customClass="UIActivityIndicatorView">
-                    <rect key="frame" x="166.5" y="220" width="50" height="50"/>
-                    <viewLayoutGuide key="safeArea" id="3oh-km-pio"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="50" id="JAT-c6-VNe"/>
-                        <constraint firstAttribute="height" constant="50" id="SnZ-6z-EQU"/>
-                    </constraints>
-                </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Za3-GB-giv">
                     <rect key="frame" x="23.5" y="220" width="193" height="50"/>
                     <color key="backgroundColor" name="PrimaryBlue"/>
@@ -80,6 +71,15 @@
                         <action selector="saveButtonTouched" destination="-1" eventType="touchUpInside" id="8cu-Bx-Ird"/>
                     </connections>
                 </button>
+                <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rNa-tS-9qm" customClass="UIActivityIndicatorView">
+                    <rect key="frame" x="166.5" y="220" width="50" height="50"/>
+                    <viewLayoutGuide key="safeArea" id="3oh-km-pio"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="50" id="JAT-c6-VNe"/>
+                        <constraint firstAttribute="height" constant="50" id="SnZ-6z-EQU"/>
+                    </constraints>
+                </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="verified_user" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8wz-Zq-I2O">
                     <rect key="frame" x="100" y="40.5" width="40" height="40"/>
                     <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="40"/>

@@ -49,9 +49,28 @@ class SavePeopleProfileView: CommonModalView {
         saveButton.addShadow(location: .bottom, opacity: 0.3, radius: 5)
     }
     
-    private func showAlertAndDismiss(_ error: String) {
-        messageBubbleHelper.showGenericMessageView(text: error, delay: 5, textColor: UIColor.white, backColor: UIColor.Sphinx.BadgeRed, backAlpha: 1.0)
-        delegate?.shouldDismissVC()
+    override func modalWillShowWith(query: String, delegate: ModalViewDelegate) {
+        super.modalWillShowWith(query: query, delegate: delegate)
+        
+        processQuery()
+        
+        hostLabel.text = "\(authInfo?.host ?? "...")?"
+    }
+    
+    private func showErrorAlertAndDismiss(_ error: String) {
+        messageBubbleHelper.showGenericMessageView(text: error, textColor: UIColor.white, backColor: UIColor.Sphinx.BadgeRed, backAlpha: 1.0)
+        
+        DelayPerformedHelper.performAfterDelay(seconds: 2.0, completion: {
+            self.delegate?.shouldDismissVC()
+        })
+    }
+    
+    private func showAlertAndDismiss(_ message: String) {
+        messageBubbleHelper.showGenericMessageView(text: message)
+        
+        DelayPerformedHelper.performAfterDelay(seconds: 2.0, completion: {
+            self.delegate?.shouldDismissVC()
+        })
     }
     
     override func modalDidShow() {
@@ -60,22 +79,22 @@ class SavePeopleProfileView: CommonModalView {
         loading = true
         
         guard let host = authInfo?.host, let key = authInfo?.key, !host.isEmpty && !key.isEmpty else {
-            showAlertAndDismiss("people.save-failed".localized)
+            showErrorAlertAndDismiss("people.save-failed".localized)
             return
         }
         
         API.sharedInstance.getProfileByKey(host: host, key: key, callback: { (success, json) in
             guard let json = json, success else {
-                self.showAlertAndDismiss("people.save-failed".localized)
+                self.showErrorAlertAndDismiss("people.save-failed".localized)
                 return
             }
             
             let path = json["path"].string
             let method = json["method"].string
-            let profile = JSON(json["body"].dictionaryValue)
+            let profile = JSON.init(parseJSON: json["body"].stringValue)
             
             guard path == "profile" else {
-                self.showAlertAndDismiss("people.save-failed".localized)
+                self.showErrorAlertAndDismiss("people.save-failed".localized)
                 return
             }
             
@@ -117,9 +136,16 @@ class SavePeopleProfileView: CommonModalView {
         parameters["owner_alias"] = authInfo?.personInfo["owner_alias"].stringValue as AnyObject
         parameters["description"] = authInfo?.personInfo["description"].stringValue as AnyObject
         parameters["img"] = authInfo?.personInfo["img"].stringValue as AnyObject
-        parameters["tags"] = authInfo?.personInfo["tags"].arrayValue as AnyObject
         parameters["price_to_meet"] = authInfo?.personInfo["price_to_meet"].intValue as AnyObject
-        parameters["extras"] = authInfo?.personInfo["extras"].dictionaryValue as AnyObject
+        parameters["tags"] = (authInfo?.personInfo["tags"].arrayValue as NSArray?) as AnyObject
+        
+        if let tags = authInfo?.personInfo["tags"].arrayValue as NSArray? {
+            parameters["tags"] = tags as AnyObject
+        }
+        
+        if let extras = authInfo?.personInfo["extras"].dictionaryObject as NSDictionary? {
+            parameters["extras"] = extras as AnyObject
+        }
         
         API.sharedInstance.savePeopleProfile(
             params: parameters,
@@ -128,7 +154,7 @@ class SavePeopleProfileView: CommonModalView {
             if success {
                 self.showAlertAndDismiss("people.save-succeed".localized)
             } else {
-                self.showAlertAndDismiss("people.save-failed".localized)
+                self.showErrorAlertAndDismiss("people.save-failed".localized)
             }
         })
     }
@@ -138,14 +164,13 @@ class SavePeopleProfileView: CommonModalView {
             if success {
                 self.showAlertAndDismiss("people.delete-succeed".localized)
             } else {
-                self.showAlertAndDismiss("people.delete-failed".localized)
+                self.showErrorAlertAndDismiss("people.delete-failed".localized)
             }
         })
     }
 
     @IBAction func saveButtonTouched() {
         buttonLoading = true
-        
         
         if let method = authInfo?.updateMethod {
             buttonLoading = true

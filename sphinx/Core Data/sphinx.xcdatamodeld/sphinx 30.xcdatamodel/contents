@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19197" systemVersion="20G95" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19461" systemVersion="21A559" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Chat" representedClassName="Chat" syncable="YES">
         <attribute name="contactIds" optional="YES" attributeType="Transformable"/>
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -61,7 +61,7 @@
         <attribute name="feedURLPath" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="imageURLPath" optional="YES" attributeType="String"/>
-        <attribute name="isSubscribedFromPodcastIndex" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="isSubscribedToFromSearch" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="podcastDescription" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
         <relationship name="chat" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Chat" inverseName="podcastFeed" inverseEntity="Chat"/>
@@ -203,16 +203,16 @@
         </uniquenessConstraints>
     </entity>
     <elements>
-        <element name="Chat" positionX="-54" positionY="135" width="128" height="434"/>
-        <element name="PodcastDestination" positionX="-18" positionY="180" width="128" height="89"/>
-        <element name="PodcastEpisode" positionX="-36" positionY="153" width="128" height="14"/>
-        <element name="PodcastFeed" positionX="-45" positionY="144" width="128" height="194"/>
-        <element name="PodcastModel" positionX="-27" positionY="171" width="128" height="74"/>
-        <element name="Subscription" positionX="-54" positionY="135" width="128" height="223"/>
-        <element name="TransactionMessage" positionX="-54" positionY="63" width="128" height="463"/>
-        <element name="UserContact" positionX="-63" positionY="-18" width="128" height="358"/>
-        <element name="UserInvite" positionX="-54" positionY="135" width="128" height="118"/>
-        <element name="Video" positionX="-36" positionY="153" width="128" height="134"/>
-        <element name="VideoFeed" positionX="-45" positionY="144" width="128" height="134"/>
+        <element name="Chat" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="PodcastDestination" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="PodcastEpisode" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="PodcastFeed" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="PodcastModel" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Subscription" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="TransactionMessage" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="UserContact" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="UserInvite" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Video" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="VideoFeed" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>

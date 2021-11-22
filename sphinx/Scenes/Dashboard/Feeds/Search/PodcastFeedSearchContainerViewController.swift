@@ -25,20 +25,21 @@ class PodcastFeedSearchContainerViewController: UIViewController {
     private weak var resultsDelegate: PodcastFeedSearchResultsViewControllerDelegate?
     
     
-    lazy var fetchedResultsController: NSFetchedResultsController = PodcastFeedSearchContainerViewController
+    lazy var fetchedResultsController: NSFetchedResultsController = Self
         .makeFetchedResultsController(
             using: managedObjectContext,
-            and: PodcastFeed.FetchRequests.default()
+//            and: PodcastFeed.FetchRequests.default()
+            and: ContentFeed.FetchRequests.default()
         )
     
     
     internal lazy var searchResultsViewController: PodcastFeedSearchResultsCollectionViewController = {
         PodcastFeedSearchResultsCollectionViewController
             .instantiate(
-                onPodcastFeedCellSelected: handleFeedCellSelection,
-                onPodcastDirectoryResultCellSelected: handleIndexResultCellSelection,
-                onPodcastSubscriptionSelected: handlePodcastIndexSubscription,
-                onPodcastSubscriptionCancellationSelected: handlePodcastIndexSubscriptionCancellation
+                onSubscribedPodcastFeedCellSelected: handleFeedCellSelection,
+                onPodcastFeedSearchResultCellSelected: handleSearchResultCellSelection,
+                onPodcastFeedSubscriptionSelected: handlePodcastFeedSubscription,
+                onPodcastFeedSubscriptionCancellationSelected: handlePodcastFeedSubscriptionCancellation
             )
     }()
     
@@ -75,8 +76,8 @@ extension PodcastFeedSearchContainerViewController {
     
     static func makeFetchedResultsController(
         using managedObjectContext: NSManagedObjectContext,
-        and fetchRequest: NSFetchRequest<PodcastFeed>
-    ) -> NSFetchedResultsController<PodcastFeed> {
+        and fetchRequest: NSFetchRequest<ContentFeed>
+    ) -> NSFetchedResultsController<ContentFeed> {
         NSFetchedResultsController(
             fetchRequest: fetchRequest,
             managedObjectContext: managedObjectContext,
@@ -155,18 +156,41 @@ extension PodcastFeedSearchContainerViewController {
             )
         }
         
-        API.sharedInstance.searchPodcastIndex(
+//        API.sharedInstance.searchPodcastIndex(
+//            matching: searchQuery
+//        ) { [weak self] result in
+//            guard let self = self else { return }
+//
+//            DispatchQueue.main.async {
+//                switch result {
+//                case .success(let searchResults):
+//                    self.searchResultsViewController.updateWithNew(
+//                        directorySearchResults: searchResults
+//                    )
+//                case .failure(_):
+//                    AlertHelper.showAlert(
+//                        title: "dashboard.feeds.search.error-alert-title".localized,
+//                        message: """
+//                        \("generic.contact-support".localized)
+//                        """
+//                    )
+//                }
+//            }
+//        }
+        
+        API.sharedInstance.searchForPodcasts(
             matching: searchQuery
         ) { [weak self] result in
             guard let self = self else { return }
             
             DispatchQueue.main.async {
-                //                self.stopProgressIndicator()
-                
                 switch result {
-                case .success(let searchResults):
+                case .success(let foundFeeds):
+                    let podcastFeeds = foundFeeds
+                        .map(PodcastFeed.convertedFrom(contentFeed:))
+                    
                     self.searchResultsViewController.updateWithNew(
-                        directorySearchResults: searchResults
+                        searchResults: podcastFeeds
                     )
                 case .failure(_):
                     AlertHelper.showAlert(
@@ -197,12 +221,12 @@ extension PodcastFeedSearchContainerViewController {
     }
     
     
-    private func handleIndexResultCellSelection(
-        _ searchResult: PodcastFeedSearchResult
+    private func handleSearchResultCellSelection(
+        _ searchResult: PodcastFeed
     ) {
         let existingFeedsFetchRequest: NSFetchRequest<PodcastFeed> = PodcastFeed
             .FetchRequests
-            .matching(id: "\(searchResult.id)")
+            .matching(feedID: searchResult.feedID)
         
         let fetchRequestResult = try! managedObjectContext.fetch(existingFeedsFetchRequest)
             
@@ -212,34 +236,38 @@ extension PodcastFeedSearchContainerViewController {
                 didSelectPodcastFeedWithID: existingPodcastFeed.objectID
             )
         } else {
-            let newPodcastFeed = PodcastFeed(
-                from: searchResult,
-                managedObjectContext: managedObjectContext
-            )
-            
-            newPodcastFeed.isSubscribedFromPodcastIndex = false
+//            let newPodcastFeed = PodcastFeed(
+//                from: searchResult,
+//                managedObjectContext: managedObjectContext
+//            )
+//
+//            newPodcastFeed.isSubscribedToFromSearch = false
+//
+            searchResult.isSubscribedToFromSearch = false
             
             resultsDelegate?.viewController(
                 self,
-                didSelectPodcastFeedWithID: newPodcastFeed.objectID
+//                didSelectPodcastFeedWithID: newPodcastFeed.objectID
+                didSelectPodcastFeedWithID: searchResult.objectID
             )
         }
     }
     
     
-    private func handlePodcastIndexSubscription(
-        _ searchResult: PodcastFeedSearchResult
+    private func handlePodcastFeedSubscription(
+        _ searchResult: PodcastFeed
     ) {
-        let newPodcastFeed = PodcastFeed(
-            from: searchResult,
-            managedObjectContext: managedObjectContext
-        )
+//        let newPodcastFeed = PodcastFeed(
+//            from: searchResult,
+//            managedObjectContext: managedObjectContext
+//        )
         
-        newPodcastFeed.isSubscribedFromPodcastIndex = true
+//        newPodcastFeed.isSubscribedToFromSearch = true
+        searchResult.isSubscribedToFromSearch = true
 
         CoreDataManager.sharedManager.saveContext()
 
-        searchResultsViewController.refreshPodcastIndexResultItem(using: searchResult)
+        searchResultsViewController.refreshPodcastFeedSearchResultItem(using: searchResult)
         
         DispatchQueue.main.async { [weak self] in
             self?.searchResultsViewController.collectionView.reloadData()
@@ -247,18 +275,18 @@ extension PodcastFeedSearchContainerViewController {
     }
     
     
-    private func handlePodcastIndexSubscriptionCancellation(
-        _ searchResult: PodcastFeedSearchResult
+    private func handlePodcastFeedSubscriptionCancellation(
+        _ searchResult: PodcastFeed
     ) {
         if let persistedFeed: PodcastFeed = CoreDataManager
             .sharedManager
-            .getObjectOfTypeWith(id: searchResult.id, entityName: "PodcastFeed")
+            .getContentFeedObjectOfTypeWith(feedID: searchResult.feedID, entityName: "PodcastFeed")
         {
             managedObjectContext.delete(persistedFeed)
             
             CoreDataManager.sharedManager.saveContext()
             
-            searchResultsViewController.refreshPodcastIndexResultItem(using: searchResult)
+            searchResultsViewController.refreshPodcastFeedSearchResultItem(using: searchResult)
         }
     }
 }
@@ -276,16 +304,21 @@ extension PodcastFeedSearchContainerViewController: NSFetchedResultsControllerDe
         guard
             let resultController = controller as? NSFetchedResultsController<NSManagedObject>,
             let firstSection = resultController.sections?.first,
-            let foundFeeds = firstSection.objects as? [PodcastFeed]
+//            let foundFeeds = firstSection.objects as? [PodcastFeed]
+            let foundFeeds = firstSection.objects as? [ContentFeed]
         else {
             return
         }
         
+        let podcastFeeds = foundFeeds.map(
+            PodcastFeed.convertedFrom(contentFeed:)
+        )
+        
         DispatchQueue.main.async { [weak self] in
             self?.searchResultsViewController.updateWithNew(
-                followedPodcastFeeds: foundFeeds
+                followedPodcastFeeds: podcastFeeds
                     .filter({
-                        $0.isSubscribedFromPodcastIndex ||
+                        $0.isSubscribedToFromSearch ||
                         $0.chat != nil
                     })
             )

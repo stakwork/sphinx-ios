@@ -18,7 +18,7 @@ extension PodcastFeed {
     @NSManaged public var generator: String?
     @NSManaged public var imageURLPath: String?
     @NSManaged public var feedURLPath: String?
-    @NSManaged public var isSubscribedFromPodcastIndex: Bool
+    @NSManaged public var isSubscribedToFromSearch: Bool
     @NSManaged public var chat: Chat?
     @NSManaged public var model: PodcastModel?
     @NSManaged public var episodes: Set<PodcastEpisode>?

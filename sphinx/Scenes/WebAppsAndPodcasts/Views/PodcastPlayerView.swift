@@ -92,7 +92,7 @@ class PodcastPlayerView: UIView {
     }
     
     private var subscriptionToggleButtonTitle: String {
-        (playerHelper.podcast?.isSubscribedFromPodcastIndex ?? false) ?
+        (playerHelper.podcast?.isSubscribedToFromSearch ?? false) ?
         "unsubscribe.upper".localized
         : "subscribe.upper".localized
     }
@@ -289,7 +289,7 @@ class PodcastPlayerView: UIView {
     }
     
     @IBAction func subscriptionToggleButtonTouched() {
-        playerHelper.podcast?.isSubscribedFromPodcastIndex.toggle()
+        playerHelper.podcast?.isSubscribedToFromSearch.toggle()
         
         subscriptionToggleButton.setTitle(
             subscriptionToggleButtonTitle,

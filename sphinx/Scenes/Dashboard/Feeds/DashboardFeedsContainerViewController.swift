@@ -86,7 +86,7 @@ class DashboardFeedsContainerViewController: UIViewController {
         PodcastFeedCollectionViewController.instantiate(
             managedObjectContext: managedObjectContext,
             onPodcastEpisodeCellSelected: handlePodcastEpisodeCellSelection(_:),
-            onPodcastFeedCellSelected: handlePodcastFeedCellSelection(_:),
+            onSubscribedPodcastFeedCellSelected: handlePodcastFeedCellSelection(_:),
             onNewResultsFetched: handleNewResultsFetch(_:)
         )
     }()

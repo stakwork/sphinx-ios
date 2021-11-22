@@ -396,7 +396,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b82-lt-VgM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1652" y="3464"/>
+            <point key="canvasLocation" x="-1419" y="3520"/>
         </scene>
         <!--Chats Container View Controller-->
         <scene sceneID="qKk-C4-9MQ">

@@ -161,7 +161,7 @@
         <attribute name="feedURLPath" optional="YES" attributeType="String"/>
         <attribute name="generator" optional="YES" attributeType="String"/>
         <attribute name="imageURLPath" optional="YES" attributeType="String"/>
-        <attribute name="isSubscribedFromPodcastIndex" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="isSubscribedToFromSearch" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="podcastDescription" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
         <relationship name="chat" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Chat" inverseName="podcastFeed" inverseEntity="Chat"/>
@@ -320,7 +320,7 @@
         <element name="NewsletterItem" positionX="-36" positionY="153" width="128" height="149"/>
         <element name="PodcastDestination" positionX="-18" positionY="180" width="128" height="89"/>
         <element name="PodcastEpisode" positionX="-36" positionY="153" width="128" height="194"/>
-        <element name="PodcastFeed" positionX="-45" positionY="144" width="128" height="239"/>
+        <element name="PodcastFeed" positionX="-45" positionY="144" width="128" height="14"/>
         <element name="PodcastModel" positionX="-27" positionY="171" width="128" height="74"/>
         <element name="Subscription" positionX="-54" positionY="135" width="128" height="223"/>
         <element name="TransactionMessage" positionX="-54" positionY="63" width="128" height="463"/>

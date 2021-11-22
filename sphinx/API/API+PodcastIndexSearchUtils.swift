@@ -11,86 +11,66 @@ import Alamofire
 import CryptoKit
 import SwiftyJSON
 
-extension API {
-    
-    enum PodcastIndexConfig {
-        static let apiKey = Bundle
-            .main
-            .object(forInfoDictionaryKey: "PODCAST_INDEX_API_KEY") as! String
-        
-        
-        static let apiSecret = Bundle
-            .main
-            .object(forInfoDictionaryKey: "PODCAST_INDEX_API_SECRET") as! String
-    }
-}
+//extension API {
+//
+//    enum PodcastIndexConfig {
+//        static let apiKey = Bundle
+//            .main
+//            .object(forInfoDictionaryKey: "PODCAST_INDEX_API_KEY") as! String
+//
+//
+//        static let apiSecret = Bundle
+//            .main
+//            .object(forInfoDictionaryKey: "PODCAST_INDEX_API_SECRET") as! String
+//    }
+//}
 
 
 extension API {
     
-    public func searchPodcastIndex(
+    public func searchForPodcasts(
         matching queryString: String,
-        then completionHandler: @escaping PodcastIndexSearchCompletionHandler
+        then completionHandler: @escaping PodcastSearchCompletionHandler
     ) {
-        let urlPath = "\(API.kPodcastIndexURL)/api/1.0/search/byterm"
-        let apiKey = API.PodcastIndexConfig.apiKey
-        let apiSecret = API.PodcastIndexConfig.apiSecret
-        let authDate = "\(Int(Date().timeIntervalSince1970))"
-        let userAgent = "SphinxChat/1.0"
-
-        let rawAuthorizationDataString = [
-            apiKey,
-            apiSecret,
-            authDate,
-        ]
-        .joined()
-        .utf8
-
-        let authorizationInputData = Data(rawAuthorizationDataString)
-        let authorizationHeaderHash = Insecure.SHA1.hash(data: authorizationInputData)
-
-        let authorizationHeaderString = authorizationHeaderHash
-            .compactMap { String(format: "%02x", $0) }
-            .joined()
+        let urlPath = "\(API.kTestTribesServerBaseURL)/search_podcasts"
         
-        let requestHeaders: [String: String] = [
-            "x-auth-key": apiKey,
-            "x-auth-date": authDate,
-            "user-agent": userAgent,
-            "authorization": authorizationHeaderString,
-        ]
-                                  
         var urlComponents = URLComponents(string: urlPath)!
         urlComponents.queryItems = [
             URLQueryItem(name: "q", value: queryString)
         ]
-        
+
         guard let urlString = urlComponents.url?.absoluteString else {
             completionHandler(.failure(.failedToCreateRequestURL))
             return
         }
-        
+
         guard let request = createRequest(
             urlString,
             bodyParams: nil,
-            headers: requestHeaders,
+//            headers: requestHeaders,
             method: "GET"
         ) else {
             completionHandler(.failure(.failedToCreateRequest(urlPath: urlPath)))
             return
         }
-        
-        AF.request(request).responseJSON { [weak self] response in
+
+        AF.request(request).responseJSON { response in
             switch response.result {
             case .success:
                 guard let data = response.data else {
                     completionHandler(.failure(.missingResponseData))
                     return
                 }
-                
+
                 do {
-                    let searchResults = try self?.decodePodcastFeeds(from: data) ?? []
+                    let decoder = JSONDecoder()
                     
+                    decoder.userInfo[.managedObjectContext] = CoreDataManager.sharedManager.persistentContainer.viewContext
+                    
+                    let searchResults = try decoder.decode([ContentFeed].self, from: data)
+                    
+                    searchResults.forEach { $0.feedKind = .podcast }
+
                     completionHandler(.success(searchResults))
                 } catch let error as DecodingError {
                     completionHandler(.failure(.decodingError(error)))
@@ -99,127 +79,203 @@ extension API {
                 }
             case .failure(let error):
                 completionHandler(.failure(.networkError(error)))
-                return
             }
         }
     }
     
     
-    func getPodcastEpisodes(
-        byFeedURLPath feedURLPath: String,
-        then completionHandler: @escaping PodcastIndexEpisodeFetchCompletionHandler
-    ) {
-        let urlPath = "\(API.kPodcastIndexURL)/api/1.0/episodes/byfeedurl"
-        let apiKey = API.PodcastIndexConfig.apiKey
-        let apiSecret = API.PodcastIndexConfig.apiSecret
-        let authDate = "\(Int(Date().timeIntervalSince1970))"
-        let userAgent = "SphinxChat/1.0"
-
-        let rawAuthorizationDataString = [
-            apiKey,
-            apiSecret,
-            authDate,
-        ]
-        .joined()
-        .utf8
-
-        let authorizationInputData = Data(rawAuthorizationDataString)
-        let authorizationHeaderHash = Insecure.SHA1.hash(data: authorizationInputData)
-
-        let authorizationHeaderString = authorizationHeaderHash
-            .compactMap { String(format: "%02x", $0) }
-            .joined()
-        
-        let requestHeaders: [String: String] = [
-            "x-auth-key": apiKey,
-            "x-auth-date": authDate,
-            "user-agent": userAgent,
-            "authorization": authorizationHeaderString,
-        ]
-                                  
-        var urlComponents = URLComponents(string: urlPath)!
-        urlComponents.queryItems = [
-            URLQueryItem(name: "url", value: feedURLPath)
-        ]
-        
-        guard let urlString = urlComponents.url?.absoluteString else {
-            completionHandler(.failure(.failedToCreateRequestURL))
-            return
-        }
-        
-        guard let request = createRequest(
-            urlString,
-            bodyParams: nil,
-            headers: requestHeaders,
-            method: "GET"
-        ) else {
-            completionHandler(.failure(.failedToCreateRequest(urlPath: urlPath)))
-            return
-        }
-        
-        AF.request(request).responseJSON { [weak self] response in
-            switch response.result {
-            case .success:
-                guard let data = response.data else {
-                    completionHandler(.failure(.missingResponseData))
-                    return
-                }
-                
-                do {
-                    let episodes = try self?.decodePodcastFeedEpisodes(from: data) ?? []
-                    
-                    completionHandler(.success(episodes))
-                } catch let error as DecodingError {
-                    completionHandler(.failure(.decodingError(error)))
-                } catch let error {
-                    completionHandler(.failure(.unknownError(error)))
-                }
-            case .failure(let error):
-                completionHandler(.failure(.networkError(error)))
-                return
-            }
-        }
-    }
+//    public func searchPodcastIndex(
+//        matching queryString: String,
+//        then completionHandler: @escaping PodcastIndexSearchCompletionHandler
+//    ) {
+//        let urlPath = "\(API.kPodcastIndexURL)/api/1.0/search/byterm"
+//        let apiKey = API.PodcastIndexConfig.apiKey
+//        let apiSecret = API.PodcastIndexConfig.apiSecret
+//        let authDate = "\(Int(Date().timeIntervalSince1970))"
+//        let userAgent = "SphinxChat/1.0"
+//
+//        let rawAuthorizationDataString = [
+//            apiKey,
+//            apiSecret,
+//            authDate,
+//        ]
+//        .joined()
+//        .utf8
+//
+//        let authorizationInputData = Data(rawAuthorizationDataString)
+//        let authorizationHeaderHash = Insecure.SHA1.hash(data: authorizationInputData)
+//
+//        let authorizationHeaderString = authorizationHeaderHash
+//            .compactMap { String(format: "%02x", $0) }
+//            .joined()
+//
+//        let requestHeaders: [String: String] = [
+//            "x-auth-key": apiKey,
+//            "x-auth-date": authDate,
+//            "user-agent": userAgent,
+//            "authorization": authorizationHeaderString,
+//        ]
+//
+//        var urlComponents = URLComponents(string: urlPath)!
+//        urlComponents.queryItems = [
+//            URLQueryItem(name: "q", value: queryString)
+//        ]
+//
+//        guard let urlString = urlComponents.url?.absoluteString else {
+//            completionHandler(.failure(.failedToCreateRequestURL))
+//            return
+//        }
+//
+//        guard let request = createRequest(
+//            urlString,
+//            bodyParams: nil,
+//            headers: requestHeaders,
+//            method: "GET"
+//        ) else {
+//            completionHandler(.failure(.failedToCreateRequest(urlPath: urlPath)))
+//            return
+//        }
+//
+//        AF.request(request).responseJSON { [weak self] response in
+//            switch response.result {
+//            case .success:
+//                guard let data = response.data else {
+//                    completionHandler(.failure(.missingResponseData))
+//                    return
+//                }
+//
+//                do {
+//                    let searchResults = try self?.decodePodcastFeeds(from: data) ?? []
+//
+//                    completionHandler(.success(searchResults))
+//                } catch let error as DecodingError {
+//                    completionHandler(.failure(.decodingError(error)))
+//                } catch let error {
+//                    completionHandler(.failure(.unknownError(error)))
+//                }
+//            case .failure(let error):
+//                completionHandler(.failure(.networkError(error)))
+//                return
+//            }
+//        }
+//    }
     
     
-    func decodePodcastFeeds(
-        from searchResults: Data
-    ) throws -> [PodcastFeedSearchResult] {
-        let decoder = JSONDecoder()
-        
-        let resultsContainer = try decoder.decode(
-            PodcastFeedSearchResult.ResultsContainer.self,
-            from: searchResults
-        )
-        
-        return resultsContainer.feeds
-    }
+//    func getPodcastEpisodes(
+//        byFeedURLPath feedURLPath: String,
+//        then completionHandler: @escaping PodcastIndexEpisodeFetchCompletionHandler
+//    ) {
+//        let urlPath = "\(API.kPodcastIndexURL)/api/1.0/episodes/byfeedurl"
+//        let apiKey = API.PodcastIndexConfig.apiKey
+//        let apiSecret = API.PodcastIndexConfig.apiSecret
+//        let authDate = "\(Int(Date().timeIntervalSince1970))"
+//        let userAgent = "SphinxChat/1.0"
+//
+//        let rawAuthorizationDataString = [
+//            apiKey,
+//            apiSecret,
+//            authDate,
+//        ]
+//        .joined()
+//        .utf8
+//
+//        let authorizationInputData = Data(rawAuthorizationDataString)
+//        let authorizationHeaderHash = Insecure.SHA1.hash(data: authorizationInputData)
+//
+//        let authorizationHeaderString = authorizationHeaderHash
+//            .compactMap { String(format: "%02x", $0) }
+//            .joined()
+//
+//        let requestHeaders: [String: String] = [
+//            "x-auth-key": apiKey,
+//            "x-auth-date": authDate,
+//            "user-agent": userAgent,
+//            "authorization": authorizationHeaderString,
+//        ]
+//
+//        var urlComponents = URLComponents(string: urlPath)!
+//        urlComponents.queryItems = [
+//            URLQueryItem(name: "url", value: feedURLPath)
+//        ]
+//
+//        guard let urlString = urlComponents.url?.absoluteString else {
+//            completionHandler(.failure(.failedToCreateRequestURL))
+//            return
+//        }
+//
+//        guard let request = createRequest(
+//            urlString,
+//            bodyParams: nil,
+//            headers: requestHeaders,
+//            method: "GET"
+//        ) else {
+//            completionHandler(.failure(.failedToCreateRequest(urlPath: urlPath)))
+//            return
+//        }
+//
+//        AF.request(request).responseJSON { [weak self] response in
+//            switch response.result {
+//            case .success:
+//                guard let data = response.data else {
+//                    completionHandler(.failure(.missingResponseData))
+//                    return
+//                }
+//
+//                do {
+//                    let episodes = try self?.decodePodcastFeedEpisodes(from: data) ?? []
+//
+//                    completionHandler(.success(episodes))
+//                } catch let error as DecodingError {
+//                    completionHandler(.failure(.decodingError(error)))
+//                } catch let error {
+//                    completionHandler(.failure(.unknownError(error)))
+//                }
+//            case .failure(let error):
+//                completionHandler(.failure(.networkError(error)))
+//                return
+//            }
+//        }
+//    }
     
     
-    func decodePodcastFeedEpisodes(
-        from data: Data
-    ) throws -> [PodcastEpisode] {
-        
-        let context = CoreDataManager.sharedManager.persistentContainer.viewContext
-        let json = JSON(data)
-        
-        let episodes = json["items"].arrayValue.map { e in
-            PodcastEpisode.parseEpisode(using: e, managedObjectContext: context)
-        }
-        
-        return episodes
-    }
+//    func decodePodcastFeeds(
+//        from searchResults: Data
+//    ) throws -> [PodcastFeedSearchResult] {
+//        let decoder = JSONDecoder()
+//
+//        let resultsContainer = try decoder.decode(
+//            PodcastFeedSearchResult.ResultsContainer.self,
+//            from: searchResults
+//        )
+//
+//        return resultsContainer.feeds
+//    }
+    
+    
+//    func decodePodcastFeedEpisodes(
+//        from data: Data
+//    ) throws -> [PodcastEpisode] {
+//
+//        let context = CoreDataManager.sharedManager.persistentContainer.viewContext
+//        let json = JSON(data)
+//
+//        let episodes = json["items"].arrayValue.map { e in
+//            PodcastEpisode.parseEpisode(using: e, managedObjectContext: context)
+//        }
+//
+//        return episodes
+//    }
 }
     
-
-
-extension PodcastFeedSearchResult {
-    
-    fileprivate struct ResultsContainer: Decodable {
-        var feeds: [PodcastFeedSearchResult]
-        
-        enum CodingKeys: String, CodingKey {
-            case feeds = "feeds"
-        }
-    }
-}
+//
+//
+//extension PodcastFeedSearchResult {
+//
+//    fileprivate struct ResultsContainer: Decodable {
+//        var feeds: [PodcastFeedSearchResult]
+//
+//        enum CodingKeys: String, CodingKey {
+//            case feeds = "feeds"
+//        }
+//    }
+//}

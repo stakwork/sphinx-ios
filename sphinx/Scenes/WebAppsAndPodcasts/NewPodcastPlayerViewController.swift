@@ -112,29 +112,60 @@ class NewPodcastPlayerViewController: UIViewController {
     }
     
     
-    func updateEpisodesInBackground() {
+//    func updateEpisodesInBackground() {
+//        DispatchQueue
+//            .global(qos: .utility)
+//            .async { [weak self] in
+//                guard let self = self else { return }
+//                guard let feedURLPath = self.playerHelper.podcast?.feedURLPath else { return }
+//
+//                API.sharedInstance.getPodcastEpisodes(
+//                    byFeedURLPath: feedURLPath
+//                ) { result in
+//                    DispatchQueue.main.async {
+//                        switch result {
+//                        case .success(let episodes):
+//                            self.playerHelper.podcast?.addToEpisodes(Set(episodes))
+//                            self.shouldReloadEpisodesTable()
+//                        case .failure(_):
+//                            AlertHelper.showAlert(
+//                                title: "Failed to fetch episodes for feed",
+//                                message: ""
+//                            )
+//                        }
+//                    }
+//                }
+//            }
+//    }
+    
+    private func updateEpisodesInBackground() {
         DispatchQueue
             .global(qos: .utility)
             .async { [weak self] in
-                guard let self = self else { return }
-                guard let feedURLPath = self.playerHelper.podcast?.feedURLPath else { return }
+                guard
+                    let self = self,
+                    let podcastFeed = self.playerHelper.podcast,
+                    let feedURLPath = podcastFeed.feedURLPath
+                else { return }
+                
+                let tribesServerURL = "\(API.kTestTribesServerBaseURL)/feed?url=\(feedURLPath)"
 
-                API.sharedInstance.getPodcastEpisodes(
-                    byFeedURLPath: feedURLPath
-                ) { result in
-                    DispatchQueue.main.async {
-                        switch result {
-                        case .success(let episodes):
-                            self.playerHelper.podcast?.addToEpisodes(Set(episodes))
-                            self.shouldReloadEpisodesTable()
-                        case .failure(_):
-                            AlertHelper.showAlert(
-                                title: "Failed to fetch episodes for feed",
-                                message: ""
+                API.sharedInstance.getContentFeed(
+                    url: tribesServerURL,
+                    callback: { contentFeed in
+                        podcastFeed.addToEpisodes(
+                            Set(
+                                contentFeed
+                                    .items?
+                                    .map(PodcastEpisode.convertedFrom(contentFeedItem:))
+                                ?? []
                             )
-                        }
+                        )
+                    },
+                    errorCallback: {
+                        print("Failed to fetch newsletter items.")
                     }
-                }
+                )
             }
     }
 }
@@ -181,7 +212,7 @@ extension NewPodcastPlayerViewController : PodcastEpisodesDSDelegate {
 extension NewPodcastPlayerViewController: PodcastPlayerViewDelegate {
     
     func didTapSubscriptionToggleButton() {
-        playerHelper.podcast?.isSubscribedFromPodcastIndex.toggle()
+        playerHelper.podcast?.isSubscribedToFromSearch.toggle()
         
         CoreDataManager.sharedManager.saveContext()
     }

@@ -16,7 +16,7 @@ class PodcastFeedSearchResultCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var bottomSeparatorView: UIView!
     
     
-    var item: PodcastFeedSearchResult! {
+    var item: PodcastFeed! {
         didSet {
             DispatchQueue.main.async { [weak self] in
                 self?.updateViewsWithItem()
@@ -24,7 +24,7 @@ class PodcastFeedSearchResultCollectionViewCell: UICollectionViewCell {
         }
     }
 
-    var onSubscriptionButtonTapped: ((PodcastFeedSearchResult, SubscriptionState) -> Void)?
+    var onSubscriptionButtonTapped: ((PodcastFeed, SubscriptionState) -> Void)?
     
     private var subscriptionState: SubscriptionState = .followedViaTribe
 }
@@ -66,7 +66,7 @@ extension PodcastFeedSearchResultCollectionViewCell {
 extension PodcastFeedSearchResultCollectionViewCell {
     
     public func configure(
-        withItem searchResult: PodcastFeedSearchResult,
+        withItem searchResult: PodcastFeed,
         subscriptionState: SubscriptionState,
         shouldShowSeparator: Bool = false
     ) {

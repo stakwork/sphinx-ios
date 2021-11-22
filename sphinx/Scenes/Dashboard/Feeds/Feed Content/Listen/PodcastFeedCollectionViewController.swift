@@ -7,7 +7,7 @@ class PodcastFeedCollectionViewController: UICollectionViewController {
     var interSectionSpacing: CGFloat!
 
     var onPodcastEpisodeCellSelected: ((NSManagedObjectID) -> Void)!
-    var onPodcastFeedCellSelected: ((NSManagedObjectID) -> Void)!
+    var onSubscribedPodcastFeedCellSelected: ((NSManagedObjectID) -> Void)!
     var onNewResultsFetched: ((Int) -> Void)!
 
     private var managedObjectContext: NSManagedObjectContext!
@@ -32,7 +32,7 @@ extension PodcastFeedCollectionViewController {
         managedObjectContext: NSManagedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext,
         interSectionSpacing: CGFloat = 10.0,
         onPodcastEpisodeCellSelected: @escaping ((NSManagedObjectID) -> Void) = { _ in },
-        onPodcastFeedCellSelected: @escaping ((NSManagedObjectID) -> Void) = { _ in },
+        onSubscribedPodcastFeedCellSelected: @escaping ((NSManagedObjectID) -> Void) = { _ in },
         onNewResultsFetched: @escaping ((Int) -> Void) = { _ in }
     ) -> PodcastFeedCollectionViewController {
         let viewController = StoryboardScene.Dashboard.podcastFeedCollectionViewController.instantiate()
@@ -43,7 +43,7 @@ extension PodcastFeedCollectionViewController {
         viewController.interSectionSpacing = interSectionSpacing
 
         viewController.onPodcastEpisodeCellSelected = onPodcastEpisodeCellSelected
-        viewController.onPodcastFeedCellSelected = onPodcastFeedCellSelected
+        viewController.onSubscribedPodcastFeedCellSelected = onSubscribedPodcastFeedCellSelected
         viewController.onNewResultsFetched = onNewResultsFetched
 
         viewController.fetchedResultsController = Self.makeFetchedResultsController(using: managedObjectContext)
@@ -396,7 +396,7 @@ extension PodcastFeedCollectionViewController {
         case .listenNowEpisode(let podcastEpisode):
             onPodcastEpisodeCellSelected(podcastEpisode.objectID)
         case .subscribedPodcastFeed(let podcastFeed):
-            onPodcastFeedCellSelected(podcastFeed.objectID)
+            onSubscribedPodcastFeedCellSelected(podcastFeed.objectID)
         }
     }
 }

@@ -1,4 +1,4 @@
-// PodcastFeed+FetchUtils.swift
+// ContentFeed+FetchUtils.swift
 //
 // Created by CypherPoet.
 // ✌️
@@ -10,7 +10,7 @@ import CoreData
 
 
 // MARK: - Predicates
-extension PodcastFeed {
+extension ContentFeed {
 
     public enum Predicates {
         
@@ -20,7 +20,7 @@ extension PodcastFeed {
 
             return NSPredicate(
                 format: "%K \(keyword) \(formatSpecifier)",
-                #keyPath(PodcastFeed.title),
+                #keyPath(ContentFeed.title),
                 searchQuery
             )
         }
@@ -48,7 +48,7 @@ extension PodcastFeed {
 
 
 // MARK: - SortDescriptors
-extension PodcastFeed {
+extension ContentFeed {
 
     // 💡 An instance of `NSFetchedResultsController`, or an `NSFetchRequestResult` created by
     // SwiftUI's `@FetchRequest` property wrapper, requires a fetch request with sort descriptors.
@@ -56,7 +56,7 @@ extension PodcastFeed {
     public enum SortDescriptors {
 
         public static let nameAscending: NSSortDescriptor = NSSortDescriptor(
-            key: #keyPath(PodcastFeed.title),
+            key: #keyPath(ContentFeed.title),
             ascending: true,
 
             // 🔑 Any time you’re sorting user-facing strings,
@@ -80,40 +80,40 @@ extension PodcastFeed {
 
 
 // MARK: - FetchRequests
-extension PodcastFeed {
+extension ContentFeed {
 
     public enum FetchRequests {
 
-        public static func baseFetchRequest<PodcastFeed>() -> NSFetchRequest<PodcastFeed> {
-            NSFetchRequest<PodcastFeed>(entityName: "PodcastFeed")
+        public static func baseFetchRequest<ContentFeed>() -> NSFetchRequest<ContentFeed> {
+            NSFetchRequest<ContentFeed>(entityName: "ContentFeed")
         }
 
 
-        public static func `default`() -> NSFetchRequest<PodcastFeed> {
-            let request: NSFetchRequest<PodcastFeed> = baseFetchRequest()
+        public static func `default`() -> NSFetchRequest<ContentFeed> {
+            let request: NSFetchRequest<ContentFeed> = baseFetchRequest()
 
-            request.sortDescriptors = [PodcastFeed.SortDescriptors.nameAscending]
+            request.sortDescriptors = [ContentFeed.SortDescriptors.nameAscending]
             request.predicate = nil
 
             return request
         }
         
         
-        public static func matching(searchQuery: String) -> NSFetchRequest<PodcastFeed> {
-            let request: NSFetchRequest<PodcastFeed> = baseFetchRequest()
+        public static func matching(searchQuery: String) -> NSFetchRequest<ContentFeed> {
+            let request: NSFetchRequest<ContentFeed> = baseFetchRequest()
 
-            request.predicate = PodcastFeed
+            request.predicate = ContentFeed
                 .Predicates
                 .matching(searchQuery: searchQuery)
 
-            request.sortDescriptors = [PodcastFeed.SortDescriptors.nameAscending]
+            request.sortDescriptors = [ContentFeed.SortDescriptors.nameAscending]
 
             return request
         }
      
         
-        public static func matching(feedID: String) -> NSFetchRequest<PodcastFeed> {
-            let request: NSFetchRequest<PodcastFeed> = baseFetchRequest()
+        public static func matching(feedID: String) -> NSFetchRequest<ContentFeed> {
+            let request: NSFetchRequest<ContentFeed> = baseFetchRequest()
             
             request.predicate = Predicates.matching(feedID: feedID)
             request.sortDescriptors = []
@@ -122,8 +122,8 @@ extension PodcastFeed {
         }
         
         
-        public static func followedFeeds() -> NSFetchRequest<PodcastFeed> {
-            let request: NSFetchRequest<PodcastFeed> = baseFetchRequest()
+        public static func followedFeeds() -> NSFetchRequest<ContentFeed> {
+            let request: NSFetchRequest<ContentFeed> = baseFetchRequest()
             
             request.predicate = Predicates.followedFeeds
             request.sortDescriptors = []

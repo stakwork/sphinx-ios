@@ -108,7 +108,7 @@ class PodcastPlayerHelper {
     
     
     func toggleFeedSubscriptionState() {
-        podcast?.isSubscribedFromPodcastIndex.toggle()
+        podcast?.isSubscribedToFromSearch.toggle()
         CoreDataManager.sharedManager.saveContext()
     }
     

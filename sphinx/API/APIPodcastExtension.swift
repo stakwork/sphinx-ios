@@ -25,7 +25,7 @@ extension API {
         AF.request(request).responseJSON { response in
             do {
                 if let data = response.data {
-                    let decoder = JSONDecoder()
+                    let decoder = ContentFeed.Decoders.default
                     
                     decoder.userInfo[.managedObjectContext] = CoreDataManager.sharedManager.persistentContainer.viewContext
                     

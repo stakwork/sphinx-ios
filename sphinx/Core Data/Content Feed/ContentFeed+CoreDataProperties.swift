@@ -19,7 +19,7 @@ extension ContentFeed {
     internal var mediaKindValue: ContentFeedMediaKind.RawValue
     
     @NSManaged
-    public var title: String
+    public var title: String?
     
     @NSManaged
     public var ownerURL: URL?

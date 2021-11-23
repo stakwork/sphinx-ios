@@ -160,6 +160,10 @@ class SavePeopleProfileView: CommonModalView {
     }
     
     private func deleteProfile() {
+        var parameters = [String : AnyObject]()
+        parameters["id"] = authInfo?.personInfo["id"].intValue as AnyObject
+        parameters["host"] = authInfo?.personInfo["host"].stringValue as AnyObject
+        
         API.sharedInstance.deletePeopleProfile(callback: { success in
             if success {
                 self.showAlertAndDismiss("people.delete-succeed".localized)

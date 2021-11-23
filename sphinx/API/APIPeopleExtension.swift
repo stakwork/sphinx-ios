@@ -159,8 +159,10 @@ extension API {
         }
     }
     
-    public func deletePeopleProfile(callback: @escaping SavePeopleProfileCallback) {
-        guard let request = getURLRequest(route: "/profile", method: "DELETE") else {
+    public func deletePeopleProfile(params: [String: AnyObject],
+                                    callback: @escaping SavePeopleProfileCallback) {
+        
+        guard let request = getURLRequest(route: "/profile", params: params as NSDictionary, method: "DELETE") else {
             callback(false)
             return
         }

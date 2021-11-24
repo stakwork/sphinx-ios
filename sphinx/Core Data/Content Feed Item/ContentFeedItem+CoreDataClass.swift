@@ -13,13 +13,16 @@ public final class ContentFeedItem: NSManagedObject, ContentFeedItemVariant {
 
     // MARK: - Decodable
     public required convenience init(from decoder: Decoder) throws {
-        guard let managedObjectContext = decoder.userInfo[.managedObjectContext]
+        if
+            let managedObjectContext = decoder
+                .userInfo[.managedObjectContext]
                 as? NSManagedObjectContext
-        else {
-            preconditionFailure("No managedObjectContext found in decoder userInfo")
+        {
+            self.init(context: managedObjectContext)
+        } else {
+            self.init(entity: ContentFeedItem.entity(), insertInto: nil)
         }
         
-        self.init(context: managedObjectContext)
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
 

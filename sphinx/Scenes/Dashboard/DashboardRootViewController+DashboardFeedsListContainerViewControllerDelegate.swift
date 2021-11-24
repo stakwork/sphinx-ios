@@ -23,18 +23,11 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
             with: podcastPlayerHelper
         )
     }
-
-
+    
     func viewController(
         _ viewController: UIViewController,
-        didSelectPodcastFeedWithID podcastFeedID: NSManagedObjectID
+        didSelectPodcastFeed podcastFeed: PodcastFeed
     ) {
-        guard
-            let podcastFeed = managedObjectContext.object(with: podcastFeedID) as? PodcastFeed
-        else {
-            return
-        }
-        
         guard let _ = podcastFeed.feedURLPath else {
             AlertHelper.showAlert(title: "Failed to find a URL for the feed.", message: "")
             return

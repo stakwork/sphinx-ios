@@ -8,10 +8,10 @@ import CoreData
 
 
 protocol DashboardFeedsListContainerViewControllerDelegate: AnyObject {
-    
+
     func viewController(
         _ viewController: UIViewController,
-        didSelectPodcastFeedWithID podcastFeedID: NSManagedObjectID
+        didSelectPodcastFeed podcastFeed: PodcastFeed
     )
     
     func viewController(
@@ -268,10 +268,10 @@ extension DashboardFeedsContainerViewController {
     ) {
         let entity = managedObjectContext.object(with: managedObjectID)
         
-        if entity is PodcastFeed {
+        if let podcastFeed = entity as? PodcastFeed {
             feedsListContainerDelegate?.viewController(
                 self,
-                didSelectPodcastFeedWithID: managedObjectID
+                didSelectPodcastFeed: podcastFeed
             )
         } else if entity is VideoFeed {
             feedsListContainerDelegate?.viewController(
@@ -298,10 +298,10 @@ extension DashboardFeedsContainerViewController {
         )
     }
     
-    private func handlePodcastFeedCellSelection(_ managedObjectID: NSManagedObjectID) {
+    private func handlePodcastFeedCellSelection(_ podcastFeed: PodcastFeed) {
         feedsListContainerDelegate?.viewController(
             self,
-            didSelectPodcastFeedWithID: managedObjectID
+            didSelectPodcastFeed: podcastFeed
         )
     }
 }

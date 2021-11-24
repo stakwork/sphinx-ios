@@ -490,7 +490,7 @@ public class Chat: NSManagedObject {
             } else if feedContentType.isPodcast && podcastFeed == nil {
                 fetchContentFeed(at: feedURLPath) { result in
                     if case let .success(fetchedContentFeed) = result {
-                        self.podcastFeed = PodcastFeed.convertedFrom(
+                        self.podcastFeed = PodcastFeed.convertFrom(
                             contentFeed: fetchedContentFeed
                         )
                         CoreDataManager.sharedManager.saveContext()

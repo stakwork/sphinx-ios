@@ -10,11 +10,10 @@ import CoreData
 
 class PodcastFeedSearchResultsCollectionViewController: UICollectionViewController {
     var subscribedPodcastFeeds: [PodcastFeed]!
-//    var podcastFeedSearchResults: [PodcastFeedSearchResult]!
     var podcastFeedSearchResults: [PodcastFeed]!
     var interSectionSpacing: CGFloat = 0.0
 
-    var onSubscribedPodcastFeedCellSelected: ((NSManagedObjectID) -> Void)!
+    var onSubscribedPodcastFeedCellSelected: ((PodcastFeed) -> Void)!
     var onPodcastFeedSearchResultCellSelected: ((PodcastFeed) -> Void)!
     var onPodcastFeedSubscriptionSelected: ((PodcastFeed) -> Void)!
     var onPodcastFeedSubscriptionCancellationSelected: ((PodcastFeed) -> Void)!
@@ -39,7 +38,7 @@ extension PodcastFeedSearchResultsCollectionViewController {
         subscribedPodcastFeeds: [PodcastFeed] = [],
         podcastFeedSearchResults: [PodcastFeed] = [],
         interSectionSpacing: CGFloat = 0.0,
-        onSubscribedPodcastFeedCellSelected: ((NSManagedObjectID) -> Void)!,
+        onSubscribedPodcastFeedCellSelected: ((PodcastFeed) -> Void)!,
         onPodcastFeedSearchResultCellSelected: ((PodcastFeed) -> Void)!,
         onPodcastFeedSubscriptionSelected: ((PodcastFeed) -> Void)!,
         onPodcastFeedSubscriptionCancellationSelected: ((PodcastFeed) -> Void)!
@@ -246,7 +245,6 @@ extension PodcastFeedSearchResultsCollectionViewController {
             )
             
             cell.configure(
-//                withItem: dataSourceItem.searchResult,
                 withItem: dataSourceItem.podcastFeedObject,
                 subscriptionState: self.subscriptionState(for: dataSourceItem, in: section),
                 shouldShowSeparator: isLastRow == false
@@ -316,62 +314,26 @@ extension PodcastFeedSearchResultsCollectionViewController {
     
     
     func updateWithNew(
-        followedPodcastFeeds: [PodcastFeed],
+        subscribedPodcastFeeds: [PodcastFeed],
         shouldAnimate: Bool = true
     ) {
-        self.subscribedPodcastFeeds = followedPodcastFeeds
+        self.subscribedPodcastFeeds = subscribedPodcastFeeds
 
-        if let dataSource = dataSource {
-            dataSource.apply(
-                makeSnapshotForCurrentState(),
-                animatingDifferences: shouldAnimate
-            )
+        if let _ = dataSource {
+            updateSnapshot(shouldAnimate: shouldAnimate)
         }
     }
     
-    
-//    func updateWithNew(
-//        directorySearchResults: [PodcastFeedSearchResult],
-//        shouldAnimate: Bool = true
-//    ) {
-//        self.directorySearchResults = directorySearchResults
-//
-//        if let dataSource = dataSource {
-//            dataSource.apply(
-//                makeSnapshotForCurrentState(),
-//                animatingDifferences: shouldAnimate
-//            )
-//        }
-//    }
-    
+
     func updateWithNew(
         searchResults: [PodcastFeed],
         shouldAnimate: Bool = true
     ) {
         self.podcastFeedSearchResults = searchResults
 
-        if let dataSource = dataSource {
-            dataSource.apply(
-                makeSnapshotForCurrentState(),
-                animatingDifferences: shouldAnimate
-            )
+        if let _ = dataSource {
+            updateSnapshot(shouldAnimate: shouldAnimate)
         }
-    }
-    
-    
-    func refreshPodcastFeedSearchResultItem(
-        using searchResult: PodcastFeed,
-        shouldAnimate: Bool = true
-    ) {
-        var newSnapshot = makeSnapshotForCurrentState()
-
-        let dataSourceItem = DataSourceItem.podcastFeedSearchResult(searchResult)
-        newSnapshot.reloadItems([dataSourceItem])
-        
-        dataSource.apply(
-            newSnapshot,
-            animatingDifferences: shouldAnimate
-        )
     }
 }
 
@@ -398,7 +360,7 @@ extension PodcastFeedSearchResultsCollectionViewController {
                 preconditionFailure()
             }
             
-            onSubscribedPodcastFeedCellSelected?(podcastFeed.objectID)
+            onSubscribedPodcastFeedCellSelected?(podcastFeed)
         case .podcastFeedSearchResults:
             guard
                 case let .podcastFeedSearchResult(directorySearchResult) = dataSourceItem
@@ -413,24 +375,6 @@ extension PodcastFeedSearchResultsCollectionViewController {
 
 
 extension PodcastFeedSearchResultsCollectionViewController.DataSourceItem {
-    
-//    var searchResult: PodcastFeedSearchResult {
-//        switch self {
-//        case .subscribedPodcastFeeds(let podcastFeed):
-//            return podcastFeed.searchResultItem
-//        case .podcastFeedSearchResult(let result):
-//            return result
-//        }
-//    }
-    
-//    var podcastFeedObject: PodcastFeed? {
-//        switch self {
-//        case .subscribedPodcastFeeds(let podcastFeed):
-//            return podcastFeed
-//        case .podcastFeedSearchResult:
-//            return nil
-//        }
-//    }
     
     var podcastFeedObject: PodcastFeed {
         switch self {
@@ -457,7 +401,6 @@ extension PodcastFeedSearchResultsCollectionViewController {
                 .itemIdentifiers(inSection: .subscribedFeedsResults)
                 .contains(
                     where: { podcastFeedDataSourceItem in
-//                        podcastFeedDataSourceItem.searchResult == dataSourceItem.searchResult
                         podcastFeedDataSourceItem.podcastFeedObject == dataSourceItem.podcastFeedObject
                     }
                 )
@@ -471,7 +414,6 @@ extension PodcastFeedSearchResultsCollectionViewController {
     
     
     private func handleSubscriptionButtonTap(
-//        searchResult: PodcastFeedSearchResult,
         searchResult: PodcastFeed,
         subscriptionState: PodcastFeedSearchResultCollectionViewCell.SubscriptionState
     ) {

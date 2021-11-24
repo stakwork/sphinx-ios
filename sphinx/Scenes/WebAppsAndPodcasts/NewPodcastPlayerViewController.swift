@@ -152,12 +152,15 @@ class NewPodcastPlayerViewController: UIViewController {
 
                 API.sharedInstance.getContentFeed(
                     url: tribesServerURL,
+                    persistingIn: nil,
                     callback: { contentFeed in
                         podcastFeed.addToEpisodes(
                             Set(
                                 contentFeed
                                     .items?
-                                    .map(PodcastEpisode.convertedFrom(contentFeedItem:))
+                                    .map {
+                                        PodcastEpisode.convertFrom(contentFeedItem: $0)
+                                    }
                                 ?? []
                             )
                         )

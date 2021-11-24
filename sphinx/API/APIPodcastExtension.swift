@@ -9,11 +9,13 @@
 import Foundation
 import Alamofire
 import SwiftyJSON
+import CoreData
 
 extension API {
     
     func getContentFeed(
         url: String,
+        persistingIn managedObjectContext: NSManagedObjectContext? = nil,
         callback: @escaping ContentFeedCallback,
         errorCallback: @escaping EmptyCallback
     ) {
@@ -27,7 +29,9 @@ extension API {
                 if let data = response.data {
                     let decoder = ContentFeed.Decoders.default
                     
-                    decoder.userInfo[.managedObjectContext] = CoreDataManager.sharedManager.persistentContainer.viewContext
+                    if let managedObjectContext = managedObjectContext {
+                        decoder.userInfo[.managedObjectContext] = managedObjectContext
+                    }
                     
                     callback(
                         try decoder.decode(ContentFeed.self, from: data)

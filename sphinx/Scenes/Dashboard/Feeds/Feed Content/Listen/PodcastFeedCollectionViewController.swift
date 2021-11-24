@@ -7,7 +7,7 @@ class PodcastFeedCollectionViewController: UICollectionViewController {
     var interSectionSpacing: CGFloat!
 
     var onPodcastEpisodeCellSelected: ((NSManagedObjectID) -> Void)!
-    var onSubscribedPodcastFeedCellSelected: ((NSManagedObjectID) -> Void)!
+    var onSubscribedPodcastFeedCellSelected: ((PodcastFeed) -> Void)!
     var onNewResultsFetched: ((Int) -> Void)!
 
     private var managedObjectContext: NSManagedObjectContext!
@@ -32,7 +32,7 @@ extension PodcastFeedCollectionViewController {
         managedObjectContext: NSManagedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext,
         interSectionSpacing: CGFloat = 10.0,
         onPodcastEpisodeCellSelected: @escaping ((NSManagedObjectID) -> Void) = { _ in },
-        onSubscribedPodcastFeedCellSelected: @escaping ((NSManagedObjectID) -> Void) = { _ in },
+        onSubscribedPodcastFeedCellSelected: @escaping ((PodcastFeed) -> Void) = { _ in },
         onNewResultsFetched: @escaping ((Int) -> Void) = { _ in }
     ) -> PodcastFeedCollectionViewController {
         let viewController = StoryboardScene.Dashboard.podcastFeedCollectionViewController.instantiate()
@@ -396,7 +396,7 @@ extension PodcastFeedCollectionViewController {
         case .listenNowEpisode(let podcastEpisode):
             onPodcastEpisodeCellSelected(podcastEpisode.objectID)
         case .subscribedPodcastFeed(let podcastFeed):
-            onSubscribedPodcastFeedCellSelected(podcastFeed.objectID)
+            onSubscribedPodcastFeedCellSelected(podcastFeed)
         }
     }
 }

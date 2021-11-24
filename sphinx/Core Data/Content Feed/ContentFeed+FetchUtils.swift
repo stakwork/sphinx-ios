@@ -37,10 +37,22 @@ extension ContentFeed {
             )
         }
         
-        
+
         public static let followedFeeds: NSPredicate = {
             NSPredicate(
                 format: "isSubscribedToFromSearch == true OR chat != nil"
+            )
+        }()
+        
+        
+        public static let podcastFeeds: NSPredicate = {
+            let keyword = "=="
+            let formatSpecifier = "%i"
+
+            return NSPredicate(
+                format: "%K \(keyword) \(formatSpecifier)",
+                "feedKindValue",
+                ContentFeedKind.podcast.rawValue
             )
         }()
     }
@@ -122,10 +134,10 @@ extension ContentFeed {
         }
         
         
-        public static func followedFeeds() -> NSFetchRequest<ContentFeed> {
+        public static func podcastFeeds() -> NSFetchRequest<ContentFeed> {
             let request: NSFetchRequest<ContentFeed> = baseFetchRequest()
             
-            request.predicate = Predicates.followedFeeds
+            request.predicate = Predicates.podcastFeeds
             request.sortDescriptors = []
 
             return request

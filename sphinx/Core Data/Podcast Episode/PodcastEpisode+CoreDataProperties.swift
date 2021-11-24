@@ -33,14 +33,17 @@ extension PodcastEpisode: Identifiable {}
 // MARK: -  Public Methods
 extension PodcastEpisode {
     
-    public static func convertedFrom(
-        contentFeedItem: ContentFeedItem
-    ) -> Self {
-        guard let managedObjectContext = contentFeedItem.managedObjectContext else {
-            preconditionFailure()
+    public static func convertFrom(
+        contentFeedItem: ContentFeedItem,
+        persistingIn managedObjectContext: NSManagedObjectContext? = nil
+    ) -> PodcastEpisode {
+        let podcastEpisode: PodcastEpisode
+        
+        if let managedObjectContext = managedObjectContext {
+            podcastEpisode = PodcastEpisode(context: managedObjectContext)
+        } else {
+            podcastEpisode = PodcastEpisode(entity: PodcastEpisode.entity(), insertInto: nil)
         }
-
-        let podcastEpisode = Self(context: managedObjectContext)
         
         podcastEpisode.itemID = contentFeedItem.itemID
         podcastEpisode.author = contentFeedItem.authorName

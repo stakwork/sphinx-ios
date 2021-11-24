@@ -142,7 +142,7 @@ class PodcastPlayerHelper {
         
         chat?.fetchContentFeed(at: url) { [weak self] result in
             if case let .success(contentFeed) = result {
-                self?.podcast = PodcastFeed.convertedFrom(contentFeed: contentFeed)
+                self?.podcast = PodcastFeed.convertFrom(contentFeed: contentFeed)
             }
 
             callback(true)
@@ -150,7 +150,7 @@ class PodcastPlayerHelper {
     }
     
     func processLocalPodcastFeed(chat: Chat?, callback: @escaping (Bool) -> ()) {
-        if let podcastFeed = chat?.podcastFeed {
+        if let _ = chat?.podcastFeed {
             callback(true)
         }
     }

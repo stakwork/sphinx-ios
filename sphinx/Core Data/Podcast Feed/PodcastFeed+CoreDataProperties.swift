@@ -29,14 +29,17 @@ extension PodcastFeed {
 // MARK: -  Public Methods
 extension PodcastFeed {
     
-    public static func convertedFrom(
-        contentFeed: ContentFeed
-    ) -> Self {
-        guard let managedObjectContext = contentFeed.managedObjectContext else {
-            preconditionFailure()
-        }
+    public static func convertFrom(
+        contentFeed: ContentFeed,
+        persistingIn managedObjectContext: NSManagedObjectContext? = nil
+    ) -> PodcastFeed {
+        let podcastFeed: PodcastFeed
         
-        let podcastFeed = Self(context: managedObjectContext)
+        if let managedObjectContext = managedObjectContext {
+            podcastFeed = PodcastFeed(context: managedObjectContext)
+        } else {
+            podcastFeed = PodcastFeed(entity: PodcastFeed.entity(), insertInto: nil)
+        }
         
         podcastFeed.feedID = contentFeed.feedID
         podcastFeed.title = contentFeed.title
@@ -53,7 +56,9 @@ extension PodcastFeed {
         podcastFeed.episodes = Set(
             contentFeed
                 .items?
-                .map(PodcastEpisode.convertedFrom(contentFeedItem:))
+                .map {
+                    PodcastEpisode.convertFrom(contentFeedItem: $0)
+                }
             ?? []
         )
         

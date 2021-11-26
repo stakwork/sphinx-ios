@@ -30,14 +30,17 @@ extension NewsletterItem {
 // MARK: -  Public Methods
 extension NewsletterItem {
     
-    public static func convertedFrom(
-        contentFeedItem: ContentFeedItem
-    ) -> Self {
-        guard let managedObjectContext = contentFeedItem.managedObjectContext else {
-            preconditionFailure()
+    public static func convertFrom(
+        contentFeedItem: ContentFeedItem,
+        persistingIn managedObjectContext: NSManagedObjectContext? = nil
+    ) -> NewsletterItem {
+        let newsletterItem: NewsletterItem
+        
+        if let managedObjectContext = managedObjectContext {
+            newsletterItem = NewsletterItem(context: managedObjectContext)
+        } else {
+            newsletterItem = NewsletterItem(entity: NewsletterItem.entity(), insertInto: nil)
         }
-
-        let newsletterItem = Self(context: managedObjectContext)
         
         newsletterItem.itemID = contentFeedItem.itemID
         newsletterItem.creator = contentFeedItem.authorName

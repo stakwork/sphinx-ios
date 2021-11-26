@@ -37,6 +37,7 @@ extension PodcastFeed {
         
         if let managedObjectContext = managedObjectContext {
             podcastFeed = PodcastFeed(context: managedObjectContext)
+            podcastFeed.chat = contentFeed.chat
         } else {
             podcastFeed = PodcastFeed(entity: PodcastFeed.entity(), insertInto: nil)
         }
@@ -51,13 +52,14 @@ extension PodcastFeed {
         podcastFeed.imageURLPath = contentFeed.imageURL?.absoluteString
         podcastFeed.generator = contentFeed.generator
         
-        podcastFeed.chat = contentFeed.chat
-        
         podcastFeed.episodes = Set(
             contentFeed
                 .items?
                 .map {
-                    PodcastEpisode.convertFrom(contentFeedItem: $0)
+                    PodcastEpisode.convertFrom(
+                        contentFeedItem: $0,
+                        persistingIn: managedObjectContext
+                    )
                 }
             ?? []
         )
@@ -65,16 +67,19 @@ extension PodcastFeed {
         podcastFeed.destinations = Set(
             contentFeed
                 .paymentDestinations?
-                .map(
-                    PodcastDestination
-                        .convertedFrom(contentFeedPaymentDestination:)
-                )
+                .map {
+                    PodcastDestination.convertFrom(
+                        contentFeedPaymentDestination: $0,
+                        persistingIn: managedObjectContext
+                    )
+                }
             ?? []
         )
         
         if let paymentModel = contentFeed.paymentModel {
-            podcastFeed.model = PodcastModel.convertedFrom(
-                contentFeedPaymentModel: paymentModel
+            podcastFeed.model = PodcastModel.convertFrom(
+                contentFeedPaymentModel: paymentModel,
+                persistingIn: managedObjectContext
             )
         }
         

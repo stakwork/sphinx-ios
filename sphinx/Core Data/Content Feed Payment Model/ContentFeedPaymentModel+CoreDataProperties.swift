@@ -30,27 +30,6 @@ extension ContentFeedPaymentModel {
 extension ContentFeedPaymentModel : Identifiable {}
 
 
-// MARK: -  Public Methods
-extension ContentFeedPaymentModel {
-    
-    public func legacyPodcastPaymentModel(
-        fromLegacyPodcastFeed legacyPodcastFeed: PodcastFeed
-    ) -> PodcastModel {
-        guard let managedObjectContext = managedObjectContext else {
-            preconditionFailure()
-        }
-        
-        let podcastFeedPaymentModel = PodcastModel(context: managedObjectContext)
-        
-        podcastFeedPaymentModel.type = type
-        podcastFeedPaymentModel.suggestedBTC = suggestedBTC
-        podcastFeedPaymentModel.feed = legacyPodcastFeed
-        
-        return podcastFeedPaymentModel
-    }
-}
-
-
 // MARK: - Coding Keys
 extension ContentFeedPaymentModel {
     

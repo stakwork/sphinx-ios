@@ -27,14 +27,17 @@ extension PodcastModel : Identifiable {}
 // MARK: -  Public Methods
 extension PodcastModel {
     
-    public static func convertedFrom(
-        contentFeedPaymentModel: ContentFeedPaymentModel
-    ) -> Self {
-        guard let managedObjectContext = contentFeedPaymentModel.managedObjectContext else {
-            preconditionFailure()
+    public static func convertFrom(
+        contentFeedPaymentModel: ContentFeedPaymentModel,
+        persistingIn managedObjectContext: NSManagedObjectContext? = nil
+    ) -> PodcastModel {
+        let podcastModel: PodcastModel
+        
+        if let managedObjectContext = managedObjectContext {
+            podcastModel = PodcastModel(context: managedObjectContext)
+        } else {
+            podcastModel = PodcastModel(entity: PodcastModel.entity(), insertInto: nil)
         }
-
-        let podcastModel = Self(context: managedObjectContext)
         
         podcastModel.suggestedBTC = contentFeedPaymentModel.suggestedBTC
         podcastModel.type = contentFeedPaymentModel.type

@@ -142,7 +142,10 @@ class PodcastPlayerHelper {
         
         chat?.fetchContentFeed(at: url) { [weak self] result in
             if case let .success(contentFeed) = result {
-                self?.podcast = PodcastFeed.convertFrom(contentFeed: contentFeed)
+                self?.podcast = PodcastFeed.convertFrom(
+                    contentFeed: contentFeed,
+                    persistingIn: chat?.managedObjectContext
+                )
             }
 
             callback(true)

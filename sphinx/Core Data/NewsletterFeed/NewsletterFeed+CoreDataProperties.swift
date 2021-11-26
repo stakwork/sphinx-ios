@@ -34,14 +34,17 @@ extension NewsletterFeed {
 // MARK: -  Public Methods
 extension NewsletterFeed {
     
-    public static func convertedFrom(
-        contentFeed: ContentFeed
-    ) -> Self {
-        guard let managedObjectContext = contentFeed.managedObjectContext else {
-            preconditionFailure()
-        }
+    public static func convertFrom(
+        contentFeed: ContentFeed,
+        persistingIn managedObjectContext: NSManagedObjectContext? = nil
+    ) -> NewsletterFeed {
+        let newsletterFeed: NewsletterFeed
         
-        let newsletterFeed = Self(context: managedObjectContext)
+        if let managedObjectContext = managedObjectContext {
+            newsletterFeed = NewsletterFeed(context: managedObjectContext)
+        } else {
+            newsletterFeed = NewsletterFeed(entity: NewsletterFeed.entity(), insertInto: nil)
+        }
         
         newsletterFeed.feedID = contentFeed.feedID
         newsletterFeed.title = contentFeed.title
@@ -56,7 +59,12 @@ extension NewsletterFeed {
         newsletterFeed.newsletterItems = Set(
             contentFeed
                 .items?
-                .map(NewsletterItem.convertedFrom(contentFeedItem:))
+                .map {
+                    NewsletterItem.convertFrom(
+                        contentFeedItem: $0,
+                        persistingIn: managedObjectContext
+                    )
+                }
             ?? []
         )
         

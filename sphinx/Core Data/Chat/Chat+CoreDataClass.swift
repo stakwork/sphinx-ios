@@ -481,7 +481,7 @@ public class Chat: NSManagedObject {
             } else if feedContentType.isNewsletter && newsletterFeed == nil {
                 fetchContentFeed(at: feedURLPath) { result in
                     if case let .success(fetchedContentFeed) = result {
-                        self.newsletterFeed = NewsletterFeed.convertedFrom(
+                        self.newsletterFeed = NewsletterFeed.convertFrom(
                             contentFeed: fetchedContentFeed
                         )
                         CoreDataManager.sharedManager.saveContext()
@@ -491,8 +491,10 @@ public class Chat: NSManagedObject {
                 fetchContentFeed(at: feedURLPath) { result in
                     if case let .success(fetchedContentFeed) = result {
                         self.podcastFeed = PodcastFeed.convertFrom(
-                            contentFeed: fetchedContentFeed
+                            contentFeed: fetchedContentFeed,
+                            persistingIn: self.managedObjectContext
                         )
+                        
                         CoreDataManager.sharedManager.saveContext()
                     }
                 }
@@ -531,12 +533,20 @@ public class Chat: NSManagedObject {
         then completionHandler: ((Result<ContentFeed, Error>) -> Void)? = nil
     ) {
         let tribesServerURL = "\(API.kTestTribesServerBaseURL)/feed?url=\(feedURLPath)"
+        let managedObjectContext = self.managedObjectContext ?? CoreDataManager.sharedManager.persistentContainer.viewContext
         
         API.sharedInstance.getContentFeed(
             url: tribesServerURL,
+            persistingIn: managedObjectContext,
             callback: { feed in
-                feed.chat = self
-                completionHandler?(.success(feed))
+                                feed.chat = self
+                                completionHandler?(.success(feed))
+//                if let copiedFeed = managedObjectContext.object(with: feed.objectID) as? ContentFeed {
+//                    copiedFeed.chat = self
+//                    completionHandler?(.success(copiedFeed))
+//                } else {
+//                    completionHandler?(.failure((API.RequestError.failedToFetchContentFeed)))
+//                }
             },
             errorCallback: {
                 completionHandler?(.failure((API.RequestError.failedToFetchContentFeed)))

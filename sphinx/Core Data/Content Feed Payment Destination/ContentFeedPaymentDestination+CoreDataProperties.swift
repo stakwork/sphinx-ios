@@ -46,31 +46,6 @@ extension ContentFeedPaymentDestination {
 extension ContentFeedPaymentDestination : Identifiable {}
 
 
-
-// MARK: -  Public Methods
-extension ContentFeedPaymentDestination {
-    
-    public func legacyPodcastPaymentDestinationModel(
-        fromLegacyPodcastFeed legacyPodcastFeed: PodcastFeed
-    ) -> PodcastDestination {
-        guard let managedObjectContext = managedObjectContext else {
-            preconditionFailure()
-        }
-        
-        let podcastDestinationModel = PodcastDestination(
-            context: managedObjectContext
-        )
-        
-        podcastDestinationModel.address = address
-        podcastDestinationModel.split = split
-        podcastDestinationModel.type = type
-        podcastDestinationModel.feed = legacyPodcastFeed
-        
-        return podcastDestinationModel
-    }
-}
-
-
 // MARK: - Coding Keys
 extension ContentFeedPaymentDestination {
     

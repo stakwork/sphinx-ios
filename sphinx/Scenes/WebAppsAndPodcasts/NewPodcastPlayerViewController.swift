@@ -111,33 +111,6 @@ class NewPodcastPlayerViewController: UIViewController {
         }
     }
     
-    
-//    func updateEpisodesInBackground() {
-//        DispatchQueue
-//            .global(qos: .utility)
-//            .async { [weak self] in
-//                guard let self = self else { return }
-//                guard let feedURLPath = self.playerHelper.podcast?.feedURLPath else { return }
-//
-//                API.sharedInstance.getPodcastEpisodes(
-//                    byFeedURLPath: feedURLPath
-//                ) { result in
-//                    DispatchQueue.main.async {
-//                        switch result {
-//                        case .success(let episodes):
-//                            self.playerHelper.podcast?.addToEpisodes(Set(episodes))
-//                            self.shouldReloadEpisodesTable()
-//                        case .failure(_):
-//                            AlertHelper.showAlert(
-//                                title: "Failed to fetch episodes for feed",
-//                                message: ""
-//                            )
-//                        }
-//                    }
-//                }
-//            }
-//    }
-    
     private func updateEpisodesInBackground() {
         DispatchQueue
             .global(qos: .utility)
@@ -159,7 +132,10 @@ class NewPodcastPlayerViewController: UIViewController {
                                 contentFeed
                                     .items?
                                     .map {
-                                        PodcastEpisode.convertFrom(contentFeedItem: $0)
+                                        PodcastEpisode.convertFrom(
+                                            contentFeedItem: $0,
+                                            persistingIn: podcastFeed.managedObjectContext
+                                        )
                                     }
                                 ?? []
                             )

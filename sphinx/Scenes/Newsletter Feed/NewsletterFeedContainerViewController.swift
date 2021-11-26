@@ -156,7 +156,12 @@ extension NewsletterFeedContainerViewController {
                             Set(
                                 contentFeed
                                     .items?
-                                    .map(NewsletterItem.convertedFrom(contentFeedItem:))
+                                    .map {
+                                        NewsletterItem.convertFrom(
+                                            contentFeedItem: $0,
+                                            persistingIn: newsletterFeed.managedObjectContext
+                                        )
+                                    }
                                 ?? []
                             )
                         )

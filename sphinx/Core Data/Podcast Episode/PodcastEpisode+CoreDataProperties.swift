@@ -27,7 +27,10 @@ extension PodcastEpisode {
     @NSManaged public var feed: PodcastFeed?
 }
 
-extension PodcastEpisode: Identifiable {}
+extension PodcastEpisode: Identifiable {
+//    public var id: String { itemID }
+}
+
 
 
 // MARK: -  Public Methods

@@ -29,14 +29,17 @@ extension PodcastDestination: Identifiable {}
 // MARK: -  Public Methods
 extension PodcastDestination {
     
-    public static func convertedFrom(
-        contentFeedPaymentDestination: ContentFeedPaymentDestination
-    ) -> Self {
-        guard let managedObjectContext = contentFeedPaymentDestination.managedObjectContext else {
-            preconditionFailure()
+    public static func convertFrom(
+        contentFeedPaymentDestination: ContentFeedPaymentDestination,
+        persistingIn managedObjectContext: NSManagedObjectContext? = nil
+    ) -> PodcastDestination {
+        let destination: PodcastDestination
+        
+        if let managedObjectContext = managedObjectContext {
+            destination = PodcastDestination(context: managedObjectContext)
+        } else {
+            destination = PodcastDestination(entity: PodcastDestination.entity(), insertInto: nil)
         }
-
-        let destination = Self(context: managedObjectContext)
         
         destination.address = contentFeedPaymentDestination.address
         destination.split = contentFeedPaymentDestination.split

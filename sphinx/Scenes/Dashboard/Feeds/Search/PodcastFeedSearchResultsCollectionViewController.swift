@@ -394,7 +394,9 @@ extension PodcastFeedSearchResultsCollectionViewController {
     ) -> PodcastFeedSearchResultCollectionViewCell.SubscriptionState {
         switch section {
         case .subscribedFeedsResults:
-            return .followedViaTribe
+            return dataSourceItem.podcastFeedObject.chat == nil ?
+                .subscribedFromPodcastIndex
+                : .followedViaTribe
         case .podcastFeedSearchResults:
             if dataSource
                 .snapshot()

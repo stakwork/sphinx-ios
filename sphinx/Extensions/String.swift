@@ -399,7 +399,7 @@ extension String {
     }
     
     var isYouTubeRSSFeedURL: Bool {
-        starts(with: "https://www.youtube.com/feeds/")
+        contains("www.youtube.com")
     }
     
     var isPodcastComment: Bool {
@@ -415,7 +415,7 @@ extension String {
     }
     
     var isYouTubeRSSFeed: Bool {
-        starts(with: "http://www.youtube.com/feeds")
+        contains("www.youtube.com")
     }
     
     var podcastId: Int {

@@ -38,7 +38,6 @@ public final class ContentFeedItem: NSManagedObject, ContentFeedItemVariant {
         datePublished = try container.decode(Date.self, forKey: .datePublished)
         enclosureURL = try? container.decode(URL.self, forKey: .enclosureURL)
         enclosureKind = try container.decode(String.self, forKey: .enclosureKind)
-        enclosureLength = try container.decode(Int64.self, forKey: .enclosureLength)
         imageURL = try? container.decode(URL.self, forKey: .imageURL)
         linkURL = try? container.decode(URL.self, forKey: .linkURL)
     }

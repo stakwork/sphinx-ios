@@ -17,7 +17,6 @@ protocol ContentFeedItemVariant: NSManagedObject, Decodable {
     var datePublished: Date? { get }
     var enclosureURL: URL? { get }
     var enclosureKind: String? { get }
-    var enclosureLength: Int64 { get }
     var imageURL: URL? { get }
     var linkURL: URL? { get }
 }

@@ -41,9 +41,6 @@ extension ContentFeedItem {
     public var enclosureKind: String?
     
     @NSManaged
-    public var enclosureLength: Int64
-    
-    @NSManaged
     public var imageURL: URL?
     
     @NSManaged
@@ -79,7 +76,6 @@ extension ContentFeedItem {
         case dateUpdated = "dateUpdated"
         case enclosureURL = "enclosureUrl"
         case enclosureKind = "enclosureType"
-        case enclosureLength = "enclosureLength"
         case imageURL = "imageUrl"
         case linkURL = "link"
     }

@@ -66,7 +66,6 @@
         <attribute name="datePublished" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="dateUpdated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="enclosureKind" optional="YES" attributeType="String"/>
-        <attribute name="enclosureLength" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="enclosureURL" optional="YES" attributeType="URI"/>
         <attribute name="feedKindValue" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="imageURL" optional="YES" attributeType="URI"/>

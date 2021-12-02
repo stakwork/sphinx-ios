@@ -120,7 +120,7 @@ extension YouTubeVideoFeedEpisodePlayerViewController {
     
     
     private func updateVideoPlayer(withNewEpisode video: Video) {
-        videoPlayerView.load(withVideoId: videoPlayerEpisode.videoID)
+        videoPlayerView.load(withVideoId: videoPlayerEpisode.youtubeVideoID)
         
         episodeTitleLabel.text = videoPlayerEpisode.titleForDisplay
         episodeViewCountLabel.text = "\(Int.random(in: 100...999)) Views"

@@ -25,6 +25,12 @@ extension Video {
     @NSManaged public var mediaURL: URL?
     @NSManaged public var thumbnailURL: URL?
     @NSManaged public var videoFeed: VideoFeed?
+    
+    var youtubeVideoID: String {
+        get {
+            return videoID.replacingOccurrences(of: "yt:video:", with: "")
+        }
+    }
 }
 
 

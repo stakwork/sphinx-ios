@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19461" systemVersion="21A559" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18154" systemVersion="20F71" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Chat" representedClassName="Chat" syncable="YES">
         <attribute name="contactIds" optional="YES" attributeType="Transformable"/>
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -24,12 +24,12 @@
         <attribute name="unlisted" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="uuid" optional="YES" attributeType="String"/>
         <attribute name="webAppLastDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <relationship name="contentFeed" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ContentFeed" inverseName="chat" inverseEntity="ContentFeed"/>
+        <relationship name="contentFeed" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="ContentFeed" inverseName="chat" inverseEntity="ContentFeed"/>
         <relationship name="messages" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TransactionMessage" inverseName="chat" inverseEntity="TransactionMessage"/>
-        <relationship name="newsletterFeed" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NewsletterFeed" inverseName="chat" inverseEntity="NewsletterFeed"/>
-        <relationship name="podcastFeed" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PodcastFeed" inverseName="chat" inverseEntity="PodcastFeed"/>
-        <relationship name="subscription" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Subscription" inverseName="chat" inverseEntity="Subscription"/>
-        <relationship name="videoFeed" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="VideoFeed" inverseName="chat" inverseEntity="VideoFeed"/>
+        <relationship name="newsletterFeed" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="NewsletterFeed" inverseName="chat" inverseEntity="NewsletterFeed"/>
+        <relationship name="podcastFeed" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="PodcastFeed" inverseName="chat" inverseEntity="PodcastFeed"/>
+        <relationship name="subscription" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Subscription" inverseName="chat" inverseEntity="Subscription"/>
+        <relationship name="videoFeed" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="VideoFeed" inverseName="chat" inverseEntity="VideoFeed"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="id"/>
@@ -52,9 +52,9 @@
         <attribute name="ownerURL" optional="YES" attributeType="URI"/>
         <attribute name="title" attributeType="String"/>
         <relationship name="chat" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Chat" inverseName="contentFeed" inverseEntity="Chat"/>
-        <relationship name="items" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ContentFeedItem" inverseName="contentFeed" inverseEntity="ContentFeedItem"/>
-        <relationship name="paymentDestinations" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ContentFeedPaymentDestination" inverseName="feed" inverseEntity="ContentFeedPaymentDestination"/>
-        <relationship name="paymentModel" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ContentFeedPaymentModel" inverseName="feed" inverseEntity="ContentFeedPaymentModel"/>
+        <relationship name="items" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ContentFeedItem" inverseName="contentFeed" inverseEntity="ContentFeedItem"/>
+        <relationship name="paymentDestinations" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ContentFeedPaymentDestination" inverseName="feed" inverseEntity="ContentFeedPaymentDestination"/>
+        <relationship name="paymentModel" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="ContentFeedPaymentModel" inverseName="feed" inverseEntity="ContentFeedPaymentModel"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="feedID"/>
@@ -283,7 +283,7 @@
         <attribute name="title" optional="YES" attributeType="String"/>
         <attribute name="videoDescription" optional="YES" attributeType="String"/>
         <attribute name="videoID" attributeType="String"/>
-        <relationship name="videoFeed" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="VideoFeed" inverseName="videos" inverseEntity="VideoFeed"/>
+        <relationship name="videoFeed" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="VideoFeed" inverseName="videos" inverseEntity="VideoFeed"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="videoID"/>
@@ -312,20 +312,20 @@
     <elements>
         <element name="Chat" positionX="-54" positionY="135" width="128" height="464"/>
         <element name="ContentFeed" positionX="-45" positionY="153" width="128" height="299"/>
-        <element name="ContentFeedItem" positionX="-27" positionY="162" width="128" height="254"/>
+        <element name="ContentFeedItem" positionX="-27" positionY="162" width="128" height="239"/>
         <element name="ContentFeedPaymentDestination" positionX="-9" positionY="180" width="128" height="119"/>
         <element name="ContentFeedPaymentModel" positionX="-18" positionY="171" width="128" height="74"/>
         <element name="NewsletterFeed" positionX="-45" positionY="144" width="128" height="194"/>
         <element name="NewsletterItem" positionX="-36" positionY="153" width="128" height="149"/>
         <element name="PodcastDestination" positionX="-18" positionY="180" width="128" height="89"/>
         <element name="PodcastEpisode" positionX="-36" positionY="153" width="128" height="194"/>
-        <element name="PodcastFeed" positionX="-45" positionY="144" width="128" height="14"/>
+        <element name="PodcastFeed" positionX="-45" positionY="144" width="128" height="239"/>
         <element name="PodcastModel" positionX="-27" positionY="171" width="128" height="74"/>
         <element name="Subscription" positionX="-54" positionY="135" width="128" height="223"/>
         <element name="TransactionMessage" positionX="-54" positionY="63" width="128" height="463"/>
         <element name="UserContact" positionX="-63" positionY="-18" width="128" height="358"/>
         <element name="UserInvite" positionX="-54" positionY="135" width="128" height="118"/>
         <element name="Video" positionX="-36" positionY="153" width="128" height="179"/>
-        <element name="VideoFeed" positionX="-45" positionY="144" width="128" height="14"/>
+        <element name="VideoFeed" positionX="-45" positionY="144" width="128" height="209"/>
     </elements>
 </model>

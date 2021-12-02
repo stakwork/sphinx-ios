@@ -214,12 +214,31 @@ extension PodcastFeedSearchContainerViewController {
                 didSelectPodcastFeed: existingPodcastFeed
             )
         } else {
-            searchResult.isSubscribedToFromSearch = false
-            
-            resultsDelegate?.viewController(
-                self,
-                didSelectPodcastFeed: searchResult
-            )
+            if let feedUrl = searchResult.feedURLPath {
+                let tribesServerURL = "\(API.kTestTribesServerBaseURL)/feed?url=\(feedUrl)"
+                
+                API.sharedInstance.getContentFeed(
+                    url: tribesServerURL,
+                    persistingIn: managedObjectContext,
+                    callback: { feed in
+                        
+                        let podcast = PodcastFeed.convertFrom(
+                            contentFeed: feed,
+                            persistingIn: self.managedObjectContext
+                        )
+                        
+                        searchResult.isSubscribedToFromSearch = false
+                        
+                        self.managedObjectContext.saveContext()
+                        
+                        self.resultsDelegate?.viewController(
+                            self,
+                            didSelectPodcastFeed: podcast
+                        )
+                    },
+                    errorCallback: {}
+                )
+            }
         }
     }
     
@@ -228,6 +247,7 @@ extension PodcastFeedSearchContainerViewController {
         _ searchResult: PodcastFeed
     ) {
         searchResult.isSubscribedToFromSearch = true
+        searchResult.managedObjectContext?.saveContext()
 
         if let currentIndex = searchResultsViewController.podcastFeedSearchResults.firstIndex(of: searchResult) {
             searchResultsViewController.podcastFeedSearchResults.remove(at: currentIndex)
@@ -249,6 +269,7 @@ extension PodcastFeedSearchContainerViewController {
             .getContentFeedObjectOfTypeWith(feedID: searchResult.feedID, entityName: "PodcastFeed")
         {
             persistedPodcastFeed.isSubscribedToFromSearch = false
+            persistedPodcastFeed.managedObjectContext?.saveContext()
         }
     
         if let currentIndex = searchResultsViewController.subscribedPodcastFeeds.firstIndex(of: searchResult) {

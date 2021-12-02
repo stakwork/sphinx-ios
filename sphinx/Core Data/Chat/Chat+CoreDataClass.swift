@@ -514,7 +514,6 @@ public class Chat: NSManagedObject {
         }
     }
     
-    
     func updateChatFromTribesInfo() {
         if isMyPublicGroup() {
             return

@@ -28,7 +28,7 @@ extension PodcastFeed {
         
         public static func matching(feedID: String) -> NSPredicate {
             let keyword = "=="
-            let formatSpecifier = "%i"
+            let formatSpecifier = "%@"
 
             return NSPredicate(
                 format: "%K \(keyword) \(formatSpecifier)",

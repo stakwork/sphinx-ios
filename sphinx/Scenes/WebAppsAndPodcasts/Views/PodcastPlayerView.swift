@@ -289,7 +289,7 @@ class PodcastPlayerView: UIView {
     }
     
     @IBAction func subscriptionToggleButtonTouched() {
-        playerHelper.podcast?.isSubscribedToFromSearch.toggle()
+        delegate?.didTapSubscriptionToggleButton()
         
         subscriptionToggleButton.setTitle(
             subscriptionToggleButtonTitle,

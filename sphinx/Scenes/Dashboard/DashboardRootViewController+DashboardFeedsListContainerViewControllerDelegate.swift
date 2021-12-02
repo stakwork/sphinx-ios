@@ -10,16 +10,15 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
     ) {
         guard
             let podcastEpisode = managedObjectContext.object(with: podcastEpisodeID) as? PodcastEpisode,
-            let podcastFeed = podcastEpisode.feed,
-            let chat = podcastFeed.chat
+            let podcastFeed = podcastEpisode.feed
         else {
             return
         }
         
-        let podcastPlayerHelper = chat.getPodcastPlayer()
+        let podcastPlayerHelper = getPodcastPlayerFor(podcastFeed)
 
         presentPodcastPlayer(
-            forPodcastFrom: chat,
+            forPodcastFrom: podcastFeed.chat,
             with: podcastPlayerHelper
         )
     }
@@ -33,18 +32,7 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
             return
         }
         
-        
-        let podcastPlayerHelper: PodcastPlayerHelper
-        
-        if let chat = podcastFeed.chat {
-            podcastPlayerHelper = chat.getPodcastPlayer()
-        } else {
-            // Load a podcast that was subscribed to from the Podcast Index.
-            // These won't have an associated `chat`, but we can still fetch episodes.
-            podcastPlayerHelper = PodcastPlayerHelper()
-        }
-        
-        podcastPlayerHelper.podcast = podcastFeed
+        let podcastPlayerHelper = getPodcastPlayerFor(podcastFeed)
         
         presentPodcastPlayer(
             forPodcastFrom: podcastFeed.chat,
@@ -52,6 +40,21 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
         )
     }
     
+    func getPodcastPlayerFor(_ podcast: PodcastFeed) -> PodcastPlayerHelper {
+        let podcastPlayerHelper: PodcastPlayerHelper
+        
+        if let chat = podcast.chat {
+            podcastPlayerHelper = chat.getPodcastPlayer()
+        } else {
+            // Load a podcast that was subscribed to from the Podcast Index.
+            // These won't have an associated `chat`, but we can still fetch episodes.
+            podcastPlayerHelper = PodcastPlayerHelper()
+        }
+        
+        podcastPlayerHelper.podcast = podcast
+        
+        return podcastPlayerHelper
+    }
     
     func viewController(
         _ viewController: UIViewController,

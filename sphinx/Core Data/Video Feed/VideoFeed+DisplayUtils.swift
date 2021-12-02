@@ -16,5 +16,10 @@ extension VideoFeed {
     
     var titleForDisplay: String { title ?? "Untitled" }
     
-    var authorNameForDisplay: String { author ?? title ?? "Unknown Author" }
+    var authorNameForDisplay: String {
+        if let author = author, !author.isEmpty {
+            return author
+        }
+        return title ?? "Unknown author"
+    }
 }

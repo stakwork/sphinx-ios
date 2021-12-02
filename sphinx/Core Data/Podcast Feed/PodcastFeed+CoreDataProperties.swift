@@ -37,7 +37,6 @@ extension PodcastFeed {
         
         if let managedObjectContext = managedObjectContext {
             podcastFeed = PodcastFeed(context: managedObjectContext)
-            podcastFeed.chat = contentFeed.chat
         } else {
             podcastFeed = PodcastFeed(entity: PodcastFeed.entity(), insertInto: nil)
         }
@@ -52,16 +51,18 @@ extension PodcastFeed {
         podcastFeed.imageURLPath = contentFeed.imageURL?.absoluteString
         podcastFeed.generator = contentFeed.generator
         
-        podcastFeed.episodes = Set(
-            contentFeed
-                .items?
-                .map {
-                    PodcastEpisode.convertFrom(
-                        contentFeedItem: $0,
-                        persistingIn: managedObjectContext
-                    )
-                }
-            ?? []
+        podcastFeed.addToEpisodes(
+            Set(
+                contentFeed
+                    .items?
+                    .map {
+                        PodcastEpisode.convertFrom(
+                            contentFeedItem: $0,
+                            persistingIn: managedObjectContext
+                        )
+                    }
+                ?? []
+            )
         )
         
         podcastFeed.destinations = Set(

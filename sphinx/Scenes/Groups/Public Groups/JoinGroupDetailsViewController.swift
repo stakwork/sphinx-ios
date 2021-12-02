@@ -179,10 +179,10 @@ class JoinGroupDetailsViewController: KeyboardEventsViewController {
                     chat.tribeInfo = tribeInfo
                     chat.pricePerMessage = NSDecimalNumber(floatLiteral: Double(tribeInfo.pricePerMessage ?? 0))
                     
-                    chat.fetchFeedContentInBackground()
-                    
-                    self.delegate?.shouldReloadContacts?(reload: true)
-                    self.closeButtonTouched()
+                    chat.fetchFeedContentInBackground(completion: {
+                        self.delegate?.shouldReloadContacts?(reload: true)
+                        self.closeButtonTouched()
+                    })
                 } else {
                     self.showErrorAndDismiss()
                 }

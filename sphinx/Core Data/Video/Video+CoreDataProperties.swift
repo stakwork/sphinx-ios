@@ -38,10 +38,11 @@ extension Video {
 // MARK: -  Public Methods
 extension Video {
     
-    public static func convertedFrom(
-        contentFeedItem: ContentFeedItem
+    public static func convertFrom(
+        contentFeedItem: ContentFeedItem,
+        persistingIn managedObjectContext: NSManagedObjectContext? = nil
     ) -> Self {
-        guard let managedObjectContext = contentFeedItem.managedObjectContext else {
+        guard let managedObjectContext = managedObjectContext ?? contentFeedItem.managedObjectContext else {
             preconditionFailure()
         }
 

@@ -38,13 +38,12 @@ extension NewsletterFeed {
         contentFeed: ContentFeed,
         persistingIn managedObjectContext: NSManagedObjectContext? = nil
     ) -> NewsletterFeed {
-        let newsletterFeed: NewsletterFeed
         
-        if let managedObjectContext = managedObjectContext {
-            newsletterFeed = NewsletterFeed(context: managedObjectContext)
-        } else {
-            newsletterFeed = NewsletterFeed(entity: NewsletterFeed.entity(), insertInto: nil)
+        guard let managedObjectContext = managedObjectContext ?? contentFeed.managedObjectContext else {
+            preconditionFailure()
         }
+        
+        let newsletterFeed = NewsletterFeed(context: managedObjectContext)
         
         newsletterFeed.feedID = contentFeed.feedID
         newsletterFeed.title = contentFeed.title
@@ -54,7 +53,6 @@ extension NewsletterFeed {
         newsletterFeed.feedURL = contentFeed.feedURL
         newsletterFeed.imageURL = contentFeed.imageURL
         newsletterFeed.generator = contentFeed.generator
-        newsletterFeed.chat = contentFeed.chat
         
         newsletterFeed.newsletterItems = Set(
             contentFeed

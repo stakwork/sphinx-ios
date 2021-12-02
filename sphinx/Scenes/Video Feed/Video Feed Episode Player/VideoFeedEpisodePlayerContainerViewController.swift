@@ -193,33 +193,38 @@ extension VideoFeedEpisodePlayerContainerViewController {
     
     
     private func updateEpisodesInBackground() {
-        DispatchQueue
-            .global(qos: .utility)
-            .async { [weak self] in
-                guard
-                    let self = self,
-                    let videoFeed = self.videoPlayerEpisode.videoFeed,
-                    let feedURL = videoFeed.feedURL
-                else { return }
+        let backgroundContext = CoreDataManager.sharedManager.getBackgroundContext()
+        
+        guard
+            let videoF = self.videoPlayerEpisode.videoFeed,
+            let videoFeed = backgroundContext.object(with: videoF.objectID) as? VideoFeed,
+            let feedURL = videoFeed.feedURL
+        else { return }
 
-                let tribesServerURL = "\(API.kTestTribesServerBaseURL)/feed?url=\(feedURL.absoluteString)"
+        let tribesServerURL = "\(API.kTestTribesServerBaseURL)/feed?url=\(feedURL.absoluteString)"
 
-                API.sharedInstance.getContentFeed(
-                    url: tribesServerURL,
-                    callback: { contentFeed in
-                        videoFeed.addToVideos(
-                            Set(
-                                contentFeed
-                                    .items?
-                                    .map(Video.convertedFrom(contentFeedItem:))
-                                ?? []
-                            )
-                        )
-                    },
-                    errorCallback: {
-                        print("Failed to fetch video entry data for feed.")
-                    }
+        API.sharedInstance.getContentFeed(
+            url: tribesServerURL,
+            persistingIn: backgroundContext,
+            callback: { contentFeed in
+                videoFeed.addToVideos(
+                    Set(
+                        contentFeed
+                            .items?
+                            .map {
+                                Video.convertFrom(
+                                    contentFeedItem: $0,
+                                    persistingIn: backgroundContext
+                                )
+                            }
+                        ?? []
+                    )
                 )
-        }
+                backgroundContext.saveContext()
+            },
+            errorCallback: {
+                print("Failed to fetch video entry data for feed.")
+            }
+        )
     }
 }

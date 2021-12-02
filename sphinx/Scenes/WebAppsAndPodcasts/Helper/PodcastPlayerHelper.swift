@@ -122,7 +122,7 @@ class PodcastPlayerHelper {
             return
         }
         
-        guard let url = chat?.tribeInfo?.feedUrl else {
+        guard let _ = chat?.tribeInfo?.feedUrl else {
             callback(false)
             return
         }
@@ -140,16 +140,8 @@ class PodcastPlayerHelper {
         
         resetPodcast()
         
-        chat?.fetchContentFeed(at: url) { [weak self] result in
-            if case let .success(contentFeed) = result {
-                self?.podcast = PodcastFeed.convertFrom(
-                    contentFeed: contentFeed,
-                    persistingIn: chat?.managedObjectContext
-                )
-            }
-
-            callback(true)
-        }
+        self.podcast = chat?.podcastFeed
+        callback(true)
     }
     
     func processLocalPodcastFeed(chat: Chat?, callback: @escaping (Bool) -> ()) {

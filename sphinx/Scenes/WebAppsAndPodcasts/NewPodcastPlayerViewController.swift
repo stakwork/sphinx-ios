@@ -25,7 +25,7 @@ class NewPodcastPlayerViewController: UIViewController {
     
     var tableHeaderView: PodcastPlayerView?
     
-    var chat: Chat!
+    var chat: Chat?
     var playerHelper: PodcastPlayerHelper!
     var dismissButtonStyle: ModalDismissButtonStyle!
     var tableDataSource: PodcastEpisodesDataSource!
@@ -112,40 +112,39 @@ class NewPodcastPlayerViewController: UIViewController {
     }
     
     private func updateEpisodesInBackground() {
-        DispatchQueue
-            .global(qos: .utility)
-            .async { [weak self] in
-                guard
-                    let self = self,
-                    let podcastFeed = self.playerHelper.podcast,
-                    let feedURLPath = podcastFeed.feedURLPath
-                else { return }
-                
-                let tribesServerURL = "\(API.kTestTribesServerBaseURL)/feed?url=\(feedURLPath)"
+        let backgroundContext = CoreDataManager.sharedManager.getBackgroundContext()
+        
+        guard
+            let podcastF = self.playerHelper?.podcast,
+            let podcastFeed = backgroundContext.object(with: podcastF.objectID) as? PodcastFeed,
+            let feedURLPath = podcastF.feedURLPath
+        else { return }
+        
+        let tribesServerURL = "\(API.kTestTribesServerBaseURL)/feed?url=\(feedURLPath)"
 
-                API.sharedInstance.getContentFeed(
-                    url: tribesServerURL,
-                    persistingIn: nil,
-                    callback: { contentFeed in
-                        podcastFeed.addToEpisodes(
-                            Set(
-                                contentFeed
-                                    .items?
-                                    .map {
-                                        PodcastEpisode.convertFrom(
-                                            contentFeedItem: $0,
-                                            persistingIn: podcastFeed.managedObjectContext
-                                        )
-                                    }
-                                ?? []
-                            )
-                        )
-                    },
-                    errorCallback: {
-                        print("Failed to fetch newsletter items.")
-                    }
+        API.sharedInstance.getContentFeed(
+            url: tribesServerURL,
+            persistingIn: backgroundContext,
+            callback: { contentFeed in
+                podcastFeed.addToEpisodes(
+                    Set(
+                        contentFeed
+                            .items?
+                            .map {
+                                PodcastEpisode.convertFrom(
+                                    contentFeedItem: $0,
+                                    persistingIn: backgroundContext
+                                )
+                            }
+                        ?? []
+                    )
                 )
+                backgroundContext.saveContext()
+            },
+            errorCallback: {
+                print("Failed to fetch newsletter items.")
             }
+        )
     }
 }
 

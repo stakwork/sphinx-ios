@@ -7,7 +7,6 @@
 import Foundation
 import CoreData
 
-
 @objc(ContentFeed)
 public class ContentFeed: NSManagedObject, Decodable {
     
@@ -50,19 +49,24 @@ public class ContentFeed: NSManagedObject, Decodable {
         dateUpdated = try? container.decode(Date.self, forKey: .dateUpdated)
         language = try? container.decode(String.self, forKey: .language)
         
-        items = try? container.decode(Set<ContentFeedItem>.self, forKey: .items)
-        
-        
+        if let newItems = try? container.decode(Set<ContentFeedItem>.self, forKey: .items) {
+            items = newItems
+        }
+
+
         if
-            let valueContainer = try? container
-                .nestedContainer(keyedBy: CodingKeys.Value.self, forKey: .value)
+            let valueContainer = try? container.nestedContainer(keyedBy: CodingKeys.Value.self, forKey: .value)
         {
-            paymentModel = try? valueContainer.decode(ContentFeedPaymentModel.self, forKey: .paymentModel)
-            
-            paymentDestinations = try? valueContainer.decode(
+            if let model = try? valueContainer.decode(ContentFeedPaymentModel.self, forKey: .paymentModel) {
+                paymentModel = model
+            }
+
+            if let newPaymentDestinations = try? valueContainer.decode(
                 Set<ContentFeedPaymentDestination>.self,
                 forKey: .paymentDestinations
-            )
+            ) {
+                paymentDestinations = newPaymentDestinations
+            }
         }
     }
 }

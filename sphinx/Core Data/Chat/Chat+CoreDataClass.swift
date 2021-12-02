@@ -412,9 +412,9 @@ public class Chat: NSManagedObject {
                 uuid: uuid,
                 callback: { chatJson in
                     self.tribeInfo = GroupsManager.sharedInstance.getTribesInfoFrom(json: chatJson)
-                    self.fetchFeedContent()
                     self.updateChatFromTribesInfo()
-                    completion()
+                    
+                    self.fetchFeedContentInBackground(completion: completion)
                 },
                 errorCallback: {
                     completion()
@@ -451,51 +451,63 @@ public class Chat: NSManagedObject {
         return (self.pricePerMessage?.intValue ?? 0, self.escrowAmount?.intValue ?? 0)
     }
     
-    func fetchFeedContentInBackground() {
-        DispatchQueue
-            .global(qos: .utility)
-            .async { [weak self] in
-                guard
-                    let self = self
-                else { return }
-                
-                self.fetchFeedContent()
-            }
-    }
-    
-    
-    func fetchFeedContent() {
-        if
-            let feedURLPath = tribeInfo?.feedUrl,
-            let feedContentType = tribeInfo?.feedContentType
-        {
-            if (feedContentType.isVideo || feedURLPath.isYouTubeRSSFeedURL) && videoFeed == nil {
-                fetchContentFeed(at: feedURLPath) { result in
+    func fetchFeedContentInBackground(completion: @escaping () -> ()) {
+        let backgroundContext = CoreDataManager.sharedManager.getBackgroundContext()
+        
+        backgroundContext.perform {
+            if
+                let feedURLPath = self.tribeInfo?.feedUrl,
+                let feedContentType = self.tribeInfo?.feedContentType,
+                let backgroundChat = backgroundContext.object(with: self.objectID) as? Chat
+            {
+                backgroundChat.fetchContentFeed(
+                    at: feedURLPath,
+                    persistingIn: backgroundContext
+                ) { result in
                     if case let .success(fetchedContentFeed) = result {
-                        self.videoFeed = VideoFeed.convertedFrom(
-                            contentFeed: fetchedContentFeed
-                        )
-                        CoreDataManager.sharedManager.saveContext()
+                        backgroundChat.contentFeed = fetchedContentFeed
+
+                        if (feedContentType.isVideo || feedURLPath.isYouTubeRSSFeedURL) {
+                            let videoFeed = VideoFeed.convertFrom(
+                                contentFeed: fetchedContentFeed,
+                                persistingIn: backgroundContext
+                            )
+                            
+                            if let existingVideoFeed = backgroundChat.videoFeed {
+                                backgroundContext.delete(existingVideoFeed)
+                            }
+                            
+                            backgroundChat.videoFeed = videoFeed
+
+                        } else if feedContentType.isPodcast {
+                            let podcastFeed = PodcastFeed.convertFrom(
+                                contentFeed: fetchedContentFeed,
+                                persistingIn: backgroundContext
+                            )
+                            
+                            if let existingPodcastFeed = backgroundChat.podcastFeed {
+                                backgroundContext.delete(existingPodcastFeed)
+                            }
+                            
+                            backgroundChat.podcastFeed = podcastFeed
+                            
+                        } else if feedContentType.isNewsletter {
+                            let newsletterFeed = NewsletterFeed.convertFrom(
+                                contentFeed: fetchedContentFeed,
+                                persistingIn: backgroundContext
+                            )
+                            
+                            if let existingNewsletterFeed = backgroundChat.newsletterFeed {
+                                backgroundContext.delete(existingNewsletterFeed)
+                            }
+                            
+                            backgroundChat.newsletterFeed = newsletterFeed
+                        }
+                        backgroundContext.saveContext()
                     }
-                }
-            } else if feedContentType.isNewsletter && newsletterFeed == nil {
-                fetchContentFeed(at: feedURLPath) { result in
-                    if case let .success(fetchedContentFeed) = result {
-                        self.newsletterFeed = NewsletterFeed.convertFrom(
-                            contentFeed: fetchedContentFeed
-                        )
-                        CoreDataManager.sharedManager.saveContext()
-                    }
-                }
-            } else if feedContentType.isPodcast && podcastFeed == nil {
-                fetchContentFeed(at: feedURLPath) { result in
-                    if case let .success(fetchedContentFeed) = result {
-                        self.podcastFeed = PodcastFeed.convertFrom(
-                            contentFeed: fetchedContentFeed,
-                            persistingIn: self.managedObjectContext
-                        )
-                        
-                        CoreDataManager.sharedManager.saveContext()
+
+                    DispatchQueue.main.async {
+                        completion()
                     }
                 }
             }
@@ -530,23 +542,21 @@ public class Chat: NSManagedObject {
     
     func fetchContentFeed(
         at feedURLPath: String,
+        persistingIn managedObjectContext: NSManagedObjectContext? = nil,
         then completionHandler: ((Result<ContentFeed, Error>) -> Void)? = nil
     ) {
         let tribesServerURL = "\(API.kTestTribesServerBaseURL)/feed?url=\(feedURLPath)"
-        let managedObjectContext = self.managedObjectContext ?? CoreDataManager.sharedManager.persistentContainer.viewContext
+        let managedObjectContext = managedObjectContext ?? CoreDataManager.sharedManager.persistentContainer.viewContext
+        
+        if let existingContenFeed = contentFeed {
+            managedObjectContext.delete(existingContenFeed)
+        }
         
         API.sharedInstance.getContentFeed(
             url: tribesServerURL,
             persistingIn: managedObjectContext,
             callback: { feed in
-                                feed.chat = self
-                                completionHandler?(.success(feed))
-//                if let copiedFeed = managedObjectContext.object(with: feed.objectID) as? ContentFeed {
-//                    copiedFeed.chat = self
-//                    completionHandler?(.success(copiedFeed))
-//                } else {
-//                    completionHandler?(.failure((API.RequestError.failedToFetchContentFeed)))
-//                }
+                completionHandler?(.success(feed))
             },
             errorCallback: {
                 completionHandler?(.failure((API.RequestError.failedToFetchContentFeed)))

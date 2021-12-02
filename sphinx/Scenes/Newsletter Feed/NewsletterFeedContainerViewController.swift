@@ -138,38 +138,38 @@ extension NewsletterFeedContainerViewController {
     
     
     private func updateItemsInBackground() {
-        DispatchQueue
-            .global(qos: .utility)
-            .async { [weak self] in
-                guard
-                    let self = self,
-                    let newsletterFeed = self.newsletterFeed,
-                    let feedURL = newsletterFeed.feedURL
-                else { return }
-                
-                let tribesServerURL = "\(API.kTestTribesServerBaseURL)/feed?url=\(feedURL.absoluteString)"
+        let backgroundContext = CoreDataManager.sharedManager.getBackgroundContext()
+        
+        guard
+            let newsletterF = self.newsletterFeed,
+            let newsletterFeed = backgroundContext.object(with: newsletterF.objectID) as? NewsletterFeed,
+            let feedURL = newsletterFeed.feedURL
+        else { return }
+        
+        let tribesServerURL = "\(API.kTestTribesServerBaseURL)/feed?url=\(feedURL.absoluteString)"
 
-                API.sharedInstance.getContentFeed(
-                    url: tribesServerURL,
-                    callback: { contentFeed in
-                        newsletterFeed.addToNewsletterItems(
-                            Set(
-                                contentFeed
-                                    .items?
-                                    .map {
-                                        NewsletterItem.convertFrom(
-                                            contentFeedItem: $0,
-                                            persistingIn: newsletterFeed.managedObjectContext
-                                        )
-                                    }
-                                ?? []
-                            )
-                        )
-                    },
-                    errorCallback: {
-                        print("Failed to fetch newsletter items.")
-                    }
+        API.sharedInstance.getContentFeed(
+            url: tribesServerURL,
+            persistingIn: backgroundContext,
+            callback: { contentFeed in
+                newsletterFeed.addToNewsletterItems(
+                    Set(
+                        contentFeed
+                            .items?
+                            .map {
+                                NewsletterItem.convertFrom(
+                                    contentFeedItem: $0,
+                                    persistingIn: backgroundContext
+                                )
+                            }
+                        ?? []
+                    )
                 )
-        }
+                backgroundContext.saveContext()
+            },
+            errorCallback: {
+                print("Failed to fetch newsletter items.")
+            }
+        )
     }
 }

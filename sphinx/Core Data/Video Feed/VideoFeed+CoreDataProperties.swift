@@ -35,10 +35,11 @@ extension VideoFeed {
 // MARK: -  Public Methods
 extension VideoFeed {
     
-    public static func convertedFrom(
-        contentFeed: ContentFeed
+    public static func convertFrom(
+        contentFeed: ContentFeed,
+        persistingIn managedObjectContext: NSManagedObjectContext? = nil
     ) -> Self {
-        guard let managedObjectContext = contentFeed.managedObjectContext else {
+        guard let managedObjectContext = managedObjectContext ?? contentFeed.managedObjectContext else {
             preconditionFailure()
         }
         
@@ -54,12 +55,16 @@ extension VideoFeed {
         videoFeed.feedOwnerURL = contentFeed.ownerURL
         videoFeed.imageURL = contentFeed.imageURL
         videoFeed.generator = contentFeed.generator
-        videoFeed.chat = contentFeed.chat
         
         videoFeed.videos = Set(
             contentFeed
                 .items?
-                .map(Video.convertedFrom(contentFeedItem:))
+                .map {
+                    Video.convertFrom(
+                        contentFeedItem: $0,
+                        persistingIn: managedObjectContext
+                    )
+                }
             ?? []
         )
         

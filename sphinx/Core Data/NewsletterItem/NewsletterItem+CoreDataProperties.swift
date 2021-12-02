@@ -34,13 +34,12 @@ extension NewsletterItem {
         contentFeedItem: ContentFeedItem,
         persistingIn managedObjectContext: NSManagedObjectContext? = nil
     ) -> NewsletterItem {
-        let newsletterItem: NewsletterItem
         
-        if let managedObjectContext = managedObjectContext {
-            newsletterItem = NewsletterItem(context: managedObjectContext)
-        } else {
-            newsletterItem = NewsletterItem(entity: NewsletterItem.entity(), insertInto: nil)
+        guard let managedObjectContext = managedObjectContext ?? contentFeedItem.managedObjectContext else {
+            preconditionFailure()
         }
+        
+        let newsletterItem = NewsletterItem(context: managedObjectContext)
         
         newsletterItem.itemID = contentFeedItem.itemID
         newsletterItem.creator = contentFeedItem.authorName

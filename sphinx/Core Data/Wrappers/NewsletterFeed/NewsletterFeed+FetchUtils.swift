@@ -23,40 +23,11 @@ extension NewsletterFeed {
         }()
         
         
-        public static let followedFeeds: NSPredicate = {
+        public static let followedNewsletterFeeds: NSPredicate = {
             NSPredicate(
                 format: "chat != nil AND feedKindValue == %d",
                 FeedType.Newsletter.rawValue
             )
-        }()
-    }
-}
-
-
-// MARK: - SortDescriptors
-extension NewsletterFeed {
-
-    public enum SortDescriptors {
-
-        public static let nameAscending: NSSortDescriptor = NSSortDescriptor(
-            key: #keyPath(ContentFeed.title),
-            ascending: true,
-
-            // 🔑 Any time you’re sorting user-facing strings,
-            // Apple recommends that you pass in `NSString.localizedStandardCompare(_:)`
-            // to sort according to the language rules of the current locale.
-            // This means sort will “just work” and do the right thing for
-            // languages with special character.
-            selector: #selector(NSString.localizedStandardCompare(_:))
-        )
-
-
-        public static let nameDescending: NSSortDescriptor = {
-            guard let descriptor = nameAscending.reversedSortDescriptor as? NSSortDescriptor else {
-                preconditionFailure("Unable to make reversed sort descriptor")
-            }
-
-            return descriptor
         }()
     }
 }
@@ -76,7 +47,7 @@ extension NewsletterFeed {
         public static func followedFeeds() -> NSFetchRequest<ContentFeed> {
             let request: NSFetchRequest<ContentFeed> = baseFetchRequest()
             
-            request.predicate = Predicates.followedFeeds
+            request.predicate = Predicates.followedNewsletterFeeds
             request.sortDescriptors = []
 
             return request

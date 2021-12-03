@@ -116,14 +116,14 @@ class NewPodcastPlayerViewController: UIViewController {
             let context = CoreDataManager.sharedManager.persistentContainer.viewContext
             
             guard
-                let podcastF = self.playerHelper?.podcast,
-                let feedURLPath = podcastF.feedURLPath
+                let podcastF = self.playerHelper?.podcast
             else { return }
             
-            let tribesServerURL = "\(API.kTestTribesServerBaseURL)/feed?url=\(feedURLPath)"
-            
-            
-            if let existingContentFeed = context.object(with: podcastF.objectID) as? ContentFeed {
+            if let existingContentFeed = context.object(with: podcastF.objectID) as? ContentFeed,
+               let feedURL = existingContentFeed.feedURL {
+                
+                let tribesServerURL = "\(API.kTestTribesServerBaseURL)/feed?url=\(feedURL.absoluteString)"
+                
                 API.sharedInstance.getContentFeed(
                     url: tribesServerURL,
                     persistingIn: context,

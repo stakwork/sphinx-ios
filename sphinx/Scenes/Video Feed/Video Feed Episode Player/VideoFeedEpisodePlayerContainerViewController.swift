@@ -203,13 +203,13 @@ extension VideoFeedEpisodePlayerContainerViewController {
             let context = CoreDataManager.sharedManager.persistentContainer.viewContext
             
             guard
-                let videoF = self.videoPlayerEpisode.videoFeed,
-                let feedURL = videoF.feedURL
+                let videoF = self.videoPlayerEpisode.videoFeed
             else { return }
-
-            let tribesServerURL = "\(API.kTestTribesServerBaseURL)/feed?url=\(feedURL.absoluteString)"
             
-            if let existingContentFeed = context.object(with: videoF.objectID) as? ContentFeed {
+            if let existingContentFeed = context.object(with: videoF.objectID) as? ContentFeed,
+               let feedURL = existingContentFeed.feedURL {
+                
+                let tribesServerURL = "\(API.kTestTribesServerBaseURL)/feed?url=\(feedURL.absoluteString)"
                 
                 API.sharedInstance.getContentFeed(
                     url: tribesServerURL,

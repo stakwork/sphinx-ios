@@ -50,7 +50,9 @@ public class ContentFeed: NSManagedObject, Decodable {
         language = try? container.decode(String.self, forKey: .language)
         
         if let newItems = try? container.decode(Set<ContentFeedItem>.self, forKey: .items) {
-            items = newItems
+            if newItems.count > 0 {
+                addToItems(newItems)
+            }
         }
 
         if
@@ -64,7 +66,9 @@ public class ContentFeed: NSManagedObject, Decodable {
                 Set<ContentFeedPaymentDestination>.self,
                 forKey: .paymentDestinations
             ) {
-                paymentDestinations = newPaymentDestinations
+                if (newPaymentDestinations.count > 0) {
+                    paymentDestinations = newPaymentDestinations
+                }
             }
         }
     }

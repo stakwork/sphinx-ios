@@ -141,13 +141,13 @@ extension NewsletterFeedContainerViewController {
             let context = CoreDataManager.sharedManager.persistentContainer.viewContext
             
             guard
-                let newsletterF = self.newsletterFeed,
-                let feedURL = newsletterF.feedURL
+                let newsletterF = self.newsletterFeed
             else { return }
             
-            let tribesServerURL = "\(API.kTestTribesServerBaseURL)/feed?url=\(feedURL.absoluteString)"
-            
-            if let existingContentFeed = context.object(with: newsletterF.objectID) as? ContentFeed {
+            if let existingContentFeed = context.object(with: newsletterF.objectID) as? ContentFeed,
+               let feedURL = existingContentFeed.feedURL {
+                
+                let tribesServerURL = "\(API.kTestTribesServerBaseURL)/feed?url=\(feedURL.absoluteString)"
                 
                 API.sharedInstance.getContentFeed(
                     url: tribesServerURL,

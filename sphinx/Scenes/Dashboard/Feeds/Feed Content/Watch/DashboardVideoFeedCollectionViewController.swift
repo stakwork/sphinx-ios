@@ -393,7 +393,7 @@ extension DashboardVideoFeedCollectionViewController {
         shouldAnimate: Bool = true
     ) {
         self.videoFeeds = videoFeeds
-        videoEpisodes = videoFeeds.compactMap(\.videosArray.last)
+        videoEpisodes = videoFeeds.compactMap(\.videosArray.first)
 
         if let dataSource = dataSource {
             dataSource.apply(

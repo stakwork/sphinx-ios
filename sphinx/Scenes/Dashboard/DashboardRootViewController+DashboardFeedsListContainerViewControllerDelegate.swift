@@ -70,7 +70,7 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
         let videoFeed = VideoFeed.convertFrom(contentFeed: contentFeed)
 
         if
-            let latestEpisode = videoFeed.videosArray.last,
+            let latestEpisode = videoFeed.videosArray.first,
             viewController is DashboardFeedsContainerViewController
         {
             presentVideoPlayer(for: latestEpisode)

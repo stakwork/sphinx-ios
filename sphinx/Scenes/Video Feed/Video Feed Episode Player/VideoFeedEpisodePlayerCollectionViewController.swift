@@ -402,7 +402,10 @@ extension VideoFeedEpisodePlayerCollectionViewController {
         shouldAnimate: Bool = true
     ) {
         self.videoPlayerEpisode = videoPlayerEpisode
-        self.videoFeedEpisodes = videoPlayerEpisode.videoFeed?.videosArray ?? []
+        
+        if (self.videoFeedEpisodes.count != videoPlayerEpisode.videoFeed?.videosArray.count) {
+            self.videoFeedEpisodes = videoPlayerEpisode.videoFeed?.videosArray ?? []
+        }
 
         if let dataSource = dataSource {
             dataSource.apply(

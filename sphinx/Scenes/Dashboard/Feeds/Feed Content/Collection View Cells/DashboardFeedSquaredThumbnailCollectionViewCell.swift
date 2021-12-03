@@ -98,7 +98,12 @@ extension ContentFeed: DashboardFeedSquaredThumbnailCollectionViewItem {
     }
     
     var subtitle: String? {
-        feedDescription ?? title
+        get {
+            if (feedDescription?.isEmpty == true) {
+                return title
+            }
+            return feedDescription ?? title
+        }
     }
 }
 

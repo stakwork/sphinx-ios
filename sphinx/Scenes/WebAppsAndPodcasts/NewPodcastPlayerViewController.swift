@@ -130,6 +130,8 @@ class NewPodcastPlayerViewController: UIViewController {
                     callback: { contentFeed in
                         
                         contentFeed.items?.forEach {
+                            $0.contentFeed = existingContentFeed
+                            
                             context.insert($0)
                         }
                         

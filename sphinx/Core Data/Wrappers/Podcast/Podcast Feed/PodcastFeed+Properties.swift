@@ -6,6 +6,7 @@
 
 import Foundation
 import CoreData
+import SwiftyJSON
 
 public class PodcastFeed: NSObject {
     
@@ -84,6 +85,26 @@ extension PodcastFeed {
                 feed: podcastFeed
             )
         }
+        
+        return podcastFeed
+    }
+    
+    public static func convertFrom(
+        searchResult: JSON
+    ) -> PodcastFeed {
+        
+        let podcastFeed = PodcastFeed(
+            NSManagedObjectID.init(),
+            searchResult[ContentFeed.CodingKeys.feedID.rawValue].stringValue,
+            false
+        )
+        
+        podcastFeed.title = searchResult[ContentFeed.CodingKeys.title.rawValue].stringValue
+        podcastFeed.podcastDescription = searchResult[ContentFeed.CodingKeys.feedDescription.rawValue].stringValue
+        podcastFeed.feedURLPath = searchResult[ContentFeed.CodingKeys.feedURL.rawValue].stringValue
+        podcastFeed.author = searchResult[ContentFeed.CodingKeys.authorName.rawValue].stringValue
+        podcastFeed.imageURLPath = searchResult[ContentFeed.CodingKeys.imageURL.rawValue].stringValue
+        podcastFeed.generator = searchResult[ContentFeed.CodingKeys.generator.rawValue].stringValue
         
         return podcastFeed
     }

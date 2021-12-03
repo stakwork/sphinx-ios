@@ -43,25 +43,18 @@ extension API {
         
         podcastSearchRequest = AF.request(request).responseJSON { response in
             switch response.result {
-            case .success:
-                guard let data = response.data else {
-                    completionHandler(.failure(.missingResponseData))
-                    return
+            case .success(let data):
+                var podcasts = [PodcastFeed]()
+                
+                if let itemsArray = data as? NSArray {
+                    itemsArray.forEach {
+                        podcasts.append(
+                            PodcastFeed.convertFrom(searchResult: JSON($0))
+                        )
+                    }
                 }
-
-                do {
-                    let decoder = ContentFeed.Decoders.default
-                    
-                    let searchResults = try decoder.decode([ContentFeed].self, from: data)
-                    
-                    searchResults.forEach { $0.feedKind = .Podcast }
-
-                    completionHandler(.success(searchResults))
-                } catch let error as DecodingError {
-                    completionHandler(.failure(.decodingError(error)))
-                } catch let error {
-                    completionHandler(.failure(.unknownError(error)))
-                }
+                
+                completionHandler(.success(podcasts))
             case .failure(let error):
                 completionHandler(.failure(.networkError(error)))
             }

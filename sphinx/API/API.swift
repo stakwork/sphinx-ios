@@ -67,7 +67,7 @@ typealias MediaInfoCallback = ((Int, String?, Int?) -> ())
 //) -> ()
 
 typealias PodcastSearchCompletionHandler = (
-    Result<[ContentFeed], API.RequestError>
+    Result<[PodcastFeed], API.RequestError>
 ) -> ()
 
 typealias PodcastEpisodeSearchCompletionHandler = (

@@ -162,13 +162,9 @@ extension PodcastFeedSearchContainerViewController {
             
             DispatchQueue.main.async {
                 switch result {
-                case .success(let foundFeeds):
-                    let podcastFeeds = foundFeeds.map {
-                        PodcastFeed.convertFrom(contentFeed: $0)
-                    }
-                    
+                case .success(let foundPodcasts):
                     self.searchResultsViewController.updateWithNew(
-                        searchResults: podcastFeeds
+                        searchResults: foundPodcasts
                     )
                 case .failure(_):
                     break

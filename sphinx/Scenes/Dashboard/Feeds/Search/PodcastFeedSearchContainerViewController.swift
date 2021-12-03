@@ -198,20 +198,21 @@ extension PodcastFeedSearchContainerViewController {
         )
     }
     
-    
     private func handleSearchResultCellSelection(
         _ searchResult: PodcastFeed
     ) {
-        let existingFeedsFetchRequest: NSFetchRequest<PodcastFeed> = PodcastFeed
+        let existingFeedsFetchRequest: NSFetchRequest<ContentFeed> = ContentFeed
             .FetchRequests
             .matching(feedID: searchResult.feedID)
         
         let fetchRequestResult = try! managedObjectContext.fetch(existingFeedsFetchRequest)
             
-        if let existingPodcastFeed = fetchRequestResult.first {
+        if let existingContentFeed = fetchRequestResult.first {
+            let podcastFeed = PodcastFeed.convertFrom(contentFeed: existingContentFeed)
+            
             resultsDelegate?.viewController(
                 self,
-                didSelectPodcastFeed: existingPodcastFeed
+                didSelectPodcastFeed: podcastFeed
             )
         } else {
             if let feedUrl = searchResult.feedURLPath {
@@ -222,12 +223,7 @@ extension PodcastFeedSearchContainerViewController {
                     persistingIn: managedObjectContext,
                     callback: { feed in
                         
-                        let podcast = PodcastFeed.convertFrom(
-                            contentFeed: feed,
-                            persistingIn: self.managedObjectContext
-                        )
-                        
-                        searchResult.isSubscribedToFromSearch = false
+                        let podcast = PodcastFeed.convertFrom(contentFeed: feed)
                         
                         self.managedObjectContext.saveContext()
                         
@@ -246,8 +242,13 @@ extension PodcastFeedSearchContainerViewController {
     private func handlePodcastFeedSubscription(
         _ searchResult: PodcastFeed
     ) {
+        
         searchResult.isSubscribedToFromSearch = true
-        searchResult.managedObjectContext?.saveContext()
+        
+        if let contentFeed = managedObjectContext.object(with: searchResult.objectID) as? ContentFeed {
+            contentFeed.isSubscribedToFromSearch = true
+            contentFeed.managedObjectContext?.saveContext()
+        }
 
         if let currentIndex = searchResultsViewController.podcastFeedSearchResults.firstIndex(of: searchResult) {
             searchResultsViewController.podcastFeedSearchResults.remove(at: currentIndex)
@@ -264,12 +265,12 @@ extension PodcastFeedSearchContainerViewController {
     private func handlePodcastFeedSubscriptionCancellation(
         _ searchResult: PodcastFeed
     ) {
-        if let persistedPodcastFeed: PodcastFeed = CoreDataManager
-            .sharedManager
-            .getContentFeedObjectOfTypeWith(feedID: searchResult.feedID, entityName: "PodcastFeed")
-        {
-            persistedPodcastFeed.isSubscribedToFromSearch = false
-            persistedPodcastFeed.managedObjectContext?.saveContext()
+        
+        searchResult.isSubscribedToFromSearch = false
+        
+        if let contentFeed = managedObjectContext.object(with: searchResult.objectID) as? ContentFeed {
+            contentFeed.isSubscribedToFromSearch = false
+            contentFeed.managedObjectContext?.saveContext()
         }
     
         if let currentIndex = searchResultsViewController.subscribedPodcastFeeds.firstIndex(of: searchResult) {

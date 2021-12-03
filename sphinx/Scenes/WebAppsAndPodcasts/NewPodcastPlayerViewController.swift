@@ -116,48 +116,35 @@ class NewPodcastPlayerViewController: UIViewController {
         
         guard
             let podcastF = self.playerHelper?.podcast,
-            let podcastFeed = backgroundContext.object(with: podcastF.objectID) as? PodcastFeed,
             let feedURLPath = podcastF.feedURLPath
         else { return }
         
         let tribesServerURL = "\(API.kTestTribesServerBaseURL)/feed?url=\(feedURLPath)"
         
-        var chat: Chat? = nil
         
-        if let chatObjectId = podcastF.chat?.objectID {
-            chat = backgroundContext.object(with: chatObjectId) as? Chat
-        }
-        
-        if let existingContentFeed = chat?.contentFeed {
-            backgroundContext.delete(existingContentFeed)
-        }
-
-        API.sharedInstance.getContentFeed(
-            url: tribesServerURL,
-            persistingIn: backgroundContext,
-            callback: { contentFeed in
-                contentFeed.chat = chat
-                
-                podcastFeed.addToEpisodes(
-                    Set(
-                        contentFeed
-                            .items?
-                            .map {
-                                PodcastEpisode.convertFrom(
-                                    contentFeedItem: $0,
-                                    persistingIn: backgroundContext
-                                )
-                            }
-                        ?? []
+        if let existingContentFeed = backgroundContext.object(with: podcastF.objectID) as? ContentFeed {
+            API.sharedInstance.getContentFeed(
+                url: tribesServerURL,
+                persistingIn: backgroundContext,
+                callback: { contentFeed in
+                    
+                    contentFeed.items?.forEach {
+                        backgroundContext.insert($0)
+                    }
+                    
+                    existingContentFeed.addToItems(
+                        Set(
+                            contentFeed.items ?? []
+                        )
                     )
-                )
-                
-                backgroundContext.saveContext()
-            },
-            errorCallback: {
-                print("Failed to fetch newsletter items.")
-            }
-        )
+                    
+                    backgroundContext.saveContext()
+                },
+                errorCallback: {
+                    print("Failed to fetch newsletter items.")
+                }
+            )
+        }
     }
 }
 

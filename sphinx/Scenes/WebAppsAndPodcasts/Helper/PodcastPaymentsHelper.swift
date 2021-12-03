@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftyJSON
+import CoreData
 
 class PodcastPaymentsHelper {
     public static func getSatsEarnedFor(_ feedId: Int) -> Int {
@@ -40,7 +41,7 @@ class PodcastPaymentsHelper {
             clipSenderPubKey != myPubKey
         {
             shouldUpdateMeta = false
-            clipSenderDestination = PodcastDestination(context: CoreDataManager.sharedManager.persistentContainer.viewContext)
+            clipSenderDestination = PodcastDestination(NSManagedObjectID.init())
             
             if let clipSenderDestination = clipSenderDestination {
                 clipSenderDestination.address = clipSenderPubKey
@@ -71,11 +72,6 @@ class PodcastPaymentsHelper {
                 uuid: uuid
             )
         }
-        
-        if let clipSenderDestination = clipSenderDestination {
-            CoreDataManager.sharedManager.deleteObject(object: clipSenderDestination)
-        }
-        
     }
     
     func getPodcastAmount(_ podcastFeed: PodcastFeed?) -> Int {

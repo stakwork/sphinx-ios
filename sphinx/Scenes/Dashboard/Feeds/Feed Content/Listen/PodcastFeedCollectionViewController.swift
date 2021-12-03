@@ -11,7 +11,7 @@ class PodcastFeedCollectionViewController: UICollectionViewController {
     var onNewResultsFetched: ((Int) -> Void)!
 
     private var managedObjectContext: NSManagedObjectContext!
-    private var fetchedResultsController: NSFetchedResultsController<PodcastFeed>!
+    private var fetchedResultsController: NSFetchedResultsController<ContentFeed>!
     private var currentDataSnapshot: DataSourceSnapshot!
     private var dataSource: DataSource!
 
@@ -366,7 +366,7 @@ extension PodcastFeedCollectionViewController {
 
     static func makeFetchedResultsController(
         using managedObjectContext: NSManagedObjectContext
-    ) -> NSFetchedResultsController<PodcastFeed> {
+    ) -> NSFetchedResultsController<ContentFeed> {
         let fetchRequest = PodcastFeed.FetchRequests.followedFeeds()
 
         return NSFetchedResultsController(
@@ -415,17 +415,21 @@ extension PodcastFeedCollectionViewController: NSFetchedResultsControllerDelegat
         guard
             let resultController = controller as? NSFetchedResultsController<NSManagedObject>,
             let firstSection = resultController.sections?.first,
-            let foundFeeds = firstSection.objects as? [PodcastFeed]
+            let foundFeeds = firstSection.objects as? [ContentFeed]
         else {
             return
+        }
+        
+        let podcastFeeds = foundFeeds.map {
+            PodcastFeed.convertFrom(contentFeed: $0)
         }
 
         DispatchQueue.main.async { [weak self] in
             self?.updateWithNew(
-                followedPodcastFeeds: foundFeeds
+                followedPodcastFeeds: podcastFeeds
             )
             
-            self?.onNewResultsFetched(foundFeeds.count)
+            self?.onNewResultsFetched(podcastFeeds.count)
         }
     }
 }

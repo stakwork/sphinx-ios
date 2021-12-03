@@ -20,7 +20,7 @@ extension PodcastFeed {
 
             return NSPredicate(
                 format: "%K \(keyword) \(formatSpecifier)",
-                #keyPath(PodcastFeed.title),
+                "title",
                 searchQuery
             )
         }
@@ -40,7 +40,8 @@ extension PodcastFeed {
         
         public static let followedFeeds: NSPredicate = {
             NSPredicate(
-                format: "isSubscribedToFromSearch == true OR chat != nil"
+                format: "(isSubscribedToFromSearch == true OR chat != nil) AND feedKindValue == %d",
+                FeedType.Podcast.rawValue
             )
         }()
     }
@@ -56,7 +57,7 @@ extension PodcastFeed {
     public enum SortDescriptors {
 
         public static let nameAscending: NSSortDescriptor = NSSortDescriptor(
-            key: #keyPath(PodcastFeed.title),
+            key: "title",
             ascending: true,
 
             // 🔑 Any time you’re sorting user-facing strings,
@@ -84,23 +85,13 @@ extension PodcastFeed {
 
     public enum FetchRequests {
 
-        public static func baseFetchRequest<PodcastFeed>() -> NSFetchRequest<PodcastFeed> {
-            NSFetchRequest<PodcastFeed>(entityName: "PodcastFeed")
-        }
-
-
-        public static func `default`() -> NSFetchRequest<PodcastFeed> {
-            let request: NSFetchRequest<PodcastFeed> = baseFetchRequest()
-
-            request.sortDescriptors = [PodcastFeed.SortDescriptors.nameAscending]
-            request.predicate = nil
-
-            return request
+        public static func baseFetchRequest<ContentFeed>() -> NSFetchRequest<ContentFeed> {
+            NSFetchRequest<ContentFeed>(entityName: "ContentFeed")
         }
         
         
-        public static func matching(searchQuery: String) -> NSFetchRequest<PodcastFeed> {
-            let request: NSFetchRequest<PodcastFeed> = baseFetchRequest()
+        public static func matching(searchQuery: String) -> NSFetchRequest<ContentFeed> {
+            let request: NSFetchRequest<ContentFeed> = baseFetchRequest()
 
             request.predicate = PodcastFeed
                 .Predicates
@@ -112,8 +103,8 @@ extension PodcastFeed {
         }
      
         
-        public static func matching(feedID: String) -> NSFetchRequest<PodcastFeed> {
-            let request: NSFetchRequest<PodcastFeed> = baseFetchRequest()
+        public static func matching(feedID: String) -> NSFetchRequest<ContentFeed> {
+            let request: NSFetchRequest<ContentFeed> = baseFetchRequest()
             
             request.predicate = Predicates.matching(feedID: feedID)
             request.sortDescriptors = []
@@ -122,8 +113,8 @@ extension PodcastFeed {
         }
         
         
-        public static func followedFeeds() -> NSFetchRequest<PodcastFeed> {
-            let request: NSFetchRequest<PodcastFeed> = baseFetchRequest()
+        public static func followedFeeds() -> NSFetchRequest<ContentFeed> {
+            let request: NSFetchRequest<ContentFeed> = baseFetchRequest()
             
             request.predicate = Predicates.followedFeeds
             request.sortDescriptors = []

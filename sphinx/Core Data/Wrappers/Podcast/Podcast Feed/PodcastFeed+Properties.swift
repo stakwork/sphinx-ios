@@ -1,0 +1,92 @@
+// PodcastFeed+CoreDataProperties.swift
+//
+// Created by CypherPoet.
+// ✌️
+//
+
+import Foundation
+import CoreData
+
+public class PodcastFeed: NSObject {
+    
+    public var objectID: NSManagedObjectID
+    public var feedID: String
+    public var title: String?
+    public var podcastDescription: String?
+    public var author: String?
+    public var datePublished: Date?
+    public var dateUpdated: Date?
+    public var generator: String?
+    public var imageURLPath: String?
+    public var feedURLPath: String?
+    public var isSubscribedToFromSearch: Bool
+    public var chat: Chat?
+    public var model: PodcastModel?
+    public var episodes: Array<PodcastEpisode>?
+    public var destinations: Array<PodcastDestination>?
+    
+    init(
+        _ objectID: NSManagedObjectID,
+        _ feedID: String,
+        _ isSubscribedToFromSearch: Bool) {
+        
+        self.objectID = objectID
+        self.feedID = feedID
+        self.isSubscribedToFromSearch = isSubscribedToFromSearch
+    }
+}
+
+// MARK: -  Public Methods
+extension PodcastFeed {
+    
+    public static func convertFrom(
+        contentFeed: ContentFeed
+    ) -> PodcastFeed {
+        let podcastFeed = PodcastFeed(
+            contentFeed.objectID,
+            contentFeed.feedID,
+            contentFeed.isSubscribedToFromSearch
+        )
+        
+        podcastFeed.title = contentFeed.title
+        podcastFeed.podcastDescription = contentFeed.feedDescription
+        podcastFeed.feedURLPath = contentFeed.feedURL?.absoluteString
+        podcastFeed.datePublished = contentFeed.datePublished
+        podcastFeed.dateUpdated = contentFeed.dateUpdated
+        podcastFeed.author = contentFeed.authorName
+        podcastFeed.imageURLPath = contentFeed.imageURL?.absoluteString
+        podcastFeed.generator = contentFeed.generator
+        podcastFeed.chat = contentFeed.chat
+        
+        podcastFeed.episodes = contentFeed
+                .items?
+                .map {
+                    PodcastEpisode.convertFrom(
+                        contentFeedItem: $0,
+                        feed: podcastFeed
+                    )
+                }
+            ?? []
+        
+        podcastFeed.destinations = contentFeed
+                .paymentDestinations?
+                .map {
+                    PodcastDestination.convertFrom(
+                        contentFeedPaymentDestination: $0,
+                        feed: podcastFeed
+                    )
+                }
+            ?? []
+        
+        if let paymentModel = contentFeed.paymentModel {
+            podcastFeed.model = PodcastModel.convertFrom(
+                contentFeedPaymentModel: paymentModel,
+                feed: podcastFeed
+            )
+        }
+        
+        return podcastFeed
+    }
+}
+
+extension PodcastFeed: Identifiable {}

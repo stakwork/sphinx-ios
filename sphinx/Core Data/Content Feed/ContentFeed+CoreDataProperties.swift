@@ -52,6 +52,9 @@ extension ContentFeed {
     public var language: String?
     
     @NSManaged
+    public var isSubscribedToFromSearch: Bool
+    
+    @NSManaged
     public var items: Set<ContentFeedItem>?
     
     @NSManaged

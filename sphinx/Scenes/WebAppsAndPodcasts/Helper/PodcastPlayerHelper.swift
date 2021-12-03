@@ -140,12 +140,15 @@ class PodcastPlayerHelper {
         
         resetPodcast()
         
-        self.podcast = chat?.podcastFeed
+        if let contentFeed = chat?.contentFeed {
+            self.podcast = PodcastFeed.convertFrom(contentFeed: contentFeed)
+        }
+        
         callback(true)
     }
     
     func processLocalPodcastFeed(chat: Chat?, callback: @escaping (Bool) -> ()) {
-        if let _ = chat?.podcastFeed {
+        if let _ = chat?.contentFeed {
             callback(true)
         }
     }

@@ -24,7 +24,7 @@ public class VideoFeed: NSObject {
     public var generator: String?
     
     public var chat: Chat?
-    public var videos: Set<Video>?
+    public var videos: Array<Video>?
     
     init(_ objectID: NSManagedObjectID, _ feedID: String) {
         self.objectID = objectID
@@ -69,17 +69,15 @@ extension VideoFeed {
         videoFeed.generator = contentFeed.generator
         videoFeed.chat = contentFeed.chat
         
-        videoFeed.videos = Set(
-            contentFeed
-                .items?
-                .map {
-                    Video.convertFrom(
-                        contentFeedItem: $0,
-                        videoFeed: videoFeed
-                    )
-                }
-            ?? []
-        )
+        videoFeed.videos = contentFeed
+            .items?
+            .map {
+                Video.convertFrom(
+                    contentFeedItem: $0,
+                    videoFeed: videoFeed
+                )
+            }
+        ?? []
         
         return videoFeed
     }

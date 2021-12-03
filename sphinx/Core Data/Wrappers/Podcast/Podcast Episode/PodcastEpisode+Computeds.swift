@@ -1,17 +1,14 @@
-// PodcastEpisode+CoreDataClass.swift
+// PodcastEpisode+Computeds.swift
 //
 // Created by CypherPoet.
 // ✌️
 //
+    
 
 import Foundation
+import SwiftyJSON
 import CoreData
 
-
-@objc(PodcastEpisode)
-public class PodcastEpisode: NSManagedObject {
-    
-}
 
 extension PodcastEpisode {
     
@@ -47,4 +44,13 @@ extension PodcastEpisode {
             }
         }
     }
+    
+    /// Converts the HTML-formatted ``episodeDescription`` string to a standard Swift String
+    var formattedDescription: String {
+        episodeDescription?.attributedStringFromHTML?.string ?? ""
+    }
 }
+
+
+
+

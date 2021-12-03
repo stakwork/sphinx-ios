@@ -421,7 +421,6 @@
 		47A79D3A2444A15C005CD72F /* MessageOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A79D392444A15C005CD72F /* MessageOptionsView.swift */; };
 		47A79D3E2444EEF3005CD72F /* MessageOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A79D3D2444EEF3005CD72F /* MessageOptionView.swift */; };
 		47A79D402444EEFF005CD72F /* MessageOptionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47A79D3F2444EEFF005CD72F /* MessageOptionView.xib */; };
-		47A9F5FA2739B21D005396A1 /* PodcastEpisode+FetchUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A9F5F92739B21D005396A1 /* PodcastEpisode+FetchUtils.swift */; };
 		47AA08C3234B8CF2002C69E2 /* AddFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47AA08C2234B8CF2002C69E2 /* AddFriendViewController.swift */; };
 		47AA08C5234B96BF002C69E2 /* ConfirmAddFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47AA08C4234B96BF002C69E2 /* ConfirmAddFriendViewController.swift */; };
 		47AA08C7234BB8E0002C69E2 /* ShareInviteCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47AA08C6234BB8E0002C69E2 /* ShareInviteCodeViewController.swift */; };
@@ -561,14 +560,10 @@
 		F3197C1326811DE400330F79 /* RestoreUserFormViewController+KeychainRestorationUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3197C1226811DE400330F79 /* RestoreUserFormViewController+KeychainRestorationUtils.swift */; };
 		F31CF2662691489800AAB621 /* StoreKitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31CF2652691489800AAB621 /* StoreKitService.swift */; };
 		F31EFCB42746968D00C05FF4 /* ContentFeed+FetchUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31EFCB32746968C00C05FF4 /* ContentFeed+FetchUtils.swift */; };
-		F32A696026CFEF600004B8B3 /* PodcastEpisode+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32A695626CFEF5F0004B8B3 /* PodcastEpisode+CoreDataClass.swift */; };
-		F32A696126CFEF600004B8B3 /* PodcastEpisode+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32A695726CFEF5F0004B8B3 /* PodcastEpisode+CoreDataProperties.swift */; };
-		F32A696226CFEF600004B8B3 /* PodcastDestination+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32A695826CFEF5F0004B8B3 /* PodcastDestination+CoreDataClass.swift */; };
-		F32A696326CFEF600004B8B3 /* PodcastDestination+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32A695926CFEF5F0004B8B3 /* PodcastDestination+CoreDataProperties.swift */; };
-		F32A696426CFEF600004B8B3 /* PodcastFeed+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32A695A26CFEF5F0004B8B3 /* PodcastFeed+CoreDataClass.swift */; };
-		F32A696526CFEF600004B8B3 /* PodcastFeed+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32A695B26CFEF5F0004B8B3 /* PodcastFeed+CoreDataProperties.swift */; };
-		F32A696626CFEF600004B8B3 /* PodcastModel+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32A695C26CFEF600004B8B3 /* PodcastModel+CoreDataClass.swift */; };
-		F32A696726CFEF600004B8B3 /* PodcastModel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32A695D26CFEF600004B8B3 /* PodcastModel+CoreDataProperties.swift */; };
+		F32A696126CFEF600004B8B3 /* PodcastEpisode+Properties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32A695726CFEF5F0004B8B3 /* PodcastEpisode+Properties.swift */; };
+		F32A696326CFEF600004B8B3 /* PodcastDestination+Properties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32A695926CFEF5F0004B8B3 /* PodcastDestination+Properties.swift */; };
+		F32A696526CFEF600004B8B3 /* PodcastFeed+Properties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32A695B26CFEF5F0004B8B3 /* PodcastFeed+Properties.swift */; };
+		F32A696726CFEF600004B8B3 /* PodcastModel+Properties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32A695D26CFEF600004B8B3 /* PodcastModel+Properties.swift */; };
 		F32A697926D515AB0004B8B3 /* PodcastFeed+Computeds.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32A697826D515AB0004B8B3 /* PodcastFeed+Computeds.swift */; };
 		F32A697B26D565E50004B8B3 /* PodcastModel+Computeds.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32A697A26D565E50004B8B3 /* PodcastModel+Computeds.swift */; };
 		F331199B268E375B005082EB /* NewUserSignupOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F331199A268E375B005082EB /* NewUserSignupOptionsViewController.swift */; };
@@ -1192,7 +1187,6 @@
 		47A79D392444A15C005CD72F /* MessageOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageOptionsView.swift; sourceTree = "<group>"; };
 		47A79D3D2444EEF3005CD72F /* MessageOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageOptionView.swift; sourceTree = "<group>"; };
 		47A79D3F2444EEFF005CD72F /* MessageOptionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageOptionView.xib; sourceTree = "<group>"; };
-		47A9F5F92739B21D005396A1 /* PodcastEpisode+FetchUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PodcastEpisode+FetchUtils.swift"; sourceTree = "<group>"; };
 		47AA08C2234B8CF2002C69E2 /* AddFriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendViewController.swift; sourceTree = "<group>"; };
 		47AA08C4234B96BF002C69E2 /* ConfirmAddFriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmAddFriendViewController.swift; sourceTree = "<group>"; };
 		47AA08C6234BB8E0002C69E2 /* ShareInviteCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareInviteCodeViewController.swift; sourceTree = "<group>"; };
@@ -1346,14 +1340,10 @@
 		F3241A30267CBB12007A6454 /* ellipse.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = ellipse.gif; sourceTree = "<group>"; };
 		F3241A31267CBB12007A6454 /* lightningNetwork.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = lightningNetwork.gif; sourceTree = "<group>"; };
 		F32A694E26CFA7740004B8B3 /* sphinx 30.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 30.xcdatamodel"; sourceTree = "<group>"; };
-		F32A695626CFEF5F0004B8B3 /* PodcastEpisode+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PodcastEpisode+CoreDataClass.swift"; sourceTree = "<group>"; };
-		F32A695726CFEF5F0004B8B3 /* PodcastEpisode+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PodcastEpisode+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		F32A695826CFEF5F0004B8B3 /* PodcastDestination+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PodcastDestination+CoreDataClass.swift"; sourceTree = "<group>"; };
-		F32A695926CFEF5F0004B8B3 /* PodcastDestination+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PodcastDestination+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		F32A695A26CFEF5F0004B8B3 /* PodcastFeed+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PodcastFeed+CoreDataClass.swift"; sourceTree = "<group>"; };
-		F32A695B26CFEF5F0004B8B3 /* PodcastFeed+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PodcastFeed+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		F32A695C26CFEF600004B8B3 /* PodcastModel+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PodcastModel+CoreDataClass.swift"; sourceTree = "<group>"; };
-		F32A695D26CFEF600004B8B3 /* PodcastModel+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PodcastModel+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		F32A695726CFEF5F0004B8B3 /* PodcastEpisode+Properties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PodcastEpisode+Properties.swift"; sourceTree = "<group>"; };
+		F32A695926CFEF5F0004B8B3 /* PodcastDestination+Properties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PodcastDestination+Properties.swift"; sourceTree = "<group>"; };
+		F32A695B26CFEF5F0004B8B3 /* PodcastFeed+Properties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PodcastFeed+Properties.swift"; sourceTree = "<group>"; };
+		F32A695D26CFEF600004B8B3 /* PodcastModel+Properties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PodcastModel+Properties.swift"; sourceTree = "<group>"; };
 		F32A697826D515AB0004B8B3 /* PodcastFeed+Computeds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PodcastFeed+Computeds.swift"; sourceTree = "<group>"; };
 		F32A697A26D565E50004B8B3 /* PodcastModel+Computeds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PodcastModel+Computeds.swift"; sourceTree = "<group>"; };
 		F331199A268E375B005082EB /* NewUserSignupOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewUserSignupOptionsViewController.swift; sourceTree = "<group>"; };
@@ -2321,10 +2311,6 @@
 				F3DC6AFE273C88D400458E09 /* Content Feed Item */,
 				F3DC6B1E273F60D800458E09 /* Content Feed Payment Destination */,
 				F3DC6B1D273F60CE00458E09 /* Content Feed Payment Model */,
-				F32A695226CFEEF50004B8B3 /* Podcast Destination */,
-				F32A695026CFEED70004B8B3 /* Podcast Episode */,
-				F32A694F26CFEECD0004B8B3 /* Podcast Feed */,
-				F32A695126CFEEE70004B8B3 /* Podcast Model */,
 				47F35D4A2373156A0042A58F /* sphinx.xcdatamodeld */,
 				47FA18D02434D39900469C8F /* TransactionMessage */,
 				4707089824AE46FA00A98DCA /* UserContact */,
@@ -2618,12 +2604,40 @@
 		4780FA2A275A6F400099CE75 /* Wrappers */ = {
 			isa = PBXGroup;
 			children = (
+				4780FA2B275AA2FD0099CE75 /* Podcast */,
+				4780FA2C275AA3060099CE75 /* Video */,
+				4780FA2D275AA30E0099CE75 /* Newsletter */,
+			);
+			path = Wrappers;
+			sourceTree = "<group>";
+		};
+		4780FA2B275AA2FD0099CE75 /* Podcast */ = {
+			isa = PBXGroup;
+			children = (
+				F32A695226CFEEF50004B8B3 /* Podcast Destination */,
+				F32A695026CFEED70004B8B3 /* Podcast Episode */,
+				F32A694F26CFEECD0004B8B3 /* Podcast Feed */,
+				F32A695126CFEEE70004B8B3 /* Podcast Model */,
+			);
+			path = Podcast;
+			sourceTree = "<group>";
+		};
+		4780FA2C275AA3060099CE75 /* Video */ = {
+			isa = PBXGroup;
+			children = (
 				F3188B762717927C00890DDD /* Video */,
 				F3188B782717929B00890DDD /* Video Feed */,
+			);
+			path = Video;
+			sourceTree = "<group>";
+		};
+		4780FA2D275AA30E0099CE75 /* Newsletter */ = {
+			isa = PBXGroup;
+			children = (
 				47357A082729A0BB00A49EEE /* NewsletterFeed */,
 				47357A092729A0C200A49EEE /* NewsletterItem */,
 			);
-			path = Wrappers;
+			path = Newsletter;
 			sourceTree = "<group>";
 		};
 		4787F87024743D6400CCE8B9 /* Public Groups */ = {
@@ -3192,8 +3206,7 @@
 			isa = PBXGroup;
 			children = (
 				F32A697826D515AB0004B8B3 /* PodcastFeed+Computeds.swift */,
-				F32A695A26CFEF5F0004B8B3 /* PodcastFeed+CoreDataClass.swift */,
-				F32A695B26CFEF5F0004B8B3 /* PodcastFeed+CoreDataProperties.swift */,
+				F32A695B26CFEF5F0004B8B3 /* PodcastFeed+Properties.swift */,
 				F3B2518C26D8DD1800C96D42 /* PodcastFeed+FetchUtils.swift */,
 			);
 			path = "Podcast Feed";
@@ -3202,10 +3215,8 @@
 		F32A695026CFEED70004B8B3 /* Podcast Episode */ = {
 			isa = PBXGroup;
 			children = (
-				F32A695626CFEF5F0004B8B3 /* PodcastEpisode+CoreDataClass.swift */,
-				F32A695726CFEF5F0004B8B3 /* PodcastEpisode+CoreDataProperties.swift */,
+				F32A695726CFEF5F0004B8B3 /* PodcastEpisode+Properties.swift */,
 				F3B2518E26DD3F4000C96D42 /* PodcastEpisode+Computeds.swift */,
-				47A9F5F92739B21D005396A1 /* PodcastEpisode+FetchUtils.swift */,
 			);
 			path = "Podcast Episode";
 			sourceTree = "<group>";
@@ -3213,8 +3224,7 @@
 		F32A695126CFEEE70004B8B3 /* Podcast Model */ = {
 			isa = PBXGroup;
 			children = (
-				F32A695C26CFEF600004B8B3 /* PodcastModel+CoreDataClass.swift */,
-				F32A695D26CFEF600004B8B3 /* PodcastModel+CoreDataProperties.swift */,
+				F32A695D26CFEF600004B8B3 /* PodcastModel+Properties.swift */,
 				F32A697A26D565E50004B8B3 /* PodcastModel+Computeds.swift */,
 			);
 			path = "Podcast Model";
@@ -3223,8 +3233,7 @@
 		F32A695226CFEEF50004B8B3 /* Podcast Destination */ = {
 			isa = PBXGroup;
 			children = (
-				F32A695826CFEF5F0004B8B3 /* PodcastDestination+CoreDataClass.swift */,
-				F32A695926CFEF5F0004B8B3 /* PodcastDestination+CoreDataProperties.swift */,
+				F32A695926CFEF5F0004B8B3 /* PodcastDestination+Properties.swift */,
 			);
 			path = "Podcast Destination";
 			sourceTree = "<group>";
@@ -3836,14 +3845,13 @@
 				47904C1B24BF3C7A00710E7A /* NotificationSoundViewController.swift in Sources */,
 				F394ECAB2682218F00529038 /* NewUserSignupFormViewController.swift in Sources */,
 				471D8D1027274AC80024AEAC /* GroupsManager+Tag.swift in Sources */,
-				F32A696626CFEF600004B8B3 /* PodcastModel+CoreDataClass.swift in Sources */,
 				47FA44192375A682005D8C63 /* SubscriptionCommonView.swift in Sources */,
 				4789E25224EDB77B003991BE /* WebAppHelper.swift in Sources */,
 				475BDD2E232ACA9000C5BBD6 /* UserDefaults.swift in Sources */,
 				475BDCB3232AC1E800C5BBD6 /* NewKeyPadView.swift in Sources */,
 				47ACBC15265E9CE600D2FE47 /* AuthExternalView.swift in Sources */,
 				47F2289E23672A5E001429A4 /* ImagePickerManager.swift in Sources */,
-				F32A696526CFEF600004B8B3 /* PodcastFeed+CoreDataProperties.swift in Sources */,
+				F32A696526CFEF600004B8B3 /* PodcastFeed+Properties.swift in Sources */,
 				F38744E1271FD7CB00E28C84 /* Video+DisplayUtils.swift in Sources */,
 				F358212F2698BE6800A314F1 /* API+HubError.swift in Sources */,
 				47949BD624AA12C7000D697B /* CommonDeletedMessageTableViewCell.swift in Sources */,
@@ -3875,7 +3883,7 @@
 				F3CE637C26AFE823006E37A0 /* FeedFilterChipCollectionViewCell.swift in Sources */,
 				4787F8942476B8E600CCE8B9 /* CGFloat.swift in Sources */,
 				47484B94251255CF00F82AAC /* MessageWebViewTableViewCell.swift in Sources */,
-				F32A696126CFEF600004B8B3 /* PodcastEpisode+CoreDataProperties.swift in Sources */,
+				F32A696126CFEF600004B8B3 /* PodcastEpisode+Properties.swift in Sources */,
 				47B9A648233BB6AE00D2B022 /* AddressBookHeaderView.swift in Sources */,
 				475BDD05232AC24600C5BBD6 /* ExpiredInvoiceReceivedTableViewCell.swift in Sources */,
 				479A39D7244E26FA00A37899 /* AttachmentObject.swift in Sources */,
@@ -3908,7 +3916,7 @@
 				4711B2BD24522C4E0056ED25 /* ChatAccessoryViewDelegateExtension.swift in Sources */,
 				4787F88724746A5400CCE8B9 /* AlignedCollectionViewFlowLayout.swift in Sources */,
 				473BC88D25F287340070E519 /* PodcastNewEpisodeViewController.swift in Sources */,
-				F32A696726CFEF600004B8B3 /* PodcastModel+CoreDataProperties.swift in Sources */,
+				F32A696726CFEF600004B8B3 /* PodcastModel+Properties.swift in Sources */,
 				47FA18C224253BDD00469C8F /* InvoiceManager.swift in Sources */,
 				47771C6E259B848300990467 /* GroupPinView.swift in Sources */,
 				F313024626BA62B300A1396E /* ChatsCollectionViewController.swift in Sources */,
@@ -3933,7 +3941,6 @@
 				475BDCFB232AC24600C5BBD6 /* PaidInvoiceReceivedTableViewCell.swift in Sources */,
 				4789E26E24F406F3003991BE /* RelayURLUpdateHelper.swift in Sources */,
 				475BDD5C232AE26E00C5BBD6 /* TransactionMessage+CoreDataClass.swift in Sources */,
-				F32A696226CFEF600004B8B3 /* PodcastDestination+CoreDataClass.swift in Sources */,
 				475723A9247EBB56001ADC7E /* CustomAudioPlayer.swift in Sources */,
 				473842F7239197E700AA640F /* FullScreenImageView.swift in Sources */,
 				F3188BAD271CF20B00890DDD /* VideoFeedEpisodePlayerCollectionViewDetailsCell.swift in Sources */,
@@ -4027,7 +4034,6 @@
 				F3D04027268BABFF00D54A94 /* InviteActionsHelper.swift in Sources */,
 				F3531C3D26BD505F00E9586C /* DashboardChatsListDelegate.swift in Sources */,
 				F3188B822717942000890DDD /* VideoFeed+Computeds.swift in Sources */,
-				F32A696026CFEF600004B8B3 /* PodcastEpisode+CoreDataClass.swift in Sources */,
 				F3D04020268BAB7500D54A94 /* InviteWelcomeViewController.swift in Sources */,
 				475154B32423E7FE00477384 /* VideoCallSentTableViewCell.swift in Sources */,
 				47AA08C3234B8CF2002C69E2 /* AddFriendViewController.swift in Sources */,
@@ -4045,7 +4051,6 @@
 				475BDCBA232AC1E800C5BBD6 /* ChatAccessoryView.swift in Sources */,
 				F30884A92699181200CADDEB /* API+KarmaPurchaseUtils.swift in Sources */,
 				4787F8982478112F00CCE8B9 /* ChatAvatarView.swift in Sources */,
-				47A9F5FA2739B21D005396A1 /* PodcastEpisode+FetchUtils.swift in Sources */,
 				47308E0E24FEE6E700FFAC6F /* SocketIOClientConfiguration.swift in Sources */,
 				47308E1124FEE6E700FFAC6F /* SocketIOClientOption.swift in Sources */,
 				47FB189B23A299000097695B /* SignupHelper.swift in Sources */,
@@ -4071,7 +4076,7 @@
 				47BB1D5C239572A30049802B /* NewContactDelegatesExtension.swift in Sources */,
 				F3188B9D271CD6CC00890DDD /* VideoFeedEpisodePlayerCollectionViewController.swift in Sources */,
 				47F258D92540F61F00122A5A /* PodcastPaymentsHelper.swift in Sources */,
-				F32A696326CFEF600004B8B3 /* PodcastDestination+CoreDataProperties.swift in Sources */,
+				F32A696326CFEF600004B8B3 /* PodcastDestination+Properties.swift in Sources */,
 				470F5CA5243E1DA6007E054F /* ChatViewControllerVideoCallExtension.swift in Sources */,
 				47CC7CEB23E4AA2100730E6F /* TransactionCommonTableViewCell.swift in Sources */,
 				47308E1324FEE6E700FFAC6F /* SocketRawView.swift in Sources */,
@@ -4079,7 +4084,6 @@
 				F358212D2695D11500A314F1 /* ConnectionCodeSignupHandling.swift in Sources */,
 				4703CF97251D23E5007B685C /* LinkPreviewUIImage.swift in Sources */,
 				F3188B932719DA1600890DDD /* DashboardVideoEpisodeCollectionViewCell.swift in Sources */,
-				F32A696426CFEF600004B8B3 /* PodcastFeed+CoreDataClass.swift in Sources */,
 				47AF0D31254B236C00C98398 /* BoostButtonView.swift in Sources */,
 				47822C70244A02010011D832 /* CommonPaidMessageTableViewCell.swift in Sources */,
 				47D46A33237C83900005A548 /* Chat+CoreDataClass.swift in Sources */,

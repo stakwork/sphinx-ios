@@ -9,18 +9,22 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
         didSelectPodcastEpisodeWithID podcastEpisodeID: NSManagedObjectID
     ) {
         guard
-            let podcastEpisode = managedObjectContext.object(with: podcastEpisodeID) as? PodcastEpisode,
-            let podcastFeed = podcastEpisode.feed
+            let contentFeedItem = managedObjectContext.object(with: podcastEpisodeID) as? ContentFeedItem,
+            contentFeedItem.contentFeed?.isPodcast == true
         else {
-            return
+            preconditionFailure()
         }
         
-        let podcastPlayerHelper = getPodcastPlayerFor(podcastFeed)
+        if let contentFeed = contentFeedItem.contentFeed {
+            
+            let podcastFeed = PodcastFeed.convertFrom(contentFeed:  contentFeed)
+            let podcastPlayerHelper = getPodcastPlayerFor(podcastFeed)
 
-        presentPodcastPlayer(
-            forPodcastFrom: podcastFeed.chat,
-            with: podcastPlayerHelper
-        )
+            presentPodcastPlayer(
+                forPodcastFrom: podcastFeed.chat,
+                with: podcastPlayerHelper
+            )
+        }
     }
     
     func viewController(

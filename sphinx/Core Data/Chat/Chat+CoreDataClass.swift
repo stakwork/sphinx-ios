@@ -43,11 +43,15 @@ public class Chat: NSManagedObject {
     var podcastPlayer: PodcastPlayerHelper? = nil
     
     func getPodcastPlayer() -> PodcastPlayerHelper {
+        
         if podcastPlayer == nil {
             podcastPlayer = PodcastPlayerHelper()
         }
         
-        podcastPlayer?.podcast = self.podcastFeed
+        if let contentFeed = self.contentFeed {
+            podcastPlayer?.podcast = PodcastFeed.convertFrom(contentFeed: contentFeed)
+        }
+
         podcastPlayer?.chat = self
         
         return podcastPlayer!
@@ -457,30 +461,15 @@ public class Chat: NSManagedObject {
         backgroundContext.perform {
             if
                 let feedURLPath = self.tribeInfo?.feedUrl,
-                let feedContentType = self.tribeInfo?.feedContentType,
                 let backgroundChat = backgroundContext.object(with: self.objectID) as? Chat
             {
                 backgroundChat.fetchContentFeed(
                     at: feedURLPath,
                     persistingIn: backgroundContext
                 ) { result in
+                    
                     if case let .success(fetchedContentFeed) = result {
                         backgroundChat.contentFeed = fetchedContentFeed
-
-                        if feedContentType.isPodcast {
-                            let podcastFeed = PodcastFeed.convertFrom(
-                                contentFeed: fetchedContentFeed,
-                                persistingIn: backgroundContext
-                            )
-                            
-                            if let existingPodcastFeed = backgroundChat.podcastFeed {
-                                backgroundContext.delete(existingPodcastFeed)
-                            }
-                            
-                            backgroundChat.podcastFeed = podcastFeed
-                            
-                        }
-                        
                         backgroundContext.saveContext()
                     }
 

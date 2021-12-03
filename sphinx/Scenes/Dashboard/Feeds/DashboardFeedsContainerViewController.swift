@@ -273,18 +273,18 @@ extension DashboardFeedsContainerViewController {
                 self,
                 didSelectPodcastFeed: podcastFeed
             )
-        } else if entity is VideoFeed {
-            feedsListContainerDelegate?.viewController(
-                self,
-                didSelectVideoFeedWithID: managedObjectID
-            )
         }
         
-        if entity is ContentFeed {
-            if (entity as? ContentFeed)?.isNewsletter == true {
+        if let contentFeed = entity as? ContentFeed {
+            if contentFeed.isNewsletter {
                 feedsListContainerDelegate?.viewController(
                     self,
                     didSelectNewsletterFeedWithID: managedObjectID
+                )
+            } else if contentFeed.isVideo {
+                feedsListContainerDelegate?.viewController(
+                    self,
+                    didSelectVideoFeedWithID: managedObjectID
                 )
             }
         }

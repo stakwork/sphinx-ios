@@ -92,7 +92,7 @@ extension DashboardNewsletterItemCollectionViewCell {
         }
 
         itemTitleLabel.text = newsletterItem.title
-        itemDescriptionLabel.text = newsletterItem.itemDescription
+        itemDescriptionLabel.text = newsletterItem.itemDescription?.nonHtmlRawString
         itemDateLabel.text = newsletterItem.datePublished?.getStringFromDate(format: "MMM dd, yyyy")
     }
 }

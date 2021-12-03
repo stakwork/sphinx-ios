@@ -68,7 +68,8 @@ extension NewsletterFeed {
                 .items?
                 .map {
                     NewsletterItem.convertFrom(
-                        contentFeedItem: $0
+                        contentFeedItem: $0,
+                        newsletterFeed: newsletterFeed
                     )
                 }
             ?? []

@@ -467,19 +467,7 @@ public class Chat: NSManagedObject {
                     if case let .success(fetchedContentFeed) = result {
                         backgroundChat.contentFeed = fetchedContentFeed
 
-                        if (feedContentType.isVideo || feedURLPath.isYouTubeRSSFeedURL) {
-                            let videoFeed = VideoFeed.convertFrom(
-                                contentFeed: fetchedContentFeed,
-                                persistingIn: backgroundContext
-                            )
-                            
-                            if let existingVideoFeed = backgroundChat.videoFeed {
-                                backgroundContext.delete(existingVideoFeed)
-                            }
-                            
-                            backgroundChat.videoFeed = videoFeed
-
-                        } else if feedContentType.isPodcast {
+                        if feedContentType.isPodcast {
                             let podcastFeed = PodcastFeed.convertFrom(
                                 contentFeed: fetchedContentFeed,
                                 persistingIn: backgroundContext

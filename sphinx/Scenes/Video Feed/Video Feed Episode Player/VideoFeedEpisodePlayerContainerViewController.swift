@@ -175,19 +175,25 @@ extension VideoFeedEpisodePlayerContainerViewController {
         _ managedObjectID: NSManagedObjectID
     ) {
         guard
-            let selectedEpisode = managedObjectContext.object(with: managedObjectID) as? Video
+            let selectedFeedItem = managedObjectContext.object(with: managedObjectID) as? ContentFeedItem
         else {
             preconditionFailure()
         }
         
-        if selectedEpisode != videoPlayerEpisode {
-            videoPlayerEpisode = selectedEpisode
-            currentVideoPlayerViewController.videoPlayerEpisode = videoPlayerEpisode
+        if let contentFeed = selectedFeedItem.contentFeed {
             
-            delegate?.viewController(
-                self,
-                didSelectVideoEpisodeWithID: managedObjectID
-            )
+            let videoFeed = VideoFeed.convertFrom(contentFeed:  contentFeed)
+            let selectedEpisode = Video.convertFrom(contentFeedItem: selectedFeedItem, videoFeed: videoFeed)
+            
+            if selectedEpisode != videoPlayerEpisode {
+                videoPlayerEpisode = selectedEpisode
+                currentVideoPlayerViewController.videoPlayerEpisode = videoPlayerEpisode
+                
+                delegate?.viewController(
+                    self,
+                    didSelectVideoEpisodeWithID: managedObjectID
+                )
+            }
         }
     }
     
@@ -197,46 +203,34 @@ extension VideoFeedEpisodePlayerContainerViewController {
         
         guard
             let videoF = self.videoPlayerEpisode.videoFeed,
-            let videoFeed = backgroundContext.object(with: videoF.objectID) as? VideoFeed,
             let feedURL = videoF.feedURL
         else { return }
 
         let tribesServerURL = "\(API.kTestTribesServerBaseURL)/feed?url=\(feedURL.absoluteString)"
         
-        var chat: Chat? = nil
-        
-        if let chatObjectId = videoF.chat?.objectID {
-            chat = backgroundContext.object(with: chatObjectId) as? Chat
-        }
-        
-        if let existingContentFeed = chat?.contentFeed {
-            backgroundContext.delete(existingContentFeed)
-        }
-
-        API.sharedInstance.getContentFeed(
-            url: tribesServerURL,
-            persistingIn: backgroundContext,
-            callback: { contentFeed in
-                contentFeed.chat = chat
-                
-                videoFeed.addToVideos(
-                    Set(
-                        contentFeed
-                            .items?
-                            .map {
-                                Video.convertFrom(
-                                    contentFeedItem: $0,
-                                    persistingIn: backgroundContext
-                                )
-                            }
-                        ?? []
+        if let existingContentFeed = backgroundContext.object(with: videoF.objectID) as? ContentFeed {
+            
+            API.sharedInstance.getContentFeed(
+                url: tribesServerURL,
+                callback: { contentFeed in
+                    
+                    contentFeed.items?.forEach {
+                        backgroundContext.insert($0)
+                    }
+                    
+                    existingContentFeed.addToItems(
+                        Set(
+                            contentFeed.items ?? []
+                        )
                     )
-                )
-                backgroundContext.saveContext()
-            },
-            errorCallback: {
-                print("Failed to fetch video entry data for feed.")
-            }
-        )
+                    
+                    backgroundContext.saveContext()
+                },
+                errorCallback: {
+                    print("Failed to fetch newsletter items.")
+                }
+            )
+            
+        }
     }
 }

@@ -61,12 +61,14 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
         didSelectVideoFeedWithID videoFeedID: NSManagedObjectID
     ) {
         guard
-            let videoFeed = managedObjectContext.object(with: videoFeedID) as? VideoFeed
+            let contentFeed = managedObjectContext.object(with: videoFeedID) as? ContentFeed,
+            contentFeed.isVideo
         else {
             preconditionFailure()
         }
+        
+        let videoFeed = VideoFeed.convertFrom(contentFeed: contentFeed)
 
-        // 📝 TODO:  Implement the dedicated `VideoFeed` screen page and go there instead.
         if
             let latestEpisode = videoFeed.videosArray.last,
             viewController is DashboardFeedsContainerViewController
@@ -81,14 +83,20 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
         didSelectVideoEpisodeWithID videoEpisodeID: NSManagedObjectID
     ) {
         guard
-            let videoEpisode = managedObjectContext
-                .object(with: videoEpisodeID) as? Video
+            let contentFeedItem = managedObjectContext.object(with: videoEpisodeID) as? ContentFeedItem,
+            contentFeedItem.contentFeed?.isVideo == true
         else {
             preconditionFailure()
         }
         
-        if viewController is DashboardFeedsContainerViewController {
-            presentVideoPlayer(for: videoEpisode)
+        if let contentFeed = contentFeedItem.contentFeed {
+            
+            let videoFeed = VideoFeed.convertFrom(contentFeed:  contentFeed)
+            let videoEpisode = Video.convertFrom(contentFeedItem: contentFeedItem, videoFeed: videoFeed)
+            
+            if viewController is DashboardFeedsContainerViewController {
+                presentVideoPlayer(for: videoEpisode)
+            }
         }
     }
     

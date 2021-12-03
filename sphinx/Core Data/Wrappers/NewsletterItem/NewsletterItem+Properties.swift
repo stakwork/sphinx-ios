@@ -44,7 +44,8 @@ extension NewsletterItem {
 extension NewsletterItem {
     
     public static func convertFrom(
-        contentFeedItem: ContentFeedItem
+        contentFeedItem: ContentFeedItem,
+        newsletterFeed: NewsletterFeed? = nil
     ) -> NewsletterItem {
         
         let newsletterItem = NewsletterItem(
@@ -59,6 +60,7 @@ extension NewsletterItem {
         newsletterItem.itemDescription = contentFeedItem.itemDescription
         newsletterItem.itemUrl = contentFeedItem.enclosureURL
         newsletterItem.title = contentFeedItem.title
+        newsletterItem.newsletterFeed = newsletterFeed
         
         return newsletterItem
     }

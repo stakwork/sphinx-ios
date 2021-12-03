@@ -148,27 +148,29 @@ extension NewsletterFeedContainerViewController {
         
         let tribesServerURL = "\(API.kTestTribesServerBaseURL)/feed?url=\(feedURL.absoluteString)"
         
-        let existingContentFeed = backgroundContext.object(with: newsletterF.objectID) as? ContentFeed
-
-        API.sharedInstance.getContentFeed(
-            url: tribesServerURL,
-            callback: { contentFeed in
-                
-                contentFeed.items?.forEach {
-                    backgroundContext.insert($0)
-                }
-                
-                existingContentFeed?.addToItems(
-                    Set(
-                        contentFeed.items ?? []
+        if let existingContentFeed = backgroundContext.object(with: newsletterF.objectID) as? ContentFeed {
+            
+            API.sharedInstance.getContentFeed(
+                url: tribesServerURL,
+                callback: { contentFeed in
+                    
+                    contentFeed.items?.forEach {
+                        backgroundContext.insert($0)
+                    }
+                    
+                    existingContentFeed.addToItems(
+                        Set(
+                            contentFeed.items ?? []
+                        )
                     )
-                )
-                
-                backgroundContext.saveContext()
-            },
-            errorCallback: {
-                print("Failed to fetch newsletter items.")
-            }
-        )
+                    
+                    backgroundContext.saveContext()
+                },
+                errorCallback: {
+                    print("Failed to fetch newsletter items.")
+                }
+            )
+            
+        }
     }
 }

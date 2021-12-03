@@ -19,7 +19,7 @@ class DashboardVideoFeedCollectionViewController: UICollectionViewController {
     var onNewResultsFetched: ((Int) -> Void)!
 
     private var managedObjectContext: NSManagedObjectContext!
-    private var fetchedResultsController: NSFetchedResultsController<VideoFeed>!
+    private var fetchedResultsController: NSFetchedResultsController<ContentFeed>!
     private var currentDataSnapshot: DataSourceSnapshot!
     private var dataSource: DataSource!
 
@@ -425,7 +425,7 @@ extension DashboardVideoFeedCollectionViewController {
     
     static func makeFetchedResultsController(
         using managedObjectContext: NSManagedObjectContext
-    ) -> NSFetchedResultsController<VideoFeed> {
+    ) -> NSFetchedResultsController<ContentFeed> {
         let fetchRequest = VideoFeed.FetchRequests.followedFeeds()
         
         return NSFetchedResultsController(
@@ -498,17 +498,21 @@ extension DashboardVideoFeedCollectionViewController: NSFetchedResultsController
         guard
             let resultController = controller as? NSFetchedResultsController<NSManagedObject>,
             let firstSection = resultController.sections?.first,
-            let foundFeeds = firstSection.objects as? [VideoFeed]
+            let foundFeeds = firstSection.objects as? [ContentFeed]
         else {
             return
         }
         
+        let videoFeeds = foundFeeds.map {
+            VideoFeed.convertFrom(contentFeed: $0)
+        }
+        
         DispatchQueue.main.async { [weak self] in
             self?.updateWithNew(
-                videoFeeds: foundFeeds
+                videoFeeds: videoFeeds
             )
             
-            self?.onNewResultsFetched(foundFeeds.count)
+            self?.onNewResultsFetched(videoFeeds.count)
         }
     }
 }

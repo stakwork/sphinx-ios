@@ -122,7 +122,7 @@ extension VideoFeedEpisodePlayerContainerViewController {
         configurePlayerView()
         configureCollectionView()
         
-        updateEpisodesInBackground()
+        updateEpisodes()
     }
 }
 
@@ -198,39 +198,41 @@ extension VideoFeedEpisodePlayerContainerViewController {
     }
     
     
-    private func updateEpisodesInBackground() {
-        let backgroundContext = CoreDataManager.sharedManager.getBackgroundContext()
-        
-        guard
-            let videoF = self.videoPlayerEpisode.videoFeed,
-            let feedURL = videoF.feedURL
-        else { return }
+    private func updateEpisodes() {
+        DispatchQueue.global(qos: .utility).async {
+            let context = CoreDataManager.sharedManager.persistentContainer.viewContext
+            
+            guard
+                let videoF = self.videoPlayerEpisode.videoFeed,
+                let feedURL = videoF.feedURL
+            else { return }
 
-        let tribesServerURL = "\(API.kTestTribesServerBaseURL)/feed?url=\(feedURL.absoluteString)"
-        
-        if let existingContentFeed = backgroundContext.object(with: videoF.objectID) as? ContentFeed {
+            let tribesServerURL = "\(API.kTestTribesServerBaseURL)/feed?url=\(feedURL.absoluteString)"
             
-            API.sharedInstance.getContentFeed(
-                url: tribesServerURL,
-                callback: { contentFeed in
-                    
-                    contentFeed.items?.forEach {
-                        backgroundContext.insert($0)
-                    }
-                    
-                    existingContentFeed.addToItems(
-                        Set(
-                            contentFeed.items ?? []
+            if let existingContentFeed = context.object(with: videoF.objectID) as? ContentFeed {
+                
+                API.sharedInstance.getContentFeed(
+                    url: tribesServerURL,
+                    callback: { contentFeed in
+                        
+                        contentFeed.items?.forEach {
+                            context.insert($0)
+                        }
+                        
+                        existingContentFeed.addToItems(
+                            Set(
+                                contentFeed.items ?? []
+                            )
                         )
-                    )
-                    
-                    backgroundContext.saveContext()
-                },
-                errorCallback: {
-                    print("Failed to fetch newsletter items.")
-                }
-            )
-            
+                        
+                        context.saveContext()
+                    },
+                    errorCallback: {
+                        print("Failed to fetch newsletter items.")
+                    }
+                )
+                
+            }
         }
     }
 }

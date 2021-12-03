@@ -113,6 +113,11 @@ class CoreDataManager {
         saveContext()
     }
     
+    func getObjectWith<T>(objectId: NSManagedObjectID) -> T? {
+        let managedContext = persistentContainer.viewContext
+        return managedContext.object(with:objectId) as? T
+    }
+    
     func getAllOfType<T>(entityName: String, sortDescriptors: [NSSortDescriptor]? = nil) -> [T] {
         let managedContext = persistentContainer.viewContext
         var objects:[T] = [T]()

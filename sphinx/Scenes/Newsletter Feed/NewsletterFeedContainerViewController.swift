@@ -33,8 +33,6 @@ class NewsletterFeedContainerViewController: UIViewController {
         }
     }
     
-    internal var managedObjectContext: NSManagedObjectContext!
-    
     weak var delegate: NewsletterFeedContainerViewControllerDelegate?
     
     internal lazy var collectionViewController: NewsletterFeedItemsCollectionViewController = {
@@ -55,7 +53,7 @@ extension NewsletterFeedContainerViewController {
         loadFeed()
         configureCollectionView()
         
-        updateItemsInBackground()
+        updateItems()
     }
 }
 
@@ -103,8 +101,7 @@ extension NewsletterFeedContainerViewController {
     
     static func instantiate(
         newsletterFeed: NewsletterFeed,
-        delegate: NewsletterFeedContainerViewControllerDelegate,
-        managedObjectContext: NSManagedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext
+        delegate: NewsletterFeedContainerViewControllerDelegate
     ) -> NewsletterFeedContainerViewController {
         let viewController = StoryboardScene
             .NewsletterFeed
@@ -113,7 +110,6 @@ extension NewsletterFeedContainerViewController {
         
         viewController.newsletterFeed = newsletterFeed
         viewController.delegate = delegate
-        viewController.managedObjectContext = managedObjectContext
         
         return viewController
     }
@@ -125,8 +121,10 @@ extension NewsletterFeedContainerViewController {
     private func handleNewsletterItemCellSelection(
         _ managedObjectID: NSManagedObjectID
     ) {
+        let context = CoreDataManager.sharedManager.persistentContainer.viewContext
+        
         guard
-            let selectedItem = managedObjectContext.object(with: managedObjectID) as? ContentFeedItem,
+            let selectedItem = context.object(with: managedObjectID) as? ContentFeedItem,
             selectedItem.contentFeed?.isNewsletter == true
         else {
             return
@@ -138,39 +136,40 @@ extension NewsletterFeedContainerViewController {
     }
     
     
-    private func updateItemsInBackground() {
-        let backgroundContext = CoreDataManager.sharedManager.getBackgroundContext()
-        
-        guard
-            let newsletterF = self.newsletterFeed,
-            let feedURL = newsletterF.feedURL
-        else { return }
-        
-        let tribesServerURL = "\(API.kTestTribesServerBaseURL)/feed?url=\(feedURL.absoluteString)"
-        
-        if let existingContentFeed = backgroundContext.object(with: newsletterF.objectID) as? ContentFeed {
+    private func updateItems() {
+        DispatchQueue.global(qos: .utility).async {
+            let context = CoreDataManager.sharedManager.persistentContainer.viewContext
             
-            API.sharedInstance.getContentFeed(
-                url: tribesServerURL,
-                callback: { contentFeed in
-                    
-                    contentFeed.items?.forEach {
-                        backgroundContext.insert($0)
-                    }
-                    
-                    existingContentFeed.addToItems(
-                        Set(
-                            contentFeed.items ?? []
+            guard
+                let newsletterF = self.newsletterFeed,
+                let feedURL = newsletterF.feedURL
+            else { return }
+            
+            let tribesServerURL = "\(API.kTestTribesServerBaseURL)/feed?url=\(feedURL.absoluteString)"
+            
+            if let existingContentFeed = context.object(with: newsletterF.objectID) as? ContentFeed {
+                
+                API.sharedInstance.getContentFeed(
+                    url: tribesServerURL,
+                    callback: { contentFeed in
+                        
+                        contentFeed.items?.forEach {
+                            context.insert($0)
+                        }
+                        
+                        existingContentFeed.addToItems(
+                            Set(
+                                contentFeed.items ?? []
+                            )
                         )
-                    )
-                    
-                    backgroundContext.saveContext()
-                },
-                errorCallback: {
-                    print("Failed to fetch newsletter items.")
-                }
-            )
-            
+                        
+                        context.saveContext()
+                    },
+                    errorCallback: {
+                        print("Failed to fetch newsletter items.")
+                    }
+                )
+            }
         }
     }
 }

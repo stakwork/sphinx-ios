@@ -79,7 +79,7 @@ class NewPodcastPlayerViewController: UIViewController {
         tableHeaderView?.preparePlayer()
         tableView.reloadData()
         
-        updateEpisodesInBackground()
+        updateEpisodes()
     }
     
     
@@ -111,39 +111,41 @@ class NewPodcastPlayerViewController: UIViewController {
         }
     }
     
-    private func updateEpisodesInBackground() {
-        let backgroundContext = CoreDataManager.sharedManager.getBackgroundContext()
-        
-        guard
-            let podcastF = self.playerHelper?.podcast,
-            let feedURLPath = podcastF.feedURLPath
-        else { return }
-        
-        let tribesServerURL = "\(API.kTestTribesServerBaseURL)/feed?url=\(feedURLPath)"
-        
-        
-        if let existingContentFeed = backgroundContext.object(with: podcastF.objectID) as? ContentFeed {
-            API.sharedInstance.getContentFeed(
-                url: tribesServerURL,
-                persistingIn: backgroundContext,
-                callback: { contentFeed in
-                    
-                    contentFeed.items?.forEach {
-                        backgroundContext.insert($0)
-                    }
-                    
-                    existingContentFeed.addToItems(
-                        Set(
-                            contentFeed.items ?? []
+    private func updateEpisodes() {
+        DispatchQueue.global(qos: .utility).async {
+            let context = CoreDataManager.sharedManager.persistentContainer.viewContext
+            
+            guard
+                let podcastF = self.playerHelper?.podcast,
+                let feedURLPath = podcastF.feedURLPath
+            else { return }
+            
+            let tribesServerURL = "\(API.kTestTribesServerBaseURL)/feed?url=\(feedURLPath)"
+            
+            
+            if let existingContentFeed = context.object(with: podcastF.objectID) as? ContentFeed {
+                API.sharedInstance.getContentFeed(
+                    url: tribesServerURL,
+                    persistingIn: context,
+                    callback: { contentFeed in
+                        
+                        contentFeed.items?.forEach {
+                            context.insert($0)
+                        }
+                        
+                        existingContentFeed.addToItems(
+                            Set(
+                                contentFeed.items ?? []
+                            )
                         )
-                    )
-                    
-                    backgroundContext.saveContext()
-                },
-                errorCallback: {
-                    print("Failed to fetch newsletter items.")
-                }
-            )
+                        
+                        context.saveContext()
+                    },
+                    errorCallback: {
+                        print("Failed to fetch newsletter items.")
+                    }
+                )
+            }
         }
     }
 }
@@ -190,9 +192,14 @@ extension NewPodcastPlayerViewController : PodcastEpisodesDSDelegate {
 extension NewPodcastPlayerViewController: PodcastPlayerViewDelegate {
     
     func didTapSubscriptionToggleButton() {
-        playerHelper.podcast?.isSubscribedToFromSearch.toggle()
-        
-        CoreDataManager.sharedManager.saveContext()
+        if let podcast = playerHelper.podcast {
+            
+            podcast.isSubscribedToFromSearch.toggle()
+            
+            let contentFeed: ContentFeed? = CoreDataManager.sharedManager.getObjectWith(objectId: podcast.objectID)
+            contentFeed?.isSubscribedToFromSearch.toggle()
+            contentFeed?.managedObjectContext?.saveContext()
+        }
     }
     
     

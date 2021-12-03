@@ -53,7 +53,6 @@ public class ContentFeed: NSManagedObject, Decodable {
             items = newItems
         }
 
-
         if
             let valueContainer = try? container.nestedContainer(keyedBy: CodingKeys.Value.self, forKey: .value)
         {

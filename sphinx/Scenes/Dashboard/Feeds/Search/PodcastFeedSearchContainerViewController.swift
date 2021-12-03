@@ -163,6 +163,7 @@ extension PodcastFeedSearchContainerViewController {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let foundFeeds):
+                    
                     let podcastFeeds = foundFeeds.map {
                         PodcastFeed.convertFrom(contentFeed: $0)
                     }

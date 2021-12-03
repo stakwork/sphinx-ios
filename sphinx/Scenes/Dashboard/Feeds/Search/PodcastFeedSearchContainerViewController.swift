@@ -163,7 +163,6 @@ extension PodcastFeedSearchContainerViewController {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let foundFeeds):
-                    
                     let podcastFeeds = foundFeeds.map {
                         PodcastFeed.convertFrom(contentFeed: $0)
                     }
@@ -172,12 +171,7 @@ extension PodcastFeedSearchContainerViewController {
                         searchResults: podcastFeeds
                     )
                 case .failure(_):
-                    AlertHelper.showAlert(
-                        title: "dashboard.feeds.search.error-alert-title".localized,
-                        message: """
-                        \("generic.contact-support".localized)
-                        """
-                    )
+                    break
                 }
             }
         }

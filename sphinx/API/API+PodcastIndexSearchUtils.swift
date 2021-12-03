@@ -39,7 +39,9 @@ extension API {
             return
         }
 
-        AF.request(request).responseJSON { response in
+        podcastSearchRequest?.cancel()
+        
+        podcastSearchRequest = AF.request(request).responseJSON { response in
             switch response.result {
             case .success:
                 guard let data = response.data else {

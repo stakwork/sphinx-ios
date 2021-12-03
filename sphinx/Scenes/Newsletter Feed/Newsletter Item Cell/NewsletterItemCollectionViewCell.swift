@@ -93,7 +93,7 @@ extension NewsletterItemCollectionViewCell {
 
 
         itemTitleLabel.text = newsletterItem.titleForDisplay
-        itemDescriptionLabel.text = newsletterItem.itemDescription
+        itemDescriptionLabel.text = newsletterItem.itemDescription?.nonHtmlRawString
         itemDateLabel.text = newsletterItem.publishDateText
     }
 }

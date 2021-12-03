@@ -113,7 +113,7 @@ extension NewPublicGroupViewController {
                 
                 
                 let feedUrl = chatTribeInfo.feedUrl ?? ""
-                let feedType = (chatTribeInfo.feedContentType ?? GroupsManager.FeedContentType.defaultValue).description
+                let feedType = (chatTribeInfo.feedContentType ?? FeedContentType.defaultValue).description
                 feedContentTypeField.text = (feedUrl.isEmpty) ? "" : feedType
                 feedContentTypeButton.isUserInteractionEnabled = !feedUrl.isEmpty
                 
@@ -186,8 +186,8 @@ extension NewPublicGroupViewController {
     }
     
     func showFeedContentTypePicker() {
-        let values = GroupsManager.FeedContentType.allCases.map { $0.description }
-        let selectedValue = GroupsManager.FeedContentType.allCases.filter { $0.description == feedContentTypeField.text}.first?.description ?? values.first?.description
+        let values = FeedContentType.allCases.map { $0.description }
+        let selectedValue = FeedContentType.allCases.filter { $0.description == feedContentTypeField.text}.first?.description ?? values.first?.description
         
         let pickerVC = PickerViewController.instantiate(
             values: values,
@@ -202,7 +202,7 @@ extension NewPublicGroupViewController {
 
 extension NewPublicGroupViewController : PickerViewDelegate {
     func didSelectValue(value: String) {
-        let selectedValue = GroupsManager.FeedContentType.allCases.filter { $0.description == value}.first
+        let selectedValue = FeedContentType.allCases.filter { $0.description == value}.first
         
         feedContentTypeField.text = selectedValue?.description ?? "-"
         groupsManager.newGroupInfo.feedContentType = selectedValue

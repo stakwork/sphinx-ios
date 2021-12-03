@@ -198,15 +198,27 @@ extension VideoFeedEpisodePlayerContainerViewController {
         guard
             let videoF = self.videoPlayerEpisode.videoFeed,
             let videoFeed = backgroundContext.object(with: videoF.objectID) as? VideoFeed,
-            let feedURL = videoFeed.feedURL
+            let feedURL = videoF.feedURL
         else { return }
 
         let tribesServerURL = "\(API.kTestTribesServerBaseURL)/feed?url=\(feedURL.absoluteString)"
+        
+        var chat: Chat? = nil
+        
+        if let chatObjectId = videoF.chat?.objectID {
+            chat = backgroundContext.object(with: chatObjectId) as? Chat
+        }
+        
+        if let existingContentFeed = chat?.contentFeed {
+            backgroundContext.delete(existingContentFeed)
+        }
 
         API.sharedInstance.getContentFeed(
             url: tribesServerURL,
             persistingIn: backgroundContext,
             callback: { contentFeed in
+                contentFeed.chat = chat
+                
                 videoFeed.addToVideos(
                     Set(
                         contentFeed

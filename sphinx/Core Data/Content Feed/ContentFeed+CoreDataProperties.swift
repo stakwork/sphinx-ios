@@ -13,7 +13,7 @@ extension ContentFeed {
     public var feedID: String
     
     @NSManaged
-    internal var feedKindValue: ContentFeedKind.RawValue
+    internal var feedKindValue: FeedType.RawValue
    
     @NSManaged
     internal var mediaKindValue: ContentFeedMediaKind.RawValue

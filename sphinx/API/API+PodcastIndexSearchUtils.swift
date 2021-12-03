@@ -52,7 +52,7 @@ extension API {
                     
                     let searchResults = try decoder.decode([ContentFeed].self, from: data)
                     
-                    searchResults.forEach { $0.feedKind = .podcast }
+                    searchResults.forEach { $0.feedKind = .Podcast }
 
                     completionHandler(.success(searchResults))
                 } catch let error as DecodingError {

@@ -87,6 +87,21 @@ extension DashboardFeedSquaredThumbnailCollectionViewCell {
 
 
 // MARK: - DashboardFeedSquaredThumbnailCollectionViewItem - NSManagedObject Conformance
+extension ContentFeed: DashboardFeedSquaredThumbnailCollectionViewItem {
+    
+    var imageURLPath: String? {
+        imageURL?.absoluteString ?? chat?.photoUrl
+    }
+    
+    var placeholderImageName: String? {
+        "videoPlaceholder"
+    }
+    
+    var subtitle: String? {
+        feedDescription ?? title
+    }
+}
+
 extension VideoFeed: DashboardFeedSquaredThumbnailCollectionViewItem {
     
     var imageURLPath: String? {

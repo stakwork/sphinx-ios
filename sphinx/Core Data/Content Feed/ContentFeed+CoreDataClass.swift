@@ -37,7 +37,7 @@ public class ContentFeed: NSManagedObject, Decodable {
         
         feedID = try container.decode(String.self, forKey: .feedID)
         title = try? container.decode(String.self, forKey: .title)
-        feedKindValue = try container.decode(ContentFeedKind.RawValue.self, forKey: .feedKindValue)
+        feedKindValue = try container.decode(FeedType.RawValue.self, forKey: .feedKindValue)
         ownerURL = try? container.decode(URL.self, forKey: .ownerURL)
         generator = try? container.decode(String.self, forKey: .generator)
         authorName = try? container.decode(String.self, forKey: .authorName)

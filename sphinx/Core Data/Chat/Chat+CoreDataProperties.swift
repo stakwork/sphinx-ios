@@ -39,7 +39,6 @@ extension Chat {
     @NSManaged public var contentFeed: ContentFeed?
     @NSManaged public var podcastFeed: PodcastFeed?
     @NSManaged public var videoFeed: VideoFeed?
-    @NSManaged public var newsletterFeed: NewsletterFeed?
     @NSManaged public var contactIds: [NSNumber]
     @NSManaged public var pendingContactIds: [NSNumber]
 

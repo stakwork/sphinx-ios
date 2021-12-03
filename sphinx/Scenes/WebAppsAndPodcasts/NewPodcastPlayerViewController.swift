@@ -121,11 +121,23 @@ class NewPodcastPlayerViewController: UIViewController {
         else { return }
         
         let tribesServerURL = "\(API.kTestTribesServerBaseURL)/feed?url=\(feedURLPath)"
+        
+        var chat: Chat? = nil
+        
+        if let chatObjectId = podcastF.chat?.objectID {
+            chat = backgroundContext.object(with: chatObjectId) as? Chat
+        }
+        
+        if let existingContentFeed = chat?.contentFeed {
+            backgroundContext.delete(existingContentFeed)
+        }
 
         API.sharedInstance.getContentFeed(
             url: tribesServerURL,
             persistingIn: backgroundContext,
             callback: { contentFeed in
+                contentFeed.chat = chat
+                
                 podcastFeed.addToEpisodes(
                     Set(
                         contentFeed
@@ -139,6 +151,7 @@ class NewPodcastPlayerViewController: UIViewController {
                         ?? []
                     )
                 )
+                
                 backgroundContext.saveContext()
             },
             errorCallback: {

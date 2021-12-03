@@ -21,7 +21,7 @@ class DashboardNewsletterFeedCollectionViewController: UICollectionViewControlle
     var onNewResultsFetched: ((Int) -> Void)!
 
     private var managedObjectContext: NSManagedObjectContext!
-    private var fetchedResultsController: NSFetchedResultsController<NewsletterFeed>!
+    private var fetchedResultsController: NSFetchedResultsController<ContentFeed>!
     private var currentDataSnapshot: DataSourceSnapshot!
     private var dataSource: DataSource!
 
@@ -417,7 +417,7 @@ extension DashboardNewsletterFeedCollectionViewController {
     
     static func makeFetchedResultsController(
         using managedObjectContext: NSManagedObjectContext
-    ) -> NSFetchedResultsController<NewsletterFeed> {
+    ) -> NSFetchedResultsController<ContentFeed> {
         let fetchRequest = NewsletterFeed.FetchRequests.followedFeeds()
         
         return NSFetchedResultsController(
@@ -491,17 +491,21 @@ extension DashboardNewsletterFeedCollectionViewController: NSFetchedResultsContr
         guard
             let resultController = controller as? NSFetchedResultsController<NSManagedObject>,
             let firstSection = resultController.sections?.first,
-            let foundFeeds = firstSection.objects as? [NewsletterFeed]
+            let foundFeeds = firstSection.objects as? [ContentFeed]
         else {
             return
         }
         
+        let newsletterFeeds = foundFeeds.map {
+            NewsletterFeed.convertFrom(contentFeed: $0)
+        }
+        
         DispatchQueue.main.async { [weak self] in
             self?.updateWithNew(
-                newsletterFeeds: foundFeeds
+                newsletterFeeds: newsletterFeeds
             )
             
-            self?.onNewResultsFetched(foundFeeds.count)
+            self?.onNewResultsFetched(newsletterFeeds.count)
         }
     }
 }

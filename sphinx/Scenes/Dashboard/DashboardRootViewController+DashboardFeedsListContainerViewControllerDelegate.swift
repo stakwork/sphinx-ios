@@ -97,11 +97,13 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
         didSelectNewsletterFeedWithID newsletterFeedID: NSManagedObjectID
     ) {
         guard
-            let newsletterFeed = managedObjectContext
-                .object(with: newsletterFeedID) as? NewsletterFeed
+            let contentFeed = managedObjectContext.object(with: newsletterFeedID) as? ContentFeed,
+            contentFeed.isNewsletter
         else {
             preconditionFailure()
         }
+        
+        let newsletterFeed = NewsletterFeed.convertFrom(contentFeed: contentFeed)
         
         if viewController is DashboardFeedsContainerViewController {
             presentNewsletterFeedVC(for: newsletterFeed)
@@ -113,13 +115,15 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
         didSelectNewsletterItemWithID newsletterItemID: NSManagedObjectID
     ) {
         guard
-            let newsletterItem = managedObjectContext
-                .object(with: newsletterItemID) as? NewsletterItem
+            let contentFeedItem = managedObjectContext.object(with: newsletterItemID) as? ContentFeedItem,
+            contentFeedItem.contentFeed?.isNewsletter == true
         else {
             preconditionFailure()
         }
         
-        presentItemWebView(for: newsletterItem)
+        let newsletterFeedItem = NewsletterItem.convertFrom(contentFeedItem: contentFeedItem)
+        
+        presentItemWebView(for: newsletterFeedItem)
     }
 }
 

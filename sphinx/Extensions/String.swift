@@ -702,4 +702,8 @@ extension String {
             return nil
         }
     }
+    
+    var nonHtmlRawString: String {
+        return self.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
+    }
 }

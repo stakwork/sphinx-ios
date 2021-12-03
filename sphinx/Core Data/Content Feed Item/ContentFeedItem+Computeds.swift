@@ -9,7 +9,7 @@ import Foundation
 
 extension ContentFeedItem {
     
-    public var feedKind: ContentFeedKind {
+    public var feedKind: FeedType {
         get {
             .init(rawValue: feedKindValue)!
         }

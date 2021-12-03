@@ -70,8 +70,11 @@ extension NewsletterFeedItemsCollectionViewController {
         configureDataSource(for: collectionView)
     }
     
-    func reloadItems(newsletterItems: [NewsletterItem]) {
-        if (newsletterItems.count > 0 && newsletterItems.count != self.newsletterItems.count) {
+    func reloadItems(
+        newsletterItems: [NewsletterItem],
+        forceReload: Bool = false
+    ) {
+        if forceReload || (newsletterItems.count > 0 && newsletterItems.count != self.newsletterItems.count) {
             self.newsletterItems = newsletterItems
             configureDataSource(for: collectionView)
         }

@@ -400,7 +400,7 @@ class GroupsManager {
 }
 
 extension Int {
-    var toFeedContentType: GroupsManager.FeedContentType? {
-        return GroupsManager.FeedContentType.allCases.filter { $0.id == self }.first
+    var toFeedContentType: FeedContentType? {
+        return FeedContentType.allCases.filter { $0.id == self }.first
     }
 }

@@ -11,6 +11,12 @@ import CoreData
 
 // MARK: - Predicates
 extension ContentFeed {
+    
+    public static func getAll() -> [ContentFeed] {
+        let sortDescriptors = [NSSortDescriptor(key: "feedID", ascending: true)]
+        let feeds: [ContentFeed] = CoreDataManager.sharedManager.getAllOfType(entityName: "ContentFeed", sortDescriptors: sortDescriptors)
+        return feeds
+    }
 
     public enum Predicates {
         
@@ -52,7 +58,7 @@ extension ContentFeed {
             return NSPredicate(
                 format: "%K \(keyword) \(formatSpecifier)",
                 "feedKindValue",
-                ContentFeedKind.podcast.rawValue
+                FeedType.Podcast.rawValue
             )
         }()
     }
@@ -128,6 +134,15 @@ extension ContentFeed {
             let request: NSFetchRequest<ContentFeed> = baseFetchRequest()
             
             request.predicate = Predicates.matching(feedID: feedID)
+            request.sortDescriptors = []
+
+            return request
+        }
+        
+        public static func followedFeeds() -> NSFetchRequest<ContentFeed> {
+            let request: NSFetchRequest<ContentFeed> = baseFetchRequest()
+            
+            request.predicate = Predicates.followedFeeds
             request.sortDescriptors = []
 
             return request

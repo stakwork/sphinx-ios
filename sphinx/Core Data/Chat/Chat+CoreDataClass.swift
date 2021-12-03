@@ -491,18 +491,8 @@ public class Chat: NSManagedObject {
                             
                             backgroundChat.podcastFeed = podcastFeed
                             
-                        } else if feedContentType.isNewsletter {
-                            let newsletterFeed = NewsletterFeed.convertFrom(
-                                contentFeed: fetchedContentFeed,
-                                persistingIn: backgroundContext
-                            )
-                            
-                            if let existingNewsletterFeed = backgroundChat.newsletterFeed {
-                                backgroundContext.delete(existingNewsletterFeed)
-                            }
-                            
-                            backgroundChat.newsletterFeed = newsletterFeed
                         }
+                        
                         backgroundContext.saveContext()
                     }
 

@@ -126,9 +126,10 @@ extension NewsletterFeedContainerViewController {
         _ managedObjectID: NSManagedObjectID
     ) {
         guard
-            let selectedItem = managedObjectContext.object(with: managedObjectID) as? NewsletterItem
+            let selectedItem = managedObjectContext.object(with: managedObjectID) as? ContentFeedItem,
+            selectedItem.contentFeed?.isNewsletter == true
         else {
-            preconditionFailure()
+            return
         }
 
         self.dismiss(animated: false, completion: {
@@ -142,29 +143,27 @@ extension NewsletterFeedContainerViewController {
         
         guard
             let newsletterF = self.newsletterFeed,
-            let newsletterFeed = backgroundContext.object(with: newsletterF.objectID) as? NewsletterFeed,
-            let feedURL = newsletterFeed.feedURL
+            let feedURL = newsletterF.feedURL
         else { return }
         
         let tribesServerURL = "\(API.kTestTribesServerBaseURL)/feed?url=\(feedURL.absoluteString)"
+        
+        let existingContentFeed = backgroundContext.object(with: newsletterF.objectID) as? ContentFeed
 
         API.sharedInstance.getContentFeed(
             url: tribesServerURL,
-            persistingIn: backgroundContext,
             callback: { contentFeed in
-                newsletterFeed.addToNewsletterItems(
+                
+                contentFeed.items?.forEach {
+                    backgroundContext.insert($0)
+                }
+                
+                existingContentFeed?.addToItems(
                     Set(
-                        contentFeed
-                            .items?
-                            .map {
-                                NewsletterItem.convertFrom(
-                                    contentFeedItem: $0,
-                                    persistingIn: backgroundContext
-                                )
-                            }
-                        ?? []
+                        contentFeed.items ?? []
                     )
                 )
+                
                 backgroundContext.saveContext()
             },
             errorCallback: {

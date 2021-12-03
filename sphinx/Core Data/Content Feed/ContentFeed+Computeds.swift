@@ -10,7 +10,7 @@ import CoreData
 
 extension ContentFeed {
     
-    public var feedKind: ContentFeedKind {
+    public var feedKind: FeedType {
         get {
             .init(rawValue: feedKindValue)!
         }
@@ -27,5 +27,17 @@ extension ContentFeed {
         set {
             mediaKindValue = newValue.rawValue
         }
+    }
+    
+    var isPodcast: Bool {
+        return self.feedKind.rawValue == FeedType.Podcast.rawValue
+    }
+    
+    var isVideo: Bool {
+        return self.feedKind.rawValue == FeedType.Video.rawValue
+    }
+    
+    var isNewsletter: Bool {
+        return self.feedKind.rawValue == FeedType.Newsletter.rawValue
     }
 }

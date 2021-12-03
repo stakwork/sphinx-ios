@@ -20,7 +20,7 @@ extension ContentFeedItem {
     public var authorName: String?
 
     @NSManaged
-    internal var feedKindValue: ContentFeedKind.RawValue
+    internal var feedKindValue: FeedType.RawValue
     
     @NSManaged
     internal var mediaKindValue: ContentFeedMediaKind.RawValue
@@ -48,6 +48,12 @@ extension ContentFeedItem {
     
     @NSManaged
     public var isDownloaded: Bool
+    
+    @NSManaged
+    public var contentFeed: ContentFeed?
+    
+    @NSManaged
+    public var isSubscribedToFromSearch: Bool
 }
 
 

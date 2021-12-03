@@ -9,7 +9,7 @@ import CoreData
 
 
 class AllTribeFeedsCollectionViewController: UICollectionViewController {
-    var tribesWithFeeds: [Chat] = []
+    var followedFeeds: [ContentFeed] = []
     
     var interSectionSpacing: CGFloat = 20.0
     var interCellSpacing: CGFloat = 6.0
@@ -18,7 +18,7 @@ class AllTribeFeedsCollectionViewController: UICollectionViewController {
     var onNewResultsFetched: ((Int) -> Void)!
 
     private var managedObjectContext: NSManagedObjectContext!
-    private var fetchedResultsController: NSFetchedResultsController<Chat>!
+    private var fetchedResultsController: NSFetchedResultsController<ContentFeed>!
     private var currentDataSnapshot: DataSourceSnapshot!
     private var dataSource: DataSource!
 
@@ -75,9 +75,9 @@ extension AllTribeFeedsCollectionViewController {
     
     
     enum DataSourceItem: Hashable {
-        case tribePodcastFeed(PodcastFeed)
-        case tribeVideoFeed(VideoFeed)
-        case tribeNewsletterFeed(NewsletterFeed)
+        case tribePodcastFeed(ContentFeed)
+        case tribeVideoFeed(ContentFeed)
+        case tribeNewsletterFeed(ContentFeed)
     }
 
     
@@ -260,8 +260,7 @@ extension AllTribeFeedsCollectionViewController {
                 }
                 
                 guard
-                    let feedEntity = dataSourceItem
-                        .feedEntity
+                    let feedEntity = dataSourceItem.feedEntity
                         as? DashboardFeedSquaredThumbnailCollectionViewItem
                 else {
                     preconditionFailure("Failed to find entity that conforms to `DashboardFeedSquaredThumbnailCollectionViewItem`")
@@ -310,24 +309,23 @@ extension AllTribeFeedsCollectionViewController {
 
         snapshot.appendSections(CollectionViewSection.allCases)
   
-        let dataSourceItems = tribesWithFeeds.sorted { (first, second) in
-            guard let firstDate = first.webAppLastDate else {
+        let dataSourceItems = followedFeeds.sorted { (first, second) in
+            guard let firstDate = first.chat?.webAppLastDate else {
                 return false
             }
-            guard let secondDate = second.webAppLastDate else {
+            guard let secondDate = second.chat?.webAppLastDate else {
                 return true
             }
             return firstDate > secondDate
-        }.compactMap { tribeChat -> DataSourceItem? in
-            if let podcastFeed = tribeChat.podcastFeed {
-                return DataSourceItem.tribePodcastFeed(podcastFeed)
-            } else if let videoFeed = tribeChat.videoFeed {
-                return DataSourceItem.tribeVideoFeed(videoFeed)
-            } else if let newsletterFeed = tribeChat.newsletterFeed {
-                return DataSourceItem.tribeNewsletterFeed(newsletterFeed)
-            } else {
-                return nil
+        }.compactMap { contentFeed -> DataSourceItem? in
+            if contentFeed.isPodcast {
+                return DataSourceItem.tribePodcastFeed(contentFeed)
+            } else if contentFeed.isVideo {
+                return DataSourceItem.tribeVideoFeed(contentFeed)
+            } else if contentFeed.isNewsletter {
+                return DataSourceItem.tribeNewsletterFeed(contentFeed)
             }
+            return nil
         }
         
         snapshot.appendItems(
@@ -347,10 +345,10 @@ extension AllTribeFeedsCollectionViewController {
     
     
     func updateWithNew(
-        tribes tribesWithFeeds: [Chat],
+        feeds followedFeeds: [ContentFeed],
         shouldAnimate: Bool = true
     ) {
-        self.tribesWithFeeds = tribesWithFeeds
+        self.followedFeeds = followedFeeds
 
         if let dataSource = dataSource {
             dataSource.apply(
@@ -367,8 +365,8 @@ extension AllTribeFeedsCollectionViewController {
     
     static func makeFetchedResultsController(
         using managedObjectContext: NSManagedObjectContext
-    ) -> NSFetchedResultsController<Chat> {
-        let fetchRequest = Chat.FetchRequests.default()
+    ) -> NSFetchedResultsController<ContentFeed> {
+        let fetchRequest = ContentFeed.FetchRequests.followedFeeds()
         
         return NSFetchedResultsController(
             fetchRequest: fetchRequest,
@@ -422,17 +420,17 @@ extension AllTribeFeedsCollectionViewController: NSFetchedResultsControllerDeleg
         guard
             let resultController = controller as? NSFetchedResultsController<NSManagedObject>,
             let firstSection = resultController.sections?.first,
-            let foundTribes = firstSection.objects as? [Chat]
+            let foundFeeds = firstSection.objects as? [ContentFeed]
         else {
             return
         }
         
         DispatchQueue.main.async { [weak self] in
             self?.updateWithNew(
-                tribes: foundTribes
+                feeds: foundFeeds
             )
             
-            self?.onNewResultsFetched(foundTribes.count)
+            self?.onNewResultsFetched(foundFeeds.count)
         }
     }
 }

@@ -44,7 +44,6 @@
 		4712BB4723D898DD00DDCC3B /* PlayAudioHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4712BB4623D898DD00DDCC3B /* PlayAudioHelper.swift */; };
 		4712BB4923D89A5100DDCC3B /* ClipboardHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4712BB4823D89A5100DDCC3B /* ClipboardHelper.swift */; };
 		47158D77273083E200601F00 /* NewsletterFeed.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 47158D79273083E200601F00 /* NewsletterFeed.storyboard */; };
-		47158D7F2731788F00601F00 /* NewsletterItem+FetchUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47158D7E2731788F00601F00 /* NewsletterItem+FetchUtils.swift */; };
 		47158D81273178C200601F00 /* Video+FetchUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47158D80273178C200601F00 /* Video+FetchUtils.swift */; };
 		47183CB0254893B100E6FD19 /* NewPodcastPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47183CAF254893B100E6FD19 /* NewPodcastPlayerViewController.swift */; };
 		47183CB22548AA4400E6FD19 /* PodcastPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47183CB12548AA4400E6FD19 /* PodcastPlayerView.swift */; };
@@ -63,7 +62,6 @@
 		471D8D0E27274AA40024AEAC /* GroupsManager+TribeInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471D8D0D27274AA30024AEAC /* GroupsManager+TribeInfo.swift */; };
 		471D8D1027274AC80024AEAC /* GroupsManager+Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471D8D0F27274AC80024AEAC /* GroupsManager+Tag.swift */; };
 		471D8D1227274ADB0024AEAC /* GroupsManager+Bot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471D8D1127274ADB0024AEAC /* GroupsManager+Bot.swift */; };
-		471D8D1427274AED0024AEAC /* GroupsManager+FeedContentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471D8D1327274AED0024AEAC /* GroupsManager+FeedContentType.swift */; };
 		471F3ABB255ADECB00E2AC79 /* PodcastLiveDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471F3ABA255ADECB00E2AC79 /* PodcastLiveDataSource.swift */; };
 		471FACD823E9B65C007DE1C8 /* EmailHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471FACD723E9B65C007DE1C8 /* EmailHelper.swift */; };
 		471FACDA23E9BE48007DE1C8 /* SupportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471FACD923E9BE48007DE1C8 /* SupportViewController.swift */; };
@@ -110,12 +108,10 @@
 		47352E4A2440F54300E5CC7F /* MessageOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47352E492440F54300E5CC7F /* MessageOptionsViewController.swift */; };
 		47352E4C2440FEB800E5CC7F /* WindowsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47352E4B2440FEB800E5CC7F /* WindowsManager.swift */; };
 		47357A0B2729A11300A49EEE /* NewsletterFeed+Computeds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47357A0A2729A11300A49EEE /* NewsletterFeed+Computeds.swift */; };
-		47357A0D2729A11E00A49EEE /* NewsletterFeed+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47357A0C2729A11E00A49EEE /* NewsletterFeed+CoreDataClass.swift */; };
-		47357A0F2729A12A00A49EEE /* NewsletterFeed+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47357A0E2729A12A00A49EEE /* NewsletterFeed+CoreDataProperties.swift */; };
+		47357A0F2729A12A00A49EEE /* NewsletterFeed+Properties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47357A0E2729A12A00A49EEE /* NewsletterFeed+Properties.swift */; };
 		47357A112729A13600A49EEE /* NewsletterFeed+DisplayUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47357A102729A13600A49EEE /* NewsletterFeed+DisplayUtils.swift */; };
 		47357A132729A14D00A49EEE /* NewsletterItem+Computeds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47357A122729A14D00A49EEE /* NewsletterItem+Computeds.swift */; };
-		47357A152729A15800A49EEE /* NewsletterItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47357A142729A15800A49EEE /* NewsletterItem+CoreDataClass.swift */; };
-		47357A172729A16100A49EEE /* NewsletterItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47357A162729A16100A49EEE /* NewsletterItem+CoreDataProperties.swift */; };
+		47357A172729A16100A49EEE /* NewsletterItem+Properties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47357A162729A16100A49EEE /* NewsletterItem+Properties.swift */; };
 		47357A192729A16C00A49EEE /* NewsletterItem+DisplayUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47357A182729A16C00A49EEE /* NewsletterItem+DisplayUtils.swift */; };
 		4735D5C22411416000BEE3D4 /* LinkPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4735D5C12411416000BEE3D4 /* LinkPreviewView.swift */; };
 		4735D5C42411416B00BEE3D4 /* LinkPreviewView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4735D5C32411416B00BEE3D4 /* LinkPreviewView.xib */; };
@@ -729,7 +725,6 @@
 		47158D78273083E200601F00 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/NewsletterFeed.storyboard; sourceTree = "<group>"; };
 		47158D7B273083E500601F00 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/NewsletterFeed.strings; sourceTree = "<group>"; };
 		47158D7D2730841600601F00 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/NewsletterFeed.strings; sourceTree = "<group>"; };
-		47158D7E2731788F00601F00 /* NewsletterItem+FetchUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewsletterItem+FetchUtils.swift"; sourceTree = "<group>"; };
 		47158D80273178C200601F00 /* Video+FetchUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Video+FetchUtils.swift"; sourceTree = "<group>"; };
 		47183CAF254893B100E6FD19 /* NewPodcastPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPodcastPlayerViewController.swift; sourceTree = "<group>"; };
 		47183CB12548AA4400E6FD19 /* PodcastPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastPlayerView.swift; sourceTree = "<group>"; };
@@ -748,7 +743,6 @@
 		471D8D0D27274AA30024AEAC /* GroupsManager+TribeInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GroupsManager+TribeInfo.swift"; sourceTree = "<group>"; };
 		471D8D0F27274AC80024AEAC /* GroupsManager+Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GroupsManager+Tag.swift"; sourceTree = "<group>"; };
 		471D8D1127274ADB0024AEAC /* GroupsManager+Bot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GroupsManager+Bot.swift"; sourceTree = "<group>"; };
-		471D8D1327274AED0024AEAC /* GroupsManager+FeedContentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GroupsManager+FeedContentType.swift"; sourceTree = "<group>"; };
 		471F3ABA255ADECB00E2AC79 /* PodcastLiveDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastLiveDataSource.swift; sourceTree = "<group>"; };
 		471FACD723E9B65C007DE1C8 /* EmailHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailHelper.swift; sourceTree = "<group>"; };
 		471FACD923E9BE48007DE1C8 /* SupportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportViewController.swift; sourceTree = "<group>"; };
@@ -802,12 +796,10 @@
 		47352E4B2440FEB800E5CC7F /* WindowsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowsManager.swift; sourceTree = "<group>"; };
 		47357A0727299E0900A49EEE /* sphinx 31.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 31.xcdatamodel"; sourceTree = "<group>"; };
 		47357A0A2729A11300A49EEE /* NewsletterFeed+Computeds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewsletterFeed+Computeds.swift"; sourceTree = "<group>"; };
-		47357A0C2729A11E00A49EEE /* NewsletterFeed+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewsletterFeed+CoreDataClass.swift"; sourceTree = "<group>"; };
-		47357A0E2729A12A00A49EEE /* NewsletterFeed+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewsletterFeed+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		47357A0E2729A12A00A49EEE /* NewsletterFeed+Properties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewsletterFeed+Properties.swift"; sourceTree = "<group>"; };
 		47357A102729A13600A49EEE /* NewsletterFeed+DisplayUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewsletterFeed+DisplayUtils.swift"; sourceTree = "<group>"; };
 		47357A122729A14D00A49EEE /* NewsletterItem+Computeds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewsletterItem+Computeds.swift"; sourceTree = "<group>"; };
-		47357A142729A15800A49EEE /* NewsletterItem+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewsletterItem+CoreDataClass.swift"; sourceTree = "<group>"; };
-		47357A162729A16100A49EEE /* NewsletterItem+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewsletterItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		47357A162729A16100A49EEE /* NewsletterItem+Properties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewsletterItem+Properties.swift"; sourceTree = "<group>"; };
 		47357A182729A16C00A49EEE /* NewsletterItem+DisplayUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewsletterItem+DisplayUtils.swift"; sourceTree = "<group>"; };
 		4735D5C12411416000BEE3D4 /* LinkPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkPreviewView.swift; sourceTree = "<group>"; };
 		4735D5C32411416B00BEE3D4 /* LinkPreviewView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LinkPreviewView.xib; sourceTree = "<group>"; };
@@ -1813,8 +1805,7 @@
 			isa = PBXGroup;
 			children = (
 				47357A0A2729A11300A49EEE /* NewsletterFeed+Computeds.swift */,
-				47357A0C2729A11E00A49EEE /* NewsletterFeed+CoreDataClass.swift */,
-				47357A0E2729A12A00A49EEE /* NewsletterFeed+CoreDataProperties.swift */,
+				47357A0E2729A12A00A49EEE /* NewsletterFeed+Properties.swift */,
 				47357A102729A13600A49EEE /* NewsletterFeed+DisplayUtils.swift */,
 				472782112729A547007D5F1F /* NewsletterFeed+FetchUtils.swift */,
 			);
@@ -1825,10 +1816,8 @@
 			isa = PBXGroup;
 			children = (
 				47357A122729A14D00A49EEE /* NewsletterItem+Computeds.swift */,
-				47357A142729A15800A49EEE /* NewsletterItem+CoreDataClass.swift */,
-				47357A162729A16100A49EEE /* NewsletterItem+CoreDataProperties.swift */,
+				47357A162729A16100A49EEE /* NewsletterItem+Properties.swift */,
 				47357A182729A16C00A49EEE /* NewsletterItem+DisplayUtils.swift */,
-				47158D7E2731788F00601F00 /* NewsletterItem+FetchUtils.swift */,
 			);
 			path = NewsletterItem;
 			sourceTree = "<group>";
@@ -2325,6 +2314,7 @@
 		475BDD4F232AE1C400C5BBD6 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
+				4780FA2A275A6F400099CE75 /* Wrappers */,
 				475BDD60232AE46B00C5BBD6 /* CoreDataManager.swift */,
 				47468FCD233131B40072124A /* NSManagedObjectContext.swift */,
 				47AF0D4B2551883400C98398 /* PodcastModels.swift */,
@@ -2337,8 +2327,6 @@
 				F3DC6AFE273C88D400458E09 /* Content Feed Item */,
 				F3DC6B1E273F60D800458E09 /* Content Feed Payment Destination */,
 				F3DC6B1D273F60CE00458E09 /* Content Feed Payment Model */,
-				47357A082729A0BB00A49EEE /* NewsletterFeed */,
-				47357A092729A0C200A49EEE /* NewsletterItem */,
 				F32A695226CFEEF50004B8B3 /* Podcast Destination */,
 				F32A695026CFEED70004B8B3 /* Podcast Episode */,
 				F32A694F26CFEECD0004B8B3 /* Podcast Feed */,
@@ -2501,7 +2489,6 @@
 				471D8D0D27274AA30024AEAC /* GroupsManager+TribeInfo.swift */,
 				471D8D0F27274AC80024AEAC /* GroupsManager+Tag.swift */,
 				471D8D1127274ADB0024AEAC /* GroupsManager+Bot.swift */,
-				471D8D1327274AED0024AEAC /* GroupsManager+FeedContentType.swift */,
 			);
 			path = Groups;
 			sourceTree = "<group>";
@@ -2634,6 +2621,15 @@
 				474FE33223F5A22A00C06FC8 /* AVViewController.swift */,
 			);
 			path = "Chat Attachment";
+			sourceTree = "<group>";
+		};
+		4780FA2A275A6F400099CE75 /* Wrappers */ = {
+			isa = PBXGroup;
+			children = (
+				47357A082729A0BB00A49EEE /* NewsletterFeed */,
+				47357A092729A0C200A49EEE /* NewsletterItem */,
+			);
+			path = Wrappers;
 			sourceTree = "<group>";
 		};
 		4787F87024743D6400CCE8B9 /* Public Groups */ = {
@@ -3870,14 +3866,12 @@
 				47CC7CE223E3611600730E6F /* APITransactionsExtension.swift in Sources */,
 				476EB47223C5064C009745E2 /* GroupAllContactsDataSource.swift in Sources */,
 				47308E0024FEE6E600FFAC6F /* SocketLogger.swift in Sources */,
-				47158D7F2731788F00601F00 /* NewsletterItem+FetchUtils.swift in Sources */,
 				475BDCB4232AC1E800C5BBD6 /* MessageBubbleView.swift in Sources */,
 				4794CA79252F72D2007C5022 /* PodcastPlayerHelper.swift in Sources */,
 				472F9D3B2412F95100EFC30A /* Data.swift in Sources */,
-				471D8D1427274AED0024AEAC /* GroupsManager+FeedContentType.swift in Sources */,
 				47F258D2253F705800122A5A /* ChatViewControllerPodcastExtension.swift in Sources */,
 				F3188B99271CD36D00890DDD /* DashboardRootViewController+VideoPlayerViewControllerDelegate.swift in Sources */,
-				47357A0F2729A12A00A49EEE /* NewsletterFeed+CoreDataProperties.swift in Sources */,
+				47357A0F2729A12A00A49EEE /* NewsletterFeed+Properties.swift in Sources */,
 				47AAFC7E238D7C8D00E30BDA /* PaymentRequestDecoder.swift in Sources */,
 				F3DC6B04273C9D4A00458E09 /* ContentFeedItemVariant.swift in Sources */,
 				47B9A63F233BAEE500D2B022 /* AddressBookViewController.swift in Sources */,
@@ -3942,7 +3936,7 @@
 				F39F2C7A26E22FC800D357F6 /* PodcastFeedSearchContainerViewController.swift in Sources */,
 				F31CF2662691489800AAB621 /* StoreKitService.swift in Sources */,
 				47357A0B2729A11300A49EEE /* NewsletterFeed+Computeds.swift in Sources */,
-				47357A172729A16100A49EEE /* NewsletterItem+CoreDataProperties.swift in Sources */,
+				47357A172729A16100A49EEE /* NewsletterItem+Properties.swift in Sources */,
 				F3DC6B00273C88F200458E09 /* ContentFeedItem+CoreDataClass.swift in Sources */,
 				F313024826BA994B00A1396E /* ChatsContainerViewController.swift in Sources */,
 				475BDCFB232AC24600C5BBD6 /* PaidInvoiceReceivedTableViewCell.swift in Sources */,
@@ -4087,7 +4081,6 @@
 				F3188B9D271CD6CC00890DDD /* VideoFeedEpisodePlayerCollectionViewController.swift in Sources */,
 				47F258D92540F61F00122A5A /* PodcastPaymentsHelper.swift in Sources */,
 				F32A696326CFEF600004B8B3 /* PodcastDestination+CoreDataProperties.swift in Sources */,
-				47357A152729A15800A49EEE /* NewsletterItem+CoreDataClass.swift in Sources */,
 				470F5CA5243E1DA6007E054F /* ChatViewControllerVideoCallExtension.swift in Sources */,
 				47CC7CEB23E4AA2100730E6F /* TransactionCommonTableViewCell.swift in Sources */,
 				47308E1324FEE6E700FFAC6F /* SocketRawView.swift in Sources */,
@@ -4199,7 +4192,6 @@
 				47FA18CA2433AEDA00469C8F /* AttachmentPriceViewController.swift in Sources */,
 				F3531C3F26BD511300E9586C /* DashboardRootViewController+DashboardChatsListDelegate.swift in Sources */,
 				474FE32D23F588E400C06FC8 /* CommonVideoTableViewCell.swift in Sources */,
-				47357A0D2729A11E00A49EEE /* NewsletterFeed+CoreDataClass.swift in Sources */,
 				F3A35CA826C43508007D35BD /* DashboardRootViewController+SocketManagerDelegate.swift in Sources */,
 				47308E0C24FEE6E700FFAC6F /* SocketEnginePacketType.swift in Sources */,
 				474A136324E5807C007C7528 /* SphinxOnionConnector.swift in Sources */,

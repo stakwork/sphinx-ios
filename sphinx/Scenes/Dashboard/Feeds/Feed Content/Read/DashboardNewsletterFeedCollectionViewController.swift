@@ -89,6 +89,42 @@ extension DashboardNewsletterFeedCollectionViewController {
     enum DataSourceItem: Hashable {
         case newsletterItem(NewsletterItem)
         case newsletterFeed(NewsletterFeed)
+        
+        static func == (lhs: DataSourceItem, rhs: DataSourceItem) -> Bool {
+            if let lhsContentFeed = lhs.feedEntity,
+               let rhsContentFeed = rhs.feedEntity {
+                    
+                return
+                    lhsContentFeed.feedID == rhsContentFeed.feedID &&
+                    lhsContentFeed.title == rhsContentFeed.title &&
+                    lhsContentFeed.feedURL?.absoluteString == rhsContentFeed.feedURL?.absoluteString &&
+                    lhsContentFeed.itemsArray.count == rhsContentFeed.itemsArray.count
+            }
+            
+            if let lhsEpisode = lhs.articleEntity,
+               let rhsEpisode = rhs.articleEntity {
+                    
+                return
+                    lhsEpisode.itemID == rhsEpisode.itemID &&
+                    lhsEpisode.title == rhsEpisode.title
+            }
+
+            return false
+         }
+
+        func hash(into hasher: inout Hasher) {
+            if let contentFeed = self.feedEntity {
+                hasher.combine(contentFeed.feedID)
+                hasher.combine(contentFeed.title)
+                hasher.combine(contentFeed.feedURL?.absoluteString)
+                hasher.combine(contentFeed.itemsArray.count)
+            }
+            
+            if let episode = self.articleEntity {
+                hasher.combine(episode.itemID)
+                hasher.combine(episode.title)
+            }
+        }
     }
 
     
@@ -538,5 +574,26 @@ extension NewsletterItem: DashboardFeedSquaredThumbnailCollectionViewItem {
 
     var subtitle: String? {
         itemDescription
+    }
+}
+
+extension DashboardNewsletterFeedCollectionViewController.DataSourceItem {
+    
+    var feedEntity: NewsletterFeed? {
+        switch self {
+        case .newsletterFeed(let newsletterFeed):
+            return newsletterFeed
+        default:
+            return nil
+        }
+    }
+    
+    var articleEntity: NewsletterItem? {
+        switch self {
+        case .newsletterItem(let newsletterItem):
+            return newsletterItem
+        default:
+            return nil
+        }
     }
 }

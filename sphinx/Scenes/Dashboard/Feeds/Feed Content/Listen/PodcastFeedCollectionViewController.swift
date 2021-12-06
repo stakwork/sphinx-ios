@@ -80,6 +80,42 @@ extension PodcastFeedCollectionViewController {
     enum DataSourceItem: Hashable {
         case listenNowEpisode(PodcastEpisode)
         case subscribedPodcastFeed(PodcastFeed)
+        
+        static func == (lhs: DataSourceItem, rhs: DataSourceItem) -> Bool {
+            if let lhsContentFeed = lhs.feedEntity,
+               let rhsContentFeed = rhs.feedEntity {
+                    
+                return
+                    lhsContentFeed.feedID == rhsContentFeed.feedID &&
+                    lhsContentFeed.title == rhsContentFeed.title &&
+                    lhsContentFeed.feedURLPath == rhsContentFeed.feedURLPath &&
+                    lhsContentFeed.episodesArray.count == rhsContentFeed.episodesArray.count
+            }
+            
+            if let lhsEpisode = lhs.episodeEntity,
+               let rhsEpisode = rhs.episodeEntity {
+                    
+                return
+                    lhsEpisode.itemID == rhsEpisode.itemID &&
+                    lhsEpisode.title == rhsEpisode.title
+            }
+
+            return false
+         }
+
+        func hash(into hasher: inout Hasher) {
+            if let contentFeed = self.feedEntity {
+                hasher.combine(contentFeed.feedID)
+                hasher.combine(contentFeed.title)
+                hasher.combine(contentFeed.feedURLPath)
+                hasher.combine(contentFeed.episodesArray.count)
+            }
+            
+            if let episode = self.episodeEntity {
+                hasher.combine(episode.itemID)
+                hasher.combine(episode.title)
+            }
+        }
     }
 
 
@@ -434,6 +470,27 @@ extension PodcastFeedCollectionViewController: NSFetchedResultsControllerDelegat
             )
             
             self?.onNewResultsFetched(podcastFeeds.count)
+        }
+    }
+}
+
+extension PodcastFeedCollectionViewController.DataSourceItem {
+    
+    var feedEntity: PodcastFeed? {
+        switch self {
+        case .subscribedPodcastFeed(let podcastFeed):
+            return podcastFeed
+        default:
+            return nil
+        }
+    }
+    
+    var episodeEntity: PodcastEpisode? {
+        switch self {
+        case .listenNowEpisode(let podcastEpisode):
+            return podcastEpisode
+        default:
+            return nil
         }
     }
 }

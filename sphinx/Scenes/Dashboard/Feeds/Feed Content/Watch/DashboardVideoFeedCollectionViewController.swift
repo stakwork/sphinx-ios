@@ -87,6 +87,42 @@ extension DashboardVideoFeedCollectionViewController {
     enum DataSourceItem: Hashable {
         case videoEpisode(Video)
         case videoFeed(VideoFeed)
+        
+        static func == (lhs: DataSourceItem, rhs: DataSourceItem) -> Bool {
+            if let lhsContentFeed = lhs.feedEntity,
+               let rhsContentFeed = rhs.feedEntity {
+                    
+                return
+                    lhsContentFeed.feedID == rhsContentFeed.feedID &&
+                    lhsContentFeed.title == rhsContentFeed.title &&
+                    lhsContentFeed.feedURL?.absoluteString == rhsContentFeed.feedURL?.absoluteString &&
+                    lhsContentFeed.videosArray.count == rhsContentFeed.videosArray.count
+            }
+            
+            if let lhsEpisode = lhs.episodeEntity,
+               let rhsEpisode = rhs.episodeEntity {
+                    
+                return
+                    lhsEpisode.videoID == rhsEpisode.videoID &&
+                    lhsEpisode.title == rhsEpisode.title
+            }
+
+            return false
+         }
+
+        func hash(into hasher: inout Hasher) {
+            if let contentFeed = self.feedEntity {
+                hasher.combine(contentFeed.feedID)
+                hasher.combine(contentFeed.title)
+                hasher.combine(contentFeed.feedURL?.absoluteString)
+                hasher.combine(contentFeed.videosArray.count)
+            }
+            
+            if let episode = self.episodeEntity {
+                hasher.combine(episode.videoID)
+                hasher.combine(episode.title)
+            }
+        }
     }
 
     
@@ -515,6 +551,27 @@ extension DashboardVideoFeedCollectionViewController: NSFetchedResultsController
             )
             
             self?.onNewResultsFetched(videoFeeds.count)
+        }
+    }
+}
+
+extension DashboardVideoFeedCollectionViewController.DataSourceItem {
+    
+    var feedEntity: VideoFeed? {
+        switch self {
+        case .videoFeed(let videoFeed):
+            return videoFeed
+        default:
+            return nil
+        }
+    }
+    
+    var episodeEntity: Video? {
+        switch self {
+        case .videoEpisode(let videoEpisode):
+            return videoEpisode
+        default:
+            return nil
         }
     }
 }

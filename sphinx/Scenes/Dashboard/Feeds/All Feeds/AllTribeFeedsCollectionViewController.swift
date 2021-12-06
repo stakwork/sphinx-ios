@@ -78,6 +78,29 @@ extension AllTribeFeedsCollectionViewController {
         case tribePodcastFeed(ContentFeed)
         case tribeVideoFeed(ContentFeed)
         case tribeNewsletterFeed(ContentFeed)
+
+        static func == (lhs: DataSourceItem, rhs: DataSourceItem) -> Bool {
+            if let lhsContentFeed = lhs.feedEntity as? ContentFeed,
+               let rhsContentFeed = rhs.feedEntity as? ContentFeed {
+                    
+                return
+                    lhsContentFeed.feedID == rhsContentFeed.feedID &&
+                    lhsContentFeed.title == rhsContentFeed.title &&
+                    lhsContentFeed.feedURL?.absoluteString == rhsContentFeed.feedURL?.absoluteString &&
+                    lhsContentFeed.items?.count ?? 0 == rhsContentFeed.items?.count ?? 0
+            }
+
+            return false
+         }
+
+        func hash(into hasher: inout Hasher) {
+            if let contentFeed = self.feedEntity as? ContentFeed {
+                hasher.combine(contentFeed.feedID)
+                hasher.combine(contentFeed.title)
+                hasher.combine(contentFeed.feedURL?.absoluteString)
+                hasher.combine(contentFeed.items?.count)
+            }
+        }
     }
 
     
@@ -348,8 +371,10 @@ extension AllTribeFeedsCollectionViewController {
         self.followedFeeds = followedFeeds
 
         if let dataSource = dataSource {
+            let snapshot = makeSnapshotForCurrentState()
+            
             dataSource.apply(
-                makeSnapshotForCurrentState(),
+                snapshot,
                 animatingDifferences: shouldAnimate
             )
         }

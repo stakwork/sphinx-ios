@@ -47,9 +47,6 @@ extension ContentFeedItem {
     public var linkURL: URL?
     
     @NSManaged
-    public var isDownloaded: Bool
-    
-    @NSManaged
     public var contentFeed: ContentFeed?
     
     @NSManaged

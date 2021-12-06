@@ -17,12 +17,10 @@ extension PodcastEpisode {
     }
     
     func getAudioUrl() -> URL? {
-        if self.isDownloaded {
-            if let fileName = URL(string: urlPath ?? "")?.lastPathComponent {
-                let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent(fileName)
-                if FileManager.default.fileExists(atPath: path.path) {
-                    return path
-                }
+        if let fileName = URL(string: urlPath ?? "")?.lastPathComponent {
+            let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent(fileName)
+            if FileManager.default.fileExists(atPath: path.path) {
+                return path
             }
         }
         guard let episodeUrl = urlPath, !episodeUrl.isEmpty else {
@@ -32,15 +30,13 @@ extension PodcastEpisode {
     }
     
     func shouldDeleteFile(deleteCompletion: @escaping () -> ()) {
-        if self.isDownloaded {
-            if let fileName = URL(string: urlPath ?? "")?.lastPathComponent {
-                let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent(fileName)
-                
-                if FileManager.default.fileExists(atPath: path.path) {
-                    try? FileManager.default.removeItem(at: path)
-                    self.isDownloaded = false
-                    deleteCompletion()
-                }
+        if let fileName = URL(string: urlPath ?? "")?.lastPathComponent {
+            let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent(fileName)
+            
+            if FileManager.default.fileExists(atPath: path.path) {
+                try? FileManager.default.removeItem(at: path)
+                self.downloaded = false
+                deleteCompletion()
             }
         }
     }

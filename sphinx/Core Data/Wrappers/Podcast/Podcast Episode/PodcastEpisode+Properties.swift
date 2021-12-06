@@ -19,13 +19,25 @@ public class PodcastEpisode: NSObject {
     public var urlPath: String?
     public var imageURLPath: String?
     public var linkURLPath: String?
-    public var isDownloaded: Bool
     public var feed: PodcastFeed?
     
-    init(_ objectID: NSManagedObjectID, _ itemID: String, _ isDownloaded: Bool) {
+    init(_ objectID: NSManagedObjectID, _ itemID: String) {
         self.objectID = objectID
         self.itemID = itemID
-        self.isDownloaded = isDownloaded
+    }
+    
+    var downloaded: Bool? = nil
+    public var isDownloaded: Bool {
+        get {
+            if let downloaded = downloaded {
+                return downloaded
+            }
+            if let fileName = URL(string: urlPath ?? "")?.lastPathComponent {
+                let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent(fileName)
+                return FileManager.default.fileExists(atPath: path.path)
+            }
+            return false
+        }
     }
 }
 
@@ -51,8 +63,7 @@ extension PodcastEpisode {
         
         let podcastEpisode = PodcastEpisode(
             contentFeedItem.objectID,
-            contentFeedItem.itemID,
-            contentFeedItem.isDownloaded
+            contentFeedItem.itemID
         )
         
         podcastEpisode.author = contentFeedItem.authorName

@@ -87,14 +87,6 @@ class DownloadService : NSObject {
         download.isDownloading = true
         activeDownloads[urlString] = download
     }
-    
-    func isEpisodeDownloaded(_ episode: PodcastEpisode) -> Bool {
-        if let fileName = URL(string: episode.urlPath ?? "")?.lastPathComponent {
-            let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent(fileName)
-            return FileManager.default.fileExists(atPath: path.path)
-        }
-        return false
-    }
 }
 
 extension DownloadService : URLSessionDownloadDelegate {
@@ -114,8 +106,8 @@ extension DownloadService : URLSessionDownloadDelegate {
         try? fileManager.removeItem(at: destinationURL)
 
         do {
-        try fileManager.copyItem(at: location, to: destinationURL)
-            download?.episode.isDownloaded = true
+            try fileManager.copyItem(at: location, to: destinationURL)
+            download?.episode.downloaded = true
         } catch let error {
             print("Could not copy file to disk: \(error.localizedDescription)")
         }

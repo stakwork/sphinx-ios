@@ -128,12 +128,18 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
     ) {
         guard
             let contentFeedItem = managedObjectContext.object(with: newsletterItemID) as? ContentFeedItem,
-            contentFeedItem.contentFeed?.isNewsletter == true
+            let contentFeed = contentFeedItem.contentFeed,
+            contentFeed.isNewsletter
         else {
             preconditionFailure()
         }
         
-        let newsletterFeedItem = NewsletterItem.convertFrom(contentFeedItem: contentFeedItem)
+        let newsletterFeed = NewsletterFeed.convertFrom(contentFeed: contentFeed)
+        
+        let newsletterFeedItem = NewsletterItem.convertFrom(
+            contentFeedItem: contentFeedItem,
+            newsletterFeed: newsletterFeed
+        )
         
         presentItemWebView(for: newsletterFeedItem)
     }

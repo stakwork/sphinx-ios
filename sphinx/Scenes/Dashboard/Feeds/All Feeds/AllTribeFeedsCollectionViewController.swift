@@ -310,12 +310,9 @@ extension AllTribeFeedsCollectionViewController {
         snapshot.appendSections(CollectionViewSection.allCases)
   
         let dataSourceItems = followedFeeds.sorted { (first, second) in
-            guard let firstDate = first.chat?.webAppLastDate else {
-                return false
-            }
-            guard let secondDate = second.chat?.webAppLastDate else {
-                return true
-            }
+            let firstDate = first.dateUpdated ?? first.datePublished ?? Date.init(timeIntervalSince1970: 0)
+            let secondDate = second.dateUpdated ?? second.datePublished ?? Date.init(timeIntervalSince1970: 0)
+
             return firstDate > secondDate
         }.compactMap { contentFeed -> DataSourceItem? in
             if contentFeed.isPodcast {

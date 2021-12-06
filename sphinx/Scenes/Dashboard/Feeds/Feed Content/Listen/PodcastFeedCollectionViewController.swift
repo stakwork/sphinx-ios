@@ -238,26 +238,30 @@ extension PodcastFeedCollectionViewController {
 
         snapshot.appendItems(
             followedPodcastFeeds.sorted { (first, second) in
-                guard let firstDate = first.chat?.webAppLastDate else {
-                    return false
-                }
-                guard let secondDate = second.chat?.webAppLastDate else {
-                    return true
-                }
+                let firstDate = first.dateUpdated ?? first.datePublished ?? Date.init(timeIntervalSince1970: 0)
+                let secondDate = second.dateUpdated ?? second.datePublished ?? Date.init(timeIntervalSince1970: 0)
+                
                 return firstDate > secondDate
-            }.map { DataSourceItem.subscribedPodcastFeed($0) },
+            }.map {
+                DataSourceItem.subscribedPodcastFeed($0)
+                
+            },
             toSection: .subscribedPodcastFeeds
         )
 
         snapshot.appendItems(
-            followedPodcastFeeds
-                .compactMap { feed in
-                    feed.getCurrentEpisode()
-                    ?? feed.episodesArray.last
-                }
-                .map { episode in
-                    DataSourceItem.listenNowEpisode(episode)
-                },
+            followedPodcastFeeds.sorted { (first, second) in
+                let firstDate = first.dateUpdated ?? first.datePublished ?? Date.init(timeIntervalSince1970: 0)
+                let secondDate = second.dateUpdated ?? second.datePublished ?? Date.init(timeIntervalSince1970: 0)
+                
+                return firstDate > secondDate
+            }.compactMap { feed in
+                feed.getCurrentEpisode()
+                ?? feed.episodesArray.last
+            }
+            .map { episode in
+                DataSourceItem.listenNowEpisode(episode)
+            },
             toSection: .latestPodcastEpisodes
         )
 

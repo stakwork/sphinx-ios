@@ -365,12 +365,9 @@ extension DashboardNewsletterFeedCollectionViewController {
         
         snapshot.appendItems(
             newsletterFeeds.sorted { (first, second) in
-                guard let firstDate = first.chat?.webAppLastDate else {
-                    return false
-                }
-                guard let secondDate = second.chat?.webAppLastDate else {
-                    return true
-                }
+                let firstDate = first.dateUpdated ?? first.datePublished ?? Date.init(timeIntervalSince1970: 0)
+                let secondDate = second.dateUpdated ?? second.datePublished ?? Date.init(timeIntervalSince1970: 0)
+                
                 return firstDate > secondDate
             }.map { DataSourceItem.newsletterFeed($0) },
             toSection: .newsletterFeeds
@@ -381,7 +378,12 @@ extension DashboardNewsletterFeedCollectionViewController {
         }
         
         snapshot.appendItems(
-            feedsWithArticles.map { DataSourceItem.newsletterItem($0.nextArticle) },
+            feedsWithArticles.sorted { (first, second) in
+                let firstDate = first.dateUpdated ?? first.datePublished ?? Date.init(timeIntervalSince1970: 0)
+                let secondDate = second.dateUpdated ?? second.datePublished ?? Date.init(timeIntervalSince1970: 0)
+                
+                return firstDate > secondDate
+            }.map { DataSourceItem.newsletterItem($0.nextArticle) },
             toSection: .newsletterItems
         )
 

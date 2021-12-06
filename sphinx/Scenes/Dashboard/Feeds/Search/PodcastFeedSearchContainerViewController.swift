@@ -163,9 +163,11 @@ extension PodcastFeedSearchContainerViewController {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let foundPodcasts):
+                    
                     self.searchResultsViewController.updateWithNew(
                         searchResults: foundPodcasts
                     )
+                    
                 case .failure(_):
                     break
                 }
@@ -298,10 +300,6 @@ extension PodcastFeedSearchContainerViewController: NSFetchedResultsControllerDe
         
         let subscribedPodcastFeeds: [PodcastFeed] = foundFeeds
             .compactMap {
-                guard $0.chat != nil else {
-                    return nil
-                }
-                
                 return PodcastFeed.convertFrom(contentFeed: $0)
             }
         

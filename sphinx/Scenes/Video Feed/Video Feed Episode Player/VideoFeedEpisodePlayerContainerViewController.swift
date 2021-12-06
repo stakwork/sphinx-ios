@@ -199,42 +199,10 @@ extension VideoFeedEpisodePlayerContainerViewController {
     
     
     private func updateEpisodes() {
-        DispatchQueue.global(qos: .utility).async {
-            let context = CoreDataManager.sharedManager.persistentContainer.viewContext
+        if  let videoFeed = self.videoPlayerEpisode?.videoFeed,
+            let feedUrl = videoFeed.feedURL?.absoluteString {
             
-            guard
-                let videoF = self.videoPlayerEpisode.videoFeed
-            else { return }
-            
-            if let existingContentFeed = context.object(with: videoF.objectID) as? ContentFeed,
-               let feedURL = existingContentFeed.feedURL {
-                
-                let tribesServerURL = "\(API.kTestTribesServerBaseURL)/feed?url=\(feedURL.absoluteString)"
-                
-                API.sharedInstance.getContentFeed(
-                    url: tribesServerURL,
-                    callback: { contentFeed in
-                        
-                        contentFeed.items?.forEach {
-                            $0.contentFeed = existingContentFeed
-                            
-                            context.insert($0)
-                        }
-                        
-                        existingContentFeed.addToItems(
-                            Set(
-                                contentFeed.items ?? []
-                            )
-                        )
-                        
-                        context.saveContext()
-                    },
-                    errorCallback: {
-                        print("Failed to fetch newsletter items.")
-                    }
-                )
-                
-            }
+            ContentFeed.fetchFeedItemsInBackground(feedUrl: feedUrl, contentFeedObjectID: videoFeed.objectID, completion: {})
         }
     }
 }

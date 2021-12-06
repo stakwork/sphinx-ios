@@ -6,40 +6,41 @@
     
 import Foundation
 import CoreData
+import SwiftyJSON
 
 
 @objc(ContentFeedItem)
-public final class ContentFeedItem: NSManagedObject, ContentFeedItemVariant {
-
-    // MARK: - Decodable
-    public required convenience init(from decoder: Decoder) throws {
-        if
-            let managedObjectContext = decoder
-                .userInfo[.managedObjectContext]
-                as? NSManagedObjectContext
-        {
-            self.init(context: managedObjectContext)
-        } else {
-            self.init(entity: ContentFeedItem.entity(), insertInto: nil)
+public final class ContentFeedItem: NSManagedObject {
+    
+    public static func createObjectFrom(
+        json: JSON,
+        context: NSManagedObjectContext? = nil
+    ) -> ContentFeedItem? {
+        
+        guard let itemId = json[CodingKeys.itemID.rawValue].string else {
+            return nil
         }
         
+        var contentFeedItem: ContentFeedItem
         
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        itemID = try container.decode(String.self, forKey: .itemID)
-        title = try container.decode(String.self, forKey: .title)
-        authorName = try container.decode(String.self, forKey: .authorName)
-        itemDescription = try container.decode(String.self, forKey: .itemDescription)
-
-        // TODO: Uncomment when the API returns these
-        //        feedKindValue = try container.decode(Int16.self, forKey: .feedKindValue)
-        //        mediaKindValue = try container.decode(String.self, forKey: .mediaKindValue)
+        if let managedObjectContext = context {
+            contentFeedItem = ContentFeedItem(context: managedObjectContext)
+        } else {
+            contentFeedItem = ContentFeedItem(entity: ContentFeedItem.entity(), insertInto: nil)
+        }
         
-        datePublished = try container.decode(Date.self, forKey: .datePublished)
-        enclosureURL = try? container.decode(URL.self, forKey: .enclosureURL)
-        enclosureKind = try container.decode(String.self, forKey: .enclosureKind)
-        imageURL = try? container.decode(URL.self, forKey: .imageURL)
-        linkURL = try? container.decode(URL.self, forKey: .linkURL)
+        contentFeedItem.itemID = itemId
+        
+        contentFeedItem.title = json[CodingKeys.title.rawValue].stringValue
+        contentFeedItem.authorName = json[CodingKeys.authorName.rawValue].stringValue
+        contentFeedItem.itemDescription = json[CodingKeys.itemDescription.rawValue].stringValue
+        contentFeedItem.datePublished = Date(timeIntervalSince1970: json[CodingKeys.datePublished.rawValue].doubleValue)
+        contentFeedItem.enclosureURL = URL(string: json[CodingKeys.enclosureURL.rawValue].stringValue)
+        contentFeedItem.enclosureKind = json[CodingKeys.enclosureKind.rawValue].stringValue
+        contentFeedItem.imageURL = URL(string: json[CodingKeys.imageURL.rawValue].stringValue)
+        contentFeedItem.linkURL = URL(string: json[CodingKeys.linkURL.rawValue].stringValue)
+        
+        return contentFeedItem
     }
 }
 

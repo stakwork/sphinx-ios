@@ -8,30 +8,28 @@
 
 import Foundation
 import CoreData
+import SwiftyJSON
 
 
 @objc(ContentFeedPaymentModel)
-public class ContentFeedPaymentModel: NSManagedObject, Decodable {
-
-    // MARK: - Decodable
-    public required convenience init(from decoder: Decoder) throws {
-        if
-            let managedObjectContext = decoder
-                .userInfo[.managedObjectContext]
-                as? NSManagedObjectContext
-        {
-            self.init(context: managedObjectContext)
+public class ContentFeedPaymentModel: NSManagedObject {
+    
+    public static func createObjectFrom(
+        json: JSON,
+        context: NSManagedObjectContext? = nil
+    ) -> ContentFeedPaymentModel? {
+        
+        var paymentModel: ContentFeedPaymentModel
+        
+        if let managedObjectContext = context {
+            paymentModel = ContentFeedPaymentModel(context: managedObjectContext)
         } else {
-            self.init(entity: ContentFeedPaymentModel.entity(), insertInto: nil)
+            paymentModel = ContentFeedPaymentModel(entity: ContentFeedPaymentModel.entity(), insertInto: nil)
         }
         
+        paymentModel.suggestedBTC = Double(json[CodingKeys.suggestedBTC.rawValue].stringValue) ?? 0.0
+        paymentModel.type = json[CodingKeys.type.rawValue].stringValue
         
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        suggestedBTC = Double(
-            try container.decode(String.self, forKey: .suggestedBTC)
-        ) ?? 0
-        
-        type = try container.decode(String.self, forKey: .type)
+        return paymentModel
     }
 }

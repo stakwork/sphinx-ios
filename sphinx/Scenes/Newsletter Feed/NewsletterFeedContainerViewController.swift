@@ -137,41 +137,10 @@ extension NewsletterFeedContainerViewController {
     
     
     private func updateItems() {
-        DispatchQueue.global(qos: .utility).async {
-            let context = CoreDataManager.sharedManager.persistentContainer.viewContext
+        if let objectId = self.newsletterFeed?.objectID,
+           let feedUrl = self.newsletterFeed?.feedURL?.absoluteString {
             
-            guard
-                let newsletterF = self.newsletterFeed
-            else { return }
-            
-            if let existingContentFeed = context.object(with: newsletterF.objectID) as? ContentFeed,
-               let feedURL = existingContentFeed.feedURL {
-                
-                let tribesServerURL = "\(API.kTestTribesServerBaseURL)/feed?url=\(feedURL.absoluteString)"
-                
-                API.sharedInstance.getContentFeed(
-                    url: tribesServerURL,
-                    callback: { contentFeed in
-                        
-                        contentFeed.items?.forEach {
-                            $0.contentFeed = existingContentFeed
-                            
-                            context.insert($0)
-                        }
-                        
-                        existingContentFeed.addToItems(
-                            Set(
-                                contentFeed.items ?? []
-                            )
-                        )
-                        
-                        context.saveContext()
-                    },
-                    errorCallback: {
-                        print("Failed to fetch newsletter items.")
-                    }
-                )
-            }
+            ContentFeed.fetchFeedItemsInBackground(feedUrl: feedUrl, contentFeedObjectID: objectId, completion: {})
         }
     }
 }

@@ -418,7 +418,9 @@ public class Chat: NSManagedObject {
                     self.tribeInfo = GroupsManager.sharedInstance.getTribesInfoFrom(json: chatJson)
                     self.updateChatFromTribesInfo()
                     
-                    self.fetchFeedContentInBackground(completion: completion)
+                    if let feedUrl = self.tribeInfo?.feedUrl {
+                        ContentFeed.fetchChatFeedContentInBackground(feedUrl: feedUrl, chatObjectID: self.objectID, completion: completion)
+                    }
                 },
                 errorCallback: {
                     completion()
@@ -455,32 +457,6 @@ public class Chat: NSManagedObject {
         return (self.pricePerMessage?.intValue ?? 0, self.escrowAmount?.intValue ?? 0)
     }
     
-    func fetchFeedContentInBackground(completion: @escaping () -> ()) {
-        let backgroundContext = CoreDataManager.sharedManager.getBackgroundContext()
-        
-        backgroundContext.perform {
-            if
-                let feedURLPath = self.tribeInfo?.feedUrl,
-                let backgroundChat = backgroundContext.object(with: self.objectID) as? Chat
-            {
-                backgroundChat.fetchContentFeed(
-                    at: feedURLPath,
-                    persistingIn: backgroundContext
-                ) { result in
-                    
-                    if case let .success(fetchedContentFeed) = result {
-                        backgroundChat.contentFeed = fetchedContentFeed
-                        backgroundContext.saveContext()
-                    }
-
-                    DispatchQueue.main.async {
-                        completion()
-                    }
-                }
-            }
-        }
-    }
-    
     func updateChatFromTribesInfo() {
         if isMyPublicGroup() {
             return
@@ -503,33 +479,7 @@ public class Chat: NSManagedObject {
     func syncAfterUpdate() {
         syncTribeWithServer()
         checkForDeletedTribe()
-    }
-    
-    
-    func fetchContentFeed(
-        at feedURLPath: String,
-        persistingIn managedObjectContext: NSManagedObjectContext? = nil,
-        then completionHandler: ((Result<ContentFeed, Error>) -> Void)? = nil
-    ) {
-        let tribesServerURL = "\(API.kTestTribesServerBaseURL)/feed?url=\(feedURLPath)"
-        let managedObjectContext = managedObjectContext ?? CoreDataManager.sharedManager.persistentContainer.viewContext
-        
-        if let existingContenFeed = contentFeed {
-            managedObjectContext.delete(existingContenFeed)
-        }
-        
-        API.sharedInstance.getContentFeed(
-            url: tribesServerURL,
-            persistingIn: managedObjectContext,
-            callback: { feed in
-                completionHandler?(.success(feed))
-            },
-            errorCallback: {
-                completionHandler?(.failure((API.RequestError.failedToFetchContentFeed)))
-            }
-        )
-    }
-    
+    } 
     
     func checkForDeletedTribe() {
         if let tribeInfo = self.tribeInfo, tribeInfo.deleted {

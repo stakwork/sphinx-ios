@@ -112,42 +112,10 @@ class NewPodcastPlayerViewController: UIViewController {
     }
     
     private func updateEpisodes() {
-        DispatchQueue.global(qos: .utility).async {
-            let context = CoreDataManager.sharedManager.persistentContainer.viewContext
+        if let podcastFeed = self.playerHelper?.podcast,
+           let feedUrl = podcastFeed.feedURLPath {
             
-            guard
-                let podcastF = self.playerHelper?.podcast
-            else { return }
-            
-            if let existingContentFeed = context.object(with: podcastF.objectID) as? ContentFeed,
-               let feedURL = existingContentFeed.feedURL {
-                
-                let tribesServerURL = "\(API.kTestTribesServerBaseURL)/feed?url=\(feedURL.absoluteString)"
-                
-                API.sharedInstance.getContentFeed(
-                    url: tribesServerURL,
-                    persistingIn: context,
-                    callback: { contentFeed in
-                        
-                        contentFeed.items?.forEach {
-                            $0.contentFeed = existingContentFeed
-                            
-                            context.insert($0)
-                        }
-                        
-                        existingContentFeed.addToItems(
-                            Set(
-                                contentFeed.items ?? []
-                            )
-                        )
-                        
-                        context.saveContext()
-                    },
-                    errorCallback: {
-                        print("Failed to fetch newsletter items.")
-                    }
-                )
-            }
+            ContentFeed.fetchFeedItemsInBackground(feedUrl: feedUrl, contentFeedObjectID: podcastFeed.objectID, completion: {})
         }
     }
 }

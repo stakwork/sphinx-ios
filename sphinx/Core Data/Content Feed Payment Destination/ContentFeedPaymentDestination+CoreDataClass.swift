@@ -6,29 +6,30 @@
 
 import Foundation
 import CoreData
-
+import SwiftyJSON
 
 @objc(ContentFeedPaymentDestination)
-public class ContentFeedPaymentDestination: NSManagedObject, Decodable {
+public class ContentFeedPaymentDestination: NSManagedObject {
     
-    // MARK: - Decodable
-    public required convenience init(from decoder: Decoder) throws {
-        if
-            let managedObjectContext = decoder
-                .userInfo[.managedObjectContext]
-                as? NSManagedObjectContext
-        {
-            self.init(context: managedObjectContext)
+    public static func createObjectFrom(
+        json: JSON,
+        context: NSManagedObjectContext? = nil
+    ) -> ContentFeedPaymentDestination? {
+        
+        var paymentDestination: ContentFeedPaymentDestination
+        
+        if let managedObjectContext = context {
+            paymentDestination = ContentFeedPaymentDestination(context: managedObjectContext)
         } else {
-            self.init(entity: ContentFeedPaymentDestination.entity(), insertInto: nil)
+            paymentDestination = ContentFeedPaymentDestination(entity: ContentFeedPaymentDestination.entity(), insertInto: nil)
         }
         
-        let container = try decoder.container(keyedBy: CodingKeys.self)
+        paymentDestination.address = json[CodingKeys.address.rawValue].stringValue
+        paymentDestination.split = json[CodingKeys.split.rawValue].doubleValue
+        paymentDestination.type = json[CodingKeys.type.rawValue].stringValue
+        paymentDestination.customKey = json[CodingKeys.customKey.rawValue].stringValue
+        paymentDestination.customValue = json[CodingKeys.customValue.rawValue].stringValue
         
-        address = try container.decodeIfPresent(String.self, forKey: .address)
-        split = try container.decode(Double.self, forKey: .split)
-        type = try container.decodeIfPresent(String.self, forKey: .type)
-        customKey = try container.decodeIfPresent(String.self, forKey: .customKey)
-        customValue = try container.decodeIfPresent(String.self, forKey: .customValue)
+        return paymentDestination
     }
 }

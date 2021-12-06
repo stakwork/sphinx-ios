@@ -212,16 +212,17 @@ extension PodcastFeedSearchContainerViewController {
                 API.sharedInstance.getContentFeed(
                     url: tribesServerURL,
                     persistingIn: managedObjectContext,
-                    callback: { feed in
-                        
-                        let podcast = PodcastFeed.convertFrom(contentFeed: feed)
-                        
-                        self.managedObjectContext.saveContext()
-                        
-                        self.resultsDelegate?.viewController(
-                            self,
-                            didSelectPodcastFeed: podcast
-                        )
+                    callback: { feedJSON in 
+                        if let contentFeed = ContentFeed.createObjectFrom(json: feedJSON, context: self.managedObjectContext) {
+                            self.managedObjectContext.saveContext()
+                            
+                            let podcast = PodcastFeed.convertFrom(contentFeed: contentFeed)
+                            
+                            self.resultsDelegate?.viewController(
+                                self,
+                                didSelectPodcastFeed: podcast
+                            )
+                        }
                     },
                     errorCallback: {}
                 )

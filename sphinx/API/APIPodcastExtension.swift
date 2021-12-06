@@ -25,21 +25,9 @@ extension API {
         }
         
         AF.request(request).responseJSON { response in
-            do {
-                if let data = response.data {
-                    let decoder = ContentFeed.Decoders.default
-                    
-                    if let managedObjectContext = managedObjectContext {
-                        decoder.userInfo[.managedObjectContext] = managedObjectContext
-                    }
-                    
-                    callback(
-                        try decoder.decode(ContentFeed.self, from: data)
-                    )
-                } else {
-                    errorCallback()
-                }
-            } catch {
+            if let data = response.data {
+                callback(JSON(data))
+            } else {
                 errorCallback()
             }
         }

@@ -76,9 +76,9 @@ extension DashboardVideoFeedCollectionViewController {
         var titleForDisplay: String {
             switch self {
             case .videoEpisodes:
-                return "Watch Now"
+                return "feed.watch-now".localized
             case .videoFeeds:
-                return "Following"
+                return "feed.following".localized
             }
         }
     }

@@ -68,7 +68,7 @@ extension AllTribeFeedsCollectionViewController {
         var titleForDisplay: String {
             switch self {
             case .followedFeeds:
-                return "Following"
+                return "feed.following".localized
             }
         }
     }

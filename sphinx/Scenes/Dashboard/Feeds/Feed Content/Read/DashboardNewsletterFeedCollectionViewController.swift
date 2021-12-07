@@ -78,9 +78,9 @@ extension DashboardNewsletterFeedCollectionViewController {
         var titleForDisplay: String {
             switch self {
             case .newsletterItems:
-                return "Read Now"
+                return "feed.read-now".localized
             case .newsletterFeeds:
-                return "Following"
+                return "feed.following".localized
             }
         }
     }

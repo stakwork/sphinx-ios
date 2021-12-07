@@ -69,9 +69,9 @@ extension PodcastFeedCollectionViewController {
         var titleForDisplay: String {
             switch self {
             case .latestPodcastEpisodes:
-                return "Listen Now"
+                return "feed.listen-now".localized
             case .subscribedPodcastFeeds:
-                return "Following"
+                return "feed.following".localized
             }
         }
     }

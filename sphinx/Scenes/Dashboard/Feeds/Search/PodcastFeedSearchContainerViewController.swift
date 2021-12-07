@@ -208,26 +208,19 @@ extension PodcastFeedSearchContainerViewController {
                 didSelectPodcastFeed: podcastFeed
             )
         } else {
-            if let feedUrl = searchResult.feedURLPath {
-                let tribesServerURL = "\(API.kTestTribesServerBaseURL)/feed?url=\(feedUrl)"
-                
-                API.sharedInstance.getContentFeed(
-                    url: tribesServerURL,
-                    persistingIn: managedObjectContext,
-                    callback: { feedJSON in 
-                        if let contentFeed = ContentFeed.createObjectFrom(json: feedJSON, context: self.managedObjectContext) {
-                            self.managedObjectContext.saveContext()
-                            
-                            let podcast = PodcastFeed.convertFrom(contentFeed: contentFeed)
-                            
-                            self.resultsDelegate?.viewController(
-                                self,
-                                didSelectPodcastFeed: podcast
-                            )
-                        }
-                    },
-                    errorCallback: {}
-                )
+            if let feedUrl = searchResult.feedURLPath { 
+                ContentFeed.fetchContentFeed(at: feedUrl, chat: nil, persistingIn: managedObjectContext, then: { result in
+                    if case .success(let contentFeed) = result {
+                        self.managedObjectContext.saveContext()
+                        
+                        let podcast = PodcastFeed.convertFrom(contentFeed: contentFeed)
+                        
+                        self.resultsDelegate?.viewController(
+                            self,
+                            didSelectPodcastFeed: podcast
+                        )
+                    }
+                })
             }
         }
     }

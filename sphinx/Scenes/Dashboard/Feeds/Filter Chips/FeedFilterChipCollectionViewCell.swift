@@ -50,12 +50,12 @@ class FeedFilterChipCollectionViewCell: UICollectionViewCell {
         filterLabel.text = filterOption.titleForDisplay
         
         contentView.backgroundColor = filterOption.isActive ?
-            .Sphinx.BodyInverted
+            .Sphinx.Text
             : .Sphinx.DashboardFilterChipBackground
         
         filterLabel.textColor = filterOption.isActive ?
-            .Sphinx.DashboardFilterChipActiveText
-            : .Sphinx.BodyInverted
+            .Sphinx.TextInverted
+            : .Sphinx.Text
     }
     
     private func setCornerRadius() {

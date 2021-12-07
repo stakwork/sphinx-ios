@@ -60,17 +60,17 @@ extension DashboardFeedsEmptyStateViewController {
     private var emptyStateMessageText: String {
         switch contentFilterOption.id {
         case ContentFilterOption.allContent.id:
-            return "No Feed Results Found."
+            return "feed.no-feed-found".localized
         case ContentFilterOption.listen.id:
-            return "No \"Listen\" Results Found."
+            return "feed.no-listen-found".localized
         case ContentFilterOption.watch.id:
-            return "No \"Watch\" Results Found."
+            return "feed.no-watch-found".localized
         case ContentFilterOption.read.id:
-            return "No \"Read\" Results Found."
+            return "feed.no-read-found".localized
         case ContentFilterOption.play.id:
-            return "No \"Play\" Results Found."
+            return "feed.no-play-found".localized
         default:
-            return "No Feed Results Found."
+            return "feed.no-feed-found".localized
         }
     }
 }

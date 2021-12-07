@@ -439,8 +439,6 @@
 "delete.episode.title" = "Borrar Episodio";
 "delete.episode.message" = "¿Borrar Episodio de la memoria del dispositivo?";
 
-
-
 // VIDEOS
 "video" = "video";
 "videos" = "videos";
@@ -448,3 +446,15 @@
 "video-player.episode-details.button.show-less" = "show less";
 "video-player.button.subscribe" = "Subscribe";
 "video-player.button.unsubscribe" = "Unsubscribe";
+
+//FEED
+"feed.following" = "Siguiendo";
+"feed.listen-now" = "Escuchar Ahora";
+"feed.watch-now" = "Mirar Ahora";
+"feed.read-now" = "Leer Ahora";
+"feed.play-now" = "Jugar Ahora";
+"feed.no-feed-found" = "No se encontraron resultados en el Feed";
+"feed.no-listen-found" = "No se encontraron resultados para \"Escuchar\"";
+"feed.no-watch-found" = "No se encontraron resultados para \"Mirar\"";
+"feed.no-read-found" = "No se encontraron resultados para \"Leer\"";
+"feed.no-play-found" = "No se encontraron resultados para \"Jugar\"";

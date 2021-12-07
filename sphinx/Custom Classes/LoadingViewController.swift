@@ -64,6 +64,7 @@ private extension LoadingViewController {
     
     func makeSpinner() -> UIActivityIndicatorView {
         let spinner = UIActivityIndicatorView(style: .large)
+        spinner.color = UIColor.white
 
         spinner.sizeToFit()
         spinner.translatesAutoresizingMaskIntoConstraints = false

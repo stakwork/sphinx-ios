@@ -110,6 +110,11 @@ class DashboardFeedsContainerViewController: UIViewController {
         )
     }()
     
+    internal lazy var playFeedCollectionViewController: DashboardFeedsEmptyStateViewController = {
+        DashboardFeedsEmptyStateViewController.instantiate(
+            contentFilterOption: ContentFilterOption.play
+        )
+    }()
     
     static func instantiate(
         managedObjectContext: NSManagedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext,
@@ -197,7 +202,7 @@ extension DashboardFeedsContainerViewController {
         case ContentFilterOption.read.id:
             return newsletterFeedCollectionViewController
         case ContentFilterOption.play.id:
-            return emptyStateViewController
+            return playFeedCollectionViewController
         default:
             preconditionFailure()
         }

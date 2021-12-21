@@ -33,13 +33,13 @@ extension ContentFeed {
         
         
         public static func matching(feedID: String) -> NSPredicate {
-            let keyword = "=="
+            let keyword = "IN"
             let formatSpecifier = "%@"
 
             return NSPredicate(
                 format: "%K \(keyword) \(formatSpecifier)",
                 "feedID",
-                feedID
+                [feedID, "yt:channel:\(feedID)", "yt:playlist:\(feedID)"]
             )
         }
         
@@ -59,6 +59,17 @@ extension ContentFeed {
                 format: "%K \(keyword) \(formatSpecifier)",
                 "feedKindValue",
                 FeedType.Podcast.rawValue
+            )
+        }()
+        
+        public static let videoFeeds: NSPredicate = {
+            let keyword = "=="
+            let formatSpecifier = "%i"
+
+            return NSPredicate(
+                format: "%K \(keyword) \(formatSpecifier)",
+                "feedKindValue",
+                FeedType.Video.rawValue
             )
         }()
     }
@@ -153,6 +164,15 @@ extension ContentFeed {
             let request: NSFetchRequest<ContentFeed> = baseFetchRequest()
             
             request.predicate = Predicates.podcastFeeds
+            request.sortDescriptors = []
+
+            return request
+        }
+        
+        public static func videoFeeds() -> NSFetchRequest<ContentFeed> {
+            let request: NSFetchRequest<ContentFeed> = baseFetchRequest()
+            
+            request.predicate = Predicates.videoFeeds
             request.sortDescriptors = []
 
             return request

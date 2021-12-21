@@ -42,7 +42,6 @@ class PodcastPlayerView: UIView {
     @IBOutlet weak var currentTimeDot: UIView!
     @IBOutlet weak var gestureHandlerView: UIView!
     @IBOutlet weak var boostButtonView: BoostButtonView!
-    @IBOutlet weak var subscriptionButton: UIButton!
     
     @IBOutlet weak var audioLoadingWheel: UIActivityIndicatorView!
     
@@ -112,7 +111,7 @@ class PodcastPlayerView: UIView {
         
         playPauseButton.layer.cornerRadius = playPauseButton.frame.size.height / 2
         currentTimeDot.layer.cornerRadius = currentTimeDot.frame.size.height / 2
-        subscriptionButton.layer.cornerRadius = subscriptionButton.frame.size.height / 2
+        subscriptionToggleButton.layer.cornerRadius = subscriptionToggleButton.frame.size.height / 2
         
         
         subscriptionToggleButton.setTitle(

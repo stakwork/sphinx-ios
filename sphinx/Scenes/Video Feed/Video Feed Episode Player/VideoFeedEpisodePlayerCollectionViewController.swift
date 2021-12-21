@@ -287,7 +287,9 @@ extension VideoFeedEpisodePlayerCollectionViewController {
                     preconditionFailure("Failed to find expected data source item")
                 }
 
-                episodeCell.configure(withVideoEpisode: videoEpisode)
+                episodeCell.configure(
+                    withVideoEpisode: videoEpisode
+                )
 
                 return episodeCell
                 
@@ -313,7 +315,6 @@ extension VideoFeedEpisodePlayerCollectionViewController {
             }
         }
     }
-
 
     func makeSupplementaryViewProvider(
         for collectionView: UICollectionView

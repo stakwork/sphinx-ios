@@ -2,6 +2,6 @@ import UIKit
 import CoreData
 
 
-extension DashboardRootViewController: PodcastFeedSearchResultsViewControllerDelegate {
+extension DashboardRootViewController: FeedSearchResultsViewControllerDelegate {
     
 }

@@ -1,4 +1,4 @@
-// PodcastFeedSearchResultCollectionViewCell.swift
+// FeedSearchResultCollectionViewCell.swift
 //
 // Created by CypherPoet.
 // ✌️
@@ -8,7 +8,7 @@ import UIKit
 import SDWebImage
 
 
-class PodcastFeedSearchResultCollectionViewCell: UICollectionViewCell {
+class FeedSearchResultCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var feedThumbnailImageView: UIImageView!
     @IBOutlet weak var feedTitleLabel: UILabel!
     @IBOutlet weak var feedSubtitleLabel: UILabel!
@@ -16,7 +16,7 @@ class PodcastFeedSearchResultCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var bottomSeparatorView: UIView!
     
     
-    var item: PodcastFeed! {
+    var item: FeedSearchResult! {
         didSet {
             DispatchQueue.main.async { [weak self] in
                 self?.updateViewsWithItem()
@@ -32,26 +32,26 @@ class PodcastFeedSearchResultCollectionViewCell: UICollectionViewCell {
 
 
 // MARK: - Static Properties
-extension PodcastFeedSearchResultCollectionViewCell {
-    static let reuseID = "PodcastFeedSearchResultCollectionViewCell"
+extension FeedSearchResultCollectionViewCell {
+    static let reuseID = "FeedSearchResultCollectionViewCell"
     
     static let nib: UINib = {
-        UINib(nibName: "PodcastFeedSearchResultCollectionViewCell", bundle: nil)
+        UINib(nibName: "FeedSearchResultCollectionViewCell", bundle: nil)
     }()
 }
 
 
 // MARK: - Computeds
-extension PodcastFeedSearchResultCollectionViewCell {
+extension FeedSearchResultCollectionViewCell {
     
     var imageURL: URL? {
-        item.imageURLPath.flatMap { URL(string: $0) }
+        item.imageUrl.flatMap { URL(string: $0) }
     }
 }
     
 
 // MARK: - Lifecycle
-extension PodcastFeedSearchResultCollectionViewCell {
+extension FeedSearchResultCollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -63,36 +63,30 @@ extension PodcastFeedSearchResultCollectionViewCell {
 
 
 // MARK: - Public Methods
-extension PodcastFeedSearchResultCollectionViewCell {
+extension FeedSearchResultCollectionViewCell {
     
     public func configure(
-        withItem searchResult: PodcastFeed,
-        subscriptionState: SubscriptionState,
+        withItem searchResult: FeedSearchResult,
         shouldShowSeparator: Bool = false
     ) {
         bottomSeparatorView.isHidden = shouldShowSeparator == false
         
-        if subscriptionState == .followedViaTribe {
-            disableSubscriptionButton()
-        }
-
-        self.subscriptionState = subscriptionState
         item = searchResult
     }
 }
 
 
 // MARK: - Event Handling
-extension PodcastFeedSearchResultCollectionViewCell {
+extension FeedSearchResultCollectionViewCell {
     
     @IBAction func subscriptionButtonTapped(_ sender: UIButton) {
-        onSubscriptionButtonTapped?(item, subscriptionState)
+//        onSubscriptionButtonTapped?(item, subscriptionState)
     }
 }
 
 
 // MARK: - Private Helpers
-extension PodcastFeedSearchResultCollectionViewCell {
+extension FeedSearchResultCollectionViewCell {
     
     private func updateViewsWithItem() {
         if let imageURL = imageURL {
@@ -107,7 +101,7 @@ extension PodcastFeedSearchResultCollectionViewCell {
         }
         
         feedTitleLabel.text = item.title
-        feedSubtitleLabel.text = item.podcastDescription
+        feedSubtitleLabel.text = item.feedDescription
         
         switch subscriptionState {
         case .subscribedFromPodcastIndex:
@@ -131,7 +125,7 @@ extension PodcastFeedSearchResultCollectionViewCell {
 }
 
 
-extension PodcastFeedSearchResultCollectionViewCell {
+extension FeedSearchResultCollectionViewCell {
     
     enum SubscriptionState {
         case subscribedFromPodcastIndex

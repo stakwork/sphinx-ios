@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -26,21 +24,21 @@
             <objects>
                 <viewController storyboardIdentifier="DashboardRootViewController" id="28a-MN-hzt" customClass="DashboardRootViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="04F-3T-MXy">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LVT-UQ-uni" customClass="ChatListHeader" customModule="sphinx" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="44" width="414" height="50"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
                                 <color key="backgroundColor" name="DashboardHeader"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="Jth-A8-d4f"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yxo-is-Yxg" userLabel="Search Bar Container">
-                                <rect key="frame" x="0.0" y="142" width="414" height="70"/>
+                                <rect key="frame" x="0.0" y="98" width="600" height="70"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="52N-Az-4on">
-                                        <rect key="frame" x="16" y="16" width="382" height="44"/>
+                                        <rect key="frame" x="16" y="16" width="568" height="44"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lwz-zX-pkx">
                                                 <rect key="frame" x="16" y="10" width="24.5" height="24.5"/>
@@ -49,7 +47,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ef7-It-4Rs">
-                                                <rect key="frame" x="50.5" y="0.0" width="315.5" height="44"/>
+                                                <rect key="frame" x="50.5" y="0.0" width="501.5" height="44"/>
                                                 <color key="textColor" name="Text"/>
                                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
@@ -81,21 +79,21 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="875-dS-sJM" customClass="CustomSegmentedControl" customModule="sphinx" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="94" width="414" height="48"/>
+                                <rect key="frame" x="0.0" y="50" width="600" height="48"/>
                                 <color key="backgroundColor" name="DashboardHeader"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="6E0-rD-gcM"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wUN-0d-ubm" userLabel="Main Content Container View">
-                                <rect key="frame" x="0.0" y="212" width="414" height="592"/>
+                                <rect key="frame" x="0.0" y="168" width="600" height="374"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U1o-Ky-NBS" userLabel="Bottom Bar Container">
-                                <rect key="frame" x="0.0" y="804" width="414" height="58"/>
+                                <rect key="frame" x="0.0" y="542" width="600" height="58"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iPO-AC-fa6">
-                                        <rect key="frame" x="0.0" y="0.0" width="103.5" height="58"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="150" height="58"/>
                                         <color key="tintColor" name="MainBottomIcons"/>
                                         <state key="normal" image="bottomBar1"/>
                                         <connections>
@@ -103,7 +101,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yJZ-iT-Aoq">
-                                        <rect key="frame" x="103.5" y="0.0" width="103.5" height="58"/>
+                                        <rect key="frame" x="150" y="0.0" width="150" height="58"/>
                                         <color key="tintColor" name="MainBottomIcons"/>
                                         <state key="normal" image="bottomBar2"/>
                                         <connections>
@@ -111,7 +109,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F8U-3b-9bJ">
-                                        <rect key="frame" x="207" y="0.0" width="103.5" height="58"/>
+                                        <rect key="frame" x="300" y="0.0" width="150" height="58"/>
                                         <color key="tintColor" name="MainBottomIcons"/>
                                         <state key="normal" image="bottomBar3"/>
                                         <connections>
@@ -119,7 +117,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yY0-bJ-XOQ">
-                                        <rect key="frame" x="310.5" y="0.0" width="103.5" height="58"/>
+                                        <rect key="frame" x="450" y="0.0" width="150" height="58"/>
                                         <color key="tintColor" name="MainBottomIcons"/>
                                         <state key="normal" image="bottomBar4"/>
                                         <connections>
@@ -184,12 +182,12 @@
             </objects>
             <point key="canvasLocation" x="-4487" y="960"/>
         </scene>
-        <!--Podcast Feed Search Container View Controller-->
+        <!--Feed Search Container View Controller-->
         <scene sceneID="ifQ-5p-cRO">
             <objects>
-                <viewController storyboardIdentifier="PodcastFeedSearchContainerViewController" id="Mk9-eA-WoW" customClass="PodcastFeedSearchContainerViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FeedSearchContainerViewController" id="Mk9-eA-WoW" customClass="FeedSearchContainerViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="RPx-Rg-omQ">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="oJU-7h-Zd5"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -207,18 +205,18 @@
             <objects>
                 <viewController storyboardIdentifier="DashboardFeedsContainerViewController" id="izJ-JO-cwu" customClass="DashboardFeedsContainerViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="XKi-k6-l8l">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uch-ef-QEI" userLabel="Feed Filter Chips Collection View Container">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="60"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="K9r-1J-17V"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hwZ-I8-IJL" userLabel="Feed Content Collection View Container">
-                                <rect key="frame" x="0.0" y="60" width="414" height="836"/>
+                                <rect key="frame" x="0.0" y="60" width="600" height="540"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                         </subviews>
@@ -248,7 +246,7 @@
             <objects>
                 <collectionViewController storyboardIdentifier="FeedFilterChipsCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="QGs-A9-cwQ" customClass="FeedFilterChipsCollectionViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="jmh-7h-cdI">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" name="DashboardHeader"/>
                         <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="eWa-VJ-OOo">
@@ -273,11 +271,11 @@
             <objects>
                 <viewController storyboardIdentifier="DashboardFeedsEmptyStateViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="rf1-Tn-GFa" customClass="DashboardFeedsEmptyStateViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="U25-4Z-Far">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Content Found" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oTA-xG-eJf">
-                                <rect key="frame" x="107.5" y="434" width="199" height="28"/>
+                                <rect key="frame" x="200.5" y="286" width="199" height="28"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="24"/>
                                 <color key="textColor" name="Text"/>
                                 <nil key="highlightedColor"/>
@@ -303,7 +301,7 @@
             <objects>
                 <collectionViewController storyboardIdentifier="AllTribeFeedsCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="GDs-Du-Iow" customClass="AllTribeFeedsCollectionViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="D1n-Ll-UoS">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" name="ListBG"/>
                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="HzR-ds-Sjo">
@@ -328,7 +326,7 @@
             <objects>
                 <collectionViewController storyboardIdentifier="PodcastFeedCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="bdw-5E-YTV" customClass="PodcastFeedCollectionViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="owa-fC-ffZ">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" name="ListBG"/>
                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="GhL-Cj-xhy">
@@ -353,7 +351,7 @@
             <objects>
                 <collectionViewController storyboardIdentifier="VideoFeedCollectionViewController" id="4pN-wi-GqR" customClass="DashboardVideoFeedCollectionViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="diG-Rx-ygk">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" name="ListBG"/>
                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="DRS-tI-zM9">
@@ -378,7 +376,7 @@
             <objects>
                 <collectionViewController storyboardIdentifier="NewsletterFeedCollectionViewController" id="Rwc-02-H7Q" customClass="DashboardNewsletterFeedCollectionViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="h3X-j2-fG6">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="bLL-7n-Td1">
@@ -403,7 +401,7 @@
             <objects>
                 <viewController storyboardIdentifier="ChatsContainerViewController" id="Nnq-TE-Byc" customClass="ChatsContainerViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="aa3-I2-cdN">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="D5f-b5-Sze"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -421,7 +419,7 @@
             <objects>
                 <collectionViewController storyboardIdentifier="ChatsCollectionViewController" id="8l3-PI-ySH" customClass="ChatsCollectionViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="Q15-Ve-1KU">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="8Ft-Ue-2TN">
@@ -441,16 +439,16 @@
             </objects>
             <point key="canvasLocation" x="-1651" y="2550"/>
         </scene>
-        <!--Podcast Feed Search Empty State View Controller-->
+        <!--Feed Search Empty State View Controller-->
         <scene sceneID="xdh-VO-aTW">
             <objects>
-                <viewController storyboardIdentifier="PodcastFeedSearchEmptyStateViewController" id="NmB-cB-3h2" customClass="PodcastFeedSearchEmptyStateViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FeedSearchEmptyStateViewController" id="NmB-cB-3h2" customClass="FeedSearchEmptyStateViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="VX3-OM-Ef9">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="saw-em-W2w">
-                                <rect key="frame" x="111.5" y="330" width="191" height="236.5"/>
+                                <rect key="frame" x="204.5" y="182" width="191" height="236.5"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="podcastIndexLogo" translatesAutoresizingMaskIntoConstraints="NO" id="fF4-Ol-xgj">
                                         <rect key="frame" x="57.5" y="0.0" width="76" height="72"/>
@@ -498,12 +496,12 @@
             </objects>
             <point key="canvasLocation" x="-7171" y="2640"/>
         </scene>
-        <!--Podcast Feed Search Results Collection View Controller-->
+        <!--Feed Search Results Collection View Controller-->
         <scene sceneID="qWS-Af-xVJ">
             <objects>
-                <collectionViewController storyboardIdentifier="PodcastFeedSearchResultsCollectionViewController" id="6rA-gL-oUT" customClass="PodcastFeedSearchResultsCollectionViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="FeedSearchResultsCollectionViewController" id="6rA-gL-oUT" customClass="FeedSearchResultsCollectionViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="5V7-1u-a30">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="LMw-0A-Y2N">

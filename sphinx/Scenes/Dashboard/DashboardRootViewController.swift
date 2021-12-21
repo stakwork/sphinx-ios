@@ -55,7 +55,7 @@ class DashboardRootViewController: RootViewController {
     
     
     internal lazy var feedSearchResultsContainerViewController = {
-        PodcastFeedSearchContainerViewController.instantiate(
+        FeedSearchContainerViewController.instantiate(
             resultsDelegate: self
         )
     }()

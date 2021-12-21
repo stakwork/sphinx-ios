@@ -1,4 +1,4 @@
-// PodcastFeedSearchEmptyStateViewController.swift
+// FeedSearchEmptyStateViewController.swift
 //
 // Created by CypherPoet.
 // ✌️
@@ -8,17 +8,17 @@
 import UIKit
 
 
-class PodcastFeedSearchEmptyStateViewController: UIViewController {}
+class FeedSearchEmptyStateViewController: UIViewController {}
     
 
 // MARK: -  Static Members
-extension PodcastFeedSearchEmptyStateViewController {
+extension FeedSearchEmptyStateViewController {
     
     static func instantiate(
-    ) -> PodcastFeedSearchEmptyStateViewController {
+    ) -> FeedSearchEmptyStateViewController {
         let viewController = StoryboardScene
             .Dashboard
-            .podcastFeedSearchEmptyStateViewController
+            .FeedSearchEmptyStateViewController
             .instantiate()
 
         return viewController
@@ -27,7 +27,7 @@ extension PodcastFeedSearchEmptyStateViewController {
 
 
 // MARK: -  Lifecycle
-extension PodcastFeedSearchEmptyStateViewController {
+extension FeedSearchEmptyStateViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

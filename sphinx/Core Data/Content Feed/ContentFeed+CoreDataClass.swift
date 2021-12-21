@@ -13,6 +13,8 @@ public class ContentFeed: NSManagedObject {
     
     public static func createObjectFrom(
         json: JSON,
+        searchResultDescription: String? = nil,
+        searchResultImageUrl: String? = nil,
         context: NSManagedObjectContext? = nil
     ) -> ContentFeed? {
         
@@ -35,13 +37,24 @@ public class ContentFeed: NSManagedObject {
         contentFeed.ownerURL = URL(string: json[CodingKeys.ownerURL.rawValue].stringValue)
         contentFeed.generator = json[CodingKeys.generator.rawValue].stringValue
         contentFeed.authorName = json[CodingKeys.authorName.rawValue].stringValue
-        contentFeed.imageURL = URL(string: json[CodingKeys.imageURL.rawValue].stringValue)
-        contentFeed.feedDescription = json[CodingKeys.feedDescription.rawValue].stringValue
         contentFeed.feedURL = URL(string: json[CodingKeys.feedURL.rawValue].stringValue)
         contentFeed.linkURL = URL(string: json[CodingKeys.linkURL.rawValue].stringValue)
         contentFeed.datePublished = Date(timeIntervalSince1970: json[CodingKeys.datePublished.rawValue].doubleValue)
         contentFeed.dateUpdated = Date(timeIntervalSince1970: json[CodingKeys.dateUpdated.rawValue].doubleValue)
         contentFeed.language = json[CodingKeys.language.rawValue].string
+        
+        //Using search result image and description
+        if let imageUrlPath = json[CodingKeys.imageURL.rawValue].string, !imageUrlPath.isEmpty {
+            contentFeed.imageURL = URL(string: imageUrlPath)
+        } else if let searchResultImageUrl = searchResultImageUrl, !searchResultImageUrl.isEmpty {
+            contentFeed.imageURL = URL(string: searchResultImageUrl)
+        }
+        
+        if let feedDescription = json[CodingKeys.feedDescription.rawValue].string, !feedDescription.isEmpty {
+            contentFeed.feedDescription = feedDescription
+        } else if let searchResultDescription = searchResultDescription {
+            contentFeed.feedDescription = searchResultDescription
+        }
         
         if let items = json[CodingKeys.items.rawValue].array {
             for item in items {
@@ -97,10 +110,12 @@ public class ContentFeed: NSManagedObject {
     public static func fetchContentFeed(
         at feedURLPath: String,
         chat: Chat?,
+        searchResultDescription: String? = nil,
+        searchResultImageUrl: String? = nil,
         persistingIn managedObjectContext: NSManagedObjectContext,
         then completionHandler: ((Result<ContentFeed, Error>) -> Void)? = nil
     ) {
-        let tribesServerURL = "\(API.kTestTribesServerBaseURL)/feed?url=\(feedURLPath)"
+        let tribesServerURL = "\(API.kTribesServerBaseURL)/feed?url=\(feedURLPath)"
         
         if let existingContenFeed = chat?.contentFeed {
             managedObjectContext.delete(existingContenFeed)
@@ -111,7 +126,12 @@ public class ContentFeed: NSManagedObject {
             persistingIn: managedObjectContext,
             callback: { feedJSON in
                 
-                if let contentFeed = ContentFeed.createObjectFrom(json: feedJSON, context: managedObjectContext) {
+                if let contentFeed = ContentFeed.createObjectFrom(
+                    json: feedJSON,
+                    searchResultDescription: searchResultDescription,
+                    searchResultImageUrl: searchResultImageUrl,
+                    context: managedObjectContext
+                ) {
                     chat?.contentFeed = contentFeed
                     
                     completionHandler?(.success(contentFeed))
@@ -158,7 +178,7 @@ public class ContentFeed: NSManagedObject {
         persistingIn managedObjectContext: NSManagedObjectContext,
         then completionHandler: ((Result<ContentFeed, Error>) -> Void)? = nil
     ) {
-        let tribesServerURL = "\(API.kTestTribesServerBaseURL)/feed?url=\(feedURLPath)"
+        let tribesServerURL = "\(API.kTribesServerBaseURL)/feed?url=\(feedURLPath)"
         
         API.sharedInstance.getContentFeed(
             url: tribesServerURL,

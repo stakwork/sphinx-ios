@@ -17,11 +17,13 @@ extension PodcastFeed {
         public static func matching(searchQuery: String) -> NSPredicate {
             let keyword = "CONTAINS[cd]"
             let formatSpecifier = "%@"
+            let typeFormatSpecifier = "%d"
 
             return NSPredicate(
-                format: "%K \(keyword) \(formatSpecifier)",
+                format: "%K \(keyword) \(formatSpecifier) AND feedKindValue == \(typeFormatSpecifier)",
                 "title",
-                searchQuery
+                searchQuery,
+                FeedType.Podcast.rawValue
             )
         }
         

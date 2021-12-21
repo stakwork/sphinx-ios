@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import SwiftyJSON
 
 public class VideoFeed: NSObject {
     
@@ -22,13 +23,15 @@ public class VideoFeed: NSObject {
     public var datePublished: Date?
     public var dateUpdated: Date?
     public var generator: String?
+    public var isSubscribedToFromSearch: Bool
     
     public var chat: Chat?
     public var videos: Array<Video>?
     
-    init(_ objectID: NSManagedObjectID, _ feedID: String) {
+    init(_ objectID: NSManagedObjectID, _ feedID: String, _ isSubscribedToFromSearch: Bool) {
         self.objectID = objectID
         self.feedID = feedID
+        self.isSubscribedToFromSearch = isSubscribedToFromSearch
     }
 }
 
@@ -55,7 +58,8 @@ extension VideoFeed {
         
         let videoFeed = VideoFeed(
             contentFeed.objectID,
-            contentFeed.feedID
+            contentFeed.feedID,
+            contentFeed.isSubscribedToFromSearch
         )
         
         videoFeed.title = contentFeed.title
@@ -78,6 +82,26 @@ extension VideoFeed {
                 )
             }
         ?? []
+        
+        return videoFeed
+    }
+    
+    public static func convertFrom(
+        searchResult: JSON
+    ) -> VideoFeed {
+        
+        let videoFeed = VideoFeed(
+            NSManagedObjectID.init(),
+            searchResult[ContentFeed.CodingKeys.feedID.rawValue].stringValue,
+            false
+        )
+        
+        videoFeed.title = searchResult[ContentFeed.CodingKeys.title.rawValue].stringValue
+        videoFeed.feedDescription = searchResult[ContentFeed.CodingKeys.feedDescription.rawValue].stringValue
+        videoFeed.feedURL = URL(string: searchResult[ContentFeed.CodingKeys.feedURL.rawValue].stringValue)
+        videoFeed.author = searchResult[ContentFeed.CodingKeys.authorName.rawValue].stringValue
+        videoFeed.imageURL = URL(string: searchResult[ContentFeed.CodingKeys.imageURL.rawValue].stringValue)
+        videoFeed.generator = searchResult[ContentFeed.CodingKeys.generator.rawValue].stringValue
         
         return videoFeed
     }

@@ -14,11 +14,14 @@ import SwiftyJSON
 
 extension API {
     
-    public func searchForPodcasts(
+    public func searchForFeeds(
+        with type: FeedType,
         matching queryString: String,
-        then completionHandler: @escaping PodcastSearchCompletionHandler
+        then completionHandler: @escaping FeedSearchCompletionHandler
     ) {
-        let urlPath = "\(API.kTestTribesServerBaseURL)/search_podcasts"
+        
+        let route = (type == FeedType.Podcast) ? "search_podcasts" : "search_youtube"
+        let urlPath = "\(API.kTribesServerBaseURL)/\(route)"
         
         var urlComponents = URLComponents(string: urlPath)!
         urlComponents.queryItems = [
@@ -44,17 +47,20 @@ extension API {
         podcastSearchRequest = AF.request(request).responseJSON { response in
             switch response.result {
             case .success(let data):
-                var podcasts = [PodcastFeed]()
+                var results = [FeedSearchResult]()
                 
                 if let itemsArray = data as? NSArray {
                     itemsArray.forEach {
-                        podcasts.append(
-                            PodcastFeed.convertFrom(searchResult: JSON($0))
+                        results.append(
+                            FeedSearchResult.convertFrom(
+                                searchResult: JSON($0),
+                                type: type
+                            )
                         )
                     }
                 }
                 
-                completionHandler(.success(podcasts))
+                completionHandler(.success(results))
             case .failure(let error):
                 completionHandler(.failure(.networkError(error)))
             }

@@ -10,6 +10,7 @@ import SDWebImage
 
 
 class VideoFeedEpisodeCollectionViewCell: UICollectionViewCell {
+    
     @IBOutlet private weak var thumbnailImageView: UIImageView!
     @IBOutlet private weak var episodeTitleLabel: UILabel!
     @IBOutlet private weak var episodePublishDateLabel: UILabel!

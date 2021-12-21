@@ -57,18 +57,10 @@ typealias VerifyAuthenticationCallback = ((String?) -> ())
 typealias UploadAttachmentCallback = ((Bool, NSDictionary?) -> ())
 typealias MediaInfoCallback = ((Int, String?, Int?) -> ())
 
-// PodcastIndex Search
-//typealias PodcastIndexSearchCompletionHandler = (
-//    Result<[PodcastFeedSearchResult], API.RequestError>
-//) -> ()
-//
-//typealias PodcastIndexEpisodeFetchCompletionHandler = (
-//    Result<[PodcastEpisode], API.RequestError>
-//) -> ()
-
-typealias PodcastSearchCompletionHandler = (
-    Result<[PodcastFeed], API.RequestError>
+typealias FeedSearchCompletionHandler = (
+    Result<[FeedSearchResult], API.RequestError>
 ) -> ()
+
 
 typealias PodcastEpisodeSearchCompletionHandler = (
     Result<[ContentFeedItem], API.RequestError>
@@ -148,7 +140,6 @@ class API {
     public static let kPodcastIndexURL = "https://api.podcastindex.org"
     
     public static let kTribesServerBaseURL = "https://tribes.sphinx.chat"
-    public static let kTestTribesServerBaseURL = "https://tribes-test.sphinx.chat"
     
 
     class func getUrl(route: String) -> String {

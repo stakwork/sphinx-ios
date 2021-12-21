@@ -26,18 +26,6 @@ extension PodcastFeed {
         
         return Array(destinations)
     }
-    
-    
-    var searchResultItem: PodcastFeedSearchResult {
-        .init(
-            id: Int(feedID)!,
-            title: title ?? "",
-            podcastDescription: podcastDescription ?? "",
-            author: author ?? "",
-            imageURLPath: imageURLPath,
-            feedURLPath: feedURLPath
-        )
-    }
 }
 
 extension PodcastFeed {
@@ -112,25 +100,4 @@ extension PodcastFeed {
             ?? currentEpisode
     }
     
-}
-
-
-extension PodcastFeed {
-
-    convenience init(
-        from searchResult: PodcastFeedSearchResult
-    ) {
-        
-        self.init(
-            NSManagedObjectID.init(),
-            "\(searchResult.id)",
-            false
-        )
-
-        title = searchResult.title
-        podcastDescription = searchResult.podcastDescription
-        author = searchResult.author
-        imageURLPath = searchResult.imageURLPath
-        feedURLPath = searchResult.feedURLPath
-    }
 }

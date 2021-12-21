@@ -33,12 +33,24 @@ extension DashboardRootViewController: UITextFieldDelegate {
         return true
     }
     
+    func getSearchFeedType() -> FeedType? {
+        switch(feedsContainerViewController.activeFilterOption.id) {
+        case DashboardFeedsContainerViewController.ContentFilterOption.listen.id:
+            return FeedType.Podcast
+        case DashboardFeedsContainerViewController.ContentFilterOption.watch.id:
+            return FeedType.Video
+        default:
+            break
+        }
+        return nil
+    }
     
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
         switch activeTab {
         case .feed:
             feedSearchResultsContainerViewController.updateSearchQuery(
-                with: ""
+                with: "",
+                and: getSearchFeedType()
             )
             presentRootFeedsListView()
         case .friends:
@@ -60,7 +72,7 @@ extension DashboardRootViewController: UITextFieldDelegate {
         shouldChangeCharactersIn range: NSRange,
         replacementString string: String
     ) -> Bool {
-        var initialText = (textField.text ?? "") as NSString
+        let initialText = (textField.text ?? "") as NSString
 
         let queryString = initialText.replacingCharacters(
             in: range,
@@ -74,7 +86,8 @@ extension DashboardRootViewController: UITextFieldDelegate {
             }
             
             feedSearchResultsContainerViewController.updateSearchQuery(
-                with: queryString
+                with: queryString,
+                and: getSearchFeedType()
             )
         case .friends:
             contactChatsContainerViewController.updateWithNewChats(

@@ -9,9 +9,11 @@ import UIKit
 
 
 class VideoFeedEpisodePlayerCollectionViewDetailsCell: UICollectionViewCell {
+    
     @IBOutlet private weak var episodeDescriptionLabel: UILabel!
     @IBOutlet private weak var showMoreButton: UIButton!
-
+    @IBOutlet private weak var subscriptionToggleButton: UIButton!
+    
     
     var videoEpisode: Video! {
         didSet {
@@ -80,7 +82,9 @@ extension VideoFeedEpisodePlayerCollectionViewDetailsCell {
 // MARK: - Public Methods
 extension VideoFeedEpisodePlayerCollectionViewDetailsCell {
     
-    func configure(withVideoEpisode videoEpisode: Video) {
+    func configure(
+        withVideoEpisode videoEpisode: Video
+    ) {
         self.videoEpisode = videoEpisode
     }
 }
@@ -88,6 +92,28 @@ extension VideoFeedEpisodePlayerCollectionViewDetailsCell {
 
 // MARK: - Action Handling
 extension VideoFeedEpisodePlayerCollectionViewDetailsCell {
+    
+    private var subscriptionToggleButtonTitle: String {
+        (videoEpisode.videoFeed?.isSubscribedToFromSearch ?? false) ?
+        "unsubscribe.upper".localized
+        : "subscribe.upper".localized
+    }
+    
+    @IBAction func subscriptionButtonTouched() {
+        if let videoFeed = videoEpisode.videoFeed {
+            
+            videoFeed.isSubscribedToFromSearch.toggle()
+            
+            let contentFeed: ContentFeed? = CoreDataManager.sharedManager.getObjectWith(objectId: videoFeed.objectID)
+            contentFeed?.isSubscribedToFromSearch.toggle()
+            contentFeed?.managedObjectContext?.saveContext()
+        }
+        
+        subscriptionToggleButton.setTitle(
+            subscriptionToggleButtonTitle,
+            for: .normal
+        )
+    }
     
     @IBAction private func didTapShowMoreButton() {
         switch viewMode {
@@ -113,10 +139,19 @@ extension VideoFeedEpisodePlayerCollectionViewDetailsCell {
             showMoreButtonTitle,
             for: .normal
         )
+        
+        subscriptionToggleButton.layer.cornerRadius = subscriptionToggleButton.frame.size.height / 2
     }
     
     private func updateViewsWithVideoEpisode() {
         episodeDescriptionLabel.text = videoEpisode.videoDescription
+        
+        subscriptionToggleButton.setTitle(
+            subscriptionToggleButtonTitle,
+            for: .normal
+        )
+        
+        subscriptionToggleButton.isHidden = videoEpisode.videoFeed?.chat != nil
     }
 }
 

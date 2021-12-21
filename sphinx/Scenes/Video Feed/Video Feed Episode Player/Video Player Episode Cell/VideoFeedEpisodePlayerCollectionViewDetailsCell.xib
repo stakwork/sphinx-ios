@@ -8,6 +8,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="Roboto-Medium.ttf">
+            <string>Roboto-Medium</string>
+        </array>
         <array key="Roboto-Regular.ttf">
             <string>Roboto-Regular</string>
         </array>
@@ -21,14 +24,14 @@
                 <rect key="frame" x="0.0" y="0.0" width="375" height="95"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Episode Description That May potetentially have 3 lines of text" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sbQ-FG-2SW">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Episode Description That May potetentially have 3 lines of text" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sbQ-FG-2SW">
                         <rect key="frame" x="16" y="10" width="343" height="33"/>
                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                         <color key="textColor" name="MainBottomIcons"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Ph-df-A9I">
-                        <rect key="frame" x="282" y="55" width="77" height="30"/>
+                        <rect key="frame" x="283" y="55" width="76" height="30"/>
                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="15"/>
                         <color key="tintColor" name="ReceivedIcon"/>
                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -39,11 +42,27 @@
                             <action selector="didTapShowMoreButton" destination="gTV-IL-0wX" eventType="touchUpInside" id="vkn-tb-cUL"/>
                         </connections>
                     </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uty-Gv-ZoD" userLabel="Subscription Button">
+                        <rect key="frame" x="16" y="57" width="89" height="26"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="13"/>
+                        <inset key="contentEdgeInsets" minX="10" minY="5" maxX="10" maxY="5"/>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                        <state key="normal" title="SUBSCRIBE">
+                            <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </state>
+                        <connections>
+                            <action selector="subscriptionButtonTouched" destination="gTV-IL-0wX" eventType="touchUpInside" id="CdZ-pQ-J3t"/>
+                        </connections>
+                    </button>
                 </subviews>
             </view>
             <color key="backgroundColor" name="HeaderBG"/>
             <constraints>
+                <constraint firstAttribute="bottom" secondItem="6Ph-df-A9I" secondAttribute="bottom" constant="10" id="TdR-wt-eW2"/>
+                <constraint firstItem="uty-Gv-ZoD" firstAttribute="centerY" secondItem="6Ph-df-A9I" secondAttribute="centerY" id="U4p-or-atS"/>
                 <constraint firstItem="sbQ-FG-2SW" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="Vcq-b9-NaY"/>
+                <constraint firstItem="uty-Gv-ZoD" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="16" id="b50-2R-3a9"/>
                 <constraint firstItem="sbQ-FG-2SW" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="16" id="bc0-O1-prE"/>
                 <constraint firstItem="6Ph-df-A9I" firstAttribute="top" secondItem="sbQ-FG-2SW" secondAttribute="bottom" constant="12" id="dgr-in-hHi"/>
                 <constraint firstAttribute="trailing" secondItem="6Ph-df-A9I" secondAttribute="trailing" constant="16" id="eaw-6N-JAY"/>
@@ -55,6 +74,7 @@
             <connections>
                 <outlet property="episodeDescriptionLabel" destination="sbQ-FG-2SW" id="z9Q-HZ-Uk3"/>
                 <outlet property="showMoreButton" destination="6Ph-df-A9I" id="iyE-Gu-8Ni"/>
+                <outlet property="subscriptionToggleButton" destination="uty-Gv-ZoD" id="fS0-4x-Fhm"/>
             </connections>
             <point key="canvasLocation" x="131.15942028985509" y="37.165178571428569"/>
         </collectionViewCell>

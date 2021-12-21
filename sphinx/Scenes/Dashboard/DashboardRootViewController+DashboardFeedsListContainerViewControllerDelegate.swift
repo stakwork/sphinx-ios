@@ -4,6 +4,21 @@ import CoreData
 
 extension DashboardRootViewController: DashboardFeedsListContainerViewControllerDelegate, NewsletterFeedContainerViewControllerDelegate {
     
+    func viewController(_ viewController: UIViewController, didSelectFeedSearchResult searchResult: FeedSearchResult) {
+        let contentFeed: ContentFeed? = CoreDataManager.sharedManager.getObjectWith(objectId: searchResult.objectID)
+        
+        if let contentFeed = contentFeed {
+            if contentFeed.isPodcast {
+                let podcastFeed = PodcastFeed.convertFrom(contentFeed: contentFeed)
+                self.viewController(self, didSelectPodcastFeed: podcastFeed)
+            } else if contentFeed.isVideo {
+                self.viewController(self, didSelectVideoFeedWithID: contentFeed.objectID)
+            } else if contentFeed.isNewsletter {
+                self.viewController(self, didSelectNewsletterFeedWithID: contentFeed.objectID)
+            }
+        }
+    }
+    
     func viewController(
         _ viewController: UIViewController,
         didSelectPodcastEpisodeWithID podcastEpisodeID: NSManagedObjectID
@@ -73,10 +88,7 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
         
         let videoFeed = VideoFeed.convertFrom(contentFeed: contentFeed)
 
-        if
-            let latestEpisode = videoFeed.videosArray.first,
-            viewController is DashboardFeedsContainerViewController
-        {
+        if let latestEpisode = videoFeed.videosArray.first {
             presentVideoPlayer(for: latestEpisode)
         }
     }
@@ -98,9 +110,7 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
             let videoFeed = VideoFeed.convertFrom(contentFeed:  contentFeed)
             let videoEpisode = Video.convertFrom(contentFeedItem: contentFeedItem, videoFeed: videoFeed)
             
-            if viewController is DashboardFeedsContainerViewController {
-                presentVideoPlayer(for: videoEpisode)
-            }
+            presentVideoPlayer(for: videoEpisode)
         }
     }
     
@@ -116,10 +126,7 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
         }
         
         let newsletterFeed = NewsletterFeed.convertFrom(contentFeed: contentFeed)
-        
-        if viewController is DashboardFeedsContainerViewController {
-            presentNewsletterFeedVC(for: newsletterFeed)
-        }
+        presentNewsletterFeedVC(for: newsletterFeed)
     }
     
     func viewController(

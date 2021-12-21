@@ -281,18 +281,27 @@ extension FeedSearchResultsCollectionViewController {
 
     func makeSnapshotForCurrentState() -> DataSourceSnapshot {
         var snapshot = DataSourceSnapshot()
-
-        snapshot.appendSections(CollectionViewSection.allCases)
         
-        snapshot.appendItems(
-            subscribedFeeds.map { DataSourceItem.subscribedFeeds($0) },
-            toSection: .subscribedFeedsResults
-        )
-        
-        snapshot.appendItems(
-            feedSearchResults.map { DataSourceItem.feedSearchResult($0) },
-            toSection: .FeedSearchResults
-        )
+        if feedSearchResults.count > 0 {
+            snapshot.appendSections(CollectionViewSection.allCases)
+            
+            snapshot.appendItems(
+                subscribedFeeds.map { DataSourceItem.subscribedFeeds($0) },
+                toSection: .subscribedFeedsResults
+            )
+            
+            snapshot.appendItems(
+                feedSearchResults.map { DataSourceItem.feedSearchResult($0) },
+                toSection: .FeedSearchResults
+            )
+        } else {
+            snapshot.appendSections([CollectionViewSection.subscribedFeedsResults])
+            
+            snapshot.appendItems(
+                subscribedFeeds.map { DataSourceItem.subscribedFeeds($0) },
+                toSection: .subscribedFeedsResults
+            )
+        }
 
         return snapshot
     }

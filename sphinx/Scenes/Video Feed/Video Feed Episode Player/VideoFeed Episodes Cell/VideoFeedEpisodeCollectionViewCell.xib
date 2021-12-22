@@ -27,7 +27,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cKn-Ff-BNo">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="appPinIcon" translatesAutoresizingMaskIntoConstraints="NO" id="BkS-ai-kTh" userLabel="Video Episode Thumbnail">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="videoPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="BkS-ai-kTh" userLabel="Video Episode Thumbnail">
                                 <rect key="frame" x="12" y="4" width="120" height="72"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="120" id="t9h-pE-1eL"/>
@@ -106,8 +106,8 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="appPinIcon" width="80" height="80"/>
         <image name="square.and.arrow.down" catalog="system" width="121" height="128"/>
+        <image name="videoPlaceholder" width="1024" height="1024"/>
         <namedColor name="MainBottomIcons">
             <color red="0.37254901960784315" green="0.38823529411764707" blue="0.40784313725490196" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

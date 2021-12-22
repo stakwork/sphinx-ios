@@ -110,7 +110,7 @@ extension ContentFeed: DashboardFeedSquaredThumbnailCollectionViewItem {
 extension VideoFeed: DashboardFeedSquaredThumbnailCollectionViewItem {
     
     var imageURLPath: String? {
-        chat?.photoUrl
+        imageURL?.absoluteString ?? chat?.photoUrl
     }
     
     var placeholderImageName: String? {

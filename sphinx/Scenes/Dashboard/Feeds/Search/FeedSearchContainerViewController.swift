@@ -194,6 +194,10 @@ extension FeedSearchContainerViewController {
                     }
                 }
             }
+        } else {
+            self.searchResultsViewController.updateWithNew(
+                searchResults: []
+            )
         }
     }
     

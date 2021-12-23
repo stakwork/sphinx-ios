@@ -13,7 +13,9 @@ extension DashboardRootViewController: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if case .feed = activeTab {
-            presentFeedSearchView()
+            if textField.text?.isEmpty == true {
+                presentFeedSearchView()
+            }
         }
     }
     
@@ -24,6 +26,9 @@ extension DashboardRootViewController: UITextFieldDelegate {
         _ textField: UITextField,
         reason: UITextField.DidEndEditingReason
     ) {
+        if textField.text?.isEmpty == true {
+            presentRootFeedsListView()
+        }
     }
     
    
@@ -52,7 +57,9 @@ extension DashboardRootViewController: UITextFieldDelegate {
                 with: "",
                 and: getSearchFeedType()
             )
-            presentRootFeedsListView()
+            if (!textField.isEditing) {
+                presentRootFeedsListView()
+            }
         case .friends:
             contactChatsContainerViewController.updateWithNewChats(
                 chatsListViewModel.contactChats
@@ -112,6 +119,8 @@ extension DashboardRootViewController {
         feedViewMode = .searching
         
         feedsContainerViewController.removeFromParent()
+        
+        feedSearchResultsContainerViewController.feedType = getSearchFeedType()
         
         addChildVC(
             child: feedSearchResultsContainerViewController,

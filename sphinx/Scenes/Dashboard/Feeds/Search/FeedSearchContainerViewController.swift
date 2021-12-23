@@ -24,6 +24,8 @@ class FeedSearchContainerViewController: UIViewController {
     private var managedObjectContext: NSManagedObjectContext!
     private weak var resultsDelegate: FeedSearchResultsViewControllerDelegate?
     
+    var feedType: FeedType? = nil
+    var searchTimer: Timer? = nil
     
     lazy var fetchedResultsController: NSFetchedResultsController = Self
         .makeFetchedResultsController(
@@ -87,8 +89,8 @@ extension FeedSearchContainerViewController {
 
 // MARK: -  Lifecycle
 extension FeedSearchContainerViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func didMove(toParent parent: UIViewController?) {
+        super.didMove(toParent: parent)
         
         configureStartingEmptyStateView()
     }
@@ -128,6 +130,8 @@ extension FeedSearchContainerViewController {
         isShowingStartingEmptyStateVC = true
         
         removeChildVC(child: searchResultsViewController)
+        
+        emptyStateViewController.feedType = feedType
         
         addChildVC(
             child: emptyStateViewController,
@@ -175,25 +179,8 @@ extension FeedSearchContainerViewController {
         }
         
         if let type = type {
-            API.sharedInstance.searchForFeeds(
-                with: type,
-                matching: searchQuery
-            ) { [weak self] result in
-                guard let self = self else { return }
-                
-                DispatchQueue.main.async {
-                    switch result {
-                    case .success(let results):
-                        
-                        self.searchResultsViewController.updateWithNew(
-                            searchResults: results
-                        )
-                        
-                    case .failure(_):
-                        break
-                    }
-                }
-            }
+            searchTimer?.invalidate()
+            searchTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(fetchRemoteResults(timer:)), userInfo: ["search_query": searchQuery, "feed_type" : type], repeats: false)
         } else {
             self.searchResultsViewController.updateWithNew(
                 searchResults: []
@@ -201,8 +188,36 @@ extension FeedSearchContainerViewController {
         }
     }
     
+    @objc func fetchRemoteResults(timer: Timer) {
+        if let userInfo = timer.userInfo as? [String: Any] {
+            if let searchQuery = userInfo["search_query"] as? String, let type = userInfo["feed_type"] as? FeedType {
+                API.sharedInstance.searchForFeeds(
+                    with: type,
+                    matching: searchQuery
+                ) { [weak self] result in
+                    guard let self = self else { return }
+                    
+                    DispatchQueue.main.async {
+                        switch result {
+                        case .success(let results):
+                            
+                            self.searchResultsViewController.updateWithNew(
+                                searchResults: results
+                            )
+                            
+                        case .failure(_):
+                            break
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
     
     private func configureStartingEmptyStateView() {
+        emptyStateViewController.feedType = feedType
+        
         addChildVC(
             child: emptyStateViewController,
             container: contentView

@@ -459,3 +459,10 @@
 "feed.no-watch-found" = "No \"Watch\" Results Found";
 "feed.no-read-found" = "No \"Read\" Results Found";
 "feed.no-play-found" = "No \"Play\" Results Found";
+
+"feed.search-over" = "Search over";
+"feed.search-podcast-quantity" = "4 000 000 podcasts";
+"feed.search-podcast-source" = "on the Podcast Index";
+"feed.search-video-quantity" = "thousands of videos";
+"feed.search-video-source" = "on Youtube";
+"feed.search-other-source" = "your subscribed feeds";

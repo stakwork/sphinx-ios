@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -24,30 +26,30 @@
             <objects>
                 <viewController storyboardIdentifier="DashboardRootViewController" id="28a-MN-hzt" customClass="DashboardRootViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="04F-3T-MXy">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LVT-UQ-uni" customClass="ChatListHeader" customModule="sphinx" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="50"/>
                                 <color key="backgroundColor" name="DashboardHeader"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="Jth-A8-d4f"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yxo-is-Yxg" userLabel="Search Bar Container">
-                                <rect key="frame" x="0.0" y="98" width="600" height="70"/>
+                                <rect key="frame" x="0.0" y="142" width="414" height="70"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="52N-Az-4on">
-                                        <rect key="frame" x="16" y="16" width="568" height="44"/>
+                                        <rect key="frame" x="16" y="16" width="382" height="44"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lwz-zX-pkx">
-                                                <rect key="frame" x="16" y="10" width="24.5" height="24.5"/>
+                                                <rect key="frame" x="16" y="11.5" width="21" height="21"/>
                                                 <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="21"/>
                                                 <color key="textColor" name="PlaceholderText"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ef7-It-4Rs">
-                                                <rect key="frame" x="50.5" y="0.0" width="501.5" height="44"/>
+                                                <rect key="frame" x="47" y="0.0" width="319" height="44"/>
                                                 <color key="textColor" name="Text"/>
                                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
@@ -79,21 +81,21 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="875-dS-sJM" customClass="CustomSegmentedControl" customModule="sphinx" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="50" width="600" height="48"/>
+                                <rect key="frame" x="0.0" y="94" width="414" height="48"/>
                                 <color key="backgroundColor" name="DashboardHeader"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="6E0-rD-gcM"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wUN-0d-ubm" userLabel="Main Content Container View">
-                                <rect key="frame" x="0.0" y="168" width="600" height="374"/>
+                                <rect key="frame" x="0.0" y="212" width="414" height="592"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U1o-Ky-NBS" userLabel="Bottom Bar Container">
-                                <rect key="frame" x="0.0" y="542" width="600" height="58"/>
+                                <rect key="frame" x="0.0" y="804" width="414" height="58"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iPO-AC-fa6">
-                                        <rect key="frame" x="0.0" y="0.0" width="150" height="58"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="103.5" height="58"/>
                                         <color key="tintColor" name="MainBottomIcons"/>
                                         <state key="normal" image="bottomBar1"/>
                                         <connections>
@@ -101,7 +103,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yJZ-iT-Aoq">
-                                        <rect key="frame" x="150" y="0.0" width="150" height="58"/>
+                                        <rect key="frame" x="103.5" y="0.0" width="103.5" height="58"/>
                                         <color key="tintColor" name="MainBottomIcons"/>
                                         <state key="normal" image="bottomBar2"/>
                                         <connections>
@@ -109,7 +111,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F8U-3b-9bJ">
-                                        <rect key="frame" x="300" y="0.0" width="150" height="58"/>
+                                        <rect key="frame" x="207" y="0.0" width="103.5" height="58"/>
                                         <color key="tintColor" name="MainBottomIcons"/>
                                         <state key="normal" image="bottomBar3"/>
                                         <connections>
@@ -117,7 +119,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yY0-bJ-XOQ">
-                                        <rect key="frame" x="450" y="0.0" width="150" height="58"/>
+                                        <rect key="frame" x="310.5" y="0.0" width="103.5" height="58"/>
                                         <color key="tintColor" name="MainBottomIcons"/>
                                         <state key="normal" image="bottomBar4"/>
                                         <connections>
@@ -187,7 +189,7 @@
             <objects>
                 <viewController storyboardIdentifier="FeedSearchContainerViewController" id="Mk9-eA-WoW" customClass="FeedSearchContainerViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="RPx-Rg-omQ">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="oJU-7h-Zd5"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -205,18 +207,18 @@
             <objects>
                 <viewController storyboardIdentifier="DashboardFeedsContainerViewController" id="izJ-JO-cwu" customClass="DashboardFeedsContainerViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="XKi-k6-l8l">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uch-ef-QEI" userLabel="Feed Filter Chips Collection View Container">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="60"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="K9r-1J-17V"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hwZ-I8-IJL" userLabel="Feed Content Collection View Container">
-                                <rect key="frame" x="0.0" y="60" width="600" height="540"/>
+                                <rect key="frame" x="0.0" y="60" width="414" height="836"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                         </subviews>
@@ -246,7 +248,7 @@
             <objects>
                 <collectionViewController storyboardIdentifier="FeedFilterChipsCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="QGs-A9-cwQ" customClass="FeedFilterChipsCollectionViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="jmh-7h-cdI">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" name="DashboardHeader"/>
                         <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="eWa-VJ-OOo">
@@ -271,11 +273,11 @@
             <objects>
                 <viewController storyboardIdentifier="DashboardFeedsEmptyStateViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="rf1-Tn-GFa" customClass="DashboardFeedsEmptyStateViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="U25-4Z-Far">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Content Found" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oTA-xG-eJf">
-                                <rect key="frame" x="200.5" y="286" width="199" height="28"/>
+                                <rect key="frame" x="107.5" y="434" width="199" height="28"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="24"/>
                                 <color key="textColor" name="Text"/>
                                 <nil key="highlightedColor"/>
@@ -301,7 +303,7 @@
             <objects>
                 <collectionViewController storyboardIdentifier="AllTribeFeedsCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="GDs-Du-Iow" customClass="AllTribeFeedsCollectionViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="D1n-Ll-UoS">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" name="ListBG"/>
                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="HzR-ds-Sjo">
@@ -326,7 +328,7 @@
             <objects>
                 <collectionViewController storyboardIdentifier="PodcastFeedCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="bdw-5E-YTV" customClass="PodcastFeedCollectionViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="owa-fC-ffZ">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" name="ListBG"/>
                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="GhL-Cj-xhy">
@@ -351,7 +353,7 @@
             <objects>
                 <collectionViewController storyboardIdentifier="VideoFeedCollectionViewController" id="4pN-wi-GqR" customClass="DashboardVideoFeedCollectionViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="diG-Rx-ygk">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" name="ListBG"/>
                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="DRS-tI-zM9">
@@ -376,7 +378,7 @@
             <objects>
                 <collectionViewController storyboardIdentifier="NewsletterFeedCollectionViewController" id="Rwc-02-H7Q" customClass="DashboardNewsletterFeedCollectionViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="h3X-j2-fG6">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="bLL-7n-Td1">
@@ -401,7 +403,7 @@
             <objects>
                 <viewController storyboardIdentifier="ChatsContainerViewController" id="Nnq-TE-Byc" customClass="ChatsContainerViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="aa3-I2-cdN">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="D5f-b5-Sze"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -419,7 +421,7 @@
             <objects>
                 <collectionViewController storyboardIdentifier="ChatsCollectionViewController" id="8l3-PI-ySH" customClass="ChatsCollectionViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="Q15-Ve-1KU">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="8Ft-Ue-2TN">
@@ -444,39 +446,39 @@
             <objects>
                 <viewController storyboardIdentifier="FeedSearchEmptyStateViewController" id="NmB-cB-3h2" customClass="FeedSearchEmptyStateViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="VX3-OM-Ef9">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="saw-em-W2w">
-                                <rect key="frame" x="204.5" y="182" width="191" height="236.5"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="saw-em-W2w">
+                                <rect key="frame" x="112.5" y="328" width="189.5" height="240.5"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="podcastIndexLogo" translatesAutoresizingMaskIntoConstraints="NO" id="fF4-Ol-xgj">
-                                        <rect key="frame" x="57.5" y="0.0" width="76" height="72"/>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="podcastIndexLogo" translatesAutoresizingMaskIntoConstraints="NO" id="fF4-Ol-xgj">
+                                        <rect key="frame" x="56.5" y="0.0" width="76" height="76"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="76" id="4Dn-N7-Xc3"/>
-                                            <constraint firstAttribute="height" constant="72" id="Oa0-0g-72C"/>
+                                            <constraint firstAttribute="height" constant="76" id="Oa0-0g-72C"/>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Co-KV-mYF" userLabel="Spacer">
-                                        <rect key="frame" x="70.5" y="83" width="50" height="50"/>
-                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="8"/>
+                                        <rect key="frame" x="69.5" y="87" width="50" height="50"/>
+                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="4"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search over" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ndg-SW-RNS">
-                                        <rect key="frame" x="42" y="144" width="107.5" height="23.5"/>
+                                        <rect key="frame" x="41.5" y="148" width="106" height="23.5"/>
                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="20"/>
                                         <color key="textColor" name="PlaceholderText"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4 000 000 podcasts" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l4t-u1-si6">
-                                        <rect key="frame" x="6.5" y="178.5" width="178" height="23.5"/>
+                                        <rect key="frame" x="5.5" y="182.5" width="178" height="23.5"/>
                                         <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="20"/>
                                         <color key="textColor" name="PlaceholderText"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="on the Podcast Index" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0eu-Sz-ryQ">
-                                        <rect key="frame" x="0.0" y="213" width="191" height="23.5"/>
+                                        <rect key="frame" x="0.0" y="217" width="189.5" height="23.5"/>
                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="20"/>
                                         <color key="textColor" name="PlaceholderText"/>
                                         <nil key="highlightedColor"/>
@@ -491,6 +493,12 @@
                             <constraint firstItem="saw-em-W2w" firstAttribute="centerX" secondItem="VX3-OM-Ef9" secondAttribute="centerX" id="bNB-zq-ovk"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="searchPlaceholder1" destination="Ndg-SW-RNS" id="jSv-qy-epA"/>
+                        <outlet property="searchPlaceholder2" destination="l4t-u1-si6" id="aZ6-GK-uTG"/>
+                        <outlet property="searchPlaceholder3" destination="0eu-Sz-ryQ" id="2CM-f6-bHc"/>
+                        <outlet property="searchPlaceholderImage" destination="fF4-Ol-xgj" id="Wzk-ri-h8l"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MQo-iP-nxj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -501,7 +509,7 @@
             <objects>
                 <collectionViewController storyboardIdentifier="FeedSearchResultsCollectionViewController" id="6rA-gL-oUT" customClass="FeedSearchResultsCollectionViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="5V7-1u-a30">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="LMw-0A-Y2N">

@@ -458,3 +458,10 @@
 "feed.no-watch-found" = "No se encontraron resultados para \"Mirar\"";
 "feed.no-read-found" = "No se encontraron resultados para \"Leer\"";
 "feed.no-play-found" = "No se encontraron resultados para \"Jugar\"";
+
+"feed.search-over" = "Buscá entre";
+"feed.search-podcast-quantity" = "4 000 000 podcasts";
+"feed.search-podcast-source" = "en el Podcast Index";
+"feed.search-video-quantity" = "miles de videos";
+"feed.search-video-source" = "en Youtube";
+"feed.search-other-source" = "en tus feeds";

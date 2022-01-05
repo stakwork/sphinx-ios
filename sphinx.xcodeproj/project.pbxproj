@@ -3589,7 +3589,7 @@
 				F34BFEDF267B3C30003F6D55 /* RestoreUser.storyboard in Resources */,
 				F39F2C8626E2840500D357F6 /* FeedSearchResultsCollectionViewSectionHeader.xib in Resources */,
 				474064952745582A00FB7F93 /* SavePeopleProfileView.xib in Resources */,
-				F39F2C8626E2840500D357F6 /* PodcastFeedSearchResultsCollectionViewSectionHeader.xib in Resources */,
+				F39F2C8626E2840500D357F6 /* FeedSearchResultsCollectionViewSectionHeader.xib in Resources */,
 				4724BC1325474B440012BD76 /* WebApps.storyboard in Resources */,
 				4785C10724D4A6A0004E2D6C /* AppSizeView.xib in Resources */,
 				4797E78724B8ED7700D13270 /* LoadingMoreTableViewCell.xib in Resources */,

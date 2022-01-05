@@ -10,7 +10,6 @@ import UIKit
 
 protocol ModalViewDelegate: class {
     func shouldDismissVC()
-    func shouldGoToContactChat(contactId: Int)
 }
 
 protocol ModalViewInterface: class {
@@ -102,9 +101,5 @@ extension PeopleModalsViewController : ModalViewDelegate {
         }, completion: { _ in
             WindowsManager.sharedInstance.removeCoveringWindow()
         })
-    }
-    
-    func shouldGoToContactChat(contactId: Int) {
-        shouldDismissVC()
     }
 }

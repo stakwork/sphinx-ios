@@ -233,8 +233,14 @@ extension DashboardRootViewController {
             let chat = Chat.getChatWith(id: chatId)
         {
             presentChatDetailsVC(for: chat, shouldFetchNewChatData: true)
+        } else if
+            let contactId = UserDefaults.Keys.contactId.get(defaultValue: -1),
+            let contact = UserContact.getContactWith(id: contactId)
+        {
+            presentChatDetailsVC(for: nil, contact: contact, shouldFetchNewChatData: true)
         }
 
+        UserDefaults.Keys.contactId.removeValue()
         UserDefaults.Keys.chatId.removeValue()
     }
 }

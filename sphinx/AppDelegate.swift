@@ -275,7 +275,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 UserDefaults.Keys.chatId.removeValue()
                 currentVC.fetchNewData()
             } else if let dashboardRootVC = currentVC as? DashboardRootViewController {
-                let shouldDeepLinkIntoChatDetails = UserDefaults.Keys.chatId.get(defaultValue: -1) >= 0
+                
+                let shouldDeepLinkIntoChatDetails =
+                    UserDefaults.Keys.chatId.get(defaultValue: -1) >= 0 ||
+                    UserDefaults.Keys.contactId.get(defaultValue: -1) >= 0
 
                 if shouldDeepLinkIntoChatDetails {
                     dashboardRootVC.handleDeepLinksAndPush()

@@ -130,19 +130,16 @@ class PersonModalView: CommonModalView {
                 return
             }
             
-            API.sharedInstance.sendMessage(params: params, callback: { _ in
-                self.goToChat(contactId: contact.id)
+            API.sharedInstance.sendMessage(params: params, callback: { m in
+                if let _ = TransactionMessage.insertMessage(m: m).0 {
+                    self.delegate?.shouldDismissVC()
+                }
             }, errorCallback: {
                 self.showErrorMessage()
             })
         } else {
             showErrorMessage()
         }
-    }
-    
-    func goToChat(contactId: Int) {
-        UserDefaults.Keys.contactId.set(contactId)
-        delegate?.shouldGoToContactChat(contactId: contactId)
     }
     
     func showErrorMessage() {

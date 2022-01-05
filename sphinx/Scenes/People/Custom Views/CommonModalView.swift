@@ -27,6 +27,9 @@ class CommonModalView: UIView, ModalViewInterface {
         var ts : Int? = nil
         var info : [String: AnyObject] = [:]
         var personInfo : JSON = JSON()
+        
+        var key : String? = nil
+        var updateMethod : String? = nil
     }
     
     var authInfo: AuthInfo? = nil
@@ -66,6 +69,8 @@ class CommonModalView: UIView, ModalViewInterface {
                         break
                     case "pubkey":
                         authInfo?.pubkey = value
+                    case "key":
+                        authInfo?.key = value
                         break
                     default:
                         break

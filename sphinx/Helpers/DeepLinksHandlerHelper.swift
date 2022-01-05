@@ -46,6 +46,10 @@ class DeepLinksHandlerHelper {
             return false
         }
         
+        if WindowsManager.sharedInstance.showPeopleUpdateModal(delegate: vc as? WindowsManagerDelegate) {
+            return false
+        }
+        
         return false
     }
     
@@ -78,6 +82,10 @@ class DeepLinksHandlerHelper {
                     shouldSetVC = true
                 case "person":
                     UserDefaults.Keys.personQuery.set(query)
+                    shouldSetVC = true
+                    break
+                case "save":
+                    UserDefaults.Keys.saveQuery.set(query)
                     shouldSetVC = true
                     break
                 default:

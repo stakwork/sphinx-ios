@@ -404,6 +404,11 @@
 "already.connected" = "Ya estas conectado con esta persona";
 "price.to.meet" = "Precio para conectar: ";
 
+"people.save-profile" = "Guardar Perfil de:";
+"people.delete-profile" = "Borrar Perfil de:";
+"people.save-failed" = "No se ha podido guardar el Perfil";
+"people.delete-failed" = "No se ha podido eliminar el Perfil";
+
 //TRANSACTION MESSAGE
 "purchase.succeeded" = "Compra exitosa";
 "purchase.denied" = "Compra denegada";

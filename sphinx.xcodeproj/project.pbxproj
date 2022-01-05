@@ -128,6 +128,8 @@
 		473E5DE32575696C00697EEA /* PickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473E5DE22575696C00697EEA /* PickerViewController.swift */; };
 		473F7BA6268B7F970063D0E0 /* OnionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473F7BA5268B7F970063D0E0 /* OnionManager.swift */; };
 		4740538C244CFE0000826533 /* CustomImageScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4740538B244CFE0000826533 /* CustomImageScrollView.swift */; };
+		474064932745581C00FB7F93 /* SavePeopleProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474064922745581C00FB7F93 /* SavePeopleProfileView.swift */; };
+		474064952745582A00FB7F93 /* SavePeopleProfileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 474064942745582A00FB7F93 /* SavePeopleProfileView.xib */; };
 		47468FCE233131B40072124A /* NSManagedObjectContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47468FCD233131B40072124A /* NSManagedObjectContext.swift */; };
 		47468FD323314EE80072124A /* PinCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47468FD223314EE80072124A /* PinCodeViewController.swift */; };
 		47468FD5233162D40072124A /* AlertHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47468FD4233162D40072124A /* AlertHelper.swift */; };
@@ -808,6 +810,8 @@
 		473E5DE22575696C00697EEA /* PickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerViewController.swift; sourceTree = "<group>"; };
 		473F7BA5268B7F970063D0E0 /* OnionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnionManager.swift; sourceTree = "<group>"; };
 		4740538B244CFE0000826533 /* CustomImageScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImageScrollView.swift; sourceTree = "<group>"; };
+		474064922745581C00FB7F93 /* SavePeopleProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavePeopleProfileView.swift; sourceTree = "<group>"; };
+		474064942745582A00FB7F93 /* SavePeopleProfileView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SavePeopleProfileView.xib; sourceTree = "<group>"; };
 		47468FCD233131B40072124A /* NSManagedObjectContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSManagedObjectContext.swift; sourceTree = "<group>"; };
 		47468FD223314EE80072124A /* PinCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinCodeViewController.swift; sourceTree = "<group>"; };
 		47468FD4233162D40072124A /* AlertHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertHelper.swift; sourceTree = "<group>"; };
@@ -2863,6 +2867,8 @@
 				47ACBC30265EA35D00D2FE47 /* AuthExternalView.xib */,
 				47ACBC21265E9D0800D2FE47 /* PersonModalView.swift */,
 				47ACBC40265EA69200D2FE47 /* PersonModalView.xib */,
+				474064922745581C00FB7F93 /* SavePeopleProfileView.swift */,
+				474064942745582A00FB7F93 /* SavePeopleProfileView.xib */,
 			);
 			path = "Custom Views";
 			sourceTree = "<group>";
@@ -3582,6 +3588,8 @@
 				47D46A29237B1D030005A548 /* SubscriptionFormTableViewCell.xib in Resources */,
 				F34BFEDF267B3C30003F6D55 /* RestoreUser.storyboard in Resources */,
 				F39F2C8626E2840500D357F6 /* FeedSearchResultsCollectionViewSectionHeader.xib in Resources */,
+				474064952745582A00FB7F93 /* SavePeopleProfileView.xib in Resources */,
+				F39F2C8626E2840500D357F6 /* PodcastFeedSearchResultsCollectionViewSectionHeader.xib in Resources */,
 				4724BC1325474B440012BD76 /* WebApps.storyboard in Resources */,
 				4785C10724D4A6A0004E2D6C /* AppSizeView.xib in Resources */,
 				4797E78724B8ED7700D13270 /* LoadingMoreTableViewCell.xib in Resources */,
@@ -4177,6 +4185,7 @@
 				470F4C36257A765D00288A9B /* LinkPreviewBubbleView.swift in Sources */,
 				4707089424AE45D400A98DCA /* UserContactChatListExtension.swift in Sources */,
 				47DAABCE2491410900EF38B0 /* MessageReplyView.swift in Sources */,
+				474064932745581C00FB7F93 /* SavePeopleProfileView.swift in Sources */,
 				47468FD723353C880072124A /* LeftMenuOptionTableViewCell.swift in Sources */,
 				47FA44172374B6F7005D8C63 /* SubscriptionEndRuleView.swift in Sources */,
 				478DCFA02344E5EF009A03D6 /* CameraHelper.swift in Sources */,

@@ -332,15 +332,24 @@ public class UserContact: NSManagedObject {
         if let currentDeviceId = UserDefaults.Keys.deviceId.get(defaultValue: ""), currentDeviceId == deviceId {
             return
         }
+        
+        syncDeviceId(newDeviceId: deviceId)
+    }
+    
+    public static func syncDeviceId(
+        newDeviceId: String? = nil
+    ) {
+        if let currentDeviceId = newDeviceId ?? UserDefaults.Keys.deviceId.get(), !currentDeviceId.isEmpty {
+            
+            let parameters : [String: AnyObject] = ["device_id" : currentDeviceId as AnyObject]
+            let id = UserData.sharedInstance.getUserId()
 
-        let parameters : [String: AnyObject] = ["device_id" : deviceId as AnyObject]
-        let id = UserData.sharedInstance.getUserId()
-
-        API.sharedInstance.updateUser(id: id, params: parameters, callback: { contact in
-            UserDefaults.Keys.deviceId.set(contact["device_id"].string)
-        }, errorCallback: {
-            print("Error updating device id")
-        })
+            API.sharedInstance.updateUser(id: id, params: parameters, callback: { contact in
+                UserDefaults.Keys.deviceId.set(contact["device_id"].string)
+            }, errorCallback: {
+                print("Error updating device id")
+            })
+        }
     }
     
     public static func updateTipAmount(amount: Int) {

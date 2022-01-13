@@ -64,6 +64,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
         setInitialVC(launchingApp: true)
         connectTor()
+        
+        UserContact.syncDeviceId()
 
         return true
     }
@@ -355,8 +357,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         let notificationsCenter = UNUserNotificationCenter.current()
         notificationsCenter.getNotificationSettings { settings in
             notificationsCenter.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
-                guard granted else { return }
-
                 DispatchQueue.main.async {
                     UIApplication.shared.registerForRemoteNotifications()
                 }

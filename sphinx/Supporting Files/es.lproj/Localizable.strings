@@ -408,6 +408,8 @@
 "people.delete-profile" = "Borrar Perfil de:";
 "people.save-failed" = "No se ha podido guardar el Perfil";
 "people.delete-failed" = "No se ha podido eliminar el Perfil";
+"people.save-succeed" = "Perfil guardado con éxito";
+"people.delete-succeed" = "Perfil borrado con éxito";
 
 //TRANSACTION MESSAGE
 "purchase.succeeded" = "Compra exitosa";

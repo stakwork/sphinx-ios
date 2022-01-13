@@ -269,12 +269,20 @@ public class UserContact: NSManagedObject {
         return nil
     }
     
+    var conversation: Chat? = nil
+    
     public func getChat() -> Chat? {
+        if conversation == nil {
+            setContactConversation()
+        }
+        return conversation
+    }
+    
+    public func setContactConversation() {
         let userId = UserData.sharedInstance.getUserId()
         let predicate = NSPredicate(format: "(contactIds == %@ OR contactIds == %@) AND type = %d", [userId, self.id], [self.id, userId], Chat.ChatType.conversation.rawValue)
         let sortDescriptors = [NSSortDescriptor(key: "id", ascending: false)]
-        let chat:Chat? = CoreDataManager.sharedManager.getObjectOfTypeWith(predicate: predicate, sortDescriptors: sortDescriptors, entityName: "Chat")
-        return chat
+        conversation = CoreDataManager.sharedManager.getObjectOfTypeWith(predicate: predicate, sortDescriptors: sortDescriptors, entityName: "Chat")
     }
     
     public func getChat(chats: [Chat]) -> Chat? {

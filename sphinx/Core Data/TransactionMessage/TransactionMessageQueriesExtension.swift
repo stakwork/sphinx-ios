@@ -119,44 +119,6 @@ extension TransactionMessage {
         return -1
     }
     
-    static func getProvisionalMessageFor(messageContent: String, type: TransactionMessageType, chat: Chat) -> TransactionMessage? {
-        let userId = UserData.sharedInstance.getUserId()
-        let messageType = type.rawValue
-        let pendingStatus = TransactionMessageStatus.pending.rawValue
-        var predicate : NSPredicate!
-        if (chat.messages?.count ?? 0) > 0 {
-            predicate = NSPredicate(format: "(senderId == %d) AND (messageContent == %@) AND (type == %d) AND (status == %d) AND (chat == %@) AND id < 0", userId, messageContent, messageType, pendingStatus, chat)
-        } else {
-            predicate = NSPredicate(format: "(senderId == %d) AND (messageContent == %@) AND (type == %d) AND (status == %d) AND (chat == nil) AND id < 0", userId, messageContent, messageType, pendingStatus)
-        }
-        let sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
-        let messages: [TransactionMessage] = CoreDataManager.sharedManager.getObjectsOfTypeWith(predicate: predicate, sortDescriptors: sortDescriptors, entityName: "TransactionMessage", fetchLimit: 1)
-        
-        if messages.count > 0 {
-            return messages[0]
-        }
-        return nil
-    }
-    
-    static func getLastProvisionalImageMessage(chat: Chat) -> TransactionMessage? {
-        let userId = UserData.sharedInstance.getUserId()
-        let attachmentType = TransactionMessageType.attachment.rawValue
-        let pendingStatus = TransactionMessageStatus.pending.rawValue
-        var predicate : NSPredicate!
-        if (chat.messages?.count ?? 0) > 0 {
-            predicate = NSPredicate(format: "(senderId == %d) AND (type == %d) AND (status == %d) AND (chat == %@) AND id < 0", userId, attachmentType, pendingStatus, chat)
-        } else {
-            predicate = NSPredicate(format: "(senderId == %d) AND (type == %d) AND (status == %d) AND (chat == nil) AND id < 0", userId, attachmentType, pendingStatus, chat)
-        }
-        let sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
-        let messages: [TransactionMessage] = CoreDataManager.sharedManager.getObjectsOfTypeWith(predicate: predicate, sortDescriptors: sortDescriptors, entityName: "TransactionMessage", fetchLimit: 1)
-        
-        if messages.count > 0 {
-            return messages[0]
-        }
-        return nil
-    }
-    
     static func getPaymentsFor(feedId: Int) -> [TransactionMessage] {
         let feedIDString1 = "{\"feedID\":\"\(feedId)"
         let feedIDString2 = "{\"feedID\":\(feedId)"

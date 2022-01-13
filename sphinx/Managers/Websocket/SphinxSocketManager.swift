@@ -246,14 +246,8 @@ extension SphinxSocketManager {
     func didReceiveMessage(type: String, messageJson: JSON) {
         let isConfirmation = type == "confirmation"
         let messageFromUpdatedContact = didUpdateContact(messageJson: messageJson)
-        let messageId = messageJson["id"].intValue
-        let existingMessage = TransactionMessage.getMessageWith(id: messageId)
         
-        if isConfirmation && (existingMessage?.isConfirmedAsReceived() ?? false) {
-            return
-        }
-        
-        if let message = TransactionMessage.insertMessage(m: messageJson, existingMessage: existingMessage).0 {
+        if let message = TransactionMessage.insertMessage(m: messageJson).0 {
             updateBalanceIfNeeded(type: type)
             
             message.setPaymentInvoiceAsPaid()

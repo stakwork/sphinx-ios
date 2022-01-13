@@ -127,7 +127,7 @@ public final class ContactsService {
         chatsCount = filteredChats.count
 
         let chatsWithLastMessages = filteredChats.map{ (chat) -> Chat in
-            chat.lastMessage = chat.getLastMessageToShow()
+            chat.updateLastMessage()
             return chat
         }
 

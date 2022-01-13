@@ -147,33 +147,7 @@ public class TransactionMessage: NSManagedObject {
     static let typesToExcludeFromChat = [TransactionMessageType.purchase.rawValue, TransactionMessageType.purchaseAccept.rawValue, TransactionMessageType.purchaseDeny.rawValue, TransactionMessageType.repayment.rawValue]
     
     static let kCallRoomName = "/sphinx.call"
-    
-    static func getMessageInstance(type: Int, chat: Chat?, messageContent: String, managedContext: NSManagedObjectContext) -> TransactionMessage {
-        if let chat = chat {
-            if type == TransactionMessageType.message.rawValue && messageContent != "" {
-                if let m = TransactionMessage.getProvisionalMessageFor(messageContent: messageContent, type: TransactionMessageType.message, chat: chat) {
-                    return m
-                }
-            } else if type == TransactionMessageType.boost.rawValue && messageContent != "" {
-                if let m = TransactionMessage.getProvisionalMessageFor(messageContent: messageContent, type: TransactionMessageType.boost, chat: chat) {
-                    return m
-                }
-            }
-            
-            if type == TransactionMessageType.attachment.rawValue {
-                if messageContent != "" {
-                    if let m = TransactionMessage.getProvisionalMessageFor(messageContent: messageContent, type: TransactionMessageType.attachment, chat: chat) {
-                        return m
-                    }
-                } else {
-                    if let m = TransactionMessage.getLastProvisionalImageMessage(chat: chat) {
-                        return m
-                    }
-                }
-            }
-        }
-        return TransactionMessage(context: managedContext) as TransactionMessage
-    }
+
     
     static func insertMessage(m: JSON, existingMessage: TransactionMessage? = nil) -> (TransactionMessage?, Bool) {
         let encryptionManager = EncryptionManager.sharedInstance
@@ -234,7 +208,7 @@ public class TransactionMessage: NSManagedObject {
         if let existingMessage = existingMessage {
             message = existingMessage
         } else {
-            message = getMessageInstance(type: type, chat: messageChat, messageContent: messageContent, managedContext: CoreDataManager.sharedManager.persistentContainer.viewContext)
+            message = TransactionMessage(context: CoreDataManager.sharedManager.persistentContainer.viewContext) as TransactionMessage
         }
         
         let updatedMessage = TransactionMessage.createObject(id: id, uuid: uuid, replyUUID: replyUUID, type: type, sender: sender, senderAlias: senderAlias, senderPic: senderPic, receiver: receiver, amount: amount, paymentHash: paymentHash, invoice: invoice, messageContent: messageContent, status: status.rawValue, date: date, expirationDate: expirationDate, mediaToken: mediaToken, mediaKey: mediaKey, mediaType: mediaType, originalMuid: originalMuid, seen: messageSeen, messageEncrypted: messageEncrypted, chat: messageChat, message: message)
@@ -319,7 +293,7 @@ public class TransactionMessage: NSManagedObject {
         
         if let chat = chat {
             message.chat = chat
-            chat.lastMessage = message
+            chat.setLastMessage(message)
         }
         
         return message
@@ -412,10 +386,6 @@ public class TransactionMessage: NSManagedObject {
             return true
         }
         return false
-    }
-    
-    func setAsLastMessage() {
-        chat?.lastMessage = self
     }
     
     func setAsSeen() {

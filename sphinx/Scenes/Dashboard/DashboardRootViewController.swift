@@ -134,9 +134,9 @@ class DashboardRootViewController: RootViewController {
     
     var indicesOfTabsWithNewMessages: [Int] {
         var indices = [Int]()
-        
-        if chatsListViewModel
-            .contactChats
+
+        let contacts = chatsListViewModel.contactsService.chatListObjects.filter { $0.isConversation() }
+        if contacts
             .contains(
                 where: { $0.getChat()?.getReceivedUnseenMessagesCount() ?? 0 > 0 }
             )
@@ -144,8 +144,8 @@ class DashboardRootViewController: RootViewController {
             indices.append(1)
         }
         
-        if chatsListViewModel
-            .tribeChats
+        let tribes = chatsListViewModel.contactsService.chatListObjects.filter { $0.isPublicGroup() }
+        if tribes
             .contains(
                 where: { $0.getChat()?.getReceivedUnseenMessagesCount() ?? 0 > 0 }
             )

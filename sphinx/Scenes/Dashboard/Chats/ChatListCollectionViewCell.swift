@@ -149,6 +149,9 @@ extension ChatListCollectionViewCell {
     
     
     private func renderContactImageViews(for chatListObject: ChatListCommonObject) {
+        
+        contactImageView.sd_cancelCurrentImageLoad()
+        
         if chatListObject.isPending() {
             
             contactImageView.tintColor = UIColor.Sphinx.TextMessages
@@ -173,7 +176,7 @@ extension ChatListCollectionViewCell {
                 contactInitialsLabel.isHidden = false
                 contactImageView.isHidden = true
                 renderContactInitialsLabel(for: chatListObject)
-                
+
                 if
                     let imageURLPath = chatListObject.getPhotoUrl()?.removeDuplicatedProtocol(),
                     let imageURL = URL(string: imageURLPath)
@@ -213,6 +216,7 @@ extension ChatListCollectionViewCell {
             inviteIcon.textColor = iconColor
             inviteIcon.isHidden = false
             
+            messageLabel.superview?.isHidden = false
             messageLabel.text = text
             dateLabel.isHidden = true
             

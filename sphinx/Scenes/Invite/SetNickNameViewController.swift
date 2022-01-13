@@ -62,7 +62,7 @@ class SetNickNameViewController: SetDataViewController {
     }
     
     func insertAndUpdateOwner(contacts: [JSON]) {
-        contactsService.insertContacts(contacts: contacts, shouldSyncDeleted: false)
+        contactsService.insertContacts(contacts: contacts)
         UserData.sharedInstance.saveNewNodeOnKeychain()
         
         let id = UserData.sharedInstance.getUserId()

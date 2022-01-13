@@ -40,38 +40,40 @@ public final class ContactsService {
         self.subscriptions = Subscription.getAll()
     }
 
-    public func insertObjects(contacts: [JSON], chats: [JSON], subscriptions: [JSON]) {
+    public func insertObjects(contacts: [JSON], chats: [JSON], subscriptions: [JSON], invites: [JSON]) {
         insertContacts(contacts: contacts)
         insertChats(chats: chats)
         insertSubscriptions(subscriptions: subscriptions)
+        insertInvites(invites: invites)
     }
-
-    public func insertContacts(contacts: [JSON], shouldSyncDeleted: Bool = true) {
-        if contacts.count > 0 {
-            var contactIds = [Int]()
-
-            for contact: JSON in contacts {
-                if let contact = UserContact.insertContact(contact: contact) {
-                    contactIds.append(contact.id)
-                }
+    
+    public func insertInvites(invites: [JSON]) {
+        if invites.count > 0 {
+            
+            for invite: JSON in invites {
+                let _ = UserInvite.insertInvite(invite: invite)
             }
-
-            if shouldSyncDeleted {
-                removeDeletedContacts(existingContactIds: contactIds)
+        }
+    }
+    
+    public func insertContacts(contacts: [JSON]) {
+        if contacts.count > 0 {
+            for contact: JSON in contacts {
+                if let id = contact.getJSONId(), contact["deleted"].boolValue || contact["from_group"].boolValue {
+                    if let contact = UserContact.getContactWith(id: id) {
+                        CoreDataManager.sharedManager.deleteContactObjectsFor(contact)
+                    }
+                } else {
+                    let _ = UserContact.insertContact(contact: contact)
+                }
             }
         }
     }
 
     public func insertContact(contact: JSON, pin: String? = nil) -> UserContact? {
-        if let c = UserContact.insertContact(contact: contact) {
-
-            if let pin = pin {
-                c.pin = pin
-            }
-
-            return c
-        }
-        return nil
+        let c = UserContact.insertContact(contact: contact)
+        c?.pin = pin
+        return c
     }
 
     func removeDeletedContacts(existingContactIds: [Int]) {
@@ -82,31 +84,22 @@ public final class ContactsService {
             }
         }
     }
-
+    
     public func insertChats(chats: [JSON]) {
         if chats.count > 0 {
-            var chatIds = [Int]()
-
             for chat: JSON in chats {
-                if let chatId = Chat.getChatId(chat: chat) {
-                    chatIds.append(chatId)
-                }
-
-                if let chat = Chat.insertChat(chat: chat) {
-                    if chat.seen {
-                        chat.setChatMessagesAsSeen(shouldSync: false, shouldSave: false)
+                if let id = chat.getJSONId(), chat["deleted"].boolValue {
+                    if let chat = Chat.getChatWith(id: id) {
+                        CoreDataManager.sharedManager.deleteChatObjectsFor(chat)
+                    }
+                } else {
+                    if let chat = Chat.insertChat(chat: chat) {
+                        if chat.seen {
+                            chat.setChatMessagesAsSeen(shouldSync: false, shouldSave: false)
+                        }
                     }
                 }
             }
-
-            removeDeletedChats(existingChatIds: chatIds)
-        }
-    }
-
-    func removeDeletedChats(existingChatIds: [Int]) {
-        let chatsToDelete = Chat.getAllExcluding(ids: existingChatIds)
-        for chat in chatsToDelete {
-            CoreDataManager.sharedManager.deleteChatObjectsFor(chat)
         }
     }
 

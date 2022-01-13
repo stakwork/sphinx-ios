@@ -11,6 +11,7 @@ import Alamofire
 import SwiftyJSON
 
 typealias ContactsResultsCallback = (([JSON], [JSON], [JSON]) -> ())
+typealias LatestContactsResultsCallback = (([JSON], [JSON], [JSON], [JSON]) -> ())
 typealias ChatContactsCallback = (([JSON]) -> ())
 typealias SphinxMessagesResultsCallback = ((JSON) -> ())
 typealias SphinxHistoryResultsCallback = (([JSON]) -> ())

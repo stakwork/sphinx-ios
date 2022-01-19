@@ -16,6 +16,7 @@ class DashboardRootViewController: RootViewController {
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var searchBarContainer: UIView!
     @IBOutlet weak var mainContentContainerView: UIView!
+    @IBOutlet weak var restoreProgressView: RestoreProgressView!
     
     @IBOutlet weak var dashboardNavigationTabs: CustomSegmentedControl! {
         didSet {
@@ -405,9 +406,7 @@ extension DashboardRootViewController {
                     self.isLoading = false
                     
                     if (restoring) {
-                        self.newBubbleHelper.showLoadingWheel(text:
-                            (progress > 0) ? "Restoring: \(progress)%" : "Resuming Restore"
-                        )
+                        self.restoreProgressView.showRestoreProgressView(with: progress)
                     }
                 },
                 completion: { (_,_) in
@@ -453,7 +452,8 @@ extension DashboardRootViewController {
         
         updateCurrentViewControllerData()
         
-        newBubbleHelper.hideLoadingWheel()
+        restoreProgressView.hideViewAnimated()
+        
         isLoading = false
         shouldShowHeaderLoadingWheel = false
         

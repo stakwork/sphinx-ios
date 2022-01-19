@@ -148,6 +148,10 @@
                                     <constraint firstItem="yJZ-iT-Aoq" firstAttribute="top" secondItem="U1o-Ky-NBS" secondAttribute="top" id="kL2-5g-nks"/>
                                 </constraints>
                             </view>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SpQ-1c-t1N" customClass="RestoreProgressView" customModule="sphinx" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="fzQ-ek-GLy"/>
                         <color key="backgroundColor" name="HeaderBG"/>
@@ -157,11 +161,15 @@
                             <constraint firstItem="U1o-Ky-NBS" firstAttribute="top" secondItem="wUN-0d-ubm" secondAttribute="bottom" id="B80-wB-M2Z"/>
                             <constraint firstItem="LVT-UQ-uni" firstAttribute="top" secondItem="fzQ-ek-GLy" secondAttribute="top" id="F9P-zV-KUc"/>
                             <constraint firstItem="fzQ-ek-GLy" firstAttribute="trailing" secondItem="U1o-Ky-NBS" secondAttribute="trailing" id="QYz-OZ-il3"/>
+                            <constraint firstItem="SpQ-1c-t1N" firstAttribute="top" secondItem="04F-3T-MXy" secondAttribute="top" id="aK9-mP-16R"/>
                             <constraint firstItem="LVT-UQ-uni" firstAttribute="leading" secondItem="04F-3T-MXy" secondAttribute="leading" id="cya-Ci-DC6"/>
                             <constraint firstItem="875-dS-sJM" firstAttribute="top" secondItem="LVT-UQ-uni" secondAttribute="bottom" id="d5N-xu-Czf"/>
+                            <constraint firstItem="SpQ-1c-t1N" firstAttribute="leading" secondItem="fzQ-ek-GLy" secondAttribute="leading" id="dne-2x-mlS"/>
+                            <constraint firstAttribute="bottom" secondItem="SpQ-1c-t1N" secondAttribute="bottom" id="hqu-zW-sqP"/>
                             <constraint firstItem="Yxo-is-Yxg" firstAttribute="top" secondItem="875-dS-sJM" secondAttribute="bottom" id="ij3-lY-BRC"/>
                             <constraint firstItem="Yxo-is-Yxg" firstAttribute="leading" secondItem="fzQ-ek-GLy" secondAttribute="leading" id="k52-X2-PNK"/>
                             <constraint firstItem="fzQ-ek-GLy" firstAttribute="trailing" secondItem="Yxo-is-Yxg" secondAttribute="trailing" id="nBj-ld-zfe"/>
+                            <constraint firstItem="SpQ-1c-t1N" firstAttribute="trailing" secondItem="fzQ-ek-GLy" secondAttribute="trailing" id="qNM-cn-N7P"/>
                             <constraint firstItem="fzQ-ek-GLy" firstAttribute="trailing" secondItem="875-dS-sJM" secondAttribute="trailing" id="vTA-fb-0lP"/>
                             <constraint firstItem="fzQ-ek-GLy" firstAttribute="bottom" secondItem="U1o-Ky-NBS" secondAttribute="bottom" id="wLl-Ng-wzd"/>
                             <constraint firstItem="wUN-0d-ubm" firstAttribute="top" secondItem="Yxo-is-Yxg" secondAttribute="bottom" id="xS0-nE-gfu"/>
@@ -175,6 +183,7 @@
                         <outlet property="dashboardNavigationTabs" destination="875-dS-sJM" id="fkL-TD-2su"/>
                         <outlet property="headerView" destination="LVT-UQ-uni" id="SJj-CU-kUC"/>
                         <outlet property="mainContentContainerView" destination="wUN-0d-ubm" id="ooF-t6-Mp7"/>
+                        <outlet property="restoreProgressView" destination="SpQ-1c-t1N" id="AoU-hB-n7m"/>
                         <outlet property="searchBar" destination="52N-Az-4on" id="tUt-tA-AbQ"/>
                         <outlet property="searchBarContainer" destination="Yxo-is-Yxg" id="jGg-w4-PSq"/>
                         <outlet property="searchTextField" destination="ef7-It-4Rs" id="JSC-Ke-GdI"/>

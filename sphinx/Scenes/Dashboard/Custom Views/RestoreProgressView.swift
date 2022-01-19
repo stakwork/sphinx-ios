@@ -8,7 +8,13 @@
 
 import UIKit
 
+protocol RestoreProgressViewDelegate: class {
+    func shouldFinishRestoring()
+}
+
 class RestoreProgressView: UIView {
+    
+    weak var delegate: RestoreProgressViewDelegate?
     
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var restoreProgressView: UIView!
@@ -69,6 +75,7 @@ class RestoreProgressView: UIView {
     }
 
     @IBAction func finishRestoringButtonTouched() {
-        
+        delegate?.shouldFinishRestoring()
+        hideViewAnimated()
     }
 }

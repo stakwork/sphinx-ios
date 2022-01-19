@@ -191,6 +191,8 @@ extension DashboardRootViewController {
         setupHeaderViews()
         listenForEvents()
         
+        restoreProgressView.delegate = self
+        
         isLoading = true
     }
     

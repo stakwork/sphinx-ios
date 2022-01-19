@@ -127,6 +127,7 @@
 		473BC89A260238DC0070E519 /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473BC899260238DC0070E519 /* JSON.swift */; };
 		473C3150279869D2007735CD /* RestoreProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473C314F279869D2007735CD /* RestoreProgressView.swift */; };
 		473C315327986EBB007735CD /* RestoreProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 473C315527986EBB007735CD /* RestoreProgressView.xib */; };
+		473C315B2798982D007735CD /* DashboardRootViewController+RestoreProgressViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473C315A2798982D007735CD /* DashboardRootViewController+RestoreProgressViewDelegate.swift */; };
 		473E5DE32575696C00697EEA /* PickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473E5DE22575696C00697EEA /* PickerViewController.swift */; };
 		473F7BA6268B7F970063D0E0 /* OnionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473F7BA5268B7F970063D0E0 /* OnionManager.swift */; };
 		4740538C244CFE0000826533 /* CustomImageScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4740538B244CFE0000826533 /* CustomImageScrollView.swift */; };
@@ -813,6 +814,7 @@
 		473C315427986EBB007735CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/RestoreProgressView.xib; sourceTree = "<group>"; };
 		473C315727986EC2007735CD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/RestoreProgressView.strings; sourceTree = "<group>"; };
 		473C315927986EC3007735CD /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/RestoreProgressView.strings; sourceTree = "<group>"; };
+		473C315A2798982D007735CD /* DashboardRootViewController+RestoreProgressViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DashboardRootViewController+RestoreProgressViewDelegate.swift"; sourceTree = "<group>"; };
 		473E5DE22575696C00697EEA /* PickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerViewController.swift; sourceTree = "<group>"; };
 		473F7BA5268B7F970063D0E0 /* OnionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnionManager.swift; sourceTree = "<group>"; };
 		4740538B244CFE0000826533 /* CustomImageScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImageScrollView.swift; sourceTree = "<group>"; };
@@ -3319,6 +3321,7 @@
 				473C314E279869B8007735CD /* Custom Views */,
 				F373BF0A26AAFB6B0093C886 /* Custom Segmented Control */,
 				F3CE637826AFD42C006E37A0 /* Feeds */,
+				473C315A2798982D007735CD /* DashboardRootViewController+RestoreProgressViewDelegate.swift */,
 			);
 			path = Dashboard;
 			sourceTree = "<group>";
@@ -3909,6 +3912,7 @@
 				47FE9A3C23BF751C0090913F /* ChatViewControllerAttachmentDelegateExtension.swift in Sources */,
 				475BDD08232AC24600C5BBD6 /* MessageReceivedTableViewCell.swift in Sources */,
 				4734D3C9241AA24C00D6957E /* PaymentTemplateViewController.swift in Sources */,
+				473C315B2798982D007735CD /* DashboardRootViewController+RestoreProgressViewDelegate.swift in Sources */,
 				47308E1224FEE6E700FFAC6F /* SocketEventHandler.swift in Sources */,
 				475BDD6D232BF04E00C5BBD6 /* ContainerViewController.swift in Sources */,
 				F3CE637C26AFE823006E37A0 /* FeedFilterChipCollectionViewCell.swift in Sources */,

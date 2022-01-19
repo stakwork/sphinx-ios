@@ -304,14 +304,15 @@ public class Chat: NSManagedObject {
     }
     
     func setChatMessagesAsSeen(shouldSync: Bool = true, shouldSave: Bool = true) {
-        self.seen = true
-        
         let receivedUnseenMessages = self.getReceivedUnseenMessages()
         if receivedUnseenMessages.count > 0 {
             for m in receivedUnseenMessages {
                 m.seen = true
             }
         }
+        
+        seen = true
+        unseenMessagesCount = 0
         
         if shouldSync {
             API.sharedInstance.setChatMessagesAsSeen(chatId: self.id, callback: { _ in })

@@ -103,7 +103,6 @@ class ChatViewController: KeyboardHandlerViewController {
         chatHeaderView.configure(chat: chat, contact: contact, contactsService: contactsService, delegate: self)
         
         accessoryView.delegate = self
-        chat?.setChatMessagesAsSeen()
         updateChatInfo()
         
         ChatHelper.registerCellsForChat(tableView: chatTableView)

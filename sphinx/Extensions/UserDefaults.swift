@@ -35,6 +35,7 @@ extension UserDefaults {
         public static let nodePassword = DefaultKey<String>("nodePassword")
         public static let welcomeMessage = DefaultKey<String>("welcomeMessage")
         public static let signupStep = DefaultKey<Int>("signupStep")
+        public static let messagesFetchPage = DefaultKey<Int>("messagesFetchPage")
         public static let paymentProcessedInvites = DefaultKey<[String]>("paymentProcessedInvites")
         public static let challengeQuery = DefaultKey<String>("challengeQuery")
         public static let redeemSatsQuery = DefaultKey<String>("redeemSatsQuery")

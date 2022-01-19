@@ -151,7 +151,6 @@ final class ChatListViewModel: NSObject {
         
         getMessagesPaginated(
             restoring: restoring,
-            page: 1,
             prevPageNewMessages: 0,
             chatId: chatId,
             date: Date(),
@@ -162,13 +161,14 @@ final class ChatListViewModel: NSObject {
     
     func getMessagesPaginated(
         restoring: Bool,
-        page: Int,
         prevPageNewMessages: Int,
         chatId: Int? = nil,
         date: Date,
         progressCallback: @escaping (Int) -> (),
         completion: @escaping (Int, Int) -> ()
     ) {
+        let page = UserDefaults.Keys.messagesFetchPage.get(defaultValue: 1)
+        
         API.sharedInstance.getMessagesPaginated(
             page: page,
             date: date,
@@ -190,22 +190,29 @@ final class ChatListViewModel: NSObject {
                     completion: { (newMessagesCount, allMessagesCount) in
                         
                     if newMessages.count < ChatListViewModel.kMessagesPerPage {
-                        //Last page
+                        
+                        UserDefaults.Keys.messagesFetchPage.removeValue()
+                        
                         if restoring {
                             SphinxSocketManager.sharedInstance.connectWebsocket(forceConnect: true)
                         }
                         completion(newMessagesCount, allMessagesCount)
                         CoreDataManager.sharedManager.saveContext()
+                        
                     } else {
+                        
+                        CoreDataManager.sharedManager.saveContext()
+                        UserDefaults.Keys.messagesFetchPage.set(page + 1)
+                        
                         self.getMessagesPaginated(
                             restoring: restoring,
-                            page: page + 1,
                             prevPageNewMessages: newMessagesCount + prevPageNewMessages,
                             chatId: chatId,
                             date: date,
                             progressCallback: progressCallback,
                             completion: completion
                         )
+                        
                     }
                 })
             } else {
@@ -215,7 +222,6 @@ final class ChatListViewModel: NSObject {
             DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: {
                 self.getMessagesPaginated(
                     restoring: restoring,
-                    page: page,
                     prevPageNewMessages: prevPageNewMessages,
                     chatId: chatId,
                     date: date,

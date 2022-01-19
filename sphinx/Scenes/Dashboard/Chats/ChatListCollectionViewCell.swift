@@ -24,7 +24,7 @@ class ChatListCollectionViewCell: UICollectionViewCell {
             guard let chatListObject = chatListObject else { return }
             DispatchQueue.main.async {
                 self.render(with: chatListObject)
-                
+  
             }
         }
     }
@@ -51,7 +51,10 @@ extension ChatListCollectionViewCell {
 extension ChatListCollectionViewCell {
     
     var unreadMessageCount: Int {
-        chatListObject?.getChat()?.getReceivedUnseenMessagesCount() ?? 0
+        if chatListObject?.lastMessage != nil && chatListObject?.lastMessage?.seen == true {
+            return 0
+        }
+        return chatListObject?.getChat()?.getReceivedUnseenMessagesCount() ?? 0
     }
     
     var hasUnreadMessages: Bool { unreadMessageCount > 0 }

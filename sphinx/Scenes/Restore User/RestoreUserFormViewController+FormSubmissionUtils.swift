@@ -100,7 +100,6 @@ extension RestoreUserFormViewController {
         }
 
         userData.save(ip: keys[2], token: keys[3], andPin: pin)
-        UserDefaults.Keys.didJustRestore.set(true)
 
         goToWelcomeCompleteScene()
     }

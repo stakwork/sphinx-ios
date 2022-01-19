@@ -392,18 +392,20 @@ extension DashboardRootViewController {
         isLoading = true
         headerView.updateBalance()
 
-        chatsListViewModel.loadFriends() { [weak self] in
+        chatsListViewModel.loadFriends() { [weak self] restoring in
             guard let self = self else { return }
+            
+            if restoring {
+                self.chatsListViewModel.updateContactsAndChats()
+                self.updateCurrentViewControllerData()
+            }
 
             self.chatsListViewModel.syncMessages(
                 progressCallback: { message in
                     self.isLoading = false
                     self.newBubbleHelper.showLoadingWheel(text: message)
                 },
-                completion: { (_,_, isRestoring) in
-                    if isRestoring {
-                        self.chatsListViewModel.updateContactsAndChats()
-                    }
+                completion: { (_,_) in
                     self.finishLoading()
                 }
             )

@@ -63,24 +63,48 @@ final class ChatListViewModel: NSObject {
     }
     
     
-    func loadFriends(fromPush: Bool = false, completion: @escaping () -> ()) {
+    func loadFriends(
+        fromPush: Bool = false,
+        completion: @escaping (Bool) -> ()
+    ) {
         if let contactsService = contactsService {
+            
             if contactsService.chats.count == 0 {
-                API.sharedInstance.getContacts(callback: {(contacts, chats, subscriptions) -> () in
-                    contactsService.insertObjects(contacts: contacts, chats: chats, subscriptions: subscriptions, invites: [])
+                
+                API.sharedInstance.getContacts(
+                    callback: {(contacts, chats, subscriptions) -> () in
+                    
+                    contactsService.insertObjects(
+                        contacts: contacts,
+                        chats: chats,
+                        subscriptions: subscriptions,
+                        invites: []
+                    )
+                    
                     self.forceKeychainSync()
-                    completion()
+                    
+                    completion(self.isRestoring())
                 })
             } else {
-                API.sharedInstance.getLatestContacts(date: Date(), callback: {(contacts, chats, subscriptions, invites) -> () in
-                    contactsService.insertObjects(contacts: contacts, chats: chats, subscriptions: subscriptions, invites: invites)
+                API.sharedInstance.getLatestContacts(
+                    date: Date(),
+                    callback: {(contacts, chats, subscriptions, invites) -> () in
+                    
+                    contactsService.insertObjects(
+                        contacts: contacts,
+                        chats: chats,
+                        subscriptions: subscriptions,
+                        invites: invites
+                    )
+                    
                     self.forceKeychainSync()
-                    completion()
+                    
+                    completion(false)
                 })
             }
             return
         }
-        completion()
+        completion(false)
     }
     
     func getChatListObjectsCount() -> Int {
@@ -104,91 +128,94 @@ final class ChatListViewModel: NSObject {
         EncryptionManager.sharedInstance.saveKeysOnKeychain()
     }
     
+    func askForNotificationPermissions() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.registerForPushNotifications()
+    }
+    
     func isRestoring(chatId: Int? = nil) -> Bool {
-        let lastSeenDate = API.sharedInstance.lastSeenMessagesDate
-        let didJustRestore = UserDefaults.Keys.didJustRestore.get(defaultValue: false)
-        return (lastSeenDate == nil) || (chatId == nil && TransactionMessage.getAllMesagesCount() == 0 && didJustRestore)
+        return API.sharedInstance.lastSeenMessagesDate == nil && TransactionMessage.getAllMesagesCount() == 0
     }
     
     func syncMessages(
         chatId: Int? = nil,
-        fromPush: Bool = false,
         progressCallback: @escaping (String) -> (),
-        completion: @escaping (Int, Int, Bool) -> ()
+        completion: @escaping (Int, Int) -> ()
     ) {
-        if isRestoring(chatId: chatId) {
+        let restoring = isRestoring()
+        
+        if (restoring) {
             askForNotificationPermissions()
             progressCallback("fetching.old.messages".localized)
-            getAllMessages(page: 1, date: Date(), completion: completion)
-        } else {
-            getMessagesPaginated(
-                fromPush: fromPush,
-                page: 1,
-                prevPageNewMessages: 0,
-                chatId: chatId,
-                date: Date(),
-                progressCallback: progressCallback,
-                completion: completion
-            )
         }
-        UserDefaults.Keys.didJustRestore.set(false)
-    }
-    
-    func getAllMessages(page: Int, date: Date, completion: @escaping (Int, Int, Bool) -> ()) {
-        API.sharedInstance.getAllMessages(page: page, date: date, callback: { messages in
-            self.addMessages(messages: messages, completion: { (_, _) in
-                if messages.count < ChatListViewModel.kMessagesPerPage {
-                    completion(0,0, true)
-                    
-                    SphinxSocketManager.sharedInstance.connectWebsocket(forceConnect: true)
-                    CoreDataManager.sharedManager.saveContext()
-                } else {
-                    self.getAllMessages(page: page + 1, date: date, completion: completion)
-                }
-            })
-        }, errorCallback: {
-            completion(0,0, true)
-        })
-    }
-    
-    func askForNotificationPermissions() {
-        if UserDefaults.Keys.didJustRestore.get(defaultValue: false) {
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            appDelegate.registerForPushNotifications()
-        }
+        
+        getMessagesPaginated(
+            restoring: restoring,
+            page: 1,
+            prevPageNewMessages: 0,
+            chatId: chatId,
+            date: Date(),
+            progressCallback: progressCallback,
+            completion: completion
+        )
     }
     
     func getMessagesPaginated(
-        fromPush: Bool = false,
+        restoring: Bool,
         page: Int,
         prevPageNewMessages: Int,
         chatId: Int? = nil,
         date: Date,
         progressCallback: @escaping (String) -> (),
-        completion: @escaping (Int, Int, Bool) -> ()
+        completion: @escaping (Int, Int) -> ()
     ) {
-        API.sharedInstance.getMessagesPaginated(fromPush: fromPush, page: page, date: date, callback: {(newMessages) -> () in
-            if newMessages.count > 0 {
-                if newMessages.count > 100 {
-                    progressCallback("fetching.new.messages".localized)
-                }
+        API.sharedInstance.getMessagesPaginated(
+            page: page,
+            date: date,
+            callback: {(messagesTotal, newMessages) -> () in
                 
-                self.addMessages(messages: newMessages, chatId: chatId, completion: { (newMessagesCount, allMessagesCount) in
+            if newMessages.count > 0 {
+                
+                self.addMessages(
+                    messages: newMessages,
+                    chatId: chatId,
+                    completion: { (newMessagesCount, allMessagesCount) in
+                        
                     if newMessages.count < ChatListViewModel.kMessagesPerPage {
-                        completion(newMessagesCount, allMessagesCount, false)
+                        //Last page
+                        if restoring {
+                            SphinxSocketManager.sharedInstance.connectWebsocket(forceConnect: true)
+                        }
+                        completion(newMessagesCount, allMessagesCount)
                         CoreDataManager.sharedManager.saveContext()
                     } else {
-                        self.getMessagesPaginated(fromPush: fromPush, page: page + 1, prevPageNewMessages: newMessagesCount + prevPageNewMessages, chatId: chatId, date: date, progressCallback: progressCallback, completion: completion)
+                        self.getMessagesPaginated(
+                            restoring: restoring,
+                            page: page + 1,
+                            prevPageNewMessages: newMessagesCount + prevPageNewMessages,
+                            chatId: chatId,
+                            date: date,
+                            progressCallback: progressCallback,
+                            completion: completion
+                        )
                     }
                 })
             } else {
-                completion(0, 0, false)
+                completion(0, 0)
             }
         }, errorCallback: {
             DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: {
-                self.getMessagesPaginated(page: page, prevPageNewMessages: prevPageNewMessages, chatId: chatId, date: date, progressCallback: progressCallback, completion: completion)
+                self.getMessagesPaginated(
+                    restoring: restoring,
+                    page: page,
+                    prevPageNewMessages: prevPageNewMessages,
+                    chatId: chatId,
+                    date: date,
+                    progressCallback: progressCallback,
+                    completion: completion
+                )
             })
-            completion(0,0, false)
+            completion(0,0)
         })
     }
     

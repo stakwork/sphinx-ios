@@ -71,6 +71,9 @@ extension DashboardNewsletterItemCollectionViewCell {
     
     
     private func updateViewsWithNewsletterItem() {
+        itemImageView.sd_cancelCurrentImageLoad()
+        itemIcon.sd_cancelCurrentImageLoad()
+        
         if let imageUrl = newsletterItem.newsletterFeed?.imageURL {
             
             itemImageView.sd_setImage(

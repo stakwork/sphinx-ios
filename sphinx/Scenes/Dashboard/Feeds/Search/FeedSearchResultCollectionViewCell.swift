@@ -89,6 +89,8 @@ extension FeedSearchResultCollectionViewCell {
 extension FeedSearchResultCollectionViewCell {
     
     private func updateViewsWithItem() {
+        feedThumbnailImageView.sd_cancelCurrentImageLoad()
+        
         if let imageURL = imageURL {
             feedThumbnailImageView.sd_setImage(
                 with: imageURL,

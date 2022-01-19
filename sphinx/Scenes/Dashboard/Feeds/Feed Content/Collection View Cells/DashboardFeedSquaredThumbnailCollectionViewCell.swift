@@ -58,6 +58,8 @@ extension DashboardFeedSquaredThumbnailCollectionViewCell {
     
     
     private func updateViewsWithItem() {
+        thumbnailImageView.sd_cancelCurrentImageLoad()
+        
         if let imageURL = imageURL {
             thumbnailImageView.sd_setImage(
                 with: imageURL,

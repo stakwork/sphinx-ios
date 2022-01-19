@@ -66,6 +66,8 @@ extension NewsletterFeedContainerViewController {
     }
     
     func loadFeed() {
+        feedImageView.sd_cancelCurrentImageLoad()
+        
         if let imageUrl = newsletterFeed.imageURL {
             feedImageView.sd_setImage(
                 with: imageUrl,

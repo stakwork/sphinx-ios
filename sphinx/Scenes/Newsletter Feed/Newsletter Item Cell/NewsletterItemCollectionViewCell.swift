@@ -79,6 +79,8 @@ extension NewsletterItemCollectionViewCell {
 extension NewsletterItemCollectionViewCell {
     
     private func updateViewsWithNewsletterItem() {
+        itemImageView.sd_cancelCurrentImageLoad()
+        
         if let imageURL = imageViewURL {
             itemImageView.sd_setImage(
                 with: imageURL,

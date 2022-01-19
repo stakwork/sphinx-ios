@@ -72,6 +72,8 @@ extension VideoFeedEpisodeCollectionViewCell {
 extension VideoFeedEpisodeCollectionViewCell {
     
     private func updateViewsWithVideoEpisode() {
+        thumbnailImageView.sd_cancelCurrentImageLoad()
+        
         if let imageURL = thumbnailImageViewURL {
             thumbnailImageView.sd_setImage(
                 with: imageURL,

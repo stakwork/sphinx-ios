@@ -77,6 +77,9 @@ extension DashboardVideoEpisodeCollectionViewCell {
     
     
     private func updateViewsWithVideoEpisode() {
+        thumbnailImageView.sd_cancelCurrentImageLoad()
+        feedAvatarImageView.sd_cancelCurrentImageLoad()
+        
         if let imageURL = feedImageViewURL {
             thumbnailImageView.sd_setImage(
                 with: imageURL,

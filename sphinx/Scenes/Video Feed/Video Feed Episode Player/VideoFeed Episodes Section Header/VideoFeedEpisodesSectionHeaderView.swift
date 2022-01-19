@@ -112,6 +112,8 @@ extension VideoFeedEpisodesSectionHeaderView {
     
     
     private func updateViewsWithVideoEpisode() {
+        feedAvatarImage.sd_cancelCurrentImageLoad()
+        
         if let imageURL = videoFeed?.avatarImageURL {
             feedAvatarImage.sd_setImage(
                 with: imageURL,

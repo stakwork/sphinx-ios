@@ -40,6 +40,8 @@ class ChatAvatarView: UIView {
     }
     
     func configureFor(messageRow: TransactionMessageRow, contact: UserContact?, and chat: Chat?) {
+        
+        profileImageView.sd_cancelCurrentImageLoad()
         profileImageView.isHidden = true
         profileInitialContainer.isHidden = true
         profileImageView.layer.borderWidth = 0
@@ -52,11 +54,20 @@ class ChatAvatarView: UIView {
             let senderAvatarURL = message.getMessageSenderProfilePic(chat: chat, contact: contact)
             
             if let senderAvatarURL = senderAvatarURL, let nsUrl = URL(string: senderAvatarURL) {
-                MediaLoader.asyncLoadImage(imageView: profileImageView, nsUrl: nsUrl, placeHolderImage: UIImage(named: "profile_avatar"), completion: { image in
-                    self.profileInitialContainer.isHidden = true
-                    self.profileImageView.isHidden = false
-                    self.profileImageView.image = image
-                }, errorCompletion: { _ in })
+                
+                profileImageView.sd_setImage(
+                    with: nsUrl,
+                    placeholderImage: UIImage(named: "profile_avatar"),
+                    options: [.highPriority],
+                    progress: nil,
+                    completed: { (image, error, _, _) in
+                        if (error == nil) {
+                            self.profileInitialContainer.isHidden = true
+                            self.profileImageView.isHidden = false
+                            self.profileImageView.image = image
+                        }
+                    }
+                )
             }
         }
     }

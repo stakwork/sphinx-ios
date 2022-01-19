@@ -401,9 +401,11 @@ extension DashboardRootViewController {
             }
 
             self.chatsListViewModel.syncMessages(
-                progressCallback: { message in
+                progressCallback: { progress in
                     self.isLoading = false
-                    self.newBubbleHelper.showLoadingWheel(text: message)
+                    self.newBubbleHelper.showLoadingWheel(text:
+                        "Restoring: \(progress)%"
+                    )
                 },
                 completion: { (_,_) in
                     self.finishLoading()

@@ -139,14 +139,14 @@ final class ChatListViewModel: NSObject {
     
     func syncMessages(
         chatId: Int? = nil,
-        progressCallback: @escaping (String) -> (),
+        progressCallback: @escaping (Int) -> (),
         completion: @escaping (Int, Int) -> ()
     ) {
         let restoring = isRestoring()
         
         if (restoring) {
             askForNotificationPermissions()
-            progressCallback("fetching.old.messages".localized)
+            progressCallback(0)
         }
         
         getMessagesPaginated(
@@ -166,13 +166,21 @@ final class ChatListViewModel: NSObject {
         prevPageNewMessages: Int,
         chatId: Int? = nil,
         date: Date,
-        progressCallback: @escaping (String) -> (),
+        progressCallback: @escaping (Int) -> (),
         completion: @escaping (Int, Int) -> ()
     ) {
         API.sharedInstance.getMessagesPaginated(
             page: page,
             date: date,
-            callback: {(messagesTotal, newMessages) -> () in
+            callback: {(newMessagesTotal, newMessages) -> () in
+                
+            progressCallback(
+                self.getRestoreProgress(
+                    currentPage: page,
+                    newMessagesTotal: newMessagesTotal,
+                    itemsPerPage: ChatListViewModel.kMessagesPerPage
+                )
+            )
                 
             if newMessages.count > 0 {
                 
@@ -217,6 +225,18 @@ final class ChatListViewModel: NSObject {
             })
             completion(0,0)
         })
+    }
+    
+    func getRestoreProgress(
+        currentPage: Int,
+        newMessagesTotal: Int,
+        itemsPerPage: Int
+    ) -> Int {
+        
+        let pages = (newMessagesTotal <= itemsPerPage) ? 1 : (newMessagesTotal / itemsPerPage)
+        let progress: Int = currentPage * 100 / pages
+
+        return progress
     }
     
     func addMessages(messages: [JSON], chatId: Int? = nil, completion: @escaping (Int, Int) -> ()) {

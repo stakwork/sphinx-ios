@@ -54,8 +54,7 @@ extension API {
         
         let itemsPerPage = ChatListViewModel.kMessagesPerPage
         let offset = (page - 1) * itemsPerPage
-//        var route = "/msgs?offset=\(offset)&limit=\(itemsPerPage)&order=desc"
-        var route = "/msgs?offset=\(offset)&limit=\(itemsPerPage)"
+        var route = "/msgs?offset=\(offset)&limit=\(itemsPerPage)&order=desc"
         
         let dateString = (lastSeenMessagesDate ?? Date(timeIntervalSince1970: 0))
         if let dateString = dateString.getStringFromDate(format:"yyyy-MM-dd HH:mm:ss").percentEscaped {

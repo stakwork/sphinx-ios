@@ -356,15 +356,21 @@ public class Chat: NSManagedObject {
     }
     
     public func updateLastMessage() {
-        self.lastMessage = self.getLastMessageToShow()
-        
+        lastMessage = getLastMessageToShow()
         calculateUnssenMessagesCount()
     }
     
     public func setLastMessage(_ message: TransactionMessage) {
-        self.lastMessage = message
+        guard let lastM = lastMessage else {
+            lastMessage = message
+            calculateUnssenMessagesCount()
+            return
+        }
         
-        calculateUnssenMessagesCount()
+        if (lastM.date < message.date) {
+            lastMessage = message
+            calculateUnssenMessagesCount()
+        }
     }
     
     public func getContact() -> UserContact? {

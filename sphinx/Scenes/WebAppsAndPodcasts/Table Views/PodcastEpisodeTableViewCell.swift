@@ -66,15 +66,22 @@ class PodcastEpisodeTableViewCell: SwipableCell {
         
         configureDownload(episode: episode, download: download)
         
-        if let img = PodcastEpisodeTableViewCell.podcastImage {
-            loadEpisodeImage(episode: episode, with: img)
-        } else if let imageURLPath = podcast?.imageURLPath, let url = URL(string: imageURLPath) {
-            MediaLoader.asyncLoadImage(imageView: episodeImageView, nsUrl: url, placeHolderImage: UIImage(named: "profile_avatar"), completion: { img in
-                PodcastEpisodeTableViewCell.podcastImage = img
-                self.loadEpisodeImage(episode: episode, with: img)
-            }, errorCompletion: { _ in
-                self.loadEpisodeImage(episode: episode, with: UIImage(named: "profile_avatar")!)
-            })
+        episodeImageView.sd_cancelCurrentImageLoad()
+        
+        if let episodeURLPath = episode.imageURLPath, let url = URL(string: episodeURLPath) {
+            episodeImageView.sd_setImage(
+                with: url,
+                placeholderImage: UIImage(named: "podcastPlaceholder"),
+                options: [.highPriority],
+                progress: nil
+            )
+        } else if let podcastURLPath = podcast?.imageURLPath, let url = URL(string: podcastURLPath) {
+            episodeImageView.sd_setImage(
+                with: url,
+                placeholderImage: UIImage(named: "podcastPlaceholder"),
+                options: [.highPriority],
+                progress: nil
+            )
         }
     }
     
@@ -102,19 +109,6 @@ class PodcastEpisodeTableViewCell: SwipableCell {
     
     func updateProgress(progress: Float) {
         progressLabel.text = progress == 1 ? "" : "\(Int(progress * 100))%"
-    }
-    
-    func loadEpisodeImage(episode: PodcastEpisode, with defaultImg: UIImage) {
-        if let imageURLPath = episode.imageURLPath, let url = URL(string: imageURLPath) {
-            MediaLoader.asyncLoadImage(imageView: episodeImageView, nsUrl: url, placeHolderImage: defaultImg, id: Int(episode.itemID) ?? -1, completion: { (img, id) in
-                if self.isDifferentEpisode(episodeId: id) { return }
-                self.episodeImageView.image = img
-            }, errorCompletion: { _ in
-                self.episodeImageView.image = defaultImg
-            })
-        } else {
-            self.episodeImageView.image = defaultImg
-        }
     }
     
     func isDifferentEpisode(episodeId: Int) -> Bool {

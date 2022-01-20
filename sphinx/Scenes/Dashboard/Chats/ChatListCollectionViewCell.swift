@@ -186,9 +186,12 @@ extension ChatListCollectionViewCell {
                         placeholderImage: UIImage(named: "profile_avatar"),
                         options: .lowPriority,
                         progress: nil,
-                        completed: { [unowned self] (_,_,_,_) in
-                            self.contactInitialsLabel.isHidden = true
-                            self.contactImageView.isHidden = false
+                        completed: { [unowned self] (image, error,_,_) in
+                            if (error == nil) {
+                                self.contactInitialsLabel.isHidden = true
+                                self.contactImageView.isHidden = false
+                                self.contactImageView.image = image
+                            }
                         }
                     )
                 }

@@ -293,7 +293,7 @@
             <viewLayoutGuide key="safeArea" id="Btf-dk-gGg"/>
             <color key="backgroundColor" name="HeaderBG"/>
             <constraints>
-                <constraint firstItem="DK5-KL-hVN" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="5wn-nm-p8G"/>
+                <constraint firstItem="DK5-KL-hVN" firstAttribute="top" secondItem="Btf-dk-gGg" secondAttribute="top" constant="-44" id="5wn-nm-p8G"/>
                 <constraint firstAttribute="trailing" secondItem="yFL-Ym-JIV" secondAttribute="trailing" id="8v3-Y7-p4L"/>
                 <constraint firstItem="Bkm-ne-hyH" firstAttribute="top" secondItem="DK5-KL-hVN" secondAttribute="top" id="Bks-IE-cB2"/>
                 <constraint firstItem="UgS-Pv-vWR" firstAttribute="leading" secondItem="Btf-dk-gGg" secondAttribute="leading" constant="20" id="Bq1-Fl-ccJ"/>

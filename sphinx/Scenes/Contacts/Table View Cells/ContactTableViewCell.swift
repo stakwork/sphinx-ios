@@ -62,6 +62,8 @@ class ContactTableViewCell: SwipableCell {
     }
     
     func loadImageFor(_ contact: UserContact, in imageView: UIImageView, and initialLabel: UILabel) {
+        imageView.sd_cancelCurrentImageLoad()
+        
         imageView.layer.borderWidth = 1
         imageView.layer.borderColor = UIColor.Sphinx.Divider.resolvedCGColor(with: self)
         imageView.isHidden = true
@@ -70,12 +72,20 @@ class ContactTableViewCell: SwipableCell {
         showInitialsFor(contact, in: initialLabel)
         
         if let imageUrl = contact.avatarUrl?.trim(), let nsUrl = URL(string: imageUrl), imageUrl != "" {
-            MediaLoader.asyncLoadImage(imageView: imageView, nsUrl: nsUrl, placeHolderImage: UIImage(named: "profile_avatar"), completion: { image in
-                initialLabel.isHidden = true
-                imageView.isHidden = false
-                imageView.layer.borderWidth = 0
-                imageView.image = image
-            }, errorCompletion: { _ in })
+            imageView.sd_setImage(
+                with: nsUrl,
+                placeholderImage: UIImage(named: "profile_avatar"),
+                options: [.highPriority],
+                progress: nil,
+                completed: { (image, error, _, _) in
+                    if (error == nil) {
+                        initialLabel.isHidden = true
+                        imageView.isHidden = false
+                        imageView.layer.borderWidth = 0
+                        imageView.image = image
+                    }
+                }
+            )
         }
     }
     

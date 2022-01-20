@@ -42,6 +42,7 @@ class ChatAvatarView: UIView {
     func configureFor(messageRow: TransactionMessageRow, contact: UserContact?, and chat: Chat?) {
         
         profileImageView.sd_cancelCurrentImageLoad()
+        
         profileImageView.isHidden = true
         profileInitialContainer.isHidden = true
         profileImageView.layer.borderWidth = 0

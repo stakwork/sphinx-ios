@@ -75,7 +75,6 @@ extension DashboardNewsletterItemCollectionViewCell {
         itemIcon.sd_cancelCurrentImageLoad()
         
         if let imageUrl = newsletterItem.newsletterFeed?.imageURL {
-            
             itemImageView.sd_setImage(
                 with: imageUrl,
                 placeholderImage: UIImage(named: "newsletterPlaceholder"),

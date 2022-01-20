@@ -55,12 +55,22 @@ class GroupContactCollectionViewCell: UICollectionViewCell {
         
         showInitials(contact: contact)
         
+        contactImageView.sd_cancelCurrentImageLoad()
+        
         if let imageUrl = contact.avatarUrl?.trim(), let nsUrl = URL(string: imageUrl), imageUrl != "" {
-            MediaLoader.asyncLoadImage(imageView: contactImageView, nsUrl: nsUrl, placeHolderImage: UIImage(named: "profile_avatar"), completion: { image in
-                self.contactInitialsLabel.isHidden = true
-                self.contactImageView.isHidden = false
-                self.contactImageView.image = image
-            }, errorCompletion: { _ in })
+            contactImageView.sd_setImage(
+                with: nsUrl,
+                placeholderImage: UIImage(named: "profile_avatar"),
+                options: [.highPriority],
+                progress: nil,
+                completed: { (image, error, _, _) in
+                    if (error == nil) {
+                        self.contactInitialsLabel.isHidden = true
+                        self.contactImageView.isHidden = false
+                        self.contactImageView.image = image
+                    }
+                }
+            )
         }
     }
     

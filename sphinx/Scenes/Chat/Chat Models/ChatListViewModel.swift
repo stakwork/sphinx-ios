@@ -156,7 +156,6 @@ final class ChatListViewModel: NSObject {
             
             if (restoring) {
                 self.askForNotificationPermissions()
-                progressCallback(0)
             }
             
             self.getMessagesPaginated(
@@ -204,13 +203,15 @@ final class ChatListViewModel: NSObject {
                     return
                 }
                 
-                progressCallback(
-                    self.getRestoreProgress(
-                        currentPage: page,
-                        newMessagesTotal: newMessagesTotal,
-                        itemsPerPage: ChatListViewModel.kMessagesPerPage
+                if (newMessagesTotal > 0) {
+                    progressCallback(
+                        self.getRestoreProgress(
+                            currentPage: page,
+                            newMessagesTotal: newMessagesTotal,
+                            itemsPerPage: ChatListViewModel.kMessagesPerPage
+                        )
                     )
-                )
+                }
                     
                 if newMessages.count > 0 {
                     

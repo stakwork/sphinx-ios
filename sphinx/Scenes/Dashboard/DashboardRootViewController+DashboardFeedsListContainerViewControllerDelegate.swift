@@ -181,7 +181,8 @@ extension DashboardRootViewController {
             .instantiate(
                 videoPlayerEpisode: videoEpisode,
                 dismissButtonStyle: .backArrow,
-                delegate: self
+                delegate: self,
+                boostDelegate: self
             )
         
         viewController.modalPresentationStyle = .automatic

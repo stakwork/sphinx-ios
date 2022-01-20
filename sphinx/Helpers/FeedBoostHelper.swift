@@ -93,7 +93,7 @@ class FeedBoostHelper : NSObject {
         
         var params: [String: AnyObject] = ["destinations": destinations as AnyObject, "amount": amount as AnyObject, "chat_id": (chat?.id ?? -1) as AnyObject]
         
-        params["text"] = "{\"feedID\":\(feedID),\"itemID\":\(itemID),\"ts\":\(currentTime)}" as AnyObject
+        params["text"] = "{\"feedID\":\"\(feedID)\",\"itemID\":\"\(itemID)\",\"ts\":\(currentTime)}" as AnyObject
             
         API.sharedInstance.streamSats(params: params, callback: {}, errorCallback: {})
     }

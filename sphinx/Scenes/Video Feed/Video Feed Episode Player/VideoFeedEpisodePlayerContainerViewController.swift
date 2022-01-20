@@ -33,12 +33,11 @@ protocol VideoFeedEpisodePlayerViewController: UIViewController {
 
 
 class VideoFeedEpisodePlayerContainerViewController: UIViewController {
+    
     @IBOutlet weak var playerViewContainer: UIView!
     @IBOutlet weak var collectionViewContainer: UIView!
-
     
     internal var managedObjectContext: NSManagedObjectContext!
-    
     
     var videoPlayerEpisode: Video! {
         didSet {
@@ -61,7 +60,7 @@ class VideoFeedEpisodePlayerContainerViewController: UIViewController {
     var dismissButtonStyle: ModalDismissButtonStyle!
 
     weak var delegate: VideoFeedEpisodePlayerViewControllerDelegate?
-    
+    weak var boostDelegate: CustomBoostDelegate?
 
     internal lazy var youtubeVideoPlayerViewController: YouTubeVideoFeedEpisodePlayerViewController = {
         YouTubeVideoFeedEpisodePlayerViewController.instantiate(
@@ -83,6 +82,7 @@ class VideoFeedEpisodePlayerContainerViewController: UIViewController {
         VideoFeedEpisodePlayerCollectionViewController.instantiate(
             videoPlayerEpisode: videoPlayerEpisode,
             videoFeedEpisodes: videoFeedEpisodes,
+            boostDelegate: boostDelegate,
             onVideoEpisodeCellSelected: handleVideoEpisodeCellSelection(_:)
         )
     }()
@@ -96,6 +96,7 @@ extension VideoFeedEpisodePlayerContainerViewController {
         videoPlayerEpisode: Video,
         dismissButtonStyle: ModalDismissButtonStyle,
         delegate: VideoFeedEpisodePlayerViewControllerDelegate,
+        boostDelegate: CustomBoostDelegate,
         managedObjectContext: NSManagedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext
     ) -> VideoFeedEpisodePlayerContainerViewController {
         let viewController = StoryboardScene
@@ -106,6 +107,7 @@ extension VideoFeedEpisodePlayerContainerViewController {
         viewController.videoPlayerEpisode = videoPlayerEpisode
         viewController.dismissButtonStyle = dismissButtonStyle
         viewController.delegate = delegate
+        viewController.boostDelegate = boostDelegate
         viewController.managedObjectContext = managedObjectContext
         
         return viewController

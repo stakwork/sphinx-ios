@@ -13,7 +13,6 @@ protocol PodcastPlayerViewDelegate: AnyObject {
     func didTapSubscriptionToggleButton()
     func shouldReloadEpisodesTable()
     func shouldShareClip(comment: PodcastComment)
-    func didSendBoostMessage(success: Bool, message: TransactionMessage?)
     func shouldSyncPodcast()
     func shouldShowSpeedPicker()
 }
@@ -22,6 +21,7 @@ protocol PodcastPlayerViewDelegate: AnyObject {
 class PodcastPlayerView: UIView {
     
     weak var delegate: PodcastPlayerViewDelegate?
+    weak var boostDelegate: CustomBoostDelegate?
     
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var imageViewTop: NSLayoutConstraint!
@@ -77,7 +77,8 @@ class PodcastPlayerView: UIView {
         playerHelper: PodcastPlayerHelper,
         chat: Chat?,
         dismissButtonStyle: ModalDismissButtonStyle = .downArrow,
-        delegate: PodcastPlayerViewDelegate
+        delegate: PodcastPlayerViewDelegate,
+        boostDelegate: CustomBoostDelegate
     ) {
         let windowWidth = WindowsManager.getWindowWidth()
         let frame = CGRect(x: 0, y: 0, width: windowWidth, height: windowWidth + PodcastPlayerView.kPlayerHeight)
@@ -85,13 +86,14 @@ class PodcastPlayerView: UIView {
         self.init(frame: frame)
         
         self.delegate = delegate
+        self.boostDelegate = boostDelegate
         self.playerHelper = playerHelper
         self.chat = chat
         self.dismissButtonStyle = dismissButtonStyle
         self.playerHelper.delegate = self
         
-        if let feedID = playerHelper.podcast?.objectID {
-            feedBoostHelper.configure(with: feedID, and: chat)
+        if let feedObjectID = playerHelper.podcast?.objectID {
+            feedBoostHelper.configure(with: feedObjectID, and: chat)
         }
         
         setup()
@@ -114,8 +116,6 @@ class PodcastPlayerView: UIView {
         imageHeight.constant = windowInset.top
         episodeImageView.layoutIfNeeded()
         
-        customBoostView.delegate = self
-        
         playPauseButton.layer.cornerRadius = playPauseButton.frame.size.height / 2
         currentTimeDot.layer.cornerRadius = currentTimeDot.frame.size.height / 2
         subscriptionToggleButton.layer.cornerRadius = subscriptionToggleButton.frame.size.height / 2
@@ -136,6 +136,8 @@ class PodcastPlayerView: UIView {
     }
     
     func setupActions() {
+        customBoostView.delegate = self
+        
         if playerHelper.podcast?.destinationsArray.count == 0 {
             customBoostView.alpha = 0.3
             customBoostView.isUserInteractionEnabled = false
@@ -390,7 +392,7 @@ extension PodcastPlayerView: CustomBoostViewDelegate {
             
             feedBoostHelper.processPayment(itemID: itemID, amount: amount, currentTime: currentTime)
             feedBoostHelper.sendBoostMessage(message: boostMessage, completion: { (message, success) in
-                self.delegate?.didSendBoostMessage(success: success, message: message)
+                self.boostDelegate?.didSendBoostMessage(success: success, message: message)
             })
         }
     }

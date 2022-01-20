@@ -8,14 +8,21 @@
 
 import UIKit
 import WebKit
+import CoreData
 
 class NewsletterItemDetailViewController: UIViewController {
+    
+    weak var boostDelegate: CustomBoostDelegate?
 
     @IBOutlet weak var webview: WKWebView!
     @IBOutlet weak var loadingWheelContainer: UIView!
     @IBOutlet weak var loadingWheel: UIActivityIndicatorView!
+    @IBOutlet weak var customBoostView: CustomBoostView!
+    
+    let feedBoostHelper = FeedBoostHelper()
     
     var newsletterItem: NewsletterItem!
+    var contentFeed: ContentFeed? = nil
     
     var loading = false {
         didSet {
@@ -57,7 +64,8 @@ extension NewsletterItemDetailViewController {
 extension NewsletterItemDetailViewController {
     
     static func instantiate(
-        newsletterItem: NewsletterItem
+        newsletterItem: NewsletterItem,
+        boostDelegate: CustomBoostDelegate
     ) -> NewsletterItemDetailViewController {
         let viewController = StoryboardScene
             .NewsletterFeed
@@ -65,6 +73,11 @@ extension NewsletterItemDetailViewController {
             .instantiate()
         
         viewController.newsletterItem = newsletterItem
+        viewController.boostDelegate = boostDelegate
+        
+        if let feedID = newsletterItem.newsletterFeed?.objectID {
+            viewController.contentFeed = CoreDataManager.sharedManager.getObjectWith(objectId: feedID)
+        }
         
         return viewController
     }
@@ -74,11 +87,29 @@ extension NewsletterItemDetailViewController {
 extension NewsletterItemDetailViewController {
     
     func loadItem() {
+        setupFeedBoostHelper()
+        setupCustomBoost()
+        
         webview.navigationDelegate = self
         
         if let itemURL = newsletterItem.itemUrl {
             let request = URLRequest(url: itemURL)
             webview.load(request)
+        }
+    }
+    
+    func setupFeedBoostHelper() {
+        if let contentFeed = contentFeed {
+            feedBoostHelper.configure(with: contentFeed.objectID, and: contentFeed.chat)
+        }
+    }
+    
+    func setupCustomBoost() {
+        customBoostView.delegate = self
+        
+        if contentFeed?.destinationsArray.count == 0 {
+            customBoostView.alpha = 0.3
+            customBoostView.isUserInteractionEnabled = false
         }
     }
     
@@ -94,5 +125,24 @@ extension NewsletterItemDetailViewController : WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         self.toggleLoadingWheel(false)
+    }
+}
+
+extension NewsletterItemDetailViewController: CustomBoostViewDelegate {
+    func didTouchBoostButton(withAmount amount: Int) {
+        let itemID = newsletterItem.itemID
+        
+        if let boostMessage = feedBoostHelper.getBoostMessage(itemID: itemID, amount: amount) {
+            
+            let podcastAnimationVC = PodcastAnimationViewController.instantiate(amount: amount)
+            WindowsManager.sharedInstance.showConveringWindowWith(rootVC: podcastAnimationVC)
+            podcastAnimationVC.showBoostAnimation()
+            
+            feedBoostHelper.processPayment(itemID: itemID, amount: amount)
+            
+            feedBoostHelper.sendBoostMessage(message: boostMessage, completion: { (message, success) in
+                self.boostDelegate?.didSendBoostMessage(success: success, message: message)
+            })
+        }
     }
 }

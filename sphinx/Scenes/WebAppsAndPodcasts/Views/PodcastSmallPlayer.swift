@@ -11,6 +11,7 @@ import UIKit
 class PodcastSmallPlayer: UIView {
     
     weak var delegate: PodcastPlayerVCDelegate?
+    weak var boostDelegate: CustomBoostDelegate?
 
     @IBOutlet var contentView: UIView!
     
@@ -44,14 +45,21 @@ class PodcastSmallPlayer: UIView {
         setup()
     }
     
-    func configure(playerHelper: PodcastPlayerHelper, delegate: PodcastPlayerVCDelegate, completion: @escaping () -> ()) {
+    func configure(
+        playerHelper: PodcastPlayerHelper,
+        delegate: PodcastPlayerVCDelegate,
+        boostDelegate: CustomBoostDelegate,
+        completion: @escaping () -> ()
+    ) {
+        
         self.playerHelper = playerHelper
         self.delegate = delegate
+        self.boostDelegate = boostDelegate
         
         setPlayerDelegate(completion: completion)
         
-        if let feedID = playerHelper.podcast?.objectID {
-            feedBoostHelper.configure(with: feedID, and: playerHelper.chat)
+        if let feedObjectID = playerHelper.podcast?.objectID {
+            feedBoostHelper.configure(with: feedObjectID, and: playerHelper.chat)
         }
     }
     
@@ -165,7 +173,7 @@ extension PodcastSmallPlayer : BoostButtonViewDelegate {
             
             feedBoostHelper.processPayment(itemID: itemID, amount: amount, currentTime: currentTime)
             feedBoostHelper.sendBoostMessage(message: boostMessage, completion: { (message, success) in
-                self.delegate?.didSendBoostMessage(success: success, message: message)
+                self.boostDelegate?.didSendBoostMessage(success: success, message: message)
             })
         }
     }

@@ -8,6 +8,19 @@
 
 import UIKit
 
+extension ChatViewController : CustomBoostDelegate {
+    func didSendBoostMessage(success: Bool, message: TransactionMessage?) {
+        guard let message = message, success else {
+            DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: {
+                self.didFailSendingMessage(provisionalMessage: message)
+            })
+            return
+        }
+        self.insertSentMessage(message: message, completion: { _ in })
+        self.scrollAfterInsert()
+    }
+}
+
 extension ChatViewController : PodcastPlayerVCDelegate {
     func shouldDismissPlayerView() {}
     
@@ -35,17 +48,6 @@ extension ChatViewController : PodcastPlayerVCDelegate {
         accessoryView.configureReplyFor(podcastComment: comment)
     }
     
-    func didSendBoostMessage(success: Bool, message: TransactionMessage?) {
-        guard let message = message, success else {
-            DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: {
-                self.didFailSendingMessage(provisionalMessage: message)
-            })
-            return
-        }
-        self.insertSentMessage(message: message, completion: { _ in })
-        self.scrollAfterInsert()
-    }
-    
     func shouldGoToPlayer() {
         guard let chat = chat else {
             return
@@ -63,7 +65,12 @@ extension ChatViewController : PodcastPlayerVCDelegate {
         guard let podcastPlayerHelper = podcastPlayerHelper else {
             return
         }
-        accessoryView.configurePlayerView(playerHelper: podcastPlayerHelper, delegate: self, completion: completion)
+        accessoryView.configurePlayerView(
+            playerHelper: podcastPlayerHelper,
+            delegate: self,
+            boostDelegate: self,
+            completion: completion
+        )
     }
     
     func presentPodcastPlayer(chat: Chat) {
@@ -76,7 +83,8 @@ extension ChatViewController : PodcastPlayerVCDelegate {
             chat: chat,
             playerHelper: podcastPlayerHelper,
             dismissButtonStyle: .downArrow,
-            delegate: self
+            delegate: self,
+            boostDelegate: self
         )
         podcastFeedVC.modalPresentationStyle = .automatic
         

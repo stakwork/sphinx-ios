@@ -11,14 +11,16 @@ extension DashboardRootViewController: PodcastPlayerVCDelegate {
             .performFetch()
     }
     
-    func didSendBoostMessage(success: Bool, message: TransactionMessage?) {
-        chatsListViewModel.updateContactsAndChats()
-        updateCurrentViewControllerData()
-    }
-    
     func willDismissPlayer(playing: Bool) {}
     
     func shouldShareClip(comment: PodcastComment) {}
     
     func shouldGoToPlayer() {}
+}
+
+extension DashboardRootViewController : CustomBoostDelegate {
+    func didSendBoostMessage(success: Bool, message: TransactionMessage?) {
+        chatsListViewModel.updateContactsAndChats()
+        updateCurrentViewControllerData()
+    }
 }

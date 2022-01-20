@@ -12,13 +12,17 @@ protocol PodcastPlayerVCDelegate: AnyObject {
     func willDismissPlayer(playing: Bool)
     func shouldShareClip(comment: PodcastComment)
     func shouldGoToPlayer()
-    func didSendBoostMessage(success: Bool, message: TransactionMessage?)
     func shouldDismissPlayerView()
+}
+
+protocol CustomBoostDelegate: AnyObject {
+    func didSendBoostMessage(success: Bool, message: TransactionMessage?)
 }
 
 class NewPodcastPlayerViewController: UIViewController {
     
     weak var delegate: PodcastPlayerVCDelegate?
+    weak var boostDelegate: CustomBoostDelegate?
     
     @IBOutlet weak var topFixingView: UIView!
     @IBOutlet weak var tableView: UITableView!
@@ -62,7 +66,8 @@ class NewPodcastPlayerViewController: UIViewController {
         chat: Chat?,
         playerHelper: PodcastPlayerHelper,
         dismissButtonStyle: ModalDismissButtonStyle,
-        delegate: PodcastPlayerVCDelegate
+        delegate: PodcastPlayerVCDelegate,
+        boostDelegate: CustomBoostDelegate
     ) -> NewPodcastPlayerViewController {
         let viewController = StoryboardScene.WebApps.newPodcastPlayerViewController.instantiate()
         
@@ -70,6 +75,7 @@ class NewPodcastPlayerViewController: UIViewController {
         viewController.playerHelper = playerHelper
         viewController.dismissButtonStyle = dismissButtonStyle
         viewController.delegate = delegate
+        viewController.boostDelegate = boostDelegate
     
         return viewController
     }
@@ -94,7 +100,8 @@ class NewPodcastPlayerViewController: UIViewController {
                 playerHelper: playerHelper,
                 chat: chat,
                 dismissButtonStyle: dismissButtonStyle,
-                delegate: self
+                delegate: self,
+                boostDelegate: self
             )
             
             tableView.tableHeaderView = tableHeaderView!
@@ -159,7 +166,7 @@ extension NewPodcastPlayerViewController : PodcastEpisodesDSDelegate {
     }
 }
 
-extension NewPodcastPlayerViewController: PodcastPlayerViewDelegate {
+extension NewPodcastPlayerViewController : PodcastPlayerViewDelegate {
     
     func didTapSubscriptionToggleButton() {
         if let podcast = playerHelper.podcast {
@@ -187,10 +194,6 @@ extension NewPodcastPlayerViewController: PodcastPlayerViewDelegate {
         self.dismiss(animated: true, completion: nil)
     }
     
-    func didSendBoostMessage(success: Bool, message: TransactionMessage?) {
-        delegate?.didSendBoostMessage(success: success, message: message)
-    }
-    
     func shouldSyncPodcast() {
         chat?.updateMetaData()
     }
@@ -199,6 +202,12 @@ extension NewPodcastPlayerViewController: PodcastPlayerViewDelegate {
         let selectedValue = playerHelper.playerSpeed
         let pickerVC = PickerViewController.instantiate(values: ["0.5", "0.8", "1.0", "1.2", "1.5", "2.1"], selectedValue: "\(selectedValue)", delegate: self)
         self.present(pickerVC, animated: false, completion: nil)
+    }
+}
+
+extension NewPodcastPlayerViewController : CustomBoostDelegate {
+    func didSendBoostMessage(success: Bool, message: TransactionMessage?) {
+        boostDelegate?.didSendBoostMessage(success: success, message: message)
     }
 }
 

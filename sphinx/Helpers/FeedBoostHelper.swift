@@ -25,7 +25,7 @@ class FeedBoostHelper : NSObject {
     func getBoostMessage(
         itemID: String,
         amount: Int,
-        currentTime: Int
+        currentTime: Int = 0
     ) -> String? {
         
         guard let contentFeed = self.contentFeed else {
@@ -38,13 +38,13 @@ class FeedBoostHelper : NSObject {
         
         let feedID = contentFeed.feedID
         
-        return "{\"feedID\":\(feedID),\"itemID\":\(itemID),\"ts\":\(currentTime),\"amount\":\(amount)}"
+        return "{\"feedID\":\"\(feedID)\",\"itemID\":\"\(itemID)\",\"ts\":\(currentTime),\"amount\":\(amount)}"
     }
     
     func processPayment(
         itemID: String,
         amount: Int,
-        currentTime: Int
+        currentTime: Int = 0
     ) {
         processPaymentsFor(
             itemID: itemID,

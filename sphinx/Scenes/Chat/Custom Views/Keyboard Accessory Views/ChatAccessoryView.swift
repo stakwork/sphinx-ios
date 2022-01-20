@@ -280,10 +280,16 @@ class ChatAccessoryView: UIView {
         textViewDidChange(textView)
     }
     
-    func configurePlayerView(playerHelper: PodcastPlayerHelper, delegate: PodcastPlayerVCDelegate, completion: @escaping () -> ()) {
+    func configurePlayerView(
+        playerHelper: PodcastPlayerHelper,
+        delegate: PodcastPlayerVCDelegate,
+        boostDelegate: CustomBoostDelegate,
+        completion: @escaping () -> ()
+    ) {
         podcastPlayerView.configure(
             playerHelper: playerHelper,
             delegate: delegate,
+            boostDelegate: boostDelegate,
             completion: {
                 self.podcastPlayerView.showPlayerInfo()
                 self.rebuildSize()

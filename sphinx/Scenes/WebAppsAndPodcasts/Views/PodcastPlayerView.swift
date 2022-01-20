@@ -13,13 +13,14 @@ protocol PodcastPlayerViewDelegate: AnyObject {
     func didTapSubscriptionToggleButton()
     func shouldReloadEpisodesTable()
     func shouldShareClip(comment: PodcastComment)
-    func shouldSendBoost(message: String, amount: Int, animation: Bool) -> TransactionMessage?
+    func didSendBoostMessage(success: Bool, message: TransactionMessage?)
     func shouldSyncPodcast()
     func shouldShowSpeedPicker()
 }
 
 
 class PodcastPlayerView: UIView {
+    
     weak var delegate: PodcastPlayerViewDelegate?
     
     @IBOutlet var contentView: UIView!
@@ -41,7 +42,8 @@ class PodcastPlayerView: UIView {
     @IBOutlet weak var subscriptionToggleButton: UIButton!
     @IBOutlet weak var currentTimeDot: UIView!
     @IBOutlet weak var gestureHandlerView: UIView!
-    @IBOutlet weak var boostButtonView: BoostButtonView!
+    @IBOutlet weak var customBoostView: CustomBoostView!
+    @IBOutlet weak var shareClipButton: UIButton!
     
     @IBOutlet weak var audioLoadingWheel: UIActivityIndicatorView!
     
@@ -58,6 +60,7 @@ class PodcastPlayerView: UIView {
         }
     }
     
+    let feedBoostHelper = FeedBoostHelper()
     var playerHelper: PodcastPlayerHelper! = nil
     var chat: Chat?
     var dismissButtonStyle: ModalDismissButtonStyle = .downArrow
@@ -87,6 +90,10 @@ class PodcastPlayerView: UIView {
         self.dismissButtonStyle = dismissButtonStyle
         self.playerHelper.delegate = self
         
+        if let feedID = playerHelper.podcast?.objectID {
+            feedBoostHelper.configure(with: feedID, and: chat)
+        }
+        
         setup()
     }
     
@@ -107,7 +114,7 @@ class PodcastPlayerView: UIView {
         imageHeight.constant = windowInset.top
         episodeImageView.layoutIfNeeded()
         
-        boostButtonView.delegate = self
+        customBoostView.delegate = self
         
         playPauseButton.layer.cornerRadius = playPauseButton.frame.size.height / 2
         currentTimeDot.layer.cornerRadius = currentTimeDot.frame.size.height / 2
@@ -125,6 +132,19 @@ class PodcastPlayerView: UIView {
         showInfo()
         configureControls()
         addDotGesture()
+        setupActions()
+    }
+    
+    func setupActions() {
+        if playerHelper.podcast?.destinationsArray.count == 0 {
+            customBoostView.alpha = 0.3
+            customBoostView.isUserInteractionEnabled = false
+        }
+        
+        if chat == nil {
+            shareClipButton.alpha = 0.3
+            shareClipButton.isUserInteractionEnabled = false
+        }
     }
     
     func setupDismissButton() {
@@ -357,17 +377,21 @@ extension PodcastPlayerView : PodcastPlayerDelegate {
     }
 }
 
-extension PodcastPlayerView: BoostButtonViewDelegate {
-    func didTouchButton() {
-        let amount = UserContact.kTipAmount
+extension PodcastPlayerView: CustomBoostViewDelegate {
+    func didTouchBoostButton(withAmount amount: Int) {
+        let itemID = playerHelper.getCurrentEpisode()?.itemID ?? "-1"
+        let currentTime = playerHelper.currentTime
         
-        if let boostMessage = playerHelper.getBoostMessage(amount: amount) {
-            playerHelper.processPayment(amount: amount)
+        if let boostMessage = feedBoostHelper.getBoostMessage(itemID: itemID, amount: amount, currentTime: currentTime) {
             
-            if let message = delegate?.shouldSendBoost(message: boostMessage, amount: amount, animation: false) {
-                addToLiveMessages(message: message)
-                livePodcastDataSource?.insert(messages: [message])
-            }
+            let podcastAnimationVC = PodcastAnimationViewController.instantiate(amount: amount)
+            WindowsManager.sharedInstance.showConveringWindowWith(rootVC: podcastAnimationVC)
+            podcastAnimationVC.showBoostAnimation()
+            
+            feedBoostHelper.processPayment(itemID: itemID, amount: amount, currentTime: currentTime)
+            feedBoostHelper.sendBoostMessage(message: boostMessage, completion: { (message, success) in
+                self.delegate?.didSendBoostMessage(success: success, message: message)
+            })
         }
     }
 }

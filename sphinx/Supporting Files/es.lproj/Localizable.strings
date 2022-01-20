@@ -20,6 +20,7 @@
 "continue.upper" = "CONTINUAR";
 "save.upper" = "GUARDAR";
 "cancel" = "Cancelar";
+"done" = "Listo";
 "uploaded.progress" = "Subido: %d %%";
 "public.key" = "Clave Pública";
 "route.hint" = "Pista de Ruta";

@@ -12,7 +12,7 @@ protocol PodcastPlayerVCDelegate: AnyObject {
     func willDismissPlayer(playing: Bool)
     func shouldShareClip(comment: PodcastComment)
     func shouldGoToPlayer()
-    func shouldSendBoost(message: String, amount: Int, animation: Bool) -> TransactionMessage?
+    func didSendBoostMessage(success: Bool, message: TransactionMessage?)
     func shouldDismissPlayerView()
 }
 
@@ -187,8 +187,8 @@ extension NewPodcastPlayerViewController: PodcastPlayerViewDelegate {
         self.dismiss(animated: true, completion: nil)
     }
     
-    func shouldSendBoost(message: String, amount: Int, animation: Bool) -> TransactionMessage? {
-        return delegate?.shouldSendBoost(message: message, amount: amount, animation: animation)
+    func didSendBoostMessage(success: Bool, message: TransactionMessage?) {
+        delegate?.didSendBoostMessage(success: success, message: message)
     }
     
     func shouldSyncPodcast() {

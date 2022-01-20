@@ -35,14 +35,15 @@ extension ChatViewController : PodcastPlayerVCDelegate {
         accessoryView.configureReplyFor(podcastComment: comment)
     }
     
-    func shouldSendBoost(message: String, amount: Int, animation: Bool) -> TransactionMessage? {
-        if animation {
-            let podcastAnimationVC = PodcastAnimationViewController.instantiate(amount: amount)
-            WindowsManager.sharedInstance.showConveringWindowWith(rootVC: podcastAnimationVC)
-            podcastAnimationVC.showBoostAnimation()
+    func didSendBoostMessage(success: Bool, message: TransactionMessage?) {
+        guard let message = message, success else {
+            DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: {
+                self.didFailSendingMessage(provisionalMessage: message)
+            })
+            return
         }
-        let boostType = TransactionMessage.TransactionMessageType.boost.rawValue
-        return createProvisionalAndSend(messageText: message, type: boostType, botAmount: 0, completion: { _ in })
+        self.insertSentMessage(message: message, completion: { _ in })
+        self.scrollAfterInsert()
     }
     
     func shouldGoToPlayer() {

@@ -11,6 +11,7 @@ import SwiftyJSON
 import CoreData
 
 class PodcastPaymentsHelper {
+    
     public static func getSatsEarnedFor(_ feedId: Int) -> Int {
         let pmts = TransactionMessage.getPaymentsFor(feedId: feedId)
         var satsEarned = 0
@@ -110,7 +111,7 @@ class PodcastPaymentsHelper {
         var destinations = [[String: AnyObject]]()
         
         for d in podcastDestinations {
-            let destinationParams: [String: AnyObject] = ["address": (d.address ?? "") as AnyObject, "split": (d.split ?? 0) as AnyObject, "type": (d.type ?? "") as AnyObject]
+            let destinationParams: [String: AnyObject] = ["address": (d.address ?? "") as AnyObject, "split": (d.split) as AnyObject, "type": (d.type ?? "") as AnyObject]
             destinations.append(destinationParams)
         }
         

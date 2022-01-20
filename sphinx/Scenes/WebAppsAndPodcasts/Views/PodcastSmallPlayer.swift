@@ -24,6 +24,8 @@ class PodcastSmallPlayer: UIView {
     
     var playerHelper: PodcastPlayerHelper! = nil
     
+    let feedBoostHelper = FeedBoostHelper()
+    
     var wasPlayingOnDrag = false
     
     var audioLoading = false {
@@ -47,6 +49,10 @@ class PodcastSmallPlayer: UIView {
         self.delegate = delegate
         
         setPlayerDelegate(completion: completion)
+        
+        if let feedID = playerHelper.podcast?.objectID {
+            feedBoostHelper.configure(with: feedID, and: playerHelper.chat)
+        }
     }
     
     func setPlayerDelegate(completion: @escaping () -> ()) {
@@ -148,9 +154,19 @@ extension PodcastSmallPlayer : BoostButtonViewDelegate {
     func didTouchButton() {
         let amount = UserContact.kTipAmount
         
-        if let boostMessage = playerHelper.getBoostMessage(amount: amount) {
-            playerHelper.processPayment(amount: amount)
-            let _ = delegate?.shouldSendBoost(message: boostMessage, amount: amount, animation: true)
+        let itemID = playerHelper.getCurrentEpisode()?.itemID ?? "-1"
+        let currentTime = playerHelper.currentTime
+        
+        if let boostMessage = feedBoostHelper.getBoostMessage(itemID: itemID, amount: amount, currentTime: currentTime) {
+            
+            let podcastAnimationVC = PodcastAnimationViewController.instantiate(amount: amount)
+            WindowsManager.sharedInstance.showConveringWindowWith(rootVC: podcastAnimationVC)
+            podcastAnimationVC.showBoostAnimation()
+            
+            feedBoostHelper.processPayment(itemID: itemID, amount: amount, currentTime: currentTime)
+            feedBoostHelper.sendBoostMessage(message: boostMessage, completion: { (message, success) in
+                self.delegate?.didSendBoostMessage(success: success, message: message)
+            })
         }
     }
 }

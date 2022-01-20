@@ -7,13 +7,13 @@
 
 import UIKit
 
-
 class VideoFeedEpisodePlayerCollectionViewDetailsCell: UICollectionViewCell {
     
     @IBOutlet private weak var episodeDescriptionLabel: UILabel!
-    @IBOutlet private weak var showMoreButton: UIButton!
     @IBOutlet private weak var subscriptionToggleButton: UIButton!
+    @IBOutlet weak var customBoostView: CustomBoostView!
     
+    weak var boostDelegate: CustomBoostDelegate?
     
     var videoEpisode: Video! {
         didSet {
@@ -23,13 +23,9 @@ class VideoFeedEpisodePlayerCollectionViewDetailsCell: UICollectionViewCell {
         }
     }
     
-    private var viewMode: ViewMode = .fullDetailsCollapsed {
-        didSet {
-            // 📝 TODO:  Implement dynamic resizing around the state change here
-            // (see: https://stackoverflow.com/a/60835843/8859365)
-//            setNeedsLayout()
-        }
-    }
+    var contentFeed: ContentFeed? = nil
+    
+    let feedBoostHelper = FeedBoostHelper()
 }
 
 
@@ -42,24 +38,6 @@ extension VideoFeedEpisodePlayerCollectionViewDetailsCell {
         nibName: "VideoFeedEpisodePlayerCollectionViewDetailsCell",
         bundle: nil
     )
-}
-
-
-// MARK: - Computeds
-extension VideoFeedEpisodePlayerCollectionViewDetailsCell {
-    
-    var showMoreButtonTitle: String {
-        switch viewMode {
-        case .fullDetailsCollapsed:
-            return "video-player.episode-details.button.show-more"
-                .localized
-                .uppercased()
-        case .fullDetailsExpanded:
-            return "video-player.episode-details.button.show-less"
-                .localized
-                .uppercased()
-        }
-    }
 }
 
 
@@ -83,9 +61,33 @@ extension VideoFeedEpisodePlayerCollectionViewDetailsCell {
 extension VideoFeedEpisodePlayerCollectionViewDetailsCell {
     
     func configure(
-        withVideoEpisode videoEpisode: Video
+        withVideoEpisode videoEpisode: Video,
+        and boostDelegate: CustomBoostDelegate?
     ) {
         self.videoEpisode = videoEpisode
+        self.boostDelegate = boostDelegate
+        
+        if let objectID = videoEpisode.videoFeed?.objectID {
+            self.contentFeed = CoreDataManager.sharedManager.getObjectWith(objectId: objectID)
+        }
+        
+        setupActions()
+        setupFeedBoostHelper()
+    }
+    
+    func setupFeedBoostHelper() {
+        if let contentFeed = contentFeed {
+            feedBoostHelper.configure(with: contentFeed.objectID, and: contentFeed.chat)
+        }
+    }
+    
+    func setupActions() {
+        customBoostView.delegate = self
+        
+        if contentFeed?.destinationsArray.count == 0 {
+            customBoostView.alpha = 0.3
+            customBoostView.isUserInteractionEnabled = false
+        }
     }
 }
 
@@ -114,20 +116,6 @@ extension VideoFeedEpisodePlayerCollectionViewDetailsCell {
             for: .normal
         )
     }
-    
-    @IBAction private func didTapShowMoreButton() {
-        switch viewMode {
-        case .fullDetailsCollapsed:
-            viewMode = .fullDetailsExpanded
-        case .fullDetailsExpanded:
-            viewMode = .fullDetailsCollapsed
-        }
-        
-        showMoreButton.setTitle(
-            showMoreButtonTitle,
-            for: .normal
-        )
-    }
 }
 
 
@@ -135,11 +123,6 @@ extension VideoFeedEpisodePlayerCollectionViewDetailsCell {
 extension VideoFeedEpisodePlayerCollectionViewDetailsCell {
     
     private func setupViews() {
-        showMoreButton.setTitle(
-            showMoreButtonTitle,
-            for: .normal
-        )
-        
         subscriptionToggleButton.layer.cornerRadius = subscriptionToggleButton.frame.size.height / 2
     }
     
@@ -155,10 +138,21 @@ extension VideoFeedEpisodePlayerCollectionViewDetailsCell {
     }
 }
 
-
-extension VideoFeedEpisodePlayerCollectionViewDetailsCell {
-    enum ViewMode {
-        case fullDetailsCollapsed
-        case fullDetailsExpanded
+extension VideoFeedEpisodePlayerCollectionViewDetailsCell : CustomBoostViewDelegate {
+    func didTouchBoostButton(withAmount amount: Int) {
+        let itemID = videoEpisode.videoID
+        
+        if let boostMessage = feedBoostHelper.getBoostMessage(itemID: itemID, amount: amount) {
+            
+            let podcastAnimationVC = PodcastAnimationViewController.instantiate(amount: amount)
+            WindowsManager.sharedInstance.showConveringWindowWith(rootVC: podcastAnimationVC)
+            podcastAnimationVC.showBoostAnimation()
+            
+            feedBoostHelper.processPayment(itemID: itemID, amount: amount)
+            
+            feedBoostHelper.sendBoostMessage(message: boostMessage, completion: { (message, success) in
+                self.boostDelegate?.didSendBoostMessage(success: success, message: message)
+            })
+        }
     }
 }

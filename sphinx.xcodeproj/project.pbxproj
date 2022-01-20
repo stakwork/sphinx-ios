@@ -22,6 +22,10 @@
 		4703CF932519425E007B685C /* PDFKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47D03DF02510EA170077A968 /* PDFKit.framework */; };
 		4703CF97251D23E5007B685C /* LinkPreviewUIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4703CF96251D23E5007B685C /* LinkPreviewUIImage.swift */; };
 		4703CFA125278C40007B685C /* APIRedeemSatsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4703CFA025278C40007B685C /* APIRedeemSatsExtension.swift */; };
+		4705D3992799AAB5009C0729 /* CustomBoostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4705D3982799AAB5009C0729 /* CustomBoostView.swift */; };
+		4705D39B2799AAC0009C0729 /* CustomBoostView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4705D39A2799AAC0009C0729 /* CustomBoostView.xib */; };
+		4705D39D2799B3B0009C0729 /* FeedBoostHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4705D39C2799B3B0009C0729 /* FeedBoostHelper.swift */; };
+		4705D39F2799C339009C0729 /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4705D39E2799C339009C0729 /* UITextField.swift */; };
 		4707089224AE16DF00A98DCA /* MediaDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4707089124AE16DF00A98DCA /* MediaDownloader.swift */; };
 		4707089424AE45D400A98DCA /* UserContactChatListExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4707089324AE45D400A98DCA /* UserContactChatListExtension.swift */; };
 		4707089624AE466D00A98DCA /* ChatChatListExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4707089524AE466D00A98DCA /* ChatChatListExtension.swift */; };
@@ -689,6 +693,10 @@
 		4703CF9225193701007B685C /* sphinx 22.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 22.xcdatamodel"; sourceTree = "<group>"; };
 		4703CF96251D23E5007B685C /* LinkPreviewUIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkPreviewUIImage.swift; sourceTree = "<group>"; };
 		4703CFA025278C40007B685C /* APIRedeemSatsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRedeemSatsExtension.swift; sourceTree = "<group>"; };
+		4705D3982799AAB5009C0729 /* CustomBoostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBoostView.swift; sourceTree = "<group>"; };
+		4705D39A2799AAC0009C0729 /* CustomBoostView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomBoostView.xib; sourceTree = "<group>"; };
+		4705D39C2799B3B0009C0729 /* FeedBoostHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedBoostHelper.swift; sourceTree = "<group>"; };
+		4705D39E2799C339009C0729 /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
 		4707089124AE16DF00A98DCA /* MediaDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDownloader.swift; sourceTree = "<group>"; };
 		4707089324AE45D400A98DCA /* UserContactChatListExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserContactChatListExtension.swift; sourceTree = "<group>"; };
 		4707089524AE466D00A98DCA /* ChatChatListExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatChatListExtension.swift; sourceTree = "<group>"; };
@@ -2255,6 +2263,7 @@
 				475154A52423B3B000477384 /* URL.swift */,
 				47D03DF72510F3D20077A968 /* URLResponse.swift */,
 				475BDD2D232ACA9000C5BBD6 /* UserDefaults.swift */,
+				4705D39E2799C339009C0729 /* UITextField.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2447,6 +2456,7 @@
 				470708A324B3669200A98DCA /* MetaDataCache.swift */,
 				4797E74924B89ECA00D13270 /* VideoCallHelper.swift */,
 				4789E26D24F406F3003991BE /* RelayURLUpdateHelper.swift */,
+				4705D39C2799B3B0009C0729 /* FeedBoostHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -2747,6 +2757,8 @@
 				47AF0D32254B238B00C98398 /* BoostButtonView.xib */,
 				47AF0D36254C98D100C98398 /* BoostFireworksAnimationView.swift */,
 				47AF0D38254C98DE00C98398 /* BoostFireworksAnimationView.xib */,
+				4705D3982799AAB5009C0729 /* CustomBoostView.swift */,
+				4705D39A2799AAC0009C0729 /* CustomBoostView.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3694,6 +3706,7 @@
 				475BDD0E232AC25100C5BBD6 /* DayHeaderTableViewCell.xib in Resources */,
 				47904C0D24BF352300710E7A /* bells.caf in Resources */,
 				475BDD23232AC71000C5BBD6 /* Colors.xcassets in Resources */,
+				4705D39B2799AAC0009C0729 /* CustomBoostView.xib in Resources */,
 				47183CB42548AA5100E6FD19 /* PodcastPlayerView.xib in Resources */,
 				F3446B9426BABAB400855516 /* ChatListCollectionViewCell.xib in Resources */,
 				F3188BAE271CF20B00890DDD /* VideoFeedEpisodePlayerCollectionViewDetailsCell.xib in Resources */,
@@ -3866,6 +3879,7 @@
 				47822C6D2449EEEE0011D832 /* PaidMessageReceivedTableViewCell.swift in Sources */,
 				F3DFB78A26B87C0C00E76FBD /* DashboardFeedsContainerViewController+ContentFilterOption.swift in Sources */,
 				47935FBE24A1070800B39ADB /* StakworkAuthorizeViewController.swift in Sources */,
+				4705D39D2799B3B0009C0729 /* FeedBoostHelper.swift in Sources */,
 				4787F86D247410C500CCE8B9 /* JoinGroupDetailsViewController.swift in Sources */,
 				47A79D3824424D19005CD72F /* UITableViewCell.swift in Sources */,
 				47468FCE233131B40072124A /* NSManagedObjectContext.swift in Sources */,
@@ -3954,6 +3968,7 @@
 				47FA18C224253BDD00469C8F /* InvoiceManager.swift in Sources */,
 				47771C6E259B848300990467 /* GroupPinView.swift in Sources */,
 				F313024626BA62B300A1396E /* ChatsCollectionViewController.swift in Sources */,
+				4705D39F2799C339009C0729 /* UITextField.swift in Sources */,
 				F32A697926D515AB0004B8B3 /* PodcastFeed+Computeds.swift in Sources */,
 				47468FD323314EE80072124A /* PinCodeViewController.swift in Sources */,
 				470DB25423FAE43400D29FA5 /* SphinxCache.swift in Sources */,
@@ -4201,6 +4216,7 @@
 				47A06CA624A3AC9A00BE468C /* DeepLinksHandlerHelper.swift in Sources */,
 				478DCF9E2343D7AC009A03D6 /* SetDataViewController.swift in Sources */,
 				47357A112729A13600A49EEE /* NewsletterFeed+DisplayUtils.swift in Sources */,
+				4705D3992799AAB5009C0729 /* CustomBoostView.swift in Sources */,
 				F39767C826C5A85F00DDFC0A /* LeftMenuDelegate.swift in Sources */,
 				479A03E92583A7180093DB30 /* LocalNetworkPermissionService.swift in Sources */,
 				471FACD823E9B65C007DE1C8 /* EmailHelper.swift in Sources */,

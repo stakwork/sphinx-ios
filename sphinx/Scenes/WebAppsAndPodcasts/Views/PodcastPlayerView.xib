@@ -24,10 +24,10 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PodcastPlayerView" customModule="sphinx" customModuleProvider="target">
             <connections>
                 <outlet property="audioLoadingWheel" destination="kFQ-zV-BtX" id="31I-gG-yfD"/>
-                <outlet property="boostButtonView" destination="Lvk-UX-m39" id="txU-DH-ow1"/>
                 <outlet property="contentView" destination="iN0-l3-epB" id="WkH-Pi-lwg"/>
                 <outlet property="currentTimeDot" destination="Mtu-jO-ZFp" id="RPs-Ww-FWa"/>
                 <outlet property="currentTimeLabel" destination="iDW-iO-P0o" id="6to-ww-AnB"/>
+                <outlet property="customBoostView" destination="Lvk-UX-m39" id="X8S-r1-rFA"/>
                 <outlet property="dismissButton" destination="UgS-Pv-vWR" id="ngh-kF-LVR"/>
                 <outlet property="durationLabel" destination="w3F-zG-zqr" id="6kB-qM-bEh"/>
                 <outlet property="durationLine" destination="hlq-Ib-TyG" id="K6Y-Vv-GPb"/>
@@ -40,6 +40,7 @@
                 <outlet property="playPauseButton" destination="hny-dv-u2n" id="DCS-45-iYO"/>
                 <outlet property="progressLine" destination="Jf7-jW-t9r" id="Zxa-RY-cwM"/>
                 <outlet property="progressLineWidth" destination="ZVG-Fi-rtQ" id="jmn-59-9Hg"/>
+                <outlet property="shareClipButton" destination="Tb8-08-zgd" id="Lhp-y0-uuN"/>
                 <outlet property="speedButton" destination="VV8-QB-b2B" id="OVT-TI-kJw"/>
                 <outlet property="subscriptionToggleButton" destination="9rE-5F-wP7" id="dNu-6f-kCd"/>
             </connections>
@@ -137,14 +138,15 @@
                                 <constraint firstAttribute="height" constant="28" id="mGy-FF-UJV"/>
                             </constraints>
                         </view>
-                        <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tb8-08-zgd">
-                            <rect key="frame" x="32" y="182" width="32" height="58"/>
+                        <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tb8-08-zgd">
+                            <rect key="frame" x="16" y="178" width="90" height="58"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="32" id="b1E-xO-OFe"/>
+                                <constraint firstAttribute="width" constant="90" id="b1E-xO-OFe"/>
                                 <constraint firstAttribute="height" constant="58" id="kYH-je-KXc"/>
                             </constraints>
                             <color key="tintColor" name="MainBottomIcons"/>
+                            <inset key="imageEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
                             <state key="normal" image="clipIcon">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </state>
@@ -153,11 +155,12 @@
                             </connections>
                         </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="28w-L6-a8W">
-                            <rect key="frame" x="64" y="182" width="114" height="58"/>
+                            <rect key="frame" x="106" y="178" width="76" height="58"/>
                             <subviews>
                                 <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NER-8a-Vfh">
-                                    <rect key="frame" x="43.5" y="14" width="27" height="30"/>
+                                    <rect key="frame" x="24.5" y="14" width="27" height="30"/>
                                     <color key="tintColor" name="MainBottomIcons"/>
+                                    <inset key="imageEdgeInsets" minX="2" minY="2" maxX="2" maxY="2"/>
                                     <state key="normal" image="back15Icon">
                                         <color key="titleColor" name="MainBottomIcons"/>
                                     </state>
@@ -173,11 +176,11 @@
                             </constraints>
                         </view>
                         <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hny-dv-u2n">
-                            <rect key="frame" x="178" y="182" width="58" height="58"/>
+                            <rect key="frame" x="182" y="182" width="50" height="50"/>
                             <color key="backgroundColor" name="ReceivedIcon"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="58" id="Hs0-gN-fs7"/>
-                                <constraint firstAttribute="width" constant="58" id="fa1-IW-7PR"/>
+                                <constraint firstAttribute="width" secondItem="hny-dv-u2n" secondAttribute="height" multiplier="1:1" id="cTr-G6-8pn"/>
+                                <constraint firstAttribute="width" constant="50" id="fa1-IW-7PR"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="40"/>
                             <state key="normal" title="play_arrow">
@@ -188,11 +191,12 @@
                             </connections>
                         </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bIp-4g-4ho">
-                            <rect key="frame" x="236" y="182" width="114" height="58"/>
+                            <rect key="frame" x="232" y="182" width="76" height="50"/>
                             <subviews>
                                 <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9D0-xc-N0M">
-                                    <rect key="frame" x="43.5" y="14" width="27" height="30"/>
+                                    <rect key="frame" x="24.5" y="10" width="27" height="30"/>
                                     <color key="tintColor" name="MainBottomIcons"/>
+                                    <inset key="imageEdgeInsets" minX="2" minY="2" maxX="2" maxY="2"/>
                                     <state key="normal" image="forw30Icon">
                                         <color key="titleColor" name="MainBottomIcons"/>
                                     </state>
@@ -207,12 +211,12 @@
                                 <constraint firstItem="9D0-xc-N0M" firstAttribute="centerX" secondItem="bIp-4g-4ho" secondAttribute="centerX" id="sdn-H0-NKC"/>
                             </constraints>
                         </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lvk-UX-m39" customClass="BoostButtonView" customModule="sphinx" customModuleProvider="target">
-                            <rect key="frame" x="341" y="182" width="50" height="58"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lvk-UX-m39" customClass="CustomBoostView" customModule="sphinx" customModuleProvider="target">
+                            <rect key="frame" x="308" y="187" width="90" height="40"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="50" id="5bo-n9-JFP"/>
-                                <constraint firstAttribute="height" constant="58" id="fte-16-eLk"/>
+                                <constraint firstAttribute="width" constant="90" id="5bo-n9-JFP"/>
+                                <constraint firstAttribute="height" constant="40" id="fte-16-eLk"/>
                             </constraints>
                         </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iDW-iO-P0o">
@@ -268,7 +272,7 @@
                         <constraint firstItem="Mtu-jO-ZFp" firstAttribute="leading" secondItem="Jf7-jW-t9r" secondAttribute="trailing" constant="-9" id="U0e-Kj-LrE"/>
                         <constraint firstItem="hny-dv-u2n" firstAttribute="top" secondItem="VV8-QB-b2B" secondAttribute="bottom" constant="5" id="UHt-TW-SIf"/>
                         <constraint firstItem="iDW-iO-P0o" firstAttribute="top" secondItem="hlq-Ib-TyG" secondAttribute="bottom" constant="10" id="UgD-C3-pcW"/>
-                        <constraint firstAttribute="trailing" secondItem="Lvk-UX-m39" secondAttribute="trailing" constant="23" id="VGj-QK-tiu"/>
+                        <constraint firstAttribute="trailing" secondItem="Lvk-UX-m39" secondAttribute="trailing" constant="16" id="VGj-QK-tiu"/>
                         <constraint firstItem="KTf-4e-LmA" firstAttribute="leading" secondItem="hlq-Ib-TyG" secondAttribute="leading" id="VIO-2G-7o2"/>
                         <constraint firstItem="bIp-4g-4ho" firstAttribute="leading" secondItem="hny-dv-u2n" secondAttribute="trailing" id="VQj-P4-gXi"/>
                         <constraint firstAttribute="trailing" secondItem="wIY-t2-tmY" secondAttribute="trailing" constant="32" id="bW0-3D-7H6"/>
@@ -283,9 +287,9 @@
                         <constraint firstItem="hny-dv-u2n" firstAttribute="leading" secondItem="28w-L6-a8W" secondAttribute="trailing" id="spR-K7-2U1"/>
                         <constraint firstItem="28w-L6-a8W" firstAttribute="bottom" secondItem="Tb8-08-zgd" secondAttribute="bottom" id="tVM-7f-XwI"/>
                         <constraint firstItem="w3F-zG-zqr" firstAttribute="trailing" secondItem="hlq-Ib-TyG" secondAttribute="trailing" id="tdK-3i-eFk"/>
-                        <constraint firstItem="Tb8-08-zgd" firstAttribute="leading" secondItem="yFL-Ym-JIV" secondAttribute="leading" constant="32" id="vgG-QW-k1h"/>
+                        <constraint firstItem="Tb8-08-zgd" firstAttribute="leading" secondItem="yFL-Ym-JIV" secondAttribute="leading" constant="16" id="vgG-QW-k1h"/>
                         <constraint firstItem="bIp-4g-4ho" firstAttribute="top" secondItem="hny-dv-u2n" secondAttribute="top" id="wMo-xA-HfE"/>
-                        <constraint firstItem="Lvk-UX-m39" firstAttribute="leading" secondItem="bIp-4g-4ho" secondAttribute="trailing" constant="-9" id="z1x-tQ-5QT"/>
+                        <constraint firstItem="Lvk-UX-m39" firstAttribute="leading" secondItem="bIp-4g-4ho" secondAttribute="trailing" id="z1x-tQ-5QT"/>
                         <constraint firstItem="hlq-Ib-TyG" firstAttribute="leading" secondItem="yFL-Ym-JIV" secondAttribute="leading" constant="32" id="zQM-Mz-qBJ"/>
                     </constraints>
                 </view>

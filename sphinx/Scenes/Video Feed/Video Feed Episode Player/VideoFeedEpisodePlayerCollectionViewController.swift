@@ -10,6 +10,7 @@ import CoreData
 
 
 class VideoFeedEpisodePlayerCollectionViewController: UICollectionViewController {
+    
     var videoPlayerEpisode: Video!
     var videoFeedEpisodes: [Video]!
 
@@ -19,6 +20,8 @@ class VideoFeedEpisodePlayerCollectionViewController: UICollectionViewController
     
     private var currentDataSnapshot: DataSourceSnapshot!
     private var dataSource: DataSource!
+    
+    weak var boostDelegate: CustomBoostDelegate?
 }
 
 
@@ -28,6 +31,7 @@ extension VideoFeedEpisodePlayerCollectionViewController {
     static func instantiate(
         videoPlayerEpisode: Video,
         videoFeedEpisodes: [Video],
+        boostDelegate: CustomBoostDelegate?,
         onVideoEpisodeCellSelected: @escaping ((NSManagedObjectID) -> Void) = { _ in },
         onFeedSubscriptionSelected: @escaping (() -> Void) = {},
         onFeedSubscriptionCancellationSelected: @escaping (() -> Void) = {}
@@ -39,6 +43,8 @@ extension VideoFeedEpisodePlayerCollectionViewController {
         
         viewController.videoPlayerEpisode = videoPlayerEpisode
         viewController.videoFeedEpisodes = videoFeedEpisodes
+        
+        viewController.boostDelegate = boostDelegate
         
         viewController.onVideoEpisodeCellSelected = onVideoEpisodeCellSelected
         viewController.onFeedSubscriptionSelected = onFeedSubscriptionSelected
@@ -117,8 +123,9 @@ extension VideoFeedEpisodePlayerCollectionViewController {
 
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
-            heightDimension: .estimated(100.0)
+            heightDimension: .estimated(110.0)
         )
+        
         let group = NSCollectionLayoutGroup.horizontal(
             layoutSize: groupSize,
             subitems: [item]
@@ -145,7 +152,7 @@ extension VideoFeedEpisodePlayerCollectionViewController {
 
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
-            heightDimension: .estimated(82.9)
+            heightDimension: .estimated(100.0)
         )
         
         let group = NSCollectionLayoutGroup.horizontal(
@@ -153,11 +160,9 @@ extension VideoFeedEpisodePlayerCollectionViewController {
             subitems: [item]
         )
         
-        
         let sectionHeader = makeVideoFeedEpisodesSectionHeader()
         
         sectionHeader.pinToVisibleBounds = true
-        
 
         let section = NSCollectionLayoutSection(group: group)
 
@@ -288,7 +293,8 @@ extension VideoFeedEpisodePlayerCollectionViewController {
                 }
 
                 episodeCell.configure(
-                    withVideoEpisode: videoEpisode
+                    withVideoEpisode: videoEpisode,
+                    and: self.boostDelegate
                 )
 
                 return episodeCell

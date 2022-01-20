@@ -5,6 +5,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -19,9 +20,9 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="VideoFeedEpisodePlayerCollectionViewDetailsCell" reuseIdentifier="VideoFeedEpisodePlayerCollectionViewDetailsCell" translatesAutoresizingMaskIntoConstraints="NO" id="gTV-IL-0wX" customClass="VideoFeedEpisodePlayerCollectionViewDetailsCell" customModule="sphinx" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="95"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="110"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="375" height="95"/>
+                <rect key="frame" x="0.0" y="0.0" width="375" height="110"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Episode Description That May potetentially have 3 lines of text" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sbQ-FG-2SW">
@@ -30,20 +31,8 @@
                         <color key="textColor" name="MainBottomIcons"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Ph-df-A9I">
-                        <rect key="frame" x="283" y="55" width="76" height="30"/>
-                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="15"/>
-                        <color key="tintColor" name="ReceivedIcon"/>
-                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                        <state key="normal" title="Show More">
-                            <color key="titleColor" name="ReceivedIcon"/>
-                        </state>
-                        <connections>
-                            <action selector="didTapShowMoreButton" destination="gTV-IL-0wX" eventType="touchUpInside" id="vkn-tb-cUL"/>
-                        </connections>
-                    </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uty-Gv-ZoD" userLabel="Subscription Button">
-                        <rect key="frame" x="16" y="57" width="89" height="26"/>
+                        <rect key="frame" x="16" y="68" width="89" height="26"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="13"/>
                         <inset key="contentEdgeInsets" minX="10" minY="5" maxX="10" maxY="5"/>
@@ -55,25 +44,32 @@
                             <action selector="subscriptionButtonTouched" destination="gTV-IL-0wX" eventType="touchUpInside" id="CdZ-pQ-J3t"/>
                         </connections>
                     </button>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JWc-6m-KNo" customClass="CustomBoostView" customModule="sphinx" customModuleProvider="target">
+                        <rect key="frame" x="269" y="61" width="90" height="40"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="90" id="D69-2k-4jb"/>
+                            <constraint firstAttribute="height" constant="40" id="phF-0R-qF4"/>
+                        </constraints>
+                    </view>
                 </subviews>
             </view>
             <color key="backgroundColor" name="HeaderBG"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="6Ph-df-A9I" secondAttribute="bottom" constant="10" id="TdR-wt-eW2"/>
-                <constraint firstItem="uty-Gv-ZoD" firstAttribute="centerY" secondItem="6Ph-df-A9I" secondAttribute="centerY" id="U4p-or-atS"/>
+                <constraint firstAttribute="trailing" secondItem="JWc-6m-KNo" secondAttribute="trailing" constant="16" id="BWl-bl-ePy"/>
                 <constraint firstItem="sbQ-FG-2SW" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="Vcq-b9-NaY"/>
                 <constraint firstItem="uty-Gv-ZoD" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="16" id="b50-2R-3a9"/>
                 <constraint firstItem="sbQ-FG-2SW" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="16" id="bc0-O1-prE"/>
-                <constraint firstItem="6Ph-df-A9I" firstAttribute="top" secondItem="sbQ-FG-2SW" secondAttribute="bottom" constant="12" id="dgr-in-hHi"/>
-                <constraint firstAttribute="trailing" secondItem="6Ph-df-A9I" secondAttribute="trailing" constant="16" id="eaw-6N-JAY"/>
+                <constraint firstItem="JWc-6m-KNo" firstAttribute="centerY" secondItem="uty-Gv-ZoD" secondAttribute="centerY" id="fZf-pq-1h9"/>
                 <constraint firstAttribute="trailing" secondItem="sbQ-FG-2SW" secondAttribute="trailing" constant="16" id="hik-KL-5XA"/>
                 <constraint firstItem="sbQ-FG-2SW" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="16" id="oOs-5N-RXA"/>
+                <constraint firstAttribute="bottom" secondItem="uty-Gv-ZoD" secondAttribute="bottom" constant="16" id="tff-nx-bEl"/>
                 <constraint firstAttribute="trailing" secondItem="sbQ-FG-2SW" secondAttribute="trailing" constant="16" id="zPj-h2-C9q"/>
             </constraints>
             <size key="customSize" width="375" height="95"/>
             <connections>
+                <outlet property="customBoostView" destination="JWc-6m-KNo" id="Ntp-FW-cv6"/>
                 <outlet property="episodeDescriptionLabel" destination="sbQ-FG-2SW" id="z9Q-HZ-Uk3"/>
-                <outlet property="showMoreButton" destination="6Ph-df-A9I" id="iyE-Gu-8Ni"/>
                 <outlet property="subscriptionToggleButton" destination="uty-Gv-ZoD" id="fS0-4x-Fhm"/>
             </connections>
             <point key="canvasLocation" x="131.15942028985509" y="37.165178571428569"/>
@@ -86,8 +82,8 @@
         <namedColor name="MainBottomIcons">
             <color red="0.37254901960784315" green="0.38823529411764707" blue="0.40784313725490196" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="ReceivedIcon">
-            <color red="0.50980392156862742" green="0.70588235294117652" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

@@ -11,6 +11,7 @@ import UIKit
 class PodcastSmallPlayer: UIView {
     
     weak var delegate: PodcastPlayerVCDelegate?
+    weak var boostDelegate: CustomBoostDelegate?
 
     @IBOutlet var contentView: UIView!
     
@@ -23,6 +24,8 @@ class PodcastSmallPlayer: UIView {
     @IBOutlet weak var boostButtonView: BoostButtonView!
     
     var playerHelper: PodcastPlayerHelper! = nil
+    
+    let feedBoostHelper = FeedBoostHelper()
     
     var wasPlayingOnDrag = false
     
@@ -42,11 +45,22 @@ class PodcastSmallPlayer: UIView {
         setup()
     }
     
-    func configure(playerHelper: PodcastPlayerHelper, delegate: PodcastPlayerVCDelegate, completion: @escaping () -> ()) {
+    func configure(
+        playerHelper: PodcastPlayerHelper,
+        delegate: PodcastPlayerVCDelegate,
+        boostDelegate: CustomBoostDelegate,
+        completion: @escaping () -> ()
+    ) {
+        
         self.playerHelper = playerHelper
         self.delegate = delegate
+        self.boostDelegate = boostDelegate
         
         setPlayerDelegate(completion: completion)
+        
+        if let feedObjectID = playerHelper.podcast?.objectID {
+            feedBoostHelper.configure(with: feedObjectID, and: playerHelper.chat)
+        }
     }
     
     func setPlayerDelegate(completion: @escaping () -> ()) {
@@ -148,9 +162,19 @@ extension PodcastSmallPlayer : BoostButtonViewDelegate {
     func didTouchButton() {
         let amount = UserContact.kTipAmount
         
-        if let boostMessage = playerHelper.getBoostMessage(amount: amount) {
-            playerHelper.processPayment(amount: amount)
-            let _ = delegate?.shouldSendBoost(message: boostMessage, amount: amount, animation: true)
+        let itemID = playerHelper.getCurrentEpisode()?.itemID ?? "-1"
+        let currentTime = playerHelper.currentTime
+        
+        if let boostMessage = feedBoostHelper.getBoostMessage(itemID: itemID, amount: amount, currentTime: currentTime) {
+            
+            let podcastAnimationVC = PodcastAnimationViewController.instantiate(amount: amount)
+            WindowsManager.sharedInstance.showConveringWindowWith(rootVC: podcastAnimationVC)
+            podcastAnimationVC.showBoostAnimation()
+            
+            feedBoostHelper.processPayment(itemID: itemID, amount: amount, currentTime: currentTime)
+            feedBoostHelper.sendBoostMessage(message: boostMessage, completion: { (message, success) in
+                self.boostDelegate?.didSendBoostMessage(success: success, message: message)
+            })
         }
     }
 }

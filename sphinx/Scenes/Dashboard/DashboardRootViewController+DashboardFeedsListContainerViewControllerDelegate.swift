@@ -163,7 +163,8 @@ extension DashboardRootViewController {
             chat: chat,
             playerHelper: podcastPlayerHelper,
             dismissButtonStyle: .backArrow,
-            delegate: self
+            delegate: self,
+            boostDelegate: self
         )
         
         podcastFeedVC.modalPresentationStyle = .automatic
@@ -180,7 +181,8 @@ extension DashboardRootViewController {
             .instantiate(
                 videoPlayerEpisode: videoEpisode,
                 dismissButtonStyle: .backArrow,
-                delegate: self
+                delegate: self,
+                boostDelegate: self
             )
         
         viewController.modalPresentationStyle = .automatic
@@ -194,7 +196,8 @@ extension DashboardRootViewController {
     ) {
         let viewController = NewsletterItemDetailViewController
             .instantiate(
-                newsletterItem: newsletterItem
+                newsletterItem: newsletterItem,
+                boostDelegate: self
             )
         
         viewController.modalPresentationStyle = .automatic

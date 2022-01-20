@@ -429,7 +429,6 @@ class PodcastPlayerHelper {
             )
     }
     
-    
     func togglePlayState() {
         if isPlaying() {
             shouldPause()

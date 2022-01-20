@@ -40,4 +40,10 @@ extension ContentFeed {
     var isNewsletter: Bool {
         return self.feedKind.rawValue == FeedType.Newsletter.rawValue
     }
+    
+    var destinationsArray: [ContentFeedPaymentDestination] {
+        guard let destinations = paymentDestinations else { return [] }
+        
+        return Array(destinations)
+    }
 }

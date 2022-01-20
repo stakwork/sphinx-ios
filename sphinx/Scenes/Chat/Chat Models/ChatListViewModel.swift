@@ -139,6 +139,7 @@ final class ChatListViewModel: NSObject {
     
     var syncMessagesTask: DispatchWorkItem? = nil
     var syncMessagesDate = Date()
+    var newMessagesChatIds = [Int]()
     
     func syncMessages(
         chatId: Int? = nil,
@@ -148,6 +149,7 @@ final class ChatListViewModel: NSObject {
         syncMessagesTask = DispatchWorkItem { [weak self] in
             guard let self = self else { return }
             
+            self.newMessagesChatIds = []
             self.syncMessagesDate = Date()
             
             let restoring = self.isRestoring()
@@ -157,14 +159,20 @@ final class ChatListViewModel: NSObject {
                 progressCallback(0)
             }
             
-            
             self.getMessagesPaginated(
                 restoring: restoring,
                 prevPageNewMessages: 0,
                 chatId: chatId,
                 date: self.syncMessagesDate,
                 progressCallback: progressCallback,
-                completion: completion
+                completion: { chatNewMessagesCount, newMessagesCount in
+                    
+                    Chat.updateLastMessageForChats(
+                        self.newMessagesChatIds
+                    )
+                    
+                    completion(chatNewMessagesCount, newMessagesCount)
+                }
             )
         }
         syncMessagesTask?.perform()
@@ -267,7 +275,11 @@ final class ChatListViewModel: NSObject {
         return progress
     }
     
-    func addMessages(messages: [JSON], chatId: Int? = nil, completion: @escaping (Int, Int) -> ()) {
+    func addMessages(
+        messages: [JSON],
+        chatId: Int? = nil,
+        completion: @escaping (Int, Int) -> ()
+    ) {
         var newMessagesCount = 0
         
         for messageDictionary in messages {
@@ -278,13 +290,22 @@ final class ChatListViewModel: NSObject {
                 if isAddedRow(message: message, isNew: isNew, viewChatId: chatId) {
                     newMessagesCount = newMessagesCount + 1
                 }
+                
+                if let chat = message.chat, !newMessagesChatIds.contains(chat.id) {
+                    newMessagesChatIds.append(chat.id)
+                }
             }
 
         }
         completion(newMessagesCount, messages.count)
     }
     
-    func isAddedRow(message: TransactionMessage, isNew: Bool, viewChatId: Int?) -> Bool {
+    func isAddedRow(
+        message: TransactionMessage,
+        isNew: Bool,
+        viewChatId: Int?
+    ) -> Bool {
+        
         if TransactionMessage.typesToExcludeFromChat.contains(message.type) {
             return false
         }
@@ -301,7 +322,11 @@ final class ChatListViewModel: NSObject {
         return false
     }
     
-    func payInvite(invite: UserInvite, completion: @escaping (UserContact?) -> ()) {
+    func payInvite(
+        invite: UserInvite,
+        completion: @escaping (UserContact?) -> ()
+    ) {
+        
         guard let inviteString = invite.inviteString else {
             completion(nil)
             return
@@ -310,7 +335,10 @@ final class ChatListViewModel: NSObject {
         let bubbleHelper = NewMessageBubbleHelper()
         bubbleHelper.showLoadingWheel()
         
-        API.sharedInstance.payInvite(inviteString: inviteString, callback: { inviteJson in
+        API.sharedInstance.payInvite(
+            inviteString: inviteString,
+            callback: { inviteJson in
+                
             bubbleHelper.hideLoadingWheel()
             
             if let invite = UserInvite.insertInvite(invite: inviteJson) {

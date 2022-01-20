@@ -356,6 +356,14 @@ public class Chat: NSManagedObject {
         return messages.first
     }
     
+    public static func updateLastMessageForChats(_ chatIds: [Int]) {
+        for id in chatIds {
+            if let chat = Chat.getChatWith(id: id) {
+                chat.calculateUnssenMessagesCount()
+            }
+        }
+    }
+    
     public func updateLastMessage() {
         lastMessage = getLastMessageToShow()
         calculateUnssenMessagesCount()

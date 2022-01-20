@@ -103,7 +103,6 @@ class ChatViewController: KeyboardHandlerViewController {
         chatHeaderView.configure(chat: chat, contact: contact, contactsService: contactsService, delegate: self)
         
         accessoryView.delegate = self
-        chat?.setChatMessagesAsSeen()
         updateChatInfo()
         
         ChatHelper.registerCellsForChat(tableView: chatTableView)
@@ -216,7 +215,7 @@ class ChatViewController: KeyboardHandlerViewController {
         }
         
         DispatchQueue.global().async {
-            self.chatListViewModel.syncMessages(chatId: self.chat?.id, progressCallback: { _ in }) { (chatNewMessagesCount, _, _) in
+            self.chatListViewModel.syncMessages(chatId: self.chat?.id, progressCallback: { _ in }) { (chatNewMessagesCount, _) in
                 DispatchQueue.main.async {
                     self.reloadMessages(newMessageCount: chatNewMessagesCount)
                 }

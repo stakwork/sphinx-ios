@@ -125,6 +125,9 @@
 		47393E682461F6F600E6F93E /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47393E672461F6F600E6F93E /* KeychainManager.swift */; };
 		473BC88D25F287340070E519 /* PodcastNewEpisodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473BC88C25F287340070E519 /* PodcastNewEpisodeViewController.swift */; };
 		473BC89A260238DC0070E519 /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473BC899260238DC0070E519 /* JSON.swift */; };
+		473C3150279869D2007735CD /* RestoreProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473C314F279869D2007735CD /* RestoreProgressView.swift */; };
+		473C315327986EBB007735CD /* RestoreProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 473C315527986EBB007735CD /* RestoreProgressView.xib */; };
+		473C315B2798982D007735CD /* DashboardRootViewController+RestoreProgressViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473C315A2798982D007735CD /* DashboardRootViewController+RestoreProgressViewDelegate.swift */; };
 		473E5DE32575696C00697EEA /* PickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473E5DE22575696C00697EEA /* PickerViewController.swift */; };
 		473F7BA6268B7F970063D0E0 /* OnionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473F7BA5268B7F970063D0E0 /* OnionManager.swift */; };
 		4740538C244CFE0000826533 /* CustomImageScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4740538B244CFE0000826533 /* CustomImageScrollView.swift */; };
@@ -807,6 +810,11 @@
 		473BC88C25F287340070E519 /* PodcastNewEpisodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastNewEpisodeViewController.swift; sourceTree = "<group>"; };
 		473BC899260238DC0070E519 /* JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
 		473BC89B2602434D0070E519 /* sphinx 28.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 28.xcdatamodel"; sourceTree = "<group>"; };
+		473C314F279869D2007735CD /* RestoreProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreProgressView.swift; sourceTree = "<group>"; };
+		473C315427986EBB007735CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/RestoreProgressView.xib; sourceTree = "<group>"; };
+		473C315727986EC2007735CD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/RestoreProgressView.strings; sourceTree = "<group>"; };
+		473C315927986EC3007735CD /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/RestoreProgressView.strings; sourceTree = "<group>"; };
+		473C315A2798982D007735CD /* DashboardRootViewController+RestoreProgressViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DashboardRootViewController+RestoreProgressViewDelegate.swift"; sourceTree = "<group>"; };
 		473E5DE22575696C00697EEA /* PickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerViewController.swift; sourceTree = "<group>"; };
 		473F7BA5268B7F970063D0E0 /* OnionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnionManager.swift; sourceTree = "<group>"; };
 		4740538B244CFE0000826533 /* CustomImageScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImageScrollView.swift; sourceTree = "<group>"; };
@@ -1825,6 +1833,15 @@
 				47393E672461F6F600E6F93E /* KeychainManager.swift */,
 			);
 			path = Keychain;
+			sourceTree = "<group>";
+		};
+		473C314E279869B8007735CD /* Custom Views */ = {
+			isa = PBXGroup;
+			children = (
+				473C314F279869D2007735CD /* RestoreProgressView.swift */,
+				473C315527986EBB007735CD /* RestoreProgressView.xib */,
+			);
+			path = "Custom Views";
 			sourceTree = "<group>";
 		};
 		47468FCF23313EF90072124A /* Pin */ = {
@@ -3301,8 +3318,10 @@
 				F3B2519B26E118E600C96D42 /* DashboardRootViewController+UITextFieldDelegate.swift */,
 				F3188B98271CD36C00890DDD /* DashboardRootViewController+VideoPlayerViewControllerDelegate.swift */,
 				F313024426BA628D00A1396E /* Chats */,
+				473C314E279869B8007735CD /* Custom Views */,
 				F373BF0A26AAFB6B0093C886 /* Custom Segmented Control */,
 				F3CE637826AFD42C006E37A0 /* Feeds */,
+				473C315A2798982D007735CD /* DashboardRootViewController+RestoreProgressViewDelegate.swift */,
 			);
 			path = Dashboard;
 			sourceTree = "<group>";
@@ -3681,6 +3700,7 @@
 				F3197C0D267FA2C800330F79 /* ellipse.gif in Resources */,
 				F33119A0268E9C1B005082EB /* XcodeStoreKitConfiguration.storekit in Resources */,
 				4754FAA2272B2040006295A5 /* NewsletterItemCollectionViewCell.xib in Resources */,
+				473C315327986EBB007735CD /* RestoreProgressView.xib in Resources */,
 				4789E26224F04752003991BE /* SettingsTabsView.xib in Resources */,
 				4797E81524BBA54300D13270 /* ChatAccessoryView.xib in Resources */,
 				473842F52391970B00AA640F /* FullScreenImageView.xib in Resources */,
@@ -3892,6 +3912,7 @@
 				47FE9A3C23BF751C0090913F /* ChatViewControllerAttachmentDelegateExtension.swift in Sources */,
 				475BDD08232AC24600C5BBD6 /* MessageReceivedTableViewCell.swift in Sources */,
 				4734D3C9241AA24C00D6957E /* PaymentTemplateViewController.swift in Sources */,
+				473C315B2798982D007735CD /* DashboardRootViewController+RestoreProgressViewDelegate.swift in Sources */,
 				47308E1224FEE6E700FFAC6F /* SocketEventHandler.swift in Sources */,
 				475BDD6D232BF04E00C5BBD6 /* ContainerViewController.swift in Sources */,
 				F3CE637C26AFE823006E37A0 /* FeedFilterChipCollectionViewCell.swift in Sources */,
@@ -3990,6 +4011,7 @@
 				475BDCE9232AC23B00C5BBD6 /* PaymentSentTableViewCell.swift in Sources */,
 				47AAFC7C2387070D00E30BDA /* APIWalletExtension.swift in Sources */,
 				47ACBC0E265E9CB200D2FE47 /* PeopleModalsViewController.swift in Sources */,
+				473C3150279869D2007735CD /* RestoreProgressView.swift in Sources */,
 				475BDD61232AE46B00C5BBD6 /* CoreDataManager.swift in Sources */,
 				47F35D4C2373156A0042A58F /* sphinx.xcdatamodeld in Sources */,
 				4787F8812474623F00CCE8B9 /* GroupTagCollectionViewCell.swift in Sources */,
@@ -4362,6 +4384,16 @@
 				4724BC1925474B4B0012BD76 /* es */,
 			);
 			name = WebApps.storyboard;
+			sourceTree = "<group>";
+		};
+		473C315527986EBB007735CD /* RestoreProgressView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				473C315427986EBB007735CD /* Base */,
+				473C315727986EC2007735CD /* en */,
+				473C315927986EC3007735CD /* es */,
+			);
+			name = RestoreProgressView.xib;
 			sourceTree = "<group>";
 		};
 		47771C75259B9B9400990467 /* GroupPinView.xib */ = {

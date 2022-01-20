@@ -50,7 +50,6 @@ class KeychainRestoreViewController: UIViewController {
 
             if EncryptionManager.sharedInstance.insertKeys(privateKey: credentials[3], publicKey: credentials[4]) {
                 UserData.sharedInstance.save(ip: credentials[0], token: credentials[1], andPin: credentials[2])
-                UserDefaults.Keys.didJustRestore.set(true)
 
                 delegate?.goToApp()
                 

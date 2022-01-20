@@ -67,6 +67,8 @@ class ContactTableViewCell: SwipableCell {
         imageView.layer.borderWidth = 1
         imageView.layer.borderColor = UIColor.Sphinx.Divider.resolvedCGColor(with: self)
         imageView.isHidden = true
+        imageView.sd_cancelCurrentImageLoad()
+        
         initialLabel.isHidden = true
         
         showInitialsFor(contact, in: initialLabel)

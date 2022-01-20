@@ -316,7 +316,7 @@ extension GroupDetailsViewController : NewContactVCDelegate {
         let contactsService = ContactsService()
         let chatListViewModel = ChatListViewModel(contactsService: contactsService)
         
-        chatListViewModel.loadFriends() {
+        chatListViewModel.loadFriends { _ in
             self.chat = chat
             self.loadData()
         }

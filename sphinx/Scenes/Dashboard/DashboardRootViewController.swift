@@ -16,6 +16,7 @@ class DashboardRootViewController: RootViewController {
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var searchBarContainer: UIView!
     @IBOutlet weak var mainContentContainerView: UIView!
+    @IBOutlet weak var restoreProgressView: RestoreProgressView!
     
     @IBOutlet weak var dashboardNavigationTabs: CustomSegmentedControl! {
         didSet {
@@ -189,6 +190,8 @@ extension DashboardRootViewController {
         
         setupHeaderViews()
         listenForEvents()
+        
+        restoreProgressView.delegate = self
         
         isLoading = true
     }
@@ -392,18 +395,23 @@ extension DashboardRootViewController {
         isLoading = true
         headerView.updateBalance()
 
-        chatsListViewModel.loadFriends() { [weak self] in
+        chatsListViewModel.loadFriends() { [weak self] restoring in
             guard let self = self else { return }
+            
+            if restoring {
+                self.chatsListViewModel.updateContactsAndChats()
+                self.updateCurrentViewControllerData()
+            }
 
             self.chatsListViewModel.syncMessages(
-                progressCallback: { message in
+                progressCallback: { progress in
                     self.isLoading = false
-                    self.newBubbleHelper.showLoadingWheel(text: message)
-                },
-                completion: { (_,_, isRestoring) in
-                    if isRestoring {
-                        self.chatsListViewModel.updateContactsAndChats()
+                    
+                    if (restoring) {
+                        self.restoreProgressView.showRestoreProgressView(with: progress)
                     }
+                },
+                completion: { (_,_) in
                     self.finishLoading()
                 }
             )
@@ -446,7 +454,8 @@ extension DashboardRootViewController {
         
         updateCurrentViewControllerData()
         
-        newBubbleHelper.hideLoadingWheel()
+        restoreProgressView.hideViewAnimated()
+        
         isLoading = false
         shouldShowHeaderLoadingWheel = false
         
@@ -474,6 +483,8 @@ extension DashboardRootViewController {
         if handleInvite(for: contact) {
             return
         }
+        
+        chat?.setChatMessagesAsSeen()
         
         let chatVC = ChatViewController.instantiate(
             contact: contact,

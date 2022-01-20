@@ -304,14 +304,15 @@ public class Chat: NSManagedObject {
     }
     
     func setChatMessagesAsSeen(shouldSync: Bool = true, shouldSave: Bool = true) {
-        self.seen = true
-        
         let receivedUnseenMessages = self.getReceivedUnseenMessages()
         if receivedUnseenMessages.count > 0 {
             for m in receivedUnseenMessages {
                 m.seen = true
             }
         }
+        
+        seen = true
+        unseenMessagesCount = 0
         
         if shouldSync {
             API.sharedInstance.setChatMessagesAsSeen(chatId: self.id, callback: { _ in })
@@ -355,16 +356,30 @@ public class Chat: NSManagedObject {
         return messages.first
     }
     
+    public static func updateLastMessageForChats(_ chatIds: [Int]) {
+        for id in chatIds {
+            if let chat = Chat.getChatWith(id: id) {
+                chat.calculateUnssenMessagesCount()
+            }
+        }
+    }
+    
     public func updateLastMessage() {
-        self.lastMessage = self.getLastMessageToShow()
-        
+        lastMessage = getLastMessageToShow()
         calculateUnssenMessagesCount()
     }
     
     public func setLastMessage(_ message: TransactionMessage) {
-        self.lastMessage = message
+        guard let lastM = lastMessage else {
+            lastMessage = message
+            calculateUnssenMessagesCount()
+            return
+        }
         
-        calculateUnssenMessagesCount()
+        if (lastM.date < message.date) {
+            lastMessage = message
+            calculateUnssenMessagesCount()
+        }
     }
     
     public func getContact() -> UserContact? {

@@ -444,6 +444,17 @@ extension TransactionMessage {
         
         if messageContainText() {
             
+            if isBoostActionAllowed {
+                options.append(
+                    .init(
+                        tag: MessageActionsItem.Boost,
+                        materialIconName: nil,
+                        iconImage: "boostIconGreen",
+                        label: "Boost"
+                    )
+                )
+            }
+            
             if isCopyTextActionAllowed {
                 options.append(
                     .init(
@@ -507,17 +518,6 @@ extension TransactionMessage {
                     materialIconName: "",
                     iconImage: nil,
                     label: "save.file".localized
-                )
-            )
-        }
-        
-        if isBoostActionAllowed {
-            options.append(
-                .init(
-                    tag: MessageActionsItem.Boost,
-                    materialIconName: nil,
-                    iconImage: "boostIconGreen",
-                    label: "Boost"
                 )
             )
         }

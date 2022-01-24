@@ -377,6 +377,11 @@
 "bot.response.preview" = "Respuesta de Bot";
 "chat-row.message-deleted" = "Este mensaje ha sido eliminado";
 "chat-row.message-flagged" = "Este mensaje ha sido reportado";
+"alert-confirm.flag-message-title" = "Confirmar Mensaje reportado";
+"alert-confirm.flag-message-message" = "¿Estas seguro de que quieres reportar este mensaje? Esta acción no puede revertirse";
+"alert-confirm.delete-message-title" = "Confirmar Mensaje eliminado";
+"alert-confirm.delete-message-message" = "¿Estas seguro de que quieres eliminar este mensaje? Esta acción no puede revertirse";
+
 
 //OTHER
 "create.call" = "Crear Llamada";

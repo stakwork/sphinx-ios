@@ -23,7 +23,7 @@ class MessageOptionsView : UIView {
     weak var delegate: MessageOptionsDelegate?
     
     let menuOptionsWidth:CGFloat = 140
-    let optionsHeight:CGFloat = 40
+    let optionsHeight:CGFloat = 45
     let iconWidth:CGFloat = 40
     let menuVerticalMargin: CGFloat = 10
     
@@ -236,7 +236,14 @@ extension MessageOptionsView : MessageOptionViewDelegate {
         case .CopyCallLink:
             ClipboardHelper.copyToClipboard(text: message.messageContent ?? "", message: "call.link.copied.clipboard".localized)
         case .Delete:
-            delegate?.shouldDeleteMessage()
+            AlertHelper.showTwoOptionsAlert(
+                title: "alert-confirm.delete-message-title".localized,
+                message: "alert-confirm.delete-message-message".localized,
+                confirm: {
+                    self.delegate?.shouldDeleteMessage()
+                    self.delegate?.shouldDismiss()
+                })
+            return
         case .Reply:
             delegate?.shouldReplayToMessage()
         case .Save:
@@ -246,7 +253,14 @@ extension MessageOptionsView : MessageOptionViewDelegate {
         case .Resend:
             delegate?.shouldResendMessage()
         case .Flag:
-            delegate?.shouldFlagMessage()
+            AlertHelper.showTwoOptionsAlert(
+                title: "alert-confirm.delete-message-title".localized,
+                message: "alert-confirm.delete-message-message".localized,
+                confirm: {
+                    self.delegate?.shouldFlagMessage()
+                    self.delegate?.shouldDismiss()
+                })
+            return
         default:
             break
         }

@@ -378,6 +378,11 @@
 "bot.response.preview" = "Bot response";
 "chat-row.message-deleted" = "This message has been deleted";
 "chat-row.message-flagged" = "This message has been flagged";
+"alert-confirm.flag-message-title" = "Confirm Flagging message";
+"alert-confirm.flag-message-message" = "Are you sure you want to flag this message? This action can not be undone";
+"alert-confirm.delete-message-title" = "Confirm Deleting message";
+"alert-confirm.delete-message-message" = "Are you sure you want to delete this message? This action can not be undone";
+
 
 //OTHER
 "create.call" = "Create Call";

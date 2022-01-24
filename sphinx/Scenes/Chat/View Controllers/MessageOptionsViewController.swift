@@ -131,18 +131,20 @@ class MessageOptionsViewController: UIViewController {
         shouldDismissViewController()
     }
     
-    func shouldDismissViewController() {
+    func shouldDismissViewController(_ completion: (() -> ())? = nil) {
         PlayAudioHelper.playHaptic()
         
         self.dismiss(animated: false, completion: {
             self.delegate?.shouldRemoveWindow()
+            
+            completion?()
         })
     }
 }
 
 extension MessageOptionsViewController : MessageOptionsDelegate {
-    func shouldDismiss() {
-        shouldDismissViewController()
+    func shouldDismiss(completion: @escaping (() -> ())) {
+        shouldDismissViewController(completion)
     }
     
     func shouldReplayToMessage() {

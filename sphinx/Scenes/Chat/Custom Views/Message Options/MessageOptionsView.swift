@@ -9,7 +9,7 @@
 import UIKit
 
 @objc protocol MessageOptionsDelegate: class {
-    func shouldDismiss()
+    func shouldDismiss(completion: @escaping (() -> ()))
     func shouldDeleteMessage()
     func shouldReplayToMessage()
     func shouldSaveFile()
@@ -220,6 +220,12 @@ class MessageOptionsView : UIView {
 extension MessageOptionsView : MessageOptionViewDelegate {
     
     func didTapButton(tag: Int) {
+        delegate?.shouldDismiss() {
+            self.handleActionWith(tag)
+        }
+    }
+    
+    private func handleActionWith(_ tag: Int) {
         guard let message = message else {
             return
         }
@@ -236,14 +242,7 @@ extension MessageOptionsView : MessageOptionViewDelegate {
         case .CopyCallLink:
             ClipboardHelper.copyToClipboard(text: message.messageContent ?? "", message: "call.link.copied.clipboard".localized)
         case .Delete:
-            AlertHelper.showTwoOptionsAlert(
-                title: "alert-confirm.delete-message-title".localized,
-                message: "alert-confirm.delete-message-message".localized,
-                confirm: {
-                    self.delegate?.shouldDeleteMessage()
-                    self.delegate?.shouldDismiss()
-                })
-            return
+            delegate?.shouldDeleteMessage()
         case .Reply:
             delegate?.shouldReplayToMessage()
         case .Save:
@@ -253,17 +252,9 @@ extension MessageOptionsView : MessageOptionViewDelegate {
         case .Resend:
             delegate?.shouldResendMessage()
         case .Flag:
-            AlertHelper.showTwoOptionsAlert(
-                title: "alert-confirm.delete-message-title".localized,
-                message: "alert-confirm.delete-message-message".localized,
-                confirm: {
-                    self.delegate?.shouldFlagMessage()
-                    self.delegate?.shouldDismiss()
-                })
-            return
+            delegate?.shouldFlagMessage()
         default:
             break
         }
-        delegate?.shouldDismiss()
     }
 }

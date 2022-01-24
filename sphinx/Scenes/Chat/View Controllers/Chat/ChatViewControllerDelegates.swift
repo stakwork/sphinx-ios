@@ -540,6 +540,17 @@ extension ChatViewController : MessageOptionsVCDelegate {
     }
     
     func shouldFlagMessage(message: TransactionMessage) {
+        DelayPerformedHelper.performAfterDelay(seconds: 0.1, completion: {
+            AlertHelper.showTwoOptionsAlert(
+                title: "alert-confirm.flag-message-title".localized,
+                message: "alert-confirm.flag-message-message".localized,
+                confirm: {
+                    self.flagMessage(message)
+                })
+        })
+    }
+    
+    private func flagMessage(_ message: TransactionMessage) {
         if message.flag() {
             chatViewModel.sendFlagMessageFor(message)
             updateMessageRowFor(message)
@@ -565,6 +576,17 @@ extension ChatViewController : MessageOptionsVCDelegate {
     }
     
     func shouldDeleteMessage(message: TransactionMessage) {
+        DelayPerformedHelper.performAfterDelay(seconds: 0.1, completion: {
+            AlertHelper.showTwoOptionsAlert(
+                title: "alert-confirm.delete-message-title".localized,
+                message: "alert-confirm.delete-message-message".localized,
+                confirm: {
+                    self.deleteMessage(message)
+                })
+        })
+    }
+    
+    private func deleteMessage(_ message: TransactionMessage) {
         if message.id < 0 {
             chatDataSource?.deleteCellFor(m: message)
             CoreDataManager.sharedManager.deleteObject(object: message)

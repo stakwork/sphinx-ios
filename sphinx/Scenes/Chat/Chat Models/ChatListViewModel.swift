@@ -133,7 +133,7 @@ final class ChatListViewModel: NSObject {
         appDelegate.registerForPushNotifications()
     }
     
-    func isRestoring(chatId: Int? = nil) -> Bool {
+    func isRestoring() -> Bool {
         return API.sharedInstance.lastSeenMessagesDate == nil && TransactionMessage.getAllMesagesCount() == 0
     }
     

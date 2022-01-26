@@ -42,6 +42,8 @@ class PinCodeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.view.endEditing(true)
+        
         loading = false
         subtitleLabel.text = subtitle
         

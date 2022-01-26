@@ -12,6 +12,7 @@ import StoreKit
 import SDWebImage
 import Alamofire
 import GiphyUISDK
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -49,6 +50,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Constants.setSize()
         window?.setStyle()
         saveCurrentStyle()
+        
+        FirebaseApp.configure()
 
         if UserData.sharedInstance.isUserLogged() {
             application.setMinimumBackgroundFetchInterval(UIApplication.backgroundFetchIntervalMinimum)

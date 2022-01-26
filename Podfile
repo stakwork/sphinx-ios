@@ -23,6 +23,7 @@ target 'sphinx' do
     pod "SwiftyXMLParser", :git => 'https://github.com/yahoojapan/SwiftyXMLParser.git'
     
     pod "youtube-ios-player-helper", "~> 1.0.3"
+    pod 'Firebase/Crashlytics'
     
     post_install do |installer|
       installer.pods_project.targets.each do |target|

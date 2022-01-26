@@ -48,7 +48,7 @@
                                 <constraint firstAttribute="height" constant="50" id="Iaw-jL-9zW"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="12"/>
-                            <state key="normal" title="FINISH RESTORING">
+                            <state key="normal" title="CONTINUE LATER">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </state>
                             <connections>

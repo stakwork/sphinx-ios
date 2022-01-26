@@ -338,12 +338,12 @@ public class Chat: NSManagedObject {
     
     func getReceivedUnseenMessagesCount() -> Int {
         if unseenMessagesCount == 0 {
-            calculateUnssenMessagesCount()
+            calculateUnseenMessagesCount()
         }
         return unseenMessagesCount
     }
     
-    func calculateUnssenMessagesCount() {
+    func calculateUnseenMessagesCount() {
         let userId = UserData.sharedInstance.getUserId()
         let predicate = NSPredicate(format: "senderId != %d AND chat == %@ AND seen == %@ && chat.seen == %@", userId, self, NSNumber(booleanLiteral: false), NSNumber(booleanLiteral: false))
         unseenMessagesCount = CoreDataManager.sharedManager.getObjectsCountOfTypeWith(predicate: predicate, entityName: "TransactionMessage")
@@ -359,26 +359,26 @@ public class Chat: NSManagedObject {
     public static func updateLastMessageForChats(_ chatIds: [Int]) {
         for id in chatIds {
             if let chat = Chat.getChatWith(id: id) {
-                chat.calculateUnssenMessagesCount()
+                chat.calculateUnseenMessagesCount()
             }
         }
     }
     
     public func updateLastMessage() {
         lastMessage = getLastMessageToShow()
-        calculateUnssenMessagesCount()
+        calculateUnseenMessagesCount()
     }
     
     public func setLastMessage(_ message: TransactionMessage) {
         guard let lastM = lastMessage else {
             lastMessage = message
-            calculateUnssenMessagesCount()
+            calculateUnseenMessagesCount()
             return
         }
         
         if (lastM.date < message.date) {
             lastMessage = message
-            calculateUnssenMessagesCount()
+            calculateUnseenMessagesCount()
         }
     }
     

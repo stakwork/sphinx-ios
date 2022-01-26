@@ -19,7 +19,7 @@ public protocol ChatListCommonObject: class {
     func getContactStatus() -> Int?
     func getInviteStatus() -> Int?
     
-    func getObjectId() -> Int
+    func getObjectId() -> String
     func getOrderDate() -> Date?
     func getName() -> String
     func getChatContacts() -> [UserContact]

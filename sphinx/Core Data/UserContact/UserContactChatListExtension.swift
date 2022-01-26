@@ -11,8 +11,8 @@ import CoreData
 
 extension UserContact : ChatListCommonObject {
     
-    public func getObjectId() -> Int {
-        return self.id
+    public func getObjectId() -> String {
+        return "user-\(self.id)"
     }
     
     public func getOrderDate() -> Date? {

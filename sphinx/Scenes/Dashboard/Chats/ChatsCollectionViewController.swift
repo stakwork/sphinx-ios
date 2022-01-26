@@ -46,13 +46,13 @@ extension ChatsCollectionViewController {
     
     struct DataSourceItem: Hashable {
         
-        var objectId: Int
+        var objectId: String
         var messageId: Int?
         var messageSeen: Bool
         var contactStatus: Int?
         var inviteStatus: Int?
 
-        init(objectId: Int,
+        init(objectId: String,
              messageId: Int?,
              messageSeen: Bool,
              contactStatus: Int?,

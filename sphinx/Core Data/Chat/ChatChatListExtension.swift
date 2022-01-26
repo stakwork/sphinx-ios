@@ -11,8 +11,8 @@ import CoreData
 
 extension Chat: ChatListCommonObject {
     
-    public func getObjectId() -> Int {
-        return self.id
+    public func getObjectId() -> String {
+        return "chat-\(self.id)"
     }
     
     public func getOrderDate() -> Date? {

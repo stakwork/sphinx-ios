@@ -1,9 +1,44 @@
 PODS:
   - Alamofire (5.0.5)
+  - Firebase/CoreOnly (8.2.0):
+    - FirebaseCore (= 8.2.0)
+  - Firebase/Crashlytics (8.2.0):
+    - Firebase/CoreOnly
+    - FirebaseCrashlytics (~> 8.2.0)
+  - FirebaseCore (8.2.0):
+    - FirebaseCoreDiagnostics (~> 8.0)
+    - GoogleUtilities/Environment (~> 7.4)
+    - GoogleUtilities/Logger (~> 7.4)
+  - FirebaseCoreDiagnostics (8.2.0):
+    - GoogleDataTransport (~> 9.0)
+    - GoogleUtilities/Environment (~> 7.4)
+    - GoogleUtilities/Logger (~> 7.4)
+    - nanopb (~> 2.30908.0)
+  - FirebaseCrashlytics (8.2.0):
+    - FirebaseCore (~> 8.0)
+    - FirebaseInstallations (~> 8.0)
+    - GoogleDataTransport (~> 9.0)
+    - nanopb (~> 2.30908.0)
+    - PromisesObjC (~> 1.2)
+  - FirebaseInstallations (8.2.0):
+    - FirebaseCore (~> 8.0)
+    - GoogleUtilities/Environment (~> 7.4)
+    - GoogleUtilities/UserDefaults (~> 7.4)
+    - PromisesObjC (~> 1.2)
   - FLAnimatedImage (1.0.16)
   - Giphy (2.1.1):
     - libwebp
     - PINCache
+  - GoogleDataTransport (9.0.1):
+    - GoogleUtilities/Environment (~> 7.2)
+    - nanopb (~> 2.30908.0)
+    - PromisesObjC (~> 1.2)
+  - GoogleUtilities/Environment (7.4.3):
+    - PromisesObjC (~> 1.2)
+  - GoogleUtilities/Logger (7.4.3):
+    - GoogleUtilities/Environment
+  - GoogleUtilities/UserDefaults (7.4.3):
+    - GoogleUtilities/Logger
   - JitsiMeetSDK (3.6.0)
   - KeychainAccess (4.2.2)
   - KYDrawerController (2.1.0)
@@ -17,6 +52,11 @@ PODS:
     - libwebp/demux
   - libwebp/webp (1.2.0)
   - lottie-ios (3.2.3)
+  - nanopb (2.30908.0):
+    - nanopb/decode (= 2.30908.0)
+    - nanopb/encode (= 2.30908.0)
+  - nanopb/decode (2.30908.0)
+  - nanopb/encode (2.30908.0)
   - PINCache (3.0.3):
     - PINCache/Arc-exception-safe (= 3.0.3)
     - PINCache/Core (= 3.0.3)
@@ -25,6 +65,7 @@ PODS:
   - PINCache/Core (3.0.3):
     - PINOperation (~> 1.2.1)
   - PINOperation (1.2.1)
+  - PromisesObjC (1.2.12)
   - ReachabilitySwift (5.0.0)
   - RNCryptor (5.1.0)
   - SDWebImage (5.11.1):
@@ -45,6 +86,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (~> 5.0.0-rc.3)
+  - Firebase/Crashlytics
   - Giphy (= 2.1.1)
   - JitsiMeetSDK (~> 3.6.0)
   - KeychainAccess
@@ -65,15 +107,24 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Alamofire
+    - Firebase
+    - FirebaseCore
+    - FirebaseCoreDiagnostics
+    - FirebaseCrashlytics
+    - FirebaseInstallations
     - FLAnimatedImage
     - Giphy
+    - GoogleDataTransport
+    - GoogleUtilities
     - JitsiMeetSDK
     - KeychainAccess
     - KYDrawerController
     - libwebp
     - lottie-ios
+    - nanopb
     - PINCache
     - PINOperation
+    - PromisesObjC
     - ReachabilitySwift
     - RNCryptor
     - SDWebImage
@@ -97,15 +148,24 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: df2f8f826963b08b9a870791ad48e07a10090b2e
+  Firebase: 12c568897b807321964e89d2b263ef4c6cff3db6
+  FirebaseCore: 3a83f24c3de69ec9f9a426e2598125ea51f3a2ce
+  FirebaseCoreDiagnostics: 61384f54989065b15c36b5922b65112e86811d3c
+  FirebaseCrashlytics: 935dbdb043a286ca92a22d15e5780802403ea0ea
+  FirebaseInstallations: 9394ea09e242bf0816e95ac30e56a9214cc86ced
   FLAnimatedImage: 8f3e854ebf9680b71f0b6e700939687fc4d82b4b
   Giphy: 4a3ca076645091bba1a2e5579066b4c851e53d45
+  GoogleDataTransport: 04c3e9a480bbcaa2ec3f5d27f1cdeb6a92f20c8d
+  GoogleUtilities: 45dbb24a7f351d69d0a601482b39ad6c32e30dab
   JitsiMeetSDK: 476329f72a866f714d2802bafe1729de6d644ccf
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   KYDrawerController: baad0e63b09c0cb564bd48f0f7f70f45d9176ebc
   libwebp: e90b9c01d99205d03b6bb8f2c8c415e5a4ef66f0
   lottie-ios: c058aeafa76daa4cf64d773554bccc8385d0150e
+  nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   PINCache: 7a8fc1a691173d21dbddbf86cd515de6efa55086
   PINOperation: 00c935935f1e8cf0d1e2d6b542e75b88fc3e5e20
+  PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   RNCryptor: a369134686cd2ad391323cc856b62e591193ba79
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
@@ -118,6 +178,6 @@ SPEC CHECKSUMS:
   Tor: fad2cec0e7ef5f889fecdaf69e5edd6df0438326
   youtube-ios-player-helper: 0185c57db23c80d63d6ca11251d110abb8a4ca61
 
-PODFILE CHECKSUM: 8c8a2bf9b3f3e73bb2a6b26ba70e9400ce01d9ca
+PODFILE CHECKSUM: b57e415d3f86a867f80788a0686af5271fc06e38
 
 COCOAPODS: 1.9.3

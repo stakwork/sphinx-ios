@@ -484,6 +484,7 @@
 		47D03DF42510ED9C0077A968 /* FileInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D03DF32510ED9C0077A968 /* FileInfoView.swift */; };
 		47D03DF62510EDAA0077A968 /* FileInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47D03DF52510EDAA0077A968 /* FileInfoView.xib */; };
 		47D03DF82510F3D20077A968 /* URLResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D03DF72510F3D20077A968 /* URLResponse.swift */; };
+		47D0B7C727A1B826008176AB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 47D0B7C627A1B826008176AB /* GoogleService-Info.plist */; };
 		47D3D8D7277220D7007C64F9 /* FeedSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D3D8D6277220D7007C64F9 /* FeedSearchResult.swift */; };
 		47D46A28237B1D030005A548 /* SubscriptionFormTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D46A26237B1D030005A548 /* SubscriptionFormTableViewCell.swift */; };
 		47D46A29237B1D030005A548 /* SubscriptionFormTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47D46A27237B1D030005A548 /* SubscriptionFormTableViewCell.xib */; };
@@ -1272,6 +1273,7 @@
 		47D03DF32510ED9C0077A968 /* FileInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileInfoView.swift; sourceTree = "<group>"; };
 		47D03DF52510EDAA0077A968 /* FileInfoView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FileInfoView.xib; sourceTree = "<group>"; };
 		47D03DF72510F3D20077A968 /* URLResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLResponse.swift; sourceTree = "<group>"; };
+		47D0B7C627A1B826008176AB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		47D3D8D6277220D7007C64F9 /* FeedSearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedSearchResult.swift; sourceTree = "<group>"; };
 		47D46A26237B1D030005A548 /* SubscriptionFormTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionFormTableViewCell.swift; sourceTree = "<group>"; };
 		47D46A27237B1D030005A548 /* SubscriptionFormTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubscriptionFormTableViewCell.xib; sourceTree = "<group>"; };
@@ -2565,6 +2567,7 @@
 			isa = PBXGroup;
 			children = (
 				47E61581237DC7F400630FD1 /* sphinx.entitlements */,
+				47D0B7C627A1B826008176AB /* GoogleService-Info.plist */,
 				4779F170232AA0F300D35E81 /* Info.plist */,
 				4779F161232AA0F200D35E81 /* AppDelegate.swift */,
 				4779F16B232AA0F300D35E81 /* Assets.xcassets */,
@@ -3491,6 +3494,7 @@
 				4779F15B232AA0F200D35E81 /* Frameworks */,
 				4779F15C232AA0F200D35E81 /* Resources */,
 				5EF20FB23EDF8BAF61C119AC /* [CP] Embed Pods Frameworks */,
+				47D0B7C327A1B3E6008176AB /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -3603,6 +3607,7 @@
 				47FA440723749D02005D8C63 /* SubscriptionFormTableHeaderView.xib in Resources */,
 				4797E7AC24B8F13800D13270 /* JoinVideoCallView.xib in Resources */,
 				4797E7BA24B8F3B600D13270 /* History.storyboard in Resources */,
+				47D0B7C727A1B826008176AB /* GoogleService-Info.plist in Resources */,
 				F3188BB5271CF34E00890DDD /* VideoFeedEpisodeCollectionViewCell.xib in Resources */,
 				477D9692244DFCDA00830406 /* GifOverlayView.xib in Resources */,
 				475BDD48232AD00D00C5BBD6 /* Montserrat-Regular.otf in Resources */,
@@ -3777,6 +3782,25 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		47D0B7C327A1B3E6008176AB /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n\n";
+		};
 		5EF20FB23EDF8BAF61C119AC /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

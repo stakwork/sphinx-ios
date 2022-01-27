@@ -25,6 +25,8 @@ class EncryptionManager {
     var contactsService = ContactsService()
     let userData = UserData.sharedInstance
     
+    var myPrivateKey : PrivateKey?
+    
     var ownPrivateKey: SecKey? {
         get {
             return retrieveKey(keyClass: kSecAttrKeyClassPrivate, tag: PRIVATE_KEY)
@@ -197,18 +199,24 @@ class EncryptionManager {
     }
     
     func getOwnPrivateKey() -> PrivateKey? {
-        var privateKey : PrivateKey?
-
+        if let myPrivateKey = myPrivateKey {
+            return myPrivateKey
+        }
+        
         guard let privateKeyReference = ownPrivateKey else {
             return getOwnPrivateKeyFromKeychain()
         }
 
+        var privateKey : PrivateKey?
+        
         do {
             privateKey = try PrivateKey(reference: privateKeyReference)
         } catch let error {
             print(error)
         }
 
+        myPrivateKey = privateKey
+        
         if let privateKey = privateKey {
             return privateKey
         }
@@ -217,11 +225,11 @@ class EncryptionManager {
     }
     
     func getOwnPrivateKeyFromKeychain() -> PrivateKey? {
-        var privateKey : PrivateKey?
-        
         guard let privateKeyString = userData.getEncryptionKeys().0, !privateKeyString.isEmpty else {
             return nil
         }
+        
+        var privateKey : PrivateKey?
 
         do {
             privateKey = try PrivateKey(base64Encoded: privateKeyString)
@@ -237,11 +245,11 @@ class EncryptionManager {
     }
     
     func getOwnPublicKey() -> PublicKey? {
-        var publicKey : PublicKey?
-        
         guard let publicKeyReference = self.ownPublicKey else {
             return nil
         }
+        
+        var publicKey : PublicKey?
 
         do {
             publicKey = try PublicKey(reference: publicKeyReference)

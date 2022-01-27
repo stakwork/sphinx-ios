@@ -69,6 +69,8 @@ final class ChatListViewModel: NSObject {
     ) {
         if let contactsService = contactsService {
             
+            let restoring = self.isRestoring()
+            
             if contactsService.chats.count == 0 {
                 
                 API.sharedInstance.getContacts(
@@ -83,7 +85,7 @@ final class ChatListViewModel: NSObject {
                     
                     self.forceKeychainSync()
                     
-                    completion(self.isRestoring())
+                    completion(restoring)
                 })
             } else {
                 API.sharedInstance.getLatestContacts(
@@ -99,7 +101,7 @@ final class ChatListViewModel: NSObject {
                     
                     self.forceKeychainSync()
                     
-                    completion(false)
+                    completion(restoring)
                 })
             }
             return
@@ -134,7 +136,21 @@ final class ChatListViewModel: NSObject {
     }
     
     func isRestoring() -> Bool {
-        return API.sharedInstance.lastSeenMessagesDate == nil && TransactionMessage.getAllMesagesCount() == 0
+        return API.sharedInstance.lastSeenMessagesDate == nil
+    }
+    
+    var backgroundTask: UIBackgroundTaskIdentifier = UIBackgroundTaskIdentifier.invalid
+    
+    func registerBackgroundTask() {
+        backgroundTask = UIApplication.shared.beginBackgroundTask (expirationHandler: { [unowned self] in
+            self.endBackgroundTask()
+        })
+        assert(backgroundTask != UIBackgroundTaskIdentifier.invalid)
+    }
+    
+    func endBackgroundTask() {
+        UIApplication.shared.endBackgroundTask(backgroundTask)
+        backgroundTask = UIBackgroundTaskIdentifier.invalid
     }
     
     var syncMessagesTask: DispatchWorkItem? = nil
@@ -155,6 +171,7 @@ final class ChatListViewModel: NSObject {
             let restoring = self.isRestoring()
             
             if (restoring) {
+                self.registerBackgroundTask()
                 self.askForNotificationPermissions()
             }
             
@@ -169,6 +186,7 @@ final class ChatListViewModel: NSObject {
                     Chat.updateLastMessageForChats(
                         self.newMessagesChatIds
                     )
+                    self.endBackgroundTask()
                     
                     completion(chatNewMessagesCount, newMessagesCount)
                 }
@@ -178,6 +196,7 @@ final class ChatListViewModel: NSObject {
     }
     
     func finishRestoring() {
+        endBackgroundTask()
         syncMessagesTask?.cancel()
         
         UserDefaults.Keys.messagesFetchPage.removeValue()
@@ -212,7 +231,6 @@ final class ChatListViewModel: NSObject {
                 )
                     
                 if newMessages.count > 0 {
-                    
                     self.addMessages(
                         messages: newMessages,
                         chatId: chatId,
@@ -227,7 +245,6 @@ final class ChatListViewModel: NSObject {
                             }
                             completion(newMessagesCount, allMessagesCount)
                             CoreDataManager.sharedManager.saveContext()
-                            
                         } else {
                             
                             CoreDataManager.sharedManager.saveContext()

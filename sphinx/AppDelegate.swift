@@ -13,6 +13,7 @@ import SDWebImage
 import Alamofire
 import GiphyUISDK
 import Firebase
+import BackgroundTasks
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -52,10 +53,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         saveCurrentStyle()
         
         FirebaseApp.configure()
-
-        if UserData.sharedInstance.isUserLogged() {
-            application.setMinimumBackgroundFetchInterval(UIApplication.backgroundFetchIntervalMinimum)
-        }
+        
+        BGTaskScheduler.shared.register(forTaskWithIdentifier: "com.gl.sphinx.refresh", using: nil, launchHandler: { task in
+            self.handleAppRefresh(task: task)
+        })
 
         if let GIPHY_API_KEY = Bundle.main.object(forInfoDictionaryKey: "GIPHY_API_KEY") as? String {
             Giphy.configure(apiKey: GIPHY_API_KEY)
@@ -73,6 +74,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
+    func handleAppRefresh(task: BGTask) {
+        scheduleAppRefresh()
+        
+        self.getNewData(completion: { result in
+            task.setTaskCompleted(success: true)
+        })
+    }
+    
+    func scheduleAppRefresh() {
+        let request = BGAppRefreshTaskRequest(identifier: "com.gl.sphinx.refresh")
+        request.earliestBeginDate = Date(timeIntervalSinceNow: 15 * 60)
+        do {
+            try BGTaskScheduler.shared.submit(request)
+        } catch {
+            print("Could not schedule app refresh \(error)")
+        }
+    }
 
     func connectTor() {
         if !SignupHelper.isLogged() { return }
@@ -100,6 +118,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setMessagesAsSeen()
         setBadge(application: application)
         CoreDataManager.sharedManager.saveContext()
+        
+        scheduleAppRefresh()
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
@@ -110,10 +130,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         reloadMessagesData()
         presentPINIfNeeded()
-    }
-
-    func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        performBackgroundFetch(application: application, completionHandler: completionHandler)
     }
 
     func performBackgroundFetch(application: UIApplication, completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
@@ -319,12 +335,16 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
     func getNewData(completion: @escaping (UIBackgroundFetchResult) -> ()) {
         let chatListViewModel = ChatListViewModel(contactsService: ContactsService())
+        
         chatListViewModel.loadFriends { _ in
             chatListViewModel.syncMessages(progressCallback: { _ in }, completion: { (_, newMessagesCount) in
                 DispatchQueue.main.async {
                     if (newMessagesCount > 0) {
                         self.reloadMessagesUI()
+                        
                         completion(.newData)
+                    } else {
+                        completion(.noData)
                     }
                 }
             })

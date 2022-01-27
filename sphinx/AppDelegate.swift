@@ -144,10 +144,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
-    func applicationWillResignActive(_ application: UIApplication) {
-        SphinxSocketManager.sharedInstance.disconnectWebsocket()
-    }
-
     func applicationDidBecomeActive(_ application: UIApplication) {
         SphinxSocketManager.sharedInstance.connectWebsocket(forceConnect: true)
         reloadAppIfStyleChanged()

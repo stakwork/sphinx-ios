@@ -405,10 +405,14 @@ extension DashboardRootViewController {
 
             self.chatsListViewModel.syncMessages(
                 progressCallback: { progress in
-                    self.isLoading = false
-                    
                     if (restoring) {
-                        self.restoreProgressView.showRestoreProgressView(with: progress)
+                        self.isLoading = false
+                        
+                        if (progress >= 0) {
+                            self.restoreProgressView.showRestoreProgressView(with: progress)
+                        } else {
+                            self.newBubbleHelper.showLoadingWheel(text: "fetching.old.messages".localized)
+                        }
                     }
                 },
                 completion: { (_,_) in
@@ -454,6 +458,7 @@ extension DashboardRootViewController {
         
         updateCurrentViewControllerData()
         
+        newBubbleHelper.hideLoadingWheel()
         restoreProgressView.hideViewAnimated()
         
         isLoading = false

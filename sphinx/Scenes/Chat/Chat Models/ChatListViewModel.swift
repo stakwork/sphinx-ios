@@ -203,15 +203,13 @@ final class ChatListViewModel: NSObject {
                     return
                 }
                 
-                if (newMessagesTotal > 0) {
-                    progressCallback(
-                        self.getRestoreProgress(
-                            currentPage: page,
-                            newMessagesTotal: newMessagesTotal,
-                            itemsPerPage: ChatListViewModel.kMessagesPerPage
-                        )
+                progressCallback(
+                    self.getRestoreProgress(
+                        currentPage: page,
+                        newMessagesTotal: newMessagesTotal,
+                        itemsPerPage: ChatListViewModel.kMessagesPerPage
                     )
-                }
+                )
                     
                 if newMessages.count > 0 {
                     
@@ -269,6 +267,10 @@ final class ChatListViewModel: NSObject {
         newMessagesTotal: Int,
         itemsPerPage: Int
     ) -> Int {
+        
+        if (newMessagesTotal <= 0) {
+            return -1
+        }
         
         let pages = (newMessagesTotal <= itemsPerPage) ? 1 : (newMessagesTotal / itemsPerPage)
         let progress: Int = currentPage * 100 / pages

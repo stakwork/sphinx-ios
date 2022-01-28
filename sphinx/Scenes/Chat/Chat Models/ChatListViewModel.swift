@@ -173,6 +173,8 @@ final class ChatListViewModel: NSObject {
             if (restoring) {
                 self.registerBackgroundTask()
                 self.askForNotificationPermissions()
+            } else {
+                UserDefaults.Keys.messagesFetchPage.removeValue()
             }
             
             self.getMessagesPaginated(
@@ -182,6 +184,8 @@ final class ChatListViewModel: NSObject {
                 date: self.syncMessagesDate,
                 progressCallback: progressCallback,
                 completion: { chatNewMessagesCount, newMessagesCount in
+                    
+                    UserDefaults.Keys.messagesFetchPage.removeValue()
                     
                     Chat.updateLastMessageForChats(
                         self.newMessagesChatIds
@@ -236,30 +240,35 @@ final class ChatListViewModel: NSObject {
                         chatId: chatId,
                         completion: { (newMessagesCount, allMessagesCount) in
                             
-                        if newMessages.count < ChatListViewModel.kMessagesPerPage {
-                            
-                            UserDefaults.Keys.messagesFetchPage.removeValue()
-                            
-                            if restoring {
-                                SphinxSocketManager.sharedInstance.connectWebsocket(forceConnect: true)
+                            if self.syncMessagesTask?.isCancelled == true {
+                                return
                             }
-                            completion(newMessagesCount, allMessagesCount)
-                            CoreDataManager.sharedManager.saveContext()
-                        } else {
                             
-                            CoreDataManager.sharedManager.saveContext()
-                            UserDefaults.Keys.messagesFetchPage.set(page + 1)
-                            
-                            self.getMessagesPaginated(
-                                restoring: restoring,
-                                prevPageNewMessages: newMessagesCount + prevPageNewMessages,
-                                chatId: chatId,
-                                date: date,
-                                progressCallback: progressCallback,
-                                completion: completion
-                            )
-                            
-                        }
+                            if newMessages.count < ChatListViewModel.kMessagesPerPage {
+                                
+                                CoreDataManager.sharedManager.saveContext()
+                                
+                                if restoring {
+                                    SphinxSocketManager.sharedInstance.connectWebsocket(forceConnect: true)
+                                }
+                                
+                                completion(newMessagesCount, allMessagesCount)
+                                
+                            } else {
+                                
+                                CoreDataManager.sharedManager.saveContext()
+                                UserDefaults.Keys.messagesFetchPage.set(page + 1)
+                                
+                                self.getMessagesPaginated(
+                                    restoring: restoring,
+                                    prevPageNewMessages: newMessagesCount + prevPageNewMessages,
+                                    chatId: chatId,
+                                    date: date,
+                                    progressCallback: progressCallback,
+                                    completion: completion
+                                )
+                                
+                            }
                     })
                 } else {
                     completion(0, 0)

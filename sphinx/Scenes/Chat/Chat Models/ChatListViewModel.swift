@@ -139,20 +139,6 @@ final class ChatListViewModel: NSObject {
         return API.sharedInstance.lastSeenMessagesDate == nil
     }
     
-    var backgroundTask: UIBackgroundTaskIdentifier = UIBackgroundTaskIdentifier.invalid
-    
-    func registerBackgroundTask() {
-        backgroundTask = UIApplication.shared.beginBackgroundTask (expirationHandler: { [unowned self] in
-            self.endBackgroundTask()
-        })
-        assert(backgroundTask != UIBackgroundTaskIdentifier.invalid)
-    }
-    
-    func endBackgroundTask() {
-        UIApplication.shared.endBackgroundTask(backgroundTask)
-        backgroundTask = UIBackgroundTaskIdentifier.invalid
-    }
-    
     var syncMessagesTask: DispatchWorkItem? = nil
     var syncMessagesDate = Date()
     var newMessagesChatIds = [Int]()
@@ -171,7 +157,6 @@ final class ChatListViewModel: NSObject {
             let restoring = self.isRestoring()
             
             if (restoring) {
-                self.registerBackgroundTask()
                 self.askForNotificationPermissions()
             } else {
                 UserDefaults.Keys.messagesFetchPage.removeValue()
@@ -190,7 +175,6 @@ final class ChatListViewModel: NSObject {
                     Chat.updateLastMessageForChats(
                         self.newMessagesChatIds
                     )
-                    self.endBackgroundTask()
                     
                     completion(chatNewMessagesCount, newMessagesCount)
                 }
@@ -200,7 +184,6 @@ final class ChatListViewModel: NSObject {
     }
     
     func finishRestoring() {
-        endBackgroundTask()
         syncMessagesTask?.cancel()
         
         UserDefaults.Keys.messagesFetchPage.removeValue()

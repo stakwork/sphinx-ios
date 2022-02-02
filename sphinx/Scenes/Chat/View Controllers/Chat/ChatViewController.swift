@@ -56,7 +56,6 @@ class ChatViewController: KeyboardHandlerViewController {
     var contact: UserContact?
     var chat: Chat?
     var preventLoading = false
-    var preventFetching = false
     
     func updateViewChat(updatedChat: Chat?) {
         if let updatedChat = updatedChat {
@@ -74,7 +73,6 @@ class ChatViewController: KeyboardHandlerViewController {
     static func instantiate(
         contact: UserContact? = nil,
         chat: Chat? = nil,
-        preventFetching: Bool = false,
         contactsService: ContactsService,
         rootViewController: RootViewController
     ) -> ChatViewController {
@@ -82,7 +80,6 @@ class ChatViewController: KeyboardHandlerViewController {
         
         viewController.contact = contact
         viewController.chat = chat ?? contact?.getChat()
-        viewController.preventFetching = preventFetching
         viewController.rootViewController = rootViewController
         viewController.contactsService = contactsService
         viewController.chatViewModel = ChatViewModel()
@@ -209,11 +206,6 @@ class ChatViewController: KeyboardHandlerViewController {
     }
         
     func fetchNewData() {
-        if preventFetching {
-            preventFetching = false
-            return
-        }
-        
         DispatchQueue.global().async {
             self.chatListViewModel.syncMessages(chatId: self.chat?.id, progressCallback: { _ in }) { (chatNewMessagesCount, _) in
                 DispatchQueue.main.async {

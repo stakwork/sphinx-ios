@@ -235,12 +235,12 @@ extension DashboardRootViewController {
             let chatId = UserDefaults.Keys.chatId.get(defaultValue: -1),
             let chat = Chat.getChatWith(id: chatId)
         {
-            presentChatDetailsVC(for: chat, shouldFetchNewChatData: true)
+            presentChatDetailsVC(for: chat)
         } else if
             let contactId = UserDefaults.Keys.contactId.get(defaultValue: -1),
             let contact = UserContact.getContactWith(id: contactId)
         {
-            presentChatDetailsVC(for: nil, contact: contact, shouldFetchNewChatData: true)
+            presentChatDetailsVC(for: nil, contact: contact)
         }
 
         UserDefaults.Keys.contactId.removeValue()
@@ -481,7 +481,6 @@ extension DashboardRootViewController {
         for chat: Chat?,
         contact: UserContact? = nil,
         shouldAnimate: Bool = true,
-        shouldFetchNewChatData: Bool = true
     ) {
         let contact = contact ?? chat?.getContact()
         
@@ -494,7 +493,6 @@ extension DashboardRootViewController {
         let chatVC = ChatViewController.instantiate(
             contact: contact,
             chat: chat,
-            preventFetching: shouldFetchNewChatData == false,
             contactsService: contactsService,
             rootViewController: rootViewController
         )

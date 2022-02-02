@@ -366,12 +366,8 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     ) {
         if application.applicationState == .background {
             chatListViewModel.loadFriends { _ in
-                self.chatListViewModel.syncMessages(progressCallback: { _ in }, completion: { (_, newMessagesCount) in
-                    if (newMessagesCount > 0) {
-                        completionHandler(.newData)
-                    } else {
-                        completionHandler(.noData)
-                    }
+                self.chatListViewModel.syncMessages(progressCallback: { _ in }, completion: { (_, _) in
+                    completionHandler(.newData)
                 })
             }
         }

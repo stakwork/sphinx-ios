@@ -480,7 +480,7 @@ extension DashboardRootViewController {
     internal func presentChatDetailsVC(
         for chat: Chat?,
         contact: UserContact? = nil,
-        shouldAnimate: Bool = true,
+        shouldAnimate: Bool = true
     ) {
         let contact = contact ?? chat?.getContact()
         

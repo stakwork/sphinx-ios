@@ -243,7 +243,7 @@ extension ChatListCollectionViewCell {
                     : .Sphinx.SecondaryText
                 
                 messageLabel.text = lastMessage.getMessageDescription(dashboard: true)
-                dateLabel.text = lastMessage.date.getLastMessageDateFormat()
+                dateLabel.text = lastMessage.messageDate.getLastMessageDateFormat()
                 
                 messageLabel.superview?.isHidden = false
                 dateLabel.isHidden = false

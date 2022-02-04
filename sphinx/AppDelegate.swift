@@ -12,7 +12,6 @@ import StoreKit
 import SDWebImage
 import Alamofire
 import GiphyUISDK
-import Firebase
 import BackgroundTasks
 
 @UIApplicationMain
@@ -57,8 +56,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Constants.setSize()
         window?.setStyle()
         saveCurrentStyle()
-        
-        FirebaseApp.configure()
         
         BGTaskScheduler.shared.register(forTaskWithIdentifier: "com.gl.sphinx.refresh", using: nil, launchHandler: { task in
             self.handleAppRefresh(task: task)

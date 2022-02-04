@@ -16,17 +16,21 @@ extension Chat: ChatListCommonObject {
     }
     
     public func getOrderDate() -> Date? {
-        var date = createdAt
+        var date: Date? = nil
         
         if let lastMessage = lastMessage {
             date = lastMessage.date
         }
         
-        if let webAppLastDate = webAppLastDate, webAppLastDate > date {
-            date = webAppLastDate
+        if let webAppLastDate = webAppLastDate {
+            if date == nil {
+                date = webAppLastDate
+            } else if let savedDate = date, webAppLastDate > savedDate {
+                date = webAppLastDate
+            }
         }
         
-        return date
+        return date ?? createdAt
     }
     
     func getConversationContact() -> UserContact? {

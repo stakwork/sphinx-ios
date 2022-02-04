@@ -25,7 +25,7 @@ extension TransactionMessage {
     @NSManaged public var amountMsat: NSDecimalNumber?
     @NSManaged public var type: Int
     @NSManaged public var status: Int
-    @NSManaged public var date: Date
+    @NSManaged public var date: Date?
     @NSManaged public var expirationDate: Date?
     @NSManaged public var paymentHash: String?
     @NSManaged public var invoice: String?

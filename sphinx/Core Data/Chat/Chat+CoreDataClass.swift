@@ -376,7 +376,7 @@ public class Chat: NSManagedObject {
             return
         }
         
-        if (lastM.date < message.date) {
+        if (lastM.messageDate < message.messageDate) {
             lastMessage = message
             calculateUnseenMessagesCount()
         }

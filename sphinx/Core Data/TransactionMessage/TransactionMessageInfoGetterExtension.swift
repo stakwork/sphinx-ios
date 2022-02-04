@@ -12,6 +12,12 @@ import SwiftyJSON
 
 extension TransactionMessage {
     
+    var messageDate: Date {
+        get {
+            return self.date ?? Date()
+        }
+    }
+    
     public enum MessageActionsItem: Int {
         case Delete
         case Copy

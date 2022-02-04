@@ -41,13 +41,13 @@ extension TransactionMessage {
         var predicate : NSPredicate!
         if messagesIdsToExclude.count > 0 {
             if let m = lastMessage {
-                predicate = NSPredicate(format: "chat == %@ AND (NOT id IN %@) AND (date <= %@) AND NOT (type IN %@)", chat, messagesIdsToExclude, m.date as NSDate, typesToExcludeFromChat)
+                predicate = NSPredicate(format: "chat == %@ AND (NOT id IN %@) AND (date <= %@) AND NOT (type IN %@)", chat, messagesIdsToExclude, m.messageDate as NSDate, typesToExcludeFromChat)
             } else {
                 predicate = NSPredicate(format: "chat == %@ AND (NOT id IN %@) AND NOT (type IN %@)", chat, messagesIdsToExclude, typesToExcludeFromChat)
             }
         } else {
             if let m = lastMessage {
-                predicate = NSPredicate(format: "chat == %@ AND (date <= %@) AND NOT (type IN %@)", chat, m.date as NSDate, typesToExcludeFromChat)
+                predicate = NSPredicate(format: "chat == %@ AND (date <= %@) AND NOT (type IN %@)", chat, m.messageDate as NSDate, typesToExcludeFromChat)
             } else {
                 predicate = NSPredicate(format: "chat == %@ AND NOT (type IN %@)", chat, typesToExcludeFromChat)
             }

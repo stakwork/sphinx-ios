@@ -31,8 +31,8 @@ class PaymentSentTableViewCell: CommonChatTableViewCell, MessageRowProtocol {
         
         commonConfigurationForMessages()
         
-        let dateString = messageRow.transactionMessage.date.getStringDate(format: "EEEE, MMM dd")
-        let paidString = String(format: "invoice.paid.on".localized, "\(dateString)\(messageRow.transactionMessage.date.daySuffix())")
+        let dateString = messageRow.transactionMessage.messageDate.getStringDate(format: "EEEE, MMM dd")
+        let paidString = String(format: "invoice.paid.on".localized, "\(dateString)\(messageRow.transactionMessage.messageDate.daySuffix())")
         paymentLabel.text = paidString
         
         addSmallRightLine()

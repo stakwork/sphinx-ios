@@ -32,7 +32,7 @@
                                     <constraint firstAttribute="height" constant="300" id="PxM-Ro-Sqv"/>
                                 </constraints>
                             </view>
-                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wwz-Zs-yv0" customClass="SavePeopleProfileView" customModule="sphinx" customModuleProvider="target">
+                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wwz-Zs-yv0" customClass="PeopleTorActionsView" customModule="sphinx" customModuleProvider="target">
                                 <rect key="frame" x="87" y="303" width="240" height="300"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <constraints>
@@ -55,9 +55,9 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="authExternalView" destination="3bj-dk-fFz" id="RmV-Cy-Scr"/>
+                        <outlet property="peopleTorActionsView" destination="wwz-Zs-yv0" id="3ra-rU-dor"/>
                         <outlet property="personModalView" destination="M0d-NU-3XH" id="a8Z-MP-lrA"/>
                         <outlet property="personModalViewVerticalCenterConstraint" destination="5tc-yx-msG" id="YGn-sD-cNH"/>
-                        <outlet property="savePeopleProfileView" destination="wwz-Zs-yv0" id="bhY-wd-cWc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mdf-w9-hAW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

@@ -26,9 +26,10 @@ class CommonModalView: UIView, ModalViewInterface {
         var verificationSignature : String? = nil
         var ts : Int? = nil
         var info : [String: AnyObject] = [:]
-        var personInfo : JSON = JSON()
+        var jsonBody : JSON = JSON()
         
         var key : String? = nil
+        var path : String? = nil
         var updateMethod : String? = nil
     }
     

@@ -135,7 +135,7 @@
 		473E5DE32575696C00697EEA /* PickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473E5DE22575696C00697EEA /* PickerViewController.swift */; };
 		473F7BA6268B7F970063D0E0 /* OnionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473F7BA5268B7F970063D0E0 /* OnionManager.swift */; };
 		4740538C244CFE0000826533 /* CustomImageScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4740538B244CFE0000826533 /* CustomImageScrollView.swift */; };
-		474064932745581C00FB7F93 /* SavePeopleProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474064922745581C00FB7F93 /* SavePeopleProfileView.swift */; };
+		474064932745581C00FB7F93 /* PeopleTorActionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474064922745581C00FB7F93 /* PeopleTorActionsView.swift */; };
 		47468FCE233131B40072124A /* NSManagedObjectContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47468FCD233131B40072124A /* NSManagedObjectContext.swift */; };
 		47468FD323314EE80072124A /* PinCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47468FD223314EE80072124A /* PinCodeViewController.swift */; };
 		47468FD5233162D40072124A /* AlertHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47468FD4233162D40072124A /* AlertHelper.swift */; };
@@ -471,7 +471,7 @@
 		47BE854B246492FD00BE4AE8 /* KeychainRestoreTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47BE8549246492FD00BE4AE8 /* KeychainRestoreTableViewCell.xib */; };
 		47BE85502465E09B00BE4AE8 /* BiometricAuthenticationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47BE854F2465E09B00BE4AE8 /* BiometricAuthenticationHelper.swift */; };
 		47BF7D4B25A8A59100593489 /* APIVersionsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47BF7D4A25A8A59100593489 /* APIVersionsExtension.swift */; };
-		47C7D704278749CF006D2809 /* SavePeopleProfileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47C7D706278749CF006D2809 /* SavePeopleProfileView.xib */; };
+		47C7D704278749CF006D2809 /* PeopleTorActionsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47C7D706278749CF006D2809 /* PeopleTorActionsView.xib */; };
 		47CBB4EB23E9D9BE00743CBE /* APILogsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CBB4EA23E9D9BE00743CBE /* APILogsExtension.swift */; };
 		47CC7CE223E3611600730E6F /* APITransactionsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CC7CE123E3611600730E6F /* APITransactionsExtension.swift */; };
 		47CC7CE523E361B800730E6F /* PaymentTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CC7CE423E361B800730E6F /* PaymentTransaction.swift */; };
@@ -826,7 +826,7 @@
 		473E5DE22575696C00697EEA /* PickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerViewController.swift; sourceTree = "<group>"; };
 		473F7BA5268B7F970063D0E0 /* OnionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnionManager.swift; sourceTree = "<group>"; };
 		4740538B244CFE0000826533 /* CustomImageScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImageScrollView.swift; sourceTree = "<group>"; };
-		474064922745581C00FB7F93 /* SavePeopleProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavePeopleProfileView.swift; sourceTree = "<group>"; };
+		474064922745581C00FB7F93 /* PeopleTorActionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleTorActionsView.swift; sourceTree = "<group>"; };
 		47468FCD233131B40072124A /* NSManagedObjectContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSManagedObjectContext.swift; sourceTree = "<group>"; };
 		47468FD223314EE80072124A /* PinCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinCodeViewController.swift; sourceTree = "<group>"; };
 		47468FD4233162D40072124A /* AlertHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertHelper.swift; sourceTree = "<group>"; };
@@ -1254,9 +1254,9 @@
 		47BE8549246492FD00BE4AE8 /* KeychainRestoreTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KeychainRestoreTableViewCell.xib; sourceTree = "<group>"; };
 		47BE854F2465E09B00BE4AE8 /* BiometricAuthenticationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricAuthenticationHelper.swift; sourceTree = "<group>"; };
 		47BF7D4A25A8A59100593489 /* APIVersionsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIVersionsExtension.swift; sourceTree = "<group>"; };
-		47C7D705278749CF006D2809 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SavePeopleProfileView.xib; sourceTree = "<group>"; };
-		47C7D70B278749D5006D2809 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/SavePeopleProfileView.strings; sourceTree = "<group>"; };
-		47C7D70D278749D9006D2809 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/SavePeopleProfileView.strings; sourceTree = "<group>"; };
+		47C7D705278749CF006D2809 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PeopleTorActionsView.xib; sourceTree = "<group>"; };
+		47C7D70B278749D5006D2809 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PeopleTorActionsView.strings; sourceTree = "<group>"; };
+		47C7D70D278749D9006D2809 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/PeopleTorActionsView.strings; sourceTree = "<group>"; };
 		47CBB4EA23E9D9BE00743CBE /* APILogsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APILogsExtension.swift; sourceTree = "<group>"; };
 		47CC7CE123E3611600730E6F /* APITransactionsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APITransactionsExtension.swift; sourceTree = "<group>"; };
 		47CC7CE423E361B800730E6F /* PaymentTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentTransaction.swift; sourceTree = "<group>"; };
@@ -2898,8 +2898,8 @@
 				47ACBC30265EA35D00D2FE47 /* AuthExternalView.xib */,
 				47ACBC21265E9D0800D2FE47 /* PersonModalView.swift */,
 				47ACBC40265EA69200D2FE47 /* PersonModalView.xib */,
-				474064922745581C00FB7F93 /* SavePeopleProfileView.swift */,
-				47C7D706278749CF006D2809 /* SavePeopleProfileView.xib */,
+				474064922745581C00FB7F93 /* PeopleTorActionsView.swift */,
+				47C7D706278749CF006D2809 /* PeopleTorActionsView.xib */,
 			);
 			path = "Custom Views";
 			sourceTree = "<group>";
@@ -3621,7 +3621,7 @@
 				47D46A29237B1D030005A548 /* SubscriptionFormTableViewCell.xib in Resources */,
 				F34BFEDF267B3C30003F6D55 /* RestoreUser.storyboard in Resources */,
 				F39F2C8626E2840500D357F6 /* FeedSearchResultsCollectionViewSectionHeader.xib in Resources */,
-				47C7D704278749CF006D2809 /* SavePeopleProfileView.xib in Resources */,
+				47C7D704278749CF006D2809 /* PeopleTorActionsView.xib in Resources */,
 				F39F2C8626E2840500D357F6 /* FeedSearchResultsCollectionViewSectionHeader.xib in Resources */,
 				4724BC1325474B440012BD76 /* WebApps.storyboard in Resources */,
 				4785C10724D4A6A0004E2D6C /* AppSizeView.xib in Resources */,
@@ -4225,7 +4225,7 @@
 				470F4C36257A765D00288A9B /* LinkPreviewBubbleView.swift in Sources */,
 				4707089424AE45D400A98DCA /* UserContactChatListExtension.swift in Sources */,
 				47DAABCE2491410900EF38B0 /* MessageReplyView.swift in Sources */,
-				474064932745581C00FB7F93 /* SavePeopleProfileView.swift in Sources */,
+				474064932745581C00FB7F93 /* PeopleTorActionsView.swift in Sources */,
 				47468FD723353C880072124A /* LeftMenuOptionTableViewCell.swift in Sources */,
 				47FA44172374B6F7005D8C63 /* SubscriptionEndRuleView.swift in Sources */,
 				478DCFA02344E5EF009A03D6 /* CameraHelper.swift in Sources */,
@@ -4768,14 +4768,14 @@
 			name = PersonModalView.xib;
 			sourceTree = "<group>";
 		};
-		47C7D706278749CF006D2809 /* SavePeopleProfileView.xib */ = {
+		47C7D706278749CF006D2809 /* PeopleTorActionsView.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				47C7D705278749CF006D2809 /* Base */,
 				47C7D70B278749D5006D2809 /* en */,
 				47C7D70D278749D9006D2809 /* es */,
 			);
-			name = SavePeopleProfileView.xib;
+			name = PeopleTorActionsView.xib;
 			sourceTree = "<group>";
 		};
 		F33846E9267B0FA00041F1EA /* Welcome.storyboard */ = {

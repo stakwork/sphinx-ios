@@ -1,5 +1,5 @@
 //
-//  SavePeopleProfileView.swift
+//  PeopleTorActionsView.swift
 //  sphinx
 //
 //  Created by Tomas Timinskas on 17/11/2021.
@@ -9,7 +9,7 @@
 import UIKit
 import SwiftyJSON
 
-class SavePeopleProfileView: CommonModalView {
+class PeopleTorActionsView: CommonModalView {
 
     @IBOutlet weak var viewTitleLabel: UILabel!
     @IBOutlet weak var hostLabel: UILabel!
@@ -19,6 +19,9 @@ class SavePeopleProfileView: CommonModalView {
     
     let kSaveRequestMethod = "POST"
     let kDeleteRequestMethod = "DELETE"
+    
+    let kSaveProfilePath = "profile"
+    let kClaimOnLiquidPath = "claim_on_liquid"
     
     var loading = false {
         didSet {
@@ -39,7 +42,7 @@ class SavePeopleProfileView: CommonModalView {
     }
     
     private func setup() {
-        Bundle.main.loadNibNamed("SavePeopleProfileView", owner: self, options: nil)
+        Bundle.main.loadNibNamed("PeopleTorActionsView", owner: self, options: nil)
         addSubview(contentView)
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
@@ -91,21 +94,24 @@ class SavePeopleProfileView: CommonModalView {
             
             let path = json["path"].string
             let method = json["method"].string
-            let profile = JSON.init(parseJSON: json["body"].stringValue)
+            let body = JSON.init(parseJSON: json["body"].stringValue)
             
-            guard path == "profile" else {
-                self.showErrorAlertAndDismiss("people.save-failed".localized)
-                return
-            }
-            
-            self.authInfo?.personInfo = profile
+            self.authInfo?.jsonBody = body
             self.authInfo?.updateMethod = method
+            self.authInfo?.path = path
             
-            switch (method) {
-            case self.kSaveRequestMethod:
-                self.presentSaveModal()
-            case self.kDeleteRequestMethod:
-                self.presentDeleteModal()
+            switch(path) {
+            case self.kSaveProfilePath:
+                switch (method) {
+                case self.kSaveRequestMethod:
+                    self.presentSaveModal()
+                case self.kDeleteRequestMethod:
+                    self.presentDeleteModal()
+                default:
+                    break
+                }
+            case self.kClaimOnLiquidPath:
+                self.presentClaimOnLiquidModal()
             default:
                 break
             }
@@ -129,21 +135,27 @@ class SavePeopleProfileView: CommonModalView {
         viewTitleLabel.text = "people.delete-profile".localized
     }
     
+    private func presentClaimOnLiquidModal() {
+        setDefaultModalInfo()
+        
+        viewTitleLabel.text = "people.claim-on-liquid".localized
+    }
+    
     private func saveProfile() {
         var parameters = [String : AnyObject]()
-        parameters["id"] = authInfo?.personInfo["id"].intValue as AnyObject
-        parameters["host"] = authInfo?.personInfo["host"].stringValue as AnyObject
-        parameters["owner_alias"] = authInfo?.personInfo["owner_alias"].stringValue as AnyObject
-        parameters["description"] = authInfo?.personInfo["description"].stringValue as AnyObject
-        parameters["img"] = authInfo?.personInfo["img"].stringValue as AnyObject
-        parameters["price_to_meet"] = authInfo?.personInfo["price_to_meet"].intValue as AnyObject
-        parameters["tags"] = (authInfo?.personInfo["tags"].arrayValue as NSArray?) as AnyObject
+        parameters["id"] = authInfo?.jsonBody["id"].intValue as AnyObject
+        parameters["host"] = authInfo?.jsonBody["host"].stringValue as AnyObject
+        parameters["owner_alias"] = authInfo?.jsonBody["owner_alias"].stringValue as AnyObject
+        parameters["description"] = authInfo?.jsonBody["description"].stringValue as AnyObject
+        parameters["img"] = authInfo?.jsonBody["img"].stringValue as AnyObject
+        parameters["price_to_meet"] = authInfo?.jsonBody["price_to_meet"].intValue as AnyObject
+        parameters["tags"] = (authInfo?.jsonBody["tags"].arrayValue as NSArray?) as AnyObject
         
-        if let tags = authInfo?.personInfo["tags"].arrayValue as NSArray? {
+        if let tags = authInfo?.jsonBody["tags"].arrayValue as NSArray? {
             parameters["tags"] = tags as AnyObject
         }
         
-        if let extras = authInfo?.personInfo["extras"].dictionaryObject as NSDictionary? {
+        if let extras = authInfo?.jsonBody["extras"].dictionaryObject as NSDictionary? {
             parameters["extras"] = extras as AnyObject
         }
         
@@ -161,8 +173,8 @@ class SavePeopleProfileView: CommonModalView {
     
     private func deleteProfile() {
         var parameters = [String : AnyObject]()
-        parameters["id"] = authInfo?.personInfo["id"].intValue as AnyObject
-        parameters["host"] = authInfo?.personInfo["host"].stringValue as AnyObject
+        parameters["id"] = authInfo?.jsonBody["id"].intValue as AnyObject
+        parameters["host"] = authInfo?.jsonBody["host"].stringValue as AnyObject
         
         API.sharedInstance.deletePeopleProfile(
             params: parameters,
@@ -175,20 +187,47 @@ class SavePeopleProfileView: CommonModalView {
             }
         })
     }
+    
+    private func redeemBadgeTokens() {
+        var parameters = [String : AnyObject]()
+        parameters["host"] = authInfo?.jsonBody["host"].stringValue as AnyObject
+        parameters["amount"] = authInfo?.jsonBody["amount"].intValue as AnyObject
+        parameters["to"] = authInfo?.jsonBody["to"].stringValue as AnyObject
+        parameters["asset"] = authInfo?.jsonBody["asset"].intValue as AnyObject
+        parameters["memo"] = authInfo?.jsonBody["memo"].stringValue as AnyObject
+        
+        API.sharedInstance.redeemBadgeTokens(
+            params: parameters,
+            callback: { success in
+                
+            if success {
+                self.showAlertAndDismiss("people.claim-on-liquid-succeed".localized)
+            } else {
+                self.showErrorAlertAndDismiss("people.claim-on-liquid-failed".localized)
+            }
+        })
+    }
 
     @IBAction func saveButtonTouched() {
         buttonLoading = true
         
-        if let method = authInfo?.updateMethod {
-            buttonLoading = true
-            
-            switch (method) {
-            case kSaveRequestMethod:
-                self.saveProfile()
-            case kDeleteRequestMethod:
-                self.deleteProfile()
-            default:
-                break
+        if let path = authInfo?.path {
+            if let method = authInfo?.updateMethod {
+                switch(path) {
+                case self.kSaveProfilePath:
+                    switch (method) {
+                    case self.kSaveRequestMethod:
+                        self.saveProfile()
+                    case self.kDeleteRequestMethod:
+                        self.deleteProfile()
+                    default:
+                        break
+                    }
+                case self.kClaimOnLiquidPath:
+                    self.redeemBadgeTokens()
+                default:
+                    break
+                }
             }
         }
     }

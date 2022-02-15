@@ -419,6 +419,9 @@
 "people.delete-failed" = "Delete Profile failed";
 "people.save-succeed" = "Profile saved successfully";
 "people.delete-succeed" = "Profile deleted successfully";
+"people.claim-on-liquid" = "Redeem Badge Token from:";
+"people.claim-on-liquid-succeed" = "Redeemed Badge Token successfully";
+"people.claim-on-liquid-failed" = "Could not Redeem Badge Token";
 
 //TRANSACTION MESSAGE
 "purchase.succeeded" = "Purchase Succeeded";

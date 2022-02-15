@@ -70,7 +70,7 @@ class PersonModalView: CommonModalView {
     }
     
     func showPersonInfo(person: JSON) {
-        authInfo?.personInfo = person
+        authInfo?.jsonBody = person
         
         if let imageUrl = person["img"].string, let nsUrl = URL(string: imageUrl), imageUrl != "" {
             MediaLoader.asyncLoadImage(imageView: imageView, nsUrl: nsUrl, placeHolderImage: UIImage(named: "profile_avatar"))
@@ -104,10 +104,10 @@ class PersonModalView: CommonModalView {
                 return
             }
             
-            let nickname = authInfo?.personInfo["owner_alias"].string ?? "Unknown"
-            let pubkey = authInfo?.personInfo["owner_pubkey"].string ?? ""
-            let routeHint = authInfo?.personInfo["owner_route_hint"].string ?? ""
-            let contactKey = authInfo?.personInfo["owner_contact_key"].string ?? ""
+            let nickname = authInfo?.jsonBody["owner_alias"].string ?? "Unknown"
+            let pubkey = authInfo?.jsonBody["owner_pubkey"].string ?? ""
+            let routeHint = authInfo?.jsonBody["owner_route_hint"].string ?? ""
+            let contactKey = authInfo?.jsonBody["owner_contact_key"].string ?? ""
             
             let contactsService = ContactsService()
             contactsService.createContact(nickname: nickname,pubKey: pubkey, routeHint: routeHint, contactKey: contactKey, callback: { (success, _) in
@@ -121,9 +121,9 @@ class PersonModalView: CommonModalView {
     }
     
     func sendInitialMessage() {
-        if let pubkey = authInfo?.personInfo["owner_pubkey"].string, let contact = UserContact.getContactWith(pubkey: pubkey) {
+        if let pubkey = authInfo?.jsonBody["owner_pubkey"].string, let contact = UserContact.getContactWith(pubkey: pubkey) {
             let text = initialMessageField.text
-            let price = authInfo?.personInfo["price_to_meet"].int ?? 0
+            let price = authInfo?.jsonBody["price_to_meet"].int ?? 0
             
             guard let params = TransactionMessage.getMessageParams(contact: contact, type: TransactionMessage.TransactionMessageType.message, text: text, priceToMeet: price) else {
                 showErrorMessage()

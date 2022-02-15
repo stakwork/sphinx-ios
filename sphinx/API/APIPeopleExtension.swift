@@ -16,7 +16,7 @@ extension API {
     typealias SignVerifyCallback = ((String?) -> ())
     typealias GetPersonInfoCallback = ((Bool, JSON?) -> ())
     typealias GetProfileByKeyCallback = ((Bool, JSON?) -> ())
-    typealias SavePeopleProfileCallback = ((Bool) -> ())
+    typealias PeopleTorRequestCallback = ((Bool) -> ())
     
     public func verifyExternal(callback: @escaping VerifyExternalCallback) {
         guard let request = getURLRequest(route: "/verify_external", method: "POST") else {
@@ -138,7 +138,7 @@ extension API {
     }
     
     public func savePeopleProfile(params: [String: AnyObject],
-                                  callback: @escaping SavePeopleProfileCallback) {
+                                  callback: @escaping PeopleTorRequestCallback) {
         
         guard let request = getURLRequest(route: "/profile", params: params as NSDictionary, method: "POST") else {
             callback(false)
@@ -149,10 +149,13 @@ extension API {
             switch response.result {
             case .success(let data):
                 if let json = data as? NSDictionary {
-                    if let success = json["success"] as? Bool, let _ = json["response"] as? NSDictionary, success {
+                    if let success = json["success"] as? Bool,
+                       let _ = json["response"] as? NSDictionary, success {
                         callback(true)
+                        return
                     }
                 }
+                callback(false)
             case .failure(_):
                 callback(false)
             }
@@ -160,7 +163,7 @@ extension API {
     }
     
     public func deletePeopleProfile(params: [String: AnyObject],
-                                    callback: @escaping SavePeopleProfileCallback) {
+                                    callback: @escaping PeopleTorRequestCallback) {
         
         guard let request = getURLRequest(route: "/profile", params: params as NSDictionary, method: "DELETE") else {
             callback(false)
@@ -171,10 +174,38 @@ extension API {
             switch response.result {
             case .success(let data):
                 if let json = data as? NSDictionary {
-                    if let success = json["success"] as? Bool, let _ = json["response"] as? NSDictionary, success {
+                    if let success = json["success"] as? Bool,
+                       let _ = json["response"] as? NSDictionary, success {
                         callback(true)
+                        return
                     }
                 }
+                callback(false)
+            case .failure(_):
+                callback(false)
+            }
+        }
+    }
+    
+    public func redeemBadgeTokens(params: [String: AnyObject],
+                                  callback: @escaping PeopleTorRequestCallback) {
+        
+        guard let request = getURLRequest(route: "/claim_on_liquid", params: params as NSDictionary, method: "POST") else {
+            callback(false)
+            return
+        }
+        
+        sphinxRequest(request) { response in
+            switch response.result {
+            case .success(let data):
+                if let json = data as? NSDictionary {
+                    if let success = json["success"] as? Bool,
+                       let _ = json["response"] as? NSDictionary, success {
+                        callback(true)
+                        return
+                    }
+                }
+                callback(false)
             case .failure(_):
                 callback(false)
             }

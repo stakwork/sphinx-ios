@@ -418,6 +418,9 @@
 "people.delete-failed" = "No se ha podido eliminar el Perfil";
 "people.save-succeed" = "Perfil guardado con éxito";
 "people.delete-succeed" = "Perfil borrado con éxito";
+"people.claim-on-liquid" = "Canjear tokens de:";
+"people.claim-on-liquid-succeed" = "No se ha podido canjear los tokens";
+"people.claim-on-liquid-failed" = "Tokens canjeados con éxito";
 
 //TRANSACTION MESSAGE
 "purchase.succeeded" = "Compra exitosa";

@@ -86,7 +86,8 @@ class PeopleTorActionsView: CommonModalView {
             return
         }
         
-        API.sharedInstance.getProfileByKey(host: host, key: key, callback: { (success, json) in
+        API.sharedInstance.getExternalRequestByKey(host: host, key: key, callback: { (success, json) in
+            
             guard let json = json, success else {
                 self.showErrorAlertAndDismiss("people.save-failed".localized)
                 return

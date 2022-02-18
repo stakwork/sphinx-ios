@@ -15,7 +15,7 @@ extension API {
     typealias VerifyExternalCallback = ((Bool, NSDictionary?) -> ())
     typealias SignVerifyCallback = ((String?) -> ())
     typealias GetPersonInfoCallback = ((Bool, JSON?) -> ())
-    typealias GetProfileByKeyCallback = ((Bool, JSON?) -> ())
+    typealias GetExternalRequestByKeyCallback = ((Bool, JSON?) -> ())
     typealias PeopleTorRequestCallback = ((Bool) -> ())
     
     public func verifyExternal(callback: @escaping VerifyExternalCallback) {
@@ -112,9 +112,9 @@ extension API {
         }
     }
     
-    public func getProfileByKey(host: String,
-                                key: String,
-                                callback: @escaping GetProfileByKeyCallback) {
+    public func getExternalRequestByKey(host: String,
+                                        key: String,
+                                        callback: @escaping GetExternalRequestByKeyCallback) {
         
         let url = "https://\(host)/save/\(key)"
         

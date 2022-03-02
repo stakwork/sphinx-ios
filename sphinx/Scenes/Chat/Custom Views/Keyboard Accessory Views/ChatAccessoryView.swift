@@ -283,13 +283,11 @@ class ChatAccessoryView: UIView {
     func configurePlayerView(
         playerHelper: PodcastPlayerHelper,
         delegate: PodcastPlayerVCDelegate,
-        boostDelegate: CustomBoostDelegate,
         completion: @escaping () -> ()
     ) {
         podcastPlayerView.configure(
             playerHelper: playerHelper,
             delegate: delegate,
-            boostDelegate: boostDelegate,
             completion: {
                 self.podcastPlayerView.showPlayerInfo()
                 self.rebuildSize()

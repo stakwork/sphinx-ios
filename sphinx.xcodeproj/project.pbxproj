@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		12075275C652A9404FC48EBC /* Pods_sphinx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 487E10CEB3D07B0840A84681 /* Pods_sphinx.framework */; };
 		470125C02373255C0013C57B /* TransactionMessage+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470125BF2373255C0013C57B /* TransactionMessage+CoreDataProperties.swift */; };
+		47018F8127CFB7CE00797E0B /* pause_animation.json in Resources */ = {isa = PBXBuildFile; fileRef = 47018F8027CFB7CD00797E0B /* pause_animation.json */; };
+		47018F9227CFEEAF00797E0B /* skip30v1.caf in Resources */ = {isa = PBXBuildFile; fileRef = 47018F9127CFEDB400797E0B /* skip30v1.caf */; };
+		47018F9327CFEEAF00797E0B /* skip30v2.caf in Resources */ = {isa = PBXBuildFile; fileRef = 47018F8E27CFEDB300797E0B /* skip30v2.caf */; };
+		47018F9427CFEEAF00797E0B /* skip30v3.caf in Resources */ = {isa = PBXBuildFile; fileRef = 47018F8F27CFEDB300797E0B /* skip30v3.caf */; };
+		47018F9527CFEEAF00797E0B /* skip30v4.caf in Resources */ = {isa = PBXBuildFile; fileRef = 47018F9027CFEDB400797E0B /* skip30v4.caf */; };
 		470396D82535D12D007F9C23 /* PodcastEpisodeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470396D62535D12D007F9C23 /* PodcastEpisodeTableViewCell.swift */; };
 		470396D92535D12D007F9C23 /* PodcastEpisodeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 470396D72535D12D007F9C23 /* PodcastEpisodeTableViewCell.xib */; };
 		470396DC2535D2EB007F9C23 /* PodcastEpisodesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470396DB2535D2EB007F9C23 /* PodcastEpisodesDataSource.swift */; };
@@ -680,6 +685,11 @@
 
 /* Begin PBXFileReference section */
 		470125BF2373255C0013C57B /* TransactionMessage+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TransactionMessage+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		47018F8027CFB7CD00797E0B /* pause_animation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = pause_animation.json; sourceTree = "<group>"; };
+		47018F8E27CFEDB300797E0B /* skip30v2.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = skip30v2.caf; sourceTree = "<group>"; };
+		47018F8F27CFEDB300797E0B /* skip30v3.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = skip30v3.caf; sourceTree = "<group>"; };
+		47018F9027CFEDB400797E0B /* skip30v4.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = skip30v4.caf; sourceTree = "<group>"; };
+		47018F9127CFEDB400797E0B /* skip30v1.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = skip30v1.caf; sourceTree = "<group>"; };
 		470396D62535D12D007F9C23 /* PodcastEpisodeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastEpisodeTableViewCell.swift; sourceTree = "<group>"; };
 		470396D72535D12D007F9C23 /* PodcastEpisodeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PodcastEpisodeTableViewCell.xib; sourceTree = "<group>"; };
 		470396DB2535D2EB007F9C23 /* PodcastEpisodesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastEpisodesDataSource.swift; sourceTree = "<group>"; };
@@ -2811,6 +2821,10 @@
 		4797E8B624BE26D600D13270 /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
+				47018F9127CFEDB400797E0B /* skip30v1.caf */,
+				47018F8E27CFEDB300797E0B /* skip30v2.caf */,
+				47018F8F27CFEDB300797E0B /* skip30v3.caf */,
+				47018F9027CFEDB400797E0B /* skip30v4.caf */,
 				47904C0124BF352200710E7A /* aurora.caf */,
 				47904C0024BF352200710E7A /* bamboo.caf */,
 				47904C0424BF352300710E7A /* bell.caf */,
@@ -2915,6 +2929,7 @@
 		47AF0D3A254C9EEC00C98398 /* Animation */ = {
 			isa = PBXGroup;
 			children = (
+				47018F8027CFB7CD00797E0B /* pause_animation.json */,
 				47FDDB1B2562D77100BBF15F /* boost_animation.json */,
 				47AF0D3B254C9F1000C98398 /* fireworks.json */,
 			);
@@ -3586,6 +3601,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47018F9227CFEEAF00797E0B /* skip30v1.caf in Resources */,
+				47018F9327CFEEAF00797E0B /* skip30v2.caf in Resources */,
+				47018F9427CFEEAF00797E0B /* skip30v3.caf in Resources */,
+				47018F9527CFEEAF00797E0B /* skip30v4.caf in Resources */,
 				475154AE2423E75F00477384 /* VideoCallReceivedTableViewCell.xib in Resources */,
 				47904C0B24BF352300710E7A /* bamboo.caf in Resources */,
 				4797E80724B8FA6700D13270 /* Groups.storyboard in Resources */,
@@ -3639,6 +3658,7 @@
 				47904C0924BF352300710E7A /* note.caf in Resources */,
 				475BDD4E232AD00D00C5BBD6 /* Roboto-Regular.ttf in Resources */,
 				4779F16F232AA0F300D35E81 /* LaunchScreen.storyboard in Resources */,
+				47018F8127CFB7CE00797E0B /* pause_animation.json in Resources */,
 				F373BEFF26A9CB790093C886 /* Dashboard.storyboard in Resources */,
 				47F258BD2539DA0100122A5A /* PodcastCommentSentTableViewCell.xib in Resources */,
 				470F4C37257A949A00288A9B /* TribeLinkPreviewView.xib in Resources */,

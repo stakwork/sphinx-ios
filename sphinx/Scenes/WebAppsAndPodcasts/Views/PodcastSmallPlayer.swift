@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Lottie
 
 class PodcastSmallPlayer: UIView {
     
@@ -15,17 +16,18 @@ class PodcastSmallPlayer: UIView {
 
     @IBOutlet var contentView: UIView!
     
+    @IBOutlet weak var episodeImageView: UIImageView!
     @IBOutlet weak var episodeLabel: UILabel!
+    @IBOutlet weak var contributorLabel: UILabel!
     @IBOutlet weak var durationLine: UIView!
     @IBOutlet weak var progressLine: UIView!
     @IBOutlet weak var progressLineWidth: NSLayoutConstraint!
     @IBOutlet weak var playPauseButton: UIButton!
     @IBOutlet weak var audioLoadingWheel: UIActivityIndicatorView!
-    @IBOutlet weak var boostButtonView: BoostButtonView!
+    @IBOutlet weak var playButton: UIButton!
+    @IBOutlet weak var pauseAnimationView: AnimationView!
     
     var playerHelper: PodcastPlayerHelper! = nil
-    
-    let feedBoostHelper = FeedBoostHelper()
     
     var wasPlayingOnDrag = false
     
@@ -48,19 +50,13 @@ class PodcastSmallPlayer: UIView {
     func configure(
         playerHelper: PodcastPlayerHelper,
         delegate: PodcastPlayerVCDelegate,
-        boostDelegate: CustomBoostDelegate,
         completion: @escaping () -> ()
     ) {
         
         self.playerHelper = playerHelper
         self.delegate = delegate
-        self.boostDelegate = boostDelegate
         
         setPlayerDelegate(completion: completion)
-        
-        if let feedObjectID = playerHelper.podcast?.objectID {
-            feedBoostHelper.configure(with: feedObjectID, and: playerHelper.chat)
-        }
     }
     
     func setPlayerDelegate(completion: @escaping () -> ()) {
@@ -73,6 +69,7 @@ class PodcastSmallPlayer: UIView {
     
     func reload() {
         setPlayerDelegate(completion: {})
+        
         showEpisodeInfo()
         configureControls()
     }
@@ -83,8 +80,15 @@ class PodcastSmallPlayer: UIView {
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         
-        boostButtonView.delegate = self
+        runAnimation()
+        
         isHidden = true
+    }
+    
+    func runAnimation() {
+        let pauseAnimation = Animation.named("pause_animation")
+        pauseAnimationView.animation = pauseAnimation
+        pauseAnimationView.loopMode = .autoReverse
     }
     
     func getViewHeight() -> CGFloat {
@@ -100,17 +104,41 @@ class PodcastSmallPlayer: UIView {
     }
     
     func showEpisodeInfo() {
-        let (title, _) = playerHelper.getEpisodeInfo()
+        let (title, imageUrlString) = playerHelper.getEpisodeInfo()
         episodeLabel.text = title
+        contributorLabel.text = playerHelper.podcast?.author ?? playerHelper.podcast?.title ?? ""
+        
+        if let imageURL = URL(string: imageUrlString), !imageUrlString.isEmpty {
+            episodeImageView.sd_setImage(
+                with: imageURL,
+                placeholderImage: UIImage(named: "podcastPlaceholder"),
+                options: [.highPriority],
+                progress: nil
+            )
+        } else {
+            episodeImageView.image = UIImage(named: "podcastPlaceholder")
+        }
     }
     
     func configureControls() {
         let isPlaying = playerHelper.isPlaying()
-        playPauseButton.setTitle(isPlaying ? "pause" : "play_arrow", for: .normal)
+        playButton.isHidden = isPlaying
+        
+        pauseAnimationView.isHidden = !isPlaying
+        
+        if isPlaying {
+            pauseAnimationView.play()
+        } else {
+            pauseAnimationView.stop()
+        }
+        
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(PodcastSmallPlayer.playPauseButtonTouched))
+        pauseAnimationView.addGestureRecognizer(gesture)
     }
     
     func setLabels(duration: Int, currentTime: Int) {
-        let durationLineWidth = UIScreen.main.bounds.width
+        let progressBarMargin:CGFloat = 32
+        let durationLineWidth = UIScreen.main.bounds.width - progressBarMargin
         let progress = (Double(currentTime) * 100 / Double(duration))/100
         var progressWidth = durationLineWidth * CGFloat(progress)
         
@@ -155,26 +183,5 @@ extension PodcastSmallPlayer : PodcastPlayerDelegate {
     
     func shouldUpdateEpisodeInfo() {
         showEpisodeInfo()
-    }
-}
-
-extension PodcastSmallPlayer : BoostButtonViewDelegate {
-    func didTouchButton() {
-        let amount = UserContact.kTipAmount
-        
-        let itemID = playerHelper.getCurrentEpisode()?.itemID ?? "-1"
-        let currentTime = playerHelper.currentTime
-        
-        if let boostMessage = feedBoostHelper.getBoostMessage(itemID: itemID, amount: amount, currentTime: currentTime) {
-            
-            let podcastAnimationVC = PodcastAnimationViewController.instantiate(amount: amount)
-            WindowsManager.sharedInstance.showConveringWindowWith(rootVC: podcastAnimationVC)
-            podcastAnimationVC.showBoostAnimation()
-            
-            feedBoostHelper.processPayment(itemID: itemID, amount: amount, currentTime: currentTime)
-            feedBoostHelper.sendBoostMessage(message: boostMessage, completion: { (message, success) in
-                self.boostDelegate?.didSendBoostMessage(success: success, message: message)
-            })
-        }
     }
 }

@@ -28,6 +28,15 @@ class PodcastPlayerHelper {
     var paymentsTimer : Timer? = nil
     var playingEpisodeImage: UIImage? = nil
     
+    let audioPlayerHelper = PlayAudioHelper()
+    
+    let sounds = [
+        "skip30v1.caf",
+        "skip30v2.caf",
+        "skip30v3.caf",
+        "skip30v4.caf"
+    ]
+    
     var chat: Chat? = nil
     
     var currentEpisode: Int {
@@ -520,6 +529,10 @@ class PodcastPlayerHelper {
             }
             
             configurePlayingInfoCenter(duration: duration, currentTime: currentTime, forceUpdate: true)
+            
+            if let sound = sounds.randomElement() {
+                audioPlayerHelper.playSound(name: sound)
+            }
         }
         if wasPlaying { shouldPlay() }
     }

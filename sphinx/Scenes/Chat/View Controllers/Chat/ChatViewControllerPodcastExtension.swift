@@ -68,7 +68,6 @@ extension ChatViewController : PodcastPlayerVCDelegate {
         accessoryView.configurePlayerView(
             playerHelper: podcastPlayerHelper,
             delegate: self,
-            boostDelegate: self,
             completion: completion
         )
     }

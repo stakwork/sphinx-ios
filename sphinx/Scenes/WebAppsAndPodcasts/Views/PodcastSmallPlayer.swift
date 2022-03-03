@@ -8,6 +8,8 @@
 
 import UIKit
 import Lottie
+import AVKit
+import MarqueeLabel
 
 class PodcastSmallPlayer: UIView {
     
@@ -17,7 +19,7 @@ class PodcastSmallPlayer: UIView {
     @IBOutlet var contentView: UIView!
     
     @IBOutlet weak var episodeImageView: UIImageView!
-    @IBOutlet weak var episodeLabel: UILabel!
+    @IBOutlet weak var episodeLabel: MarqueeLabel!
     @IBOutlet weak var contributorLabel: UILabel!
     @IBOutlet weak var durationLine: UIView!
     @IBOutlet weak var progressLine: UIView!
@@ -27,14 +29,29 @@ class PodcastSmallPlayer: UIView {
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var pauseAnimationView: AnimationView!
     
-    var playerHelper: PodcastPlayerHelper! = nil
+    let playerHelper: PodcastPlayerHelper = PodcastPlayerHelper.sharedInstance
     
     var wasPlayingOnDrag = false
+    
+    var podcast: PodcastFeed! = nil
     
     var audioLoading = false {
         didSet {
             LoadingWheelHelper.toggleLoadingWheel(loading: audioLoading, loadingWheel: audioLoadingWheel, loadingWheelColor: UIColor.Sphinx.Text)
         }
+    }
+    
+    private func setup() {
+        Bundle.main.loadNibNamed("PodcastSmallPlayer", owner: self, options: nil)
+        addSubview(contentView)
+        contentView.frame = self.bounds
+        contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        
+        episodeLabel.fadeLength = 10
+        
+        runAnimation()
+        
+        isHidden = true
     }
     
     override init(frame: CGRect) {
@@ -47,42 +64,24 @@ class PodcastSmallPlayer: UIView {
         setup()
     }
     
-    func configure(
-        playerHelper: PodcastPlayerHelper,
-        delegate: PodcastPlayerVCDelegate,
+    func configureWith(
+        podcast: PodcastFeed,
+        and delegate: PodcastPlayerVCDelegate,
         completion: @escaping () -> ()
     ) {
-        
-        self.playerHelper = playerHelper
+        self.podcast = podcast
         self.delegate = delegate
         
-        setPlayerDelegate(completion: completion)
-    }
-    
-    func setPlayerDelegate(completion: @escaping () -> ()) {
-        playerHelper.delegate = self
-        playerHelper.preparePlayer(completion: {
-            self.playerHelper.shouldUpdateTimeLabels()
-            completion()
-        })
-    }
-    
-    func reload() {
-        setPlayerDelegate(completion: {})
+        showPodcastInfo()
         
-        showEpisodeInfo()
-        configureControls()
-    }
-
-    private func setup() {
-        Bundle.main.loadNibNamed("PodcastSmallPlayer", owner: self, options: nil)
-        addSubview(contentView)
-        contentView.frame = self.bounds
-        contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        playerHelper.addDelegate(
+            self,
+            withKey: PodcastPlayerHelper.DelegateKeys.smallPlayer.rawValue
+        )
         
-        runAnimation()
+        isHidden = false
         
-        isHidden = true
+        completion()
     }
     
     func runAnimation() {
@@ -95,20 +94,20 @@ class PodcastSmallPlayer: UIView {
         return isHidden ? 0 : self.frame.height
     }
 
-    func showPlayerInfo() {
-        playerHelper?.updateCurrentTime()
-        configureControls()
+    func showPodcastInfo() {
         showEpisodeInfo()
-        
-        isHidden = false
+        configureControls()
     }
     
     func showEpisodeInfo() {
-        let (title, imageUrlString) = playerHelper.getEpisodeInfo()
-        episodeLabel.text = title
-        contributorLabel.text = playerHelper.podcast?.author ?? playerHelper.podcast?.title ?? ""
+        let episode = podcast.getCurrentEpisode()
         
-        if let imageURL = URL(string: imageUrlString), !imageUrlString.isEmpty {
+        episodeLabel.text = episode?.title ?? "Episode with no title"
+        contributorLabel.text = podcast.author ?? podcast.title ?? ""
+        
+        if let imageUrlString = episode?.imageURLPath,
+           let imageURL = URL(string: imageUrlString), !imageUrlString.isEmpty {
+            
             episodeImageView.sd_setImage(
                 with: imageURL,
                 placeholderImage: UIImage(named: "podcastPlaceholder"),
@@ -118,13 +117,34 @@ class PodcastSmallPlayer: UIView {
         } else {
             episodeImageView.image = UIImage(named: "podcastPlaceholder")
         }
+        
+        if let duration = episode?.duration {
+            setProgress(
+                duration: duration,
+                currentTime: podcast.currentTime
+            )
+        } else if let url = episode?.getAudioUrl() {
+            let asset = AVAsset(url: url)
+            asset.loadValuesAsynchronously(forKeys: ["duration"], completionHandler: {
+                let duration = Double(asset.duration.value) / Double(asset.duration.timescale)
+                
+                DispatchQueue.main.async {
+                    self.setProgress(
+                        duration: Int(duration),
+                        currentTime: self.podcast.currentTime
+                    )
+                }
+            })
+        }
     }
     
     func configureControls() {
-        let isPlaying = playerHelper.isPlaying()
-        playButton.isHidden = isPlaying
+        let isPlaying = playerHelper.isPlaying(podcast.feedID)
         
+        playButton.isHidden = isPlaying
         pauseAnimationView.isHidden = !isPlaying
+        
+        episodeLabel.labelize = !isPlaying
         
         if isPlaying {
             pauseAnimationView.play()
@@ -136,7 +156,7 @@ class PodcastSmallPlayer: UIView {
         pauseAnimationView.addGestureRecognizer(gesture)
     }
     
-    func setLabels(duration: Int, currentTime: Int) {
+    func setProgress(duration: Int, currentTime: Int) {
         let progressBarMargin:CGFloat = 32
         let durationLineWidth = UIScreen.main.bounds.width - progressBarMargin
         let progress = (Double(currentTime) * 100 / Double(duration))/100
@@ -151,8 +171,10 @@ class PodcastSmallPlayer: UIView {
     }
     
     func togglePlayState() {
-        playerHelper.togglePlayState()
-        configureControls()
+        if let podcast = podcast {
+            playerHelper.togglePlayStateFor(podcast)
+            configureControls()
+        }
     }
     
     @IBAction func playPauseButtonTouched() {
@@ -160,7 +182,9 @@ class PodcastSmallPlayer: UIView {
     }
     
     @IBAction func forwardButtonTouched() {
-        playerHelper.seekTo(seconds: 30)
+        if let podcast = podcast {
+            playerHelper.seek(podcast, to: 30)
+        }
     }
     
     @IBAction func playerButtonTouched() {
@@ -170,7 +194,7 @@ class PodcastSmallPlayer: UIView {
 
 extension PodcastSmallPlayer : PodcastPlayerDelegate {
     func shouldUpdateLabels(duration: Int, currentTime: Int) {
-        setLabels(duration: duration, currentTime: currentTime)
+        setProgress(duration: duration, currentTime: currentTime)
     }
     
     func shouldToggleLoadingWheel(loading: Bool) {

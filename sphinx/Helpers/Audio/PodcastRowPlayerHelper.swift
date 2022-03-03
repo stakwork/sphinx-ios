@@ -215,10 +215,17 @@ class PodcastRowPlayerHelper {
     }
     
     func processPayment() {
-        let itemId = self.podcastComment?.itemId ?? 0
+        let itemId = self.podcastComment?.itemId ?? ""
         let clipSenderPK = self.podcastComment?.pubkey
         let uuid = self.podcastComment?.uuid
-        self.podcastPaymentsHelper.processPaymentsFor(podcastFeed: self.podcast, itemId: itemId, currentTime: Int(self.currentTime), clipSenderPubKey: clipSenderPK, uuid: uuid)
+        
+        self.podcastPaymentsHelper.processPaymentsFor(
+            podcastFeed: self.podcast,
+            itemId: itemId,
+            currentTime: Int(self.currentTime),
+            clipSenderPubKey: clipSenderPK,
+            uuid: uuid
+        )
     }
     
     func audioDidFinishPlaying() {

@@ -280,27 +280,21 @@ class ChatAccessoryView: UIView {
         textViewDidChange(textView)
     }
     
-    func configurePlayerView(
-        playerHelper: PodcastPlayerHelper,
+    func configurePlayerViewWith(
+        podcast: PodcastFeed,
         delegate: PodcastPlayerVCDelegate,
         completion: @escaping () -> ()
     ) {
-        podcastPlayerView.configure(
-            playerHelper: playerHelper,
-            delegate: delegate,
+        podcastPlayerView.configureWith(
+            podcast: podcast,
+            and: delegate,
             completion: {
-                self.podcastPlayerView.showPlayerInfo()
                 self.rebuildSize()
                 
                 self.podcastPlayerView.addShadow(location: .top, color: UIColor.black, opacity: 0.1)
                 self.viewContainer.removeShadow()
                 completion()
-            }
-        )
-    }
-    
-    func reloadPlayerView() {
-        podcastPlayerView.reload()
+            })
     }
     
     func hideReplyView() {

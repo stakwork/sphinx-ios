@@ -798,8 +798,8 @@ extension TransactionMessage {
             if let data = stringWithoutPrefix.data(using: .utf8) {
                 if let jsonObject = try? JSON(data: data) {
                     var podcastComment = PodcastComment()
-                    podcastComment.feedId = jsonObject["feedID"].intValue
-                    podcastComment.itemId = jsonObject["itemID"].intValue
+                    podcastComment.feedId = jsonObject["feedID"].stringValue
+                    podcastComment.itemId = jsonObject["itemID"].stringValue
                     podcastComment.timestamp = jsonObject["ts"].intValue
                     podcastComment.title = jsonObject["title"].stringValue
                     podcastComment.text = jsonObject["text"].stringValue

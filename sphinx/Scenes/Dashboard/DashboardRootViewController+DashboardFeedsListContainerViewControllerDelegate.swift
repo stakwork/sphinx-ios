@@ -33,12 +33,7 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
         if let contentFeed = contentFeedItem.contentFeed {
             
             let podcastFeed = PodcastFeed.convertFrom(contentFeed:  contentFeed)
-            let podcastPlayerHelper = getPodcastPlayerFor(podcastFeed)
-
-            presentPodcastPlayer(
-                forPodcastFrom: podcastFeed.chat,
-                with: podcastPlayerHelper
-            )
+            presentPodcastPlayerFor(podcastFeed)
         }
     }
     
@@ -51,28 +46,7 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
             return
         }
         
-        let podcastPlayerHelper = getPodcastPlayerFor(podcastFeed)
-        
-        presentPodcastPlayer(
-            forPodcastFrom: podcastFeed.chat,
-            with: podcastPlayerHelper
-        )
-    }
-    
-    func getPodcastPlayerFor(_ podcast: PodcastFeed) -> PodcastPlayerHelper {
-        let podcastPlayerHelper: PodcastPlayerHelper
-        
-        if let chat = podcast.chat {
-            podcastPlayerHelper = chat.getPodcastPlayer()
-        } else {
-            // Load a podcast that was subscribed to from the Podcast Index.
-            // These won't have an associated `chat`, but we can still fetch episodes.
-            podcastPlayerHelper = PodcastPlayerHelper()
-        }
-        
-        podcastPlayerHelper.podcast = podcast
-        
-        return podcastPlayerHelper
+        presentPodcastPlayerFor(podcastFeed)
     }
     
     func viewController(
@@ -155,13 +129,11 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
 
 extension DashboardRootViewController {
     
-    private func presentPodcastPlayer(
-        forPodcastFrom chat: Chat? = nil,
-        with podcastPlayerHelper: PodcastPlayerHelper
+    private func presentPodcastPlayerFor(
+        _ podcast: PodcastFeed
     ) {
         let podcastFeedVC = NewPodcastPlayerViewController.instantiate(
-            chat: chat,
-            playerHelper: podcastPlayerHelper,
+            podcast: podcast,
             dismissButtonStyle: .backArrow,
             delegate: self,
             boostDelegate: self

@@ -39,6 +39,8 @@ public class PodcastEpisode: NSObject {
             return false
         }
     }
+    
+    var duration: Int? = nil
 }
 
 

@@ -22,6 +22,7 @@ target 'sphinx' do
     pod 'Tor', podspec: 'https://raw.githubusercontent.com/iCepa/Tor.framework/v405.8.1/Tor.podspec'
     pod "SwiftyXMLParser", :git => 'https://github.com/yahoojapan/SwiftyXMLParser.git'
     pod "youtube-ios-player-helper", "~> 1.0.3"
+    pod 'MarqueeLabel'
     
     post_install do |installer|
       installer.pods_project.targets.each do |target|

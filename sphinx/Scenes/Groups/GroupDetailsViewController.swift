@@ -116,7 +116,10 @@ class GroupDetailsViewController: UIViewController {
     }
     
     func configurePodcastView() {
-        if let chat = chat, let _ = chat.getFeedUrl(), let _ = chat.podcastPlayer?.podcast {
+        if let chat = chat,
+           let _ = chat.getFeedUrl(),
+           let _ = chat.podcast
+        {
             podcastSatsViewHeight.constant = 70
             podcastSatsView.configureWith(chat: chat)
             podcastSatsView.isHidden = false

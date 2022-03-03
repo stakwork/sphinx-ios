@@ -35,8 +35,6 @@ class ChatViewController: KeyboardHandlerViewController {
     var processingPRCell : InvoiceReceivedTableViewCell?
     var webAppVC : WebAppViewController? = nil
     
-    var podcastPlayerHelper: PodcastPlayerHelper? = nil
-    
     var firstLoad = true
     
     var loading = false {
@@ -95,8 +93,6 @@ class ChatViewController: KeyboardHandlerViewController {
         configureVideoCallManager()
         addShadows()
         
-        podcastPlayerHelper = chat?.getPodcastPlayer()
-        
         chatHeaderView.configure(chat: chat, contact: contact, contactsService: contactsService, delegate: self)
         
         accessoryView.delegate = self
@@ -149,6 +145,10 @@ class ChatViewController: KeyboardHandlerViewController {
         
         if isMovingFromParent {
             accessoryView.removeKeyboardObservers()
+            
+            PodcastPlayerHelper.sharedInstance.removeFromDelegatesWith(
+                key: PodcastPlayerHelper.DelegateKeys.podcastPlayerVC.rawValue
+            )
         }
         
         CustomAudioPlayer.sharedInstance.stopAndReset()

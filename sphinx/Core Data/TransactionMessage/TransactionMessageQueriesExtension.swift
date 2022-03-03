@@ -119,9 +119,9 @@ extension TransactionMessage {
         return -1
     }
     
-    static func getPaymentsFor(feedId: Int) -> [TransactionMessage] {
+    static func getPaymentsFor(feedId: String) -> [TransactionMessage] {
         let feedIDString1 = "{\"feedID\":\"\(feedId)"
-        let feedIDString2 = "{\"feedID\":\(feedId)"
+        let feedIDString2 = "{\"feedID\":\(Int(feedId) ?? -1)"
         let predicate = NSPredicate(format: "chat == nil && (messageContent BEGINSWITH[c] %@ OR messageContent BEGINSWITH[c] %@)", feedIDString1, feedIDString2)
         let sortDescriptors = [NSSortDescriptor(key: "id", ascending: false)]
         let payments: [TransactionMessage] = CoreDataManager.sharedManager.getObjectsOfTypeWith(predicate: predicate, sortDescriptors: sortDescriptors, entityName: "TransactionMessage")
@@ -130,8 +130,8 @@ extension TransactionMessage {
     }
     
     static func getLiveMessagesFor(chat: Chat, episodeId: Int) -> [TransactionMessage] {
-        let episodeString = "\"itemID\":\(episodeId)"
-        let episodeString2 = "\"itemID\" : \(episodeId)"
+        let episodeString = "\"itemID\":\"\(episodeId)\""
+        let episodeString2 = "\"itemID\":\(episodeId)"
         let predicate = NSPredicate(format: "chat == %@ && ((type == %d && (messageContent BEGINSWITH[c] %@ OR messageContent BEGINSWITH[c] %@)) || (type == %d && replyUUID == nil)) && (messageContent CONTAINS[c] %@ || messageContent CONTAINS[c] %@)", chat, TransactionMessageType.message.rawValue, PodcastPlayerHelper.kClipPrefix, PodcastPlayerHelper.kBoostPrefix, TransactionMessageType.boost.rawValue, episodeString, episodeString2)
         let sortDescriptors = [NSSortDescriptor(key: "id", ascending: false)]
         let boostAndClips: [TransactionMessage] = CoreDataManager.sharedManager.getObjectsOfTypeWith(predicate: predicate, sortDescriptors: sortDescriptors, entityName: "TransactionMessage")

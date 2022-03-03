@@ -12,7 +12,7 @@ import CoreData
 
 class PodcastPaymentsHelper {
     
-    public static func getSatsEarnedFor(_ feedId: Int) -> Int {
+    public static func getSatsEarnedFor(_ feedId: String) -> Int {
         let pmts = TransactionMessage.getPaymentsFor(feedId: feedId)
         var satsEarned = 0
         
@@ -24,7 +24,7 @@ class PodcastPaymentsHelper {
     
     func processPaymentsFor(podcastFeed: PodcastFeed?,
                             boostAmount: Int? = nil,
-                            itemId: Int,
+                            itemId: String,
                             currentTime: Int,
                             clipSenderPubKey: String? = nil,
                             uuid: String? = nil) {
@@ -63,7 +63,7 @@ class PodcastPaymentsHelper {
             destinations.isEmpty == false
         {
             streamSats(
-                podcastId: Int(podcastFeed.feedID)!,
+                podcastId: podcastFeed.feedID,
                 podcastDestinations: destinations,
                 updateMeta: shouldUpdateMeta,
                 amount: satsAmt,
@@ -99,12 +99,12 @@ class PodcastPaymentsHelper {
         return amt < 1 ? 1 : amt
     }
     
-    func streamSats(podcastId: Int,
+    func streamSats(podcastId: String,
                     podcastDestinations: [PodcastDestination],
                     updateMeta: Bool,
                     amount: Int,
                     chatId: Int,
-                    itemId: Int,
+                    itemId: String,
                     currentTime: Int,
                     uuid: String? = nil) {
         
@@ -119,9 +119,9 @@ class PodcastPaymentsHelper {
         params["update_meta"] = updateMeta as AnyObject
         
         if let uuid = uuid, !uuid.isEmpty {
-            params["text"] = "{\"feedID\":\(podcastId),\"itemID\":\(itemId),\"ts\":\(currentTime),\"uuid\":\"\(uuid)\"}" as AnyObject
+            params["text"] = "{\"feedID\":\"\(podcastId)\",\"itemID\":\"\(itemId)\",\"ts\":\(currentTime),\"uuid\":\"\(uuid)\"}" as AnyObject
         } else {
-            params["text"] = "{\"feedID\":\(podcastId),\"itemID\":\(itemId),\"ts\":\(currentTime)}" as AnyObject
+            params["text"] = "{\"feedID\":\"\(podcastId)\",\"itemID\":\"\(itemId)\",\"ts\":\(currentTime)}" as AnyObject
         }
             
         API.sharedInstance.streamSats(params: params, callback: {}, errorCallback: {})

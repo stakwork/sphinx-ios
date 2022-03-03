@@ -8,13 +8,7 @@
 
 import UIKit
 
-protocol NewEpisodeDelegate : class {
-    func shouldGoToLastEpisodePlayer()
-}
-
 class PodcastNewEpisodeViewController: UIViewController {
-    
-    weak var delegate: NewEpisodeDelegate?
     
     @IBOutlet weak var viewContainer: UIView!
     @IBOutlet weak var bubbleView: UIView!
@@ -31,23 +25,26 @@ class PodcastNewEpisodeViewController: UIViewController {
         return viewController
     }
     
-    static func checkForNewEpisode(chat: Chat, rootViewController: RootViewController, delegate: NewEpisodeDelegate) {
-        if (chat.podcastPlayer?.podcast?.episodes ?? []).count == 0 { return }
-        guard let chatId = rootViewController.getChatVCId() else { return }
-        if chatId != chat.id { return }
+    static func checkForNewEpisode(chat: Chat, rootViewController: RootViewController) {
+        if let podcast = chat.podcast {
+            if (chat.podcast?.episodes ?? []).count == 0 { return }
+            guard let chatId = rootViewController.getChatVCId() else { return }
+            if chatId != chat.id { return }
 
-        let lastStoredEpisodeId = (chat.podcastPlayer?.lastEpisodeId ?? chat.podcastPlayer?.currentEpisodeId) ?? -1
+            let lastStoredEpisodeId = podcast.lastEpisodeId ?? podcast.currentEpisodeId
 
-        if let lastEpisode = chat.podcastPlayer?.podcast?.episodesArray[0] {
-            let lastEpisodeId = Int(lastEpisode.itemID) ?? -1
-            
-            chat.podcastPlayer?.lastEpisodeId = lastEpisodeId
+            if podcast.episodesArray.count > 0 {
+                
+                let lastEpisode = podcast.episodesArray[0]
+                let lastEpisodeId = Int(lastEpisode.itemID) ?? -1
+                
+                podcast.lastEpisodeId = lastEpisodeId
 
-            if lastStoredEpisodeId > 0 && lastStoredEpisodeId != lastEpisodeId {
-                let podcastNewEpisodeVC = PodcastNewEpisodeViewController.instantiate()
-                podcastNewEpisodeVC.episode = lastEpisode
-                podcastNewEpisodeVC.delegate = delegate
-                WindowsManager.sharedInstance.showConveringWindowWith(rootVC: podcastNewEpisodeVC)
+                if lastStoredEpisodeId > 0 && lastStoredEpisodeId != lastEpisodeId {
+                    let podcastNewEpisodeVC = PodcastNewEpisodeViewController.instantiate()
+                    podcastNewEpisodeVC.episode = lastEpisode
+                    WindowsManager.sharedInstance.showConveringWindowWith(rootVC: podcastNewEpisodeVC)
+                }
             }
         }
     }

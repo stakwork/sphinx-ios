@@ -26,7 +26,7 @@ class PodcastCommentSentTableViewCell: CommonPodcastCommentTableViewCell, Messag
         super.configureMessageRow(messageRow: messageRow, contact: contact, chat: chat)
 
         commonConfigurationForMessages()
-        configureAudioAndMessage(podcast: chat?.podcastPlayer?.podcast)
+        configureAudioAndMessage(podcast: chat?.podcast)
         configureMessageStatus()
 
         if messageRow.shouldShowRightLine {

@@ -11,8 +11,8 @@ import SwiftyJSON
 
 
 struct PodcastComment {
-    var feedId:Int? = nil
-    var itemId:Int? = nil
+    var feedId:String? = nil
+    var itemId:String? = nil
     var timestamp:Int? = nil
     var title: String? = nil
     var text: String? = nil

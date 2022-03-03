@@ -25,21 +25,15 @@ extension ChatViewController : PodcastPlayerVCDelegate {
     func shouldDismissPlayerView() {}
     
     func loadPodcastFeed() {
-        if chat?.tribeInfo?.feedContentType?.isPodcast == false {
+        guard let chat = chat else {
             return
         }
         
-        podcastPlayerHelper?.loadPodcastFeed(chat: chat, callback: { success in
-            if
-                let chat = self.chat,
-                let _ = chat.podcastPlayer?.podcast,
-                success
-            {
-                self.addSmallPlayer(completion: {
-                    PodcastNewEpisodeViewController.checkForNewEpisode(chat: chat, rootViewController: self.rootViewController, delegate: self)
-                })
-                self.chatHeaderView.updateSatsEarned()
-            }
+        FeedLoaderHelper.loadPodcastFeedFor(chat: chat, callback: { podcast in
+            self.addSmallPlayerFor(podcast, completion: {
+                PodcastNewEpisodeViewController.checkForNewEpisode(chat: chat, rootViewController: self.rootViewController)
+            })
+            self.chatHeaderView.updateSatsEarned()
         })
     }
     
@@ -58,42 +52,33 @@ extension ChatViewController : PodcastPlayerVCDelegate {
     func willDismissPlayer(playing: Bool) {
         accessoryView.addKeyboardObservers()
         accessoryView.show(animated: false)
-        accessoryView.reloadPlayerView()
     }
     
-    func addSmallPlayer(completion: @escaping () -> ()) {
-        guard let podcastPlayerHelper = podcastPlayerHelper else {
-            return
-        }
-        accessoryView.configurePlayerView(
-            playerHelper: podcastPlayerHelper,
+    func addSmallPlayerFor(
+        _ podcast: PodcastFeed,
+        completion: @escaping () -> ()
+    ) {
+        accessoryView.configurePlayerViewWith(
+            podcast: podcast,
             delegate: self,
             completion: completion
         )
     }
     
     func presentPodcastPlayer(chat: Chat) {
-        guard let podcastPlayerHelper = podcastPlayerHelper else {
-            return
+        if let podcast = chat.podcast {
+            accessoryView.hide()
+            
+            let podcastFeedVC = NewPodcastPlayerViewController.instantiate(
+                podcast: podcast,
+                dismissButtonStyle: .downArrow,
+                delegate: self,
+                boostDelegate: self
+            )
+
+            podcastFeedVC.modalPresentationStyle = .automatic
+
+            present(podcastFeedVC, animated: true, completion: nil)
         }
-        accessoryView.hide()
-
-        let podcastFeedVC = NewPodcastPlayerViewController.instantiate(
-            chat: chat,
-            playerHelper: podcastPlayerHelper,
-            dismissButtonStyle: .downArrow,
-            delegate: self,
-            boostDelegate: self
-        )
-        podcastFeedVC.modalPresentationStyle = .automatic
-        
-        self.present(podcastFeedVC, animated: true, completion: nil)
-    }
-}
-
-extension ChatViewController : NewEpisodeDelegate {
-    func shouldGoToLastEpisodePlayer() {
-        chat?.podcastPlayer?.goToLastEpisode()
-        shouldGoToPlayer()
     }
 }

@@ -39,11 +39,6 @@ extension ChatListCollectionViewCell {
         
         setupViews()
     }
-    
-    
-    override func didMoveToSuperview() {
-        super.didMoveToSuperview()
-    }
 }
 
 

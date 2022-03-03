@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 protocol PodcastPlayerViewDelegate: AnyObject {
     func didTapDismissButton()
@@ -61,8 +62,16 @@ class PodcastPlayerView: UIView {
     }
     
     let feedBoostHelper = FeedBoostHelper()
-    var playerHelper: PodcastPlayerHelper! = nil
-    var chat: Chat?
+    var playerHelper: PodcastPlayerHelper = PodcastPlayerHelper.sharedInstance
+    
+    var podcast: PodcastFeed! = nil
+    
+    var chat: Chat? {
+        get {
+            return podcast?.chat
+        }
+    }
+    
     var dismissButtonStyle: ModalDismissButtonStyle = .downArrow
     
     public enum ControlButtons: Int {
@@ -74,8 +83,7 @@ class PodcastPlayerView: UIView {
     }
     
     convenience init(
-        playerHelper: PodcastPlayerHelper,
-        chat: Chat?,
+        podcast: PodcastFeed,
         dismissButtonStyle: ModalDismissButtonStyle = .downArrow,
         delegate: PodcastPlayerViewDelegate,
         boostDelegate: CustomBoostDelegate
@@ -87,14 +95,15 @@ class PodcastPlayerView: UIView {
         
         self.delegate = delegate
         self.boostDelegate = boostDelegate
-        self.playerHelper = playerHelper
-        self.chat = chat
+        self.podcast = podcast
         self.dismissButtonStyle = dismissButtonStyle
-        self.playerHelper.delegate = self
         
-        if let feedObjectID = playerHelper.podcast?.objectID {
-            feedBoostHelper.configure(with: feedObjectID, and: chat)
-        }
+        self.playerHelper.addDelegate(
+            self,
+            withKey: PodcastPlayerHelper.DelegateKeys.podcastPlayerVC.rawValue
+        )
+        
+        feedBoostHelper.configure(with: podcast.objectID, and: chat)
         
         setup()
     }
@@ -119,7 +128,6 @@ class PodcastPlayerView: UIView {
         playPauseButton.layer.cornerRadius = playPauseButton.frame.size.height / 2
         currentTimeDot.layer.cornerRadius = currentTimeDot.frame.size.height / 2
         subscriptionToggleButton.layer.cornerRadius = subscriptionToggleButton.frame.size.height / 2
-        
         
         subscriptionToggleButton.setTitle(
             subscriptionToggleButtonTitle,
@@ -165,11 +173,37 @@ class PodcastPlayerView: UIView {
     }
     
     func showInfo() {
-        let imageURL = playerHelper.getImageURL()
-        loadImage(imageURL: imageURL)
-        episodeLabel.text = playerHelper.getCurrentEpisode()?.title ?? ""
+        if let imageURL = podcast?.getImageURL() {
+            loadImage(imageURL: imageURL)
+        }
+
+        episodeLabel.text = podcast.getCurrentEpisode()?.title ?? ""
         
+        loadTime()
         loadMessages()
+    }
+    
+    func loadTime() {
+        let episode = podcast.getCurrentEpisode()
+        
+        if let duration = episode?.duration {
+            setProgress(
+                duration: duration,
+                currentTime: podcast.currentTime
+            )
+        } else if let url = episode?.getAudioUrl() {
+            let asset = AVAsset(url: url)
+            asset.loadValuesAsynchronously(forKeys: ["duration"], completionHandler: {
+                let duration = Double(asset.duration.value) / Double(asset.duration.timescale)
+                
+                DispatchQueue.main.async {
+                    self.setProgress(
+                        duration: Int(duration),
+                        currentTime: self.podcast.currentTime
+                    )
+                }
+            })
+        }
     }
     
     func loadImage(imageURL: URL?) {
@@ -212,23 +246,23 @@ class PodcastPlayerView: UIView {
     }
     
     func preparePlayer() {
-        playerHelper.preparePlayer(completion: {
-            self.onEpisodePlayed()
-        })
+//        playerHelper.preparePlayer(completion: {
+//            self.onEpisodePlayed()
+//        })
     }
     
     func onEpisodePlayed() {
-        playerHelper?.updateCurrentTime()
+        playerHelper.updateCurrentTime()
         configureControls()
     }
     
     func configureControls() {
-        let isPlaying = playerHelper.isPlaying()
+        let isPlaying = playerHelper.isPlaying(podcast.feedID)
         playPauseButton.setTitle(isPlaying ? "pause" : "play_arrow", for: .normal)
         speedButton.setTitle(playerHelper.playerSpeed.speedDescription + "x", for: .normal)
     }
     
-    func setLabels(duration: Int, currentTime: Int) {
+    func setProgress(duration: Int, currentTime: Int) {
         let (ctHours, ctMinutes, ctSeconds) = currentTime.getTimeElements()
         let (dHours, dMinutes, dSeconds) = duration.getTimeElements()
         currentTimeLabel.text = "\(ctHours):\(ctMinutes):\(ctSeconds)"
@@ -247,7 +281,7 @@ class PodcastPlayerView: UIView {
     }
     
     func addMessagesFor(ts: Int) {
-        if !playerHelper.isPlaying() {
+        if !playerHelper.isPlaying(podcast.feedID) {
             return
         }
         
@@ -271,7 +305,8 @@ class PodcastPlayerView: UIView {
             updateProgressLineAndLabel(gestureXLocation: gestureXLocation)
         } else if gestureRecognizer.state == .ended {
             let progress = ((progressLineWidth.constant * 100) / durationLine.frame.size.width) / 100
-            playerHelper.seekTo(progress: Double(progress), play: wasPlayingOnDrag)
+            
+            playerHelper.seek(podcast, to: Double(progress), playAfterSeek: wasPlayingOnDrag)
             wasPlayingOnDrag = false
             
             delegate?.shouldSyncPodcast()
@@ -279,7 +314,7 @@ class PodcastPlayerView: UIView {
     }
     
     func gestureDidBegin(gestureXLocation: CGFloat) {
-        wasPlayingOnDrag = playerHelper.isPlaying()
+        wasPlayingOnDrag = playerHelper.isPlaying(podcast.feedID)
         playerHelper.shouldPause()
         updateProgressLineAndLabel(gestureXLocation: gestureXLocation)
     }
@@ -300,7 +335,7 @@ class PodcastPlayerView: UIView {
     }
     
     func togglePlayState() {
-        playerHelper.togglePlayState()
+        playerHelper.togglePlayStateFor(podcast)
         configureControls()
         delegate?.shouldReloadEpisodesTable()
     }
@@ -324,7 +359,7 @@ class PodcastPlayerView: UIView {
             delegate?.shouldShowSpeedPicker()
             break
         case ControlButtons.ShareClip.rawValue:
-            let comment = playerHelper.getPodcastComment()
+            let comment = podcast.getPodcastComment()
             delegate?.shouldShareClip(comment: comment)
             break
         case ControlButtons.Replay15.rawValue:
@@ -343,7 +378,7 @@ class PodcastPlayerView: UIView {
     
     func seekTo(seconds: Double) {
         livePodcastDataSource?.resetData()
-        playerHelper.seekTo(seconds: seconds)
+        playerHelper.seek(podcast, to: seconds)
     }
 }
 
@@ -358,7 +393,7 @@ extension PodcastPlayerView : PodcastPlayerDelegate {
     }
     
     func shouldUpdateLabels(duration: Int, currentTime: Int) {
-        setLabels(duration: duration, currentTime: currentTime)
+        setProgress(duration: duration, currentTime: currentTime)
     }
     
     func shouldInsertMessagesFor(currentTime: Int) {

@@ -40,28 +40,20 @@ public class Chat: NSManagedObject {
     var image : UIImage? = nil
     var tribeInfo: GroupsManager.TribeInfo? = nil
     
-    var podcastPlayer: PodcastPlayerHelper? = nil
-    
-    func getPodcastPlayer() -> PodcastPlayerHelper {
-        
-        if podcastPlayer == nil {
-            podcastPlayer = PodcastPlayerHelper()
-        }
-        
-        if let contentFeed = self.contentFeed {
-            podcastPlayer?.podcast = PodcastFeed.convertFrom(contentFeed: contentFeed)
-        }
-
-        podcastPlayer?.chat = self
-        
-        return podcastPlayer!
-    }
-    
     static func getChatInstance(id: Int, managedContext: NSManagedObjectContext) -> Chat {
         if let ch = Chat.getChatWith(id: id) {
             return ch
         } else {
             return Chat(context: managedContext) as Chat
+        }
+    }
+    
+    var podcast: PodcastFeed? {
+        get {
+            if let feed = contentFeed {
+                return PodcastFeed.convertFrom(contentFeed: feed)
+            }
+            return nil
         }
     }
     
@@ -534,7 +526,8 @@ public class Chat: NSManagedObject {
     
     func setMetaData(_ meta: String?) {
         if let meta = meta, !meta.isEmpty {
-            if (self.podcastPlayer?.isPlaying() ?? false) {
+            
+            if PodcastPlayerHelper.sharedInstance.isPlaying(self.id) {
                 return
             }
             
@@ -565,8 +558,8 @@ public class Chat: NSManagedObject {
     func updateMetaData() {
         let satsPerMinute = (UserDefaults.standard.value(forKey: "podcast-sats-\(self.id)") as? Int) ?? 0
         let currentTime = (UserDefaults.standard.value(forKey: "current-time-\(self.id)") as? Int) ?? 0
-        let currentEpisode = ((UserDefaults.standard.value(forKey: "current-episode-id-\(self.id)") as? Int) ?? self.podcastPlayer?.currentEpisodeId) ?? -1
-        let speed = ((UserDefaults.standard.value(forKey: "player-speed-\(self.id)") as? Float) ?? 0).speedDescription
+        let currentEpisode = (UserDefaults.standard.value(forKey: "current-episode-id-\(self.id)") as? Int) ?? -1
+        let speed = ((UserDefaults.standard.value(forKey: "player-speed-\(self.id)") as? Float) ?? 0.0).speedDescription
         
         let params: [String: AnyObject] = ["meta" :"{\"itemID\":\(currentEpisode),\"sats_per_minute\":\(satsPerMinute),\"ts\":\(currentTime), \"speed\":\(speed)}" as AnyObject]
         API.sharedInstance.updateChat(chatId: id, params: params, callback: {}, errorCallback: {})

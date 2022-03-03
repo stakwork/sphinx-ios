@@ -100,4 +100,35 @@ extension PodcastFeed {
             ?? currentEpisode
     }
     
+    func getEpisodeInfo() -> (String, String) {
+        let episode = getCurrentEpisode()
+        
+        return (episode?.title ?? "Episode with no title", episode?.imageURLPath ?? "")
+    }
+    
+    func getImageURL() -> URL? {
+        let (_, episodeImage) = getEpisodeInfo()
+        if let imageURL = URL(string: episodeImage), !episodeImage.isEmpty {
+            return imageURL
+        }
+        let urlPath = imageURLPath ?? ""
+        if let imageURL = URL(string: urlPath), !urlPath.isEmpty {
+            return imageURL
+        }
+        return nil
+    }
+    
+    func getPodcastComment() -> PodcastComment {
+        let episode = getCurrentEpisode()
+        
+        var comment = PodcastComment()
+        comment.feedId = feedID
+        comment.itemId = episode?.itemID
+        comment.title = episode?.title
+        comment.url = episode?.urlPath
+        comment.timestamp = currentTime
+        
+        return comment
+    }
+    
 }

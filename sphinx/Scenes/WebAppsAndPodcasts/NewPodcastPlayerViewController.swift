@@ -29,8 +29,16 @@ class NewPodcastPlayerViewController: UIViewController {
     
     var tableHeaderView: PodcastPlayerView?
     
-    var chat: Chat?
-    var playerHelper: PodcastPlayerHelper!
+    var podcast: PodcastFeed! = nil
+    
+    var chat: Chat? {
+        get {
+            return podcast.chat
+        }
+    }
+    
+    var playerHelper: PodcastPlayerHelper = PodcastPlayerHelper.sharedInstance
+    
     var dismissButtonStyle: ModalDismissButtonStyle!
     var tableDataSource: PodcastEpisodesDataSource!
     
@@ -56,30 +64,27 @@ class NewPodcastPlayerViewController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: .onConnectionStatusChanged, object: nil)
         
         if isBeingDismissed {
-            let playing = playerHelper.isPlaying()
+            let playing = playerHelper.isPlaying(podcast.feedID)
             delegate?.willDismissPlayer(playing: playing)
         }
     }
     
     
     static func instantiate(
-        chat: Chat?,
-        playerHelper: PodcastPlayerHelper,
+        podcast: PodcastFeed,
         dismissButtonStyle: ModalDismissButtonStyle,
         delegate: PodcastPlayerVCDelegate,
         boostDelegate: CustomBoostDelegate
     ) -> NewPodcastPlayerViewController {
         let viewController = StoryboardScene.WebApps.newPodcastPlayerViewController.instantiate()
         
-        viewController.chat = chat
-        viewController.playerHelper = playerHelper
+        viewController.podcast = podcast
         viewController.dismissButtonStyle = dismissButtonStyle
         viewController.delegate = delegate
         viewController.boostDelegate = boostDelegate
     
         return viewController
     }
-    
     
     func preparePlayer() {
         tableHeaderView?.preparePlayer()
@@ -95,34 +100,25 @@ class NewPodcastPlayerViewController: UIViewController {
     }
     
     func showEpisodesTable() {
-        if let _ = playerHelper.podcast {
-            tableHeaderView = PodcastPlayerView(
-                playerHelper: playerHelper,
-                chat: chat,
-                dismissButtonStyle: dismissButtonStyle,
-                delegate: self,
-                boostDelegate: self
-            )
-            
-            tableView.tableHeaderView = tableHeaderView!
-            
-            tableDataSource = PodcastEpisodesDataSource(tableView: tableView, playerHelper: playerHelper, delegate: self)
-        } else {
-            AlertHelper.showAlert(title: "generic.error.title".localized, message: "generic.error.message".localized, completion: {
-                if (self.navigationController?.viewControllers.count ?? 0 > 1) {
-                    self.navigationController?.popViewController(animated: true)
-                } else {
-                    self.dismiss(animated: true, completion: nil)
-                }
-            })
-        }
+        tableHeaderView = PodcastPlayerView(
+            podcast: podcast,
+            dismissButtonStyle: dismissButtonStyle,
+            delegate: self,
+            boostDelegate: self
+        )
+        
+        tableView.tableHeaderView = tableHeaderView
+        
+        tableDataSource = PodcastEpisodesDataSource(
+            tableView: tableView,
+            podcast: podcast,
+            delegate: self
+        )
     }
     
     private func updateEpisodes() {
-        if let podcastFeed = self.playerHelper?.podcast,
-           let feedUrl = podcastFeed.feedURLPath {
-            
-            ContentFeed.fetchFeedItemsInBackground(feedUrl: feedUrl, contentFeedObjectID: podcastFeed.objectID, completion: {})
+        if let feedUrl = podcast.feedURLPath {
+            ContentFeed.fetchFeedItemsInBackground(feedUrl: feedUrl, contentFeedObjectID: podcast.objectID, completion: {})
         }
     }
 }
@@ -214,7 +210,7 @@ extension NewPodcastPlayerViewController : CustomBoostDelegate {
 extension NewPodcastPlayerViewController : PickerViewDelegate {
     func didSelectValue(value: String) {
         if let floatValue = Float(value), floatValue >= 0.5 && floatValue <= 2.1 {
-            playerHelper.changeSpeedTo(value: floatValue)
+            playerHelper.changeSpeedTo(value: floatValue, on: podcast)
             tableHeaderView?.configureControls()
         }
     }

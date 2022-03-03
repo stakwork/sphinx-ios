@@ -43,7 +43,7 @@ class PodcastSatsView: UIView {
     func configureWith(chat: Chat) {
         self.chat = chat
         
-        if let podcast = chat.podcastPlayer?.podcast {
+        if let podcast = chat.podcast {
             if let storedAmount = UserDefaults.standard.value(forKey: "podcast-sats-\(chat.id)") as? Int {
                 setSliderValue(value: storedAmount)
             } else {

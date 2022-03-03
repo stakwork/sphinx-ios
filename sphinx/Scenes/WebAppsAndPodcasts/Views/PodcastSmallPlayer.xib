@@ -40,8 +40,8 @@
                         <constraint firstAttribute="width" constant="48" id="HH7-Ge-n9B"/>
                     </constraints>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is an episode title example" textAlignment="natural" lineBreakMode="middleTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VnX-QJ-Fmu">
-                    <rect key="frame" x="80" y="14" width="197.5" height="16.5"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="This is an episode title example and large" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VnX-QJ-Fmu" customClass="MarqueeLabel" customModule="MarqueeLabel">
+                    <rect key="frame" x="80" y="14" width="198" height="16.5"/>
                     <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                     <color key="textColor" name="Text"/>
                     <nil key="highlightedColor"/>
@@ -109,7 +109,7 @@
                     </constraints>
                 </view>
                 <activityIndicatorView opaque="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="h0Q-GP-O3o">
-                    <rect key="frame" x="282.5" y="12" width="20" height="20"/>
+                    <rect key="frame" x="283" y="12" width="20" height="20"/>
                 </activityIndicatorView>
             </subviews>
             <color key="backgroundColor" name="HeaderBG"/>
@@ -128,12 +128,12 @@
                 <constraint firstItem="rCV-yF-Gqb" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="Z01-M3-26N"/>
                 <constraint firstItem="KiM-LW-upY" firstAttribute="centerY" secondItem="dVC-vg-r3J" secondAttribute="centerY" id="Zou-nn-yHl"/>
                 <constraint firstItem="2uX-uJ-r0m" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="12" id="gUK-ws-LT9"/>
-                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="VnX-QJ-Fmu" secondAttribute="trailing" constant="100" id="hcc-N0-KvY"/>
                 <constraint firstItem="110-0W-YVr" firstAttribute="centerY" secondItem="dVC-vg-r3J" secondAttribute="centerY" id="juX-dh-1Zb"/>
                 <constraint firstItem="dVC-vg-r3J" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="kfV-U4-DU0"/>
                 <constraint firstAttribute="bottom" secondItem="QOz-O5-9aQ" secondAttribute="bottom" id="lGT-ai-9Zt"/>
                 <constraint firstAttribute="bottom" secondItem="XFF-oh-GuF" secondAttribute="bottom" id="lzi-dk-3BK"/>
                 <constraint firstItem="QOz-O5-9aQ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="mQT-0p-DzE"/>
+                <constraint firstItem="dVC-vg-r3J" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="h0Q-GP-O3o" secondAttribute="trailing" constant="8" id="mg0-zx-OU2"/>
                 <constraint firstItem="KiM-LW-upY" firstAttribute="leading" secondItem="dVC-vg-r3J" secondAttribute="trailing" constant="16" id="q4E-DE-OpZ"/>
                 <constraint firstAttribute="trailing" secondItem="QOz-O5-9aQ" secondAttribute="trailing" constant="100" id="qwy-Cu-mFn"/>
                 <constraint firstItem="wdM-ec-gI8" firstAttribute="leading" secondItem="XFF-oh-GuF" secondAttribute="leading" id="rGf-an-bcJ"/>
@@ -145,6 +145,9 @@
             <point key="canvasLocation" x="137.68115942028987" y="120.53571428571428"/>
         </view>
     </objects>
+    <designables>
+        <designable name="110-0W-YVr"/>
+    </designables>
     <resources>
         <image name="forward30Icon" width="347.14999389648438" height="383.70001220703125"/>
         <image name="playPodcastIcon" width="581.34002685546875" height="581.34002685546875"/>

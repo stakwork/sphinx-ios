@@ -25,17 +25,21 @@ class PodcastEpisodesDataSource : NSObject {
     let windowTopInset = getWindowInsets().top
     
     var tableView: UITableView! = nil
-    var playerHelper: PodcastPlayerHelper! = nil
+    var podcast: PodcastFeed! = nil
     
+    let playerHelper = PodcastPlayerHelper.sharedInstance
     let downloadService = DownloadService.sharedInstance
     
-    init(tableView: UITableView, playerHelper: PodcastPlayerHelper, delegate: PodcastEpisodesDSDelegate) {
+    init(
+        tableView: UITableView,
+        podcast: PodcastFeed,
+        delegate: PodcastEpisodesDSDelegate
+    ) {
+
         super.init()
         
-        PodcastEpisodeTableViewCell.podcastImage = nil
-        
         self.tableView = tableView
-        self.playerHelper = playerHelper
+        self.podcast = podcast
         self.delegate = delegate
         
         self.tableView.registerCell(PodcastEpisodeTableViewCell.self)
@@ -52,13 +56,14 @@ extension PodcastEpisodesDataSource : UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? PodcastEpisodeTableViewCell {
-            let episodes = playerHelper.podcast?.episodesArray ?? []
+            let episodes = podcast.episodesArray
             let episode = episodes[indexPath.row]
             let download = downloadService.activeDownloads[episode.urlPath ?? ""]
-            let isPlaying = (playerHelper.currentEpisode == indexPath.row && playerHelper.isPlaying())
+            
+            let isPlaying = (podcast.getCurrentEpisodeIndex() == indexPath.row && playerHelper.isPlaying(podcast.feedID))
             
             cell.configureWith(
-                podcast: playerHelper.podcast,
+                podcast: podcast,
                 and: episode,
                 download: download,
                 delegate: self,
@@ -69,7 +74,7 @@ extension PodcastEpisodesDataSource : UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        let episodes = playerHelper.podcast?.episodes ?? []
+        let episodes = podcast.episodes ?? []
         
         if episodes.count > 0 {
             return kHeaderHeight
@@ -79,7 +84,7 @@ extension PodcastEpisodesDataSource : UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let windowWidth = WindowsManager.getWindowWidth()
-        let episodes = playerHelper.podcast?.episodes ?? []
+        let episodes = podcast.episodes ?? []
         
         let headerView = EpisodesHeaderView(frame: CGRect(x: 0, y: 0, width: windowWidth, height: kHeaderHeight))
         headerView.configureWith(count: episodes.count)
@@ -94,7 +99,7 @@ extension PodcastEpisodesDataSource : UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let episodes = playerHelper.podcast?.episodes ?? []
+        let episodes = podcast.episodes ?? []
         return episodes.count
     }
     

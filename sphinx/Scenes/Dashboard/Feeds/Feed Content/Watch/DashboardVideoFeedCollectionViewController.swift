@@ -142,8 +142,16 @@ extension DashboardVideoFeedCollectionViewController {
         registerViews(for: collectionView)
         configure(collectionView)
         configureDataSource(for: collectionView)
+        addTableBottomInset(for: collectionView)
     }
     
+    func addTableBottomInset(for collectionView: UICollectionView) {
+        let windowInsets = getWindowInsets()
+        let bottomBarHeight:CGFloat = 60
+        
+        collectionView.contentInset.bottom = bottomBarHeight + windowInsets.bottom
+        collectionView.verticalScrollIndicatorInsets.bottom = bottomBarHeight + windowInsets.bottom
+    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)

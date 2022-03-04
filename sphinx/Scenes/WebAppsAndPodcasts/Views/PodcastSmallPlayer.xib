@@ -112,7 +112,7 @@
                     <rect key="frame" x="283" y="12" width="20" height="20"/>
                 </activityIndicatorView>
             </subviews>
-            <color key="backgroundColor" name="HeaderBG"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="110-0W-YVr" firstAttribute="centerX" secondItem="dVC-vg-r3J" secondAttribute="centerX" id="1E6-rz-hqX"/>
                 <constraint firstItem="wdM-ec-gI8" firstAttribute="top" secondItem="XFF-oh-GuF" secondAttribute="top" id="2Yo-Qy-KQx"/>
@@ -152,9 +152,6 @@
         <image name="forward30Icon" width="347.14999389648438" height="383.70001220703125"/>
         <image name="playPodcastIcon" width="581.34002685546875" height="581.34002685546875"/>
         <image name="podcastPlaceholder" width="1024" height="1024"/>
-        <namedColor name="HeaderBG">
-            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="ReceivedIcon">
             <color red="0.50980392156862742" green="0.70588235294117652" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

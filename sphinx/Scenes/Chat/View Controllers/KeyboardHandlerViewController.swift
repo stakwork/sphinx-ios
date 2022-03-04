@@ -92,14 +92,14 @@ class KeyboardHandlerViewController: OrientationHandlerViewController {
     func setTableInset(bottomBarHeight: CGFloat) {
         bottomContentInset = bottomBarHeight
         chatTableView.contentInset.bottom = bottomContentInset
-        chatTableView.scrollIndicatorInsets.bottom = bottomContentInset
+        chatTableView.verticalScrollIndicatorInsets.bottom = bottomContentInset
         setTopInset()
     }
     
     func setTopInset() {
         let headerHeight = windowInsets.top + kHeaderHeight
         chatTableView.contentInset.top = headerHeight
-        chatTableView.scrollIndicatorInsets.top = headerHeight
+        chatTableView.verticalScrollIndicatorInsets.top = headerHeight
     }
     
     func adjustScrollDownView(height: CGFloat, animated: Bool) {

@@ -23,6 +23,7 @@ public extension UIColor {
         public static let Body = color("Body")
         public static let BodyInverted = color("BodyInverted")
         public static let HeaderBG = color("HeaderBG")
+        public static let HeaderSemiTransparentBG = color("HeaderSemiTransparentBG")
         public static let ListBG = color("ListBG")
         public static let LightBG = color("LightBG")
         public static let ProfileBG = color("ProfileBG")

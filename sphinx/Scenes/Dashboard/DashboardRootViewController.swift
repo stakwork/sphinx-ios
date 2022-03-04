@@ -193,6 +193,7 @@ extension DashboardRootViewController {
         
         setupHeaderViews()
         listenForEvents()
+        addBlurToBottomBars()
         
         restoreProgressView.delegate = self
         
@@ -204,6 +205,19 @@ extension DashboardRootViewController {
         )
     }
     
+    func addBlurEffectTo(_ view: UIView) {
+        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.systemThinMaterial)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = view.bounds
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        view.addSubview(blurEffectView)
+        view.sendSubviewToBack(blurEffectView)
+    }
+    
+    func addBlurToBottomBars() {
+        addBlurEffectTo(bottomBarContainer)
+        addBlurEffectTo(podcastSmallPlayer)
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -353,12 +367,6 @@ extension DashboardRootViewController {
         )
         
         podcastSmallPlayer.addShadow(
-            location: VerticalLocation.top,
-            opacity: 0.2,
-            radius: 3.0
-        )
-        
-        bottomBarContainer.addShadow(
             location: VerticalLocation.top,
             opacity: 0.2,
             radius: 3.0

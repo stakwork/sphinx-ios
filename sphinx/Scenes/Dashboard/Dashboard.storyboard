@@ -88,71 +88,82 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wUN-0d-ubm" userLabel="Main Content Container View">
-                                <rect key="frame" x="0.0" y="212" width="414" height="592"/>
+                                <rect key="frame" x="0.0" y="212" width="414" height="684"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gtf-TP-Oq8" customClass="PodcastSmallPlayer" customModule="sphinx" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="804" width="414" height="0.0"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" name="HeaderSemiTransparentBG"/>
                                 <constraints>
                                     <constraint firstAttribute="height" id="3kU-jm-FvO"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U1o-Ky-NBS" userLabel="Bottom Bar Container">
-                                <rect key="frame" x="0.0" y="804" width="414" height="58"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4KI-Xy-2nt">
+                                <rect key="frame" x="0.0" y="804" width="414" height="92"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iPO-AC-fa6">
-                                        <rect key="frame" x="0.0" y="0.0" width="103.5" height="58"/>
-                                        <color key="tintColor" name="MainBottomIcons"/>
-                                        <state key="normal" image="bottomBar1"/>
-                                        <connections>
-                                            <action selector="bottomBarButtonTouched:" destination="28a-MN-hzt" eventType="touchUpInside" id="34z-AL-EK4"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yJZ-iT-Aoq">
-                                        <rect key="frame" x="103.5" y="0.0" width="103.5" height="58"/>
-                                        <color key="tintColor" name="MainBottomIcons"/>
-                                        <state key="normal" image="bottomBar2"/>
-                                        <connections>
-                                            <action selector="bottomBarButtonTouched:" destination="28a-MN-hzt" eventType="touchUpInside" id="0wJ-3e-b4h"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F8U-3b-9bJ">
-                                        <rect key="frame" x="207" y="0.0" width="103.5" height="58"/>
-                                        <color key="tintColor" name="MainBottomIcons"/>
-                                        <state key="normal" image="bottomBar3"/>
-                                        <connections>
-                                            <action selector="bottomBarButtonTouched:" destination="28a-MN-hzt" eventType="touchUpInside" id="4tA-1U-UD6"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yY0-bJ-XOQ">
-                                        <rect key="frame" x="310.5" y="0.0" width="103.5" height="58"/>
-                                        <color key="tintColor" name="MainBottomIcons"/>
-                                        <state key="normal" image="bottomBar4"/>
-                                        <connections>
-                                            <action selector="bottomBarButtonTouched:" destination="28a-MN-hzt" eventType="touchUpInside" id="nHo-PK-U6G"/>
-                                        </connections>
-                                    </button>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U1o-Ky-NBS" userLabel="Bottom Bar Container">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="58"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iPO-AC-fa6">
+                                                <rect key="frame" x="0.0" y="0.0" width="103.5" height="58"/>
+                                                <color key="tintColor" name="MainBottomIcons"/>
+                                                <state key="normal" image="bottomBar1"/>
+                                                <connections>
+                                                    <action selector="bottomBarButtonTouched:" destination="28a-MN-hzt" eventType="touchUpInside" id="34z-AL-EK4"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yJZ-iT-Aoq">
+                                                <rect key="frame" x="103.5" y="0.0" width="103.5" height="58"/>
+                                                <color key="tintColor" name="MainBottomIcons"/>
+                                                <state key="normal" image="bottomBar2"/>
+                                                <connections>
+                                                    <action selector="bottomBarButtonTouched:" destination="28a-MN-hzt" eventType="touchUpInside" id="0wJ-3e-b4h"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F8U-3b-9bJ">
+                                                <rect key="frame" x="207" y="0.0" width="103.5" height="58"/>
+                                                <color key="tintColor" name="MainBottomIcons"/>
+                                                <state key="normal" image="bottomBar3"/>
+                                                <connections>
+                                                    <action selector="bottomBarButtonTouched:" destination="28a-MN-hzt" eventType="touchUpInside" id="4tA-1U-UD6"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yY0-bJ-XOQ">
+                                                <rect key="frame" x="310.5" y="0.0" width="103.5" height="58"/>
+                                                <color key="tintColor" name="MainBottomIcons"/>
+                                                <state key="normal" image="bottomBar4"/>
+                                                <connections>
+                                                    <action selector="bottomBarButtonTouched:" destination="28a-MN-hzt" eventType="touchUpInside" id="nHo-PK-U6G"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="yJZ-iT-Aoq" secondAttribute="bottom" id="1qc-RC-5jO"/>
+                                            <constraint firstItem="iPO-AC-fa6" firstAttribute="width" secondItem="U1o-Ky-NBS" secondAttribute="width" multiplier="0.25" id="5cv-c0-hZu"/>
+                                            <constraint firstItem="iPO-AC-fa6" firstAttribute="leading" secondItem="U1o-Ky-NBS" secondAttribute="leading" id="7zN-31-X62"/>
+                                            <constraint firstAttribute="bottom" secondItem="iPO-AC-fa6" secondAttribute="bottom" id="9OP-aX-KNe"/>
+                                            <constraint firstItem="F8U-3b-9bJ" firstAttribute="top" secondItem="U1o-Ky-NBS" secondAttribute="top" id="9WM-C9-Pbv"/>
+                                            <constraint firstItem="iPO-AC-fa6" firstAttribute="top" secondItem="U1o-Ky-NBS" secondAttribute="top" id="FHx-QZ-xIo"/>
+                                            <constraint firstAttribute="bottom" secondItem="F8U-3b-9bJ" secondAttribute="bottom" id="Fw8-Ez-cgs"/>
+                                            <constraint firstItem="yJZ-iT-Aoq" firstAttribute="leading" secondItem="iPO-AC-fa6" secondAttribute="trailing" id="JKp-3W-mJD"/>
+                                            <constraint firstItem="F8U-3b-9bJ" firstAttribute="width" secondItem="U1o-Ky-NBS" secondAttribute="width" multiplier="0.25" id="Kh7-KE-bIp"/>
+                                            <constraint firstAttribute="bottom" secondItem="yY0-bJ-XOQ" secondAttribute="bottom" id="MSU-iC-GxK"/>
+                                            <constraint firstAttribute="trailing" secondItem="yY0-bJ-XOQ" secondAttribute="trailing" id="SfM-10-fnF"/>
+                                            <constraint firstItem="yY0-bJ-XOQ" firstAttribute="top" secondItem="U1o-Ky-NBS" secondAttribute="top" id="Ui5-5w-QeS"/>
+                                            <constraint firstItem="yY0-bJ-XOQ" firstAttribute="leading" secondItem="F8U-3b-9bJ" secondAttribute="trailing" id="VEa-dk-PuT"/>
+                                            <constraint firstItem="F8U-3b-9bJ" firstAttribute="leading" secondItem="yJZ-iT-Aoq" secondAttribute="trailing" id="VSS-1Z-YDy"/>
+                                            <constraint firstItem="yJZ-iT-Aoq" firstAttribute="width" secondItem="U1o-Ky-NBS" secondAttribute="width" multiplier="0.25" id="XEs-XW-i9o"/>
+                                            <constraint firstAttribute="height" constant="58" id="aa3-a5-ywD"/>
+                                            <constraint firstItem="yJZ-iT-Aoq" firstAttribute="top" secondItem="U1o-Ky-NBS" secondAttribute="top" id="kL2-5g-nks"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
-                                <color key="backgroundColor" name="DashboardHeader"/>
+                                <color key="backgroundColor" name="HeaderSemiTransparentBG"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="yJZ-iT-Aoq" secondAttribute="bottom" id="1qc-RC-5jO"/>
-                                    <constraint firstItem="iPO-AC-fa6" firstAttribute="width" secondItem="U1o-Ky-NBS" secondAttribute="width" multiplier="0.25" id="5cv-c0-hZu"/>
-                                    <constraint firstItem="iPO-AC-fa6" firstAttribute="leading" secondItem="U1o-Ky-NBS" secondAttribute="leading" id="7zN-31-X62"/>
-                                    <constraint firstAttribute="bottom" secondItem="iPO-AC-fa6" secondAttribute="bottom" id="9OP-aX-KNe"/>
-                                    <constraint firstItem="F8U-3b-9bJ" firstAttribute="top" secondItem="U1o-Ky-NBS" secondAttribute="top" id="9WM-C9-Pbv"/>
-                                    <constraint firstItem="iPO-AC-fa6" firstAttribute="top" secondItem="U1o-Ky-NBS" secondAttribute="top" id="FHx-QZ-xIo"/>
-                                    <constraint firstAttribute="bottom" secondItem="F8U-3b-9bJ" secondAttribute="bottom" id="Fw8-Ez-cgs"/>
-                                    <constraint firstItem="yJZ-iT-Aoq" firstAttribute="leading" secondItem="iPO-AC-fa6" secondAttribute="trailing" id="JKp-3W-mJD"/>
-                                    <constraint firstItem="F8U-3b-9bJ" firstAttribute="width" secondItem="U1o-Ky-NBS" secondAttribute="width" multiplier="0.25" id="Kh7-KE-bIp"/>
-                                    <constraint firstAttribute="bottom" secondItem="yY0-bJ-XOQ" secondAttribute="bottom" id="MSU-iC-GxK"/>
-                                    <constraint firstAttribute="trailing" secondItem="yY0-bJ-XOQ" secondAttribute="trailing" id="SfM-10-fnF"/>
-                                    <constraint firstItem="yY0-bJ-XOQ" firstAttribute="top" secondItem="U1o-Ky-NBS" secondAttribute="top" id="Ui5-5w-QeS"/>
-                                    <constraint firstItem="yY0-bJ-XOQ" firstAttribute="leading" secondItem="F8U-3b-9bJ" secondAttribute="trailing" id="VEa-dk-PuT"/>
-                                    <constraint firstItem="F8U-3b-9bJ" firstAttribute="leading" secondItem="yJZ-iT-Aoq" secondAttribute="trailing" id="VSS-1Z-YDy"/>
-                                    <constraint firstItem="yJZ-iT-Aoq" firstAttribute="width" secondItem="U1o-Ky-NBS" secondAttribute="width" multiplier="0.25" id="XEs-XW-i9o"/>
-                                    <constraint firstAttribute="height" constant="58" id="aa3-a5-ywD"/>
-                                    <constraint firstItem="yJZ-iT-Aoq" firstAttribute="top" secondItem="U1o-Ky-NBS" secondAttribute="top" id="kL2-5g-nks"/>
+                                    <constraint firstAttribute="trailing" secondItem="U1o-Ky-NBS" secondAttribute="trailing" id="240-Nb-JYd"/>
+                                    <constraint firstItem="U1o-Ky-NBS" firstAttribute="leading" secondItem="4KI-Xy-2nt" secondAttribute="leading" id="4m0-5h-XHz"/>
+                                    <constraint firstItem="U1o-Ky-NBS" firstAttribute="top" secondItem="4KI-Xy-2nt" secondAttribute="top" id="Bd6-rZ-X4B"/>
                                 </constraints>
                             </view>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SpQ-1c-t1N" customClass="RestoreProgressView" customModule="sphinx" customModuleProvider="target">
@@ -163,14 +174,15 @@
                         <viewLayoutGuide key="safeArea" id="fzQ-ek-GLy"/>
                         <color key="backgroundColor" name="HeaderBG"/>
                         <constraints>
-                            <constraint firstItem="U1o-Ky-NBS" firstAttribute="top" secondItem="gtf-TP-Oq8" secondAttribute="bottom" id="1Dz-HU-zSr"/>
                             <constraint firstItem="fzQ-ek-GLy" firstAttribute="trailing" secondItem="wUN-0d-ubm" secondAttribute="trailing" id="3Go-vy-318"/>
-                            <constraint firstItem="U1o-Ky-NBS" firstAttribute="leading" secondItem="fzQ-ek-GLy" secondAttribute="leading" id="9aB-yQ-Uzr"/>
                             <constraint firstItem="LVT-UQ-uni" firstAttribute="top" secondItem="fzQ-ek-GLy" secondAttribute="top" id="F9P-zV-KUc"/>
-                            <constraint firstItem="fzQ-ek-GLy" firstAttribute="trailing" secondItem="U1o-Ky-NBS" secondAttribute="trailing" id="QYz-OZ-il3"/>
+                            <constraint firstItem="fzQ-ek-GLy" firstAttribute="bottom" secondItem="U1o-Ky-NBS" secondAttribute="bottom" id="Fri-9I-0El"/>
+                            <constraint firstItem="4KI-Xy-2nt" firstAttribute="top" secondItem="gtf-TP-Oq8" secondAttribute="bottom" id="HaP-2p-et8"/>
+                            <constraint firstItem="4KI-Xy-2nt" firstAttribute="trailing" secondItem="fzQ-ek-GLy" secondAttribute="trailing" id="LfB-Lt-sKo"/>
                             <constraint firstItem="gtf-TP-Oq8" firstAttribute="leading" secondItem="fzQ-ek-GLy" secondAttribute="leading" id="Z0W-LS-oBN"/>
                             <constraint firstItem="SpQ-1c-t1N" firstAttribute="top" secondItem="04F-3T-MXy" secondAttribute="top" id="aK9-mP-16R"/>
-                            <constraint firstItem="gtf-TP-Oq8" firstAttribute="top" secondItem="wUN-0d-ubm" secondAttribute="bottom" id="bMG-PO-qAa"/>
+                            <constraint firstAttribute="bottom" secondItem="wUN-0d-ubm" secondAttribute="bottom" id="bMG-PO-qAa"/>
+                            <constraint firstAttribute="bottom" secondItem="4KI-Xy-2nt" secondAttribute="bottom" id="c0w-cd-cwa"/>
                             <constraint firstItem="LVT-UQ-uni" firstAttribute="leading" secondItem="04F-3T-MXy" secondAttribute="leading" id="cya-Ci-DC6"/>
                             <constraint firstItem="875-dS-sJM" firstAttribute="top" secondItem="LVT-UQ-uni" secondAttribute="bottom" id="d5N-xu-Czf"/>
                             <constraint firstItem="SpQ-1c-t1N" firstAttribute="leading" secondItem="fzQ-ek-GLy" secondAttribute="leading" id="dne-2x-mlS"/>
@@ -179,9 +191,9 @@
                             <constraint firstItem="Yxo-is-Yxg" firstAttribute="leading" secondItem="fzQ-ek-GLy" secondAttribute="leading" id="k52-X2-PNK"/>
                             <constraint firstItem="fzQ-ek-GLy" firstAttribute="trailing" secondItem="Yxo-is-Yxg" secondAttribute="trailing" id="nBj-ld-zfe"/>
                             <constraint firstItem="SpQ-1c-t1N" firstAttribute="trailing" secondItem="fzQ-ek-GLy" secondAttribute="trailing" id="qNM-cn-N7P"/>
+                            <constraint firstItem="4KI-Xy-2nt" firstAttribute="leading" secondItem="fzQ-ek-GLy" secondAttribute="leading" id="s4q-lo-Lo1"/>
                             <constraint firstItem="gtf-TP-Oq8" firstAttribute="trailing" secondItem="fzQ-ek-GLy" secondAttribute="trailing" id="uIc-x9-AlF"/>
                             <constraint firstItem="fzQ-ek-GLy" firstAttribute="trailing" secondItem="875-dS-sJM" secondAttribute="trailing" id="vTA-fb-0lP"/>
-                            <constraint firstItem="fzQ-ek-GLy" firstAttribute="bottom" secondItem="U1o-Ky-NBS" secondAttribute="bottom" id="wLl-Ng-wzd"/>
                             <constraint firstItem="wUN-0d-ubm" firstAttribute="top" secondItem="Yxo-is-Yxg" secondAttribute="bottom" id="xS0-nE-gfu"/>
                             <constraint firstAttribute="trailing" secondItem="LVT-UQ-uni" secondAttribute="trailing" id="xTb-QH-NNc"/>
                             <constraint firstItem="875-dS-sJM" firstAttribute="leading" secondItem="fzQ-ek-GLy" secondAttribute="leading" id="yQl-Jl-Buj"/>
@@ -189,7 +201,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="bottomBarContainer" destination="U1o-Ky-NBS" id="o9G-CM-Krn"/>
+                        <outlet property="bottomBarContainer" destination="4KI-Xy-2nt" id="kAP-kX-3sc"/>
                         <outlet property="dashboardNavigationTabs" destination="875-dS-sJM" id="fkL-TD-2su"/>
                         <outlet property="headerView" destination="LVT-UQ-uni" id="SJj-CU-kUC"/>
                         <outlet property="mainContentContainerView" destination="wUN-0d-ubm" id="ooF-t6-Mp7"/>
@@ -568,6 +580,9 @@
         </namedColor>
         <namedColor name="HeaderBG">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="HeaderSemiTransparentBG">
+            <color red="1" green="1" blue="1" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="ListBG">
             <color red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

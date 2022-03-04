@@ -28,6 +28,6 @@ extension DashboardRootViewController : PodcastPlayerDelegate {
     func showSmallPodcastPlayer() {
         podcastSmallPlayerHeight.constant = 64
         podcastSmallPlayer.layoutIfNeeded()
-        podcastSmallPlayer.isHidden =  false
+        podcastSmallPlayer.isHidden = false
     }
 }

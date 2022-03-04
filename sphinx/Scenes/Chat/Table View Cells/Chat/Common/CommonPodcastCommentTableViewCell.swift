@@ -271,7 +271,7 @@ class CommonPodcastCommentTableViewCell : CommonReplyTableViewCell, AudioCollect
     }
 }
 
-extension CommonPodcastCommentTableViewCell : PodcastPlayerDelegate {
+extension CommonPodcastCommentTableViewCell : PodcastPlayerRowDelegate {
     func shouldToggleLoadingWheel(loading: Bool) {
         toggleLoadingAudio(loading: loading)
     }

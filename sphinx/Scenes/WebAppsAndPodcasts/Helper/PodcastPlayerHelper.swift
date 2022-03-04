@@ -12,11 +12,9 @@ import MediaPlayer
 import SwiftyJSON
 
 @objc protocol PodcastPlayerDelegate : class {
-    func shouldUpdateLabels(duration: Int, currentTime: Int)
-    func shouldToggleLoadingWheel(loading: Bool)
-    @objc optional func shouldUpdatePlayButton()
-    @objc optional func shouldUpdateEpisodeInfo()
-    @objc optional func shouldInsertMessagesFor(currentTime: Int)
+    func playingState(podcastId: String, duration: Int, currentTime: Int)
+    func pausedState(podcastId: String, duration: Int, currentTime: Int)
+    func loadingState(podcastId: String, loading: Bool)
 }
 
 class PodcastPlayerHelper {
@@ -30,27 +28,66 @@ class PodcastPlayerHelper {
         return Static.instance
     }
     
-    var delegates = [String:PodcastPlayerDelegate]()
-    
-    var player: AVPlayer?
-    var playingTimer : Timer? = nil
-    var paymentsTimer : Timer? = nil
-    var playingEpisodeImage: UIImage? = nil
-    
-    let audioPlayerHelper = PlayAudioHelper()
-    let podcastPaymentsHelper = PodcastPaymentsHelper()
-    
-    var playedSeconds: Int = 0
-    
-    public static let kClipPrefix = "clip::"
-    public static let kBoostPrefix = "boost::"
-    public static let kSecondsBeforePMT = 60
+    var delegates = [String : PodcastPlayerDelegate]()
     
     enum DelegateKeys: String {
         case smallPlayer = "smallPlayer"
         case podcastPlayerVC = "podcastPlayerVC"
         case dashboard = "dashboard"
     }
+    
+    func addDelegate(
+        _ del: PodcastPlayerDelegate,
+        withKey key: String
+    ) {
+        self.delegates[key] = del
+    }
+    
+    func removeFromDelegatesWith(key: String) {
+        self.delegates.removeValue(forKey: key)
+    }
+    
+    var player: AVPlayer?
+    var playingTimer : Timer? = nil
+    var paymentsTimer : Timer? = nil
+    var playingEpisodeImage: UIImage? = nil
+    var playedSeconds: Int = 0
+    
+    func setAudioSession() {
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [.allowAirPlay, .allowBluetooth, .allowBluetoothA2DP, .duckOthers])
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch _ {}
+        
+        let session = AVAudioSession.sharedInstance()
+        NotificationCenter.default.removeObserver(self, name: AVAudioSession.interruptionNotification, object: session)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.handleInterruption(notification:)), name: AVAudioSession.interruptionNotification, object: session)
+    }
+    
+    @objc func handleInterruption(notification: NSNotification) {
+        if notification.name != AVAudioSession.interruptionNotification || notification.userInfo == nil{
+            return
+        }
+        let info = notification.userInfo!
+        var intValue: UInt = 0
+        
+        (info[AVAudioSessionInterruptionTypeKey] as! NSValue).getValue(&intValue)
+        if let interruptionType = AVAudioSession.InterruptionType(rawValue: intValue) {
+            switch interruptionType {
+            case .began:
+                self.shouldPause()
+            default:
+                break
+            }
+        }
+    }
+    
+    let audioPlayerHelper = PlayAudioHelper()
+    let podcastPaymentsHelper = PodcastPaymentsHelper()
+    
+    public static let kClipPrefix = "clip::"
+    public static let kBoostPrefix = "boost::"
+    public static let kSecondsBeforePMT = 60
     
     let sounds = [
         "skip30v1.caf",
@@ -118,35 +155,9 @@ class PodcastPlayerHelper {
         }
     }
     
-    var loading = false {
-        didSet {
-            for d in delegates.values {
-                d.shouldToggleLoadingWheel(loading: loading)
-            }
-        }
-    }
-    
-    func addDelegate(
-        _ del: PodcastPlayerDelegate,
-        withKey key: String
-    ) {
-        self.delegates[key] = del
-    }
-    
-    func removeFromDelegatesWith(key: String) {
-        self.delegates.removeValue(forKey: key)
-    }
-    
     func resetPodcast(_ podcast: PodcastFeed) {
         stopPlaying()
-        
         self.podcast = podcast
-    }
-    
-    
-    func toggleFeedSubscriptionState() {
-        podcast?.isSubscribedToFromSearch.toggle()
-        CoreDataManager.sharedManager.saveContext()
     }
     
     func getBoostMessage(amount: Int) -> String? {
@@ -190,44 +201,12 @@ class PodcastPlayerHelper {
         podcast?.episodesArray.firstIndex(where: { $0.id == episode.id })
     }
     
-    func setAudioSession() {
-        do {
-            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [.allowAirPlay, .allowBluetooth, .allowBluetoothA2DP, .duckOthers])
-            try AVAudioSession.sharedInstance().setActive(true)
-        } catch _ {}
-        
-        let session = AVAudioSession.sharedInstance()
-        NotificationCenter.default.removeObserver(self, name: AVAudioSession.interruptionNotification, object: session)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.handleInterruption(notification:)), name: AVAudioSession.interruptionNotification, object: session)
-    }
-    
-    @objc func handleInterruption(notification: NSNotification) {
-        if notification.name != AVAudioSession.interruptionNotification || notification.userInfo == nil{
-            return
-        }
-        let info = notification.userInfo!
-        var intValue: UInt = 0
-        
-        (info[AVAudioSessionInterruptionTypeKey] as! NSValue).getValue(&intValue)
-        if let interruptionType = AVAudioSession.InterruptionType(rawValue: intValue) {
-            switch interruptionType {
-            case .began:
-                self.shouldPause()
-                
-                for d in self.delegates.values {
-                    d.shouldUpdatePlayButton?()
-                }
-                
-            default:
-                break
-            }
-        }
-    }
-    
-    func prepareEpisode(index: Int,
-                        autoPlay: Bool = false,
-                        resetTime: Bool = false,
-                        completion: @escaping () -> ()) {
+    func prepareEpisode(
+        index: Int,
+        autoPlay: Bool = false,
+        resetTime: Bool = false,
+        completion: @escaping () -> ()
+    ) {
         
         guard let podcast = self.podcast else {
             return
@@ -240,7 +219,6 @@ class PodcastPlayerHelper {
         let episode = podcast.episodesArray[index]
         
         if !episode.isAvailable() {
-            completion()
             return
         }
         
@@ -248,7 +226,9 @@ class PodcastPlayerHelper {
             return
         }
         
-        loading = true
+        for d in self.delegates.values {
+            d.loadingState(podcastId: podcast.feedID, loading: true)
+        }
         
         currentEpisode = index
         currentEpisodeId = Int(episode.itemID) ?? -1
@@ -256,19 +236,18 @@ class PodcastPlayerHelper {
         
         loadEpisodeImage()
         
-        loadEpisode(autoPlay: autoPlay, completion: completion)
+        loadAndPlayEpisode(autoPlay: autoPlay, completion: completion)
     }
     
-    func getCurrentEpisodeUrl() -> URL? {
-        return getCurrentEpisode()?.getAudioUrl()
-    }
-    
-    func loadEpisode(autoPlay: Bool, completion: @escaping () -> ()) {
+    func loadAndPlayEpisode(autoPlay: Bool, completion: @escaping () -> ()) {
         shouldPause()
         
-        if let url = getCurrentEpisodeUrl() {
+        if let url = getCurrentEpisode()?.getAudioUrl() {
+            
             let asset = AVAsset(url: url)
+            
             asset.loadValuesAsynchronously(forKeys: ["duration"], completionHandler: {
+                
                 let playerItem = AVPlayerItem(asset: asset)
                 
                 if self.player == nil {
@@ -277,18 +256,15 @@ class PodcastPlayerHelper {
                 } else {
                     self.player?.replaceCurrentItem(with: playerItem)
                 }
+                
                 self.player?.seek(to: CMTime(seconds: Double(self.currentTime), preferredTimescale: 1))
                 
                 DispatchQueue.main.async {
-                    self.updateCurrentTime()
-                    
                     if autoPlay {
                         self.shouldPlay()
                     } else {
-                        self.player?.pause()
-                        self.loading = false
+                        self.shouldPause()
                     }
-                    
                     completion()
                 }
             })
@@ -320,6 +296,10 @@ class PodcastPlayerHelper {
     }
     
     @objc func updateCurrentTime() {
+        guard let podcast = podcast else {
+            return
+        }
+        
         guard let player = player, let item = player.currentItem else {
             return
         }
@@ -330,14 +310,10 @@ class PodcastPlayerHelper {
         if currentTime == self.currentTime + 1 {
             
             for d in delegates.values {
-                d.shouldInsertMessagesFor?(currentTime: currentTime)
+                d.playingState(podcastId: podcast.feedID, duration: duration, currentTime: currentTime)
             }
             
             configurePlayingInfoCenter(duration: duration, currentTime: currentTime)
-        }
-        
-        for d in delegates.values {
-            d.shouldUpdateLabels(duration: duration, currentTime: currentTime)
         }
         
         self.currentTime = currentTime
@@ -350,10 +326,6 @@ class PodcastPlayerHelper {
     func didEndEpisode() {
         shouldPause()
         
-        for d in delegates.values {
-            d.shouldUpdatePlayButton?()
-        }
-        
         if let podcast = self.podcast {
             let _ = move(podcast, toEpisodeWith: currentEpisode - 1)
             chat?.updateMetaData()
@@ -361,8 +333,6 @@ class PodcastPlayerHelper {
     }
     
     @objc func updatePlayedTime() {
-        loading = false
-        
         playedSeconds = playedSeconds + 1
         
         if playedSeconds > 0 && playedSeconds % PodcastPlayerHelper.kSecondsBeforePMT == 0 {
@@ -370,6 +340,115 @@ class PodcastPlayerHelper {
                 self.processPayment()
             }
         }
+    }
+    
+    func processPayment(amount: Int? = nil) {
+        podcastPaymentsHelper
+            .processPaymentsFor(
+                podcastFeed: podcast,
+                boostAmount: amount,
+                itemId: getCurrentEpisode()?.itemID ?? "",
+                currentTime: currentTime
+            )
+    }
+    
+    func shouldDeleteEpisode(episode: PodcastEpisode) {
+        episode.shouldDeleteFile(deleteCompletion: ({
+//            for d in self.delegates.values {
+//                d.shouldUpdateEpisodeInfo?()
+//            }
+        }))
+    }
+    
+    func shouldPause() {
+        
+        if isPlaying() {
+            player?.pause()
+            playingTimer?.invalidate()
+            paymentsTimer?.invalidate()
+        }
+        
+        guard let podcast = podcast else {
+            return
+        }
+        
+        guard let player = player, let item = player.currentItem else {
+            return
+        }
+        
+        let duration = Int(Double(item.asset.duration.value) / Double(item.asset.duration.timescale))
+        let currentTime = Int(round(Double(player.currentTime().value) / Double(player.currentTime().timescale)))
+        
+        for d in delegates.values {
+            d.pausedState(podcastId: podcast.feedID, duration: duration, currentTime: currentTime)
+        }
+    }
+    
+    func shouldPlay() {
+        guard let podcast = podcast else {
+            return
+        }
+        
+        setAudioSession()
+        
+        for d in delegates.values {
+            d.loadingState(podcastId: podcast.feedID, loading: true)
+        }
+        
+        if let player = player {
+            player.seek(to: CMTime(seconds: Double(currentTime), preferredTimescale: 1))
+            player.playImmediately(atRate: self.playerSpeed)
+            
+            guard let item = player.currentItem else {
+                return
+            }
+            
+            let duration = Int(Double(item.asset.duration.value) / Double(item.asset.duration.timescale))
+            
+            for d in delegates.values {
+                d.playingState(podcastId: podcast.feedID, duration: duration, currentTime: currentTime)
+            }
+            
+            configureTimer()
+        } else {
+            prepareEpisode(index: currentEpisode, autoPlay: true, completion: {})
+        }
+    }
+    
+    func isPlaying(_ chatId: Int) -> Bool {
+        
+        let playing = player?.timeControlStatus == AVPlayer.TimeControlStatus.playing ||
+                    player?.timeControlStatus == AVPlayer.TimeControlStatus.waitingToPlayAtSpecifiedRate
+        
+        return playing && self.chat?.id == chatId
+    }
+    
+    func isPlaying(
+        _ podcastId: String? = nil
+    ) -> Bool {
+        
+        let playing = player?.timeControlStatus == AVPlayer.TimeControlStatus.playing ||
+                    player?.timeControlStatus == AVPlayer.TimeControlStatus.waitingToPlayAtSpecifiedRate
+        
+        guard let podcastId = podcastId else {
+            return playing
+        }
+        
+        return playing && self.podcast?.feedID == podcastId
+    }
+    
+    func togglePlayStateFor(
+        _ podcast: PodcastFeed
+    ) {
+        if podcast.feedID != self.podcast?.feedID {
+            resetPodcast(podcast)
+        }
+        if isPlaying(podcast.feedID) {
+            shouldPause()
+        } else {
+            shouldPlay()
+        }
+        chat?.updateMetaData()
     }
     
     func changeSpeedTo(
@@ -390,90 +469,6 @@ class PodcastPlayerHelper {
         chat?.updateMetaData()
     }
     
-    
-    func processPayment(amount: Int? = nil) {
-        podcastPaymentsHelper
-            .processPaymentsFor(
-                podcastFeed: podcast,
-                boostAmount: amount,
-                itemId: getCurrentEpisode()?.itemID ?? "",
-                currentTime: currentTime
-            )
-    }
-    
-    func togglePlayStateFor(
-        _ podcast: PodcastFeed
-    ) {
-        if podcast.feedID != self.podcast?.feedID {
-            resetPodcast(podcast)
-        }
-        if isPlaying(podcast.feedID) {
-            shouldPause()
-        } else {
-            shouldPlay()
-        }
-        chat?.updateMetaData()
-    }
-    
-    func shouldDeleteEpisode(episode: PodcastEpisode) {
-        episode.shouldDeleteFile(deleteCompletion: ({
-            for d in self.delegates.values {
-                d.shouldUpdateEpisodeInfo?()
-            }
-        }))
-    }
-    
-    func shouldPause() {
-        player?.pause()
-        playingTimer?.invalidate()
-        paymentsTimer?.invalidate()
-        
-        for d in delegates.values {
-            d.shouldUpdatePlayButton?()
-        }
-    }
-    
-    func shouldPlay() {
-        setAudioSession()
-        
-        loading = true
-        
-        if let player = player {
-            player.seek(to: CMTime(seconds: Double(currentTime), preferredTimescale: 1))
-            player.playImmediately(atRate: self.playerSpeed)
-            
-            if currentTime == 0 {
-                for d in delegates.values {
-                    d.shouldInsertMessagesFor?(currentTime: currentTime)
-                }
-            }
-            configureTimer()
-            
-            for d in delegates.values {
-                d.shouldUpdatePlayButton?()
-                d.shouldUpdateEpisodeInfo?()
-            }
-        } else {
-            prepareEpisode(index: currentEpisode, autoPlay: true, completion: {})
-        }
-    }
-    
-    func isPlaying(_ chatId: Int) -> Bool {
-        
-        let playing = player?.timeControlStatus == AVPlayer.TimeControlStatus.playing ||
-                    player?.timeControlStatus == AVPlayer.TimeControlStatus.waitingToPlayAtSpecifiedRate
-        
-        return playing && self.chat?.id == chatId
-    }
-    
-    func isPlaying(_ podcastId: String) -> Bool {
-        
-        let playing = player?.timeControlStatus == AVPlayer.TimeControlStatus.playing ||
-                    player?.timeControlStatus == AVPlayer.TimeControlStatus.waitingToPlayAtSpecifiedRate
-        
-        return playing && self.podcast?.feedID == podcastId
-    }
-    
     func stopPlaying() {
         player?.pause()
         player = nil
@@ -483,6 +478,31 @@ class PodcastPlayerHelper {
         
         paymentsTimer?.invalidate()
         paymentsTimer = nil
+    }
+    
+    func shouldUpdateTimeLabels(
+        progress: Double,
+        podcastId: String
+    ) {
+        guard let podcast = podcast else {
+            return
+        }
+        
+        guard let player = player, let item = player.currentItem else {
+            return
+        }
+        
+        let playing = isPlaying(podcastId)
+        let duration = Double(item.asset.duration.value) / Double(item.asset.duration.timescale)
+        let currentTime = (duration * progress)
+        
+        for d in delegates.values {
+            if playing {
+                d.playingState(podcastId: podcast.feedID, duration: Int(duration), currentTime: Int(currentTime))
+            } else {
+                d.pausedState(podcastId: podcast.feedID, duration: Int(duration), currentTime: Int(currentTime))
+            }
+        }
     }
     
     func seek(
@@ -527,10 +547,6 @@ class PodcastPlayerHelper {
             
             if playing {
                 player.playImmediately(atRate: self.playerSpeed)
-            } else {
-                for d in delegates.values {
-                    d.shouldUpdateLabels(duration: duration, currentTime: currentTime)
-                }
             }
             
             configurePlayingInfoCenter(duration: duration, currentTime: currentTime, forceUpdate: true)
@@ -545,23 +561,32 @@ class PodcastPlayerHelper {
         }
     }
     
-    func shouldUpdateTimeLabels(progress: Double? = nil) {
-        guard let player = player, let item = player.currentItem else {
-            return
+    func move(
+        _ podcast: PodcastFeed,
+        toEpisodeWith index: Int
+    ) -> Bool {
+        if podcast.feedID != self.podcast?.feedID {
+            resetPodcast(podcast)
         }
         
-        let duration = Double(item.asset.duration.value) / Double(item.asset.duration.timescale)
-        
-        for d in delegates.values {
-            if let progress = progress {
-                let currentTime = (duration * progress)
-                d.shouldUpdateLabels(duration: Int(duration), currentTime: Int(currentTime))
-            } else {
-                d.shouldUpdateLabels(duration: Int(duration), currentTime: Int(currentTime))
-            }
+        if index < self.getEpisodes().count && index >= 0 {
+            prepareEpisode(
+                index: index,
+                autoPlay: isPlaying(podcast.feedID),
+                resetTime: true,
+                completion: {}
+            )
+            return true
         }
+        return false
     }
     
+    func toggleFeedSubscriptionState() {
+        podcast?.isSubscribedToFromSearch.toggle()
+        CoreDataManager.sharedManager.saveContext()
+    }
+    
+    //Info Center
     func configurePlayingInfoCenter(duration: Int, currentTime: Int, forceUpdate: Bool = false) {
         let playingCenter = MPNowPlayingInfoCenter.default()
 
@@ -614,20 +639,10 @@ class PodcastPlayerHelper {
         
         MPRemoteCommandCenter.shared().playCommand.addTarget {event in
             self.shouldPlay()
-            
-            for d in self.delegates.values {
-                d.shouldUpdatePlayButton?()
-            }
-            
             return .success
         }
         MPRemoteCommandCenter.shared().pauseCommand.addTarget {event in
             self.shouldPause()
-            
-            for d in self.delegates.values {
-                d.shouldUpdatePlayButton?()
-            }
-            
             return .success
         }
         MPRemoteCommandCenter.shared().skipBackwardCommand.addTarget {event in
@@ -644,25 +659,5 @@ class PodcastPlayerHelper {
             }
             return .commandFailed
         }
-    }
-    
-    func move(
-        _ podcast: PodcastFeed,
-        toEpisodeWith index: Int
-    ) -> Bool {
-        if podcast.feedID != self.podcast?.feedID {
-            resetPodcast(podcast)
-        }
-        
-        if index < self.getEpisodes().count && index >= 0 {
-            prepareEpisode(
-                index: index,
-                autoPlay: isPlaying(podcast.feedID),
-                resetTime: true,
-                completion: {}
-            )
-            return true
-        }
-        return false
     }
 }

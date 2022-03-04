@@ -72,7 +72,11 @@ class PodcastSmallPlayer: UIView {
         self.podcast = podcast
         self.delegate = delegate
         
-        showPodcastInfo()
+        audioLoading = true
+        
+        showPodcastInfo(completion: {
+            self.audioLoading = false
+        })
         
         playerHelper.addDelegate(
             self,
@@ -94,12 +98,16 @@ class PodcastSmallPlayer: UIView {
         return isHidden ? 0 : self.frame.height
     }
 
-    func showPodcastInfo() {
-        showEpisodeInfo()
+    func showPodcastInfo(
+        completion: (() -> ())? = nil
+    ) {
+        showEpisodeInfo(completion: completion)
         configureControls()
     }
     
-    func showEpisodeInfo() {
+    func showEpisodeInfo(
+        completion: (() -> ())? = nil
+    ) {
         let episode = podcast.getCurrentEpisode()
         
         episodeLabel.text = episode?.title ?? "Episode with no title"
@@ -123,16 +131,19 @@ class PodcastSmallPlayer: UIView {
                 duration: duration,
                 currentTime: podcast.currentTime
             )
+            completion?()
         } else if let url = episode?.getAudioUrl() {
             let asset = AVAsset(url: url)
             asset.loadValuesAsynchronously(forKeys: ["duration"], completionHandler: {
-                let duration = Double(asset.duration.value) / Double(asset.duration.timescale)
+                let duration = Int(Double(asset.duration.value) / Double(asset.duration.timescale))
+                episode?.duration = duration
                 
                 DispatchQueue.main.async {
                     self.setProgress(
-                        duration: Int(duration),
+                        duration: duration,
                         currentTime: self.podcast.currentTime
                     )
+                    completion?()
                 }
             })
         }
@@ -193,19 +204,29 @@ class PodcastSmallPlayer: UIView {
 }
 
 extension PodcastSmallPlayer : PodcastPlayerDelegate {
-    func shouldUpdateLabels(duration: Int, currentTime: Int) {
+    func playingState(podcastId: String, duration: Int, currentTime: Int) {
+        guard podcastId == podcast.feedID else {
+            return
+        }
+        audioLoading = false
         setProgress(duration: duration, currentTime: currentTime)
-    }
-    
-    func shouldToggleLoadingWheel(loading: Bool) {
-        audioLoading = loading
-    }
-    
-    func shouldUpdatePlayButton() {
         configureControls()
     }
     
-    func shouldUpdateEpisodeInfo() {
+    func pausedState(podcastId: String, duration: Int, currentTime: Int) {
+        guard podcastId == podcast.feedID else {
+            return
+        }
+        audioLoading = false
+        setProgress(duration: duration, currentTime: currentTime)
+        configureControls()
+    }
+    
+    func loadingState(podcastId: String, loading: Bool) {
+        guard podcastId == podcast.feedID else {
+            return
+        }
         showEpisodeInfo()
+        audioLoading = loading
     }
 }

@@ -34,19 +34,6 @@ class FeedLoaderHelper {
             return
         }
         
-//        if
-//            let podcastChatId = podcast?.chat?.id,
-//            let chatId = chat?.id,
-//            podcastChatId == chatId && isPlaying()
-//        {
-//            DelayPerformedHelper.performAfterDelay(seconds: 0.5) {
-//                callback(true)
-//            }
-//            return
-//        }
-        
-//        resetPodcast()
-        
         if let contentFeed = chat.contentFeed {
             let podcast = PodcastFeed.convertFrom(contentFeed: contentFeed)
             callback(podcast)

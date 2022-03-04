@@ -129,12 +129,11 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
 
 extension DashboardRootViewController {
     
-    private func presentPodcastPlayerFor(
+    func presentPodcastPlayerFor(
         _ podcast: PodcastFeed
     ) {
         let podcastFeedVC = NewPodcastPlayerViewController.instantiate(
             podcast: podcast,
-            dismissButtonStyle: .backArrow,
             delegate: self,
             boostDelegate: self
         )

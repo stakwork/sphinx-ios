@@ -3,19 +3,13 @@ import UIKit
 
 extension DashboardRootViewController: PodcastPlayerVCDelegate {
     
-    func shouldDismissPlayerView() {
-        navigationController?.popViewController(animated: true)
-        
-        try? feedSearchResultsContainerViewController
-            .fetchedResultsController
-            .performFetch()
-    }
-    
-    func willDismissPlayer(playing: Bool) {}
+    func willDismissPlayer() {}
     
     func shouldShareClip(comment: PodcastComment) {}
     
-    func shouldGoToPlayer() {}
+    func shouldGoToPlayer(podcast: PodcastFeed) {
+        presentPodcastPlayerFor(podcast)
+    }
 }
 
 extension DashboardRootViewController : CustomBoostDelegate {

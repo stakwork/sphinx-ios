@@ -9,10 +9,9 @@
 import UIKit
 
 protocol PodcastPlayerVCDelegate: AnyObject {
-    func willDismissPlayer(playing: Bool)
+    func willDismissPlayer()
     func shouldShareClip(comment: PodcastComment)
-    func shouldGoToPlayer()
-    func shouldDismissPlayerView()
+    func shouldGoToPlayer(podcast: PodcastFeed)
 }
 
 protocol CustomBoostDelegate: AnyObject {
@@ -39,7 +38,6 @@ class NewPodcastPlayerViewController: UIViewController {
     
     var playerHelper: PodcastPlayerHelper = PodcastPlayerHelper.sharedInstance
     
-    var dismissButtonStyle: ModalDismissButtonStyle!
     var tableDataSource: PodcastEpisodesDataSource!
     
     let downloadService = DownloadService.sharedInstance
@@ -64,22 +62,19 @@ class NewPodcastPlayerViewController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: .onConnectionStatusChanged, object: nil)
         
         if isBeingDismissed {
-            let playing = playerHelper.isPlaying(podcast.feedID)
-            delegate?.willDismissPlayer(playing: playing)
+            delegate?.willDismissPlayer()
         }
     }
     
     
     static func instantiate(
         podcast: PodcastFeed,
-        dismissButtonStyle: ModalDismissButtonStyle,
         delegate: PodcastPlayerVCDelegate,
         boostDelegate: CustomBoostDelegate
     ) -> NewPodcastPlayerViewController {
         let viewController = StoryboardScene.WebApps.newPodcastPlayerViewController.instantiate()
         
         viewController.podcast = podcast
-        viewController.dismissButtonStyle = dismissButtonStyle
         viewController.delegate = delegate
         viewController.boostDelegate = boostDelegate
     
@@ -87,9 +82,7 @@ class NewPodcastPlayerViewController: UIViewController {
     }
     
     func preparePlayer() {
-        tableHeaderView?.preparePlayer()
         tableView.reloadData()
-        
         updateEpisodes()
     }
     
@@ -102,7 +95,6 @@ class NewPodcastPlayerViewController: UIViewController {
     func showEpisodesTable() {
         tableHeaderView = PodcastPlayerView(
             podcast: podcast,
-            dismissButtonStyle: dismissButtonStyle,
             delegate: self,
             boostDelegate: self
         )
@@ -173,12 +165,6 @@ extension NewPodcastPlayerViewController : PodcastPlayerViewDelegate {
             contentFeed?.isSubscribedToFromSearch.toggle()
             contentFeed?.managedObjectContext?.saveContext()
         }
-    }
-    
-    
-    func didTapDismissButton() {
-        delegate?.shouldDismissPlayerView()
-        dismiss(animated: true, completion: nil)
     }
     
     func shouldReloadEpisodesTable() {

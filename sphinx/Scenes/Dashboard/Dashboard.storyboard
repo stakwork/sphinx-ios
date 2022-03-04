@@ -91,6 +91,13 @@
                                 <rect key="frame" x="0.0" y="212" width="414" height="592"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gtf-TP-Oq8" customClass="PodcastSmallPlayer" customModule="sphinx" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="804" width="414" height="0.0"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" id="3kU-jm-FvO"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U1o-Ky-NBS" userLabel="Bottom Bar Container">
                                 <rect key="frame" x="0.0" y="804" width="414" height="58"/>
                                 <subviews>
@@ -156,12 +163,14 @@
                         <viewLayoutGuide key="safeArea" id="fzQ-ek-GLy"/>
                         <color key="backgroundColor" name="HeaderBG"/>
                         <constraints>
+                            <constraint firstItem="U1o-Ky-NBS" firstAttribute="top" secondItem="gtf-TP-Oq8" secondAttribute="bottom" id="1Dz-HU-zSr"/>
                             <constraint firstItem="fzQ-ek-GLy" firstAttribute="trailing" secondItem="wUN-0d-ubm" secondAttribute="trailing" id="3Go-vy-318"/>
                             <constraint firstItem="U1o-Ky-NBS" firstAttribute="leading" secondItem="fzQ-ek-GLy" secondAttribute="leading" id="9aB-yQ-Uzr"/>
-                            <constraint firstItem="U1o-Ky-NBS" firstAttribute="top" secondItem="wUN-0d-ubm" secondAttribute="bottom" id="B80-wB-M2Z"/>
                             <constraint firstItem="LVT-UQ-uni" firstAttribute="top" secondItem="fzQ-ek-GLy" secondAttribute="top" id="F9P-zV-KUc"/>
                             <constraint firstItem="fzQ-ek-GLy" firstAttribute="trailing" secondItem="U1o-Ky-NBS" secondAttribute="trailing" id="QYz-OZ-il3"/>
+                            <constraint firstItem="gtf-TP-Oq8" firstAttribute="leading" secondItem="fzQ-ek-GLy" secondAttribute="leading" id="Z0W-LS-oBN"/>
                             <constraint firstItem="SpQ-1c-t1N" firstAttribute="top" secondItem="04F-3T-MXy" secondAttribute="top" id="aK9-mP-16R"/>
+                            <constraint firstItem="gtf-TP-Oq8" firstAttribute="top" secondItem="wUN-0d-ubm" secondAttribute="bottom" id="bMG-PO-qAa"/>
                             <constraint firstItem="LVT-UQ-uni" firstAttribute="leading" secondItem="04F-3T-MXy" secondAttribute="leading" id="cya-Ci-DC6"/>
                             <constraint firstItem="875-dS-sJM" firstAttribute="top" secondItem="LVT-UQ-uni" secondAttribute="bottom" id="d5N-xu-Czf"/>
                             <constraint firstItem="SpQ-1c-t1N" firstAttribute="leading" secondItem="fzQ-ek-GLy" secondAttribute="leading" id="dne-2x-mlS"/>
@@ -170,6 +179,7 @@
                             <constraint firstItem="Yxo-is-Yxg" firstAttribute="leading" secondItem="fzQ-ek-GLy" secondAttribute="leading" id="k52-X2-PNK"/>
                             <constraint firstItem="fzQ-ek-GLy" firstAttribute="trailing" secondItem="Yxo-is-Yxg" secondAttribute="trailing" id="nBj-ld-zfe"/>
                             <constraint firstItem="SpQ-1c-t1N" firstAttribute="trailing" secondItem="fzQ-ek-GLy" secondAttribute="trailing" id="qNM-cn-N7P"/>
+                            <constraint firstItem="gtf-TP-Oq8" firstAttribute="trailing" secondItem="fzQ-ek-GLy" secondAttribute="trailing" id="uIc-x9-AlF"/>
                             <constraint firstItem="fzQ-ek-GLy" firstAttribute="trailing" secondItem="875-dS-sJM" secondAttribute="trailing" id="vTA-fb-0lP"/>
                             <constraint firstItem="fzQ-ek-GLy" firstAttribute="bottom" secondItem="U1o-Ky-NBS" secondAttribute="bottom" id="wLl-Ng-wzd"/>
                             <constraint firstItem="wUN-0d-ubm" firstAttribute="top" secondItem="Yxo-is-Yxg" secondAttribute="bottom" id="xS0-nE-gfu"/>
@@ -183,6 +193,8 @@
                         <outlet property="dashboardNavigationTabs" destination="875-dS-sJM" id="fkL-TD-2su"/>
                         <outlet property="headerView" destination="LVT-UQ-uni" id="SJj-CU-kUC"/>
                         <outlet property="mainContentContainerView" destination="wUN-0d-ubm" id="ooF-t6-Mp7"/>
+                        <outlet property="podcastSmallPlayer" destination="gtf-TP-Oq8" id="Gek-Ng-FNy"/>
+                        <outlet property="podcastSmallPlayerHeight" destination="3kU-jm-FvO" id="php-0t-oJ4"/>
                         <outlet property="restoreProgressView" destination="SpQ-1c-t1N" id="AoU-hB-n7m"/>
                         <outlet property="searchBar" destination="52N-Az-4on" id="tUt-tA-AbQ"/>
                         <outlet property="searchBarContainer" destination="Yxo-is-Yxg" id="jGg-w4-PSq"/>

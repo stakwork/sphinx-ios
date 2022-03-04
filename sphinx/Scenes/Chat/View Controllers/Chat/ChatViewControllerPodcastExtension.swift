@@ -22,8 +22,6 @@ extension ChatViewController : CustomBoostDelegate {
 }
 
 extension ChatViewController : PodcastPlayerVCDelegate {
-    func shouldDismissPlayerView() {}
-    
     func loadPodcastFeed() {
         guard let chat = chat else {
             return
@@ -42,14 +40,11 @@ extension ChatViewController : PodcastPlayerVCDelegate {
         accessoryView.configureReplyFor(podcastComment: comment)
     }
     
-    func shouldGoToPlayer() {
-        guard let chat = chat else {
-            return
-        }
-        presentPodcastPlayer(chat: chat)
+    func shouldGoToPlayer(podcast: PodcastFeed) {
+        presentPodcastPlayerFor(podcast)
     }
     
-    func willDismissPlayer(playing: Bool) {
+    func willDismissPlayer() {
         accessoryView.addKeyboardObservers()
         accessoryView.show(animated: false)
     }
@@ -65,20 +60,19 @@ extension ChatViewController : PodcastPlayerVCDelegate {
         )
     }
     
-    func presentPodcastPlayer(chat: Chat) {
-        if let podcast = chat.podcast {
-            accessoryView.hide()
-            
-            let podcastFeedVC = NewPodcastPlayerViewController.instantiate(
-                podcast: podcast,
-                dismissButtonStyle: .downArrow,
-                delegate: self,
-                boostDelegate: self
-            )
+    func presentPodcastPlayerFor(
+        _ podcast: PodcastFeed
+    ) {
+        accessoryView.hide()
+        
+        let podcastFeedVC = NewPodcastPlayerViewController.instantiate(
+            podcast: podcast,
+            delegate: self,
+            boostDelegate: self
+        )
 
-            podcastFeedVC.modalPresentationStyle = .automatic
+        podcastFeedVC.modalPresentationStyle = .automatic
 
-            present(podcastFeedVC, animated: true, completion: nil)
-        }
+        present(podcastFeedVC, animated: true, completion: nil)
     }
 }

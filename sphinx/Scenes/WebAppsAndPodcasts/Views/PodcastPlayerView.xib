@@ -4,7 +4,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
-        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -28,7 +27,6 @@
                 <outlet property="currentTimeDot" destination="Mtu-jO-ZFp" id="RPs-Ww-FWa"/>
                 <outlet property="currentTimeLabel" destination="iDW-iO-P0o" id="6to-ww-AnB"/>
                 <outlet property="customBoostView" destination="Lvk-UX-m39" id="X8S-r1-rFA"/>
-                <outlet property="dismissButton" destination="UgS-Pv-vWR" id="ngh-kF-LVR"/>
                 <outlet property="durationLabel" destination="w3F-zG-zqr" id="6kB-qM-bEh"/>
                 <outlet property="durationLine" destination="hlq-Ib-TyG" id="K6Y-Vv-GPb"/>
                 <outlet property="episodeImageView" destination="DK5-KL-hVN" id="9M6-al-2cS"/>
@@ -67,25 +65,8 @@
                         <constraint firstAttribute="height" constant="150" id="vhi-xJ-kpQ"/>
                     </constraints>
                 </imageView>
-                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UgS-Pv-vWR" userLabel="Dismiss Button">
-                    <rect key="frame" x="20" y="54" width="50" height="50"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="50" id="EaN-jF-gj7"/>
-                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="a05-02-V8D"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="34"/>
-                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <state key="normal">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <imageReference key="image" image="chevron.down" catalog="system" symbolScale="large" renderingMode="template"/>
-                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="20" scale="large" weight="bold"/>
-                    </state>
-                    <connections>
-                        <action selector="dismissButtonTouched" destination="-1" eventType="touchUpInside" id="zFR-QI-jS6"/>
-                    </connections>
-                </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9rE-5F-wP7" userLabel="Subscription Button">
-                    <rect key="frame" x="300" y="66" width="94" height="26"/>
+                    <rect key="frame" x="305" y="66" width="89" height="26"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="13"/>
                     <inset key="contentEdgeInsets" minX="10" minY="5" maxX="10" maxY="5"/>
@@ -300,14 +281,12 @@
                 <constraint firstItem="DK5-KL-hVN" firstAttribute="top" secondItem="Btf-dk-gGg" secondAttribute="top" constant="-44" id="5wn-nm-p8G"/>
                 <constraint firstAttribute="trailing" secondItem="yFL-Ym-JIV" secondAttribute="trailing" id="8v3-Y7-p4L"/>
                 <constraint firstItem="Bkm-ne-hyH" firstAttribute="top" secondItem="DK5-KL-hVN" secondAttribute="top" id="Bks-IE-cB2"/>
-                <constraint firstItem="UgS-Pv-vWR" firstAttribute="leading" secondItem="Btf-dk-gGg" secondAttribute="leading" constant="20" id="Bq1-Fl-ccJ"/>
                 <constraint firstItem="Btf-dk-gGg" firstAttribute="trailing" secondItem="9rE-5F-wP7" secondAttribute="trailing" constant="20" id="Caz-xs-ZrQ"/>
-                <constraint firstItem="UgS-Pv-vWR" firstAttribute="top" secondItem="Btf-dk-gGg" secondAttribute="top" constant="10" id="ChW-zH-pam"/>
+                <constraint firstItem="9rE-5F-wP7" firstAttribute="top" secondItem="Btf-dk-gGg" secondAttribute="top" constant="22" id="JPc-oQ-yMH"/>
                 <constraint firstAttribute="trailing" secondItem="DK5-KL-hVN" secondAttribute="trailing" id="JWg-FU-hZF"/>
                 <constraint firstAttribute="bottom" secondItem="yFL-Ym-JIV" secondAttribute="bottom" id="R9j-2d-yZW"/>
                 <constraint firstItem="DK5-KL-hVN" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="XLc-B4-Eus"/>
                 <constraint firstItem="P08-M5-arT" firstAttribute="top" secondItem="DK5-KL-hVN" secondAttribute="top" id="Z0h-kf-Gsg"/>
-                <constraint firstItem="9rE-5F-wP7" firstAttribute="centerY" secondItem="UgS-Pv-vWR" secondAttribute="centerY" id="a1U-FK-guI"/>
                 <constraint firstItem="Bkm-ne-hyH" firstAttribute="leading" secondItem="Btf-dk-gGg" secondAttribute="leading" id="aH4-dp-Qar"/>
                 <constraint firstItem="P08-M5-arT" firstAttribute="trailing" secondItem="DK5-KL-hVN" secondAttribute="trailing" id="jFW-wA-m9P"/>
                 <constraint firstItem="P08-M5-arT" firstAttribute="bottom" secondItem="DK5-KL-hVN" secondAttribute="bottom" id="se2-JK-1TA"/>
@@ -321,7 +300,6 @@
     </objects>
     <resources>
         <image name="back15Icon" width="27" height="30"/>
-        <image name="chevron.down" catalog="system" width="128" height="72"/>
         <image name="clipIcon" width="28" height="28"/>
         <image name="forw30Icon" width="27" height="30"/>
         <image name="imageFullScreenShadow" width="414" height="105"/>

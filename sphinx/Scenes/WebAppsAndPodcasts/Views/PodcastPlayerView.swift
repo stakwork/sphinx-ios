@@ -10,14 +10,12 @@ import UIKit
 import AVFoundation
 
 protocol PodcastPlayerViewDelegate: AnyObject {
-    func didTapDismissButton()
     func didTapSubscriptionToggleButton()
     func shouldReloadEpisodesTable()
     func shouldShareClip(comment: PodcastComment)
     func shouldSyncPodcast()
     func shouldShowSpeedPicker()
 }
-
 
 class PodcastPlayerView: UIView {
     
@@ -38,7 +36,6 @@ class PodcastPlayerView: UIView {
     @IBOutlet weak var progressLine: UIView!
     @IBOutlet weak var progressLineWidth: NSLayoutConstraint!
     @IBOutlet weak var speedButton: UIButton!
-    @IBOutlet weak var dismissButton: UIButton!
     @IBOutlet weak var playPauseButton: UIButton!
     @IBOutlet weak var subscriptionToggleButton: UIButton!
     @IBOutlet weak var currentTimeDot: UIView!
@@ -72,8 +69,6 @@ class PodcastPlayerView: UIView {
         }
     }
     
-    var dismissButtonStyle: ModalDismissButtonStyle = .downArrow
-    
     public enum ControlButtons: Int {
         case PlayerSpeed
         case ShareClip
@@ -84,7 +79,6 @@ class PodcastPlayerView: UIView {
     
     convenience init(
         podcast: PodcastFeed,
-        dismissButtonStyle: ModalDismissButtonStyle = .downArrow,
         delegate: PodcastPlayerViewDelegate,
         boostDelegate: CustomBoostDelegate
     ) {
@@ -96,7 +90,6 @@ class PodcastPlayerView: UIView {
         self.delegate = delegate
         self.boostDelegate = boostDelegate
         self.podcast = podcast
-        self.dismissButtonStyle = dismissButtonStyle
         
         self.playerHelper.addDelegate(
             self,
@@ -136,7 +129,6 @@ class PodcastPlayerView: UIView {
         
         subscriptionToggleButton.isHidden = chat != nil
         
-        setupDismissButton()
         showInfo()
         configureControls()
         addDotGesture()
@@ -154,21 +146,6 @@ class PodcastPlayerView: UIView {
         if chat == nil {
             shareClipButton.alpha = 0.3
             shareClipButton.isUserInteractionEnabled = false
-        }
-    }
-    
-    func setupDismissButton() {
-        switch dismissButtonStyle {
-        case .downArrow:
-            dismissButton.setImage(
-                UIImage(systemName: "chevron.down"),
-                for: .normal
-            )
-        case .backArrow:
-            dismissButton.setImage(
-                UIImage(systemName: "chevron.backward"),
-                for: .normal
-            )
         }
     }
     
@@ -249,19 +226,10 @@ class PodcastPlayerView: UIView {
         }
     }
     
-    func preparePlayer() {
-//        playerHelper.preparePlayer(completion: {
-//            self.onEpisodePlayed()
-//        })
-    }
-    
-    func onEpisodePlayed() {
-        playerHelper.updateCurrentTime()
-        configureControls()
-    }
-    
-    func configureControls() {
-        let isPlaying = playerHelper.isPlaying(podcast.feedID)
+    func configureControls(
+        forcePlaying: Bool? = nil
+    ) {
+        let isPlaying = forcePlaying ?? playerHelper.isPlaying(podcast.feedID)
         playPauseButton.setTitle(isPlaying ? "pause" : "play_arrow", for: .normal)
         speedButton.setTitle(playerHelper.playerSpeed.speedDescription + "x", for: .normal)
     }
@@ -340,12 +308,7 @@ class PodcastPlayerView: UIView {
     
     func togglePlayState() {
         playerHelper.togglePlayStateFor(podcast)
-        configureControls()
         delegate?.shouldReloadEpisodesTable()
-    }
-    
-    @IBAction func dismissButtonTouched() {
-        delegate?.didTapDismissButton()
     }
     
     @IBAction func subscriptionToggleButtonTouched() {
@@ -418,6 +381,7 @@ extension PodcastPlayerView : PodcastPlayerDelegate {
         guard podcastId == podcast.feedID else {
             return
         }
+        configureControls(forcePlaying: loading)
         showInfo()
         delegate?.shouldReloadEpisodesTable()
         audioLoading = loading

@@ -10,13 +10,17 @@ import CoreData
 
 
 class DashboardRootViewController: RootViewController {
+    
     @IBOutlet weak var bottomBarContainer: UIView!
+    @IBOutlet weak var podcastSmallPlayer: PodcastSmallPlayer!
     @IBOutlet weak var headerView: ChatListHeader!
     @IBOutlet weak var searchBar: UIView!
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var searchBarContainer: UIView!
     @IBOutlet weak var mainContentContainerView: UIView!
     @IBOutlet weak var restoreProgressView: RestoreProgressView!
+    
+    @IBOutlet weak var podcastSmallPlayerHeight: NSLayoutConstraint!
     
     @IBOutlet weak var dashboardNavigationTabs: CustomSegmentedControl! {
         didSet {
@@ -40,8 +44,9 @@ class DashboardRootViewController: RootViewController {
     internal let onionConnector = SphinxOnionConnector.sharedInstance
     internal let socketManager = SphinxSocketManager.sharedInstance
     internal let refreshControl = UIRefreshControl()
-    internal let newBubbleHelper = NewMessageBubbleHelper()
     
+    internal let newBubbleHelper = NewMessageBubbleHelper()
+    internal let podcastPlayerHelper = PodcastPlayerHelper.sharedInstance
 
     internal lazy var chatsListViewModel: ChatListViewModel = {
         ChatListViewModel(contactsService: contactsService)
@@ -60,7 +65,6 @@ class DashboardRootViewController: RootViewController {
             resultsDelegate: self
         )
     }()
-    
     
     internal lazy var contactChatsContainerViewController: ChatsContainerViewController = {
         ChatsContainerViewController.instantiate(
@@ -130,7 +134,6 @@ class DashboardRootViewController: RootViewController {
         }
     }
     
-    
     var feedViewMode: FeedViewMode = .rootList
     
     var indicesOfTabsWithNewMessages: [Int] {
@@ -194,6 +197,11 @@ extension DashboardRootViewController {
         restoreProgressView.delegate = self
         
         isLoading = true
+        
+        podcastPlayerHelper.addDelegate(
+            self,
+            withKey: PodcastPlayerHelper.DelegateKeys.dashboard.rawValue
+        )
     }
     
     
@@ -341,6 +349,12 @@ extension DashboardRootViewController {
         searchBarContainer.addShadow(
             location: VerticalLocation.bottom,
             opacity: 0.15,
+            radius: 3.0
+        )
+        
+        podcastSmallPlayer.addShadow(
+            location: VerticalLocation.top,
+            opacity: 0.2,
             radius: 3.0
         )
         

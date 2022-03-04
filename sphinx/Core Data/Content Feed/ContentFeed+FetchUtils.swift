@@ -17,6 +17,12 @@ extension ContentFeed {
         let feeds: [ContentFeed] = CoreDataManager.sharedManager.getAllOfType(entityName: "ContentFeed", sortDescriptors: sortDescriptors)
         return feeds
     }
+    
+    public static func getFeedWith(feedId: String) -> ContentFeed? {
+        let predicate = Predicates.matching(feedID: feedId)
+        let feed: ContentFeed? = CoreDataManager.sharedManager.getObjectOfTypeWith(predicate: predicate, sortDescriptors: [], entityName: "ContentFeed")
+        return feed
+    }
 
     public enum Predicates {
         

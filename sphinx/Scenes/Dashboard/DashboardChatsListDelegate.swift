@@ -9,9 +9,12 @@ protocol DashboardChatsListDelegate: AnyObject {
         orContact contact: UserContact?
     )
     
-    
     func viewControllerDidRefreshChats(
         _ viewController: UIViewController,
         using refreshControl: UIRefreshControl
+    )
+
+    func viewControllerContentScrolled(
+        scrollView: UIScrollView
     )
 }

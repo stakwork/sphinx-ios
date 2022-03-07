@@ -17,6 +17,7 @@ class DashboardVideoFeedCollectionViewController: UICollectionViewController {
     var onVideoEpisodeCellSelected: ((NSManagedObjectID) -> Void)!
     var onVideoFeedCellSelected: ((NSManagedObjectID) -> Void)!
     var onNewResultsFetched: ((Int) -> Void)!
+    var onContentScrolled: ((UIScrollView) -> Void)?
 
     private var managedObjectContext: NSManagedObjectContext!
     private var fetchedResultsController: NSFetchedResultsController<ContentFeed>!
@@ -42,7 +43,8 @@ extension DashboardVideoFeedCollectionViewController {
         interSectionSpacing: CGFloat = 20.0,
         onVideoEpisodeCellSelected: ((NSManagedObjectID) -> Void)!,
         onVideoFeedCellSelected: ((NSManagedObjectID) -> Void)!,
-        onNewResultsFetched: @escaping ((Int) -> Void) = { _ in }
+        onNewResultsFetched: @escaping ((Int) -> Void) = { _ in },
+        onContentScrolled: ((UIScrollView) -> Void)? = nil
     ) -> DashboardVideoFeedCollectionViewController {
         let viewController = StoryboardScene
             .Dashboard
@@ -57,6 +59,7 @@ extension DashboardVideoFeedCollectionViewController {
         viewController.onVideoEpisodeCellSelected = onVideoEpisodeCellSelected
         viewController.onVideoFeedCellSelected = onVideoFeedCellSelected
         viewController.onNewResultsFetched = onNewResultsFetched
+        viewController.onContentScrolled = onContentScrolled
         
         viewController.fetchedResultsController = Self.makeFetchedResultsController(using: managedObjectContext)
         viewController.fetchedResultsController.delegate = viewController
@@ -147,7 +150,7 @@ extension DashboardVideoFeedCollectionViewController {
     
     func addTableBottomInset(for collectionView: UICollectionView) {
         let windowInsets = getWindowInsets()
-        let bottomBarHeight:CGFloat = 60
+        let bottomBarHeight:CGFloat = 64
         
         collectionView.contentInset.bottom = bottomBarHeight + windowInsets.bottom
         collectionView.verticalScrollIndicatorInsets.bottom = bottomBarHeight + windowInsets.bottom
@@ -294,6 +297,10 @@ extension DashboardVideoFeedCollectionViewController {
         collectionView.showsVerticalScrollIndicator = false
         
         collectionView.delegate = self
+    }
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        onContentScrolled?(scrollView)
     }
 }
 

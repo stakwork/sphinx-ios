@@ -15,6 +15,7 @@ class AllTribeFeedsCollectionViewController: UICollectionViewController {
     var interCellSpacing: CGFloat = 6.0
 
     var onCellSelected: ((NSManagedObjectID) -> Void)!
+    var onContentScrolled: ((UIScrollView) -> Void)?
     var onNewResultsFetched: ((Int) -> Void)!
 
     private var managedObjectContext: NSManagedObjectContext!
@@ -38,7 +39,8 @@ extension AllTribeFeedsCollectionViewController {
         managedObjectContext: NSManagedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext,
         interSectionSpacing: CGFloat = 20.0,
         onCellSelected: ((NSManagedObjectID) -> Void)!,
-        onNewResultsFetched: @escaping ((Int) -> Void) = { _ in }
+        onNewResultsFetched: @escaping ((Int) -> Void) = { _ in },
+        onContentScrolled: ((UIScrollView) -> Void)? = nil
     ) -> AllTribeFeedsCollectionViewController {
         let viewController = StoryboardScene
             .Dashboard
@@ -50,6 +52,7 @@ extension AllTribeFeedsCollectionViewController {
         viewController.interSectionSpacing = interSectionSpacing
         viewController.onCellSelected = onCellSelected
         viewController.onNewResultsFetched = onNewResultsFetched
+        viewController.onContentScrolled = onContentScrolled
         
         viewController.fetchedResultsController = Self.makeFetchedResultsController(using: managedObjectContext)
         viewController.fetchedResultsController.delegate = viewController
@@ -231,6 +234,10 @@ extension AllTribeFeedsCollectionViewController {
         collectionView.showsVerticalScrollIndicator = false
         
         collectionView.delegate = self
+    }
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        onContentScrolled?(scrollView)
     }
 }
 

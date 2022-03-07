@@ -2,10 +2,11 @@ import UIKit
 
 
 class ChatsCollectionViewController: UICollectionViewController {
+    
     var chatListObjects: [ChatListCommonObject] = []
     var onChatSelected: ((ChatListCommonObject) -> Void)?
+    var onContentScrolled: ((UIScrollView) -> Void)?
     var onRefresh: ((UIRefreshControl) -> Void)?
-
 
     private var currentDataSnapshot: DataSourceSnapshot!
     private var dataSource: DataSource!
@@ -25,12 +26,14 @@ extension ChatsCollectionViewController {
     static func instantiate(
         chatListObjects: [ChatListCommonObject] = [],
         onChatSelected: ((ChatListCommonObject) -> Void)? = nil,
+        onContentScrolled: ((UIScrollView) -> Void)? = nil,
         onRefresh: ((UIRefreshControl) -> Void)? = nil
     ) -> ChatsCollectionViewController {
         let viewController = StoryboardScene.Dashboard.chatsCollectionViewController.instantiate()
         
         viewController.chatListObjects = chatListObjects
         viewController.onChatSelected = onChatSelected
+        viewController.onContentScrolled = onContentScrolled
         viewController.onRefresh = onRefresh
 
         return viewController
@@ -107,7 +110,7 @@ extension ChatsCollectionViewController {
     
     func addTableBottomInset(for collectionView: UICollectionView) {
         let windowInsets = getWindowInsets()
-        let bottomBarHeight:CGFloat = 90
+        let bottomBarHeight:CGFloat = 64
         
         collectionView.contentInset.bottom = bottomBarHeight + windowInsets.bottom
         collectionView.verticalScrollIndicatorInsets.bottom = bottomBarHeight + windowInsets.bottom
@@ -222,6 +225,10 @@ extension ChatsCollectionViewController {
             action: #selector(handleRefreshOnPull(refreshControl:)),
             for: .valueChanged
         )
+    }
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        onContentScrolled?(scrollView)
     }
 }
 

@@ -73,6 +73,10 @@ private extension ChatsContainerViewController {
     func handleChatsListRefresh(refreshControl: UIRefreshControl) {
         chatsListDelegate?.viewControllerDidRefreshChats(self, using: refreshControl)
     }
+    
+    func handleChatsScroll(scrollView: UIScrollView) {
+        chatsListDelegate?.viewControllerContentScrolled(scrollView: scrollView)
+    }
 }
 
 
@@ -84,6 +88,7 @@ extension ChatsContainerViewController {
             .instantiate(
                 chatListObjects: chats,
                 onChatSelected: handleChatSelection(_:),
+                onContentScrolled: handleChatsScroll(scrollView:),
                 onRefresh: handleChatsListRefresh(refreshControl:)
             )
         

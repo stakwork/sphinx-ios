@@ -11,6 +11,7 @@ import CoreData
 
 class DashboardRootViewController: RootViewController {
     
+    @IBOutlet weak var bottomBar: UIView!
     @IBOutlet weak var bottomBarContainer: UIView!
     @IBOutlet weak var podcastSmallPlayer: PodcastSmallPlayer!
     @IBOutlet weak var headerView: ChatListHeader!
@@ -20,6 +21,7 @@ class DashboardRootViewController: RootViewController {
     @IBOutlet weak var mainContentContainerView: UIView!
     @IBOutlet weak var restoreProgressView: RestoreProgressView!
     
+    @IBOutlet weak var bottomBarBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var podcastSmallPlayerHeight: NSLayoutConstraint!
     
     @IBOutlet weak var dashboardNavigationTabs: CustomSegmentedControl! {
@@ -159,6 +161,8 @@ class DashboardRootViewController: RootViewController {
         
         return indices
     }
+    
+    var lastContentOffset: CGFloat = 0
 }
 
 
@@ -206,7 +210,7 @@ extension DashboardRootViewController {
     }
     
     func addBlurEffectTo(_ view: UIView) {
-        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.systemThinMaterial)
+        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.systemUltraThinMaterial)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = view.bounds
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]

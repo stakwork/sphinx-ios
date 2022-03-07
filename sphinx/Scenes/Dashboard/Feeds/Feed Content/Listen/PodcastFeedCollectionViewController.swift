@@ -9,6 +9,7 @@ class PodcastFeedCollectionViewController: UICollectionViewController {
     var onPodcastEpisodeCellSelected: ((NSManagedObjectID) -> Void)!
     var onSubscribedPodcastFeedCellSelected: ((PodcastFeed) -> Void)!
     var onNewResultsFetched: ((Int) -> Void)!
+    var onContentScrolled: ((UIScrollView) -> Void)?
 
     private var managedObjectContext: NSManagedObjectContext!
     private var fetchedResultsController: NSFetchedResultsController<ContentFeed>!
@@ -33,7 +34,8 @@ extension PodcastFeedCollectionViewController {
         interSectionSpacing: CGFloat = 10.0,
         onPodcastEpisodeCellSelected: @escaping ((NSManagedObjectID) -> Void) = { _ in },
         onSubscribedPodcastFeedCellSelected: @escaping ((PodcastFeed) -> Void) = { _ in },
-        onNewResultsFetched: @escaping ((Int) -> Void) = { _ in }
+        onNewResultsFetched: @escaping ((Int) -> Void) = { _ in },
+        onContentScrolled: ((UIScrollView) -> Void)? = nil
     ) -> PodcastFeedCollectionViewController {
         let viewController = StoryboardScene.Dashboard.podcastFeedCollectionViewController.instantiate()
 
@@ -45,6 +47,7 @@ extension PodcastFeedCollectionViewController {
         viewController.onPodcastEpisodeCellSelected = onPodcastEpisodeCellSelected
         viewController.onSubscribedPodcastFeedCellSelected = onSubscribedPodcastFeedCellSelected
         viewController.onNewResultsFetched = onNewResultsFetched
+        viewController.onContentScrolled = onContentScrolled
 
         viewController.fetchedResultsController = Self.makeFetchedResultsController(using: managedObjectContext)
         viewController.fetchedResultsController.delegate = viewController
@@ -142,7 +145,7 @@ extension PodcastFeedCollectionViewController {
     
     func addTableBottomInset(for collectionView: UICollectionView) {
         let windowInsets = getWindowInsets()
-        let bottomBarHeight:CGFloat = 60
+        let bottomBarHeight:CGFloat = 64
         
         collectionView.contentInset.bottom = bottomBarHeight + windowInsets.bottom
         collectionView.verticalScrollIndicatorInsets.bottom = bottomBarHeight + windowInsets.bottom
@@ -247,6 +250,10 @@ extension PodcastFeedCollectionViewController {
         collectionView.showsVerticalScrollIndicator = false
         collectionView.contentInset = .init(top: 20, left: 0, bottom: 0, right: 0)
         collectionView.delegate = self
+    }
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        onContentScrolled?(scrollView)
     }
 }
 

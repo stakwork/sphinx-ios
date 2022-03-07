@@ -19,6 +19,7 @@ class DashboardNewsletterFeedCollectionViewController: UICollectionViewControlle
     var onNewsletterItemCellSelected: ((NSManagedObjectID) -> Void)!
     var onNewsletterFeedCellSelected: ((NSManagedObjectID) -> Void)!
     var onNewResultsFetched: ((Int) -> Void)!
+    var onContentScrolled: ((UIScrollView) -> Void)?
 
     private var managedObjectContext: NSManagedObjectContext!
     private var fetchedResultsController: NSFetchedResultsController<ContentFeed>!
@@ -44,7 +45,8 @@ extension DashboardNewsletterFeedCollectionViewController {
         interSectionSpacing: CGFloat = 20.0,
         onNewsletterItemCellSelected: ((NSManagedObjectID) -> Void)!,
         onNewsletterFeedCellSelected: ((NSManagedObjectID) -> Void)!,
-        onNewResultsFetched: @escaping ((Int) -> Void) = { _ in }
+        onNewResultsFetched: @escaping ((Int) -> Void) = { _ in },
+        onContentScrolled: ((UIScrollView) -> Void)? = nil
     ) -> DashboardNewsletterFeedCollectionViewController {
         
         let viewController = StoryboardScene
@@ -59,6 +61,7 @@ extension DashboardNewsletterFeedCollectionViewController {
         viewController.onNewsletterItemCellSelected = onNewsletterItemCellSelected
         viewController.onNewsletterFeedCellSelected = onNewsletterFeedCellSelected
         viewController.onNewResultsFetched = onNewResultsFetched
+        viewController.onContentScrolled = onContentScrolled
         
         viewController.fetchedResultsController = Self.makeFetchedResultsController(using: managedObjectContext)
         viewController.fetchedResultsController.delegate = viewController
@@ -149,7 +152,7 @@ extension DashboardNewsletterFeedCollectionViewController {
     
     func addTableBottomInset(for collectionView: UICollectionView) {
         let windowInsets = getWindowInsets()
-        let bottomBarHeight:CGFloat = 60
+        let bottomBarHeight:CGFloat = 64
         
         collectionView.contentInset.bottom = bottomBarHeight + windowInsets.bottom
         collectionView.verticalScrollIndicatorInsets.bottom = bottomBarHeight + windowInsets.bottom
@@ -296,6 +299,10 @@ extension DashboardNewsletterFeedCollectionViewController {
         collectionView.showsVerticalScrollIndicator = false
         
         collectionView.delegate = self
+    }
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        onContentScrolled?(scrollView)
     }
 }
 

@@ -39,6 +39,10 @@ protocol DashboardFeedsListContainerViewControllerDelegate: AnyObject {
         _ viewController: UIViewController,
         didSelectNewsletterItemWithID newsletterItemID: NSManagedObjectID
     )
+    
+    func viewControllerContentScrolled(
+        scrollView: UIScrollView
+    )
 }
 
 
@@ -77,7 +81,8 @@ class DashboardFeedsContainerViewController: UIViewController {
         AllTribeFeedsCollectionViewController.instantiate(
             managedObjectContext: managedObjectContext,
             onCellSelected: handleAllFeedsCellSelection(_:),
-            onNewResultsFetched: handleNewResultsFetch(_:)
+            onNewResultsFetched: handleNewResultsFetch(_:),
+            onContentScrolled: handleFeedScroll(scrollView:)
         )
     }()
     
@@ -87,7 +92,8 @@ class DashboardFeedsContainerViewController: UIViewController {
             managedObjectContext: managedObjectContext,
             onPodcastEpisodeCellSelected: handlePodcastEpisodeCellSelection(_:),
             onSubscribedPodcastFeedCellSelected: handlePodcastFeedCellSelection(_:),
-            onNewResultsFetched: handleNewResultsFetch(_:)
+            onNewResultsFetched: handleNewResultsFetch(_:),
+            onContentScrolled: handleFeedScroll(scrollView:)
         )
     }()
     
@@ -97,7 +103,8 @@ class DashboardFeedsContainerViewController: UIViewController {
             managedObjectContext: managedObjectContext,
             onVideoEpisodeCellSelected: handleVideoEpisodeCellSelection(_:),
             onVideoFeedCellSelected: handleVideoFeedCellSelection(_:),
-            onNewResultsFetched: handleNewResultsFetch(_:)
+            onNewResultsFetched: handleNewResultsFetch(_:),
+            onContentScrolled: handleFeedScroll(scrollView:)
         )
     }()
     
@@ -106,7 +113,8 @@ class DashboardFeedsContainerViewController: UIViewController {
             managedObjectContext: managedObjectContext,
             onNewsletterItemCellSelected: handleNewsletterItemCellSelection(_:),
             onNewsletterFeedCellSelected: handleNewsletterFeedCellSelection(_:),
-            onNewResultsFetched: handleNewResultsFetch(_:)
+            onNewResultsFetched: handleNewResultsFetch(_:),
+            onContentScrolled: handleFeedScroll(scrollView:)
         )
     }()
     
@@ -291,6 +299,10 @@ extension DashboardFeedsContainerViewController {
                 )
             }
         }
+    }
+    
+    func handleFeedScroll(scrollView: UIScrollView) {
+        feedsListContainerDelegate?.viewControllerContentScrolled(scrollView: scrollView)
     }
 }
 

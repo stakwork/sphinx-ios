@@ -101,7 +101,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4KI-Xy-2nt">
                                 <rect key="frame" x="0.0" y="804" width="414" height="92"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U1o-Ky-NBS" userLabel="Bottom Bar Container">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U1o-Ky-NBS" userLabel="Bottom Bar">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="58"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iPO-AC-fa6">
@@ -201,6 +201,8 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="bottomBar" destination="U1o-Ky-NBS" id="UxE-QJ-Uwb"/>
+                        <outlet property="bottomBarBottomConstraint" destination="Fri-9I-0El" id="60y-7V-V80"/>
                         <outlet property="bottomBarContainer" destination="4KI-Xy-2nt" id="kAP-kX-3sc"/>
                         <outlet property="dashboardNavigationTabs" destination="875-dS-sJM" id="fkL-TD-2su"/>
                         <outlet property="headerView" destination="LVT-UQ-uni" id="SJj-CU-kUC"/>
@@ -582,7 +584,7 @@
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="HeaderSemiTransparentBG">
-            <color red="1" green="1" blue="1" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="1" blue="1" alpha="0.75" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="ListBG">
             <color red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

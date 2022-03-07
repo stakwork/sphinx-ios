@@ -135,7 +135,8 @@ extension DashboardRootViewController {
         let podcastFeedVC = NewPodcastPlayerViewController.instantiate(
             podcast: podcast,
             delegate: self,
-            boostDelegate: self
+            boostDelegate: self,
+            fromDashboard: true
         )
         
         podcastFeedVC.modalPresentationStyle = .automatic

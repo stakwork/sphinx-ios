@@ -80,7 +80,8 @@ class PodcastPlayerView: UIView {
     convenience init(
         podcast: PodcastFeed,
         delegate: PodcastPlayerViewDelegate,
-        boostDelegate: CustomBoostDelegate
+        boostDelegate: CustomBoostDelegate,
+        fromDashboard: Bool
     ) {
         let windowWidth = WindowsManager.getWindowWidth()
         let frame = CGRect(x: 0, y: 0, width: windowWidth, height: windowWidth + PodcastPlayerView.kPlayerHeight)
@@ -98,16 +99,17 @@ class PodcastPlayerView: UIView {
         
         feedBoostHelper.configure(with: podcast.objectID, and: chat)
         
-        setup()
+        setupView()
+        setupActions(fromDashboard)
     }
     
     private var subscriptionToggleButtonTitle: String {
-        (playerHelper.podcast?.isSubscribedToFromSearch ?? false) ?
+        podcast.isSubscribedToFromSearch ?
         "unsubscribe.upper".localized
         : "subscribe.upper".localized
     }
 
-    private func setup() {
+    private func setupView() {
         Bundle.main.loadNibNamed("PodcastPlayerView", owner: self, options: nil)
         addSubview(contentView)
         contentView.frame = self.bounds
@@ -132,18 +134,17 @@ class PodcastPlayerView: UIView {
         showInfo()
         configureControls()
         addDotGesture()
-        setupActions()
     }
     
-    func setupActions() {
+    func setupActions(_ fromDashboard: Bool) {
         customBoostView.delegate = self
         
-        if playerHelper.podcast?.destinationsArray.count == 0 {
+        if podcast.destinationsArray.count == 0 {
             customBoostView.alpha = 0.3
             customBoostView.isUserInteractionEnabled = false
         }
         
-        if chat == nil {
+        if chat == nil || fromDashboard {
             shareClipButton.alpha = 0.3
             shareClipButton.isUserInteractionEnabled = false
         }

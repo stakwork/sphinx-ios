@@ -36,12 +36,12 @@ class NewPodcastPlayerViewController: UIViewController {
         }
     }
     
+    var fromDashboard = false
+    
     var playerHelper: PodcastPlayerHelper = PodcastPlayerHelper.sharedInstance
-    
-    var tableDataSource: PodcastEpisodesDataSource!
-    
     let downloadService = DownloadService.sharedInstance
     
+    var tableDataSource: PodcastEpisodesDataSource!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,13 +70,15 @@ class NewPodcastPlayerViewController: UIViewController {
     static func instantiate(
         podcast: PodcastFeed,
         delegate: PodcastPlayerVCDelegate,
-        boostDelegate: CustomBoostDelegate
+        boostDelegate: CustomBoostDelegate,
+        fromDashboard: Bool
     ) -> NewPodcastPlayerViewController {
         let viewController = StoryboardScene.WebApps.newPodcastPlayerViewController.instantiate()
         
         viewController.podcast = podcast
         viewController.delegate = delegate
         viewController.boostDelegate = boostDelegate
+        viewController.fromDashboard = fromDashboard
     
         return viewController
     }
@@ -96,7 +98,8 @@ class NewPodcastPlayerViewController: UIViewController {
         tableHeaderView = PodcastPlayerView(
             podcast: podcast,
             delegate: self,
-            boostDelegate: self
+            boostDelegate: self,
+            fromDashboard: fromDashboard
         )
         
         tableView.tableHeaderView = tableHeaderView
@@ -157,14 +160,11 @@ extension NewPodcastPlayerViewController : PodcastEpisodesDSDelegate {
 extension NewPodcastPlayerViewController : PodcastPlayerViewDelegate {
     
     func didTapSubscriptionToggleButton() {
-        if let podcast = playerHelper.podcast {
-            
-            podcast.isSubscribedToFromSearch.toggle()
-            
-            let contentFeed: ContentFeed? = CoreDataManager.sharedManager.getObjectWith(objectId: podcast.objectID)
-            contentFeed?.isSubscribedToFromSearch.toggle()
-            contentFeed?.managedObjectContext?.saveContext()
-        }
+        podcast.isSubscribedToFromSearch.toggle()
+        
+        let contentFeed: ContentFeed? = CoreDataManager.sharedManager.getObjectWith(objectId: podcast.objectID)
+        contentFeed?.isSubscribedToFromSearch.toggle()
+        contentFeed?.managedObjectContext?.saveContext()
     }
     
     func shouldReloadEpisodesTable() {

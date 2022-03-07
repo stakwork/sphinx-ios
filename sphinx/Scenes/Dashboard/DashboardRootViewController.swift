@@ -219,7 +219,7 @@ extension DashboardRootViewController {
     }
     
     func addBlurEffectTo(_ view: UIView) {
-        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.systemUltraThinMaterial)
+        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.systemChromeMaterial)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = view.bounds
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]

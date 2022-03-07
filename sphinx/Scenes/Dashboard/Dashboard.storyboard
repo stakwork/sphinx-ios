@@ -91,11 +91,23 @@
                                 <rect key="frame" x="0.0" y="212" width="414" height="684"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gtf-TP-Oq8" customClass="PodcastSmallPlayer" customModule="sphinx" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="804" width="414" height="0.0"/>
-                                <color key="backgroundColor" name="HeaderSemiTransparentBG"/>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XIu-2C-BO6" customClass="CustomDismissibleView" customModule="sphinx" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="740" width="414" height="64"/>
+                                <subviews>
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gtf-TP-Oq8" customClass="PodcastSmallPlayer" customModule="sphinx" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="64"/>
+                                        <color key="backgroundColor" name="HeaderSemiTransparentBG"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="64" id="3kU-jm-FvO"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" id="3kU-jm-FvO"/>
+                                    <constraint firstAttribute="bottom" secondItem="gtf-TP-Oq8" secondAttribute="bottom" id="PQk-vC-vep"/>
+                                    <constraint firstItem="gtf-TP-Oq8" firstAttribute="leading" secondItem="XIu-2C-BO6" secondAttribute="leading" id="Ygz-JH-RJ3"/>
+                                    <constraint firstAttribute="height" constant="64" id="qfS-O8-cfp"/>
+                                    <constraint firstAttribute="trailing" secondItem="gtf-TP-Oq8" secondAttribute="trailing" id="xvv-uX-DQA"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4KI-Xy-2nt">
@@ -174,12 +186,13 @@
                         <viewLayoutGuide key="safeArea" id="fzQ-ek-GLy"/>
                         <color key="backgroundColor" name="HeaderBG"/>
                         <constraints>
+                            <constraint firstItem="XIu-2C-BO6" firstAttribute="leading" secondItem="04F-3T-MXy" secondAttribute="leading" id="34d-pf-ESB"/>
                             <constraint firstItem="fzQ-ek-GLy" firstAttribute="trailing" secondItem="wUN-0d-ubm" secondAttribute="trailing" id="3Go-vy-318"/>
+                            <constraint firstAttribute="trailing" secondItem="XIu-2C-BO6" secondAttribute="trailing" id="8BG-dc-0ob"/>
                             <constraint firstItem="LVT-UQ-uni" firstAttribute="top" secondItem="fzQ-ek-GLy" secondAttribute="top" id="F9P-zV-KUc"/>
                             <constraint firstItem="fzQ-ek-GLy" firstAttribute="bottom" secondItem="U1o-Ky-NBS" secondAttribute="bottom" id="Fri-9I-0El"/>
-                            <constraint firstItem="4KI-Xy-2nt" firstAttribute="top" secondItem="gtf-TP-Oq8" secondAttribute="bottom" id="HaP-2p-et8"/>
                             <constraint firstItem="4KI-Xy-2nt" firstAttribute="trailing" secondItem="fzQ-ek-GLy" secondAttribute="trailing" id="LfB-Lt-sKo"/>
-                            <constraint firstItem="gtf-TP-Oq8" firstAttribute="leading" secondItem="fzQ-ek-GLy" secondAttribute="leading" id="Z0W-LS-oBN"/>
+                            <constraint firstItem="4KI-Xy-2nt" firstAttribute="top" secondItem="XIu-2C-BO6" secondAttribute="bottom" id="VxP-m2-03g"/>
                             <constraint firstItem="SpQ-1c-t1N" firstAttribute="top" secondItem="04F-3T-MXy" secondAttribute="top" id="aK9-mP-16R"/>
                             <constraint firstAttribute="bottom" secondItem="wUN-0d-ubm" secondAttribute="bottom" id="bMG-PO-qAa"/>
                             <constraint firstAttribute="bottom" secondItem="4KI-Xy-2nt" secondAttribute="bottom" id="c0w-cd-cwa"/>
@@ -192,7 +205,6 @@
                             <constraint firstItem="fzQ-ek-GLy" firstAttribute="trailing" secondItem="Yxo-is-Yxg" secondAttribute="trailing" id="nBj-ld-zfe"/>
                             <constraint firstItem="SpQ-1c-t1N" firstAttribute="trailing" secondItem="fzQ-ek-GLy" secondAttribute="trailing" id="qNM-cn-N7P"/>
                             <constraint firstItem="4KI-Xy-2nt" firstAttribute="leading" secondItem="fzQ-ek-GLy" secondAttribute="leading" id="s4q-lo-Lo1"/>
-                            <constraint firstItem="gtf-TP-Oq8" firstAttribute="trailing" secondItem="fzQ-ek-GLy" secondAttribute="trailing" id="uIc-x9-AlF"/>
                             <constraint firstItem="fzQ-ek-GLy" firstAttribute="trailing" secondItem="875-dS-sJM" secondAttribute="trailing" id="vTA-fb-0lP"/>
                             <constraint firstItem="wUN-0d-ubm" firstAttribute="top" secondItem="Yxo-is-Yxg" secondAttribute="bottom" id="xS0-nE-gfu"/>
                             <constraint firstAttribute="trailing" secondItem="LVT-UQ-uni" secondAttribute="trailing" id="xTb-QH-NNc"/>
@@ -205,10 +217,10 @@
                         <outlet property="bottomBarBottomConstraint" destination="Fri-9I-0El" id="60y-7V-V80"/>
                         <outlet property="bottomBarContainer" destination="4KI-Xy-2nt" id="kAP-kX-3sc"/>
                         <outlet property="dashboardNavigationTabs" destination="875-dS-sJM" id="fkL-TD-2su"/>
+                        <outlet property="dismissibleBar" destination="XIu-2C-BO6" id="kWv-7t-lgr"/>
                         <outlet property="headerView" destination="LVT-UQ-uni" id="SJj-CU-kUC"/>
                         <outlet property="mainContentContainerView" destination="wUN-0d-ubm" id="ooF-t6-Mp7"/>
                         <outlet property="podcastSmallPlayer" destination="gtf-TP-Oq8" id="Gek-Ng-FNy"/>
-                        <outlet property="podcastSmallPlayerHeight" destination="3kU-jm-FvO" id="php-0t-oJ4"/>
                         <outlet property="restoreProgressView" destination="SpQ-1c-t1N" id="AoU-hB-n7m"/>
                         <outlet property="searchBar" destination="52N-Az-4on" id="tUt-tA-AbQ"/>
                         <outlet property="searchBarContainer" destination="Yxo-is-Yxg" id="jGg-w4-PSq"/>

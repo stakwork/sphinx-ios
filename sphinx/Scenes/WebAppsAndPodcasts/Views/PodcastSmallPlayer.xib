@@ -47,7 +47,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is an episode title example" textAlignment="natural" lineBreakMode="middleTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2uX-uJ-r0m">
-                    <rect key="frame" x="80" y="37.5" width="155.5" height="13"/>
+                    <rect key="frame" x="80" y="37.5" width="154.5" height="13"/>
                     <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="11"/>
                     <color key="textColor" name="Text"/>
                     <nil key="highlightedColor"/>
@@ -147,6 +147,9 @@
     </objects>
     <designables>
         <designable name="110-0W-YVr"/>
+        <designable name="VnX-QJ-Fmu">
+            <size key="intrinsicContentSize" width="258.5" height="16.5"/>
+        </designable>
     </designables>
     <resources>
         <image name="forward30Icon" width="347.14999389648438" height="383.70001220703125"/>

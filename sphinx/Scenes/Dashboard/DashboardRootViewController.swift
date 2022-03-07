@@ -13,6 +13,7 @@ class DashboardRootViewController: RootViewController {
     
     @IBOutlet weak var bottomBar: UIView!
     @IBOutlet weak var bottomBarContainer: UIView!
+    @IBOutlet weak var dismissibleBar: CustomDismissibleView!
     @IBOutlet weak var podcastSmallPlayer: PodcastSmallPlayer!
     @IBOutlet weak var headerView: ChatListHeader!
     @IBOutlet weak var searchBar: UIView!
@@ -22,7 +23,6 @@ class DashboardRootViewController: RootViewController {
     @IBOutlet weak var restoreProgressView: RestoreProgressView!
     
     @IBOutlet weak var bottomBarBottomConstraint: NSLayoutConstraint!
-    @IBOutlet weak var podcastSmallPlayerHeight: NSLayoutConstraint!
     
     @IBOutlet weak var dashboardNavigationTabs: CustomSegmentedControl! {
         didSet {
@@ -197,7 +197,7 @@ extension DashboardRootViewController {
         
         setupHeaderViews()
         listenForEvents()
-        addBlurToBottomBars()
+        setupPlayerBar()
         
         restoreProgressView.delegate = self
         
@@ -207,6 +207,15 @@ extension DashboardRootViewController {
             self,
             withKey: PodcastPlayerHelper.DelegateKeys.dashboard.rawValue
         )
+    }
+    
+    func setupPlayerBar() {
+        addBlurToBottomBars()
+        
+        dismissibleBar.onViewDimissed = {
+            self.podcastSmallPlayer.pauseIfPlaying()
+            self.hideSmallPodcastPlayer()
+        }
     }
     
     func addBlurEffectTo(_ view: UIView) {

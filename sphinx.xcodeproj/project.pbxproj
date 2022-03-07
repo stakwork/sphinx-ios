@@ -16,6 +16,7 @@
 		47018F9527CFEEAF00797E0B /* skip30v4.caf in Resources */ = {isa = PBXBuildFile; fileRef = 47018F9027CFEDB400797E0B /* skip30v4.caf */; };
 		47018F9727D1079800797E0B /* FeedLoaderHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47018F9627D1079800797E0B /* FeedLoaderHelper.swift */; };
 		47018F9927D2673200797E0B /* DashboardRootViewController+PodcastPlayerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47018F9827D2673200797E0B /* DashboardRootViewController+PodcastPlayerDelegate.swift */; };
+		47018F9B27D65B8D00797E0B /* CustomDismissibleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47018F9A27D65B8C00797E0B /* CustomDismissibleView.swift */; };
 		470396D82535D12D007F9C23 /* PodcastEpisodeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470396D62535D12D007F9C23 /* PodcastEpisodeTableViewCell.swift */; };
 		470396D92535D12D007F9C23 /* PodcastEpisodeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 470396D72535D12D007F9C23 /* PodcastEpisodeTableViewCell.xib */; };
 		470396DC2535D2EB007F9C23 /* PodcastEpisodesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470396DB2535D2EB007F9C23 /* PodcastEpisodesDataSource.swift */; };
@@ -694,6 +695,7 @@
 		47018F9127CFEDB400797E0B /* skip30v1.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = skip30v1.caf; sourceTree = "<group>"; };
 		47018F9627D1079800797E0B /* FeedLoaderHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedLoaderHelper.swift; sourceTree = "<group>"; };
 		47018F9827D2673200797E0B /* DashboardRootViewController+PodcastPlayerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DashboardRootViewController+PodcastPlayerDelegate.swift"; sourceTree = "<group>"; };
+		47018F9A27D65B8C00797E0B /* CustomDismissibleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDismissibleView.swift; sourceTree = "<group>"; };
 		470396D62535D12D007F9C23 /* PodcastEpisodeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastEpisodeTableViewCell.swift; sourceTree = "<group>"; };
 		470396D72535D12D007F9C23 /* PodcastEpisodeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PodcastEpisodeTableViewCell.xib; sourceTree = "<group>"; };
 		470396DB2535D2EB007F9C23 /* PodcastEpisodesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastEpisodesDataSource.swift; sourceTree = "<group>"; };
@@ -1862,6 +1864,7 @@
 			children = (
 				473C314F279869D2007735CD /* RestoreProgressView.swift */,
 				473C315527986EBB007735CD /* RestoreProgressView.xib */,
+				47018F9A27D65B8C00797E0B /* CustomDismissibleView.swift */,
 			);
 			path = "Custom Views";
 			sourceTree = "<group>";
@@ -4222,6 +4225,7 @@
 				476A10BB23A91FCE00817892 /* APIChatsExtension.swift in Sources */,
 				4703CFA125278C40007B685C /* APIRedeemSatsExtension.swift in Sources */,
 				470396D82535D12D007F9C23 /* PodcastEpisodeTableViewCell.swift in Sources */,
+				47018F9B27D65B8D00797E0B /* CustomDismissibleView.swift in Sources */,
 				4726F0A625791CF900E20EA9 /* TribeLinkPreviewView.swift in Sources */,
 				4734D3D4241AADD900D6957E /* PaymentTemplateCollectionViewCell.swift in Sources */,
 				47FA18C8242D35F700469C8F /* CommonGroupContactsViewController.swift in Sources */,

@@ -216,6 +216,10 @@ class PodcastSmallPlayer: UIView {
         }
     }
     
+    func pauseIfPlaying() {
+        playerHelper.shouldPause()
+    }
+    
     @IBAction func playPauseButtonTouched() {
         togglePlayState()
         configureControls()

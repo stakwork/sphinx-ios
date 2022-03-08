@@ -120,8 +120,9 @@ class NewPodcastPlayerViewController: UIViewController {
 
 extension NewPodcastPlayerViewController : PodcastEpisodesDSDelegate {
     func deleteTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {
-        playerHelper.shouldDeleteEpisode(episode: episode)
-        reload(indexPath.row)
+        episode.shouldDeleteFile {
+            self.reload(indexPath.row)
+        }
     }
     
     func didTapEpisodeAt(index: Int) {
@@ -216,7 +217,7 @@ extension NewPodcastPlayerViewController: URLSessionDelegate {
 
 extension NewPodcastPlayerViewController : DownloadServiceDelegate {
     func shouldReloadRowFor(download: Download) {
-        if let index = playerHelper.getIndexFor(episode: download.episode) {
+        if let index = playerHelper.getIndexFor(episode: download.episode, in: podcast) {
             DispatchQueue.main.async {
               self.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
             }
@@ -224,7 +225,7 @@ extension NewPodcastPlayerViewController : DownloadServiceDelegate {
     }
     
     func shouldUpdateProgressFor(download: Download) {
-        if let index = playerHelper.getIndexFor(episode: download.episode) {
+        if let index = playerHelper.getIndexFor(episode: download.episode, in: podcast) {
             if let cell = self.tableView.cellForRow(at: IndexPath(row: index, section: 0)) as? PodcastEpisodeTableViewCell {
                 cell.updateProgress(progress: download.progress)
             }

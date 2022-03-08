@@ -344,15 +344,16 @@ class PodcastPlayerView: UIView {
         }
     }
     
-    func seekTo(seconds: Double) {
-        livePodcastDataSource?.resetData()
-        playerHelper.seek(podcast, to: seconds)
-    }
-}
-
-extension PodcastPlayerView : PodcastPlayerDelegate {
     func didTapEpisodeAt(index: Int) {
-        playerHelper.prepareEpisode(index: index, autoPlay: true, resetTime: true, completion: {
+        audioLoading = true
+        
+        playerHelper.prepareEpisode(
+            index: index,
+            in: podcast,
+            autoPlay: true,
+            resetTime: true,
+            completion: {
+                
             self.configureControls()
             self.delegate?.shouldReloadEpisodesTable()
         })
@@ -360,6 +361,13 @@ extension PodcastPlayerView : PodcastPlayerDelegate {
         showInfo()
     }
     
+    func seekTo(seconds: Double) {
+        livePodcastDataSource?.resetData()
+        playerHelper.seek(podcast, to: seconds)
+    }
+}
+
+extension PodcastPlayerView : PodcastPlayerDelegate {
     func playingState(podcastId: String, duration: Int, currentTime: Int) {
         guard podcastId == podcast.feedID else {
             return

@@ -197,16 +197,21 @@ class PodcastPlayerHelper {
         return podcast?.getCurrentEpisodeIndex() ?? 0
     }
     
-    func getIndexFor(episode: PodcastEpisode) -> Int? {
-        podcast?.episodesArray.firstIndex(where: { $0.id == episode.id })
+    func getIndexFor(episode: PodcastEpisode, in podcast: PodcastFeed) -> Int? {
+        podcast.episodesArray.firstIndex(where: { $0.itemID == episode.itemID })
     }
     
     func prepareEpisode(
         index: Int,
+        in podcast: PodcastFeed,
         autoPlay: Bool = false,
         resetTime: Bool = false,
         completion: @escaping () -> ()
     ) {
+        
+        if podcast.feedID != self.podcast?.feedID {
+            resetPodcast(podcast)
+        }
         
         guard let podcast = self.podcast else {
             return
@@ -352,16 +357,7 @@ class PodcastPlayerHelper {
             )
     }
     
-    func shouldDeleteEpisode(episode: PodcastEpisode) {
-        episode.shouldDeleteFile(deleteCompletion: ({
-//            for d in self.delegates.values {
-//                d.shouldUpdateEpisodeInfo?()
-//            }
-        }))
-    }
-    
     func shouldPause() {
-        
         if isPlaying() {
             player?.pause()
             playingTimer?.invalidate()
@@ -411,7 +407,7 @@ class PodcastPlayerHelper {
             
             configureTimer()
         } else {
-            prepareEpisode(index: currentEpisode, autoPlay: true, completion: {})
+            prepareEpisode(index: currentEpisode, in: podcast, autoPlay: true, completion: {})
         }
     }
     
@@ -543,7 +539,9 @@ class PodcastPlayerHelper {
             
             let duration = Int(Double(item.asset.duration.value) / Double(item.asset.duration.timescale))
             player.seek(to: CMTime(seconds: (Double(currentTime) + seconds), preferredTimescale: 1))
-            self.currentTime = self.currentTime + Int(seconds)
+            
+            let newTime = self.currentTime + Int(seconds)
+            self.currentTime = (newTime > 0) ? newTime : 0
             
             if playing {
                 player.playImmediately(atRate: self.playerSpeed)
@@ -572,6 +570,7 @@ class PodcastPlayerHelper {
         if index < self.getEpisodes().count && index >= 0 {
             prepareEpisode(
                 index: index,
+                in: podcast,
                 autoPlay: isPlaying(podcast.feedID),
                 resetTime: true,
                 completion: {}

@@ -175,11 +175,12 @@ class PodcastPlayerView: UIView {
         } else if let url = episode?.getAudioUrl() {
             let asset = AVAsset(url: url)
             asset.loadValuesAsynchronously(forKeys: ["duration"], completionHandler: {
-                let duration = Double(asset.duration.value) / Double(asset.duration.timescale)
+                let duration = Int(Double(asset.duration.value) / Double(asset.duration.timescale))
+                episode?.duration = duration
                 
                 DispatchQueue.main.async {
                     self.setProgress(
-                        duration: Int(duration),
+                        duration: duration,
                         currentTime: self.podcast.currentTime
                     )
                     self.audioLoading = false
@@ -206,8 +207,8 @@ class PodcastPlayerView: UIView {
         
         liveMessages = [:]
         
-        let episodeId = Int(playerHelper.getCurrentEpisode()?.itemID ?? "") ?? -1
-        let messages = TransactionMessage.getLiveMessagesFor(chat: chat, episodeId: Int(episodeId))
+        let episodeId = podcast.getCurrentEpisode()?.itemID ?? ""
+        let messages = TransactionMessage.getLiveMessagesFor(chat: chat, episodeId: episodeId)
         
         for m in messages {
             addToLiveMessages(message: m)
@@ -228,18 +229,19 @@ class PodcastPlayerView: UIView {
     }
     
     func configureControls(
-        forcePlaying: Bool? = nil
+        playing: Bool? = nil
     ) {
-        let isPlaying = forcePlaying ?? playerHelper.isPlaying(podcast.feedID)
+        let isPlaying = playing ?? playerHelper.isPlaying(podcast.feedID)
         playPauseButton.setTitle(isPlaying ? "pause" : "play_arrow", for: .normal)
-        speedButton.setTitle(playerHelper.playerSpeed.speedDescription + "x", for: .normal)
+        speedButton.setTitle(podcast.playerSpeed.speedDescription + "x", for: .normal)
     }
     
-    func setProgress(duration: Int, currentTime: Int) {
-        let (ctHours, ctMinutes, ctSeconds) = currentTime.getTimeElements()
-        let (dHours, dMinutes, dSeconds) = duration.getTimeElements()
-        currentTimeLabel.text = "\(ctHours):\(ctMinutes):\(ctSeconds)"
-        durationLabel.text = "\(dHours):\(dMinutes):\(dSeconds)"
+    func setProgress(duration: Int, currentTime: Int) -> Bool {
+        let currentTimeString = currentTime.getPodcastTimeString()
+        let didChangeCurrentTime = currentTimeLabel.text != currentTimeString
+        
+        currentTimeLabel.text = currentTimeString
+        durationLabel.text = duration.getPodcastTimeString()
         
         let progress = (Double(currentTime) * 100 / Double(duration))/100
         let durationLineWidth = UIScreen.main.bounds.width - 64
@@ -251,6 +253,8 @@ class PodcastPlayerView: UIView {
         
         progressLineWidth.constant = progressWidth
         progressLine.layoutIfNeeded()
+        
+        return didChangeCurrentTime
     }
     
     func addMessagesFor(ts: Int) {
@@ -288,7 +292,7 @@ class PodcastPlayerView: UIView {
     
     func gestureDidBegin(gestureXLocation: CGFloat) {
         wasPlayingOnDrag = playerHelper.isPlaying(podcast.feedID)
-        playerHelper.shouldPause()
+        playerHelper.didStartDraggingProgressFor(podcast)
         updateProgressLineAndLabel(gestureXLocation: gestureXLocation)
     }
     
@@ -304,7 +308,12 @@ class PodcastPlayerView: UIView {
         progressLine.layoutIfNeeded()
         
         let progress = ((progressLineWidth.constant * 100) / durationLine.frame.size.width) / 100
-        playerHelper.shouldUpdateTimeLabels(progress: Double(progress), podcastId: podcast.feedID)
+        
+        playerHelper.shouldUpdateTimeLabelsTo(
+            progress: Double(progress),
+            with: podcast.getCurrentEpisode()?.duration ?? 0,
+            in: podcast
+        )
     }
     
     func togglePlayState() {
@@ -347,11 +356,10 @@ class PodcastPlayerView: UIView {
     func didTapEpisodeAt(index: Int) {
         audioLoading = true
         
-        playerHelper.prepareEpisode(
+        playerHelper.prepareEpisodeWith(
             index: index,
             in: podcast,
             autoPlay: true,
-            resetTime: true,
             completion: {
                 
             self.configureControls()
@@ -368,13 +376,23 @@ class PodcastPlayerView: UIView {
 }
 
 extension PodcastPlayerView : PodcastPlayerDelegate {
+    func loadingState(podcastId: String, loading: Bool) {
+        guard podcastId == podcast.feedID else {
+            return
+        }
+        configureControls(playing: loading)
+        showInfo()
+        delegate?.shouldReloadEpisodesTable()
+        audioLoading = loading
+    }
+    
     func playingState(podcastId: String, duration: Int, currentTime: Int) {
         guard podcastId == podcast.feedID else {
             return
         }
-        audioLoading = false
-        setProgress(duration: duration, currentTime: currentTime)
-        configureControls()
+        let didChangeTime = setProgress(duration: duration, currentTime: currentTime)
+        configureControls(playing: true)
+        audioLoading = !didChangeTime
     }
     
     func pausedState(podcastId: String, duration: Int, currentTime: Int) {
@@ -382,25 +400,15 @@ extension PodcastPlayerView : PodcastPlayerDelegate {
             return
         }
         audioLoading = false
-        setProgress(duration: duration, currentTime: currentTime)
-        configureControls()
-    }
-    
-    func loadingState(podcastId: String, loading: Bool) {
-        guard podcastId == podcast.feedID else {
-            return
-        }
-        configureControls(forcePlaying: loading)
-        showInfo()
-        delegate?.shouldReloadEpisodesTable()
-        audioLoading = loading
+        let _ = setProgress(duration: duration, currentTime: currentTime)
+        configureControls(playing: false)
     }
 }
 
 extension PodcastPlayerView: CustomBoostViewDelegate {
     func didTouchBoostButton(withAmount amount: Int) {
-        let itemID = playerHelper.getCurrentEpisode()?.itemID ?? "-1"
-        let currentTime = playerHelper.currentTime
+        let itemID = podcast.getCurrentEpisode()?.itemID ?? ""
+        let currentTime = podcast.currentTime
         
         if let boostMessage = feedBoostHelper.getBoostMessage(itemID: itemID, amount: amount, currentTime: currentTime) {
             

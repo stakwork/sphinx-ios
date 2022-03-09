@@ -28,12 +28,16 @@ class PodcastPlayerHelper {
         return Static.instance
     }
     
+    init() {
+        setupNowPlayingInfoCenter()
+    }
+    
     var delegates = [String : PodcastPlayerDelegate]()
     
     enum DelegateKeys: String {
         case smallPlayer = "smallPlayer"
         case podcastPlayerVC = "podcastPlayerVC"
-        case dashboard = "dashboard"
+        case dashboard = "dashboardSmallPlayer"
     }
     
     func addDelegate(
@@ -104,57 +108,6 @@ class PodcastPlayerHelper {
         }
     }
     
-    var currentEpisode: Int {
-        get {
-            return podcast?.currentEpisode ?? 0
-        }
-        set {
-            podcast?.currentEpisode = newValue
-        }
-    }
-    
-    var currentEpisodeId: Int {
-        get {
-            return podcast?.currentEpisodeId ?? -1
-        }
-        set {
-            podcast?.currentEpisodeId = newValue
-        }
-    }
-    
-    var lastEpisodeId: Int? {
-        get {
-            return podcast?.lastEpisodeId
-        }
-        set {
-            podcast?.lastEpisodeId = newValue
-        }
-    }
-    
-    var currentTime: Int {
-        get {
-            return podcast?.currentTime ?? 0
-        }
-        set {
-            podcast?.currentTime = newValue
-        }
-    }
-    
-    var playerSpeed: Float {
-        get {
-            return podcast?.playerSpeed ?? 1
-        }
-        set {
-            podcast?.playerSpeed = newValue
-        }
-    }
-    
-    var isConfigured : Bool {
-        get {
-            return self.podcast != nil
-        }
-    }
-    
     func resetPodcast(_ podcast: PodcastFeed) {
         stopPlaying()
         self.podcast = podcast
@@ -166,7 +119,7 @@ class PodcastPlayerHelper {
         }
         
         let feedID = Int(podcast.feedID) ?? -1
-        let itemID = Int(getCurrentEpisode()?.itemID ?? "") ?? -1
+        let itemID = Int(podcast.getCurrentEpisode()?.itemID ?? "") ?? -1
         
         guard feedID > 0 else {
             return nil
@@ -180,32 +133,36 @@ class PodcastPlayerHelper {
             return nil
         }
         
-        return "{\"feedID\":\(feedID),\"itemID\":\(itemID),\"ts\":\(currentTime),\"amount\":\(amount)}"
+        return "{\"feedID\":\(feedID),\"itemID\":\(itemID),\"ts\":\(podcast.currentTime),\"amount\":\(amount)}"
     }
     
-    
-    func getEpisodes() -> [PodcastEpisode] {
-        podcast?.episodesArray ?? []
+    func loadEpisodeImage() {
+        self.playingEpisodeImage = nil
+        
+        if let url = podcast?.getImageURL() {
+            MediaLoader.loadDataFrom(URL: url, includeToken: false, completion: { (data, fileName) in
+                if let img = UIImage(data: data) {
+                    self.playingEpisodeImage = img
+                }
+            }, errorCompletion: {
+                self.playingEpisodeImage = nil
+            })
+        }
+        
+        configurePlayingInfoCenter(duration: 0, currentTime: 0)
     }
     
-    
-    func getCurrentEpisode() -> PodcastEpisode? {
-        return podcast?.getCurrentEpisode()
-    }
-    
-    func getCurrentEpisodeIndex() -> Int {
-        return podcast?.getCurrentEpisodeIndex() ?? 0
-    }
-    
-    func getIndexFor(episode: PodcastEpisode, in podcast: PodcastFeed) -> Int? {
+    func getIndexFor(
+        episode: PodcastEpisode,
+        in podcast: PodcastFeed
+    ) -> Int? {
         podcast.episodesArray.firstIndex(where: { $0.itemID == episode.itemID })
     }
     
-    func prepareEpisode(
+    func prepareEpisodeWith(
         index: Int,
         in podcast: PodcastFeed,
         autoPlay: Bool = false,
-        resetTime: Bool = false,
         completion: @escaping () -> ()
     ) {
         
@@ -235,19 +192,51 @@ class PodcastPlayerHelper {
             d.loadingState(podcastId: podcast.feedID, loading: true)
         }
         
-        currentEpisode = index
-        currentEpisodeId = Int(episode.itemID) ?? -1
-        currentTime = resetTime ? 0 : currentTime
+        let didChangeEpisode = setNewEpisodeWith(
+            index: index,
+            in: podcast,
+            episodeId: episode.itemID
+        )
+        
+        if didChangeEpisode {
+            shouldPause()
+            
+            podcast.currentTime = 0
+            
+            for d in self.delegates.values {
+                d.playingState(podcastId: podcast.feedID, duration: 0, currentTime: 0)
+            }
+        }
         
         loadEpisodeImage()
         
-        loadAndPlayEpisode(autoPlay: autoPlay, completion: completion)
+        loadAndPlayEpisodeOn(
+            podcast,
+            autoPlay: autoPlay,
+            completion: completion
+        )
     }
     
-    func loadAndPlayEpisode(autoPlay: Bool, completion: @escaping () -> ()) {
-        shouldPause()
+    func setNewEpisodeWith(
+        index: Int,
+        in podcast: PodcastFeed,
+        episodeId: String
+    ) -> Bool {
+        podcast.currentEpisodeIndex = index
         
-        if let url = getCurrentEpisode()?.getAudioUrl() {
+        if (podcast.currentEpisodeId != episodeId) {
+            podcast.currentEpisodeId = episodeId
+            return true
+        }
+        return false
+    }
+    
+    func loadAndPlayEpisodeOn(
+        _ podcast: PodcastFeed,
+        autoPlay: Bool,
+        completion: @escaping () -> ()
+    ) {
+        if let url = podcast.getCurrentEpisode()?.getAudioUrl() {
             
             let asset = AVAsset(url: url)
             
@@ -257,12 +246,14 @@ class PodcastPlayerHelper {
                 
                 if self.player == nil {
                     self.player = AVPlayer(playerItem:playerItem)
-                    self.player?.rate = self.playerSpeed;
+                    self.player?.rate = podcast.playerSpeed;
                 } else {
                     self.player?.replaceCurrentItem(with: playerItem)
                 }
                 
-                self.player?.seek(to: CMTime(seconds: Double(self.currentTime), preferredTimescale: 1))
+                self.player?.seek(
+                    to: CMTime(seconds: Double(podcast.currentTime), preferredTimescale: 1)
+                )
                 
                 DispatchQueue.main.async {
                     if autoPlay {
@@ -274,22 +265,6 @@ class PodcastPlayerHelper {
                 }
             })
         }
-    }
-    
-    func loadEpisodeImage() {
-        self.playingEpisodeImage = nil
-        
-        if let url = podcast?.getImageURL() {
-            MediaLoader.loadDataFrom(URL: url, includeToken: false, completion: { (data, fileName) in
-                if let img = UIImage(data: data) {
-                    self.playingEpisodeImage = img
-                }
-            }, errorCompletion: {
-                self.playingEpisodeImage = nil
-            })
-        }
-        
-        configurePlayingInfoCenter(duration: 0, currentTime: 0)
     }
     
     func configureTimer() {
@@ -312,7 +287,7 @@ class PodcastPlayerHelper {
         let duration = Int(Double(item.asset.duration.value) / Double(item.asset.duration.timescale))
         let currentTime = Int(round(Double(player.currentTime().value) / Double(player.currentTime().timescale)))
          
-        if currentTime == self.currentTime + 1 {
+        if currentTime == podcast.currentTime + 1 {
             
             for d in delegates.values {
                 d.playingState(podcastId: podcast.feedID, duration: duration, currentTime: currentTime)
@@ -321,7 +296,7 @@ class PodcastPlayerHelper {
             configurePlayingInfoCenter(duration: duration, currentTime: currentTime)
         }
         
-        self.currentTime = currentTime
+        podcast.currentTime = currentTime
         
         if currentTime >= duration {
             didEndEpisode()
@@ -332,7 +307,7 @@ class PodcastPlayerHelper {
         shouldPause()
         
         if let podcast = self.podcast {
-            let _ = move(podcast, toEpisodeWith: currentEpisode - 1)
+            let _ = move(podcast, toEpisodeWith: podcast.currentEpisodeIndex - 1)
             chat?.updateMetaData()
         }
     }
@@ -348,16 +323,29 @@ class PodcastPlayerHelper {
     }
     
     func processPayment(amount: Int? = nil) {
+        guard let podcast = podcast else {
+            return
+        }
+        
         podcastPaymentsHelper
             .processPaymentsFor(
                 podcastFeed: podcast,
                 boostAmount: amount,
-                itemId: getCurrentEpisode()?.itemID ?? "",
-                currentTime: currentTime
+                itemId: podcast.getCurrentEpisode()?.itemID ?? "",
+                currentTime: podcast.currentTime
             )
     }
     
-    func shouldPause() {
+    func didStartDraggingProgressFor(
+        _ podcast: PodcastFeed
+    ) {
+        if podcast.feedID != self.podcast?.feedID {
+            return
+        }
+        shouldPause()
+    }
+    
+    func shouldPause() {        
         if isPlaying() {
             player?.pause()
             playingTimer?.invalidate()
@@ -392,8 +380,8 @@ class PodcastPlayerHelper {
         }
         
         if let player = player {
-            player.seek(to: CMTime(seconds: Double(currentTime), preferredTimescale: 1))
-            player.playImmediately(atRate: self.playerSpeed)
+            player.seek(to: CMTime(seconds: Double(podcast.currentTime), preferredTimescale: 1))
+            player.playImmediately(atRate: podcast.playerSpeed)
             
             guard let item = player.currentItem else {
                 return
@@ -402,12 +390,12 @@ class PodcastPlayerHelper {
             let duration = Int(Double(item.asset.duration.value) / Double(item.asset.duration.timescale))
             
             for d in delegates.values {
-                d.playingState(podcastId: podcast.feedID, duration: duration, currentTime: currentTime)
+                d.playingState(podcastId: podcast.feedID, duration: duration, currentTime: podcast.currentTime)
             }
             
             configureTimer()
         } else {
-            prepareEpisode(index: currentEpisode, in: podcast, autoPlay: true, completion: {})
+            prepareEpisodeWith(index: podcast.currentEpisodeIndex, in: podcast, autoPlay: true, completion: {})
         }
     }
     
@@ -457,7 +445,7 @@ class PodcastPlayerHelper {
             return
         }
         
-        playerSpeed = value
+        podcast.playerSpeed = value
         
         if let player = player, isPlaying(podcast.feedID) {
             player.playImmediately(atRate: value)
@@ -476,21 +464,13 @@ class PodcastPlayerHelper {
         paymentsTimer = nil
     }
     
-    func shouldUpdateTimeLabels(
+    func shouldUpdateTimeLabelsTo(
         progress: Double,
-        podcastId: String
+        with duration: Int,
+        in podcast: PodcastFeed
     ) {
-        guard let podcast = podcast else {
-            return
-        }
-        
-        guard let player = player, let item = player.currentItem else {
-            return
-        }
-        
-        let playing = isPlaying(podcastId)
-        let duration = Double(item.asset.duration.value) / Double(item.asset.duration.timescale)
-        let currentTime = (duration * progress)
+        let playing = isPlaying(podcast.feedID)
+        let currentTime = Double(duration) * progress
         
         for d in delegates.values {
             if playing {
@@ -507,15 +487,20 @@ class PodcastPlayerHelper {
         playAfterSeek: Bool
     ) {
         if podcast.feedID != self.podcast?.feedID {
+            if let episode = podcast.getCurrentEpisode(), let duration = episode.duration {
+                podcast.currentTime = Int(Double(duration) * progress)
+            }
             return
         }
         
         if let player = player, let item = player.currentItem {
             let duration = Double(item.asset.duration.value) / Double(item.asset.duration.timescale)
             player.seek(to: CMTime(seconds: round(duration * progress), preferredTimescale: 1))
-            self.currentTime = Int(duration * progress)
             
-            configurePlayingInfoCenter(duration: Int(duration), currentTime: currentTime, forceUpdate: playAfterSeek)
+            let newTime = Int(duration * progress)
+            podcast.currentTime = newTime
+            
+            configurePlayingInfoCenter(duration: Int(duration), currentTime: newTime, forceUpdate: playAfterSeek)
         }
         
         if playAfterSeek { shouldPlay() }
@@ -525,37 +510,47 @@ class PodcastPlayerHelper {
         _ podcast: PodcastFeed,
         to seconds: Double
     ) {
+        var newTime = podcast.currentTime + Int(seconds)
+        newTime = newTime > 0 ? newTime : 0
+        
         if podcast.feedID != self.podcast?.feedID {
+            if let episode = podcast.getCurrentEpisode(), let duration = episode.duration {
+                
+                podcast.currentTime = newTime
+                
+                for d in delegates.values {
+                    d.pausedState(podcastId: podcast.feedID, duration: Int(duration), currentTime: Int(newTime))
+                }
+            }
             return
         }
-        
-        let wasPlaying = isPlaying(podcast.feedID)
-        
-        self.shouldPause()
         
         if let player = player, let item = player.currentItem {
             let playing = isPlaying(podcast.feedID)
             player.pause()
             
             let duration = Int(Double(item.asset.duration.value) / Double(item.asset.duration.timescale))
-            player.seek(to: CMTime(seconds: (Double(currentTime) + seconds), preferredTimescale: 1))
+            player.seek(to: CMTime(seconds: Double(newTime), preferredTimescale: 1))
             
-            let newTime = self.currentTime + Int(seconds)
-            self.currentTime = (newTime > 0) ? newTime : 0
+            podcast.currentTime = newTime
             
             if playing {
-                player.playImmediately(atRate: self.playerSpeed)
+                if let sound = sounds.randomElement() {
+                    audioPlayerHelper.playSound(name: sound)
+                }
+                
+                player.playImmediately(atRate: podcast.playerSpeed)
             }
             
-            configurePlayingInfoCenter(duration: duration, currentTime: currentTime, forceUpdate: true)
-            
-            if let sound = sounds.randomElement() {
-                audioPlayerHelper.playSound(name: sound)
+            for d in delegates.values {
+                if playing {
+                    d.playingState(podcastId: podcast.feedID, duration: Int(duration), currentTime: Int(newTime))
+                } else {
+                    d.pausedState(podcastId: podcast.feedID, duration: Int(duration), currentTime: Int(newTime))
+                }
             }
-        }
-        
-        if wasPlaying {
-            shouldPlay()
+            
+            configurePlayingInfoCenter(duration: duration, currentTime: newTime, forceUpdate: true)
         }
     }
     
@@ -567,12 +562,11 @@ class PodcastPlayerHelper {
             resetPodcast(podcast)
         }
         
-        if index < self.getEpisodes().count && index >= 0 {
-            prepareEpisode(
+        if index < podcast.episodesArray.count && index >= 0 {
+            prepareEpisodeWith(
                 index: index,
                 in: podcast,
                 autoPlay: isPlaying(podcast.feedID),
-                resetTime: true,
                 completion: {}
             )
             return true
@@ -594,7 +588,7 @@ class PodcastPlayerHelper {
             return
         }
 
-        guard let episode = getCurrentEpisode() else {
+        guard let episode = podcast.getCurrentEpisode() else {
             playingCenter.nowPlayingInfo = nil
             return
         }
@@ -617,8 +611,9 @@ class PodcastPlayerHelper {
             MPMediaItemPropertyArtist: podcast.author ?? "",
             MPMediaItemPropertyPlaybackDuration: "\(duration)",
             MPNowPlayingInfoPropertyElapsedPlaybackTime: "\(currentTime)",
-            MPMediaItemPropertyAlbumTrackCount: "\(getEpisodes().count)",
-            MPMediaItemPropertyAlbumTrackNumber: "\(currentEpisode)",
+            MPNowPlayingInfoPropertyPlaybackRate: podcast.playerSpeed,
+            MPMediaItemPropertyAlbumTrackCount: "\(podcast.episodesArray.count)",
+            MPMediaItemPropertyAlbumTrackNumber: "\(podcast.currentEpisodeIndex)",
             MPMediaItemPropertyAssetURL: episode.urlPath ?? ""
         ]
     }

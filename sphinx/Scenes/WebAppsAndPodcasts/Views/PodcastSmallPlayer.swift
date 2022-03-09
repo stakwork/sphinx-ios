@@ -173,13 +173,13 @@ class PodcastSmallPlayer: UIView {
     }
     
     func configureControls(
-        forcePlaying: Bool? = nil
+        playing: Bool? = nil
     ) {
         guard let podcast = podcast else {
             return
         }
         
-        let isPlaying = forcePlaying ?? playerHelper.isPlaying(podcast.feedID)
+        let isPlaying = playing ?? playerHelper.isPlaying(podcast.feedID)
         
         playButton.isHidden = isPlaying
         pauseAnimationView.isHidden = !isPlaying
@@ -196,7 +196,7 @@ class PodcastSmallPlayer: UIView {
         pauseAnimationView.addGestureRecognizer(gesture)
     }
     
-    func setProgress(duration: Int, currentTime: Int) {
+    func setProgress(duration: Int, currentTime: Int) -> Bool {
         let progressBarMargin:CGFloat = 32
         let durationLineWidth = UIScreen.main.bounds.width - progressBarMargin
         let progress = (Double(currentTime) * 100 / Double(duration))/100
@@ -206,8 +206,12 @@ class PodcastSmallPlayer: UIView {
             progressWidth = 0
         }
         
-        progressLineWidth.constant = progressWidth
-        progressLine.layoutIfNeeded()
+        if (progressLineWidth.constant != progressWidth) {
+            progressLineWidth.constant = progressWidth
+            progressLine.layoutIfNeeded()
+            return true
+        }
+        return false
     }
     
     func togglePlayState() {
@@ -243,9 +247,9 @@ extension PodcastSmallPlayer : PodcastPlayerDelegate {
         guard podcastId == podcast?.feedID else {
             return
         }
-        audioLoading = false
-        setProgress(duration: duration, currentTime: currentTime)
-        configureControls()
+        let didUpdateTime = setProgress(duration: duration, currentTime: currentTime)
+        configureControls(playing: true)
+        audioLoading = !didUpdateTime
     }
     
     func pausedState(podcastId: String, duration: Int, currentTime: Int) {
@@ -253,15 +257,15 @@ extension PodcastSmallPlayer : PodcastPlayerDelegate {
             return
         }
         audioLoading = false
-        setProgress(duration: duration, currentTime: currentTime)
-        configureControls()
+        let _ = setProgress(duration: duration, currentTime: currentTime)
+        configureControls(playing: false)
     }
     
     func loadingState(podcastId: String, loading: Bool) {
         guard podcastId == podcast?.feedID else {
             return
         }
-        configureControls(forcePlaying: loading)
+        configureControls(playing: loading)
         showEpisodeInfo()
         audioLoading = loading
     }

@@ -36,7 +36,7 @@ extension PodcastFeed {
         }
     }
     
-    var currentEpisode: Int {
+    var currentEpisodeIndex: Int {
         get {
             return (UserDefaults.standard.value(forKey: "current-episode-\(identifier)") as? Int) ?? 0
         }
@@ -45,21 +45,21 @@ extension PodcastFeed {
         }
     }
     
-    var currentEpisodeId: Int {
+    var currentEpisodeId: String {
         get {
-            return (UserDefaults.standard.value(forKey: "current-episode-id-\(identifier)") as? Int) ?? -1
+            return (UserDefaults.standard.value(forKey: "current-episode-item-id-\(identifier)") as? String) ?? ""
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: "current-episode-id-\(identifier)")
+            UserDefaults.standard.set(newValue, forKey: "current-episode-item-id-\(identifier)")
         }
     }
     
-    var lastEpisodeId: Int? {
+    var lastEpisodeId: String? {
         get {
-            return (UserDefaults.standard.value(forKey: "last-episode-id-\(identifier)") as? Int)
+            return (UserDefaults.standard.value(forKey: "last-episode-item-id-\(identifier)") as? String)
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: "last-episode-id-\(identifier)")
+            UserDefaults.standard.set(newValue, forKey: "last-episode-item-id-\(identifier)")
         }
     }
     
@@ -96,8 +96,8 @@ extension PodcastFeed {
         let currentEId = currentEpisodeId
         
         return episodesArray
-            .firstIndex(where: { Int($0.itemID) ?? -1 == currentEId })
-            ?? currentEpisode
+            .firstIndex(where: { $0.itemID == currentEId })
+            ?? currentEpisodeIndex
     }
     
     func getEpisodeInfo() -> (String, String) {

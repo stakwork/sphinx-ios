@@ -36,11 +36,13 @@ class PodcastNewEpisodeViewController: UIViewController {
             if podcast.episodesArray.count > 0 {
                 
                 let lastEpisode = podcast.episodesArray[0]
-                let lastEpisodeId = Int(lastEpisode.itemID) ?? -1
+                let lastEpisodeId = lastEpisode.itemID
                 
                 podcast.lastEpisodeId = lastEpisodeId
 
-                if lastStoredEpisodeId > 0 && lastStoredEpisodeId != lastEpisodeId {
+                if !lastStoredEpisodeId.isEmpty &&
+                    lastStoredEpisodeId != lastEpisodeId {
+                    
                     let podcastNewEpisodeVC = PodcastNewEpisodeViewController.instantiate()
                     podcastNewEpisodeVC.episode = lastEpisode
                     WindowsManager.sharedInstance.showConveringWindowWith(rootVC: podcastNewEpisodeVC)

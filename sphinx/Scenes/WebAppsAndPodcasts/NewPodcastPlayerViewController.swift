@@ -182,7 +182,7 @@ extension NewPodcastPlayerViewController : PodcastPlayerViewDelegate {
     }
     
     func shouldShowSpeedPicker() {
-        let selectedValue = playerHelper.playerSpeed
+        let selectedValue = podcast.playerSpeed
         let pickerVC = PickerViewController.instantiate(values: ["0.5", "0.8", "1.0", "1.2", "1.5", "2.1"], selectedValue: "\(selectedValue)", delegate: self)
         self.present(pickerVC, animated: false, completion: nil)
     }

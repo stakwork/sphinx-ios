@@ -144,9 +144,9 @@ class MessageReplyView: UIView {
         
         resetView()
         
-        let (hours, minutes, seconds) = (podcastComment.timestamp ?? 0).getTimeElements()
+        let timeString = (podcastComment.timestamp ?? 0).getPodcastTimeString()
         let title = podcastComment.title ?? "title.not.available".localized
-        let message = "Share audio clip: \(hours):\(minutes):\(seconds)"
+        let message = "Share audio clip: \(timeString)"
         configureWith(title: title, message: message, isIncoming: true)
         
         adjustMargins(isRow: false, isIncoming: false)

@@ -41,10 +41,10 @@ class PodcastPlayerHelper {
     }
     
     func addDelegate(
-        _ del: PodcastPlayerDelegate,
+        _ delegate: PodcastPlayerDelegate,
         withKey key: String
     ) {
-        self.delegates[key] = del
+        self.delegates[key] = delegate
     }
     
     func removeFromDelegatesWith(key: String) {
@@ -59,23 +59,41 @@ class PodcastPlayerHelper {
     
     func setAudioSession() {
         do {
-            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [.allowAirPlay, .allowBluetooth, .allowBluetoothA2DP, .duckOthers])
+            try AVAudioSession.sharedInstance().setCategory(
+                .playback,
+                mode: .default,
+                options: [.allowAirPlay, .allowBluetooth, .allowBluetoothA2DP, .duckOthers]
+            )
             try AVAudioSession.sharedInstance().setActive(true)
         } catch _ {}
         
         let session = AVAudioSession.sharedInstance()
-        NotificationCenter.default.removeObserver(self, name: AVAudioSession.interruptionNotification, object: session)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.handleInterruption(notification:)), name: AVAudioSession.interruptionNotification, object: session)
+        
+        NotificationCenter.default.removeObserver(
+            self,
+            name: AVAudioSession.interruptionNotification,
+            object: session
+        )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(self.handleInterruption(notification:)),
+            name: AVAudioSession.interruptionNotification,
+            object: session
+        )
     }
     
     @objc func handleInterruption(notification: NSNotification) {
-        if notification.name != AVAudioSession.interruptionNotification || notification.userInfo == nil{
+        if notification.name != AVAudioSession.interruptionNotification ||
+            notification.userInfo == nil {
+            
             return
         }
         let info = notification.userInfo!
         var intValue: UInt = 0
         
         (info[AVAudioSessionInterruptionTypeKey] as! NSValue).getValue(&intValue)
+        
         if let interruptionType = AVAudioSession.InterruptionType(rawValue: intValue) {
             switch interruptionType {
             case .began:
@@ -140,13 +158,18 @@ class PodcastPlayerHelper {
         self.playingEpisodeImage = nil
         
         if let url = podcast?.getImageURL() {
-            MediaLoader.loadDataFrom(URL: url, includeToken: false, completion: { (data, fileName) in
-                if let img = UIImage(data: data) {
-                    self.playingEpisodeImage = img
+            MediaLoader.loadDataFrom(
+                URL: url,
+                includeToken: false,
+                completion: { (data, fileName) in
+                    
+                    if let img = UIImage(data: data) {
+                        self.playingEpisodeImage = img
+                    }
+                }, errorCompletion: {
+                    self.playingEpisodeImage = nil
                 }
-            }, errorCompletion: {
-                self.playingEpisodeImage = nil
-            })
+            )
         }
         
         configurePlayingInfoCenter(duration: 0, currentTime: 0)

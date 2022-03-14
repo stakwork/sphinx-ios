@@ -167,7 +167,7 @@ class PodcastPlayerView: UIView {
         let episode = podcast.getCurrentEpisode()
         
         if let duration = episode?.duration {
-            setProgress(
+            let _ = setProgress(
                 duration: duration,
                 currentTime: podcast.currentTime
             )
@@ -179,7 +179,7 @@ class PodcastPlayerView: UIView {
                 episode?.duration = duration
                 
                 DispatchQueue.main.async {
-                    self.setProgress(
+                    let _ = self.setProgress(
                         duration: duration,
                         currentTime: self.podcast.currentTime
                     )
@@ -205,19 +205,26 @@ class PodcastPlayerView: UIView {
     func loadMessages() {
         guard let chat = chat else { return }
         
-        liveMessages = [:]
-        
-        let episodeId = podcast.getCurrentEpisode()?.itemID ?? ""
-        let messages = TransactionMessage.getLiveMessagesFor(chat: chat, episodeId: episodeId)
-        
-        for m in messages {
-            addToLiveMessages(message: m)
-        }
-        
         if livePodcastDataSource == nil {
             livePodcastDataSource = PodcastLiveDataSource(tableView: liveTableView, chat: chat)
         }
-        livePodcastDataSource?.resetData()
+        
+        let episodeId = podcast.getCurrentEpisode()?.itemID ?? ""
+        
+        if (episodeId != livePodcastDataSource?.episodeId) {
+            
+            livePodcastDataSource?.episodeId = episodeId
+            
+            let messages = TransactionMessage.getLiveMessagesFor(chat: chat, episodeId: episodeId)
+            
+            liveMessages = [:]
+            
+            for m in messages {
+                addToLiveMessages(message: m)
+            }
+            
+            livePodcastDataSource?.resetData()
+        }
     }
     
     func addToLiveMessages(message: TransactionMessage) {
@@ -381,8 +388,8 @@ extension PodcastPlayerView : PodcastPlayerDelegate {
             return
         }
         configureControls(playing: loading)
-        showInfo()
         delegate?.shouldReloadEpisodesTable()
+        showInfo()
         audioLoading = loading
     }
     
@@ -392,6 +399,7 @@ extension PodcastPlayerView : PodcastPlayerDelegate {
         }
         let didChangeTime = setProgress(duration: duration, currentTime: currentTime)
         configureControls(playing: true)
+        addMessagesFor(ts: currentTime)
         audioLoading = !didChangeTime
     }
     
@@ -399,9 +407,10 @@ extension PodcastPlayerView : PodcastPlayerDelegate {
         guard podcastId == podcast.feedID else {
             return
         }
-        audioLoading = false
         let _ = setProgress(duration: duration, currentTime: currentTime)
         configureControls(playing: false)
+        delegate?.shouldReloadEpisodesTable()
+        audioLoading = false
     }
 }
 

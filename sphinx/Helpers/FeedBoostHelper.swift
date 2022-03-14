@@ -87,11 +87,19 @@ class FeedBoostHelper : NSObject {
         var destinations = [[String: AnyObject]]()
         
         for d in feedDestinations {
-            let destinationParams: [String: AnyObject] = ["address": (d.address ?? "") as AnyObject, "split": (d.split) as AnyObject, "type": (d.type ?? "") as AnyObject]
+            let destinationParams: [String: AnyObject] = [
+                "address": (d.address ?? "") as AnyObject,
+                "split": (d.split) as AnyObject,
+                "type": (d.type ?? "") as AnyObject
+            ]
             destinations.append(destinationParams)
         }
         
-        var params: [String: AnyObject] = ["destinations": destinations as AnyObject, "amount": amount as AnyObject, "chat_id": (chat?.id ?? -1) as AnyObject]
+        var params: [String: AnyObject] = [
+            "destinations": destinations as AnyObject,
+            "amount": amount as AnyObject,
+            "chat_id": (chat?.id ?? -1) as AnyObject
+        ]
         
         params["text"] = "{\"feedID\":\"\(feedID)\",\"itemID\":\"\(itemID)\",\"ts\":\(currentTime)}" as AnyObject
             

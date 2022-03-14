@@ -12,6 +12,7 @@ class PodcastLiveDataSource : NSObject {
     
     var tableView: UITableView! = nil
     var chat: Chat! = nil
+    var episodeId: String? = nil
     
     var messageRows: [TransactionMessageRow] = []
     

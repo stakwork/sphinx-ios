@@ -14,7 +14,7 @@ extension TransactionMessage {
     
     var messageDate: Date {
         get {
-            return self.date ?? Date()
+            return self.date ?? Date(timeIntervalSince1970: 0)
         }
     }
     

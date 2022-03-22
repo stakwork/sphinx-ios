@@ -114,21 +114,6 @@ public final class ContactsService {
     public func getChatListObjects() -> [ChatListCommonObject] {
         let filteredContacts =  contacts.filter { !$0.isOwner && !$0.shouldBeExcluded() && !$0.isBlocked()}
         let filteredChats =  chats.filter { !($0.getContact()?.isBlocked() ?? false) }
-        let chatListObjectsCount = filteredContacts.count + filteredChats.count
-
-        if chatListObjectsCount == chatListObjects.count &&
-           chatsCount == filteredChats.count &&
-           chatListObjectsCount > 0
-        {
-            let chatsWithLastMessages = chatListObjects.map { (chatListObject) -> ChatListCommonObject in
-                if let chat = chatListObject as? Chat {
-                    chat.updateLastMessage()
-                }
-                return chatListObject
-            }
-            chatListObjects = orderChatListObjects(objects: chatsWithLastMessages)
-            return chatListObjects
-        }
 
         chatsCount = filteredChats.count
 

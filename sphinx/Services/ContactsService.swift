@@ -118,13 +118,11 @@ public final class ContactsService {
 
         if chatListObjectsCount == chatListObjects.count &&
            chatsCount == filteredChats.count &&
-           chatListObjectsCount > 0 {
-
+           chatListObjectsCount > 0
+        {
             let chatsWithLastMessages = chatListObjects.map { (chatListObject) -> ChatListCommonObject in
                 if let chat = chatListObject as? Chat {
-                    if chat.lastMessage?.isFault == true {
-                        chat.updateLastMessage()
-                    }
+                    chat.updateLastMessage()
                 }
                 return chatListObject
             }

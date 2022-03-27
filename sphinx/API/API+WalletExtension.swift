@@ -11,8 +11,14 @@ import Alamofire
 import SwiftyJSON
 
 extension API {
-    func getWalletBalance(callback: @escaping BalanceCallback, errorCallback: @escaping EmptyCallback){
-        guard let request = getURLRequest(route: "/balance", method: "GET") else {
+    func getWalletBalance(
+        callback: @escaping BalanceCallback,
+        errorCallback: @escaping EmptyCallback
+    ){
+        guard let request = getURLRequest(
+                route: "/balance",
+                method: "GET"
+        ) else {
             errorCallback()
             return
         }

@@ -14,12 +14,14 @@ class RelayURLUpdateHelper : SphinxOnionConnectorDelegate {
     let userData = UserData.sharedInstance
     let onionConnector = SphinxOnionConnector.sharedInstance
 
+    var newUrl: String? = nil
     var doneCompletion: (() -> ())? = nil
 
     func updateRelayURL(newValue: String, completion: @escaping (() -> ())) {
         self.doneCompletion = completion
 
-        UserData.sharedInstance.save(ip: newValue)
+        userData.save(ip: newValue)
+        newUrl = newValue
 
         if connectTorIfNeeded() {
            return
@@ -51,10 +53,16 @@ class RelayURLUpdateHelper : SphinxOnionConnectorDelegate {
     func verifyNewIP() {
         newMessageBubbleHelper.showLoadingWheel(text: "verifying.new.ip".localized)
 
-        API.sharedInstance.getWalletBalance(callback: { _ in
-            self.newURLConnected()
-        }, errorCallback: {
-            self.newURLConnectionFailed()
+        userData.getAndSaveTransportKey(completion: { [weak self] _ in
+            guard let self = self else { return }
+            
+            API.sharedInstance.getWalletBalance(
+                callback: { _ in
+                    
+                self.newURLConnected()
+            }, errorCallback: {
+                self.newURLConnectionFailed()
+            })
         })
     }
 
@@ -68,8 +76,12 @@ class RelayURLUpdateHelper : SphinxOnionConnectorDelegate {
 
     func newURLConnectionFailed() {
         userData.revertIP()
-        newMessageBubbleHelper.hideLoadingWheel()
-        newMessageBubbleHelper.showGenericMessageView(text: "reverting.ip".localized, delay: 4)
-        doneCompletion?()
+        userData.getAndSaveTransportKey(completion: { [weak self] _ in
+            guard let self = self else { return }
+            
+            self.newMessageBubbleHelper.hideLoadingWheel()
+            self.newMessageBubbleHelper.showGenericMessageView(text: "reverting.ip".localized, delay: 4)
+            self.doneCompletion?()
+        })
     }
 }

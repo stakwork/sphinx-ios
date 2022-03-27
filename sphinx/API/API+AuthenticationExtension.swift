@@ -54,7 +54,7 @@ extension API {
         callback: @escaping TransportKeyCallback,
         errorCallback: @escaping EmptyCallback
     ) {
-        guard let request = getURLRequest(
+        guard let request = getUnauthenticatedURLRequest(
                 route: "/request_transport_key",
                 params: nil,
                 method: "GET"

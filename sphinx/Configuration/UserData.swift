@@ -114,7 +114,11 @@ class UserData {
         return ownerPubKey
     }
     
-    func save(ip: String, token: String, andPin pin: String) {
+    func save(
+        ip: String,
+        token: String,
+        pin: String
+    ) {
         save(ip: ip)
         save(authToken: token)
         save(pin: pin)

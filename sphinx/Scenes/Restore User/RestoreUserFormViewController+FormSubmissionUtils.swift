@@ -99,9 +99,13 @@ extension RestoreUserFormViewController {
             return
         }
 
-        userData.save(ip: keys[2], token: keys[3], andPin: pin)
+        userData.save(ip: keys[2], token: keys[3], pin: pin)
 
-        goToWelcomeCompleteScene()
+        userData.getAndSaveTransportKey(completion: { [weak self] _ in
+            guard let self = self else { return }
+            
+            self.goToWelcomeCompleteScene()
+        })
     }
     
     

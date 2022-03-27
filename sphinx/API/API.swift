@@ -203,6 +203,30 @@ class API {
             additionalHeaders: additionalHeaders
         )
     }
+    
+    func getUnauthenticatedURLRequest(
+        route: String,
+        params: NSDictionary? = nil,
+        method: String
+    ) -> URLRequest? {
+        
+        let ip = UserData.sharedInstance.getNodeIP()
+
+        if ip.isEmpty {
+            connectionStatus = .Unauthorize
+            postConnectionStatusChange()
+            return nil
+        }
+
+        let url = API.getUrl(route: "\(ip)\(route)")
+
+        return createRequest(
+            url,
+            bodyParams: params,
+            method: method
+        )
+
+    }
 
     var errorCounter = 0
     let successStatusCode = 200

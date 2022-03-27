@@ -98,22 +98,17 @@ extension ConnectionCodeSignupHandling {
     
     func generateTokenAndProceed(pubkey: String, token: String, password: String? = nil) {
         generateTokenRetries += 1
-
-        API.sharedInstance.generateToken(
+        
+        userData.generateToken(
             token: token,
             pubkey: pubkey,
             password: password,
-            callback: { [weak self] success in
+            completion: { [weak self] in
                 guard let self = self else { return }
-            
-                if success {
-                    self.userData.save(authToken: token)
-                    self.proceedToNewUserWelcome()
-                } else {
-                    self.generateTokenError(pubkey: pubkey, token: token, password: password)
-                }
+                
+                self.proceedToNewUserWelcome()
             },
-            errorCallback: { [weak self] in
+            errorCompletion: { [weak self] in
                 guard let self = self else { return }
                 
                 self.generateTokenError(pubkey: pubkey, token: token, password: password)

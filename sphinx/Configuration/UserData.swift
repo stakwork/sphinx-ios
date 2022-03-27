@@ -23,14 +23,59 @@ class UserData {
         return (getAppPin() != "" && getNodeIP() != "" && getAuthToken() != "" && SignupHelper.isLogged())
     }
     
-    func getAndSaveTransportKey() {
+    func getAndSaveTransportKey(
+        completion: ((String?) ->())? = nil
+    ) {
         if let transportKey = getTransportKey(), !transportKey.isEmpty {
+            completion?(transportKey)
             return
         }
         
         API.sharedInstance.getTransportKey(callback: { transportKey in
             self.save(transportKey: transportKey)
-        }, errorCallback: {})
+            completion?(transportKey)
+        }, errorCallback: {
+            completion?(nil)
+        })
+    }
+    
+    func generateToken(
+        token: String,
+        pubkey: String,
+        password: String? = nil,
+        completion: @escaping () -> (),
+        errorCompletion: @escaping () -> ()
+    ) {
+        getAndSaveTransportKey(completion: { transportKey in
+            let authenticatedHeader = EncryptionManager.sharedInstance.getAuthenticationHeader(
+                token: token,
+                transportKey: transportKey
+            )
+            
+            API.sharedInstance.generateToken(
+                pubkey: pubkey,
+                password: password,
+                additionalHeaders: authenticatedHeader,
+                callback: { [weak self] success in
+                    guard let self = self else { return }
+                
+                    if success {
+                        self.save(authToken: token)
+                        
+                        if let transportKey = transportKey {
+                            self.save(transportKey: transportKey)
+                        }
+                        
+                        completion()
+                    } else {
+                        errorCompletion()
+                    }
+                },
+                errorCallback: {
+                    errorCompletion()
+                }
+            )
+        })
     }
     
     func getPINHours() -> Int {

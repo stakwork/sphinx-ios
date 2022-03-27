@@ -9,10 +9,11 @@
 import Foundation
 
 extension API {
+    
     public func generateToken(
-        token: String,
         pubkey: String,
         password: String? = nil,
+        additionalHeaders: [String: String] = [:],
         callback: @escaping SuccessCallback,
         errorCallback: @escaping EmptyCallback
     ) {
@@ -21,13 +22,13 @@ extension API {
             route = "\(route)?pwd=\(password)"
         }
         
-        let parameters: [String : AnyObject] = ["token" : token as AnyObject, "pubkey": pubkey as AnyObject]
+        let parameters: [String : AnyObject] = ["pubkey": pubkey as AnyObject]
         
         guard let request = getURLRequest(
                 route: route,
                 params: parameters as NSDictionary?,
                 method: "POST",
-                authenticated: false
+                additionalHeaders: additionalHeaders
         ) else {
             errorCallback()
             return

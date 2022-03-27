@@ -384,20 +384,28 @@ class EncryptionManager {
         return String((0..<length).map{ _ in letters.randomElement()! })
     }
     
-    func getAuthenticationHeader() -> [String: String] {
-        let token = userData.getAuthToken()
+    func getAuthenticationHeader(
+        token: String? = nil,
+        transportKey: String? = nil
+    ) -> [String: String] {
         
-        if let transportKey = userData.getTransportKey(),
-           let transportEncryptionKey = getPublicKeyFromBase64String(base64String: transportKey) {
+        let t = token ?? userData.getAuthToken()
+        
+        if t.isEmpty {
+            return [:]
+        }
+        
+        if let transportK = transportKey ?? userData.getTransportKey(),
+           let transportEncryptionKey = getPublicKeyFromBase64String(base64String: transportK) {
             
             let time = Int(NSDate().timeIntervalSince1970)
-            let tokenAndTime = "\(token)|\(time)"
+            let tokenAndTime = "\(t)|\(time)"
             
             if let encryptedToken = encryptToken(token: tokenAndTime, key: transportEncryptionKey) {
                 return ["x-transport-token": encryptedToken]
             }
             
         }
-        return ["X-User-Token": token]
+        return ["X-User-Token": t]
     }
 }

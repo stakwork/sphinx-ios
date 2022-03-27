@@ -358,6 +358,16 @@ class EncryptionManager {
         }
     }
     
+    func encryptToken(token: String, key: PublicKey) -> String? {
+        do {
+            let clear = try ClearMessage(string: token, using: .utf8)
+            let encrypted = try clear.encrypted(with: key, padding: .PKCS1)
+            return encrypted.base64String
+        } catch {
+            return nil
+        }
+    }
+    
     func decryptMessage(message: String, key: PrivateKey) -> (Bool, String) {
         do {
             let encrypted = try EncryptedMessage(base64Encoded: message)
@@ -372,5 +382,22 @@ class EncryptionManager {
     public static func randomString(length: Int) -> String {
         let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
         return String((0..<length).map{ _ in letters.randomElement()! })
+    }
+    
+    func getAuthenticationHeader() -> [String: String] {
+        let token = userData.getAuthToken()
+        
+        if let transportKey = userData.getTransportKey(),
+           let transportEncryptionKey = getPublicKeyFromBase64String(base64String: transportKey) {
+            
+            let time = Int(NSDate().timeIntervalSince1970)
+            let tokenAndTime = "\(token)|\(time)"
+            
+            if let encryptedToken = encryptToken(token: tokenAndTime, key: transportEncryptionKey) {
+                return ["x-transport-token": encryptedToken]
+            }
+            
+        }
+        return ["X-User-Token": token]
     }
 }

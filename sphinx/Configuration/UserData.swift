@@ -23,6 +23,16 @@ class UserData {
         return (getAppPin() != "" && getNodeIP() != "" && getAuthToken() != "" && SignupHelper.isLogged())
     }
     
+    func getAndSaveTransportKey() {
+        if let transportKey = getTransportKey(), !transportKey.isEmpty {
+            return
+        }
+        
+        API.sharedInstance.getTransportKey(callback: { transportKey in
+            self.save(transportKey: transportKey)
+        }, errorCallback: {})
+    }
+    
     func getPINHours() -> Int {
         if GroupsPinManager.sharedInstance.isStandardPIN {
             return UserDefaults.Keys.pinHours.get(defaultValue: 12)
@@ -98,6 +108,10 @@ class UserData {
         saveValueFor(value: authToken, for: KeychainManager.KeychainKeys.authToken, userDefaultKey: UserDefaults.Keys.authToken)
     }
     
+    func save(transportKey: String) {
+        saveValueFor(value: transportKey, for: KeychainManager.KeychainKeys.transportKey, userDefaultKey: UserDefaults.Keys.transportKey)
+    }
+    
     func save(password: String) {
         UserDefaults.Keys.nodePassword.set(password)
     }
@@ -135,6 +149,14 @@ class UserData {
     
     func getAuthToken() -> String {
         return getValueFor(keychainKey: KeychainManager.KeychainKeys.authToken, userDefaultKey: UserDefaults.Keys.authToken)
+    }
+    
+    func getTransportKey() -> String? {
+        let transportKey = getValueFor(keychainKey: KeychainManager.KeychainKeys.transportKey, userDefaultKey: UserDefaults.Keys.transportKey)
+        if !transportKey.isEmpty {
+            return transportKey
+        }
+        return nil
     }
     
     func getEncryptionKeys() -> (String?, String?) {

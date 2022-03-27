@@ -57,35 +57,6 @@ extension API {
         }
     }
     
-    public func generateToken(token: String, pubkey: String, password: String? = nil, callback: @escaping SuccessCallback, errorCallback: @escaping EmptyCallback) {
-        var route = "/contacts/tokens"
-        if let password = password {
-            route = "\(route)?pwd=\(password)"
-        }
-        
-        let parameters: [String : AnyObject] = ["token" : token as AnyObject, "pubkey": pubkey as AnyObject]
-        
-        guard let request = getURLRequest(route: route, params: parameters as NSDictionary?, method: "POST", authenticated: false) else {
-            errorCallback()
-            return
-        }
-        
-        sphinxRequest(request) { response in
-            switch response.result {
-            case .success(let data):
-                if let json = data as? NSDictionary {
-                    if let success = json["success"] as? Bool, success {
-                        callback(success)
-                    } else {
-                        errorCallback()
-                    }
-                }
-            case .failure(_):
-                errorCallback()
-            }
-        }
-    }
-    
     public func payInvite(inviteString: String, callback: @escaping PayInviteCallback, errorCallback: @escaping EmptyCallback) {
         guard let request = getURLRequest(route: "/invites/\(inviteString)/pay", method: "POST") else {
             errorCallback()

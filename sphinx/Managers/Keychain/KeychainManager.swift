@@ -24,6 +24,7 @@ class KeychainManager {
         case pubKeys = "pub_keys"
         case ip = "relay_ip"
         case authToken = "relay_auth_token"
+        case transportKey = "relay_transport_key"
         case pin = "app_pin"
         case privacyPin = "privacy_pin"
         case currentPin = "app_current_pin_ios"
@@ -59,18 +60,6 @@ class KeychainManager {
             print(error.localizedDescription)
             return nil
         }
-    }
-    
-    func getIP() -> String? {
-        return getValueFor(key: KeychainKeys.ip.rawValue)
-    }
-    
-    func getAuthToken() -> String? {
-        return getValueFor(key: KeychainKeys.authToken.rawValue)
-    }
-    
-    func getPIN() -> String? {
-        return getValueFor(key: KeychainKeys.pin.rawValue)
     }
     
     func getPublicKey() -> String? {
@@ -141,18 +130,6 @@ class KeychainManager {
         }
     }
     
-    func save(ip: String) -> Bool {
-        return save(value: ip, forKey: KeychainKeys.ip.rawValue)
-    }
-    
-    func save(authToken: String) -> Bool {
-        return save(value: authToken, forKey: KeychainKeys.authToken.rawValue)
-    }
-    
-    func save(pin: String) -> Bool {
-        return save(value: pin, forKey: KeychainKeys.pin.rawValue)
-    }
-    
     func save(privateKey: String) -> Bool {
         return save(value: privateKey, forKey: KeychainKeys.privateKey.rawValue)
     }
@@ -215,12 +192,14 @@ class KeychainManager {
     func resetAllFor(pubKey: String) {
         let ipComposedKey = getComposedKey(for: KeychainKeys.ip.rawValue, with: pubKey)
         let tokenComposedKey = getComposedKey(for: KeychainKeys.authToken.rawValue, with: pubKey)
+        let transportKeyComposedKey = getComposedKey(for: KeychainKeys.transportKey.rawValue, with: pubKey)
         let pinComposedKey = getComposedKey(for: KeychainKeys.pin.rawValue, with: pubKey)
         let privateKeyComposedKey = getComposedKey(for: KeychainKeys.privateKey.rawValue, with: pubKey)
         let publicKeyComposedKey = getComposedKey(for: KeychainKeys.publicKey.rawValue, with: pubKey)
 
         let _ = deleteValueFor(composedKey: ipComposedKey)
         let _ = deleteValueFor(composedKey: tokenComposedKey)
+        let _ = deleteValueFor(composedKey: transportKeyComposedKey)
         let _ = deleteValueFor(composedKey: pinComposedKey)
         let _ = deleteValueFor(composedKey: privateKeyComposedKey)
         let _ = deleteValueFor(composedKey: publicKeyComposedKey)

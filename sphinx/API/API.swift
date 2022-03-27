@@ -42,6 +42,7 @@ typealias ContentFeedCallback = ((JSON) -> ())
 typealias PodcastInfoCallback = ((JSON) -> ())
 typealias OnchainAddressCallback = ((String) -> ())
 typealias AppVersionsCallback = ((String) -> ())
+typealias TransportKeyCallback = ((String) -> ())
 
 // HUB calls
 typealias SignupWithCodeCallback = ((JSON, String, String) -> ())
@@ -398,11 +399,18 @@ class API {
         }
 
         if let nsURL = NSURL(string: url) {
+            let headers = EncryptionManager.sharedInstance.getAuthenticationHeader()
+            
             var request = URLRequest(url: nsURL as URL)
             request.httpMethod = method
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            request.setValue(UserData.sharedInstance.getAuthToken(), forHTTPHeaderField: "X-User-Token")
             request.setValue("no-cache", forHTTPHeaderField: "Cache-Control")
+            
+            for (key, value) in headers {
+                request.setValue(value, forHTTPHeaderField: key)
+                
+                print("HEADER KEY: \(key) FOR VALUE: \(value)")
+            }
 
             if let p = params {
                 do {

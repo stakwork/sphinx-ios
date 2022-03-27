@@ -339,14 +339,21 @@ extension API {
             parameters["chat_id"] = "\(chatId)"
         }
         
-        let headers = HTTPHeaders(["X-User-Token": UserData.sharedInstance.getAuthToken()])
+        var httpHeaders = HTTPHeaders()
+        let headers = EncryptionManager.sharedInstance.getAuthenticationHeader()
+        
+        for (key, value) in headers {
+            httpHeaders.add(name: key, value: value)
+            
+            print("HEADER KEY: \(key) FOR VALUE: \(value)")
+        }
         
         AF.upload(multipartFormData: { multipartFormData in
             for (key, value) in parameters {
                 multipartFormData.append(value.data(using: String.Encoding.utf8)!, withName: key)
             }
             multipartFormData.append(imgData, withName: "file", fileName: "file.jpg", mimeType: "image/jpg")
-        }, to: url, method: method, headers: headers).uploadProgress(queue: .main, closure: { progress in
+        }, to: url, method: method, headers: httpHeaders).uploadProgress(queue: .main, closure: { progress in
             let progressInt = Int(round(progress.fractionCompleted * 100))
             progressCallback(progressInt)
         }).responseJSON { (response) in

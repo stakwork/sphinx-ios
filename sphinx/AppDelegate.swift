@@ -51,30 +51,56 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
-        notificationUserInfo = nil
+        
+        setAppConfiguration()
+        registerAppRefresh()
+        configureGiphy()
+        configureNotificationCenter()
+        configureStoreKit()
+        connectTor()
+        syncDeviceId()
+        getTransportKey()
+        
+        setInitialVC(launchingApp: true)
 
+        return true
+    }
+    
+    func setAppConfiguration() {
         Constants.setSize()
         window?.setStyle()
         saveCurrentStyle()
-        
+    }
+    
+    func registerAppRefresh() {
         BGTaskScheduler.shared.register(forTaskWithIdentifier: "com.gl.sphinx.refresh", using: nil, launchHandler: { task in
             self.handleAppRefresh(task: task)
         })
-
+    }
+    
+    func configureGiphy() {
         if let GIPHY_API_KEY = Bundle.main.object(forInfoDictionaryKey: "GIPHY_API_KEY") as? String {
             Giphy.configure(apiKey: GIPHY_API_KEY)
         }
-
-        UNUserNotificationCenter.current().delegate = self
-
-        SKPaymentQueue.default().add(StoreKitService.shared)
+    }
     
-        setInitialVC(launchingApp: true)
-        connectTor()
-        
+    func configureNotificationCenter() {
+        notificationUserInfo = nil
+        UNUserNotificationCenter.current().delegate = self
+    }
+    
+    func configureStoreKit() {
+        SKPaymentQueue.default().add(StoreKitService.shared)
+    }
+    
+    func syncDeviceId() {
         UserContact.syncDeviceId()
-
-        return true
+    }
+    
+    func getTransportKey() {
+        if UserData.sharedInstance.isUserLogged() {
+            UserData.sharedInstance.getAndSaveTransportKey()
+        }
     }
     
     func handleAppRefresh(task: BGTask) {

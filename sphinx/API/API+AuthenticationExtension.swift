@@ -10,6 +10,49 @@ import Foundation
 
 extension API {
     
+    public func generateTokenUnauthenticated(
+        token: String,
+        pubkey: String,
+        password: String? = nil,
+        callback: @escaping SuccessCallback,
+        errorCallback: @escaping EmptyCallback
+    ) {
+        var route = "/contacts/tokens"
+    
+        if let password = password {
+            route = "\(route)?pwd=\(password)"
+        }
+        
+        let parameters: [String : AnyObject] = [
+            "token" : token as AnyObject,
+            "pubkey": pubkey as AnyObject
+        ]
+        
+        guard let request = getUnauthenticatedURLRequest(
+                route: route,
+                params: parameters as NSDictionary?,
+                method: "POST"
+        ) else {
+            errorCallback()
+            return
+        }
+        
+        sphinxRequest(request) { response in
+            switch response.result {
+            case .success(let data):
+                if let json = data as? NSDictionary {
+                    if let success = json["success"] as? Bool, success {
+                        callback(success)
+                    } else {
+                        errorCallback()
+                    }
+                }
+            case .failure(_):
+                errorCallback()
+            }
+        }
+    }
+    
     public func generateToken(
         pubkey: String,
         password: String? = nil,

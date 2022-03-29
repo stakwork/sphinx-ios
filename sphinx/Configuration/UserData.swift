@@ -47,35 +47,69 @@ class UserData {
         errorCompletion: @escaping () -> ()
     ) {
         getAndSaveTransportKey(completion: { transportKey in
-            let authenticatedHeader = EncryptionManager.sharedInstance.getAuthenticationHeader(
-                token: token,
-                transportKey: transportKey
-            )
-            
-            API.sharedInstance.generateToken(
-                pubkey: pubkey,
-                password: password,
-                additionalHeaders: authenticatedHeader,
-                callback: { [weak self] success in
-                    guard let self = self else { return }
+            if let transportKey = transportKey {
+                let authenticatedHeader = EncryptionManager.sharedInstance.getAuthenticationHeader(
+                    token: token,
+                    transportKey: transportKey
+                )
                 
-                    if success {
-                        self.save(authToken: token)
-                        
-                        if let transportKey = transportKey {
-                            self.save(transportKey: transportKey)
+                API.sharedInstance.generateToken(
+                    pubkey: pubkey,
+                    password: password,
+                    additionalHeaders: authenticatedHeader,
+                    callback: { [weak self] success in
+                        guard let self = self else { return }
+                    
+                        if success {
+                            self.saveTokenAndContinue(
+                                token: token,
+                                transportKey: transportKey,
+                                completion: completion
+                            )
+                        } else {
+                            errorCompletion()
                         }
-                        
-                        completion()
-                    } else {
+                    },
+                    errorCallback: {
                         errorCompletion()
                     }
-                },
-                errorCallback: {
-                    errorCompletion()
-                }
-            )
+                )
+            } else {
+                API.sharedInstance.generateTokenUnauthenticated(
+                    token: token,
+                    pubkey: pubkey,
+                    password: password,
+                    callback: { [weak self] success in
+                        guard let self = self else { return }
+                        
+                        if success {
+                            self.saveTokenAndContinue(
+                                token: token,
+                                transportKey: transportKey,
+                                completion: completion
+                            )
+                        } else {
+                            errorCompletion()
+                        }
+                    }, errorCallback: {
+                        errorCompletion()
+                    })
+            }
         })
+    }
+    
+    func saveTokenAndContinue(
+        token: String,
+        transportKey: String?,
+        completion: @escaping () -> ()
+    ) {
+        self.save(authToken: token)
+        
+        if let transportKey = transportKey {
+            self.save(transportKey: transportKey)
+        }
+        
+        completion()
     }
     
     func getPINHours() -> Int {

@@ -471,11 +471,11 @@
 "feed.watch-now" = "Mirar Ahora";
 "feed.read-now" = "Leer Ahora";
 "feed.play-now" = "Jugar Ahora";
-"feed.no-feed-found" = "No se encontraron resultados en el Feed";
-"feed.no-listen-found" = "No se encontraron resultados para \"Escuchar\"";
-"feed.no-watch-found" = "No se encontraron resultados para \"Mirar\"";
-"feed.no-read-found" = "No se encontraron resultados para \"Leer\"";
-"feed.no-play-found" = "No se encontraron resultados para \"Jugar\"";
+"feed.no-feed-found" = "No se encontraron\nresultados en el Feed";
+"feed.no-listen-found" = "No se encontraron\nresultados para \"Escuchar\"";
+"feed.no-watch-found" = "No se encontraron\nresultados para \"Mirar\"";
+"feed.no-read-found" = "No se encontraron\nresultados para \"Leer\"";
+"feed.no-play-found" = "No se encontraron\nresultados para \"Jugar\"";
 
 "feed.search-over" = "Buscá entre";
 "feed.search-podcast-quantity" = "4 000 000 podcasts";

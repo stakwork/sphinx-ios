@@ -438,14 +438,10 @@ class API {
             
             for (key, value) in headers {
                 request.setValue(value, forHTTPHeaderField: key)
-                
-                print("HEADER KEY: \(key) FOR VALUE: \(value)")
             }
             
             for (key, value) in additionalHeaders {
                 request.setValue(value, forHTTPHeaderField: key)
-                
-                print("HEADER KEY: \(key) FOR VALUE: \(value)")
             }
 
             if let p = params {

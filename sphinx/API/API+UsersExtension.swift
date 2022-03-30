@@ -344,8 +344,6 @@ extension API {
         
         for (key, value) in headers {
             httpHeaders.add(name: key, value: value)
-            
-            print("HEADER KEY: \(key) FOR VALUE: \(value)")
         }
         
         AF.upload(multipartFormData: { multipartFormData in

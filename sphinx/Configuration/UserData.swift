@@ -97,7 +97,8 @@ class UserData {
     }
     
     func getAndSaveHMACKey(
-        completion: (() -> ())? = nil
+        completion: (() -> ())? = nil,
+        errorCompletion: (() -> ())? = nil
     ) {
         if let hmacKey = getHmacKey(), !hmacKey.isEmpty {
             completion?()
@@ -110,7 +111,39 @@ class UserData {
                 self.save(hmacKey: decryptedHMACKey)
                 completion?()
             }
-        }, errorCallback: {})
+        }, errorCallback: {
+            errorCompletion?()
+        })
+    }
+    
+    func generateHMACKey() {
+        if let hmacKey = getHmacKey(), !hmacKey.isEmpty {
+            return
+        }
+        
+        getAndSaveHMACKey(errorCompletion: {
+            let HMACKey = EncryptionManager.randomString(length: 20)
+            
+            var parameters = [String : AnyObject]()
+            
+            if let transportK = self.getTransportKey(),
+               let transportEncryptionKey = EncryptionManager.sharedInstance.getPublicKeyFromBase64String(base64String: transportK) {
+                
+                if let encryptedHMACKey = EncryptionManager.sharedInstance.encryptToken(token: HMACKey, key: transportEncryptionKey) {
+                    parameters["encrypted_key"] = encryptedHMACKey as AnyObject?
+                } else {
+                    return
+                }
+            }
+            
+            API.sharedInstance.addHMACKey(
+                params: parameters,
+                callback: { _ in
+                    self.save(hmacKey: HMACKey)
+                },
+                errorCallback: {}
+            )
+        })
     }
     
     func generateToken(

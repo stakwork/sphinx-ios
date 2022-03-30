@@ -78,10 +78,6 @@ class SphinxSocketManager {
                     socketConfiguration = [.compress, .secure(secure), .extraHeaders(headers)]
                 }
                 
-                for (key, value) in headers {
-                    print("HEADER KEY: \(key) FOR VALUE: \(value)")
-                }
-                
                 manager = SocketManager(socketURL: url, config: socketConfiguration)
                 socket = manager?.defaultSocket
             }

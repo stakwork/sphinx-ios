@@ -444,13 +444,33 @@ class API {
                 request.setValue(value, forHTTPHeaderField: key)
             }
 
+            var bodyData: Data? = nil
+            
             if let p = params {
                 do {
-                    try request.httpBody = JSONSerialization.data(withJSONObject: p, options: [])
+                    try bodyData = JSONSerialization.data(withJSONObject: p, options: [])
                 } catch let error as NSError {
                     print("Error: " + error.localizedDescription)
                 }
             }
+            
+            let path = (nsURL as URL).pathWithParams
+            var signingString = "\(method)|\(path)|"
+            
+            if let bodyData = bodyData {
+                request.httpBody = bodyData
+                
+                if let bodyJsonString = String(data: bodyData, encoding: .utf8) {
+                    print(bodyJsonString)
+                    
+                    signingString = "\(signingString)\(bodyJsonString)"
+                }
+            }
+            
+            request.setValue(
+                signingString.hmac(algorithm: .SHA256, key: "test"),
+                forHTTPHeaderField: "x-hmac"
+            )
 
             return request
         } else {

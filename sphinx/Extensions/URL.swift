@@ -29,6 +29,14 @@ extension URL {
             return self.host
         }
     }
+    
+    var pathWithParams: String {
+        let path = self.path
+        if let query = self.query {
+            return "\(path)?\(query)"
+        }
+        return path
+    }
 }
 
 extension String {

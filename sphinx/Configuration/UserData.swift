@@ -20,7 +20,64 @@ class UserData {
     let onionConnector = SphinxOnionConnector.sharedInstance
     
     func isUserLogged() -> Bool {
-        return (getAppPin() != "" && getNodeIP() != "" && getAuthToken() != "" && SignupHelper.isLogged())
+        return getAppPin() != "" &&
+               getNodeIP() != "" &&
+               getAuthToken() != "" &&
+               SignupHelper.isLogged()
+    }
+    
+    func getAuthenticationHeader(
+        token: String? = nil,
+        transportKey: String? = nil
+    ) -> [String: String] {
+        
+        let t = token ?? getAuthToken()
+        
+        if t.isEmpty {
+            return [:]
+        }
+        
+        if let transportK = transportKey ?? getTransportKey(),
+           let transportEncryptionKey = EncryptionManager.sharedInstance.getPublicKeyFromBase64String(base64String: transportK) {
+            
+            let time = Int(NSDate().timeIntervalSince1970)
+            let tokenAndTime = "\(t)|\(time)"
+            
+            if let encryptedToken = EncryptionManager.sharedInstance.encryptToken(token: tokenAndTime, key: transportEncryptionKey) {
+                return ["x-transport-token": encryptedToken]
+            }
+            
+        }
+        return ["X-User-Token": t]
+    }
+    
+    func getHMACHeader(
+        url: URL,
+        method: String,
+        bodyData: Data?
+    ) -> [String: String] {
+        
+        let path = url.pathWithParams
+        var signingString = "\(method)|\(path)|"
+        
+        if let bodyData = bodyData {
+            
+            if let bodyJsonString = String(
+                data: bodyData,
+                encoding: .utf8
+            ) {
+                signingString = "\(signingString)\(bodyJsonString)"
+            }
+            
+        }
+        
+        if let HMACKey = getHmacKey() {
+            return [
+                "x-hmac": signingString.hmac(algorithm: .SHA256, key: HMACKey)
+            ]
+        }
+        
+        return [:]
     }
     
     func getAndSaveTransportKey(
@@ -39,6 +96,23 @@ class UserData {
         })
     }
     
+    func getAndSaveHMACKey(
+        completion: (() -> ())? = nil
+    ) {
+        if let hmacKey = getHmacKey(), !hmacKey.isEmpty {
+            completion?()
+            return
+        }
+        
+        API.sharedInstance.getHMACKey(callback: { hmacKey in
+            let (decrypted, decryptedHMACKey) = EncryptionManager.sharedInstance.decryptMessage(message: hmacKey)
+            if decrypted {
+                self.save(hmacKey: decryptedHMACKey)
+                completion?()
+            }
+        }, errorCallback: {})
+    }
+    
     func generateToken(
         token: String,
         pubkey: String,
@@ -48,7 +122,7 @@ class UserData {
     ) {
         getAndSaveTransportKey(completion: { transportKey in
             if let transportKey = transportKey {
-                let authenticatedHeader = EncryptionManager.sharedInstance.getAuthenticationHeader(
+                let authenticatedHeader = UserData.sharedInstance.getAuthenticationHeader(
                     token: token,
                     transportKey: transportKey
                 )
@@ -195,6 +269,10 @@ class UserData {
         saveValueFor(value: transportKey, for: KeychainManager.KeychainKeys.transportKey, userDefaultKey: UserDefaults.Keys.transportKey)
     }
     
+    func save(hmacKey: String) {
+        saveValueFor(value: hmacKey, for: KeychainManager.KeychainKeys.hmacKey, userDefaultKey: UserDefaults.Keys.hmacKey)
+    }
+    
     func save(password: String) {
         UserDefaults.Keys.nodePassword.set(password)
     }
@@ -238,6 +316,14 @@ class UserData {
         let transportKey = getValueFor(keychainKey: KeychainManager.KeychainKeys.transportKey, userDefaultKey: UserDefaults.Keys.transportKey)
         if !transportKey.isEmpty {
             return transportKey
+        }
+        return nil
+    }
+    
+    func getHmacKey() -> String? {
+        let hmacKey = getValueFor(keychainKey: KeychainManager.KeychainKeys.hmacKey, userDefaultKey: UserDefaults.Keys.hmacKey)
+        if !hmacKey.isEmpty {
+            return hmacKey
         }
         return nil
     }

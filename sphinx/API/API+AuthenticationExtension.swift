@@ -124,4 +124,37 @@ extension API {
             }
         }
     }
+    
+    public func getHMACKey(
+        callback: @escaping HMACKeyCallback,
+        errorCallback: @escaping EmptyCallback
+    ) {
+        guard let request = getURLRequest(
+                route: "/hmac_key",
+                params: nil,
+                method: "GET"
+        ) else {
+            errorCallback()
+            return
+        }
+        
+        sphinxRequest(request) { response in
+            switch response.result {
+            case .success(let data):
+                if let json = data as? NSDictionary {
+                    if let success = json["success"] as? Bool,
+                       let response = json["response"] as? NSDictionary, success {
+                        if let transportKey = response["encrypted_key"] as? String {
+                            callback(transportKey)
+                            return
+                        }
+                    }
+                    errorCallback()
+                }
+            case .failure(_):
+                errorCallback()
+            }
+        }
+    }
+    
 }

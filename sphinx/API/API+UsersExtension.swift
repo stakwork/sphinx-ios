@@ -340,7 +340,7 @@ extension API {
         }
         
         var httpHeaders = HTTPHeaders()
-        let headers = EncryptionManager.sharedInstance.getAuthenticationHeader()
+        let headers = UserData.sharedInstance.getAuthenticationHeader()
         
         for (key, value) in headers {
             httpHeaders.add(name: key, value: value)

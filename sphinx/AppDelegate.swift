@@ -100,7 +100,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func getTransportKey() {
         if UserData.sharedInstance.isUserLogged() {
             UserData.sharedInstance.getAndSaveTransportKey()
-            UserData.sharedInstance.generateHMACKey()
+            UserData.sharedInstance.getOrCreateHMACKey()
         }
     }
     

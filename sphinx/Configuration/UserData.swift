@@ -98,7 +98,7 @@ class UserData {
     
     func getAndSaveHMACKey(
         completion: (() -> ())? = nil,
-        errorCompletion: (() -> ())? = nil
+        noKeyCompletion: (() -> ())? = nil
     ) {
         if let hmacKey = getHmacKey(), !hmacKey.isEmpty {
             completion?()
@@ -112,38 +112,54 @@ class UserData {
                 completion?()
             }
         }, errorCallback: {
-            errorCompletion?()
+            noKeyCompletion?()
         })
     }
     
-    func generateHMACKey() {
+    func getOrCreateHMACKey(
+        completion: (() -> ())? = nil
+    ) {
         if let hmacKey = getHmacKey(), !hmacKey.isEmpty {
+            completion?()
             return
         }
         
-        getAndSaveHMACKey(errorCompletion: {
-            let HMACKey = EncryptionManager.randomString(length: 20)
-            
-            var parameters = [String : AnyObject]()
-            
-            if let transportK = self.getTransportKey(),
-               let transportEncryptionKey = EncryptionManager.sharedInstance.getPublicKeyFromBase64String(base64String: transportK) {
-                
-                if let encryptedHMACKey = EncryptionManager.sharedInstance.encryptToken(token: HMACKey, key: transportEncryptionKey) {
-                    parameters["encrypted_key"] = encryptedHMACKey as AnyObject?
-                } else {
-                    return
-                }
+        getAndSaveHMACKey(
+            completion: completion,
+            noKeyCompletion: {
+                self.createHMACKey(completion: completion)
             }
+        )
+    }
+    
+    func createHMACKey(
+        completion: (() -> ())? = nil
+    ) {
+        let HMACKey = EncryptionManager.randomString(length: 20)
+        
+        var parameters = [String : AnyObject]()
+        
+        if let transportK = self.getTransportKey(),
+           let transportEncryptionKey = EncryptionManager.sharedInstance.getPublicKeyFromBase64String(base64String: transportK) {
             
-            API.sharedInstance.addHMACKey(
-                params: parameters,
-                callback: { _ in
-                    self.save(hmacKey: HMACKey)
-                },
-                errorCallback: {}
-            )
-        })
+            if let encryptedHMACKey = EncryptionManager.sharedInstance.encryptToken(token: HMACKey, key: transportEncryptionKey) {
+                parameters["encrypted_key"] = encryptedHMACKey as AnyObject?
+            } else {
+                completion?()
+                return
+            }
+        }
+        
+        API.sharedInstance.addHMACKey(
+            params: parameters,
+            callback: { _ in
+                self.save(hmacKey: HMACKey)
+                completion?()
+            },
+            errorCallback: {
+                completion?()
+            }
+        )
     }
     
     func generateToken(
@@ -155,6 +171,7 @@ class UserData {
     ) {
         getAndSaveTransportKey(completion: { transportKey in
             if let transportKey = transportKey {
+                    
                 let authenticatedHeader = UserData.sharedInstance.getAuthenticationHeader(
                     token: token,
                     transportKey: transportKey
@@ -214,6 +231,11 @@ class UserData {
         
         if let transportKey = transportKey {
             self.save(transportKey: transportKey)
+            
+            self.createHMACKey() {
+                completion()
+            }
+            return
         }
         
         completion()

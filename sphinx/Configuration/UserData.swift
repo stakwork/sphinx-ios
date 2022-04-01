@@ -172,7 +172,7 @@ class UserData {
         getAndSaveTransportKey(completion: { transportKey in
             if let transportKey = transportKey {
                     
-                let authenticatedHeader = UserData.sharedInstance.getAuthenticationHeader(
+                let authenticatedHeader = self.getAuthenticationHeader(
                     token: token,
                     transportKey: transportKey
                 )

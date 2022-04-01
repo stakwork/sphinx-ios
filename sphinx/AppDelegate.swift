@@ -59,7 +59,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         configureStoreKit()
         connectTor()
         syncDeviceId()
-        getTransportKey()
+        getRelayKeys()
         
         setInitialVC(launchingApp: true)
 
@@ -97,7 +97,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UserContact.syncDeviceId()
     }
     
-    func getTransportKey() {
+    func getRelayKeys() {
         if UserData.sharedInstance.isUserLogged() {
             UserData.sharedInstance.getAndSaveTransportKey()
             UserData.sharedInstance.getOrCreateHMACKey()

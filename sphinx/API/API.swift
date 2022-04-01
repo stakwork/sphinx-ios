@@ -289,9 +289,9 @@ class API {
             case self.successStatusCode:
                 self.connectionStatus = .Connected
             case self.unauthorizedStatusCode:
-                if self.getHMACKeyAndRetry(urlRequest, completionHandler: completionHandler) {
-                    return
-                }
+//                if self.getHMACKeyAndRetry(urlRequest, completionHandler: completionHandler) {
+//                    return
+//                }
                 self.connectionStatus = .Unauthorize
             default:
                 if response.response == nil ||
@@ -324,21 +324,21 @@ class API {
         return request
     }
     
-    func getHMACKeyAndRetry(
-        _ urlRequest: URLRequestConvertible,
-        completionHandler: @escaping (AFDataResponse<Any>) -> Void
-    ) -> Bool {
-        if UserData.sharedInstance.getHmacKey() == nil {
-            UserData.sharedInstance.getAndSaveHMACKey(completion: {
-                let _ = self.unauthorizedHandledRequest(
-                    urlRequest,
-                    completionHandler: completionHandler
-                )
-            })
-            return true
-        }
-        return false
-    }
+//    func getHMACKeyAndRetry(
+//        _ urlRequest: URLRequestConvertible,
+//        completionHandler: @escaping (AFDataResponse<Any>) -> Void
+//    ) -> Bool {
+//        if UserData.sharedInstance.getHmacKey() == nil {
+//            UserData.sharedInstance.getAndSaveHMACKey(completion: {
+//                let _ = self.unauthorizedHandledRequest(
+//                    urlRequest,
+//                    completionHandler: completionHandler
+//                )
+//            })
+//            return true
+//        }
+//        return false
+//    }
 
     func networksConnectionLost() {
         DispatchQueue.main.async {

@@ -113,7 +113,7 @@ public final class ContactsService {
 
     public func getChatListObjects() -> [ChatListCommonObject] {
         let filteredContacts =  contacts.filter { !$0.isOwner && !$0.shouldBeExcluded() && !$0.isBlocked()}
-        let filteredChats =  chats.filter { !($0.getContact()?.isBlocked() ?? false) }
+        let filteredChats =  chats.filter { $0.getContact() != nil && !($0.getContact()?.isBlocked() ?? false) }
 
         chatsCount = filteredChats.count
 

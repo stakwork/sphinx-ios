@@ -56,7 +56,7 @@ extension API {
     func getLatestContacts(date: Date, callback: @escaping LatestContactsResultsCallback){
         var route = "/latest_contacts"
         
-        let lastSeenDate = (lastSeenContactsDate ?? Date().changeDays(by: -1))
+        let lastSeenDate = lastSeenContactsDate ?? Date(timeIntervalSince1970: 0)
         if let dateString = lastSeenDate.getStringFromDate(format:"yyyy-MM-dd HH:mm:ss").percentEscaped {
             route = "\(route)?date=\(dateString)"
         }

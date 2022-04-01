@@ -71,39 +71,21 @@ final class ChatListViewModel: NSObject {
             
             let restoring = self.isRestoring()
             
-            if contactsService.chats.count == 0 {
+            API.sharedInstance.getLatestContacts(
+                date: Date(),
+                callback: {(contacts, chats, subscriptions, invites) -> () in
                 
-                API.sharedInstance.getContacts(
-                    callback: {(contacts, chats, subscriptions) -> () in
-                    
-                    contactsService.insertObjects(
-                        contacts: contacts,
-                        chats: chats,
-                        subscriptions: subscriptions,
-                        invites: []
-                    )
-                    
-                    self.forceKeychainSync()
-                    
-                    completion(restoring)
-                })
-            } else {
-                API.sharedInstance.getLatestContacts(
-                    date: Date(),
-                    callback: {(contacts, chats, subscriptions, invites) -> () in
-                    
-                    contactsService.insertObjects(
-                        contacts: contacts,
-                        chats: chats,
-                        subscriptions: subscriptions,
-                        invites: invites
-                    )
-                    
-                    self.forceKeychainSync()
-                    
-                    completion(restoring)
-                })
-            }
+                contactsService.insertObjects(
+                    contacts: contacts,
+                    chats: chats,
+                    subscriptions: subscriptions,
+                    invites: invites
+                )
+                
+                self.forceKeychainSync()
+                
+                completion(restoring)
+            })
             return
         }
         completion(false)

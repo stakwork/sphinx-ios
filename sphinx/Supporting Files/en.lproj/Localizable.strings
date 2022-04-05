@@ -249,6 +249,10 @@
 "hour" = "hour";
 "hours" = "hours";
 "always.require.pin" = "Always require PIN";
+"profile.github-pat-title" = "Github Personal Access Token";
+"profile.github-pat-message" = "Generate a Personal Access Token on github with the repo scope";
+"profile.github-pat.error" = "Github Personal Access Token coult not be set";
+"profile.github-pat.success" = "Github Personal Access Token successfully set";
 
 //PIN
 "choose.pin.upper" = "CHOOSE PIN";

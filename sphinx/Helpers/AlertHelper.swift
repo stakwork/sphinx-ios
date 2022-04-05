@@ -17,13 +17,22 @@ class AlertHelper {
         }
     }
     
-    class func showAlert(title: String, message: String, completion: (() -> ())? = nil) {
+    class func showAlert(
+        title: String,
+        message: String,
+        completion: (() -> ())? = nil
+    ) {
         if let rootViewController: UIViewController = getRootVC() {
             showAlert(title: title, message: message, on: rootViewController, completion: completion)
         }
     }
     
-    class func showAlert(title: String, message: String, on vc: UIViewController, completion: (() -> ())? = nil) {
+    class func showAlert(
+        title: String,
+        message: String,
+        on vc: UIViewController,
+        completion: (() -> ())? = nil
+    ) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let alertAction = UIAlertAction(title: "Ok", style: .cancel, handler: { _ in
             if let callback = completion {
@@ -40,7 +49,13 @@ class AlertHelper {
         }
     }
     
-    class func showTwoOptionsAlert(title: String, message: String, on vc: UIViewController, confirm: (() -> ())? = nil, cancel: (() -> ())? = nil){
+    class func showTwoOptionsAlert(
+        title: String,
+        message: String,
+        on vc: UIViewController,
+        confirm: (() -> ())? = nil,
+        cancel: (() -> ())? = nil
+    ){
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "cancel".localized, style: .destructive , handler:{ (UIAlertAction)in
             if let cancel = cancel {
@@ -52,6 +67,35 @@ class AlertHelper {
                 confirm()
             }
         }))
+        vc.present(alert, animated: true, completion: nil)
+    }
+    
+    class func showPromptAlert(
+        title: String,
+        message: String,
+        on vc: UIViewController,
+        confirm: ((String?) -> ())? = nil,
+        cancel: (() -> ())? = nil
+    ){
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "cancel".localized, style: .destructive , handler:{ (UIAlertAction)in
+            if let cancel = cancel {
+                cancel()
+            }
+        }))
+        alert.addAction(UIAlertAction(title: "confirm".localized, style: .default , handler:{ (UIAlertAction)in
+            if let confirm = confirm {
+                if let textFields = alert.textFields, textFields.count > 0 {
+                    confirm(
+                        textFields[0].text
+                    )
+                } else {
+                    confirm(nil)
+                }
+            }
+        }))
+        alert.addTextField(configurationHandler: { _ in })
+        
         vc.present(alert, animated: true, completion: nil)
     }
     

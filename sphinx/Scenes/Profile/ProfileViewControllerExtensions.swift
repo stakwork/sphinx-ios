@@ -19,7 +19,13 @@ extension ProfileViewController {
                 }
                 AlertHelper.showTwoOptionsAlert(title: "pin.change".localized, message: "confirm.pin.change".localized, confirm: {
                     GroupsPinManager.sharedInstance.didUpdateStandardPin(newPin: pin)
-                    self.newMessageBubbleHelper.showGenericMessageView(text: "pin.changed".localized, delay: 6, backAlpha: 1.0)
+                    self.newMessageBubbleHelper.showGenericMessageView(
+                        text: "pin.changed".localized,
+                        delay: 6,
+                        textColor: UIColor.white,
+                        backColor: UIColor.Sphinx.PrimaryGreen,
+                        backAlpha: 1.0
+                    )
                 })
             })
         }
@@ -40,7 +46,14 @@ extension ProfileViewController {
                     GroupsPinManager.sharedInstance.didUpdatePrivacyPin(newPin: pin)
                     self.privacyPinLabel.text = "change.privacy.pin".localized
                     let alertLabel = (isPrivacyPinSet ? "privacy.pin.changed" : "privacy.pin.set").localized
-                    self.newMessageBubbleHelper.showGenericMessageView(text: alertLabel, delay: 6, backAlpha: 1.0)
+                    
+                    self.newMessageBubbleHelper.showGenericMessageView(
+                        text: alertLabel,
+                        delay: 6,
+                        textColor: UIColor.white,
+                        backColor: UIColor.Sphinx.PrimaryGreen,
+                        backAlpha: 1.0
+                    )
                 })
             })
         }

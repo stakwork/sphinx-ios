@@ -38,6 +38,7 @@ class ProfileViewController: KeyboardEventsViewController {
     @IBOutlet weak var exportKeyButton: UIButton!
     @IBOutlet weak var relayContainerView: UIView!
     @IBOutlet weak var changePINContainerView: UIView!
+    @IBOutlet weak var setGithubPATContainerView: UIView!
     @IBOutlet weak var uploadingLabel: UILabel!
     @IBOutlet weak var uploadLoadingWheel: UIActivityIndicatorView!
     @IBOutlet weak var contentScrollView: UIScrollView!
@@ -69,6 +70,7 @@ class ProfileViewController: KeyboardEventsViewController {
     var rootViewController : RootViewController!
     var contactsService : ContactsService!
     let urlUpdateHelper = RelayURLUpdateHelper()
+    let userData = UserData.sharedInstance
     
     var imagePickerManager = ImagePickerManager.sharedInstance
     var notificationSoundHelper = NotificationSoundHelper()
@@ -195,7 +197,7 @@ class ProfileViewController: KeyboardEventsViewController {
             }
         }
         
-        relayUrlTextField.text = UserData.sharedInstance.getNodeIP()
+        relayUrlTextField.text = userData.getNodeIP()
     }
     
     func configureServers() {
@@ -273,7 +275,7 @@ class ProfileViewController: KeyboardEventsViewController {
         let setPinVC = PinCodeViewController.instantiate(subtitle: subtitle)
         setPinVC.doneCompletion = { pin in
             setPinVC.dismiss(animated: true, completion: {
-                if let keyJSONString = UserData.sharedInstance.exportKeysJSON(pin: pin) {
+                if let keyJSONString = self.userData.exportKeysJSON(pin: pin) {
                     AlertHelper.showAlert(title: "export.keys".localized, message: "keys.will.copy.clipboard".localized, completion: {
                         ClipboardHelper.copyToClipboard(text: keyJSONString, message: "keys.copied.clipboard".localized)
                     })
@@ -283,6 +285,60 @@ class ProfileViewController: KeyboardEventsViewController {
             })
         }
         self.present(setPinVC, animated: true)
+    }
+    
+    @IBAction func setGithubPATButtonTouched() {
+        AlertHelper.showPromptAlert(
+            title: "profile.github-pat-title".localized,
+            message: "profile.github-pat-message".localized,
+            on: self,
+            confirm: { value in
+                if let value = value {
+                    self.sendGithubPAT(pat: value)
+                }
+            },
+            cancel: {}
+        )
+    }
+    
+    func sendGithubPAT(
+        pat: String
+    ) {
+        var parameters = [String : AnyObject]()
+        
+        if let transportK = userData.getTransportKey(),
+           let transportEncryptionKey = EncryptionManager.sharedInstance.getPublicKeyFromBase64String(base64String: transportK) {
+            
+            if let encryptedPat = EncryptionManager.sharedInstance.encryptToken(token: pat, key: transportEncryptionKey) {
+                parameters["encrypted_pat"] = encryptedPat as AnyObject?
+            }
+        }
+        
+        if (parameters.keys.isEmpty) {
+            AlertHelper.showAlert(
+                title: "generic.error.title".localized,
+                message: "profile.github-pat.error".localized
+            )
+            return
+        }
+        
+        API.sharedInstance.addGitPAT(
+            params: parameters,
+            callback: { _ in
+                self.newMessageBubbleHelper.showGenericMessageView(
+                    text: "profile.github-pat.success".localized,
+                    textColor: UIColor.white,
+                    backColor: UIColor.Sphinx.PrimaryGreen,
+                    backAlpha: 1.0
+                )
+            },
+            errorCallback: {
+                AlertHelper.showAlert(
+                    title: "generic.error.title".localized,
+                    message: "profile.github-pat.error".localized
+                )
+            }
+        )
     }
     
     @IBAction func changePinButtonTouched() {

@@ -125,6 +125,37 @@ extension API {
         }
     }
     
+    public func addGitPAT(
+        params: [String: AnyObject],
+        callback: @escaping SuccessCallback,
+        errorCallback: @escaping EmptyCallback
+    ) {
+        guard let request = getURLRequest(
+                route: "/bot/git",
+                params: params as NSDictionary?,
+                method: "POST"
+        ) else {
+            errorCallback()
+            return
+        }
+        
+        sphinxRequest(request) { response in
+            switch response.result {
+            case .success(let data):
+                if let json = data as? NSDictionary {
+                    if let success = json["success"] as? Bool,
+                       let _ = json["response"] as? NSDictionary, success {
+                        callback(true)
+                        return
+                    }
+                    errorCallback()
+                }
+            case .failure(_):
+                errorCallback()
+            }
+        }
+    }
+    
     public func addHMACKey(
         params: [String: AnyObject],
         callback: @escaping SuccessCallback,
@@ -187,5 +218,4 @@ extension API {
             }
         }
     }
-    
 }

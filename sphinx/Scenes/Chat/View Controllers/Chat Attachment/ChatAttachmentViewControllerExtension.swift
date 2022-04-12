@@ -9,6 +9,8 @@
 import UIKit
 import GiphyUISDK
 import SDWebImage
+import Photos
+import PhotosUI
 
 extension ChatAttachmentViewController {
     func isButtonDisabled(option: OptionsButton) -> Bool {
@@ -51,11 +53,18 @@ extension ChatAttachmentViewController : UIImagePickerControllerDelegate, UINavi
         
         DispatchQueue.main.async {
             if let chosenImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-                if let imageURL = info[UIImagePickerController.InfoKey.imageURL] as? URL, let data = try? Data(contentsOf: imageURL), data.isAnimatedImage() {
-                    let animated = SDAnimatedImage(data: data)
-                    self.gifSelected(animatedImage: animated, staticImage: chosenImage)
-                } else {
-                    self.imageSelected(image: chosenImage)
+                if let asset = info[UIImagePickerController.InfoKey.phAsset] as? PHAsset {
+                    let requestOptions = PHImageRequestOptions()
+                    requestOptions.isSynchronous = true
+                    
+                    PHImageManager.default().requestImageDataAndOrientation(for: asset, options: requestOptions, resultHandler: { (imageData, _, _, _) in
+                        if let data = imageData, data.isAnimatedImage() {
+                            let animated = SDAnimatedImage(data: data)
+                            self.gifSelected(animatedImage: animated, staticImage: chosenImage)
+                        } else {
+                            self.imageSelected(image: chosenImage)
+                        }
+                    })
                 }
             } else if let videoURL = info[UIImagePickerController.InfoKey.mediaURL] as? NSURL {
                 self.videoSelected(videoURL: videoURL)
@@ -130,7 +139,7 @@ extension ChatAttachmentViewController : UIImagePickerControllerDelegate, UINavi
     
     func videoSelected(videoURL: NSURL) {
         viewTitle.text = "send.video.upper".localized
-        selectedVideo = MediaLoader.getDataFromUrl(videoURL: videoURL as URL)
+        selectedVideo = MediaLoader.getDataFromUrl(url: videoURL as URL)
         
         if let thumbnail = AttachmentsManager.sharedInstance.getThumbnailFromVideo(videoURL: videoURL as URL) {
             selectedImage = thumbnail

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Photos
 
 extension ProfileViewController {
     func shouldChangePIN() {
@@ -156,25 +157,33 @@ extension ProfileViewController : UITextFieldDelegate {
 
 extension ProfileViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let chosenImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            dismiss(animated:true, completion: {
-                self.profileImageView.image = chosenImage
-                self.profileImageView.contentMode = .scaleAspectFill
-                self.uploadImage(image: chosenImage)
+        if let asset = info[UIImagePickerController.InfoKey.phAsset] as? PHAsset {
+            let requestOptions = PHImageRequestOptions()
+            requestOptions.isSynchronous = true
+            
+            PHImageManager.default().requestImageDataAndOrientation(for: asset, options: requestOptions, resultHandler: { (imageData, UTI, _, _) in
+                self.dismiss(animated:true, completion: {
+                    if let data = imageData {
+                        self.profileImageView.image = data.gifImageFromData()
+                        self.profileImageView.contentMode = .scaleAspectFill
+                        self.uploadImage(data: data)
+                    }
+                })
             })
         }
     }
     
-    func uploadImage(image: UIImage) {
-        let fixedImage = image.fixedOrientation()
-        
-        if let profile = UserContact.getOwner(), profile.id > 0, let imgData = fixedImage.jpegData(compressionQuality: 0.5) {
+    func uploadImage(data: Data) {
+        if let profile = UserContact.getOwner(),
+           profile.id > 0 {
+            
             uploading = true
             
             let attachmentsManager = AttachmentsManager.sharedInstance
             attachmentsManager.setDelegate(delegate: self)
             
-            let attachmentObject = AttachmentObject(data: imgData, type: AttachmentsManager.AttachmentType.Photo)
+            let fileType = data.isAnimatedImage() ? AttachmentsManager.AttachmentType.Gif : AttachmentsManager.AttachmentType.Photo
+            let attachmentObject = AttachmentObject(data: data, type: fileType)
             attachmentsManager.uploadImage(attachmentObject: attachmentObject, route: "public")
         } else {
             configureProfile()
@@ -193,7 +202,7 @@ extension ProfileViewController : AttachmentsManagerDelegate {
     }
     
     func didSuccessUploadingImage(url: String) {
-        if let image = profileImageView.image?.fixedOrientation() {
+        if let image = profileImageView.image {
             MediaLoader.storeImageInCache(img: image, url: url)
         }
         updateProfile(photoUrl: url)

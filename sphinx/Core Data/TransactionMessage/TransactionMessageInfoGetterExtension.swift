@@ -93,10 +93,7 @@ extension TransactionMessage {
             image = self.senderPic?.removeDuplicatedProtocol().trim()
         }
         
-        if let image = image {
-            return image + "?thumb=true"
-        }
-        return nil
+        return image
     }
     
     //Message content and encryption

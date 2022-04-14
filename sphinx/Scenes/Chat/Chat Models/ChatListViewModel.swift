@@ -124,14 +124,18 @@ final class ChatListViewModel: NSObject {
     var syncMessagesTask: DispatchWorkItem? = nil
     var syncMessagesDate = Date()
     var newMessagesChatIds = [Int]()
+    var syncing = false
     
     func syncMessages(
         chatId: Int? = nil,
         progressCallback: @escaping (Int) -> (),
         completion: @escaping (Int, Int) -> ()
     ) {
+        if syncing { return }
+        
         syncMessagesTask = DispatchWorkItem { [weak self] in
             guard let self = self else { return }
+            self.syncing = true
             
             self.newMessagesChatIds = []
             self.syncMessagesDate = Date()
@@ -151,13 +155,13 @@ final class ChatListViewModel: NSObject {
                 date: self.syncMessagesDate,
                 progressCallback: progressCallback,
                 completion: { chatNewMessagesCount, newMessagesCount in
-                    
+
                     UserDefaults.Keys.messagesFetchPage.removeValue()
                     
                     Chat.updateLastMessageForChats(
                         self.newMessagesChatIds
                     )
-                    
+                    self.syncing = false
                     completion(chatNewMessagesCount, newMessagesCount)
                 }
             )
@@ -166,6 +170,7 @@ final class ChatListViewModel: NSObject {
     }
     
     func finishRestoring() {
+        self.syncing = false
         syncMessagesTask?.cancel()
         
         UserDefaults.Keys.messagesFetchPage.removeValue()
@@ -263,8 +268,8 @@ final class ChatListViewModel: NSObject {
             return -1
         }
         
-        let pages = (newMessagesTotal <= itemsPerPage) ? 1 : (newMessagesTotal / itemsPerPage)
-        let progress: Int = currentPage * 100 / pages
+        let pages = (newMessagesTotal <= itemsPerPage) ? 1 : ceil(Double(newMessagesTotal) / Double(itemsPerPage))
+        let progress: Int = currentPage * 100 / Int(pages)
 
         return progress
     }

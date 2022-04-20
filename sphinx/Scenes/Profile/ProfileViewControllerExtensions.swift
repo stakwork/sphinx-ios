@@ -164,26 +164,36 @@ extension ProfileViewController : UIImagePickerControllerDelegate, UINavigationC
                 
                 PHImageManager.default().requestImageDataAndOrientation(for: asset, options: requestOptions, resultHandler: { (imageData, _, _, _) in
                     self.dismiss(animated:true, completion: {
-                        if let data = imageData {
-                            self.profileImageView.image = data.gifImageFromData()
-                            self.profileImageView.contentMode = .scaleAspectFill
-                            self.uploadImage(data: data)
+                        if let data = imageData, data.isAnimatedImage() {
+                            self.uploadGif(data: data)
+                        } else {
+                            self.uploadImage(image: chosenImage)
                         }
                     })
                 })
             } else {
                 self.dismiss(animated:true, completion: {
-                    if let data = chosenImage.jpegData(compressionQuality: 0.5) {
-                        self.profileImageView.image = chosenImage
-                        self.profileImageView.contentMode = .scaleAspectFill
-                        self.uploadImage(data: data)
-                    }
+                    self.uploadImage(image: chosenImage)
                 })
             }
         }
     }
     
-    func uploadImage(data: Data) {
+    func uploadGif(data: Data) {
+        self.profileImageView.image = data.gifImageFromData()
+        self.profileImageView.contentMode = .scaleAspectFill
+        self.uploadImageData(data: data)
+    }
+    
+    func uploadImage(image: UIImage) {
+        if let data = image.jpegData(compressionQuality: 0.5) {
+            self.profileImageView.image = image
+            self.profileImageView.contentMode = .scaleAspectFill
+            self.uploadImageData(data: data)
+        }
+    }
+    
+    func uploadImageData(data: Data) {
         if let profile = UserContact.getOwner(),
            profile.id > 0 {
             

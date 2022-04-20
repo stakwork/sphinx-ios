@@ -59,7 +59,7 @@ class ChatAvatarView: UIView {
                 profileImageView.sd_setImage(
                     with: nsUrl,
                     placeholderImage: UIImage(named: "profile_avatar"),
-                    options: [.highPriority],
+                    options: [.lowPriority, .decodeFirstFrameOnly],
                     progress: nil,
                     completed: { (image, error, _, _) in
                         if (error == nil) {

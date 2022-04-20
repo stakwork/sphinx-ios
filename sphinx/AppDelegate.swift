@@ -356,16 +356,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
-    func reloadMessagesUI() {
-        if let currentVC = getCurrentVC() {
-            if let currentVC = currentVC as? ChatViewController {
-                currentVC.initialLoad()
-            } else if let dashboardRootVC = currentVC as? DashboardRootViewController {
-                dashboardRootVC.loadContactsAndSyncMessages()
-            }
-        }
-    }
-
     func setBadge(
         application: UIApplication
     ) {
@@ -394,6 +384,8 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                     completionHandler(.newData)
                 })
             }
+        } else {
+            completionHandler(.noData)
         }
     }
 

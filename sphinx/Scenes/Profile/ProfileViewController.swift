@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MobileCoreServices
 
 class ProfileViewController: KeyboardEventsViewController {
     
@@ -267,7 +268,12 @@ class ProfileViewController: KeyboardEventsViewController {
     }
     
     @IBAction func profilePictureButtonTouched() {
-        imagePickerManager.showAlert(title: "profile.image".localized, message: "select.option".localized, sourceView: profileImageView)
+        imagePickerManager.showAlert(
+            title: "profile.image".localized,
+            message: "select.option".localized,
+            sourceView: profileImageView,
+            mediaTypes: [kUTTypeImage as String]
+        )
     }
     
     @IBAction func exportKeysButtonTouched() {

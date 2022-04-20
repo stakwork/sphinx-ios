@@ -76,7 +76,7 @@ class AudioRecorderHelper : NSObject {
     
     func getAudioData() -> Data? {
         let audioFilename = getDocumentsDirectory().appendingPathComponent("recording.m4a")
-        return MediaLoader.getDataFromUrl(videoURL: audioFilename)
+        return MediaLoader.getDataFromUrl(url: audioFilename)
     }
     
     func startRecording() {

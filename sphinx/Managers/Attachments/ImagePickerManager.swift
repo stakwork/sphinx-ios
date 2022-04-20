@@ -37,15 +37,20 @@ class ImagePickerManager {
         }
     }
     
-    func showAlert(title: String, message: String, sourceView: UIView) {
+    func showAlert(
+        title: String,
+        message: String,
+        sourceView: UIView,
+        mediaTypes: [String]? = nil
+    ) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
         
         alert.addAction(UIAlertAction(title: "camera".localized, style: .default , handler:{ (UIAlertAction)in
-            self.showCamera()
+            self.showCamera(mediaTypes: mediaTypes)
         }))
         
         alert.addAction(UIAlertAction(title: "photo.library".localized, style: .default , handler:{ (UIAlertAction)in
-            self.showPhotoLibrary()
+            self.showPhotoLibrary(mediaTypes: mediaTypes)
         }))
         
         alert.addAction(UIAlertAction(title: "dismiss".localized, style: .cancel, handler:{ (UIAlertAction)in
@@ -62,13 +67,18 @@ class ImagePickerManager {
         }
     }
     
-    func showPhotoLibrary() {
+    func showPhotoLibrary(
+        mediaTypes: [String]? = nil
+    ) {
         if let vc = self.viewController {
-            CameraHelper.showPhotoLibrary(picker: self.picker, vc: vc)
+            CameraHelper.showPhotoLibrary(picker: self.picker, vc: vc, mediaTypes: mediaTypes)
         }
     }
     
-    func showCamera(mode: UIImagePickerController.CameraCaptureMode = .photo) {
+    func showCamera(
+        mode: UIImagePickerController.CameraCaptureMode = .photo,
+        mediaTypes: [String]? = nil
+    ) {
         if let vc = self.viewController {
             let conformsToBackCameraProtocol = (vc as? BackCameraVC) != nil
             

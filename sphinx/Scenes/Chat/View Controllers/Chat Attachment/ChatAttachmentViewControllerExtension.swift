@@ -59,6 +59,8 @@ extension ChatAttachmentViewController : UIImagePickerControllerDelegate, UINavi
                         if let data = imageData, data.isAnimatedImage() {
                             let animated = SDAnimatedImage(data: data)
                             self.gifSelected(animatedImage: animated, staticImage: chosenImage)
+                        } else {
+                            self.imageSelected(image: chosenImage)
                         }
                     })
                 } else {

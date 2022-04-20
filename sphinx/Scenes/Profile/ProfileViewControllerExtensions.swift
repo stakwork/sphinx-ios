@@ -157,19 +157,29 @@ extension ProfileViewController : UITextFieldDelegate {
 
 extension ProfileViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let asset = info[UIImagePickerController.InfoKey.phAsset] as? PHAsset {
-            let requestOptions = PHImageRequestOptions()
-            requestOptions.isSynchronous = true
-            
-            PHImageManager.default().requestImageDataAndOrientation(for: asset, options: requestOptions, resultHandler: { (imageData, UTI, _, _) in
+        if let chosenImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            if let asset = info[UIImagePickerController.InfoKey.phAsset] as? PHAsset {
+                let requestOptions = PHImageRequestOptions()
+                requestOptions.isSynchronous = true
+                
+                PHImageManager.default().requestImageDataAndOrientation(for: asset, options: requestOptions, resultHandler: { (imageData, _, _, _) in
+                    self.dismiss(animated:true, completion: {
+                        if let data = imageData {
+                            self.profileImageView.image = data.gifImageFromData()
+                            self.profileImageView.contentMode = .scaleAspectFill
+                            self.uploadImage(data: data)
+                        }
+                    })
+                })
+            } else {
                 self.dismiss(animated:true, completion: {
-                    if let data = imageData {
-                        self.profileImageView.image = data.gifImageFromData()
+                    if let data = chosenImage.jpegData(compressionQuality: 0.5) {
+                        self.profileImageView.image = chosenImage
                         self.profileImageView.contentMode = .scaleAspectFill
                         self.uploadImage(data: data)
                     }
                 })
-            })
+            }
         }
     }
     

@@ -49,8 +49,6 @@ extension ChatAttachmentViewController : AttachmentsDelegate {
 
 extension ChatAttachmentViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        hideOptionsContainer()
-        
         DispatchQueue.main.async {
             if let chosenImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
                 if let asset = info[UIImagePickerController.InfoKey.phAsset] as? PHAsset {
@@ -61,20 +59,21 @@ extension ChatAttachmentViewController : UIImagePickerControllerDelegate, UINavi
                         if let data = imageData, data.isAnimatedImage() {
                             let animated = SDAnimatedImage(data: data)
                             self.gifSelected(animatedImage: animated, staticImage: chosenImage)
-                        } else {
-                            self.imageSelected(image: chosenImage)
                         }
                     })
+                } else {
+                    self.imageSelected(image: chosenImage)
                 }
             } else if let videoURL = info[UIImagePickerController.InfoKey.mediaURL] as? NSURL {
                 self.videoSelected(videoURL: videoURL)
             }
             picker.dismiss(animated:true, completion: nil)
         }
-
     }
     
     func gifSelected(animatedImage: SDAnimatedImage?, staticImage: UIImage?, allowPrice: Bool = true) {
+        hideOptionsContainer()
+        
         viewTitle.text = "send.gif.upper".localized
         selectedAnimatedImage = animatedImage
         selectedImage = staticImage
@@ -82,6 +81,8 @@ extension ChatAttachmentViewController : UIImagePickerControllerDelegate, UINavi
     }
     
     func imageSelected(image: UIImage?) {
+        hideOptionsContainer()
+        
         viewTitle.text = "send.image.upper".localized
         selectedImage = image
         showImagePreview(image: image)
@@ -138,6 +139,8 @@ extension ChatAttachmentViewController : UIImagePickerControllerDelegate, UINavi
     }
     
     func videoSelected(videoURL: NSURL) {
+        hideOptionsContainer()
+        
         viewTitle.text = "send.video.upper".localized
         selectedVideo = MediaLoader.getDataFromUrl(url: videoURL as URL)
         

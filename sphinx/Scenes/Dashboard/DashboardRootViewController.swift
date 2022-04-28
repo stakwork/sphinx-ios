@@ -461,16 +461,18 @@ extension DashboardRootViewController {
     internal func updateCurrentViewControllerData() {
         updateNewMessageBadges()
         
+        let queryString = searchTextField?.text ?? ""
+        
         switch activeTab {
         case .feed:
             break
         case .friends:
             contactChatsContainerViewController.updateWithNewChats(
-                chatsListViewModel.contactChats
+                chatsListViewModel.contactChats(fromSearchQuery: queryString)
             )
         case .tribes:
             tribeChatsContainerViewController.updateWithNewChats(
-                chatsListViewModel.tribeChats
+                chatsListViewModel.tribeChats(fromSearchQuery: queryString)
             )
         }
     }

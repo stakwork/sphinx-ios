@@ -29,6 +29,7 @@ target 'sphinx' do
         target.build_configurations.each do |config|
           config.build_settings['ENABLE_BITCODE'] = 'NO'
           config.build_settings["SWIFT_OPTIMIZATION_LEVEL"] = "-Onone"
+          config.build_settings['ONLY_ACTIVE_ARCH'] = 'NO'
         end
       end
     end

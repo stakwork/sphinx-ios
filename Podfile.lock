@@ -36,7 +36,7 @@ PODS:
     - SDWebImage/Core (~> 5.10)
   - Starscream (3.1.1)
   - SwiftLinkPreview (3.1.0)
-  - SwiftyJSON (5.0.1)
+  - SwiftyJSON (4.3.0)
   - SwiftyRSA (1.6.0):
     - SwiftyRSA/ObjC (= 1.6.0)
   - SwiftyRSA/ObjC (1.6.0)
@@ -116,12 +116,12 @@ SPEC CHECKSUMS:
   SDWebImageFLPlugin: 245c7ce1e77028b6ef415240847b3f8aa4b106b7
   Starscream: 4bb2f9942274833f7b4d296a55504dcfc7edb7b0
   SwiftLinkPreview: 3d924eeaae8d17410a827a4b37675713af1a0a8a
-  SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
+  SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
   SwiftyRSA: 3b9c9179744217951facc6a3e9ae8d8c97061ffa
   SwiftyXMLParser: 027d9e6fb54a38d95dccec025bcea9693f699c47
   Tor: fad2cec0e7ef5f889fecdaf69e5edd6df0438326
   youtube-ios-player-helper: 0185c57db23c80d63d6ca11251d110abb8a4ca61
 
-PODFILE CHECKSUM: 99424def6e5eca57ca7743ff49bc07ac7ab31830
+PODFILE CHECKSUM: 1871d8b3ee0307b22d6e148b5f6e7eff2c13263f
 
-COCOAPODS: 1.9.3
+COCOAPODS: 1.11.3

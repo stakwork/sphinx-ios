@@ -3513,7 +3513,6 @@
 			buildConfigurationList = 4779F189232AA0F300D35E81 /* Build configuration list for PBXNativeTarget "sphinx" */;
 			buildPhases = (
 				74D5802228AED9FB0AFE86CA /* [CP] Check Pods Manifest.lock */,
-				B1CEA61D0D10FAAE61042C57 /* [CP] Prepare Artifacts */,
 				4779F15A232AA0F200D35E81 /* Sources */,
 				4779F15B232AA0F200D35E81 /* Frameworks */,
 				4779F15C232AA0F200D35E81 /* Resources */,
@@ -3846,23 +3845,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		B1CEA61D0D10FAAE61042C57 /* [CP] Prepare Artifacts */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-sphinx/Pods-sphinx-artifacts-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Prepare Artifacts";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-sphinx/Pods-sphinx-artifacts-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-sphinx/Pods-sphinx-artifacts.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

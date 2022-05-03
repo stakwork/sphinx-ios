@@ -34,31 +34,39 @@ final class ChatListViewModel: NSObject {
             .filter { $0.isPublicGroup() }
     }
     
-    
     func contactChats(
         fromSearchQuery searchQuery: String
     ) -> [ChatListCommonObject] {
-        contactsService
+        
+        if searchQuery.isEmpty {
+            return contactChats
+        }
+        
+        return contactsService
             .getChatListObjects()
             .filter {
                 $0.isConversation() &&
                 $0.getName()
                     .lowercased()
-                    .starts(with: searchQuery.lowercased())
+                    .contains(searchQuery.lowercased())
             }
     }
-    
     
     func tribeChats(
         fromSearchQuery searchQuery: String
     ) -> [ChatListCommonObject] {
-        contactsService
+        
+        if searchQuery.isEmpty {
+            return tribeChats
+        }
+        
+        return contactsService
             .getChatListObjects()
             .filter {
                 $0.isPublicGroup() &&
                 $0.getName()
                     .lowercased()
-                    .starts(with: searchQuery.lowercased())
+                    .contains(searchQuery.lowercased())
             }
     }
     

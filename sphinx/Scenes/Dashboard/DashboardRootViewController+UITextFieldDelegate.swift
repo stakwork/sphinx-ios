@@ -26,8 +26,10 @@ extension DashboardRootViewController: UITextFieldDelegate {
         _ textField: UITextField,
         reason: UITextField.DidEndEditingReason
     ) {
-        if textField.text?.isEmpty == true {
-            presentRootFeedsListView()
+        if case .feed = activeTab {
+            if textField.text?.isEmpty == true {
+                presentRootFeedsListView()
+            }
         }
     }
     

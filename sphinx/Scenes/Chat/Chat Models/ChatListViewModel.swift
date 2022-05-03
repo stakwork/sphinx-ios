@@ -128,10 +128,15 @@ final class ChatListViewModel: NSObject {
     
     func syncMessages(
         chatId: Int? = nil,
+        shouldSaveFetchDate: Bool = true,
         progressCallback: @escaping (Int) -> (),
-        completion: @escaping (Int, Int) -> ()
+        completion: @escaping (Int, Int) -> (),
+        errorCompletion: (() -> ())? = nil
     ) {
-        if syncing { return }
+        if syncing {
+            errorCompletion?()
+            return
+        }
         
         syncMessagesTask = DispatchWorkItem { [weak self] in
             guard let self = self else { return }
@@ -153,6 +158,7 @@ final class ChatListViewModel: NSObject {
                 prevPageNewMessages: 0,
                 chatId: chatId,
                 date: self.syncMessagesDate,
+                shouldSaveFetchDate,
                 progressCallback: progressCallback,
                 completion: { chatNewMessagesCount, newMessagesCount in
 
@@ -182,6 +188,7 @@ final class ChatListViewModel: NSObject {
         prevPageNewMessages: Int,
         chatId: Int? = nil,
         date: Date,
+        _ shouldSaveFetchDate: Bool = true,
         progressCallback: @escaping (Int) -> (),
         completion: @escaping (Int, Int) -> ()
     ) {
@@ -190,6 +197,7 @@ final class ChatListViewModel: NSObject {
         API.sharedInstance.getMessagesPaginated(
             page: page,
             date: date,
+            shouldSaveFetchDate,
             callback: {(newMessagesTotal, newMessages) -> () in
                 
                 if self.syncMessagesTask?.isCancelled == true {

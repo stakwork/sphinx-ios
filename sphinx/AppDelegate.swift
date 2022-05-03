@@ -107,9 +107,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         scheduleAppRefresh()
         
         chatListViewModel.loadFriends { _ in
-            self.chatListViewModel.syncMessages(progressCallback: { _ in }, completion: { (_, _) in
-                task.setTaskCompleted(success: true)
-            })
+            self.chatListViewModel.syncMessages(
+                progressCallback: { _ in },
+                completion: { (_, _) in
+                    task.setTaskCompleted(success: true)
+                },
+                errorCompletion: {
+                    task.setTaskCompleted(success: true)
+                }
+            )
         }
     }
     
@@ -378,11 +384,16 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
     ) {
         if application.applicationState == .background {
-            chatListViewModel.loadFriends { _ in
-                self.chatListViewModel.syncMessages(progressCallback: { _ in }, completion: { (_, _) in
+            self.chatListViewModel.syncMessages(
+                shouldSaveFetchDate: false,
+                progressCallback: { _ in },
+                completion: { (_, _) in
                     completionHandler(.newData)
-                })
-            }
+                },
+                errorCompletion: {
+                    completionHandler(.noData)
+                }
+            )
         } else {
             completionHandler(.noData)
         }

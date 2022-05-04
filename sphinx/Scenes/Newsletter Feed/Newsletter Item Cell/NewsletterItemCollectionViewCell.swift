@@ -39,11 +39,9 @@ extension NewsletterItemCollectionViewCell {
 extension NewsletterItemCollectionViewCell {
     
     var imageViewURL: URL? {
-//        if let url = newsletterItem.newsletterFeed?.imageURL {
-//            return url
-//        } else if let chatUrl = newsletterItem.newsletterFeed?.chat?.photoUrl, let url = URL(string: chatUrl) {
-//            return url
-//        }
+        if let url = newsletterItem?.imageUrl {
+            return url
+        }
         return nil
     }
 }

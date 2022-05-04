@@ -21,7 +21,6 @@ class LeftMenuAddFriendTableViewCell: UITableViewCell {
         
         addFriendButtonView = AddFriendRowButton(frame: CGRect(x: 0.0, y: 0.0, width: WindowsManager.getWindowWidth(), height: rowHeight))
         addFriendButtonView.delegate = self
-        if UserContact.getOwner()?.isVirtualNode() ?? false { addFriendButtonView.configureForAddFriend() }
         contentView.addSubview(addFriendButtonView)
     }
     

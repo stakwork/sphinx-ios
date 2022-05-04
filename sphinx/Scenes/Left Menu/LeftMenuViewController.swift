@@ -31,7 +31,7 @@ class LeftMenuViewController: UIViewController {
     
     let storeKitService = StoreKitService.shared
 
-    let buttonsCount = 2
+    var buttonsCount = 2
     
     let menuOptions:[MenuOption] = [
         MenuOption(iconCharacter: "", optionTitle: "left-menu.dashboard".localized),
@@ -84,7 +84,6 @@ class LeftMenuViewController: UIViewController {
         profileImageView.layer.cornerRadius = profileImageView.frame.size.height / 2
         profileImageView.clipsToBounds = true
         
-        
         karmaPurchaseButton.setTitle("left-menu.buy-karma-button".localized, for: .normal)
         karmaPurchaseButton.layer.cornerRadius = karmaPurchaseButton.frame.size.height / 2
         karmaPurchaseButton.clipsToBounds = true
@@ -114,6 +113,10 @@ class LeftMenuViewController: UIViewController {
     }
     
     func configureTable() {
+        if UserContact.getOwner()?.isVirtualNode() ?? false {
+            buttonsCount = 1
+        }
+        
         optionsTableView.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
         optionsTableView.delegate = self
         optionsTableView.dataSource = self

@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreData
+import HDWalletKit
 
 
 class DashboardRootViewController: RootViewController {
@@ -259,6 +260,17 @@ extension DashboardRootViewController {
 // MARK: -  Public Methods
 extension DashboardRootViewController {
     
+    public func generateAndPersistWalletMnemonic() {
+        let secret = EncryptionManager.randomString(length: 16)
+        let entropy = Data(hex: secret.toHexString())
+        let mnemonic = Mnemonic.create(entropy: entropy)
+        
+        print("MNEMONIC WORDS: \(mnemonic)")
+        print("MNEMONIC WORDS: \(mnemonic)")
+        
+        UserData.sharedInstance.save(walletMnemonic: mnemonic)
+    }
+    
     public func handleDeepLinksAndPush() {
         deepLinkIntoChatDetails()
         handleLinkQueries()
@@ -306,6 +318,8 @@ extension DashboardRootViewController {
     
     
     func scanQRCodeButtonTouched() {
+        generateAndPersistWalletMnemonic()
+        
         let viewController = NewQRScannerViewController.instantiate(
             rootViewController: rootViewController
         )

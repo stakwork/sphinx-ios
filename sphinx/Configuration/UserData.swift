@@ -195,6 +195,10 @@ class UserData {
         saveValueFor(value: transportKey, for: KeychainManager.KeychainKeys.transportKey, userDefaultKey: UserDefaults.Keys.transportKey)
     }
     
+    func save(walletMnemonic: String) {
+        saveValueFor(value: walletMnemonic, for: KeychainManager.KeychainKeys.walletMnemonic, userDefaultKey: nil)
+    }
+    
     func save(password: String) {
         UserDefaults.Keys.nodePassword.set(password)
     }

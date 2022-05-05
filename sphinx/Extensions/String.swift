@@ -352,6 +352,12 @@ extension String {
         return nil
     }
     
+    var hexEncoded : String {
+        let data = Data(self.utf8)
+        let hexString = data.map{ String(format:"%02x", $0) }.joined()
+        return hexString
+    }
+    
     var base64Encoded : String? {
         return Data(self.utf8).base64EncodedString()
     }

@@ -16,6 +16,7 @@ class NewsletterItem: NSObject {
     public var title: String?
     public var itemDescription: String?
     public var itemUrl: URL?
+    public var imageUrl: URL?
     public var creator: String?
     public var datePublished: Date?
     public var dateUpdated: Date?
@@ -59,6 +60,7 @@ extension NewsletterItem {
         newsletterItem.dateUpdated = contentFeedItem.dateUpdated
         newsletterItem.itemDescription = contentFeedItem.itemDescription
         newsletterItem.itemUrl = contentFeedItem.enclosureURL
+        newsletterItem.imageUrl = contentFeedItem.imageURL
         newsletterItem.title = contentFeedItem.title
         newsletterItem.newsletterFeed = newsletterFeed
         

@@ -1092,6 +1092,7 @@
 		4789E26824F04758003991BE /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/SettingsTabsView.strings; sourceTree = "<group>"; };
 		4789E26B24F05481003991BE /* ProfileViewControllerRelayExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewControllerRelayExtension.swift; sourceTree = "<group>"; };
 		4789E26D24F406F3003991BE /* RelayURLUpdateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelayURLUpdateHelper.swift; sourceTree = "<group>"; };
+		478BD8B428297FD500C733FD /* sphinx 33.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 33.xcdatamodel"; sourceTree = "<group>"; };
 		478C3D5624A947920003A1A4 /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
 		478DCF972343D24D009A03D6 /* SetProfileImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetProfileImageViewController.swift; sourceTree = "<group>"; };
 		478DCF992343D258009A03D6 /* SetNickNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetNickNameViewController.swift; sourceTree = "<group>"; };
@@ -5245,6 +5246,7 @@
 		47F35D4A2373156A0042A58F /* sphinx.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				478BD8B428297FD500C733FD /* sphinx 33.xcdatamodel */,
 				F3DC6AFC273C81C400458E09 /* sphinx 32.xcdatamodel */,
 				47357A0727299E0900A49EEE /* sphinx 31.xcdatamodel */,
 				F32A694E26CFA7740004B8B3 /* sphinx 30.xcdatamodel */,
@@ -5278,7 +5280,7 @@
 				475E4162238588A200928931 /* sphinx 2.xcdatamodel */,
 				47F35D4B2373156A0042A58F /* sphinx.xcdatamodel */,
 			);
-			currentVersion = F3DC6AFC273C81C400458E09 /* sphinx 32.xcdatamodel */;
+			currentVersion = 478BD8B428297FD500C733FD /* sphinx 33.xcdatamodel */;
 			path = sphinx.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

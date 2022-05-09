@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -1870,6 +1870,38 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xJt-e9-912" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1458" y="163"/>
+        </scene>
+        <!--Tribe Member Popup View Controller-->
+        <scene sceneID="1VD-v0-oZG">
+            <objects>
+                <viewController storyboardIdentifier="TribeMemberPopupViewController" id="oAq-1f-CtK" customClass="TribeMemberPopupViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="1DE-Km-wQN">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GvM-cS-iPk" customClass="TribeMemberPopupView" customModule="sphinx" customModuleProvider="target">
+                                <rect key="frame" x="67.5" y="193.5" width="240" height="280"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="NgM-Yw-C5g"/>
+                                    <constraint firstAttribute="height" constant="280" id="gwO-nc-OF8"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="BfT-55-bcN"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="displayP3"/>
+                        <constraints>
+                            <constraint firstItem="GvM-cS-iPk" firstAttribute="centerY" secondItem="BfT-55-bcN" secondAttribute="centerY" id="b4L-fB-g1J"/>
+                            <constraint firstItem="GvM-cS-iPk" firstAttribute="centerX" secondItem="BfT-55-bcN" secondAttribute="centerX" id="ju8-i5-a4d"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tribeMemberPopupView" destination="GvM-cS-iPk" id="ouG-XG-NYy"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ulY-xa-6EL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1241" y="-537"/>
         </scene>
     </scenes>
     <resources>

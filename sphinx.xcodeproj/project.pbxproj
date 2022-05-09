@@ -363,6 +363,9 @@
 		4789E26224F04752003991BE /* SettingsTabsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4789E26424F04752003991BE /* SettingsTabsView.xib */; };
 		4789E26C24F05481003991BE /* ProfileViewControllerRelayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4789E26B24F05481003991BE /* ProfileViewControllerRelayExtension.swift */; };
 		4789E26E24F406F3003991BE /* RelayURLUpdateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4789E26D24F406F3003991BE /* RelayURLUpdateHelper.swift */; };
+		478BD8B62829B67300C733FD /* TribeMemberPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478BD8B52829B67300C733FD /* TribeMemberPopupViewController.swift */; };
+		478BD8B92829B70700C733FD /* TribeMemberPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478BD8B82829B70700C733FD /* TribeMemberPopupView.swift */; };
+		478BD8BB2829B71D00C733FD /* TribeMemberPopupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 478BD8BA2829B71D00C733FD /* TribeMemberPopupView.xib */; };
 		478C3D5724A947920003A1A4 /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478C3D5624A947920003A1A4 /* UIApplication.swift */; };
 		478DCF982343D24D009A03D6 /* SetProfileImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478DCF972343D24D009A03D6 /* SetProfileImageViewController.swift */; };
 		478DCF9A2343D258009A03D6 /* SetNickNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478DCF992343D258009A03D6 /* SetNickNameViewController.swift */; };
@@ -1093,6 +1096,9 @@
 		4789E26B24F05481003991BE /* ProfileViewControllerRelayExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewControllerRelayExtension.swift; sourceTree = "<group>"; };
 		4789E26D24F406F3003991BE /* RelayURLUpdateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelayURLUpdateHelper.swift; sourceTree = "<group>"; };
 		478BD8B428297FD500C733FD /* sphinx 33.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 33.xcdatamodel"; sourceTree = "<group>"; };
+		478BD8B52829B67300C733FD /* TribeMemberPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TribeMemberPopupViewController.swift; sourceTree = "<group>"; };
+		478BD8B82829B70700C733FD /* TribeMemberPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TribeMemberPopupView.swift; sourceTree = "<group>"; };
+		478BD8BA2829B71D00C733FD /* TribeMemberPopupView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TribeMemberPopupView.xib; sourceTree = "<group>"; };
 		478C3D5624A947920003A1A4 /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
 		478DCF972343D24D009A03D6 /* SetProfileImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetProfileImageViewController.swift; sourceTree = "<group>"; };
 		478DCF992343D258009A03D6 /* SetNickNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetNickNameViewController.swift; sourceTree = "<group>"; };
@@ -2085,6 +2091,7 @@
 				477D9698244E0C0200830406 /* Chat */,
 				477D9699244E0C1B00830406 /* Chat Attachment */,
 				473258AA241BD6E7006E6602 /* Common */,
+				478BD8B52829B67300C733FD /* TribeMemberPopupViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -2110,6 +2117,7 @@
 		475BDC96232AC15C00C5BBD6 /* Custom Views */ = {
 			isa = PBXGroup;
 			children = (
+				478BD8B72829B6F400C733FD /* Tribe Member */,
 				479608F2256EAEA200A68FC1 /* Boosting Messages */,
 				47D03DF22510ED840077A968 /* PDF */,
 				4726A40B24C09C23005A66B4 /* Chat */,
@@ -2793,6 +2801,15 @@
 				47018F9627D1079800797E0B /* FeedLoaderHelper.swift */,
 			);
 			path = Helper;
+			sourceTree = "<group>";
+		};
+		478BD8B72829B6F400C733FD /* Tribe Member */ = {
+			isa = PBXGroup;
+			children = (
+				478BD8B82829B70700C733FD /* TribeMemberPopupView.swift */,
+				478BD8BA2829B71D00C733FD /* TribeMemberPopupView.xib */,
+			);
+			path = "Tribe Member";
 			sourceTree = "<group>";
 		};
 		478F07D424E3228600EE32A3 /* Giphy */ = {
@@ -3735,6 +3752,7 @@
 				475154B82423F09900477384 /* VideoCallBubbleView.xib in Resources */,
 				47771C73259B9B9400990467 /* GroupPinView.xib in Resources */,
 				47904C2024BF403400710E7A /* NotificationSoundTableViewCell.xib in Resources */,
+				478BD8BB2829B71D00C733FD /* TribeMemberPopupView.xib in Resources */,
 				475BDD0E232AC25100C5BBD6 /* DayHeaderTableViewCell.xib in Resources */,
 				47904C0D24BF352300710E7A /* bells.caf in Resources */,
 				475BDD23232AC71000C5BBD6 /* Colors.xcassets in Resources */,
@@ -4005,6 +4023,7 @@
 				475BDCFB232AC24600C5BBD6 /* PaidInvoiceReceivedTableViewCell.swift in Sources */,
 				4789E26E24F406F3003991BE /* RelayURLUpdateHelper.swift in Sources */,
 				475BDD5C232AE26E00C5BBD6 /* TransactionMessage+CoreDataClass.swift in Sources */,
+				478BD8B92829B70700C733FD /* TribeMemberPopupView.swift in Sources */,
 				475723A9247EBB56001ADC7E /* CustomAudioPlayer.swift in Sources */,
 				47D76E6927F10D89000DC021 /* API+AuthenticationExtension.swift in Sources */,
 				473842F7239197E700AA640F /* FullScreenImageView.swift in Sources */,
@@ -4311,6 +4330,7 @@
 				4734D3CB241AA7A000D6957E /* PaymentTemplatesDataSource.swift in Sources */,
 				F3D52185272A939900918267 /* AllTribeFeedsCollectionViewController.swift in Sources */,
 				47A79D3E2444EEF3005CD72F /* MessageOptionView.swift in Sources */,
+				478BD8B62829B67300C733FD /* TribeMemberPopupViewController.swift in Sources */,
 				47FA18BE242534CD00469C8F /* UIViewController.swift in Sources */,
 				47FA18C5242D26F300469C8F /* GroupPaymentViewController.swift in Sources */,
 				470F5CAB243E7D27007E054F /* Notification.Name.swift in Sources */,

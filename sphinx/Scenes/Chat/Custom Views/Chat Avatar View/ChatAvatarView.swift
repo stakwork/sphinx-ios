@@ -45,10 +45,14 @@ class ChatAvatarView: UIView {
         profileInitialContainer.clipsToBounds = true
     }
     
+    func setInitialLabelSize(size: Double) {
+        initialsLabel.font = UIFont(name: "Montserrat-Regular", size: size)!
+    }
+    
     func configureFor(
-        recipientAlias: String?,
-        recipientPic: String?,
-        tribeAdminId: Int
+        alias: String?,
+        picture: String?,
+        senderId: Int
     ) {
         profileImageView.sd_cancelCurrentImageLoad()
         
@@ -57,11 +61,11 @@ class ChatAvatarView: UIView {
         profileImageView.layer.borderWidth = 0
         
         showInitialsWith(
-            alias: recipientAlias ?? "Unknown",
-            color: ChatHelper.getRecipientColor(adminId: tribeAdminId, recipientAlias: recipientAlias ?? "Unknown")
+            alias: alias ?? "Unknown",
+            color: ChatHelper.getRecipientColor(adminId: senderId, recipientAlias: alias ?? "Unknown")
         )
         
-        if let recipientPic = recipientPic, let url = URL(string: recipientPic) {
+        if let recipientPic = picture, let url = URL(string: recipientPic) {
             showImageWith(url: url)
         }
     }

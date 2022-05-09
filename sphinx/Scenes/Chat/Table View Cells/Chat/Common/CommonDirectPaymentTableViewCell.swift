@@ -119,7 +119,7 @@ class CommonDirectPaymentTableViewCell : CommonChatTableViewCell {
         }
 
         recipientAvatarView.isHidden = false
-        recipientAvatarView.configureFor(recipientAlias: message.recipientAlias, recipientPic: message.recipientPic, tribeAdminId: tribeAdminId)
+        recipientAvatarView.configureFor(alias: message.recipientAlias, picture: message.recipientPic, senderId: tribeAdminId)
     }
     
     func tryLoadingImage(messageRow: TransactionMessageRow) {

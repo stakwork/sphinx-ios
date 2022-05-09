@@ -357,8 +357,15 @@ extension ChatViewController : MessageCellDelegate {
     }
     
     func didTapAvatarView(message: TransactionMessage) {
+        let tribeMemberPopupVC = TribeMemberPopupViewController.instantiate(message: message, delegate: self)
+        WindowsManager.sharedInstance.showConveringWindowWith(rootVC: tribeMemberPopupVC)
+    }
+}
+
+extension ChatViewController : TribeMemberPopupViewDelegate {
+    func shouldGoToSendPayment(message: TransactionMessage) {
         accessoryView.hide()
-        
+
         let viewController : UIViewController! = CreateInvoiceViewController.instantiate(
             contacts: [],
             chat: chat,
@@ -368,7 +375,7 @@ extension ChatViewController : MessageCellDelegate {
             paymentMode: .send,
             rootViewController: rootViewController
         )
-        
+
         presentNavigationControllerWith(vc: viewController)
     }
 }

@@ -32,15 +32,39 @@ class ChatAvatarView: UIView {
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         
-        profileImageView.layer.cornerRadius = profileImageView.frame.size.height/2
+        profileImageView.layer.cornerRadius = self.bounds.height/2
         profileImageView.clipsToBounds = true
         
-        profileInitialContainer.layer.cornerRadius = profileInitialContainer.frame.size.height/2
+        profileInitialContainer.layer.cornerRadius = self.bounds.height/2
         profileInitialContainer.clipsToBounds = true
     }
     
-    func configureFor(messageRow: TransactionMessageRow, contact: UserContact?, and chat: Chat?) {
+    func configureFor(
+        recipientAlias: String?,
+        recipientPic: String?,
+        tribeAdminId: Int
+    ) {
+        profileImageView.sd_cancelCurrentImageLoad()
         
+        profileImageView.isHidden = true
+        profileInitialContainer.isHidden = true
+        profileImageView.layer.borderWidth = 0
+        
+        showInitialsWith(
+            alias: recipientAlias ?? "Unknown",
+            color: ChatHelper.getRecipientColor(adminId: tribeAdminId, recipientAlias: recipientAlias ?? "Unknown")
+        )
+        
+        if let recipientPic = recipientPic, let url = URL(string: recipientPic) {
+            showImageWith(url: url)
+        }
+    }
+    
+    func configureFor(
+        messageRow: TransactionMessageRow,
+        contact: UserContact?,
+        and chat: Chat?
+    ) {
         profileImageView.sd_cancelCurrentImageLoad()
         
         profileImageView.isHidden = true
@@ -50,38 +74,48 @@ class ChatAvatarView: UIView {
         let message = messageRow.transactionMessage!
         
         if !messageRow.getConsecutiveMessages().previousMessage {
-            showInitialsFor(message: message)
+            
+            showInitialsWith(
+                alias: message.getMessageSenderNickname(),
+                color: ChatHelper.getSenderColorFor(message: message)
+            )
             
             let senderAvatarURL = message.getMessageSenderProfilePic(chat: chat, contact: contact)
             
-            if let senderAvatarURL = senderAvatarURL, let nsUrl = URL(string: senderAvatarURL) {
+            if let senderAvatarURL = senderAvatarURL, let url = URL(string: senderAvatarURL) {
                 
-                profileImageView.sd_setImage(
-                    with: nsUrl,
-                    placeholderImage: UIImage(named: "profile_avatar"),
-                    options: [.lowPriority, .decodeFirstFrameOnly],
-                    progress: nil,
-                    completed: { (image, error, _, _) in
-                        if (error == nil) {
-                            self.profileInitialContainer.isHidden = true
-                            self.profileImageView.isHidden = false
-                            self.profileImageView.image = image
-                        }
-                    }
-                )
+                showImageWith(url: url)
             }
         }
     }
     
-    func showInitialsFor(message: TransactionMessage) {
-        self.profileImageView.image = nil
-        
-        let senderNickname = message.getMessageSenderNickname()
-        let senderColor = ChatHelper.getSenderColorFor(message: message)
+    func showImageWith(
+        url: URL
+    ) {
+        profileImageView.sd_setImage(
+            with: url,
+            placeholderImage: UIImage(named: "profile_avatar"),
+            options: [.lowPriority, .decodeFirstFrameOnly],
+            progress: nil,
+            completed: { (image, error, _, _) in
+                if (error == nil) {
+                    self.profileInitialContainer.isHidden = true
+                    self.profileImageView.isHidden = false
+                    self.profileImageView.image = image
+                }
+            }
+        )
+    }
+    
+    func showInitialsWith(
+        alias: String,
+        color: UIColor
+    ) {
+        profileImageView.image = nil
         
         profileInitialContainer.isHidden = false
-        profileInitialContainer.backgroundColor = senderColor
+        profileInitialContainer.backgroundColor = color
         initialsLabel.textColor = UIColor.white
-        initialsLabel.text = senderNickname.getInitialsFromName()
+        initialsLabel.text = alias.getInitialsFromName()
     }
 }

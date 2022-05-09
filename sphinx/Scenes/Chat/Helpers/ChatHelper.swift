@@ -26,6 +26,14 @@ class ChatHelper {
         return UIColor.Sphinx.Text
     }
     
+    public static func getRecipientColor(
+        adminId: Int,
+        recipientAlias: String
+    ) -> UIColor {
+        let key:String = "\(adminId)-\(recipientAlias.trim())-color"
+        return UIColor.getColorFor(key: key)
+    }
+    
     public static func registerCellsForChat(tableView: UITableView) {
         tableView.registerCell(MessageSentTableViewCell.self)
         tableView.registerCell(MessageReceivedTableViewCell.self)
@@ -484,7 +492,10 @@ class ChatHelper {
         }
     }
     
-    func processMessageReaction(message: TransactionMessage, boosts: inout [String: TransactionMessage.Reactions]) {
+    func processMessageReaction(
+        message: TransactionMessage,
+        boosts: inout [String: TransactionMessage.Reactions]
+    ) {
         if let replyUUID = message.replyUUID {
             let outgoing = message.isOutgoing()
             let isPublicGroup = message.chat?.isPublicGroup() ?? false

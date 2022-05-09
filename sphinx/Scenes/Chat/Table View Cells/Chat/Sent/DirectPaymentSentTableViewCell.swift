@@ -24,8 +24,13 @@ class DirectPaymentSentTableViewCell: CommonDirectPaymentTableViewCell, MessageR
         super.setSelected(selected, animated: animated)
     }
     
-    func configureMessageRow(messageRow: TransactionMessageRow, contact: UserContact?, chat: Chat?) {
-        super.configurePayment(messageRow: messageRow, contact: contact, chat: chat, incoming: false)
+    func configureMessageRow(
+        messageRow: TransactionMessageRow,
+        contact: UserContact?,
+        chat: Chat?,
+        tribeAdminId: Int?
+    ) {
+        super.configurePayment(messageRow: messageRow, contact: contact, chat: chat, incoming: false, tribeAdminId: tribeAdminId)
         
         configureMessageStatus()
     }
@@ -50,4 +55,5 @@ class DirectPaymentSentTableViewCell: CommonDirectPaymentTableViewCell, MessageR
         errorContainerRightConstraint.constant = rightConstraint
         errorContainer.superview?.layoutIfNeeded()
     }
+    
 }

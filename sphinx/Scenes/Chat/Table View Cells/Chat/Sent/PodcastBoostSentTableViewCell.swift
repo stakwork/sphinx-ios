@@ -22,7 +22,7 @@ class PodcastBoostSentTableViewCell: CommonPodcastBoostTableViewCell, MessageRow
         super.setSelected(selected, animated: animated)
     }
     
-    override func configureMessageRow(messageRow: TransactionMessageRow, contact: UserContact?, chat: Chat?) {
+    func configureMessageRow(messageRow: TransactionMessageRow, contact: UserContact?, chat: Chat?, tribeAdminId: Int?) {
         super.configureMessageRow(messageRow: messageRow, contact: contact, chat: chat)
 
         commonConfigurationForMessages()

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -46,11 +46,11 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3gO-ya-9Gf" customClass="ChatAvatarView" customModule="sphinx" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="56" height="56"/>
+                                <rect key="frame" x="15" y="4" width="33" height="33"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="56" id="JZf-3s-utp"/>
-                                    <constraint firstAttribute="height" constant="56" id="Za5-f2-hDA"/>
+                                    <constraint firstAttribute="width" constant="33" id="JZf-3s-utp"/>
+                                    <constraint firstAttribute="height" constant="33" id="Za5-f2-hDA"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KeT-AQ-Sdv">
@@ -118,8 +118,8 @@
                             <constraint firstItem="HdR-EY-QTa" firstAttribute="leading" secondItem="rNK-aM-YOu" secondAttribute="leading" constant="56" id="CVH-7q-x1d"/>
                             <constraint firstItem="HdR-EY-QTa" firstAttribute="top" secondItem="rNK-aM-YOu" secondAttribute="top" constant="21" id="Fg8-Ag-pRd"/>
                             <constraint firstItem="0IP-O7-Quw" firstAttribute="trailing" secondItem="282-Oo-OML" secondAttribute="trailing" id="HVE-ik-jPG"/>
-                            <constraint firstItem="3gO-ya-9Gf" firstAttribute="leading" secondItem="rNK-aM-YOu" secondAttribute="leading" id="IPe-YU-dGn"/>
-                            <constraint firstItem="3gO-ya-9Gf" firstAttribute="top" secondItem="rNK-aM-YOu" secondAttribute="top" id="IXQ-Jx-oNS"/>
+                            <constraint firstItem="3gO-ya-9Gf" firstAttribute="leading" secondItem="rNK-aM-YOu" secondAttribute="leading" constant="15" id="IPe-YU-dGn"/>
+                            <constraint firstItem="3gO-ya-9Gf" firstAttribute="top" secondItem="rNK-aM-YOu" secondAttribute="top" constant="4" id="IXQ-Jx-oNS"/>
                             <constraint firstItem="282-Oo-OML" firstAttribute="top" secondItem="HdR-EY-QTa" secondAttribute="top" constant="8" id="KJe-1a-YEs"/>
                             <constraint firstAttribute="bottom" secondItem="aUt-8L-PIf" secondAttribute="bottom" id="Pih-lJ-MtI"/>
                             <constraint firstAttribute="bottom" secondItem="ewt-NR-ERE" secondAttribute="bottom" id="T3b-OK-bKm"/>

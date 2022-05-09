@@ -8,7 +8,13 @@
 
 import UIKit
 
+protocol ChatAvatarViewDelegate: class {
+    func didTapAvatarView()
+}
+
 class ChatAvatarView: UIView {
+    
+    weak var delegate: ChatAvatarViewDelegate?
     
     @IBOutlet private var contentView: UIView!
 
@@ -63,8 +69,11 @@ class ChatAvatarView: UIView {
     func configureFor(
         messageRow: TransactionMessageRow,
         contact: UserContact?,
-        and chat: Chat?
+        chat: Chat?,
+        with delegate: ChatAvatarViewDelegate? = nil
     ) {
+        self.delegate = delegate
+        
         profileImageView.sd_cancelCurrentImageLoad()
         
         profileImageView.isHidden = true
@@ -117,5 +126,9 @@ class ChatAvatarView: UIView {
         profileInitialContainer.backgroundColor = color
         initialsLabel.textColor = UIColor.white
         initialsLabel.text = alias.getInitialsFromName()
+    }
+    
+    @IBAction func avatarViewButtonTouched() {
+        delegate?.didTapAvatarView()
     }
 }

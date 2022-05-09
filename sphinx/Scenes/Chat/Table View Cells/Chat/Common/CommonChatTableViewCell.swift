@@ -23,6 +23,7 @@ import SDWebImage
     func shouldScrollToBottom()
     func shouldGoBackToDashboard()
     func didTapOnPubKey(pubkey: String)
+    func didTapAvatarView(message: TransactionMessage)
     func fileDownloadButtonTouched(message: TransactionMessage, data: Data, button: UIButton)
 }
 
@@ -137,7 +138,7 @@ class CommonChatTableViewCell: SwipableReplyCell, RowWithLinkPreviewProtocol {
         dateLabel.text = (messageRow.date ?? Date()).getStringDate(format: "hh:mm a")
         dateLabel.font = UIFont(name: "Roboto-Regular", size: 10.0)!
         
-        chatAvatarView?.configureFor(messageRow: messageRow, contact: contact, and: chat)
+        chatAvatarView?.configureFor(messageRow: messageRow, contact: contact, chat: chat, with: self)
 
         rightLineContainer?.layer.sublayers?.forEach { $0.removeFromSuperlayer() }
         leftLineContainer?.layer.sublayers?.forEach { $0.removeFromSuperlayer() }
@@ -404,6 +405,14 @@ extension CommonChatTableViewCell : LinkPreviewDelegate {
     func didTapOnContactButton() {
         if let link = messageRow?.getMessageContent().stringFirstPubKey {
             delegate?.didTapOnPubKey(pubkey: link)
+        }
+    }
+}
+
+extension CommonChatTableViewCell : ChatAvatarViewDelegate {
+    func didTapAvatarView() {
+        if let message = messageRow?.transactionMessage, (chat?.isPublicGroup() ?? false) {
+            delegate?.didTapAvatarView(message: message)
         }
     }
 }

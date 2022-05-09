@@ -21,6 +21,7 @@ final class ChatViewModel: NSObject {
         public var encryptedMessage: String?
         public var remoteEncryptedMessage: String?
         public var muid: String?
+        public var messageUUID: String?
         public var dim: String?
     }
     
@@ -73,7 +74,11 @@ final class ChatViewModel: NSObject {
         return true
     }
     
-    func shouldSendDirectPayment(parameters: [String: AnyObject], callback: @escaping (TransactionMessage?) -> (), errorCallback: @escaping () -> ()) {
+    func shouldSendDirectPayment(
+        parameters: [String: AnyObject],
+        callback: @escaping (TransactionMessage?) -> (),
+        errorCallback: @escaping () -> ()
+    ) {
         API.sharedInstance.sendDirectPayment(params: parameters, callback: { payment in
             if let payment = payment {
                 let (messageObject, success) = self.createLocalMessages(message: payment)
@@ -98,7 +103,10 @@ final class ChatViewModel: NSObject {
         return (nil, false)
     }
     
-    func getParams(contacts: [UserContact]?, chat: Chat?) -> [String: AnyObject] {
+    func getParams(
+        contacts: [UserContact]?,
+        chat: Chat?
+    ) -> [String: AnyObject] {
         var parameters = [String : AnyObject]()
         
         if let amount = currentPayment.amount {
@@ -168,7 +176,10 @@ final class ChatViewModel: NSObject {
         return parameters
     }
     
-    func toggleVolumeOn(chat: Chat, completion: @escaping (Chat?) -> ()) {
+    func toggleVolumeOn(
+        chat: Chat,
+        completion: @escaping (Chat?) -> ()
+    ) {
         let currentMode = chat.isMuted()
         
         API.sharedInstance.toggleChatSound(chatId: chat.id, muted: !currentMode, callback: { chatJson in
@@ -200,7 +211,7 @@ final class ChatViewModel: NSObject {
                         flagMessageContent = "\(flagMessageContent)\n- Tribe: \(chat.uuid ?? "Empty Tribe UUID")"
                     }
                     
-                    self.sendMessage(
+                    self.sendFlagMessage(
                         contact: contact,
                         text: flagMessageContent
                     )
@@ -210,7 +221,7 @@ final class ChatViewModel: NSObject {
         }
     }
     
-    func sendMessage(
+    func sendFlagMessage(
         contact: UserContact,
         text: String
     ) {

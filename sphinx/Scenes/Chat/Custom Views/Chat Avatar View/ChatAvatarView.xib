@@ -46,10 +46,19 @@
                         <constraint firstItem="kgX-82-1DS" firstAttribute="centerX" secondItem="tZr-Gc-AKU" secondAttribute="centerX" id="sOX-jo-PaE"/>
                     </constraints>
                 </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jWk-hx-QNH">
+                    <rect key="frame" x="0.0" y="0.0" width="56" height="56"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <connections>
+                        <action selector="avatarViewButtonTouched" destination="-1" eventType="touchUpInside" id="srL-Y2-2Tb"/>
+                    </connections>
+                </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
+                <constraint firstItem="jWk-hx-QNH" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="8jk-CG-Z3Y"/>
+                <constraint firstItem="jWk-hx-QNH" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="GPw-b0-Q1r"/>
                 <constraint firstItem="8St-VU-ZJS" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="I5S-zc-1cj"/>
                 <constraint firstItem="tZr-Gc-AKU" firstAttribute="trailing" secondItem="8St-VU-ZJS" secondAttribute="trailing" id="LBT-e7-y1m"/>
                 <constraint firstAttribute="trailing" secondItem="8St-VU-ZJS" secondAttribute="trailing" id="UhW-wN-pwR"/>
@@ -57,6 +66,8 @@
                 <constraint firstItem="tZr-Gc-AKU" firstAttribute="top" secondItem="8St-VU-ZJS" secondAttribute="top" id="Yvq-Pg-BkM"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="8St-VU-ZJS" secondAttribute="bottom" id="eYc-I3-yPA"/>
                 <constraint firstItem="tZr-Gc-AKU" firstAttribute="bottom" secondItem="8St-VU-ZJS" secondAttribute="bottom" id="mdW-eG-PAB"/>
+                <constraint firstItem="jWk-hx-QNH" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="pdC-CL-aBf"/>
+                <constraint firstItem="jWk-hx-QNH" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="tBm-Pt-Qrz"/>
                 <constraint firstItem="tZr-Gc-AKU" firstAttribute="leading" secondItem="8St-VU-ZJS" secondAttribute="leading" id="toB-bg-hnx"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

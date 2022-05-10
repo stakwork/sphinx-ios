@@ -1880,17 +1880,19 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GvM-cS-iPk" customClass="TribeMemberPopupView" customModule="sphinx" customModuleProvider="target">
-                                <rect key="frame" x="67.5" y="193.5" width="240" height="280"/>
+                                <rect key="frame" x="47.5" y="158.5" width="280" height="350"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="240" id="NgM-Yw-C5g"/>
-                                    <constraint firstAttribute="height" constant="280" id="gwO-nc-OF8"/>
+                                    <constraint firstAttribute="width" constant="280" id="1ZJ-7g-dPC"/>
+                                    <constraint firstAttribute="height" constant="350" id="gwO-nc-OF8"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="BfT-55-bcN"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
+                            <constraint firstItem="BfT-55-bcN" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="GvM-cS-iPk" secondAttribute="trailing" constant="31" id="1yi-0x-ppJ"/>
+                            <constraint firstItem="GvM-cS-iPk" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="BfT-55-bcN" secondAttribute="leading" constant="31" id="C13-6f-zBv"/>
                             <constraint firstItem="GvM-cS-iPk" firstAttribute="centerY" secondItem="BfT-55-bcN" secondAttribute="centerY" id="b4L-fB-g1J"/>
                             <constraint firstItem="GvM-cS-iPk" firstAttribute="centerX" secondItem="BfT-55-bcN" secondAttribute="centerX" id="ju8-i5-a4d"/>
                         </constraints>

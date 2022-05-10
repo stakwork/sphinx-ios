@@ -41,9 +41,10 @@ class TribeMemberPopupView: UIView {
         contentView.layer.cornerRadius = 15
         
         sendSatsButton.layer.cornerRadius = sendSatsButton.frame.height / 2
-        sendSatsButton.addShadow(location: .bottom, opacity: 0.3, radius: 5)
+        sendSatsButton.layer.borderColor = UIColor.Sphinx.PlaceholderText.cgColor
+        sendSatsButton.layer.borderWidth = 1
         
-        memberPicture.setInitialLabelSize(size: 24)
+        memberPicture.setInitialLabelSize(size: 30)
     }
     
     func configureFor(

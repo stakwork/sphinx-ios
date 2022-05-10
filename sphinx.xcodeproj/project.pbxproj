@@ -365,7 +365,7 @@
 		4789E26E24F406F3003991BE /* RelayURLUpdateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4789E26D24F406F3003991BE /* RelayURLUpdateHelper.swift */; };
 		478BD8B62829B67300C733FD /* TribeMemberPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478BD8B52829B67300C733FD /* TribeMemberPopupViewController.swift */; };
 		478BD8B92829B70700C733FD /* TribeMemberPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478BD8B82829B70700C733FD /* TribeMemberPopupView.swift */; };
-		478BD8BB2829B71D00C733FD /* TribeMemberPopupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 478BD8BA2829B71D00C733FD /* TribeMemberPopupView.xib */; };
+		478BD8BC282AA6C600C733FD /* TribeMemberPopupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 478BD8BE282AA6C600C733FD /* TribeMemberPopupView.xib */; };
 		478C3D5724A947920003A1A4 /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478C3D5624A947920003A1A4 /* UIApplication.swift */; };
 		478DCF982343D24D009A03D6 /* SetProfileImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478DCF972343D24D009A03D6 /* SetProfileImageViewController.swift */; };
 		478DCF9A2343D258009A03D6 /* SetNickNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478DCF992343D258009A03D6 /* SetNickNameViewController.swift */; };
@@ -1098,7 +1098,9 @@
 		478BD8B428297FD500C733FD /* sphinx 33.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 33.xcdatamodel"; sourceTree = "<group>"; };
 		478BD8B52829B67300C733FD /* TribeMemberPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TribeMemberPopupViewController.swift; sourceTree = "<group>"; };
 		478BD8B82829B70700C733FD /* TribeMemberPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TribeMemberPopupView.swift; sourceTree = "<group>"; };
-		478BD8BA2829B71D00C733FD /* TribeMemberPopupView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TribeMemberPopupView.xib; sourceTree = "<group>"; };
+		478BD8BD282AA6C600C733FD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/TribeMemberPopupView.xib; sourceTree = "<group>"; };
+		478BD8C0282AA6C900C733FD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/TribeMemberPopupView.strings; sourceTree = "<group>"; };
+		478BD8C2282AA6CB00C733FD /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/TribeMemberPopupView.strings; sourceTree = "<group>"; };
 		478C3D5624A947920003A1A4 /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
 		478DCF972343D24D009A03D6 /* SetProfileImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetProfileImageViewController.swift; sourceTree = "<group>"; };
 		478DCF992343D258009A03D6 /* SetNickNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetNickNameViewController.swift; sourceTree = "<group>"; };
@@ -2807,7 +2809,7 @@
 			isa = PBXGroup;
 			children = (
 				478BD8B82829B70700C733FD /* TribeMemberPopupView.swift */,
-				478BD8BA2829B71D00C733FD /* TribeMemberPopupView.xib */,
+				478BD8BE282AA6C600C733FD /* TribeMemberPopupView.xib */,
 			);
 			path = "Tribe Member";
 			sourceTree = "<group>";
@@ -3752,7 +3754,7 @@
 				475154B82423F09900477384 /* VideoCallBubbleView.xib in Resources */,
 				47771C73259B9B9400990467 /* GroupPinView.xib in Resources */,
 				47904C2024BF403400710E7A /* NotificationSoundTableViewCell.xib in Resources */,
-				478BD8BB2829B71D00C733FD /* TribeMemberPopupView.xib in Resources */,
+				478BD8BC282AA6C600C733FD /* TribeMemberPopupView.xib in Resources */,
 				475BDD0E232AC25100C5BBD6 /* DayHeaderTableViewCell.xib in Resources */,
 				47904C0D24BF352300710E7A /* bells.caf in Resources */,
 				475BDD23232AC71000C5BBD6 /* Colors.xcassets in Resources */,
@@ -4498,6 +4500,16 @@
 				4789E26824F04758003991BE /* es */,
 			);
 			name = SettingsTabsView.xib;
+			sourceTree = "<group>";
+		};
+		478BD8BE282AA6C600C733FD /* TribeMemberPopupView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				478BD8BD282AA6C600C733FD /* Base */,
+				478BD8C0282AA6C900C733FD /* en */,
+				478BD8C2282AA6CB00C733FD /* es */,
+			);
+			name = TribeMemberPopupView.xib;
 			sourceTree = "<group>";
 		};
 		4797E76024B8DDE400D13270 /* LeftMenu.storyboard */ = {

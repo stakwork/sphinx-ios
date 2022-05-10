@@ -107,13 +107,13 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2500" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zYG-qP-5Lo">
-                                        <rect key="frame" x="39" y="16" width="37" height="19"/>
+                                        <rect key="frame" x="35" y="16" width="37" height="19"/>
                                         <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="16"/>
                                         <color key="textColor" name="Text"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="sat" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HUo-Nd-Edd">
-                                        <rect key="frame" x="82" y="16" width="23" height="19"/>
+                                        <rect key="frame" x="78" y="16" width="23" height="19"/>
                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
                                         <color key="textColor" name="WashedOutReceivedText"/>
                                         <nil key="highlightedColor"/>
@@ -121,12 +121,13 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="zYG-qP-5Lo" secondAttribute="bottom" constant="15" id="0Dt-Ca-wJ1"/>
                                     <constraint firstItem="adQ-Oc-oyo" firstAttribute="leading" secondItem="pnD-XD-DFZ" secondAttribute="leading" id="1bn-KU-6Ho"/>
                                     <constraint firstItem="HUo-Nd-Edd" firstAttribute="centerY" secondItem="zYG-qP-5Lo" secondAttribute="centerY" id="3sk-pM-bKj"/>
                                     <constraint firstItem="adQ-Oc-oyo" firstAttribute="top" secondItem="pnD-XD-DFZ" secondAttribute="top" constant="16" id="4Bc-Fq-Kvc"/>
-                                    <constraint firstItem="zYG-qP-5Lo" firstAttribute="leading" secondItem="adQ-Oc-oyo" secondAttribute="trailing" constant="20" id="F7B-K1-dlb"/>
+                                    <constraint firstItem="zYG-qP-5Lo" firstAttribute="leading" secondItem="adQ-Oc-oyo" secondAttribute="trailing" constant="16" id="F7B-K1-dlb"/>
                                     <constraint firstItem="HUo-Nd-Edd" firstAttribute="leading" secondItem="zYG-qP-5Lo" secondAttribute="trailing" constant="6" id="Kpi-Gy-Pwj"/>
+                                    <constraint firstAttribute="bottom" secondItem="adQ-Oc-oyo" secondAttribute="bottom" constant="15" id="eCg-xc-i9p"/>
+                                    <constraint firstItem="zYG-qP-5Lo" firstAttribute="centerY" secondItem="adQ-Oc-oyo" secondAttribute="centerY" id="jqw-69-MB3"/>
                                     <constraint firstAttribute="height" constant="50" id="lvr-b5-hXO"/>
                                 </constraints>
                             </view>
@@ -134,7 +135,7 @@
                                 <rect key="frame" x="24" y="5" width="254" height="50"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Typ-lw-Uvs" customClass="ChatAvatarView" customModule="sphinx" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="7.5" width="36" height="36"/>
+                                        <rect key="frame" x="0.0" y="6.5" width="36" height="36"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="36" id="flx-cK-QWa"/>
@@ -142,36 +143,29 @@
                                         </constraints>
                                     </view>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="invoice-pay-button" translatesAutoresizingMaskIntoConstraints="NO" id="NQs-5w-Mdx">
-                                        <rect key="frame" x="235" y="16" width="19" height="19"/>
+                                        <rect key="frame" x="237" y="16" width="17" height="17"/>
                                         <color key="tintColor" name="SecondaryText"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="19" id="lUH-Ho-0wa"/>
-                                            <constraint firstAttribute="width" constant="19" id="vmU-0z-9KW"/>
+                                            <constraint firstAttribute="height" constant="17" id="lUH-Ho-0wa"/>
+                                            <constraint firstAttribute="width" constant="17" id="vmU-0z-9KW"/>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2500" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nsa-qn-6fR">
-                                        <rect key="frame" x="149" y="16" width="37" height="19"/>
-                                        <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="16"/>
-                                        <color key="textColor" name="SecondaryText"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="sat" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nAx-x5-zNV">
-                                        <rect key="frame" x="192" y="16" width="23" height="19"/>
-                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
+                                        <rect key="frame" x="199" y="17.5" width="28" height="14.5"/>
+                                        <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="12"/>
                                         <color key="textColor" name="SecondaryText"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="NQs-5w-Mdx" firstAttribute="leading" secondItem="nAx-x5-zNV" secondAttribute="trailing" constant="20" id="8Hi-IC-ny4"/>
-                                    <constraint firstItem="nAx-x5-zNV" firstAttribute="leading" secondItem="nsa-qn-6fR" secondAttribute="trailing" constant="6" id="WeI-xU-vkI"/>
+                                    <constraint firstItem="nsa-qn-6fR" firstAttribute="centerY" secondItem="NQs-5w-Mdx" secondAttribute="centerY" id="08S-mK-bIH"/>
+                                    <constraint firstItem="NQs-5w-Mdx" firstAttribute="leading" secondItem="nsa-qn-6fR" secondAttribute="trailing" constant="10" id="72i-pI-d4C"/>
                                     <constraint firstItem="Typ-lw-Uvs" firstAttribute="centerY" secondItem="NQs-5w-Mdx" secondAttribute="centerY" id="ZwU-aK-AiJ"/>
-                                    <constraint firstAttribute="bottom" secondItem="nsa-qn-6fR" secondAttribute="bottom" constant="15" id="bg7-Xg-pTG"/>
+                                    <constraint firstAttribute="bottom" secondItem="NQs-5w-Mdx" secondAttribute="bottom" constant="17" id="ej5-JG-yX0"/>
                                     <constraint firstItem="Typ-lw-Uvs" firstAttribute="leading" secondItem="KeJ-JO-TsR" secondAttribute="leading" id="hjX-p2-qL6"/>
                                     <constraint firstItem="NQs-5w-Mdx" firstAttribute="top" secondItem="KeJ-JO-TsR" secondAttribute="top" constant="16" id="ieG-0O-y5V"/>
                                     <constraint firstAttribute="height" constant="50" id="mTR-T8-7sH"/>
-                                    <constraint firstItem="nAx-x5-zNV" firstAttribute="centerY" secondItem="nsa-qn-6fR" secondAttribute="centerY" id="ofr-a0-Tcv"/>
                                     <constraint firstAttribute="trailing" secondItem="NQs-5w-Mdx" secondAttribute="trailing" id="tej-4s-Cgw"/>
                                 </constraints>
                             </view>
@@ -298,7 +292,6 @@
                 <outlet property="tribePaymentAmountLabel" destination="nsa-qn-6fR" id="Cdx-gt-t9y"/>
                 <outlet property="tribePaymentDetailsContainer" destination="KeJ-JO-TsR" id="9MY-Xf-exZ"/>
                 <outlet property="tribePaymentIcon" destination="NQs-5w-Mdx" id="MKD-m2-noW"/>
-                <outlet property="tribePaymentUnitLabel" destination="nAx-x5-zNV" id="u6F-Xt-lG0"/>
                 <outlet property="unitLabel" destination="HUo-Nd-Edd" id="mI5-7l-uZk"/>
             </connections>
             <point key="canvasLocation" x="-11" y="14"/>

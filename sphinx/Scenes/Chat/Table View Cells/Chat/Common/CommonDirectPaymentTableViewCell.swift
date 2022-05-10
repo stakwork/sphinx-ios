@@ -27,7 +27,7 @@ class CommonDirectPaymentTableViewCell : CommonChatTableViewCell {
     
     static let kLabelSideMargins: CGFloat = 46
     static let kBubbleMaximumWidth: CGFloat = 210
-    static let kAmountLabelSideMargins: CGFloat = 116
+    static let kAmountLabelSideMargins: CGFloat = 112
     static let kLabelTopMargin: CGFloat = 60
     static let kLabelBottomMargin: CGFloat = 20
     static let kRecipientViewWidth: CGFloat = 56

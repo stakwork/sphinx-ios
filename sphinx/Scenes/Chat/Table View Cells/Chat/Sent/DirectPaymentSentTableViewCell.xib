@@ -122,13 +122,13 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2500" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l9c-Md-lhB">
-                                <rect key="frame" x="119" y="21" width="37" height="19"/>
+                                <rect key="frame" x="123" y="21" width="37" height="19"/>
                                 <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="16"/>
                                 <color key="textColor" name="Text"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="sat" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CV4-Qn-H2s">
-                                <rect key="frame" x="162" y="21" width="23" height="19"/>
+                                <rect key="frame" x="166" y="21" width="23" height="19"/>
                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
                                 <color key="textColor" name="WashedOutSentText"/>
                                 <nil key="highlightedColor"/>
@@ -152,16 +152,16 @@
                         <constraints>
                             <constraint firstItem="CzX-VV-D9D" firstAttribute="centerY" secondItem="Xpi-1M-HSf" secondAttribute="centerY" id="2hf-Q4-HCA"/>
                             <constraint firstItem="l9c-Md-lhB" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="EfX-0Q-oGk" secondAttribute="leading" constant="19" id="2t7-LU-hKv"/>
+                            <constraint firstItem="9nj-fO-ygS" firstAttribute="top" secondItem="Xpi-1M-HSf" secondAttribute="bottom" constant="20" id="HsY-hS-bVI"/>
                             <constraint firstItem="l9c-Md-lhB" firstAttribute="centerY" secondItem="Xpi-1M-HSf" secondAttribute="centerY" id="KtZ-BD-IE1"/>
                             <constraint firstAttribute="trailing" secondItem="9nj-fO-ygS" secondAttribute="trailing" constant="24" id="NXV-2A-OND"/>
                             <constraint firstItem="CzX-VV-D9D" firstAttribute="leading" secondItem="EfX-0Q-oGk" secondAttribute="leading" constant="22" id="UPq-CR-1w1"/>
                             <constraint firstAttribute="width" constant="250" id="V4A-Uq-mJX"/>
-                            <constraint firstItem="Xpi-1M-HSf" firstAttribute="leading" secondItem="CV4-Qn-H2s" secondAttribute="trailing" constant="20" id="cmW-cN-jyd"/>
+                            <constraint firstItem="Xpi-1M-HSf" firstAttribute="leading" secondItem="CV4-Qn-H2s" secondAttribute="trailing" constant="16" id="cmW-cN-jyd"/>
                             <constraint firstAttribute="trailing" secondItem="Xpi-1M-HSf" secondAttribute="trailing" constant="26" id="evg-Wx-AZV"/>
                             <constraint firstItem="Xpi-1M-HSf" firstAttribute="top" secondItem="EfX-0Q-oGk" secondAttribute="top" constant="21" id="fLT-ul-MAa"/>
                             <constraint firstItem="CV4-Qn-H2s" firstAttribute="centerY" secondItem="l9c-Md-lhB" secondAttribute="centerY" id="hY7-B1-W94"/>
                             <constraint firstItem="9nj-fO-ygS" firstAttribute="leading" secondItem="EfX-0Q-oGk" secondAttribute="leading" constant="22" id="jtP-wM-VEm"/>
-                            <constraint firstItem="9nj-fO-ygS" firstAttribute="top" secondItem="l9c-Md-lhB" secondAttribute="bottom" constant="20" id="kRp-ZD-W9B"/>
                             <constraint firstItem="CV4-Qn-H2s" firstAttribute="leading" secondItem="l9c-Md-lhB" secondAttribute="trailing" constant="6" id="xpR-cx-z8B"/>
                         </constraints>
                     </view>

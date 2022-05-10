@@ -42,7 +42,7 @@ extension API {
     func getMessagesPaginated(
         page: Int,
         date: Date,
-        _ shouldSaveFetchDate: Bool = true,
+        onPushReceived: Bool = false,
         callback: @escaping GetMessagesPaginatedCallback,
         errorCallback: @escaping EmptyCallback
     ){
@@ -79,7 +79,7 @@ extension API {
                         if (
                             (newMessages.count > 0 || page > 1) &&
                             newMessages.count < itemsPerPage &&
-                            shouldSaveFetchDate
+                            !onPushReceived
                         ) {
                             //is last page. Date should be tracked
                             self.lastSeenMessagesDate = date

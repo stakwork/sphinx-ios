@@ -69,8 +69,8 @@
                         <action selector="sendSatsButtonTouched" destination="-1" eventType="touchUpInside" id="6eH-BC-EVw"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tomas Timinskas Large Name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DMh-GX-cbO">
-                    <rect key="frame" x="16" y="178" width="248" height="70.5"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DMh-GX-cbO">
+                    <rect key="frame" x="16" y="178" width="248" height="0.0"/>
                     <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="30"/>
                     <color key="textColor" name="Text"/>
                     <nil key="highlightedColor"/>

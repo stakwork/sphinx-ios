@@ -17,7 +17,7 @@ class ChatHelper {
         }
         
         if let senderAlias = message.senderAlias, !senderAlias.isEmpty {
-            key = "\(message.senderId)-\(senderAlias.trim())-color"
+            key = "\(senderAlias.trim())-color"
         }
 
         if let key = key {
@@ -30,7 +30,7 @@ class ChatHelper {
         adminId: Int,
         recipientAlias: String
     ) -> UIColor {
-        let key:String = "\(adminId)-\(recipientAlias.trim())-color"
+        let key:String = "\(recipientAlias.trim())-color"
         return UIColor.getColorFor(key: key)
     }
     

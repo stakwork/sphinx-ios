@@ -386,7 +386,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     ) {
         if application.applicationState == .background {
             self.chatListViewModel.syncMessages(
-                shouldSaveFetchDate: false,
+                onPushReceived: true,
                 progressCallback: { _ in },
                 completion: { (_, _) in
                     completionHandler(.newData)

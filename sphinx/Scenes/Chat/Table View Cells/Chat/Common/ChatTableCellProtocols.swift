@@ -11,7 +11,7 @@ import Foundation
 protocol MessageRowProtocol: class {
     var delegate: MessageCellDelegate? { get set }
     var audioDelegate: AudioCellDelegate? { get set }
-    func configureMessageRow(messageRow: TransactionMessageRow, contact: UserContact?, chat: Chat?, tribeAdminId: Int?)
+    func configureMessageRow(messageRow: TransactionMessageRow, contact: UserContact?, chat: Chat?)
 }
 
 protocol RowWithLinkPreviewProtocol: class {

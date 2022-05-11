@@ -96,7 +96,7 @@ extension PodcastLiveDataSource : UITableViewDelegate {
         if let cell = cell as? MessageRowProtocol {
             let messageRow = messageRows[indexPath.row]
             
-            cell.configureMessageRow(messageRow: messageRow, contact: nil, chat: chat, tribeAdminId: nil)
+            cell.configureMessageRow(messageRow: messageRow, contact: nil, chat: chat)
         }
     }
 }

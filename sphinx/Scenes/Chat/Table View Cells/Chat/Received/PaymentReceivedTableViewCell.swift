@@ -24,7 +24,7 @@ class PaymentReceivedTableViewCell: CommonChatTableViewCell, MessageRowProtocol 
         super.setSelected(selected, animated: animated)
     }
     
-    func configureMessageRow(messageRow: TransactionMessageRow, contact: UserContact?, chat: Chat?, tribeAdminId: Int?) {
+    func configureMessageRow(messageRow: TransactionMessageRow, contact: UserContact?, chat: Chat?) {
         super.configureRow(messageRow: messageRow, contact: contact, chat: chat)
         
         commonConfigurationForMessages()

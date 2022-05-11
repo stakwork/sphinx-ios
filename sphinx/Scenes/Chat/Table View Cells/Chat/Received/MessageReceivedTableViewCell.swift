@@ -25,7 +25,7 @@ class MessageReceivedTableViewCell: CommonReplyTableViewCell, MessageRowProtocol
         return bubbleView
     }
     
-    func configureMessageRow(messageRow: TransactionMessageRow, contact: UserContact?, chat: Chat?, tribeAdminId: Int?) {
+    func configureMessageRow(messageRow: TransactionMessageRow, contact: UserContact?, chat: Chat?) {
         super.configureRow(messageRow: messageRow, contact: contact, chat: chat)
 
         let minimumWidth:CGFloat = CommonChatTableViewCell.getMinimumWidth(message: messageRow.transactionMessage)

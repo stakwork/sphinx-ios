@@ -55,13 +55,10 @@ class TribeMemberPopupView: UIView {
         self.delegate = delegate
         
         memberAliasLabel.text = message.senderAlias ?? "Unknown"
-        
-        let tribeAdmin = UserContact.getContactWith(pubkey: message.chat?.ownerPubkey ?? "")
-        
+
         memberPicture.configureFor(
             alias: message.senderAlias ?? "Unknown",
-            picture: message.senderPic,
-            senderId: tribeAdmin?.id ?? -1
+            picture: message.senderPic
         )
     }
     

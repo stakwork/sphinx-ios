@@ -44,8 +44,7 @@ class CommonDirectPaymentTableViewCell : CommonChatTableViewCell {
         messageRow: TransactionMessageRow,
         contact: UserContact?,
         chat: Chat?,
-        incoming: Bool,
-        tribeAdminId: Int?
+        incoming: Bool
     ) {
         super.configureRow(messageRow: messageRow, contact: contact, chat: chat)
 
@@ -69,7 +68,7 @@ class CommonDirectPaymentTableViewCell : CommonChatTableViewCell {
         lockSign.text = encrypted ? "lock" : ""
         
         setAmountAndTextLabels(messageRow: messageRow)
-        configureRecipientInfoWith(tribeAdminId)
+        configureRecipientInfo()
         tryLoadingImage(messageRow: messageRow)
 
         bubbleView.bringSubviewToFront(paymentIcon)
@@ -110,16 +109,14 @@ class CommonDirectPaymentTableViewCell : CommonChatTableViewCell {
         messageLabel.text = text
     }
     
-    func configureRecipientInfoWith(
-        _ tribeAdminId: Int?
-    ) {
-        guard let message = messageRow?.transactionMessage, let tribeAdminId = tribeAdminId else {
+    func configureRecipientInfo() {
+        guard let message = messageRow?.transactionMessage, (self.chat?.isPublicGroup() ?? false) else {
             recipientAvatarView.isHidden = true
             return
         }
 
         recipientAvatarView.isHidden = false
-        recipientAvatarView.configureFor(alias: message.recipientAlias, picture: message.recipientPic, senderId: tribeAdminId)
+        recipientAvatarView.configureFor(alias: message.recipientAlias, picture: message.recipientPic)
     }
     
     func tryLoadingImage(messageRow: TransactionMessageRow) {

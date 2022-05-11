@@ -27,10 +27,9 @@ class DirectPaymentSentTableViewCell: CommonDirectPaymentTableViewCell, MessageR
     func configureMessageRow(
         messageRow: TransactionMessageRow,
         contact: UserContact?,
-        chat: Chat?,
-        tribeAdminId: Int?
+        chat: Chat?
     ) {
-        super.configurePayment(messageRow: messageRow, contact: contact, chat: chat, incoming: false, tribeAdminId: tribeAdminId)
+        super.configurePayment(messageRow: messageRow, contact: contact, chat: chat, incoming: false)
         
         configureMessageStatus()
     }

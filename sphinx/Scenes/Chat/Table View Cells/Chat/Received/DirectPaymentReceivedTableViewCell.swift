@@ -25,13 +25,13 @@ class DirectPaymentReceivedTableViewCell: CommonDirectPaymentTableViewCell, Mess
         super.setSelected(selected, animated: animated)
     }
     
-    func configureMessageRow(messageRow: TransactionMessageRow, contact: UserContact?, chat: Chat?, tribeAdminId: Int?) {
-        super.configurePayment(messageRow: messageRow, contact: contact, chat: chat, incoming: true, tribeAdminId: tribeAdminId)
+    func configureMessageRow(messageRow: TransactionMessageRow, contact: UserContact?, chat: Chat?) {
+        super.configurePayment(messageRow: messageRow, contact: contact, chat: chat, incoming: true)
 
-        configureTribePaymentLayout(messageRow: messageRow, contact: contact, chat: chat, tribeAdminId: tribeAdminId)
+        configureTribePaymentLayout(messageRow: messageRow, contact: contact, chat: chat)
     }
     
-    func configureTribePaymentLayout(messageRow: TransactionMessageRow, contact: UserContact?, chat: Chat?, tribeAdminId: Int?) {
+    func configureTribePaymentLayout(messageRow: TransactionMessageRow, contact: UserContact?, chat: Chat?) {
         bubbleView.bringSubviewToFront(paymentDetailsContainer)
         bubbleView.bringSubviewToFront(tribePaymentDetailsContainer)
         

@@ -559,8 +559,7 @@ extension ChatDataSource : UITableViewDelegate {
             cell.configureMessageRow(
                 messageRow: messageRow,
                 contact: sender,
-                chat: chat,
-                tribeAdminId: tribeAdmin?.id
+                chat: chat
             )
             cell.delegate = cellDelegate
             cell.audioDelegate = self

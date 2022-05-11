@@ -51,8 +51,7 @@ class ChatAvatarView: UIView {
     
     func configureFor(
         alias: String?,
-        picture: String?,
-        senderId: Int
+        picture: String?
     ) {
         profileImageView.sd_cancelCurrentImageLoad()
         
@@ -62,7 +61,7 @@ class ChatAvatarView: UIView {
         
         showInitialsWith(
             alias: alias ?? "Unknown",
-            color: ChatHelper.getRecipientColor(adminId: senderId, recipientAlias: alias ?? "Unknown")
+            color: ChatHelper.getRecipientColor(recipientAlias: alias ?? "Unknown")
         )
         
         if let recipientPic = picture, let url = URL(string: recipientPic) {

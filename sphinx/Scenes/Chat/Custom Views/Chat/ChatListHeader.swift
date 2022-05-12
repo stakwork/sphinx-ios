@@ -130,7 +130,7 @@ class ChatListHeader: UIView {
     }
     
     @IBAction func upgradeAppButtonTouched() {
-        let urlStr = "itms-apps://itunes.apple.com/app/apple-store/id1483956418?mt=8"
+        let urlStr = "https://testflight.apple.com/join/QoaCkJn6"
         UIApplication.shared.open(URL(string: urlStr)!, options: [:], completionHandler: nil)
     }
     

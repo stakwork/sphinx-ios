@@ -56,10 +56,7 @@ class TribeMemberPopupView: UIView {
         
         memberAliasLabel.text = message.senderAlias ?? "Unknown"
 
-        memberPicture.configureFor(
-            alias: message.senderAlias ?? "Unknown",
-            picture: message.senderPic
-        )
+        memberPicture.configureForSenderWith(message: message)
     }
     
     @IBAction func sendSatsButtonTouched() {

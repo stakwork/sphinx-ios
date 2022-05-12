@@ -26,11 +26,16 @@ class ChatHelper {
         return UIColor.Sphinx.Text
     }
     
-    public static func getRecipientColor(
-        recipientAlias: String
+    public static func getRecipientColorFor(
+        message: TransactionMessage
     ) -> UIColor {
-        let key:String = "\(recipientAlias.trim())-color"
-        return UIColor.getColorFor(key: key)
+        if let recipientAlias = message.recipientAlias, !recipientAlias.isEmpty {
+            return UIColor.getColorFor(
+                key: "\(recipientAlias.trim())-color"
+            )
+        }
+        
+        return UIColor.Sphinx.Text
     }
     
     public static func registerCellsForChat(tableView: UITableView) {
@@ -262,7 +267,6 @@ class ChatHelper {
             return height
         }
         
-        let status = TransactionMessage.TransactionMessageStatus(fromRawValue: Int(message.status))
         if message.isDeleted() || message.isFlagged() {
             return CommonDeletedMessageTableViewCell.getRowHeight()
         }
@@ -498,7 +502,11 @@ class ChatHelper {
         if let replyUUID = message.replyUUID {
             let outgoing = message.isOutgoing()
             let isPublicGroup = message.chat?.isPublicGroup() ?? false
-            let image = (outgoing || !isPublicGroup) ? message.getMessageSender()?.getCachedImage() : nil
+            var image = (outgoing || !isPublicGroup) ? message.getMessageSender()?.getCachedImage() : nil
+            
+            if let staticData = image?.sd_imageData(as: .JPEG, compressionQuality: 1, firstFrameOnly: true) {
+                image = UIImage(data: staticData)
+            }
             
             let user: (String, UIColor, UIImage?) = (message.getMessageSenderNickname(forceNickname: true), ChatHelper.getSenderColorFor(message: message), image)
             let amount = message.amount?.intValue ?? 0

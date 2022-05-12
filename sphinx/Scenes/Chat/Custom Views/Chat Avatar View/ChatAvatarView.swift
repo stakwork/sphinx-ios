@@ -49,7 +49,28 @@ class ChatAvatarView: UIView {
         initialsLabel.font = UIFont(name: "Montserrat-Regular", size: size)!
     }
     
-    func configureFor(
+    func configureForSenderWith(
+        message: TransactionMessage
+    ) {
+        configureForUserWith(
+            color: ChatHelper.getSenderColorFor(message: message),
+            alias: message.senderAlias,
+            picture: message.senderPic
+        )
+    }
+    
+    func configureForRecipientWith(
+        message: TransactionMessage
+    ) {
+        configureForUserWith(
+            color: ChatHelper.getRecipientColorFor(message: message),
+            alias: message.recipientAlias,
+            picture: message.recipientPic
+        )
+    }
+    
+    func configureForUserWith(
+        color: UIColor,
         alias: String?,
         picture: String?
     ) {
@@ -61,10 +82,10 @@ class ChatAvatarView: UIView {
         
         showInitialsWith(
             alias: alias ?? "Unknown",
-            color: ChatHelper.getRecipientColor(recipientAlias: alias ?? "Unknown")
+            color: color
         )
         
-        if let recipientPic = picture, let url = URL(string: recipientPic) {
+        if let picture = picture, let url = URL(string: picture) {
             showImageWith(url: url)
         }
     }

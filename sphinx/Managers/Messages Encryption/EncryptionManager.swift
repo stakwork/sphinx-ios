@@ -379,8 +379,13 @@ class EncryptionManager {
         }
     }
     
-    public static func randomString(length: Int) -> String {
-        let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-        return String((0..<length).map{ _ in letters.randomElement()! })
+    public static func randomString(length: UInt) -> String {
+        let prefixSize = Int(min(length, 43))
+        let uuidString = UUID().uuidString.replacingOccurrences(of: "-", with: "")
+        
+        return String(Data(uuidString.utf8)
+            .base64EncodedString()
+            .replacingOccurrences(of: "=", with: "")
+            .prefix(prefixSize))
     }
 }

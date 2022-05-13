@@ -379,13 +379,14 @@ class EncryptionManager {
         }
     }
     
-    public static func randomString(length: UInt) -> String {
-        let prefixSize = Int(min(length, 43))
+    public static func randomString(length: Int) -> String {
         let uuidString = UUID().uuidString.replacingOccurrences(of: "-", with: "")
         
-        return String(Data(uuidString.utf8)
+        return String(
+            Data(uuidString.utf8)
             .base64EncodedString()
             .replacingOccurrences(of: "=", with: "")
-            .prefix(prefixSize))
+            .prefix(length)
+        )
     }
 }

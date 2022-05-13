@@ -23,7 +23,7 @@ class ChatHelper {
         if let key = key {
             return UIColor.getColorFor(key: key)
         }
-        return UIColor.Sphinx.Text
+        return UIColor.Sphinx.SecondaryText
     }
     
     public static func getRecipientColorFor(
@@ -35,7 +35,7 @@ class ChatHelper {
             )
         }
         
-        return UIColor.Sphinx.Text
+        return UIColor.Sphinx.SecondaryText
     }
     
     public static func registerCellsForChat(tableView: UITableView) {

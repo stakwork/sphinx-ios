@@ -355,6 +355,29 @@ extension ChatViewController : MessageCellDelegate {
             self.present(activityVC, animated: true, completion: nil)
         }
     }
+    
+    func didTapAvatarView(message: TransactionMessage) {
+        let tribeMemberPopupVC = TribeMemberPopupViewController.instantiate(message: message, delegate: self)
+        WindowsManager.sharedInstance.showConveringWindowWith(rootVC: tribeMemberPopupVC)
+    }
+}
+
+extension ChatViewController : TribeMemberPopupViewDelegate {
+    func shouldGoToSendPayment(message: TransactionMessage) {
+        accessoryView.hide()
+
+        let viewController : UIViewController! = CreateInvoiceViewController.instantiate(
+            contacts: [],
+            chat: chat,
+            messageUUID: message.uuid,
+            viewModel: chatViewModel,
+            delegate: self,
+            paymentMode: .send,
+            rootViewController: rootViewController
+        )
+
+        presentNavigationControllerWith(vc: viewController)
+    }
 }
 
 extension ChatViewController : PaymentInvoiceDelegate, GroupPaymentVCDelegate {    
@@ -569,10 +592,34 @@ extension ChatViewController : MessageOptionsVCDelegate {
     }
     
     func shouldBoostMessage(message: TransactionMessage) {
-        guard let params = TransactionMessage.getBoostMessageParams(contact: contact, chat: chat, replyingMessage: message) else {
+        guard let params = TransactionMessage.getBoostMessageParams(
+            contact: contact,
+            chat: chat,
+            replyingMessage: message
+        ) else {
             return
         }
         sendMessage(provisionalMessage: nil, params: params, completion: {_ in })
+    }
+    
+    func shouldSendTribePayment(
+        amount: Int,
+        message: String,
+        messageUUID: String,
+        callback: (() -> ())?
+    ) {
+        guard let params = TransactionMessage.getTribePaymentParams(
+            chat: chat,
+            messageUUID: messageUUID,
+            amount: amount,
+            text: message
+        ) else {
+            callback?()
+            return
+        }
+        sendMessage(provisionalMessage: nil, params: params, completion: { _ in
+            callback?()
+        })
     }
     
     func shouldDeleteMessage(message: TransactionMessage) {

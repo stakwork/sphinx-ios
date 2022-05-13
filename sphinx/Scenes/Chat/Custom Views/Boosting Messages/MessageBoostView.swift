@@ -86,7 +86,12 @@ class MessageBoostView: UIView {
         var i = 0
         for (name, (color, image)) in reactions.users {
             if i >= 3 { return }
-            if let container = containers[i] { showInitialsFor(name, color: color, and: image, in: container, incoming: incoming) }
+            
+            if let container = containers[i] {
+                showInitialsFor(name, color: color, and: image, in: container, incoming: incoming)
+                
+            }
+            
             i = i + 1
         }
     }

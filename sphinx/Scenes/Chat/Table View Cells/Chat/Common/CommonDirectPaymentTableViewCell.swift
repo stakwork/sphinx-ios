@@ -23,12 +23,14 @@ class CommonDirectPaymentTableViewCell : CommonChatTableViewCell {
     @IBOutlet weak var imagePreloader: UIImageView!
     @IBOutlet weak var imageNotAvailable: UIImageView!
     @IBOutlet weak var bubbleWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var recipientAvatarView: ChatAvatarView!
     
     static let kLabelSideMargins: CGFloat = 46
     static let kBubbleMaximumWidth: CGFloat = 210
-    static let kAmountLabelSideMargins: CGFloat = 116
-    static let kLabelTopMargin: CGFloat = 57
+    static let kAmountLabelSideMargins: CGFloat = 112
+    static let kLabelTopMargin: CGFloat = 60
     static let kLabelBottomMargin: CGFloat = 20
+    static let kRecipientViewWidth: CGFloat = 56
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -38,7 +40,12 @@ class CommonDirectPaymentTableViewCell : CommonChatTableViewCell {
         amountLabel.font = UIFont.getAmountFont()
     }
     
-    func configurePayment(messageRow: TransactionMessageRow, contact: UserContact?, chat: Chat?, incoming: Bool) {
+    func configurePayment(
+        messageRow: TransactionMessageRow,
+        contact: UserContact?,
+        chat: Chat?,
+        incoming: Bool
+    ) {
         super.configureRow(messageRow: messageRow, contact: contact, chat: chat)
 
         commonConfigurationForMessages()
@@ -61,12 +68,14 @@ class CommonDirectPaymentTableViewCell : CommonChatTableViewCell {
         lockSign.text = encrypted ? "lock" : ""
         
         setAmountAndTextLabels(messageRow: messageRow)
+        configureRecipientInfo()
         tryLoadingImage(messageRow: messageRow)
 
         bubbleView.bringSubviewToFront(paymentIcon)
         bubbleView.bringSubviewToFront(amountLabel)
         bubbleView.bringSubviewToFront(unitLabel)
         bubbleView.bringSubviewToFront(messageLabel)
+        bubbleView.bringSubviewToFront(recipientAvatarView)
 
         if messageRow.shouldShowRightLine {
             addRightLine()
@@ -78,7 +87,8 @@ class CommonDirectPaymentTableViewCell : CommonChatTableViewCell {
     }
     
     public static func getBubbleAndLabelWidth(messageRow: TransactionMessageRow) -> (CGFloat, CGFloat) {
-        let amountBubbleWidth = getAmountLabelWidth(messageRow: messageRow) + kAmountLabelSideMargins
+        let recipientViewWidth = (messageRow.transactionMessage?.chat?.isPublicGroup() ?? false) ? kRecipientViewWidth : 0
+        let amountBubbleWidth = getAmountLabelWidth(messageRow: messageRow) + kAmountLabelSideMargins + recipientViewWidth
         var labelBubbleWidth = getLabelSize(messageRow: messageRow).width + kLabelSideMargins
         if labelBubbleWidth > kBubbleMaximumWidth {
             let labelHeight = getLabelHeight(messageRow: messageRow, width: kBubbleMaximumWidth - kLabelSideMargins)
@@ -97,6 +107,16 @@ class CommonDirectPaymentTableViewCell : CommonChatTableViewCell {
         let amountString = messageRow.getAmountString()
         amountLabel.text = amountString
         messageLabel.text = text
+    }
+    
+    func configureRecipientInfo() {
+        guard let message = messageRow?.transactionMessage, (self.chat?.isPublicGroup() ?? false) else {
+            recipientAvatarView.isHidden = true
+            return
+        }
+
+        recipientAvatarView.isHidden = false
+        recipientAvatarView.configureForRecipientWith(message: message)
     }
     
     func tryLoadingImage(messageRow: TransactionMessageRow) {

@@ -162,6 +162,8 @@ public class TransactionMessage: NSManagedObject {
         let sender = m["sender"].intValue
         let senderAlias = m["sender_alias"].string
         let senderPic = m["sender_pic"].string
+        let recipientAlias = m["recipient_alias"].string
+        let recipientPic = m["recipient_pic"].string
         let receiver = m["contact_id"].intValue
         let uuid:String? = m["uuid"].string
         let replyUUID:String? = m["reply_uuid"].string
@@ -211,7 +213,33 @@ public class TransactionMessage: NSManagedObject {
             message = TransactionMessage(context: CoreDataManager.sharedManager.persistentContainer.viewContext) as TransactionMessage
         }
         
-        let updatedMessage = TransactionMessage.createObject(id: id, uuid: uuid, replyUUID: replyUUID, type: type, sender: sender, senderAlias: senderAlias, senderPic: senderPic, receiver: receiver, amount: amount, paymentHash: paymentHash, invoice: invoice, messageContent: messageContent, status: status.rawValue, date: date, expirationDate: expirationDate, mediaToken: mediaToken, mediaKey: mediaKey, mediaType: mediaType, originalMuid: originalMuid, seen: messageSeen, messageEncrypted: messageEncrypted, chat: messageChat, message: message)
+        let updatedMessage = TransactionMessage.createObject(
+            id: id,
+            uuid: uuid,
+            replyUUID: replyUUID,
+            type: type,
+            sender: sender,
+            senderAlias: senderAlias,
+            senderPic: senderPic,
+            recipientAlias: recipientAlias,
+            recipientPic: recipientPic,
+            receiver: receiver,
+            amount: amount,
+            paymentHash: paymentHash,
+            invoice: invoice,
+            messageContent: messageContent,
+            status: status.rawValue,
+            date: date,
+            expirationDate: expirationDate,
+            mediaToken: mediaToken,
+            mediaKey: mediaKey,
+            mediaType: mediaType,
+            originalMuid: originalMuid,
+            seen: messageSeen,
+            messageEncrypted: messageEncrypted,
+            chat: messageChat,
+            message: message
+        )
         
         return (updatedMessage, existingMessage == nil)
     }
@@ -246,6 +274,8 @@ public class TransactionMessage: NSManagedObject {
                              sender: Int,
                              senderAlias: String?,
                              senderPic: String?,
+                             recipientAlias: String?,
+                             recipientPic: String?,
                              receiver: Int,
                              amount: NSDecimalNumber? = nil,
                              paymentHash: String? = nil,
@@ -272,6 +302,8 @@ public class TransactionMessage: NSManagedObject {
         message.senderId = sender
         message.senderAlias = senderAlias
         message.senderPic = senderPic
+        message.recipientAlias = recipientAlias
+        message.recipientPic = recipientPic
         message.receiverId = receiver
         message.amount = amount
         message.paymentHash = paymentHash

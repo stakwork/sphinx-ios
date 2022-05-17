@@ -78,6 +78,20 @@ extension TransactionMessage {
         return alias
     }
     
+    func getMessageSenderImageUrl(
+        owner: UserContact?,
+        contact: UserContact?
+    ) -> String? {
+        let outgoing = self.isOutgoing()
+        
+        if (outgoing) {
+            return self.chat?.myPhotoUrl ?? owner?.getPhotoUrl()
+        } else {
+            return self.senderPic ?? contact?.getPhotoUrl()
+        }
+    }
+
+    
     func hasSameSenderThan(message: TransactionMessage?) -> Bool {
         let hasSameSenderId = senderId == (message?.senderId ?? -1)
         let hasSameSenderAlias = (senderAlias ?? "") == (message?.senderAlias ?? "")

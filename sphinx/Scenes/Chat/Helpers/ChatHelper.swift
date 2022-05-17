@@ -491,24 +491,27 @@ class ChatHelper {
         let emptyFilteredUUIDs = messagesUUIDs.filter { !$0.isEmpty }
         
         for message in TransactionMessage.getReactionsOn(chat: chat, for: emptyFilteredUUIDs) {
-            processMessageReaction(message: message, boosts: &boosts)
+            processMessageReaction(
+                message: message,
+                owner: UserContact.getOwner(),
+                contact: chat.getContact(),
+                boosts: &boosts
+            )
         }
     }
     
     func processMessageReaction(
         message: TransactionMessage,
+        owner: UserContact?,
+        contact: UserContact?,
         boosts: inout [String: TransactionMessage.Reactions]
     ) {
         if let replyUUID = message.replyUUID {
+            
             let outgoing = message.isOutgoing()
-            let isPublicGroup = message.chat?.isPublicGroup() ?? false
-            var image = (outgoing || !isPublicGroup) ? message.getMessageSender()?.getCachedImage() : nil
+            let senderImageUrl: String? = message.getMessageSenderImageUrl(owner: owner, contact: contact)
             
-            if let staticData = image?.sd_imageData(as: .JPEG, compressionQuality: 1, firstFrameOnly: true) {
-                image = UIImage(data: staticData)
-            }
-            
-            let user: (String, UIColor, UIImage?) = (message.getMessageSenderNickname(forceNickname: true), ChatHelper.getSenderColorFor(message: message), image)
+            let user: (String, UIColor, String?) = (message.getMessageSenderNickname(forceNickname: true), ChatHelper.getSenderColorFor(message: message), senderImageUrl)
             let amount = message.amount?.intValue ?? 0
             
             if var reaction = boosts[replyUUID] {

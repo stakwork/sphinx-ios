@@ -96,7 +96,7 @@ class MessageBoostView: UIView {
         }
     }
     
-    func showInitialsFor(_ name: String, color: UIColor, and image: UIImage?, in container: UIView, incoming: Bool) {
+    func showInitialsFor(_ name: String, color: UIColor, and imageUrl: String?, in container: UIView, incoming: Bool) {
         container.isHidden = false
         container.layer.cornerRadius = container.frame.size.height / 2
         
@@ -109,13 +109,24 @@ class MessageBoostView: UIView {
             } else if let imageView = view as? UIImageView {
                 imageView.layer.cornerRadius = imageView.frame.size.height / 2
                 
-                if let image = image {
-                    imageView.image = image
+                if let imageUrl = imageUrl {
+                    if let image = MediaLoader.getImageFromCachedUrl(url: imageUrl) {
+                        if let staticData = image.sd_imageData(as: .JPEG, compressionQuality: 1, firstFrameOnly: true) {
+                            imageView.image = UIImage(data: staticData)
+                        }
+                    } else if let url = URL(string: imageUrl) {
+                        imageView.sd_setImage(
+                            with: url,
+                            placeholderImage: UIImage(named: "profile_avatar"),
+                            options: [.highPriority, .decodeFirstFrameOnly],
+                            progress: nil
+                        )
+                    }
                 } else {
                     imageView.image = nil
                 }
             } else {
-                view.backgroundColor = (image != nil) ? UIColor.clear : color
+                view.backgroundColor = (imageUrl != nil) ? UIColor.clear : color
                 view.layer.cornerRadius = view.frame.size.height / 2
             }
         }

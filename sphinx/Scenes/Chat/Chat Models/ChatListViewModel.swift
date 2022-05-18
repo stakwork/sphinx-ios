@@ -260,19 +260,6 @@ final class ChatListViewModel: NSObject {
                     completion(0, 0)
                 }
             }, errorCallback: {
-                if !onPushReceived {
-                    //Retry unless it is coming from didReceiveRemoteNotification
-                    DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: {
-                        self.getMessagesPaginated(
-                            restoring: restoring,
-                            prevPageNewMessages: prevPageNewMessages,
-                            chatId: chatId,
-                            date: date,
-                            progressCallback: progressCallback,
-                            completion: completion
-                        )
-                    })
-                }
                 completion(0,0)
             })
     }

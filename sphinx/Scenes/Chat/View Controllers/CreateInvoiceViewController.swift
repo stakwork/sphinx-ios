@@ -39,7 +39,7 @@ class CreateInvoiceViewController: CommonPaymentViewController {
     @IBOutlet weak var loadingWheel: UIActivityIndicatorView!
     
     let kCharacterLimit = 200
-    var kMaximumAmount = 100000
+    let kMaximumAmount = 9999999
     
     var textColor: UIColor = UIColor.Sphinx.Text {
         didSet {
@@ -93,8 +93,6 @@ class CreateInvoiceViewController: CommonPaymentViewController {
     private func setupView() {
         let sending = mode == paymentMode.send
         let sendingOnchain = mode == paymentMode.sendOnchain
-        
-        kMaximumAmount = sendingOnchain ? 10000000 : 1000000
         
         nextButton.layer.cornerRadius = nextButton.frame.size.height / 2
         nextButton.clipsToBounds = true
@@ -198,6 +196,7 @@ class CreateInvoiceViewController: CommonPaymentViewController {
             chatViewModel.currentPayment.amount = amount
             return true
         }
+        NewMessageBubbleHelper().showGenericMessageView(text: "amount.too.high".localized)
         return false
     }
     

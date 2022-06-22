@@ -20,13 +20,26 @@ extension ChatViewController {
     }
     
     func startVideoCall(link: String, audioOnly: Bool) {
+        accessoryView.shouldDismissKeyboard()
+        accessoryView.hide()
+        
         VideoCallManager.sharedInstance.startVideoCall(link: link, audioOnly: audioOnly)
+    }
+    
+    func didFinishCall() {
+        accessoryView.show()
     }
 }
 
 extension ChatViewController : VideoCallDelegate {
     func didSwitchMode(pip: Bool) {
         accessoryView.shouldDismissKeyboard()
+        
+        if (pip) {
+            accessoryView.show()
+        } else {
+            accessoryView.hide()
+        }
     }
     
     func didTapButton(callback: @escaping () -> ()) {

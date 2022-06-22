@@ -96,7 +96,12 @@ class MessageBoostView: UIView {
         }
     }
     
-    func showInitialsFor(_ name: String, color: UIColor, and imageUrl: String?, in container: UIView, incoming: Bool) {
+    func showInitialsFor(
+        _ name: String,
+        color: UIColor,
+        and imageUrl: String?,
+        in container: UIView, incoming: Bool
+    ) {
         container.isHidden = false
         container.layer.cornerRadius = container.frame.size.height / 2
         
@@ -126,7 +131,7 @@ class MessageBoostView: UIView {
                     imageView.image = nil
                 }
             } else {
-                view.backgroundColor = (imageUrl != nil) ? UIColor.clear : color
+                view.backgroundColor = color
                 view.layer.cornerRadius = view.frame.size.height / 2
             }
         }

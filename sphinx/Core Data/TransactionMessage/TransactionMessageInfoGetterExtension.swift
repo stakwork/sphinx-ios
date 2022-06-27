@@ -702,12 +702,24 @@ extension TransactionMessage {
                 return "\(self.getMessageSenderNickname(minimized: true)): \(self.getMessageContent(dashboard: dashboard))"
             }
         case TransactionMessage.TransactionMessageType.invoice.rawValue:
-            return  "\("invoice".localized) \(directionString): \(amountString) sat"
+            return  "\("invoice".localized) \(directionString): \(amountString) sats"
         case TransactionMessage.TransactionMessageType.payment.rawValue:
             let invoiceAmount = getInvoicePaidAmountString()
-            return  "\("payment".localized) \(directionString): \(invoiceAmount) sat"
+            return  "\("payment".localized) \(directionString): \(invoiceAmount) sats"
         case TransactionMessage.TransactionMessageType.directPayment.rawValue:
-            return "\("payment".localized) \(directionString): \(amountString) sat"
+            let isTribe = self.chat?.isPublicGroup() ?? false
+            let senderAlias = self.senderAlias ?? "Unknown".localized
+            let recipientAlias = self.recipientAlias ?? "Unknown".localized
+            
+            if isTribe {
+                if incoming {
+                    return String(format: "tribe.payment.received".localized, senderAlias, "\(amountString) sats" , recipientAlias)
+                } else {
+                    return String(format: "tribe.payment.sent".localized, "\(amountString) sats", recipientAlias)
+                }
+            } else {
+                return "\("payment".localized) \(directionString): \(amountString) sats"
+            }
         case TransactionMessage.TransactionMessageType.imageAttachment.rawValue:
             if self.isGif() {
                 return "\("gif.capitalize".localized) \(directionString)"

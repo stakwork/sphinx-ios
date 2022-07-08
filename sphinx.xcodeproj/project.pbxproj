@@ -529,6 +529,8 @@
 		47F258D2253F705800122A5A /* ChatViewControllerPodcastExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F258D1253F705800122A5A /* ChatViewControllerPodcastExtension.swift */; };
 		47F258D92540F61F00122A5A /* PodcastPaymentsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F258D82540F61F00122A5A /* PodcastPaymentsHelper.swift */; };
 		47F35D4C2373156A0042A58F /* sphinx.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 47F35D4A2373156A0042A58F /* sphinx.xcdatamodeld */; };
+		47F6CA052878698A005EBCB6 /* universal-crypter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 47F6CA032878695C005EBCB6 /* universal-crypter.a */; };
+		47F6CA0C28786BC7005EBCB6 /* crypter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F6CA0B28786BC7005EBCB6 /* crypter.swift */; };
 		47F7273825791D8600A794B9 /* ContactLinkPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F7273725791D8600A794B9 /* ContactLinkPreviewView.swift */; };
 		47FA18BE242534CD00469C8F /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FA18BD242534CD00469C8F /* UIViewController.swift */; };
 		47FA18C02425381500469C8F /* CreateInvoiceDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FA18BF2425381500469C8F /* CreateInvoiceDetailsViewController.swift */; };
@@ -1334,6 +1336,11 @@
 		47F258D1253F705800122A5A /* ChatViewControllerPodcastExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewControllerPodcastExtension.swift; sourceTree = "<group>"; };
 		47F258D82540F61F00122A5A /* PodcastPaymentsHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastPaymentsHelper.swift; sourceTree = "<group>"; };
 		47F35D4B2373156A0042A58F /* sphinx.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = sphinx.xcdatamodel; sourceTree = "<group>"; };
+		47F6CA032878695C005EBCB6 /* universal-crypter.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "universal-crypter.a"; sourceTree = "<group>"; };
+		47F6CA06287869A6005EBCB6 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
+		47F6CA0928786A89005EBCB6 /* crypter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypter.h; sourceTree = "<group>"; };
+		47F6CA0A28786B34005EBCB6 /* Crypter-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Crypter-Bridging-Header.h"; sourceTree = "<group>"; };
+		47F6CA0B28786BC7005EBCB6 /* crypter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = crypter.swift; sourceTree = "<group>"; };
 		47F7273725791D8600A794B9 /* ContactLinkPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactLinkPreviewView.swift; sourceTree = "<group>"; };
 		47FA18BD242534CD00469C8F /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		47FA18BF2425381500469C8F /* CreateInvoiceDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateInvoiceDetailsViewController.swift; sourceTree = "<group>"; };
@@ -1496,6 +1503,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F331199D268E93FB005082EB /* StoreKit.framework in Frameworks */,
+				47F6CA052878698A005EBCB6 /* universal-crypter.a in Frameworks */,
 				4703CF932519425E007B685C /* PDFKit.framework in Frameworks */,
 				12075275C652A9404FC48EBC /* Pods_sphinx.framework in Frameworks */,
 			);
@@ -1521,6 +1529,8 @@
 		29CA57C9FD66D9C3750CE036 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				47F6CA06287869A6005EBCB6 /* libresolv.tbd */,
+				47F6CA032878695C005EBCB6 /* universal-crypter.a */,
 				F331199C268E93FB005082EB /* StoreKit.framework */,
 				F3C92B282671FCFD005F0A42 /* .Tor.version */,
 				47D03DF02510EA170077A968 /* PDFKit.framework */,
@@ -2617,6 +2627,7 @@
 				4756DE0C232ABDED001BAFD6 /* Scenes */,
 				475BDD74232BF90C00C5BBD6 /* Services */,
 				F331199E268E99FE005082EB /* StoreKit */,
+				47F6CA0728786A13005EBCB6 /* Crypter */,
 				475BDD35232ACF8700C5BBD6 /* Supporting Files */,
 			);
 			path = sphinx;
@@ -3099,6 +3110,16 @@
 				47E300E3234B83EC00DB56DB /* AddFriendRowButton.swift */,
 			);
 			path = "Custom Views";
+			sourceTree = "<group>";
+		};
+		47F6CA0728786A13005EBCB6 /* Crypter */ = {
+			isa = PBXGroup;
+			children = (
+				47F6CA0928786A89005EBCB6 /* crypter.h */,
+				47F6CA0A28786B34005EBCB6 /* Crypter-Bridging-Header.h */,
+				47F6CA0B28786BC7005EBCB6 /* crypter.swift */,
+			);
+			path = Crypter;
 			sourceTree = "<group>";
 		};
 		47FA18C324253BEC00469C8F /* Manager */ = {
@@ -4184,6 +4205,7 @@
 				F358212D2695D11500A314F1 /* ConnectionCodeSignupHandling.swift in Sources */,
 				4703CF97251D23E5007B685C /* LinkPreviewUIImage.swift in Sources */,
 				F3188B932719DA1600890DDD /* DashboardVideoEpisodeCollectionViewCell.swift in Sources */,
+				47F6CA0C28786BC7005EBCB6 /* crypter.swift in Sources */,
 				47AF0D31254B236C00C98398 /* BoostButtonView.swift in Sources */,
 				47822C70244A02010011D832 /* CommonPaidMessageTableViewCell.swift in Sources */,
 				47D46A33237C83900005A548 /* Chat+CoreDataClass.swift in Sources */,
@@ -5003,6 +5025,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				MARKETING_VERSION = 1.0.10;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -5070,6 +5096,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.gl.sphinx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(PROJECT_DIR)/sphinx/Crypter/Crypter-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -5091,6 +5118,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				MARKETING_VERSION = 1.0.10;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -5158,6 +5189,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.gl.sphinx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(PROJECT_DIR)/sphinx/Crypter/Crypter-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

@@ -42,7 +42,7 @@ extension API {
     func getMessagesPaginated(
         page: Int,
         date: Date,
-        _ shouldSaveFetchDate: Bool = true,
+        onPushReceived: Bool = false,
         callback: @escaping GetMessagesPaginatedCallback,
         errorCallback: @escaping EmptyCallback
     ){
@@ -57,7 +57,7 @@ extension API {
         let offset = (page - 1) * itemsPerPage
         var route = "/msgs?offset=\(offset)&limit=\(itemsPerPage)&order=desc"
         
-        let dateString = (lastSeenMessagesDate ?? Date(timeIntervalSince1970: 0))
+        let dateString = lastSeenMessagesDate ?? Date(timeIntervalSince1970: 0)
         if let dateString = dateString.getStringFromDate(format:"yyyy-MM-dd HH:mm:ss").percentEscaped {
             route = "\(route)&date=\(dateString)"
         }
@@ -79,7 +79,7 @@ extension API {
                         if (
                             (newMessages.count > 0 || page > 1) &&
                             newMessages.count < itemsPerPage &&
-                            shouldSaveFetchDate
+                            !onPushReceived
                         ) {
                             //is last page. Date should be tracked
                             self.lastSeenMessagesDate = date

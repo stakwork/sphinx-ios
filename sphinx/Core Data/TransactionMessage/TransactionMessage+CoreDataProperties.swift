@@ -34,6 +34,8 @@ extension TransactionMessage {
     @NSManaged public var encrypted: Bool
     @NSManaged public var senderAlias: String?
     @NSManaged public var senderPic: String?
+    @NSManaged public var recipientAlias: String?
+    @NSManaged public var recipientPic: String?
     @NSManaged public var uuid: String?
     @NSManaged public var replyUUID: String?
     @NSManaged public var originalMuid: String?

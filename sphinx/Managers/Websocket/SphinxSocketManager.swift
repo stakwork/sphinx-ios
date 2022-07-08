@@ -70,7 +70,7 @@ class SphinxSocketManager {
             if let urlString = urlString, let url = url {
                 let secure = urlString.starts(with: "wss")
                 var socketConfiguration : SocketIOClientConfiguration!
-                let headers = EncryptionManager.sharedInstance.getAuthenticationHeader()
+                let headers = UserData.sharedInstance.getAuthenticationHeader()
                 
                 if onionConnector.usingTor() {
                     socketConfiguration = [.compress, .forcePolling(true), .secure(secure), .extraHeaders(headers)]

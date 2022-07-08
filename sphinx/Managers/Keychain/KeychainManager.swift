@@ -25,6 +25,7 @@ class KeychainManager {
         case ip = "relay_ip"
         case authToken = "relay_auth_token"
         case transportKey = "relay_transport_key"
+        case hmacKey = "hmac_key"
         case pin = "app_pin"
         case privacyPin = "privacy_pin"
         case currentPin = "app_current_pin_ios"
@@ -194,6 +195,7 @@ class KeychainManager {
         let ipComposedKey = getComposedKey(for: KeychainKeys.ip.rawValue, with: pubKey)
         let tokenComposedKey = getComposedKey(for: KeychainKeys.authToken.rawValue, with: pubKey)
         let transportKeyComposedKey = getComposedKey(for: KeychainKeys.transportKey.rawValue, with: pubKey)
+        let hmacKeyComposedKey = getComposedKey(for: KeychainKeys.hmacKey.rawValue, with: pubKey)
         let pinComposedKey = getComposedKey(for: KeychainKeys.pin.rawValue, with: pubKey)
         let privateKeyComposedKey = getComposedKey(for: KeychainKeys.privateKey.rawValue, with: pubKey)
         let publicKeyComposedKey = getComposedKey(for: KeychainKeys.publicKey.rawValue, with: pubKey)
@@ -201,6 +203,7 @@ class KeychainManager {
         let _ = deleteValueFor(composedKey: ipComposedKey)
         let _ = deleteValueFor(composedKey: tokenComposedKey)
         let _ = deleteValueFor(composedKey: transportKeyComposedKey)
+        let _ = deleteValueFor(composedKey: hmacKeyComposedKey)
         let _ = deleteValueFor(composedKey: pinComposedKey)
         let _ = deleteValueFor(composedKey: privateKeyComposedKey)
         let _ = deleteValueFor(composedKey: publicKeyComposedKey)

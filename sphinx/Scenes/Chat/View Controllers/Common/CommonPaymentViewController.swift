@@ -14,6 +14,7 @@ import SwiftyJSON
     @objc optional func didCreateMessage(message: TransactionMessage)
     @objc optional func didFailCreatingInvoice()
     @objc optional func shouldSendOnchain(address: String, amount: Int)
+    @objc optional func shouldSendTribePayment(amount: Int, message: String, messageUUID: String, callback: (() -> ())?)
 }
 
 class CommonPaymentViewController : UIViewController {
@@ -21,6 +22,7 @@ class CommonPaymentViewController : UIViewController {
     var rootViewController: RootViewController!
     var contacts : [UserContact]?
     var chat: Chat?
+    var message: TransactionMessage?
     var chatViewModel: ChatViewModel!
     
     public weak var delegate: PaymentInvoiceDelegate?

@@ -93,7 +93,7 @@ extension NewUserSignupFormViewController {
     func signupWithRelayQRCode(ip: String, password: String) {
         presentConnectingLoadingScreenVC()
         
-        let invite = SignupHelper.getSupportContact()
+        let invite = SignupHelper.getSupportContact(includePubKey: false)
         SignupHelper.saveInviterInfo(invite: invite)
         
         connectToNode(ip: ip, password: password)

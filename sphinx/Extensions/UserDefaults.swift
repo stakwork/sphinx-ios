@@ -18,6 +18,7 @@ extension UserDefaults {
         public static let currentIP = DefaultKey<String>("currentIP")
         public static let authToken = DefaultKey<String>("authToken")
         public static let transportKey = DefaultKey<String>("transportKey")
+        public static let hmacKey = DefaultKey<String>("hmacKey")
         public static let ownerId = DefaultKey<Int>("ownerId")
         public static let ownerPubKey = DefaultKey<Int>("ownerPubKey")
         public static let inviteString = DefaultKey<String>("inviteString")

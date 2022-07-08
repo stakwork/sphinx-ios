@@ -59,7 +59,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         configureStoreKit()
         connectTor()
         syncDeviceId()
-        getTransportKey()
+        getRelayKeys()
         
         setInitialVC(launchingApp: true)
 
@@ -97,9 +97,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UserContact.syncDeviceId()
     }
     
-    func getTransportKey() {
+    func getRelayKeys() {
         if UserData.sharedInstance.isUserLogged() {
             UserData.sharedInstance.getAndSaveTransportKey()
+            UserData.sharedInstance.getOrCreateHMACKey()
         }
     }
     
@@ -385,7 +386,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     ) {
         if application.applicationState == .background {
             self.chatListViewModel.syncMessages(
-                shouldSaveFetchDate: false,
+                onPushReceived: true,
                 progressCallback: { _ in },
                 completion: { (_, _) in
                     completionHandler(.newData)

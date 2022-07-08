@@ -43,6 +43,7 @@ typealias PodcastInfoCallback = ((JSON) -> ())
 typealias OnchainAddressCallback = ((String) -> ())
 typealias AppVersionsCallback = ((String) -> ())
 typealias TransportKeyCallback = ((String) -> ())
+typealias HMACKeyCallback = ((String) -> ())
 
 // HUB calls
 typealias SignupWithCodeCallback = ((JSON, String, String) -> ())
@@ -245,11 +246,18 @@ class API {
 
     var connectionStatus = ConnectionStatus.Connecting
 
-    func sphinxRequest(_ urlRequest: URLRequestConvertible, completionHandler: @escaping (AFDataResponse<Any>) -> Void) {
+    func sphinxRequest(
+        _ urlRequest: URLRequestConvertible,
+        completionHandler: @escaping (AFDataResponse<Any>) -> Void
+    ) {
         let _ = unauthorizedHandledRequest(urlRequest, completionHandler: completionHandler)
     }
 
-    func cancellableRequest(_ urlRequest: URLRequestConvertible, type: CancellableRequestType?, completionHandler: @escaping (AFDataResponse<Any>) -> Void) {
+    func cancellableRequest(
+        _ urlRequest: URLRequestConvertible,
+        type: CancellableRequestType?,
+        completionHandler: @escaping (AFDataResponse<Any>) -> Void
+    ) {
         if let cancellableRequest = cancellableRequest, type != nil && type == currentRequestType {
             cancellableRequest.cancel()
         }
@@ -269,29 +277,44 @@ class API {
         cancellableRequest = nil
     }
 
-    func unauthorizedHandledRequest(_ urlRequest: URLRequestConvertible, completionHandler: @escaping (AFDataResponse<Any>) -> Void) -> DataRequest? {
+    func unauthorizedHandledRequest(
+        _ urlRequest: URLRequestConvertible,
+        completionHandler: @escaping (AFDataResponse<Any>) -> Void
+    ) -> DataRequest? {
         let request = session()?.request(urlRequest).responseJSON { (response) in
             
-            let statusCode = response.response?.statusCode ?? -1
-
-            if statusCode == self.successStatusCode {
+            let statusCode = (response.response?.statusCode ?? -1)
+            
+            switch statusCode {
+            case self.successStatusCode:
                 self.connectionStatus = .Connected
-            } else if statusCode == self.unauthorizedStatusCode {
+            case self.unauthorizedStatusCode:
+//                if self.getHMACKeyAndRetry(urlRequest, completionHandler: completionHandler) {
+//                    return
+//                }
                 self.connectionStatus = .Unauthorize
-            } else if response.response == nil || statusCode == self.notFoundStatusCode  || statusCode == self.badGatewayStatusCode {
-                self.connectionStatus = response.response == nil ? self.connectionStatus : .NotConnected
+            default:
+                if response.response == nil ||
+                    statusCode == self.notFoundStatusCode  ||
+                    statusCode == self.badGatewayStatusCode {
+                    
+                    self.connectionStatus = response.response == nil ?
+                        self.connectionStatus :
+                        .NotConnected
 
-                if self.errorCounter < 5 {
-                    self.errorCounter = self.errorCounter + 1
-                } else if response.response != nil {
-                    self.getIPFromHUB()
+                    if self.errorCounter < 5 {
+                        self.errorCounter = self.errorCounter + 1
+                    } else if response.response != nil {
+                        self.getIPFromHUB()
+                        return
+                    }
+                    completionHandler(response)
                     return
+                } else {
+                    self.connectionStatus = .NotConnected
                 }
-                completionHandler(response)
-                return
-            } else {
-                self.connectionStatus = .NotConnected
             }
+
             self.errorCounter = 0
 
             if let _ = response.response {
@@ -300,6 +323,22 @@ class API {
         }
         return request
     }
+    
+//    func getHMACKeyAndRetry(
+//        _ urlRequest: URLRequestConvertible,
+//        completionHandler: @escaping (AFDataResponse<Any>) -> Void
+//    ) -> Bool {
+//        if UserData.sharedInstance.getHmacKey() == nil {
+//            UserData.sharedInstance.getAndSaveHMACKey(completion: {
+//                let _ = self.unauthorizedHandledRequest(
+//                    urlRequest,
+//                    completionHandler: completionHandler
+//                )
+//            })
+//            return true
+//        }
+//        return false
+//    }
 
     func networksConnectionLost() {
         DispatchQueue.main.async {
@@ -429,14 +468,12 @@ class API {
         }
 
         if let nsURL = NSURL(string: url) {
-            let headers = EncryptionManager.sharedInstance.getAuthenticationHeader()
-            
             var request = URLRequest(url: nsURL as URL)
             request.httpMethod = method
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             request.setValue("no-cache", forHTTPHeaderField: "Cache-Control")
             
-            for (key, value) in headers {
+            for (key, value) in UserData.sharedInstance.getAuthenticationHeader() {
                 request.setValue(value, forHTTPHeaderField: key)
             }
             
@@ -444,12 +481,26 @@ class API {
                 request.setValue(value, forHTTPHeaderField: key)
             }
 
+            var bodyData: Data? = nil
+            
             if let p = params {
                 do {
-                    try request.httpBody = JSONSerialization.data(withJSONObject: p, options: [])
+                    try bodyData = JSONSerialization.data(withJSONObject: p, options: [])
                 } catch let error as NSError {
                     print("Error: " + error.localizedDescription)
                 }
+            }
+            
+            if let bodyData = bodyData {
+                request.httpBody = bodyData
+            }
+            
+            for (key, value) in UserData.sharedInstance.getHMACHeader(
+                url: nsURL as URL,
+                method: method,
+                bodyData: bodyData
+            ) {
+                request.setValue(value, forHTTPHeaderField: key)
             }
 
             return request

@@ -45,6 +45,8 @@ internal enum StoryboardScene {
         internal static let messageOptionsViewController = SceneType<MessageOptionsViewController>(storyboard: Chat.self, identifier: "MessageOptionsViewController")
         
         internal static let paidMessagePreviewViewController = SceneType<PaidMessagePreviewViewController>(storyboard: Chat.self, identifier: "PaidMessagePreviewViewController")
+        
+        internal static let tribeMemberPopupViewController = SceneType<TribeMemberPopupViewController>(storyboard: Chat.self, identifier: "TribeMemberPopupViewController")
     }
     
     internal enum Dashboard: StoryboardType {

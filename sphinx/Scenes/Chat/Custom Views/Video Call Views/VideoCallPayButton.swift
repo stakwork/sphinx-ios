@@ -11,6 +11,7 @@ import UIKit
 protocol VideoCallDelegate: class {
     func didTapButton(callback: @escaping () -> ())
     func didSwitchMode(pip: Bool)
+    func didFinishCall()
 }
 
 class VideoCallPayButton: UIView {

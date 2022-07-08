@@ -379,38 +379,14 @@ class EncryptionManager {
         }
     }
     
-    public static func randomString(length: UInt) -> String {
-        let prefixSize = Int(min(length, 43))
+    public static func randomString(length: Int) -> String {
         let uuidString = UUID().uuidString.replacingOccurrences(of: "-", with: "")
         
-        return String(Data(uuidString.utf8)
+        return String(
+            Data(uuidString.utf8)
             .base64EncodedString()
             .replacingOccurrences(of: "=", with: "")
-            .prefix(prefixSize))
-    }
-    
-    func getAuthenticationHeader(
-        token: String? = nil,
-        transportKey: String? = nil
-    ) -> [String: String] {
-        
-        let t = token ?? userData.getAuthToken()
-        
-        if t.isEmpty {
-            return [:]
-        }
-        
-        if let transportK = transportKey ?? userData.getTransportKey(),
-           let transportEncryptionKey = getPublicKeyFromBase64String(base64String: transportK) {
-            
-            let time = Int(NSDate().timeIntervalSince1970)
-            let tokenAndTime = "\(t)|\(time)"
-            
-            if let encryptedToken = encryptToken(token: tokenAndTime, key: transportEncryptionKey) {
-                return ["x-transport-token": encryptedToken]
-            }
-            
-        }
-        return ["X-User-Token": t]
+            .prefix(length)
+        )
     }
 }

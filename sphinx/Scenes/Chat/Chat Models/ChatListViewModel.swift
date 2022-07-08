@@ -136,7 +136,7 @@ final class ChatListViewModel: NSObject {
     
     func syncMessages(
         chatId: Int? = nil,
-        shouldSaveFetchDate: Bool = true,
+        onPushReceived: Bool = false,
         progressCallback: @escaping (Int) -> (),
         completion: @escaping (Int, Int) -> (),
         errorCompletion: (() -> ())? = nil
@@ -166,7 +166,7 @@ final class ChatListViewModel: NSObject {
                 prevPageNewMessages: 0,
                 chatId: chatId,
                 date: self.syncMessagesDate,
-                shouldSaveFetchDate,
+                onPushReceived: onPushReceived,
                 progressCallback: progressCallback,
                 completion: { chatNewMessagesCount, newMessagesCount in
 
@@ -196,7 +196,7 @@ final class ChatListViewModel: NSObject {
         prevPageNewMessages: Int,
         chatId: Int? = nil,
         date: Date,
-        _ shouldSaveFetchDate: Bool = true,
+        onPushReceived: Bool = false,
         progressCallback: @escaping (Int) -> (),
         completion: @escaping (Int, Int) -> ()
     ) {
@@ -205,7 +205,7 @@ final class ChatListViewModel: NSObject {
         API.sharedInstance.getMessagesPaginated(
             page: page,
             date: date,
-            shouldSaveFetchDate,
+            onPushReceived: onPushReceived,
             callback: {(newMessagesTotal, newMessages) -> () in
                 
                 if self.syncMessagesTask?.isCancelled == true {
@@ -260,16 +260,6 @@ final class ChatListViewModel: NSObject {
                     completion(0, 0)
                 }
             }, errorCallback: {
-                DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: {
-                    self.getMessagesPaginated(
-                        restoring: restoring,
-                        prevPageNewMessages: prevPageNewMessages,
-                        chatId: chatId,
-                        date: date,
-                        progressCallback: progressCallback,
-                        completion: completion
-                    )
-                })
                 completion(0,0)
             })
     }

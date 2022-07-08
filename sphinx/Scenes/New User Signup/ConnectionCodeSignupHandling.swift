@@ -173,8 +173,8 @@ extension ConnectionCodeSignupHandling {
     
     func proceedToNewUserWelcome() {
         guard let inviter = SignupHelper.getInviter() else {
-            let defaultInviter = SignupHelper.getSupportContact()
-
+            
+            let defaultInviter = SignupHelper.getSupportContact(includePubKey: false)
             SignupHelper.saveInviterInfo(invite: defaultInviter)
             
             proceedToNewUserWelcome()

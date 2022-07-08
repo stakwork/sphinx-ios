@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -47,11 +47,11 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lo8-nx-NQc" customClass="ChatAvatarView" customModule="sphinx" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="56" height="56"/>
+                                <rect key="frame" x="15" y="4" width="33" height="33"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="56" id="ZPL-Za-b7d"/>
-                                    <constraint firstAttribute="height" constant="56" id="r8u-Vy-aja"/>
+                                    <constraint firstAttribute="width" constant="33" id="ZPL-Za-b7d"/>
+                                    <constraint firstAttribute="height" constant="33" id="r8u-Vy-aja"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gat-eJ-uGx">
@@ -240,14 +240,14 @@
                             <constraint firstItem="cUU-6B-uXE" firstAttribute="top" secondItem="t48-wC-dT1" secondAttribute="bottom" id="4Zw-gJ-ypz"/>
                             <constraint firstItem="LhV-H6-H97" firstAttribute="bottom" secondItem="t48-wC-dT1" secondAttribute="bottom" id="4ek-Qv-pFM"/>
                             <constraint firstItem="t48-wC-dT1" firstAttribute="top" secondItem="310-jM-fgt" secondAttribute="top" constant="21" id="5a6-dJ-OD6"/>
-                            <constraint firstItem="Lo8-nx-NQc" firstAttribute="top" secondItem="310-jM-fgt" secondAttribute="top" id="5gv-42-sfZ"/>
+                            <constraint firstItem="Lo8-nx-NQc" firstAttribute="top" secondItem="310-jM-fgt" secondAttribute="top" constant="4" id="5gv-42-sfZ"/>
                             <constraint firstItem="t48-wC-dT1" firstAttribute="width" secondItem="t48-wC-dT1" secondAttribute="height" id="6vX-Iz-L6k"/>
                             <constraint firstItem="D5L-sr-DJm" firstAttribute="top" secondItem="t48-wC-dT1" secondAttribute="top" id="77j-ym-RTW"/>
                             <constraint firstItem="t48-wC-dT1" firstAttribute="leading" secondItem="310-jM-fgt" secondAttribute="leading" constant="56" id="DRl-8X-IFQ"/>
                             <constraint firstItem="827-Ld-Nyl" firstAttribute="top" secondItem="t48-wC-dT1" secondAttribute="top" id="En5-5v-jcy"/>
                             <constraint firstItem="aEa-OF-tlI" firstAttribute="leading" secondItem="2qP-xh-t87" secondAttribute="leading" constant="3.5" id="EpN-fJ-j6Q"/>
                             <constraint firstAttribute="bottom" secondItem="84h-7I-Zbp" secondAttribute="bottom" id="I1m-mp-eH4"/>
-                            <constraint firstItem="Lo8-nx-NQc" firstAttribute="leading" secondItem="310-jM-fgt" secondAttribute="leading" id="MVo-JO-mbv"/>
+                            <constraint firstItem="Lo8-nx-NQc" firstAttribute="leading" secondItem="310-jM-fgt" secondAttribute="leading" constant="15" id="MVo-JO-mbv"/>
                             <constraint firstItem="D5L-sr-DJm" firstAttribute="bottom" secondItem="t48-wC-dT1" secondAttribute="bottom" id="Nh3-RP-Bdd"/>
                             <constraint firstItem="Gat-eJ-uGx" firstAttribute="trailing" secondItem="t48-wC-dT1" secondAttribute="trailing" id="QE2-3I-hRQ"/>
                             <constraint firstItem="cUU-6B-uXE" firstAttribute="trailing" secondItem="t48-wC-dT1" secondAttribute="trailing" id="Xx9-qh-0ow"/>

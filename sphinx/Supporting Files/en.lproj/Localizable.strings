@@ -338,6 +338,8 @@
 "sent" = "sent";
 "message.x.deleted" = "Message deleted";
 "payment" = "Payment";
+"tribe.payment.sent" = "Payment of %@ sent to %@";
+"tribe.payment.received" = "%@ sent a payment of %@ to %@";
 "picture.capitalize" = "Picture";
 "gif.capitalize" = "Gif";
 "video.capitalize" = "Video";

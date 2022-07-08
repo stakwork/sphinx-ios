@@ -54,11 +54,15 @@ class KeychainRestoreViewController: UIViewController {
                 userData.getAndSaveTransportKey(completion: { [weak self] _ in
                     guard let self = self else { return }
                     
-                    self.delegate?.goToApp()
-                    
-                    self.dismiss(animated: true, completion: {
-                        self.messageBubbleHelper.hideLoadingWheel()
-                    })
+                    self.userData.getOrCreateHMACKey() { [weak self] in
+                        guard let self = self else { return }
+                        
+                        self.delegate?.goToApp()
+                        
+                        self.dismiss(animated: true, completion: {
+                            self.messageBubbleHelper.hideLoadingWheel()
+                        })
+                    }
                 })
             } else {
                 self.dismissAndShowError()

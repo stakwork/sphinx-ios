@@ -371,6 +371,10 @@ class UserData {
         return getValueFor(keychainKey: KeychainManager.KeychainKeys.authToken, userDefaultKey: UserDefaults.Keys.authToken)
     }
     
+    func getMnemonic() -> String? {
+        return getValueFor(keychainKey: KeychainManager.KeychainKeys.walletMnemonic, userDefaultKey: nil)
+    }
+    
     func getTransportKey() -> String? {
         let transportKey = getValueFor(keychainKey: KeychainManager.KeychainKeys.transportKey, userDefaultKey: UserDefaults.Keys.transportKey)
         if !transportKey.isEmpty {

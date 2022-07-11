@@ -262,13 +262,13 @@ extension DashboardRootViewController {
 extension DashboardRootViewController {
     
     public func generateAndPersistWalletMnemonic() -> String {
-        let mnemonic = Mnemonic.create()
-        
-//        UserData.sharedInstance.save(walletMnemonic: mnemonic)
+        let mnemonic = UserData.sharedInstance.getMnemonic() ?? Mnemonic.create()
+        UserData.sharedInstance.save(walletMnemonic: mnemonic)
         
         let seed = Mnemonic.createSeed(mnemonic: mnemonic)
+        let seed32Bytes = seed.bytes[0..<32]
         
-        return seed.sha256().toHexString()
+        return seed32Bytes.hexString
     }
     
     public func handleDeepLinksAndPush() {

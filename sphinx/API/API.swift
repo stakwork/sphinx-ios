@@ -44,6 +44,8 @@ typealias OnchainAddressCallback = ((String) -> ())
 typealias AppVersionsCallback = ((String) -> ())
 typealias TransportKeyCallback = ((String) -> ())
 typealias HMACKeyCallback = ((String) -> ())
+typealias HardwarePublicKeyCallback = ((String) -> ())
+typealias HardwareSeedCallback = ((Bool) -> ())
 
 // HUB calls
 typealias SignupWithCodeCallback = ((JSON, String, String) -> ())

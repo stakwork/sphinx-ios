@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -531,6 +531,9 @@
 		47F35D4C2373156A0042A58F /* sphinx.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 47F35D4A2373156A0042A58F /* sphinx.xcdatamodeld */; };
 		47F6CA052878698A005EBCB6 /* universal-crypter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 47F6CA032878695C005EBCB6 /* universal-crypter.a */; };
 		47F6CA0C28786BC7005EBCB6 /* crypter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F6CA0B28786BC7005EBCB6 /* crypter.swift */; };
+		47F6CA0E287C6524005EBCB6 /* API+CrypterExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F6CA0D287C6524005EBCB6 /* API+CrypterExtension.swift */; };
+		47F6CA10287C695B005EBCB6 /* Nonce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F6CA0F287C695B005EBCB6 /* Nonce.swift */; };
+		47F6CA13287C7523005EBCB6 /* K1 in Frameworks */ = {isa = PBXBuildFile; productRef = 47F6CA12287C7523005EBCB6 /* K1 */; };
 		47F7273825791D8600A794B9 /* ContactLinkPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F7273725791D8600A794B9 /* ContactLinkPreviewView.swift */; };
 		47FA18BE242534CD00469C8F /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FA18BD242534CD00469C8F /* UIViewController.swift */; };
 		47FA18C02425381500469C8F /* CreateInvoiceDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FA18BF2425381500469C8F /* CreateInvoiceDetailsViewController.swift */; };
@@ -1341,6 +1344,8 @@
 		47F6CA0928786A89005EBCB6 /* crypter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypter.h; sourceTree = "<group>"; };
 		47F6CA0A28786B34005EBCB6 /* Crypter-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Crypter-Bridging-Header.h"; sourceTree = "<group>"; };
 		47F6CA0B28786BC7005EBCB6 /* crypter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = crypter.swift; sourceTree = "<group>"; };
+		47F6CA0D287C6524005EBCB6 /* API+CrypterExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+CrypterExtension.swift"; sourceTree = "<group>"; };
+		47F6CA0F287C695B005EBCB6 /* Nonce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Nonce.swift; sourceTree = "<group>"; };
 		47F7273725791D8600A794B9 /* ContactLinkPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactLinkPreviewView.swift; sourceTree = "<group>"; };
 		47FA18BD242534CD00469C8F /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		47FA18BF2425381500469C8F /* CreateInvoiceDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateInvoiceDetailsViewController.swift; sourceTree = "<group>"; };
@@ -1502,6 +1507,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47F6CA13287C7523005EBCB6 /* K1 in Frameworks */,
 				F331199D268E93FB005082EB /* StoreKit.framework in Frameworks */,
 				47F6CA052878698A005EBCB6 /* universal-crypter.a in Frameworks */,
 				4703CF932519425E007B685C /* PDFKit.framework in Frameworks */,
@@ -2333,6 +2339,7 @@
 				47BF7D4A25A8A59100593489 /* API+VersionsExtension.swift */,
 				47AAFC7B2387070D00E30BDA /* API+WalletExtension.swift */,
 				47D76E6827F10D89000DC021 /* API+AuthenticationExtension.swift */,
+				47F6CA0D287C6524005EBCB6 /* API+CrypterExtension.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -3118,6 +3125,7 @@
 				47F6CA0928786A89005EBCB6 /* crypter.h */,
 				47F6CA0A28786B34005EBCB6 /* Crypter-Bridging-Header.h */,
 				47F6CA0B28786BC7005EBCB6 /* crypter.swift */,
+				47F6CA0F287C695B005EBCB6 /* Nonce.swift */,
 			);
 			path = Crypter;
 			sourceTree = "<group>";
@@ -3575,6 +3583,9 @@
 			dependencies = (
 			);
 			name = sphinx;
+			packageProductDependencies = (
+				47F6CA12287C7523005EBCB6 /* K1 */,
+			);
 			productName = sphinx;
 			productReference = 4779F15E232AA0F200D35E81 /* sphinx.app */;
 			productType = "com.apple.product-type.application";
@@ -3648,6 +3659,9 @@
 				es,
 			);
 			mainGroup = 4779F155232AA0F200D35E81;
+			packageReferences = (
+				47F6CA11287C7523005EBCB6 /* XCRemoteSwiftPackageReference "K1" */,
+			);
 			productRefGroup = 4779F15F232AA0F200D35E81 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -3925,6 +3939,7 @@
 				47183CBF2549E1BE00E6FD19 /* PodcastBoostSentTableViewCell.swift in Sources */,
 				47B46F66254AFE1C007F61CD /* ChatHeaderView.swift in Sources */,
 				47893AA2240E857F002F675B /* AVAudioSession.swift in Sources */,
+				47F6CA10287C695B005EBCB6 /* Nonce.swift in Sources */,
 				F39F2C7E26E2367B00D357F6 /* FeedSearchEmptyStateViewController.swift in Sources */,
 				475BDCD0232AC23100C5BBD6 /* ExpiredInvoiceCommonTableViewCell.swift in Sources */,
 				47308E1024FEE6E700FFAC6F /* SocketIOClient.swift in Sources */,
@@ -4359,6 +4374,7 @@
 				F360123326E96B31009B8DC0 /* API+FeedSearchUtils.swift in Sources */,
 				47468FD5233162D40072124A /* AlertHelper.swift in Sources */,
 				47893A9624095DF6002F675B /* CommonAudioTableViewCell.swift in Sources */,
+				47F6CA0E287C6524005EBCB6 /* API+CrypterExtension.swift in Sources */,
 				47669F4223CF7EE900C17A77 /* GroupsManager.swift in Sources */,
 				F394ECB32683EB5A00529038 /* SphinxDesktopAdViewController.swift in Sources */,
 				47F258CA253DD42500122A5A /* PinTimeSlider.swift in Sources */,
@@ -5317,6 +5333,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		47F6CA11287C7523005EBCB6 /* XCRemoteSwiftPackageReference "K1" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Sajjon/K1";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.0.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		47F6CA12287C7523005EBCB6 /* K1 */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 47F6CA11287C7523005EBCB6 /* XCRemoteSwiftPackageReference "K1" */;
+			productName = K1;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		47F35D4A2373156A0042A58F /* sphinx.xcdatamodeld */ = {

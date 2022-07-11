@@ -8,6 +8,7 @@
 import UIKit
 import CoreData
 import HDWalletKit
+import SwiftyJSON
 
 
 class DashboardRootViewController: RootViewController {
@@ -260,15 +261,14 @@ extension DashboardRootViewController {
 // MARK: -  Public Methods
 extension DashboardRootViewController {
     
-    public func generateAndPersistWalletMnemonic() {
-        let secret = EncryptionManager.randomString(length: 16)
-        let entropy = Data(hex: secret.toHexString())
-        let mnemonic = Mnemonic.create(entropy: entropy)
+    public func generateAndPersistWalletMnemonic() -> String {
+        let mnemonic = Mnemonic.create()
         
-        print("MNEMONIC WORDS: \(mnemonic)")
-        print("MNEMONIC WORDS: \(mnemonic)")
+//        UserData.sharedInstance.save(walletMnemonic: mnemonic)
         
-        UserData.sharedInstance.save(walletMnemonic: mnemonic)
+        let seed = Mnemonic.createSeed(mnemonic: mnemonic)
+        
+        return seed.sha256().toHexString()
     }
     
     public func handleDeepLinksAndPush() {
@@ -319,7 +319,6 @@ extension DashboardRootViewController {
     
     
     func scanQRCodeButtonTouched() {
-        generateAndPersistWalletMnemonic()
         
         let viewController = NewQRScannerViewController.instantiate(
             rootViewController: rootViewController
@@ -337,54 +336,50 @@ extension DashboardRootViewController {
     }
     
     func testCrypter() {
-        let sk1 = "86c8977989592a97beb409bc27fde76e981ce3543499fd61743755b832e92a3e"
-        let pk1 = "0362a684901b8d065fb034bc44ea972619a409aeafc2a698016a74f6eee1008aca"
-
-        let sk2 = "21c2d41c7394b0a87dae89576bee2552aedb54a204cdcdbf5cdceb0b4c1c2a17"
-        let pk2 = "027dd6297aff570a409fe05032b6e1dab39f309daa8c438a65c32e3d7b4722b7c3"
-
-        // derive shared secrets
-        var sec1: String? = nil
-        do {
-            sec1 = try deriveSharedSecret(theirPubkey: pk2, mySecretKey: sk1)
-        } catch {}
+        let newKeyPair = EncryptionManager.sharedInstance.createSepC256kKeyPair()
         
-        var sec2: String? = nil
-        do {
-            sec2 = try deriveSharedSecret(theirPubkey: pk1, mySecretKey: sk2)
-        } catch {}
-        
-        let areEqual = sec1 == sec2
+        if let privateKey = newKeyPair.0, let publicKey = newKeyPair.1 {
+            
+            let sk1 = privateKey
+            let pk1 = publicKey
+            
+            API.sharedInstance.getHardwarePublicKey(url: "http://127.0.0.1:8000/ecdh", callback: { pubKey in
+                
+                var sec1: String? = nil
+                do {
+                    sec1 = try deriveSharedSecret(theirPubkey: pubKey, mySecretKey: sk1)
+                } catch {
+                    print(error.localizedDescription)
+                }
+                
+                let seed = self.generateAndPersistWalletMnemonic()
+                
+                guard let sec1 = sec1 else {
+                    return
+                }
+                
+                // encrypt plaintext with sec1
+                let nonce = Nonce(length: 8).description.hexEncoded
+                var cipher: String? = nil
+                
+                do {
+                    cipher = try encrypt(plaintext: seed, secret: sec1, nonce: nonce)
+                } catch {
+                    print(error.localizedDescription)
+                }
 
-        print("Are Equal \(areEqual)")
-        
-        guard let sec1 = sec1, let sec2 = sec2 else {
-            return
+                guard let cipher = cipher else {
+                    return
+                }
+
+                API.sharedInstance.sendSeedToHardware(url: "http://127.0.0.1:8000/config", encryptedSeed: cipher, pubkey: pk1, callback: { success in
+                    print("Send seed to hardware: \(success)")
+                })
+                
+            }, errorCallback: {
+                print("Error getting hardware pub key")
+            })
         }
-        
-        // encrypt plaintext with sec1
-        let plaintext = "59ff446bec1d96dc7d1a69232cd69ca409e069294e983df7f1e3e5fb3c95c41c"
-        let nonce = "0da01cc0c0a73ad3"
-        
-        var cipher: String? = nil
-        
-        do {
-            cipher = try encrypt(plaintext: plaintext, secret: sec1, nonce: nonce)
-        } catch {}
-
-        guard let cipher = cipher else {
-            return
-        }
-        
-        // decrypt with sec2
-        var plain: String? = nil
-        do {
-            plain = try decrypt(ciphertext: cipher, secret: sec2)
-        } catch {}
-        
-        let areEqual2 = plaintext == plain
-
-        print("Are Equal2 \(areEqual2)")
     }
     
     

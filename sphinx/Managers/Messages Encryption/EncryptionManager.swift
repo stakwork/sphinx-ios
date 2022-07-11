@@ -8,10 +8,12 @@
 
 import Foundation
 import SwiftyRSA
+import K1
 
 class EncryptionManager {
     
     let KEY_SIZE = 2048
+    let SMALL_KEY_SIZE = 256
     let PUBLIC_KEY = "public.com.gl.sphinx"
     let PRIVATE_KEY = "private.com.gl.sphinx"
     
@@ -388,5 +390,36 @@ class EncryptionManager {
             .replacingOccurrences(of: "=", with: "")
             .prefix(length)
         )
+    }
+    
+    public func createSepC256kKeyPair() -> (String?, String?) {
+        
+        var privateKey: K1.PrivateKey? = nil
+        var privateKeyString: String? = nil
+        
+        do {
+            privateKey = try K1.PrivateKey.generateNew()
+            privateKeyString = privateKey?.rawRepresentation.hexString
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        
+        
+        let publicKey = privateKey?.publicKey
+        var publicKeyString: String? = nil
+        
+        do {
+            publicKeyString = try publicKey?.rawRepresentation(format: .compressed).hexString
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        
+        guard let privateKeyString = privateKeyString, let publicKeyString = publicKeyString else {
+            return (nil, nil)
+        }
+        
+        return (privateKeyString, publicKeyString)
     }
 }

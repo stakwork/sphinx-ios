@@ -42,12 +42,21 @@ extension API {
     
     func sendSeedToHardware(
         url: String,
-        encryptedSeed: String,
-        pubkey: String,
+        hardwarePostDto: CrypterManager.HardwarePostDto,
         callback: @escaping HardwareSeedCallback
     ) {
         
-        let params = "{\"seed\":\"\(encryptedSeed)\",\"ssid\":\"xxx\",\"pass\":\"xxx\",\"broker\":\"xxx\",\"pubkey\":\"\(pubkey)\",\"network\":\"regtest\"}"
+        guard let encryptedSeed = hardwarePostDto.encryptedSeed,
+              let networkName = hardwarePostDto.networkName,
+              let networkPassword = hardwarePostDto.networkPassword,
+              let publicKey = hardwarePostDto.publicKey else {
+            
+            callback(false)
+            return
+        }
+        
+        let params = "{\"seed\":\"\(encryptedSeed)\",\"ssid\":\"\(networkName)\",\"pass\":\"\(networkPassword)\",\"broker\":\"127.0.0.1:1883\",\"pubkey\":\"\(publicKey)\",\"network\":\"regtest\"}"
+        
         let url = "\(url)?config=\(params.urlEncode()!)"
         let request : URLRequest? = createRequest(url, bodyParams: nil, method: "POST")
         

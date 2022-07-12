@@ -7,7 +7,6 @@
 
 import UIKit
 import CoreData
-import HDWalletKit
 import SwiftyJSON
 
 
@@ -261,16 +260,6 @@ extension DashboardRootViewController {
 // MARK: -  Public Methods
 extension DashboardRootViewController {
     
-    public func generateAndPersistWalletMnemonic() -> String {
-        let mnemonic = UserData.sharedInstance.getMnemonic() ?? Mnemonic.create()
-        UserData.sharedInstance.save(walletMnemonic: mnemonic)
-        
-        let seed = Mnemonic.createSeed(mnemonic: mnemonic)
-        let seed32Bytes = seed.bytes[0..<32]
-        
-        return seed32Bytes.hexString
-    }
-    
     public func handleDeepLinksAndPush() {
         deepLinkIntoChatDetails()
         handleLinkQueries()
@@ -310,8 +299,7 @@ extension DashboardRootViewController {
         case .transactionsHistory:
             transactionsHistoryButtonTouched()
         case .scanQRCode:
-            testCrypter()
-//            scanQRCodeButtonTouched()
+            scanQRCodeButtonTouched()
         case .sendSats:
             sendSatsButtonTouched()
         }
@@ -319,7 +307,6 @@ extension DashboardRootViewController {
     
     
     func scanQRCodeButtonTouched() {
-        
         let viewController = NewQRScannerViewController.instantiate(
             rootViewController: rootViewController
         )
@@ -334,59 +321,6 @@ extension DashboardRootViewController {
         navigationController.isNavigationBarHidden = true
         present(navigationController, animated: true)
     }
-    
-    func testCrypter() {
-        let sk1 = Nonce(length: 32).description.hexEncoded
-        
-        var pk1: String? = nil
-        do {
-            pk1 = try pubkeyFromSecretKey(mySecretKey: sk1)
-        } catch {
-            print(error.localizedDescription)
-        }
-        
-        guard let pk1 = pk1 else {
-            return
-        }
-        
-        API.sharedInstance.getHardwarePublicKey(url: "http://127.0.0.1:8000/ecdh", callback: { pubKey in
-            
-            var sec1: String? = nil
-            do {
-                sec1 = try deriveSharedSecret(theirPubkey: pubKey, mySecretKey: sk1)
-            } catch {
-                print(error.localizedDescription)
-            }
-            
-            let seed = self.generateAndPersistWalletMnemonic()
-            
-            guard let sec1 = sec1 else {
-                return
-            }
-            
-            // encrypt plaintext with sec1
-            let nonce = Nonce(length: 8).description.hexEncoded
-            var cipher: String? = nil
-            
-            do {
-                cipher = try encrypt(plaintext: seed, secret: sec1, nonce: nonce)
-            } catch {
-                print(error.localizedDescription)
-            }
-
-            guard let cipher = cipher else {
-                return
-            }
-
-            API.sharedInstance.sendSeedToHardware(url: "http://127.0.0.1:8000/config", encryptedSeed: cipher, pubkey: pk1, callback: { success in
-                print("Send seed to hardware: \(success)")
-            })
-            
-        }, errorCallback: {
-            print("Error getting hardware pub key")
-        })
-    }
-    
     
     func transactionsHistoryButtonTouched() {
         let viewController = HistoryViewController.instantiate(

@@ -372,7 +372,12 @@ class UserData {
     }
     
     func getMnemonic() -> String? {
-        return getValueFor(keychainKey: KeychainManager.KeychainKeys.walletMnemonic, userDefaultKey: nil)
+        let mnemonic = getValueFor(keychainKey: KeychainManager.KeychainKeys.walletMnemonic, userDefaultKey: nil)
+        
+        if !mnemonic.isEmpty {
+            return mnemonic
+        }
+        return nil
     }
     
     func getTransportKey() -> String? {

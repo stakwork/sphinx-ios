@@ -77,6 +77,7 @@ class ProfileViewController: KeyboardEventsViewController {
     var notificationSoundHelper = NotificationSoundHelper()
     let newMessageBubbleHelper = NewMessageBubbleHelper()
     var walletBalanceService = WalletBalanceService()
+    let cryptedManager = CrypterManager()
     
     public enum ProfileFields: Int {
         case Name
@@ -305,6 +306,10 @@ class ProfileViewController: KeyboardEventsViewController {
             },
             cancel: {}
         )
+    }
+    
+    @IBAction func testHardwareLink() {
+        cryptedManager.testHardwareLink(vc: self)
     }
     
     func sendGithubPAT(

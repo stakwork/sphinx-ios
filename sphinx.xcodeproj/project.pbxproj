@@ -273,6 +273,7 @@
 		475BDD90232C087A00C5BBD6 /* TransactionPaymentSentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475BDD8C232C087A00C5BBD6 /* TransactionPaymentSentTableViewCell.swift */; };
 		475BDD91232C087A00C5BBD6 /* TransactionPaymentReceivedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 475BDD8D232C087A00C5BBD6 /* TransactionPaymentReceivedTableViewCell.xib */; };
 		475BDD95232C2F9100C5BBD6 /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475BDD94232C2F9100C5BBD6 /* UILabel.swift */; };
+		475CD5AC287E1198003FF171 /* CrypterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475CD5AB287E1198003FF171 /* CrypterManager.swift */; };
 		475E41612382E28800928931 /* UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475E41602382E28800928931 /* UIButton.swift */; };
 		475E416B23858D4900928931 /* Subscription+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475E416923858D4800928931 /* Subscription+CoreDataProperties.swift */; };
 		475E416C23858D4900928931 /* Subscription+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475E416A23858D4800928931 /* Subscription+CoreDataClass.swift */; };
@@ -986,6 +987,7 @@
 		475BDD8C232C087A00C5BBD6 /* TransactionPaymentSentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionPaymentSentTableViewCell.swift; sourceTree = "<group>"; };
 		475BDD8D232C087A00C5BBD6 /* TransactionPaymentReceivedTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TransactionPaymentReceivedTableViewCell.xib; sourceTree = "<group>"; };
 		475BDD94232C2F9100C5BBD6 /* UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
+		475CD5AB287E1198003FF171 /* CrypterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrypterManager.swift; sourceTree = "<group>"; };
 		475E41602382E28800928931 /* UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButton.swift; sourceTree = "<group>"; };
 		475E4162238588A200928931 /* sphinx 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 2.xcdatamodel"; sourceTree = "<group>"; };
 		475E416923858D4800928931 /* Subscription+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Subscription+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -3124,6 +3126,7 @@
 				47F6CA0A28786B34005EBCB6 /* Crypter-Bridging-Header.h */,
 				47F6CA0B28786BC7005EBCB6 /* crypter.swift */,
 				47F6CA0F287C695B005EBCB6 /* Nonce.swift */,
+				475CD5AB287E1198003FF171 /* CrypterManager.swift */,
 			);
 			path = Crypter;
 			sourceTree = "<group>";
@@ -4104,6 +4107,7 @@
 				4785C10424D4A633004E2D6C /* AppSizeView.swift in Sources */,
 				F3DC6B17273F45F300458E09 /* ContentFeed+Computeds.swift in Sources */,
 				475799FA23F1AA4F00507E68 /* SymmetricEncryptionManager.swift in Sources */,
+				475CD5AC287E1198003FF171 /* CrypterManager.swift in Sources */,
 				475BDCE9232AC23B00C5BBD6 /* PaymentSentTableViewCell.swift in Sources */,
 				47AAFC7C2387070D00E30BDA /* API+WalletExtension.swift in Sources */,
 				47ACBC0E265E9CB200D2FE47 /* PeopleModalsViewController.swift in Sources */,

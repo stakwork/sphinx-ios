@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -533,7 +533,6 @@
 		47F6CA0C28786BC7005EBCB6 /* crypter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F6CA0B28786BC7005EBCB6 /* crypter.swift */; };
 		47F6CA0E287C6524005EBCB6 /* API+CrypterExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F6CA0D287C6524005EBCB6 /* API+CrypterExtension.swift */; };
 		47F6CA10287C695B005EBCB6 /* Nonce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F6CA0F287C695B005EBCB6 /* Nonce.swift */; };
-		47F6CA13287C7523005EBCB6 /* K1 in Frameworks */ = {isa = PBXBuildFile; productRef = 47F6CA12287C7523005EBCB6 /* K1 */; };
 		47F7273825791D8600A794B9 /* ContactLinkPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F7273725791D8600A794B9 /* ContactLinkPreviewView.swift */; };
 		47FA18BE242534CD00469C8F /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FA18BD242534CD00469C8F /* UIViewController.swift */; };
 		47FA18C02425381500469C8F /* CreateInvoiceDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FA18BF2425381500469C8F /* CreateInvoiceDetailsViewController.swift */; };
@@ -1507,7 +1506,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				47F6CA13287C7523005EBCB6 /* K1 in Frameworks */,
 				F331199D268E93FB005082EB /* StoreKit.framework in Frameworks */,
 				47F6CA052878698A005EBCB6 /* universal-crypter.a in Frameworks */,
 				4703CF932519425E007B685C /* PDFKit.framework in Frameworks */,
@@ -3584,7 +3582,6 @@
 			);
 			name = sphinx;
 			packageProductDependencies = (
-				47F6CA12287C7523005EBCB6 /* K1 */,
 			);
 			productName = sphinx;
 			productReference = 4779F15E232AA0F200D35E81 /* sphinx.app */;
@@ -3660,7 +3657,6 @@
 			);
 			mainGroup = 4779F155232AA0F200D35E81;
 			packageReferences = (
-				47F6CA11287C7523005EBCB6 /* XCRemoteSwiftPackageReference "K1" */,
 			);
 			productRefGroup = 4779F15F232AA0F200D35E81 /* Products */;
 			projectDirPath = "";
@@ -5333,25 +5329,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		47F6CA11287C7523005EBCB6 /* XCRemoteSwiftPackageReference "K1" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Sajjon/K1";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.0.1;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		47F6CA12287C7523005EBCB6 /* K1 */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 47F6CA11287C7523005EBCB6 /* XCRemoteSwiftPackageReference "K1" */;
-			productName = K1;
-		};
-/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		47F35D4A2373156A0042A58F /* sphinx.xcdatamodeld */ = {

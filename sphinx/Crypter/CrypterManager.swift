@@ -14,6 +14,7 @@ class CrypterManager {
     
     struct HardwarePostDto {
         var ip:String? = nil
+        var broker:String? = nil
         var networkName:String? = nil
         var networkPassword:String? = nil
         var publicKey: String? = nil
@@ -27,67 +28,89 @@ class CrypterManager {
         hardwarePostDto = HardwarePostDto()
         
         promptForHardwareIP(vc:vc) {
-            self.promptForNetworkName(vc: vc) {
-                self.promptForNetworkPassword(vc: vc) {
-                    self.testCrypter(vc: vc)
+            self.promptForBroker(vc: vc) {
+                self.promptForNetworkName(vc: vc) {
+                    self.promptForNetworkPassword(vc: vc) {
+                        self.testCrypter(vc: vc)
+                    }
                 }
             }
         }
-        
     }
     
     func promptForHardwareIP(vc: UIViewController, callback: @escaping () -> ()) {
-        AlertHelper.showPromptAlert(
-            title: "Hardware IP",
+        promptFor(
+            "Hardware IP",
             message: "Please enter hardware IP to start process",
-            on: vc,
-            confirm: { value in
-                if let value = value {
-                    
-                    if !self.getUrl(route: value).isValidURL {
-                        self.showErrorWithMessage("Invalid IP")
-                        return
-                    }
-                    
-                    self.hardwarePostDto.ip = value
-                    
-                    callback()
-                }
-            },
-            cancel: {}
+            errorMessage: "Invalid IP",
+            vc: vc,
+            callback: { value in
+                self.hardwarePostDto.ip = value
+                callback()
+            }
+        )
+    }
+    
+    func promptForBroker(vc: UIViewController, callback: @escaping () -> ()) {
+        promptFor(
+            "Broker",
+            message: "Please enter broker",
+            errorMessage: "Invalid Broker",
+            vc: vc,
+            callback: { value in
+                self.hardwarePostDto.broker = value
+                callback()
+            }
         )
     }
     
     func promptForNetworkName(vc: UIViewController, callback: @escaping () -> ()) {
-        AlertHelper.showPromptAlert(
-            title: "Network",
+        promptFor(
+            "Network",
             message: "Please enter WiFi network name",
-            on: vc,
-            confirm: { value in
-                if let value = value {
-                    self.hardwarePostDto.networkName = value
-                    
-                    callback()
-                }
-            },
-            cancel: {}
+            errorMessage: "Invalid WiFi name",
+            vc: vc,
+            callback: { value in
+                self.hardwarePostDto.networkName = value
+                callback()
+            }
         )
     }
     
     func promptForNetworkPassword(vc: UIViewController, callback: @escaping () -> ()) {
-        AlertHelper.showPromptAlert(
-            title: "WiFi password",
+        promptFor(
+            "WiFi password",
             message: "Please enter WiFi network password",
+            errorMessage: "Invalid WiFi password",
+            vc: vc,
+            callback: { value in
+                self.hardwarePostDto.networkPassword = value
+                callback()
+            }
+        )
+    }
+    
+    func promptFor(
+        _ title: String,
+        message: String,
+        errorMessage: String,
+        vc: UIViewController,
+        callback: @escaping (String) -> ()) {
+            
+        AlertHelper.showPromptAlert(
+            title: title,
+            message: message,
             on: vc,
             confirm: { value in
-                if let value = value {
-                    self.hardwarePostDto.networkPassword = value
-                    
-                    callback()
+                if let value = value, !value.isEmpty {
+                    callback(value)
+                } else {
+                    self.showErrorWithMessage(errorMessage)
                 }
             },
             cancel: {}
         )
+        
     }
     
     public func generateAndPersistWalletMnemonic() -> String {
@@ -133,7 +156,7 @@ class CrypterManager {
             
             let seed = self.generateAndPersistWalletMnemonic()
             
-            self.copyMnemonicToClipboard(vc: vc) {
+            self.showMnemonicToUser(vc: vc) {
                 guard let sec1 = sec1 else {
                     self.showSuccessWithMessage("There was an error. Please try again later")
                     return
@@ -163,7 +186,7 @@ class CrypterManager {
                     callback: { success in
                         
                     if (success) {
-                        self.showSuccessWithMessage("Send seed to hardware successfully")
+                        self.showSuccessWithMessage("Seed sent to hardware successfully")
                     } else {
                         self.showErrorWithMessage("Error sending seed to hardware")
                     }
@@ -171,17 +194,15 @@ class CrypterManager {
             }
             
         }, errorCallback: {
-            self.showErrorWithMessage("Error getting hardware pub key")
+            self.showErrorWithMessage("Error getting hardware public key")
         })
     }
     
-    func copyMnemonicToClipboard(vc: UIViewController, callback: @escaping () -> ()) {
+    func showMnemonicToUser(vc: UIViewController, callback: @escaping () -> ()) {
         self.newMessageBubbleHelper.hideLoadingWheel()
         
         if let mnemonic = UserData.sharedInstance.getMnemonic() {
-            AlertHelper.showAlert(title: "Mnemonic", message: "Your mnemonic phrase will be copied to the clipboard. Save these words securely.", on: vc, completion: {
-                ClipboardHelper.copyToClipboard(text: mnemonic, message: "Mnemonic copied to clipboard")
-                
+            AlertHelper.showAlert(title: "Store your Mnemonic securely", message: mnemonic, on: vc, completion: {
                 callback()
             })
         }

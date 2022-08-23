@@ -47,7 +47,6 @@ extension API {
     ) {
         
         guard let encryptedSeed = hardwarePostDto.encryptedSeed,
-              let broker = hardwarePostDto.broker,
               let networkName = hardwarePostDto.networkName,
               let networkPassword = hardwarePostDto.networkPassword,
               let publicKey = hardwarePostDto.publicKey else {
@@ -55,6 +54,8 @@ extension API {
             callback(false)
             return
         }
+        
+        let broker = hardwarePostDto.broker
         
         let params = "{\"seed\":\"\(encryptedSeed)\",\"ssid\":\"\(networkName)\",\"pass\":\"\(networkPassword)\",\"broker\":\"\(broker)\",\"pubkey\":\"\(publicKey)\",\"network\":\"regtest\"}"
         

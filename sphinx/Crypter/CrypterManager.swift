@@ -9,41 +9,77 @@
 import Foundation
 import UIKit
 import HDWalletKit
+import NetworkExtension
+import CoreLocation
 
-class CrypterManager {
+class CrypterManager : NSObject {
     
     struct HardwarePostDto {
         var ip:String? = nil
-        var broker:String? = nil
+        var port:String = "1883"
+        var broker:String = "127.0.0.1:1883"
         var networkName:String? = nil
         var networkPassword:String? = nil
         var publicKey: String? = nil
         var encryptedSeed: String? = nil
     }
     
+    var locationManger: CLLocationManager?
+    var vc: UIViewController! = nil
+    
     var hardwarePostDto = HardwarePostDto()
     let newMessageBubbleHelper = NewMessageBubbleHelper()
     
+    func startLocationManager(callback: () -> ()) {
+        let status = CLLocationManager.authorizationStatus()
+         if status == .authorizedWhenInUse {
+             callback()
+             return
+         }
+
+        guard locationManger == nil else {
+            // If locationManager is being started for the second time, for instance in .confirmNetwork, don't set accuracy and delegate again.
+            locationManger?.requestWhenInUseAuthorization()
+            locationManger?.startUpdatingLocation()
+            return
+        }
+
+        locationManger = CLLocationManager()
+        locationManger?.delegate = self
+        locationManger?.desiredAccuracy = kCLLocationAccuracyKilometer
+        locationManger?.requestWhenInUseAuthorization()
+        locationManger?.startUpdatingLocation()
+    }
+    
     func testHardwareLink(vc: UIViewController) {
-        hardwarePostDto = HardwarePostDto()
+        self.vc = vc
         
-        promptForHardwareIP(vc:vc) {
-            self.promptForBroker(vc: vc) {
-                self.promptForNetworkName(vc: vc) {
-                    self.promptForNetworkPassword(vc: vc) {
-                        self.testCrypter(vc: vc)
-                    }
-                }
-            }
+        startLocationManager() {
+            self.hardwarePostDto = HardwarePostDto()
+            self.setupSigningDevice()
         }
     }
     
-    func promptForHardwareIP(vc: UIViewController, callback: @escaping () -> ()) {
+    func setupSigningDevice() {
+        self.getWifiInfo() { network in
+            self.promptForNetworkName(network?.ssid) {
+                self.promptForNetworkPassword(network?.ssid) {
+                    self.promptForHardwareIP() {
+                        self.promptForHardwarePort {
+                            self.testCrypter()
+                        }
+                    }
+                }
+            }
+            
+        }
+    }
+    
+    func promptForHardwareIP(callback: @escaping () -> ()) {
         promptFor(
-            "Hardware IP",
-            message: "Please enter hardware IP to start process",
+            "Lightning node IP",
+            message: "Enter the IP of your lightning node",
             errorMessage: "Invalid IP",
-            vc: vc,
             callback: { value in
                 self.hardwarePostDto.ip = value
                 callback()
@@ -51,25 +87,38 @@ class CrypterManager {
         )
     }
     
-    func promptForBroker(vc: UIViewController, callback: @escaping () -> ()) {
+    func promptForHardwarePort(callback: @escaping () -> ()) {
         promptFor(
-            "Broker",
-            message: "Please enter broker",
-            errorMessage: "Invalid Broker",
-            vc: vc,
+            "Lightning node Port",
+            message: "nter the Port number of your lightning node",
+            errorMessage: "Invalid IP",
+            textFieldText: "1883",
             callback: { value in
-                self.hardwarePostDto.broker = value
+                self.hardwarePostDto.port = value
                 callback()
             }
         )
     }
     
-    func promptForNetworkName(vc: UIViewController, callback: @escaping () -> ()) {
+    func getWifiInfo(callback: @escaping (NEHotspotNetwork?) -> ()) {
+        if #available(iOS 14.0, *) {
+            NEHotspotNetwork.fetchCurrent(completionHandler: { network in
+                callback(network)
+            })
+        } else {
+            callback(nil)
+        }
+    }
+    
+    func promptForNetworkName(
+        _ networkName: String?,
+        callback: @escaping () -> ()
+    ) {
         promptFor(
-            "Network",
-            message: "Please enter WiFi network name",
+            "WiFI network",
+            message: "Please specify your WiFI network",
             errorMessage: "Invalid WiFi name",
-            vc: vc,
+            textFieldText: networkName,
             callback: { value in
                 self.hardwarePostDto.networkName = value
                 callback()
@@ -77,12 +126,15 @@ class CrypterManager {
         )
     }
     
-    func promptForNetworkPassword(vc: UIViewController, callback: @escaping () -> ()) {
+    func promptForNetworkPassword(
+        _ networkName: String?,
+        callback: @escaping () -> ()
+    ) {
         promptFor(
             "WiFi password",
-            message: "Please enter WiFi network password",
+            message: "Enter the WiFi password for \(networkName ?? "your network")",
             errorMessage: "Invalid WiFi password",
-            vc: vc,
+            secureEntry: true,
             callback: { value in
                 self.hardwarePostDto.networkPassword = value
                 callback()
@@ -94,12 +146,15 @@ class CrypterManager {
         _ title: String,
         message: String,
         errorMessage: String,
-        vc: UIViewController,
+        textFieldText: String? = nil,
+        secureEntry: Bool = false,
         callback: @escaping (String) -> ()) {
             
         AlertHelper.showPromptAlert(
             title: title,
             message: message,
+            textFieldText: textFieldText,
+            secureEntry: secureEntry,
             on: vc,
             confirm: { value in
                 if let value = value, !value.isEmpty {
@@ -123,7 +178,7 @@ class CrypterManager {
         return seed32Bytes.hexString
     }
     
-    func testCrypter(vc: UIViewController) {
+    func testCrypter() {
         let sk1 = Nonce(length: 32).description.hexEncoded
         
         var pk1: String? = nil
@@ -145,7 +200,9 @@ class CrypterManager {
         
         self.newMessageBubbleHelper.showLoadingWheel()
         
-        API.sharedInstance.getHardwarePublicKey(url: "\(getUrl(route: ip))/ecdh", callback: { pubKey in
+        let url = "\(getUrl(route: ip)):\(hardwarePostDto.port)"
+        
+        API.sharedInstance.getHardwarePublicKey(url: "\(url)/ecdh", callback: { pubKey in
             
             var sec1: String? = nil
             do {
@@ -156,14 +213,14 @@ class CrypterManager {
             
             let seed = self.generateAndPersistWalletMnemonic()
             
-            self.showMnemonicToUser(vc: vc) {
+            self.showMnemonicToUser() {
                 guard let sec1 = sec1 else {
                     self.showSuccessWithMessage("There was an error. Please try again later")
                     return
                 }
                 
                 // encrypt plaintext with sec1
-                let nonce = Nonce(length: 8).description.hexEncoded
+                let nonce = Nonce(length: 12).description.hexEncoded
                 var cipher: String? = nil
                 
                 do {
@@ -181,7 +238,7 @@ class CrypterManager {
                 self.hardwarePostDto.encryptedSeed = cipher
 
                 API.sharedInstance.sendSeedToHardware(
-                    url: "\(self.getUrl(route: ip))/config",
+                    url: "\(url)/config",
                     hardwarePostDto: self.hardwarePostDto,
                     callback: { success in
                         
@@ -198,7 +255,7 @@ class CrypterManager {
         })
     }
     
-    func showMnemonicToUser(vc: UIViewController, callback: @escaping () -> ()) {
+    func showMnemonicToUser(callback: @escaping () -> ()) {
         self.newMessageBubbleHelper.hideLoadingWheel()
         
         if let mnemonic = UserData.sharedInstance.getMnemonic() {
@@ -236,5 +293,33 @@ class CrypterManager {
             backColor: UIColor.Sphinx.PrimaryGreen,
             backAlpha: 1.0
         )
+    }
+}
+
+extension CrypterManager: CLLocationManagerDelegate {
+
+    // MARK: - CLLocationManagerDelegate Methods
+
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let lastLocation = locations.last {
+            print("<LocationManager> lastLocation:\(lastLocation.coordinate.latitude), \(lastLocation.coordinate.longitude)")
+        }
+    }
+
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        // Detect the CLAuthorizationStatus and enable the capture of associated SSID.
+        if status == CLAuthorizationStatus.authorizedAlways || status == CLAuthorizationStatus.authorizedWhenInUse  {
+            setupSigningDevice()
+        }
+    }
+
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        if let error = error as? CLError, error.code == .denied {
+            
+            print("<LocationManager> Error Denied: \(error.localizedDescription)")
+            manager.stopUpdatingLocation()
+            
+            setupSigningDevice()
+        }
     }
 }

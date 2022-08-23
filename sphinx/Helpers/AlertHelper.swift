@@ -73,6 +73,8 @@ class AlertHelper {
     class func showPromptAlert(
         title: String,
         message: String,
+        textFieldText: String? = nil,
+        secureEntry: Bool = false,
         on vc: UIViewController,
         confirm: ((String?) -> ())? = nil,
         cancel: (() -> ())? = nil
@@ -94,7 +96,10 @@ class AlertHelper {
                 }
             }
         }))
-        alert.addTextField(configurationHandler: { _ in })
+        alert.addTextField(configurationHandler: { textField in
+            textField.text = textFieldText
+            textField.isSecureTextEntry = secureEntry
+        })
         
         vc.present(alert, animated: true, completion: nil)
     }

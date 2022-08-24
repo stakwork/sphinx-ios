@@ -46,6 +46,7 @@ class ProfileViewController: KeyboardEventsViewController {
     @IBOutlet weak var advanceScrollView: UIScrollView!
     @IBOutlet weak var privacyPinLabel: UILabel!
     @IBOutlet weak var privacyPinGroupContainer: UIView!
+    @IBOutlet weak var signingDeviceLabel: UILabel!
     
     @IBOutlet var tabContainers: [UIScrollView]!
     
@@ -118,6 +119,7 @@ class ProfileViewController: KeyboardEventsViewController {
         configureFields()
         configureProfile()
         configureServers()
+        configureSigningDeviceButton()
     }
     
     func setShadows() {
@@ -164,6 +166,11 @@ class ProfileViewController: KeyboardEventsViewController {
         meetingAmountTextField.inputAccessoryView = keyboardAccessoryView
         nameTextField.inputAccessoryView = keyboardAccessoryView
         relayUrlTextField.inputAccessoryView = keyboardAccessoryView
+    }
+    
+    func configureSigningDeviceButton() {
+        let didSetupSigningDevice = UserDefaults.Keys.setupSigningDevice.get(defaultValue: false)
+        signingDeviceLabel.text = (didSetupSigningDevice ? "profile.configure-signing-device" : "profile.setup-signing-device").localized
     }
     
     func configureProfile() {
@@ -308,8 +315,10 @@ class ProfileViewController: KeyboardEventsViewController {
         )
     }
     
-    @IBAction func testHardwareLink() {
-        cryptedManager.testHardwareLink(vc: self)
+    @IBAction func setupSigningDevice() {
+        cryptedManager.setupSigningDevice(vc: self) {
+            self.configureSigningDeviceButton()
+        }
     }
     
     func sendGithubPAT(

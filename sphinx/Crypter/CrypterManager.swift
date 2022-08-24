@@ -25,7 +25,9 @@ class CrypterManager : NSObject {
     }
     
     var locationManger: CLLocationManager?
+    
     var vc: UIViewController! = nil
+    var endCallback: () -> Void = {}
     
     var hardwarePostDto = HardwarePostDto()
     let newMessageBubbleHelper = NewMessageBubbleHelper()
@@ -51,8 +53,12 @@ class CrypterManager : NSObject {
         locationManger?.startUpdatingLocation()
     }
     
-    func testHardwareLink(vc: UIViewController) {
+    func setupSigningDevice(
+        vc: UIViewController,
+        callback: @escaping () -> ()
+    ) {
         self.vc = vc
+        self.endCallback = callback
         
         startLocationManager() {
             self.hardwarePostDto = HardwarePostDto()
@@ -243,10 +249,14 @@ class CrypterManager : NSObject {
                     callback: { success in
                         
                     if (success) {
+                        UserDefaults.Keys.setupSigningDevice.set(true)
+                        
                         self.showSuccessWithMessage("Seed sent to hardware successfully")
                     } else {
                         self.showErrorWithMessage("Error sending seed to hardware")
                     }
+                        
+                    self.endCallback()
                 })
             }
             

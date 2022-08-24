@@ -697,8 +697,8 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g9d-cL-lnU">
                                                 <rect key="frame" x="0.0" y="210" width="414" height="80"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Test Hardware Link" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z8e-Oe-Tdt">
-                                                        <rect key="frame" x="155" y="33" width="104" height="14"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Setup Signing Device" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z8e-Oe-Tdt">
+                                                        <rect key="frame" x="150" y="33" width="114.5" height="14"/>
                                                         <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="12"/>
                                                         <color key="textColor" name="PrimaryBlue"/>
                                                         <nil key="highlightedColor"/>
@@ -706,7 +706,7 @@
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X8J-Vf-geS">
                                                         <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
                                                         <connections>
-                                                            <action selector="testHardwareLink" destination="54b-ve-hAY" eventType="touchUpInside" id="DIN-h8-Ayi"/>
+                                                            <action selector="setupSigningDevice" destination="54b-ve-hAY" eventType="touchUpInside" id="VMo-ff-EES"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
@@ -1009,6 +1009,7 @@
                         <outlet property="settingsContainerView" destination="jSa-Rq-1hp" id="mtI-w2-oSv"/>
                         <outlet property="settingsTabView" destination="hMY-y3-AUE" id="1rN-y9-Ekj"/>
                         <outlet property="sharePhotoSwitch" destination="t4X-Gf-32s" id="N1D-9W-8Kl"/>
+                        <outlet property="signingDeviceLabel" destination="z8e-Oe-Tdt" id="7fi-N7-3Cu"/>
                         <outlet property="sizeView" destination="3gR-wX-nSS" id="FGc-ee-9UZ"/>
                         <outlet property="topContainerView" destination="36z-hJ-x0i" id="t2k-ng-rhC"/>
                         <outlet property="uploadLoadingWheel" destination="f0w-2Q-7Tc" id="WAk-sf-ino"/>

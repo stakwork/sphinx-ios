@@ -253,6 +253,8 @@
 "profile.github-pat-message" = "Generate a Personal Access Token on github with the repo scope";
 "profile.github-pat.error" = "Github Personal Access Token coult not be set";
 "profile.github-pat.success" = "Github Personal Access Token successfully set";
+"profile.setup-signing-device" = "Setup Signing Device";
+"profile.configure-signing-device" = "Configure Signing Device";
 
 //PIN
 "choose.pin.upper" = "CHOOSE PIN";

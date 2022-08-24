@@ -62,6 +62,8 @@ extension UserDefaults {
         public static let appAppearence = DefaultKey<Int>("appAppearence")
         public static let messagesSize = DefaultKey<Int>("messagesSize")
         public static let webViewsHeight = DefaultKey<Int>("webViewsHeight")
+        
+        public static let setupSigningDevice = DefaultKey<Bool>("setupSigningDevice")
     }
     
     class func resetUserDefaults() {

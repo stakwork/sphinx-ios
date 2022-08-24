@@ -461,17 +461,6 @@ extension TransactionMessage {
         
         if messageContainText() {
             
-            if isBoostActionAllowed {
-                options.append(
-                    .init(
-                        tag: MessageActionsItem.Boost,
-                        materialIconName: nil,
-                        iconImage: "boostIconGreen",
-                        label: "Boost"
-                    )
-                )
-            }
-            
             if isCopyTextActionAllowed {
                 options.append(
                     .init(
@@ -546,6 +535,17 @@ extension TransactionMessage {
                     materialIconName: "redo",
                     iconImage: nil,
                     label: "Resend"
+                )
+            )
+        }
+        
+        if isBoostActionAllowed {
+            options.append(
+                .init(
+                    tag: MessageActionsItem.Boost,
+                    materialIconName: nil,
+                    iconImage: "boostIconGreen",
+                    label: "Boost"
                 )
             )
         }

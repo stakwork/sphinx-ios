@@ -49,13 +49,15 @@ extension API {
         guard let encryptedSeed = hardwarePostDto.encryptedSeed,
               let networkName = hardwarePostDto.networkName,
               let networkPassword = hardwarePostDto.networkPassword,
+              let lightnignIp = hardwarePostDto.lightningNodeIP,
+              let lightnignPort = hardwarePostDto.lightningNodePort,
               let publicKey = hardwarePostDto.publicKey else {
             
             callback(false)
             return
         }
         
-        let broker = hardwarePostDto.broker
+        let broker = "\(lightnignIp):\(lightnignPort)"
         
         let params = "{\"seed\":\"\(encryptedSeed)\",\"ssid\":\"\(networkName)\",\"pass\":\"\(networkPassword)\",\"broker\":\"\(broker)\",\"pubkey\":\"\(publicKey)\",\"network\":\"regtest\"}"
         

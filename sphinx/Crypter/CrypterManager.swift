@@ -15,9 +15,8 @@ import CoreLocation
 class CrypterManager : NSObject {
     
     struct HardwarePostDto {
-        var ip:String? = nil
-        var port:String = "1883"
-        var broker:String = "127.0.0.1:1883"
+        var lightningNodePort:String? = nil
+        var lightningNodeIP:String? = nil
         var networkName:String? = nil
         var networkPassword:String? = nil
         var publicKey: String? = nil
@@ -31,6 +30,8 @@ class CrypterManager : NSObject {
     
     var hardwarePostDto = HardwarePostDto()
     let newMessageBubbleHelper = NewMessageBubbleHelper()
+    
+    let url = "http://192.168.71.1"
     
     func startLocationManager(callback: () -> ()) {
         let status = CLLocationManager.authorizationStatus()
@@ -87,7 +88,7 @@ class CrypterManager : NSObject {
             message: "Enter the IP of your lightning node",
             errorMessage: "Invalid IP",
             callback: { value in
-                self.hardwarePostDto.ip = value
+                self.hardwarePostDto.lightningNodeIP = value
                 callback()
             }
         )
@@ -96,11 +97,11 @@ class CrypterManager : NSObject {
     func promptForHardwarePort(callback: @escaping () -> ()) {
         promptFor(
             "Lightning node Port",
-            message: "nter the Port number of your lightning node",
+            message: "Enter the Port number of your lightning node",
             errorMessage: "Invalid IP",
             textFieldText: "1883",
             callback: { value in
-                self.hardwarePostDto.port = value
+                self.hardwarePostDto.lightningNodePort = value
                 callback()
             }
         )
@@ -199,14 +200,12 @@ class CrypterManager : NSObject {
             return
         }
         
-        guard let ip = hardwarePostDto.ip else {
+        guard let _ = hardwarePostDto.lightningNodeIP, let _ = hardwarePostDto.lightningNodePort else {
             self.showSuccessWithMessage("There was an error. Please try again later")
             return
         }
         
         self.newMessageBubbleHelper.showLoadingWheel()
-        
-        let url = "\(getUrl(route: ip)):\(hardwarePostDto.port)"
         
         API.sharedInstance.getHardwarePublicKey(url: "\(url)/ecdh", callback: { pubKey in
             
@@ -244,7 +243,7 @@ class CrypterManager : NSObject {
                 self.hardwarePostDto.encryptedSeed = cipher
 
                 API.sharedInstance.sendSeedToHardware(
-                    url: "\(url)/config",
+                    url: "\(self.url)/config",
                     hardwarePostDto: self.hardwarePostDto,
                     callback: { success in
                         

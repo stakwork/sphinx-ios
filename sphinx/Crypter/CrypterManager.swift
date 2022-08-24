@@ -29,8 +29,8 @@ class CrypterManager : NSObject {
     var hardwarePostDto = HardwarePostDto()
     let newMessageBubbleHelper = NewMessageBubbleHelper()
     
-//    let url = "http://192.168.71.1"
-    let url = "http://192.168.0.25:8000"
+    let url = "http://192.168.71.1"
+//    let url = "http://192.168.0.25:8000"
     
     func setupSigningDevice(
         vc: UIViewController,
@@ -219,7 +219,6 @@ class CrypterManager : NSObject {
                     self.endCallback()
                 })
             }
-            
         }, errorCallback: {
             self.showErrorWithMessage("Error getting hardware public key")
         })

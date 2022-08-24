@@ -58,8 +58,6 @@
 	<string>Sphinx would like to access microphone to record video and audio messages</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Sphinx would like to access your photo library to save files</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Sphinx needs access to your location to get your WiFi network information</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Roboto-Regular.ttf</string>

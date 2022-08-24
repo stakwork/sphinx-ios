@@ -23,36 +23,14 @@ class CrypterManager : NSObject {
         var encryptedSeed: String? = nil
     }
     
-    var locationManger: CLLocationManager?
-    
     var vc: UIViewController! = nil
     var endCallback: () -> Void = {}
     
     var hardwarePostDto = HardwarePostDto()
     let newMessageBubbleHelper = NewMessageBubbleHelper()
     
-    let url = "http://192.168.71.1"
-    
-    func startLocationManager(callback: () -> ()) {
-        let status = CLLocationManager.authorizationStatus()
-         if status == .authorizedWhenInUse {
-             callback()
-             return
-         }
-
-        guard locationManger == nil else {
-            // If locationManager is being started for the second time, for instance in .confirmNetwork, don't set accuracy and delegate again.
-            locationManger?.requestWhenInUseAuthorization()
-            locationManger?.startUpdatingLocation()
-            return
-        }
-
-        locationManger = CLLocationManager()
-        locationManger?.delegate = self
-        locationManger?.desiredAccuracy = kCLLocationAccuracyKilometer
-        locationManger?.requestWhenInUseAuthorization()
-        locationManger?.startUpdatingLocation()
-    }
+//    let url = "http://192.168.71.1"
+    let url = "http://192.168.0.25:8000"
     
     func setupSigningDevice(
         vc: UIViewController,
@@ -61,24 +39,19 @@ class CrypterManager : NSObject {
         self.vc = vc
         self.endCallback = callback
         
-        startLocationManager() {
-            self.hardwarePostDto = HardwarePostDto()
-            self.setupSigningDevice()
-        }
+        self.hardwarePostDto = HardwarePostDto()
+        self.setupSigningDevice()
     }
     
     func setupSigningDevice() {
-        self.getWifiInfo() { network in
-            self.promptForNetworkName(network?.ssid) {
-                self.promptForNetworkPassword(network?.ssid) {
-                    self.promptForHardwareIP() {
-                        self.promptForHardwarePort {
-                            self.testCrypter()
-                        }
+        self.promptForNetworkName() { networkName in
+            self.promptForNetworkPassword(networkName) {
+                self.promptForHardwareIP() {
+                    self.promptForHardwarePort {
+                        self.testCrypter()
                     }
                 }
             }
-            
         }
     }
     
@@ -107,39 +80,27 @@ class CrypterManager : NSObject {
         )
     }
     
-    func getWifiInfo(callback: @escaping (NEHotspotNetwork?) -> ()) {
-        if #available(iOS 14.0, *) {
-            NEHotspotNetwork.fetchCurrent(completionHandler: { network in
-                callback(network)
-            })
-        } else {
-            callback(nil)
-        }
-    }
-    
     func promptForNetworkName(
-        _ networkName: String?,
-        callback: @escaping () -> ()
+        callback: @escaping (String) -> ()
     ) {
         promptFor(
-            "WiFI network",
-            message: "Please specify your WiFI network",
+            "WiFi network",
+            message: "Please specify your WiFi network",
             errorMessage: "Invalid WiFi name",
-            textFieldText: networkName,
             callback: { value in
                 self.hardwarePostDto.networkName = value
-                callback()
+                callback(value)
             }
         )
     }
     
     func promptForNetworkPassword(
-        _ networkName: String?,
+        _ networkName: String,
         callback: @escaping () -> ()
     ) {
         promptFor(
             "WiFi password",
-            message: "Enter the WiFi password for \(networkName ?? "your network")",
+            message: "Enter the WiFi password for \(networkName)",
             errorMessage: "Invalid WiFi password",
             secureEntry: true,
             callback: { value in
@@ -302,33 +263,5 @@ class CrypterManager : NSObject {
             backColor: UIColor.Sphinx.PrimaryGreen,
             backAlpha: 1.0
         )
-    }
-}
-
-extension CrypterManager: CLLocationManagerDelegate {
-
-    // MARK: - CLLocationManagerDelegate Methods
-
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let lastLocation = locations.last {
-            print("<LocationManager> lastLocation:\(lastLocation.coordinate.latitude), \(lastLocation.coordinate.longitude)")
-        }
-    }
-
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        // Detect the CLAuthorizationStatus and enable the capture of associated SSID.
-        if status == CLAuthorizationStatus.authorizedAlways || status == CLAuthorizationStatus.authorizedWhenInUse  {
-            setupSigningDevice()
-        }
-    }
-
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        if let error = error as? CLError, error.code == .denied {
-            
-            print("<LocationManager> Error Denied: \(error.localizedDescription)")
-            manager.stopUpdatingLocation()
-            
-            setupSigningDevice()
-        }
     }
 }

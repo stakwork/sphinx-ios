@@ -21,6 +21,8 @@
 "save.upper" = "SAVE";
 "cancel" = "Cancel";
 "done" = "Done";
+"yes" = "Yes";
+"no" = "No";
 "uploaded.progress" = "Uploaded: %d %%";
 "public.key" = "Public Key";
 "route.hint" = "Route Hint";
@@ -255,6 +257,25 @@
 "profile.github-pat.success" = "Github Personal Access Token successfully set";
 "profile.setup-signing-device" = "Setup Signing Device";
 "profile.configure-signing-device" = "Configure Signing Device";
+"profile.lightning-ip-title" = "Lightning node IP";
+"profile.lightning-ip-message" = "Enter the IP of your lightning node";
+"profile.lightning-ip-error" = "Lightning node IP can not be empty";
+"profile.lightning-port-title" = "Lightning node Port";
+"profile.lightning-port-message" = "Enter the Port number of your lightning node";
+"profile.lightning-port-error" = "Port can not be empty";
+"profile.wifi-network-title" = "WiFi network";
+"profile.wifi-network-message" = "Please specify your WiFi network";
+"profile.wifi-network-error" = "WiFi name can not be empty";
+"profile.wifi-password-title" = "WiFi password";
+"profile.wifi-password-message" = "Enter the WiFi password for %@";
+"profile.wifi-password-error" = "WiFi password can not be empty";
+"profile.seed-sent-successfully" = "Seed sent to hardware successfully";
+"profile.error-sending-seed" = "Error sending seed to hardware";
+"profile.error-getting-hardware-public-key" = "Error getting hardware public key";
+"profile.store-mnemonic" = "Store your Mnemonic securely";
+"profile.network-check-title" = "Check your network";
+"profile.network-check-message" = "Before starting you need to connect to \"sphinxkey\" WiFi network. Otherwise you won’t be able to setup your device. Are you connected to this network?";
+"profile.mnemonic-copied" = "Mnemonic words copied to clipboard";
 
 //PIN
 "choose.pin.upper" = "CHOOSE PIN";

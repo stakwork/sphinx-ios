@@ -29,9 +29,6 @@ class CrypterManager : NSObject {
     var hardwarePostDto = HardwarePostDto()
     let newMessageBubbleHelper = NewMessageBubbleHelper()
     
-    let url = "http://192.168.71.1"
-//    let url = "http://192.168.0.25:8000"
-    
     func setupSigningDevice(
         vc: UIViewController,
         callback: @escaping () -> ()
@@ -44,22 +41,38 @@ class CrypterManager : NSObject {
     }
     
     func setupSigningDevice() {
-        self.promptForNetworkName() { networkName in
-            self.promptForNetworkPassword(networkName) {
-                self.promptForHardwareIP() {
-                    self.promptForHardwarePort {
-                        self.testCrypter()
+        self.checkNetwork {
+            self.promptForNetworkName() { networkName in
+                self.promptForNetworkPassword(networkName) {
+                    self.promptForHardwareIP() {
+                        self.promptForHardwarePort {
+                            self.testCrypter()
+                        }
                     }
                 }
             }
         }
     }
     
+    func checkNetwork(callback: @escaping () -> ()) {
+        AlertHelper.showTwoOptionsAlert(
+            title: "profile.network-check-title".localized,
+            message: "profile.network-check-message".localized,
+            on: vc,
+            confirmButtonTitle: "yes".localized,
+            cancelButtonTitle: "no".localized,
+            confirm: { 
+                callback()
+            },
+            cancel: {}
+        )
+    }
+    
     func promptForHardwareIP(callback: @escaping () -> ()) {
         promptFor(
-            "Lightning node IP",
-            message: "Enter the IP of your lightning node",
-            errorMessage: "Invalid IP",
+            "profile.lightning-ip-title".localized,
+            message: "profile.lightning-ip-message".localized,
+            errorMessage: "profile.lightning-ip-error".localized,
             callback: { value in
                 self.hardwarePostDto.lightningNodeIP = value
                 callback()
@@ -69,9 +82,9 @@ class CrypterManager : NSObject {
     
     func promptForHardwarePort(callback: @escaping () -> ()) {
         promptFor(
-            "Lightning node Port",
-            message: "Enter the Port number of your lightning node",
-            errorMessage: "Invalid IP",
+            "profile.lightning-port-title".localized,
+            message: "profile.lightning-port-message".localized,
+            errorMessage: "profile.lightning-port-error".localized,
             textFieldText: "1883",
             callback: { value in
                 self.hardwarePostDto.lightningNodePort = value
@@ -84,9 +97,9 @@ class CrypterManager : NSObject {
         callback: @escaping (String) -> ()
     ) {
         promptFor(
-            "WiFi network",
-            message: "Please specify your WiFi network",
-            errorMessage: "Invalid WiFi name",
+            "profile.wifi-network-title".localized,
+            message: "profile.wifi-network-message".localized,
+            errorMessage: "profile.wifi-network-error".localized,
             callback: { value in
                 self.hardwarePostDto.networkName = value
                 callback(value)
@@ -99,9 +112,9 @@ class CrypterManager : NSObject {
         callback: @escaping () -> ()
     ) {
         promptFor(
-            "WiFi password",
-            message: "Enter the WiFi password for \(networkName)",
-            errorMessage: "Invalid WiFi password",
+            "profile.wifi-password-title".localized,
+            message: String(format: "profile.wifi-password-message".localized, networkName),
+            errorMessage: "profile.wifi-password-error".localized,
             secureEntry: true,
             callback: { value in
                 self.hardwarePostDto.networkPassword = value
@@ -168,7 +181,7 @@ class CrypterManager : NSObject {
         
         self.newMessageBubbleHelper.showLoadingWheel()
         
-        API.sharedInstance.getHardwarePublicKey(url: "\(url)/ecdh", callback: { pubKey in
+        API.sharedInstance.getHardwarePublicKey(callback: { pubKey in
             
             var sec1: String? = nil
             do {
@@ -204,23 +217,22 @@ class CrypterManager : NSObject {
                 self.hardwarePostDto.encryptedSeed = cipher
 
                 API.sharedInstance.sendSeedToHardware(
-                    url: "\(self.url)/config",
                     hardwarePostDto: self.hardwarePostDto,
                     callback: { success in
                         
                     if (success) {
                         UserDefaults.Keys.setupSigningDevice.set(true)
                         
-                        self.showSuccessWithMessage("Seed sent to hardware successfully")
+                        self.showSuccessWithMessage("profile.seed-sent-successfully".localized)
                     } else {
-                        self.showErrorWithMessage("Error sending seed to hardware")
+                        self.showErrorWithMessage("profile.error-sending-seed".localized)
                     }
                         
                     self.endCallback()
                 })
             }
         }, errorCallback: {
-            self.showErrorWithMessage("Error getting hardware public key")
+            self.showErrorWithMessage("profile.error-getting-hardware-public-key".localized)
         })
     }
     
@@ -228,7 +240,11 @@ class CrypterManager : NSObject {
         self.newMessageBubbleHelper.hideLoadingWheel()
         
         if let mnemonic = UserData.sharedInstance.getMnemonic() {
-            AlertHelper.showAlert(title: "Store your Mnemonic securely", message: mnemonic, on: vc, completion: {
+            let copyAction = UIAlertAction(title: "Copy", style: .default, handler: { _ in
+                ClipboardHelper.copyToClipboard(text: mnemonic, message: "profile.mnemonic-copied".localized)
+                callback()
+            })
+            AlertHelper.showAlert(title: "profile.store-mnemonic".localized, message: mnemonic, on: vc, additionAlertAction: copyAction, completion: {
                 callback()
             })
         }

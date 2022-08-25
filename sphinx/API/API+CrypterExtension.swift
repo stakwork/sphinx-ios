@@ -11,10 +11,15 @@ import SwiftyJSON
 
 extension API {
     func getHardwarePublicKey(
-        url: String,
         callback: @escaping HardwarePublicKeyCallback,
         errorCallback: @escaping EmptyCallback
     ) {
+        
+        let ip = "http://192.168.71.1"
+//        let ip = "http://192.168.0.25:8000"
+        
+        let url = "\(ip)/ecdh"
+        
         let tribeRequest : URLRequest? = createRequest(url, bodyParams: nil, method: "GET")
         
         guard let request = tribeRequest else {
@@ -41,10 +46,12 @@ extension API {
     }
     
     func sendSeedToHardware(
-        url: String,
         hardwarePostDto: CrypterManager.HardwarePostDto,
         callback: @escaping HardwareSeedCallback
     ) {
+        
+        let ip = "http://192.168.71.1"
+//        let ip = "http://192.168.0.25:8000"
         
         guard let encryptedSeed = hardwarePostDto.encryptedSeed,
               let networkName = hardwarePostDto.networkName,
@@ -61,7 +68,7 @@ extension API {
         
         let params = "{\"seed\":\"\(encryptedSeed)\",\"ssid\":\"\(networkName)\",\"pass\":\"\(networkPassword)\",\"broker\":\"\(broker)\",\"pubkey\":\"\(publicKey)\",\"network\":\"regtest\"}"
         
-        let url = "\(url)?config=\(params.urlEncode()!)"
+        let url = "\(ip)/config?config=\(params.urlEncode()!)"
         let request : URLRequest? = createRequest(url, bodyParams: nil, method: "POST")
         
         guard let request = request else {

@@ -31,9 +31,13 @@ class AlertHelper {
         title: String,
         message: String,
         on vc: UIViewController,
+        additionAlertAction: UIAlertAction? = nil,
         completion: (() -> ())? = nil
     ) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        if let additionAlertAction = additionAlertAction {
+            alert.addAction(additionAlertAction)
+        }
         let alertAction = UIAlertAction(title: "Ok", style: .cancel, handler: { _ in
             if let callback = completion {
                 callback()
@@ -43,9 +47,24 @@ class AlertHelper {
         vc.present(alert, animated: true, completion: nil)
     }
     
-    class func showTwoOptionsAlert(title: String, message: String, confirm: (() -> ())? = nil, cancel: (() -> ())? = nil){
+    class func showTwoOptionsAlert(
+        title: String,
+        message: String,
+        confirmButtonTitle: String? = nil,
+        cancelButtonTitle: String? = nil,
+        confirm: (() -> ())? = nil,
+        cancel: (() -> ())? = nil
+    ){
         if let rootViewController: UIViewController = getRootVC() {
-            showTwoOptionsAlert(title: title, message: message, on: rootViewController, confirm: confirm, cancel: cancel)
+            showTwoOptionsAlert(
+                title: title,
+                message: message,
+                on: rootViewController,
+                confirmButtonTitle: confirmButtonTitle,
+                cancelButtonTitle: cancelButtonTitle,
+                confirm: confirm,
+                cancel: cancel
+            )
         }
     }
     
@@ -53,16 +72,18 @@ class AlertHelper {
         title: String,
         message: String,
         on vc: UIViewController,
+        confirmButtonTitle: String? = nil,
+        cancelButtonTitle: String? = nil,
         confirm: (() -> ())? = nil,
         cancel: (() -> ())? = nil
     ){
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "cancel".localized, style: .destructive , handler:{ (UIAlertAction)in
+        alert.addAction(UIAlertAction(title: cancelButtonTitle ?? "cancel".localized, style: .destructive , handler:{ (UIAlertAction)in
             if let cancel = cancel {
                 cancel()
             }
         }))
-        alert.addAction(UIAlertAction(title: "confirm".localized, style: .default , handler:{ (UIAlertAction)in
+        alert.addAction(UIAlertAction(title: confirmButtonTitle ?? "confirm".localized, style: .default , handler:{ (UIAlertAction)in
             if let confirm = confirm {
                 confirm()
             }

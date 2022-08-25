@@ -21,6 +21,8 @@
 "save.upper" = "GUARDAR";
 "cancel" = "Cancelar";
 "done" = "Listo";
+"yes" = "Si";
+"no" = "No";
 "uploaded.progress" = "Subido: %d %%";
 "public.key" = "Clave Pública";
 "route.hint" = "Pista de Ruta";
@@ -254,6 +256,25 @@
 "profile.github-pat.success" = "El Personal Access Token de Github ha sido establecido con éxito";
 "profile.setup-signing-device" = "Configurar Dispositivo de firma";
 "profile.configure-signing-device" = "Configurar Dispositivo de firma";
+"profile.lightning-ip-title" = "IP del nodo de lightning";
+"profile.lightning-ip-message" = "Ingresa la IP de tu nodo de lightning";
+"profile.lightning-ip-error" = "La IP no puede ser vacía";
+"profile.lightning-port-title" = "Puerto del nodo de lightning";
+"profile.lightning-port-message" = "Ingresa el número de puerto de tu nodo de lightning";
+"profile.lightning-port-error" = "El Puerto no puede ser vacío";
+"profile.wifi-network-title" = "Red WiFi";
+"profile.wifi-network-message" = "Por favor especifica tu red WiFi";
+"profile.wifi-network-error" = "La red WiFi no puede ser vacía";
+"profile.wifi-password-title" = "Contraseña de WiFi";
+"profile.wifi-password-message" = "Ingresa la contraseña de WiFi para %@";
+"profile.wifi-password-error" = "La contraseña de WiFi no puede ser vacía";
+"profile.seed-sent-successfully" = "Seed envíado al dispositivo con éxito";
+"profile.error-sending-seed" = "Ocurrió un error enviando el seed al dispositivo";
+"profile.error-getting-hardware-public-key" = "Ocurrió un error al intentar obtener la clave pública del dispositivo";
+"profile.store-mnemonic" = "Guarda tus palabras de seguridad cuidadosamente";
+"profile.network-check-title" = "Verifica tu conexión WiFi";
+"profile.network-check-message" = "Antes de comenzar tenes que conectarte a la red WiFi \"sphinxkey\". De lo contrario no vas a poder configurar tu dispositivo. ¿Estás actualmente conectado a esta red?";
+"profile.mnemonic-copied" = "Palabras de seguridad copiadas al portapapeles";
 
 //PIN
 "choose.pin.upper" = "ELIGE TU PIN";

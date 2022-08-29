@@ -168,6 +168,10 @@ class GroupDetailsViewController: UIViewController {
                     self.goToEditGroup()
                 }))
                 
+                alert.addAction(UIAlertAction(title: "tribe.add-member".localized, style: .default, handler:{ (UIAlertAction) in
+                    self.goToAddMember()
+                }))
+                
                 alert.addAction(UIAlertAction(title: "delete.tribe".localized, style: .destructive, handler:{ (UIAlertAction) in
                     self.exitAndDeleteGroup()
                 }))
@@ -204,6 +208,11 @@ class GroupDetailsViewController: UIViewController {
         let link = chat.getJoinChatLink()
         let qrCodeDetailViewModel = QRCodeDetailViewModel(qrCodeString: link, amount: 0, viewTitle: "share.group.link".localized)
         let viewController = QRCodeDetailViewController.instantiate(with: qrCodeDetailViewModel)
+        self.present(viewController, animated: true, completion: nil)
+    }
+    
+    func goToAddMember() {
+        let viewController = AddTribeMemberViewController.instantiate(with: chat, delegate: self)
         self.present(viewController, animated: true, completion: nil)
     }
     
@@ -304,6 +313,12 @@ extension GroupDetailsViewController : UIImagePickerControllerDelegate, UINaviga
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension GroupDetailsViewController : AddTribeMemberDelegate {
+    func shouldReloadMembers() {
+        tableDataSource.reloadContacts(chat: chat)
     }
 }
 

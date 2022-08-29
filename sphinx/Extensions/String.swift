@@ -295,6 +295,13 @@ extension String {
         }
     }
     
+    var isRouteHint : Bool {
+        get {
+            let routeHintRegex = try? NSRegularExpression(pattern: "^[A-F0-9a-f]{66}:[0-9]+$")
+            return (routeHintRegex?.matches(in: self, range: NSRange(self.startIndex..., in: self)) ?? []).count > 0
+        }
+    }
+    
     var isVirtualPubKey : Bool {
         get {
             let completePubkeyRegex = try? NSRegularExpression(pattern: "^[A-F0-9a-f]{66}:[A-F0-9a-f]{66}:[0-9]+$")

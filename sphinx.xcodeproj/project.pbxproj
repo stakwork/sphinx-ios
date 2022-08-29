@@ -174,6 +174,8 @@
 		475154B62423F08A00477384 /* VideoCallBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475154B52423F08A00477384 /* VideoCallBubbleView.swift */; };
 		475154B82423F09900477384 /* VideoCallBubbleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 475154B72423F09900477384 /* VideoCallBubbleView.xib */; };
 		475154BB2423FA4100477384 /* JoinVideoCallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475154BA2423FA4100477384 /* JoinVideoCallView.swift */; };
+		47515DA528BD150400D2B2CA /* AddTribeMemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47515DA428BD150400D2B2CA /* AddTribeMemberViewController.swift */; };
+		47515DA828BD15CA00D2B2CA /* AddTribeMemberViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47515DA728BD15CA00D2B2CA /* AddTribeMemberViewModel.swift */; };
 		4754FA8F2729DD38006295A5 /* DashboardNewsletterFeedCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4754FA8E2729DD38006295A5 /* DashboardNewsletterFeedCollectionViewController.swift */; };
 		4754FA93272ADB02006295A5 /* DashboardNewsletterItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4754FA91272ADB02006295A5 /* DashboardNewsletterItemCollectionViewCell.swift */; };
 		4754FA94272ADB02006295A5 /* DashboardNewsletterItemCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4754FA92272ADB02006295A5 /* DashboardNewsletterItemCollectionViewCell.xib */; };
@@ -887,6 +889,8 @@
 		475154B52423F08A00477384 /* VideoCallBubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCallBubbleView.swift; sourceTree = "<group>"; };
 		475154B72423F09900477384 /* VideoCallBubbleView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoCallBubbleView.xib; sourceTree = "<group>"; };
 		475154BA2423FA4100477384 /* JoinVideoCallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinVideoCallView.swift; sourceTree = "<group>"; };
+		47515DA428BD150400D2B2CA /* AddTribeMemberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTribeMemberViewController.swift; sourceTree = "<group>"; };
+		47515DA728BD15CA00D2B2CA /* AddTribeMemberViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTribeMemberViewModel.swift; sourceTree = "<group>"; };
 		475302A424D1B3BB000CC2FE /* sphinx 19.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 19.xcdatamodel"; sourceTree = "<group>"; };
 		4754FA8E2729DD38006295A5 /* DashboardNewsletterFeedCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardNewsletterFeedCollectionViewController.swift; sourceTree = "<group>"; };
 		4754FA91272ADB02006295A5 /* DashboardNewsletterItemCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardNewsletterItemCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -1987,6 +1991,15 @@
 			path = "Bubble Views";
 			sourceTree = "<group>";
 		};
+		47515DA628BD15BA00D2B2CA /* Add Tribe Member */ = {
+			isa = PBXGroup;
+			children = (
+				47515DA428BD150400D2B2CA /* AddTribeMemberViewController.swift */,
+				47515DA728BD15CA00D2B2CA /* AddTribeMemberViewModel.swift */,
+			);
+			path = "Add Tribe Member";
+			sourceTree = "<group>";
+		};
 		4754FA8D2729DD08006295A5 /* Read */ = {
 			isa = PBXGroup;
 			children = (
@@ -2733,6 +2746,7 @@
 				4787F86E24741EB900CCE8B9 /* NewPublicGroupViewController.swift */,
 				4787F87124743D7C00CCE8B9 /* NewPublicGroupViewControllerExtension.swift */,
 				4787F8732474490200CCE8B9 /* GroupTagsViewController.swift */,
+				47515DA628BD15BA00D2B2CA /* Add Tribe Member */,
 			);
 			path = "Public Groups";
 			sourceTree = "<group>";
@@ -3945,6 +3959,7 @@
 				47308E0624FEE6E600FFAC6F /* SocketManagerSpec.swift in Sources */,
 				47FA18C02425381500469C8F /* CreateInvoiceDetailsViewController.swift in Sources */,
 				47669F3D23CF622000C17A77 /* API+GroupsExtension.swift in Sources */,
+				47515DA828BD15CA00D2B2CA /* AddTribeMemberViewModel.swift in Sources */,
 				475BDCE5232AC23B00C5BBD6 /* DirectPaymentSentTableViewCell.swift in Sources */,
 				47308DFF24FEE6E600FFAC6F /* SocketStringReader.swift in Sources */,
 				475154B02423E79E00477384 /* CommonVideoCallTableViewCell.swift in Sources */,
@@ -4375,6 +4390,7 @@
 				47468FD5233162D40072124A /* AlertHelper.swift in Sources */,
 				47893A9624095DF6002F675B /* CommonAudioTableViewCell.swift in Sources */,
 				47F6CA0E287C6524005EBCB6 /* API+CrypterExtension.swift in Sources */,
+				47515DA528BD150400D2B2CA /* AddTribeMemberViewController.swift in Sources */,
 				47669F4223CF7EE900C17A77 /* GroupsManager.swift in Sources */,
 				F394ECB32683EB5A00529038 /* SphinxDesktopAdViewController.swift in Sources */,
 				47F258CA253DD42500122A5A /* PinTimeSlider.swift in Sources */,

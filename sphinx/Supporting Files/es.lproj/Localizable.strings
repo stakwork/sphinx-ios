@@ -82,6 +82,7 @@
 "add.members.limit" = "Imposible agregar más de %d miembros";
 "reach.members.limit" = "Has alcanzado el límite de miembros";
 "group.image" = "Imagen del Grupo";
+"tribe.member.image" = "Imagen del Miembro";
 "tribe.image" = "Imagen de la Tribu";
 "select.option" = "Por favor selecciona una opción";
 "required.fields.empty" = "Algunos de los campos obligatorios están vacíos";
@@ -108,6 +109,7 @@
 "tribe.deleted.message" = "El administrador ha eliminado esta tribu. ¿Deseas eliminar esta tribu?";
 "exit.group" = "Abandonar Grupo";
 "exit.tribe" = "Abandonar Tribu";
+"tribe.add-member" = "Agregar Miembro";
 "confirm.exit.delete.group" = "¿Estás seguro que deseas abandonar y eliminar el grupo?";
 "confirm.exit.delete.tribe" = "¿Estás seguro que deseas abandonar y eliminar la tribu?";
 "confirm.delete.group" = "¿Estás seguro que deseas borrar este grupo?";

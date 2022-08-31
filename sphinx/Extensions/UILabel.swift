@@ -40,8 +40,9 @@ extension UILabel {
         if let text = self.text {
             let linkMatches = text.stringLinks
             let pubKeyMatches = text.pubKeyMatches
+            let mentionMatches = text.mentionMatches
             
-            if (linkMatches.count + pubKeyMatches.count) > 0 {
+            if (linkMatches.count + pubKeyMatches.count + mentionMatches.count) > 0 {
                 let attributedString = NSMutableAttributedString(string: text)
                 
                 for match in linkMatches {
@@ -54,6 +55,12 @@ extension UILabel {
                     URLRanges.append(match.range)
                     
                     attributedString.setAttributes([NSAttributedString.Key.foregroundColor: linkColor, NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue], range: match.range)
+                }
+                
+                for match in mentionMatches {
+                    URLRanges.append(match.range)
+                    
+                    attributedString.setAttributes([NSAttributedString.Key.foregroundColor: linkColor], range: match.range)
                 }
                 
                 self.attributedText = attributedString

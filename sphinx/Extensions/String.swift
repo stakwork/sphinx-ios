@@ -215,10 +215,15 @@ extension String {
         let virtualPubkeyRegex = try? NSRegularExpression(pattern: "\\b[A-F0-9a-f]{66}:[A-F0-9a-f]{66}:[0-9]+\\b")
         
         let virtualPubkeyResults = virtualPubkeyRegex?.matches(in: self, range: NSRange(self.startIndex..., in: self)) ?? []
-        if virtualPubkeyResults.count > 0 { return virtualPubkeyResults }
-        
         let pubkeyResults = pubkeyRegex?.matches(in: self, range: NSRange(self.startIndex..., in: self)) ?? []
-        return pubkeyResults
+        
+        return virtualPubkeyResults + pubkeyResults
+    }
+    
+    var mentionMatches: [NSTextCheckingResult] {
+        let mentionRegex = try? NSRegularExpression(pattern: "\\B@[^\\s]+")
+        
+        return mentionRegex?.matches(in: self, range: NSRange(self.startIndex..., in: self)) ?? []
     }
     
     var stringFirstLink : String {

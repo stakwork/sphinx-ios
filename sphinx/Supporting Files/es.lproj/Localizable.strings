@@ -104,6 +104,7 @@
 "edit.tribe" = "Editar Tribu";
 "delete.group" = "Eliminar Grupo";
 "delete.tribe" = "Eliminar Tribu";
+"notifications.level" = "Notificaciones";
 "tribe.deleted.title" = "Tribu eliminada";
 "tribe.deleted.message" = "El administrador ha eliminado esta tribu. ¿Deseas eliminar esta tribu?";
 "exit.group" = "Abandonar Grupo";

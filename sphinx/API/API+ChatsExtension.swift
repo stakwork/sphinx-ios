@@ -33,4 +33,26 @@ extension API {
             }
         }
     }
+    
+    public func setNotificationLevel(chatId: Int, level: Int, callback: @escaping NotificationLevelCallback, errorCallback: @escaping EmptyCallback) {
+        guard let request = getURLRequest(route: "/notify/\(chatId)/\(level)", method: "PUT") else {
+            errorCallback()
+            return
+        }
+        
+        sphinxRequest(request) { response in
+            switch response.result {
+            case .success(let data):
+                if let json = data as? NSDictionary {
+                    if let success = json["success"] as? Bool, let response = json["response"] as? NSDictionary, success {
+                        callback(JSON(response))
+                    } else {
+                        errorCallback()
+                    }
+                }
+            case .failure(_):
+                errorCallback()
+            }
+        }
+    }
 }

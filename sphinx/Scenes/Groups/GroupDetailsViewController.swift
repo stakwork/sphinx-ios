@@ -159,6 +159,9 @@ class GroupDetailsViewController: UIViewController {
         let isMyPublicGroup = chat.isMyPublicGroup()
         
         if isPublicGroup {
+            alert.addAction(UIAlertAction(title: "notifications.level".localized, style: .default, handler:{ (UIAlertAction) in
+                self.goToNotificationsLevel()
+            }))
             if isMyPublicGroup {
                 alert.addAction(UIAlertAction(title: "share.group".localized, style: .default, handler:{ (UIAlertAction) in
                     self.goToShare()
@@ -205,6 +208,11 @@ class GroupDetailsViewController: UIViewController {
         let qrCodeDetailViewModel = QRCodeDetailViewModel(qrCodeString: link, amount: 0, viewTitle: "share.group.link".localized)
         let viewController = QRCodeDetailViewController.instantiate(with: qrCodeDetailViewModel)
         self.present(viewController, animated: true, completion: nil)
+    }
+    
+    func goToNotificationsLevel() {
+        let notificationsVC = NotificationsLevelViewController.instantiate(chat: chat)
+        self.present(notificationsVC, animated: true, completion: nil)
     }
     
     func exitAndDeleteGroup() {

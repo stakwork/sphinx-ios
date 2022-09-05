@@ -104,6 +104,7 @@
 "edit.group" = "Edit Group";
 "edit.tribe" = "Edit Tribe";
 "delete.group" = "Delete Group";
+"notifications.level" = "Notifications";
 "tribe.deleted.title" = "Tribe deleted";
 "tribe.deleted.message" = "The admin has deleted this tribe. Do you want to delete tribe?";
 "delete.tribe" = "Delete Tribe";

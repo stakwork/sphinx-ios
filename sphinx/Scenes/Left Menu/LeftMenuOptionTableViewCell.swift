@@ -25,5 +25,4 @@ class LeftMenuOptionTableViewCell: UITableViewCell {
         iconLabel.text = option.iconCharacter
         titleLabel.text = option.optionTitle
     }
-
 }

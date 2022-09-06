@@ -77,15 +77,29 @@ extension ChatViewController : ChatHeaderViewDelegate {
         guard let chat = chat else {
             return
         }
+        if chat.isPublicGroup() {
+            goToNotificationsLevel()
+            return
+        }
+        chatHeaderView.setVolumeState(muted: !chat.isMuted())
+        
         chatViewModel.toggleVolumeOn(chat: chat, completion: { chat in
             if let chat = chat {
                 if chat.isMuted() {
                     self.messageBubbleHelper.showGenericMessageView(text: "chat.muted.message".localized, delay: 2.5)
                 }
                 self.updateViewChat(updatedChat: chat)
+                self.chatHeaderView.setVolumeState(muted: chat.isMuted())
             }
-            self.chatHeaderView.setVolumeState()
         })
+    }
+    
+    func goToNotificationsLevel() {
+        if let chat =  chat {
+            accessoryView.hide()
+            let notificationsVC = NotificationsLevelViewController.instantiate(chat: chat, delegate: self)
+            self.present(notificationsVC, animated: true, completion: nil)
+        }
     }
     
     func didTapCallButton(sender: UIButton) {
@@ -93,6 +107,13 @@ extension ChatViewController : ChatHeaderViewDelegate {
             let messageType = TransactionMessage.TransactionMessageType.message.rawValue
             self.shouldSendMessage(text: link, type: messageType, completion: { _ in })
         })
+    }
+}
+
+extension ChatViewController : PresentedViewControllerDelegate {
+    func viewWillDismiss() {
+        accessoryView.show()
+        chatHeaderView.setVolumeState(muted: chat?.isMuted() == true)
     }
 }
 

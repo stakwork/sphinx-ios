@@ -96,7 +96,7 @@ class ChatHeaderView: UIView {
         keysLoading = !isEncrypted
         
         configureWebAppButton()
-        setVolumeState()
+        setVolumeState(muted: chat?.isMuted() ?? false)
         configureImageOrInitials()
         
         if let contact = contact, !contact.hasEncryptionKey() {
@@ -177,8 +177,8 @@ class ChatHeaderView: UIView {
         webAppButton.setTitle("apps", for: .normal)
     }
     
-    func setVolumeState() {
-        volumeButton.setImage(UIImage(named: chat?.isMuted() ?? false ? "muteOnIcon" : "muteOffIcon"), for: .normal)
+    func setVolumeState(muted: Bool) {
+        volumeButton.setImage(UIImage(named: muted ? "muteOnIcon" : "muteOffIcon"), for: .normal)
     }
     
     func forceKeysExchange(contactId: Int) {
@@ -211,10 +211,6 @@ class ChatHeaderView: UIView {
             delegate?.didTapWebAppButton()
             break
         case RightButtons.Mute.rawValue:
-            guard let chat = chat else {
-                return
-            }
-            volumeButton.setImage(UIImage(named: !chat.isMuted() ? "muteOnIcon" : "muteOffIcon"), for: .normal)
             delegate?.didTapMuteButton()
             break
         case RightButtons.Call.rawValue:

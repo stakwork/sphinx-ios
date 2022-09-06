@@ -102,4 +102,8 @@ extension UserContact : ChatListCommonObject {
         }
         return nil
     }
+    
+    public func isMuted() -> Bool {
+        return conversation?.isMuted() ?? false
+    }
 }

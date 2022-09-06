@@ -54,18 +54,23 @@ extension ChatsCollectionViewController {
         var messageSeen: Bool
         var contactStatus: Int?
         var inviteStatus: Int?
+        var muted: Bool
 
-        init(objectId: String,
-             messageId: Int?,
-             messageSeen: Bool,
-             contactStatus: Int?,
-             inviteStatus: Int?)
+        init(
+            objectId: String,
+            messageId: Int?,
+            messageSeen: Bool,
+            contactStatus: Int?,
+            inviteStatus: Int?,
+            muted: Bool
+        )
         {
             self.objectId = objectId
             self.messageId = messageId
             self.messageSeen = messageSeen
             self.contactStatus = contactStatus
             self.inviteStatus = inviteStatus
+            self.muted = muted
         }
         
         static func == (lhs: DataSourceItem, rhs: DataSourceItem) -> Bool {
@@ -74,7 +79,8 @@ extension ChatsCollectionViewController {
                 lhs.messageId == rhs.messageId &&
                 lhs.messageSeen == rhs.messageSeen &&
                 lhs.contactStatus == rhs.contactStatus &&
-                lhs.inviteStatus == rhs.inviteStatus
+                lhs.inviteStatus == rhs.inviteStatus &&
+                lhs.muted == rhs.muted
             
             return isEqual
          }
@@ -85,6 +91,7 @@ extension ChatsCollectionViewController {
             hasher.combine(messageSeen)
             hasher.combine(contactStatus)
             hasher.combine(inviteStatus)
+            hasher.combine(muted)
         }
     }
 
@@ -310,7 +317,8 @@ extension ChatsCollectionViewController {
                 messageId: $0.lastMessage?.id,
                 messageSeen: $0.lastMessage?.seen ?? false,
                 contactStatus: $0.getContactStatus(),
-                inviteStatus: $0.getInviteStatus()
+                inviteStatus: $0.getInviteStatus(),
+                muted: $0.isMuted()
             )
             
         }

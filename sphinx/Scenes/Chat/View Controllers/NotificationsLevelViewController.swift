@@ -8,7 +8,13 @@
 
 import UIKit
 
+public protocol PresentedViewControllerDelegate: class {
+    func viewWillDismiss()
+}
+
 class NotificationsLevelViewController: UIViewController {
+    
+    public weak var delegate: PresentedViewControllerDelegate?
     
     var chat: Chat!
     
@@ -33,10 +39,12 @@ class NotificationsLevelViewController: UIViewController {
     }
     
     static func instantiate(
-        chat: Chat
+        chat: Chat,
+        delegate: NotificationsLevelViewControllerDelegate?
     ) -> NotificationsLevelViewController {
         let viewController = StoryboardScene.Chat.notificationsLevelViewController.instantiate()
         viewController.chat = chat
+        viewController.delegate = delegate
         return viewController
     }
 
@@ -51,9 +59,9 @@ class NotificationsLevelViewController: UIViewController {
     
     func configureViewFromChat() {
         notificationLevelOptions = [
-            NotificationLevel(title: "See all", selected: chat.notify == 0),
-            NotificationLevel(title: "Only mentions", selected: chat.notify == 1),
-            NotificationLevel(title: "Mute chat", selected: chat.notify == 2)
+            NotificationLevel(title: "See all", selected: chat.notify == Chat.NotificationLevel.SeeAll.rawValue),
+            NotificationLevel(title: "Only mentions", selected: chat.notify == Chat.NotificationLevel.OnlyMentions.rawValue),
+            NotificationLevel(title: "Mute chat", selected: chat.notify == Chat.NotificationLevel.MuteChat.rawValue)
         ]
         tableView.reloadData()
     }
@@ -70,6 +78,7 @@ class NotificationsLevelViewController: UIViewController {
     }
     
     @IBAction func closeButtonTouched() {
+        self.delegate?.viewWillDismiss()
         self.dismiss(animated: true)
     }
 }
@@ -90,9 +99,9 @@ extension NotificationsLevelViewController : UITableViewDelegate {
         setChatNotificationLevel(indexPath.row)
         
         notificationLevelOptions = [
-            NotificationLevel(title: "See all", selected: indexPath.row == 0),
-            NotificationLevel(title: "Only mentions", selected: indexPath.row == 1),
-            NotificationLevel(title: "Mute chat", selected: indexPath.row == 2)
+            NotificationLevel(title: "See all", selected: indexPath.row == Chat.NotificationLevel.SeeAll.rawValue),
+            NotificationLevel(title: "Only mentions", selected: indexPath.row == Chat.NotificationLevel.OnlyMentions.rawValue),
+            NotificationLevel(title: "Mute chat", selected: indexPath.row == Chat.NotificationLevel.MuteChat.rawValue)
         ]
         
         tableView.reloadData()

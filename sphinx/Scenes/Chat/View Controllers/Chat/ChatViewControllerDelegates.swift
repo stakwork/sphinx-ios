@@ -102,7 +102,50 @@ extension ChatViewController : ChatHeaderViewDelegate {
         }
     }
     
-    func didTapCallButton(sender: UIButton) {
+    func goToShare() {
+        if let link = chat?.getJoinChatLink() {
+            accessoryView.hide()
+            let qrCodeDetailViewModel = QRCodeDetailViewModel(qrCodeString: link, amount: 0, viewTitle: "share.group.link".localized)
+            let viewController = QRCodeDetailViewController.instantiate(with: qrCodeDetailViewModel, presentedVCDelegate: self)
+            self.present(viewController, animated: true, completion: nil)
+        }
+    }
+    
+    func didTapMoreOptionsButton(sender: UIButton) {
+        accessoryView.hide()
+        let alert = CustomAlertController(title: "chat.options".localized, message: "select.option".localized, preferredStyle: .actionSheet)
+
+        let isPublicGroup = chat?.isPublicGroup() ?? false
+        let isMyPublicGroup = chat?.isMyPublicGroup() ?? false
+        
+        alert.addAction(UIAlertAction(title: "create.call".localized, style: .default, handler:{ (UIAlertAction) in
+            self.sendCallMessage(sender: sender)
+        }))
+
+        if isPublicGroup {
+            alert.addAction(UIAlertAction(title: "notifications.level".localized, style: .default, handler:{ (UIAlertAction) in
+                self.goToNotificationsLevel()
+            }))
+            if isMyPublicGroup {
+                alert.addAction(UIAlertAction(title: "share.group".localized, style: .default, handler:{ (UIAlertAction) in
+                    self.goToShare()
+                }))
+            }
+        }
+
+        alert.addAction(UIAlertAction(title: "cancel".localized, style: .cancel ))
+        alert.popoverPresentationController?.sourceView = sender
+        alert.popoverPresentationController?.sourceRect = sender.bounds
+        
+        alert.willDisappearBlock = {_ in
+            self.accessoryView.show()
+        }
+
+        self.present(alert, animated: true, completion: nil)
+        
+    }
+    
+    func sendCallMessage(sender: UIButton) {
         VideoCallHelper.createCallMessage(button: sender, callback: { link in
             let messageType = TransactionMessage.TransactionMessageType.message.rawValue
             self.shouldSendMessage(text: link, type: messageType, completion: { _ in })

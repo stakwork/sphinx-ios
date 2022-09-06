@@ -13,7 +13,7 @@ protocol ChatHeaderViewDelegate : class {
     func didTapBackButton()
     func didTapWebAppButton()
     func didTapMuteButton()
-    func didTapCallButton(sender: UIButton)
+    func didTapMoreOptionsButton(sender: UIButton)
 }
 
 class ChatHeaderView: UIView {
@@ -51,7 +51,7 @@ class ChatHeaderView: UIView {
     public enum RightButtons: Int {
         case WebApp
         case Mute
-        case Call
+        case More
     }
     
     override init(frame: CGRect) {
@@ -213,8 +213,8 @@ class ChatHeaderView: UIView {
         case RightButtons.Mute.rawValue:
             delegate?.didTapMuteButton()
             break
-        case RightButtons.Call.rawValue:
-            delegate?.didTapCallButton(sender: sender)
+        case RightButtons.More.rawValue:
+            delegate?.didTapMoreOptionsButton(sender: sender)
             break
         default:
             break

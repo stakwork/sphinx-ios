@@ -111,6 +111,7 @@
 		473258AC241BD700006E6602 /* CommonPaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473258AB241BD700006E6602 /* CommonPaymentViewController.swift */; };
 		4733C7E323C4DF30006A2C51 /* GroupNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4733C7E223C4DF30006A2C51 /* GroupNameViewController.swift */; };
 		4733C7E523C4DF4C006A2C51 /* GroupContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4733C7E423C4DF4C006A2C51 /* GroupContactsViewController.swift */; };
+		47341E8428C79A8B00426055 /* CustomAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47341E8328C79A8B00426055 /* CustomAlertController.swift */; };
 		4734D3C7241A828B00D6957E /* CommonDirectPaymentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4734D3C6241A828B00D6957E /* CommonDirectPaymentTableViewCell.swift */; };
 		4734D3C9241AA24C00D6957E /* PaymentTemplateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4734D3C8241AA24C00D6957E /* PaymentTemplateViewController.swift */; };
 		4734D3CB241AA7A000D6957E /* PaymentTemplatesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4734D3CA241AA7A000D6957E /* PaymentTemplatesDataSource.swift */; };
@@ -819,6 +820,7 @@
 		4733C7E223C4DF30006A2C51 /* GroupNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupNameViewController.swift; sourceTree = "<group>"; };
 		4733C7E423C4DF4C006A2C51 /* GroupContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupContactsViewController.swift; sourceTree = "<group>"; };
 		47341E8028C642DC00426055 /* sphinx 34.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 34.xcdatamodel"; sourceTree = "<group>"; };
+		47341E8328C79A8B00426055 /* CustomAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertController.swift; sourceTree = "<group>"; };
 		4734D3C6241A828B00D6957E /* CommonDirectPaymentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonDirectPaymentTableViewCell.swift; sourceTree = "<group>"; };
 		4734D3C8241AA24C00D6957E /* PaymentTemplateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentTemplateViewController.swift; sourceTree = "<group>"; };
 		4734D3CA241AA7A000D6957E /* PaymentTemplatesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentTemplatesDataSource.swift; sourceTree = "<group>"; };
@@ -2543,6 +2545,7 @@
 				F3DC6ACB273A700D00458E09 /* LoadingViewController.swift */,
 				4703CF96251D23E5007B685C /* LinkPreviewUIImage.swift */,
 				473633E925559945007405F2 /* LogarithmicSlider.swift */,
+				47341E8328C79A8B00426055 /* CustomAlertController.swift */,
 			);
 			path = "Custom Classes";
 			sourceTree = "<group>";
@@ -4254,6 +4257,7 @@
 				47FE9A3E23C381A20090913F /* UITapGestureRecognizer.swift in Sources */,
 				477B319223B10FC30081413E /* NewMessageBubbleHelper.swift in Sources */,
 				47893A8F24095A43002F675B /* AudioReceivedTableViewCell.swift in Sources */,
+				47341E8428C79A8B00426055 /* CustomAlertController.swift in Sources */,
 				477D9696244E0B5500830406 /* ChatAttachmentViewControllerExtension.swift in Sources */,
 				47AAFC80238EC5AA00E30BDA /* NewQRScannerProcessingCodeExtension.swift in Sources */,
 				471F3ABB255ADECB00E2AC79 /* PodcastLiveDataSource.swift in Sources */,

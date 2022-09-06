@@ -94,12 +94,14 @@
 "group.details" = "Detalles del Grupo";
 "tribe.details" = "Detalles de la Tribu";
 "share.group" = "Compartir código QR";
+"create.call" = "Crear Llamada";
 "share.group.link" = "Código QR de la tribu";
 "group.members.upper" = "MIEMBROS DEL GRUPO";
 "tribe.members.upper" = "MIEMBROS DE LA TRIBU";
 "tribe.pending.members.upper" = "MIEMBROS PENDIENTES";
 "group.options" = "Opciones del Grupo";
 "tribe.options" = "Opciones de la Tribu";
+"chat.options" = "Opciones del Chat";
 "edit.group" = "Editar Grupo";
 "edit.tribe" = "Editar Tribu";
 "delete.group" = "Eliminar Grupo";

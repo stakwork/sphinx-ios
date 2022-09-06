@@ -11,7 +11,11 @@ import SwiftyJSON
 import Alamofire
 
 extension API {
-    func createGroup(params: [String: AnyObject], callback: @escaping CreateGroupCallback, errorCallback: @escaping EmptyCallback){
+    func createGroup(
+        params: [String: AnyObject],
+        callback: @escaping CreateGroupCallback,
+        errorCallback: @escaping EmptyCallback
+    ){
         guard let request = getURLRequest(route: "/group", params: params as NSDictionary?, method: "POST") else {
             errorCallback()
             return
@@ -33,7 +37,12 @@ extension API {
         }
     }
     
-    func editGroup(id: Int, params: [String: AnyObject], callback: @escaping CreateGroupCallback, errorCallback: @escaping EmptyCallback){
+    func editGroup(
+        id: Int,
+        params: [String: AnyObject],
+        callback: @escaping CreateGroupCallback,
+        errorCallback: @escaping EmptyCallback
+    ){
         guard let request = getURLRequest(route: "/group/\(id)", params: params as NSDictionary?, method: "PUT") else {
             errorCallback()
             return
@@ -55,7 +64,10 @@ extension API {
         }
     }
     
-    func deleteGroup(id: Int, callback: @escaping SuccessCallback) {
+    func deleteGroup(
+        id: Int,
+        callback: @escaping SuccessCallback
+    ) {
         guard let request = getURLRequest(route: "/chat/\(id)", method: "DELETE") else {
             callback(false)
             return
@@ -77,7 +89,12 @@ extension API {
         }
     }
     
-    func addMembers(id: Int, params: [String: AnyObject], callback: @escaping CreateGroupCallback, errorCallback: @escaping EmptyCallback) {
+    func addMembers(
+        id: Int,
+        params: [String: AnyObject],
+        callback: @escaping CreateGroupCallback,
+        errorCallback: @escaping EmptyCallback
+    ) {
         guard let request = getURLRequest(route: "/chat/\(id)", params: params as NSDictionary?, method: "PUT") else {
             errorCallback()
             return
@@ -128,7 +145,11 @@ extension API {
         }
     }
     
-    func joinTribe(params: [String: AnyObject], callback: @escaping CreateGroupCallback, errorCallback: @escaping EmptyCallback) {
+    func joinTribe(
+        params: [String: AnyObject],
+        callback: @escaping CreateGroupCallback,
+        errorCallback: @escaping EmptyCallback
+    ) {
         guard let request = getURLRequest(route: "/tribe", params: params as NSDictionary?, method: "POST") else {
             errorCallback()
             return
@@ -150,7 +171,12 @@ extension API {
         }
     }
     
-    func kickMember(chatId: Int, contactId: Int, callback: @escaping CreateGroupCallback, errorCallback: @escaping EmptyCallback) {
+    func kickMember(
+        chatId: Int,
+        contactId: Int,
+        callback: @escaping CreateGroupCallback,
+        errorCallback: @escaping EmptyCallback
+    ) {
         guard let request = getURLRequest(route: "/kick/\(chatId)/\(contactId)", params: nil, method: "PUT") else {
             errorCallback()
             return
@@ -172,8 +198,41 @@ extension API {
         }
     }
     
-    func requestAction(messageId: Int, contactId: Int, action: String, callback: @escaping CreateGroupCallback, errorCallback: @escaping EmptyCallback) {
+    func requestAction(
+        messageId: Int,
+        contactId: Int,
+        action: String,
+        callback: @escaping CreateGroupCallback,
+        errorCallback: @escaping EmptyCallback
+    ) {
         guard let request = getURLRequest(route: "/member/\(contactId)/\(action)/\(messageId)", params: nil, method: "PUT") else {
+            errorCallback()
+            return
+        }
+        
+        sphinxRequest(request) { response in
+            switch response.result {
+            case .success(let data):
+                if let json = data as? NSDictionary {
+                    if let success = json["success"] as? Bool, let response = json["response"] as? NSDictionary, success {
+                        callback(JSON(response))
+                        return
+                    }
+                }
+                errorCallback()
+            case .failure(_):
+                errorCallback()
+            }
+        }
+    }
+    
+    func addTribeMember(
+        params: [String: AnyObject],
+        callback: @escaping CreateGroupCallback,
+        errorCallback: @escaping EmptyCallback
+    ) {
+        
+        guard let request = getURLRequest(route: "/tribe_member", params: params as NSDictionary?, method: "POST") else {
             errorCallback()
             return
         }

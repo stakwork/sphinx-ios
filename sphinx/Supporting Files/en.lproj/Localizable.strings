@@ -83,6 +83,7 @@
 "add.members.limit" = "Unable to add more than %d members";
 "reach.members.limit" = "You have reached the group members limit";
 "group.image" = "Group Image";
+"tribe.member.image" = "Tribe member image";
 "tribe.image" = "Tribe Image";
 "select.option" = "Please select an option";
 "required.fields.empty" = "Some of the required fields are empty";
@@ -109,6 +110,7 @@
 "delete.tribe" = "Delete Tribe";
 "exit.group" = "Exit Group";
 "exit.tribe" = "Exit Tribe";
+"tribe.add-member" = "Add Member";
 "confirm.exit.delete.group" = "Are you sure you want to exit and delete group?";
 "confirm.exit.delete.tribe" = "Are you sure you want to exit and delete tribe?";
 "confirm.delete.group" = "Are you sure you want to delete group?";

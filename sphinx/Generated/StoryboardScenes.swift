@@ -249,6 +249,8 @@ internal enum StoryboardScene {
         internal static let newPublicGroupViewController = SceneType<NewPublicGroupViewController>(storyboard: Groups.self, identifier: "NewPublicGroupViewController")
         
         internal static let groupTagsViewController = SceneType<GroupTagsViewController>(storyboard: Groups.self, identifier: "GroupTagsViewController")
+        
+        internal static let addTribeMemberViewController = SceneType<AddTribeMemberViewController>(storyboard: Groups.self, identifier: "AddTribeMemberViewController")
     }
     
     internal enum Stakwork: StoryboardType {

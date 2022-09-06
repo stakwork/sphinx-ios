@@ -111,6 +111,7 @@
 		473258AC241BD700006E6602 /* CommonPaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473258AB241BD700006E6602 /* CommonPaymentViewController.swift */; };
 		4733C7E323C4DF30006A2C51 /* GroupNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4733C7E223C4DF30006A2C51 /* GroupNameViewController.swift */; };
 		4733C7E523C4DF4C006A2C51 /* GroupContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4733C7E423C4DF4C006A2C51 /* GroupContactsViewController.swift */; };
+		47341E8428C79A8B00426055 /* CustomAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47341E8328C79A8B00426055 /* CustomAlertController.swift */; };
 		4734D3C7241A828B00D6957E /* CommonDirectPaymentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4734D3C6241A828B00D6957E /* CommonDirectPaymentTableViewCell.swift */; };
 		4734D3C9241AA24C00D6957E /* PaymentTemplateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4734D3C8241AA24C00D6957E /* PaymentTemplateViewController.swift */; };
 		4734D3CB241AA7A000D6957E /* PaymentTemplatesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4734D3CA241AA7A000D6957E /* PaymentTemplatesDataSource.swift */; };
@@ -307,6 +308,8 @@
 		4779F17A232AA0F300D35E81 /* sphinxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4779F179232AA0F300D35E81 /* sphinxTests.swift */; };
 		4779F185232AA0F300D35E81 /* sphinxUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4779F184232AA0F300D35E81 /* sphinxUITests.swift */; };
 		477B319223B10FC30081413E /* NewMessageBubbleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477B319123B10FC30081413E /* NewMessageBubbleHelper.swift */; };
+		477C525028C6307100C24117 /* NotificationsLevelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477C524F28C6307100C24117 /* NotificationsLevelViewController.swift */; };
+		477C525228C6358200C24117 /* NotificationLevelTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477C525128C6358200C24117 /* NotificationLevelTableViewCell.swift */; };
 		477C57E5234545D700BB4E04 /* SetPinCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477C57E4234545D700BB4E04 /* SetPinCodeViewController.swift */; };
 		477C57E7234785ED00BB4E04 /* WalletBalanceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477C57E6234785ED00BB4E04 /* WalletBalanceService.swift */; };
 		477D9692244DFCDA00830406 /* GifOverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 477D9691244DFCDA00830406 /* GifOverlayView.xib */; };
@@ -818,6 +821,8 @@
 		473258AB241BD700006E6602 /* CommonPaymentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonPaymentViewController.swift; sourceTree = "<group>"; };
 		4733C7E223C4DF30006A2C51 /* GroupNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupNameViewController.swift; sourceTree = "<group>"; };
 		4733C7E423C4DF4C006A2C51 /* GroupContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupContactsViewController.swift; sourceTree = "<group>"; };
+		47341E8028C642DC00426055 /* sphinx 34.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 34.xcdatamodel"; sourceTree = "<group>"; };
+		47341E8328C79A8B00426055 /* CustomAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertController.swift; sourceTree = "<group>"; };
 		4734D3C6241A828B00D6957E /* CommonDirectPaymentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonDirectPaymentTableViewCell.swift; sourceTree = "<group>"; };
 		4734D3C8241AA24C00D6957E /* PaymentTemplateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentTemplateViewController.swift; sourceTree = "<group>"; };
 		4734D3CA241AA7A000D6957E /* PaymentTemplatesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentTemplatesDataSource.swift; sourceTree = "<group>"; };
@@ -1036,6 +1041,8 @@
 		4779F186232AA0F300D35E81 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		477B319023ABE0540081413E /* sphinx 7.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 7.xcdatamodel"; sourceTree = "<group>"; };
 		477B319123B10FC30081413E /* NewMessageBubbleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageBubbleHelper.swift; sourceTree = "<group>"; };
+		477C524F28C6307100C24117 /* NotificationsLevelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsLevelViewController.swift; sourceTree = "<group>"; };
+		477C525128C6358200C24117 /* NotificationLevelTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationLevelTableViewCell.swift; sourceTree = "<group>"; };
 		477C57E4234545D700BB4E04 /* SetPinCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetPinCodeViewController.swift; sourceTree = "<group>"; };
 		477C57E6234785ED00BB4E04 /* WalletBalanceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletBalanceService.swift; sourceTree = "<group>"; };
 		477D9691244DFCDA00830406 /* GifOverlayView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GifOverlayView.xib; sourceTree = "<group>"; };
@@ -2126,6 +2133,7 @@
 				477D9699244E0C1B00830406 /* Chat Attachment */,
 				473258AA241BD6E7006E6602 /* Common */,
 				478BD8B52829B67300C733FD /* TribeMemberPopupViewController.swift */,
+				477C524F28C6307100C24117 /* NotificationsLevelViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -2206,6 +2214,7 @@
 				475BDCCC232AC22700C5BBD6 /* Sent */,
 				475BDCCB232AC22200C5BBD6 /* Received */,
 				475BDCCA232AC21C00C5BBD6 /* Headers */,
+				477C525428C635EB00C24117 /* Notification Level */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -2549,6 +2558,7 @@
 				F3DC6ACB273A700D00458E09 /* LoadingViewController.swift */,
 				4703CF96251D23E5007B685C /* LinkPreviewUIImage.swift */,
 				473633E925559945007405F2 /* LogarithmicSlider.swift */,
+				47341E8328C79A8B00426055 /* CustomAlertController.swift */,
 			);
 			path = "Custom Classes";
 			sourceTree = "<group>";
@@ -2669,6 +2679,14 @@
 				4779F186232AA0F300D35E81 /* Info.plist */,
 			);
 			path = sphinxUITests;
+			sourceTree = "<group>";
+		};
+		477C525428C635EB00C24117 /* Notification Level */ = {
+			isa = PBXGroup;
+			children = (
+				477C525128C6358200C24117 /* NotificationLevelTableViewCell.swift */,
+			);
+			path = "Notification Level";
 			sourceTree = "<group>";
 		};
 		477D9698244E0C0200830406 /* Chat */ = {
@@ -4125,6 +4143,7 @@
 				475CD5AC287E1198003FF171 /* CrypterManager.swift in Sources */,
 				475BDCE9232AC23B00C5BBD6 /* PaymentSentTableViewCell.swift in Sources */,
 				47AAFC7C2387070D00E30BDA /* API+WalletExtension.swift in Sources */,
+				477C525028C6307100C24117 /* NotificationsLevelViewController.swift in Sources */,
 				47ACBC0E265E9CB200D2FE47 /* PeopleModalsViewController.swift in Sources */,
 				473C3150279869D2007735CD /* RestoreProgressView.swift in Sources */,
 				475BDD61232AE46B00C5BBD6 /* CoreDataManager.swift in Sources */,
@@ -4137,6 +4156,7 @@
 				479EAB6323E30BAC001013AB /* HistoryDataSource.swift in Sources */,
 				4764B2AA2375DF51009508BA /* SubscriptionManager.swift in Sources */,
 				F34BFEDB267B3552003F6D55 /* RestoreUserConnectingViewController.swift in Sources */,
+				477C525228C6358200C24117 /* NotificationLevelTableViewCell.swift in Sources */,
 				F3138C3C27434D2F00F014BF /* ContentFeedMediaKind.swift in Sources */,
 				4756DE0F232ABF90001BAFD6 /* MainCoordinator.swift in Sources */,
 				47FA44152374B6EA005D8C63 /* SubscriptionTimeIntervalView.swift in Sources */,
@@ -4252,6 +4272,7 @@
 				47FE9A3E23C381A20090913F /* UITapGestureRecognizer.swift in Sources */,
 				477B319223B10FC30081413E /* NewMessageBubbleHelper.swift in Sources */,
 				47893A8F24095A43002F675B /* AudioReceivedTableViewCell.swift in Sources */,
+				47341E8428C79A8B00426055 /* CustomAlertController.swift in Sources */,
 				477D9696244E0B5500830406 /* ChatAttachmentViewControllerExtension.swift in Sources */,
 				47AAFC80238EC5AA00E30BDA /* NewQRScannerProcessingCodeExtension.swift in Sources */,
 				471F3ABB255ADECB00E2AC79 /* PodcastLiveDataSource.swift in Sources */,
@@ -5354,6 +5375,7 @@
 		47F35D4A2373156A0042A58F /* sphinx.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				47341E8028C642DC00426055 /* sphinx 34.xcdatamodel */,
 				478BD8B428297FD500C733FD /* sphinx 33.xcdatamodel */,
 				F3DC6AFC273C81C400458E09 /* sphinx 32.xcdatamodel */,
 				47357A0727299E0900A49EEE /* sphinx 31.xcdatamodel */,
@@ -5388,7 +5410,7 @@
 				475E4162238588A200928931 /* sphinx 2.xcdatamodel */,
 				47F35D4B2373156A0042A58F /* sphinx.xcdatamodel */,
 			);
-			currentVersion = 478BD8B428297FD500C733FD /* sphinx 33.xcdatamodel */;
+			currentVersion = 47341E8028C642DC00426055 /* sphinx 34.xcdatamodel */;
 			path = sphinx.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

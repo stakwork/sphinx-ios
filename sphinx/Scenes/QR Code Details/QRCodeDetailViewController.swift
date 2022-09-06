@@ -19,13 +19,19 @@ final class QRCodeDetailViewController: UIViewController {
     @IBOutlet weak var paidLabelContainer: UIView!
     
     public weak var delegate: PaymentInvoiceDelegate?
+    public weak var presentedVCDelegate: PresentedViewControllerDelegate?
     
     private var viewModel: QRCodeDetailViewModel?
     
-    static func instantiate(with qrCodeDetailViewModel: QRCodeDetailViewModel, delegate: PaymentInvoiceDelegate? = nil) -> QRCodeDetailViewController {
+    static func instantiate(
+        with qrCodeDetailViewModel: QRCodeDetailViewModel,
+        delegate: PaymentInvoiceDelegate? = nil,
+        presentedVCDelegate: PresentedViewControllerDelegate? = nil
+    ) -> QRCodeDetailViewController {
         let viewController = StoryboardScene.QRCodeDetail.qrCodeDetailViewController.instantiate()
         viewController.viewModel = qrCodeDetailViewModel
         viewController.delegate = delegate
+        viewController.presentedVCDelegate = presentedVCDelegate
         return viewController
     }
 
@@ -88,6 +94,8 @@ final class QRCodeDetailViewController: UIViewController {
     
     private func dismissParent() {
         delegate?.willDismissPresentedView?(paymentCreated: false)
+        presentedVCDelegate?.viewWillDismiss()
+        
         dismiss(animated: true, completion: nil)
     }
     

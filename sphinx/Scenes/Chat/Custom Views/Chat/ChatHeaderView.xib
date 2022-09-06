@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19115.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19107.4"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -34,7 +34,6 @@
                 <outlet property="lockSign" destination="tp6-3C-IrP" id="Cwe-47-jWV"/>
                 <outlet property="nameLabel" destination="6In-3T-Qql" id="ktG-68-lek"/>
                 <outlet property="profileImageView" destination="FzU-vr-ru9" id="VV3-FJ-SPa"/>
-                <outlet property="videoCallButton" destination="ahL-K7-tna" id="IAk-TD-hjd"/>
                 <outlet property="volumeButton" destination="6uG-XH-Ptg" id="77y-CI-Nlm"/>
                 <outlet property="webAppButton" destination="Mt6-rI-5Dn" id="zIa-gv-EgZ"/>
                 <outlet property="webAppButtonTrailing" destination="oyF-xL-U2b" id="2i5-Ji-Wfk"/>
@@ -183,7 +182,7 @@
                             </constraints>
                             <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="25"/>
                             <color key="tintColor" name="WashedOutReceivedText"/>
-                            <state key="normal" title="">
+                            <state key="normal" title="more_vert">
                                 <color key="titleColor" name="MainBottomIcons"/>
                             </state>
                             <connections>

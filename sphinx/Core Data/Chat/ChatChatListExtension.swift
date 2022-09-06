@@ -63,6 +63,10 @@ extension Chat: ChatListCommonObject {
         return false
     }
     
+    public func isMuted() -> Bool {
+        return self.notify == NotificationLevel.MuteChat.rawValue
+    }
+    
     public func shouldShowSingleImage() -> Bool {
         if isPublicGroup() || isConversation() {
             return true

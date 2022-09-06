@@ -40,7 +40,7 @@ class NotificationsLevelViewController: UIViewController {
     
     static func instantiate(
         chat: Chat,
-        delegate: NotificationsLevelViewControllerDelegate?
+        delegate: PresentedViewControllerDelegate?
     ) -> NotificationsLevelViewController {
         let viewController = StoryboardScene.Chat.notificationsLevelViewController.instantiate()
         viewController.chat = chat

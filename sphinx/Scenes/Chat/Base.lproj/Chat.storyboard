@@ -1874,7 +1874,7 @@
         <scene sceneID="ulV-Fa-7Ih">
             <objects>
                 <viewController storyboardIdentifier="NotificationsLevelViewController" id="r6H-GB-QlG" customClass="NotificationsLevelViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" ambiguous="YES" id="jQQ-Xb-wQB">
+                    <view key="view" contentMode="scaleToFill" id="jQQ-Xb-wQB">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -1911,9 +1911,8 @@
                                     <constraint firstItem="SpZ-Zf-bcC" firstAttribute="centerX" secondItem="2sb-aQ-g03" secondAttribute="centerX" id="uS1-uu-4TL"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" alwaysBounceVertical="YES" contentInsetAdjustmentBehavior="never" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" contentViewInsetsToSafeArea="NO" id="bXN-7v-F9d">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" alwaysBounceVertical="YES" contentInsetAdjustmentBehavior="never" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" contentViewInsetsToSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bXN-7v-F9d">
                                 <rect key="frame" x="0.0" y="70" width="375" height="597"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -1955,13 +1954,13 @@
                         <viewLayoutGuide key="safeArea" id="075-FG-ewI"/>
                         <color key="backgroundColor" name="Body"/>
                         <constraints>
-                            <constraint firstItem="bXN-7v-F9d" firstAttribute="trailing" secondItem="jQQ-Xb-wQB" secondAttribute="trailing" id="AsW-UD-8J1"/>
                             <constraint firstItem="bXN-7v-F9d" firstAttribute="top" secondItem="2sb-aQ-g03" secondAttribute="bottom" constant="15" id="Cw1-75-Fvl"/>
                             <constraint firstItem="2sb-aQ-g03" firstAttribute="trailing" secondItem="075-FG-ewI" secondAttribute="trailing" id="XPv-35-LyW"/>
                             <constraint firstItem="2sb-aQ-g03" firstAttribute="top" secondItem="075-FG-ewI" secondAttribute="top" id="gKx-g1-DmC"/>
-                            <constraint firstItem="bXN-7v-F9d" firstAttribute="leading" secondItem="jQQ-Xb-wQB" secondAttribute="leading" id="lnO-Qa-J0s"/>
-                            <constraint firstItem="bXN-7v-F9d" firstAttribute="bottom" secondItem="jQQ-Xb-wQB" secondAttribute="bottom" constant="200" id="lsd-WM-SYg"/>
+                            <constraint firstItem="bXN-7v-F9d" firstAttribute="leading" secondItem="075-FG-ewI" secondAttribute="leading" id="j1p-Db-jn5"/>
+                            <constraint firstItem="bXN-7v-F9d" firstAttribute="bottom" secondItem="jQQ-Xb-wQB" secondAttribute="bottom" id="lsd-WM-SYg"/>
                             <constraint firstItem="2sb-aQ-g03" firstAttribute="leading" secondItem="075-FG-ewI" secondAttribute="leading" id="lyk-ec-8v4"/>
+                            <constraint firstItem="bXN-7v-F9d" firstAttribute="trailing" secondItem="075-FG-ewI" secondAttribute="trailing" id="qUs-7s-icL"/>
                         </constraints>
                         <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
                     </view>

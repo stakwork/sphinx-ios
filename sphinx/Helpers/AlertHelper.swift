@@ -129,7 +129,8 @@ class AlertHelper {
                                 message: String,
                                 options: [String],
                                 callbacks: [() -> ()],
-                                sourceView: UIView) {
+                                sourceView: UIView,
+                                vc: UIViewController? = nil) {
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
         
@@ -151,8 +152,8 @@ class AlertHelper {
         alert.popoverPresentationController?.sourceView = sourceView
         alert.popoverPresentationController?.sourceRect = sourceView.bounds
         
-        if let rootViewController: UIViewController = getRootVC() {
-            rootViewController.present(alert, animated: true, completion: nil)
+        if let viewController: UIViewController = vc ?? getRootVC() {
+            viewController.present(alert, animated: true, completion: nil)
         }
     }
 }

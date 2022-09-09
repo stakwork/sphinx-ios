@@ -20,6 +20,7 @@ class CrypterManager : NSObject {
         var networkName:String? = nil
         var networkPassword:String? = nil
         var publicKey: String? = nil
+        var bitcoinNetwork: String? = nil
         var encryptedSeed: String? = nil
     }
     
@@ -46,7 +47,9 @@ class CrypterManager : NSObject {
                 self.promptForNetworkPassword(networkName) {
                     self.promptForHardwareIP() {
                         self.promptForHardwarePort {
-                            self.testCrypter()
+                            self.promptForBitcoinNetwork {
+                                self.testCrypter()
+                            }
                         }
                     }
                 }
@@ -65,31 +68,6 @@ class CrypterManager : NSObject {
                 callback()
             },
             cancel: {}
-        )
-    }
-    
-    func promptForHardwareIP(callback: @escaping () -> ()) {
-        promptFor(
-            "profile.lightning-ip-title".localized,
-            message: "profile.lightning-ip-message".localized,
-            errorMessage: "profile.lightning-ip-error".localized,
-            callback: { value in
-                self.hardwarePostDto.lightningNodeIP = value
-                callback()
-            }
-        )
-    }
-    
-    func promptForHardwarePort(callback: @escaping () -> ()) {
-        promptFor(
-            "profile.lightning-port-title".localized,
-            message: "profile.lightning-port-message".localized,
-            errorMessage: "profile.lightning-port-error".localized,
-            textFieldText: "1883",
-            callback: { value in
-                self.hardwarePostDto.lightningNodePort = value
-                callback()
-            }
         )
     }
     
@@ -120,6 +98,52 @@ class CrypterManager : NSObject {
                 self.hardwarePostDto.networkPassword = value
                 callback()
             }
+        )
+    }
+    
+    func promptForHardwareIP(callback: @escaping () -> ()) {
+        promptFor(
+            "profile.lightning-ip-title".localized,
+            message: "profile.lightning-ip-message".localized,
+            errorMessage: "profile.lightning-ip-error".localized,
+            callback: { value in
+                self.hardwarePostDto.lightningNodeIP = value
+                callback()
+            }
+        )
+    }
+    
+    func promptForHardwarePort(callback: @escaping () -> ()) {
+        promptFor(
+            "profile.lightning-port-title".localized,
+            message: "profile.lightning-port-message".localized,
+            errorMessage: "profile.lightning-port-error".localized,
+            textFieldText: "1883",
+            callback: { value in
+                self.hardwarePostDto.lightningNodePort = value
+                callback()
+            }
+        )
+    }
+    
+    func promptForBitcoinNetwork(callback: @escaping () -> ()) {
+        let regtestCallbak: (() -> ()) = {
+            self.hardwarePostDto.bitcoinNetwork = "regtest"
+            callback()
+        }
+        
+        let mainnetCallback: (() -> ()) = {
+            self.hardwarePostDto.bitcoinNetwork = "mainnet"
+            callback()
+        }
+        
+        AlertHelper.showOptionsPopup(
+            title: "profile.bitcoin-network".localized,
+            message: "profile.select-bitcoin-network".localized,
+            options: ["Regtest", "Mainnet"],
+            callbacks: [regtestCallbak, mainnetCallback],
+            sourceView: self.vc.view,
+            vc: self.vc
         )
     }
     

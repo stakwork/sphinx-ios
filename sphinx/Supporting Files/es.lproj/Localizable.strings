@@ -275,6 +275,8 @@
 "profile.network-check-title" = "Verifica tu conexión WiFi";
 "profile.network-check-message" = "Antes de comenzar tenes que conectarte a la red WiFi \"sphinxkey\". De lo contrario no vas a poder configurar tu dispositivo. ¿Estás actualmente conectado a esta red?";
 "profile.mnemonic-copied" = "Palabras de seguridad copiadas al portapapeles";
+"profile.bitcoin-network" = "Red de Bitcoin";
+"profile.select-bitcoin-network" = "Seleccioná la red de Bitcoin";
 
 //PIN
 "choose.pin.upper" = "ELIGE TU PIN";

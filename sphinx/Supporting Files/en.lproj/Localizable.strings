@@ -276,6 +276,8 @@
 "profile.network-check-title" = "Check your network";
 "profile.network-check-message" = "Before starting you need to connect to \"sphinxkey\" WiFi network. Otherwise you won’t be able to setup your device. Are you connected to this network?";
 "profile.mnemonic-copied" = "Mnemonic words copied to clipboard";
+"profile.bitcoin-network" = "Bitcoin Network";
+"profile.select-bitcoin-network" = "Select Bitcoin Network";
 
 //PIN
 "choose.pin.upper" = "CHOOSE PIN";

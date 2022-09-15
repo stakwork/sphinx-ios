@@ -156,6 +156,8 @@
 		47484B972512690D00F82AAC /* BotWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47484B962512690D00F82AAC /* BotWebView.swift */; };
 		474A136324E5807C007C7528 /* SphinxOnionConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474A136224E5807C007C7528 /* SphinxOnionConnector.swift */; };
 		474A667D24929D45002C2D10 /* CommonReplyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474A667C24929D45002C2D10 /* CommonReplyTableViewCell.swift */; };
+		474C7A5128D3A765007A3E17 /* universal-sphinxrs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 474C7A5028D3A75D007A3E17 /* universal-sphinxrs.a */; };
+		474C7A5528D3A7A2007A3E17 /* sphinxrs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474C7A5228D3A7A1007A3E17 /* sphinxrs.swift */; };
 		474FE32223F1CE1700C06FC8 /* CommonPictureTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474FE32123F1CE1700C06FC8 /* CommonPictureTableViewCell.swift */; };
 		474FE32623F588C000C06FC8 /* VideoSentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474FE32423F588C000C06FC8 /* VideoSentTableViewCell.swift */; };
 		474FE32723F588C000C06FC8 /* VideoSentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 474FE32523F588C000C06FC8 /* VideoSentTableViewCell.xib */; };
@@ -530,8 +532,6 @@
 		47F258D2253F705800122A5A /* ChatViewControllerPodcastExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F258D1253F705800122A5A /* ChatViewControllerPodcastExtension.swift */; };
 		47F258D92540F61F00122A5A /* PodcastPaymentsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F258D82540F61F00122A5A /* PodcastPaymentsHelper.swift */; };
 		47F35D4C2373156A0042A58F /* sphinx.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 47F35D4A2373156A0042A58F /* sphinx.xcdatamodeld */; };
-		47F6CA052878698A005EBCB6 /* universal-crypter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 47F6CA032878695C005EBCB6 /* universal-crypter.a */; };
-		47F6CA0C28786BC7005EBCB6 /* crypter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F6CA0B28786BC7005EBCB6 /* crypter.swift */; };
 		47F6CA0E287C6524005EBCB6 /* API+CrypterExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F6CA0D287C6524005EBCB6 /* API+CrypterExtension.swift */; };
 		47F6CA10287C695B005EBCB6 /* Nonce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F6CA0F287C695B005EBCB6 /* Nonce.swift */; };
 		47F7273825791D8600A794B9 /* ContactLinkPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F7273725791D8600A794B9 /* ContactLinkPreviewView.swift */; };
@@ -867,6 +867,10 @@
 		474A667C24929D45002C2D10 /* CommonReplyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonReplyTableViewCell.swift; sourceTree = "<group>"; };
 		474A667E2493AFAB002C2D10 /* sphinx 16.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 16.xcdatamodel"; sourceTree = "<group>"; };
 		474A6692249A9F0D002C2D10 /* sphinx 17.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 17.xcdatamodel"; sourceTree = "<group>"; };
+		474C7A5028D3A75D007A3E17 /* universal-sphinxrs.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "universal-sphinxrs.a"; sourceTree = "<group>"; };
+		474C7A5228D3A7A1007A3E17 /* sphinxrs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = sphinxrs.swift; sourceTree = "<group>"; };
+		474C7A5328D3A7A1007A3E17 /* Sphinxrs-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Sphinxrs-Bridging-Header.h"; sourceTree = "<group>"; };
+		474C7A5428D3A7A1007A3E17 /* sphinxrsFFI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sphinxrsFFI.h; sourceTree = "<group>"; };
 		474F67682486DDA400CE6016 /* sphinx 14.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 14.xcdatamodel"; sourceTree = "<group>"; };
 		474FE32123F1CE1700C06FC8 /* CommonPictureTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonPictureTableViewCell.swift; sourceTree = "<group>"; };
 		474FE32323F324C900C06FC8 /* sphinx 8.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 8.xcdatamodel"; sourceTree = "<group>"; };
@@ -1340,11 +1344,7 @@
 		47F258D1253F705800122A5A /* ChatViewControllerPodcastExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewControllerPodcastExtension.swift; sourceTree = "<group>"; };
 		47F258D82540F61F00122A5A /* PodcastPaymentsHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastPaymentsHelper.swift; sourceTree = "<group>"; };
 		47F35D4B2373156A0042A58F /* sphinx.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = sphinx.xcdatamodel; sourceTree = "<group>"; };
-		47F6CA032878695C005EBCB6 /* universal-crypter.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "universal-crypter.a"; sourceTree = "<group>"; };
 		47F6CA06287869A6005EBCB6 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
-		47F6CA0928786A89005EBCB6 /* crypter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypter.h; sourceTree = "<group>"; };
-		47F6CA0A28786B34005EBCB6 /* Crypter-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Crypter-Bridging-Header.h"; sourceTree = "<group>"; };
-		47F6CA0B28786BC7005EBCB6 /* crypter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = crypter.swift; sourceTree = "<group>"; };
 		47F6CA0D287C6524005EBCB6 /* API+CrypterExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+CrypterExtension.swift"; sourceTree = "<group>"; };
 		47F6CA0F287C695B005EBCB6 /* Nonce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Nonce.swift; sourceTree = "<group>"; };
 		47F7273725791D8600A794B9 /* ContactLinkPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactLinkPreviewView.swift; sourceTree = "<group>"; };
@@ -1508,8 +1508,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				474C7A5128D3A765007A3E17 /* universal-sphinxrs.a in Frameworks */,
 				F331199D268E93FB005082EB /* StoreKit.framework in Frameworks */,
-				47F6CA052878698A005EBCB6 /* universal-crypter.a in Frameworks */,
 				4703CF932519425E007B685C /* PDFKit.framework in Frameworks */,
 				12075275C652A9404FC48EBC /* Pods_sphinx.framework in Frameworks */,
 			);
@@ -1535,8 +1535,8 @@
 		29CA57C9FD66D9C3750CE036 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				474C7A5028D3A75D007A3E17 /* universal-sphinxrs.a */,
 				47F6CA06287869A6005EBCB6 /* libresolv.tbd */,
-				47F6CA032878695C005EBCB6 /* universal-crypter.a */,
 				F331199C268E93FB005082EB /* StoreKit.framework */,
 				F3C92B282671FCFD005F0A42 /* .Tor.version */,
 				47D03DF02510EA170077A968 /* PDFKit.framework */,
@@ -3122,9 +3122,9 @@
 		47F6CA0728786A13005EBCB6 /* Crypter */ = {
 			isa = PBXGroup;
 			children = (
-				47F6CA0928786A89005EBCB6 /* crypter.h */,
-				47F6CA0A28786B34005EBCB6 /* Crypter-Bridging-Header.h */,
-				47F6CA0B28786BC7005EBCB6 /* crypter.swift */,
+				474C7A5328D3A7A1007A3E17 /* Sphinxrs-Bridging-Header.h */,
+				474C7A5228D3A7A1007A3E17 /* sphinxrs.swift */,
+				474C7A5428D3A7A1007A3E17 /* sphinxrsFFI.h */,
 				47F6CA0F287C695B005EBCB6 /* Nonce.swift */,
 				475CD5AB287E1198003FF171 /* CrypterManager.swift */,
 			);
@@ -4220,7 +4220,6 @@
 				F358212D2695D11500A314F1 /* ConnectionCodeSignupHandling.swift in Sources */,
 				4703CF97251D23E5007B685C /* LinkPreviewUIImage.swift in Sources */,
 				F3188B932719DA1600890DDD /* DashboardVideoEpisodeCollectionViewCell.swift in Sources */,
-				47F6CA0C28786BC7005EBCB6 /* crypter.swift in Sources */,
 				47AF0D31254B236C00C98398 /* BoostButtonView.swift in Sources */,
 				47822C70244A02010011D832 /* CommonPaidMessageTableViewCell.swift in Sources */,
 				47D46A33237C83900005A548 /* Chat+CoreDataClass.swift in Sources */,
@@ -4369,6 +4368,7 @@
 				470125C02373255C0013C57B /* TransactionMessage+CoreDataProperties.swift in Sources */,
 				47D0046325E7F66400E74063 /* DownloadService.swift in Sources */,
 				4789E26124F03CF4003991BE /* CommonTabsView.swift in Sources */,
+				474C7A5528D3A7A2007A3E17 /* sphinxrs.swift in Sources */,
 				475154AD2423E75F00477384 /* VideoCallReceivedTableViewCell.swift in Sources */,
 				F38744E3271FDA9200E28C84 /* VideoFeed+DisplayUtils.swift in Sources */,
 				F360123326E96B31009B8DC0 /* API+FeedSearchUtils.swift in Sources */,
@@ -5112,7 +5112,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.gl.sphinx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "$(PROJECT_DIR)/sphinx/Crypter/Crypter-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(PROJECT_DIR)/sphinx/Crypter/Sphinxrs-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -5205,7 +5205,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.gl.sphinx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "$(PROJECT_DIR)/sphinx/Crypter/Crypter-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(PROJECT_DIR)/sphinx/Crypter/Sphinxrs-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

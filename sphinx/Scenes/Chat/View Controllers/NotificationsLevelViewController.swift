@@ -23,9 +23,9 @@ class NotificationsLevelViewController: UIViewController {
     let kRowHeight: CGFloat = 44
     
     var notificationLevelOptions: [NotificationLevel] = [
-        NotificationLevel(title: "See all", selected: true),
-        NotificationLevel(title: "Only mentions", selected: false),
-        NotificationLevel(title: "Mute chat", selected: false)
+        NotificationLevel(title: "see-all".localized, selected: true),
+        NotificationLevel(title: "only-mentions".localized, selected: false),
+        NotificationLevel(title: "mute-chat".localized, selected: false)
     ]
     
     struct NotificationLevel {
@@ -58,11 +58,10 @@ class NotificationsLevelViewController: UIViewController {
     }
     
     func configureViewFromChat() {
-        notificationLevelOptions = [
-            NotificationLevel(title: "See all", selected: chat.notify == Chat.NotificationLevel.SeeAll.rawValue),
-            NotificationLevel(title: "Only mentions", selected: chat.notify == Chat.NotificationLevel.OnlyMentions.rawValue),
-            NotificationLevel(title: "Mute chat", selected: chat.notify == Chat.NotificationLevel.MuteChat.rawValue)
-        ]
+        for (index, value) in notificationLevelOptions.enumerated() {
+            let currentLevel = value
+            notificationLevelOptions[index] = NotificationLevel(title: currentLevel.title, selected: chat.notify == index)
+        }
         tableView.reloadData()
     }
     
@@ -98,11 +97,10 @@ extension NotificationsLevelViewController : UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         setChatNotificationLevel(indexPath.row)
         
-        notificationLevelOptions = [
-            NotificationLevel(title: "See all", selected: indexPath.row == Chat.NotificationLevel.SeeAll.rawValue),
-            NotificationLevel(title: "Only mentions", selected: indexPath.row == Chat.NotificationLevel.OnlyMentions.rawValue),
-            NotificationLevel(title: "Mute chat", selected: indexPath.row == Chat.NotificationLevel.MuteChat.rawValue)
-        ]
+        for (index, value) in notificationLevelOptions.enumerated() {
+            let currentLevel = value
+            notificationLevelOptions[index] = NotificationLevel(title: currentLevel.title, selected: indexPath.row == index)
+        }
         
         tableView.reloadData()
     }

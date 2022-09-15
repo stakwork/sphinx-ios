@@ -413,6 +413,10 @@
 "alert-confirm.flag-message-message" = "¿Estas seguro de que quieres reportar este mensaje? Esta acción no puede revertirse";
 "alert-confirm.delete-message-title" = "Confirmar Mensaje eliminado";
 "alert-confirm.delete-message-message" = "¿Estas seguro de que quieres eliminar este mensaje? Esta acción no puede revertirse";
+"notificaion-level" = "Notificaciones";
+"see-all" = "Ver Todas";
+"only-mentions" = "Solo Menciones";
+"mute-chat" = "Silenciar Chat";
 
 
 //OTHER

@@ -12,7 +12,7 @@ public class FeedSearchAction: Codable {
     
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-    
+
         try container.encode(self.frequency, forKey: .frequency)
         try container.encode(self.searchTerm, forKey: .searchTerm)
         try container.encode(self.currentTimestamp, forKey: .currentTimestamp)
@@ -20,7 +20,7 @@ public class FeedSearchAction: Codable {
     
     public required init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        
+
         let frequency = try values.decode(Int.self, forKey: .frequency)
         let searchTerm = try values.decode(String.self, forKey: .searchTerm)
         let currentTimestamp = try values.decode(Date.self, forKey: .currentTimestamp)

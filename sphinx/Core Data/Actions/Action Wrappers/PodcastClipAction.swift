@@ -12,7 +12,7 @@ public class PodcastClipAction: Codable {
     
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-    
+
         try container.encode(self.feedId, forKey: .feedId)
         try container.encode(self.feedType, forKey: .feedType)
         try container.encode(self.feedUrl, forKey: .feedUrl)
@@ -26,7 +26,7 @@ public class PodcastClipAction: Codable {
     
     public required init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        
+
         let feedId = try values.decode(String.self, forKey: .feedId)
         let feedType = try values.decode(Int.self, forKey: .feedType)
         let feedUrl = try values.decode(String.self, forKey: .feedUrl)

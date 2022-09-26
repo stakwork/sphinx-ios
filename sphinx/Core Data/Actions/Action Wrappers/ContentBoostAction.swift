@@ -12,7 +12,7 @@ public class ContentBoostAction: Codable {
     
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-    
+
         try container.encode(self.boost, forKey: .boost)
         try container.encode(self.feedId, forKey: .feedId)
         try container.encode(self.feedType, forKey: .feedType)
@@ -25,7 +25,7 @@ public class ContentBoostAction: Codable {
     
     public required init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        
+
         let boost = try values.decode(Int.self, forKey: .boost)
         let feedId = try values.decode(String.self, forKey: .feedId)
         let feedType = try values.decode(Int.self, forKey: .feedType)

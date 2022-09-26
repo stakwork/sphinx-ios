@@ -10,26 +10,16 @@ import Foundation
 
 public class MessageAction: Codable {
     
-    public func encode(with coder: NSCoder) {
-        coder.encode(keywords, forKey: MessageAction.CodingKeys.keywords.rawValue)
-        coder.encode(currentTimestamp, forKey: MessageAction.CodingKeys.currentTimestamp.rawValue)
-    }
-    
-    public init?(coder: NSCoder) {
-        keywords = coder.decodeObject(forKey: MessageAction.CodingKeys.keywords.rawValue) as? [String] ?? []
-        currentTimestamp = coder.decodeObject(forKey: MessageAction.CodingKeys.currentTimestamp.rawValue) as? Date ?? Date()
-    }
-    
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-    
+
         try container.encode(self.keywords, forKey: .keywords)
         try container.encode(self.currentTimestamp, forKey: .currentTimestamp)
     }
     
     public required init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        
+
         let keywords = try values.decode([String].self, forKey: .keywords)
         let currentTimestamp = try values.decode(Date.self, forKey: .currentTimestamp)
 

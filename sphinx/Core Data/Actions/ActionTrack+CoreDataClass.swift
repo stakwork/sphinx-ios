@@ -11,7 +11,14 @@ import CoreData
 import SwiftyJSON
 
 @objc(ActionTrack)
-public class ActionTrack: NSManagedObject {
+public class ActionTrack: NSManagedObject, Encodable {
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+
+        try container.encode(self.type, forKey: .type)
+        try container.encode(self.metaData, forKey: .metaData)
+    }
     
     static func createObject(
         type: Int,
@@ -35,6 +42,25 @@ public class ActionTrack: NSManagedObject {
     static func getAll() -> [ActionTrack] {
         let actions : [ActionTrack] = CoreDataManager.sharedManager.getAllOfType(entityName: "ActionTrack", sortDescriptors: [])
         return actions
+    }
+    
+    func jsonString() -> String? {
+        let jsonEncoder = JSONEncoder()
+        var jsonData: Data! = nil
+        do {
+            jsonData = try jsonEncoder.encode(self)
+        } catch let error {
+            print(error.localizedDescription)
+            return nil
+        }
+        return String(data: jsonData, encoding: String.Encoding.utf8)
+    }
+}
+
+extension ActionTrack {
+    enum CodingKeys: String, CodingKey {
+        case type = "type"
+        case metaData = "meta_data"
     }
 }
     

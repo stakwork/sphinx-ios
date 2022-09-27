@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -76,6 +76,9 @@
 		471F3ABB255ADECB00E2AC79 /* PodcastLiveDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471F3ABA255ADECB00E2AC79 /* PodcastLiveDataSource.swift */; };
 		471FACD823E9B65C007DE1C8 /* EmailHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471FACD723E9B65C007DE1C8 /* EmailHelper.swift */; };
 		471FACDA23E9BE48007DE1C8 /* SupportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471FACD923E9BE48007DE1C8 /* SupportViewController.swift */; };
+		4722884B28E38EBB00205807 /* Python.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4722884A28E38EBB00205807 /* Python.xcframework */; };
+		4722884D28E3928500205807 /* python-stdlib in Resources */ = {isa = PBXBuildFile; fileRef = 4722884C28E3928500205807 /* python-stdlib */; };
+		4722885228E398EA00205807 /* PythonKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4722885128E398EA00205807 /* PythonKit */; };
 		4724BC1325474B440012BD76 /* WebApps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4724BC1525474B440012BD76 /* WebApps.storyboard */; };
 		4726A40D24C09C38005A66B4 /* ChatListHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4726A40C24C09C38005A66B4 /* ChatListHeader.swift */; };
 		4726A40F24C09C4C005A66B4 /* ChatListHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4726A40E24C09C4C005A66B4 /* ChatListHeader.xib */; };
@@ -790,6 +793,9 @@
 		471F3ABA255ADECB00E2AC79 /* PodcastLiveDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastLiveDataSource.swift; sourceTree = "<group>"; };
 		471FACD723E9B65C007DE1C8 /* EmailHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailHelper.swift; sourceTree = "<group>"; };
 		471FACD923E9BE48007DE1C8 /* SupportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportViewController.swift; sourceTree = "<group>"; };
+		4722884A28E38EBB00205807 /* Python.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = Python.xcframework; sourceTree = "<group>"; };
+		4722884C28E3928500205807 /* python-stdlib */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "python-stdlib"; sourceTree = "<group>"; };
+		4722884F28E3966300205807 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		4724BC1425474B440012BD76 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/WebApps.storyboard; sourceTree = "<group>"; };
 		4724BC1725474B4A0012BD76 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/WebApps.strings; sourceTree = "<group>"; };
 		4724BC1925474B4B0012BD76 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/WebApps.strings; sourceTree = "<group>"; };
@@ -1542,8 +1548,10 @@
 			files = (
 				F331199D268E93FB005082EB /* StoreKit.framework in Frameworks */,
 				47F6CA052878698A005EBCB6 /* universal-crypter.a in Frameworks */,
+				4722884B28E38EBB00205807 /* Python.xcframework in Frameworks */,
 				4703CF932519425E007B685C /* PDFKit.framework in Frameworks */,
 				12075275C652A9404FC48EBC /* Pods_sphinx.framework in Frameworks */,
+				4722885228E398EA00205807 /* PythonKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1567,6 +1575,7 @@
 		29CA57C9FD66D9C3750CE036 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4722884A28E38EBB00205807 /* Python.xcframework */,
 				47F6CA06287869A6005EBCB6 /* libresolv.tbd */,
 				47F6CA032878695C005EBCB6 /* universal-crypter.a */,
 				F331199C268E93FB005082EB /* StoreKit.framework */,
@@ -1574,6 +1583,7 @@
 				47D03DF02510EA170077A968 /* PDFKit.framework */,
 				47308E1925013DE100FFAC6F /* Tor.framework */,
 				487E10CEB3D07B0840A84681 /* Pods_sphinx.framework */,
+				4722884F28E3966300205807 /* module.modulemap */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1739,6 +1749,14 @@
 				47352E4D2440FEBC00E5CC7F /* Windows */,
 			);
 			path = Managers;
+			sourceTree = "<group>";
+		};
+		4722884928E38EAD00205807 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				4722884C28E3928500205807 /* python-stdlib */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		4726A40B24C09C23005A66B4 /* Chat */ = {
@@ -2638,6 +2656,7 @@
 		4779F155232AA0F200D35E81 = {
 			isa = PBXGroup;
 			children = (
+				4722884928E38EAD00205807 /* Resources */,
 				F3C92B262671FB6C005F0A42 /* README.md */,
 				4779F160232AA0F200D35E81 /* sphinx */,
 				4779F178232AA0F300D35E81 /* sphinxTests */,
@@ -3664,6 +3683,7 @@
 			);
 			name = sphinx;
 			packageProductDependencies = (
+				4722885128E398EA00205807 /* PythonKit */,
 			);
 			productName = sphinx;
 			productReference = 4779F15E232AA0F200D35E81 /* sphinx.app */;
@@ -3739,6 +3759,7 @@
 			);
 			mainGroup = 4779F155232AA0F200D35E81;
 			packageReferences = (
+				4722885028E398EA00205807 /* XCRemoteSwiftPackageReference "PythonKit" */,
 			);
 			productRefGroup = 4779F15F232AA0F200D35E81 /* Products */;
 			projectDirPath = "";
@@ -3852,6 +3873,7 @@
 				470F4C49257E708400288A9B /* TribeMemberInfoView.xib in Resources */,
 				4797E77224B8E51E00D13270 /* Chat.storyboard in Resources */,
 				4797E7A524B8F06A00D13270 /* PaidAttachmentView.xib in Resources */,
+				4722884D28E3928500205807 /* python-stdlib in Resources */,
 				4703CF8A2518FFB1007B685C /* FileReceivedTableViewCell.xib in Resources */,
 				4787F89A2478113E00CCE8B9 /* ChatAvatarView.xib in Resources */,
 				473842F12391715D00AA640F /* PictureBubbleView.xib in Resources */,
@@ -5207,7 +5229,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.gl.sphinx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(PROJECT_DIR)/sphinx/Crypter/Crypter-Bridging-Header.h";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -5300,7 +5322,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.gl.sphinx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(PROJECT_DIR)/sphinx/Crypter/Crypter-Bridging-Header.h";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -5427,6 +5449,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4722885028E398EA00205807 /* XCRemoteSwiftPackageReference "PythonKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pvieito/PythonKit.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4722885128E398EA00205807 /* PythonKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4722885028E398EA00205807 /* XCRemoteSwiftPackageReference "PythonKit" */;
+			productName = PythonKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		47F35D4A2373156A0042A58F /* sphinx.xcdatamodeld */ = {

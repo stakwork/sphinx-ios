@@ -13,6 +13,7 @@ import SDWebImage
 import Alamofire
 import GiphyUISDK
 import BackgroundTasks
+import Python
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -51,6 +52,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
+        
+        if let path = Bundle.main.path(forResource: "python-stdlib", ofType: nil) {
+            setenv("PYTHONHOME", path, 1)
+            setenv("PYTHONPATH", path, 1)
+        }
+        
+        Py_Initialize()
         
         setAppConfiguration()
         registerAppRefresh()

@@ -542,6 +542,14 @@ extension String {
         return "txt"
     }
     
+    func A() -> String {
+        let components = self.components(separatedBy: ".")
+        if components.count > 1 {
+            return components.last ?? ""
+        }
+        return ""
+    }
+    
     public static func getAttributedText(string: String, boldStrings: [String], font: UIFont, boldFont: UIFont, color: UIColor = UIColor.white) -> NSAttributedString {
         let normalFont = font
         let stringRange = (string as NSString).range(of: string)

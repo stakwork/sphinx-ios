@@ -192,8 +192,6 @@ extension DashboardRootViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        ActionsManager.sharedInstance.test()
-        
         navigationController?.isNavigationBarHidden = true
         searchTextField.delegate = self
         activeTab = .friends

@@ -47,18 +47,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         return .portrait
     }
+    
+//    func pleaseLinkPython() {
+//        if let path = Bundle.main.path(forResource: "Python/Resources", ofType: nil) {
+//            setenv("PYTHONHOME", path, 1)
+//            setenv("PYTHONPATH", path, 1)
+//        }
+//        Py_Initialize()
+//    }
 
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
         
-        if let path = Bundle.main.path(forResource: "python-stdlib", ofType: nil) {
-            setenv("PYTHONHOME", path, 1)
-            setenv("PYTHONPATH", path, 1)
-        }
+//        pleaseLinkPython()
         
-        Py_Initialize()
+        ActionsManager.sharedInstance.testPython()
         
         setAppConfiguration()
         registerAppRefresh()

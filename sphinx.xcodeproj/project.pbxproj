@@ -76,9 +76,8 @@
 		471F3ABB255ADECB00E2AC79 /* PodcastLiveDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471F3ABA255ADECB00E2AC79 /* PodcastLiveDataSource.swift */; };
 		471FACD823E9B65C007DE1C8 /* EmailHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471FACD723E9B65C007DE1C8 /* EmailHelper.swift */; };
 		471FACDA23E9BE48007DE1C8 /* SupportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471FACD923E9BE48007DE1C8 /* SupportViewController.swift */; };
-		4722884B28E38EBB00205807 /* Python.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4722884A28E38EBB00205807 /* Python.xcframework */; };
-		4722884D28E3928500205807 /* python-stdlib in Resources */ = {isa = PBXBuildFile; fileRef = 4722884C28E3928500205807 /* python-stdlib */; };
 		4722885228E398EA00205807 /* PythonKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4722885128E398EA00205807 /* PythonKit */; };
+		4722885928E48E4A00205807 /* Python in Resources */ = {isa = PBXBuildFile; fileRef = 4722885828E48E4A00205807 /* Python */; };
 		4724BC1325474B440012BD76 /* WebApps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4724BC1525474B440012BD76 /* WebApps.storyboard */; };
 		4726A40D24C09C38005A66B4 /* ChatListHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4726A40C24C09C38005A66B4 /* ChatListHeader.swift */; };
 		4726A40F24C09C4C005A66B4 /* ChatListHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4726A40E24C09C4C005A66B4 /* ChatListHeader.xib */; };
@@ -295,6 +294,7 @@
 		476A10B923A7E9E500817892 /* ContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 476A10B723A7E9E500817892 /* ContactTableViewCell.xib */; };
 		476A10BB23A91FCE00817892 /* API+ChatsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476A10BA23A91FCE00817892 /* API+ChatsExtension.swift */; };
 		476A10BE23AA8C8E00817892 /* SubscriptionDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476A10BD23AA8C8E00817892 /* SubscriptionDetailsViewController.swift */; };
+		476C9F8128E4AD65005E5ADE /* Python.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 476C9F8028E4AD65005E5ADE /* Python.xcframework */; };
 		476EB46823C4F1AE009745E2 /* GroupContactCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476EB46623C4F1AE009745E2 /* GroupContactCollectionViewCell.swift */; };
 		476EB46923C4F1AE009745E2 /* GroupContactCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 476EB46723C4F1AE009745E2 /* GroupContactCollectionViewCell.xib */; };
 		476EB47023C50640009745E2 /* GroupAddedContactsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476EB46F23C50640009745E2 /* GroupAddedContactsDataSource.swift */; };
@@ -793,9 +793,8 @@
 		471F3ABA255ADECB00E2AC79 /* PodcastLiveDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastLiveDataSource.swift; sourceTree = "<group>"; };
 		471FACD723E9B65C007DE1C8 /* EmailHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailHelper.swift; sourceTree = "<group>"; };
 		471FACD923E9BE48007DE1C8 /* SupportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportViewController.swift; sourceTree = "<group>"; };
-		4722884A28E38EBB00205807 /* Python.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = Python.xcframework; sourceTree = "<group>"; };
-		4722884C28E3928500205807 /* python-stdlib */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "python-stdlib"; sourceTree = "<group>"; };
 		4722884F28E3966300205807 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
+		4722885828E48E4A00205807 /* Python */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Python; sourceTree = "<group>"; };
 		4724BC1425474B440012BD76 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/WebApps.storyboard; sourceTree = "<group>"; };
 		4724BC1725474B4A0012BD76 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/WebApps.strings; sourceTree = "<group>"; };
 		4724BC1925474B4B0012BD76 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/WebApps.strings; sourceTree = "<group>"; };
@@ -1030,6 +1029,7 @@
 		476A10BA23A91FCE00817892 /* API+ChatsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+ChatsExtension.swift"; sourceTree = "<group>"; };
 		476A10BC23A9207700817892 /* sphinx 6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 6.xcdatamodel"; sourceTree = "<group>"; };
 		476A10BD23AA8C8E00817892 /* SubscriptionDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionDetailsViewController.swift; sourceTree = "<group>"; };
+		476C9F8028E4AD65005E5ADE /* Python.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = Python.xcframework; sourceTree = "<group>"; };
 		476EB46623C4F1AE009745E2 /* GroupContactCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupContactCollectionViewCell.swift; sourceTree = "<group>"; };
 		476EB46723C4F1AE009745E2 /* GroupContactCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GroupContactCollectionViewCell.xib; sourceTree = "<group>"; };
 		476EB46F23C50640009745E2 /* GroupAddedContactsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupAddedContactsDataSource.swift; sourceTree = "<group>"; };
@@ -1547,8 +1547,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				F331199D268E93FB005082EB /* StoreKit.framework in Frameworks */,
+				476C9F8128E4AD65005E5ADE /* Python.xcframework in Frameworks */,
 				47F6CA052878698A005EBCB6 /* universal-crypter.a in Frameworks */,
-				4722884B28E38EBB00205807 /* Python.xcframework in Frameworks */,
 				4703CF932519425E007B685C /* PDFKit.framework in Frameworks */,
 				12075275C652A9404FC48EBC /* Pods_sphinx.framework in Frameworks */,
 				4722885228E398EA00205807 /* PythonKit in Frameworks */,
@@ -1575,7 +1575,7 @@
 		29CA57C9FD66D9C3750CE036 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				4722884A28E38EBB00205807 /* Python.xcframework */,
+				476C9F8028E4AD65005E5ADE /* Python.xcframework */,
 				47F6CA06287869A6005EBCB6 /* libresolv.tbd */,
 				47F6CA032878695C005EBCB6 /* universal-crypter.a */,
 				F331199C268E93FB005082EB /* StoreKit.framework */,
@@ -1754,7 +1754,7 @@
 		4722884928E38EAD00205807 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				4722884C28E3928500205807 /* python-stdlib */,
+				4722885828E48E4A00205807 /* Python */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -3837,6 +3837,7 @@
 				47018F8127CFB7CE00797E0B /* pause_animation.json in Resources */,
 				F373BEFF26A9CB790093C886 /* Dashboard.storyboard in Resources */,
 				47F258BD2539DA0100122A5A /* PodcastCommentSentTableViewCell.xib in Resources */,
+				4722885928E48E4A00205807 /* Python in Resources */,
 				470F4C37257A949A00288A9B /* TribeLinkPreviewView.xib in Resources */,
 				4734D3D5241AADD900D6957E /* PaymentTemplateCollectionViewCell.xib in Resources */,
 				47904C0F24BF352300710E7A /* bell.caf in Resources */,
@@ -3873,7 +3874,6 @@
 				470F4C49257E708400288A9B /* TribeMemberInfoView.xib in Resources */,
 				4797E77224B8E51E00D13270 /* Chat.storyboard in Resources */,
 				4797E7A524B8F06A00D13270 /* PaidAttachmentView.xib in Resources */,
-				4722884D28E3928500205807 /* python-stdlib in Resources */,
 				4703CF8A2518FFB1007B685C /* FileReceivedTableViewCell.xib in Resources */,
 				4787F89A2478113E00CCE8B9 /* ChatAvatarView.xib in Resources */,
 				473842F12391715D00AA640F /* PictureBubbleView.xib in Resources */,

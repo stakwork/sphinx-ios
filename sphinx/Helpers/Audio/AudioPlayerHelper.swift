@@ -39,7 +39,7 @@ class AudioPlayerHelper : NSObject {
     }
     
     func getAudioDuration(data: Data) -> Double? {
-        let fileURL = getDocumentsDirectory().appendingPathComponent("audio_length.m4a")
+        let fileURL = getDocumentsDirectory().appendingPathComponent("audio_length.wav")
         
         do {
             try data.write(to: fileURL)
@@ -79,7 +79,7 @@ class AudioPlayerHelper : NSObject {
         self.endCallback = endCallback
         self.pauseCallback = pauseCallback
         
-        let fileURL = getDocumentsDirectory().appendingPathComponent("playing.m4a")
+        let fileURL = getDocumentsDirectory().appendingPathComponent("playing.wav")
         
         do {
             try data.write(to: fileURL)

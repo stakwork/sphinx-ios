@@ -418,6 +418,10 @@
 "alert-confirm.flag-message-message" = "Are you sure you want to flag this message? This action can not be undone";
 "alert-confirm.delete-message-title" = "Confirm Deleting message";
 "alert-confirm.delete-message-message" = "Are you sure you want to delete this message? This action can not be undone";
+"notificaion-level" = "Notifications";
+"see-all" = "See All";
+"only-mentions" = "Only Mentions";
+"mute-chat" = "Mute Chat";
 
 
 //OTHER

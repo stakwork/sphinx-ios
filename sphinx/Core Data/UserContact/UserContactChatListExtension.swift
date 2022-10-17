@@ -44,13 +44,6 @@ extension UserContact : ChatListCommonObject {
         return avatarUrl
     }
     
-    public func getCachedImage() -> UIImage? {
-        if let url = getPhotoUrl(), let cachedImage = MediaLoader.getImageFromCachedUrl(url: url) {
-            return cachedImage
-        }
-        return nil
-    }
-    
     public func setImage(image: UIImage)  {
         self.image = image
     }

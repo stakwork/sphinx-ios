@@ -115,15 +115,11 @@ class MessageBoostView: UIView {
                 imageView.layer.cornerRadius = imageView.frame.size.height / 2
                 
                 if let imageUrl = imageUrl {
-                    if let image = MediaLoader.getImageFromCachedUrl(url: imageUrl) {
-                        if let staticData = image.sd_imageData(as: .JPEG, compressionQuality: 1, firstFrameOnly: true) {
-                            imageView.image = UIImage(data: staticData)
-                        }
-                    } else if let url = URL(string: imageUrl) {
+                    if let url = URL(string: imageUrl) {
                         imageView.sd_setImage(
                             with: url,
                             placeholderImage: UIImage(named: "profile_avatar"),
-                            options: [.highPriority, .decodeFirstFrameOnly],
+                            options: [.scaleDownLargeImages, .decodeFirstFrameOnly, .lowPriority],
                             progress: nil
                         )
                     }

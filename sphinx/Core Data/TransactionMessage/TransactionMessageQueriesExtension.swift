@@ -99,8 +99,23 @@ extension TransactionMessage {
     
     static func getReceivedUnseenMessagesCount() -> Int {
         let userId = UserData.sharedInstance.getUserId()
-        let predicate = NSPredicate(format: "senderId != %d AND seen == %@ AND chat != null AND id >= 0 AND chat.seen == %@ AND chat.muted == %@", userId, NSNumber(booleanLiteral: false), NSNumber(booleanLiteral: false), NSNumber(booleanLiteral: false))
-        let messagesCount = CoreDataManager.sharedManager.getObjectsCountOfTypeWith(predicate: predicate, entityName: "TransactionMessage")
+
+        let predicate = NSPredicate(
+            format:
+                "senderId != %d AND seen == %@ AND chat != null AND id >= 0 AND chat.seen == %@ AND (chat.notify == %d OR (chat.notify == %d AND push == %@))",
+            userId,
+            NSNumber(booleanLiteral: false),
+            NSNumber(booleanLiteral: false),
+            Chat.NotificationLevel.SeeAll.rawValue,
+            Chat.NotificationLevel.OnlyMentions.rawValue,
+            NSNumber(booleanLiteral: true)
+        )
+
+        let messagesCount = CoreDataManager.sharedManager.getObjectsCountOfTypeWith(
+            predicate: predicate,
+            entityName: "TransactionMessage"
+        )
+
         return messagesCount
     }
     

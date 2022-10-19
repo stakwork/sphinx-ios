@@ -185,6 +185,7 @@ public class TransactionMessage: NSManagedObject {
         }
         
         let seen:Bool = m["seen"].boolValue
+        let push:Bool = m["push"].boolValue
         
         if let contact = m["contact"].dictionary {
             let _ = UserContact.getOrCreateContact(contact: JSON(contact))
@@ -236,6 +237,7 @@ public class TransactionMessage: NSManagedObject {
             mediaType: mediaType,
             originalMuid: originalMuid,
             seen: messageSeen,
+            push: push,
             messageEncrypted: messageEncrypted,
             chat: messageChat,
             message: message
@@ -291,6 +293,7 @@ public class TransactionMessage: NSManagedObject {
                              mediaType: String? = nil,
                              originalMuid: String? = nil,
                              seen: Bool,
+                             push: Bool,
                              messageEncrypted: Bool,
                              chat: Chat?,
                              message: TransactionMessage) -> TransactionMessage? {
@@ -317,6 +320,7 @@ public class TransactionMessage: NSManagedObject {
         message.mediaKey = mediaKey
         message.mediaType = mediaType
         message.seen = seen
+        message.push = push
         message.encrypted = isContentEncrypted(messageEncrypted: messageEncrypted, type: type, mediaKey: mediaKey)
         
         if messageContent != "" {

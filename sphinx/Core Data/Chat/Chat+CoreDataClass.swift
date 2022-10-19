@@ -315,6 +315,7 @@ public class Chat: NSManagedObject {
         
         seen = true
         unseenMessagesCount = 0
+        unseenMentionsCount = 0
         
         if shouldSync {
             API.sharedInstance.setChatMessagesAsSeen(chatId: self.id, callback: { _ in })
@@ -345,10 +346,37 @@ public class Chat: NSManagedObject {
         return unseenMessagesCount
     }
     
+    var unseenMentionsCount: Int = 0
+    
+    func getReceivedUnseenMentionsCount() -> Int {
+        if unseenMentionsCount == 0 {
+            calculateUnseenMentionsCount()
+        }
+        return unseenMentionsCount
+    }
+    
     func calculateUnseenMessagesCount() {
         let userId = UserData.sharedInstance.getUserId()
-        let predicate = NSPredicate(format: "senderId != %d AND chat == %@ AND seen == %@ && chat.seen == %@", userId, self, NSNumber(booleanLiteral: false), NSNumber(booleanLiteral: false))
+        let predicate = NSPredicate(
+            format: "senderId != %d AND chat == %@ AND seen == %@ && chat.seen == %@",
+            userId, self,
+            NSNumber(booleanLiteral: false),
+            NSNumber(booleanLiteral: false)
+        )
         unseenMessagesCount = CoreDataManager.sharedManager.getObjectsCountOfTypeWith(predicate: predicate, entityName: "TransactionMessage")
+    }
+    
+    func calculateUnseenMentionsCount() {
+        let userId = UserData.sharedInstance.getUserId()
+        let predicate = NSPredicate(
+            format: "senderId != %d AND chat == %@ AND seen == %@ && push == %@ && chat.seen == %@",
+            userId,
+            self,
+            NSNumber(booleanLiteral: false),
+            NSNumber(booleanLiteral: true),
+            NSNumber(booleanLiteral: false)
+        )
+        unseenMentionsCount = CoreDataManager.sharedManager.getObjectsCountOfTypeWith(predicate: predicate, entityName: "TransactionMessage")
     }
     
     func getLastMessageToShow() -> TransactionMessage? {

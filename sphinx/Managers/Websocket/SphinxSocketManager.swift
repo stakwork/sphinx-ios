@@ -445,6 +445,10 @@ extension SphinxSocketManager {
             return false
         }
         
+        if (message.chat?.isOnlyMentions() ?? false) && !message.push {
+            return false
+        }
+        
         if message.isPodcastPayment() {
             return false
         }

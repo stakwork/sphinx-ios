@@ -17,6 +17,8 @@ class ChatListCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var muteImageView: UIImageView!
     @IBOutlet weak var unreadMessageBadgeContainer: UIView!
     @IBOutlet weak var unreadMessageBadgeLabel: UILabel!
+    @IBOutlet weak var mentionsBadgeContainer: UIView!
+    @IBOutlet weak var mentionsBadgeLabel: UILabel!
     
     
     var chatListObject: ChatListCommonObject? {
@@ -53,6 +55,15 @@ extension ChatListCollectionViewCell {
     }
     
     var hasUnreadMessages: Bool { unreadMessageCount > 0 }
+    
+    var unreadMentionsCount: Int {
+        if chatListObject?.lastMessage != nil && chatListObject?.lastMessage?.seen == true {
+            return 0
+        }
+        return chatListObject?.getChat()?.getReceivedUnseenMentionsCount() ?? 0
+    }
+    
+    var hasUnreadMentions: Bool { unreadMentionsCount > 0 }
 }
 
 
@@ -72,12 +83,14 @@ extension ChatListCollectionViewCell {
         contactImageView.makeCircular()
         contactInitialsLabel.makeCircular()
         unreadMessageBadgeContainer.makeCircular()
+        mentionsBadgeContainer.makeCircular()
         
         invitePriceContainer.layer.cornerRadius = 2
         invitePriceContainer.clipsToBounds = true
         
         // Clear initial contents
-        unreadMessageBadgeContainer.alpha = 0
+        unreadMessageBadgeContainer.isHidden = true
+        mentionsBadgeContainer.isHidden = true
         nameLabel.text = ""
         messageLabel.text = ""
         dateLabel.text = ""
@@ -116,27 +129,27 @@ extension ChatListCollectionViewCell {
         
         renderLastMessage(for: chatListObject)
         renderBadgeView(for: chatListObject)
+        renderMentionsView(for: chatListObject)
         renderContactImageViews(for: chatListObject)
         renderInvitePrice(for: chatListObject)
     }
     
     
-    
     private func renderBadgeView(for chatListObject: ChatListCommonObject) {
         guard hasUnreadMessages else {
-            unreadMessageBadgeContainer.alpha = 0
+            unreadMessageBadgeContainer.isHidden = true
             return
         }
         
         guard chatListObject.isConfirmed() else {
-            unreadMessageBadgeContainer.alpha = 0
+            unreadMessageBadgeContainer.isHidden = true
             return
         }
         
-        unreadMessageBadgeContainer.alpha = 1
+        unreadMessageBadgeContainer.isHidden = false
         unreadMessageBadgeLabel.text = unreadMessageCount > 99 ? "99+" : "\(unreadMessageCount)"
         
-        if chatListObject.getChat()?.isMuted() == true {
+        if chatListObject.getChat()?.isMuted() == true || chatListObject.getChat()?.isOnlyMentions() == true {
             unreadMessageBadgeContainer.alpha = 0.2
             unreadMessageBadgeContainer.backgroundColor = .Sphinx.WashedOutReceivedText
         } else {
@@ -144,7 +157,22 @@ extension ChatListCollectionViewCell {
             unreadMessageBadgeContainer.backgroundColor = .Sphinx.PrimaryBlue
         }
     }
-    
+
+    private func renderMentionsView(for chatListObject: ChatListCommonObject) {
+        guard hasUnreadMentions else {
+            mentionsBadgeContainer.isHidden = true
+            return
+        }
+        
+        guard chatListObject.isConfirmed() else {
+            mentionsBadgeContainer.isHidden = true
+            return
+        }
+        
+        mentionsBadgeContainer.isHidden = false
+        
+        mentionsBadgeLabel.text = unreadMentionsCount > 99 ? "@ 99+" : "@ \(unreadMentionsCount)"
+    }
     
     private func renderContactImageViews(for chatListObject: ChatListCommonObject) {
         

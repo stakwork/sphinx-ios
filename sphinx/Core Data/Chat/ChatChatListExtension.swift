@@ -67,6 +67,10 @@ extension Chat: ChatListCommonObject {
         return self.notify == NotificationLevel.MuteChat.rawValue
     }
     
+    public func isOnlyMentions() -> Bool {
+        return self.notify == NotificationLevel.OnlyMentions.rawValue
+    }
+    
     public func shouldShowSingleImage() -> Bool {
         if isPublicGroup() || isConversation() {
             return true

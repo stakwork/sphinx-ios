@@ -34,6 +34,10 @@ class ActionsManager {
             setenv("PYTHONPATH", path, 1)
         }
 
+        initializePython()
+    }
+    
+    func initializePython() {
         Py_Initialize()
     }
     
@@ -44,10 +48,27 @@ class ActionsManager {
         print("Python Version: \(sys.version)")
         print("Python Encoding: \(sys.getdefaultencoding().upper())")
         
-        let keybert = Python.import("keybert")
-        
         let random = Python.import("random")
         let randomeObject = random.randint(1000, 2000)
+        print("random: \(Int(randomeObject)!)")
+        
+        let doc = """
+                 Supervised learning is the machine learning task of learning a function that
+                 maps an input to an output based on example input-output pairs. It infers a
+                 function from labeled training data consisting of a set of training examples.
+                 In supervised learning, each example is a pair consisting of an input object
+                 (typically a vector) and a desired output value (also called the supervisory signal).
+                 A supervised learning algorithm analyzes the training data and produces an inferred function,
+                 which can be used for mapping new examples. An optimal scenario will allow for the
+                 algorithm to correctly determine the class labels for unseen instances. This requires
+                 the learning algorithm to generalize from the training data to unseen situations in a
+                 'reasonable' way (see inductive bias).
+              """
+        
+        let keybert = Python.import("keybert")
+        let keywords = keybert.extract_keywords(doc)
+        
+        print("KEYWORDS: \(keywords)")
     }
     
     func test() {

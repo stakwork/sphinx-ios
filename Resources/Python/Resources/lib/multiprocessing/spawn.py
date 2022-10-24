@@ -33,20 +33,17 @@ else:
     WINEXE = getattr(sys, 'frozen', False)
     WINSERVICE = sys.executable.lower().endswith("pythonservice.exe")
 
+if WINSERVICE:
+    _python_exe = os.path.join(sys.exec_prefix, 'python.exe')
+else:
+    _python_exe = sys.executable
+
 def set_executable(exe):
     global _python_exe
-    if sys.platform == 'win32':
-        _python_exe = os.fsdecode(exe)
-    else:
-        _python_exe = os.fsencode(exe)
+    _python_exe = exe
 
 def get_executable():
     return _python_exe
-
-if WINSERVICE:
-    set_executable(os.path.join(sys.exec_prefix, 'python.exe'))
-else:
-    set_executable(sys.executable)
 
 #
 #
@@ -89,8 +86,7 @@ def get_command_line(**kwds):
         prog = 'from multiprocessing.spawn import spawn_main; spawn_main(%s)'
         prog %= ', '.join('%s=%r' % item for item in kwds.items())
         opts = util._args_from_interpreter_flags()
-        exe = get_executable()
-        return [exe] + opts + ['-c', prog, '--multiprocessing-fork']
+        return [_python_exe] + opts + ['-c', prog, '--multiprocessing-fork']
 
 
 def spawn_main(pipe_handle, parent_pid=None, tracker_fd=None):

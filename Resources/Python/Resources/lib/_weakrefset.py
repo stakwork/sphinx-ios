@@ -80,7 +80,8 @@ class WeakSet:
         return wr in self.data
 
     def __reduce__(self):
-        return self.__class__, (list(self),), self.__getstate__()
+        return (self.__class__, (list(self),),
+                getattr(self, '__dict__', None))
 
     def add(self, item):
         if self._pending_removals:

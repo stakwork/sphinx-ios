@@ -1,5 +1,7 @@
 """The machinery of importlib: finders, loaders, hooks, etc."""
 
+import _imp
+
 from ._bootstrap import ModuleSpec
 from ._bootstrap import BuiltinImporter
 from ._bootstrap import FrozenImporter
@@ -12,7 +14,6 @@ from ._bootstrap_external import FileFinder
 from ._bootstrap_external import SourceFileLoader
 from ._bootstrap_external import SourcelessFileLoader
 from ._bootstrap_external import ExtensionFileLoader
-from ._bootstrap_external import NamespaceLoader
 
 
 def all_suffixes():

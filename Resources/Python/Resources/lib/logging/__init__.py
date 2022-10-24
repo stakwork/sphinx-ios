@@ -25,7 +25,6 @@ To use, simply 'import logging' and log away!
 
 import sys, os, time, io, re, traceback, warnings, weakref, collections.abc
 
-from types import GenericAlias
 from string import Template
 from string import Formatter as StrFormatter
 
@@ -38,7 +37,7 @@ __all__ = ['BASIC_FORMAT', 'BufferingFormatter', 'CRITICAL', 'DEBUG', 'ERROR',
            'exception', 'fatal', 'getLevelName', 'getLogger', 'getLoggerClass',
            'info', 'log', 'makeLogRecord', 'setLoggerClass', 'shutdown',
            'warn', 'warning', 'getLogRecordFactory', 'setLogRecordFactory',
-           'lastResort', 'raiseExceptions', 'getLevelNamesMapping']
+           'lastResort', 'raiseExceptions']
 
 import threading
 
@@ -117,9 +116,6 @@ _nameToLevel = {
     'NOTSET': NOTSET,
 }
 
-def getLevelNamesMapping():
-    return _nameToLevel.copy()
-
 def getLevelName(level):
     """
     Return the textual or numeric representation of logging level 'level'.
@@ -160,8 +156,8 @@ def addLevelName(level, levelName):
     finally:
         _releaseLock()
 
-if hasattr(sys, "_getframe"):
-    currentframe = lambda: sys._getframe(1)
+if hasattr(sys, '_getframe'):
+    currentframe = lambda: sys._getframe(3)
 else: #pragma: no cover
     def currentframe():
         """Return the frame object for the caller's stack frame."""
@@ -185,18 +181,13 @@ else: #pragma: no cover
 _srcfile = os.path.normcase(addLevelName.__code__.co_filename)
 
 # _srcfile is only used in conjunction with sys._getframe().
-# Setting _srcfile to None will prevent findCaller() from being called. This
-# way, you can avoid the overhead of fetching caller information.
-
-# The following is based on warnings._is_internal_frame. It makes sure that
-# frames of the import mechanism are skipped when logging at module level and
-# using a stacklevel value greater than one.
-def _is_internal_frame(frame):
-    """Signal whether the frame is a CPython or logging module internal."""
-    filename = os.path.normcase(frame.f_code.co_filename)
-    return filename == _srcfile or (
-        "importlib" in filename and "_bootstrap" in filename
-    )
+# To provide compatibility with older versions of Python, set _srcfile
+# to None if _getframe() is not available; this value will prevent
+# findCaller() from being called. You can also do this if you want to avoid
+# the overhead of fetching caller information, even when _getframe() is
+# available.
+#if not hasattr(sys, '_getframe'):
+#    _srcfile = None
 
 
 def _checkLevel(level):
@@ -207,8 +198,7 @@ def _checkLevel(level):
             raise ValueError("Unknown level: %r" % level)
         rv = _nameToLevel[level]
     else:
-        raise TypeError("Level not an integer or a valid string: %r"
-                        % (level,))
+        raise TypeError("Level not an integer or a valid string: %r" % level)
     return rv
 
 #---------------------------------------------------------------------------
@@ -334,7 +324,7 @@ class LogRecord(object):
         self.lineno = lineno
         self.funcName = func
         self.created = ct
-        self.msecs = int((ct - int(ct)) * 1000) + 0.0  # see gh-89047
+        self.msecs = (ct - int(ct)) * 1000
         self.relativeCreated = (self.created - _startTime) * 1000
         if logThreads:
             self.thread = threading.get_ident()
@@ -425,9 +415,8 @@ class PercentStyle(object):
     asctime_search = '%(asctime)'
     validation_pattern = re.compile(r'%\(\w+\)[#0+ -]*(\*|\d+)?(\.(\*|\d+))?[diouxefgcrsa%]', re.I)
 
-    def __init__(self, fmt, *, defaults=None):
+    def __init__(self, fmt):
         self._fmt = fmt or self.default_format
-        self._defaults = defaults
 
     def usesTime(self):
         return self._fmt.find(self.asctime_search) >= 0
@@ -438,11 +427,7 @@ class PercentStyle(object):
             raise ValueError("Invalid format '%s' for '%s' style" % (self._fmt, self.default_format[0]))
 
     def _format(self, record):
-        if defaults := self._defaults:
-            values = defaults | record.__dict__
-        else:
-            values = record.__dict__
-        return self._fmt % values
+        return self._fmt % record.__dict__
 
     def format(self, record):
         try:
@@ -460,11 +445,7 @@ class StrFormatStyle(PercentStyle):
     field_spec = re.compile(r'^(\d+|\w+)(\.\w+|\[[^]]+\])*$')
 
     def _format(self, record):
-        if defaults := self._defaults:
-            values = defaults | record.__dict__
-        else:
-            values = record.__dict__
-        return self._fmt.format(**values)
+        return self._fmt.format(**record.__dict__)
 
     def validate(self):
         """Validate the input format, ensure it is the correct string formatting style"""
@@ -490,8 +471,8 @@ class StringTemplateStyle(PercentStyle):
     asctime_format = '${asctime}'
     asctime_search = '${asctime}'
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def __init__(self, fmt):
+        self._fmt = fmt or self.default_format
         self._tpl = Template(self._fmt)
 
     def usesTime(self):
@@ -513,11 +494,7 @@ class StringTemplateStyle(PercentStyle):
             raise ValueError('invalid format: no fields')
 
     def _format(self, record):
-        if defaults := self._defaults:
-            values = defaults | record.__dict__
-        else:
-            values = record.__dict__
-        return self._tpl.substitute(**values)
+        return self._tpl.substitute(**record.__dict__)
 
 
 BASIC_FORMAT = "%(levelname)s:%(name)s:%(message)s"
@@ -573,8 +550,7 @@ class Formatter(object):
 
     converter = time.localtime
 
-    def __init__(self, fmt=None, datefmt=None, style='%', validate=True, *,
-                 defaults=None):
+    def __init__(self, fmt=None, datefmt=None, style='%', validate=True):
         """
         Initialize the formatter with specified format strings.
 
@@ -593,7 +569,7 @@ class Formatter(object):
         if style not in _STYLES:
             raise ValueError('Style must be one of: %s' % ','.join(
                              _STYLES.keys()))
-        self._style = _STYLES[style][0](fmt, defaults=defaults)
+        self._style = _STYLES[style][0](fmt)
         if validate:
             self._style.validate()
 
@@ -854,9 +830,8 @@ def _removeHandlerRef(wr):
     if acquire and release and handlers:
         acquire()
         try:
-            handlers.remove(wr)
-        except ValueError:
-            pass
+            if wr in handlers:
+                handlers.remove(wr)
         finally:
             release()
 
@@ -888,7 +863,6 @@ class Handler(Filterer):
         self._name = None
         self.level = _checkLevel(level)
         self.formatter = None
-        self._closed = False
         # Add the handler to the global _handlerList (for cleanup on shutdown)
         _addHandlerRef(self)
         self.createLock()
@@ -1007,7 +981,6 @@ class Handler(Filterer):
         #get the module data lock, as we're updating a shared structure.
         _acquireLock()
         try:    #unlikely to raise an exception, but you never know...
-            self._closed = True
             if self._name and self._name in _handlers:
                 del _handlers[self._name]
         finally:
@@ -1146,8 +1119,6 @@ class StreamHandler(Handler):
             name += ' '
         return '<%s %s(%s)>' % (self.__class__.__name__, name, level)
 
-    __class_getitem__ = classmethod(GenericAlias)
-
 
 class FileHandler(StreamHandler):
     """
@@ -1164,14 +1135,8 @@ class FileHandler(StreamHandler):
         self.baseFilename = os.path.abspath(filename)
         self.mode = mode
         self.encoding = encoding
-        if "b" not in mode:
-            self.encoding = io.text_encoding(encoding)
         self.errors = errors
         self.delay = delay
-        # bpo-26789: FileHandler keeps a reference to the builtin open()
-        # function to be able to open or reopen the file during Python
-        # finalization.
-        self._builtin_open = open
         if delay:
             #We don't open the stream, but we still need to call the
             #Handler constructor to set level, formatter, lock etc.
@@ -1198,8 +1163,6 @@ class FileHandler(StreamHandler):
             finally:
                 # Issue #19523: call unconditionally to
                 # prevent a handler leak when delay is set
-                # Also see Issue #42378: we also rely on
-                # self._closed being set to True there
                 StreamHandler.close(self)
         finally:
             self.release()
@@ -1209,9 +1172,8 @@ class FileHandler(StreamHandler):
         Open the current base file with the (original) mode and encoding.
         Return the resulting stream.
         """
-        open_func = self._builtin_open
-        return open_func(self.baseFilename, self.mode,
-                         encoding=self.encoding, errors=self.errors)
+        return open(self.baseFilename, self.mode, encoding=self.encoding,
+                    errors=self.errors)
 
     def emit(self, record):
         """
@@ -1219,15 +1181,10 @@ class FileHandler(StreamHandler):
 
         If the stream was not opened because 'delay' was specified in the
         constructor, open it before calling the superclass's emit.
-
-        If stream is not open, current mode is 'w' and `_closed=True`, record
-        will not be emitted (see Issue #42378).
         """
         if self.stream is None:
-            if self.mode != 'w' or not self._closed:
-                self.stream = self._open()
-        if self.stream:
-            StreamHandler.emit(self, record)
+            self.stream = self._open()
+        StreamHandler.emit(self, record)
 
     def __repr__(self):
         level = getLevelName(self.level)
@@ -1535,11 +1492,7 @@ class Logger(Filterer):
         if self.isEnabledFor(CRITICAL):
             self._log(CRITICAL, msg, args, **kwargs)
 
-    def fatal(self, msg, *args, **kwargs):
-        """
-        Don't use this method, use critical() instead.
-        """
-        self.critical(msg, *args, **kwargs)
+    fatal = critical
 
     def log(self, level, msg, *args, **kwargs):
         """
@@ -1566,31 +1519,33 @@ class Logger(Filterer):
         f = currentframe()
         #On some versions of IronPython, currentframe() returns None if
         #IronPython isn't run with -X:Frames.
-        if f is None:
-            return "(unknown file)", 0, "(unknown function)", None
-        while stacklevel > 0:
-            next_f = f.f_back
-            if next_f is None:
-                ## We've got options here.
-                ## If we want to use the last (deepest) frame:
-                break
-                ## If we want to mimic the warnings module:
-                #return ("sys", 1, "(unknown function)", None)
-                ## If we want to be pedantic:
-                #raise ValueError("call stack is not deep enough")
-            f = next_f
-            if not _is_internal_frame(f):
-                stacklevel -= 1
-        co = f.f_code
-        sinfo = None
-        if stack_info:
-            with io.StringIO() as sio:
-                sio.write("Stack (most recent call last):\n")
+        if f is not None:
+            f = f.f_back
+        orig_f = f
+        while f and stacklevel > 1:
+            f = f.f_back
+            stacklevel -= 1
+        if not f:
+            f = orig_f
+        rv = "(unknown file)", 0, "(unknown function)", None
+        while hasattr(f, "f_code"):
+            co = f.f_code
+            filename = os.path.normcase(co.co_filename)
+            if filename == _srcfile:
+                f = f.f_back
+                continue
+            sinfo = None
+            if stack_info:
+                sio = io.StringIO()
+                sio.write('Stack (most recent call last):\n')
                 traceback.print_stack(f, file=sio)
                 sinfo = sio.getvalue()
                 if sinfo[-1] == '\n':
                     sinfo = sinfo[:-1]
-        return co.co_filename, f.f_lineno, co.co_name, sinfo
+                sio.close()
+            rv = (co.co_filename, f.f_lineno, co.co_name, sinfo)
+            break
+        return rv
 
     def makeRecord(self, name, level, fn, lno, msg, args, exc_info,
                    func=None, extra=None, sinfo=None):
@@ -1777,6 +1732,8 @@ class Logger(Filterer):
         return '<%s %s (%s)>' % (self.__class__.__name__, self.name, level)
 
     def __reduce__(self):
+        # In general, only the root logger will not be accessible via its name.
+        # However, the root logger's class has its own __reduce__ method.
         if getLogger(self.name) is not self:
             import pickle
             raise pickle.PicklingError('logger cannot be pickled')
@@ -1806,7 +1763,7 @@ class LoggerAdapter(object):
     information in logging output.
     """
 
-    def __init__(self, logger, extra=None):
+    def __init__(self, logger, extra):
         """
         Initialize the adapter with a logger and a dict-like object which
         provides contextual information. This constructor signature allows
@@ -1940,8 +1897,6 @@ class LoggerAdapter(object):
         level = getLevelName(logger.getEffectiveLevel())
         return '<%s %s (%s)>' % (self.__class__.__name__, logger.name, level)
 
-    __class_getitem__ = classmethod(GenericAlias)
-
 root = RootLogger(WARNING)
 Logger.root = root
 Logger.manager = Manager(Logger.root)
@@ -2043,10 +1998,8 @@ def basicConfig(**kwargs):
                 filename = kwargs.pop("filename", None)
                 mode = kwargs.pop("filemode", 'a')
                 if filename:
-                    if 'b' in mode:
+                    if 'b'in mode:
                         errors = None
-                    else:
-                        encoding = io.text_encoding(encoding)
                     h = FileHandler(filename, mode,
                                     encoding=encoding, errors=errors)
                 else:
@@ -2098,11 +2051,7 @@ def critical(msg, *args, **kwargs):
         basicConfig()
     root.critical(msg, *args, **kwargs)
 
-def fatal(msg, *args, **kwargs):
-    """
-    Don't use this function, use critical() instead.
-    """
-    critical(msg, *args, **kwargs)
+fatal = critical
 
 def error(msg, *args, **kwargs):
     """
@@ -2252,9 +2201,7 @@ def _showwarning(message, category, filename, lineno, file=None, line=None):
         logger = getLogger("py.warnings")
         if not logger.handlers:
             logger.addHandler(NullHandler())
-        # bpo-46557: Log str(s) as msg instead of logger.warning("%s", s)
-        # since some log aggregation tools group logs by the msg arg
-        logger.warning(str(s))
+        logger.warning("%s", s)
 
 def captureWarnings(capture):
     """

@@ -68,7 +68,6 @@ import socket
 import collections
 import datetime
 import sys
-import warnings
 
 try:
     import ssl
@@ -85,8 +84,6 @@ __all__ = ["NNTP",
            "NNTPPermanentError", "NNTPProtocolError", "NNTPDataError",
            "decode_header",
            ]
-
-warnings._deprecated(__name__, remove=(3, 13))
 
 # maximal line length when calling readline(). This is to prevent
 # reading arbitrary length lines. RFC 3977 limits NNTP line length to

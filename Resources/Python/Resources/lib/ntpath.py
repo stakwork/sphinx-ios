@@ -23,7 +23,6 @@ import stat
 import genericpath
 from genericpath import *
 
-
 __all__ = ["normcase","isabs","join","splitdrive","split","splitext",
            "basename","dirname","commonprefix","getsize","getmtime",
            "getatime","getctime", "islink","exists","lexists","isdir","isfile",
@@ -42,39 +41,14 @@ def _get_bothseps(path):
 # Other normalizations (such as optimizing '../' away) are not done
 # (this is done by normpath).
 
-try:
-    from _winapi import (
-        LCMapStringEx as _LCMapStringEx,
-        LOCALE_NAME_INVARIANT as _LOCALE_NAME_INVARIANT,
-        LCMAP_LOWERCASE as _LCMAP_LOWERCASE)
+def normcase(s):
+    """Normalize case of pathname.
 
-    def normcase(s):
-        """Normalize case of pathname.
-
-        Makes all characters lowercase and all slashes into backslashes.
-        """
-        s = os.fspath(s)
-        if not s:
-            return s
-        if isinstance(s, bytes):
-            encoding = sys.getfilesystemencoding()
-            s = s.decode(encoding, 'surrogateescape').replace('/', '\\')
-            s = _LCMapStringEx(_LOCALE_NAME_INVARIANT,
-                               _LCMAP_LOWERCASE, s)
-            return s.encode(encoding, 'surrogateescape')
-        else:
-            return _LCMapStringEx(_LOCALE_NAME_INVARIANT,
-                                  _LCMAP_LOWERCASE,
-                                  s.replace('/', '\\'))
-except ImportError:
-    def normcase(s):
-        """Normalize case of pathname.
-
-        Makes all characters lowercase and all slashes into backslashes.
-        """
-        s = os.fspath(s)
-        if isinstance(s, bytes):
-            return os.fsencode(os.fsdecode(s).replace('/', '\\').lower())
+    Makes all characters lowercase and all slashes into backslashes."""
+    s = os.fspath(s)
+    if isinstance(s, bytes):
+        return s.replace(b'/', b'\\').lower()
+    else:
         return s.replace('/', '\\').lower()
 
 
@@ -96,7 +70,7 @@ def isabs(s):
         if s.replace('/', '\\').startswith('\\\\?\\'):
             return True
     s = splitdrive(s)[1]
-    return len(s) > 0 and s[0] and s[0] in _get_bothseps(s)
+    return len(s) > 0 and s[0] in _get_bothseps(s)
 
 
 # Join two (or more) paths.
@@ -294,13 +268,11 @@ def ismount(path):
     root, rest = splitdrive(path)
     if root and root[0] in seps:
         return (not rest) or (rest in seps)
-    if rest and rest in seps:
+    if rest in seps:
         return True
 
     if _getvolumepathname:
-        x = path.rstrip(seps)
-        y =_getvolumepathname(path).rstrip(seps)
-        return x.casefold() == y.casefold()
+        return path.rstrip(seps) == _getvolumepathname(path).rstrip(seps)
     else:
         return False
 
@@ -340,24 +312,11 @@ def expanduser(path):
             drive = ''
         userhome = join(drive, os.environ['HOMEPATH'])
 
-    if i != 1: #~user
-        target_user = path[1:i]
-        if isinstance(target_user, bytes):
-            target_user = os.fsdecode(target_user)
-        current_user = os.environ.get('USERNAME')
-
-        if target_user != current_user:
-            # Try to guess user home directory.  By default all user
-            # profile directories are located in the same place and are
-            # named by corresponding usernames.  If userhome isn't a
-            # normal profile directory, this guess is likely wrong,
-            # so we bail out.
-            if current_user != basename(userhome):
-                return path
-            userhome = join(dirname(userhome), target_user)
-
     if isinstance(path, bytes):
         userhome = os.fsencode(userhome)
+
+    if i != 1: #~user
+        userhome = join(dirname(userhome), path[1:i])
 
     return userhome + path[i:]
 
@@ -487,68 +446,56 @@ def expandvars(path):
 # Normalize a path, e.g. A//B, A/./B and A/foo/../B all become A\B.
 # Previously, this function also truncated pathnames to 8+3 format,
 # but as this module is called "ntpath", that's obviously wrong!
-try:
-    from nt import _path_normpath
 
-except ImportError:
-    def normpath(path):
-        """Normalize path, eliminating double slashes, etc."""
-        path = os.fspath(path)
-        if isinstance(path, bytes):
-            sep = b'\\'
-            altsep = b'/'
-            curdir = b'.'
-            pardir = b'..'
-            special_prefixes = (b'\\\\.\\', b'\\\\?\\')
-        else:
-            sep = '\\'
-            altsep = '/'
-            curdir = '.'
-            pardir = '..'
-            special_prefixes = ('\\\\.\\', '\\\\?\\')
-        if path.startswith(special_prefixes):
-            # in the case of paths with these prefixes:
-            # \\.\ -> device names
-            # \\?\ -> literal paths
-            # do not do any normalization, but return the path
-            # unchanged apart from the call to os.fspath()
-            return path
-        path = path.replace(altsep, sep)
-        prefix, path = splitdrive(path)
+def normpath(path):
+    """Normalize path, eliminating double slashes, etc."""
+    path = os.fspath(path)
+    if isinstance(path, bytes):
+        sep = b'\\'
+        altsep = b'/'
+        curdir = b'.'
+        pardir = b'..'
+        special_prefixes = (b'\\\\.\\', b'\\\\?\\')
+    else:
+        sep = '\\'
+        altsep = '/'
+        curdir = '.'
+        pardir = '..'
+        special_prefixes = ('\\\\.\\', '\\\\?\\')
+    if path.startswith(special_prefixes):
+        # in the case of paths with these prefixes:
+        # \\.\ -> device names
+        # \\?\ -> literal paths
+        # do not do any normalization, but return the path
+        # unchanged apart from the call to os.fspath()
+        return path
+    path = path.replace(altsep, sep)
+    prefix, path = splitdrive(path)
 
-        # collapse initial backslashes
-        if path.startswith(sep):
-            prefix += sep
-            path = path.lstrip(sep)
+    # collapse initial backslashes
+    if path.startswith(sep):
+        prefix += sep
+        path = path.lstrip(sep)
 
-        comps = path.split(sep)
-        i = 0
-        while i < len(comps):
-            if not comps[i] or comps[i] == curdir:
+    comps = path.split(sep)
+    i = 0
+    while i < len(comps):
+        if not comps[i] or comps[i] == curdir:
+            del comps[i]
+        elif comps[i] == pardir:
+            if i > 0 and comps[i-1] != pardir:
+                del comps[i-1:i+1]
+                i -= 1
+            elif i == 0 and prefix.endswith(sep):
                 del comps[i]
-            elif comps[i] == pardir:
-                if i > 0 and comps[i-1] != pardir:
-                    del comps[i-1:i+1]
-                    i -= 1
-                elif i == 0 and prefix.endswith(sep):
-                    del comps[i]
-                else:
-                    i += 1
             else:
                 i += 1
-        # If the path is now empty, substitute '.'
-        if not prefix and not comps:
-            comps.append(curdir)
-        return prefix + sep.join(comps)
-
-else:
-    def normpath(path):
-        """Normalize path, eliminating double slashes, etc."""
-        path = os.fspath(path)
-        if isinstance(path, bytes):
-            return os.fsencode(_path_normpath(os.fsdecode(path))) or b"."
-        return _path_normpath(path) or "."
-
+        else:
+            i += 1
+    # If the path is now empty, substitute '.'
+    if not prefix and not comps:
+        comps.append(curdir)
+    return prefix + sep.join(comps)
 
 def _abspath_fallback(path):
     """Return the absolute version of a path as a fallback function in case
@@ -577,7 +524,7 @@ else:  # use native Windows method on Windows
     def abspath(path):
         """Return the absolute version of a path."""
         try:
-            return _getfullpathname(normpath(path))
+            return normpath(_getfullpathname(path))
         except (OSError, ValueError):
             return _abspath_fallback(path)
 
@@ -675,7 +622,7 @@ else:
                 tail = join(name, tail) if tail else name
         return tail
 
-    def realpath(path, *, strict=False):
+    def realpath(path):
         path = normpath(path)
         if isinstance(path, bytes):
             prefix = b'\\\\?\\'
@@ -700,8 +647,6 @@ else:
             path = _getfinalpathname(path)
             initial_winerror = 0
         except OSError as ex:
-            if strict:
-                raise
             initial_winerror = ex.winerror
             path = _getfinalpathname_nonstrict(path)
         # The path returned by _getfinalpathname will always start with \\?\ -

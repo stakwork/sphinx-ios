@@ -409,10 +409,14 @@ class Sniffer:
                 continue # skip rows that have irregular number of columns
 
             for col in list(columnTypes.keys()):
-                thisType = complex
-                try:
-                    thisType(row[col])
-                except (ValueError, OverflowError):
+
+                for thisType in [int, float, complex]:
+                    try:
+                        thisType(row[col])
+                        break
+                    except (ValueError, OverflowError):
+                        pass
+                else:
                     # fallback to length of string
                     thisType = len(row[col])
 

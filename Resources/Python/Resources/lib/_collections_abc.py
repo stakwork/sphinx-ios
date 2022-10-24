@@ -416,7 +416,7 @@ class Collection(Sized, Iterable, Container):
 class _CallableGenericAlias(GenericAlias):
     """ Represent `Callable[argtypes, resulttype]`.
 
-    This sets ``__args__`` to a tuple containing the flattened ``argtypes``
+    This sets ``__args__`` to a tuple containing the flattened``argtypes``
     followed by ``resulttype``.
 
     Example: ``Callable[[int, str], float]`` sets ``__args__`` to
@@ -426,19 +426,32 @@ class _CallableGenericAlias(GenericAlias):
     __slots__ = ()
 
     def __new__(cls, origin, args):
-        if not (isinstance(args, tuple) and len(args) == 2):
+        try:
+            return cls.__create_ga(origin, args)
+        except TypeError as exc:
+            import warnings
+            warnings.warn(f'{str(exc)} '
+                          f'(This will raise a TypeError in Python 3.10.)',
+                          DeprecationWarning)
+            return GenericAlias(origin, args)
+
+    @classmethod
+    def __create_ga(cls, origin, args):
+        if not isinstance(args, tuple) or len(args) != 2:
             raise TypeError(
                 "Callable must be used as Callable[[arg, ...], result].")
         t_args, t_result = args
-        if isinstance(t_args, (tuple, list)):
-            args = (*t_args, t_result)
-        elif not _is_param_expr(t_args):
-            raise TypeError(f"Expected a list of types, an ellipsis, "
-                            f"ParamSpec, or Concatenate. Got {t_args}")
-        return super().__new__(cls, origin, args)
+        if isinstance(t_args, (list, tuple)):
+            ga_args = tuple(t_args) + (t_result,)
+        # This relaxes what t_args can be on purpose to allow things like
+        # PEP 612 ParamSpec.  Responsibility for whether a user is using
+        # Callable[...] properly is deferred to static type checkers.
+        else:
+            ga_args = args
+        return super().__new__(cls, origin, ga_args)
 
     def __repr__(self):
-        if len(self.__args__) == 2 and _is_param_expr(self.__args__[0]):
+        if len(self.__args__) == 2 and self.__args__[0] is Ellipsis:
             return super().__repr__()
         return (f'collections.abc.Callable'
                 f'[[{", ".join([_type_repr(a) for a in self.__args__[:-1]])}], '
@@ -446,45 +459,20 @@ class _CallableGenericAlias(GenericAlias):
 
     def __reduce__(self):
         args = self.__args__
-        if not (len(args) == 2 and _is_param_expr(args[0])):
+        if not (len(args) == 2 and args[0] is Ellipsis):
             args = list(args[:-1]), args[-1]
         return _CallableGenericAlias, (Callable, args)
 
     def __getitem__(self, item):
         # Called during TypeVar substitution, returns the custom subclass
-        # rather than the default types.GenericAlias object.  Most of the
-        # code is copied from typing's _GenericAlias and the builtin
-        # types.GenericAlias.
+        # rather than the default types.GenericAlias object.
+        ga = super().__getitem__(item)
+        args = ga.__args__
+        t_result = args[-1]
+        t_args = args[:-1]
+        args = (t_args, t_result)
+        return _CallableGenericAlias(Callable, args)
 
-        if not isinstance(item, tuple):
-            item = (item,)
-        # A special case in PEP 612 where if X = Callable[P, int],
-        # then X[int, str] == X[[int, str]].
-        if (len(self.__parameters__) == 1
-                and _is_param_expr(self.__parameters__[0])
-                and item and not _is_param_expr(item[0])):
-            item = (item,)
-
-        new_args = super().__getitem__(item).__args__
-
-        # args[0] occurs due to things like Z[[int, str, bool]] from PEP 612
-        if not isinstance(new_args[0], (tuple, list)):
-            t_result = new_args[-1]
-            t_args = new_args[:-1]
-            new_args = (t_args, t_result)
-        return _CallableGenericAlias(Callable, tuple(new_args))
-
-def _is_param_expr(obj):
-    """Checks if obj matches either a list of types, ``...``, ``ParamSpec`` or
-    ``_ConcatenateGenericAlias`` from typing.py
-    """
-    if obj is Ellipsis:
-        return True
-    if isinstance(obj, list):
-        return True
-    obj = type(obj)
-    names = ('ParamSpec', '_ConcatenateGenericAlias')
-    return obj.__module__ == 'typing' and any(obj.__name__ == name for name in names)
 
 def _type_repr(obj):
     """Return the repr() of an object, special-casing types (internal helper).
@@ -526,6 +514,7 @@ class Callable(metaclass=ABCMeta):
 
 
 class Set(Collection):
+
     """A set is a finite, iterable container.
 
     This class provides concrete generic implementations of all
@@ -751,18 +740,18 @@ MutableSet.register(set)
 
 ### MAPPINGS ###
 
+
 class Mapping(Collection):
+
+    __slots__ = ()
+
     """A Mapping is a generic container for associating key/value
     pairs.
 
     This class provides concrete generic implementations of all
     methods except for __getitem__, __iter__, and __len__.
+
     """
-
-    __slots__ = ()
-
-    # Tell ABCMeta.__new__ that this class should have TPFLAGS_MAPPING set.
-    __abc_tpflags__ = 1 << 6 # Py_TPFLAGS_MAPPING
 
     @abstractmethod
     def __getitem__(self, key):
@@ -801,6 +790,7 @@ class Mapping(Collection):
         return dict(self.items()) == dict(other.items())
 
     __reversed__ = None
+
 
 Mapping.register(mappingproxy)
 
@@ -884,15 +874,17 @@ ValuesView.register(dict_values)
 
 
 class MutableMapping(Mapping):
+
+    __slots__ = ()
+
     """A MutableMapping is a generic container for associating
     key/value pairs.
 
     This class provides concrete generic implementations of all
     methods except for __getitem__, __setitem__, __delitem__,
     __iter__, and __len__.
-    """
 
-    __slots__ = ()
+    """
 
     @abstractmethod
     def __setitem__(self, key, value):
@@ -970,7 +962,9 @@ MutableMapping.register(dict)
 
 ### SEQUENCES ###
 
+
 class Sequence(Reversible, Collection):
+
     """All the operations on a read-only sequence.
 
     Concrete subclasses must override __new__ or __init__,
@@ -978,9 +972,6 @@ class Sequence(Reversible, Collection):
     """
 
     __slots__ = ()
-
-    # Tell ABCMeta.__new__ that this class should have TPFLAGS_SEQUENCE set.
-    __abc_tpflags__ = 1 << 5 # Py_TPFLAGS_SEQUENCE
 
     @abstractmethod
     def __getitem__(self, index):
@@ -1022,16 +1013,17 @@ class Sequence(Reversible, Collection):
         while stop is None or i < stop:
             try:
                 v = self[i]
+                if v is value or v == value:
+                    return i
             except IndexError:
                 break
-            if v is value or v == value:
-                return i
             i += 1
         raise ValueError
 
     def count(self, value):
         'S.count(value) -> integer -- return number of occurrences of value'
         return sum(1 for v in self if v is value or v == value)
+
 
 Sequence.register(tuple)
 Sequence.register(str)
@@ -1040,6 +1032,7 @@ Sequence.register(memoryview)
 
 
 class ByteString(Sequence):
+
     """This unifies bytes and bytearray.
 
     XXX Should add all their methods.
@@ -1052,13 +1045,15 @@ ByteString.register(bytearray)
 
 
 class MutableSequence(Sequence):
+
+    __slots__ = ()
+
     """All the operations on a read-write sequence.
 
     Concrete subclasses must provide __new__ or __init__,
     __getitem__, __setitem__, __delitem__, __len__, and insert().
-    """
 
-    __slots__ = ()
+    """
 
     @abstractmethod
     def __setitem__(self, index, value):

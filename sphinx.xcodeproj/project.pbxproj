@@ -294,7 +294,6 @@
 		476A10B923A7E9E500817892 /* ContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 476A10B723A7E9E500817892 /* ContactTableViewCell.xib */; };
 		476A10BB23A91FCE00817892 /* API+ChatsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476A10BA23A91FCE00817892 /* API+ChatsExtension.swift */; };
 		476A10BE23AA8C8E00817892 /* SubscriptionDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476A10BD23AA8C8E00817892 /* SubscriptionDetailsViewController.swift */; };
-		476C9F8128E4AD65005E5ADE /* Python.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 476C9F8028E4AD65005E5ADE /* Python.xcframework */; };
 		476EB46823C4F1AE009745E2 /* GroupContactCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476EB46623C4F1AE009745E2 /* GroupContactCollectionViewCell.swift */; };
 		476EB46923C4F1AE009745E2 /* GroupContactCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 476EB46723C4F1AE009745E2 /* GroupContactCollectionViewCell.xib */; };
 		476EB47023C50640009745E2 /* GroupAddedContactsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476EB46F23C50640009745E2 /* GroupAddedContactsDataSource.swift */; };
@@ -525,6 +524,13 @@
 		47DAABCB24913E6E00EF38B0 /* SwipableReplyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47DAABCA24913E6E00EF38B0 /* SwipableReplyCell.swift */; };
 		47DAABCE2491410900EF38B0 /* MessageReplyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47DAABCD2491410900EF38B0 /* MessageReplyView.swift */; };
 		47DAABD02491411400EF38B0 /* MessageReplyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47DAABCF2491411400EF38B0 /* MessageReplyView.xib */; };
+		47DB024B2906CE7D0098126B /* BZip2.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47DB02462906CE7C0098126B /* BZip2.xcframework */; };
+		47DB024C2906CE7D0098126B /* libFFI.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47DB02472906CE7C0098126B /* libFFI.xcframework */; };
+		47DB024D2906CE7D0098126B /* OpenSSL.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47DB02482906CE7D0098126B /* OpenSSL.xcframework */; };
+		47DB024E2906CE7D0098126B /* Python.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47DB02492906CE7D0098126B /* Python.xcframework */; };
+		47DB024F2906CE7D0098126B /* XZ.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47DB024A2906CE7D0098126B /* XZ.xcframework */; };
+		47DB02512906D1B30098126B /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 47DB02502906D1B30098126B /* libsqlite3.tbd */; };
+		47DB02532906D1C40098126B /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 47DB02522906D1C40098126B /* libz.tbd */; };
 		47E194CE2350DB0E004B86A1 /* SphinxSocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E194CD2350DB0E004B86A1 /* SphinxSocketManager.swift */; };
 		47E300DF234B81F800DB56DB /* LeftMenuAddFriendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E300DE234B81F800DB56DB /* LeftMenuAddFriendTableViewCell.swift */; };
 		47E300E4234B83EC00DB56DB /* AddFriendRowButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E300E3234B83EC00DB56DB /* AddFriendRowButton.swift */; };
@@ -1029,7 +1035,6 @@
 		476A10BA23A91FCE00817892 /* API+ChatsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+ChatsExtension.swift"; sourceTree = "<group>"; };
 		476A10BC23A9207700817892 /* sphinx 6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 6.xcdatamodel"; sourceTree = "<group>"; };
 		476A10BD23AA8C8E00817892 /* SubscriptionDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionDetailsViewController.swift; sourceTree = "<group>"; };
-		476C9F8028E4AD65005E5ADE /* Python.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = Python.xcframework; sourceTree = "<group>"; };
 		476EB46623C4F1AE009745E2 /* GroupContactCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupContactCollectionViewCell.swift; sourceTree = "<group>"; };
 		476EB46723C4F1AE009745E2 /* GroupContactCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GroupContactCollectionViewCell.xib; sourceTree = "<group>"; };
 		476EB46F23C50640009745E2 /* GroupAddedContactsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupAddedContactsDataSource.swift; sourceTree = "<group>"; };
@@ -1354,6 +1359,13 @@
 		47DAABCA24913E6E00EF38B0 /* SwipableReplyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipableReplyCell.swift; sourceTree = "<group>"; };
 		47DAABCD2491410900EF38B0 /* MessageReplyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageReplyView.swift; sourceTree = "<group>"; };
 		47DAABCF2491411400EF38B0 /* MessageReplyView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageReplyView.xib; sourceTree = "<group>"; };
+		47DB02462906CE7C0098126B /* BZip2.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = BZip2.xcframework; sourceTree = "<group>"; };
+		47DB02472906CE7C0098126B /* libFFI.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = libFFI.xcframework; sourceTree = "<group>"; };
+		47DB02482906CE7D0098126B /* OpenSSL.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = OpenSSL.xcframework; sourceTree = "<group>"; };
+		47DB02492906CE7D0098126B /* Python.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Python.xcframework; path = "../../../Downloads/Python-3.9-iOS-support.b7/Python.xcframework"; sourceTree = "<group>"; };
+		47DB024A2906CE7D0098126B /* XZ.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = XZ.xcframework; sourceTree = "<group>"; };
+		47DB02502906D1B30098126B /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		47DB02522906D1C40098126B /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		47E194CD2350DB0E004B86A1 /* SphinxSocketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SphinxSocketManager.swift; sourceTree = "<group>"; };
 		47E300DE234B81F800DB56DB /* LeftMenuAddFriendTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftMenuAddFriendTableViewCell.swift; sourceTree = "<group>"; };
 		47E300E3234B83EC00DB56DB /* AddFriendRowButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendRowButton.swift; sourceTree = "<group>"; };
@@ -1546,12 +1558,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47DB02532906D1C40098126B /* libz.tbd in Frameworks */,
+				47DB02512906D1B30098126B /* libsqlite3.tbd in Frameworks */,
 				F331199D268E93FB005082EB /* StoreKit.framework in Frameworks */,
-				476C9F8128E4AD65005E5ADE /* Python.xcframework in Frameworks */,
 				47F6CA052878698A005EBCB6 /* universal-crypter.a in Frameworks */,
 				4703CF932519425E007B685C /* PDFKit.framework in Frameworks */,
 				12075275C652A9404FC48EBC /* Pods_sphinx.framework in Frameworks */,
+				47DB024E2906CE7D0098126B /* Python.xcframework in Frameworks */,
+				47DB024F2906CE7D0098126B /* XZ.xcframework in Frameworks */,
 				4722885228E398EA00205807 /* PythonKit in Frameworks */,
+				47DB024C2906CE7D0098126B /* libFFI.xcframework in Frameworks */,
+				47DB024D2906CE7D0098126B /* OpenSSL.xcframework in Frameworks */,
+				47DB024B2906CE7D0098126B /* BZip2.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1575,7 +1593,13 @@
 		29CA57C9FD66D9C3750CE036 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				476C9F8028E4AD65005E5ADE /* Python.xcframework */,
+				47DB02522906D1C40098126B /* libz.tbd */,
+				47DB02502906D1B30098126B /* libsqlite3.tbd */,
+				47DB02462906CE7C0098126B /* BZip2.xcframework */,
+				47DB02472906CE7C0098126B /* libFFI.xcframework */,
+				47DB02482906CE7D0098126B /* OpenSSL.xcframework */,
+				47DB02492906CE7D0098126B /* Python.xcframework */,
+				47DB024A2906CE7D0098126B /* XZ.xcframework */,
 				47F6CA06287869A6005EBCB6 /* libresolv.tbd */,
 				47F6CA032878695C005EBCB6 /* universal-crypter.a */,
 				F331199C268E93FB005082EB /* StoreKit.framework */,

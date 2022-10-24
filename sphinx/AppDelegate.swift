@@ -13,7 +13,7 @@ import SDWebImage
 import Alamofire
 import GiphyUISDK
 import BackgroundTasks
-import Python
+//import Python
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

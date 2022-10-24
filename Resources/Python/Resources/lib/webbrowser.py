@@ -1,5 +1,5 @@
 #! /usr/bin/env python3
-"""Interfaces for launching and remotely controlling web browsers."""
+"""Interfaces for launching and remotely controlling Web browsers."""
 # Maintained by Georg Brandl.
 
 import os
@@ -8,7 +8,6 @@ import shutil
 import sys
 import subprocess
 import threading
-import warnings
 
 __all__ = ["Error", "open", "open_new", "open_new_tab", "get", "register"]
 
@@ -462,14 +461,13 @@ def register_X_browsers():
     if shutil.which("xdg-open"):
         register("xdg-open", None, BackgroundBrowser("xdg-open"))
 
-    # Opens an appropriate browser for the URL scheme according to
-    # freedesktop.org settings (GNOME, KDE, XFCE, etc.)
-    if shutil.which("gio"):
-        register("gio", None, BackgroundBrowser(["gio", "open", "--", "%s"]))
-
-    # Equivalent of gio open before 2015
+    # The default GNOME3 browser
     if "GNOME_DESKTOP_SESSION_ID" in os.environ and shutil.which("gvfs-open"):
         register("gvfs-open", None, BackgroundBrowser("gvfs-open"))
+
+    # The default GNOME browser
+    if "GNOME_DESKTOP_SESSION_ID" in os.environ and shutil.which("gnome-open"):
+        register("gnome-open", None, BackgroundBrowser("gnome-open"))
 
     # The default KDE browser
     if "KDE_FULL_SESSION" in os.environ and shutil.which("kfmclient"):
@@ -533,10 +531,6 @@ def register_standard_browsers():
         register("safari", None, MacOSXOSAScript('safari'))
         # OS X can use below Unix support (but we prefer using the OS X
         # specific stuff)
-
-    if sys.platform == "serenityos":
-        # SerenityOS webbrowser, simply called "Browser".
-        register("Browser", None, BackgroundBrowser("Browser"))
 
     if sys.platform[:3] == "win":
         # First try to use the default Windows browser
@@ -682,8 +676,6 @@ if sys.platform == 'darwin':
         Internet System Preferences panel, will be used.
         """
         def __init__(self, name):
-            warnings.warn(f'{self.__class__.__name__} is deprecated in 3.11'
-                          ' use MacOSXOSAScript instead.', DeprecationWarning, stacklevel=2)
             self.name = name
 
         def open(self, url, new=0, autoraise=True):
@@ -721,33 +713,19 @@ if sys.platform == 'darwin':
             return not rc
 
     class MacOSXOSAScript(BaseBrowser):
-        def __init__(self, name='default'):
-            super().__init__(name)
-
-        @property
-        def _name(self):
-            warnings.warn(f'{self.__class__.__name__}._name is deprecated in 3.11'
-                          f' use {self.__class__.__name__}.name instead.',
-                          DeprecationWarning, stacklevel=2)
-            return self.name
-
-        @_name.setter
-        def _name(self, val):
-            warnings.warn(f'{self.__class__.__name__}._name is deprecated in 3.11'
-                          f' use {self.__class__.__name__}.name instead.',
-                          DeprecationWarning, stacklevel=2)
-            self.name = val
+        def __init__(self, name):
+            self._name = name
 
         def open(self, url, new=0, autoraise=True):
-            if self.name == 'default':
+            if self._name == 'default':
                 script = 'open location "%s"' % url.replace('"', '%22') # opens in default browser
             else:
-                script = f'''
+                script = '''
                    tell application "%s"
                        activate
                        open location "%s"
                    end
-                   '''%(self.name, url.replace('"', '%22'))
+                   '''%(self._name, url.replace('"', '%22'))
 
             osapipe = os.popen("osascript", "w")
             if osapipe is None:

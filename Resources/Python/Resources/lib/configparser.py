@@ -316,7 +316,7 @@ class ParsingError(Error):
     def filename(self):
         """Deprecated, use `source'."""
         warnings.warn(
-            "The 'filename' attribute will be removed in Python 3.12. "
+            "The 'filename' attribute will be removed in future versions.  "
             "Use 'source' instead.",
             DeprecationWarning, stacklevel=2
         )
@@ -326,7 +326,7 @@ class ParsingError(Error):
     def filename(self, value):
         """Deprecated, user `source'."""
         warnings.warn(
-            "The 'filename' attribute will be removed in Python 3.12. "
+            "The 'filename' attribute will be removed in future versions.  "
             "Use 'source' instead.",
             DeprecationWarning, stacklevel=2
         )
@@ -525,15 +525,6 @@ class LegacyInterpolation(Interpolation):
 
     _KEYCRE = re.compile(r"%\(([^)]*)\)s|.")
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        warnings.warn(
-            "LegacyInterpolation has been deprecated since Python 3.2 "
-            "and will be removed from the configparser module in Python 3.13. "
-            "Use BasicInterpolation or ExtendedInterpolation instead.",
-            DeprecationWarning, stacklevel=2
-        )
-
     def before_get(self, parser, section, option, value, vars):
         rawval = value
         depth = MAX_INTERPOLATION_DEPTH
@@ -572,7 +563,7 @@ class RawConfigParser(MutableMapping):
     # Regular expressions for parsing section headers and options
     _SECT_TMPL = r"""
         \[                                 # [
-        (?P<header>.+)                     # very permissive!
+        (?P<header>[^]]+)                  # very permissive!
         \]                                 # ]
         """
     _OPT_TMPL = r"""
@@ -642,11 +633,6 @@ class RawConfigParser(MutableMapping):
             self._interpolation = self._DEFAULT_INTERPOLATION
         if self._interpolation is None:
             self._interpolation = Interpolation()
-        if not isinstance(self._interpolation, Interpolation):
-            raise TypeError(
-                f"interpolation= must be None or an instance of Interpolation;"
-                f" got an object of type {type(self._interpolation)}"
-            )
         if converters is not _UNSET:
             self._converters.update(converters)
         if defaults:
@@ -704,7 +690,6 @@ class RawConfigParser(MutableMapping):
         """
         if isinstance(filenames, (str, bytes, os.PathLike)):
             filenames = [filenames]
-        encoding = io.text_encoding(encoding)
         read_ok = []
         for filename in filenames:
             try:
@@ -771,7 +756,7 @@ class RawConfigParser(MutableMapping):
     def readfp(self, fp, filename=None):
         """Deprecated, use read_file instead."""
         warnings.warn(
-            "This method will be removed in Python 3.12. "
+            "This method will be removed in future versions.  "
             "Use 'parser.read_file()' instead.",
             DeprecationWarning, stacklevel=2
         )
@@ -1246,7 +1231,7 @@ class SafeConfigParser(ConfigParser):
         super().__init__(*args, **kwargs)
         warnings.warn(
             "The SafeConfigParser class has been renamed to ConfigParser "
-            "in Python 3.2. This alias will be removed in Python 3.12."
+            "in Python 3.2. This alias will be removed in future versions."
             " Use ConfigParser directly instead.",
             DeprecationWarning, stacklevel=2
         )

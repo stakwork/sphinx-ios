@@ -44,16 +44,6 @@ def _sighandler_noop(signum, frame):
     pass
 
 
-def waitstatus_to_exitcode(status):
-    try:
-        return os.waitstatus_to_exitcode(status)
-    except ValueError:
-        # The child exited, but we don't understand its status.
-        # This shouldn't happen, but if it does, let's just
-        # return that status; perhaps that helps debug it.
-        return status
-
-
 class _UnixSelectorEventLoop(selector_events.BaseSelectorEventLoop):
     """Unix event loop.
 
@@ -229,8 +219,7 @@ class _UnixSelectorEventLoop(selector_events.BaseSelectorEventLoop):
             self, protocol_factory, path=None, *,
             ssl=None, sock=None,
             server_hostname=None,
-            ssl_handshake_timeout=None,
-            ssl_shutdown_timeout=None):
+            ssl_handshake_timeout=None):
         assert server_hostname is None or isinstance(server_hostname, str)
         if ssl:
             if server_hostname is None:
@@ -242,9 +231,6 @@ class _UnixSelectorEventLoop(selector_events.BaseSelectorEventLoop):
             if ssl_handshake_timeout is not None:
                 raise ValueError(
                     'ssl_handshake_timeout is only meaningful with ssl')
-            if ssl_shutdown_timeout is not None:
-                raise ValueError(
-                    'ssl_shutdown_timeout is only meaningful with ssl')
 
         if path is not None:
             if sock is not None:
@@ -271,15 +257,13 @@ class _UnixSelectorEventLoop(selector_events.BaseSelectorEventLoop):
 
         transport, protocol = await self._create_connection_transport(
             sock, protocol_factory, ssl, server_hostname,
-            ssl_handshake_timeout=ssl_handshake_timeout,
-            ssl_shutdown_timeout=ssl_shutdown_timeout)
+            ssl_handshake_timeout=ssl_handshake_timeout)
         return transport, protocol
 
     async def create_unix_server(
             self, protocol_factory, path=None, *,
             sock=None, backlog=100, ssl=None,
             ssl_handshake_timeout=None,
-            ssl_shutdown_timeout=None,
             start_serving=True):
         if isinstance(ssl, bool):
             raise TypeError('ssl argument must be an SSLContext or None')
@@ -287,10 +271,6 @@ class _UnixSelectorEventLoop(selector_events.BaseSelectorEventLoop):
         if ssl_handshake_timeout is not None and not ssl:
             raise ValueError(
                 'ssl_handshake_timeout is only meaningful with ssl')
-
-        if ssl_shutdown_timeout is not None and not ssl:
-            raise ValueError(
-                'ssl_shutdown_timeout is only meaningful with ssl')
 
         if path is not None:
             if sock is not None:
@@ -338,8 +318,7 @@ class _UnixSelectorEventLoop(selector_events.BaseSelectorEventLoop):
 
         sock.setblocking(False)
         server = base_events.Server(self, [sock], protocol_factory,
-                                    ssl, backlog, ssl_handshake_timeout,
-                                    ssl_shutdown_timeout)
+                                    ssl, backlog, ssl_handshake_timeout)
         if start_serving:
             server._start_serving()
             # Skip one loop iteration so that all 'loop.add_reader'
@@ -962,7 +941,7 @@ class PidfdChildWatcher(AbstractChildWatcher):
                 " will report returncode 255",
                 pid)
         else:
-            returncode = waitstatus_to_exitcode(status)
+            returncode = _compute_returncode(status)
 
         os.close(pidfd)
         callback(pid, returncode, *args)
@@ -975,6 +954,20 @@ class PidfdChildWatcher(AbstractChildWatcher):
         self._loop._remove_reader(pidfd)
         os.close(pidfd)
         return True
+
+
+def _compute_returncode(status):
+    if os.WIFSIGNALED(status):
+        # The child process died because of a signal.
+        return -os.WTERMSIG(status)
+    elif os.WIFEXITED(status):
+        # The child process exited (e.g sys.exit()).
+        return os.WEXITSTATUS(status)
+    else:
+        # The child exited, but we don't understand its status.
+        # This shouldn't happen, but if it does, let's just
+        # return that status; perhaps that helps debug it.
+        return status
 
 
 class BaseChildWatcher(AbstractChildWatcher):
@@ -1087,7 +1080,7 @@ class SafeChildWatcher(BaseChildWatcher):
                 # The child process is still alive.
                 return
 
-            returncode = waitstatus_to_exitcode(status)
+            returncode = _compute_returncode(status)
             if self._loop.get_debug():
                 logger.debug('process %s exited with returncode %s',
                              expected_pid, returncode)
@@ -1180,7 +1173,7 @@ class FastChildWatcher(BaseChildWatcher):
                     # A child process is still alive.
                     return
 
-                returncode = waitstatus_to_exitcode(status)
+                returncode = _compute_returncode(status)
 
             with self._lock:
                 try:
@@ -1307,7 +1300,7 @@ class MultiLoopChildWatcher(AbstractChildWatcher):
                 # The child process is still alive.
                 return
 
-            returncode = waitstatus_to_exitcode(status)
+            returncode = _compute_returncode(status)
             debug_log = True
         try:
             loop, callback, args = self._callbacks.pop(pid)
@@ -1410,7 +1403,7 @@ class ThreadedChildWatcher(AbstractChildWatcher):
                 "Unknown child process pid %d, will report returncode 255",
                 pid)
         else:
-            returncode = waitstatus_to_exitcode(status)
+            returncode = _compute_returncode(status)
             if loop.get_debug():
                 logger.debug('process %s exited with returncode %s',
                              expected_pid, returncode)

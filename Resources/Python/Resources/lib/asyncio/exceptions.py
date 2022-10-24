@@ -1,8 +1,7 @@
 """asyncio exceptions."""
 
 
-__all__ = ('BrokenBarrierError',
-           'CancelledError', 'InvalidStateError', 'TimeoutError',
+__all__ = ('CancelledError', 'InvalidStateError', 'TimeoutError',
            'IncompleteReadError', 'LimitOverrunError',
            'SendfileNotAvailableError')
 
@@ -11,7 +10,8 @@ class CancelledError(BaseException):
     """The Future or Task was cancelled."""
 
 
-TimeoutError = TimeoutError  # make local alias for the standard exception
+class TimeoutError(Exception):
+    """The operation exceeded the given deadline."""
 
 
 class InvalidStateError(Exception):
@@ -56,7 +56,3 @@ class LimitOverrunError(Exception):
 
     def __reduce__(self):
         return type(self), (self.args[0], self.consumed)
-
-
-class BrokenBarrierError(RuntimeError):
-    """Barrier is broken by barrier.abort() call."""

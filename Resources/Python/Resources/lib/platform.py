@@ -5,7 +5,7 @@
 
     If called from the command line, it prints the platform
     information concatenated as single string to stdout. The output
-    format is usable as part of a filename.
+    format is useable as part of a filename.
 
 """
 #    This module is maintained by Marc-Andre Lemburg <mal@egenix.com>.
@@ -116,6 +116,7 @@ import collections
 import os
 import re
 import sys
+import subprocess
 import functools
 import itertools
 
@@ -168,12 +169,12 @@ def libc_ver(executable=None, lib='', version='', chunksize=16384):
 
         Note that the function has intimate knowledge of how different
         libc versions add symbols to the executable and thus is probably
-        only usable for executables compiled using gcc.
+        only useable for executables compiled using gcc.
 
         The file is read and scanned in chunks of chunksize bytes.
 
     """
-    if not executable:
+    if executable is None:
         try:
             ver = os.confstr('CS_GNU_LIBC_VERSION')
             # parse 'glibc 2.28' as ('glibc', '2.28')
@@ -186,15 +187,12 @@ def libc_ver(executable=None, lib='', version='', chunksize=16384):
 
         executable = sys.executable
 
-        if not executable:
-            # sys.executable is not set.
-            return lib, version
-
     V = _comparable_version
-    # We use os.path.realpath()
-    # here to work around problems with Cygwin not being
-    # able to open symlinks for reading
-    executable = os.path.realpath(executable)
+    if hasattr(os.path, 'realpath'):
+        # Python 2.2 introduced os.path.realpath(); it is used
+        # here to work around problems with Cygwin not being
+        # able to open symlinks for reading
+        executable = os.path.realpath(executable)
     with open(executable, 'rb') as f:
         binary = f.read(chunksize)
         pos = 0
@@ -453,32 +451,43 @@ def mac_ver(release='', versioninfo=('', '', ''), machine=''):
 
 def iOS_ver():
     """ Get iOS/tvOS version information, and return it as a
-        tuple (system, release, model). All tuple entries are strings.
+        tuple (system, release). All tuple entries are strings.
 
         Equivalent of:
-        system = [[UIDevice currentDevice].systemName] UTF8String]
+        system = [[UIDevice currentDevice].model] UTF8String]
         release = [[UIDevice currentDevice].systemVersion] UTF8String]
-        model = [[UIDevice currentDevice].model] UTF8String]
+
     """
-    import _ios_support
-    return _ios_support.get_platform_ios()
+    from ctypes import cast, cdll, c_void_p, c_char_p
+    from ctypes import util
+    objc = cdll.LoadLibrary(util.find_library(b'objc'))
+    uikit = cdll.LoadLibrary(util.find_library(b'UIKit'))
 
-def is_simulator():
-    """Determine if the current platform is a device simulator.
+    objc.objc_getClass.restype = c_void_p
+    objc.objc_getClass.argtypes = [c_char_p]
+    objc.objc_msgSend.restype = c_void_p
+    objc.objc_msgSend.argtypes = [c_void_p, c_void_p]
+    objc.sel_registerName.restype = c_void_p
+    objc.sel_registerName.argtypes = [c_char_p]
 
-    Only useful when working with iOS, tvOS or watchOS, because
-    Apple provides simulator platforms for those devices.
+    UIDevice = c_void_p(objc.objc_getClass(b'UIDevice'))
+    SEL_currentDevice = c_void_p(objc.sel_registerName(b'currentDevice'))
+    device = c_void_p(objc.objc_msgSend(UIDevice, SEL_currentDevice))
 
-    If the platform is actual hardware, returns False. Will also
-    return False for device *emulators*, which are indistinguishable
-    from actual devices because they are reproducing actual device
-    properties.
-    """
-    if sys.platform in ('ios', 'tvos', 'watchos'):
-        return sys.implementation._multiarch.endswith('simulator')
+    SEL_systemVersion = c_void_p(objc.sel_registerName(b'systemVersion'))
+    systemVersion = c_void_p(objc.objc_msgSend(device, SEL_systemVersion))
 
-    # All other platforms aren't simulators.
-    return False
+    SEL_systemName = c_void_p(objc.sel_registerName(b'systemName'))
+    systemName = c_void_p(objc.objc_msgSend(device, SEL_systemName))
+
+    # UTF8String returns a const char*;
+    SEL_UTF8String = c_void_p(objc.sel_registerName(b'UTF8String'))
+    objc.objc_msgSend.restype = c_char_p
+
+    system = objc.objc_msgSend(systemName, SEL_UTF8String).decode()
+    release = objc.objc_msgSend(systemVersion, SEL_UTF8String).decode()
+
+    return system, release
 
 def _java_getprop(name, default):
 
@@ -556,6 +565,16 @@ def system_alias(system, release, version):
         else:
             # XXX Whatever the new SunOS marketing name is...
             system = 'Solaris'
+
+    elif system == 'IRIX64':
+        # IRIX reports IRIX64 on platforms with 64-bit support; yet it
+        # is really a version and not a different platform, since 32-bit
+        # apps are also supported..
+        system = 'IRIX'
+        if version:
+            version = version + ' (64bit)'
+        else:
+            version = '64bit'
 
     elif system in ('win32', 'win16'):
         # In case one of the other tricks
@@ -640,10 +659,7 @@ def _syscmd_file(target, default=''):
         # XXX Others too ?
         return default
 
-    try:
-        import subprocess
-    except ImportError:
-        return default
+    import subprocess
     target = _follow_symlinks(target)
     # "file" output is locale dependent: force the usage of the C locale
     # to get deterministic behavior.
@@ -724,6 +740,9 @@ def architecture(executable=sys.executable, bits='', linkage=''):
     # Bits
     if '32-bit' in fileout:
         bits = '32bit'
+    elif 'N32' in fileout:
+        # On Irix only
+        bits = 'n32bit'
     elif '64-bit' in fileout:
         bits = '64bit'
 
@@ -778,32 +797,17 @@ class _Processor:
             csid, cpu_number = vms_lib.getsyi('SYI$_CPU', 0)
             return 'Alpha' if cpu_number >= 128 else 'VAX'
 
-    # On iOS, tvOS and watchOS, os.uname returns the architecture
-    # as uname.machine. On device it doesn't; but there's only
-    # on CPU architecture on device
+    # iOS, tvOS and watchOS processor is the same as machine
     def get_ios():
-        if sys.implementation._multiarch.endswith('simulator'):
-            return os.uname().machine
-        return 'arm64'
+        return ''
 
-    def get_tvos():
-        if sys.implementation._multiarch.endswith('simulator'):
-            return os.uname().machine
-        return 'arm64'
-
-    def get_watchos():
-        if sys.implementation._multiarch.endswith('simulator'):
-            return os.uname().machine
-        return 'arm64_32'
+    get_tvos = get_ios
+    get_watchos = get_ios
 
     def from_subprocess():
         """
         Fall back to `uname -p`
         """
-        try:
-            import subprocess
-        except ImportError:
-            return None
         try:
             return subprocess.check_output(
                 ['uname', '-p'],
@@ -946,14 +950,6 @@ def uname():
     if system == 'Microsoft' and release == 'Windows':
         system = 'Windows'
         release = 'Vista'
-
-    # Normalize responses on Apple mobile platforms
-    if sys.platform in ('ios', 'tvos'):
-        system, release, model = iOS_ver()
-        # Simulator devices report as "arm64" or "x86_64";
-        # use the model as the basis for the normalized machine name.
-        if sys.implementation._multiarch.endswith('simulator'):
-            machine = f'{model} Simulator'
 
     vals = system, node, release, version, machine
     # Replace 'unknown' values with the more portable ''
@@ -1267,8 +1263,9 @@ def platform(aliased=0, terse=0):
         system, release, version = system_alias(system, release, version)
 
     if system == 'Darwin':
+        # macOS/iOS/tvOS/watchOS (darwin kernel)
         if sys.platform in ('ios', 'tvos'):
-            system, release, model = iOS_ver()
+            system, release = iOS_ver()
         else:
             macos_release = mac_ver()[0]
             if macos_release:
@@ -1310,63 +1307,6 @@ def platform(aliased=0, terse=0):
 
     _platform_cache[(aliased, terse)] = platform
     return platform
-
-### freedesktop.org os-release standard
-# https://www.freedesktop.org/software/systemd/man/os-release.html
-
-# NAME=value with optional quotes (' or "). The regular expression is less
-# strict than shell lexer, but that's ok.
-_os_release_line = re.compile(
-    "^(?P<name>[a-zA-Z0-9_]+)=(?P<quote>[\"\']?)(?P<value>.*)(?P=quote)$"
-)
-# unescape five special characters mentioned in the standard
-_os_release_unescape = re.compile(r"\\([\\\$\"\'`])")
-# /etc takes precedence over /usr/lib
-_os_release_candidates = ("/etc/os-release", "/usr/lib/os-release")
-_os_release_cache = None
-
-
-def _parse_os_release(lines):
-    # These fields are mandatory fields with well-known defaults
-    # in practice all Linux distributions override NAME, ID, and PRETTY_NAME.
-    info = {
-        "NAME": "Linux",
-        "ID": "linux",
-        "PRETTY_NAME": "Linux",
-    }
-
-    for line in lines:
-        mo = _os_release_line.match(line)
-        if mo is not None:
-            info[mo.group('name')] = _os_release_unescape.sub(
-                r"\1", mo.group('value')
-            )
-
-    return info
-
-
-def freedesktop_os_release():
-    """Return operation system identification from freedesktop.org os-release
-    """
-    global _os_release_cache
-
-    if _os_release_cache is None:
-        errno = None
-        for candidate in _os_release_candidates:
-            try:
-                with open(candidate, encoding="utf-8") as f:
-                    _os_release_cache = _parse_os_release(f)
-                break
-            except OSError as e:
-                errno = e.errno
-        else:
-            raise OSError(
-                errno,
-                f"Unable to read files {', '.join(_os_release_candidates)}"
-            )
-
-    return _os_release_cache.copy()
-
 
 ### Command line interface
 

@@ -30,6 +30,7 @@ import logging
 import logging.handlers
 import re
 import struct
+import sys
 import threading
 import traceback
 
@@ -47,7 +48,7 @@ RESET_ERROR = errno.ECONNRESET
 #   _listener holds the server object doing the listening
 _listener = None
 
-def fileConfig(fname, defaults=None, disable_existing_loggers=True, encoding=None):
+def fileConfig(fname, defaults=None, disable_existing_loggers=True):
     """
     Read the logging configuration from a ConfigParser-format file.
 
@@ -65,8 +66,7 @@ def fileConfig(fname, defaults=None, disable_existing_loggers=True, encoding=Non
         if hasattr(fname, 'readline'):
             cp.read_file(fname)
         else:
-            encoding = io.text_encoding(encoding)
-            cp.read(fname, encoding=encoding)
+            cp.read(fname)
 
     formatters = _create_formatters(cp)
 
@@ -391,9 +391,11 @@ class BaseConfigurator(object):
                     self.importer(used)
                     found = getattr(found, frag)
             return found
-        except ImportError as e:
+        except ImportError:
+            e, tb = sys.exc_info()[1:]
             v = ValueError('Cannot resolve %r: %s' % (s, e))
-            raise v from e
+            v.__cause__, v.__traceback__ = e, tb
+            raise v
 
     def ext_convert(self, value):
         """Default converter for the ext:// protocol."""
@@ -694,11 +696,7 @@ class DictConfigurator(BaseConfigurator):
         """Add filters to a filterer from a list of names."""
         for f in filters:
             try:
-                if callable(f) or callable(getattr(f, 'filter', None)):
-                    filter_ = f
-                else:
-                    filter_ = self.config['filters'][f]
-                filterer.addFilter(filter_)
+                filterer.addFilter(self.config['filters'][f])
             except Exception as e:
                 raise ValueError('Unable to add filter %r' % f) from e
 
@@ -795,7 +793,6 @@ class DictConfigurator(BaseConfigurator):
         """Configure a non-root logger from a dictionary."""
         logger = logging.getLogger(name)
         self.common_logger_config(logger, config, incremental)
-        logger.disabled = False
         propagate = config.get('propagate', None)
         if propagate is not None:
             logger.propagate = propagate

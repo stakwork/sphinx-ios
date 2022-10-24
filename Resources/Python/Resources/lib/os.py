@@ -36,7 +36,7 @@ _names = sys.builtin_module_names
 __all__ = ["altsep", "curdir", "pardir", "sep", "pathsep", "linesep",
            "defpath", "name", "path", "devnull", "SEEK_SET", "SEEK_CUR",
            "SEEK_END", "fsencode", "fsdecode", "get_exec_path", "fdopen",
-           "extsep"]
+           "popen", "extsep", "allows_subprocesses"]
 
 def _exists(name):
     return name in globals()
@@ -331,8 +331,8 @@ def walk(top, topdown=True, onerror=None, followlinks=False):
     import os
     from os.path import join, getsize
     for root, dirs, files in os.walk('python/Lib/email'):
-        print(root, "consumes ")
-        print(sum(getsize(join(root, name)) for name in files), end=" ")
+        print(root, "consumes", end="")
+        print(sum(getsize(join(root, name)) for name in files), end="")
         print("bytes in", len(files), "non-directory files")
         if 'CVS' in dirs:
             dirs.remove('CVS')  # don't visit CVS directories
@@ -461,7 +461,8 @@ if {open, stat} <= supports_dir_fd and {scandir, stat} <= supports_fd:
                 dirs.remove('CVS')  # don't visit CVS directories
         """
         sys.audit("os.fwalk", top, topdown, onerror, follow_symlinks, dir_fd)
-        top = fspath(top)
+        if not isinstance(top, int) or not hasattr(top, '__index__'):
+            top = fspath(top)
         # Note: To guard against symlink races, we use the standard
         # lstat()/open()/fstat() trick.
         if not follow_symlinks:
@@ -703,11 +704,9 @@ class _Environ(MutableMapping):
         return len(self._data)
 
     def __repr__(self):
-        formatted_items = ", ".join(
-            f"{self.decodekey(key)!r}: {self.decodevalue(value)!r}"
-            for key, value in self._data.items()
-        )
-        return f"environ({{{formatted_items}}})"
+        return 'environ({{{}}})'.format(', '.join(
+            ('{!r}: {!r}'.format(self.decodekey(key), self.decodevalue(value))
+            for key, value in self._data.items())))
 
     def copy(self):
         return dict(self)
@@ -830,6 +829,13 @@ def _fscodec():
 
 fsencode, fsdecode = _fscodec()
 del _fscodec
+
+
+if sys.platform in ('ios', 'tvos', 'watchos'):
+    allows_subprocesses = False
+else:
+    allows_subprocesses = True
+
 
 # Supply spawn*() (probably only for Unix)
 if _exists("fork") and not _exists("spawnv") and _exists("execv"):
@@ -970,64 +976,58 @@ otherwise return -SIG, where SIG is the signal that killed it. """
 
     __all__.extend(["spawnlp", "spawnlpe"])
 
-# VxWorks has no user space shell provided. As a result, running
-# command in a shell can't be supported.
-if sys.platform != 'vxworks':
-    # Supply os.popen()
-    def popen(cmd, mode="r", buffering=-1):
-        if not isinstance(cmd, str):
-            raise TypeError("invalid cmd type (%s, expected string)" % type(cmd))
-        if mode not in ("r", "w"):
-            raise ValueError("invalid mode %r" % mode)
-        if buffering == 0 or buffering is None:
-            raise ValueError("popen() does not support unbuffered streams")
-        import subprocess
-        if mode == "r":
-            proc = subprocess.Popen(cmd,
-                                    shell=True, text=True,
-                                    stdout=subprocess.PIPE,
-                                    bufsize=buffering)
-            return _wrap_close(proc.stdout, proc)
+
+# Supply os.popen()
+def popen(cmd, mode="r", buffering=-1):
+    if not isinstance(cmd, str):
+        raise TypeError("invalid cmd type (%s, expected string)" % type(cmd))
+    if mode not in ("r", "w"):
+        raise ValueError("invalid mode %r" % mode)
+    if buffering == 0 or buffering is None:
+        raise ValueError("popen() does not support unbuffered streams")
+    import subprocess, io
+    if mode == "r":
+        proc = subprocess.Popen(cmd,
+                                shell=True,
+                                stdout=subprocess.PIPE,
+                                bufsize=buffering)
+        return _wrap_close(io.TextIOWrapper(proc.stdout), proc)
+    else:
+        proc = subprocess.Popen(cmd,
+                                shell=True,
+                                stdin=subprocess.PIPE,
+                                bufsize=buffering)
+        return _wrap_close(io.TextIOWrapper(proc.stdin), proc)
+
+# Helper for popen() -- a proxy for a file whose close waits for the process
+class _wrap_close:
+    def __init__(self, stream, proc):
+        self._stream = stream
+        self._proc = proc
+    def close(self):
+        self._stream.close()
+        returncode = self._proc.wait()
+        if returncode == 0:
+            return None
+        if name == 'nt':
+            return returncode
         else:
-            proc = subprocess.Popen(cmd,
-                                    shell=True, text=True,
-                                    stdin=subprocess.PIPE,
-                                    bufsize=buffering)
-            return _wrap_close(proc.stdin, proc)
-
-    # Helper for popen() -- a proxy for a file whose close waits for the process
-    class _wrap_close:
-        def __init__(self, stream, proc):
-            self._stream = stream
-            self._proc = proc
-        def close(self):
-            self._stream.close()
-            returncode = self._proc.wait()
-            if returncode == 0:
-                return None
-            if name == 'nt':
-                return returncode
-            else:
-                return returncode << 8  # Shift left to match old behavior
-        def __enter__(self):
-            return self
-        def __exit__(self, *args):
-            self.close()
-        def __getattr__(self, name):
-            return getattr(self._stream, name)
-        def __iter__(self):
-            return iter(self._stream)
-
-    __all__.append("popen")
+            return returncode << 8  # Shift left to match old behavior
+    def __enter__(self):
+        return self
+    def __exit__(self, *args):
+        self.close()
+    def __getattr__(self, name):
+        return getattr(self._stream, name)
+    def __iter__(self):
+        return iter(self._stream)
 
 # Supply os.fdopen()
-def fdopen(fd, mode="r", buffering=-1, encoding=None, *args, **kwargs):
+def fdopen(fd, *args, **kwargs):
     if not isinstance(fd, int):
         raise TypeError("invalid fd type (%s, expected integer)" % type(fd))
     import io
-    if "b" not in mode:
-        encoding = io.text_encoding(encoding)
-    return io.open(fd, mode, buffering, encoding, *args, **kwargs)
+    return io.open(fd, *args, **kwargs)
 
 
 # For testing purposes, make sure the function is available when the C

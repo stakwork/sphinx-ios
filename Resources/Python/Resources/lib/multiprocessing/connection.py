@@ -188,9 +188,10 @@ class _ConnectionBase:
         self._check_closed()
         self._check_writable()
         m = memoryview(buf)
+        # HACK for byte-indexing of non-bytewise buffers (e.g. array.array)
         if m.itemsize > 1:
-            m = m.cast('B')
-        n = m.nbytes
+            m = memoryview(bytes(m))
+        n = len(m)
         if offset < 0:
             raise ValueError("offset is negative")
         if n < offset:
@@ -942,7 +943,7 @@ else:
                             return ready
 
 #
-# Make connection and socket objects shareable if possible
+# Make connection and socket objects sharable if possible
 #
 
 if sys.platform == 'win32':

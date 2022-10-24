@@ -60,12 +60,9 @@ To create a new template object initialized to a given one:
 import re
 import os
 import tempfile
-import warnings
 # we import the quote function rather than the module for backward compat
 # (quote used to be an undocumented but used function in pipes)
 from shlex import quote
-
-warnings._deprecated(__name__, remove=(3, 13))
 
 __all__ = ["Template"]
 
@@ -112,7 +109,7 @@ class Template:
 
     def append(self, cmd, kind):
         """t.append(cmd, kind) adds a new step at the end."""
-        if not isinstance(cmd, str):
+        if type(cmd) is not type(''):
             raise TypeError('Template.append: cmd must be a string')
         if kind not in stepkinds:
             raise ValueError('Template.append: bad kind %r' % (kind,))
@@ -128,7 +125,7 @@ class Template:
 
     def prepend(self, cmd, kind):
         """t.prepend(cmd, kind) adds a new step at the front."""
-        if not isinstance(cmd, str):
+        if type(cmd) is not type(''):
             raise TypeError('Template.prepend: cmd must be a string')
         if kind not in stepkinds:
             raise ValueError('Template.prepend: bad kind %r' % (kind,))

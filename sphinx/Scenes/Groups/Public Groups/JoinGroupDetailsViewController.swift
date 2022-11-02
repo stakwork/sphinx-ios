@@ -79,9 +79,13 @@ class JoinGroupDetailsViewController: KeyboardEventsViewController {
         
         LoadingWheelHelper.toggleLoadingWheel(loading: false, loadingWheel: imageUploadLoadingWheel, loadingWheelColor: UIColor.Sphinx.Text, view: view)
         
-        let alias = owner?.nickname
-        let photoUrl = owner?.getPhotoUrl()
-        tribeMemberInfoView.configureWith(vc: self, accessoryView: keyboardAccessoryView, alias: alias, picture: photoUrl)
+        tribeMemberInfoView.configureWith(
+            vc: self,
+            accessoryView: keyboardAccessoryView,
+            alias: owner?.nickname,
+            picture: owner?.getPhotoUrl(),
+            shouldFixAlias: true
+        )
         
         loadGroupDetails()
     }

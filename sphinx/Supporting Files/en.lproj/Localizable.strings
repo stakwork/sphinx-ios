@@ -139,6 +139,7 @@
 "admin.request.rejected" = "You have declined the\nrequest from %@";
 "waiting.admin.approval" = "Waiting for admin approval";
 "picker-title.tribe-form.feed-type" = "Feed Type";
+"alias.allowed-characters" = "Only letters, numbers and underscore\nare allowed in tribe aliases";
 
 //SUBSCRIPTIONS
 "leave.lose.unsaved.changed" = "Are you sure you want to leave and lose any unsaved changes?";

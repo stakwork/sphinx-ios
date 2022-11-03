@@ -30,7 +30,7 @@ class TribeMemberInfoView: UIView {
     
     var uploadCompletion: ((String?, String?) -> ())? = nil
     
-    let ACCEPTABLE_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_."
+    let ACCEPTABLE_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_ "
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -100,6 +100,13 @@ class TribeMemberInfoView: UIView {
         imagePickerManager.setPickerDelegateView(view: self)
         imagePickerManager.showAlert(title: "profile.image".localized, message: "select.option".localized, sourceView: pictureImageView)
     }
+    
+    @IBAction func aliasDidChanged(_ sender: UITextField) {
+        if (sender.text?.contains(" ") == true) {
+            allowedCharactersToast(true)
+        }
+        sender.text = sender.text?.replacingOccurrences(of: " ", with: "_")
+    }
 }
 
 extension TribeMemberInfoView : UITextFieldDelegate {
@@ -120,14 +127,20 @@ extension TribeMemberInfoView : UITextFieldDelegate {
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if (string.count == 1 && string.first?.isEmoji == true) {
-            return true
-        }
-        
         let cs = NSCharacterSet(charactersIn: ACCEPTABLE_CHARACTERS).inverted
         let filtered = string.components(separatedBy: cs).joined(separator: "")
+        let allowed = (string == filtered)
+        
+        allowedCharactersToast(!allowed)
 
-        return (string == filtered)
+        return allowed
+    }
+    
+    func allowedCharactersToast(_ show: Bool) {
+        guard show else {
+            return
+        }
+        NewMessageBubbleHelper().showGenericMessageView(text: "alias.allowed-characters".localized)
     }
 }
 

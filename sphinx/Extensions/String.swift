@@ -204,14 +204,13 @@ extension String {
     }
     
     var fixedAlias: String {
-        let ACCEPTABLE_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_."
+        let ACCEPTABLE_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_"
         var fixedAlias = ""
         
         for ch in self.replacingOccurrences(of: " ", with: "_") {
-            if (!ACCEPTABLE_CHARACTERS.contains(ch) && !ch.isEmoji) {
-                continue
+            if (ACCEPTABLE_CHARACTERS.contains(ch)) {
+                fixedAlias.append(ch)
             }
-            fixedAlias.append(ch)
         }
         return fixedAlias
     }

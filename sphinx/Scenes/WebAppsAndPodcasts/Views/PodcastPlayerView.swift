@@ -92,7 +92,7 @@ class PodcastPlayerView: UIView {
         self.boostDelegate = boostDelegate
         self.podcast = podcast
         
-        self.playerHelper.addDelegate(
+        playerHelper.addDelegate(
             self,
             withKey: PodcastPlayerHelper.DelegateKeys.podcastPlayerVC.rawValue
         )
@@ -416,19 +416,27 @@ extension PodcastPlayerView : PodcastPlayerDelegate {
 
 extension PodcastPlayerView: CustomBoostViewDelegate {
     func didTouchBoostButton(withAmount amount: Int) {
-        let itemID = podcast.getCurrentEpisode()?.itemID ?? ""
-        let currentTime = podcast.currentTime
-        
-        if let boostMessage = feedBoostHelper.getBoostMessage(itemID: itemID, amount: amount, currentTime: currentTime) {
+        if let episode = podcast.getCurrentEpisode() {
+            let itemID = episode.itemID
+            let currentTime = podcast.currentTime
             
-            let podcastAnimationVC = PodcastAnimationViewController.instantiate(amount: amount)
-            WindowsManager.sharedInstance.showConveringWindowWith(rootVC: podcastAnimationVC)
-            podcastAnimationVC.showBoostAnimation()
-            
-            feedBoostHelper.processPayment(itemID: itemID, amount: amount, currentTime: currentTime)
-            feedBoostHelper.sendBoostMessage(message: boostMessage, completion: { (message, success) in
-                self.boostDelegate?.didSendBoostMessage(success: success, message: message)
-            })
+            if let boostMessage = feedBoostHelper.getBoostMessage(itemID: itemID, amount: amount, currentTime: currentTime) {
+                
+                let podcastAnimationVC = PodcastAnimationViewController.instantiate(amount: amount)
+                WindowsManager.sharedInstance.showConveringWindowWith(rootVC: podcastAnimationVC)
+                podcastAnimationVC.showBoostAnimation()
+                
+                feedBoostHelper.processPayment(itemID: itemID, amount: amount, currentTime: currentTime)
+                
+                feedBoostHelper.sendBoostMessage(
+                    message: boostMessage,
+                    itemObjectID: episode.objectID,
+                    amount: amount,
+                    completion: { (message, success) in
+                        self.boostDelegate?.didSendBoostMessage(success: success, message: message)
+                    }
+                )
+            }
         }
     }
 }

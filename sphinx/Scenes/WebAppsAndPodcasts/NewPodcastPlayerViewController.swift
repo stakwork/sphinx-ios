@@ -63,6 +63,13 @@ class NewPodcastPlayerViewController: UIViewController {
         
         if isBeingDismissed {
             delegate?.willDismissPlayer()
+            
+            if let tableHeaderView = tableHeaderView {
+                playerHelper.addDelegate(
+                    tableHeaderView,
+                    withKey: PodcastPlayerHelper.DelegateKeys.podcastPlayerVC.rawValue
+                )
+            }
         }
     }
     

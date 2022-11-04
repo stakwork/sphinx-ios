@@ -204,6 +204,8 @@ extension ChatViewController : ChatAccessoryViewDelegate {
     }
     
     func sendMessage(provisionalMessage: TransactionMessage?, params: [String: AnyObject], completion: @escaping (Bool) -> ()) {
+        let podcastComment = accessoryView.getReplyingPodcast()
+        
         askForNotificationPermissions()
         accessoryView.hideReplyView()
         
@@ -211,6 +213,12 @@ extension ChatViewController : ChatAccessoryViewDelegate {
             if let message = TransactionMessage.insertMessage(m: m, existingMessage: provisionalMessage).0 {
                 message.setPaymentInvoiceAsPaid()
                 self.insertSentMessage(message: message, completion: completion)
+                
+                ActionsManager.sharedInstance.trackMessageSent(message: message)
+            }
+            
+            if let podcastComment = podcastComment {
+                ActionsManager.sharedInstance.trackClipComment(podcastComment: podcastComment)
             }
         }, errorCallback: {
              if let provisionalMessage = provisionalMessage {

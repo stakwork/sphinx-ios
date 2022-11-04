@@ -9,6 +9,7 @@ import youtube_ios_player_helper
 
 
 class YouTubeVideoFeedEpisodePlayerViewController: UIViewController, VideoFeedEpisodePlayerViewController {
+    
     @IBOutlet private weak var videoPlayerView: YTPlayerView!
     @IBOutlet private weak var dismissButton: UIButton!
     @IBOutlet private weak var episodeTitleLabel: UILabel!
@@ -16,17 +17,21 @@ class YouTubeVideoFeedEpisodePlayerViewController: UIViewController, VideoFeedEp
     @IBOutlet weak var episodeSubtitleCircularDivider: UIView!
     @IBOutlet private weak var episodePublishDateLabel: UILabel!
     
+    let actionsManager = ActionsManager.sharedInstance
+    let podcastPlayer = PodcastPlayerHelper.sharedInstance
     
     var videoPlayerEpisode: Video! {
         didSet {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
                 
-                self.updateVideoPlayer(withNewEpisode: self.videoPlayerEpisode)
+                self.updateVideoPlayer(withNewEpisode: self.videoPlayerEpisode, previousEpisode: oldValue)
             }
         }
     }
     
+    var currentTime: Float = 0
+    var currentState: YTPlayerState = .unknown
     
     var dismissButtonStyle: ModalDismissButtonStyle = .downArrow
     var onDismiss: (() -> Void)?
@@ -60,6 +65,9 @@ extension YouTubeVideoFeedEpisodePlayerViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        podcastPlayer.shouldPause()
+        podcastPlayer.finishAndSaveContentConsumed()
 
         setupViews()
     }
@@ -69,6 +77,7 @@ extension YouTubeVideoFeedEpisodePlayerViewController {
         super.viewWillDisappear(true)
         
         videoPlayerView.stopVideo()
+        podcastPlayer.finishAndSaveContentConsumed()
     }
 }
 
@@ -119,7 +128,17 @@ extension YouTubeVideoFeedEpisodePlayerViewController {
     }
     
     
-    private func updateVideoPlayer(withNewEpisode video: Video) {
+    private func updateVideoPlayer(withNewEpisode video: Video, previousEpisode: Video?) {
+        if let previousEpisode = previousEpisode {
+            currentState = .ended
+            
+            trackItemFinished(
+                videoId: previousEpisode.videoID,
+                currentTime,
+                shouldSaveAction: true
+            )
+        }
+        
         videoPlayerView.load(withVideoId: videoPlayerEpisode.youtubeVideoID)
         
         episodeTitleLabel.text = videoPlayerEpisode.titleForDisplay
@@ -131,9 +150,60 @@ extension YouTubeVideoFeedEpisodePlayerViewController {
 
 // MARK: -  YTPlayerViewDelegate
 extension YouTubeVideoFeedEpisodePlayerViewController: YTPlayerViewDelegate {
+    func playerView(_ playerView: YTPlayerView, didPlayTime playTime: Float) {
+        currentTime = playTime
+    }
+    
     func playerView(_ playerView: YTPlayerView, didChangeTo state: YTPlayerState) {
-        if (state == .playing) {
-            videoPlayerEpisode?.videoFeed?.chat?.updateWebAppLastDate()
+        currentState = state
+        
+        playerView.currentTime({ (time, error) in
+            switch (state) {
+            case .playing:
+                self.videoPlayerEpisode?.videoFeed?.chat?.updateWebAppLastDate()
+
+                self.trackItemStarted(
+                    videoId: self.videoPlayerEpisode.videoID,
+                    time
+                )
+                break
+            case .paused:
+                self.trackItemFinished(
+                    videoId: self.videoPlayerEpisode.videoID,
+                    self.currentTime
+                )
+                break
+            case .ended:
+                self.trackItemFinished(
+                    videoId: self.videoPlayerEpisode.videoID,
+                    time,
+                    shouldSaveAction: true
+                )
+                break
+            default:
+                break
+            }
+        })
+    }
+    
+    func trackItemStarted(
+        videoId: String,
+        _ currentTime: Float
+    ) {
+        if let feedItem: ContentFeedItem = ContentFeedItem.getItemWith(itemID: videoId) {
+            let time = Int(round(currentTime)) * 1000
+            actionsManager.trackItemConsumed(item: feedItem, startTimestamp: time)
+        }
+    }
+
+    func trackItemFinished(
+        videoId: String,
+        _ currentTime: Float,
+        shouldSaveAction: Bool = false
+    ) {
+        if let feedItem: ContentFeedItem = ContentFeedItem.getItemWith(itemID: videoId) {
+            let time = Int(round(currentTime)) * 1000
+            actionsManager.trackItemFinished(item: feedItem, timestamp: time, shouldSaveAction: shouldSaveAction)
         }
     }
 }

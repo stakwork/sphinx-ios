@@ -108,6 +108,8 @@ class FeedBoostHelper : NSObject {
     
     func sendBoostMessage(
         message: String,
+        itemObjectID: NSManagedObjectID,
+        amount: Int,
         completion: @escaping ((TransactionMessage?, Bool) -> ())
     ) {
         if let chat = chat {
@@ -126,6 +128,8 @@ class FeedBoostHelper : NSObject {
                     
                     completion(message, true)
                     
+                    self.trackBoostAction(itemObjectID: itemObjectID, amount: amount)
+                    
                 }
             }, errorCallback: {
                  if let provisionalMessage = provisionalMessage {
@@ -136,4 +140,13 @@ class FeedBoostHelper : NSObject {
             })
         }
     }
+    
+    func trackBoostAction(
+            itemObjectID: NSManagedObjectID,
+            amount: Int
+        ) {
+            if let contentFeedItem: ContentFeedItem = CoreDataManager.sharedManager.getObjectWith(objectId: itemObjectID) {
+                ActionsManager.sharedInstance.trackContentBoost(amount: amount, feedItem: contentFeedItem)
+            }
+        }
 }

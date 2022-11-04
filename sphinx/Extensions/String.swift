@@ -724,4 +724,16 @@ extension String {
     var nonHtmlRawString: String {
         return self.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
     }
+    
+    func removingPunctuation() -> String {
+        var filteredString = self
+        while true {
+            if let forbiddenCharRange = filteredString.rangeOfCharacter(from: CharacterSet.punctuationCharacters)  {
+                filteredString.removeSubrange(forbiddenCharRange)
+            } else {
+                break
+            }
+        }
+        return filteredString
+    }
 }

@@ -156,28 +156,6 @@ class CoreDataManager {
         return nil
     }
     
-    func getContentFeedObjectOfTypeWith<T>(feedID: String, entityName: String) -> T? {
-        let managedContext = persistentContainer.viewContext
-        var objects:[T] = [T]()
-        
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName:"\(entityName)")
-        let predicate = NSPredicate(format: "feedID == %s", feedID)
-        fetchRequest.predicate = predicate
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "feedID", ascending: false)]
-        fetchRequest.fetchLimit = 1
-        
-        do {
-            try objects = managedContext.fetch(fetchRequest) as! [T]
-        } catch let error as NSError {
-            print("Error: " + error.localizedDescription)
-        }
-        
-        if objects.count > 0 {
-            return objects[0]
-        }
-        return nil
-    }
-    
     func getObjectsOfTypeWith<T>(predicate: NSPredicate, sortDescriptors: [NSSortDescriptor], entityName: String, fetchLimit: Int? = nil) -> [T] {
         let managedContext = persistentContainer.viewContext
         var objects:[T] = [T]()

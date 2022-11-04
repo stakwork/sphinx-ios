@@ -16,7 +16,7 @@ public class ActionTrack: NSManagedObject, Encodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
 
-        try container.encode(String(self.type), forKey: .type)
+        try container.encode(self.type, forKey: .type)
         try container.encode(self.metaData, forKey: .metaData)
     }
     

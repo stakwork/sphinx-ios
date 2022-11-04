@@ -2,7 +2,7 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21G83" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="ActionTrack" representedClassName="ActionTrack" syncable="YES">
         <attribute name="metaData" attributeType="String" defaultValueString=""/>
-        <attribute name="type" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="type" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="uploaded" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
     </entity>
     <entity name="Chat" representedClassName="Chat" syncable="YES">

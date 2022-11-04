@@ -62,6 +62,7 @@
 		471161E229156511008EAFF2 /* Rake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471161E129156511008EAFF2 /* Rake.swift */; };
 		471161E529156540008EAFF2 /* ActionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471161E429156540008EAFF2 /* ActionsManager.swift */; };
 		471161E82915680B008EAFF2 /* csvStopList.csv in Resources */ = {isa = PBXBuildFile; fileRef = 471161E72915680B008EAFF2 /* csvStopList.csv */; };
+		471161EA2915937A008EAFF2 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471161E92915937A008EAFF2 /* Array.swift */; };
 		4711B2BD24522C4E0056ED25 /* ChatAccessoryViewDelegateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4711B2BC24522C4E0056ED25 /* ChatAccessoryViewDelegateExtension.swift */; };
 		4712BB4223D755EA00DDCC3B /* GroupAddMemberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4712BB4023D755EA00DDCC3B /* GroupAddMemberTableViewCell.swift */; };
 		4712BB4323D755EA00DDCC3B /* GroupAddMemberTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4712BB4123D755EA00DDCC3B /* GroupAddMemberTableViewCell.xib */; };
@@ -778,6 +779,7 @@
 		471161E129156511008EAFF2 /* Rake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rake.swift; sourceTree = "<group>"; };
 		471161E429156540008EAFF2 /* ActionsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionsManager.swift; sourceTree = "<group>"; };
 		471161E72915680B008EAFF2 /* csvStopList.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = csvStopList.csv; sourceTree = "<group>"; };
+		471161E92915937A008EAFF2 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		4711B2BC24522C4E0056ED25 /* ChatAccessoryViewDelegateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatAccessoryViewDelegateExtension.swift; sourceTree = "<group>"; };
 		4712BB4023D755EA00DDCC3B /* GroupAddMemberTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupAddMemberTableViewCell.swift; sourceTree = "<group>"; };
 		4712BB4123D755EA00DDCC3B /* GroupAddMemberTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GroupAddMemberTableViewCell.xib; sourceTree = "<group>"; };
@@ -2415,6 +2417,7 @@
 				475BDD2D232ACA9000C5BBD6 /* UserDefaults.swift */,
 				4705D39E2799C339009C0729 /* UITextField.swift */,
 				471161DE29156480008EAFF2 /* NSObject.swift */,
+				471161E92915937A008EAFF2 /* Array.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -4358,6 +4361,7 @@
 				475BDD2A232AC9E200C5BBD6 /* Date.swift in Sources */,
 				475723A7247EB5DA001ADC7E /* AudioPlayerHelper.swift in Sources */,
 				F3DC6B28273FABDB00458E09 /* ContentFeedPaymentModel+Computeds.swift in Sources */,
+				471161EA2915937A008EAFF2 /* Array.swift in Sources */,
 				475BDD07232AC24600C5BBD6 /* DirectPaymentReceivedTableViewCell.swift in Sources */,
 				475BDD02232AC24600C5BBD6 /* PaymentReceivedTableViewCell.swift in Sources */,
 				47FE9A3E23C381A20090913F /* UITapGestureRecognizer.swift in Sources */,

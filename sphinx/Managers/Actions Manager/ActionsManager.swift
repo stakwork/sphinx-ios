@@ -267,28 +267,45 @@ class ActionsManager {
     }
     
     func syncActions() {
-        globalThread.async {
+        let dispatchQueue = DispatchQueue(label: "sync-actions")
+        dispatchQueue.async {
             let actions = ActionTrack.getUnsynced()
             
             guard actions.count > 0 else {
                 return
             }
             
-            API.sharedInstance.syncActions(actions: actions, callback: { success in
-                if (success) {
-                    self.updateSyncedActions()
-                }
-            })
+            let chunkedActions = actions.chunked(into: 50)
+            
+            let dispatchGroup = DispatchGroup()
+            let dispatchSemaphore = DispatchSemaphore(value: 0)
+            
+            for chunk in chunkedActions {
+                
+                dispatchGroup.enter()
+                
+                API.sharedInstance.syncActions(actions: chunk, callback: { success in
+                    if (success) {
+                        self.updateSyncedActions(objectIds: chunk.map { $0.objectID })
+                    }
+                    
+                    dispatchSemaphore.signal()
+                    dispatchGroup.leave()
+                })
+                
+                dispatchSemaphore.wait()
+            }
         }
     }
     
-    func updateSyncedActions() {
+    func updateSyncedActions(objectIds: [NSManagedObjectID]) {
         let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
         
         if let entityDescription = NSEntityDescription.entity(forEntityName: "ActionTrack", in: managedContext) {
             
             let batchUpdateRequest = NSBatchUpdateRequest(entity: entityDescription)
-             
+            
+            batchUpdateRequest.predicate = NSPredicate(format: "self IN %@", objectIds)
             batchUpdateRequest.resultType = .updatedObjectIDsResultType
             batchUpdateRequest.propertiesToUpdate = ["uploaded": true]
              

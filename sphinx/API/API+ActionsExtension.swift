@@ -37,16 +37,17 @@ extension API {
             return
         }
         
-        //NEEDS TO BE CHANGED
         sphinxRequest(request) { response in
             switch response.result {
             case .success(let data):
-                if let _ = data as? NSDictionary {
-                    callback(true)
-                } else {
-                    callback(false)
+                if let json = data as? NSDictionary {
+                    if let success = json["success"] as? Bool, success {
+                        callback(true)
+                        return
+                    }
                 }
-            case .failure(let error):
+                callback(false)
+            case .failure(_):
                 callback(false)
             }
         }

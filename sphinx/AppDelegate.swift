@@ -62,6 +62,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         getRelayKeys()
         
         setInitialVC(launchingApp: true)
+        
+        ActionsManager.sharedInstance.syncActions()
 
         return true
     }
@@ -166,6 +168,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         WindowsManager.sharedInstance.removeMessageOptions()
         setMessagesAsSeen()
         setBadge(application: application)
+        
+        PodcastPlayerHelper.sharedInstance.finishAndSaveContentConsumed()
         CoreDataManager.sharedManager.saveContext()
         
         scheduleAppRefresh()
@@ -181,6 +185,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         reloadMessagesData()
         presentPINIfNeeded()
+        
+        PodcastPlayerHelper.sharedInstance.finishAndSaveContentConsumed()
     }
 
     func saveCurrentStyle() {
@@ -224,6 +230,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         SKPaymentQueue.default().remove(StoreKitService.shared)
 
+        PodcastPlayerHelper.sharedInstance.finishAndSaveContentConsumed()
         CoreDataManager.sharedManager.saveContext()
     }
 

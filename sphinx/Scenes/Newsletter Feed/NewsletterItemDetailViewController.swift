@@ -140,9 +140,14 @@ extension NewsletterItemDetailViewController: CustomBoostViewDelegate {
             
             feedBoostHelper.processPayment(itemID: itemID, amount: amount)
             
-            feedBoostHelper.sendBoostMessage(message: boostMessage, completion: { (message, success) in
-                self.boostDelegate?.didSendBoostMessage(success: success, message: message)
-            })
+            feedBoostHelper.sendBoostMessage(
+                message: boostMessage,
+                itemObjectID: newsletterItem.objectID,
+                amount: amount,
+                completion: { (message, success) in
+                    self.boostDelegate?.didSendBoostMessage(success: success, message: message)
+                }
+            )
         }
     }
 }

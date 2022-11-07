@@ -106,6 +106,7 @@ class PodcastPlayerHelper {
     
     let audioPlayerHelper = PlayAudioHelper()
     let podcastPaymentsHelper = PodcastPaymentsHelper()
+    let actionsManager = ActionsManager.sharedInstance
     
     public static let kClipPrefix = "clip::"
     public static let kBoostPrefix = "boost::"
@@ -127,6 +128,7 @@ class PodcastPlayerHelper {
     }
     
     func resetPodcast(_ podcast: PodcastFeed) {
+        trackItemFinished(shouldSaveAction: true)
         stopPlaying()
         self.podcast = podcast
     }
@@ -248,7 +250,11 @@ class PodcastPlayerHelper {
         podcast.currentEpisodeIndex = index
         
         if (podcast.currentEpisodeId != episodeId) {
+            
+            trackItemFinished(shouldSaveAction: true)
+            
             podcast.currentEpisodeId = episodeId
+            
             return true
         }
         return false
@@ -327,6 +333,7 @@ class PodcastPlayerHelper {
     }
     
     func didEndEpisode() {
+        trackItemFinished(shouldSaveAction: true)
         shouldPause()
         
         if let podcast = self.podcast {
@@ -368,11 +375,13 @@ class PodcastPlayerHelper {
         shouldPause()
     }
     
-    func shouldPause() {        
+    func shouldPause() {
         if isPlaying() {
             player?.pause()
             playingTimer?.invalidate()
             paymentsTimer?.invalidate()
+            
+            trackItemFinished()
         }
         
         guard let podcast = podcast else {
@@ -391,7 +400,9 @@ class PodcastPlayerHelper {
         }
     }
     
-    func shouldPlay() {
+    func shouldPlay(
+        previousItemTimestamp: Int? = nil
+    ) {
         guard let podcast = podcast else {
             return
         }
@@ -417,6 +428,8 @@ class PodcastPlayerHelper {
             }
             
             configureTimer()
+            
+            trackItemStarted(endTimestamp: previousItemTimestamp)
         } else {
             prepareEpisodeWith(index: podcast.currentEpisodeIndex, in: podcast, autoPlay: true, completion: {})
         }
@@ -518,15 +531,8 @@ class PodcastPlayerHelper {
         
         if let player = player, let item = player.currentItem {
             let duration = Double(item.asset.duration.value) / Double(item.asset.duration.timescale)
-            player.seek(to: CMTime(seconds: round(duration * progress), preferredTimescale: 1))
-            
-            let newTime = Int(duration * progress)
-            podcast.currentTime = newTime
-            
-            configurePlayingInfoCenter(duration: Int(duration), currentTime: newTime, forceUpdate: playAfterSeek)
+            seekTo(newTime: round(duration * progress), playAfterSeek: playAfterSeek)
         }
-        
-        if playAfterSeek { shouldPlay() }
     }
     
     func seek(
@@ -537,43 +543,40 @@ class PodcastPlayerHelper {
         newTime = newTime > 0 ? newTime : 0
         
         if podcast.feedID != self.podcast?.feedID {
-            if let episode = podcast.getCurrentEpisode(), let duration = episode.duration {
-                
-                podcast.currentTime = newTime
-                
-                for d in delegates.values {
-                    d.pausedState(podcastId: podcast.feedID, duration: Int(duration), currentTime: Int(newTime))
-                }
-            }
+            podcast.currentTime = newTime
             return
         }
         
+        if let player = player, let _ = player.currentItem {
+            seekTo(newTime: Double(newTime), playAfterSeek: true)
+        }
+    }
+    
+    func seekTo(
+        newTime: Double,
+        playAfterSeek: Bool
+    ) {
+        guard let podcast = podcast else {
+            return
+        }
+        
+        let endTimestamp = isPlaying() ? podcast.currentTime : nil
+        
         if let player = player, let item = player.currentItem {
-            let playing = isPlaying(podcast.feedID)
-            player.pause()
+            let duration = Double(item.asset.duration.value) / Double(item.asset.duration.timescale)
+            player.seek(to: CMTime(seconds: newTime, preferredTimescale: 1))
             
-            let duration = Int(Double(item.asset.duration.value) / Double(item.asset.duration.timescale))
-            player.seek(to: CMTime(seconds: Double(newTime), preferredTimescale: 1))
+            podcast.currentTime = Int(newTime)
             
-            podcast.currentTime = newTime
-            
-            if playing {
-                if let sound = sounds.randomElement() {
-                    audioPlayerHelper.playSound(name: sound)
-                }
-                
-                player.playImmediately(atRate: podcast.playerSpeed)
+            configurePlayingInfoCenter(duration: Int(duration), currentTime: Int(newTime), forceUpdate: playAfterSeek)
+        }
+        
+        if playAfterSeek {
+            if let sound = sounds.randomElement() {
+                audioPlayerHelper.playSound(name: sound)
             }
             
-            for d in delegates.values {
-                if playing {
-                    d.playingState(podcastId: podcast.feedID, duration: Int(duration), currentTime: Int(newTime))
-                } else {
-                    d.pausedState(podcastId: podcast.feedID, duration: Int(duration), currentTime: Int(newTime))
-                }
-            }
-            
-            configurePlayingInfoCenter(duration: duration, currentTime: newTime, forceUpdate: true)
+            shouldPlay(previousItemTimestamp: endTimestamp)
         }
     }
     
@@ -581,10 +584,6 @@ class PodcastPlayerHelper {
         _ podcast: PodcastFeed,
         toEpisodeWith index: Int
     ) -> Bool {
-        if podcast.feedID != self.podcast?.feedID {
-            resetPodcast(podcast)
-        }
-        
         if index < podcast.episodesArray.count && index >= 0 {
             prepareEpisodeWith(
                 index: index,
@@ -675,6 +674,34 @@ class PodcastPlayerHelper {
                 return .success
             }
             return .commandFailed
+        }
+    }
+    
+    func trackItemStarted(
+        endTimestamp: Int? = nil
+    ) {
+        if let episode = podcast?.getCurrentEpisode(),
+           let feedItem: ContentFeedItem = ContentFeedItem.getItemWith(itemID: episode.itemID),
+           let time = podcast?.currentTime {
+
+            actionsManager.trackItemConsumed(item: feedItem, startTimestamp: time, endTimestamp: endTimestamp)
+        }
+    }
+
+    func trackItemFinished(
+        shouldSaveAction: Bool = false
+    ) {
+        if let episode = podcast?.getCurrentEpisode(),
+           let feedItem: ContentFeedItem = ContentFeedItem.getItemWith(itemID: episode.itemID),
+            let time = podcast?.currentTime {
+
+            actionsManager.trackItemFinished(item: feedItem, timestamp: time, shouldSaveAction: shouldSaveAction)
+        }
+    }
+    
+    func finishAndSaveContentConsumed() {
+        if !isPlaying() {
+            actionsManager.finishAndSaveContentConsumed()
         }
     }
 }

@@ -216,6 +216,7 @@ extension DashboardRootViewController {
         dismissibleBar.onViewDimissed = {
             self.podcastSmallPlayer.pauseIfPlaying()
             self.hideSmallPodcastPlayer()
+            self.podcastPlayerHelper.finishAndSaveContentConsumed()
         }
     }
     

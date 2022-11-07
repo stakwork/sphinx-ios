@@ -8,11 +8,13 @@
 
 import Foundation
 import SwiftyJSON
+import CoreData
 
 
 struct PodcastComment {
     var feedId:String? = nil
     var itemId:String? = nil
+    var feedItemObjectId: NSManagedObjectID? = nil
     var timestamp:Int? = nil
     var title: String? = nil
     var text: String? = nil

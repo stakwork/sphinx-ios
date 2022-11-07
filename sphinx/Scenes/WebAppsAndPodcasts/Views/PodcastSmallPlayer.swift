@@ -150,7 +150,7 @@ class PodcastSmallPlayer: UIView {
         }
         
         if let duration = episode?.duration {
-            setProgress(
+            let _ = setProgress(
                 duration: duration,
                 currentTime: podcast.currentTime
             )
@@ -162,7 +162,7 @@ class PodcastSmallPlayer: UIView {
                 episode?.duration = duration
                 
                 DispatchQueue.main.async {
-                    self.setProgress(
+                    let _ = self.setProgress(
                         duration: duration,
                         currentTime: podcast.currentTime
                     )

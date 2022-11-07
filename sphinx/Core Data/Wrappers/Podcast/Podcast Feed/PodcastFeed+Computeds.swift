@@ -123,6 +123,7 @@ extension PodcastFeed {
         
         var comment = PodcastComment()
         comment.feedId = feedID
+        comment.feedItemObjectId = episode?.objectID
         comment.itemId = episode?.itemID
         comment.title = episode?.title
         comment.url = episode?.urlPath

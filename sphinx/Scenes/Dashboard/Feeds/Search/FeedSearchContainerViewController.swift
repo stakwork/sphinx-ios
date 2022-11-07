@@ -197,6 +197,8 @@ extension FeedSearchContainerViewController {
                 ) { [weak self] result in
                     guard let self = self else { return }
                     
+                    ActionsManager.sharedInstance.trackFeedSearch(searchTerm: searchQuery)
+                    
                     DispatchQueue.main.async {
                         switch result {
                         case .success(let results):

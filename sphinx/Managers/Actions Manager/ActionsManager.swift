@@ -49,33 +49,33 @@ class ActionsManager {
     }
     
     func trackMessageSent(message: TransactionMessage) {
-        globalThread.async {
-            guard let messagesContent = message.messageContent, !messagesContent.isEmpty else {
-                return
-            }
-            
-            let scoreDict =  self.rake.run(text: messagesContent)
-            let scoreDictSorted = scoreDict.sorted {
-                $0.value > $1.value
-            }
-            let keywords = Array(scoreDictSorted.map {
-                $0.key.removingPunctuation()
-            }.prefix(5))
-            
-            if (keywords.count < 1) {
-                return
-            }
-            
-            let messageAction = MessageAction(keywords: keywords, currentTimestamp: Date())
-            if let jsonString = messageAction.jsonString() {
-                
-                print("SAVING MESSAGE SENT")
-                print(jsonString)
-                print("SAVING MESSAGE SENT")
-                
-                let _ = ActionTrack.createObject(type: ActionType.Message.rawValue, uploaded: false, metaData: jsonString)
-            }
-        }
+//        globalThread.async {
+//            guard let messagesContent = message.messageContent, !messagesContent.isEmpty else {
+//                return
+//            }
+//            
+//            let scoreDict =  self.rake.run(text: messagesContent)
+//            let scoreDictSorted = scoreDict.sorted {
+//                $0.value > $1.value
+//            }
+//            let keywords = Array(scoreDictSorted.map {
+//                $0.key.removingPunctuation()
+//            }.prefix(5))
+//            
+//            if (keywords.count < 1) {
+//                return
+//            }
+//            
+//            let messageAction = MessageAction(keywords: keywords, currentTimestamp: Date())
+//            if let jsonString = messageAction.jsonString() {
+//                
+//                print("SAVING MESSAGE SENT")
+//                print(jsonString)
+//                print("SAVING MESSAGE SENT")
+//                
+//                let _ = ActionTrack.createObject(type: ActionType.Message.rawValue, uploaded: false, metaData: jsonString)
+//            }
+//        }
     }
     
     func trackContentBoost(

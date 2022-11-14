@@ -748,4 +748,27 @@ extension String {
         }
         return filteredString
     }
+    
+    var personHost: String? {
+        let elements = self.split(separator: "/")
+        if let last = elements.last {
+            return self.replacingOccurrences(of: "/\(String(last))", with: "")
+        }
+        return nil
+    }
+    
+    var personUUID: String? {
+        let elements = self.split(separator: "/")
+        if let last = elements.last {
+            return String(last)
+        }
+        return nil
+    }
+    
+    var tribeMemberProfileValue : String {
+        if self.trim().isEmpty {
+            return "-"
+        }
+        return self
+    }
 }

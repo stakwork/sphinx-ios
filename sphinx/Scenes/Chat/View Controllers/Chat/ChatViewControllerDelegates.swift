@@ -429,12 +429,20 @@ extension ChatViewController : MessageCellDelegate {
     }
     
     func didTapAvatarView(message: TransactionMessage) {
-        let tribeMemberPopupVC = TribeMemberPopupViewController.instantiate(message: message, delegate: self)
-        WindowsManager.sharedInstance.showConveringWindowWith(rootVC: tribeMemberPopupVC)
+        if let _ = message.person {
+            accessoryView.hide()
+            
+            let tribeMemberProfileVC = TribeMemberProfileViewController.instantiate(message: message, delegate: self)
+            tribeMemberProfileVC.modalPresentationStyle = .overCurrentContext
+            self.navigationController?.present(tribeMemberProfileVC, animated: false)
+        } else {
+            let tribeMemberPopupVC = TribeMemberPopupViewController.instantiate(message: message, delegate: self)
+            WindowsManager.sharedInstance.showConveringWindowWith(rootVC: tribeMemberPopupVC)
+        }
     }
 }
 
-extension ChatViewController : TribeMemberPopupViewDelegate {
+extension ChatViewController : TribeMemberViewDelegate {
     func shouldGoToSendPayment(message: TransactionMessage) {
         accessoryView.hide()
 
@@ -449,6 +457,10 @@ extension ChatViewController : TribeMemberPopupViewDelegate {
         )
 
         presentNavigationControllerWith(vc: viewController)
+    }
+    
+    func didDismissTribeMemberVC() {
+        accessoryView.show()
     }
 }
 

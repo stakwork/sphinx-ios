@@ -8,13 +8,14 @@
 
 import UIKit
 
-protocol TribeMemberPopupViewDelegate: class {
+protocol TribeMemberViewDelegate: class {
     func shouldGoToSendPayment(message: TransactionMessage)
+    func didDismissTribeMemberVC()
 }
 
 class TribeMemberPopupView: UIView {
     
-    weak var delegate: TribeMemberPopupViewDelegate?
+    weak var delegate: TribeMemberViewDelegate?
     
     var message: TransactionMessage!
 
@@ -49,7 +50,7 @@ class TribeMemberPopupView: UIView {
     
     func configureFor(
         message: TransactionMessage,
-        with delegate: TribeMemberPopupViewDelegate
+        with delegate: TribeMemberViewDelegate
     ) {
         self.message = message
         self.delegate = delegate

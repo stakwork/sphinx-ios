@@ -12,13 +12,13 @@ class TribeMemberPopupViewController: UIViewController {
     
     @IBOutlet weak var tribeMemberPopupView: TribeMemberPopupView!
     
-    weak var delegate: TribeMemberPopupViewDelegate!
+    weak var delegate: TribeMemberViewDelegate!
     
     var message: TransactionMessage!
     
     static func instantiate(
         message : TransactionMessage,
-        delegate: TribeMemberPopupViewDelegate
+        delegate: TribeMemberViewDelegate
     ) -> TribeMemberPopupViewController {
         let viewController = StoryboardScene.Chat.tribeMemberPopupViewController.instantiate()
         viewController.message = message

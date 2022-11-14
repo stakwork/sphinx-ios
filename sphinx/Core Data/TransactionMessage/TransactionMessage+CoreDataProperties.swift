@@ -41,6 +41,7 @@ extension TransactionMessage {
     @NSManaged public var originalMuid: String?
     @NSManaged public var chat: Chat?
     @NSManaged public var push: Bool
+    @NSManaged public var person: String?
     
     @NSManaged public var mediaKey: String?
     @NSManaged public var mediaType: String?

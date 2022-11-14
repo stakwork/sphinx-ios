@@ -64,6 +64,10 @@
 		471161E82915680B008EAFF2 /* csvStopList.csv in Resources */ = {isa = PBXBuildFile; fileRef = 471161E72915680B008EAFF2 /* csvStopList.csv */; };
 		471161EA2915937A008EAFF2 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471161E92915937A008EAFF2 /* Array.swift */; };
 		4711B2BD24522C4E0056ED25 /* ChatAccessoryViewDelegateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4711B2BC24522C4E0056ED25 /* ChatAccessoryViewDelegateExtension.swift */; };
+		4712994329227B450049CBE3 /* TribeMemberProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4712994229227B450049CBE3 /* TribeMemberProfileViewController.swift */; };
+		4712994529227C460049CBE3 /* TribeMemberProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4712994429227C460049CBE3 /* TribeMemberProfileView.swift */; };
+		4712994829228ED20049CBE3 /* TribeMemberProfileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4712994A29228ED20049CBE3 /* TribeMemberProfileView.xib */; };
+		47129951292297CB0049CBE3 /* TribeMemberProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47129950292297CB0049CBE3 /* TribeMemberProfile.swift */; };
 		4712BB4223D755EA00DDCC3B /* GroupAddMemberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4712BB4023D755EA00DDCC3B /* GroupAddMemberTableViewCell.swift */; };
 		4712BB4323D755EA00DDCC3B /* GroupAddMemberTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4712BB4123D755EA00DDCC3B /* GroupAddMemberTableViewCell.xib */; };
 		4712BB4723D898DD00DDCC3B /* PlayAudioHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4712BB4623D898DD00DDCC3B /* PlayAudioHelper.swift */; };
@@ -781,6 +785,13 @@
 		471161E72915680B008EAFF2 /* csvStopList.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = csvStopList.csv; sourceTree = "<group>"; };
 		471161E92915937A008EAFF2 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		4711B2BC24522C4E0056ED25 /* ChatAccessoryViewDelegateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatAccessoryViewDelegateExtension.swift; sourceTree = "<group>"; };
+		47129941292278570049CBE3 /* sphinx 37.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 37.xcdatamodel"; sourceTree = "<group>"; };
+		4712994229227B450049CBE3 /* TribeMemberProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TribeMemberProfileViewController.swift; sourceTree = "<group>"; };
+		4712994429227C460049CBE3 /* TribeMemberProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TribeMemberProfileView.swift; sourceTree = "<group>"; };
+		4712994929228ED20049CBE3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/TribeMemberProfileView.xib; sourceTree = "<group>"; };
+		4712994C29228ED40049CBE3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/TribeMemberProfileView.strings; sourceTree = "<group>"; };
+		4712994E29228ED50049CBE3 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/TribeMemberProfileView.strings; sourceTree = "<group>"; };
+		47129950292297CB0049CBE3 /* TribeMemberProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TribeMemberProfile.swift; sourceTree = "<group>"; };
 		4712BB4023D755EA00DDCC3B /* GroupAddMemberTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupAddMemberTableViewCell.swift; sourceTree = "<group>"; };
 		4712BB4123D755EA00DDCC3B /* GroupAddMemberTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GroupAddMemberTableViewCell.xib; sourceTree = "<group>"; };
 		4712BB4623D898DD00DDCC3B /* PlayAudioHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayAudioHelper.swift; sourceTree = "<group>"; };
@@ -1748,6 +1759,14 @@
 			path = "Gif Support Views";
 			sourceTree = "<group>";
 		};
+		4712994F292297AE0049CBE3 /* Parsing Models */ = {
+			isa = PBXGroup;
+			children = (
+				47129950292297CB0049CBE3 /* TribeMemberProfile.swift */,
+			);
+			path = "Parsing Models";
+			sourceTree = "<group>";
+		};
 		471940AB2339512C00F1BF5B /* QR Code Details */ = {
 			isa = PBXGroup;
 			children = (
@@ -2215,6 +2234,7 @@
 				473258AA241BD6E7006E6602 /* Common */,
 				478BD8B52829B67300C733FD /* TribeMemberPopupViewController.swift */,
 				477C524F28C6307100C24117 /* NotificationsLevelViewController.swift */,
+				4712994229227B450049CBE3 /* TribeMemberProfileViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -2425,6 +2445,7 @@
 		475BDD26232AC96C00C5BBD6 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				4712994F292297AE0049CBE3 /* Parsing Models */,
 				475BDD27232AC97500C5BBD6 /* API.swift */,
 				F358212E2698BE6700A314F1 /* API+HubError.swift */,
 				F30884A82699181200CADDEB /* API+KarmaPurchaseUtils.swift */,
@@ -2949,6 +2970,8 @@
 			children = (
 				478BD8B82829B70700C733FD /* TribeMemberPopupView.swift */,
 				478BD8BE282AA6C600C733FD /* TribeMemberPopupView.xib */,
+				4712994429227C460049CBE3 /* TribeMemberProfileView.swift */,
+				4712994A29228ED20049CBE3 /* TribeMemberProfileView.xib */,
 			);
 			path = "Tribe Member";
 			sourceTree = "<group>";
@@ -3881,6 +3904,7 @@
 				47D46A2D237B1D140005A548 /* SubscriptionFormButtonTableViewCell.xib in Resources */,
 				475BDD91232C087A00C5BBD6 /* TransactionPaymentReceivedTableViewCell.xib in Resources */,
 				F3188B942719DA1600890DDD /* DashboardVideoEpisodeCollectionViewCell.xib in Resources */,
+				4712994829228ED20049CBE3 /* TribeMemberProfileView.xib in Resources */,
 				47BE854B246492FD00BE4AE8 /* KeychainRestoreTableViewCell.xib in Resources */,
 				4797E75E24B8DDE400D13270 /* LeftMenu.storyboard in Resources */,
 				4779F16C232AA0F300D35E81 /* Assets.xcassets in Resources */,
@@ -4059,6 +4083,7 @@
 				47B46F66254AFE1C007F61CD /* ChatHeaderView.swift in Sources */,
 				47893AA2240E857F002F675B /* AVAudioSession.swift in Sources */,
 				47F6CA10287C695B005EBCB6 /* Nonce.swift in Sources */,
+				4712994329227B450049CBE3 /* TribeMemberProfileViewController.swift in Sources */,
 				F39F2C7E26E2367B00D357F6 /* FeedSearchEmptyStateViewController.swift in Sources */,
 				475BDCD0232AC23100C5BBD6 /* ExpiredInvoiceCommonTableViewCell.swift in Sources */,
 				47308E1024FEE6E700FFAC6F /* SocketIOClient.swift in Sources */,
@@ -4213,6 +4238,7 @@
 				47352E4C2440FEB800E5CC7F /* WindowsManager.swift in Sources */,
 				47183CB22548AA4400E6FD19 /* PodcastPlayerView.swift in Sources */,
 				F34BFED7267B350D003F6D55 /* RestoreUserDescriptionViewController.swift in Sources */,
+				4712994529227C460049CBE3 /* TribeMemberProfileView.swift in Sources */,
 				47FA440923749D0B005D8C63 /* SubscriptionFormTableHeaderView.swift in Sources */,
 				F3DC6B23273F60FF00458E09 /* ContentFeedPaymentDestination+CoreDataClass.swift in Sources */,
 				47893A8B24095A30002F675B /* AudioSentTableViewCell.swift in Sources */,
@@ -4496,6 +4522,7 @@
 				47308E0724FEE6E600FFAC6F /* SocketManager.swift in Sources */,
 				473842F32391719500AA640F /* PictureBubbleView.swift in Sources */,
 				475BDD8F232C087A00C5BBD6 /* TransactionPaymentReceivedTableViewCell.swift in Sources */,
+				47129951292297CB0049CBE3 /* TribeMemberProfile.swift in Sources */,
 				F3DC6B26273F60FF00458E09 /* ContentFeedPaymentModel+CoreDataProperties.swift in Sources */,
 				475BDD30232ACB3900C5BBD6 /* UITableView.swift in Sources */,
 				4797E74A24B89ECA00D13270 /* VideoCallHelper.swift in Sources */,
@@ -4610,6 +4637,16 @@
 				470F4C4F257E708A00288A9B /* es */,
 			);
 			name = TribeMemberInfoView.xib;
+			sourceTree = "<group>";
+		};
+		4712994A29228ED20049CBE3 /* TribeMemberProfileView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4712994929228ED20049CBE3 /* Base */,
+				4712994C29228ED40049CBE3 /* en */,
+				4712994E29228ED50049CBE3 /* es */,
+			);
+			name = TribeMemberProfileView.xib;
 			sourceTree = "<group>";
 		};
 		47158D79273083E200601F00 /* NewsletterFeed.storyboard */ = {
@@ -5477,6 +5514,7 @@
 		47F35D4A2373156A0042A58F /* sphinx.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				47129941292278570049CBE3 /* sphinx 37.xcdatamodel */,
 				474CCFA8291560DA0037E1D4 /* sphinx 36.xcdatamodel */,
 				474CC56D2900880300B68F08 /* sphinx 35.xcdatamodel */,
 				47341E8028C642DC00426055 /* sphinx 34.xcdatamodel */,
@@ -5514,7 +5552,7 @@
 				475E4162238588A200928931 /* sphinx 2.xcdatamodel */,
 				47F35D4B2373156A0042A58F /* sphinx.xcdatamodel */,
 			);
-			currentVersion = 474CCFA8291560DA0037E1D4 /* sphinx 36.xcdatamodel */;
+			currentVersion = 47129941292278570049CBE3 /* sphinx 37.xcdatamodel */;
 			path = sphinx.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

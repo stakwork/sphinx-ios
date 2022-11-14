@@ -17,6 +17,8 @@ extension API {
     typealias GetPersonInfoCallback = ((Bool, JSON?) -> ())
     typealias GetExternalRequestByKeyCallback = ((Bool, JSON?) -> ())
     typealias PeopleTorRequestCallback = ((Bool) -> ())
+    typealias GetPersonProfileCallback = ((Bool, JSON?) -> ())
+    typealias GetTribeMemberProfileCallback = ((Bool, TribeMemberStruct?) -> ())
     
     public func verifyExternal(callback: @escaping VerifyExternalCallback) {
         guard let request = getURLRequest(route: "/verify_external", method: "POST") else {
@@ -208,6 +210,38 @@ extension API {
                 callback(false)
             case .failure(_):
                 callback(false)
+            }
+        }
+    }
+    
+    public func getTribeMemberInfo(
+        person: String,
+        callback: @escaping GetTribeMemberProfileCallback
+    ) {
+        
+        guard let host = person.personHost, let uuid = person.personUUID else {
+            callback(false, nil)
+            return
+        }
+        
+        let url = "https://\(host)/person/uuid/\(uuid)"
+        
+        guard let request = createRequest(url, bodyParams: nil, method: "GET") else {
+            callback(false, nil)
+            return
+        }
+        
+        AF.request(request).responseJSON { (response) in
+            switch response.result {
+            case .success(let data):
+                if let json = data as? NSDictionary {
+                    let tribeMember = TribeMemberStruct(json: JSON(json))
+                    callback(true, tribeMember)
+                    return
+                }
+                callback(false, nil)
+            case .failure(_):
+                callback(false, nil)
             }
         }
     }

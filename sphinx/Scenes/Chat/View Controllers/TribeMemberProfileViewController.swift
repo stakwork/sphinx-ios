@@ -62,7 +62,7 @@ class TribeMemberProfileViewController: UIViewController {
             self.tribeMemberProfileViewBottomConstraint.constant = 0
 
             UIView.animate(withDuration: 0.3, animations: {
-                self.view.layoutSubviews()
+                self.tribeMemberProfileContainer.superview?.layoutSubviews()
             }, completion: { _ in
                 self.loadProfileData()
             })

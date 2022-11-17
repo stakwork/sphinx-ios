@@ -66,4 +66,29 @@ extension API {
             }
         }
     }
+    
+    public func getFeedRecommendations(
+        callback: @escaping SuccessCallback
+    ) {
+        
+        guard let request = getURLRequest(route: "/feeds", method: "GET") else {
+            callback(false)
+            return
+        }
+        
+        sphinxRequest(request) { response in
+            switch response.result {
+            case .success(let data):
+                if let json = data as? NSDictionary {
+                    if let success = json["success"] as? Bool, let response = json["response"] as? NSDictionary, success {
+                        callback(true)
+                    } else {
+                        callback(false)
+                    }
+                }
+            case .failure(_):
+                callback(false)
+            }
+        }
+    }
 }

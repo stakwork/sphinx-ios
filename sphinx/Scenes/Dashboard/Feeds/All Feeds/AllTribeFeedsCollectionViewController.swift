@@ -10,8 +10,9 @@ import CoreData
 
 class AllTribeFeedsCollectionViewController: UICollectionViewController {
     var followedFeeds: [ContentFeed] = []
+    var recommendedFeeds: [ContentFeed] = []
     
-    var interSectionSpacing: CGFloat = 20.0
+    var interSectionSpacing: CGFloat = 10.0
     var interCellSpacing: CGFloat = 6.0
 
     var onCellSelected: ((NSManagedObjectID) -> Void)!
@@ -37,7 +38,7 @@ extension AllTribeFeedsCollectionViewController {
 
     static func instantiate(
         managedObjectContext: NSManagedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext,
-        interSectionSpacing: CGFloat = 20.0,
+        interSectionSpacing: CGFloat = 10.0,
         onCellSelected: ((NSManagedObjectID) -> Void)!,
         onNewResultsFetched: @escaping ((Int) -> Void) = { _ in },
         onContentScrolled: ((UIScrollView) -> Void)? = nil
@@ -66,12 +67,15 @@ extension AllTribeFeedsCollectionViewController {
 extension AllTribeFeedsCollectionViewController {
     
     enum CollectionViewSection: Int, CaseIterable {
+        case recommendedFeeds
         case followedFeeds
         
         var titleForDisplay: String {
             switch self {
-            case .followedFeeds:
-                return "feed.following".localized
+                case .recommendedFeeds:
+                    return "feed.recommended".localized
+                case .followedFeeds:
+                    return "feed.following".localized
             }
         }
     }
@@ -81,20 +85,35 @@ extension AllTribeFeedsCollectionViewController {
         case tribePodcastFeed(ContentFeed)
         case tribeVideoFeed(ContentFeed)
         case tribeNewsletterFeed(ContentFeed)
-
-        static func == (lhs: DataSourceItem, rhs: DataSourceItem) -> Bool {
+        case recommendedFeed(ContentFeed)
+        
+        static func hasEqualValues(_ lhs: DataSourceItem, _ rhs: DataSourceItem) -> Bool {
             if let lhsContentFeed = lhs.feedEntity as? ContentFeed,
                let rhsContentFeed = rhs.feedEntity as? ContentFeed {
-                    
+                
                 return
                     lhsContentFeed.feedID == rhsContentFeed.feedID &&
                     lhsContentFeed.title == rhsContentFeed.title &&
                     lhsContentFeed.feedURL?.absoluteString == rhsContentFeed.feedURL?.absoluteString &&
                     lhsContentFeed.items?.count ?? 0 == rhsContentFeed.items?.count ?? 0
             }
-
             return false
-         }
+        }
+
+        static func == (lhs: DataSourceItem, rhs: DataSourceItem) -> Bool {
+            switch (lhs, rhs) {
+            case ( .tribePodcastFeed(_), .tribePodcastFeed(_)):
+                return DataSourceItem.hasEqualValues(lhs, rhs)
+            case ( .tribeVideoFeed(_), .tribeVideoFeed(_)):
+                return DataSourceItem.hasEqualValues(lhs, rhs)
+            case ( .tribeNewsletterFeed(_), .tribeNewsletterFeed(_)):
+                return DataSourceItem.hasEqualValues(lhs, rhs)
+            case ( .recommendedFeed(_), .recommendedFeed(_)):
+                return DataSourceItem.hasEqualValues(lhs, rhs)
+            default:
+                return false
+            }
+        }
 
         func hash(into hasher: inout Hasher) {
             if let contentFeed = self.feedEntity as? ContentFeed {
@@ -123,6 +142,15 @@ extension AllTribeFeedsCollectionViewController {
         registerViews(for: collectionView)
         configure(collectionView)
         configureDataSource(for: collectionView)
+        addTableBottomInset(for: collectionView)
+    }
+    
+    func addTableBottomInset(for collectionView: UICollectionView) {
+        let windowInsets = getWindowInsets()
+        let bottomBarHeight:CGFloat = 64
+        
+        collectionView.contentInset.bottom = bottomBarHeight + windowInsets.bottom
+        collectionView.verticalScrollIndicatorInsets.bottom = bottomBarHeight + windowInsets.bottom
     }
     
     
@@ -140,7 +168,7 @@ extension AllTribeFeedsCollectionViewController {
     func makeSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
         let headerSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
-            heightDimension: .estimated(48)
+            heightDimension: .estimated(80)
         )
 
         return NSCollectionLayoutBoundarySupplementaryItem(
@@ -151,7 +179,7 @@ extension AllTribeFeedsCollectionViewController {
     }
 
 
-    func makeFollowedFeedsSectionLayout() -> NSCollectionLayoutSection {
+    func makeFeedsSectionLayout() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
             heightDimension: .fractionalHeight(1.0)
@@ -159,14 +187,12 @@ extension AllTribeFeedsCollectionViewController {
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = itemContentInsets
 
-
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .absolute(160.0),
             heightDimension: .absolute(240.0)
         )
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
 
-        
         let section = NSCollectionLayoutSection(group: group)
 
         section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
@@ -179,10 +205,7 @@ extension AllTribeFeedsCollectionViewController {
 
     func makeSectionProvider() -> UICollectionViewCompositionalLayoutSectionProvider {
         { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
-            switch CollectionViewSection(rawValue: sectionIndex)! {
-            case .followedFeeds:
-                return self.makeFollowedFeedsSectionLayout()
-            }
+            return self.makeFeedsSectionLayout()
         }
     }
 
@@ -220,18 +243,12 @@ extension AllTribeFeedsCollectionViewController {
     }
 
 
-    func configure(_ collectionView: UICollectionView) {
-        collectionView.contentInset = .init(
-            top: interSectionSpacing,
-            left: 0,
-            bottom: 0,
-            right: 0
-        )
-        
+    func configure(_ collectionView: UICollectionView) {        
         collectionView.collectionViewLayout = makeLayout()
         collectionView.alwaysBounceVertical = true
         collectionView.backgroundColor = .Sphinx.ListBG
         collectionView.showsVerticalScrollIndicator = false
+        collectionView.contentInset = .init(top: 20, left: 0, bottom: 0, right: 0)
         
         collectionView.delegate = self
     }
@@ -279,26 +296,26 @@ extension AllTribeFeedsCollectionViewController {
             }
             
             switch section {
-            case .followedFeeds:
-                guard
-                    let feedCell = collectionView.dequeueReusableCell(
-                        withReuseIdentifier: DashboardFeedSquaredThumbnailCollectionViewCell.reuseID,
-                        for: indexPath
-                    ) as? DashboardFeedSquaredThumbnailCollectionViewCell
-                else {
-                    preconditionFailure("Failed to dequeue expected reusable cell type")
-                }
-                
-                guard
-                    let feedEntity = dataSourceItem.feedEntity
-                        as? DashboardFeedSquaredThumbnailCollectionViewItem
-                else {
-                    preconditionFailure("Failed to find entity that conforms to `DashboardFeedSquaredThumbnailCollectionViewItem`")
-                }
-                
-                feedCell.configure(withItem: feedEntity)
-                
-                return feedCell
+                case .followedFeeds, .recommendedFeeds:
+                    guard
+                        let feedCell = collectionView.dequeueReusableCell(
+                            withReuseIdentifier: DashboardFeedSquaredThumbnailCollectionViewCell.reuseID,
+                            for: indexPath
+                        ) as? DashboardFeedSquaredThumbnailCollectionViewCell
+                    else {
+                        preconditionFailure("Failed to dequeue expected reusable cell type")
+                    }
+                    
+                    guard
+                        let feedEntity = dataSourceItem.feedEntity
+                            as? DashboardFeedSquaredThumbnailCollectionViewItem
+                    else {
+                        preconditionFailure("Failed to find entity that conforms to `DashboardFeedSquaredThumbnailCollectionViewItem`")
+                    }
+                    
+                    feedCell.configure(withItem: feedEntity)
+                    
+                    return feedCell
             }
         }
     }
@@ -318,15 +335,22 @@ extension AllTribeFeedsCollectionViewController {
                     preconditionFailure()
                 }
 
-                let section = CollectionViewSection.allCases[indexPath.section]
-
-                headerView.render(withTitle: section.titleForDisplay)
+                let section = self.getSectionFor(indexPath: indexPath)
+                let isRecommendedSection = section == .recommendedFeeds
+                
+                headerView.render(withTitle: section.titleForDisplay, refreshButton: isRecommendedSection)
 
                 return headerView
             default:
                 return UICollectionReusableView()
             }
         }
+    }
+    
+    private func getSectionFor(indexPath: IndexPath) -> CollectionViewSection {
+        let numberOfSections = self.currentDataSnapshot?.numberOfSections ?? 0
+        let sectionFix = (numberOfSections == 1) ? 1 : 0
+        return CollectionViewSection.allCases[indexPath.section + sectionFix]
     }
 }
 
@@ -337,9 +361,25 @@ extension AllTribeFeedsCollectionViewController {
     func makeSnapshotForCurrentState() -> DataSourceSnapshot {
         var snapshot = DataSourceSnapshot()
 
-        snapshot.appendSections(CollectionViewSection.allCases)
+        let recommendedSourceItems = recommendedFeeds.sorted { (first, second) in
+            let firstDate = first.dateUpdated ?? first.datePublished ?? Date.init(timeIntervalSince1970: 0)
+            let secondDate = second.dateUpdated ?? second.datePublished ?? Date.init(timeIntervalSince1970: 0)
+
+            return firstDate > secondDate
+        }.compactMap { contentFeed -> DataSourceItem? in
+            return DataSourceItem.recommendedFeed(contentFeed)
+        }
+        
+        if recommendedSourceItems.count > 0 {
+            snapshot.appendSections([CollectionViewSection.recommendedFeeds])
+            
+            snapshot.appendItems(
+                recommendedSourceItems,
+                toSection: .recommendedFeeds
+            )
+        }
   
-        let dataSourceItems = followedFeeds.sorted { (first, second) in
+        let followedSourceItems = followedFeeds.sorted { (first, second) in
             let firstDate = first.dateUpdated ?? first.datePublished ?? Date.init(timeIntervalSince1970: 0)
             let secondDate = second.dateUpdated ?? second.datePublished ?? Date.init(timeIntervalSince1970: 0)
 
@@ -355,11 +395,16 @@ extension AllTribeFeedsCollectionViewController {
             return nil
         }
         
-        snapshot.appendItems(
-            dataSourceItems,
-            toSection: .followedFeeds
-        )
+        if followedSourceItems.count > 0 {
+            snapshot.appendSections([CollectionViewSection.followedFeeds])
+            
+            snapshot.appendItems(
+                followedSourceItems,
+                toSection: .followedFeeds
+            )
+        }
         
+        currentDataSnapshot = snapshot
         return snapshot
     }
 
@@ -376,6 +421,7 @@ extension AllTribeFeedsCollectionViewController {
         shouldAnimate: Bool = true
     ) {
         self.followedFeeds = followedFeeds
+        self.recommendedFeeds = followedFeeds
 
         if let dataSource = dataSource {
             let snapshot = makeSnapshotForCurrentState()
@@ -476,6 +522,8 @@ extension AllTribeFeedsCollectionViewController.DataSourceItem {
             return videoFeed
         case .tribeNewsletterFeed(let newsletterFeed):
             return newsletterFeed
+        case .recommendedFeed(let recommendedFeed):
+            return recommendedFeed
         }
     }
 }

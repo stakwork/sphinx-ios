@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -15,6 +15,9 @@
         <array key="Roboto-Bold.ttf">
             <string>Roboto-Bold</string>
         </array>
+        <array key="Roboto-Medium.ttf">
+            <string>Roboto-Medium</string>
+        </array>
     </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -24,7 +27,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="4aX-st-Aff">
-                    <rect key="frame" x="10" y="0.0" width="394" height="50"/>
+                    <rect key="frame" x="10" y="0.0" width="404" height="50"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="751" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="ofj-sj-jbM">
                             <rect key="frame" x="0.0" y="0.0" width="135" height="50"/>
@@ -43,55 +46,74 @@
                                 </label>
                             </subviews>
                         </stackView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="249" text="playlist" textAlignment="natural" lineBreakMode="clip" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hHt-8D-yWm">
-                            <rect key="frame" x="179.5" y="0.0" width="140" height="50"/>
-                            <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="28"/>
-                            <color key="textColor" name="WashedOutReceivedText"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hd0-8P-gDr">
-                            <rect key="frame" x="254" y="0.0" width="140" height="50"/>
-                            <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="28"/>
-                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                            <state key="normal" title="playlist">
-                                <color key="titleColor" name="WashedOutReceivedText"/>
-                            </state>
-                        </button>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="21v-iu-a4D">
+                            <rect key="frame" x="329" y="0.0" width="75" height="50"/>
+                            <subviews>
+                                <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="751" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Ym3-ly-reR">
+                                    <rect key="frame" x="0.0" y="15" width="75" height="20"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Refresh" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XdF-LL-R0D">
+                                            <rect key="frame" x="0.0" y="2" width="50" height="16.5"/>
+                                            <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="14"/>
+                                            <color key="textColor" name="SecondaryText"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="refresh" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EAa-5j-QRJ">
+                                            <rect key="frame" x="55" y="0.0" width="20" height="20"/>
+                                            <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="20"/>
+                                            <color key="textColor" name="SecondaryText"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </stackView>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BHy-7M-lBF">
+                                    <rect key="frame" x="0.0" y="0.0" width="75" height="50"/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <connections>
+                                        <action selector="refreshButtonTapped" destination="Yp2-hm-eWM" eventType="touchUpInside" id="Oq5-Ji-dbn"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstItem="BHy-7M-lBF" firstAttribute="top" secondItem="21v-iu-a4D" secondAttribute="top" id="Bch-C4-Ct1"/>
+                                <constraint firstItem="Ym3-ly-reR" firstAttribute="centerY" secondItem="21v-iu-a4D" secondAttribute="centerY" id="DEk-Bz-H1T"/>
+                                <constraint firstItem="Ym3-ly-reR" firstAttribute="leading" secondItem="21v-iu-a4D" secondAttribute="leading" id="GzQ-Hx-84k"/>
+                                <constraint firstAttribute="width" constant="75" id="MjH-7V-hBL"/>
+                                <constraint firstAttribute="trailing" secondItem="BHy-7M-lBF" secondAttribute="trailing" id="SHi-gk-37w"/>
+                                <constraint firstAttribute="trailing" secondItem="Ym3-ly-reR" secondAttribute="trailing" id="YC2-Rn-pZU"/>
+                                <constraint firstItem="BHy-7M-lBF" firstAttribute="leading" secondItem="21v-iu-a4D" secondAttribute="leading" id="YSK-cw-N5L"/>
+                                <constraint firstAttribute="bottom" secondItem="BHy-7M-lBF" secondAttribute="bottom" id="ptJ-uT-TIk"/>
+                            </constraints>
+                        </view>
                     </subviews>
                     <constraints>
-                        <constraint firstAttribute="trailing" secondItem="hHt-8D-yWm" secondAttribute="trailing" id="Fwq-U3-WVS"/>
-                        <constraint firstItem="hHt-8D-yWm" firstAttribute="top" secondItem="4aX-st-Aff" secondAttribute="top" id="Opl-lD-NZq"/>
-                        <constraint firstAttribute="bottom" secondItem="Hd0-8P-gDr" secondAttribute="bottom" id="Pv8-zB-obz"/>
-                        <constraint firstAttribute="bottom" secondItem="hHt-8D-yWm" secondAttribute="bottom" id="mFb-Ru-5eJ"/>
-                        <constraint firstItem="Hd0-8P-gDr" firstAttribute="top" secondItem="4aX-st-Aff" secondAttribute="top" id="pXB-kd-eRf"/>
-                        <constraint firstAttribute="trailing" secondItem="Hd0-8P-gDr" secondAttribute="trailing" id="zrM-EJ-HOU"/>
+                        <constraint firstAttribute="bottom" secondItem="21v-iu-a4D" secondAttribute="bottom" id="0cL-bz-uC7"/>
+                        <constraint firstItem="21v-iu-a4D" firstAttribute="top" secondItem="4aX-st-Aff" secondAttribute="top" id="T4g-7l-g0M"/>
+                        <constraint firstAttribute="trailing" secondItem="21v-iu-a4D" secondAttribute="trailing" id="gC5-0N-9gK"/>
                     </constraints>
-                    <variation key="default">
-                        <mask key="subviews">
-                            <exclude reference="hHt-8D-yWm"/>
-                        </mask>
-                    </variation>
                 </stackView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="ETB-r9-sFE"/>
             <constraints>
                 <constraint firstItem="4aX-st-Aff" firstAttribute="leading" secondItem="ETB-r9-sFE" secondAttribute="leading" constant="10" id="5vr-Zy-9mX"/>
-                <constraint firstItem="ETB-r9-sFE" firstAttribute="trailing" secondItem="4aX-st-Aff" secondAttribute="trailing" constant="10" id="Rc7-mr-ksa"/>
+                <constraint firstItem="ETB-r9-sFE" firstAttribute="trailing" secondItem="4aX-st-Aff" secondAttribute="trailing" id="Rc7-mr-ksa"/>
                 <constraint firstItem="4aX-st-Aff" firstAttribute="bottom" secondItem="ETB-r9-sFE" secondAttribute="bottom" id="c8T-AI-lK4"/>
                 <constraint firstItem="4aX-st-Aff" firstAttribute="top" secondItem="Yp2-hm-eWM" secondAttribute="top" id="srj-9h-JRr"/>
             </constraints>
             <connections>
+                <outlet property="refreshButtonContainer" destination="21v-iu-a4D" id="Pab-a2-YeB"/>
                 <outlet property="sectionTitleLabel" destination="lmV-U5-tqg" id="rMN-rj-QzU"/>
             </connections>
             <point key="canvasLocation" x="92" y="15"/>
         </collectionReusableView>
     </objects>
     <resources>
+        <namedColor name="SecondaryText">
+            <color red="0.55686274509803924" green="0.58823529411764708" blue="0.61176470588235299" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="Text">
             <color red="0.23529411764705882" green="0.24705882352941178" blue="0.25490196078431371" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="WashedOutReceivedText">
-            <color red="0.69019607843137254" green="0.71764705882352942" blue="0.73725490196078436" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

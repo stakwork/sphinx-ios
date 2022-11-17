@@ -8,6 +8,10 @@ import UIKit
 
 class DashboardFeedCollectionViewSectionHeader: UICollectionReusableView {
     @IBOutlet weak var sectionTitleLabel: UILabel!
+    @IBOutlet weak var refreshButtonContainer: UIView!
+    
+    @IBAction func refreshButtonTapped() {
+    }
 }
 
 
@@ -33,7 +37,12 @@ extension DashboardFeedCollectionViewSectionHeader {
 // MARK: - Public Methods
 extension DashboardFeedCollectionViewSectionHeader {
 
-    func render(withTitle title: String) {
+    func render(
+        withTitle title: String,
+        refreshButton: Bool = false
+    ) {
         sectionTitleLabel.text = title
+        
+        refreshButtonContainer.alpha = refreshButton ? 1.0 : 0.0
     }
 }

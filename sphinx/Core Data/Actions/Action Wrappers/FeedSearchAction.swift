@@ -52,8 +52,8 @@ public class FeedSearchAction: Codable {
             "meta_data":
                 [
                     "search_term" : self.searchTerm,
-                    "current_timestamp" : round(self.currentTimestamp.timeIntervalSince1970 * 1000),
-                    "frequency" : self.frequency
+                    "frequency" : self.frequency,
+                    "current_timestamp" : round(self.currentTimestamp.timeIntervalSince1970 * 1000)
                 ]
         ]
         return json

@@ -64,6 +64,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setInitialVC(launchingApp: true)
         
         ActionsManager.sharedInstance.syncActions()
+        
+//        API.sharedInstance.getFeedRecommendations(callback: { success in
+//            print(success)
+//        })
 
         return true
     }

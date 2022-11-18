@@ -39,6 +39,18 @@ public class MessageAction: Codable {
         self.currentTimestamp = currentTimestamp
     }
     
+    func getParamsDictionary() -> [String: Any] {
+        let json: [String: Any] = [
+            "type": ActionsManager.ActionType.Message.rawValue,
+            "meta_data":
+                [
+                    "keywords" : self.keywords,
+                    "current_timestamp" : round(self.currentTimestamp.timeIntervalSince1970 * 1000),
+                ]
+        ]
+        return json
+    }
+    
     func jsonString() -> String? {
         let jsonEncoder = JSONEncoder()
         var jsonData: Data! = nil

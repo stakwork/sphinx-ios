@@ -81,6 +81,25 @@ public class PodcastClipAction: Codable {
         self.currentTimestamp = currentTimestamp
     }
     
+    func getParamsDictionary() -> [String: Any] {
+        let json: [String: Any] = [
+            "type": ActionsManager.ActionType.PodcastClipComment.rawValue,
+            "meta_data":
+                [
+                    "feed_id" : self.feedId,
+                    "feed_type" : self.feedType,
+                    "feed_url" : self.feedUrl,
+                    "feed_item_id" : self.feedItemId,
+                    "feed_item_url" : self.feedItemUrl,
+                    "topics" : self.topics,
+                    "start_timestamp" : self.startTimestamp,
+                    "end_timestamp" : self.endTimestamp,
+                    "current_timestamp" : round(self.currentTimestamp.timeIntervalSince1970 * 1000),
+                ]
+        ]
+        return json
+    }
+    
     func jsonString() -> String? {
         let jsonEncoder = JSONEncoder()
         var jsonData: Data! = nil
@@ -93,7 +112,7 @@ public class PodcastClipAction: Codable {
         return String(data: jsonData, encoding: String.Encoding.utf8)
     }
 
-    static func messageAction(jsonString: String) -> PodcastClipAction? {
+    static func podcastClipAction(jsonString: String) -> PodcastClipAction? {
         let data = Data(jsonString.utf8)
         let jsonDecoder = JSONDecoder()
         var podcastClipAction: PodcastClipAction! = nil

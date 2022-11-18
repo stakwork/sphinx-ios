@@ -40,7 +40,7 @@ class UserData {
         if let transportK = transportKey ?? getTransportKey(),
            let transportEncryptionKey = EncryptionManager.sharedInstance.getPublicKeyFromBase64String(base64String: transportK) {
             
-            let time = Int(NSDate().timeIntervalSince1970)
+            let time = Int(NSDate().timeIntervalSince1970*1000)
             let tokenAndTime = "\(t)|\(time)"
             
             if let encryptedToken = EncryptionManager.sharedInstance.encryptToken(token: tokenAndTime, key: transportEncryptionKey) {

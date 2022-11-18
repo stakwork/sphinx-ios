@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 public class FeedSearchAction: Codable {
     
@@ -45,6 +46,19 @@ public class FeedSearchAction: Codable {
         self.currentTimestamp = currentTimestamp
     }
     
+    func getParamsDictionary() -> [String: Any] {
+        let json: [String: Any] = [
+            "type": ActionsManager.ActionType.FeedSearch.rawValue,
+            "meta_data":
+                [
+                    "search_term" : self.searchTerm,
+                    "frequency" : self.frequency,
+                    "current_timestamp" : round(self.currentTimestamp.timeIntervalSince1970 * 1000)
+                ]
+        ]
+        return json
+    }
+    
     func jsonString() -> String? {
         let jsonEncoder = JSONEncoder()
         var jsonData: Data! = nil
@@ -57,7 +71,7 @@ public class FeedSearchAction: Codable {
         return String(data: jsonData, encoding: String.Encoding.utf8)
     }
 
-    static func messageAction(jsonString: String) -> FeedSearchAction? {
+    static func feedSearchAction(jsonString: String) -> FeedSearchAction? {
         let data = Data(jsonString.utf8)
         let jsonDecoder = JSONDecoder()
         var feedSearchAction: FeedSearchAction! = nil

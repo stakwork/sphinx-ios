@@ -75,6 +75,24 @@ public class ContentBoostAction: Codable {
         self.currentTimestamp = currentTimestamp
     }
     
+    func getParamsDictionary() -> [String: Any] {
+        let json: [String: Any] = [
+            "type": ActionsManager.ActionType.ContentBoost.rawValue,
+            "meta_data":
+                [
+                    "boost" : self.boost,
+                    "feed_id" : self.feedId,
+                    "feed_type" : self.feedType,
+                    "feed_url" : self.feedUrl,
+                    "feed_item_id" : self.feedItemId,
+                    "feed_item_url" : self.feedItemUrl,
+                    "topics" : self.topics,
+                    "current_timestamp" : round(self.currentTimestamp.timeIntervalSince1970 * 1000),
+                ]
+        ]
+        return json
+    }
+    
     func jsonString() -> String? {
         let jsonEncoder = JSONEncoder()
         var jsonData: Data! = nil
@@ -87,7 +105,7 @@ public class ContentBoostAction: Codable {
         return String(data: jsonData, encoding: String.Encoding.utf8)
     }
 
-    static func messageAction(jsonString: String) -> ContentBoostAction? {
+    static func contentBoostAction(jsonString: String) -> ContentBoostAction? {
         let data = Data(jsonString.utf8)
         let jsonDecoder = JSONDecoder()
         var contentBoostAction: ContentBoostAction! = nil

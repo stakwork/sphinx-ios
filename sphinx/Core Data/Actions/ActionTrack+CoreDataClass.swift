@@ -55,16 +55,35 @@ public class ActionTrack: NSManagedObject, Encodable {
         return CoreDataManager.sharedManager.getObjectsCountOfTypeWith(predicate: predicate, entityName: "ActionTrack")
     }
     
-    func jsonString() -> String? {
-        let jsonEncoder = JSONEncoder()
-        var jsonData: Data! = nil
-        do {
-            jsonData = try jsonEncoder.encode(self)
-        } catch let error {
-            print(error.localizedDescription)
-            return nil
+    func getParamsDictionary() -> [String: Any] {
+        switch (self.type) {
+        case ActionsManager.ActionType.Message.rawValue:
+            if let message = MessageAction.messageAction(jsonString: self.metaData) {
+                return message.getParamsDictionary()
+            }
+        case ActionsManager.ActionType.FeedSearch.rawValue:
+            if let feedSearch = FeedSearchAction.feedSearchAction(jsonString: self.metaData) {
+                return feedSearch.getParamsDictionary()
+            }
+            break
+        case ActionsManager.ActionType.ContentBoost.rawValue:
+            if let contentBoost = ContentBoostAction.contentBoostAction(jsonString: self.metaData) {
+                return contentBoost.getParamsDictionary()
+            }
+            break
+        case ActionsManager.ActionType.PodcastClipComment.rawValue:
+            if let podcastClip = PodcastClipAction.podcastClipAction(jsonString: self.metaData) {
+                return podcastClip.getParamsDictionary()
+            }
+            break
+        case ActionsManager.ActionType.ContentConsumed.rawValue:
+            if let contentConsumed = ContentConsumedAction.contentConsumedAction(jsonString: self.metaData) {
+                return contentConsumed.getParamsDictionary()
+            }
+        default:
+            return [:]
         }
-        return String(data: jsonData, encoding: String.Encoding.utf8)
+        return [:]
     }
 }
 

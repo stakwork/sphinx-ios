@@ -16,14 +16,11 @@ extension API {
         callback: @escaping SyncActionsCallback
     ) {
         
-        var actionsJson: [[String: AnyObject]] = []
+        var actionsJson: [[String: Any]] = []
         
         for action in actions {
-            var actionDictionary:[String: AnyObject] = [:]
-            actionDictionary["type"] = action.type as AnyObject
-            actionDictionary["meta_data"] = action.metaData as AnyObject
-            
-            actionsJson.append(actionDictionary)
+            let params = action.getParamsDictionary()
+            actionsJson.append(params)
         }
         
         guard actionsJson.count > 0 else {

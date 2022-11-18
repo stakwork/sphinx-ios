@@ -58,12 +58,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         configureNotificationCenter()
         configureStoreKit()
         connectTor()
-        syncDeviceId()
-        getRelayKeys()
         
         setInitialVC(launchingApp: true)
-        
-        ActionsManager.sharedInstance.syncActions()
 
         return true
     }
@@ -100,10 +96,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func getRelayKeys() {
-        if UserData.sharedInstance.isUserLogged() {
-            UserData.sharedInstance.getAndSaveTransportKey()
-            UserData.sharedInstance.getOrCreateHMACKey()
-        }
+        UserData.sharedInstance.getAndSaveTransportKey()
+        UserData.sharedInstance.getOrCreateHMACKey()
     }
     
     func handleAppRefresh(task: BGTask) {
@@ -249,6 +243,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             reloadMessagesData()
             launchingVC = false
             return
+        }
+        
+        if isUserLogged {
+            syncDeviceId()
+            getRelayKeys()
+            ActionsManager.sharedInstance.syncActions()
         }
 
         takeUserToInitialVC(isUserLogged: isUserLogged)

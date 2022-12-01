@@ -16,6 +16,7 @@ class AllTribeFeedsCollectionViewController: UICollectionViewController {
     var interCellSpacing: CGFloat = 6.0
 
     var onCellSelected: ((NSManagedObjectID) -> Void)!
+    var onRecommendationSelected: (([RecommendationResult], String) -> Void)!
     var onContentScrolled: ((UIScrollView) -> Void)?
     var onNewResultsFetched: ((Int) -> Void)!
 
@@ -69,6 +70,7 @@ extension AllTribeFeedsCollectionViewController {
         managedObjectContext: NSManagedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext,
         interSectionSpacing: CGFloat = 10.0,
         onCellSelected: ((NSManagedObjectID) -> Void)!,
+        onRecommendationSelected: (([RecommendationResult], String) -> Void)!,
         onNewResultsFetched: @escaping ((Int) -> Void) = { _ in },
         onContentScrolled: ((UIScrollView) -> Void)? = nil
     ) -> AllTribeFeedsCollectionViewController {
@@ -81,6 +83,7 @@ extension AllTribeFeedsCollectionViewController {
 
         viewController.interSectionSpacing = interSectionSpacing
         viewController.onCellSelected = onCellSelected
+        viewController.onRecommendationSelected = onRecommendationSelected
         viewController.onNewResultsFetched = onNewResultsFetched
         viewController.onContentScrolled = onContentScrolled
         
@@ -632,8 +635,8 @@ extension AllTribeFeedsCollectionViewController {
 
         if let feedEntity = dataSourceItem.feedEntity {
             onCellSelected?(feedEntity.objectID)
-        } else if let _ = dataSourceItem.resultEntity {
-            //Recommendation tapped
+        } else if let recommendation = dataSourceItem.resultEntity {
+            onRecommendationSelected?(recommendedFeeds, recommendation.id)
         }
     }
 }

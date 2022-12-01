@@ -81,6 +81,7 @@ class DashboardFeedsContainerViewController: UIViewController {
         AllTribeFeedsCollectionViewController.instantiate(
             managedObjectContext: managedObjectContext,
             onCellSelected: handleAllFeedsCellSelection(_:),
+            onRecommendationSelected: handleRecommendationSelection(_:_:),
             onNewResultsFetched: handleNewResultsFetch(_:),
             onContentScrolled: handleFeedScroll(scrollView:)
         )
@@ -299,6 +300,13 @@ extension DashboardFeedsContainerViewController {
                 )
             }
         }
+    }
+    
+    private func handleRecommendationSelection(
+        _ recommendations: [RecommendationResult],
+        _ selectedRecommendationId: String
+    ) {
+        
     }
     
     func handleFeedScroll(scrollView: UIScrollView) {

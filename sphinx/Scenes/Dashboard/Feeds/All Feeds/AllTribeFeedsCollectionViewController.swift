@@ -511,10 +511,13 @@ extension AllTribeFeedsCollectionViewController {
         feeds followedFeeds: [ContentFeed]
     ) {
         self.followedFeeds = followedFeeds
+        
+        let firstDataSourceItem = self.dataSource.itemIdentifier(for: IndexPath(row: 0, section: 0))
+        let isLoadingRecommendations = firstDataSourceItem?.isLoading == true
 
         if let dataSource = dataSource {
             let snapshot = makeSnapshotForCurrentState(
-                loadingRecommendations: true
+                loadingRecommendations: isLoadingRecommendations
             )
             
             dataSource.apply(

@@ -12,14 +12,18 @@ protocol DashboardFeedSquaredThumbnailCollectionViewItem {
     var title: String? { get }
     var subtitle: String? { get }
     var placeholderImageName: String? { get }
+    var typeIconImage: String? { get }
+    var titleFontColor: UIColor? { get }
+    var subTitleFontColor: UIColor? { get }
 }
 
 
 class DashboardFeedSquaredThumbnailCollectionViewCell: UICollectionViewCell {
+    
     @IBOutlet private weak var thumbnailImageView: UIImageView!
+    @IBOutlet private weak var typeIconImageView: UIImageView!
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var subtitleLabel: UILabel!
-    
     
     var item: DashboardFeedSquaredThumbnailCollectionViewItem! {
         didSet {
@@ -49,13 +53,17 @@ extension DashboardFeedSquaredThumbnailCollectionViewCell {
         
         thumbnailImageView.layer.cornerRadius = 6.0
         thumbnailImageView.clipsToBounds = true
+        
+        typeIconImageView.layer.cornerRadius = 4.0
+        typeIconImageView.clipsToBounds = true
+        
+        typeIconImageView.isHidden = true
     }
     
     
     func configure(withItem dataItem: DashboardFeedSquaredThumbnailCollectionViewItem) {
         self.item = dataItem
     }
-    
     
     private func updateViewsWithItem() {
         thumbnailImageView.sd_cancelCurrentImageLoad()
@@ -73,6 +81,16 @@ extension DashboardFeedSquaredThumbnailCollectionViewCell {
         
         titleLabel.text = item.title
         subtitleLabel.text = item.subtitle
+        
+        titleLabel.textColor = item.titleFontColor ?? UIColor.Sphinx.Text
+        subtitleLabel.textColor = item.subTitleFontColor ?? UIColor.Sphinx.SecondaryText
+        
+        if let typeIcon = item.typeIconImage {
+            typeIconImageView.image = UIImage(named: typeIcon)
+            typeIconImageView.isHidden = false
+        } else {
+            typeIconImageView.isHidden = true
+        }
     }
 }
 
@@ -107,6 +125,10 @@ extension ContentFeed: DashboardFeedSquaredThumbnailCollectionViewItem {
             return feedDescription ?? title
         }
     }
+    
+    var typeIconImage: String? { get { nil }}
+    var titleFontColor: UIColor? { get { nil }}
+    var subTitleFontColor: UIColor? { get { nil }}
 }
 
 extension VideoFeed: DashboardFeedSquaredThumbnailCollectionViewItem {
@@ -122,6 +144,10 @@ extension VideoFeed: DashboardFeedSquaredThumbnailCollectionViewItem {
     var subtitle: String? {
         title
     }
+    
+    var typeIconImage: String? { get { nil }}
+    var titleFontColor: UIColor? { get { nil }}
+    var subTitleFontColor: UIColor? { get { nil }}
 }
 
 
@@ -134,6 +160,10 @@ extension PodcastEpisode: DashboardFeedSquaredThumbnailCollectionViewItem {
     var subtitle: String? {
         formattedDescription
     }
+    
+    var typeIconImage: String? { get { nil }}
+    var titleFontColor: UIColor? { get { nil }}
+    var subTitleFontColor: UIColor? { get { nil }}
 }
 
 
@@ -145,4 +175,8 @@ extension PodcastFeed: DashboardFeedSquaredThumbnailCollectionViewItem {
     var subtitle: String? {
         podcastDescription ?? ""
     }
+    
+    var typeIconImage: String? { get { nil }}
+    var titleFontColor: UIColor? { get { nil }}
+    var subTitleFontColor: UIColor? { get { nil }}
 }

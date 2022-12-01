@@ -576,6 +576,10 @@ extension NewsletterFeed: DashboardFeedSquaredThumbnailCollectionViewItem {
     var subtitle: String? {
         feedDescription
     }
+    
+    var typeIconImage: String? { get { nil }}
+    var titleFontColor: UIColor? { get { nil }}
+    var subTitleFontColor: UIColor? { get { nil }}
 }
 
 extension NewsletterItem: DashboardFeedSquaredThumbnailCollectionViewItem {
@@ -590,6 +594,10 @@ extension NewsletterItem: DashboardFeedSquaredThumbnailCollectionViewItem {
     var subtitle: String? {
         itemDescription
     }
+    
+    var typeIconImage: String? { get { nil }}
+    var titleFontColor: UIColor? { get { nil }}
+    var subTitleFontColor: UIColor? { get { nil }}
 }
 
 extension DashboardNewsletterFeedCollectionViewController.DataSourceItem {

@@ -10,7 +10,7 @@ import CoreData
 
 class AllTribeFeedsCollectionViewController: UICollectionViewController {
     var followedFeeds: [ContentFeed] = []
-    var recommendedFeeds: [ContentFeed] = []
+    var recommendedFeeds: [RecommendationResult] = []
     
     var interSectionSpacing: CGFloat = 10.0
     var interCellSpacing: CGFloat = 6.0
@@ -30,6 +30,35 @@ class AllTribeFeedsCollectionViewController: UICollectionViewController {
         bottom: 0,
         trailing: 0
     )
+    
+    override var collectionViewLayout: UICollectionViewLayout {
+
+        let layout = UICollectionViewCompositionalLayout { [weak self] (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
+
+            let section = CollectionViewSection(rawValue: sectionIndex)
+            let firstDataSourceItem = self?.dataSource.itemIdentifier(for: IndexPath(row: 0, section: sectionIndex))
+
+            switch section {
+            case .recommendations:
+                if (
+                    firstDataSourceItem?.isLoading == true ||
+                    firstDataSourceItem?.noResults == true
+                ) {
+                    return self?.makeEmptySectionLayout()
+                }
+                return self?.makeFeedsItemSectionLayout()
+            default:
+                return self?.makeFeedsItemSectionLayout()
+            }
+        }
+        
+        let layoutConfiguration = UICollectionViewCompositionalLayoutConfiguration()
+        layoutConfiguration.interSectionSpacing = interSectionSpacing
+        
+        layout.configuration = layoutConfiguration
+
+        return layout
+    }
 }
 
 
@@ -67,13 +96,13 @@ extension AllTribeFeedsCollectionViewController {
 extension AllTribeFeedsCollectionViewController {
     
     enum CollectionViewSection: Int, CaseIterable {
-        case recommendedFeeds
+        case recommendations
         case followedFeeds
         
         var titleForDisplay: String {
             switch self {
-                case .recommendedFeeds:
-                    return "feed.recommended".localized
+                case .recommendations:
+                    return "feed.recommendations".localized
                 case .followedFeeds:
                     return "feed.following".localized
             }
@@ -82,10 +111,15 @@ extension AllTribeFeedsCollectionViewController {
     
     
     enum DataSourceItem: Hashable {
+        
         case tribePodcastFeed(ContentFeed)
         case tribeVideoFeed(ContentFeed)
         case tribeNewsletterFeed(ContentFeed)
-        case recommendedFeed(ContentFeed)
+        
+        case recommendedFeed(RecommendationResult)
+        
+        case loading
+        case noResults
         
         static func hasEqualValues(_ lhs: DataSourceItem, _ rhs: DataSourceItem) -> Bool {
             if let lhsContentFeed = lhs.feedEntity as? ContentFeed,
@@ -96,6 +130,13 @@ extension AllTribeFeedsCollectionViewController {
                     lhsContentFeed.title == rhsContentFeed.title &&
                     lhsContentFeed.feedURL?.absoluteString == rhsContentFeed.feedURL?.absoluteString &&
                     lhsContentFeed.items?.count ?? 0 == rhsContentFeed.items?.count ?? 0
+            }
+            if let lhsContentFeed = lhs.resultEntity,
+               let rhsContentFeed = rhs.resultEntity {
+                
+                return
+                    lhsContentFeed.id == rhsContentFeed.id &&
+                    lhsContentFeed.link == rhsContentFeed.link
             }
             return false
         }
@@ -122,6 +163,10 @@ extension AllTribeFeedsCollectionViewController {
                 hasher.combine(contentFeed.feedURL?.absoluteString)
                 hasher.combine(contentFeed.items?.count)
             }
+            if let recommendation = self.resultEntity {
+                hasher.combine(recommendation.id)
+                hasher.combine(recommendation.link)
+            }
         }
     }
 
@@ -143,6 +188,8 @@ extension AllTribeFeedsCollectionViewController {
         configure(collectionView)
         configureDataSource(for: collectionView)
         addTableBottomInset(for: collectionView)
+        
+        loadRecommendations()
     }
     
     func addTableBottomInset(for collectionView: UICollectionView) {
@@ -177,9 +224,8 @@ extension AllTribeFeedsCollectionViewController {
             alignment: .top
         )
     }
-
-
-    func makeFeedsSectionLayout() -> NSCollectionLayoutSection {
+    
+    func makeFeedsItemSectionLayout() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
             heightDimension: .fractionalHeight(1.0)
@@ -191,6 +237,7 @@ extension AllTribeFeedsCollectionViewController {
             widthDimension: .absolute(160.0),
             heightDimension: .absolute(240.0)
         )
+        
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
 
         let section = NSCollectionLayoutSection(group: group)
@@ -201,27 +248,29 @@ extension AllTribeFeedsCollectionViewController {
 
         return section
     }
-
-
-    func makeSectionProvider() -> UICollectionViewCompositionalLayoutSectionProvider {
-        { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
-            return self.makeFeedsSectionLayout()
-        }
-    }
-
-
-    func makeLayout() -> UICollectionViewLayout {
-        let layoutConfiguration = UICollectionViewCompositionalLayoutConfiguration()
-
-        layoutConfiguration.interSectionSpacing = interSectionSpacing
-
-        let layout = UICollectionViewCompositionalLayout(
-            sectionProvider: makeSectionProvider()
+    
+    func makeEmptySectionLayout() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .fractionalHeight(1.0)
         )
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        item.contentInsets = NSDirectionalEdgeInsets(top: 11, leading: 0, bottom: 11, trailing: 0)
 
-        layout.configuration = layoutConfiguration
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .absolute(240.0)
+        )
+        
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
 
-        return layout
+        let section = NSCollectionLayoutSection(group: group)
+
+        section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
+        section.boundarySupplementaryItems = [makeSectionHeader()]
+        section.contentInsets = .init(top: 11, leading: 0, bottom: 11, trailing: 12)
+
+        return section
     }
 }
 
@@ -236,6 +285,16 @@ extension AllTribeFeedsCollectionViewController {
         )
         
         collectionView.register(
+            LoadingRecommendationsCollectionViewCell.nib,
+            forCellWithReuseIdentifier: LoadingRecommendationsCollectionViewCell.reuseID
+        )
+        
+        collectionView.register(
+            NoRecommendationsCollectionViewCell.nib,
+            forCellWithReuseIdentifier: NoRecommendationsCollectionViewCell.reuseID
+        )
+        
+        collectionView.register(
             ReusableHeaderView.nib,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: ReusableHeaderView.reuseID
@@ -244,7 +303,7 @@ extension AllTribeFeedsCollectionViewController {
 
 
     func configure(_ collectionView: UICollectionView) {        
-        collectionView.collectionViewLayout = makeLayout()
+        collectionView.collectionViewLayout = self.collectionViewLayout
         collectionView.alwaysBounceVertical = true
         collectionView.backgroundColor = .Sphinx.ListBG
         collectionView.showsVerticalScrollIndicator = false
@@ -296,26 +355,48 @@ extension AllTribeFeedsCollectionViewController {
             }
             
             switch section {
-                case .followedFeeds, .recommendedFeeds:
+            case .followedFeeds, .recommendations:
+                if dataSourceItem.isLoading {
                     guard
-                        let feedCell = collectionView.dequeueReusableCell(
-                            withReuseIdentifier: DashboardFeedSquaredThumbnailCollectionViewCell.reuseID,
+                        let loadingCell = collectionView.dequeueReusableCell(
+                            withReuseIdentifier: LoadingRecommendationsCollectionViewCell.reuseID,
                             for: indexPath
-                        ) as? DashboardFeedSquaredThumbnailCollectionViewCell
+                        ) as? LoadingRecommendationsCollectionViewCell
                     else {
                         preconditionFailure("Failed to dequeue expected reusable cell type")
                     }
-                    
+                    loadingCell.startAnimating()
+                    return loadingCell
+                } else if dataSourceItem.noResults {
                     guard
-                        let feedEntity = dataSourceItem.feedEntity
-                            as? DashboardFeedSquaredThumbnailCollectionViewItem
+                        let noRecommendationsCell = collectionView.dequeueReusableCell(
+                            withReuseIdentifier: NoRecommendationsCollectionViewCell.reuseID,
+                            for: indexPath
+                        ) as? NoRecommendationsCollectionViewCell
                     else {
-                        preconditionFailure("Failed to find entity that conforms to `DashboardFeedSquaredThumbnailCollectionViewItem`")
+                        preconditionFailure("Failed to dequeue expected reusable cell type")
                     }
-                    
+                    return noRecommendationsCell
+                }
+                
+                guard
+                    let feedCell = collectionView.dequeueReusableCell(
+                        withReuseIdentifier: DashboardFeedSquaredThumbnailCollectionViewCell.reuseID,
+                        for: indexPath
+                    ) as? DashboardFeedSquaredThumbnailCollectionViewCell
+                else {
+                    preconditionFailure("Failed to dequeue expected reusable cell type")
+                }
+                
+                if let feedEntity = dataSourceItem.feedEntity as? DashboardFeedSquaredThumbnailCollectionViewItem {
                     feedCell.configure(withItem: feedEntity)
-                    
-                    return feedCell
+                } else if let resultEntity = dataSourceItem.resultEntity {
+                    feedCell.configure(withItem: resultEntity as DashboardFeedSquaredThumbnailCollectionViewItem)
+                } else {
+                    preconditionFailure("Failed to find entity that conforms to `DashboardFeedSquaredThumbnailCollectionViewItem`")
+                }
+                
+                return feedCell
             }
         }
     }
@@ -335,10 +416,16 @@ extension AllTribeFeedsCollectionViewController {
                     preconditionFailure()
                 }
 
-                let section = self.getSectionFor(indexPath: indexPath)
-                let isRecommendedSection = section == .recommendedFeeds
+                let section = CollectionViewSection.allCases[indexPath.section]
                 
-                headerView.render(withTitle: section.titleForDisplay, refreshButton: isRecommendedSection)
+                let firstDataSourceItem = self.dataSource.itemIdentifier(for: IndexPath(row: 0, section: 0))
+                let isLoadingRecommendations = firstDataSourceItem?.isLoading == true
+                
+                headerView.render(
+                    withTitle: section.titleForDisplay,
+                    delegate: self,
+                    refreshButton: (section == .recommendations) && !isLoadingRecommendations
+                )
 
                 return headerView
             default:
@@ -346,37 +433,41 @@ extension AllTribeFeedsCollectionViewController {
             }
         }
     }
-    
-    private func getSectionFor(indexPath: IndexPath) -> CollectionViewSection {
-        let numberOfSections = self.currentDataSnapshot?.numberOfSections ?? 0
-        let sectionFix = (numberOfSections == 1) ? 1 : 0
-        return CollectionViewSection.allCases[indexPath.section + sectionFix]
-    }
 }
 
 
 // MARK: - Data Source Snapshot
 extension AllTribeFeedsCollectionViewController {
 
-    func makeSnapshotForCurrentState() -> DataSourceSnapshot {
+    func makeSnapshotForCurrentState(
+        loadingRecommendations: Bool = false
+    ) -> DataSourceSnapshot {
         var snapshot = DataSourceSnapshot()
-
-        let recommendedSourceItems = recommendedFeeds.sorted { (first, second) in
-            let firstDate = first.dateUpdated ?? first.datePublished ?? Date.init(timeIntervalSince1970: 0)
-            let secondDate = second.dateUpdated ?? second.datePublished ?? Date.init(timeIntervalSince1970: 0)
-
-            return firstDate > secondDate
-        }.compactMap { contentFeed -> DataSourceItem? in
-            return DataSourceItem.recommendedFeed(contentFeed)
-        }
         
-        if recommendedSourceItems.count > 0 {
-            snapshot.appendSections([CollectionViewSection.recommendedFeeds])
-            
+        snapshot.appendSections([CollectionViewSection.recommendations])
+        
+        if loadingRecommendations {
             snapshot.appendItems(
-                recommendedSourceItems,
-                toSection: .recommendedFeeds
+                [DataSourceItem.loading],
+                toSection: .recommendations
             )
+        } else {
+            
+            let recommendedSourceItems = recommendedFeeds.compactMap { recommendations -> DataSourceItem? in
+                return DataSourceItem.recommendedFeed(recommendations)
+            }
+            
+            if recommendedSourceItems.count > 0 {
+                snapshot.appendItems(
+                    recommendedSourceItems,
+                    toSection: .recommendations
+                )
+            } else {
+                snapshot.appendItems(
+                    [DataSourceItem.noResults],
+                    toSection: .recommendations
+                )
+            }
         }
   
         let followedSourceItems = followedFeeds.sorted { (first, second) in
@@ -405,30 +496,78 @@ extension AllTribeFeedsCollectionViewController {
         }
         
         currentDataSnapshot = snapshot
+        
         return snapshot
     }
 
 
-    func updateSnapshot(shouldAnimate: Bool = true) {
+    func updateSnapshot() {
         let snapshot = makeSnapshotForCurrentState()
 
-        dataSource.apply(snapshot, animatingDifferences: shouldAnimate)
+        dataSource.apply(snapshot, animatingDifferences: false)
     }
     
-    
     func updateWithNew(
-        feeds followedFeeds: [ContentFeed],
-        shouldAnimate: Bool = true
+        feeds followedFeeds: [ContentFeed]
     ) {
         self.followedFeeds = followedFeeds
-        self.recommendedFeeds = followedFeeds
 
         if let dataSource = dataSource {
+            let snapshot = makeSnapshotForCurrentState(
+                loadingRecommendations: true
+            )
+            
+            dataSource.apply(
+                snapshot,
+                animatingDifferences: false
+            )
+        }
+    }
+    
+    func updateWithNew(
+        recommendations: [RecommendationResult]
+    ) {
+        self.recommendedFeeds = recommendations
+
+        if let dataSource = dataSource {
+            
             let snapshot = makeSnapshotForCurrentState()
             
             dataSource.apply(
                 snapshot,
-                animatingDifferences: shouldAnimate
+                animatingDifferences: false
+            )
+        }
+    }
+    
+    func updateLoadingRecommendations() {
+        self.recommendedFeeds = []
+
+        if let dataSource = dataSource {
+            
+            let snapshot = makeSnapshotForCurrentState(
+                loadingRecommendations: true
+            )
+            
+            dataSource.apply(
+                snapshot,
+                animatingDifferences: false
+            )
+        }
+    }
+    
+    func updateNoRecommendationsFound() {
+        self.recommendedFeeds = []
+
+        if let dataSource = dataSource {
+            
+            let snapshot = makeSnapshotForCurrentState(
+                loadingRecommendations: false
+            )
+            
+            dataSource.apply(
+                snapshot,
+                animatingDifferences: false
             )
         }
     }
@@ -462,6 +601,16 @@ extension AllTribeFeedsCollectionViewController {
             )
         }
     }
+    
+    func loadRecommendations() {
+        updateLoadingRecommendations()
+        
+        API.sharedInstance.getFeedRecommendations(callback: { recommendations in
+            self.updateWithNew(recommendations: recommendations)
+        }, errorCallback: {
+            self.updateNoRecommendationsFound()
+        })
+    }
 }
 
 
@@ -478,7 +627,11 @@ extension AllTribeFeedsCollectionViewController {
             return
         }
 
-        onCellSelected?(dataSourceItem.feedEntity.objectID)
+        if let feedEntity = dataSourceItem.feedEntity {
+            onCellSelected?(feedEntity.objectID)
+        } else if let _ = dataSourceItem.resultEntity {
+            //Recommendation tapped
+        }
     }
 }
 
@@ -510,20 +663,53 @@ extension AllTribeFeedsCollectionViewController: NSFetchedResultsControllerDeleg
     }
 }
 
+extension AllTribeFeedsCollectionViewController: DashboardFeedHeaderDelegate {
+    func didTapOnRefresh() {
+        loadRecommendations()
+    }
+}
+
 
 // MARK: -  Computeds
 extension AllTribeFeedsCollectionViewController.DataSourceItem {
     
-    var feedEntity: NSManagedObject {
+    var feedEntity: NSManagedObject? {
         switch self {
-        case .tribePodcastFeed(let podcastFeed):
-            return podcastFeed
-        case .tribeVideoFeed(let videoFeed):
-            return videoFeed
-        case .tribeNewsletterFeed(let newsletterFeed):
-            return newsletterFeed
-        case .recommendedFeed(let recommendedFeed):
-            return recommendedFeed
+            case .tribePodcastFeed(let podcastFeed):
+                return podcastFeed
+            case .tribeVideoFeed(let videoFeed):
+                return videoFeed
+            case .tribeNewsletterFeed(let newsletterFeed):
+                return newsletterFeed
+            default:
+                return nil
+        }
+    }
+    
+    var resultEntity: RecommendationResult? {
+        switch self {
+            case .recommendedFeed(let recommendedFeed):
+                return recommendedFeed
+            default:
+                return nil
+        }
+    }
+    
+    var isLoading: Bool {
+        switch self {
+        case .loading:
+            return true
+        default:
+            return false
+        }
+    }
+    
+    var noResults: Bool {
+        switch self {
+        case .noResults:
+            return true
+        default:
+            return false
         }
     }
 }

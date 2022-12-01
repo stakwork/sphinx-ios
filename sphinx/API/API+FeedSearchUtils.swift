@@ -68,11 +68,12 @@ extension API {
     }
     
     public func getFeedRecommendations(
-        callback: @escaping SuccessCallback
+        callback: @escaping RecommendationsCallback,
+        errorCallback: @escaping EmptyCallback
     ) {
         
         guard let request = getURLRequest(route: "/feeds", method: "GET") else {
-            callback(false)
+            errorCallback()
             return
         }
         
@@ -80,14 +81,23 @@ extension API {
             switch response.result {
             case .success(let data):
                 if let json = data as? NSDictionary {
-                    if let success = json["success"] as? Bool, let response = json["response"] as? NSDictionary, success {
-                        callback(true)
+                    if let success = json["success"] as? Bool, let recommendations = json["response"] as? NSArray, success {
+                        var recommendationsResults: [RecommendationResult] = []
+                        
+                        for r in recommendations {
+                            
+                            recommendationsResults.append(
+                                RecommendationResult.convertFrom(recommendationResult: JSON(r))
+                            )
+                        }
+                        
+                        callback(recommendationsResults)
                     } else {
-                        callback(false)
+                        errorCallback()
                     }
                 }
             case .failure(_):
-                callback(false)
+                errorCallback()
             }
         }
     }

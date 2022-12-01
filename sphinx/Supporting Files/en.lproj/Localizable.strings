@@ -508,7 +508,7 @@
 "video-player.button.unsubscribe" = "Unsubscribe";
 
 // FEED
-"feed.recommended" = "Recommended";
+"feed.recommendations" = "Recommendations";
 "feed.following" = "Following";
 "feed.listen-now" = "Listen Now";
 "feed.watch-now" = "Watch Now";

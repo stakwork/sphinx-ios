@@ -60,10 +60,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         connectTor()
         
         setInitialVC(launchingApp: true)
-        
-//        API.sharedInstance.getFeedRecommendations(callback: { success in
-//            print(success)
-//        })
 
         return true
     }

@@ -48,6 +48,7 @@ typealias HMACKeyCallback = ((String) -> ())
 typealias HardwarePublicKeyCallback = ((String) -> ())
 typealias HardwareSeedCallback = ((Bool) -> ())
 typealias SyncActionsCallback = ((Bool) -> ())
+typealias RecommendationsCallback = (([RecommendationResult]) -> ())
 
 // HUB calls
 typealias SignupWithCodeCallback = ((JSON, String, String) -> ())

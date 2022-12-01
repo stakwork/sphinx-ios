@@ -93,6 +93,10 @@
 		471F3ABB255ADECB00E2AC79 /* PodcastLiveDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471F3ABA255ADECB00E2AC79 /* PodcastLiveDataSource.swift */; };
 		471FACD823E9B65C007DE1C8 /* EmailHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471FACD723E9B65C007DE1C8 /* EmailHelper.swift */; };
 		471FACDA23E9BE48007DE1C8 /* SupportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471FACD923E9BE48007DE1C8 /* SupportViewController.swift */; };
+		472161B1293913230088B87B /* LoadingRecommendationsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472161AF293913230088B87B /* LoadingRecommendationsCollectionViewCell.swift */; };
+		472161B42939158B0088B87B /* NoRecommendationsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472161B22939158B0088B87B /* NoRecommendationsCollectionViewCell.swift */; };
+		472161B6293915E20088B87B /* NoRecommendationsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 472161B8293915E20088B87B /* NoRecommendationsCollectionViewCell.xib */; };
+		472161BD293916250088B87B /* LoadingRecommendationsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 472161BF293916250088B87B /* LoadingRecommendationsCollectionViewCell.xib */; };
 		4724BC1325474B440012BD76 /* WebApps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4724BC1525474B440012BD76 /* WebApps.storyboard */; };
 		4726A40D24C09C38005A66B4 /* ChatListHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4726A40C24C09C38005A66B4 /* ChatListHeader.swift */; };
 		4726A40F24C09C4C005A66B4 /* ChatListHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4726A40E24C09C4C005A66B4 /* ChatListHeader.xib */; };
@@ -510,6 +514,7 @@
 		47BE85502465E09B00BE4AE8 /* BiometricAuthenticationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47BE854F2465E09B00BE4AE8 /* BiometricAuthenticationHelper.swift */; };
 		47BF7D4B25A8A59100593489 /* API+VersionsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47BF7D4A25A8A59100593489 /* API+VersionsExtension.swift */; };
 		47C52C4527F49EA9007B43E2 /* HMACSigningManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C52C4427F49EA9007B43E2 /* HMACSigningManager.swift */; };
+		47C7C1782938E84D00264BF6 /* RecommendationResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C7C1772938E84D00264BF6 /* RecommendationResult.swift */; };
 		47C7D704278749CF006D2809 /* PeopleTorActionsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47C7D706278749CF006D2809 /* PeopleTorActionsView.xib */; };
 		47CBB4EB23E9D9BE00743CBE /* API+LogsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CBB4EA23E9D9BE00743CBE /* API+LogsExtension.swift */; };
 		47CC7CE223E3611600730E6F /* API+TransactionsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CC7CE123E3611600730E6F /* API+TransactionsExtension.swift */; };
@@ -819,6 +824,14 @@
 		471F3ABA255ADECB00E2AC79 /* PodcastLiveDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastLiveDataSource.swift; sourceTree = "<group>"; };
 		471FACD723E9B65C007DE1C8 /* EmailHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailHelper.swift; sourceTree = "<group>"; };
 		471FACD923E9BE48007DE1C8 /* SupportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportViewController.swift; sourceTree = "<group>"; };
+		472161AF293913230088B87B /* LoadingRecommendationsCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingRecommendationsCollectionViewCell.swift; sourceTree = "<group>"; };
+		472161B22939158B0088B87B /* NoRecommendationsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoRecommendationsCollectionViewCell.swift; sourceTree = "<group>"; };
+		472161B7293915E20088B87B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/NoRecommendationsCollectionViewCell.xib; sourceTree = "<group>"; };
+		472161BA293915E30088B87B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/NoRecommendationsCollectionViewCell.strings; sourceTree = "<group>"; };
+		472161BC293915E40088B87B /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/NoRecommendationsCollectionViewCell.strings; sourceTree = "<group>"; };
+		472161BE293916250088B87B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LoadingRecommendationsCollectionViewCell.xib; sourceTree = "<group>"; };
+		472161C1293916290088B87B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LoadingRecommendationsCollectionViewCell.strings; sourceTree = "<group>"; };
+		472161C32939162A0088B87B /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LoadingRecommendationsCollectionViewCell.strings; sourceTree = "<group>"; };
 		4724BC1425474B440012BD76 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/WebApps.storyboard; sourceTree = "<group>"; };
 		4724BC1725474B4A0012BD76 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/WebApps.strings; sourceTree = "<group>"; };
 		4724BC1925474B4B0012BD76 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/WebApps.strings; sourceTree = "<group>"; };
@@ -1346,6 +1359,7 @@
 		47BE854F2465E09B00BE4AE8 /* BiometricAuthenticationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricAuthenticationHelper.swift; sourceTree = "<group>"; };
 		47BF7D4A25A8A59100593489 /* API+VersionsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+VersionsExtension.swift"; sourceTree = "<group>"; };
 		47C52C4427F49EA9007B43E2 /* HMACSigningManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HMACSigningManager.swift; sourceTree = "<group>"; };
+		47C7C1772938E84D00264BF6 /* RecommendationResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationResult.swift; sourceTree = "<group>"; };
 		47C7D705278749CF006D2809 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PeopleTorActionsView.xib; sourceTree = "<group>"; };
 		47C7D70B278749D5006D2809 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PeopleTorActionsView.strings; sourceTree = "<group>"; };
 		47C7D70D278749D9006D2809 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/PeopleTorActionsView.strings; sourceTree = "<group>"; };
@@ -1795,6 +1809,17 @@
 				47352E4D2440FEBC00E5CC7F /* Windows */,
 			);
 			path = Managers;
+			sourceTree = "<group>";
+		};
+		472161AD293913180088B87B /* Recommendations */ = {
+			isa = PBXGroup;
+			children = (
+				472161AF293913230088B87B /* LoadingRecommendationsCollectionViewCell.swift */,
+				472161BF293916250088B87B /* LoadingRecommendationsCollectionViewCell.xib */,
+				472161B22939158B0088B87B /* NoRecommendationsCollectionViewCell.swift */,
+				472161B8293915E20088B87B /* NoRecommendationsCollectionViewCell.xib */,
+			);
+			path = Recommendations;
 			sourceTree = "<group>";
 		};
 		4726A40B24C09C23005A66B4 /* Chat */ = {
@@ -2824,6 +2849,7 @@
 		4780FA2A275A6F400099CE75 /* Wrappers */ = {
 			isa = PBXGroup;
 			children = (
+				47C7C1762938E83900264BF6 /* Recommendations */,
 				47D3D8D52772205F007C64F9 /* FeedSearchResult */,
 				4780FA2B275AA2FD0099CE75 /* Podcast */,
 				4780FA2C275AA3060099CE75 /* Video */,
@@ -3198,6 +3224,14 @@
 				47C52C4427F49EA9007B43E2 /* HMACSigningManager.swift */,
 			);
 			path = "Requests Signing";
+			sourceTree = "<group>";
+		};
+		47C7C1762938E83900264BF6 /* Recommendations */ = {
+			isa = PBXGroup;
+			children = (
+				47C7C1772938E84D00264BF6 /* RecommendationResult.swift */,
+			);
+			path = Recommendations;
 			sourceTree = "<group>";
 		};
 		47CC7CE323E3619E00730E6F /* Models */ = {
@@ -3655,6 +3689,7 @@
 		F3D86DBA26B106C000EB9711 /* Feed Content */ = {
 			isa = PBXGroup;
 			children = (
+				472161AD293913180088B87B /* Recommendations */,
 				F3D86DC326B157F600EB9711 /* DashboardFeedCollectionViewSectionHeader.swift */,
 				F3D86DC126B157D400EB9711 /* DashboardFeedCollectionViewSectionHeader.xib */,
 				F3188B97271ACE9000890DDD /* Collection View Cells */,
@@ -3925,6 +3960,7 @@
 				47158D77273083E200601F00 /* NewsletterFeed.storyboard in Resources */,
 				4797E76B24B8E4C900D13270 /* AddFriendRowButton.xib in Resources */,
 				4754FAA7272B2060006295A5 /* NewsletterItemsSectionCollectionReusableView.xib in Resources */,
+				472161BD293916250088B87B /* LoadingRecommendationsCollectionViewCell.xib in Resources */,
 				4797E7F924B8F9C300D13270 /* SubscriptionTimeIntervalView.xib in Resources */,
 				4797E7CF24B8F4DC00D13270 /* AppAppearenceView.xib in Resources */,
 				4797E79D24B8EEC800D13270 /* InvoiceSentTableViewCell.xib in Resources */,
@@ -3934,6 +3970,7 @@
 				47A79D402444EEFF005CD72F /* MessageOptionView.xib in Resources */,
 				F3CE638126AFF93F006E37A0 /* FeedFilterChipCollectionViewCell.xib in Resources */,
 				47F258CC253DD43400122A5A /* PinTimeSlider.xib in Resources */,
+				472161B6293915E20088B87B /* NoRecommendationsCollectionViewCell.xib in Resources */,
 				47183CBC2549DF0200E6FD19 /* PodcastBoostReceivedTableViewCell.xib in Resources */,
 				475BDCFE232AC24600C5BBD6 /* DirectPaymentReceivedTableViewCell.xib in Resources */,
 				475BDCEA232AC23B00C5BBD6 /* PaymentSentTableViewCell.xib in Resources */,
@@ -4102,6 +4139,7 @@
 				F31EFCB42746968D00C05FF4 /* ContentFeed+FetchUtils.swift in Sources */,
 				475E416B23858D4900928931 /* Subscription+CoreDataProperties.swift in Sources */,
 				47308E0424FEE6E600FFAC6F /* SocketParsable.swift in Sources */,
+				47C7C1782938E84D00264BF6 /* RecommendationResult.swift in Sources */,
 				475723A5247EB5D1001ADC7E /* AudioRecorderHelper.swift in Sources */,
 				47822C6D2449EEEE0011D832 /* PaidMessageReceivedTableViewCell.swift in Sources */,
 				F3DFB78A26B87C0C00E76FBD /* DashboardFeedsContainerViewController+ContentFilterOption.swift in Sources */,
@@ -4156,6 +4194,7 @@
 				4734D3C9241AA24C00D6957E /* PaymentTemplateViewController.swift in Sources */,
 				473C315B2798982D007735CD /* DashboardRootViewController+RestoreProgressViewDelegate.swift in Sources */,
 				47308E1224FEE6E700FFAC6F /* SocketEventHandler.swift in Sources */,
+				472161B42939158B0088B87B /* NoRecommendationsCollectionViewCell.swift in Sources */,
 				475BDD6D232BF04E00C5BBD6 /* ContainerViewController.swift in Sources */,
 				F3CE637C26AFE823006E37A0 /* FeedFilterChipCollectionViewCell.swift in Sources */,
 				471161E229156511008EAFF2 /* Rake.swift in Sources */,
@@ -4213,6 +4252,7 @@
 				F3DC6B2A273FB3A400458E09 /* ContentFeedItem+Computeds.swift in Sources */,
 				F39F2C7A26E22FC800D357F6 /* FeedSearchContainerViewController.swift in Sources */,
 				F31CF2662691489800AAB621 /* StoreKitService.swift in Sources */,
+				472161B1293913230088B87B /* LoadingRecommendationsCollectionViewCell.swift in Sources */,
 				47357A0B2729A11300A49EEE /* NewsletterFeed+Computeds.swift in Sources */,
 				47357A172729A16100A49EEE /* NewsletterItem+Properties.swift in Sources */,
 				F3DC6B00273C88F200458E09 /* ContentFeedItem+CoreDataClass.swift in Sources */,
@@ -4657,6 +4697,26 @@
 				47158D7D2730841600601F00 /* es */,
 			);
 			name = NewsletterFeed.storyboard;
+			sourceTree = "<group>";
+		};
+		472161B8293915E20088B87B /* NoRecommendationsCollectionViewCell.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				472161B7293915E20088B87B /* Base */,
+				472161BA293915E30088B87B /* en */,
+				472161BC293915E40088B87B /* es */,
+			);
+			name = NoRecommendationsCollectionViewCell.xib;
+			sourceTree = "<group>";
+		};
+		472161BF293916250088B87B /* LoadingRecommendationsCollectionViewCell.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				472161BE293916250088B87B /* Base */,
+				472161C1293916290088B87B /* en */,
+				472161C32939162A0088B87B /* es */,
+			);
+			name = LoadingRecommendationsCollectionViewCell.xib;
 			sourceTree = "<group>";
 		};
 		4724BC1525474B440012BD76 /* WebApps.storyboard */ = {

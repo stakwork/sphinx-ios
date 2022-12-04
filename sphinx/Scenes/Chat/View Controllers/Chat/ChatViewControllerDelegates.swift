@@ -161,6 +161,13 @@ extension ChatViewController : PresentedViewControllerDelegate {
 }
 
 extension ChatViewController : ChatAccessoryViewDelegate {
+    
+    func didDetectPossibleMention(mentionText:String) {
+        let possibleMentions = self.chat?.aliases.filter({$0.lowercased().contains(mentionText)})
+        print(possibleMentions)
+        self.mentionAutoCompleteTableView.isHidden = (possibleMentions?.isEmpty == true)
+    }
+    
     func shouldSendMessage(text: String, type: Int, completion: @escaping (Bool) -> ()) {
         var messageText = text
         

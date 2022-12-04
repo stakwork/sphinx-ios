@@ -158,6 +158,12 @@ extension ChatAttachmentViewController : UIImagePickerControllerDelegate, UINavi
 }
 
 extension ChatAttachmentViewController : ChatAccessoryViewDelegate {
+    
+    func didDetectPossibleMention(mentionText:String) {
+        let possibleMentions = self.chat?.aliases.filter({$0.lowercased().contains(mentionText)})
+        print(possibleMentions)
+    }
+    
     func keyboardWillShow(_ notification: Notification) {
         adjustContentForKeyboard(shown: true, notification: notification)
     }

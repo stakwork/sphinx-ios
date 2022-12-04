@@ -18,6 +18,7 @@ class ChatViewController: KeyboardHandlerViewController {
     var chatViewModel: ChatViewModel!
     var chatListViewModel: ChatListViewModel!
     
+    var chatMentionAutocompleteDataSource : ChatMentionAutocompleteDataSource? = nil
     var chatDataSource : ChatDataSource? = nil
     var socketManager = SphinxSocketManager.sharedInstance
     var audioHelper = AudioRecorderHelper()
@@ -28,6 +29,8 @@ class ChatViewController: KeyboardHandlerViewController {
     @IBOutlet weak var loadingWheel: UIActivityIndicatorView!
     @IBOutlet weak var scrollDownLabel: UILabel!
     @IBOutlet weak var webAppContainerView: UIView!
+    @IBOutlet weak var mentionAutoCompleteTableView: UITableView!
+    
     
     var unseenMessagesCount = 0
     
@@ -100,6 +103,7 @@ class ChatViewController: KeyboardHandlerViewController {
         
         ChatHelper.registerCellsForChat(tableView: chatTableView)
         chatDataSource = ChatDataSource(tableView: chatTableView, delegate: self, cellDelegate: self)
+        configureMentionAutocompleteTableView()
         
         chatHeaderView.checkRoute()
     }
@@ -240,6 +244,12 @@ class ChatViewController: KeyboardHandlerViewController {
     
     @IBAction func scrollDownButtonTouched() {
         scrollChatToBottom()
+    }
+    
+    func configureMentionAutocompleteTableView(){
+        mentionAutoCompleteTableView.isHidden = true
+        chatMentionAutocompleteDataSource = ChatMentionAutocompleteDataSource()
+        mentionAutoCompleteTableView.dataSource = chatMentionAutocompleteDataSource
     }
 }
 

@@ -58,8 +58,24 @@ extension ChatAccessoryView : UITextViewDelegate {
     }
     
     func textViewDidChange(_ textView: UITextView) {
+        print("Text change to:\(textView.text)")
+        processMention(text: textView.text)
         animateView(commentString: textView.text)
         rebuildSize()
+    }
+    
+    func processMention(text:String){
+        if let lastWord = text.split(separator: " ").last,
+           let firstLetter = lastWord.first,
+        firstLetter == "@"{
+            print("processing mention!")
+            let mentionValue = String(lastWord).replacingOccurrences(of: "@", with: "").lowercased()
+            print(mentionValue)
+            self.delegate?.didDetectPossibleMention(mentionText: mentionValue)
+            //let possibleMentions = chat?.aliases.filter({$0.lowercased().contains(mentionValue)})
+            //print("possible mentions:\(possibleMentions)")
+            //if(possibleMentions?.isEmpty == false){self.chatMentionsTableView.isHidden = false}else{self.chatMentionsTableView.isHidden = true}
+        }
     }
     
     func animateElements(active: Bool) {

@@ -11,6 +11,7 @@ import UIKit
     func keyboardWillShow(_ notification: Notification)
     func keyboardWillHide(_ notification: Notification)
     func shouldSendMessage(text: String, type: Int, completion: @escaping (Bool) -> ())
+    func didDetectPossibleMention(mentionText:String)
     
     @objc optional func didChangeAccessoryViewHeight(heightDiff: CGFloat, updatedText: String)
     @objc optional func didTapAttachmentsButton()

@@ -623,7 +623,7 @@ class PodcastPlayerHelper {
             MPMediaItemPropertyAssetURL: episode.url ?? ""
         ]
     }
-    
+
     func setupNowPlayingInfoCenter() {
         MPRemoteCommandCenter.shared().playCommand.removeTarget(nil)
         MPRemoteCommandCenter.shared().pauseCommand.removeTarget(nil)
@@ -631,6 +631,20 @@ class PodcastPlayerHelper {
         MPRemoteCommandCenter.shared().previousTrackCommand.removeTarget(nil)
         MPRemoteCommandCenter.shared().skipBackwardCommand.removeTarget(nil)
         MPRemoteCommandCenter.shared().skipForwardCommand.removeTarget(nil)
+        MPRemoteCommandCenter.shared().seekForwardCommand.isEnabled = true
+        MPRemoteCommandCenter.shared().seekBackwardCommand.isEnabled = true
+        MPRemoteCommandCenter.shared().changePlaybackPositionCommand.addTarget { (event) -> MPRemoteCommandHandlerStatus in
+            
+            if let changePlaybackPositionCommandEvent = event as? MPChangePlaybackPositionCommandEvent
+            {
+                let positionTime = changePlaybackPositionCommandEvent.positionTime
+                let t = CMTimeMake(value: Int64(positionTime), timescale: 1)
+                self.player?.seek(to: t)
+                return .success
+            } else {
+                return .commandFailed
+            }
+        }
         
         MPRemoteCommandCenter.shared().skipBackwardCommand.preferredIntervals = [15]
         MPRemoteCommandCenter.shared().skipForwardCommand.preferredIntervals = [30]

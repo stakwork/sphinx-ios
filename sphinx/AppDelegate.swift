@@ -11,6 +11,7 @@ import UserNotifications
 import SDWebImage
 import Alamofire
 import GiphyUISDK
+import AVFAudio
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -57,6 +58,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UNUserNotificationCenter.current().delegate = self
 
         setInitialVC(launchingApp: true)
+        try? AVAudioSession.sharedInstance().setCategory(.playback)
         connectTor()
 
         return true

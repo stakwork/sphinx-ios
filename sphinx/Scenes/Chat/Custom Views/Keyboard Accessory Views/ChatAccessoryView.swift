@@ -43,6 +43,8 @@ class ChatAccessoryView: UIView {
     let kFieldFont = UIFont(name: "Roboto-Regular", size: UIDevice.current.isIpad ? 20.0 : 16.0)!
     
     var delegate: ChatAccessoryViewDelegate?
+    var autocompleteText:String? = nil
+    
     
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var viewContainer: UIView!

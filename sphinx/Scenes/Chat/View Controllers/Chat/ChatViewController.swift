@@ -248,8 +248,18 @@ class ChatViewController: KeyboardHandlerViewController {
     
     func configureMentionAutocompleteTableView(){
         mentionAutoCompleteTableView.isHidden = true
-        chatMentionAutocompleteDataSource = ChatMentionAutocompleteDataSource()
+        chatMentionAutocompleteDataSource = ChatMentionAutocompleteDataSource(tableView: mentionAutoCompleteTableView,delegate:self)
+        mentionAutoCompleteTableView.delegate = chatMentionAutocompleteDataSource
         mentionAutoCompleteTableView.dataSource = chatMentionAutocompleteDataSource
     }
 }
 
+
+extension ChatViewController:ChatMentionAutocompleteDelegate{
+    func processAutocomplete(text: String) {
+        print(text)
+        NotificationCenter.default.post(name: NSNotification.Name.autocompleteMention, object: text)
+    }
+    
+    
+}

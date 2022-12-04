@@ -64,17 +64,34 @@ extension ChatAccessoryView : UITextViewDelegate {
         rebuildSize()
     }
     
-    func processMention(text:String){
+    func getAtMention(text:String)->String?{
         if let lastWord = text.split(separator: " ").last,
            let firstLetter = lastWord.first,
         firstLetter == "@"{
-            print("processing mention!")
-            let mentionValue = String(lastWord).replacingOccurrences(of: "@", with: "").lowercased()
+            //print("processing mention!")
+            return String(lastWord)
+        }
+        return nil
+    }
+    
+    @objc func populateMentionAutocomplete(notification:NSNotification){
+        if let text = notification.object as? String,
+           let typedMentionText = self.getAtMention(text: textView.text){
+            self.textView.text = self.textView.text.replacingOccurrences(of: typedMentionText, with: "@\(text) ")
+            NotificationCenter.default.removeObserver(self, name: NSNotification.Name.autocompleteMention, object: nil)
+        }
+        //self.textView.text = text
+    }
+    
+    func processMention(text:String){
+        if let mention = getAtMention(text: text){
+            let mentionValue = String(mention).replacingOccurrences(of: "@", with: "").lowercased()
             print(mentionValue)
             self.delegate?.didDetectPossibleMention(mentionText: mentionValue)
-            //let possibleMentions = chat?.aliases.filter({$0.lowercased().contains(mentionValue)})
-            //print("possible mentions:\(possibleMentions)")
-            //if(possibleMentions?.isEmpty == false){self.chatMentionsTableView.isHidden = false}else{self.chatMentionsTableView.isHidden = true}
+            NotificationCenter.default.addObserver(self, selector: #selector(populateMentionAutocomplete), name:NSNotification.Name.autocompleteMention, object: nil)
+        }
+        else{
+            NotificationCenter.default.removeObserver(self, name: NSNotification.Name.autocompleteMention, object: nil)
         }
     }
     

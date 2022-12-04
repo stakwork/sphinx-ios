@@ -9,23 +9,56 @@
 import Foundation
 import UIKit
 
+
+protocol ChatMentionAutocompleteDelegate{
+    func processAutocomplete(text:String)
+}
+
 class ChatMentionAutocompleteDataSource : NSObject {
+    var mentionSuggestions : [String] = [String]()
+    var tableView : UITableView!
+    var delegate: ChatMentionAutocompleteDelegate!
+    let mentionCellHeight :CGFloat = 50.0
     
+    init(tableView:UITableView,delegate:ChatMentionAutocompleteDelegate){
+        super.init()
+        self.tableView = tableView
+        self.delegate = delegate
+        tableView.backgroundColor = .clear
+        tableView.estimatedRowHeight = mentionCellHeight
+        tableView.rowHeight = UITableView.automaticDimension
+    }
+    
+    func updateMentionSuggestions(suggestions:[String]){
+        self.tableView.isHidden = (suggestions.isEmpty == true)
+        self.mentionSuggestions = suggestions
+        tableView.reloadData()
+    }
 }
 
 extension ChatMentionAutocompleteDataSource : UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return mentionSuggestions.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        let label = UILabel(frame: cell.frame)
-        label.text = "Test"
+        let labelXOffset : CGFloat = 20.0
+        let label = UILabel(frame: CGRect(origin: CGPoint(x: labelXOffset, y: 0.0), size: CGSize(width: cell.frame.width - labelXOffset, height: cell.frame.height)))
+        label.text = mentionSuggestions[indexPath.row]
+        label.font = UIFont(name: "Roboto", size: label.font.pointSize)
         cell.addSubview(label)
         return cell
     }
     
-    
 }
 
+extension ChatMentionAutocompleteDataSource : UITableViewDelegate{
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.delegate?.processAutocomplete(text: mentionSuggestions[indexPath.row])
+        self.tableView.isHidden = true
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return mentionCellHeight
+    }
+}

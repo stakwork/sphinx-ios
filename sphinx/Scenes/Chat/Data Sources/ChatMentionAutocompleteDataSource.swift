@@ -24,7 +24,8 @@ class ChatMentionAutocompleteDataSource : NSObject {
         super.init()
         self.tableView = tableView
         self.delegate = delegate
-        tableView.backgroundColor = .clear
+        tableView.backgroundColor = UIColor.Sphinx.Body
+        tableView.separatorColor = UIColor.Sphinx.Divider
         tableView.estimatedRowHeight = mentionCellHeight
         tableView.rowHeight = UITableView.automaticDimension
     }
@@ -32,7 +33,22 @@ class ChatMentionAutocompleteDataSource : NSObject {
     func updateMentionSuggestions(suggestions:[String]){
         self.tableView.isHidden = (suggestions.isEmpty == true)
         self.mentionSuggestions = suggestions
+        //updateTableContentInset()
         tableView.reloadData()
+    }
+    
+    func updateTableContentInset() {
+        let numRows = self.tableView.numberOfRows(inSection: 0)
+        var contentInsetTop = self.tableView.bounds.size.height
+        for i in 0..<numRows {
+            let rowRect = self.tableView.rectForRow(at: IndexPath(item: i, section: 0))
+            contentInsetTop -= rowRect.size.height
+            if contentInsetTop <= 0 {
+                contentInsetTop = 0
+                break
+            }
+        }
+        self.tableView.contentInset = UIEdgeInsets(top: contentInsetTop,left: 0,bottom: 0,right: 0)
     }
 }
 

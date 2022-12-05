@@ -166,7 +166,7 @@ extension ChatViewController : ChatAccessoryViewDelegate {
         let possibleMentions = self.chat?.aliases.filter(
             {
                 let substring = $0.substring(range: NSRange(location: 0, length: mentionText.count))
-                return substring.lowercased() == mentionText
+                return (substring.lowercased() == mentionText && mentionText != "")
             }).sorted()
         if let datasource = chatMentionAutocompleteDataSource,
         let mentions = possibleMentions{

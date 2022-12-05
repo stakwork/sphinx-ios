@@ -28,12 +28,13 @@ class ChatMentionAutocompleteDataSource : NSObject {
         tableView.separatorColor = UIColor.Sphinx.Divider
         tableView.estimatedRowHeight = mentionCellHeight
         tableView.rowHeight = UITableView.automaticDimension
+        //tableView.transform = CGAffineTransform(scaleX: 1, y: -1)
     }
     
     func updateMentionSuggestions(suggestions:[String]){
         self.tableView.isHidden = (suggestions.isEmpty == true)
         self.mentionSuggestions = suggestions
-        //updateTableContentInset()
+        
         tableView.reloadData()
     }
     
@@ -64,6 +65,7 @@ extension ChatMentionAutocompleteDataSource : UITableViewDataSource{
         label.text = mentionSuggestions[indexPath.row]
         label.font = UIFont(name: "Roboto", size: label.font.pointSize)
         cell.addSubview(label)
+        
         return cell
     }
     

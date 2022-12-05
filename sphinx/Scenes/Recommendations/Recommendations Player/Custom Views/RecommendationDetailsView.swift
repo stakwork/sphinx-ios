@@ -32,5 +32,18 @@ class RecommendationDetailsView: UIView {
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
     }
+}
 
+// MARK: - Public methods
+extension RecommendationDetailsView {
+    func configure(withRecommendation recommendation: RecommendationResult) {
+        titleLabel.text = recommendation.title
+        descriptionLabel.text = recommendation.subtitle
+        
+        if let date = recommendation.date {
+            dateLabel.text = Date(timeIntervalSince1970: TimeInterval(date)).getLastMessageDateFormat()
+        } else {
+            dateLabel.text = "-"
+        }
+    }
 }

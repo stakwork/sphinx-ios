@@ -130,7 +130,7 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
         didSelectRecommendationWithId recommendationId: String,
         from recommendations: [RecommendationResult]
     ) {
-        
+        presentRecommendationsPlayerVC(for: recommendations, and: recommendationId)
     }
 }
 
@@ -199,5 +199,23 @@ extension DashboardRootViewController {
         
         navigationController?
             .present(viewController, animated: true)
+    }
+    
+    private func presentRecommendationsPlayerVC(
+        for recommendations: [RecommendationResult],
+        and recommendationId: String
+    ) {
+        if let recommendation = recommendations.filter({ $0.id == recommendationId}).first {
+            let viewController = RecommendationFeedPlayerContainerViewController
+                .instantiate(
+                    recommendations: recommendations,
+                    recommendation: recommendation
+                )
+            
+            viewController.modalPresentationStyle = .automatic
+            
+            navigationController?
+                .present(viewController, animated: true)
+        }
     }
 }

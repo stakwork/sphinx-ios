@@ -31,6 +31,10 @@ class RecommendationFeedPlayerContainerViewController: UIViewController {
                 self.collectionViewController
                     .updateWithNew(recommendation: recommendation)
                 
+                self.recommendationDetailsView.configure(
+                    withRecommendation: recommendation
+                )
+                
                 self.youtubeVideoPlayerViewController.videoItem = recommendation
             }
         }

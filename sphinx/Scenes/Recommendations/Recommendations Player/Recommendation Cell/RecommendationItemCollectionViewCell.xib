@@ -50,7 +50,7 @@
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LQf-Y4-AJu">
                         <rect key="frame" x="16" y="103" width="343" height="1"/>
-                        <color key="backgroundColor" name="Divider"/>
+                        <color key="backgroundColor" name="LightDivider"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="1" id="nSj-78-De7"/>
                         </constraints>
@@ -58,6 +58,7 @@
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <color key="backgroundColor" name="Body"/>
             <constraints>
                 <constraint firstItem="tLa-fH-IUR" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="16" id="06f-Cr-wRH"/>
                 <constraint firstItem="LQf-Y4-AJu" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="16" id="3NE-kH-xBK"/>
@@ -85,7 +86,10 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <namedColor name="Divider">
+        <namedColor name="Body">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="LightDivider">
             <color red="0.86274509803921573" green="0.8784313725490196" blue="0.8901960784313725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="SecondaryText">

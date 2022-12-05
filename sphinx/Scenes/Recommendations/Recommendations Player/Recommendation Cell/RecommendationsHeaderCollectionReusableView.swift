@@ -29,3 +29,11 @@ extension RecommendationsHeaderCollectionReusableView {
         bundle: nil
     )
 }
+
+// MARK: - Public RecommendationsHeaderCollectionReusableView
+extension RecommendationsHeaderCollectionReusableView {
+    
+    func configure(withCount count: Int) {
+        countLabel.text = String(count)
+    }
+}

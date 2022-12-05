@@ -225,11 +225,14 @@ extension RecommendationFeedItemsCollectionViewController {
                 else {
                     preconditionFailure("Failed to dequeue expected reusable cell type")
                 }
+                
+                guard
+                    case .recommendation(let recommendation) = dataSourceItem
+                else {
+                    preconditionFailure("Failed to find expected data source item")
+                }
 
-//                recommendationCell.configure(
-//                    withVideoEpisode: videoEpisode,
-//                    and: self.boostDelegate
-//                )
+                recommendationCell.configure(withRecommendation: recommendation)
 
                 return recommendationCell
             }
@@ -262,11 +265,7 @@ extension RecommendationFeedItemsCollectionViewController {
                         preconditionFailure()
                     }
                     
-//                        headerView.configure(
-//                            withEpisode: self.videoPlayerEpisode,
-//                            onFeedSubscribed: self.onFeedSubscriptionSelected,
-//                            onFeedUnsubscribed: self.onFeedSubscriptionCancellationSelected
-//                        )
+                    headerView.configure(withCount: self.recommendations.count)
                     
                     return headerView
                 default:

@@ -538,11 +538,11 @@ extension AllTribeFeedsCollectionViewController {
         if let dataSource = dataSource {
             
             let snapshot = makeSnapshotForCurrentState()
-            
-            dataSource.apply(
-                snapshot,
-                animatingDifferences: false
-            )
+            if #available(iOS 15.0, *) {
+                dataSource.applySnapshotUsingReloadData(snapshot, completion: nil)
+            } else {
+                dataSource.apply(snapshot, animatingDifferences: false, completion: nil)
+            }
         }
     }
     
@@ -554,11 +554,11 @@ extension AllTribeFeedsCollectionViewController {
             let snapshot = makeSnapshotForCurrentState(
                 loadingRecommendations: true
             )
-            
-            dataSource.apply(
-                snapshot,
-                animatingDifferences: false
-            )
+            if #available(iOS 15.0, *) {
+                dataSource.applySnapshotUsingReloadData(snapshot, completion: nil)
+            } else {
+                dataSource.apply(snapshot, animatingDifferences: false, completion: nil)
+            }
         }
     }
     
@@ -570,11 +570,11 @@ extension AllTribeFeedsCollectionViewController {
             let snapshot = makeSnapshotForCurrentState(
                 loadingRecommendations: false
             )
-            
-            dataSource.apply(
-                snapshot,
-                animatingDifferences: false
-            )
+            if #available(iOS 15.0, *) {
+                dataSource.applySnapshotUsingReloadData(snapshot, completion: nil)
+            } else {
+                dataSource.apply(snapshot, animatingDifferences: false, completion: nil)
+            }
         }
     }
 }

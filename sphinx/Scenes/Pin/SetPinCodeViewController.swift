@@ -67,6 +67,8 @@ class SetPinCodeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.view.endEditing(true)
+        
         loading = false
         subtitleLabel.text = subtitle
         reloadDots()
@@ -196,8 +198,9 @@ class SetPinCodeViewController: UIViewController {
             UserData.sharedInstance.save(pin: getPinString())
             
             SignupHelper.step = SignupHelper.SignupStep.PINSet.rawValue
-            let nicknameVC = SetNickNameViewController.instantiate(rootViewController: rootViewController)
-            self.navigationController?.pushViewController(nicknameVC, animated: true)
+            
+            let newUserGreetingVC = NewUserGreetingViewController.instantiate(rootViewController: rootViewController)
+            self.navigationController?.pushViewController(newUserGreetingVC, animated: true)
         }
     }
 }

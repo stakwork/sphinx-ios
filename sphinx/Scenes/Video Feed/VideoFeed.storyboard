@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Roboto-Medium.ttf">
+            <string>Roboto-Medium</string>
+        </array>
+        <array key="Roboto-Regular.ttf">
+            <string>Roboto-Regular</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--Video Feed Episode Player Container View Controller-->
+        <scene sceneID="nvm-GC-JlN">
+            <objects>
+                <viewController storyboardIdentifier="VideoFeedEpisodePlayerContainerViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="wSp-vi-PtY" customClass="VideoFeedEpisodePlayerContainerViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="XGc-YM-n5n">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="09p-ax-ldz">
+                                <rect key="frame" x="0.0" y="44" width="414" height="291"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="291" id="QAv-de-0Hl"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2M7-cJ-xnz">
+                                <rect key="frame" x="0.0" y="335" width="414" height="527"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="QRC-F4-mOP"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="2M7-cJ-xnz" firstAttribute="trailing" secondItem="QRC-F4-mOP" secondAttribute="trailing" id="Aa0-P0-i0V"/>
+                            <constraint firstItem="09p-ax-ldz" firstAttribute="top" secondItem="QRC-F4-mOP" secondAttribute="top" id="Anb-zs-Qy8"/>
+                            <constraint firstItem="QRC-F4-mOP" firstAttribute="bottom" secondItem="2M7-cJ-xnz" secondAttribute="bottom" id="bbN-xl-y67"/>
+                            <constraint firstItem="QRC-F4-mOP" firstAttribute="trailing" secondItem="09p-ax-ldz" secondAttribute="trailing" id="dBZ-YV-nDH"/>
+                            <constraint firstItem="2M7-cJ-xnz" firstAttribute="top" secondItem="09p-ax-ldz" secondAttribute="bottom" id="eTy-eJ-USH"/>
+                            <constraint firstItem="2M7-cJ-xnz" firstAttribute="leading" secondItem="QRC-F4-mOP" secondAttribute="leading" id="hXZ-Wz-rkt"/>
+                            <constraint firstItem="09p-ax-ldz" firstAttribute="leading" secondItem="QRC-F4-mOP" secondAttribute="leading" id="pLN-92-D1f"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="collectionViewContainer" destination="2M7-cJ-xnz" id="AMB-q7-vVw"/>
+                        <outlet property="playerViewContainer" destination="09p-ax-ldz" id="cC0-sy-exP"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="e7M-Xk-rhy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-517" y="-816"/>
+        </scene>
+        <!--General Video Feed Episode Player View Controller-->
+        <scene sceneID="JBG-bJ-rjR">
+            <objects>
+                <viewController storyboardIdentifier="GeneralVideoFeedEpisodePlayerViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="zDf-cT-9J6" customClass="GeneralVideoFeedEpisodePlayerViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="GqX-ol-ZAL">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VQJ-aV-rUs" userLabel="Episode Description Section">
+                                <rect key="frame" x="0.0" y="817" width="414" height="79"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="gIj-xS-XNj" userLabel="Episode Description Container">
+                                        <rect key="frame" x="16" y="16" width="382" height="35.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Episode Title" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SEe-le-USD">
+                                                <rect key="frame" x="0.0" y="0.0" width="382" height="20"/>
+                                                <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="17"/>
+                                                <color key="textColor" name="Text"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="n6Y-Y1-sL8">
+                                                <rect key="frame" x="0.0" y="20" width="382" height="15.5"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="View Count" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9q7-gh-pKz">
+                                                        <rect key="frame" x="0.0" y="0.0" width="66.5" height="15.5"/>
+                                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="13"/>
+                                                        <color key="textColor" name="SecondaryText"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I27-eF-jdd" userLabel="Circle Divider">
+                                                        <rect key="frame" x="70.5" y="6.5" width="3" height="3"/>
+                                                        <color key="backgroundColor" name="SecondaryText"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="3" id="bdO-dh-2NE"/>
+                                                            <constraint firstAttribute="width" constant="3" id="qo1-Rz-9IV"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Publish Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="avg-qO-Uhk">
+                                                        <rect key="frame" x="77.5" y="0.0" width="304.5" height="15.5"/>
+                                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="13"/>
+                                                        <color key="textColor" name="SecondaryText"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" name="HeaderBG"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="gIj-xS-XNj" secondAttribute="trailing" constant="16" id="Wxx-hX-7aF"/>
+                                    <constraint firstItem="gIj-xS-XNj" firstAttribute="top" secondItem="VQJ-aV-rUs" secondAttribute="top" constant="16" id="Zt6-gp-ifz"/>
+                                    <constraint firstItem="gIj-xS-XNj" firstAttribute="leading" secondItem="VQJ-aV-rUs" secondAttribute="leading" constant="16" id="kWU-Bg-UAm"/>
+                                    <constraint firstAttribute="height" constant="79" id="xH3-4N-nft"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XKa-14-GaI" customClass="YTPlayerView">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="817"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Zg2-JG-fiP"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Zg2-JG-fiP" firstAttribute="trailing" secondItem="XKa-14-GaI" secondAttribute="trailing" id="0lN-tm-eJ1"/>
+                            <constraint firstAttribute="bottom" secondItem="VQJ-aV-rUs" secondAttribute="bottom" id="5eA-cA-7Xn"/>
+                            <constraint firstItem="XKa-14-GaI" firstAttribute="top" secondItem="GqX-ol-ZAL" secondAttribute="top" id="97k-rK-sDw"/>
+                            <constraint firstItem="VQJ-aV-rUs" firstAttribute="leading" secondItem="Zg2-JG-fiP" secondAttribute="leading" id="GtM-Oe-b8I"/>
+                            <constraint firstItem="VQJ-aV-rUs" firstAttribute="trailing" secondItem="Zg2-JG-fiP" secondAttribute="trailing" id="X3n-Hu-JAL"/>
+                            <constraint firstItem="VQJ-aV-rUs" firstAttribute="top" secondItem="XKa-14-GaI" secondAttribute="bottom" id="pdh-fa-uas"/>
+                            <constraint firstItem="XKa-14-GaI" firstAttribute="leading" secondItem="GqX-ol-ZAL" secondAttribute="leading" id="vEe-dB-Asr"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="episodePublishDateLabel" destination="avg-qO-Uhk" id="02Y-xd-z5t"/>
+                        <outlet property="episodeSubtitleCircularDivider" destination="I27-eF-jdd" id="9n7-e2-Bgk"/>
+                        <outlet property="episodeTitleLabel" destination="SEe-le-USD" id="6V3-VH-wck"/>
+                        <outlet property="episodeViewCountLabel" destination="9q7-gh-pKz" id="DDK-te-4pw"/>
+                        <outlet property="videoPlayerView" destination="XKa-14-GaI" id="2HS-V7-HAR"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VZP-Ec-e8z" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1833" y="-68"/>
+        </scene>
+        <!--You Tube Video Feed Episode Player View Controller-->
+        <scene sceneID="HGa-Uy-YQF">
+            <objects>
+                <viewController storyboardIdentifier="YouTubeVideoFeedEpisodePlayerViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="KwS-8e-jFl" customClass="YouTubeVideoFeedEpisodePlayerViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Xgb-0h-roT">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4XN-jb-3A8" customClass="YTPlayerView">
+                                <rect key="frame" x="0.0" y="44" width="414" height="773"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SSC-f1-dNg" userLabel="Dismiss Button">
+                                <rect key="frame" x="20" y="54" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="0ES-gz-zdx"/>
+                                    <constraint firstAttribute="height" constant="50" id="0qu-Vz-FAi"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="34"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <imageReference key="image" image="chevron.down" catalog="system" symbolScale="large" renderingMode="template"/>
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="20" scale="large" weight="bold"/>
+                                </state>
+                                <connections>
+                                    <action selector="dismissButtonTouched" destination="KwS-8e-jFl" eventType="touchUpInside" id="2lS-nJ-i2U"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zfq-pw-lha" userLabel="Episode Description Section">
+                                <rect key="frame" x="0.0" y="817" width="414" height="79"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="9Td-tb-X2c" userLabel="Episode Description Container">
+                                        <rect key="frame" x="16" y="16" width="382" height="35.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Episode Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WWG-xL-NX5">
+                                                <rect key="frame" x="0.0" y="0.0" width="382" height="20"/>
+                                                <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="17"/>
+                                                <color key="textColor" name="Text"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="9uk-PW-fbo">
+                                                <rect key="frame" x="0.0" y="20" width="382" height="15.5"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="View Count" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z4A-6q-Ons">
+                                                        <rect key="frame" x="0.0" y="0.0" width="66.5" height="15.5"/>
+                                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="13"/>
+                                                        <color key="textColor" name="SecondaryText"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c1P-JV-5jY" userLabel="Circle Divider">
+                                                        <rect key="frame" x="70.5" y="6.5" width="3" height="3"/>
+                                                        <color key="backgroundColor" name="SecondaryText"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="3" id="Jh9-eD-f7Y"/>
+                                                            <constraint firstAttribute="width" constant="3" id="PlF-Ik-S0Z"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Publish Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xEH-wz-Wxe">
+                                                        <rect key="frame" x="77.5" y="0.0" width="304.5" height="15.5"/>
+                                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="13"/>
+                                                        <color key="textColor" name="SecondaryText"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" name="HeaderBG"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="9Td-tb-X2c" secondAttribute="trailing" constant="16" id="6mk-cJ-6LB"/>
+                                    <constraint firstItem="9Td-tb-X2c" firstAttribute="top" secondItem="Zfq-pw-lha" secondAttribute="top" constant="16" id="L7j-fc-sB3"/>
+                                    <constraint firstAttribute="height" constant="79" id="g5E-qJ-hcN"/>
+                                    <constraint firstItem="9Td-tb-X2c" firstAttribute="leading" secondItem="Zfq-pw-lha" secondAttribute="leading" constant="16" id="qXj-R3-ZZY"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="ANf-hC-GBf"/>
+                        <constraints>
+                            <constraint firstItem="Zfq-pw-lha" firstAttribute="leading" secondItem="Xgb-0h-roT" secondAttribute="leading" id="2AK-SE-meP"/>
+                            <constraint firstAttribute="trailing" secondItem="Zfq-pw-lha" secondAttribute="trailing" id="2hO-gT-4E9"/>
+                            <constraint firstItem="4XN-jb-3A8" firstAttribute="leading" secondItem="ANf-hC-GBf" secondAttribute="leading" id="AQW-yr-Bbu"/>
+                            <constraint firstItem="ANf-hC-GBf" firstAttribute="bottom" secondItem="SSC-f1-dNg" secondAttribute="bottom" constant="758" id="F6Y-R5-qoY"/>
+                            <constraint firstItem="ANf-hC-GBf" firstAttribute="trailing" secondItem="4XN-jb-3A8" secondAttribute="trailing" id="NBi-6h-4Fo"/>
+                            <constraint firstItem="ANf-hC-GBf" firstAttribute="trailing" secondItem="SSC-f1-dNg" secondAttribute="trailing" constant="344" id="Wh4-G9-vYv"/>
+                            <constraint firstItem="Zfq-pw-lha" firstAttribute="top" secondItem="4XN-jb-3A8" secondAttribute="bottom" id="frw-1R-FLc"/>
+                            <constraint firstItem="4XN-jb-3A8" firstAttribute="top" secondItem="ANf-hC-GBf" secondAttribute="top" id="isq-QJ-nuh"/>
+                            <constraint firstItem="SSC-f1-dNg" firstAttribute="leading" secondItem="ANf-hC-GBf" secondAttribute="leading" constant="20" id="khn-Bt-AfB"/>
+                            <constraint firstItem="SSC-f1-dNg" firstAttribute="top" secondItem="ANf-hC-GBf" secondAttribute="top" constant="10" id="rk1-qa-NnU"/>
+                            <constraint firstAttribute="bottom" secondItem="Zfq-pw-lha" secondAttribute="bottom" id="slI-Kh-fkO"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="dismissButton" destination="SSC-f1-dNg" id="XGP-Wy-1cK"/>
+                        <outlet property="episodePublishDateLabel" destination="xEH-wz-Wxe" id="BDm-f2-AMo"/>
+                        <outlet property="episodeSubtitleCircularDivider" destination="c1P-JV-5jY" id="FUq-MQ-CBb"/>
+                        <outlet property="episodeTitleLabel" destination="WWG-xL-NX5" id="ky2-3N-b4r"/>
+                        <outlet property="episodeViewCountLabel" destination="z4A-6q-Ons" id="83j-ut-abS"/>
+                        <outlet property="videoPlayerView" destination="4XN-jb-3A8" id="xWE-Kb-8ai"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0ie-K0-cyD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-935" y="-68"/>
+        </scene>
+        <!--Video Feed Episode Player Collection View Controller-->
+        <scene sceneID="2ky-Rw-KY1">
+            <objects>
+                <collectionViewController storyboardIdentifier="VideoFeedEpisodePlayerCollectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="aNH-56-czi" customClass="VideoFeedEpisodePlayerCollectionViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="d9d-a5-6lL">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="wgX-R9-Tkd">
+                            <size key="itemSize" width="128" height="128"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells/>
+                        <connections>
+                            <outlet property="dataSource" destination="aNH-56-czi" id="DaY-5H-Omr"/>
+                            <outlet property="delegate" destination="aNH-56-czi" id="WGt-9J-hiX"/>
+                        </connections>
+                    </collectionView>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="a7p-RA-1BG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-45" y="-68"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="chevron.down" catalog="system" width="128" height="72"/>
+        <namedColor name="HeaderBG">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="SecondaryText">
+            <color red="0.55686274509803924" green="0.58823529411764708" blue="0.61176470588235299" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Text">
+            <color red="0.23529411764705882" green="0.24705882352941178" blue="0.25490196078431371" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

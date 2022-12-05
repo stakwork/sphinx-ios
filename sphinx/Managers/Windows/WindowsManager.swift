@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol WindowsManagerDelegate: class {
+    func didDismissCoveringWindows()
+}
+
 class WindowsManager {
 
     class var sharedInstance : WindowsManager {
@@ -16,6 +20,8 @@ class WindowsManager {
         }
         return Static.instance
     }
+    
+    weak var delegate : WindowsManagerDelegate?
     
     public static func getWindowSize() -> CGSize {
         guard let window = UIApplication.shared.keyWindow else {
@@ -57,6 +63,7 @@ class WindowsManager {
         coveringWindow?.isHidden = true
         coveringWindow?.resignKey()
         coveringWindow = nil
+        delegate?.didDismissCoveringWindows()
     }
     
     func showFullScreenImage(message: TransactionMessage) {
@@ -90,9 +97,9 @@ class WindowsManager {
     }
     
     func showStakworkAuthorizeWith() -> Bool {
-        if let authQuery = UserDefaults.Keys.authQuery.get(defaultValue: ""), authQuery != "" {
-            UserDefaults.Keys.authQuery.removeValue()
-            let authorizeVC = StakworkAuthorizeViewController.instantiate(query: authQuery)
+        if let challengeQuery = UserDefaults.Keys.challengeQuery.get(defaultValue: ""), challengeQuery != "" {
+            UserDefaults.Keys.challengeQuery.removeValue()
+            let authorizeVC = StakworkAuthorizeViewController.instantiate(query: challengeQuery)
             WindowsManager.sharedInstance.showConveringWindowWith(rootVC: authorizeVC)
             return true
         }
@@ -105,6 +112,43 @@ class WindowsManager {
             
             let authorizeVC = StakworkAuthorizeViewController.instantiate(query: redeemSatsQuery)
             WindowsManager.sharedInstance.showConveringWindowWith(rootVC: authorizeVC)
+            return true
+        }
+        return false
+    }
+    
+    func showAuth() -> Bool {
+        if let authQuery = UserDefaults.Keys.authQuery.get(defaultValue: ""), authQuery != "" {
+            UserDefaults.Keys.authQuery.removeValue()
+            
+            let peopleModalsVC = PeopleModalsViewController.instantiate(query: authQuery)
+            WindowsManager.sharedInstance.showConveringWindowWith(rootVC: peopleModalsVC)
+            return true
+        }
+        return false
+    }
+    
+    func showPersonModal(delegate: WindowsManagerDelegate? = nil) -> Bool {
+        if let personQuery = UserDefaults.Keys.personQuery.get(defaultValue: ""), personQuery != "" {
+            UserDefaults.Keys.personQuery.removeValue()
+            
+            self.delegate = delegate
+            
+            let peopleModalsVC = PeopleModalsViewController.instantiate(query: personQuery)
+            WindowsManager.sharedInstance.showConveringWindowWith(rootVC: peopleModalsVC)
+            return true
+        }
+        return false
+    }
+    
+    func showPeopleUpdateModal(delegate: WindowsManagerDelegate? = nil) -> Bool {
+        if let saveQuery = UserDefaults.Keys.saveQuery.get(defaultValue: ""), saveQuery != "" {
+            UserDefaults.Keys.saveQuery.removeValue()
+            
+            self.delegate = delegate
+            
+            let peopleModalsVC = PeopleModalsViewController.instantiate(query: saveQuery)
+            WindowsManager.sharedInstance.showConveringWindowWith(rootVC: peopleModalsVC)
             return true
         }
         return false

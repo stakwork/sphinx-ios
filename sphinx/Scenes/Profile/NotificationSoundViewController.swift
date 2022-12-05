@@ -78,7 +78,7 @@ class NotificationSoundViewController: UIViewController {
         let parameters = ["notification_sound" : file as AnyObject]
 
         API.sharedInstance.updateUser(id: id, params: parameters, callback: { contact in
-            ContactsService().insertContact(contact: contact)
+            let _ = ContactsService().insertContact(contact: contact)
 
             self.delegate?.didUpdateSound()
             self.backButtonTouched()

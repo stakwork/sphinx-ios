@@ -33,7 +33,7 @@ extension ChatViewController : AttachmentsDelegate {
         if let chat = chat, chat.isPrivateGroup() {
             viewController = GroupPaymentViewController.instantiate(rootViewController: rootViewController, baseVC: self, viewModel: chatViewModel, chat: chat)
         } else {
-            let mode: CreateInvoiceViewController.paymentMode = (chat?.isPublicGroup() ?? false) && (chat?.tribesInfo?.hasLoopoutBot ?? false) ? .sendOnchain : .send
+            let mode: CreateInvoiceViewController.paymentMode = (chat?.isPublicGroup() ?? false) && (chat?.tribeInfo?.hasLoopoutBot ?? false) ? .sendOnchain : .send
             viewController = CreateInvoiceViewController.instantiate(contacts: getContacts(), chat: chat, viewModel: chatViewModel, delegate: self, paymentMode: mode, rootViewController: rootViewController)
         }
         self.presentNavigationControllerWith(vc: viewController)

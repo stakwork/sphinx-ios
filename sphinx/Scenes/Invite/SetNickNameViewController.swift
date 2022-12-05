@@ -26,7 +26,7 @@ class SetNickNameViewController: SetDataViewController {
     
     var loading = false {
         didSet {
-            LoadingWheelHelper.toggleLoadingWheel(loading: loading, loadingWheel: loadingWheel, loadingWheelColor: UIColor.Sphinx.Text, view: view)
+            LoadingWheelHelper.toggleLoadingWheel(loading: loading, loadingWheel: loadingWheel, loadingWheelColor: UIColor.white, view: view)
         }
     }
     
@@ -62,7 +62,7 @@ class SetNickNameViewController: SetDataViewController {
     }
     
     func insertAndUpdateOwner(contacts: [JSON]) {
-        contactsService.insertContacts(contacts: contacts, shouldSyncDeleted: false)
+        contactsService.insertContacts(contacts: contacts)
         UserData.sharedInstance.saveNewNodeOnKeychain()
         
         let id = UserData.sharedInstance.getUserId()
@@ -70,7 +70,7 @@ class SetNickNameViewController: SetDataViewController {
         
         API.sharedInstance.updateUser(id: id, params: parameters, callback: { contact in
             self.loading = false
-            self.contactsService.insertContact(contact: contact)
+            let _ = self.contactsService.insertContact(contact: contact)
             self.goToProfilePicture()
         }, errorCallback: {
             AlertHelper.showAlert(title: "generic.error.title".localized, message: "generic.error.message".localized)

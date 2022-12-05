@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -26,19 +26,15 @@
             <rect key="frame" x="0.0" y="0.0" width="56" height="56"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile_avatar" translatesAutoresizingMaskIntoConstraints="NO" id="8St-VU-ZJS">
-                    <rect key="frame" x="15" y="4" width="33" height="33"/>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile_avatar" translatesAutoresizingMaskIntoConstraints="NO" id="8St-VU-ZJS">
+                    <rect key="frame" x="0.0" y="0.0" width="56" height="56"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="33" id="PJb-DX-6ac"/>
-                        <constraint firstAttribute="width" constant="33" id="dJp-l5-rg1"/>
-                    </constraints>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tZr-Gc-AKU">
-                    <rect key="frame" x="15" y="4" width="33" height="33"/>
+                    <rect key="frame" x="0.0" y="0.0" width="56" height="56"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TT" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kgX-82-1DS">
-                            <rect key="frame" x="8" y="8" width="17" height="17.5"/>
+                            <rect key="frame" x="19.5" y="19.5" width="17" height="17.5"/>
                             <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="14"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -50,18 +46,31 @@
                         <constraint firstItem="kgX-82-1DS" firstAttribute="centerX" secondItem="tZr-Gc-AKU" secondAttribute="centerX" id="sOX-jo-PaE"/>
                     </constraints>
                 </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jWk-hx-QNH">
+                    <rect key="frame" x="0.0" y="0.0" width="56" height="56"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <connections>
+                        <action selector="avatarViewButtonTouched" destination="-1" eventType="touchUpInside" id="srL-Y2-2Tb"/>
+                    </connections>
+                </button>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="8St-VU-ZJS" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="4" id="I5S-zc-1cj"/>
+                <constraint firstItem="jWk-hx-QNH" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="8jk-CG-Z3Y"/>
+                <constraint firstItem="jWk-hx-QNH" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="GPw-b0-Q1r"/>
+                <constraint firstItem="8St-VU-ZJS" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="I5S-zc-1cj"/>
                 <constraint firstItem="tZr-Gc-AKU" firstAttribute="trailing" secondItem="8St-VU-ZJS" secondAttribute="trailing" id="LBT-e7-y1m"/>
+                <constraint firstAttribute="trailing" secondItem="8St-VU-ZJS" secondAttribute="trailing" id="UhW-wN-pwR"/>
+                <constraint firstItem="8St-VU-ZJS" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="WBj-vf-s44"/>
                 <constraint firstItem="tZr-Gc-AKU" firstAttribute="top" secondItem="8St-VU-ZJS" secondAttribute="top" id="Yvq-Pg-BkM"/>
-                <constraint firstItem="8St-VU-ZJS" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="hEh-L8-uUg"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="8St-VU-ZJS" secondAttribute="bottom" id="eYc-I3-yPA"/>
                 <constraint firstItem="tZr-Gc-AKU" firstAttribute="bottom" secondItem="8St-VU-ZJS" secondAttribute="bottom" id="mdW-eG-PAB"/>
+                <constraint firstItem="jWk-hx-QNH" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="pdC-CL-aBf"/>
+                <constraint firstItem="jWk-hx-QNH" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="tBm-Pt-Qrz"/>
                 <constraint firstItem="tZr-Gc-AKU" firstAttribute="leading" secondItem="8St-VU-ZJS" secondAttribute="leading" id="toB-bg-hnx"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <point key="canvasLocation" x="139" y="153"/>
         </view>
     </objects>

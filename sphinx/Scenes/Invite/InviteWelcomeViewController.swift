@@ -70,19 +70,25 @@ class InviteWelcomeViewController: UIViewController {
     @IBAction func nextButtonTouched() {
         loading = true
         
-        if let inviter = currentInviter {
+        if let inviter = currentInviter, let pubkey = inviter.pubkey {
             let contactsService = ContactsService()
-            contactsService.createContact(nickname: inviter.nickname, pubKey: inviter.pubkey, routeHint: inviter.routeHint, callback: { success in
+            contactsService.createContact(nickname: inviter.nickname, pubKey: pubkey, routeHint: inviter.routeHint, callback: { (success, _) in
                 if success {
-                    SignupHelper.step = SignupHelper.SignupStep.InviterContactCreated.rawValue
-                    
-                    let setPinVC = SetPinCodeViewController.instantiate(rootViewController: self.rootViewController)
-                    self.navigationController?.pushViewController(setPinVC, animated: true)
+                    self.continueToPinView()
                 } else {
                     self.didFailCreatingContact()
                 }
             })
+        } else {
+            self.continueToPinView()
         }
+    }
+    
+    func continueToPinView() {
+        SignupHelper.step = SignupHelper.SignupStep.InviterContactCreated.rawValue
+        
+        let setPinVC = SetPinCodeViewController.instantiate(rootViewController: self.rootViewController)
+        self.navigationController?.pushViewController(setPinVC, animated: true)
     }
     
     func didFailCreatingContact() {

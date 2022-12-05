@@ -12,10 +12,13 @@ extension UserDefaults {
     public enum Keys {
         public static let lastSeenHistoryDate = DefaultKey<Date>("lastSeenHistoryDate")
         public static let lastSeenMessagesDate = DefaultKey<Date>("lastSeenMessagesDate")
+        public static let lastSeenContactsDate = DefaultKey<Date>("lastSeenContactsDate")
         public static let channelBalance = DefaultKey<Int>("channelBalance")
         public static let remoteBalance = DefaultKey<Int>("remoteBalance")
         public static let currentIP = DefaultKey<String>("currentIP")
         public static let authToken = DefaultKey<String>("authToken")
+        public static let transportKey = DefaultKey<String>("transportKey")
+        public static let hmacKey = DefaultKey<String>("hmacKey")
         public static let ownerId = DefaultKey<Int>("ownerId")
         public static let ownerPubKey = DefaultKey<Int>("ownerPubKey")
         public static let inviteString = DefaultKey<String>("inviteString")
@@ -34,10 +37,13 @@ extension UserDefaults {
         public static let nodePassword = DefaultKey<String>("nodePassword")
         public static let welcomeMessage = DefaultKey<String>("welcomeMessage")
         public static let signupStep = DefaultKey<Int>("signupStep")
+        public static let messagesFetchPage = DefaultKey<Int>("messagesFetchPage")
         public static let paymentProcessedInvites = DefaultKey<[String]>("paymentProcessedInvites")
-        public static let didJustRestore = DefaultKey<Bool>("didJustRestore")
-        public static let authQuery = DefaultKey<String>("authQuery")
+        public static let challengeQuery = DefaultKey<String>("challengeQuery")
         public static let redeemSatsQuery = DefaultKey<String>("redeemSatsQuery")
+        public static let authQuery = DefaultKey<String>("authQuery")
+        public static let personQuery = DefaultKey<String>("personQuery")
+        public static let saveQuery = DefaultKey<String>("saveQuery")
         
         public static let previousIP = DefaultKey<String>("previousIP")
         
@@ -56,6 +62,8 @@ extension UserDefaults {
         public static let appAppearence = DefaultKey<Int>("appAppearence")
         public static let messagesSize = DefaultKey<Int>("messagesSize")
         public static let webViewsHeight = DefaultKey<Int>("webViewsHeight")
+        
+        public static let setupSigningDevice = DefaultKey<Bool>("setupSigningDevice")
     }
     
     class func resetUserDefaults() {

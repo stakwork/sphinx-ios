@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="MaterialIcons-Regular.ttf">
-            <string>MaterialIcons-Regular</string>
-        </array>
         <array key="Roboto-Regular.ttf">
             <string>Roboto-Regular</string>
         </array>
@@ -19,10 +16,13 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PodcastSmallPlayer" customModule="sphinx" customModuleProvider="target">
             <connections>
                 <outlet property="audioLoadingWheel" destination="h0Q-GP-O3o" id="ekw-bR-12F"/>
-                <outlet property="boostButtonView" destination="Ntf-j9-5lS" id="yQO-J4-6vx"/>
                 <outlet property="contentView" destination="iN0-l3-epB" id="314-cr-nY6"/>
+                <outlet property="contributorLabel" destination="2uX-uJ-r0m" id="2Rr-fZ-180"/>
                 <outlet property="durationLine" destination="XFF-oh-GuF" id="Ub9-Mb-Gor"/>
+                <outlet property="episodeImageView" destination="rCV-yF-Gqb" id="OP8-0B-Dat"/>
                 <outlet property="episodeLabel" destination="VnX-QJ-Fmu" id="wNK-UI-x4o"/>
+                <outlet property="pauseAnimationView" destination="110-0W-YVr" id="2QL-ph-jTY"/>
+                <outlet property="playButton" destination="dVC-vg-r3J" id="YMh-os-Eju"/>
                 <outlet property="playPauseButton" destination="dVC-vg-r3J" id="Cgr-3c-WdP"/>
                 <outlet property="progressLine" destination="wdM-ec-gI8" id="dHH-EK-nG1"/>
                 <outlet property="progressLineWidth" destination="unl-GP-sxM" id="wbW-7i-XEb"/>
@@ -33,108 +33,133 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="64"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." textAlignment="natural" lineBreakMode="middleTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VnX-QJ-Fmu">
-                    <rect key="frame" x="20" y="24" width="11.5" height="16.5"/>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="podcastPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="rCV-yF-Gqb">
+                    <rect key="frame" x="16" y="8" width="48" height="48"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="48" id="74i-Nt-IPM"/>
+                        <constraint firstAttribute="width" constant="48" id="HH7-Ge-n9B"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="This is an episode title example and large" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VnX-QJ-Fmu" customClass="MarqueeLabel" customModule="MarqueeLabel">
+                    <rect key="frame" x="80" y="14" width="198" height="16.5"/>
                     <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                     <color key="textColor" name="Text"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QOz-O5-9aQ">
-                    <rect key="frame" x="0.0" y="0.0" width="244" height="64"/>
+                <label opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is an episode title example" textAlignment="natural" lineBreakMode="middleTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2uX-uJ-r0m">
+                    <rect key="frame" x="80" y="37.5" width="154.5" height="13"/>
+                    <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="11"/>
+                    <color key="textColor" name="Text"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QOz-O5-9aQ">
+                    <rect key="frame" x="0.0" y="0.0" width="314" height="64"/>
                     <connections>
                         <action selector="playerButtonTouched" destination="-1" eventType="touchUpInside" id="XRh-P1-pie"/>
                     </connections>
                 </button>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ntf-j9-5lS" customClass="BoostButtonView" customModule="sphinx" customModuleProvider="target">
-                    <rect key="frame" x="267" y="0.0" width="50" height="64"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <button opaque="NO" alpha="0.69999999999999996" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KiM-LW-upY">
+                    <rect key="frame" x="369" y="16" width="29" height="32"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="50" id="u91-8m-ukU"/>
+                        <constraint firstAttribute="height" constant="32" id="FZv-lc-J5e"/>
+                        <constraint firstAttribute="width" constant="29" id="aYX-Q3-Dns"/>
                     </constraints>
-                </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KiM-LW-upY">
-                    <rect key="frame" x="327" y="17" width="27" height="30"/>
-                    <color key="tintColor" name="MainBottomIcons"/>
-                    <state key="normal" image="forw30Icon">
+                    <color key="tintColor" name="Text"/>
+                    <state key="normal" image="forward30Icon">
                         <color key="titleColor" red="0.44705882352941173" green="0.47843137254901957" blue="0.51372549019607838" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
                     <connections>
                         <action selector="forwardButtonTouched" destination="-1" eventType="touchUpInside" id="ME3-G0-S0w"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dVC-vg-r3J">
-                    <rect key="frame" x="369" y="12" width="30" height="40"/>
-                    <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="28"/>
-                    <state key="normal" title="play_arrow">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dVC-vg-r3J">
+                    <rect key="frame" x="311" y="11" width="42" height="42"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="42" id="4kq-HF-i5s"/>
+                        <constraint firstAttribute="width" constant="42" id="6gx-Rv-QwQ"/>
+                    </constraints>
+                    <color key="tintColor" name="Text"/>
+                    <state key="normal" image="playPodcastIcon">
                         <color key="titleColor" name="ReceivedIcon"/>
                     </state>
                     <connections>
-                        <action selector="playPauseButtonTouched" destination="-1" eventType="touchUpInside" id="dpi-7c-yFK"/>
+                        <action selector="playPauseButtonTouched" destination="-1" eventType="touchUpInside" id="6Cb-UI-doX"/>
                     </connections>
                 </button>
-                <view alpha="0.29999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XFF-oh-GuF">
-                    <rect key="frame" x="0.0" y="62" width="414" height="2"/>
-                    <color key="backgroundColor" name="WashedOutReceivedText"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="110-0W-YVr" customClass="AnimationView" customModule="Lottie">
+                    <rect key="frame" x="311" y="11" width="42" height="42"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="42" id="0zX-hE-ICQ"/>
+                        <constraint firstAttribute="height" constant="42" id="xWl-Xa-zuO"/>
+                    </constraints>
+                </view>
+                <view alpha="0.10000000000000001" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XFF-oh-GuF">
+                    <rect key="frame" x="16" y="62" width="382" height="2"/>
+                    <color key="backgroundColor" name="Text"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="2" id="ihm-5B-eCu"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wdM-ec-gI8">
-                    <rect key="frame" x="0.0" y="62" width="0.0" height="2"/>
-                    <color key="backgroundColor" name="ReceivedIcon"/>
+                <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wdM-ec-gI8">
+                    <rect key="frame" x="16" y="62" width="0.0" height="2"/>
+                    <color key="backgroundColor" name="Text"/>
                     <constraints>
                         <constraint firstAttribute="width" id="unl-GP-sxM"/>
                     </constraints>
                 </view>
                 <activityIndicatorView opaque="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="h0Q-GP-O3o">
-                    <rect key="frame" x="36.5" y="22" width="20" height="20"/>
+                    <rect key="frame" x="283" y="12" width="20" height="20"/>
                 </activityIndicatorView>
             </subviews>
-            <color key="backgroundColor" name="HeaderBG"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
+                <constraint firstItem="110-0W-YVr" firstAttribute="centerX" secondItem="dVC-vg-r3J" secondAttribute="centerX" id="1E6-rz-hqX"/>
                 <constraint firstItem="wdM-ec-gI8" firstAttribute="top" secondItem="XFF-oh-GuF" secondAttribute="top" id="2Yo-Qy-KQx"/>
-                <constraint firstAttribute="trailing" secondItem="XFF-oh-GuF" secondAttribute="trailing" id="IuA-aS-a0H"/>
+                <constraint firstItem="VnX-QJ-Fmu" firstAttribute="leading" secondItem="rCV-yF-Gqb" secondAttribute="trailing" constant="16" id="5Jn-MJ-h6z"/>
+                <constraint firstItem="2uX-uJ-r0m" firstAttribute="leading" secondItem="rCV-yF-Gqb" secondAttribute="trailing" constant="16" id="GQ8-py-2bI"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="2uX-uJ-r0m" secondAttribute="trailing" constant="100" id="H8w-xh-u1H"/>
+                <constraint firstAttribute="trailing" secondItem="XFF-oh-GuF" secondAttribute="trailing" constant="16" id="IuA-aS-a0H"/>
                 <constraint firstItem="wdM-ec-gI8" firstAttribute="bottom" secondItem="XFF-oh-GuF" secondAttribute="bottom" id="J2g-1c-xVe"/>
-                <constraint firstItem="VnX-QJ-Fmu" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="KhH-oC-viX"/>
-                <constraint firstItem="Ntf-j9-5lS" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="LDy-pV-xOI"/>
-                <constraint firstItem="XFF-oh-GuF" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Lr6-i9-fRk"/>
+                <constraint firstItem="VnX-QJ-Fmu" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="-10" id="KhH-oC-viX"/>
+                <constraint firstItem="XFF-oh-GuF" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="Lr6-i9-fRk"/>
                 <constraint firstItem="h0Q-GP-O3o" firstAttribute="centerY" secondItem="VnX-QJ-Fmu" secondAttribute="centerY" id="M8h-Pw-Ymt"/>
                 <constraint firstItem="QOz-O5-9aQ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Rex-SX-13s"/>
-                <constraint firstAttribute="bottom" secondItem="Ntf-j9-5lS" secondAttribute="bottom" id="Rma-PE-23U"/>
+                <constraint firstItem="rCV-yF-Gqb" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="Z01-M3-26N"/>
                 <constraint firstItem="KiM-LW-upY" firstAttribute="centerY" secondItem="dVC-vg-r3J" secondAttribute="centerY" id="Zou-nn-yHl"/>
-                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="VnX-QJ-Fmu" secondAttribute="trailing" constant="170" id="hcc-N0-KvY"/>
+                <constraint firstItem="2uX-uJ-r0m" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="12" id="gUK-ws-LT9"/>
+                <constraint firstItem="110-0W-YVr" firstAttribute="centerY" secondItem="dVC-vg-r3J" secondAttribute="centerY" id="juX-dh-1Zb"/>
                 <constraint firstItem="dVC-vg-r3J" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="kfV-U4-DU0"/>
                 <constraint firstAttribute="bottom" secondItem="QOz-O5-9aQ" secondAttribute="bottom" id="lGT-ai-9Zt"/>
                 <constraint firstAttribute="bottom" secondItem="XFF-oh-GuF" secondAttribute="bottom" id="lzi-dk-3BK"/>
-                <constraint firstItem="KiM-LW-upY" firstAttribute="leading" secondItem="Ntf-j9-5lS" secondAttribute="trailing" constant="10" id="m4g-Dk-eYn"/>
                 <constraint firstItem="QOz-O5-9aQ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="mQT-0p-DzE"/>
-                <constraint firstItem="VnX-QJ-Fmu" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="mZx-x8-3du"/>
-                <constraint firstItem="dVC-vg-r3J" firstAttribute="leading" secondItem="KiM-LW-upY" secondAttribute="trailing" constant="15" id="mpO-Ed-U5D"/>
-                <constraint firstAttribute="trailing" secondItem="QOz-O5-9aQ" secondAttribute="trailing" constant="170" id="qwy-Cu-mFn"/>
+                <constraint firstItem="dVC-vg-r3J" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="h0Q-GP-O3o" secondAttribute="trailing" constant="8" id="mg0-zx-OU2"/>
+                <constraint firstItem="KiM-LW-upY" firstAttribute="leading" secondItem="dVC-vg-r3J" secondAttribute="trailing" constant="16" id="q4E-DE-OpZ"/>
+                <constraint firstAttribute="trailing" secondItem="QOz-O5-9aQ" secondAttribute="trailing" constant="100" id="qwy-Cu-mFn"/>
                 <constraint firstItem="wdM-ec-gI8" firstAttribute="leading" secondItem="XFF-oh-GuF" secondAttribute="leading" id="rGf-an-bcJ"/>
+                <constraint firstAttribute="trailing" secondItem="KiM-LW-upY" secondAttribute="trailing" constant="16" id="rM2-bY-Fou"/>
                 <constraint firstItem="h0Q-GP-O3o" firstAttribute="leading" secondItem="VnX-QJ-Fmu" secondAttribute="trailing" constant="5" id="tnE-8K-0qK"/>
-                <constraint firstAttribute="trailing" secondItem="dVC-vg-r3J" secondAttribute="trailing" constant="15" id="ydL-6b-QNW"/>
+                <constraint firstItem="rCV-yF-Gqb" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="vu7-Vq-uqs"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="137.68115942028987" y="120.53571428571428"/>
         </view>
     </objects>
+    <designables>
+        <designable name="110-0W-YVr"/>
+        <designable name="VnX-QJ-Fmu">
+            <size key="intrinsicContentSize" width="258.5" height="16.5"/>
+        </designable>
+    </designables>
     <resources>
-        <image name="forw30Icon" width="27" height="30"/>
-        <namedColor name="HeaderBG">
-            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="MainBottomIcons">
-            <color red="0.37254901960784315" green="0.38823529411764707" blue="0.40784313725490196" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
+        <image name="forward30Icon" width="347.14999389648438" height="383.70001220703125"/>
+        <image name="playPodcastIcon" width="581.34002685546875" height="581.34002685546875"/>
+        <image name="podcastPlaceholder" width="1024" height="1024"/>
         <namedColor name="ReceivedIcon">
             <color red="0.50980392156862742" green="0.70588235294117652" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="Text">
             <color red="0.23529411764705882" green="0.24705882352941178" blue="0.25490196078431371" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="WashedOutReceivedText">
-            <color red="0.69019607843137254" green="0.71764705882352942" blue="0.73725490196078436" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

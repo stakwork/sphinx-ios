@@ -6,3 +6,7 @@ DerivedData/
 xcuserdata/
 
 Pods/
+
+
+.env
+Private/

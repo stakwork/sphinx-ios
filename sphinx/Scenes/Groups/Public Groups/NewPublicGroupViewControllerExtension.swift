@@ -69,7 +69,7 @@ extension NewPublicGroupViewController {
         if let chat = chat {
             formScrollView.alpha = 0.0
             
-            if let chatTribeInfo = chat.tribesInfo {
+            if let chatTribeInfo = chat.tribeInfo {
                 groupsManager.newGroupInfo = chatTribeInfo
                 
                 for field in formFields {
@@ -110,6 +110,12 @@ extension NewPublicGroupViewController {
                         break
                     }
                 }
+                
+                
+                let feedUrl = chatTribeInfo.feedUrl ?? ""
+                let feedType = (chatTribeInfo.feedContentType ?? FeedContentType.defaultValue).description
+                feedContentTypeField.text = (feedUrl.isEmpty) ? "" : feedType
+                feedContentTypeButton.isUserInteractionEnabled = !feedUrl.isEmpty
                 
                 listOnTribesSwitch.isOn = !chatTribeInfo.unlisted
                 privateTribeSwitch.isOn = chatTribeInfo.privateTribe
@@ -159,7 +165,7 @@ extension NewPublicGroupViewController {
     func editGroup(id: Int, params: [String: AnyObject]) {
         API.sharedInstance.editGroup(id: id, params: params, callback: { chatJson in
             if let chat = Chat.insertChat(chat: chatJson) {
-                chat.tribesInfo = self.groupsManager.newGroupInfo
+                chat.tribeInfo = self.groupsManager.newGroupInfo
                 self.shouldDismissView(chat: chat)
             } else {
                 self.showErrorAlert()
@@ -177,6 +183,31 @@ extension NewPublicGroupViewController {
             self.delegate?.shouldReloadContacts?(reload: true)
             self.dismiss(animated: true)
         }
+    }
+    
+    func showFeedContentTypePicker() {
+        let values = FeedContentType.allCases.map { $0.description }
+        let selectedValue = FeedContentType.allCases.filter { $0.description == feedContentTypeField.text}.first?.description ?? values.first?.description
+        
+        let pickerVC = PickerViewController.instantiate(
+            values: values,
+            selectedValue: selectedValue ?? "",
+            title: "picker-title.tribe-form.feed-type".localized,
+            delegate: self
+        )
+        
+        self.present(pickerVC, animated: false, completion: nil)
+    }
+}
+
+extension NewPublicGroupViewController : PickerViewDelegate {
+    func didSelectValue(value: String) {
+        let selectedValue = FeedContentType.allCases.filter { $0.description == value}.first
+        
+        feedContentTypeField.text = selectedValue?.description ?? "-"
+        groupsManager.newGroupInfo.feedContentType = selectedValue
+        
+        toggleConfirmButton()
     }
 }
 
@@ -224,10 +255,13 @@ extension NewPublicGroupViewController : UITextFieldDelegate {
             }
             break
         case GroupFields.FeedUrl.rawValue:
-            if let url = textField.text, url.isValidURL || url.isEmpty {
-                groupsManager.newGroupInfo.feedUrl = textField.text ?? ""
-            } else {
-                shouldRevertValue()
+            if let url = textField.text {
+                if url.isValidURL || url.isEmpty {
+                    groupsManager.newGroupInfo.feedUrl = textField.text ?? ""
+                } else {
+                    shouldRevertValue()
+                }
+                validateFeedUrl(url)
             }
             break
         default:
@@ -235,6 +269,13 @@ extension NewPublicGroupViewController : UITextFieldDelegate {
         }
         
         toggleConfirmButton()
+    }
+    
+    func validateFeedUrl(_ url: String) {
+        let validUrl = url.isValidURL
+        feedContentTypeButton.isUserInteractionEnabled = validUrl
+        feedContentTypeField.text = validUrl ? feedContentTypeField.text : ""
+        if (validUrl) { showFeedContentTypePicker()}
     }
     
     func completeUrlAndLoadImage(textField: UITextField) {

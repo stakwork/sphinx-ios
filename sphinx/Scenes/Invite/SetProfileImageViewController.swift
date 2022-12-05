@@ -71,7 +71,7 @@ class SetProfileImageViewController: SetDataViewController {
             loading = true
             uploadImage(image: image)
         } else {
-            goToSphinxReady()
+            goToSphinxDesktopAd()
         }
     }
     
@@ -101,19 +101,19 @@ class SetProfileImageViewController: SetDataViewController {
         
         API.sharedInstance.updateUser(id: id, params: parameters, callback: { contact in
             self.loading = false
-            self.contactsService.insertContact(contact: contact)
-            self.goToSphinxReady()
+            let _ = self.contactsService.insertContact(contact: contact)
+            self.goToSphinxDesktopAd()
         }, errorCallback: {
             self.loading = false
             AlertHelper.showAlert(title: "generic.error.title".localized, message: "generic.error.message".localized)
         })
     }
     
-    func goToSphinxReady() {
+    func goToSphinxDesktopAd() {
         SignupHelper.step = SignupHelper.SignupStep.PersonalInfoSet.rawValue
         
-        let sphinxReadyVC = SphinxReadyViewController.instantiate(rootViewController: rootViewController)
-        self.navigationController?.pushViewController(sphinxReadyVC, animated: true)
+        let sphinxDesktopAdVC = SphinxDesktopAdViewController.instantiate(rootViewController: rootViewController)
+        self.navigationController?.pushViewController(sphinxDesktopAdVC, animated: true)
     }
 }
 

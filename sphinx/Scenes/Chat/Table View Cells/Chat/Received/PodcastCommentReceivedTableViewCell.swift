@@ -26,7 +26,7 @@ class PodcastCommentReceivedTableViewCell: CommonPodcastCommentTableViewCell, Me
 
         commonConfigurationForMessages()
         configureStatus()
-        configureAudioAndMessage(podcast: chat?.podcastPlayer?.podcast)
+        configureAudioAndMessage(podcast: chat?.podcast)
 
         if messageRow.shouldShowRightLine {
             addRightLine()

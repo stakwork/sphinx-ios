@@ -25,7 +25,7 @@ class Constants {
     public static var kChatNameFont = UIFont(name: "Roboto-Regular", size: 17.0)!
     
     //Sizes
-    public static var kChatListRowHeight: CGFloat = 85
+    public static var kChatListRowHeight: CGFloat = 90
     public static var kPictureBubbleHeight: CGFloat = 210.0
     public static var kBubbleCurveSize: CGFloat = 10
     public static var kLabelMargins: CGFloat = 20
@@ -63,7 +63,7 @@ class Constants {
             kNewMessagePreviewFont = UIFont(name: "Roboto-Bold", size: 12.0)!
             kChatNameFont = UIFont(name: "Roboto-Regular", size: 16.0)!
             
-            kChatListRowHeight = 60
+            kChatListRowHeight = 70
             kPictureBubbleHeight = 170.0
             kBubbleCurveSize = 7
             kLabelMargins = 8
@@ -81,7 +81,7 @@ class Constants {
             kNewMessagePreviewFont = UIFont(name: "Roboto-Bold", size: 13.0)!
             kChatNameFont = UIFont(name: "Roboto-Regular", size: 16.0)!
             
-            kChatListRowHeight = 70
+            kChatListRowHeight = 80
             kPictureBubbleHeight = 190.0
             kBubbleCurveSize = 8
             kLabelMargins = 14
@@ -114,4 +114,9 @@ class Constants {
             break
         }
     }
+}
+
+// MARK: -  Units
+extension Constants {
+    static let satoshisInBTC = 100_000_000
 }

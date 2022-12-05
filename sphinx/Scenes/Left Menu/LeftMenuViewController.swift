@@ -7,6 +7,7 @@
 
 import UIKit
 import KYDrawerController
+import StoreKit
 
 class LeftMenuViewController: UIViewController {
     
@@ -19,14 +20,23 @@ class LeftMenuViewController: UIViewController {
     @IBOutlet weak var balanceLabel: UILabel!
     @IBOutlet weak var unitLabel: UILabel!
     @IBOutlet weak var optionsTableView: UITableView!
-    @IBOutlet weak var addSatsButton: UIButton!
+    @IBOutlet weak var karmaPurchaseButton: UIButton!
+    @IBOutlet weak var purchaseLoadingSpinner: UIActivityIndicatorView!
     
-    let buttonsCount = 2
+    var isPurchaseProcessing: Bool = false {
+        didSet {
+            LoadingWheelHelper.toggleLoadingWheel(loading: isPurchaseProcessing, loadingWheel: purchaseLoadingSpinner, loadingWheelColor: UIColor.Sphinx.Text, view: view)
+        }
+    }
+    
+    let storeKitService = StoreKitService.shared
+
+    var buttonsCount = 2
     
     let menuOptions:[MenuOption] = [
-        MenuOption(iconCharacter: "", optionTitle: "menu.dashboard".localized),
-        MenuOption(iconCharacter: "", optionTitle: "menu.contacts".localized),
-        MenuOption(iconCharacter: "", optionTitle: "menu.profile".localized)
+        MenuOption(iconCharacter: "", optionTitle: "left-menu.dashboard".localized),
+        MenuOption(iconCharacter: "", optionTitle: "left-menu.contacts".localized),
+        MenuOption(iconCharacter: "", optionTitle: "left-menu.profile".localized)
     ]
     
     let kMenuRowHeight: CGFloat = 65
@@ -42,6 +52,21 @@ class LeftMenuViewController: UIViewController {
         }
     }
     
+    
+    var canUserBuyKarmaForNode: Bool {
+        UserContact.getOwner()?.isVirtualNode() ?? false
+    }
+    
+    var karmaPurchaseProduct: SKProduct? {
+        didSet {
+            karmaPurchaseButton.isHidden = (
+                karmaPurchaseProduct == nil ||
+                canUserBuyKarmaForNode == false
+            )
+        }
+    }
+    
+    
     static func instantiate(rootViewController : RootViewController) -> LeftMenuViewController {
         let viewController = StoryboardScene.LeftMenu.leftMenuViewController.instantiate()
         viewController.rootViewController = rootViewController
@@ -51,12 +76,17 @@ class LeftMenuViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        storeKitService.requestDelegate = self
+        storeKitService.transactionObserverDelegate = self
+        
         walletIcon.tintColorDidChange()
+        
         profileImageView.layer.cornerRadius = profileImageView.frame.size.height / 2
         profileImageView.clipsToBounds = true
         
-        addSatsButton.layer.cornerRadius = addSatsButton.frame.size.height / 2
-        addSatsButton.clipsToBounds = true
+        karmaPurchaseButton.setTitle("left-menu.buy-karma-button".localized, for: .normal)
+        karmaPurchaseButton.layer.cornerRadius = karmaPurchaseButton.frame.size.height / 2
+        karmaPurchaseButton.clipsToBounds = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -64,6 +94,7 @@ class LeftMenuViewController: UIViewController {
         
         configureProfile()
         configureTable()
+        configureKarmaPurchaseButton()
         walletBalanceService.updateBalance(labels: [balanceLabel])
     }
     
@@ -82,19 +113,44 @@ class LeftMenuViewController: UIViewController {
     }
     
     func configureTable() {
+        if UserContact.getOwner()?.isVirtualNode() ?? false {
+            buttonsCount = 1
+        }
+        
         optionsTableView.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
         optionsTableView.delegate = self
         optionsTableView.dataSource = self
         optionsTableView.reloadData()
     }
     
+    
+    func configureKarmaPurchaseButton() {
+        guard canUserBuyKarmaForNode else {
+            karmaPurchaseButton.isHidden = true
+            return
+        }
+        
+        storeKitService.fetchProducts(matchingIdentifiers: [
+            StoreKitService.ProductIdentifiers.add1000Karma,
+        ])
+    }
+    
+    
     func goToChatList() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        if let centerVC = appDelegate.getCurrentVC(), centerVC.isKind(of: ChatViewController.self) {
+        
+        if
+            let centerVC = appDelegate.getCurrentVC(),
+            centerVC.isKind(of: DashboardRootViewController.self
+        ) {
             centerVC.navigationController?.popViewController(animated: false)
         } else {
-            let chatList = ChatListViewController.instantiate(rootViewController: rootViewController, delegate: self)
-            goTo(vc: chatList)
+            let dashboardRootVC = DashboardRootViewController.instantiate(
+                rootViewController: rootViewController,
+                leftMenuDelegate: self
+            )
+            
+            goTo(vc: dashboardRootVC)
         }
     }
     
@@ -123,13 +179,13 @@ class LeftMenuViewController: UIViewController {
         GroupsPinManager.sharedInstance.logout()
     }
     
-    @IBAction func addSatsButtonTouched() {
-        let addSatsVC = AddSatsViewController.instantiate(rootViewController: rootViewController)
-        let navigationC = UINavigationController(rootViewController: addSatsVC)
-        navigationC.setNavigationBarHidden(true, animated: false)
-        navigationC.modalPresentationStyle = .overCurrentContext
-        rootViewController.presentViewController(vc: navigationC)
-        closeLeftMenu()
+    
+    @IBAction func karmaPurchaseButtonTapped() {
+        guard let karmaPurchaseProduct = karmaPurchaseProduct else {
+            preconditionFailure()
+        }
+        startPurchaseProgressIndicator()
+        storeKitService.purchase(karmaPurchaseProduct)
     }
 }
 
@@ -159,18 +215,19 @@ extension LeftMenuViewController : UITableViewDelegate {
         let option = menuOptions[indexPath.row]
         
         switch (option.optionTitle) {
-        case "menu.profile".localized:
+        case "left-menu.profile".localized:
             let profile = ProfileViewController.instantiate(rootViewController: rootViewController, delegate: self)
             goTo(vc: profile)
-            break
-        case "menu.contacts".localized:
+        case "left-menu.contacts".localized:
             let addressBook = AddressBookViewController.instantiate(rootViewController: rootViewController)
             goTo(vc: addressBook)
-            break
-        case "menu.dashboard".localized:
-            let chatList = ChatListViewController.instantiate(rootViewController: rootViewController, delegate: self)
-            goTo(vc: chatList)
-            break
+        case "left-menu.dashboard".localized:
+            let dashboardRootVC = DashboardRootViewController.instantiate(
+                rootViewController: rootViewController,
+                leftMenuDelegate: self
+            )
+            
+            goTo(vc: dashboardRootVC)
         default:
             break
         }
@@ -229,7 +286,7 @@ extension LeftMenuViewController : AddFriendRowButtonDelegate {
     }
 }
 
-extension LeftMenuViewController : MenuDelegate {
+extension LeftMenuViewController : LeftMenuDelegate {
     func shouldOpenLeftMenu() {
         if let drawer = rootViewController?.getDrawer() {
             drawer.setDrawerState(.opened, animated: true)
@@ -246,3 +303,4 @@ extension LeftMenuViewController : MenuDelegate {
 extension LeftMenuViewController : KYDrawerControllerDelegate {
     func drawerController(_ drawerController: KYDrawerController, didChangeState state: KYDrawerController.DrawerState) {}
 }
+

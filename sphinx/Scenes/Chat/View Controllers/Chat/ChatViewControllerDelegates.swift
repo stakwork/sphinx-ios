@@ -77,22 +77,86 @@ extension ChatViewController : ChatHeaderViewDelegate {
         guard let chat = chat else {
             return
         }
+        if chat.isPublicGroup() {
+            goToNotificationsLevel()
+            return
+        }
+        chatHeaderView.setVolumeState(muted: !chat.isMuted())
+        
         chatViewModel.toggleVolumeOn(chat: chat, completion: { chat in
             if let chat = chat {
                 if chat.isMuted() {
                     self.messageBubbleHelper.showGenericMessageView(text: "chat.muted.message".localized, delay: 2.5)
                 }
                 self.updateViewChat(updatedChat: chat)
+                self.chatHeaderView.setVolumeState(muted: chat.isMuted())
             }
-            self.chatHeaderView.setVolumeState()
         })
     }
     
-    func didTapCallButton(sender: UIButton) {
+    func goToNotificationsLevel() {
+        if let chat =  chat {
+            accessoryView.hide()
+            let notificationsVC = NotificationsLevelViewController.instantiate(chat: chat, delegate: self)
+            self.present(notificationsVC, animated: true, completion: nil)
+        }
+    }
+    
+    func goToShare() {
+        if let link = chat?.getJoinChatLink() {
+            accessoryView.hide()
+            let qrCodeDetailViewModel = QRCodeDetailViewModel(qrCodeString: link, amount: 0, viewTitle: "share.group.link".localized)
+            let viewController = QRCodeDetailViewController.instantiate(with: qrCodeDetailViewModel, presentedVCDelegate: self)
+            self.present(viewController, animated: true, completion: nil)
+        }
+    }
+    
+    func didTapMoreOptionsButton(sender: UIButton) {
+        accessoryView.hide()
+        let alert = CustomAlertController(title: "chat.options".localized, message: "select.option".localized, preferredStyle: .actionSheet)
+
+        let isPublicGroup = chat?.isPublicGroup() ?? false
+        let isMyPublicGroup = chat?.isMyPublicGroup() ?? false
+        
+        alert.addAction(UIAlertAction(title: "create.call".localized, style: .default, handler:{ (UIAlertAction) in
+            self.sendCallMessage(sender: sender)
+        }))
+
+        if isPublicGroup {
+            alert.addAction(UIAlertAction(title: "notifications.level".localized, style: .default, handler:{ (UIAlertAction) in
+                self.goToNotificationsLevel()
+            }))
+            if isMyPublicGroup {
+                alert.addAction(UIAlertAction(title: "share.group".localized, style: .default, handler:{ (UIAlertAction) in
+                    self.goToShare()
+                }))
+            }
+        }
+
+        alert.addAction(UIAlertAction(title: "cancel".localized, style: .cancel ))
+        alert.popoverPresentationController?.sourceView = sender
+        alert.popoverPresentationController?.sourceRect = sender.bounds
+        
+        alert.willDisappearBlock = {_ in
+            self.accessoryView.show()
+        }
+
+        self.present(alert, animated: true, completion: nil)
+        
+    }
+    
+    func sendCallMessage(sender: UIButton) {
         VideoCallHelper.createCallMessage(button: sender, callback: { link in
             let messageType = TransactionMessage.TransactionMessageType.message.rawValue
             self.shouldSendMessage(text: link, type: messageType, completion: { _ in })
         })
+    }
+}
+
+extension ChatViewController : PresentedViewControllerDelegate {
+    func viewWillDismiss() {
+        accessoryView.show()
+        chatHeaderView.setVolumeState(muted: chat?.isMuted() == true)
     }
 }
 
@@ -140,6 +204,8 @@ extension ChatViewController : ChatAccessoryViewDelegate {
     }
     
     func sendMessage(provisionalMessage: TransactionMessage?, params: [String: AnyObject], completion: @escaping (Bool) -> ()) {
+        let podcastComment = accessoryView.getReplyingPodcast()
+        
         askForNotificationPermissions()
         accessoryView.hideReplyView()
         
@@ -147,11 +213,16 @@ extension ChatViewController : ChatAccessoryViewDelegate {
             if let message = TransactionMessage.insertMessage(m: m, existingMessage: provisionalMessage).0 {
                 message.setPaymentInvoiceAsPaid()
                 self.insertSentMessage(message: message, completion: completion)
+                
+                ActionsManager.sharedInstance.trackMessageSent(message: message)
+            }
+            
+            if let podcastComment = podcastComment {
+                ActionsManager.sharedInstance.trackClipComment(podcastComment: podcastComment)
             }
         }, errorCallback: {
              if let provisionalMessage = provisionalMessage {
                 provisionalMessage.status = TransactionMessage.TransactionMessageStatus.failed.rawValue
-                provisionalMessage.saveMessage()
                 self.insertSentMessage(message: provisionalMessage, completion: completion)
                 self.scrollAfterInsert()
              }
@@ -168,7 +239,7 @@ extension ChatViewController : ChatAccessoryViewDelegate {
     }
     
     func insertSentMessage(message: TransactionMessage, completion: @escaping (Bool) -> ()) {
-        updateViewChat(updatedChat: chat ?? contact?.getConversation())
+        updateViewChat(updatedChat: chat ?? contact?.getChat())
         enableViewAndComplete(success: true, completion: completion)
         chatDataSource?.addMessageAndReload(message: message)
     }
@@ -334,7 +405,7 @@ extension ChatViewController : MessageCellDelegate {
         let (pk, _) = pubkey.pubkeyComponents
         let (existing, user) = pk.isExistingContactPubkey()
         if let user = user, existing {
-            if let chat = user.getConversation() {
+            if let chat = user.getChat() {
                 UserDefaults.Keys.chatId.set(chat.id)
             } else {
                 UserDefaults.Keys.contactId.set(user.id)
@@ -355,6 +426,41 @@ extension ChatViewController : MessageCellDelegate {
             activityVC.popoverPresentationController?.sourceView = button
             self.present(activityVC, animated: true, completion: nil)
         }
+    }
+    
+    func didTapAvatarView(message: TransactionMessage) {
+        if let _ = message.person {
+            accessoryView.hide()
+            
+            let tribeMemberProfileVC = TribeMemberProfileViewController.instantiate(message: message, delegate: self)
+            tribeMemberProfileVC.modalPresentationStyle = .overCurrentContext
+            self.navigationController?.present(tribeMemberProfileVC, animated: false)
+        } else {
+            let tribeMemberPopupVC = TribeMemberPopupViewController.instantiate(message: message, delegate: self)
+            WindowsManager.sharedInstance.showConveringWindowWith(rootVC: tribeMemberPopupVC)
+        }
+    }
+}
+
+extension ChatViewController : TribeMemberViewDelegate {
+    func shouldGoToSendPayment(message: TransactionMessage) {
+        accessoryView.hide()
+
+        let viewController : UIViewController! = CreateInvoiceViewController.instantiate(
+            contacts: [],
+            chat: chat,
+            messageUUID: message.uuid,
+            viewModel: chatViewModel,
+            delegate: self,
+            paymentMode: .send,
+            rootViewController: rootViewController
+        )
+
+        presentNavigationControllerWith(vc: viewController)
+    }
+    
+    func didDismissTribeMemberVC() {
+        accessoryView.show()
     }
 }
 
@@ -458,7 +564,7 @@ extension ChatViewController : SocketManagerDelegate {
     
     func didUpdateContact(contact: UserContact) {
         self.contact = contact
-        updateViewChat(updatedChat: contact.getConversation())
+        updateViewChat(updatedChat: contact.getChat())
         chatDataSource?.updateContact(contact: contact)
         chatHeaderView.setChatInfo()
     }
@@ -482,7 +588,7 @@ extension ChatViewController : SocketManagerDelegate {
 extension ChatViewController : NewContactVCDelegate {
     func shouldReloadContacts(reload: Bool) {
         contact = UserContact.getContactWith(id: contact?.id ?? -1)
-        updateViewChat(updatedChat: chat ?? contact?.getConversation())
+        updateViewChat(updatedChat: chat ?? contact?.getChat())
         loadData()
     }
 }
@@ -535,6 +641,31 @@ extension ChatViewController: UIGestureRecognizerDelegate {
 }
 
 extension ChatViewController : MessageOptionsVCDelegate {
+    
+    func shouldResendMessage(message: TransactionMessage) {
+        sendMessage(provisionalMessage: message, text: message.getMessageContent(), completion: { _ in })
+    }
+    
+    func shouldFlagMessage(message: TransactionMessage) {
+        DelayPerformedHelper.performAfterDelay(seconds: 0.1, completion: {
+            AlertHelper.showTwoOptionsAlert(
+                title: "alert-confirm.flag-message-title".localized,
+                message: "alert-confirm.flag-message-message".localized,
+                confirm: {
+                    self.flagMessage(message)
+                })
+        })
+    }
+    
+    private func flagMessage(_ message: TransactionMessage) {
+        if message.flag() {
+            chatViewModel.sendFlagMessageFor(message)
+            updateMessageRowFor(message)
+            return
+        }
+        AlertHelper.showAlert(title: "generic.error.title".localized, message: "generic.error.message".localized)
+    }
+    
     func shouldRemoveWindow() {
         WindowsManager.sharedInstance.removeMessageOptions()
         fetchNewData()
@@ -545,13 +676,48 @@ extension ChatViewController : MessageOptionsVCDelegate {
     }
     
     func shouldBoostMessage(message: TransactionMessage) {
-        guard let params = TransactionMessage.getBoostMessageParams(contact: contact, chat: chat, replyingMessage: message) else {
+        guard let params = TransactionMessage.getBoostMessageParams(
+            contact: contact,
+            chat: chat,
+            replyingMessage: message
+        ) else {
             return
         }
         sendMessage(provisionalMessage: nil, params: params, completion: {_ in })
     }
     
+    func shouldSendTribePayment(
+        amount: Int,
+        message: String,
+        messageUUID: String,
+        callback: (() -> ())?
+    ) {
+        guard let params = TransactionMessage.getTribePaymentParams(
+            chat: chat,
+            messageUUID: messageUUID,
+            amount: amount,
+            text: message
+        ) else {
+            callback?()
+            return
+        }
+        sendMessage(provisionalMessage: nil, params: params, completion: { _ in
+            callback?()
+        })
+    }
+    
     func shouldDeleteMessage(message: TransactionMessage) {
+        DelayPerformedHelper.performAfterDelay(seconds: 0.1, completion: {
+            AlertHelper.showTwoOptionsAlert(
+                title: "alert-confirm.delete-message-title".localized,
+                message: "alert-confirm.delete-message-message".localized,
+                confirm: {
+                    self.deleteMessage(message)
+                })
+        })
+    }
+    
+    private func deleteMessage(_ message: TransactionMessage) {
         if message.id < 0 {
             chatDataSource?.deleteCellFor(m: message)
             CoreDataManager.sharedManager.deleteObject(object: message)
@@ -565,7 +731,7 @@ extension ChatViewController : MessageOptionsVCDelegate {
             let updatedMessage = TransactionMessage.insertMessage(m: m).0
             
             if success {
-                self.updateDeletedMessageRow(message: updatedMessage ?? message)
+                self.updateMessageRowFor(updatedMessage ?? message)
                 return
             }
             
@@ -573,8 +739,8 @@ extension ChatViewController : MessageOptionsVCDelegate {
         })
     }
     
-    func updateDeletedMessageRow(message: TransactionMessage) {
-        chatDataSource?.updateDeletedMessage(m: message)
+    func updateMessageRowFor(_ message: TransactionMessage) {
+        chatDataSource?.updateRowForMessage(message)
         PlayAudioHelper.playHaptic()
     }
 }

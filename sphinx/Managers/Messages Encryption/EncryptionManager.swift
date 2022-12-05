@@ -12,6 +12,7 @@ import SwiftyRSA
 class EncryptionManager {
     
     let KEY_SIZE = 2048
+    let SMALL_KEY_SIZE = 256
     let PUBLIC_KEY = "public.com.gl.sphinx"
     let PRIVATE_KEY = "private.com.gl.sphinx"
     
@@ -24,6 +25,8 @@ class EncryptionManager {
     
     var contactsService = ContactsService()
     let userData = UserData.sharedInstance
+    
+    var myPrivateKey : PrivateKey?
     
     var ownPrivateKey: SecKey? {
         get {
@@ -107,7 +110,7 @@ class EncryptionManager {
 
         if let privateKey = privateKey, let publicKey = publicKey {
             saveKeysOnKeychain()
-            sendPublicKeyToServer()
+            sendPublicKeyToServer(completion: completion)
             return (privateKey, publicKey)
         }
         
@@ -118,6 +121,8 @@ class EncryptionManager {
                 
                 ownPublicKey = publicKey.reference
                 ownPrivateKey = privateKey.reference
+                
+                completion?()
                 
                 return (privateKey, publicKey)
             }
@@ -195,18 +200,24 @@ class EncryptionManager {
     }
     
     func getOwnPrivateKey() -> PrivateKey? {
-        var privateKey : PrivateKey?
-
+        if let myPrivateKey = myPrivateKey {
+            return myPrivateKey
+        }
+        
         guard let privateKeyReference = ownPrivateKey else {
             return getOwnPrivateKeyFromKeychain()
         }
 
+        var privateKey : PrivateKey?
+        
         do {
             privateKey = try PrivateKey(reference: privateKeyReference)
         } catch let error {
             print(error)
         }
 
+        myPrivateKey = privateKey
+        
         if let privateKey = privateKey {
             return privateKey
         }
@@ -215,11 +226,11 @@ class EncryptionManager {
     }
     
     func getOwnPrivateKeyFromKeychain() -> PrivateKey? {
-        var privateKey : PrivateKey?
-        
         guard let privateKeyString = userData.getEncryptionKeys().0, !privateKeyString.isEmpty else {
             return nil
         }
+        
+        var privateKey : PrivateKey?
 
         do {
             privateKey = try PrivateKey(base64Encoded: privateKeyString)
@@ -235,11 +246,11 @@ class EncryptionManager {
     }
     
     func getOwnPublicKey() -> PublicKey? {
-        var publicKey : PublicKey?
-        
         guard let publicKeyReference = self.ownPublicKey else {
             return nil
         }
+        
+        var publicKey : PublicKey?
 
         do {
             publicKey = try PublicKey(reference: publicKeyReference)
@@ -348,6 +359,16 @@ class EncryptionManager {
         }
     }
     
+    func encryptToken(token: String, key: PublicKey) -> String? {
+        do {
+            let clear = try ClearMessage(string: token, using: .utf8)
+            let encrypted = try clear.encrypted(with: key, padding: .PKCS1)
+            return encrypted.base64String
+        } catch {
+            return nil
+        }
+    }
+    
     func decryptMessage(message: String, key: PrivateKey) -> (Bool, String) {
         do {
             let encrypted = try EncryptedMessage(base64Encoded: message)
@@ -360,7 +381,13 @@ class EncryptionManager {
     }
     
     public static func randomString(length: Int) -> String {
-        let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-        return String((0..<length).map{ _ in letters.randomElement()! })
+        let uuidString = UUID().uuidString.replacingOccurrences(of: "-", with: "")
+        
+        return String(
+            Data(uuidString.utf8)
+            .base64EncodedString()
+            .replacingOccurrences(of: "=", with: "")
+            .prefix(length)
+        )
     }
 }

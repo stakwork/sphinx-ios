@@ -10,7 +10,11 @@ import UIKit
 
 class DeepLinksHandlerHelper {
     
-    static func didHandleLinkQuery(vc: UIViewController, rootViewController: RootViewController, delegate: PaymentInvoiceDelegate? = nil) -> Bool {
+    static func didHandleLinkQuery(
+        vc: UIViewController,
+        rootViewController: RootViewController,
+        delegate: PaymentInvoiceDelegate? = nil
+    ) -> Bool {
         if SubscriptionManager.sharedInstance.goToSubscriptionDetails(vc: vc, rootViewController: rootViewController) {
             return true
         }
@@ -19,7 +23,10 @@ class DeepLinksHandlerHelper {
             return true
         }
         
-        if GroupsManager.sharedInstance.goToGroupDetails(vc: vc, rootViewController: rootViewController) {
+        if GroupsManager.sharedInstance.goToGroupDetails(
+            vc: vc,
+            rootViewController: rootViewController
+        ) {
             return true
         }
         
@@ -28,6 +35,18 @@ class DeepLinksHandlerHelper {
         }
         
         if WindowsManager.sharedInstance.showRedeemSats() {
+            return false
+        }
+        
+        if WindowsManager.sharedInstance.showAuth() {
+            return false
+        }
+        
+        if WindowsManager.sharedInstance.showPersonModal(delegate: vc as? WindowsManagerDelegate) {
+            return false
+        }
+        
+        if WindowsManager.sharedInstance.showPeopleUpdateModal(delegate: vc as? WindowsManagerDelegate) {
             return false
         }
         
@@ -53,10 +72,20 @@ class DeepLinksHandlerHelper {
                     shouldSetVC = true
                     break
                 case "challenge":
-                    UserDefaults.Keys.authQuery.set(query)
+                    UserDefaults.Keys.challengeQuery.set(query)
                     shouldSetVC = true
                 case "redeem_sats":
                     UserDefaults.Keys.redeemSatsQuery.set(query)
+                    shouldSetVC = true
+                case "auth":
+                    UserDefaults.Keys.authQuery.set(query)
+                    shouldSetVC = true
+                case "person":
+                    UserDefaults.Keys.personQuery.set(query)
+                    shouldSetVC = true
+                    break
+                case "save":
+                    UserDefaults.Keys.saveQuery.set(query)
                     shouldSetVC = true
                     break
                 default:

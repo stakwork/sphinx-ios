@@ -10,9 +10,10 @@ import UIKit
 
 protocol PodcastEpisodeRowDelegate : class {
     func shouldStartDownloading(episode: PodcastEpisode, cell: PodcastEpisodeTableViewCell)
+    func shouldDeleteFile(episode: PodcastEpisode, cell: PodcastEpisodeTableViewCell)
 }
 
-class PodcastEpisodeTableViewCell: UITableViewCell {
+class PodcastEpisodeTableViewCell: SwipableCell {
     
     weak var delegate: PodcastEpisodeRowDelegate?
     
@@ -37,6 +38,10 @@ class PodcastEpisodeTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        numberOfButtons = .oneButton
+        button3 = button1
+        button1.tintColorDidChange()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -61,15 +66,22 @@ class PodcastEpisodeTableViewCell: UITableViewCell {
         
         configureDownload(episode: episode, download: download)
         
-        if let img = PodcastEpisodeTableViewCell.podcastImage {
-            loadEpisodeImage(episode: episode, with: img)
-        } else if let image = podcast?.image, let url = URL(string: image) {
-            MediaLoader.asyncLoadImage(imageView: episodeImageView, nsUrl: url, placeHolderImage: UIImage(named: "profile_avatar"), completion: { img in
-                PodcastEpisodeTableViewCell.podcastImage = img
-                self.loadEpisodeImage(episode: episode, with: img)
-            }, errorCompletion: { _ in
-                self.loadEpisodeImage(episode: episode, with: UIImage(named: "profile_avatar")!)
-            })
+        episodeImageView.sd_cancelCurrentImageLoad()
+        
+        if let episodeURLPath = episode.imageURLPath, let url = URL(string: episodeURLPath) {
+            episodeImageView.sd_setImage(
+                with: url,
+                placeholderImage: UIImage(named: "podcastPlaceholder"),
+                options: [.highPriority],
+                progress: nil
+            )
+        } else if let podcastURLPath = podcast?.imageURLPath, let url = URL(string: podcastURLPath) {
+            episodeImageView.sd_setImage(
+                with: url,
+                placeholderImage: UIImage(named: "podcastPlaceholder"),
+                options: [.highPriority],
+                progress: nil
+            )
         }
     }
     
@@ -80,8 +92,11 @@ class PodcastEpisodeTableViewCell: UITableViewCell {
         downloadButton.setTitleColor(UIColor.Sphinx.Text, for: .normal)
         
         self.contentView.alpha = episode.isAvailable() ? 1.0 : 0.5
-        
-        if episode.downloaded {
+
+        // Disable swipe actions if the episode hasn't been downloaded yet.
+        recognizer?.isEnabled = episode.isDownloaded
+
+        if episode.isDownloaded {
             downloadButton.setTitle("", for: .normal)
             downloadButton.setTitleColor(UIColor.Sphinx.PrimaryGreen, for: .normal)
             return
@@ -96,24 +111,16 @@ class PodcastEpisodeTableViewCell: UITableViewCell {
         progressLabel.text = progress == 1 ? "" : "\(Int(progress * 100))%"
     }
     
-    func loadEpisodeImage(episode: PodcastEpisode, with defaultImg: UIImage) {
-        if let image = episode.image, let url = URL(string: image) {
-            MediaLoader.asyncLoadImage(imageView: episodeImageView, nsUrl: url, placeHolderImage: defaultImg, id: episode.id ?? -1, completion: { (img, id) in
-                if self.isDifferentEpisode(episodeId: id) { return }
-                self.episodeImageView.image = img
-            }, errorCompletion: { _ in
-                self.episodeImageView.image = defaultImg
-            })
-        } else {
-            self.episodeImageView.image = defaultImg
-        }
-    }
-    
     func isDifferentEpisode(episodeId: Int) -> Bool {
-        return episodeId != self.episode.id
+        return episodeId != Int(episode.itemID)
     }
     
     @IBAction func downloadButtonTouched() {
         self.delegate?.shouldStartDownloading(episode: episode, cell: self)
+    }
+    
+    
+    @IBAction func deleteButtonTouched() {
+        delegate?.shouldDeleteFile(episode: episode, cell: self)
     }
 }

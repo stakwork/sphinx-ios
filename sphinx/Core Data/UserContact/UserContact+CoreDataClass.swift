@@ -50,6 +50,7 @@ public class UserContact: NSManagedObject {
             let avatarUrl = contact["photo_url"].string
             let isOwner = contact["is_owner"].boolValue
             let fromGroup = contact["from_group"].boolValue
+            let blocked = contact["blocked"].boolValue
             let status = contact["status"].intValue
             let contactKey = contact["contact_key"].string
             let notificationSound = contact["notification_sound"].string
@@ -81,7 +82,7 @@ public class UserContact: NSManagedObject {
                 }
             }
             
-            let contact = UserContact.createObject(id: id, publicKey: publicKey, nodeAlias: nodeAlias, nickname: nickname, avatarUrl: avatarUrl, isOwner: isOwner, fromGroup: fromGroup, status: status, contactKey: contactKey, notificationSound: notificationSound, privatePhoto: privatePhoto, tipAmount: tipAmount, routeHint: routeHint, inviteString: inviteString, welcomeMessage: welcomeMessage, inviteStatus: inviteStatus, invitePrice: invitePrice, date: date)
+            let contact = UserContact.createObject(id: id, publicKey: publicKey, nodeAlias: nodeAlias, nickname: nickname, avatarUrl: avatarUrl, isOwner: isOwner, fromGroup: fromGroup, blocked: blocked, status: status, contactKey: contactKey, notificationSound: notificationSound, privatePhoto: privatePhoto, tipAmount: tipAmount, routeHint: routeHint, inviteString: inviteString, welcomeMessage: welcomeMessage, inviteStatus: inviteStatus, invitePrice: invitePrice, date: date)
             
             return contact
         }
@@ -96,6 +97,7 @@ public class UserContact: NSManagedObject {
                                     avatarUrl: String?,
                                     isOwner: Bool,
                                     fromGroup: Bool,
+                                    blocked: Bool,
                                     status: Int,
                                     contactKey: String?,
                                     notificationSound: String?,
@@ -127,6 +129,7 @@ public class UserContact: NSManagedObject {
         contact.avatarUrl = avatarUrl
         contact.isOwner = isOwner
         contact.fromGroup = fromGroup
+        contact.blocked = blocked
         contact.privatePhoto = privatePhoto
         contact.status = status
         contact.contactKey = contactKey
@@ -144,15 +147,8 @@ public class UserContact: NSManagedObject {
                 updateTipAmount(amount: oldTipAmount)
             }
         }
-
-        managedContext.mergePolicy = NSMergePolicy.overwrite
         
-        do {
-            try managedContext.save()
-            return contact
-        } catch {
-            return nil
-        }
+        return contact
     }
 
     public static func getAll() -> [UserContact] {
@@ -227,7 +223,6 @@ public class UserContact: NSManagedObject {
     func updateFromGroup(contact: JSON) -> Bool {
         if self.fromGroup != contact["from_group"].boolValue {
             self.fromGroup = contact["from_group"].boolValue
-            self.saveContact()
             return true
         }
         return false
@@ -274,15 +269,23 @@ public class UserContact: NSManagedObject {
         return nil
     }
     
-    public func getConversation() -> Chat? {
+    var conversation: Chat? = nil
+    
+    public func getChat() -> Chat? {
+        if conversation == nil {
+            setContactConversation()
+        }
+        return conversation
+    }
+    
+    public func setContactConversation() {
         let userId = UserData.sharedInstance.getUserId()
         let predicate = NSPredicate(format: "(contactIds == %@ OR contactIds == %@) AND type = %d", [userId, self.id], [self.id, userId], Chat.ChatType.conversation.rawValue)
         let sortDescriptors = [NSSortDescriptor(key: "id", ascending: false)]
-        let chat:Chat? = CoreDataManager.sharedManager.getObjectOfTypeWith(predicate: predicate, sortDescriptors: sortDescriptors, entityName: "Chat")
-        return chat
+        conversation = CoreDataManager.sharedManager.getObjectOfTypeWith(predicate: predicate, sortDescriptors: sortDescriptors, entityName: "Chat")
     }
     
-    public func getConversation(chats: [Chat]) -> Chat? {
+    public func getChat(chats: [Chat]) -> Chat? {
         for chat in chats {
             if chat.getContactIdsArray().contains(self.id) {
                 return chat
@@ -317,6 +320,10 @@ public class UserContact: NSManagedObject {
         return self.status == UserContact.Status.Pending.rawValue
     }
     
+    public func isBlocked() -> Bool {
+        return self.blocked
+    }
+    
     public func shouldBeExcluded() -> Bool {
         if fromGroup { return true }
         if let invite = self.invite {
@@ -329,23 +336,28 @@ public class UserContact: NSManagedObject {
         return !(self.routeHint ?? "").isEmpty
     }
     
-    public func saveContact() {
-        CoreDataManager.sharedManager.saveContext()
-    }
-    
     public static func updateDeviceId(deviceId: String) {
         if let currentDeviceId = UserDefaults.Keys.deviceId.get(defaultValue: ""), currentDeviceId == deviceId {
             return
         }
+        
+        syncDeviceId(newDeviceId: deviceId)
+    }
+    
+    public static func syncDeviceId(
+        newDeviceId: String? = nil
+    ) {
+        if let currentDeviceId = newDeviceId ?? UserDefaults.Keys.deviceId.get(), !currentDeviceId.isEmpty {
+            
+            let parameters : [String: AnyObject] = ["device_id" : currentDeviceId as AnyObject]
+            let id = UserData.sharedInstance.getUserId()
 
-        let parameters : [String: AnyObject] = ["device_id" : deviceId as AnyObject]
-        let id = UserData.sharedInstance.getUserId()
-
-        API.sharedInstance.updateUser(id: id, params: parameters, callback: { contact in
-            UserDefaults.Keys.deviceId.set(contact["device_id"].string)
-        }, errorCallback: {
-            print("Error updating device id")
-        })
+            API.sharedInstance.updateUser(id: id, params: parameters, callback: { contact in
+                UserDefaults.Keys.deviceId.set(contact["device_id"].string)
+            }, errorCallback: {
+                print("Error updating device id")
+            })
+        }
     }
     
     public static func updateTipAmount(amount: Int) {
@@ -355,7 +367,6 @@ public class UserContact: NSManagedObject {
         if let owner = UserContact.getOwner() {
             API.sharedInstance.updateUser(id: id, params: parameters, callback: { success in
                 owner.tipAmount = amount
-                owner.saveContact()
             }, errorCallback: { })
         }
     }

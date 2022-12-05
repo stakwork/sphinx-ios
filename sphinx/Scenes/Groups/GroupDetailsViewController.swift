@@ -116,7 +116,10 @@ class GroupDetailsViewController: UIViewController {
     }
     
     func configurePodcastView() {
-        if let chat = chat, let _ = chat.getFeedUrl(), let _ = chat.podcastPlayer?.podcast {
+        if let chat = chat,
+           let _ = chat.getFeedUrl(),
+           let _ = chat.podcast
+        {
             podcastSatsViewHeight.constant = 70
             podcastSatsView.configureWith(chat: chat)
             podcastSatsView.isHidden = false
@@ -129,7 +132,14 @@ class GroupDetailsViewController: UIViewController {
             let photoUrl = chat.myPhotoUrl ?? owner.getPhotoUrl()
             
             tribeMemberInfoContainerHeight.constant = 160
-            tribeMemberInfoView.configureWith(vc: self, accessoryView: keyboardAccessoryView, alias: alias, picture: photoUrl)
+            
+            tribeMemberInfoView.configureWith(
+                vc: self,
+                accessoryView: keyboardAccessoryView,
+                alias: alias,
+                picture: photoUrl
+            )
+            
             tribeMemberInfoContainer.isHidden = false
         }
     }
@@ -156,6 +166,9 @@ class GroupDetailsViewController: UIViewController {
         let isMyPublicGroup = chat.isMyPublicGroup()
         
         if isPublicGroup {
+            alert.addAction(UIAlertAction(title: "notifications.level".localized, style: .default, handler:{ (UIAlertAction) in
+                self.goToNotificationsLevel()
+            }))
             if isMyPublicGroup {
                 alert.addAction(UIAlertAction(title: "share.group".localized, style: .default, handler:{ (UIAlertAction) in
                     self.goToShare()
@@ -163,6 +176,10 @@ class GroupDetailsViewController: UIViewController {
                 
                 alert.addAction(UIAlertAction(title: "edit.tribe".localized, style: .default, handler:{ (UIAlertAction) in
                     self.goToEditGroup()
+                }))
+                
+                alert.addAction(UIAlertAction(title: "tribe.add-member".localized, style: .default, handler:{ (UIAlertAction) in
+                    self.goToAddMember()
                 }))
                 
                 alert.addAction(UIAlertAction(title: "delete.tribe".localized, style: .destructive, handler:{ (UIAlertAction) in
@@ -202,6 +219,16 @@ class GroupDetailsViewController: UIViewController {
         let qrCodeDetailViewModel = QRCodeDetailViewModel(qrCodeString: link, amount: 0, viewTitle: "share.group.link".localized)
         let viewController = QRCodeDetailViewController.instantiate(with: qrCodeDetailViewModel)
         self.present(viewController, animated: true, completion: nil)
+    }
+    
+    func goToAddMember() {
+        let viewController = AddTribeMemberViewController.instantiate(with: chat, delegate: self)
+        self.present(viewController, animated: true, completion: nil)
+    }
+    
+    func goToNotificationsLevel() {
+        let notificationsVC = NotificationsLevelViewController.instantiate(chat: chat, delegate: nil)
+        self.present(notificationsVC, animated: true, completion: nil)
     }
     
     func exitAndDeleteGroup() {
@@ -247,7 +274,6 @@ class GroupDetailsViewController: UIViewController {
     func imageUploaded(photoUrl: String?) {
         if let photoUrl = photoUrl {
             chat.photoUrl = photoUrl
-            CoreDataManager.sharedManager.saveContext()
         }
     }
     
@@ -305,6 +331,12 @@ extension GroupDetailsViewController : UIImagePickerControllerDelegate, UINaviga
     }
 }
 
+extension GroupDetailsViewController : AddTribeMemberDelegate {
+    func shouldReloadMembers() {
+        tableDataSource.reloadContacts(chat: chat)
+    }
+}
+
 extension GroupDetailsViewController : AddFriendRowButtonDelegate {
     func didTouchAddFriend() {
         let groupContactVC = GroupContactsViewController.instantiate(rootViewController: rootViewController, delegate: self, chat: chat)
@@ -317,7 +349,7 @@ extension GroupDetailsViewController : NewContactVCDelegate {
         let contactsService = ContactsService()
         let chatListViewModel = ChatListViewModel(contactsService: contactsService)
         
-        chatListViewModel.loadFriends() {
+        chatListViewModel.loadFriends { _ in
             self.chat = chat
             self.loadData()
         }
@@ -347,7 +379,6 @@ extension GroupDetailsViewController : TribeMemberInfoDelegate {
         API.sharedInstance.updateChat(chatId: chat.id, params: params, callback: {
             self.chat.myAlias = alias
             self.chat.myPhotoUrl = photoUrl ?? self.chat.myPhotoUrl
-            self.chat.saveChat()
         }, errorCallback: {})
     }
 }

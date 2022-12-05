@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -47,11 +47,11 @@
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9OB-NZ-FeJ" customClass="ChatAvatarView" customModule="sphinx" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="56" height="56"/>
+                        <rect key="frame" x="15" y="4" width="33" height="33"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="56" id="SEI-59-mXB"/>
-                            <constraint firstAttribute="height" constant="56" id="emM-Zg-gvd"/>
+                            <constraint firstAttribute="width" constant="33" id="SEI-59-mXB"/>
+                            <constraint firstAttribute="height" constant="33" id="emM-Zg-gvd"/>
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qy9-1M-nxh">
@@ -72,7 +72,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="lock" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IZ0-dB-mxE">
-                                <rect key="frame" x="50" y="0.5" width="24.5" height="13"/>
+                                <rect key="frame" x="50" y="0.5" width="13" height="13"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="13" id="rSM-c3-mde"/>
                                 </constraints>
@@ -81,17 +81,17 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fgb-yh-Fel">
-                                <rect key="frame" x="27.5" y="0.0" width="122.5" height="17"/>
+                                <rect key="frame" x="41" y="0.0" width="109" height="17"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="error" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DcY-jk-gFm">
-                                        <rect key="frame" x="0.0" y="0.0" width="25.5" height="14"/>
+                                        <rect key="frame" x="0.0" y="1" width="12" height="12"/>
                                         <color key="backgroundColor" name="Body"/>
                                         <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="12"/>
                                         <color key="textColor" name="BadgeRed"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Media terms expired" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oq2-mT-cIw">
-                                        <rect key="frame" x="28.5" y="2" width="92" height="12"/>
+                                        <rect key="frame" x="15" y="2" width="92" height="12"/>
                                         <color key="backgroundColor" name="Body"/>
                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="10"/>
                                         <color key="textColor" name="SecondaryText"/>
@@ -140,7 +140,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9gM-mj-8PM">
-                                <rect key="frame" x="60" y="12" width="5.5" height="16"/>
+                                <rect key="frame" x="60" y="12" width="6.5" height="16"/>
                                 <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="14"/>
                                 <color key="textColor" name="Text"/>
                                 <nil key="highlightedColor"/>
@@ -183,7 +183,7 @@
                     <constraint firstItem="1VT-GX-xHu" firstAttribute="top" secondItem="ZjW-a5-JUj" secondAttribute="top" id="A2W-ba-6gN"/>
                     <constraint firstItem="qy9-1M-nxh" firstAttribute="trailing" secondItem="ZjW-a5-JUj" secondAttribute="trailing" id="HAp-he-iyL"/>
                     <constraint firstItem="1VT-GX-xHu" firstAttribute="bottom" secondItem="ZjW-a5-JUj" secondAttribute="bottom" id="Ko4-Dl-Jnw"/>
-                    <constraint firstItem="9OB-NZ-FeJ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="LvQ-Je-4KQ"/>
+                    <constraint firstItem="9OB-NZ-FeJ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="LvQ-Je-4KQ"/>
                     <constraint firstItem="ZjW-a5-JUj" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="21" id="NU4-su-rzC"/>
                     <constraint firstAttribute="trailing" secondItem="ugJ-OJ-AYM" secondAttribute="trailing" constant="28" id="NyM-6F-aJY"/>
                     <constraint firstItem="1VT-GX-xHu" firstAttribute="leading" secondItem="ZjW-a5-JUj" secondAttribute="leading" id="S6e-wl-ic6"/>
@@ -193,12 +193,12 @@
                     <constraint firstItem="Su8-hS-YsV" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="75.5" id="dwr-6T-BCG"/>
                     <constraint firstItem="ugJ-OJ-AYM" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="jEf-la-JW9"/>
                     <constraint firstItem="qy9-1M-nxh" firstAttribute="leading" secondItem="ZjW-a5-JUj" secondAttribute="leading" id="rmS-dH-xKq"/>
-                    <constraint firstItem="9OB-NZ-FeJ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="roc-iK-b4U"/>
+                    <constraint firstItem="9OB-NZ-FeJ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="4" id="roc-iK-b4U"/>
                     <constraint firstItem="qy9-1M-nxh" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="4" id="trv-ZQ-PbS"/>
                 </constraints>
             </tableViewCellContentView>
-            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
                 <outlet property="boostAmountLabel" destination="9gM-mj-8PM" id="BcI-Xq-m1B"/>
                 <outlet property="boostIconCircle" destination="aeD-fm-ktJ" id="tLi-Et-MHb"/>

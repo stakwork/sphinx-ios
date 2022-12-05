@@ -12,7 +12,8 @@ import AVFoundation
     @objc optional func didScanQRCode(string: String)
     @objc optional func shouldGoToChat()
     @objc optional func willDismissPresentedView(paymentCreated: Bool)
-    @objc optional func shouldPresentGroupDetailsWith(query: String)
+    @objc optional func didScanDeepLink()
+    @objc optional func didScanPublicKey(string: String)
 }
 
 class NewQRScannerViewController: KeyboardEventsViewController {

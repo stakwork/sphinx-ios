@@ -102,6 +102,8 @@
 
 "XEl-j5-cm2.text" = "Url del Feed";
 
+"xEP-Yp-HDB.text" = "Tipo de contenido de Feed";
+
 /* Class = "UILabel"; text = "New Group Chat"; ObjectID = "uMU-CU-DoL"; */
 "uMU-CU-DoL.text" = "Nuevo Grupo";
 
@@ -110,3 +112,19 @@
 "9fz-nc-HRb.text" = "¿Aprobar solicitudes de membresías?";
 
 "9fa-JQ-04V.text" = "Subiendo imagen...";
+
+"TWz-rt-SOH.text" = "AGREGAR MIEMBRO A LA TRIBU";
+
+"1aq-Kg-Gvl.text" = "Alias *";
+
+"WbN-e3-yid.text" = "Imagen";
+
+"6Ml-t1-tHR.text" = "Clave Pública *";
+
+"IOB-X9-wYC.text" = "Pista de Ruta";
+
+"Hzg-6R-zf4.text" = "Clave pública de encriptado *";
+
+"Kjs-er-Gfs.normalTitle" = "Agregar Miembro";
+
+"2R1-bw-8cr.text" = "Subiendo imagen...";

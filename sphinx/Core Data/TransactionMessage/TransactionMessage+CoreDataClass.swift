@@ -13,65 +13,6 @@ import SwiftyJSON
 @objc(TransactionMessage)
 public class TransactionMessage: NSManagedObject {
     
-    var uploadingObject: AttachmentObject? = nil
-    var uploadingProgress: Int? = nil
-    
-    var purchaseItems: [TransactionMessage] = []
-    var paidMessageError = false
-    
-    var replyingMessage: TransactionMessage? = nil
-    var linkHasPreview: Bool = false
-    var podcastComment: PodcastComment? = nil
-    var tribeInfo: GroupsManager.TribeInfo? = nil
-    
-    var reactions: Reactions? = nil
-       
-    public struct Reactions {
-        var boosted: Bool = false
-        var totalSats: Int? = nil
-        var messageIds: [Int] = []
-        var users: [String: (UIColor, UIImage?)] = [:]
-       
-        init(totalSats: Int, users: [String: (UIColor, UIImage?)], boosted: Bool, id: Int) {
-            self.totalSats = totalSats
-            self.users = users
-            self.boosted = boosted
-            self.messageIds = [id]
-        }
-       
-        mutating func add(sats: Int, user: (String, UIColor, UIImage?)?, id: Int) {
-            if !self.messageIds.contains(id) {
-                self.messageIds.append(id)
-                
-                self.totalSats = (self.totalSats ?? 0) + sats
-                
-                if let user = user {
-                    self.users[user.0] = (user.1, user.2)
-                }
-            }
-        }
-    }
-    
-    public struct ConsecutiveMessages {
-        var previousMessage: Bool
-        var nextMessage: Bool
-        
-        init(previousMessage: Bool, nextMessage: Bool) {
-            self.previousMessage = previousMessage
-            self.nextMessage = nextMessage
-        }
-    }
-    
-    var consecutiveMessages = ConsecutiveMessages(previousMessage: false, nextMessage: false)
-    
-    func resetNextConsecutiveMessages() {
-        consecutiveMessages.nextMessage = false
-    }
-    
-    func resetPreviousConsecutiveMessages() {
-        consecutiveMessages.previousMessage = false
-    }
-    
     enum TransactionMessageRowType {
         case incomingMessage
         case outgoingMessage
@@ -148,34 +89,71 @@ public class TransactionMessage: NSManagedObject {
     
     static let kCallRoomName = "/sphinx.call"
     
-    static func getMessageInstance(type: Int, chat: Chat?, messageContent: String, managedContext: NSManagedObjectContext) -> TransactionMessage {
-        if let chat = chat {
-            if type == TransactionMessageType.message.rawValue && messageContent != "" {
-                if let m = TransactionMessage.getProvisionalMessageFor(messageContent: messageContent, type: TransactionMessageType.message, chat: chat) {
-                    return m
-                }
-            } else if type == TransactionMessageType.boost.rawValue && messageContent != "" {
-                if let m = TransactionMessage.getProvisionalMessageFor(messageContent: messageContent, type: TransactionMessageType.boost, chat: chat) {
-                    return m
-                }
-            }
-            
-            if type == TransactionMessageType.attachment.rawValue {
-                if messageContent != "" {
-                    if let m = TransactionMessage.getProvisionalMessageFor(messageContent: messageContent, type: TransactionMessageType.attachment, chat: chat) {
-                        return m
-                    }
-                } else {
-                    if let m = TransactionMessage.getLastProvisionalImageMessage(chat: chat) {
-                        return m
-                    }
+    var uploadingObject: AttachmentObject? = nil
+    var uploadingProgress: Int? = nil
+    
+    var purchaseItems: [TransactionMessage] = []
+    var paidMessageError = false
+    
+    var replyingMessage: TransactionMessage? = nil
+    var linkHasPreview: Bool = false
+    var podcastComment: PodcastComment? = nil
+    var tribeInfo: GroupsManager.TribeInfo? = nil
+    
+    var reactions: Reactions? = nil
+       
+    public struct Reactions {
+        var boosted: Bool = false
+        var totalSats: Int? = nil
+        var messageIds: [Int] = []
+        var users: [String: (UIColor, String?)] = [:]
+       
+        init(totalSats: Int, users: [String: (UIColor, String?)], boosted: Bool, id: Int) {
+            self.totalSats = totalSats
+            self.users = users
+            self.boosted = boosted
+            self.messageIds = [id]
+        }
+       
+        mutating func add(sats: Int, user: (String, UIColor, String?)?, id: Int) {
+            if !self.messageIds.contains(id) {
+                self.messageIds.append(id)
+                
+                self.totalSats = (self.totalSats ?? 0) + sats
+                
+                if let user = user {
+                    self.users[user.0] = (user.1, user.2)
                 }
             }
         }
-        return TransactionMessage(context: managedContext) as TransactionMessage
     }
     
-    static func insertMessage(m: JSON, existingMessage: TransactionMessage? = nil) -> (TransactionMessage?, Bool) {
+    public struct ConsecutiveMessages {
+        var previousMessage: Bool
+        var nextMessage: Bool
+        
+        init(previousMessage: Bool, nextMessage: Bool) {
+            self.previousMessage = previousMessage
+            self.nextMessage = nextMessage
+        }
+    }
+    
+    var consecutiveMessages = ConsecutiveMessages(previousMessage: false, nextMessage: false)
+    
+    func resetNextConsecutiveMessages() {
+        consecutiveMessages.nextMessage = false
+    }
+    
+    func resetPreviousConsecutiveMessages() {
+        consecutiveMessages.previousMessage = false
+    }
+
+    
+    static func insertMessage(
+        m: JSON,
+        existingMessage: TransactionMessage? = nil
+    ) -> (TransactionMessage?, Bool) {
+        
         let encryptionManager = EncryptionManager.sharedInstance
         
         let id = m["id"].intValue
@@ -188,6 +166,8 @@ public class TransactionMessage: NSManagedObject {
         let sender = m["sender"].intValue
         let senderAlias = m["sender_alias"].string
         let senderPic = m["sender_pic"].string
+        let recipientAlias = m["recipient_alias"].string
+        let recipientPic = m["recipient_pic"].string
         let receiver = m["contact_id"].intValue
         let uuid:String? = m["uuid"].string
         let replyUUID:String? = m["reply_uuid"].string
@@ -202,6 +182,7 @@ public class TransactionMessage: NSManagedObject {
         let mediaToken:String? = m["media_token"].string
         let mediaType:String? = m["media_type"].string
         let originalMuid:String? = m["original_muid"].string
+        let person:String? = m["person"].string
         
         var mediaKey:String? = nil
         if let mk = m["media_key"].string, mk != "" {
@@ -209,6 +190,7 @@ public class TransactionMessage: NSManagedObject {
         }
         
         let seen:Bool = m["seen"].boolValue
+        let push:Bool = m["push"].boolValue
         
         if let contact = m["contact"].dictionary {
             let _ = UserContact.getOrCreateContact(contact: JSON(contact))
@@ -234,15 +216,46 @@ public class TransactionMessage: NSManagedObject {
         if let existingMessage = existingMessage {
             message = existingMessage
         } else {
-            message = getMessageInstance(type: type, chat: messageChat, messageContent: messageContent, managedContext: CoreDataManager.sharedManager.persistentContainer.viewContext)
+            message = TransactionMessage(context: CoreDataManager.sharedManager.persistentContainer.viewContext) as TransactionMessage
         }
         
-        let updatedMessage = TransactionMessage.createObject(id: id, uuid: uuid, replyUUID: replyUUID, type: type, sender: sender, senderAlias: senderAlias, senderPic: senderPic, receiver: receiver, amount: amount, paymentHash: paymentHash, invoice: invoice, messageContent: messageContent, status: status.rawValue, date: date, expirationDate: expirationDate, mediaToken: mediaToken, mediaKey: mediaKey, mediaType: mediaType, originalMuid: originalMuid, seen: messageSeen, messageEncrypted: messageEncrypted, chat: messageChat, message: message)
+        let updatedMessage = TransactionMessage.createObject(
+            id: id,
+            uuid: uuid,
+            replyUUID: replyUUID,
+            type: type,
+            sender: sender,
+            senderAlias: senderAlias,
+            senderPic: senderPic,
+            recipientAlias: recipientAlias,
+            recipientPic: recipientPic,
+            receiver: receiver,
+            amount: amount,
+            paymentHash: paymentHash,
+            invoice: invoice,
+            messageContent: messageContent,
+            status: status.rawValue,
+            date: date,
+            expirationDate: expirationDate,
+            mediaToken: mediaToken,
+            mediaKey: mediaKey,
+            mediaType: mediaType,
+            originalMuid: originalMuid,
+            person: person,
+            seen: messageSeen,
+            push: push,
+            messageEncrypted: messageEncrypted,
+            chat: messageChat,
+            message: message
+        )
         
         return (updatedMessage, existingMessage == nil)
     }
     
-    static func getChat(m: JSON) -> (Chat?, Bool) {
+    static func getChat(
+        m: JSON
+    ) -> (Chat?, Bool) {
+        
         var messageChatId : Int? = nil
         var messageChat : Chat!
         
@@ -265,33 +278,37 @@ public class TransactionMessage: NSManagedObject {
         return (messageChat, false)
     }
     
-    static func createObject(id: Int,
-                             uuid: String? = nil,
-                             replyUUID: String? = nil,
-                             type: Int,
-                             sender: Int,
-                             senderAlias: String?,
-                             senderPic: String?,
-                             receiver: Int,
-                             amount: NSDecimalNumber? = nil,
-                             paymentHash: String? = nil,
-                             invoice: String? = nil,
-                             messageContent: String,
-                             status: Int,
-                             date: Date,
-                             expirationDate: Date? = nil,
-                             mediaTerms: String? = nil,
-                             receipt: String? = nil,
-                             mediaToken: String? = nil,
-                             mediaKey: String? = nil,
-                             mediaType: String? = nil,
-                             originalMuid: String? = nil,
-                             seen: Bool,
-                             messageEncrypted: Bool,
-                             chat: Chat?,
-                             message: TransactionMessage) -> TransactionMessage? {
-        
-        let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
+    static func createObject(
+        id: Int,
+        uuid: String? = nil,
+        replyUUID: String? = nil,
+        type: Int,
+        sender: Int,
+        senderAlias: String?,
+        senderPic: String?,
+        recipientAlias: String?,
+        recipientPic: String?,
+        receiver: Int,
+        amount: NSDecimalNumber? = nil,
+        paymentHash: String? = nil,
+        invoice: String? = nil,
+        messageContent: String,
+        status: Int,
+        date: Date,
+        expirationDate: Date? = nil,
+        mediaTerms: String? = nil,
+        receipt: String? = nil,
+        mediaToken: String? = nil,
+        mediaKey: String? = nil,
+        mediaType: String? = nil,
+        originalMuid: String? = nil,
+        person: String? = nil,
+        seen: Bool,
+        push: Bool,
+        messageEncrypted: Bool,
+        chat: Chat?,
+        message: TransactionMessage
+    ) -> TransactionMessage? {
         
         message.id = id
         message.uuid = uuid
@@ -300,6 +317,8 @@ public class TransactionMessage: NSManagedObject {
         message.senderId = sender
         message.senderAlias = senderAlias
         message.senderPic = senderPic
+        message.recipientAlias = recipientAlias
+        message.recipientPic = recipientPic
         message.receiverId = receiver
         message.amount = amount
         message.paymentHash = paymentHash
@@ -310,9 +329,11 @@ public class TransactionMessage: NSManagedObject {
         message.mediaToken = mediaToken
         message.muid = TransactionMessage.getMUIDFrom(mediaToken: mediaToken)
         message.originalMuid = originalMuid
+        message.person = person
         message.mediaKey = mediaKey
         message.mediaType = mediaType
         message.seen = seen
+        message.push = push
         message.encrypted = isContentEncrypted(messageEncrypted: messageEncrypted, type: type, mediaKey: mediaKey)
         
         if messageContent != "" {
@@ -321,35 +342,56 @@ public class TransactionMessage: NSManagedObject {
         
         if let chat = chat {
             message.chat = chat
-            chat.lastMessage = message
+            chat.setLastMessage(message)
         }
         
-        managedContext.mergePolicy = NSMergePolicy.overwrite
-        
-        do {
-            try managedContext.save()
-            return message
-        } catch {
-            print("Error inserting message")
-        }
-        return nil
+        return message
     }
     
-    static func createProvisionalMessage(messageContent: String, type: Int, date: Date, chat: Chat?, replyUUID: String? = nil) -> TransactionMessage? {
+    static func createProvisionalMessage(
+        messageContent: String,
+        type: Int,
+        date: Date,
+        chat: Chat?,
+        replyUUID: String? = nil
+    ) -> TransactionMessage? {
+        
         let messageType = TransactionMessageType(fromRawValue: type)
-        return createProvisional(messageContent: messageContent, date: date, chat: chat, type: messageType, replyUUID: replyUUID)
+        
+        return createProvisional(
+            messageContent: messageContent,
+            date: date,
+            chat: chat,
+            type: messageType,
+            replyUUID: replyUUID
+        )
     }
     
-    static func createProvisionalAttachmentMessage(attachmentObject: AttachmentObject, date: Date, chat: Chat?, replyUUID: String? = nil) -> TransactionMessage? {
-        return createProvisional(messageContent: attachmentObject.text, date: date, chat: chat, type: TransactionMessageType.attachment, attachmentObject: attachmentObject, replyUUID: replyUUID)
+    static func createProvisionalAttachmentMessage(
+        attachmentObject: AttachmentObject,
+        date: Date,
+        chat: Chat?,
+        replyUUID: String? = nil
+    ) -> TransactionMessage? {
+        
+        return createProvisional(
+            messageContent: attachmentObject.text,
+            date: date,
+            chat: chat,
+            type: TransactionMessageType.attachment,
+            attachmentObject: attachmentObject,
+            replyUUID: replyUUID
+        )
     }
     
-    static func createProvisional(messageContent: String?,
-                                  date: Date,
-                                  chat: Chat?,
-                                  type: TransactionMessageType,
-                                  attachmentObject: AttachmentObject? = nil,
-                                  replyUUID: String? = nil) -> TransactionMessage? {
+    static func createProvisional(
+        messageContent: String?,
+        date: Date,
+        chat: Chat?,
+        type: TransactionMessageType,
+        attachmentObject: AttachmentObject? = nil,
+        replyUUID: String? = nil
+    ) -> TransactionMessage? {
         
         let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
         
@@ -374,29 +416,35 @@ public class TransactionMessage: NSManagedObject {
             message.chat = chat
         }
         
-        managedContext.mergePolicy = NSMergePolicy.overwrite
-        
-        do {
-            try managedContext.save()
-            return message
-        } catch {
-            print("Error inserting contact")
-        }
-        return nil
+        return message
     }
     
-    static func isDifferentDayMessage(lastMessage: TransactionMessage?, newMessage: TransactionMessage?) -> Bool {
+    static func isDifferentDayMessage(
+        lastMessage: TransactionMessage?,
+        newMessage: TransactionMessage?
+    ) -> Bool {
+        
         if let newMessageDate = newMessage?.date as Date? {
-            return isDifferentDay(lastMessage: lastMessage, newMessageDate: newMessageDate)
+            return isDifferentDay(
+                lastMessage: lastMessage,
+                newMessageDate: newMessageDate
+            )
         }
         return false
     }
     
-    static func isDifferentDay(lastMessage: TransactionMessage?, newMessageDate: Date?) -> Bool {
+    static func isDifferentDay(
+        lastMessage: TransactionMessage?,
+        newMessageDate: Date?
+    ) -> Bool {
+        
         guard let lastMessage = lastMessage else {
             return true
         }
-        if let newMessageDate = newMessageDate, let lastMessageDate = lastMessage.date as Date?, Date.isDifferentDay(firstDate: lastMessageDate, secondDate: newMessageDate) {
+        if let newMessageDate = newMessageDate,
+            let lastMessageDate = lastMessage.date as Date?,
+            Date.isDifferentDay(firstDate: lastMessageDate, secondDate: newMessageDate) {
+            
             return true
         }
         return false
@@ -410,21 +458,29 @@ public class TransactionMessage: NSManagedObject {
         if let paymentHash = self.paymentHash, self.type == TransactionMessage.TransactionMessageType.payment.rawValue {
             if let message = TransactionMessage.getInvoiceWith(paymentHash: paymentHash) {
                 message.status = TransactionMessage.TransactionMessageStatus.confirmed.rawValue
-                message.saveMessage()
             }
         }
     }
     
-    func setAsLastMessage() {
-        chat?.lastMessage = self
+    func flag() -> Bool {
+        if let uuid = uuid {
+            UserDefaults.standard.set(true, forKey: "\(uuid)-message-flag")
+            
+            return true
+        }
+        return false
+    }
+    
+    func unflag() -> Bool {
+        if let uuid = uuid {
+            UserDefaults.standard.set(false, forKey: "\(uuid)-message-flag")
+            
+            return true
+        }
+        return false
     }
     
     func setAsSeen() {
         seen = true
-        saveMessage()
-    }
-    
-    func saveMessage() {
-        CoreDataManager.sharedManager.saveContext()
     }
 }

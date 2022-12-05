@@ -30,6 +30,8 @@ class TribeMemberInfoView: UIView {
     
     var uploadCompletion: ((String?, String?) -> ())? = nil
     
+    let ACCEPTABLE_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_ "
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
@@ -50,7 +52,13 @@ class TribeMemberInfoView: UIView {
         pictureTextField.delegate = self
     }
     
-    func configureWith(vc: UIViewController, accessoryView: UIView, alias: String?, picture: String? = nil) {
+    func configureWith(
+        vc: UIViewController,
+        accessoryView: UIView,
+        alias: String?,
+        picture: String? = nil,
+        shouldFixAlias: Bool = false
+    ) {
         if let vc = vc as? TribeMemberInfoDelegate {
             self.delegate = vc
         }
@@ -61,7 +69,7 @@ class TribeMemberInfoView: UIView {
         aliasTextField.inputAccessoryView = accessoryView
         pictureTextField.inputAccessoryView = accessoryView
         
-        aliasTextField.text = alias
+        aliasTextField.text = shouldFixAlias ? alias?.fixedAlias : alias
         pictureTextField.text = picture ?? ""
         
         loadImage(pictureUrl: picture)
@@ -92,12 +100,23 @@ class TribeMemberInfoView: UIView {
         imagePickerManager.setPickerDelegateView(view: self)
         imagePickerManager.showAlert(title: "profile.image".localized, message: "select.option".localized, sourceView: pictureImageView)
     }
+    
+    @IBAction func aliasDidChanged(_ sender: UITextField) {
+        if (sender.text?.contains(" ") == true) {
+            allowedCharactersToast(true)
+        }
+        sender.text = sender.text?.replacingOccurrences(of: " ", with: "_")
+    }
 }
 
 extension TribeMemberInfoView : UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         field = textField
         fieldValue = textField.text
+        
+        if (textField == aliasTextField) {
+            aliasTextField.text = aliasTextField.text?.fixedAlias ?? aliasTextField.text
+        }
     }
     
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
@@ -105,6 +124,23 @@ extension TribeMemberInfoView : UITextFieldDelegate {
             loadImage(pictureUrl: textField.text)
         }
         return true
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let cs = NSCharacterSet(charactersIn: ACCEPTABLE_CHARACTERS).inverted
+        let filtered = string.components(separatedBy: cs).joined(separator: "")
+        let allowed = (string == filtered)
+        
+        allowedCharactersToast(!allowed)
+
+        return allowed
+    }
+    
+    func allowedCharactersToast(_ show: Bool) {
+        guard show else {
+            return
+        }
+        NewMessageBubbleHelper().showGenericMessageView(text: "alias.allowed-characters".localized)
     }
 }
 

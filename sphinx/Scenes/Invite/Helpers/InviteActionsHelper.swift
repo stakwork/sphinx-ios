@@ -82,7 +82,6 @@ class InviteActionsHelper {
         API.sharedInstance.joinTribe(params: params, callback: { chatJson in
             if let chat = Chat.insertChat(chat: chatJson) {
                 chat.pricePerMessage = NSDecimalNumber(floatLiteral: Double(tribeInfo.pricePerMessage ?? 0))
-                chat.saveChat()
                 
                 completion()
             } else {

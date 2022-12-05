@@ -33,27 +33,37 @@ public class Chat: NSManagedObject {
         }
     }
     
+    public enum NotificationLevel: Int {
+        case SeeAll = 0
+        case OnlyMentions = 1
+        case MuteChat = 2
+        
+        public init(fromRawValue: Int){
+            self = NotificationLevel(rawValue: fromRawValue) ?? .SeeAll
+        }
+    }
+    
     public var lastMessage : TransactionMessage? = nil
     public var conversationContact : UserContact? = nil
     
     var ongoingMessage : String? = nil
     var image : UIImage? = nil
-    var tribesInfo: GroupsManager.TribeInfo? = nil
-    
-    var podcastPlayer: PodcastPlayerHelper? = nil
-    
-    func getPodcastPlayer() -> PodcastPlayerHelper {
-        if podcastPlayer == nil {
-            podcastPlayer = PodcastPlayerHelper()
-        }
-        return podcastPlayer!
-    }
+    var tribeInfo: GroupsManager.TribeInfo? = nil
     
     static func getChatInstance(id: Int, managedContext: NSManagedObjectContext) -> Chat {
         if let ch = Chat.getChatWith(id: id) {
             return ch
         } else {
             return Chat(context: managedContext) as Chat
+        }
+    }
+    
+    var podcast: PodcastFeed? {
+        get {
+            if let feed = contentFeed {
+                return PodcastFeed.convertFrom(contentFeed: feed)
+            }
+            return nil
         }
     }
     
@@ -75,6 +85,7 @@ public class Chat: NSManagedObject {
             let escrowAmount = chat["escrow_amount"].intValue
             let myAlias = chat["my_alias"].string
             let myPhotoUrl = chat["my_photo_url"].string
+            let notify = chat["notify"].intValue
             let metaData = chat["meta"].string
             let date = Date.getDateFromString(dateString: chat["created_at"].stringValue) ?? Date()
             
@@ -98,6 +109,7 @@ public class Chat: NSManagedObject {
                                          escrowAmount: escrowAmount,
                                          myAlias: myAlias,
                                          myPhotoUrl: myPhotoUrl,
+                                         notify: notify,
                                          contactIds: contactIds,
                                          pendingContactIds: pendingContactIds,
                                          date: date,
@@ -135,6 +147,7 @@ public class Chat: NSManagedObject {
                              escrowAmount: Int,
                              myAlias: String?,
                              myPhotoUrl: String?,
+                             notify: Int,
                              contactIds: [NSNumber],
                              pendingContactIds: [NSNumber],
                              date: Date,
@@ -159,6 +172,7 @@ public class Chat: NSManagedObject {
         chat.createdAt = date
         chat.myAlias = myAlias
         chat.myPhotoUrl = myPhotoUrl
+        chat.notify = notify
         chat.contactIds = contactIds
         chat.pendingContactIds = pendingContactIds
         chat.subscription = chat.getContact()?.getCurrentSubscription()
@@ -170,19 +184,7 @@ public class Chat: NSManagedObject {
             chat.escrowAmount = NSDecimalNumber(integerLiteral: escrowAmount)
         }
         
-        managedContext.mergePolicy = NSMergePolicy.overwrite
-        
-        do {
-            try managedContext.save()
-            return chat
-        } catch let error{
-            print(error)
-            return nil
-        }
-    }
-    
-    func isMuted() -> Bool {
-        return self.muted
+        return chat
     }
     
     func isStatusPending() -> Bool {
@@ -304,8 +306,6 @@ public class Chat: NSManagedObject {
     }
     
     func setChatMessagesAsSeen(shouldSync: Bool = true, shouldSave: Bool = true) {
-        self.seen = true
-        
         let receivedUnseenMessages = self.getReceivedUnseenMessages()
         if receivedUnseenMessages.count > 0 {
             for m in receivedUnseenMessages {
@@ -313,9 +313,9 @@ public class Chat: NSManagedObject {
             }
         }
         
-        if shouldSave {
-            CoreDataManager.sharedManager.saveContext()
-        }
+        seen = true
+        unseenMessagesCount = 0
+        unseenMentionsCount = 0
         
         if shouldSync {
             API.sharedInstance.setChatMessagesAsSeen(chatId: self.id, callback: { _ in })
@@ -337,11 +337,51 @@ public class Chat: NSManagedObject {
         return messages
     }
     
+    var unseenMessagesCount: Int = 0
+    
     func getReceivedUnseenMessagesCount() -> Int {
+        if unseenMessagesCount == 0 {
+            calculateUnseenMessagesCount()
+        }
+        return unseenMessagesCount
+    }
+    
+    var unseenMentionsCount: Int = 0
+    
+    func getReceivedUnseenMentionsCount() -> Int {
+        if unseenMentionsCount == 0 {
+            calculateUnseenMentionsCount()
+        }
+        return unseenMentionsCount
+    }
+    
+    func calculateBadge() {
+        calculateUnseenMessagesCount()
+        calculateUnseenMentionsCount()
+    }
+    
+    func calculateUnseenMessagesCount() {
         let userId = UserData.sharedInstance.getUserId()
-        let predicate = NSPredicate(format: "senderId != %d AND chat == %@ AND seen == %@ && chat.seen == %@", userId, self, NSNumber(booleanLiteral: false), NSNumber(booleanLiteral: false))
-        let messagesCount = CoreDataManager.sharedManager.getObjectsCountOfTypeWith(predicate: predicate, entityName: "TransactionMessage")
-        return messagesCount
+        let predicate = NSPredicate(
+            format: "senderId != %d AND chat == %@ AND seen == %@ && chat.seen == %@",
+            userId, self,
+            NSNumber(booleanLiteral: false),
+            NSNumber(booleanLiteral: false)
+        )
+        unseenMessagesCount = CoreDataManager.sharedManager.getObjectsCountOfTypeWith(predicate: predicate, entityName: "TransactionMessage")
+    }
+    
+    func calculateUnseenMentionsCount() {
+        let userId = UserData.sharedInstance.getUserId()
+        let predicate = NSPredicate(
+            format: "senderId != %d AND chat == %@ AND seen == %@ && push == %@ && chat.seen == %@",
+            userId,
+            self,
+            NSNumber(booleanLiteral: false),
+            NSNumber(booleanLiteral: true),
+            NSNumber(booleanLiteral: false)
+        )
+        unseenMentionsCount = CoreDataManager.sharedManager.getObjectsCountOfTypeWith(predicate: predicate, entityName: "TransactionMessage")
     }
     
     func getLastMessageToShow() -> TransactionMessage? {
@@ -351,11 +391,35 @@ public class Chat: NSManagedObject {
         return messages.first
     }
     
-    public func updateLastMessage() {
-        self.lastMessage = self.getLastMessageToShow()
+    public static func updateLastMessageForChats(_ chatIds: [Int]) {
+        for id in chatIds {
+            if let chat = Chat.getChatWith(id: id) {
+                chat.calculateBadge()
+            }
+        }
     }
     
-    func getContact() -> UserContact? {
+    public func updateLastMessage() {
+        if lastMessage?.id ?? 0 <= 0 {
+            lastMessage = getLastMessageToShow()
+            calculateBadge()
+        }
+    }
+    
+    public func setLastMessage(_ message: TransactionMessage) {
+        guard let lastM = lastMessage else {
+            lastMessage = message
+            calculateBadge()
+            return
+        }
+        
+        if (lastM.messageDate < message.messageDate) {
+            lastMessage = message
+            calculateBadge()
+        }
+    }
+    
+    public func getContact() -> UserContact? {
         if self.type == Chat.ChatType.conversation.rawValue {
             let contacts = getContacts(includeOwner: false)
             return contacts.first
@@ -407,27 +471,47 @@ public class Chat: NSManagedObject {
         return getContactIdsArray().contains(id)
     }
     
+    
     func updateTribeInfo(completion: @escaping () -> ()) {
-        if let host = host, let uuid = uuid, !host.isEmpty && self.isPublicGroup() {
-            API.sharedInstance.getTribeInfo(host: host, uuid: uuid, callback: { chatJson in
-                self.tribesInfo = GroupsManager.sharedInstance.getTribesInfoFrom(json: chatJson)
-                self.updateChatFromTribesInfo()
-                completion()
-            }, errorCallback: {
-                completion()
-            })
+        if
+            let host = host,
+            let uuid = uuid,
+            host.isEmpty == false,
+            isPublicGroup()
+        {
+            API.sharedInstance.getTribeInfo(
+                host: host,
+                uuid: uuid,
+                callback: { chatJson in
+                    self.tribeInfo = GroupsManager.sharedInstance.getTribesInfoFrom(json: chatJson)
+                    self.updateChatFromTribesInfo()
+                    
+                    if let feedUrl = self.tribeInfo?.feedUrl {
+                        ContentFeed.fetchChatFeedContentInBackground(feedUrl: feedUrl, chatObjectID: self.objectID, completion: completion)
+                    }
+                },
+                errorCallback: {
+                    completion()
+                }
+            )
         }
     }
     
+    
+    
     func getAppUrl() -> String? {
-        if let tribeInfo = self.tribesInfo, let appUrl = tribeInfo.appUrl, !appUrl.isEmpty {
+        if let tribeInfo = self.tribeInfo, let appUrl = tribeInfo.appUrl, !appUrl.isEmpty {
             return appUrl
         }
         return nil
     }
     
     func getFeedUrl() -> String? {
-        if let tribeInfo = self.tribesInfo, let feedUrl = tribeInfo.feedUrl, !feedUrl.isEmpty {
+        if
+            let tribeInfo = self.tribeInfo,
+            let feedUrl = tribeInfo.feedUrl,
+            feedUrl.isEmpty == false
+        {
             return feedUrl
         }
         return nil
@@ -442,28 +526,31 @@ public class Chat: NSManagedObject {
     }
     
     func updateChatFromTribesInfo() {
-        if self.isMyPublicGroup() {
+        if isMyPublicGroup() {
             return
         }
         
-        self.escrowAmount = NSDecimalNumber(integerLiteral: self.tribesInfo?.amountToStake ?? (self.escrowAmount?.intValue ?? 0))
-        self.pricePerMessage = NSDecimalNumber(integerLiteral: self.tribesInfo?.pricePerMessage ?? (self.pricePerMessage?.intValue ?? 0))
-        self.name = (self.tribesInfo?.name?.isEmpty ?? true) ? self.name : self.tribesInfo!.name
+        escrowAmount = NSDecimalNumber(integerLiteral: tribeInfo?.amountToStake ?? (escrowAmount?.intValue ?? 0))
+        pricePerMessage = NSDecimalNumber(integerLiteral: tribeInfo?.pricePerMessage ?? (pricePerMessage?.intValue ?? 0))
+        name = (tribeInfo?.name?.isEmpty ?? true) ? name : tribeInfo!.name
         
-        let tribeImage = self.tribesInfo?.img ?? self.photoUrl
+        let tribeImage = tribeInfo?.img ?? photoUrl
         
-        if self.photoUrl != tribeImage {
-            self.photoUrl = tribeImage
-            self.image = nil
+        if photoUrl != tribeImage {
+            photoUrl = tribeImage
+            image = nil
         }
         
-        self.saveChat()
-        self.syncTribeWithServer()
-        self.checkForDeletedTribe()
+        syncAfterUpdate()
     }
     
+    func syncAfterUpdate() {
+        syncTribeWithServer()
+        checkForDeletedTribe()
+    } 
+    
     func checkForDeletedTribe() {
-        if let tribesInfo = self.tribesInfo, tribesInfo.deleted {
+        if let tribeInfo = self.tribeInfo, tribeInfo.deleted {
             if let lastMessage = self.getAllMessages(limit: 1).last, lastMessage.type != TransactionMessage.TransactionMessageType.groupDelete.rawValue {
                 AlertHelper.showAlert(title: "deleted.tribe.title".localized, message: "deleted.tribe.description".localized)
             }
@@ -484,7 +571,8 @@ public class Chat: NSManagedObject {
     
     func setMetaData(_ meta: String?) {
         if let meta = meta, !meta.isEmpty {
-            if (self.podcastPlayer?.isPlaying() ?? false) {
+            
+            if PodcastPlayerHelper.sharedInstance.isPlaying(self.id) {
                 return
             }
             
@@ -513,12 +601,12 @@ public class Chat: NSManagedObject {
     }
     
     func updateMetaData() {
-        let stasPerMinute = (UserDefaults.standard.value(forKey: "podcast-sats-\(self.id)") as? Int) ?? 0
+        let satsPerMinute = (UserDefaults.standard.value(forKey: "podcast-sats-\(self.id)") as? Int) ?? 0
         let currentTime = (UserDefaults.standard.value(forKey: "current-time-\(self.id)") as? Int) ?? 0
-        let currentEpisode = ((UserDefaults.standard.value(forKey: "current-episode-id-\(self.id)") as? Int) ?? self.podcastPlayer?.currentEpisodeId) ?? -1
-        let speed = ((UserDefaults.standard.value(forKey: "player-speed-\(self.id)") as? Float) ?? 0).speedDescription
+        let currentEpisode = (UserDefaults.standard.value(forKey: "current-episode-id-\(self.id)") as? Int) ?? -1
+        let speed = ((UserDefaults.standard.value(forKey: "player-speed-\(self.id)") as? Float) ?? 0.0).speedDescription
         
-        let params: [String: AnyObject] = ["meta" :"{\"itemID\":\(currentEpisode),\"sats_per_minute\":\(stasPerMinute),\"ts\":\(currentTime), \"speed\":\(speed)}" as AnyObject]
+        let params: [String: AnyObject] = ["meta" :"{\"itemID\":\(currentEpisode),\"sats_per_minute\":\(satsPerMinute),\"ts\":\(currentTime), \"speed\":\(speed)}" as AnyObject]
         API.sharedInstance.updateChat(chatId: id, params: params, callback: {}, errorCallback: {})
     }
     
@@ -530,11 +618,11 @@ public class Chat: NSManagedObject {
         return type == Chat.ChatType.privateGroup.rawValue
     }
     
-    func isPublicGroup() -> Bool {
+    public func isPublicGroup() -> Bool {
         return type == Chat.ChatType.publicGroup.rawValue
     }
     
-    func isConversation() -> Bool {
+    public func isConversation() -> Bool {
         return type == Chat.ChatType.conversation.rawValue
     }
     
@@ -556,21 +644,6 @@ public class Chat: NSManagedObject {
         return isPublicGroup() && ownerPubkey == UserData.sharedInstance.getUserPubKey()
     }
     
-    func savePodcastFeed(json: JSON) {
-        if let strJson = json.rawString() {
-            self.podcastFeed = strJson
-        }
-        saveChat()
-    }
-    
-    func getPodcastFeed() -> JSON? {
-        if let data = self.podcastFeed?.data(using: .utf8) {
-            if let jsonObject = try? JSON(data: data) {
-                return jsonObject
-            }
-        }
-        return nil
-    }
     
     func syncTribeWithServer() {
         DispatchQueue.global().async {
@@ -581,9 +654,5 @@ public class Chat: NSManagedObject {
     
     func getJoinChatLink() -> String {
         return "sphinx.chat://?action=tribe&uuid=\(self.uuid ?? "")&host=\(self.host ?? "")"
-    }
-    
-    func saveChat() {
-        CoreDataManager.sharedManager.saveContext()
     }
 }

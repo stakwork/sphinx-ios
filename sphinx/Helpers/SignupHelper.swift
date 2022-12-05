@@ -22,11 +22,16 @@ class SignupHelper {
     
     struct Inviter {
         var nickname: String
-        var pubkey: String
+        var pubkey: String? = nil
         var routeHint: String? = nil
         var welcomeMessage: String
         
-        init(nickname: String, pubkey: String, routeHint: String? = nil, welcomeMessage: String) {
+        init(
+            nickname: String,
+            pubkey: String? = nil,
+            routeHint: String? = nil,
+            welcomeMessage: String
+        ) {
             self.nickname = nickname
             self.pubkey = pubkey
             self.routeHint = routeHint
@@ -44,7 +49,7 @@ class SignupHelper {
     }
     
     public static func isLogged() -> Bool {
-        return step == SignupHelper.SignupStep.SignupComplete.rawValue
+        return step >= SignupHelper.SignupStep.SignupComplete.rawValue
     }
     
     public static func completeSignup() {
@@ -63,29 +68,37 @@ class SignupHelper {
     public static func saveInviterInfo(invite: JSON, code: String? = nil) {
         UserDefaults.Keys.inviteString.set(code)
         UserDefaults.Keys.inviterNickname.set(invite["nickname"].stringValue)
-        UserDefaults.Keys.inviterPubkey.set(invite["pubkey"].stringValue)
         UserDefaults.Keys.inviterRouteHint.set(invite["route_hint"].stringValue)
         UserDefaults.Keys.welcomeMessage.set(invite["message"].stringValue)
         UserDefaults.Keys.inviteAction.set(invite["action"].stringValue)
-
+        
+        if let pubkey = invite["pubkey"].string {
+            UserDefaults.Keys.inviterPubkey.set(pubkey)
+        }
     }
     
     public static func getInviter() -> Inviter? {
         if let nickname:String = UserDefaults.Keys.inviterNickname.get(),
-           let pubkey:String = UserDefaults.Keys.inviterPubkey.get(),
            let welcomeMessage:String = UserDefaults.Keys.welcomeMessage.get() {
-           
+            
+            let pubkey: String? = UserDefaults.Keys.inviterPubkey.get()
             let routeHint: String? = UserDefaults.Keys.inviterRouteHint.get()
+            
             return Inviter(nickname: nickname, pubkey: pubkey, routeHint: routeHint, welcomeMessage: welcomeMessage)
         }
         return nil
     }
     
-    public static func getDefaultInviter() -> JSON {
+    public static func getSupportContact(
+        includePubKey: Bool = true
+    ) -> JSON {
         var inviteData = [String : String]()
         inviteData["nickname"] = "Sphinx Support"
-        inviteData["pubkey"] = "023d70f2f76d283c6c4e58109ee3a2816eb9d8feb40b23d62469060a2b2867b77f"
         inviteData["message"] = "Welcome to Sphinx!"
+        
+        if includePubKey {
+            inviteData["pubkey"] = "023d70f2f76d283c6c4e58109ee3a2816eb9d8feb40b23d62469060a2b2867b77f"
+        }
         
         return JSON(inviteData)
     }

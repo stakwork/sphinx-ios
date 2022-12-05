@@ -78,14 +78,14 @@ class ChatListHeader: UIView {
     }
     
     func showBalance() {
-        smallUnitLabel.text = "sat"
+        smallUnitLabel.text = "chat-header.balance.unit".localized
         smallBalanceLabel.text = walletBalanceService.balance.formattedWithSeparator
         
         shouldCheckAppVersions()
     }
     
     func updateBalance() {
-        smallUnitLabel.text = "sat"
+        smallUnitLabel.text = "chat-header.balance.unit".localized
         walletBalanceService.updateBalance(labels: [smallBalanceLabel])
     }
     
@@ -130,7 +130,7 @@ class ChatListHeader: UIView {
     }
     
     @IBAction func upgradeAppButtonTouched() {
-        let urlStr = "itms-apps://itunes.apple.com/app/apple-store/id1483956418?mt=8"
+        let urlStr = "https://testflight.apple.com/join/QoaCkJn6"
         UIApplication.shared.open(URL(string: urlStr)!, options: [:], completionHandler: nil)
     }
     

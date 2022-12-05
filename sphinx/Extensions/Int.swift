@@ -17,12 +17,12 @@ extension Int {
         }
     }
     
-    func getTimeElements() -> (String, String, String) {
+    func getPodcastTimeString() -> String {
         let hours = Int((self % 86400) / 3600).timeString
         let minutes = Int((self % 3600) / 60).timeString
         let seconds = Int((self % 3600) % 60).timeString
         
-        return (hours, minutes, seconds)
+        return "\(hours):\(minutes):\(seconds)"
     }
     
     var hoursFromMillis : Int {

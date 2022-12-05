@@ -19,72 +19,80 @@ final class MainCoordinator: NSObject {
     }
     
     func presentSignUpScreen() {
-        let currentStep = SignupHelper.step
-        
-        switch(currentStep) {
+        switch(SignupHelper.step) {
         case SignupHelper.SignupStep.Start.rawValue:
-            UserData.sharedInstance.clearData()
-            presentInviteCodeViewController()
-            break
+            presentInitialWelcomeViewController()
         case SignupHelper.SignupStep.IPAndTokenSet.rawValue:
             presentInviteWelcomeViewController()
-            break
         case SignupHelper.SignupStep.InviterContactCreated.rawValue:
             presentSetPinViewController()
-            break
         case SignupHelper.SignupStep.PINSet.rawValue:
-            presentPersonalInfoViewController()
-            break
+            presentNewUserGreetingViewController()
         case SignupHelper.SignupStep.PersonalInfoSet.rawValue:
             presentSphinxReadyViewController()
-            break
         case SignupHelper.SignupStep.SignupComplete.rawValue:
             presentInitialDrawer()
-            break
         default:
-            break
+            presentInitialWelcomeViewController()
         }
     }
     
-    func presentInviteCodeViewController() {
-        let inviteCodeVC = InviteCodeViewController.instantiate(rootViewController: rootViewController, delegate: self)
-        presentSignupInvialVC(vc: inviteCodeVC)
+    func presentInitialWelcomeViewController() {
+        let initialWelcomeVC = InitialWelcomeViewController.instantiate(rootViewController: rootViewController)
+        presentSignupVC(vc: initialWelcomeVC)
+    }
+    
+    
+    func presentNewUserSignupOptionsViewController() {
+        let vc = InitialWelcomeViewController.instantiate(rootViewController: rootViewController)
+        presentSignupVC(vc: vc)
     }
     
     func presentInviteWelcomeViewController() {
         if let inviter = SignupHelper.getInviter() {
             let inviteWelcome = InviteWelcomeViewController.instantiate(rootViewController: rootViewController, inviter: inviter)
-            presentSignupInvialVC(vc: inviteWelcome)
+            presentSignupVC(vc: inviteWelcome)
         }
     }
     
     func presentSetPinViewController() {
         let setPinVC = SetPinCodeViewController.instantiate(rootViewController: self.rootViewController)
-        presentSignupInvialVC(vc: setPinVC)
+        presentSignupVC(vc: setPinVC)
+    }
+    
+    func presentNewUserGreetingViewController() {
+        let greetingVC = NewUserGreetingViewController.instantiate(rootViewController: rootViewController)
+        presentSignupVC(vc: greetingVC)
     }
     
     func presentPersonalInfoViewController() {
         let nicknameVC = SetNickNameViewController.instantiate(rootViewController: rootViewController)
-        presentSignupInvialVC(vc: nicknameVC)
+        presentSignupVC(vc: nicknameVC)
     }
-    
+
     func presentSphinxReadyViewController() {
         let sphinxReadyVC = SphinxReadyViewController.instantiate(rootViewController: rootViewController)
-        presentSignupInvialVC(vc: sphinxReadyVC)
+        presentSignupVC(vc: sphinxReadyVC)
     }
     
-    func presentSignupInvialVC(vc: UIViewController) {
+    func presentSignupVC(vc: UIViewController) {
         let navigationController = UINavigationController(rootViewController: vc)
         navigationController.isNavigationBarHidden = true
+        
         rootViewController.setInitialViewController(navigationController)
     }
     
+    
     func presentInitialDrawer() {
         let leftViewController = LeftMenuViewController.instantiate(rootViewController: rootViewController)
-        let mainViewController = ChatListViewController.instantiate(rootViewController: rootViewController, delegate: leftViewController)
+        let mainViewController = DashboardRootViewController.instantiate(
+            rootViewController: rootViewController,
+            leftMenuDelegate:  leftViewController
+        )
         let navigationController = UINavigationController(rootViewController: mainViewController)
         
         UserData.sharedInstance.saveNewNodeOnKeychain()
+        
         runBackgroundProcesses()
 
         drawerController = KYDrawerController(drawerDirection: .left, drawerWidth: 270.0)
@@ -92,7 +100,7 @@ final class MainCoordinator: NSObject {
         drawerController.screenEdgePanGestureEnabled = false
         drawerController.mainViewController = navigationController
         drawerController.drawerViewController = leftViewController
-        
+
         drawerController.setDrawerState(.opened, animated: false)
         drawerController.setDrawerState(.closed, animated: false)
         
@@ -109,6 +117,6 @@ final class MainCoordinator: NSObject {
     }
 }
 
-extension MainCoordinator : MenuDelegate {
+extension MainCoordinator : LeftMenuDelegate {
     func shouldOpenLeftMenu() {}
 }

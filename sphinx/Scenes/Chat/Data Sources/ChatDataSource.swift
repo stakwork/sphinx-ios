@@ -19,6 +19,7 @@ class ChatDataSource : NSObject {
     
     var contact: UserContact? = nil
     var chat: Chat? = nil
+    var tribeAdmin: UserContact? = nil
     var contactIdsDictionary = [Int: UserContact] ()
     
     var chatMessagesCount = 0
@@ -56,6 +57,7 @@ class ChatDataSource : NSObject {
     func setDataAndReload(contact: UserContact? = nil, chat: Chat? = nil, forceReload: Bool = false) {
         self.contact = contact
         self.chat = chat
+        self.tribeAdmin = UserContact.getContactWith(pubkey: chat?.ownerPubkey ?? "")
         
         let newMessagesCount = (chat?.getNewMessagesCount(lastMessageId: self.messageIdsArray.last) ?? 0)
         if newMessagesCount == 0 && messagesArray.count > 0 && !forceReload {
@@ -114,7 +116,7 @@ class ChatDataSource : NSObject {
     
     func updateContact(contact: UserContact) {
         self.contact = contact
-        self.chat = contact.getConversation()
+        self.chat = contact.getChat()
     }
     
     func resetLastInvoices() {
@@ -280,7 +282,12 @@ class ChatDataSource : NSObject {
     }
     
     func processIncomingBoost(message: TransactionMessage) {
-        chatHelper.processMessageReaction(message: message, boosts: &boosts)
+        chatHelper.processMessageReaction(
+            message: message,
+            owner: UserContact.getOwner(),
+            contact: self.chat?.getContact(),
+            boosts: &boosts
+        )
         
         if let boostedMessage = message.getReplyingTo() {
             boostedMessage.reactions = boosts[message.replyUUID ?? ""]
@@ -435,7 +442,7 @@ class ChatDataSource : NSObject {
         }
     }
     
-    func updateDeletedMessage(m: TransactionMessage) {
+    func updateRowForMessage(_ m: TransactionMessage) {
         for (index, messageRow) in self.messageRowsArray.enumerated().reversed() {
             if let message = messageRow.transactionMessage {
                 if message.id == m.id {
@@ -554,7 +561,11 @@ extension ChatDataSource : UITableViewDelegate {
         } else if let cell = cell as? LoadingMoreTableViewCell {
             cell.configureCell(text: "loading.more.messages".localized)
         } else if let cell = cell as? MessageRowProtocol {
-            cell.configureMessageRow(messageRow: messageRow, contact: sender, chat: chat)
+            cell.configureMessageRow(
+                messageRow: messageRow,
+                contact: sender,
+                chat: chat
+            )
             cell.delegate = cellDelegate
             cell.audioDelegate = self
         } else if let cell = cell as? GroupActionRowProtocol {

@@ -25,6 +25,10 @@ class AudioRecorderHelper : NSObject {
     var proximityTimer : Timer? = nil
     var startRecordingTime = Date()
     
+    public var bitRate = 192000
+    public var sampleRate = 44100.0
+    public var channels = 1
+    
     func configureAudioSession(delegate: AudioHelperDelegate) -> Bool {
         self.delegate = delegate
         
@@ -75,8 +79,8 @@ class AudioRecorderHelper : NSObject {
     }
     
     func getAudioData() -> Data? {
-        let audioFilename = getDocumentsDirectory().appendingPathComponent("recording.m4a")
-        return MediaLoader.getDataFromUrl(videoURL: audioFilename)
+        let audioFilename = getDocumentsDirectory().appendingPathComponent("recording.wav")
+        return MediaLoader.getDataFromUrl(url: audioFilename)
     }
     
     func startRecording() {
@@ -87,7 +91,7 @@ class AudioRecorderHelper : NSObject {
         
         setSessionPlayerOn()
         
-        let audioFilename = getDocumentsDirectory().appendingPathComponent("recording.m4a")
+        let audioFilename = getDocumentsDirectory().appendingPathComponent("recording.wav")
         
         do {
             try FileManager.default.removeItem(at: audioFilename)
@@ -96,11 +100,12 @@ class AudioRecorderHelper : NSObject {
         }
 
         let settings = [
-            AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
-            AVSampleRateKey: 12000,
-            AVNumberOfChannelsKey: 1,
-            AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
-        ]
+            AVFormatIDKey: Int(kAudioFormatLinearPCM),
+            AVEncoderBitRateKey: bitRate,
+            AVNumberOfChannelsKey: channels,
+            AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue,
+            AVSampleRateKey: sampleRate
+        ] as [String : Any]
 
         do {
             audioRecorder = try AVAudioRecorder(url: audioFilename, settings: settings)

@@ -74,7 +74,10 @@ class CommonVideoTableViewCell : CommonReplyTableViewCell {
     
     func videoLoadingFailed() {
         toggleLoadingImage(loading: false)
-        videoNotAvailableContainer.alpha = 1.0
+        
+        if !(messageRow?.transactionMessage?.isPaidAttachment() ?? false) {
+            videoNotAvailableContainer.alpha = 1.0
+        }
     }
     
     func configureLockSign() {

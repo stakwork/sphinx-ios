@@ -35,8 +35,6 @@ class ChatViewController: KeyboardHandlerViewController {
     var processingPRCell : InvoiceReceivedTableViewCell?
     var webAppVC : WebAppViewController? = nil
     
-    var podcastPlayerHelper: PodcastPlayerHelper? = nil
-    
     var firstLoad = true
     
     var loading = false {
@@ -56,11 +54,10 @@ class ChatViewController: KeyboardHandlerViewController {
     var contact: UserContact?
     var chat: Chat?
     var preventLoading = false
-    var preventFetching = false
     
     func updateViewChat(updatedChat: Chat?) {
         if let updatedChat = updatedChat {
-            if let contact = self.contact, let vcChat = contact.getConversation(), updatedChat.id == vcChat.id {
+            if let contact = self.contact, let vcChat = contact.getChat(), updatedChat.id == vcChat.id {
                 self.chat = updatedChat
             }
             
@@ -71,15 +68,21 @@ class ChatViewController: KeyboardHandlerViewController {
         }
     }
     
-    static func instantiate(contact: UserContact? = nil, chat: Chat? = nil, preventFetching: Bool = false, contactsService: ContactsService, rootViewController : RootViewController) -> ChatViewController {
+    static func instantiate(
+        contact: UserContact? = nil,
+        chat: Chat? = nil,
+        contactsService: ContactsService,
+        rootViewController: RootViewController
+    ) -> ChatViewController {
         let viewController = StoryboardScene.Chat.chatViewController.instantiate()
+        
         viewController.contact = contact
-        viewController.chat = chat ?? contact?.getConversation()
-        viewController.preventFetching = preventFetching
+        viewController.chat = chat ?? contact?.getChat()
         viewController.rootViewController = rootViewController
         viewController.contactsService = contactsService
         viewController.chatViewModel = ChatViewModel()
         viewController.chatListViewModel = ChatListViewModel(contactsService: contactsService)
+        
         return viewController
     }
     
@@ -90,12 +93,9 @@ class ChatViewController: KeyboardHandlerViewController {
         configureVideoCallManager()
         addShadows()
         
-        podcastPlayerHelper = chat?.getPodcastPlayer()
-        
         chatHeaderView.configure(chat: chat, contact: contact, contactsService: contactsService, delegate: self)
         
         accessoryView.delegate = self
-        chat?.setChatMessagesAsSeen()
         updateChatInfo()
         
         ChatHelper.registerCellsForChat(tableView: chatTableView)
@@ -134,7 +134,7 @@ class ChatViewController: KeyboardHandlerViewController {
         
         navigationController?.interactivePopGestureRecognizer?.delegate = self
         
-        if !firstLoad {
+        if firstLoad == false {
             accessoryView.show()
         }
         addObservers()
@@ -145,7 +145,10 @@ class ChatViewController: KeyboardHandlerViewController {
         
         if isMovingFromParent {
             accessoryView.removeKeyboardObservers()
-            CoreDataManager.sharedManager.saveContext()
+            
+            PodcastPlayerHelper.sharedInstance.removeFromDelegatesWith(
+                key: PodcastPlayerHelper.DelegateKeys.smallPlayer.rawValue
+            )
         }
         
         CustomAudioPlayer.sharedInstance.stopAndReset()
@@ -203,11 +206,6 @@ class ChatViewController: KeyboardHandlerViewController {
     }
         
     func fetchNewData() {
-        if preventFetching {
-            preventFetching = false
-            return
-        }
-        
         DispatchQueue.global().async {
             self.chatListViewModel.syncMessages(chatId: self.chat?.id, progressCallback: { _ in }) { (chatNewMessagesCount, _) in
                 DispatchQueue.main.async {

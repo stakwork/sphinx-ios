@@ -36,13 +36,16 @@ class ChatAttachmentViewController: UIViewController, BackCameraVC {
     @IBOutlet weak var optionsContainer: UIView!
     @IBOutlet weak var optionsContainerBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var accessoryViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var paidMessageOptionContainer: UIView!
     @IBOutlet weak var requestOptionContainer: UIView!
     @IBOutlet weak var sendOptionContainer: UIView!
     @IBOutlet weak var sendOptionTitle: UILabel!
+    
     @IBOutlet weak var attachmentPriceVCContainer: UIView!
     @IBOutlet weak var setPriceContainer: UIView!
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var priceUnitLabel: UILabel!
+    
     @IBOutlet weak var paidMessagePreviewVCContainer: UIView!
     @IBOutlet weak var fileInfoContainer: UIView!
     @IBOutlet weak var fileInfoView: FileInfoView!
@@ -98,20 +101,19 @@ class ChatAttachmentViewController: UIViewController, BackCameraVC {
         return viewController
     }
 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.view.alpha = 0.0
         viewTitle.addTextSpacing(value: 2)
         
-        setPriceContainer.layer.cornerRadius = 5
-        attachmentPriceVCContainer.layer.cornerRadius = 10
-        attachmentPriceVCContainer.layer.borderWidth = 1
-        attachmentPriceVCContainer.layer.borderColor = UIColor.Sphinx.ReceivedBubbleBorder.resolvedCGColor(with: self.view)
-        attachmentPriceVCContainer.clipsToBounds = true
+//        setupPriceViews()
+        disablePriceFunctionality()
         
         headerContainer.addShadow(offset: CGSize(width: 0, height: 3), opacity: 0.2)
 
+        paidMessageOptionContainer.alpha = isButtonDisabled(option: .Message) ? 0.4 : 1.0
         requestOptionContainer.alpha = isButtonDisabled(option: .Request) ? 0.4 : 1.0
         sendOptionContainer.alpha = isButtonDisabled(option: .Send) ? 0.4 : 1.0
         
@@ -119,6 +121,10 @@ class ChatAttachmentViewController: UIViewController, BackCameraVC {
         addSwipeToDismiss()
         
         imagePickerManager.configurePicker(vc: self)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
         UIView.animate(withDuration: 0.2, animations: {
             self.view.alpha = 1.0
@@ -155,9 +161,12 @@ class ChatAttachmentViewController: UIViewController, BackCameraVC {
         accessoryViewContainer.layoutIfNeeded()
     }
     
+    
     func showPriceContainer() {
-        setPriceContainer.isHidden = false
+    //  ⚠️ Tentatively disabled in order to comply with our current App Store review approval needs.
+//        setPriceContainer.isHidden = false
     }
+    
     
     func showFileInfoContainer() {
         fileInfoContainer.isHidden = false
@@ -335,5 +344,22 @@ class ChatAttachmentViewController: UIViewController, BackCameraVC {
     
     @IBAction func closeButtonTouched() {
         dismissView()
+    }
+    
+    
+    /// Tentatively disables the visibility and functionality of the "Set Price"
+    /// button in order to comply with our current App Store review approval needs.
+    private func disablePriceFunctionality() {
+        attachmentPriceVCContainer.isHidden = true
+        setPriceContainer.isHidden = true
+        setPriceContainer.subviews.forEach { $0.isHidden = true }
+    }
+    
+    private func setupPriceViews() {
+        setPriceContainer.layer.cornerRadius = 5
+        attachmentPriceVCContainer.layer.cornerRadius = 10
+        attachmentPriceVCContainer.layer.borderWidth = 1
+        attachmentPriceVCContainer.layer.borderColor = UIColor.Sphinx.ReceivedBubbleBorder.resolvedCGColor(with: self.view)
+        attachmentPriceVCContainer.clipsToBounds = true
     }
 }

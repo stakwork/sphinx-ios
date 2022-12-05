@@ -10,6 +10,7 @@
 "generic.success.title" = "Success";
 "generic.error.title" = "Error";
 "generic.error.message" = "There was an error. Please try again later.";
+"generic.contact-support" = "Please contact support at support@stakwork.com";
 "confirm" = "Confirm";
 "verify" = "Verify";
 "warning" = "Warning";
@@ -19,6 +20,9 @@
 "continue.upper" = "CONTINUE";
 "save.upper" = "SAVE";
 "cancel" = "Cancel";
+"done" = "Done";
+"yes" = "Yes";
+"no" = "No";
 "uploaded.progress" = "Uploaded: %d %%";
 "public.key" = "Public Key";
 "route.hint" = "Route Hint";
@@ -26,7 +30,6 @@
 "name.unknown" = "Unknown";
 "name.unknown.initials" = "UK";
 "today" = "Today";
-
 "connected.to.node" = "Connected to Node";
 "socket.disconnected" = "Live updates unavailable";
 "unable.to.connect" = "Unable to connect to Node";
@@ -34,18 +37,45 @@
 "network.connection.lost" = "The network connection is lost.\nPlease check your network and try again later.";
 "reverting.ip" = "New URL test failed, restoring previous setting...";
 "verifying.new.ip" = "Testing new URL...";
+"error.url.request.creation.failed" = "URL Request Creation Failed";
+"error.unexpected.api.response" = "Unexpected API Response";
+"error.network" = "Network Error:";
+"error.node.invoice.generation.failed" = "Node Invoice Generation Failed. Error Message:";
+"error.karma.receipt.validation.failed" = "Karma Receipt Validation Failed. Error Message:";
+"error.app-store-purchase-receipt-not-found" = "An AppStore purchase receipt could not be found.";
+"error.app-store-receipt-validation-failed" = "An AppStore receipt validation failed.";
 
-//LeftMenu
-"menu.dashboard" = "Dashboard";
-"menu.contacts" = "Contacts";
-"menu.profile" = "Profile";
 
+// DASHBOARD
+"dashboard.tabs.feed" = "Feed";
+"dashboard.tabs.friends" = "Friends";
+"dashboard.tabs.tribes" = "Tribes";
+"dashboard.feeds.filters.all" = "All";
+"dashboard.feeds.filters.listen" = "Listen";
+"dashboard.feeds.filters.watch" = "Watch";
+"dashboard.feeds.filters.read" = "Read";
+"dashboard.feeds.filters.play" = "Play";
+"dashboard.feeds.section-headings.following" = "Following";
+"dashboard.feeds.section-headings.directory" = "Directory";
+"dashboard.feeds.content.empty-state-message" = "No Podcasts Found";
+
+
+// DASHBOARD FEED SEARCH
+"dashboard.feeds.search.error-alert-title" = "An error occurred while searching for Podcast Feeds";
+
+
+// LEFT MENU
+"left-menu.dashboard" = "Dashboard";
+"left-menu.contacts" = "Contacts";
+"left-menu.profile" = "Profile";
+"left-menu.buy-karma-button" = "Buy 1000 Karma";
 "support.describe.problem" = "Describe your problem here...";
 "support.logs.copied" = "Logs copied to clipboard";
 "message.sent" = "Your message has been sent";
-
 "copy" = "COPY";
 "copied" = "COPIED";
+"left-menu.karma-purchase-failed" = "Karma Purchase Failed";
+"left-menu.node-address-invalid" = "Node Address Information Invalid";
 
 //GROUPS
 "unselect.all.upper" = "UNSELECT ALL";
@@ -53,6 +83,7 @@
 "add.members.limit" = "Unable to add more than %d members";
 "reach.members.limit" = "You have reached the group members limit";
 "group.image" = "Group Image";
+"tribe.member.image" = "Tribe member image";
 "tribe.image" = "Tribe Image";
 "select.option" = "Please select an option";
 "required.fields.empty" = "Some of the required fields are empty";
@@ -65,20 +96,24 @@
 "group.details" = "Group Details";
 "tribe.details" = "Tribe Details";
 "share.group" = "Share tribe QR code";
+"create.call" = "Create Call";
 "share.group.link" = "Join tribe QR code";
 "group.members.upper" = "GROUP MEMBERS";
 "tribe.members.upper" = "TRIBE MEMBERS";
 "tribe.pending.members.upper" = "PENDING TRIBE MEMBERS";
 "group.options" = "Group Options";
 "tribe.options" = "Tribe Options";
+"chat.options" = "Chat Options";
 "edit.group" = "Edit Group";
 "edit.tribe" = "Edit Tribe";
 "delete.group" = "Delete Group";
+"notifications.level" = "Notifications";
 "tribe.deleted.title" = "Tribe deleted";
 "tribe.deleted.message" = "The admin has deleted this tribe. Do you want to delete tribe?";
 "delete.tribe" = "Delete Tribe";
 "exit.group" = "Exit Group";
 "exit.tribe" = "Exit Tribe";
+"tribe.add-member" = "Add Member";
 "confirm.exit.delete.group" = "Are you sure you want to exit and delete group?";
 "confirm.exit.delete.tribe" = "Are you sure you want to exit and delete tribe?";
 "confirm.delete.group" = "Are you sure you want to delete group?";
@@ -103,6 +138,8 @@
 "admin.request.approved" = "You have approved the\nrequest from %@";
 "admin.request.rejected" = "You have declined the\nrequest from %@";
 "waiting.admin.approval" = "Waiting for admin approval";
+"picker-title.tribe-form.feed-type" = "Feed Type";
+"alias.allowed-characters" = "Only letters, numbers and underscore\nare allowed in tribe aliases";
 
 //SUBSCRIPTIONS
 "leave.lose.unsaved.changed" = "Are you sure you want to leave and lose any unsaved changes?";
@@ -119,6 +156,7 @@
 "already.subscribed" = "You are already subscribed.";
 "value.cannot.empty" = "Value can not be empty";
 "subscribe.upper" = "SUBSCRIBE";
+"unsubscribe.upper" = "UNSUBSCRIBE";
 
 //INVOICE DETAILS
 "x.copied.clipboard" = "%@ copied to clipboard";
@@ -131,14 +169,60 @@
 "nickname.address.required" = "Nickname and Address are required.";
 "new.contact" = "New Contact";
 "invalid.pubkey" = "Invalid Public Key";
+"address-boox.contact-delete.alert-title" = "Delete Contact";
+"address-boox.contact-delete.alert-message" = "Are you sure you want to delete this contact?";
+"address-boox.contact-block.alert-title" = "Block Contact";
+"address-boox.contact-block.alert-message" = "Are you sure you want to block this contact?";
+"address-boox.contact-unblock.alert-title" = "Unblock Contact";
+"address-boox.contact-unblock.alert-message" = "Are you sure you want to unblock this contact?";
+
+//WELCOME
+"welcome.initial.title" = "Welcome";
+"welcome.final.title" = "Welcome!";
+"welcome.final.subtitle" = "Your app is now connected.";
+"welcome.final.continue" = "Continue";
+"welcome.connecting" = "Connecting...";
+
+//RESTORE EXISTING USER
+"restore.keychain" = "Restore from keychain";
+"restore.description.continue" = "Continue";
+"restore.description.label" = "Copy your keys from your\ndesktop app and paste it here.";
+"restore.copy.keys" = "Copy your keys";
+"restore.form.paste.keys.placeholder" = "Paste your keys...";
+"submit" = "Submit";
+"restore.invalid-code.relay-qr-code" = "This looks like a connection code from the Sphinx Relay app. To restore an existing account, you need to enter your backup string.";
+"resume-restoring" = "Resuming Restore...";
+"restoring-progress" = "Restoring:";
+
+//SIGNUP NEW USER
+"signup.signup-options.connection-code-button" = "I Have a Connection Code";
+"signup.signup-options.lite-node-button" = "Buy A Lite Node ($2.99)";
+"signup.description.continue" = "Continue";
+"signup.description.label" = "Paste your connection code\ninto Sphinx";
+"signup.description.paste" = "Paste";
+"signup.description.connection-code" = "connection code";
+"signup.form.paste.code.placeholder" = "Paste your connection code...";
+"signup.submit" = "Submit";
+"signup.greeting.headline" = "You are now on the Lightning Network!";
+"signup.greeting.continue" = "Continue";
+"signup.desktop-ad.headline" = "Don't you have Sphinx for desktop?";
+"signup.desktop-ad.sphinx-on-desktop" = "Sphinx for desktop?";
+"signup.desktop-ad.get-now" = "Get It Now";
+"signup.desktop-ad.skip" = "Skip";
+"signup.invalid-code.restore-key" = "This looks like a restoration key string from an existing Sphinx node. Try selecting \"Existing User\" from the Welcome screen.";
+"signup.error-validation-invite-code" = "An error occurred while validating the connection code.";
+"signup.error-generating-token" = "An error occurred while generating a token for this connection code.";
+"signup.purchase-eligibility-failed" = "Purchase Eligibility Failed";
+"signup.lite-node-purchase-failed" = "Lite Node Purchase Failed";
+"signup.products-fetch-failed" = "In App Purchases products not available";
 
 //INVITE
 "add.people" = "Add People";
 "create.group" = "Create Group";
 "whoops" = "Whoops!";
 "welcome" = "Welcome";
-"contact.support" = "Something went wrong.\n\nPlease contact our support at\nsupport@sphinx.chat";
-"paste.invite.text" = "Paste the invitation text\nor scan the QR code";
+"contact.support" = "Something went wrong.\n\nPlease contact our support at\nsupport@stakwork.com";
+"paste.invite.text" = "Paste the connection text\nor scan the QR code";
 "invalid.pin" = "Invalid PIN";
 "message.from.friend" = "A message\nfrom your friend..";
 "skip.upper" = "SKIP";
@@ -155,11 +239,11 @@
 "confirm.delete.keychain" = "Are you sure you want to permanently delete this node from keychain? Double check you are not connected to this node from other device, since this will remove the info from keychain causing that connection to be lost.";
 "error.restoring.keychain" = "There was an error restoring from Keychain.";
 "tor.connection.failed" = "Tor connection error";
-"establishing.tor.circuit" = "Establishing Tor circuit...";
+"establishing.tor.circuit" = "Establishing Tor circuit. Please wait...";
 "wait.tor.request" = "Please wait. This process could take a few minutes...";
-"invalid.code.pubkey" = "This looks like a pubkey, to sign up you'll need an invite code from https://sphinx.chat";
-"invalid.code.invoice" = "This looks like an invoice, to sign up you'll need an invite code from https://sphinx.chat";
-"invalid.code" = "We don't recognize this code, to sign up you'll need an invite code from https://sphinx.chat";
+"invalid.code.pubkey" = "This looks like a node public key. To sign up, you'll need an connection code from https://sphinx.chat";
+"invalid.code.invoice" = "This looks like an invoice, to sign up you'll need an connection code from https://sphinx.chat";
+"invalid.code" = "We don't recognize this code. To sign up, you'll need an connection code from https://sphinx.chat";
 "wrong.restore.string" = "This restore code couldn’t be decrypted. Make sure to select any punctuation at the end of the string.";
 
 //PROFILE
@@ -173,6 +257,33 @@
 "hour" = "hour";
 "hours" = "hours";
 "always.require.pin" = "Always require PIN";
+"profile.github-pat-title" = "Github Personal Access Token";
+"profile.github-pat-message" = "Generate a Personal Access Token on github with the repo scope";
+"profile.github-pat.error" = "Github Personal Access Token coult not be set";
+"profile.github-pat.success" = "Github Personal Access Token successfully set";
+"profile.setup-signing-device" = "Setup Signing Device";
+"profile.configure-signing-device" = "Configure Signing Device";
+"profile.lightning-ip-title" = "Lightning node IP";
+"profile.lightning-ip-message" = "Enter the IP of your lightning node";
+"profile.lightning-ip-error" = "Lightning node IP can not be empty";
+"profile.lightning-port-title" = "Lightning node Port";
+"profile.lightning-port-message" = "Enter the Port number of your lightning node";
+"profile.lightning-port-error" = "Port can not be empty";
+"profile.wifi-network-title" = "WiFi network";
+"profile.wifi-network-message" = "Please specify your WiFi network";
+"profile.wifi-network-error" = "WiFi name can not be empty";
+"profile.wifi-password-title" = "WiFi password";
+"profile.wifi-password-message" = "Enter the WiFi password for %@";
+"profile.wifi-password-error" = "WiFi password can not be empty";
+"profile.seed-sent-successfully" = "Seed sent to hardware successfully";
+"profile.error-sending-seed" = "Error sending seed to hardware";
+"profile.error-getting-hardware-public-key" = "Error getting hardware public key";
+"profile.store-mnemonic" = "Store your Mnemonic securely";
+"profile.network-check-title" = "Check your network";
+"profile.network-check-message" = "Before starting you need to connect to \"sphinxkey\" WiFi network. Otherwise you won’t be able to setup your device. Are you connected to this network?";
+"profile.mnemonic-copied" = "Mnemonic words copied to clipboard";
+"profile.bitcoin-network" = "Bitcoin Network";
+"profile.select-bitcoin-network" = "Select Bitcoin Network";
 
 //PIN
 "choose.pin.upper" = "CHOOSE PIN";
@@ -211,7 +322,7 @@
 "invoice" = "Invoice";
 "confirm.pay.invoice" = "Are you sure you want to pay this invoice?";
 
-//CHAT
+// CHAT
 "payment.failed.upper" = "PAYMENT FAILED";
 "microphone.permission.denied" = "You have denied microphone permissions. Go to Settings -> Sphinx and enable them to record audio messages.";
 "chat.muted.message" = "Chat is now muted. You won't get push notifications for incoming messages on this chat";
@@ -242,6 +353,9 @@
 "encryption.error" = "Encryption error";
 "cannot.load.message.data" = "Can't load message data";
 "pay.to.unlock.msg" = "Pay to unlock Message";
+"pay.to.unlock.image" = "Pay to unlock\nImage";
+"pay.to.unlock.video" = "Pay to unlock\nVideo";
+"paid-message.payment-not-supported" = "Paid items not available on this device";
 "loading.paid.message" = "Loading message...";
 "copy.text" = "Copy Text";
 "copy.link" = "Copy Link";
@@ -249,11 +363,14 @@
 "copy.call.link" = "Copy Call Link";
 "reply" = "Reply";
 "save.file" = "Save File";
+"flag.item" = "Flag";
 "delete.message" = "Delete Message";
 "received" = "received";
 "sent" = "sent";
 "message.x.deleted" = "Message deleted";
 "payment" = "Payment";
+"tribe.payment.sent" = "Payment of %@ sent to %@";
+"tribe.payment.received" = "%@ sent a payment of %@ to %@";
 "picture.capitalize" = "Picture";
 "gif.capitalize" = "Gif";
 "video.capitalize" = "Video";
@@ -272,7 +389,7 @@
 "amount.too.low" = "Amount too low";
 "amount.too.high" = "Amount too high";
 "onchain.amount.too.low" = "Amount too low. Minimum 250000 sats";
-
+"chat-header.balance.unit" = "karma";
 "users" = "users";
 "optional.message.placeholder" = "Optional Message...";
 "price.required" = "Price is required";
@@ -295,6 +412,18 @@
 "page" = "page";
 "pdf.description" = "PDF - %@ - Page %d of %d";
 "invalid.btc.address" = "Invalid Bitcoin Address";
+"bot.response.preview" = "Bot response";
+"chat-row.message-deleted" = "This message has been deleted";
+"chat-row.message-flagged" = "This message has been flagged";
+"alert-confirm.flag-message-title" = "Confirm Flagging message";
+"alert-confirm.flag-message-message" = "Are you sure you want to flag this message? This action can not be undone";
+"alert-confirm.delete-message-title" = "Confirm Deleting message";
+"alert-confirm.delete-message-message" = "Are you sure you want to delete this message? This action can not be undone";
+"notificaion-level" = "Notifications";
+"see-all" = "See All";
+"only-mentions" = "Only Mentions";
+"mute-chat" = "Mute Chat";
+
 
 //OTHER
 "create.call" = "Create Call";
@@ -308,6 +437,8 @@
 "error.saving.item" = "There was an error saving %@, please try again later.";
 "image" = "image";
 "video" = "video";
+"article" = "Article";
+"articles" = "Articles";
 "dismiss" = "Dismiss";
 "invoice.paid" = "Invoice Paid";
 "amount" = "Amount";
@@ -317,6 +448,21 @@
 "no.camera.available" = "No camera available in this device";
 "redeem.sats.from" = "Redeem %d sats from:";
 "keysend.received" = "You have received a payment of %d sats";
+"people.message.placeholder" = "Initial message to ";
+"authorization.succeeded" = "Authorization Succeeded. Please go back to the website to complete your profile.";
+"authorization.failed" = "Authorization Failed";
+"already.connected" = "You are already connected with this person";
+"price.to.meet" = "Price to meet: ";
+
+"people.save-profile" = "Save Profile from:";
+"people.delete-profile" = "Delete Profile from:";
+"people.save-failed" = "Save Profile failed";
+"people.delete-failed" = "Delete Profile failed";
+"people.save-succeed" = "Profile saved successfully";
+"people.delete-succeed" = "Profile deleted successfully";
+"people.claim-on-liquid" = "Redeem Badge Token from:";
+"people.claim-on-liquid-succeed" = "Redeemed Badge Token successfully";
+"people.claim-on-liquid-failed" = "Could not Redeem Badge Token";
 
 //TRANSACTION MESSAGE
 "purchase.succeeded" = "Purchase Succeeded";
@@ -325,14 +471,15 @@
 "pending" = "Pending";
 
 //INVITES
-"invite.looking.available.node" = " Looking for an available node for %@...";
+"invite.looking.available.node" = "Looking for an available node for %@...";
 "invite.payment.sent" = " Payment sent, waiting confirmation";
-"invite.pay" = " Tap to pay and activate the invite";
-"invite.ready" = " Ready! Tap to share. Expires in 24 hrs";
-"invite.signing.on" = " %@ is signing on";
-"invite.expired" = " Expired";
-"invite.signup.complete" = " Signup complete";
+"invite.pay" = "Tap to pay and activate the invite";
+"invite.ready" = "Ready! Tap to share. Expires in 24 hrs";
+"invite.signing.on" = "%@ is signing on";
+"invite.expired" = "Expired";
+"invite.signup.complete" = "Signup complete";
 "new.user" = "New user";
+"existing.user" = "Existing user";
 "invite.expired.title" = "Invite expired";
 "invite.expired.message" = "Invites expire after 24 hours. Please create a new invitation.";
 "invite.pending.title" = "Pending invite";
@@ -351,3 +498,30 @@
 "suggested.out.range" = "Suggested amount (%d sats) is above the maximum";
 "delete.episode.title" = "Delete Episode";
 "delete.episode.message" = "Delete Episode from device memory?";
+
+// VIDEOS
+"video" = "video";
+"videos" = "videos";
+"video-player.episode-details.button.show-more" = "show more";
+"video-player.episode-details.button.show-less" = "show less";
+"video-player.button.subscribe" = "Subscribe";
+"video-player.button.unsubscribe" = "Unsubscribe";
+
+// FEED
+"feed.following" = "Following";
+"feed.listen-now" = "Listen Now";
+"feed.watch-now" = "Watch Now";
+"feed.read-now" = "Read Now";
+"feed.play-now" = "Play Now";
+"feed.no-feed-found" = "No Feed Results Found";
+"feed.no-listen-found" = "No \"Listen\" Results Found";
+"feed.no-watch-found" = "No \"Watch\" Results Found";
+"feed.no-read-found" = "No \"Read\" Results Found";
+"feed.no-play-found" = "No \"Play\" Results Found";
+
+"feed.search-over" = "Search over";
+"feed.search-podcast-quantity" = "4 000 000 podcasts";
+"feed.search-podcast-source" = "on the Podcast Index";
+"feed.search-video-quantity" = "thousands of videos";
+"feed.search-video-source" = "on Youtube";
+"feed.search-other-source" = "your subscribed feeds";

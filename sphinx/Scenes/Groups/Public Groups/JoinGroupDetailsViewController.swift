@@ -79,9 +79,13 @@ class JoinGroupDetailsViewController: KeyboardEventsViewController {
         
         LoadingWheelHelper.toggleLoadingWheel(loading: false, loadingWheel: imageUploadLoadingWheel, loadingWheelColor: UIColor.Sphinx.Text, view: view)
         
-        let alias = owner?.nickname
-        let photoUrl = owner?.getPhotoUrl()
-        tribeMemberInfoView.configureWith(vc: self, accessoryView: keyboardAccessoryView, alias: alias, picture: photoUrl)
+        tribeMemberInfoView.configureWith(
+            vc: self,
+            accessoryView: keyboardAccessoryView,
+            alias: owner?.nickname,
+            picture: owner?.getPhotoUrl(),
+            shouldFixAlias: true
+        )
         
         loadGroupDetails()
     }
@@ -176,11 +180,16 @@ class JoinGroupDetailsViewController: KeyboardEventsViewController {
             
             API.sharedInstance.joinTribe(params: params, callback: { chatJson in
                 if let chat = Chat.insertChat(chat: chatJson) {
+                    chat.tribeInfo = tribeInfo
                     chat.pricePerMessage = NSDecimalNumber(floatLiteral: Double(tribeInfo.pricePerMessage ?? 0))
-                    chat.saveChat()
                     
-                    self.delegate?.shouldReloadContacts?(reload: true)
-                    self.closeButtonTouched()
+                    
+                    if let feedUrl = tribeInfo.feedUrl {
+                        ContentFeed.fetchChatFeedContentInBackground(feedUrl: feedUrl, chatObjectID: chat.objectID, completion: {
+                            self.delegate?.shouldReloadContacts?(reload: true)
+                            self.closeButtonTouched()
+                        })
+                    }
                 } else {
                     self.showErrorAndDismiss()
                 }

@@ -11,6 +11,7 @@ import UIKit
 protocol PodcastEpisodesDSDelegate : class {
     func didTapEpisodeAt(index: Int)
     func downloadTapped(_ indexPath: IndexPath, episode: PodcastEpisode)
+    func deleteTapped(_ indexPath: IndexPath, episode: PodcastEpisode)
     func shouldToggleTopView(show: Bool)
 }
 
@@ -24,17 +25,21 @@ class PodcastEpisodesDataSource : NSObject {
     let windowTopInset = getWindowInsets().top
     
     var tableView: UITableView! = nil
-    var playerHelper: PodcastPlayerHelper! = nil
+    var podcast: PodcastFeed! = nil
     
+    let playerHelper = PodcastPlayerHelper.sharedInstance
     let downloadService = DownloadService.sharedInstance
     
-    init(tableView: UITableView, playerHelper: PodcastPlayerHelper, delegate: PodcastEpisodesDSDelegate) {
+    init(
+        tableView: UITableView,
+        podcast: PodcastFeed,
+        delegate: PodcastEpisodesDSDelegate
+    ) {
+
         super.init()
         
-        PodcastEpisodeTableViewCell.podcastImage = nil
-        
         self.tableView = tableView
-        self.playerHelper = playerHelper
+        self.podcast = podcast
         self.delegate = delegate
         
         self.tableView.registerCell(PodcastEpisodeTableViewCell.self)
@@ -51,16 +56,25 @@ extension PodcastEpisodesDataSource : UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? PodcastEpisodeTableViewCell {
-            let episodes = playerHelper.podcast?.episodes ?? []
+            let episodes = podcast.episodesArray
             let episode = episodes[indexPath.row]
-            let download = downloadService.activeDownloads[episode.url ?? ""]
-            let isPlaying = (playerHelper.currentEpisode == indexPath.row && playerHelper.isPlaying())
-            cell.configureWith(podcast: playerHelper.podcast, and: episode, download: download, delegate: self, isLastRow: indexPath.row + 1 == episodes.count, playing: isPlaying)
+            let download = downloadService.activeDownloads[episode.urlPath ?? ""]
+            
+            let isPlaying = (podcast.getCurrentEpisodeIndex() == indexPath.row && playerHelper.isPlaying(podcast.feedID))
+            
+            cell.configureWith(
+                podcast: podcast,
+                and: episode,
+                download: download,
+                delegate: self,
+                isLastRow: indexPath.row + 1 == episodes.count,
+                playing: isPlaying
+            )
         }
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        let episodes = playerHelper.podcast?.episodes ?? []
+        let episodes = podcast.episodes ?? []
         
         if episodes.count > 0 {
             return kHeaderHeight
@@ -70,7 +84,7 @@ extension PodcastEpisodesDataSource : UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let windowWidth = WindowsManager.getWindowWidth()
-        let episodes = playerHelper.podcast?.episodes ?? []
+        let episodes = podcast.episodes ?? []
         
         let headerView = EpisodesHeaderView(frame: CGRect(x: 0, y: 0, width: windowWidth, height: kHeaderHeight))
         headerView.configureWith(count: episodes.count)
@@ -85,13 +99,15 @@ extension PodcastEpisodesDataSource : UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let episodes = playerHelper.podcast?.episodes ?? []
+        let episodes = podcast.episodes ?? []
         return episodes.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "PodcastEpisodeTableViewCell", for: indexPath) as! PodcastEpisodeTableViewCell
-        return cell
+        tableView.dequeueReusableCell(
+            withIdentifier: "PodcastEpisodeTableViewCell",
+            for: indexPath
+        ) as! PodcastEpisodeTableViewCell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -110,6 +126,13 @@ extension PodcastEpisodesDataSource : UIScrollViewDelegate {
 }
 
 extension PodcastEpisodesDataSource : PodcastEpisodeRowDelegate {
+   
+    func shouldDeleteFile(episode: PodcastEpisode, cell: PodcastEpisodeTableViewCell) {
+        if let indexPath = tableView.indexPath(for: cell) {
+            delegate?.deleteTapped(indexPath, episode: episode)
+        }
+    }
+    
     func shouldStartDownloading(episode: PodcastEpisode, cell: PodcastEpisodeTableViewCell) {
         if let indexPath = tableView.indexPath(for: cell) {
             delegate?.downloadTapped(indexPath, episode: episode)

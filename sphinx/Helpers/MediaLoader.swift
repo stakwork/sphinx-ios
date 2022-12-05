@@ -150,7 +150,6 @@ class MediaLoader {
                     if str != "" {
                         DispatchQueue.main.async {
                             messageRow.transactionMessage.messageContent = str
-                            messageRow.transactionMessage.saveMessage()
                             completion(messageId, str)
                         }
                         return
@@ -294,15 +293,15 @@ class MediaLoader {
         }
     }
     
-    class func getDataFromUrl(videoURL: URL) -> Data? {
-        var videoData: Data?
+    class func getDataFromUrl(url: URL) -> Data? {
+        var data: Data?
         do {
-            videoData = try Data(contentsOf: videoURL as URL, options: Data.ReadingOptions.alwaysMapped)
+            data = try Data(contentsOf: url as URL, options: Data.ReadingOptions.alwaysMapped)
         } catch _ {
-            videoData = nil
+            data = nil
         }
         
-        guard let data = videoData else {
+        guard let data = data else {
             return nil
         }
         return data

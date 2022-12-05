@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -255,7 +255,7 @@
                                                         <rect key="frame" x="30" y="0.0" width="354" height="75"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notification Sound" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jxx-Fl-kXP">
-                                                                <rect key="frame" x="0.0" y="25" width="108" height="16"/>
+                                                                <rect key="frame" x="0.0" y="25" width="109" height="16"/>
                                                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="13"/>
                                                                 <color key="textColor" name="SecondaryText"/>
                                                                 <nil key="highlightedColor"/>
@@ -371,7 +371,7 @@
                                                         <rect key="frame" x="30" y="0.0" width="354" height="75"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Default tip amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jJs-A6-b1l">
-                                                                <rect key="frame" x="0.0" y="25" width="99" height="14"/>
+                                                                <rect key="frame" x="0.0" y="25" width="100.5" height="14"/>
                                                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="12"/>
                                                                 <color key="textColor" name="SecondaryText"/>
                                                                 <nil key="highlightedColor"/>
@@ -541,7 +541,7 @@
                                                 <rect key="frame" x="0.0" y="815" width="414" height="160"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sync more devices" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aS3-Fj-p1j">
-                                                        <rect key="frame" x="134.5" y="30" width="145" height="20"/>
+                                                        <rect key="frame" x="135.5" y="30" width="143.5" height="20"/>
                                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
                                                         <color key="textColor" name="Text"/>
                                                         <nil key="highlightedColor"/>
@@ -562,7 +562,7 @@
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D93-b2-sLK">
-                                                        <rect key="frame" x="327" y="81" width="25.5" height="26"/>
+                                                        <rect key="frame" x="330.5" y="83" width="22" height="22"/>
                                                         <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="22"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
@@ -624,7 +624,7 @@
                                                         <rect key="frame" x="30" y="0.0" width="354" height="75"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Server URL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WVe-8j-tgh">
-                                                                <rect key="frame" x="0.0" y="25" width="62" height="14"/>
+                                                                <rect key="frame" x="0.0" y="25" width="60" height="14"/>
                                                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="12"/>
                                                                 <color key="textColor" name="SecondaryText"/>
                                                                 <nil key="highlightedColor"/>
@@ -667,8 +667,62 @@
                                                     <constraint firstItem="lKE-f9-8kV" firstAttribute="leading" secondItem="oeO-p1-rM6" secondAttribute="leading" constant="30" id="udZ-IG-WOD"/>
                                                 </constraints>
                                             </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GAX-RI-uEp">
+                                                <rect key="frame" x="0.0" y="120" width="414" height="80"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Set Github Personal Access Token" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IQP-Z6-eAF">
+                                                        <rect key="frame" x="115" y="33" width="184.5" height="14"/>
+                                                        <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="12"/>
+                                                        <color key="textColor" name="PrimaryBlue"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="psB-Mf-Lvp">
+                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
+                                                        <connections>
+                                                            <action selector="setGithubPATButtonTouched" destination="54b-ve-hAY" eventType="touchUpInside" id="2dg-Oo-U01"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <color key="backgroundColor" name="Body"/>
+                                                <constraints>
+                                                    <constraint firstItem="psB-Mf-Lvp" firstAttribute="top" secondItem="GAX-RI-uEp" secondAttribute="top" id="8B6-hf-0ib"/>
+                                                    <constraint firstAttribute="bottom" secondItem="psB-Mf-Lvp" secondAttribute="bottom" id="GmP-8u-76s"/>
+                                                    <constraint firstItem="IQP-Z6-eAF" firstAttribute="centerX" secondItem="GAX-RI-uEp" secondAttribute="centerX" id="QUf-RH-3b9"/>
+                                                    <constraint firstItem="psB-Mf-Lvp" firstAttribute="leading" secondItem="GAX-RI-uEp" secondAttribute="leading" id="mub-W1-BEX"/>
+                                                    <constraint firstAttribute="trailing" secondItem="psB-Mf-Lvp" secondAttribute="trailing" id="qWe-Vq-2Bl"/>
+                                                    <constraint firstAttribute="height" constant="80" id="r99-xG-woh"/>
+                                                    <constraint firstItem="IQP-Z6-eAF" firstAttribute="centerY" secondItem="GAX-RI-uEp" secondAttribute="centerY" id="rnd-V7-QKx"/>
+                                                </constraints>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g9d-cL-lnU">
+                                                <rect key="frame" x="0.0" y="210" width="414" height="80"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Setup Signing Device" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z8e-Oe-Tdt">
+                                                        <rect key="frame" x="150" y="33" width="114.5" height="14"/>
+                                                        <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="12"/>
+                                                        <color key="textColor" name="PrimaryBlue"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X8J-Vf-geS">
+                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
+                                                        <connections>
+                                                            <action selector="setupSigningDevice" destination="54b-ve-hAY" eventType="touchUpInside" id="VMo-ff-EES"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <color key="backgroundColor" name="Body"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="bottom" secondItem="X8J-Vf-geS" secondAttribute="bottom" id="5c2-HC-gm8"/>
+                                                    <constraint firstItem="X8J-Vf-geS" firstAttribute="leading" secondItem="g9d-cL-lnU" secondAttribute="leading" id="6lg-ah-HLI"/>
+                                                    <constraint firstItem="z8e-Oe-Tdt" firstAttribute="centerY" secondItem="g9d-cL-lnU" secondAttribute="centerY" id="7O5-ud-FMD"/>
+                                                    <constraint firstItem="X8J-Vf-geS" firstAttribute="top" secondItem="g9d-cL-lnU" secondAttribute="top" id="AZ7-ii-4hJ"/>
+                                                    <constraint firstAttribute="trailing" secondItem="X8J-Vf-geS" secondAttribute="trailing" id="GPH-zx-Zs1"/>
+                                                    <constraint firstAttribute="height" constant="80" id="cac-4i-irz"/>
+                                                    <constraint firstItem="z8e-Oe-Tdt" firstAttribute="centerX" secondItem="g9d-cL-lnU" secondAttribute="centerX" id="zeK-CA-uFM"/>
+                                                </constraints>
+                                            </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4mo-UF-ykT">
-                                                <rect key="frame" x="0.0" y="120" width="414" height="100"/>
+                                                <rect key="frame" x="0.0" y="300" width="414" height="100"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OKZ-dv-hS6" customClass="PinTimeSlider" customModule="sphinx" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
@@ -696,10 +750,10 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7yl-SA-2Ub">
-                                                <rect key="frame" x="0.0" y="230" width="414" height="80"/>
+                                                <rect key="frame" x="0.0" y="410" width="414" height="80"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Change App PIN" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2YG-L7-D9J">
-                                                        <rect key="frame" x="162" y="33" width="90.5" height="14"/>
+                                                        <rect key="frame" x="163.5" y="33" width="87.5" height="14"/>
                                                         <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="12"/>
                                                         <color key="textColor" name="PrimaryBlue"/>
                                                         <nil key="highlightedColor"/>
@@ -723,7 +777,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MmO-OZ-hEo">
-                                                <rect key="frame" x="0.0" y="320" width="414" height="80"/>
+                                                <rect key="frame" x="0.0" y="500" width="414" height="80"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Set Privacy PIN" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YQw-Cm-DzX">
                                                         <rect key="frame" x="165" y="33" width="84" height="14"/>
@@ -754,18 +808,24 @@
                                         <constraints>
                                             <constraint firstItem="oeO-p1-rM6" firstAttribute="leading" secondItem="WEc-DS-pWW" secondAttribute="leading" id="5D4-im-OpN"/>
                                             <constraint firstItem="MmO-OZ-hEo" firstAttribute="top" secondItem="7yl-SA-2Ub" secondAttribute="bottom" constant="10" id="9uT-Xh-5lu"/>
+                                            <constraint firstItem="4mo-UF-ykT" firstAttribute="top" secondItem="g9d-cL-lnU" secondAttribute="bottom" constant="10" id="Bzk-M1-HGO"/>
                                             <constraint firstAttribute="trailing" secondItem="oeO-p1-rM6" secondAttribute="trailing" id="Fob-0Y-p0D"/>
                                             <constraint firstAttribute="trailing" secondItem="4mo-UF-ykT" secondAttribute="trailing" id="KV2-vM-qEs"/>
                                             <constraint firstAttribute="trailing" secondItem="MmO-OZ-hEo" secondAttribute="trailing" id="L1o-TF-kFb"/>
                                             <constraint firstItem="MmO-OZ-hEo" firstAttribute="leading" secondItem="WEc-DS-pWW" secondAttribute="leading" id="MdS-J1-7QI"/>
                                             <constraint firstItem="oeO-p1-rM6" firstAttribute="top" secondItem="WEc-DS-pWW" secondAttribute="top" constant="10" id="Mz8-D4-gbQ"/>
+                                            <constraint firstAttribute="trailing" secondItem="g9d-cL-lnU" secondAttribute="trailing" id="QQK-EC-Ebl"/>
+                                            <constraint firstItem="GAX-RI-uEp" firstAttribute="top" secondItem="oeO-p1-rM6" secondAttribute="bottom" constant="10" id="Tbe-kK-GWM"/>
                                             <constraint firstItem="MmO-OZ-hEo" firstAttribute="leading" secondItem="WEc-DS-pWW" secondAttribute="leading" id="Tzj-Wn-nG0"/>
+                                            <constraint firstItem="g9d-cL-lnU" firstAttribute="top" secondItem="GAX-RI-uEp" secondAttribute="bottom" constant="10" id="Ukd-N6-V0X"/>
+                                            <constraint firstItem="g9d-cL-lnU" firstAttribute="leading" secondItem="WEc-DS-pWW" secondAttribute="leading" id="Vs9-9f-K61"/>
                                             <constraint firstItem="7yl-SA-2Ub" firstAttribute="leading" secondItem="WEc-DS-pWW" secondAttribute="leading" id="WlP-B4-PhU"/>
                                             <constraint firstAttribute="height" constant="390" id="XP7-Du-Dfz"/>
                                             <constraint firstItem="4mo-UF-ykT" firstAttribute="leading" secondItem="WEc-DS-pWW" secondAttribute="leading" id="Zhr-a1-iB2"/>
-                                            <constraint firstItem="4mo-UF-ykT" firstAttribute="top" secondItem="oeO-p1-rM6" secondAttribute="bottom" constant="10" id="bXL-3X-6l3"/>
                                             <constraint firstAttribute="trailing" secondItem="7yl-SA-2Ub" secondAttribute="trailing" id="hW5-wv-Uia"/>
+                                            <constraint firstAttribute="trailing" secondItem="GAX-RI-uEp" secondAttribute="trailing" id="jQu-Bu-UES"/>
                                             <constraint firstAttribute="trailing" secondItem="MmO-OZ-hEo" secondAttribute="trailing" id="oeZ-pb-AK2"/>
+                                            <constraint firstItem="GAX-RI-uEp" firstAttribute="leading" secondItem="WEc-DS-pWW" secondAttribute="leading" id="pCh-0a-mR0"/>
                                             <constraint firstItem="7yl-SA-2Ub" firstAttribute="top" secondItem="4mo-UF-ykT" secondAttribute="bottom" constant="10" id="qfF-fw-aew"/>
                                         </constraints>
                                     </view>
@@ -799,7 +859,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PROFILE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="41O-R2-bE7">
-                                        <rect key="frame" x="178.5" y="15" width="57.5" height="16.5"/>
+                                        <rect key="frame" x="176.5" y="14.5" width="61" height="17.5"/>
                                         <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="14"/>
                                         <color key="textColor" name="Text"/>
                                         <nil key="highlightedColor"/>
@@ -822,7 +882,7 @@
                                         </connections>
                                     </button>
                                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eZu-9D-OrY">
-                                        <rect key="frame" x="65" y="160" width="17.5" height="13"/>
+                                        <rect key="frame" x="66.5" y="160" width="14.5" height="13"/>
                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="11"/>
                                         <color key="textColor" name="SecondaryText"/>
                                         <nil key="highlightedColor"/>
@@ -839,13 +899,13 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B43-2h-mk8">
-                                        <rect key="frame" x="143" y="133" width="7" height="14"/>
+                                        <rect key="frame" x="143" y="132" width="7" height="15"/>
                                         <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="12"/>
                                         <color key="textColor" name="Text"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="sat" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yd3-kM-y9v">
-                                        <rect key="frame" x="155" y="133" width="16.5" height="14"/>
+                                        <rect key="frame" x="155" y="132" width="18" height="15"/>
                                         <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="12"/>
                                         <color key="textColor" name="SecondaryText"/>
                                         <nil key="highlightedColor"/>
@@ -895,6 +955,7 @@
                                 <color key="backgroundColor" name="Body"/>
                             </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="yd1-x3-o5f"/>
                         <color key="backgroundColor" name="ProfileBG"/>
                         <constraints>
                             <constraint firstItem="PKI-vy-i6e" firstAttribute="top" secondItem="kyE-f9-OWJ" secondAttribute="top" id="2GL-0u-SDE"/>
@@ -917,7 +978,6 @@
                             <constraint firstItem="PKI-vy-i6e" firstAttribute="leading" secondItem="kyE-f9-OWJ" secondAttribute="leading" id="rga-Tq-b1y"/>
                             <constraint firstItem="pcb-2d-jdl" firstAttribute="leading" secondItem="kyE-f9-OWJ" secondAttribute="leading" id="tW9-A5-bzW"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="yd1-x3-o5f"/>
                     </view>
                     <size key="freeformSize" width="414" height="1234"/>
                     <connections>
@@ -945,9 +1005,11 @@
                         <outlet property="relayUrlTextField" destination="SJS-bv-yWq" id="CKy-oM-spW"/>
                         <outlet property="routeHintTextField" destination="dLE-vA-AFI" id="IGT-9q-ZxK"/>
                         <outlet property="serversContainer" destination="21o-Jm-0d6" id="nWt-Ql-3LP"/>
+                        <outlet property="setGithubPATContainerView" destination="GAX-RI-uEp" id="6L0-Od-mLb"/>
                         <outlet property="settingsContainerView" destination="jSa-Rq-1hp" id="mtI-w2-oSv"/>
                         <outlet property="settingsTabView" destination="hMY-y3-AUE" id="1rN-y9-Ekj"/>
                         <outlet property="sharePhotoSwitch" destination="t4X-Gf-32s" id="N1D-9W-8Kl"/>
+                        <outlet property="signingDeviceLabel" destination="z8e-Oe-Tdt" id="7fi-N7-3Cu"/>
                         <outlet property="sizeView" destination="3gR-wX-nSS" id="FGc-ee-9UZ"/>
                         <outlet property="topContainerView" destination="36z-hJ-x0i" id="t2k-ng-rhC"/>
                         <outlet property="uploadLoadingWheel" destination="f0w-2Q-7Tc" id="WAk-sf-ino"/>
@@ -985,13 +1047,14 @@
                         </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UxI-yB-4kR">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="1"/>
+                            <viewLayoutGuide key="safeArea" id="FMT-ip-S4k"/>
                             <color key="backgroundColor" name="LightDivider"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="1" id="xH7-dK-GQ1"/>
                             </constraints>
-                            <viewLayoutGuide key="safeArea" id="FMT-ip-S4k"/>
                         </view>
                     </subviews>
+                    <viewLayoutGuide key="safeArea" id="DaP-OK-MCZ"/>
                     <color key="backgroundColor" name="Body"/>
                     <constraints>
                         <constraint firstItem="Gwy-FV-c0D" firstAttribute="leading" secondItem="uQ5-92-gBu" secondAttribute="leading" id="IIe-rG-skg"/>
@@ -1006,7 +1069,6 @@
                         <constraint firstItem="UxI-yB-4kR" firstAttribute="leading" secondItem="uQ5-92-gBu" secondAttribute="leading" id="php-r4-6en"/>
                         <constraint firstAttribute="bottom" secondItem="Gwy-FV-c0D" secondAttribute="bottom" id="zmQ-P6-qne"/>
                     </constraints>
-                    <viewLayoutGuide key="safeArea" id="DaP-OK-MCZ"/>
                 </view>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7C1-9Z-Bf8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1041,7 +1103,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NOTIFICATION SOUND" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X8L-GC-hmH">
-                                        <rect key="frame" x="133" y="16.5" width="148.5" height="17"/>
+                                        <rect key="frame" x="127.5" y="16.5" width="159" height="17"/>
                                         <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="14"/>
                                         <color key="textColor" name="Text"/>
                                         <nil key="highlightedColor"/>
@@ -1085,6 +1147,7 @@
                                 </constraints>
                             </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="MI0-DG-aBm"/>
                         <color key="backgroundColor" name="HeaderBG"/>
                         <constraints>
                             <constraint firstItem="PWz-Oj-hSR" firstAttribute="top" secondItem="IPK-br-uJ7" secondAttribute="bottom" id="1ve-AK-0DF"/>
@@ -1104,7 +1167,6 @@
                             <constraint firstItem="PWz-Oj-hSR" firstAttribute="top" secondItem="MI0-DG-aBm" secondAttribute="top" id="pYE-iY-Skv"/>
                             <constraint firstAttribute="trailing" secondItem="PWz-Oj-hSR" secondAttribute="trailing" id="veG-wS-TI0"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="MI0-DG-aBm"/>
                     </view>
                     <size key="freeformSize" width="414" height="896"/>
                     <connections>

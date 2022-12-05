@@ -235,4 +235,14 @@ extension UIView {
 
         self.layer.insertSublayer(shape, at: 0)
     }
+    
+    
+    func makeCircular() {
+        clipsToBounds = true
+     
+        layer.cornerRadius = min(
+            frame.size.width,
+            frame.size.height
+        ) / 2
+    }
 }

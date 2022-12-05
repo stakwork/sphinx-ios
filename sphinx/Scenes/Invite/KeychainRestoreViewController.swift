@@ -49,13 +49,20 @@ class KeychainRestoreViewController: UIViewController {
             messageBubbleHelper.showLoadingWheel()
 
             if EncryptionManager.sharedInstance.insertKeys(privateKey: credentials[3], publicKey: credentials[4]) {
-                UserData.sharedInstance.save(ip: credentials[0], token: credentials[1], andPin: credentials[2])
-                UserDefaults.Keys.didJustRestore.set(true)
+                UserData.sharedInstance.save(ip: credentials[0], token: credentials[1], pin: credentials[2])
 
-                delegate?.goToApp()
-                
-                dismiss(animated: true, completion: {
-                    self.messageBubbleHelper.hideLoadingWheel()
+                userData.getAndSaveTransportKey(completion: { [weak self] _ in
+                    guard let self = self else { return }
+                    
+                    self.userData.getOrCreateHMACKey() { [weak self] in
+                        guard let self = self else { return }
+                        
+                        self.delegate?.goToApp()
+                        
+                        self.dismiss(animated: true, completion: {
+                            self.messageBubbleHelper.hideLoadingWheel()
+                        })
+                    }
                 })
             } else {
                 self.dismissAndShowError()

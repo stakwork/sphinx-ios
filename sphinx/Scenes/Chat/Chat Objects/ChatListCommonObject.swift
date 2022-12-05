@@ -9,11 +9,17 @@
 import UIKit
 
 public protocol ChatListCommonObject: class {
+    
     func isPending() -> Bool
     func isConfirmed() -> Bool
-    func isGroupObject() -> Bool
     
-    func getObjectId() -> Int
+    func isConversation() -> Bool
+    func isPublicGroup() -> Bool
+    
+    func getContactStatus() -> Int?
+    func getInviteStatus() -> Int?
+    
+    func getObjectId() -> String
     func getOrderDate() -> Date?
     func getName() -> String
     func getChatContacts() -> [UserContact]
@@ -26,8 +32,11 @@ public protocol ChatListCommonObject: class {
     
     func hasEncryptionKey() -> Bool
     func subscribedToContact() -> Bool
+    func isMuted() -> Bool
     
-    func getConversation() -> Chat?
+    func getChat() -> Chat?
+    func getContact() -> UserContact?
+    func getInvite() -> UserInvite?
     
     var lastMessage : TransactionMessage? { get set }
 }

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Roboto-Regular.ttf">
+            <string>Roboto-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FeedSearchResultCollectionViewCell" id="gTV-IL-0wX" customClass="FeedSearchResultCollectionViewCell" customModule="sphinx" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="88"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="88"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="UCl-eV-tUB">
+                        <rect key="frame" x="16" y="8" width="72" height="72"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="72" id="4D2-HS-dFo"/>
+                            <constraint firstAttribute="height" constant="72" id="a8v-AO-aqe"/>
+                        </constraints>
+                    </imageView>
+                    <stackView opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="250" axis="vertical" distribution="equalCentering" alignment="top" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="Zcz-VA-ap1">
+                        <rect key="frame" x="104" y="23" width="239" height="42.5"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="texttexttexttexttexttexttexttexttexttexttexttexttexttexttexttext" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eVs-cI-cXS">
+                                <rect key="frame" x="0.0" y="0.0" width="239" height="20"/>
+                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="texttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttext" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yP4-Hj-JMW">
+                                <rect key="frame" x="0.0" y="26" width="239" height="16.5"/>
+                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
+                                <color key="textColor" name="SecondaryText"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                    </stackView>
+                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Ot-Vn-BNC">
+                        <rect key="frame" x="359" y="22" width="0.0" height="44"/>
+                        <constraints>
+                            <constraint firstAttribute="width" id="ZYc-Da-huK"/>
+                            <constraint firstAttribute="height" constant="44" id="cGd-cg-sIY"/>
+                        </constraints>
+                        <color key="tintColor" name="PrimaryText"/>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                        <state key="normal">
+                            <imageReference key="image" image="plus" catalog="system" symbolScale="large"/>
+                        </state>
+                        <connections>
+                            <action selector="subscriptionButtonTapped:" destination="gTV-IL-0wX" eventType="touchUpInside" id="hqZ-RR-Op6"/>
+                        </connections>
+                    </button>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aSs-KB-p5h" userLabel="Separator Line">
+                        <rect key="frame" x="104" y="87" width="271" height="1"/>
+                        <color key="backgroundColor" name="Divider"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="lwJ-UE-OS2"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <color key="backgroundColor" name="HeaderBG"/>
+            <constraints>
+                <constraint firstItem="aSs-KB-p5h" firstAttribute="leading" secondItem="Zcz-VA-ap1" secondAttribute="leading" id="0nU-n6-hAi"/>
+                <constraint firstItem="UCl-eV-tUB" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="16" id="0ra-zb-1as"/>
+                <constraint firstItem="Zcz-VA-ap1" firstAttribute="trailing" secondItem="9Ot-Vn-BNC" secondAttribute="leading" constant="-16" id="7nB-L6-w7U"/>
+                <constraint firstItem="aSs-KB-p5h" firstAttribute="bottom" secondItem="gTV-IL-0wX" secondAttribute="bottom" id="Bn8-Sv-lqc"/>
+                <constraint firstItem="Zcz-VA-ap1" firstAttribute="leading" secondItem="UCl-eV-tUB" secondAttribute="trailing" constant="16" id="CFX-d2-AOT"/>
+                <constraint firstAttribute="trailing" secondItem="9Ot-Vn-BNC" secondAttribute="trailing" constant="16" id="JRW-cf-abn"/>
+                <constraint firstItem="Zcz-VA-ap1" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="KZG-qw-MpC"/>
+                <constraint firstItem="UCl-eV-tUB" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="STK-oE-ETi"/>
+                <constraint firstAttribute="trailing" secondItem="aSs-KB-p5h" secondAttribute="trailing" id="bC1-ZT-ejG"/>
+                <constraint firstItem="9Ot-Vn-BNC" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="hah-Np-brQ"/>
+            </constraints>
+            <connections>
+                <outlet property="bottomSeparatorView" destination="aSs-KB-p5h" id="uCW-wr-Fbx"/>
+                <outlet property="feedSubscriptionButton" destination="9Ot-Vn-BNC" id="WDN-Dl-fMP"/>
+                <outlet property="feedSubtitleLabel" destination="yP4-Hj-JMW" id="akf-e7-Huu"/>
+                <outlet property="feedThumbnailImageView" destination="UCl-eV-tUB" id="DJm-QB-4Ek"/>
+                <outlet property="feedTitleLabel" destination="eVs-cI-cXS" id="5Qb-8S-SRw"/>
+            </connections>
+            <point key="canvasLocation" x="132" y="76"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="plus" catalog="system" width="128" height="113"/>
+        <namedColor name="Divider">
+            <color red="0.86274509803921573" green="0.8784313725490196" blue="0.8901960784313725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="HeaderBG">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="PrimaryText">
+            <color red="0.16078431372549021" green="0.17254901960784313" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="SecondaryText">
+            <color red="0.55686274509803924" green="0.58823529411764708" blue="0.61176470588235299" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

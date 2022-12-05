@@ -86,19 +86,36 @@ class GroupsManager {
     
     //tribes
     func goToGroupDetails(vc: UIViewController, rootViewController: RootViewController) -> Bool {
-        if let joinTribeQuery = UserDefaults.Keys.tribeQuery.get(defaultValue: ""), joinTribeQuery != "" {
+        if
+            let joinTribeQuery = UserDefaults.Keys.tribeQuery.get(defaultValue: ""),
+                joinTribeQuery != ""
+        {
             UserDefaults.Keys.tribeQuery.removeValue()
             
             let tribeInfo = getGroupInfo(query: joinTribeQuery)
             
-            if let uuid = tribeInfo?.uuid, let chat = Chat.getChatWith(uuid: uuid), let chatLitsVC = vc as? ChatListViewController {
-                chatLitsVC.presentChatVC(object: chat, animated: true)
+            if
+                let uuid = tribeInfo?.uuid,
+                let chat = Chat.getChatWith(uuid: uuid),
+                let dashboardRootVC = vc as? DashboardRootViewController
+            {
+                dashboardRootVC.presentChatDetailsVC(for: chat, shouldAnimate: true)
                 return true
             }
             
             if let delegate = vc as? NewContactVCDelegate {
-                let groupDetailsVC = JoinGroupDetailsViewController.instantiate(qrString: joinTribeQuery, delegate: delegate)
-                vc.navigationController?.present(groupDetailsVC, animated: true, completion: nil)
+                let groupDetailsVC = JoinGroupDetailsViewController
+                    .instantiate(
+                        qrString: joinTribeQuery,
+                        delegate: delegate
+                    )
+                
+                vc.navigationController?.present(
+                    groupDetailsVC,
+                    animated: true,
+                    completion: nil
+                )
+                
                 return true
             }
         }
@@ -113,90 +130,14 @@ class GroupsManager {
     }
     
     func isGroupInfoValid() -> Bool {
-        return !(newGroupInfo.name ?? "").isEmpty && !(newGroupInfo.description ?? "").isEmpty
-    }
-    
-    struct TribeInfo {
-        var name : String? = nil
-        var description : String? = nil
-        var img : String? = nil
-        var groupKey : String? = nil
-        var ownerPubkey : String? = nil
-        var ownerAlias : String? = nil
-        var host : String! = nil
-        var uuid : String! = nil
-        var tags : [Tag] = []
-        var priceToJoin : Int? = nil
-        var pricePerMessage : Int? = nil
-        var amountToStake : Int? = nil
-        var timeToStake : Int? = nil
-        var unlisted : Bool = false
-        var privateTribe : Bool = false
-        var deleted : Bool = false
-        var appUrl : String? = nil
-        var feedUrl : String? = nil
-        var ownerRouteHint : String? = nil
-        var bots : [Bot] = []
+        let name = newGroupInfo.name ?? ""
+        let description = newGroupInfo.description ?? ""
+        let feedUrl = newGroupInfo.feedUrl ?? ""
+        let contentType = newGroupInfo.feedContentType
         
-        var hasLoopoutBot : Bool {
-            get {
-                for bot in bots {
-                    if bot.prefix == "/loopout" {
-                        return true
-                    }
-                }
-                return false
-            }
-        }
-    }
-    
-    struct Tag {
-        var image : String
-        var description : String
-        var selected : Bool = false
+        let contentTypeValid = feedUrl.isEmpty || (!feedUrl.isEmpty && contentType != nil)
         
-        init(image: String, description: String) {
-            self.image = image
-            self.description = description
-        }
-    }
-    
-    struct Bot {
-        var prefix: String = ""
-        var price: Int = 0
-        var commands: [BotCommand] = []
-        
-        init(json: JSON) {
-            self.prefix = json["prefix"].string ?? ""
-            self.price = json["price"].int ?? 0
-            
-            var commandObjects: [BotCommand] = []
-            
-            for cmd in json["commands"].array ?? [] {
-                let commandObject = BotCommand(json: cmd)
-                commandObjects.append(commandObject)
-            }
-            
-            self.commands = commandObjects
-        }
-    }
-
-    struct BotCommand {
-        var command: String? = nil
-        var price: Int? = nil
-        var minPrice: Int? = nil
-        var maxPrice: Int? = nil
-        var priceIndex: Int? = nil
-        var adminOnly: Bool? = nil
-        
-        init(json: JSON) {
-            self.command = json["command"].string
-            self.price = json["price"].int
-            self.minPrice = json["min_price"].int
-            self.maxPrice = json["max_price"].int
-            self.priceIndex = json["price_index"].int
-            self.adminOnly = json["admin_only"].bool
-        }
+        return !name.isEmpty && !description.isEmpty && contentTypeValid
     }
     
     func getGroupTags() -> [Tag] {
@@ -210,15 +151,6 @@ class GroupsManager {
         let podcastTag = Tag(image: "podcastTagIcon", description: "Podcast")
         
         return [bitcoingTag, lightningTag, sphinxTag, cryptoTag, techTag, altcoinsTag, musicTag, podcastTag]
-    }
-    
-    func validateGroupJoinLink(string: String) -> (Bool, String) {
-        if let url = URL(string: string), let query = url.query, let action = url.getLinkAction() {
-            if action == "tribe" {
-                return (true, query)
-            }
-        }
-        return (false, "")
     }
     
     func getGroupInfo(query: String) -> TribeInfo? {
@@ -280,6 +212,10 @@ class GroupsManager {
         parameters["private"] = newGroupInfo.privateTribe as AnyObject
         parameters["app_url"] = newGroupInfo.appUrl as AnyObject
         parameters["feed_url"] = newGroupInfo.feedUrl as AnyObject
+        
+        if let feedContentType = newGroupInfo.feedContentType {
+            parameters["feed_type"] = feedContentType.id as AnyObject
+        }
         
         return parameters
     }
@@ -343,6 +279,7 @@ class GroupsManager {
         tribeInfo.deleted = json["deleted"].boolValue
         tribeInfo.appUrl = json["app_url"].string ?? tribeInfo.appUrl
         tribeInfo.feedUrl = json["feed_url"].string ?? tribeInfo.feedUrl
+        tribeInfo.feedContentType = json["feed_type"].int?.toFeedContentType ?? tribeInfo.feedContentType
         tribeInfo.ownerRouteHint = json["owner_route_hint"].string ?? tribeInfo.ownerRouteHint
         
         var tags = getGroupTags()
@@ -372,21 +309,23 @@ class GroupsManager {
         tribeInfo.bots = botObjects
     }
     
+    
     func getTribesInfoFrom(json: JSON) -> TribeInfo {
         var tribeInfo = TribeInfo()
         update(tribeInfo: &tribeInfo, from: json)
         return tribeInfo
     }
     
+    
     func calculateBotPrice(chat: Chat?, text: String) -> (Int, String?) {
-        guard let tribesInfo = chat?.tribesInfo, text.starts(with: "/") else {
+        guard let tribeInfo = chat?.tribeInfo, text.starts(with: "/") else {
             return (0, nil)
         }
         
         var price = 0
         var failureMessage: String? = nil
     
-        for b in tribesInfo.bots {
+        for b in tribeInfo.bots {
             if !text.starts(with: b.prefix) { continue }
             if b.price > 0 {
                 price = b.price
@@ -405,17 +344,17 @@ class GroupsManager {
                     } else if let cmdPriceIndex = cmd.priceIndex, cmdPriceIndex > 0 {
                         if arr.count - 1 < cmdPriceIndex { continue }
                         
-                        let amount = Int(arr[cmdPriceIndex]) ?? 0
-                        
-                        if let cmdMinPrice = cmd.minPrice, cmdMinPrice > 0 && amount < cmdMinPrice {
-                            failureMessage = "amount.too.low".localized
-                            break
+                        if let amount = Int(arr[cmdPriceIndex]) {
+                            if let cmdMinPrice = cmd.minPrice, cmdMinPrice > 0 && amount < cmdMinPrice {
+                                failureMessage = "amount.too.low".localized
+                                break
+                            }
+                            if let cmdMaxPrice = cmd.maxPrice, cmdMaxPrice > 0 && amount > cmdMaxPrice {
+                                failureMessage = "amount.too.high".localized
+                                break
+                            }
+                            price = amount
                         }
-                        if let cmdMaxPrice = cmd.maxPrice, cmdMaxPrice > 0 && amount > cmdMaxPrice {
-                            failureMessage = "amount.too.high".localized
-                            break
-                        }
-                        price = amount
                     }
                 }
             }
@@ -449,7 +388,6 @@ class GroupsManager {
         API.sharedInstance.joinTribe(params: params, callback: { chatJson in
             if let chat = Chat.insertChat(chat: chatJson) {
                 chat.pricePerMessage = NSDecimalNumber(floatLiteral: Double(tribeInfo.pricePerMessage ?? 0))
-                chat.saveChat()
                 
                 completion()
             } else {
@@ -458,5 +396,11 @@ class GroupsManager {
         }, errorCallback: {
             completion()
         })
+    }
+}
+
+extension Int {
+    var toFeedContentType: FeedContentType? {
+        return FeedContentType.allCases.filter { $0.id == self }.first
     }
 }

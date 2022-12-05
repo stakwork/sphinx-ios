@@ -79,9 +79,9 @@ public class CustomPipViewCoordinator {
 
     public func configureAsStickyView(withParentView parentView: UIView? = nil) {
         guard
-            let parentView = parentView ?? UIApplication.shared.keyWindow
+            let parentView = parentView
             else { return }
-
+        
         parentView.addSubview(view)
         currentBounds = parentView.bounds
         view.frame = currentBounds

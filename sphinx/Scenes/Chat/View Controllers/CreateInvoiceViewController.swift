@@ -39,7 +39,7 @@ class CreateInvoiceViewController: CommonPaymentViewController {
     @IBOutlet weak var loadingWheel: UIActivityIndicatorView!
     
     let kCharacterLimit = 200
-    var kMaximumAmount = 100000
+    let kMaximumAmount = 9999999
     
     var textColor: UIColor = UIColor.Sphinx.Text {
         didSet {
@@ -54,13 +54,25 @@ class CreateInvoiceViewController: CommonPaymentViewController {
         }
     }
     
-    static func instantiate(contacts: [UserContact]? = nil, chat: Chat? = nil, viewModel: ChatViewModel, delegate: PaymentInvoiceDelegate? = nil, paymentMode: paymentMode = paymentMode.receive, rootViewController: RootViewController) -> CreateInvoiceViewController {
+    static func instantiate(
+        contacts: [UserContact]? = nil,
+        chat: Chat? = nil,
+        messageUUID: String? = nil,
+        viewModel: ChatViewModel,
+        delegate: PaymentInvoiceDelegate? = nil,
+        paymentMode: paymentMode = paymentMode.receive,
+        rootViewController: RootViewController
+    ) -> CreateInvoiceViewController {
         let viewController = StoryboardScene.Chat.createInvoiceViewController.instantiate()
         viewController.mode = paymentMode
         viewController.contacts = contacts
         viewController.chat = chat
         viewController.delegate = delegate
         viewController.rootViewController = rootViewController
+        
+        if let messageUUID = messageUUID {
+            viewController.message = TransactionMessage.getMessageWith(uuid: messageUUID)
+        }
         
         viewModel.resetCurrentPayment()
         viewController.chatViewModel = viewModel
@@ -81,8 +93,6 @@ class CreateInvoiceViewController: CommonPaymentViewController {
     private func setupView() {
         let sending = mode == paymentMode.send
         let sendingOnchain = mode == paymentMode.sendOnchain
-        
-        kMaximumAmount = sendingOnchain ? 10000000 : 1000000
         
         nextButton.layer.cornerRadius = nextButton.frame.size.height / 2
         nextButton.clipsToBounds = true
@@ -133,12 +143,11 @@ class CreateInvoiceViewController: CommonPaymentViewController {
             } else {
                 nameLabel.text = contact.nickname
             }
-
-            if let imageUrl = contact.avatarUrl?.trim(), let nsUrl = URL(string: imageUrl), imageUrl != "" {
-                MediaLoader.asyncLoadImage(imageView: profileImageView, nsUrl: nsUrl, placeHolderImage: UIImage(named: "profile_avatar"))
-            } else {
-                profileImageView.image = UIImage(named: "profile_avatar")
-            }
+            
+            showUserImage(avatarUrl: contact.avatarUrl)
+        } else if let message = message, let senderAlias = message.senderAlias {
+            nameLabel.text = senderAlias
+            showUserImage(avatarUrl: message.senderPic)
         } else {
             fromLabel.isHidden = true
             nameLabel.isHidden = true
@@ -148,6 +157,14 @@ class CreateInvoiceViewController: CommonPaymentViewController {
         let sending = mode == paymentMode.send
         let nextButtonTitle = sending ? "continue.upper".localized : "confirm.upper".localized
         nextButton.setTitle(nextButtonTitle, for: .normal)
+    }
+    
+    private func showUserImage(avatarUrl: String?) {
+        if let imageUrl = avatarUrl?.trim(), let nsUrl = URL(string: imageUrl), imageUrl != "" {
+            MediaLoader.asyncLoadImage(imageView: profileImageView, nsUrl: nsUrl, placeHolderImage: UIImage(named: "profile_avatar"))
+        } else {
+            profileImageView.image = UIImage(named: "profile_avatar")
+        }
     }
     
     private func setupKeyPad() {
@@ -179,6 +196,7 @@ class CreateInvoiceViewController: CommonPaymentViewController {
             chatViewModel.currentPayment.amount = amount
             return true
         }
+        NewMessageBubbleHelper().showGenericMessageView(text: "amount.too.high".localized)
         return false
     }
     
@@ -246,10 +264,22 @@ class CreateInvoiceViewController: CommonPaymentViewController {
     private func shouldSendDirectPayment() {
         if let contacts = self.contacts, contacts.count > 0 {
             goToPaymentTemplate()
+        } else if let _ = message {
+            sendTribePayment()
         } else if let _ = self.chatViewModel.currentPayment.destinationKey {
             sendDirectPayment()
         } else {
             goToScanner()
+        }
+    }
+    
+    func sendTribePayment() {
+        delegate?.shouldSendTribePayment?(
+            amount: chatViewModel.currentPayment.amount ?? 0,
+            message: chatViewModel.currentPayment.message ?? "",
+            messageUUID: message?.uuid ?? ""
+        ) {
+            self.shouldDismissView()
         }
     }
     

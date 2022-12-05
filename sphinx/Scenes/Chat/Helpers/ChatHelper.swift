@@ -17,13 +17,25 @@ class ChatHelper {
         }
         
         if let senderAlias = message.senderAlias, !senderAlias.isEmpty {
-            key = "\(message.senderId)-\(senderAlias.trim())-color"
+            key = "\(senderAlias.trim())-color"
         }
 
         if let key = key {
             return UIColor.getColorFor(key: key)
         }
-        return UIColor.Sphinx.Text
+        return UIColor.Sphinx.SecondaryText
+    }
+    
+    public static func getRecipientColorFor(
+        message: TransactionMessage
+    ) -> UIColor {
+        if let recipientAlias = message.recipientAlias, !recipientAlias.isEmpty {
+            return UIColor.getColorFor(
+                key: "\(recipientAlias.trim())-color"
+            )
+        }
+        
+        return UIColor.Sphinx.SecondaryText
     }
     
     public static func registerCellsForChat(tableView: UITableView) {
@@ -86,10 +98,10 @@ class ChatHelper {
         guard let message = messageRow.transactionMessage else {
             return cell
         }
+        
         let incoming = messageRow.isIncoming()
         
-        let messageStatus = TransactionMessage.TransactionMessageStatus(fromRawValue: Int(message.status))
-        if messageStatus == TransactionMessage.TransactionMessageStatus.deleted {
+        if message.isDeleted() || message.isFlagged() {
             if incoming {
                 cell = tableView.dequeueReusableCell(withIdentifier: "DeletedMessageReceivedTableViewCell", for: indexPath) as! DeletedMessageReceivedTableViewCell
             } else {
@@ -226,7 +238,11 @@ class ChatHelper {
             cell = tableView.dequeueReusableCell(withIdentifier: "GroupRequestTableViewCell", for: indexPath) as! GroupRequestTableViewCell
             break
         case TransactionMessage.TransactionMessageType.botResponse:
-            cell = tableView.dequeueReusableCell(withIdentifier: "MessageWebViewTableViewCell", for: indexPath) as! MessageWebViewTableViewCell
+            if (message.messageContent?.isValidHTML ?? true) {
+                cell = tableView.dequeueReusableCell(withIdentifier: "MessageWebViewTableViewCell", for: indexPath) as! MessageWebViewTableViewCell
+            } else {
+                cell = tableView.dequeueReusableCell(withIdentifier: "MessageReceivedTableViewCell", for: indexPath) as! MessageReceivedTableViewCell
+            }
             break
         default:
             break
@@ -251,8 +267,7 @@ class ChatHelper {
             return height
         }
         
-        let status = TransactionMessage.TransactionMessageStatus(fromRawValue: Int(message.status))
-        if status == TransactionMessage.TransactionMessageStatus.deleted {
+        if message.isDeleted() || message.isFlagged() {
             return CommonDeletedMessageTableViewCell.getRowHeight()
         }
         
@@ -346,7 +361,11 @@ class ChatHelper {
             height = GroupRequestTableViewCell.getRowHeight()
             break
         case TransactionMessage.TransactionMessageType.botResponse:
-            height = MessageWebViewTableViewCell.getRowHeight(messageRow: messageRow)
+            if (message.messageContent?.isValidHTML ?? true) {
+                height = MessageWebViewTableViewCell.getRowHeight(messageRow: messageRow)
+            } else {
+                height = MessageReceivedTableViewCell.getRowHeight(messageRow: messageRow)
+            }
             break
         default:
             break
@@ -387,7 +406,7 @@ class ChatHelper {
                 continue
             }
             
-            if referenceMessageDate!.getMinutesDifference(from: message.date) > 5 {
+            if referenceMessageDate!.getMinutesDifference(from: message.messageDate) > 5 {
                referenceMessageDate = message.date
             }
             
@@ -396,7 +415,7 @@ class ChatHelper {
                     referenceMessageDate = message.date
                     message.consecutiveMessages.nextMessage = false
                     nextMessage!.consecutiveMessages.previousMessage = false
-                } else if referenceMessageDate!.getMinutesDifference(from: nextMessage!.date) <= 5 {
+                } else if referenceMessageDate!.getMinutesDifference(from: nextMessage!.messageDate) <= 5 {
                     if message.hasSameSenderThan(message: nextMessage) {
                         message.consecutiveMessages.nextMessage = true
                         nextMessage!.consecutiveMessages.previousMessage = true
@@ -419,12 +438,12 @@ class ChatHelper {
             return
         }
         
-        if referenceMessageDate!.getMinutesDifference(from: message.date) > 5 {
+        if referenceMessageDate!.getMinutesDifference(from: message.messageDate) > 5 {
             referenceMessageDate = message.date
             return
         }
         
-        if previousMessage != nil && referenceMessageDate!.getMinutesDifference(from: message.date) <= 5 {
+        if previousMessage != nil && referenceMessageDate!.getMinutesDifference(from: message.messageDate) <= 5 {
             if previousMessage!.failed() {
                 referenceMessageDate = message.date
                 message.consecutiveMessages.previousMessage = false
@@ -472,17 +491,27 @@ class ChatHelper {
         let emptyFilteredUUIDs = messagesUUIDs.filter { !$0.isEmpty }
         
         for message in TransactionMessage.getReactionsOn(chat: chat, for: emptyFilteredUUIDs) {
-            processMessageReaction(message: message, boosts: &boosts)
+            processMessageReaction(
+                message: message,
+                owner: UserContact.getOwner(),
+                contact: chat.getContact(),
+                boosts: &boosts
+            )
         }
     }
     
-    func processMessageReaction(message: TransactionMessage, boosts: inout [String: TransactionMessage.Reactions]) {
+    func processMessageReaction(
+        message: TransactionMessage,
+        owner: UserContact?,
+        contact: UserContact?,
+        boosts: inout [String: TransactionMessage.Reactions]
+    ) {
         if let replyUUID = message.replyUUID {
-            let outgoing = message.isOutgoing()
-            let isPublicGroup = message.chat?.isPublicGroup() ?? false
-            let image = (outgoing || !isPublicGroup) ? message.getMessageSender()?.getCachedImage() : nil
             
-            let user: (String, UIColor, UIImage?) = (message.getMessageSenderNickname(forceNickname: true), ChatHelper.getSenderColorFor(message: message), image)
+            let outgoing = message.isOutgoing()
+            let senderImageUrl: String? = message.getMessageSenderImageUrl(owner: owner, contact: contact)
+            
+            let user: (String, UIColor, String?) = (message.getMessageSenderNickname(forceNickname: true), ChatHelper.getSenderColorFor(message: message), senderImageUrl)
             let amount = message.amount?.intValue ?? 0
             
             if var reaction = boosts[replyUUID] {

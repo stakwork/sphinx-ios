@@ -12,6 +12,12 @@ import SwiftyJSON
 
 extension TransactionMessage {
     
+    var messageDate: Date {
+        get {
+            return self.date ?? Date(timeIntervalSince1970: 0)
+        }
+    }
+    
     public enum MessageActionsItem: Int {
         case Delete
         case Copy
@@ -21,6 +27,16 @@ extension TransactionMessage {
         case Reply
         case Save
         case Boost
+        case Resend
+        case Flag
+    }
+    
+    
+    public struct ActionsMenuOption {
+        var tag: MessageActionsItem
+        var materialIconName: String?
+        var iconImage: String?
+        var label: String
     }
     
     //Sender and Receiver info
@@ -62,6 +78,20 @@ extension TransactionMessage {
         return alias
     }
     
+    func getMessageSenderImageUrl(
+        owner: UserContact?,
+        contact: UserContact?
+    ) -> String? {
+        let outgoing = self.isOutgoing()
+        
+        if (outgoing) {
+            return self.chat?.myPhotoUrl ?? owner?.getPhotoUrl()
+        } else {
+            return self.senderPic ?? contact?.getPhotoUrl()
+        }
+    }
+
+    
     func hasSameSenderThan(message: TransactionMessage?) -> Bool {
         let hasSameSenderId = senderId == (message?.senderId ?? -1)
         let hasSameSenderAlias = (senderAlias ?? "") == (message?.senderAlias ?? "")
@@ -77,10 +107,7 @@ extension TransactionMessage {
             image = self.senderPic?.removeDuplicatedProtocol().trim()
         }
         
-        if let image = image {
-            return image + "?thumb=true"
-        }
-        return nil
+        return image
     }
     
     //Message content and encryption
@@ -156,7 +183,8 @@ extension TransactionMessage {
     
     func getReplyMessageContent() -> String {
         if hasMessageContent() {
-            return getMessageContent()
+            let messageContent = getMessageContent()
+            return messageContent.isValidHTML ? "bot.response.preview".localized : messageContent
         }
         if let fileName = self.mediaFileName {
             return fileName
@@ -170,7 +198,6 @@ extension TransactionMessage {
                 let (decrypted, message) = EncryptionManager.sharedInstance.decryptMessage(message: messageC)
                 if decrypted {
                     self.messageContent = message
-                    self.saveMessage()
                     return message
                 }
             }
@@ -283,10 +310,6 @@ extension TransactionMessage {
         return type == TransactionMessageType.attachment.rawValue
     }
     
-    func canBeDownloaded() -> Bool {
-        return (type == TransactionMessageType.attachment.rawValue && getMediaType() != TransactionMessageType.textAttachment.rawValue) || isGiphy()
-    }
-    
     func isVideo() -> Bool {
         return getMediaType() == TransactionMessage.TransactionMessageType.videoAttachment.rawValue
     }
@@ -332,6 +355,10 @@ extension TransactionMessage {
         return type == TransactionMessageType.invoice.rawValue
     }
     
+    func isBotResponse() -> Bool {
+        return type == TransactionMessageType.botResponse.rawValue
+    }
+    
     func isBoosted() -> Bool {
         return self.reactions != nil && (self.reactions?.totalSats ?? 0) > 0
     }
@@ -366,12 +393,30 @@ extension TransactionMessage {
         return status == TransactionMessageStatus.deleted.rawValue
     }
     
+    func isFlagged() -> Bool {
+        if !isFlagActionAllowed {
+            return false
+        }
+        if let uuid = uuid {
+            return (UserDefaults.standard.value(forKey: "\(uuid)-message-flag") as? Bool) ?? false
+        }
+        return false
+    }
+    
     func isNotConsecutiveMessage() -> Bool {
         return isPayment() || isInvoice() || isGroupActionMessage() || isDeleted()
     }
     
     func isDirectPayment() -> Bool {
         return type == TransactionMessageType.directPayment.rawValue
+    }
+    
+    func isPodcastPayment() -> Bool {
+        let feedIDString1 = "{\"feedID\":"
+        let feedIDString2 = "{\"feedID\":"
+        
+        return (chat == nil &&
+                    (messageContent?.contains(feedIDString1) ?? false || messageContent?.contains(feedIDString2) ?? false))
     }
     
     func canBeDeleted() -> Bool {
@@ -407,51 +452,203 @@ extension TransactionMessage {
         return invoice?.getAmountString() ?? "0"
     }
     
-    func getActionsMenuOptions() -> [(tag: MessageActionsItem, icon: String?, iconImage: String?, label: String)] {
-        var options = [(tag: MessageActionsItem, icon: String?, iconImage: String?, label: String)]()
+    func getActionsMenuOptions() -> [ActionsMenuOption] {
+        var options = [ActionsMenuOption]()
         
         if isPodcastBoost() {
             return options
         }
         
-        if let messageContent = messageContent, messageContent != "" && !isGiphy() {
-            if !messageContent.isVideoCallLink && !messageContent.isEncryptedString() {
-                options.append((MessageActionsItem.Copy, "", nil, "copy.text".localized))
+        if messageContainText() {
+            
+            if isCopyTextActionAllowed {
+                options.append(
+                    .init(
+                        tag: MessageActionsItem.Copy,
+                        materialIconName: "",
+                        iconImage: nil,
+                        label: "copy.text".localized
+                    )
+                )
             }
             
-            if !messageContent.isVideoCallLink && messageContent.stringLinks.count > 0 {
-                options.append((MessageActionsItem.CopyLink, "link", nil, "copy.link".localized))
+            if isCopyLinkActionAllowed {
+                options.append(
+                    .init(
+                        tag: MessageActionsItem.CopyLink,
+                        materialIconName: "link",
+                        iconImage: nil,
+                        label:  "copy.link".localized
+                    )
+                )
             }
             
-            if messageContent.pubKeyMatches.count > 0 {
-                options.append((MessageActionsItem.CopyPubKey, "supervisor_account", nil, "copy.pub.key".localized))
+            if isCopyPublicKeyActionAllowed {
+                options.append(
+                    .init(
+                        tag: MessageActionsItem.CopyPubKey,
+                        materialIconName: "supervisor_account",
+                        iconImage: nil,
+                        label:  "copy.pub.key".localized
+                    )
+                )
             }
             
-            if messageContent.isVideoCallLink {
-                options.append((MessageActionsItem.CopyCallLink, "link", nil, "copy.call.link".localized))
+            if isCopyCallLinkActionAllowed {
+                options.append(
+                    .init(
+                        tag: MessageActionsItem.CopyCallLink,
+                        materialIconName: "link",
+                        iconImage: nil,
+                        label:  "copy.call.link".localized
+                    )
+                )
             }
         }
-        if (isTextMessage() || isAttachment()) && !(uuid ?? "").isEmpty {
-            options.append((MessageActionsItem.Reply, "", nil, "reply".localized))
+        
+        if isReplyActionAllowed {
+            options.append(
+                .init(
+                    tag: MessageActionsItem.Reply,
+                    materialIconName: "",
+                    iconImage: nil,
+                    label:  "reply".localized
+                )
+            )
         }
         
-        if canBeDownloaded() {
-            options.append((MessageActionsItem.Save, "", nil, "save.file".localized))
+        if isDownloadFileActionAllowed {
+            options.append(
+                .init(
+                    tag: MessageActionsItem.Save,
+                    materialIconName: "",
+                    iconImage: nil,
+                    label: "save.file".localized
+                )
+            )
         }
         
-        if (!isInvoice() || (isInvoice() && !isPaid())) && canBeDeleted() {
-            options.append((MessageActionsItem.Delete, "delete", nil, "delete.message".localized))
+        if isResendActionAllowed {
+            options.append(
+                .init(
+                    tag: MessageActionsItem.Resend,
+                    materialIconName: "redo",
+                    iconImage: nil,
+                    label: "Resend"
+                )
+            )
         }
         
-        if shouldAllowBoost() {
-            options.append((MessageActionsItem.Boost, nil, "boostIconGreen", "Boost"))
+        if isBoostActionAllowed {
+            options.append(
+                .init(
+                    tag: MessageActionsItem.Boost,
+                    materialIconName: nil,
+                    iconImage: "boostIconGreen",
+                    label: "Boost"
+                )
+            )
+        }
+        
+        if isFlagActionAllowed {
+            options.append(
+                .init(
+                    tag: MessageActionsItem.Flag,
+                    materialIconName: nil,
+                    iconImage: "iconFlagContent",
+                    label:  "flag.item".localized
+                )
+            )
+        }
+        
+        if isDeleteActionAllowed {
+            options.append(
+                .init(
+                    tag: MessageActionsItem.Delete,
+                    materialIconName: "delete",
+                    iconImage: nil,
+                    label:  "delete.message".localized
+                )
+            )
         }
         
         return options
     }
     
-    func shouldAllowBoost() -> Bool {
-        return isIncoming() && !isInvoice() && !isDirectPayment() && !(messageContent ?? "").isVideoCallLink && !(uuid ?? "").isEmpty
+    func messageContainText() -> Bool {
+        return messageContent != nil && messageContent != "" && !isGiphy()
+    }
+    
+    var isCopyTextActionAllowed: Bool {
+        get {
+            if let messageContent = messageContent {
+                return !messageContent.isVideoCallLink && !messageContent.isEncryptedString()
+            }
+            return false
+        }
+    }
+    
+    var isCopyLinkActionAllowed: Bool {
+        get {
+            if let messageContent = messageContent {
+                return !messageContent.isVideoCallLink && messageContent.stringLinks.count > 0
+            }
+            return false
+        }
+    }
+    
+    var isCopyPublicKeyActionAllowed: Bool {
+        get {
+            if let messageContent = messageContent {
+                return messageContent.pubKeyMatches.count > 0
+            }
+            return false
+        }
+    }
+    
+    var isCopyCallLinkActionAllowed: Bool {
+        get {
+            if let messageContent = messageContent {
+                return messageContent.isVideoCallLink
+            }
+            return false
+        }
+    }
+    
+    var isReplyActionAllowed: Bool {
+        get {
+            return (isTextMessage() || isAttachment() || isBotResponse()) && !(uuid ?? "").isEmpty
+        }
+    }
+    
+    var isDownloadFileActionAllowed: Bool {
+        get {
+            return (type == TransactionMessageType.attachment.rawValue && getMediaType() != TransactionMessageType.textAttachment.rawValue) || isGiphy()
+        }
+    }
+    
+    var isResendActionAllowed: Bool {
+        get {
+            return (isTextMessage() && status == TransactionMessageStatus.failed.rawValue)
+        }
+    }
+    
+    var isFlagActionAllowed: Bool {
+        get {
+            return isIncoming()
+        }
+    }
+    
+    var isDeleteActionAllowed: Bool {
+        get {
+            return (!isInvoice() || (isInvoice() && !isPaid())) && canBeDeleted()
+        }
+    }
+    
+    var isBoostActionAllowed: Bool {
+        get {
+            return isIncoming() && !isInvoice() && !isDirectPayment() && !(messageContent ?? "").isVideoCallLink && !(uuid ?? "").isEmpty
+        }
     }
     
     func isNewUnseenMessage() -> Bool {
@@ -496,10 +693,6 @@ extension TransactionMessage {
         if isDeleted() {
             return "message.x.deleted".localized
         }
-        
-        if let purchaseItem = getPurchaseItems(includeAttachment: true).last, let purchaseDecription = purchaseItem.getPurchaseDescription(directionString) {
-            return purchaseDecription
-        }
 
         switch (self.getType()) {
         case TransactionMessage.TransactionMessageType.message.rawValue:
@@ -509,12 +702,24 @@ extension TransactionMessage {
                 return "\(self.getMessageSenderNickname(minimized: true)): \(self.getMessageContent(dashboard: dashboard))"
             }
         case TransactionMessage.TransactionMessageType.invoice.rawValue:
-            return  "\("invoice".localized) \(directionString): \(amountString) sat"
+            return  "\("invoice".localized) \(directionString): \(amountString) sats"
         case TransactionMessage.TransactionMessageType.payment.rawValue:
             let invoiceAmount = getInvoicePaidAmountString()
-            return  "\("payment".localized) \(directionString): \(invoiceAmount) sat"
+            return  "\("payment".localized) \(directionString): \(invoiceAmount) sats"
         case TransactionMessage.TransactionMessageType.directPayment.rawValue:
-            return "\("payment".localized) \(directionString): \(amountString) sat"
+            let isTribe = self.chat?.isPublicGroup() ?? false
+            let senderAlias = self.senderAlias ?? "Unknown".localized
+            let recipientAlias = self.recipientAlias ?? "Unknown".localized
+            
+            if isTribe {
+                if incoming {
+                    return String(format: "tribe.payment.received".localized, senderAlias, "\(amountString) sats" , recipientAlias)
+                } else {
+                    return String(format: "tribe.payment.sent".localized, "\(amountString) sats", recipientAlias)
+                }
+            } else {
+                return "\("payment".localized) \(directionString): \(amountString) sats"
+            }
         case TransactionMessage.TransactionMessageType.imageAttachment.rawValue:
             if self.isGif() {
                 return "\("gif.capitalize".localized) \(directionString)"
@@ -604,22 +809,6 @@ extension TransactionMessage {
         }
     }
     
-    func getPurchaseDescription(_ directionString: String) -> String? {
-        let (purchaseItem, _) = getPurchaseStateItem()
-        if let purchaseItem = purchaseItem {
-            switch (purchaseItem.getType()) {
-            case TransactionMessage.TransactionMessageType.purchase.rawValue:
-                return String(format: "purchase.item.description".localized, directionString)
-            case TransactionMessage.TransactionMessageType.purchaseAccept.rawValue:
-                return "item.purchased".localized
-            case TransactionMessage.TransactionMessageType.purchaseDeny.rawValue:
-                return "item.purchase.denied".localized
-            default: break
-            }
-        }
-        return nil
-    }
-    
     func processPodcastComment() {
         if let _ = self.podcastComment {
             return
@@ -632,8 +821,8 @@ extension TransactionMessage {
             if let data = stringWithoutPrefix.data(using: .utf8) {
                 if let jsonObject = try? JSON(data: data) {
                     var podcastComment = PodcastComment()
-                    podcastComment.feedId = jsonObject["feedID"].intValue
-                    podcastComment.itemId = jsonObject["itemID"].intValue
+                    podcastComment.feedId = jsonObject["feedID"].stringValue
+                    podcastComment.itemId = jsonObject["itemID"].stringValue
                     podcastComment.timestamp = jsonObject["ts"].intValue
                     podcastComment.title = jsonObject["title"].stringValue
                     podcastComment.text = jsonObject["text"].stringValue
@@ -680,9 +869,16 @@ extension TransactionMessage {
         let messageSender = getMessageSender()
         
         if isPrivateConversation {
-            return (isStandardPIN && !(messageSender?.pin ?? "").isEmpty) || (!isStandardPIN && (messageSender?.pin ?? "").isEmpty)
+            
+            return (isStandardPIN && !(messageSender?.pin ?? "").isEmpty) ||
+                   (!isStandardPIN && (messageSender?.pin ?? "").isEmpty) ||
+                   messageSender?.isBlocked() == true
+            
         } else {
-            return (isStandardPIN && !(chat?.pin ?? "").isEmpty) || (!isStandardPIN && (chat?.pin ?? "").isEmpty)
+            
+            return (isStandardPIN && !(chat?.pin ?? "").isEmpty) ||
+                   (!isStandardPIN && (chat?.pin ?? "").isEmpty)
+            
         }
     }
 }

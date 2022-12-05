@@ -8,15 +8,30 @@
 
 import UIKit
 
+extension ChatViewController : CustomBoostDelegate {
+    func didSendBoostMessage(success: Bool, message: TransactionMessage?) {
+        guard let message = message, success else {
+            DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: {
+                self.didFailSendingMessage(provisionalMessage: message)
+            })
+            return
+        }
+        self.insertSentMessage(message: message, completion: { _ in })
+        self.scrollAfterInsert()
+    }
+}
+
 extension ChatViewController : PodcastPlayerVCDelegate {
-    func loadPodcastFeed() {        
-        podcastPlayerHelper?.loadPodcastFeed(chat: self.chat, callback: { success in
-            if let chat = self.chat, let _ = chat.podcastPlayer?.podcast, success {
-                self.addSmallPlayer(completion: {
-                    PodcastNewEpisodeViewController.checkForNewEpisode(chat: chat, rootViewController: self.rootViewController, delegate: self)
-                })
-                self.chatHeaderView.updateSatsEarned()
-            }
+    func loadPodcastFeed() {
+        guard let chat = chat else {
+            return
+        }
+        
+        FeedLoaderHelper.loadPodcastFeedFor(chat: chat, callback: { podcast in
+            self.addSmallPlayerFor(podcast, completion: {
+                PodcastNewEpisodeViewController.checkForNewEpisode(chat: chat, rootViewController: self.rootViewController)
+            })
+            self.chatHeaderView.updateSatsEarned()
         })
     }
     
@@ -25,51 +40,40 @@ extension ChatViewController : PodcastPlayerVCDelegate {
         accessoryView.configureReplyFor(podcastComment: comment)
     }
     
-    func shouldSendBoost(message: String, amount: Int, animation: Bool) -> TransactionMessage? {
-        if animation {
-            let podcastAnimationVC = PodcastAnimationViewController.instantiate(amount: amount)
-            WindowsManager.sharedInstance.showConveringWindowWith(rootVC: podcastAnimationVC)
-            podcastAnimationVC.showBoostAnimation()
-        }
-        let boostType = TransactionMessage.TransactionMessageType.boost.rawValue
-        return createProvisionalAndSend(messageText: message, type: boostType, botAmount: 0, completion: { _ in })
+    func shouldGoToPlayer(podcast: PodcastFeed) {
+        presentPodcastPlayerFor(podcast)
     }
     
-    func shouldGoToPlayer() {
-        guard let chat = chat else {
-            return
-        }
-        presentPodcastPlayer(chat: chat)
-    }
-    
-    func willDismissPlayer(playing: Bool) {
+    func willDismissPlayer() {
         accessoryView.addKeyboardObservers()
         accessoryView.show(animated: false)
-        accessoryView.reloadPlayerView()
     }
     
-    func addSmallPlayer(completion: @escaping () -> ()) {
-        guard let podcastPlayerHelper = podcastPlayerHelper else {
-            return
-        }
-        accessoryView.configurePlayerView(playerHelper: podcastPlayerHelper, delegate: self, completion: completion)
+    func addSmallPlayerFor(
+        _ podcast: PodcastFeed,
+        completion: @escaping () -> ()
+    ) {
+        accessoryView.configurePlayerViewWith(
+            podcast: podcast,
+            delegate: self,
+            completion: completion
+        )
     }
     
-    func presentPodcastPlayer(chat: Chat) {
-        guard let podcastPlayerHelper = podcastPlayerHelper else {
-            return
-        }
+    func presentPodcastPlayerFor(
+        _ podcast: PodcastFeed
+    ) {
         accessoryView.hide()
+        
+        let podcastFeedVC = NewPodcastPlayerViewController.instantiate(
+            podcast: podcast,
+            delegate: self,
+            boostDelegate: self,
+            fromDashboard: false
+        )
 
-        let podcastFeedVC = NewPodcastPlayerViewController.instantiate(chat: chat, playerHelper: podcastPlayerHelper, delegate: self)
-        podcastFeedVC.modalPresentationStyle = .fullScreen
-        self.present(podcastFeedVC, animated: true, completion: nil)
-    }
-}
+        podcastFeedVC.modalPresentationStyle = .automatic
 
-extension ChatViewController : NewEpisodeDelegate {
-    func shouldGoToLastEpisodePlayer() {
-        chat?.podcastPlayer?.goToLastEpisode()
-        shouldGoToPlayer()
+        present(podcastFeedVC, animated: true, completion: nil)
     }
 }

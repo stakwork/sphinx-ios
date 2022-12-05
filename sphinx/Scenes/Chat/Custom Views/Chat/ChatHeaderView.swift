@@ -13,7 +13,7 @@ protocol ChatHeaderViewDelegate : class {
     func didTapBackButton()
     func didTapWebAppButton()
     func didTapMuteButton()
-    func didTapCallButton(sender: UIButton)
+    func didTapMoreOptionsButton(sender: UIButton)
 }
 
 class ChatHeaderView: UIView {
@@ -51,7 +51,7 @@ class ChatHeaderView: UIView {
     public enum RightButtons: Int {
         case WebApp
         case Mute
-        case Call
+        case More
     }
     
     override init(frame: CGRect) {
@@ -96,7 +96,7 @@ class ChatHeaderView: UIView {
         keysLoading = !isEncrypted
         
         configureWebAppButton()
-        setVolumeState()
+        setVolumeState(muted: chat?.isMuted() ?? false)
         configureImageOrInitials()
         
         if let contact = contact, !contact.hasEncryptionKey() {
@@ -160,7 +160,7 @@ class ChatHeaderView: UIView {
     }
     
     func updateSatsEarned() {
-        if let podcast = chat?.podcastPlayer?.podcast, let feedID = podcast.id, feedID > 0 {
+        if let feedID = chat?.contentFeed?.feedID {
             let isMyTribe = (chat?.isMyPublicGroup() ?? false)
             let label = isMyTribe ? "earned.sats".localized : "contributed.sats".localized
             let sats = PodcastPaymentsHelper.getSatsEarnedFor(feedID)
@@ -177,8 +177,8 @@ class ChatHeaderView: UIView {
         webAppButton.setTitle("apps", for: .normal)
     }
     
-    func setVolumeState() {
-        volumeButton.setImage(UIImage(named: chat?.isMuted() ?? false ? "muteOnIcon" : "muteOffIcon"), for: .normal)
+    func setVolumeState(muted: Bool) {
+        volumeButton.setImage(UIImage(named: muted ? "muteOnIcon" : "muteOffIcon"), for: .normal)
     }
     
     func forceKeysExchange(contactId: Int) {
@@ -211,14 +211,10 @@ class ChatHeaderView: UIView {
             delegate?.didTapWebAppButton()
             break
         case RightButtons.Mute.rawValue:
-            guard let chat = chat else {
-                return
-            }
-            volumeButton.setImage(UIImage(named: !chat.isMuted() ? "muteOnIcon" : "muteOffIcon"), for: .normal)
             delegate?.didTapMuteButton()
             break
-        case RightButtons.Call.rawValue:
-            delegate?.didTapCallButton(sender: sender)
+        case RightButtons.More.rawValue:
+            delegate?.didTapMoreOptionsButton(sender: sender)
             break
         default:
             break

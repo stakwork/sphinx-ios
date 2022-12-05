@@ -9,11 +9,13 @@
 import UIKit
 
 @objc protocol MessageOptionsDelegate: class {
-    func shouldDismiss()
+    func shouldDismiss(completion: @escaping (() -> ()))
     func shouldDeleteMessage()
     func shouldReplayToMessage()
     func shouldSaveFile()
     func shouldBoostMessage()
+    func shouldResendMessage()
+    func shouldFlagMessage()
 }
 
 class MessageOptionsView : UIView {
@@ -21,7 +23,7 @@ class MessageOptionsView : UIView {
     weak var delegate: MessageOptionsDelegate?
     
     let menuOptionsWidth:CGFloat = 140
-    let optionsHeight:CGFloat = 40
+    let optionsHeight:CGFloat = 45
     let iconWidth:CGFloat = 40
     let menuVerticalMargin: CGFloat = 10
     
@@ -104,24 +106,33 @@ class MessageOptionsView : UIView {
         return (menuRect, verticalPosition, horizontalPosition)
     }
     
-    func getActionsMenuOptions() -> [(tag: TransactionMessage.MessageActionsItem, icon: String?, iconImage: String?, label: String)] {
+    func getActionsMenuOptions() -> [TransactionMessage.ActionsMenuOption] {
         guard let message = message else {
             return []
         }
         return message.getActionsMenuOptions()
     }
     
-    func addMenuOptions(options: [(tag: TransactionMessage.MessageActionsItem, icon: String?, iconImage: String?, label: String)]) {
+    func addMenuOptions(options: [TransactionMessage.ActionsMenuOption]) {
         var index = 0
-        for (tag, icon, iconImage, label) in options {
+        for option in options {
             let y = menuVerticalMargin + CGFloat(index) * optionsHeight
             
             let shouldShowSeparator = index < options.count - 1
             let optionView = MessageOptionView(frame: CGRect(x: 0, y: y, width: self.frame.size.width, height: optionsHeight))
             
-            let color = getColorFor(tag)
-            let option = MessageOptionView.Option(icon: icon, iconImage: iconImage, title: label, tag: tag.rawValue, color: color, showLine: shouldShowSeparator)
-            optionView.configure(option: option, delegate: self)
+            let color = getColorFor(option.tag)
+            
+            let viewOption = MessageOptionView.Option(
+                icon: option.materialIconName,
+                iconImage: option.iconImage,
+                title: option.label,
+                tag: option.tag.rawValue,
+                color: color,
+                showLine: shouldShowSeparator
+            )
+            
+            optionView.configure(option: viewOption, delegate: self)
             
             self.addSubview(optionView)
             
@@ -207,7 +218,14 @@ class MessageOptionsView : UIView {
 }
 
 extension MessageOptionsView : MessageOptionViewDelegate {
+    
     func didTapButton(tag: Int) {
+        delegate?.shouldDismiss() {
+            self.handleActionWith(tag)
+        }
+    }
+    
+    private func handleActionWith(_ tag: Int) {
         guard let message = message else {
             return
         }
@@ -217,31 +235,26 @@ extension MessageOptionsView : MessageOptionViewDelegate {
         switch(option) {
         case .Copy:
             ClipboardHelper.copyToClipboard(text: message.getMessageContent(), message: "text.copied.clipboard".localized)
-            break
         case .CopyLink:
             ClipboardHelper.copyToClipboard(text: message.messageContent?.stringFirstLink ?? "", message: "link.copied.clipboard".localized)
-            break
         case .CopyPubKey:
             ClipboardHelper.copyToClipboard(text: message.messageContent?.stringFirstPubKey ?? "", message: "pub.key.copied.clipboard".localized)
-            break
         case .CopyCallLink:
             ClipboardHelper.copyToClipboard(text: message.messageContent ?? "", message: "call.link.copied.clipboard".localized)
-            break
         case .Delete:
             delegate?.shouldDeleteMessage()
-            break
         case .Reply:
             delegate?.shouldReplayToMessage()
-            break
         case .Save:
             delegate?.shouldSaveFile()
-            break
         case .Boost:
             delegate?.shouldBoostMessage()
-            break
+        case .Resend:
+            delegate?.shouldResendMessage()
+        case .Flag:
+            delegate?.shouldFlagMessage()
         default:
             break
         }
-        delegate?.shouldDismiss()
     }
 }

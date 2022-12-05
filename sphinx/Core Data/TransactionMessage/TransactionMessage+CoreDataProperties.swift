@@ -25,7 +25,7 @@ extension TransactionMessage {
     @NSManaged public var amountMsat: NSDecimalNumber?
     @NSManaged public var type: Int
     @NSManaged public var status: Int
-    @NSManaged public var date: Date
+    @NSManaged public var date: Date?
     @NSManaged public var expirationDate: Date?
     @NSManaged public var paymentHash: String?
     @NSManaged public var invoice: String?
@@ -34,10 +34,14 @@ extension TransactionMessage {
     @NSManaged public var encrypted: Bool
     @NSManaged public var senderAlias: String?
     @NSManaged public var senderPic: String?
+    @NSManaged public var recipientAlias: String?
+    @NSManaged public var recipientPic: String?
     @NSManaged public var uuid: String?
     @NSManaged public var replyUUID: String?
     @NSManaged public var originalMuid: String?
     @NSManaged public var chat: Chat?
+    @NSManaged public var push: Bool
+    @NSManaged public var person: String?
     
     @NSManaged public var mediaKey: String?
     @NSManaged public var mediaType: String?

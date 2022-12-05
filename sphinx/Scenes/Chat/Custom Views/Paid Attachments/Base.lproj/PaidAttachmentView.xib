@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19142.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19129"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -14,6 +14,9 @@
         <array key="Montserrat-SemiBold.otf">
             <string>Montserrat-SemiBold</string>
         </array>
+        <array key="Roboto-Italic.ttf">
+            <string>Roboto-Italic</string>
+        </array>
         <array key="Roboto-Medium.ttf">
             <string>Roboto-Medium</string>
         </array>
@@ -23,6 +26,7 @@
             <connections>
                 <outlet property="contentView" destination="iN0-l3-epB" id="HN2-8B-ghw"/>
                 <outlet property="payAttachmentContainer" destination="Y6u-lX-cJr" id="qpe-lf-ErI"/>
+                <outlet property="paymentsNotSupportedLabel" destination="5BU-tN-VN4" id="B2D-wV-l7Z"/>
                 <outlet property="processingLoadingWheel" destination="In9-ux-p94" id="qdW-Sg-3Zf"/>
                 <outlet property="processingPaymentContainer" destination="z7b-dn-eJY" id="KIk-Ma-3N5"/>
                 <outlet property="purchaseAcceptContainer" destination="qU4-Ae-kcn" id="jeZ-SN-r5j"/>
@@ -35,6 +39,27 @@
             <rect key="frame" x="0.0" y="0.0" width="220" height="50"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hwp-R1-WZq" userLabel="Payments Not Supported View">
+                    <rect key="frame" x="0.0" y="0.0" width="220" height="50"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Paid items not supported" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5BU-tN-VN4">
+                            <rect key="frame" x="10" y="0.0" width="200" height="50"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <fontDescription key="fontDescription" name="Roboto-Italic" family="Roboto" pointSize="11"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" name="SecondaryText"/>
+                    <constraints>
+                        <constraint firstItem="5BU-tN-VN4" firstAttribute="centerY" secondItem="Hwp-R1-WZq" secondAttribute="centerY" id="Av9-lS-nPR"/>
+                        <constraint firstItem="5BU-tN-VN4" firstAttribute="leading" secondItem="Hwp-R1-WZq" secondAttribute="leading" constant="10" id="Ra9-KP-eNl"/>
+                        <constraint firstAttribute="bottom" secondItem="5BU-tN-VN4" secondAttribute="bottom" id="WCq-7O-VNq"/>
+                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="5BU-tN-VN4" secondAttribute="trailing" constant="10" id="jUm-nn-OEC"/>
+                        <constraint firstItem="5BU-tN-VN4" firstAttribute="top" secondItem="Hwp-R1-WZq" secondAttribute="top" id="sC1-di-Zf8"/>
+                        <constraint firstItem="5BU-tN-VN4" firstAttribute="centerX" secondItem="Hwp-R1-WZq" secondAttribute="centerX" id="xG8-p1-Z6q"/>
+                    </constraints>
+                </view>
                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y6u-lX-cJr">
                     <rect key="frame" x="0.0" y="0.0" width="220" height="50"/>
                     <subviews>
@@ -181,18 +206,30 @@
                 <constraint firstAttribute="trailing" secondItem="j2D-Mu-TcT" secondAttribute="trailing" id="7Fk-KC-e0S"/>
                 <constraint firstItem="qU4-Ae-kcn" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="7HQ-vM-tY1"/>
                 <constraint firstItem="qU4-Ae-kcn" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="GfT-3F-wS2"/>
+                <constraint firstItem="Hwp-R1-WZq" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Mbu-QH-n4M"/>
                 <constraint firstItem="j2D-Mu-TcT" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="OTe-4B-4ak"/>
                 <constraint firstAttribute="bottom" secondItem="Y6u-lX-cJr" secondAttribute="bottom" id="RBu-8F-Ska"/>
                 <constraint firstItem="Y6u-lX-cJr" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Tym-h9-bnx"/>
+                <constraint firstAttribute="bottom" secondItem="Hwp-R1-WZq" secondAttribute="bottom" id="TzP-Gh-gGY"/>
                 <constraint firstItem="j2D-Mu-TcT" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="XA4-Kz-jwb"/>
                 <constraint firstItem="z7b-dn-eJY" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="ZPm-yb-kR9"/>
                 <constraint firstItem="z7b-dn-eJY" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="fqF-QC-yhN"/>
                 <constraint firstAttribute="trailing" secondItem="Y6u-lX-cJr" secondAttribute="trailing" id="nSZ-MV-Fl5"/>
                 <constraint firstAttribute="bottom" secondItem="qU4-Ae-kcn" secondAttribute="bottom" id="qYk-op-w9Z"/>
+                <constraint firstItem="Hwp-R1-WZq" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="rV5-15-qFQ"/>
+                <constraint firstAttribute="trailing" secondItem="Hwp-R1-WZq" secondAttribute="trailing" id="uYi-Nf-ri9"/>
                 <constraint firstAttribute="trailing" secondItem="z7b-dn-eJY" secondAttribute="trailing" id="yWI-DX-GeE"/>
                 <constraint firstAttribute="bottom" secondItem="z7b-dn-eJY" secondAttribute="bottom" id="yaF-lH-5iY"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="subviews">
+                    <exclude reference="Y6u-lX-cJr"/>
+                    <exclude reference="z7b-dn-eJY"/>
+                    <exclude reference="j2D-Mu-TcT"/>
+                    <exclude reference="qU4-Ae-kcn"/>
+                </mask>
+            </variation>
             <point key="canvasLocation" x="139" y="153"/>
         </view>
     </objects>
@@ -203,6 +240,9 @@
         </namedColor>
         <namedColor name="PrimaryGreen">
             <color red="0.28627450980392155" green="0.78823529411764703" blue="0.59607843137254901" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="SecondaryText">
+            <color red="0.55686274509803924" green="0.58823529411764708" blue="0.61176470588235299" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

@@ -243,11 +243,8 @@ class CommonPodcastCommentTableViewCell : CommonReplyTableViewCell, AudioCollect
     func updateTimeLabel(duration: Double, currentTime: Double) {
         playButton.isEnabled = duration > 0
         
-        let (dHours, dMinutes, dSeconds) = Int(duration).getTimeElements()
-        durationLabel.text = "\(dHours):\(dMinutes):\(dSeconds)"
-        
-        let (cHours, cMinutes, cSeconds) = Int(currentTime).getTimeElements()
-        currentTimeLabel.text = "\(cHours):\(cMinutes):\(cSeconds)"
+        durationLabel.text = Int(duration).getPodcastTimeString()
+        currentTimeLabel.text = Int(currentTime).getPodcastTimeString()
     }
     
     func updateControls(buttonTitle: String, color: UIColor, dotVisible: Bool = true) {
@@ -271,7 +268,7 @@ class CommonPodcastCommentTableViewCell : CommonReplyTableViewCell, AudioCollect
     }
 }
 
-extension CommonPodcastCommentTableViewCell : PodcastPlayerDelegate {
+extension CommonPodcastCommentTableViewCell : PodcastPlayerRowDelegate {
     func shouldToggleLoadingWheel(loading: Bool) {
         toggleLoadingAudio(loading: loading)
     }

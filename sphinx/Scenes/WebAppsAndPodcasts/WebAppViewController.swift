@@ -26,7 +26,7 @@ class WebAppViewController: KeyboardEventsViewController {
         let viewController = StoryboardScene.WebApps.webAppViewController.instantiate()
         viewController.chat = chat
         
-        if let tribeInfo = chat.tribesInfo, let gameURL = tribeInfo.appUrl, !gameURL.isEmpty {
+        if let tribeInfo = chat.tribeInfo, let gameURL = tribeInfo.appUrl, !gameURL.isEmpty {
             viewController.gameURL = gameURL
         }
         

@@ -36,14 +36,15 @@ extension Chat {
     @NSManaged public var myPhotoUrl: String?
     @NSManaged public var webAppLastDate: Date?
     @NSManaged public var pin: String?
-    @NSManaged public var podcastFeed: String?
+    @NSManaged public var notify: Int
+    @NSManaged public var contentFeed: ContentFeed?
     @NSManaged public var contactIds: [NSNumber]
     @NSManaged public var pendingContactIds: [NSNumber]
 
     @NSManaged public var messages: NSSet?
     @NSManaged public var subscription: Subscription?
-
 }
+
 
 // MARK: Generated accessors for messages
 extension Chat {
@@ -61,3 +62,5 @@ extension Chat {
     @NSManaged public func removeFromMessages(_ values: NSSet)
 
 }
+
+extension Chat : Identifiable {}

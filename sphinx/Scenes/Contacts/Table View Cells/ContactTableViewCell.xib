@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="MaterialIcons-Regular.ttf">
+            <string>MaterialIcons-Regular</string>
+        </array>
         <array key="Montserrat-Regular.otf">
             <string>Montserrat-Regular</string>
         </array>
@@ -43,9 +46,15 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tomas A Timinskas" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N7c-7R-PrF">
-                                <rect key="frame" x="75" y="32.5" width="146.5" height="20"/>
+                                <rect key="frame" x="75" y="32.5" width="150.5" height="20"/>
                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
                                 <color key="textColor" name="Text"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="block" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bBm-h5-6hN">
+                                <rect key="frame" x="230.5" y="27.5" width="30" height="30"/>
+                                <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="30"/>
+                                <color key="textColor" name="BadgeRed"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C3E-nK-A5P">
@@ -72,7 +81,9 @@
                             <constraint firstAttribute="trailing" secondItem="5id-r0-1Z5" secondAttribute="trailing" id="NVY-Ld-idO"/>
                             <constraint firstItem="N7c-7R-PrF" firstAttribute="centerY" secondItem="f2L-fH-IhQ" secondAttribute="centerY" id="SHf-il-bRq"/>
                             <constraint firstAttribute="bottom" secondItem="C3E-nK-A5P" secondAttribute="bottom" id="WBC-lj-2ZG"/>
+                            <constraint firstItem="bBm-h5-6hN" firstAttribute="centerY" secondItem="N7c-7R-PrF" secondAttribute="centerY" id="XRx-Ie-3zt"/>
                             <constraint firstItem="Qqb-dv-Slp" firstAttribute="trailing" secondItem="ri9-Te-mMP" secondAttribute="trailing" id="XcD-xg-cXw"/>
+                            <constraint firstItem="bBm-h5-6hN" firstAttribute="leading" secondItem="N7c-7R-PrF" secondAttribute="trailing" constant="5" id="aJP-7i-uuX"/>
                             <constraint firstItem="ri9-Te-mMP" firstAttribute="centerY" secondItem="f2L-fH-IhQ" secondAttribute="centerY" id="c5z-qc-QwX"/>
                             <constraint firstItem="Qqb-dv-Slp" firstAttribute="leading" secondItem="ri9-Te-mMP" secondAttribute="leading" id="dkc-Vz-r79"/>
                             <constraint firstItem="Qqb-dv-Slp" firstAttribute="top" secondItem="ri9-Te-mMP" secondAttribute="top" id="kRU-zY-HAT"/>
@@ -82,10 +93,10 @@
                         </constraints>
                     </view>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XI2-tI-il2">
-                        <rect key="frame" x="329" y="0.0" width="85" height="85"/>
+                        <rect key="frame" x="344" y="0.0" width="70" height="85"/>
                         <color key="backgroundColor" name="BadgeRed"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="85" id="N9h-gG-bXt"/>
+                            <constraint firstAttribute="width" constant="70" id="N9h-gG-bXt"/>
                         </constraints>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <state key="normal" image="deleteIcon"/>
@@ -93,13 +104,30 @@
                             <action selector="deleteButtonTouched" destination="KGk-i7-Jjw" eventType="touchUpInside" id="lq6-BW-XUl"/>
                         </connections>
                     </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FJg-iq-SbB">
+                        <rect key="frame" x="274" y="0.0" width="70" height="85"/>
+                        <color key="backgroundColor" name="sphinxOrange"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="70" id="eei-ki-hQa"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="25"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <state key="normal" title="block"/>
+                        <connections>
+                            <action selector="blockButtonTouched" destination="KGk-i7-Jjw" eventType="touchUpInside" id="P51-MX-5la"/>
+                            <action selector="deleteButtonTouched" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Ryg-Xn-Idf"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <color key="backgroundColor" name="Body"/>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="f2L-fH-IhQ" secondAttribute="bottom" id="0hP-cF-Fc5"/>
+                    <constraint firstAttribute="bottom" secondItem="FJg-iq-SbB" secondAttribute="bottom" id="Ijl-uC-Ttt"/>
                     <constraint firstItem="f2L-fH-IhQ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="W5b-yb-y8K"/>
                     <constraint firstAttribute="trailing" secondItem="XI2-tI-il2" secondAttribute="trailing" id="a07-Ba-edU"/>
                     <constraint firstItem="XI2-tI-il2" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="ccd-gQ-Axb"/>
+                    <constraint firstItem="FJg-iq-SbB" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="fkh-gO-Y4V"/>
+                    <constraint firstItem="XI2-tI-il2" firstAttribute="leading" secondItem="FJg-iq-SbB" secondAttribute="trailing" id="hNe-Nq-nww"/>
                     <constraint firstAttribute="bottom" secondItem="XI2-tI-il2" secondAttribute="bottom" id="lGP-dQ-03X"/>
                     <constraint firstAttribute="trailing" secondItem="f2L-fH-IhQ" secondAttribute="trailing" id="wpU-vj-dfV"/>
                     <constraint firstItem="f2L-fH-IhQ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="wtP-A3-NV5"/>
@@ -108,15 +136,17 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="allContentView" destination="f2L-fH-IhQ" id="zRN-iQ-hGZ"/>
+                <outlet property="blockedSignLabel" destination="bBm-h5-6hN" id="WkX-gR-Qde"/>
                 <outlet property="bottomLine" destination="C3E-nK-A5P" id="LWY-bH-7sn"/>
                 <outlet property="button1" destination="XI2-tI-il2" id="HHT-Cz-6u5"/>
+                <outlet property="button3" destination="FJg-iq-SbB" id="4IT-7f-HWz"/>
                 <outlet property="initialsLabel" destination="Qqb-dv-Slp" id="iol-ab-sgN"/>
                 <outlet property="leftConstraint" destination="W5b-yb-y8K" id="NOA-bd-3Lm"/>
                 <outlet property="nameLabel" destination="N7c-7R-PrF" id="8o9-fR-eQd"/>
                 <outlet property="profileImageView" destination="ri9-Te-mMP" id="ewh-vb-8gO"/>
                 <outlet property="rightConstraint" destination="wpU-vj-dfV" id="cpc-Gf-oV7"/>
             </connections>
-            <point key="canvasLocation" x="139" y="117"/>
+            <point key="canvasLocation" x="137.68115942028987" y="116.85267857142857"/>
         </tableViewCell>
     </objects>
     <resources>
@@ -132,6 +162,9 @@
         </namedColor>
         <namedColor name="Text">
             <color red="0.23529411764705882" green="0.24705882352941178" blue="0.25490196078431371" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="sphinxOrange">
+            <color red="1" green="0.74099999666213989" blue="0.34900000691413879" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

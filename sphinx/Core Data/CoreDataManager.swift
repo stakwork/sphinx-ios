@@ -16,8 +16,8 @@ class CoreDataManager {
     
     private init() {}
     
+    
     lazy var persistentContainer: NSPersistentContainer = {
-        
         let container = NSPersistentContainer(name: "sphinx")
         
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
@@ -25,20 +25,35 @@ class CoreDataManager {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         })
+        
+        container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        container.viewContext.shouldDeleteInaccessibleFaults = true
+        
+        // 🔑 Ensures that the `mainContext` is aware of any changes that were made
+        // to the persistent container.
+        //
+        // For example, when we save a background context,
+        // the persistent container is automatically informed of the changes that
+        // were made. And since the `mainContext` is considered to be a child of
+        // the persistent container, it will receive those updates -- merging
+        // any changes, as the name suggests, automatically.
+        container.viewContext.automaticallyMergesChangesFromParent = true
+        
         return container
     }()
     
+    
     func saveContext() {
-        let context = CoreDataManager.sharedManager.persistentContainer.viewContext
+        CoreDataManager.sharedManager.persistentContainer.viewContext.saveContext()
+    }
+    
+    func getBackgroundContext() -> NSManagedObjectContext {
+        let backgroundContext = CoreDataManager.sharedManager.persistentContainer.newBackgroundContext()
+        backgroundContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        backgroundContext.shouldDeleteInaccessibleFaults = true
+        backgroundContext.automaticallyMergesChangesFromParent = true
         
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-            }
-        }
+        return backgroundContext
     }
     
     func clearCoreDataStore() {
@@ -61,12 +76,11 @@ class CoreDataManager {
                 deleteContactObjectsFor(contact)
             }
         }
-        
         saveContext()
     }
     
     func deleteContactObjectsFor(_ contact: UserContact) {
-        if let chat = contact.getConversation() {
+        if let chat = contact.getChat() {
             for message in chat.getAllMessages(limit: nil) {
                 MediaLoader.clearMessageMediaCache(message: message)
                 deleteObject(object: message)
@@ -85,7 +99,7 @@ class CoreDataManager {
         
         contact.deleteColor()
         deleteObject(object: contact)
-        CoreDataManager.sharedManager.saveContext()
+        saveContext()
     }
     
     func deleteChatObjectsFor(_ chat: Chat) {
@@ -97,6 +111,11 @@ class CoreDataManager {
         }
         deleteObject(object: chat)
         saveContext()
+    }
+    
+    func getObjectWith<T>(objectId: NSManagedObjectID) -> T? {
+        let managedContext = persistentContainer.viewContext
+        return managedContext.object(with:objectId) as? T
     }
     
     func getAllOfType<T>(entityName: String, sortDescriptors: [NSSortDescriptor]? = nil) -> [T] {
@@ -176,8 +195,13 @@ class CoreDataManager {
         return count
     }
     
-    func getObjectOfTypeWith<T>(predicate: NSPredicate, sortDescriptors: [NSSortDescriptor], entityName: String) -> T? {
-        let managedContext = persistentContainer.viewContext
+    func getObjectOfTypeWith<T>(
+        predicate: NSPredicate,
+        sortDescriptors: [NSSortDescriptor],
+        entityName: String,
+        managedContext: NSManagedObjectContext? = nil
+    ) -> T? {
+        let managedContext = managedContext ?? persistentContainer.viewContext
         var objects:[T] = [T]()
         
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName:"\(entityName)")
@@ -200,6 +224,18 @@ class CoreDataManager {
     func deleteObject(object: NSManagedObject) {
         let managedContext = persistentContainer.viewContext
         managedContext.delete(object)
-        saveContext()
+    }
+}
+
+extension NSManagedObjectContext {
+    func saveContext() {
+        if self.hasChanges {
+            do {
+                try self.save()
+            } catch {
+                let nserror = error as NSError
+                print("Unresolved error \(nserror)")
+            }
+        }
     }
 }

@@ -10,11 +10,11 @@ import Foundation
 
 extension Date {
     var dayOfYear: Int {
-        return Calendar.current.ordinality(of: .day, in: .year, for: self)!
+        return Calendar.current.ordinality(of: .day, in: .year, for: self) ?? 0
     }
     
     var monthOfYear: Int {
-        return Calendar.current.ordinality(of: .month, in: .year, for: self)!
+        return Calendar.current.ordinality(of: .month, in: .year, for: self) ?? 0
     }
     
     func getStringDate(format: String) -> String {
@@ -46,7 +46,12 @@ extension Date {
     
     public static func getDateFromString(dateString: String?) -> Date? {
         if let dateString = dateString {
-            let dateFormats = ["yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", "yyyy-MM-dd HH:mm:ss.SSS", "yyyy-MM-dd'T'HH:mm:ss'.000Z'"]
+            
+            let dateFormats = [
+                "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
+                "yyyy-MM-dd HH:mm:ss.SSS",
+                "yyyy-MM-dd'T'HH:mm:ss'.000Z'"
+            ]
             
             for format in dateFormats {
                 let dateSubstring = dateString.substring(toIndex: format.count)
@@ -59,25 +64,24 @@ extension Date {
     }
     
     public static func getDateFromString(dateString: String, format: String) -> Date? {
-        let dateFormatter = DateFormatter();
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = format
         dateFormatter.timeZone = TimeZone(abbreviation: "GMT+00")
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-        if let date = dateFormatter.date(from: dateString) {
-            return date
-        }
-        return nil
+        return dateFormatter.date(from: dateString)
     }
     
     public static func isDifferentDay(firstDate: Date, secondDate: Date) -> Bool {
-       let cal = Calendar.current
-       let firstDay = cal.ordinality(of: .day, in: .year, for: firstDate)!
-       let firstYear = cal.component(.year, from: firstDate)
-
-       let secondDay = cal.ordinality(of: .day, in: .year, for: secondDate)!
-       let secondYear = cal.component(.year, from: secondDate)
-
-       return secondDay != firstDay || secondYear != firstYear
+        let cal = Calendar.current
+        if let firstDay = cal.ordinality(of: .day, in: .year, for: firstDate),
+           let secondDay = cal.ordinality(of: .day, in: .year, for: secondDate) {
+            
+            let firstYear = cal.component(.year, from: firstDate)
+            let secondYear = cal.component(.year, from: secondDate)
+            
+            return secondDay != firstDay || secondYear != firstYear
+        }
+        return true
    }
     
     func shouldShowMonthAndYear() -> (Bool, Bool) {
@@ -128,5 +132,9 @@ extension Date {
                 return self.getStringDate(format: "EEE dd MMM")
             }
         }
+    }
+    
+    func changeDays(by days: Int) -> Date {
+        return Calendar.current.date(byAdding: .day, value: days, to: self) ?? self
     }
 }

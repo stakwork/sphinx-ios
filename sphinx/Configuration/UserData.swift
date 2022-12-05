@@ -20,7 +20,225 @@ class UserData {
     let onionConnector = SphinxOnionConnector.sharedInstance
     
     func isUserLogged() -> Bool {
-        return (getAppPin() != "" && getNodeIP() != "" && getAuthToken() != "" && SignupHelper.isLogged())
+        return getAppPin() != "" &&
+               getNodeIP() != "" &&
+               getAuthToken() != "" &&
+               SignupHelper.isLogged()
+    }
+    
+    func getAuthenticationHeader(
+        token: String? = nil,
+        transportKey: String? = nil
+    ) -> [String: String] {
+        
+        let t = token ?? getAuthToken()
+        
+        if t.isEmpty {
+            return [:]
+        }
+        
+        if let transportK = transportKey ?? getTransportKey(),
+           let transportEncryptionKey = EncryptionManager.sharedInstance.getPublicKeyFromBase64String(base64String: transportK) {
+            
+            let time = Int(NSDate().timeIntervalSince1970*1000)
+            let tokenAndTime = "\(t)|\(time)"
+            
+            if let encryptedToken = EncryptionManager.sharedInstance.encryptToken(token: tokenAndTime, key: transportEncryptionKey) {
+                return ["x-transport-token": encryptedToken]
+            }
+            
+        }
+        return ["X-User-Token": t]
+    }
+    
+    func getHMACHeader(
+        url: URL,
+        method: String,
+        bodyData: Data?
+    ) -> [String: String] {
+        
+        let path = url.pathWithParams
+        var signingString = "\(method)|\(path)|"
+        
+        if let bodyData = bodyData {
+            
+            if let bodyJsonString = String(
+                data: bodyData,
+                encoding: .utf8
+            ) {
+                signingString = "\(signingString)\(bodyJsonString)"
+            }
+            
+        }
+        
+        if let HMACKey = getHmacKey() {
+            return [
+                "x-hmac": signingString.hmac(algorithm: .SHA256, key: HMACKey)
+            ]
+        }
+        
+        return [:]
+    }
+    
+    func getAndSaveTransportKey(
+        completion: ((String?) ->())? = nil
+    ) {
+        if let transportKey = getTransportKey(), !transportKey.isEmpty {
+            completion?(transportKey)
+            return
+        }
+        
+        API.sharedInstance.getTransportKey(callback: { transportKey in
+            self.save(transportKey: transportKey)
+            completion?(transportKey)
+        }, errorCallback: {
+            completion?(nil)
+        })
+    }
+    
+    func getAndSaveHMACKey(
+        completion: (() -> ())? = nil,
+        noKeyCompletion: (() -> ())? = nil
+    ) {
+        if let hmacKey = getHmacKey(), !hmacKey.isEmpty {
+            completion?()
+            return
+        }
+        
+        API.sharedInstance.getHMACKey(callback: { hmacKey in
+            let (decrypted, decryptedHMACKey) = EncryptionManager.sharedInstance.decryptMessage(message: hmacKey)
+            if decrypted {
+                self.save(hmacKey: decryptedHMACKey)
+                completion?()
+            }
+        }, errorCallback: {
+            noKeyCompletion?()
+        })
+    }
+    
+    func getOrCreateHMACKey(
+        completion: (() -> ())? = nil
+    ) {
+        if let hmacKey = getHmacKey(), !hmacKey.isEmpty {
+            completion?()
+            return
+        }
+        
+        getAndSaveHMACKey(
+            completion: completion,
+            noKeyCompletion: {
+                self.createHMACKey(completion: completion)
+            }
+        )
+    }
+    
+    func createHMACKey(
+        completion: (() -> ())? = nil
+    ) {
+        let HMACKey = EncryptionManager.randomString(length: 20)
+        
+        var parameters = [String : AnyObject]()
+        
+        if let transportK = self.getTransportKey(),
+           let transportEncryptionKey = EncryptionManager.sharedInstance.getPublicKeyFromBase64String(base64String: transportK) {
+            
+            if let encryptedHMACKey = EncryptionManager.sharedInstance.encryptToken(token: HMACKey, key: transportEncryptionKey) {
+                parameters["encrypted_key"] = encryptedHMACKey as AnyObject?
+            } else {
+                completion?()
+                return
+            }
+        }
+        
+        API.sharedInstance.addHMACKey(
+            params: parameters,
+            callback: { _ in
+                self.save(hmacKey: HMACKey)
+                completion?()
+            },
+            errorCallback: {
+                completion?()
+            }
+        )
+    }
+    
+    func generateToken(
+        token: String,
+        pubkey: String,
+        password: String? = nil,
+        completion: @escaping () -> (),
+        errorCompletion: @escaping () -> ()
+    ) {
+        getAndSaveTransportKey(completion: { transportKey in
+            if let transportKey = transportKey {
+                    
+                let authenticatedHeader = self.getAuthenticationHeader(
+                    token: token,
+                    transportKey: transportKey
+                )
+                
+                API.sharedInstance.generateToken(
+                    pubkey: pubkey,
+                    password: password,
+                    additionalHeaders: authenticatedHeader,
+                    callback: { [weak self] success in
+                        guard let self = self else { return }
+                    
+                        if success {
+                            self.saveTokenAndContinue(
+                                token: token,
+                                transportKey: transportKey,
+                                completion: completion
+                            )
+                        } else {
+                            errorCompletion()
+                        }
+                    },
+                    errorCallback: {
+                        errorCompletion()
+                    }
+                )
+            } else {
+                API.sharedInstance.generateTokenUnauthenticated(
+                    token: token,
+                    pubkey: pubkey,
+                    password: password,
+                    callback: { [weak self] success in
+                        guard let self = self else { return }
+                        
+                        if success {
+                            self.saveTokenAndContinue(
+                                token: token,
+                                transportKey: transportKey,
+                                completion: completion
+                            )
+                        } else {
+                            errorCompletion()
+                        }
+                    }, errorCallback: {
+                        errorCompletion()
+                    })
+            }
+        })
+    }
+    
+    func saveTokenAndContinue(
+        token: String,
+        transportKey: String?,
+        completion: @escaping () -> ()
+    ) {
+        self.save(authToken: token)
+        
+        if let transportKey = transportKey {
+            self.save(transportKey: transportKey)
+            
+            self.createHMACKey() {
+                completion()
+            }
+            return
+        }
+        
+        completion()
     }
     
     func getPINHours() -> Int {
@@ -59,7 +277,11 @@ class UserData {
         return ownerPubKey
     }
     
-    func save(ip: String, token: String, andPin pin: String) {
+    func save(
+        ip: String,
+        token: String,
+        pin: String
+    ) {
         save(ip: ip)
         save(authToken: token)
         save(pin: pin)
@@ -96,6 +318,18 @@ class UserData {
     
     func save(authToken: String) {
         saveValueFor(value: authToken, for: KeychainManager.KeychainKeys.authToken, userDefaultKey: UserDefaults.Keys.authToken)
+    }
+    
+    func save(transportKey: String) {
+        saveValueFor(value: transportKey, for: KeychainManager.KeychainKeys.transportKey, userDefaultKey: UserDefaults.Keys.transportKey)
+    }
+    
+    func save(walletMnemonic: String) {
+        saveValueFor(value: walletMnemonic, for: KeychainManager.KeychainKeys.walletMnemonic, userDefaultKey: nil)
+    }
+    
+    func save(hmacKey: String) {
+        saveValueFor(value: hmacKey, for: KeychainManager.KeychainKeys.hmacKey, userDefaultKey: UserDefaults.Keys.hmacKey)
     }
     
     func save(password: String) {
@@ -135,6 +369,31 @@ class UserData {
     
     func getAuthToken() -> String {
         return getValueFor(keychainKey: KeychainManager.KeychainKeys.authToken, userDefaultKey: UserDefaults.Keys.authToken)
+    }
+    
+    func getMnemonic() -> String? {
+        let mnemonic = getValueFor(keychainKey: KeychainManager.KeychainKeys.walletMnemonic, userDefaultKey: nil)
+        
+        if !mnemonic.isEmpty {
+            return mnemonic
+        }
+        return nil
+    }
+    
+    func getTransportKey() -> String? {
+        let transportKey = getValueFor(keychainKey: KeychainManager.KeychainKeys.transportKey, userDefaultKey: UserDefaults.Keys.transportKey)
+        if !transportKey.isEmpty {
+            return transportKey
+        }
+        return nil
+    }
+    
+    func getHmacKey() -> String? {
+        let hmacKey = getValueFor(keychainKey: KeychainManager.KeychainKeys.hmacKey, userDefaultKey: UserDefaults.Keys.hmacKey)
+        if !hmacKey.isEmpty {
+            return hmacKey
+        }
+        return nil
     }
     
     func getEncryptionKeys() -> (String?, String?) {

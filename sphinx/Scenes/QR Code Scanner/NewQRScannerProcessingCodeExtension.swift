@@ -35,25 +35,13 @@ extension NewQRScannerViewController {
             return
         } else if validateInvoice(string: string) {
             return
-        } else if validateGroupJoinQR(string: string) {
+        } else if validatePublicKey(string: string) {
+            return
+        } else if validateDeepLinks(string: string) {
             return
         }
         
         AlertHelper.showAlert(title: "sorry".localized, message: "code.not.recognized".localized)
-    }
-    
-    func validateGroupJoinQR(string: String) -> Bool {
-        let (valid, query) = GroupsManager.sharedInstance.validateGroupJoinLink(string: string)
-        if valid {
-            goToGroupDetailsView(query: query)
-        }
-        return valid
-    }
-    
-    func goToGroupDetailsView(query: String) {
-        self.dismiss(animated: true, completion: {
-            self.delegate?.shouldPresentGroupDetailsWith?(query: query)
-        })
     }
     
     func validateInvoice(string: String) -> Bool {
@@ -63,6 +51,16 @@ extension NewQRScannerViewController {
             DispatchQueue.main.async {
                 self.completeAndShowPRDetails()
             }
+            return true
+        }
+        return false
+    }
+    
+    func validatePublicKey(string: String) -> Bool {
+        if string.isPubKey || string.isVirtualPubKey {
+            dismiss(animated: true, completion: {
+                self.delegate?.didScanPublicKey?(string: string)
+            })
             return true
         }
         return false
@@ -82,6 +80,16 @@ extension NewQRScannerViewController {
     func goToSubscriptionDetailsView(subscription: SubscriptionManager.SubscriptionQR) {
         let subscriptionDetailsVC = SubscriptionDetailsViewController.instantiate(rootViewController: rootViewController, subscriptionQR: subscription, delegate: delegate)
         self.navigationController?.pushViewController(subscriptionDetailsVC, animated: true)
+    }
+    
+    func validateDeepLinks(string: String) -> Bool {
+        if let url = URL(string: string), DeepLinksHandlerHelper.storeLinkQueryFrom(url: url) {
+            dismiss(animated: true, completion: { 
+                self.delegate?.didScanDeepLink?()
+            })
+            return true
+        }
+        return false
     }
     
     func completeAndShowPRDetails() {

@@ -44,17 +44,19 @@ class AddFriendRowButton: UIView {
         addFriendButtonContainer.layer.cornerRadius = addFriendButtonContainer.frame.size.height / 2
         addFriendButtonContainer.clipsToBounds = true
         addFriendButtonContainer.addShadow(location: VerticalLocation.bottom, color: UIColor.Sphinx.GreenBorder, opacity: 1, radius: 0.5, bottomhHeight: 1.5)
-        
+
         createGroupContainer.layer.cornerRadius = createGroupContainer.frame.size.height / 2
         createGroupContainer.clipsToBounds = true
         createGroupContainer.addShadow(location: VerticalLocation.bottom, color: UIColor.Sphinx.PrimaryBlueBorder, opacity: 1, radius: 0.5, bottomhHeight: 1.5)
     }
     
     func configureForAddFriend() {
+        addFriendButtonContainer.isHidden = false
         createGroupContainer.isHidden = true
     }
     
     func configureForCreateTribe() {
+        createGroupContainer.isHidden = false
         addFriendButtonContainer.isHidden = true
         createGroupLeading.constant = -addFriendButtonContainer.frame.width
         createGroupContainer.layoutIfNeeded()

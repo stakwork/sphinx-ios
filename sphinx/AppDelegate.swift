@@ -8,10 +8,12 @@
 
 import UIKit
 import UserNotifications
+import StoreKit
 import SDWebImage
 import Alamofire
 import GiphyUISDK
 import AVFAudio
+import BackgroundTasks
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -27,8 +29,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let onionConnector = SphinxOnionConnector.sharedInstance
     
     let newMessageBubbleHelper = NewMessageBubbleHelper()
+    
+    let chatListViewModel = ChatListViewModel(contactsService: ContactsService())
 
-    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+    func application(
+        _ application: UIApplication,
+        supportedInterfaceOrientationsFor window: UIWindow?
+    ) -> UIInterfaceOrientationMask {
+        
         if UIDevice.current.isIpad {
             return .allButUpsideDown
         }
@@ -40,21 +48,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return .portrait
     }
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        notificationUserInfo = nil
+    func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+    ) -> Bool {
+        
+        setAppConfiguration()
+        registerAppRefresh()
+        configureGiphy()
+        configureNotificationCenter()
+        configureStoreKit()
+        connectTor()
+        
+        setInitialVC(launchingApp: true)
 
+        return true
+    }
+    
+    func setAppConfiguration() {
         Constants.setSize()
         window?.setStyle()
         saveCurrentStyle()
-
-        if UserData.sharedInstance.isUserLogged() {
-            application.setMinimumBackgroundFetchInterval(UIApplication.backgroundFetchIntervalMinimum)
-        }
-
+    }
+    
+    func registerAppRefresh() {
+        BGTaskScheduler.shared.register(forTaskWithIdentifier: "com.gl.sphinx.refresh", using: nil, launchHandler: { task in
+            self.handleAppRefresh(task: task)
+        })
+    }
+    
+    func configureGiphy() {
         if let GIPHY_API_KEY = Bundle.main.object(forInfoDictionaryKey: "GIPHY_API_KEY") as? String {
             Giphy.configure(apiKey: GIPHY_API_KEY)
         }
-
+    }
+    
+    func configureNotificationCenter() {
+        notificationUserInfo = nil
         UNUserNotificationCenter.current().delegate = self
 
         setInitialVC(launchingApp: true)
@@ -62,6 +92,45 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         connectTor()
 
         return true
+    }
+    
+    func configureStoreKit() {
+        SKPaymentQueue.default().add(StoreKitService.shared)
+    }
+    
+    func syncDeviceId() {
+        UserContact.syncDeviceId()
+    }
+    
+    func getRelayKeys() {
+        UserData.sharedInstance.getAndSaveTransportKey()
+        UserData.sharedInstance.getOrCreateHMACKey()
+    }
+    
+    func handleAppRefresh(task: BGTask) {
+        scheduleAppRefresh()
+        
+        chatListViewModel.loadFriends { _ in
+            self.chatListViewModel.syncMessages(
+                progressCallback: { _ in },
+                completion: { (_, _) in
+                    task.setTaskCompleted(success: true)
+                },
+                errorCompletion: {
+                    task.setTaskCompleted(success: true)
+                }
+            )
+        }
+    }
+    
+    func scheduleAppRefresh() {
+        let request = BGAppRefreshTaskRequest(identifier: "com.gl.sphinx.refresh")
+        request.earliestBeginDate = Date(timeIntervalSinceNow: 15 * 60)
+        do {
+            try BGTaskScheduler.shared.submit(request)
+        } catch {
+            print("Could not schedule app refresh \(error)")
+        }
     }
 
     func connectTor() {
@@ -73,26 +142,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         onionConnector.startTor(delegate: self)
     }
 
-    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+    func application(
+        _ app: UIApplication,
+        open url: URL,
+        options: [UIApplication.OpenURLOptionsKey : Any] = [:]
+    ) -> Bool {
+        
         if DeepLinksHandlerHelper.storeLinkQueryFrom(url: url) {
             setInitialVC(launchingApp: false, deepLink: true)
         }
         return true
     }
 
-    func application(_ application: UIApplication, handleEventsForBackgroundURLSession identifier: String, completionHandler: @escaping () -> Void) {
+    func application(
+        _ application: UIApplication,
+        handleEventsForBackgroundURLSession identifier: String,
+        completionHandler: @escaping () -> Void
+    ) {
         backgroundSessionCompletionHandler = completionHandler
     }
 
-    func applicationDidEnterBackground(_ application: UIApplication) {
+    func applicationDidEnterBackground(
+        _ application: UIApplication
+    ) {
         saveCurrentStyle()
         WindowsManager.sharedInstance.removeMessageOptions()
         setMessagesAsSeen()
         setBadge(application: application)
+        
+        PodcastPlayerHelper.sharedInstance.finishAndSaveContentConsumed()
         CoreDataManager.sharedManager.saveContext()
+        
+        scheduleAppRefresh()
     }
 
-    func applicationWillEnterForeground(_ application: UIApplication) {
+    func applicationWillEnterForeground(
+        _ application: UIApplication
+    ) {
         notificationUserInfo = nil
 
         if !UserData.sharedInstance.isUserLogged() {
@@ -100,18 +186,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         reloadMessagesData()
         presentPINIfNeeded()
-    }
-
-    func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        performBackgroundFetch(application: application, completionHandler: completionHandler)
-    }
-
-    func performBackgroundFetch(application: UIApplication, completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        if application.applicationState == .background {
-            self.getNewData(completion: { result in
-                completionHandler(result)
-            })
-        }
+        
+        PodcastPlayerHelper.sharedInstance.finishAndSaveContentConsumed()
     }
 
     func saveCurrentStyle() {
@@ -134,11 +210,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
-    func applicationWillResignActive(_ application: UIApplication) {
-        SphinxSocketManager.sharedInstance.disconnectWebsocket()
-    }
-
-    func applicationDidBecomeActive(_ application: UIApplication) {
+    func applicationDidBecomeActive(
+        _ application: UIApplication
+    ) {
         SphinxSocketManager.sharedInstance.connectWebsocket(forceConnect: true)
         reloadAppIfStyleChanged()
 
@@ -149,14 +223,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 
-    func applicationWillTerminate(_ application: UIApplication) {
+    func applicationWillTerminate(
+        _ application: UIApplication
+    ) {
         setMessagesAsSeen()
         setBadge(application: application)
 
+        SKPaymentQueue.default().remove(StoreKitService.shared)
+
+        PodcastPlayerHelper.sharedInstance.finishAndSaveContentConsumed()
         CoreDataManager.sharedManager.saveContext()
     }
 
-    func setInitialVC(launchingApp: Bool, deepLink: Bool = false) {
+    func setInitialVC(
+        launchingApp: Bool,
+        deepLink: Bool = false
+    ) {
         if launchingVC {
             return
         }
@@ -168,6 +250,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             reloadMessagesData()
             launchingVC = false
             return
+        }
+        
+        if isUserLogged {
+            syncDeviceId()
+            getRelayKeys()
+            ActionsManager.sharedInstance.syncActions()
         }
 
         takeUserToInitialVC(isUserLogged: isUserLogged)
@@ -181,7 +269,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
-    func takeUserToInitialVC(isUserLogged: Bool) {
+    func takeUserToInitialVC(
+        isUserLogged: Bool
+    ) {
         hideAccessoryView()
 
         let rootViewController = StoryboardScene.Root.initialScene.instantiate()
@@ -195,13 +285,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if isUserLogged {
             mainCoordinator.presentInitialDrawer()
         } else {
+            window?.setDarkStyle()
             mainCoordinator.presentSignUpScreen()
         }
 
         launchingVC = false
     }
 
-    func shouldStayInView(launchingApp: Bool) -> Bool {
+    func shouldStayInView(
+        launchingApp: Bool
+    ) -> Bool {
         let isUserLogged = UserData.sharedInstance.isUserLogged()
         let shouldTakeToChat = UserDefaults.Keys.chatId.get(defaultValue: -1) >= 0
         let shouldTakeToSubscription = UserDefaults.Keys.subscriptionQuery.get(defaultValue: "") != ""
@@ -233,10 +326,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func isOnChatList() -> Bool {
-        if let _ = getCurrentVC() as? ChatListViewController {
-            return true
-        }
-        return false
+        getCurrentVC() is DashboardRootViewController
     }
 
     func hideAccessoryView() {
@@ -269,35 +359,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if let currentVC = currentVC as? ChatViewController {
                 UserDefaults.Keys.chatId.removeValue()
                 currentVC.fetchNewData()
-            } else if let currentVC = currentVC as? ChatListViewController {
-                let shouldTakeToChat = UserDefaults.Keys.chatId.get(defaultValue: -1) >= 0
+            } else if let dashboardRootVC = currentVC as? DashboardRootViewController {
+                
+                let shouldDeepLinkIntoChatDetails =
+                    UserDefaults.Keys.chatId.get(defaultValue: -1) >= 0 ||
+                    UserDefaults.Keys.contactId.get(defaultValue: -1) >= 0
 
-                if shouldTakeToChat {
-                    currentVC.handleDeepLinksAndPush()
+                if shouldDeepLinkIntoChatDetails {
+                    dashboardRootVC.handleDeepLinksAndPush()
                 } else {
-                    currentVC.loadFriendAndReload()
+                    dashboardRootVC.loadContactsAndSyncMessages(
+                        shouldShowHeaderLoadingWheel: true
+                    )
                 }
             }
         }
     }
 
-    func reloadMessagesUI() {
-        if let currentVC = getCurrentVC() {
-            if let currentVC = currentVC as? ChatViewController {
-                currentVC.initialLoad()
-            } else if let currentVC = currentVC as? ChatListViewController {
-                currentVC.initialLoad()
-            }
-        }
-    }
-
-    func setBadge(application: UIApplication) {
+    func setBadge(
+        application: UIApplication
+    ) {
         application.applicationIconBadgeNumber = TransactionMessage.getReceivedUnseenMessagesCount()
     }
 
     func setMessagesAsSeen() {
-        if let roowVController = window?.rootViewController as? RootViewController,
-           let currentVC = roowVController.getLastCenterViewController() as? ChatViewController,
+        if let rootVController = window?.rootViewController as? RootViewController,
+           let currentVC = rootVController.getLastCenterViewController() as? ChatViewController,
            let currentChat = currentVC.chat {
             currentChat.setChatMessagesAsSeen()
         }
@@ -306,38 +393,51 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
 
-    func getNewData(completion: @escaping (UIBackgroundFetchResult) -> ()) {
-        let chatListViewModel = ChatListViewModel(contactsService: ContactsService())
-        chatListViewModel.loadFriends {
-            chatListViewModel.syncMessages(fromPush: true, progressCallback: { _ in }, completion: { (_, count) in
-                DispatchQueue.main.async {
-                    if (count > 0) {
-                        self.reloadMessagesUI()
-                        completion(.newData)
-                    }
+    func application(
+        _ application: UIApplication,
+        didReceiveRemoteNotification userInfo: [AnyHashable : Any],
+        fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
+    ) {
+        if application.applicationState == .background {
+            self.chatListViewModel.syncMessages(
+                onPushReceived: true,
+                progressCallback: { _ in },
+                completion: { (_, _) in
+                    completionHandler(.newData)
+                },
+                errorCompletion: {
+                    completionHandler(.noData)
                 }
-            })
+            )
+        } else {
+            completionHandler(.noData)
         }
     }
 
-    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        performBackgroundFetch(application: application, completionHandler: completionHandler)
-    }
-
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+    func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        didReceive response: UNNotificationResponse,
+        withCompletionHandler completionHandler: @escaping () -> Void
+    ) {
         if UIApplication.shared.applicationState == .inactive, response.actionIdentifier == UNNotificationDefaultActionIdentifier {
             notificationUserInfo = response.notification.request.content.userInfo as? [String: AnyObject]
         }
         completionHandler()
     }
 
-    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+    func application(
+        _ application: UIApplication,
+        didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data
+    ) {
         let tokenParts = deviceToken.map { data in String(format: "%02.2hhx", data) }
         let token = tokenParts.joined()
         UserContact.updateDeviceId(deviceId: token)
     }
 
-    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+    func application(
+        _ application: UIApplication,
+        didFailToRegisterForRemoteNotificationsWithError error: Error
+    ) {
         print("Failed to register: \(error)")
     }
 
@@ -345,8 +445,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         let notificationsCenter = UNUserNotificationCenter.current()
         notificationsCenter.getNotificationSettings { settings in
             notificationsCenter.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
-                guard granted else { return }
-
                 DispatchQueue.main.async {
                     UIApplication.shared.registerForRemoteNotifications()
                 }
@@ -354,7 +452,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         }
     }
 
-    func handlePush(notification: [String: AnyObject]) {
+    func handlePush(
+        notification: [String: AnyObject]
+    ) {
         if let aps = notification["aps"] as? [String: AnyObject], let customData = aps["custom_data"] as? [String: AnyObject] {
             if let chatId = customData["chat_id"] as? Int {
                 UserDefaults.Keys.chatId.set(chatId)

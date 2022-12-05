@@ -18,7 +18,7 @@
 "HTw-wx-D0f.text" = "Solicitar";
 
 /* Class = "UILabel"; text = "REQUEST AMOUNT"; ObjectID = "JH8-XK-2TQ"; */
-"JH8-XK-2TQ.text" = "SOLICITAR MONTO";
+"JH8-XK-2TQ.text" = "SOLICITAR PAGO";
 
 /* Class = "UILabel"; text = "Send"; ObjectID = "NHj-ji-e9m"; */
 "NHj-ji-e9m.text" = "Enviar";
@@ -48,7 +48,7 @@
 "mnK-0f-aOi.placeholder" = "Mensaje Vacío";
 
 /* Class = "UITextField"; placeholder = "Add Message"; ObjectID = "uzk-r4-4Vh"; */
-"uzk-r4-4Vh.placeholder" = "Agregar Mensaje";
+"uzk-r4-4Vh.placeholder" = "Agrega un Mensaje";
 
 /* Class = "UILabel"; text = "Library"; ObjectID = "vqQ-dy-2SC"; */
 "vqQ-dy-2SC.text" = "Librería";
@@ -60,3 +60,5 @@
 "ypU-tY-BWb.text" = "SOLICITAR: ";
 
 "vI1-az-0QI.text" = "Archivo";
+
+"SpZ-Zf-bcC.text" = "Notificaciones";

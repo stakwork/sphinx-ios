@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -47,11 +47,11 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FSb-3u-pBP" customClass="ChatAvatarView" customModule="sphinx" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="56" height="56"/>
+                                <rect key="frame" x="15" y="4" width="33" height="33"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="56" id="HNs-D0-iel"/>
-                                    <constraint firstAttribute="width" constant="56" id="jZ0-mq-Kxz"/>
+                                    <constraint firstAttribute="height" constant="33" id="HNs-D0-iel"/>
+                                    <constraint firstAttribute="width" constant="33" id="jZ0-mq-Kxz"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="61o-7J-1RV">
@@ -65,14 +65,14 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Monday 6:05 AM" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CMa-Bh-teH">
-                                        <rect key="frame" x="4" y="2" width="77" height="12"/>
+                                        <rect key="frame" x="4" y="2" width="76" height="12"/>
                                         <color key="backgroundColor" name="Body"/>
                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="10"/>
                                         <color key="textColor" name="SecondaryText"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="lock" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9ke-Eg-TMB">
-                                        <rect key="frame" x="84" y="0.5" width="24.5" height="13"/>
+                                        <rect key="frame" x="83" y="0.5" width="13" height="13"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="13" id="e3K-Ca-XrQ"/>
                                         </constraints>
@@ -108,17 +108,17 @@
                             <constraint firstAttribute="trailing" secondItem="KNy-bq-pH9" secondAttribute="trailing" constant="28" id="Lbb-gR-jZD"/>
                             <constraint firstItem="a76-Dq-eQW" firstAttribute="top" secondItem="6kt-tq-WkS" secondAttribute="top" constant="21" id="MOI-43-VS3"/>
                             <constraint firstItem="61o-7J-1RV" firstAttribute="top" secondItem="6kt-tq-WkS" secondAttribute="top" constant="4" id="Pi3-Pp-hqv"/>
-                            <constraint firstItem="FSb-3u-pBP" firstAttribute="leading" secondItem="6kt-tq-WkS" secondAttribute="leading" id="Tmd-EA-22V"/>
+                            <constraint firstItem="FSb-3u-pBP" firstAttribute="leading" secondItem="6kt-tq-WkS" secondAttribute="leading" constant="15" id="Tmd-EA-22V"/>
                             <constraint firstItem="frf-y6-ELt" firstAttribute="leading" secondItem="6kt-tq-WkS" secondAttribute="leading" constant="75.5" id="fbN-0b-4Td"/>
                             <constraint firstAttribute="bottom" secondItem="frf-y6-ELt" secondAttribute="bottom" id="hB9-dI-Ji1"/>
                             <constraint firstAttribute="bottom" secondItem="KNy-bq-pH9" secondAttribute="bottom" id="jJ1-4p-tRW"/>
-                            <constraint firstItem="FSb-3u-pBP" firstAttribute="top" secondItem="6kt-tq-WkS" secondAttribute="top" id="jYM-jr-cPU"/>
+                            <constraint firstItem="FSb-3u-pBP" firstAttribute="top" secondItem="6kt-tq-WkS" secondAttribute="top" constant="4" id="jYM-jr-cPU"/>
                             <constraint firstAttribute="bottom" secondItem="a76-Dq-eQW" secondAttribute="bottom" constant="4" id="nG2-Xv-AVY"/>
                             <constraint firstItem="61o-7J-1RV" firstAttribute="leading" secondItem="a76-Dq-eQW" secondAttribute="leading" id="odq-Ae-GlU"/>
                             <constraint firstItem="frf-y6-ELt" firstAttribute="top" secondItem="6kt-tq-WkS" secondAttribute="top" id="v9L-YP-knp"/>
                         </constraints>
                     </view>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nUT-xS-zQH">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nUT-xS-zQH">
                         <rect key="frame" x="375" y="0.0" width="50" height="400"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="50" id="0Q7-1U-MQJ"/>
@@ -140,8 +140,8 @@
                     <constraint firstAttribute="bottom" secondItem="6kt-tq-WkS" secondAttribute="bottom" id="fqm-9Q-dBA"/>
                 </constraints>
             </tableViewCellContentView>
-            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
                 <outlet property="allContentView" destination="6kt-tq-WkS" id="mfh-l6-ZbW"/>
                 <outlet property="bubbleView" destination="a76-Dq-eQW" id="ae5-qn-tv3"/>

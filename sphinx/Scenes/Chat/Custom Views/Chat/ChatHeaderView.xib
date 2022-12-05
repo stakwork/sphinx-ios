@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -34,7 +34,6 @@
                 <outlet property="lockSign" destination="tp6-3C-IrP" id="Cwe-47-jWV"/>
                 <outlet property="nameLabel" destination="6In-3T-Qql" id="ktG-68-lek"/>
                 <outlet property="profileImageView" destination="FzU-vr-ru9" id="VV3-FJ-SPa"/>
-                <outlet property="videoCallButton" destination="ahL-K7-tna" id="IAk-TD-hjd"/>
                 <outlet property="volumeButton" destination="6uG-XH-Ptg" id="77y-CI-Nlm"/>
                 <outlet property="webAppButton" destination="Mt6-rI-5Dn" id="zIa-gv-EgZ"/>
                 <outlet property="webAppButtonTrailing" destination="oyF-xL-U2b" id="2i5-Ji-Wfk"/>
@@ -99,7 +98,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="lock" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tp6-3C-IrP">
-                            <rect key="frame" x="171" y="26" width="28" height="13"/>
+                            <rect key="frame" x="171" y="26" width="15" height="13"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="13" id="CXt-xc-7CH"/>
@@ -109,7 +108,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="flash_on" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZEV-z5-dqb">
-                            <rect key="frame" x="199" y="26" width="56.5" height="13"/>
+                            <rect key="frame" x="186" y="26" width="15" height="13"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="13" id="oK8-Mm-hu5"/>
@@ -119,7 +118,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8t1-dd-q25" customClass="UIActivityIndicatorView">
-                            <rect key="frame" x="214" y="17.5" width="30" height="30"/>
+                            <rect key="frame" x="201" y="17.5" width="30" height="30"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="30" id="CZQ-fj-PGk"/>
@@ -133,7 +132,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="verified_user" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1oL-rq-nHf">
-                            <rect key="frame" x="107" y="38.5" width="79.5" height="13"/>
+                            <rect key="frame" x="107" y="38.5" width="14" height="13"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="13" id="lDk-GK-3II"/>
@@ -142,14 +141,14 @@
                             <color key="textColor" name="SecondaryText"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3AZ-Nl-f1j">
-                            <rect key="frame" x="90" y="0.0" width="234" height="65"/>
+                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3AZ-Nl-f1j">
+                            <rect key="frame" x="90" y="0.0" width="256" height="65"/>
                             <connections>
                                 <action selector="headerButtonTouched" destination="-1" eventType="touchUpInside" id="Dog-n8-eLi"/>
                             </connections>
                         </button>
                         <button hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mt6-rI-5Dn">
-                            <rect key="frame" x="324" y="0.0" width="52" height="65"/>
+                            <rect key="frame" x="346" y="0.0" width="30" height="65"/>
                             <constraints>
                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="30" id="cII-Zq-jqe"/>
                             </constraints>
@@ -183,7 +182,7 @@
                             </constraints>
                             <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="25"/>
                             <color key="tintColor" name="WashedOutReceivedText"/>
-                            <state key="normal" title="">
+                            <state key="normal" title="more_vert">
                                 <color key="titleColor" name="MainBottomIcons"/>
                             </state>
                             <connections>
@@ -228,6 +227,7 @@
                     </constraints>
                 </view>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" name="HeaderBG"/>
             <constraints>
                 <constraint firstItem="atH-u3-D4Y" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="EYE-6I-cC9"/>
@@ -237,7 +237,6 @@
                 <constraint firstItem="atH-u3-D4Y" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="fjE-mG-eC2"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <point key="canvasLocation" x="137.68115942028987" y="152.34375"/>
         </view>
     </objects>

@@ -40,7 +40,7 @@ extension SphinxCache {
     
     func getFromDisk(forKey key: String, using fileManager: FileManager = .default) -> Data? {
         if let fileURL = getFileUrlFrom(key: key) {
-            return MediaLoader.getDataFromUrl(videoURL: fileURL)
+            return MediaLoader.getDataFromUrl(url: fileURL)
         }
         return nil
     }

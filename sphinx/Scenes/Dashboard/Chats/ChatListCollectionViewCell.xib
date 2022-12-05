@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="MaterialIcons-Regular.ttf">
+            <string>MaterialIcons-Regular</string>
+        </array>
+        <array key="Montserrat-Regular.otf">
+            <string>Montserrat-Regular</string>
+        </array>
+        <array key="Roboto-Bold.ttf">
+            <string>Roboto-Bold</string>
+        </array>
+        <array key="Roboto-Regular.ttf">
+            <string>Roboto-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ChatListCollectionViewCell" id="gTV-IL-0wX" customClass="ChatListCollectionViewCell" customModule="sphinx" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="500" height="90"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="500" height="90"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="w37-mM-iag">
+                        <rect key="frame" x="16" y="20" width="468" height="50"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LHl-yg-hbd">
+                                <rect key="frame" x="0.0" y="2.5" width="45" height="45"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ZZ" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ATM-o6-rPV">
+                                        <rect key="frame" x="0.0" y="0.0" width="45" height="45"/>
+                                        <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="17"/>
+                                        <color key="textColor" name="Body"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NIy-iN-zSg">
+                                        <rect key="frame" x="0.0" y="0.0" width="45" height="45"/>
+                                        <imageReference key="image" image="profile_avatar"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="NIy-iN-zSg" secondAttribute="bottom" id="1dg-f7-C9A"/>
+                                    <constraint firstAttribute="trailing" secondItem="NIy-iN-zSg" secondAttribute="trailing" id="2Hy-Mv-q4O"/>
+                                    <constraint firstAttribute="width" constant="45" id="4Cp-7Q-ldo"/>
+                                    <constraint firstItem="NIy-iN-zSg" firstAttribute="top" secondItem="LHl-yg-hbd" secondAttribute="top" id="G5b-cD-npC"/>
+                                    <constraint firstItem="ATM-o6-rPV" firstAttribute="bottom" secondItem="LHl-yg-hbd" secondAttribute="bottom" id="Qim-vD-sLP"/>
+                                    <constraint firstItem="ATM-o6-rPV" firstAttribute="trailing" secondItem="LHl-yg-hbd" secondAttribute="trailing" id="Yob-yw-VxB"/>
+                                    <constraint firstItem="NIy-iN-zSg" firstAttribute="leading" secondItem="LHl-yg-hbd" secondAttribute="leading" id="bqK-a8-BaA"/>
+                                    <constraint firstAttribute="width" secondItem="LHl-yg-hbd" secondAttribute="height" multiplier="1:1" id="gQX-YO-bRQ"/>
+                                    <constraint firstItem="ATM-o6-rPV" firstAttribute="top" secondItem="LHl-yg-hbd" secondAttribute="top" id="icn-bE-Hub"/>
+                                    <constraint firstItem="ATM-o6-rPV" firstAttribute="leading" secondItem="LHl-yg-hbd" secondAttribute="leading" id="tAm-fI-OMh"/>
+                                </constraints>
+                            </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="749" axis="vertical" distribution="fillProportionally" alignment="top" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="HO8-vw-gEI">
+                                <rect key="frame" x="61" y="0.0" width="327" height="50"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="fP0-D4-hfa">
+                                        <rect key="frame" x="0.0" y="0.0" width="239.5" height="23.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Contact Name Contact Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mpk-9a-r2o" userLabel="Contact Name">
+                                                <rect key="frame" x="0.0" y="2" width="222.5" height="20"/>
+                                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="lock" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5mW-mI-rq1" userLabel="Lock Icon">
+                                                <rect key="frame" x="224.5" y="4.5" width="15" height="15"/>
+                                                <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="15"/>
+                                                <color key="textColor" name="SecondaryText"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="40T-Zs-AsY">
+                                        <rect key="frame" x="0.0" y="29.5" width="327" height="20.5"/>
+                                        <subviews>
+                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="lock" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="buG-sA-UIk" userLabel="Invite Icon">
+                                                <rect key="frame" x="0.0" y="3" width="15" height="15"/>
+                                                <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="15"/>
+                                                <color key="textColor" name="SecondaryText"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" text="A line with conversation large to test what happens..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VVb-7i-7EF" userLabel="Chat Message">
+                                                <rect key="frame" x="0.0" y="2" width="327" height="16.5"/>
+                                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
+                                                <color key="textColor" name="SecondaryText"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="bottom" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="0tl-EX-WgX">
+                                <rect key="frame" x="404" y="0.0" width="64" height="50"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="vuZ-z8-ITz">
+                                        <rect key="frame" x="5" y="0.0" width="59" height="20"/>
+                                        <subviews>
+                                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="jTQ-DK-F5a">
+                                                <rect key="frame" x="0.0" y="0.0" width="14" height="20"/>
+                                                <color key="tintColor" name="WashedOutReceivedText"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="14" id="RpN-wk-jaW"/>
+                                                </constraints>
+                                                <imageReference key="image" image="muteOnIcon"/>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="11/11/1111" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JWD-pI-3ma" userLabel="Date Label">
+                                                <rect key="frame" x="0.0" y="0.0" width="59" height="20"/>
+                                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="11"/>
+                                                <color key="textColor" name="WashedOutReceivedText"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eYG-mr-4p4" userLabel="Invite Price Container">
+                                                <rect key="frame" x="0.0" y="0.0" width="16.5" height="20"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vlv-bF-u0Z" userLabel="Invite Price Label">
+                                                        <rect key="frame" x="5" y="5" width="6.5" height="10"/>
+                                                        <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="11"/>
+                                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                                <color key="backgroundColor" name="PrimaryGreen"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="20" id="1Cp-Bx-wfK"/>
+                                                    <constraint firstAttribute="bottom" secondItem="Vlv-bF-u0Z" secondAttribute="bottom" constant="5" id="EJe-Ch-tvP"/>
+                                                    <constraint firstAttribute="trailing" secondItem="Vlv-bF-u0Z" secondAttribute="trailing" constant="5" id="Qua-Dz-5jj"/>
+                                                    <constraint firstItem="Vlv-bF-u0Z" firstAttribute="leading" secondItem="eYG-mr-4p4" secondAttribute="leading" constant="5" id="iHG-Ji-7mj"/>
+                                                    <constraint firstItem="Vlv-bF-u0Z" firstAttribute="top" secondItem="eYG-mr-4p4" secondAttribute="top" constant="5" id="zZW-RF-56E"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="pmk-gv-Xf7">
+                                        <rect key="frame" x="0.0" y="26" width="64" height="24"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8aw-VR-6KG" userLabel="Unread Message Count Badge">
+                                                <rect key="frame" x="0.0" y="0.0" width="34" height="24"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@ 99+" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GPz-N9-tGf" userLabel="Unread Message Count">
+                                                        <rect key="frame" x="1.5" y="5.5" width="31.5" height="13"/>
+                                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="11"/>
+                                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                                <color key="backgroundColor" name="PrimaryBlue"/>
+                                                <constraints>
+                                                    <constraint firstItem="GPz-N9-tGf" firstAttribute="centerX" secondItem="8aw-VR-6KG" secondAttribute="centerX" id="0ru-JI-Bob"/>
+                                                    <constraint firstItem="GPz-N9-tGf" firstAttribute="centerY" secondItem="8aw-VR-6KG" secondAttribute="centerY" id="PnW-ht-mAm"/>
+                                                    <constraint firstAttribute="width" constant="34" id="Xps-Qh-ekZ"/>
+                                                </constraints>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pNu-Vj-0BE" userLabel="Unread Message Count Badge">
+                                                <rect key="frame" x="40" y="0.0" width="24" height="24"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="99+" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7CN-YG-eaM" userLabel="Unread Message Count">
+                                                        <rect key="frame" x="2.5" y="5.5" width="19" height="13"/>
+                                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="11"/>
+                                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                                <color key="backgroundColor" name="PrimaryBlue"/>
+                                                <constraints>
+                                                    <constraint firstItem="7CN-YG-eaM" firstAttribute="centerY" secondItem="pNu-Vj-0BE" secondAttribute="centerY" id="9Ne-3z-yRB"/>
+                                                    <constraint firstAttribute="width" secondItem="pNu-Vj-0BE" secondAttribute="height" multiplier="1:1" id="GYz-wf-jwB"/>
+                                                    <constraint firstItem="7CN-YG-eaM" firstAttribute="centerX" secondItem="pNu-Vj-0BE" secondAttribute="centerX" id="Yc5-u6-siK"/>
+                                                    <constraint firstAttribute="width" constant="24" id="vCt-4o-fTu"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="0tl-EX-WgX" firstAttribute="top" secondItem="HO8-vw-gEI" secondAttribute="top" id="tSQ-as-aBA"/>
+                        </constraints>
+                    </stackView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gU9-vv-srT">
+                        <rect key="frame" x="77" y="89" width="423" height="1"/>
+                        <color key="backgroundColor" name="Divider"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="F4h-ag-Jaz"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="w37-mM-iag" secondAttribute="trailing" constant="16" id="2wq-ST-7gs"/>
+                <constraint firstItem="w37-mM-iag" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="16" id="FuY-xP-j8X"/>
+                <constraint firstItem="gU9-vv-srT" firstAttribute="leading" secondItem="HO8-vw-gEI" secondAttribute="leading" id="eff-HB-iNa"/>
+                <constraint firstAttribute="trailing" secondItem="gU9-vv-srT" secondAttribute="trailing" id="jj0-fI-mk1"/>
+                <constraint firstItem="w37-mM-iag" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="n3r-oO-Mf9"/>
+                <constraint firstAttribute="bottom" secondItem="gU9-vv-srT" secondAttribute="bottom" id="u4x-Hf-EsI"/>
+            </constraints>
+            <connections>
+                <outlet property="contactImageView" destination="NIy-iN-zSg" id="8cj-M8-QS1"/>
+                <outlet property="contactInitialsLabel" destination="ATM-o6-rPV" id="B3F-JX-E6A"/>
+                <outlet property="dateLabel" destination="JWD-pI-3ma" id="dPI-Wz-jd4"/>
+                <outlet property="inviteIcon" destination="buG-sA-UIk" id="ock-YY-y4d"/>
+                <outlet property="invitePriceContainer" destination="eYG-mr-4p4" id="jRx-16-6IA"/>
+                <outlet property="invitePriceLabel" destination="Vlv-bF-u0Z" id="oKX-TH-Qkx"/>
+                <outlet property="lockSign" destination="5mW-mI-rq1" id="83T-yE-96S"/>
+                <outlet property="mentionsBadgeContainer" destination="8aw-VR-6KG" id="HCN-6o-dLY"/>
+                <outlet property="mentionsBadgeLabel" destination="GPz-N9-tGf" id="I41-Ul-QMJ"/>
+                <outlet property="messageLabel" destination="VVb-7i-7EF" id="slX-Wl-zy1"/>
+                <outlet property="muteImageView" destination="jTQ-DK-F5a" id="m1Y-Ya-sBp"/>
+                <outlet property="nameLabel" destination="Mpk-9a-r2o" id="JoW-GG-oFP"/>
+                <outlet property="separatorLine" destination="gU9-vv-srT" id="7hf-hj-My6"/>
+                <outlet property="unreadMessageBadgeContainer" destination="pNu-Vj-0BE" id="r6G-Jf-My9"/>
+                <outlet property="unreadMessageBadgeLabel" destination="7CN-YG-eaM" id="GWm-uw-Nzg"/>
+            </connections>
+            <point key="canvasLocation" x="131.8840579710145" y="87.723214285714278"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="muteOnIcon" width="18" height="18"/>
+        <image name="profile_avatar" width="45" height="45"/>
+        <namedColor name="Body">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Divider">
+            <color red="0.86274509803921573" green="0.8784313725490196" blue="0.8901960784313725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="PrimaryBlue">
+            <color red="0.38039215686274508" green="0.54117647058823526" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="PrimaryGreen">
+            <color red="0.28627450980392155" green="0.78823529411764703" blue="0.59607843137254901" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="SecondaryText">
+            <color red="0.55686274509803924" green="0.58823529411764708" blue="0.61176470588235299" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="WashedOutReceivedText">
+            <color red="0.69019607843137254" green="0.71764705882352942" blue="0.73725490196078436" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

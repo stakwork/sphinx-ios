@@ -240,9 +240,7 @@ class LinkPreviewView: UIView {
             imageViewBack.backgroundColor = UIColor.clear
         }
         
-        if let image = MediaLoader.getImageFromCachedUrl(url: imageURL) {
-            self.showImage(image: image, imageView: imageView)
-        } else if let nsUrl = URL(string: imageURL), imageURL != "" {
+        if let nsUrl = URL(string: imageURL), imageURL != "" {
             MediaLoader.asyncLoadImage(imageView: imageView, nsUrl: nsUrl, placeHolderImage: nil, completion: { image in
                 MediaLoader.storeImageInCache(img: image, url: imageURL)
                 self.showImage(image: image, imageView: imageView)

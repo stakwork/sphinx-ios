@@ -1,9 +1,13 @@
 PODS:
   - Alamofire (5.0.5)
+  - CryptoSwift (1.0.0)
   - FLAnimatedImage (1.0.16)
   - Giphy (2.1.1):
     - libwebp
     - PINCache
+  - HDWalletKit (0.3.6):
+    - CryptoSwift (~> 1.0.0)
+    - secp256k1.swift (~> 0.1.4)
   - JitsiMeetSDK (3.6.0)
   - KeychainAccess (4.2.2)
   - KYDrawerController (2.1.0)
@@ -17,6 +21,7 @@ PODS:
     - libwebp/demux
   - libwebp/webp (1.2.0)
   - lottie-ios (3.2.3)
+  - MarqueeLabel (4.3.0)
   - PINCache (3.0.3):
     - PINCache/Arc-exception-safe (= 3.0.3)
     - PINCache/Core (= 3.0.3)
@@ -33,21 +38,26 @@ PODS:
   - SDWebImageFLPlugin (0.5.0):
     - FLAnimatedImage (>= 1.0.11)
     - SDWebImage/Core (~> 5.10)
+  - secp256k1.swift (0.1.4)
   - Starscream (3.1.1)
   - SwiftLinkPreview (3.1.0)
-  - SwiftyJSON (5.0.1)
+  - SwiftyJSON (4.3.0)
   - SwiftyRSA (1.6.0):
     - SwiftyRSA/ObjC (= 1.6.0)
   - SwiftyRSA/ObjC (1.6.0)
+  - SwiftyXMLParser (5.5.0)
   - Tor (405.8.1)
+  - youtube-ios-player-helper (1.0.3)
 
 DEPENDENCIES:
   - Alamofire (~> 5.0.0-rc.3)
   - Giphy (= 2.1.1)
+  - HDWalletKit
   - JitsiMeetSDK (~> 3.6.0)
   - KeychainAccess
   - KYDrawerController
   - lottie-ios
+  - MarqueeLabel
   - ReachabilitySwift
   - RNCryptor (~> 5.0)
   - SDWebImage (~> 5.11)
@@ -56,54 +66,74 @@ DEPENDENCIES:
   - SwiftLinkPreview (~> 3.1.0)
   - SwiftyJSON
   - SwiftyRSA
+  - SwiftyXMLParser (from `https://github.com/yahoojapan/SwiftyXMLParser.git`)
   - Tor (from `https://raw.githubusercontent.com/iCepa/Tor.framework/v405.8.1/Tor.podspec`)
+  - youtube-ios-player-helper (~> 1.0.3)
 
 SPEC REPOS:
   trunk:
     - Alamofire
+    - CryptoSwift
     - FLAnimatedImage
     - Giphy
+    - HDWalletKit
     - JitsiMeetSDK
     - KeychainAccess
     - KYDrawerController
     - libwebp
     - lottie-ios
+    - MarqueeLabel
     - PINCache
     - PINOperation
     - ReachabilitySwift
     - RNCryptor
     - SDWebImage
     - SDWebImageFLPlugin
+    - secp256k1.swift
     - Starscream
     - SwiftLinkPreview
     - SwiftyJSON
     - SwiftyRSA
+    - youtube-ios-player-helper
 
 EXTERNAL SOURCES:
+  SwiftyXMLParser:
+    :git: https://github.com/yahoojapan/SwiftyXMLParser.git
   Tor:
     :podspec: https://raw.githubusercontent.com/iCepa/Tor.framework/v405.8.1/Tor.podspec
 
+CHECKOUT OPTIONS:
+  SwiftyXMLParser:
+    :commit: 41900bb1882e704a25d4946f2dbad71b4bb02b8f
+    :git: https://github.com/yahoojapan/SwiftyXMLParser.git
+
 SPEC CHECKSUMS:
   Alamofire: df2f8f826963b08b9a870791ad48e07a10090b2e
+  CryptoSwift: d81eeaa59dc5a8d03720fe919a6fd07b51f7439f
   FLAnimatedImage: 8f3e854ebf9680b71f0b6e700939687fc4d82b4b
   Giphy: 4a3ca076645091bba1a2e5579066b4c851e53d45
+  HDWalletKit: 6d97a15404b2edfe3418e3dc064faa967e51dac4
   JitsiMeetSDK: 476329f72a866f714d2802bafe1729de6d644ccf
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   KYDrawerController: baad0e63b09c0cb564bd48f0f7f70f45d9176ebc
   libwebp: e90b9c01d99205d03b6bb8f2c8c415e5a4ef66f0
   lottie-ios: c058aeafa76daa4cf64d773554bccc8385d0150e
+  MarqueeLabel: 02f5ac8fd6877c94564556cb93fa86c70c08baeb
   PINCache: 7a8fc1a691173d21dbddbf86cd515de6efa55086
   PINOperation: 00c935935f1e8cf0d1e2d6b542e75b88fc3e5e20
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   RNCryptor: a369134686cd2ad391323cc856b62e591193ba79
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SDWebImageFLPlugin: 245c7ce1e77028b6ef415240847b3f8aa4b106b7
+  secp256k1.swift: a7e7a214f6db6ce5db32cc6b2b45e5c4dd633634
   Starscream: 4bb2f9942274833f7b4d296a55504dcfc7edb7b0
   SwiftLinkPreview: 3d924eeaae8d17410a827a4b37675713af1a0a8a
-  SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
+  SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
   SwiftyRSA: 3b9c9179744217951facc6a3e9ae8d8c97061ffa
+  SwiftyXMLParser: 027d9e6fb54a38d95dccec025bcea9693f699c47
   Tor: fad2cec0e7ef5f889fecdaf69e5edd6df0438326
+  youtube-ios-player-helper: 0185c57db23c80d63d6ca11251d110abb8a4ca61
 
-PODFILE CHECKSUM: ac1d27693ceb746f763dc6c440f7aa9efbc774fd
+PODFILE CHECKSUM: de731ae5dcb0a4d4a3f154dc1382cce5393018e5
 
-COCOAPODS: 1.9.3
+COCOAPODS: 1.11.3

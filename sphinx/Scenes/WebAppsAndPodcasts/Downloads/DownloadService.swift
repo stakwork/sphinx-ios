@@ -37,7 +37,7 @@ class DownloadService : NSObject {
     }
 
     func cancelDownload(_ episode: PodcastEpisode) {
-        guard let urlString = episode.url else { return }
+        guard let urlString = episode.urlPath else { return }
 
         guard let download = activeDownloads[urlString] else {
             return
@@ -48,7 +48,7 @@ class DownloadService : NSObject {
     }
 
     func pauseDownload(_ episode: PodcastEpisode) {
-        guard let urlString = episode.url else { return }
+        guard let urlString = episode.urlPath else { return }
 
         guard let download = activeDownloads[urlString], download.isDownloading else {
             return
@@ -62,7 +62,7 @@ class DownloadService : NSObject {
     }
 
     func resumeDownload(_ episode: PodcastEpisode) {
-        guard let urlString = episode.url, let url = URL(string: urlString) else { return }
+        guard let urlString = episode.urlPath, let url = URL(string: urlString) else { return }
 
         guard let download = activeDownloads[urlString] else {
             return
@@ -79,21 +79,13 @@ class DownloadService : NSObject {
     }
 
     func startDownload(_ episode: PodcastEpisode) {
-        guard let urlString = episode.url, let url = URL(string: urlString) else { return }
+        guard let urlString = episode.urlPath, let url = URL(string: urlString) else { return }
 
         let download = Download(episode: episode)
         download.task = downloadsSession.downloadTask(with: url)
         download.task?.resume()
         download.isDownloading = true
         activeDownloads[urlString] = download
-    }
-    
-    func isEpisodeDownloaded(_ episode: PodcastEpisode) -> Bool {
-        if let fileName = URL(string: episode.url ?? "")?.lastPathComponent {
-            let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent(fileName)
-            return FileManager.default.fileExists(atPath: path.path)
-        }
-        return false
     }
 }
 
@@ -114,7 +106,7 @@ extension DownloadService : URLSessionDownloadDelegate {
         try? fileManager.removeItem(at: destinationURL)
 
         do {
-        try fileManager.copyItem(at: location, to: destinationURL)
+            try fileManager.copyItem(at: location, to: destinationURL)
             download?.episode.downloaded = true
         } catch let error {
             print("Could not copy file to disk: \(error.localizedDescription)")

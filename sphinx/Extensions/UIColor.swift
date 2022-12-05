@@ -23,7 +23,8 @@ public extension UIColor {
         public static let Body = color("Body")
         public static let BodyInverted = color("BodyInverted")
         public static let HeaderBG = color("HeaderBG")
-        public static let ListBG = color("LightBG")
+        public static let HeaderSemiTransparentBG = color("HeaderSemiTransparentBG")
+        public static let ListBG = color("ListBG")
         public static let LightBG = color("LightBG")
         public static let ProfileBG = color("ProfileBG")
         
@@ -31,6 +32,8 @@ public extension UIColor {
         public static let ChatListSelected = color("ChatListSelected")
         
         public static let DashboardHeader = color("DashboardHeader")
+        public static let DashboardFilterChipActiveText = color("DashboardFilterChipActiveText")
+        public static let DashboardFilterChipBackground = color("DashboardFilterChipBackground")
         public static let DashboardSearch = color("DashboardSearch")
         public static let DashboardWashedOutText = color("DashboardWashedOutText")
         
@@ -88,6 +91,8 @@ public extension UIColor {
         public static let LinkReceivedColor = color("LinkReceivedColor")
         public static let LinkSentButtonColor = color("LinkSentButtonColor")
         public static let LinkReceivedButtonColor = color("LinkReceivedButtonColor")
+        
+        public static let OnboardingPlaceholderText = color("OnboardingPlaceholderText")
         
         private static func color(_ name: String) -> UIColor {
             return UIColor(named: name, in: Bundle.main, compatibleWith: nil) ?? UIColor.magenta

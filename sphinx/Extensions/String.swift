@@ -188,12 +188,31 @@ extension String {
         }
     }
     
+    var isValidHTML: Bool {
+        if self.isEmpty {
+            return false
+        }
+        return (self.range(of: "<(\"[^\"]*\"|'[^']*'|[^'\">])*>", options: .regularExpression) != nil)
+    }
+    
     var percentEscaped: String? {
         return self.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
     }
     
     var percentNotEscaped: String? {
         return NSString(string: self).removingPercentEncoding
+    }
+    
+    var fixedAlias: String {
+        let ACCEPTABLE_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_"
+        var fixedAlias = ""
+        
+        for ch in self.replacingOccurrences(of: " ", with: "_") {
+            if (ACCEPTABLE_CHARACTERS.contains(ch)) {
+                fixedAlias.append(ch)
+            }
+        }
+        return fixedAlias
     }
     
     var stringLinks: [NSTextCheckingResult] {
@@ -208,10 +227,15 @@ extension String {
         let virtualPubkeyRegex = try? NSRegularExpression(pattern: "\\b[A-F0-9a-f]{66}:[A-F0-9a-f]{66}:[0-9]+\\b")
         
         let virtualPubkeyResults = virtualPubkeyRegex?.matches(in: self, range: NSRange(self.startIndex..., in: self)) ?? []
-        if virtualPubkeyResults.count > 0 { return virtualPubkeyResults }
-        
         let pubkeyResults = pubkeyRegex?.matches(in: self, range: NSRange(self.startIndex..., in: self)) ?? []
-        return pubkeyResults
+        
+        return virtualPubkeyResults + pubkeyResults
+    }
+    
+    var mentionMatches: [NSTextCheckingResult] {
+        let mentionRegex = try? NSRegularExpression(pattern: "\\B@[^\\s]+")
+        
+        return mentionRegex?.matches(in: self, range: NSRange(self.startIndex..., in: self)) ?? []
     }
     
     var stringFirstLink : String {
@@ -288,6 +312,13 @@ extension String {
         }
     }
     
+    var isRouteHint : Bool {
+        get {
+            let routeHintRegex = try? NSRegularExpression(pattern: "^[A-F0-9a-f]{66}:[0-9]+$")
+            return (routeHintRegex?.matches(in: self, range: NSRange(self.startIndex..., in: self)) ?? []).count > 0
+        }
+    }
+    
     var isVirtualPubKey : Bool {
         get {
             let completePubkeyRegex = try? NSRegularExpression(pattern: "^[A-F0-9a-f]{66}:[A-F0-9a-f]{66}:[0-9]+$")
@@ -345,6 +376,12 @@ extension String {
         return nil
     }
     
+    var hexEncoded : String {
+        let data = Data(self.utf8)
+        let hexString = data.map{ String(format:"%02x", $0) }.joined()
+        return hexString
+    }
+    
     var base64Encoded : String? {
         return Data(self.utf8).base64EncodedString()
     }
@@ -391,6 +428,10 @@ extension String {
         }
     }
     
+    var isYouTubeRSSFeedURL: Bool {
+        contains("www.youtube.com")
+    }
+    
     var isPodcastComment: Bool {
         get {
             return self.starts(with: PodcastPlayerHelper.kClipPrefix)
@@ -401,6 +442,10 @@ extension String {
         get {
             return self.starts(with: PodcastPlayerHelper.kBoostPrefix)
         }
+    }
+    
+    var isYouTubeRSSFeed: Bool {
+        contains("www.youtube.com")
     }
     
     var podcastId: Int {
@@ -644,5 +689,86 @@ extension StringProtocol {
                     index(range.lowerBound, offsetBy: 1, limitedBy: endIndex) ?? endIndex
         }
         return result
+    }
+    
+    var attributedStringFromHTML: NSAttributedString? {
+        guard let data = data(using: .utf8) else {
+            return nil
+        }
+        
+        do {
+            return try NSAttributedString(
+                data: data,
+                options: [
+                    .documentType: NSAttributedString.DocumentType.html,
+                    .characterEncoding:String.Encoding.utf8.rawValue,
+                ],
+                documentAttributes: nil
+            )
+        } catch {
+            return nil
+        }
+    }
+}
+
+
+extension String {
+    
+    var attributedStringFromHTML: NSAttributedString? {
+        guard let data = data(using: .utf8) else {
+            return nil
+        }
+        
+        do {
+            return try NSAttributedString(
+                data: data,
+                options: [
+                    .documentType: NSAttributedString.DocumentType.html,
+                    .characterEncoding:String.Encoding.utf8.rawValue,
+                ],
+                documentAttributes: nil
+            )
+        } catch {
+            return nil
+        }
+    }
+    
+    var nonHtmlRawString: String {
+        return self.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
+    }
+    
+    func removingPunctuation() -> String {
+        var filteredString = self
+        while true {
+            if let forbiddenCharRange = filteredString.rangeOfCharacter(from: CharacterSet.punctuationCharacters)  {
+                filteredString.removeSubrange(forbiddenCharRange)
+            } else {
+                break
+            }
+        }
+        return filteredString
+    }
+    
+    var personHost: String? {
+        let elements = self.split(separator: "/")
+        if let last = elements.last {
+            return self.replacingOccurrences(of: "/\(String(last))", with: "")
+        }
+        return nil
+    }
+    
+    var personUUID: String? {
+        let elements = self.split(separator: "/")
+        if let last = elements.last {
+            return String(last)
+        }
+        return nil
+    }
+    
+    var tribeMemberProfileValue : String {
+        if self.trim().isEmpty {
+            return "-"
+        }
+        return self
     }
 }

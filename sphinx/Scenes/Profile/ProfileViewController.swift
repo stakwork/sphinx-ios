@@ -7,10 +7,11 @@
 //
 
 import UIKit
+import MobileCoreServices
 
 class ProfileViewController: KeyboardEventsViewController {
     
-    private weak var delegate: MenuDelegate?
+    private weak var delegate: LeftMenuDelegate?
     
     @IBOutlet weak var viewTitle: UILabel!
     @IBOutlet weak var profileImageView: UIImageView!
@@ -38,12 +39,14 @@ class ProfileViewController: KeyboardEventsViewController {
     @IBOutlet weak var exportKeyButton: UIButton!
     @IBOutlet weak var relayContainerView: UIView!
     @IBOutlet weak var changePINContainerView: UIView!
+    @IBOutlet weak var setGithubPATContainerView: UIView!
     @IBOutlet weak var uploadingLabel: UILabel!
     @IBOutlet weak var uploadLoadingWheel: UIActivityIndicatorView!
     @IBOutlet weak var contentScrollView: UIScrollView!
     @IBOutlet weak var advanceScrollView: UIScrollView!
     @IBOutlet weak var privacyPinLabel: UILabel!
     @IBOutlet weak var privacyPinGroupContainer: UIView!
+    @IBOutlet weak var signingDeviceLabel: UILabel!
     
     @IBOutlet var tabContainers: [UIScrollView]!
     
@@ -69,11 +72,13 @@ class ProfileViewController: KeyboardEventsViewController {
     var rootViewController : RootViewController!
     var contactsService : ContactsService!
     let urlUpdateHelper = RelayURLUpdateHelper()
+    let userData = UserData.sharedInstance
     
     var imagePickerManager = ImagePickerManager.sharedInstance
     var notificationSoundHelper = NotificationSoundHelper()
     let newMessageBubbleHelper = NewMessageBubbleHelper()
     var walletBalanceService = WalletBalanceService()
+    let cryptedManager = CrypterManager()
     
     public enum ProfileFields: Int {
         case Name
@@ -84,7 +89,7 @@ class ProfileViewController: KeyboardEventsViewController {
         case RelayUrl
     }
     
-    static func instantiate(rootViewController : RootViewController, delegate: MenuDelegate) -> ProfileViewController {
+    static func instantiate(rootViewController : RootViewController, delegate: LeftMenuDelegate) -> ProfileViewController {
         let viewController = StoryboardScene.Profile.profileViewController.instantiate()
         viewController.rootViewController = rootViewController
         viewController.contactsService = rootViewController.contactsService
@@ -114,6 +119,7 @@ class ProfileViewController: KeyboardEventsViewController {
         configureFields()
         configureProfile()
         configureServers()
+        configureSigningDeviceButton()
     }
     
     func setShadows() {
@@ -162,6 +168,11 @@ class ProfileViewController: KeyboardEventsViewController {
         relayUrlTextField.inputAccessoryView = keyboardAccessoryView
     }
     
+    func configureSigningDeviceButton() {
+        let didSetupSigningDevice = UserDefaults.Keys.setupSigningDevice.get(defaultValue: false)
+        signingDeviceLabel.text = (didSetupSigningDevice ? "profile.configure-signing-device" : "profile.setup-signing-device").localized
+    }
+    
     func configureProfile() {
         uploading = false
         
@@ -195,7 +206,7 @@ class ProfileViewController: KeyboardEventsViewController {
             }
         }
         
-        relayUrlTextField.text = UserData.sharedInstance.getNodeIP()
+        relayUrlTextField.text = userData.getNodeIP()
     }
     
     func configureServers() {
@@ -265,7 +276,12 @@ class ProfileViewController: KeyboardEventsViewController {
     }
     
     @IBAction func profilePictureButtonTouched() {
-        imagePickerManager.showAlert(title: "profile.image".localized, message: "select.option".localized, sourceView: profileImageView)
+        imagePickerManager.showAlert(
+            title: "profile.image".localized,
+            message: "select.option".localized,
+            sourceView: profileImageView,
+            mediaTypes: [kUTTypeImage as String]
+        )
     }
     
     @IBAction func exportKeysButtonTouched() {
@@ -273,7 +289,7 @@ class ProfileViewController: KeyboardEventsViewController {
         let setPinVC = PinCodeViewController.instantiate(subtitle: subtitle)
         setPinVC.doneCompletion = { pin in
             setPinVC.dismiss(animated: true, completion: {
-                if let keyJSONString = UserData.sharedInstance.exportKeysJSON(pin: pin) {
+                if let keyJSONString = self.userData.exportKeysJSON(pin: pin) {
                     AlertHelper.showAlert(title: "export.keys".localized, message: "keys.will.copy.clipboard".localized, completion: {
                         ClipboardHelper.copyToClipboard(text: keyJSONString, message: "keys.copied.clipboard".localized)
                     })
@@ -283,6 +299,66 @@ class ProfileViewController: KeyboardEventsViewController {
             })
         }
         self.present(setPinVC, animated: true)
+    }
+    
+    @IBAction func setGithubPATButtonTouched() {
+        AlertHelper.showPromptAlert(
+            title: "profile.github-pat-title".localized,
+            message: "profile.github-pat-message".localized,
+            on: self,
+            confirm: { value in
+                if let value = value {
+                    self.sendGithubPAT(pat: value)
+                }
+            },
+            cancel: {}
+        )
+    }
+    
+    @IBAction func setupSigningDevice() {
+        cryptedManager.setupSigningDevice(vc: self) {
+            self.configureSigningDeviceButton()
+        }
+    }
+    
+    func sendGithubPAT(
+        pat: String
+    ) {
+        var parameters = [String : AnyObject]()
+        
+        if let transportK = userData.getTransportKey(),
+           let transportEncryptionKey = EncryptionManager.sharedInstance.getPublicKeyFromBase64String(base64String: transportK) {
+            
+            if let encryptedPat = EncryptionManager.sharedInstance.encryptToken(token: pat, key: transportEncryptionKey) {
+                parameters["encrypted_pat"] = encryptedPat as AnyObject?
+            }
+        }
+        
+        if (parameters.keys.isEmpty) {
+            AlertHelper.showAlert(
+                title: "generic.error.title".localized,
+                message: "profile.github-pat.error".localized
+            )
+            return
+        }
+        
+        API.sharedInstance.addGitPAT(
+            params: parameters,
+            callback: { _ in
+                self.newMessageBubbleHelper.showGenericMessageView(
+                    text: "profile.github-pat.success".localized,
+                    textColor: UIColor.white,
+                    backColor: UIColor.Sphinx.PrimaryGreen,
+                    backAlpha: 1.0
+                )
+            },
+            errorCallback: {
+                AlertHelper.showAlert(
+                    title: "generic.error.title".localized,
+                    message: "profile.github-pat.error".localized
+                )
+            }
+        )
     }
     
     @IBAction func changePinButtonTouched() {

@@ -58,7 +58,11 @@ class VideoCallManager : NSObject {
                 builder.videoMuted = false
                 builder.welcomePageEnabled = false
                 builder.subject = " "
-                builder.userInfo = JitsiMeetUserInfo(displayName: owner.nickname, andEmail: nil, andAvatar: URL(string: owner.avatarUrl ?? ""))
+                builder.userInfo = JitsiMeetUserInfo(
+                    displayName: owner.nickname,
+                    andEmail: nil,
+                    andAvatar: URL(string: owner.avatarUrl ?? "")
+                )
             })
 
             jitsiMeetView.join(options)
@@ -66,19 +70,17 @@ class VideoCallManager : NSObject {
             jitsiMeetView.layer.cornerRadius = 10
             jitsiMeetView.clipsToBounds = true
 
-            let windowsManager = WindowsManager.sharedInstance
-            if let coveringWindow = windowsManager.getCoveringWindow() {
+            if let window = UIApplication.shared.windows.first {
                 pipViewCoordinator = CustomPipViewCoordinator(withView: jitsiMeetView)
                 pipViewCoordinator?.delegate = self
-                pipViewCoordinator?.configureAsStickyView(withParentView: coveringWindow)
+                pipViewCoordinator?.configureAsStickyView(withParentView: window)
+                pipViewCoordinator?.initialPositionInSuperview = .upperRightCorner
                 pipViewCoordinator?.show()
 
                 if !isGroupChat() {
                     videoCallPayButton = getPaymentView()
-                    coveringWindow.addSubview(videoCallPayButton!)
+                    window.addSubview(videoCallPayButton!)
                 }
-
-                coveringWindow.isHidden = false
             }
         }
     }
@@ -131,9 +133,10 @@ extension VideoCallManager : JitsiMeetViewDelegate {
             self.videoCallPayButton?.isHidden = true
 
             self.pipViewCoordinator?.hide() { _ in
-                WindowsManager.sharedInstance.removeCoveringWindow()
                 self.cleanUp()
             }
+            
+            self.videoCallDelegate?.didFinishCall()
         }
     }
 

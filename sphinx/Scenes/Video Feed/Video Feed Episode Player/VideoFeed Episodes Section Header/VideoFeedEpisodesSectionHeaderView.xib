@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Montserrat-Regular.otf">
+            <string>Montserrat-Regular</string>
+        </array>
+        <array key="Roboto-Regular.ttf">
+            <string>Roboto-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="VideoFeedEpisodesSectionHeaderView" reuseIdentifier="VideoFeedEpisodesSectionHeaderView" id="U6b-Vx-4bR" customClass="VideoFeedEpisodesSectionHeaderView" customModule="sphinx" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="3Ot-PD-J13" userLabel="Episode Count Container">
+                    <rect key="frame" x="0.0" y="60" width="320" height="40"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GId-NT-Dhb" userLabel="Spacer">
+                            <rect key="frame" x="0.0" y="0.0" width="13" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="13" id="1C1-wm-JQL"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0ED-Q8-2dC">
+                            <rect key="frame" x="16" y="11.5" width="8.5" height="17.5"/>
+                            <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="15"/>
+                            <color key="textColor" name="Text"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Videos" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EXz-8y-bSR">
+                            <rect key="frame" x="27.5" y="2.5" width="276.5" height="35"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="35" id="rZa-dV-UGD"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="15"/>
+                            <color key="textColor" name="SecondaryText"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P1u-Zd-O2r" userLabel="Spacer">
+                            <rect key="frame" x="307" y="0.0" width="13" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="13" id="nz3-2f-dcb"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" name="ListBG"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="5xB-9S-vLg"/>
+                    </constraints>
+                </stackView>
+                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="Lt9-R6-Vke" userLabel="Feed Info Container">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="htl-fz-qvl" userLabel="Spacer">
+                            <rect key="frame" x="0.0" y="5" width="0.0" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="width" id="SjF-gx-ugp"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile_avatar" translatesAutoresizingMaskIntoConstraints="NO" id="Pjw-Lk-tVE">
+                            <rect key="frame" x="16" y="12" width="36" height="36"/>
+                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="36" id="Nuz-mw-aJk"/>
+                                <constraint firstAttribute="width" constant="36" id="hVT-Kr-a1d"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Feed Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hiR-uB-n4b">
+                            <rect key="frame" x="68" y="20" width="236" height="20"/>
+                            <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
+                            <color key="textColor" name="Text"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OTf-3X-F6T">
+                            <rect key="frame" x="204" y="12.5" width="100" height="40"/>
+                            <color key="backgroundColor" name="PrimaryText"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="100" id="CVd-4i-5GW"/>
+                                <constraint firstAttribute="height" constant="40" id="D2v-VK-JQD"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="15"/>
+                            <color key="tintColor" name="ReceivedIcon"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" title="Subscribe">
+                                <color key="titleColor" name="Body"/>
+                            </state>
+                            <connections>
+                                <action selector="didTapSubscriptionButton" destination="U6b-Vx-4bR" eventType="touchUpInside" id="unF-4h-CXE"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xid-Jx-Oh9" userLabel="Spacer">
+                            <rect key="frame" x="320" y="5" width="0.0" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="width" id="m3A-CT-uig"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" name="HeaderBG"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="60" id="VsN-Qb-qlA"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="subviews">
+                            <exclude reference="OTf-3X-F6T"/>
+                        </mask>
+                    </variation>
+                </stackView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EFx-w2-Fri" userLabel="Top Divider">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
+                    <viewLayoutGuide key="safeArea" id="uie-sI-6Pr"/>
+                    <color key="backgroundColor" name="Divider"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="TGN-4j-0bt"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7XP-qL-e0d" userLabel="Middle Divider">
+                    <rect key="frame" x="0.0" y="60" width="320" height="1"/>
+                    <viewLayoutGuide key="safeArea" id="pIi-b8-hVb"/>
+                    <color key="backgroundColor" name="Divider"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="Fps-Od-c2m"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="H52-Cb-P2m"/>
+            <constraints>
+                <constraint firstItem="H52-Cb-P2m" firstAttribute="bottom" secondItem="3Ot-PD-J13" secondAttribute="bottom" id="2lB-I7-ka3"/>
+                <constraint firstItem="Lt9-R6-Vke" firstAttribute="leading" secondItem="H52-Cb-P2m" secondAttribute="leading" id="3hr-Oj-BPd"/>
+                <constraint firstAttribute="trailing" secondItem="EFx-w2-Fri" secondAttribute="trailing" id="4oR-Sn-j32"/>
+                <constraint firstItem="7XP-qL-e0d" firstAttribute="top" secondItem="Lt9-R6-Vke" secondAttribute="bottom" id="Igb-dW-9VS"/>
+                <constraint firstItem="EFx-w2-Fri" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" id="JaR-8l-ef9"/>
+                <constraint firstItem="3Ot-PD-J13" firstAttribute="leading" secondItem="H52-Cb-P2m" secondAttribute="leading" id="LmV-Cv-8Xy"/>
+                <constraint firstItem="Lt9-R6-Vke" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" id="MDU-c5-s5d"/>
+                <constraint firstItem="H52-Cb-P2m" firstAttribute="trailing" secondItem="Lt9-R6-Vke" secondAttribute="trailing" id="Mid-Jc-DYn"/>
+                <constraint firstItem="7XP-qL-e0d" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" id="N0x-oG-X4N"/>
+                <constraint firstItem="H52-Cb-P2m" firstAttribute="trailing" secondItem="3Ot-PD-J13" secondAttribute="trailing" id="Njx-2j-gag"/>
+                <constraint firstItem="EFx-w2-Fri" firstAttribute="top" secondItem="Lt9-R6-Vke" secondAttribute="top" id="UEf-DF-vmj"/>
+                <constraint firstAttribute="trailing" secondItem="7XP-qL-e0d" secondAttribute="trailing" id="oip-qf-eA3"/>
+            </constraints>
+            <connections>
+                <outlet property="episodeCountNumberLabel" destination="0ED-Q8-2dC" id="TPa-1H-a3y"/>
+                <outlet property="episodeCountTextLabel" destination="EXz-8y-bSR" id="yzp-2v-OsB"/>
+                <outlet property="feedAuthorNameLabel" destination="hiR-uB-n4b" id="CUK-KL-fS2"/>
+                <outlet property="feedAvatarImage" destination="Pjw-Lk-tVE" id="Eg4-Df-Tj6"/>
+                <outlet property="subscriptionButton" destination="OTf-3X-F6T" id="zu7-a8-wDT"/>
+            </connections>
+            <point key="canvasLocation" x="132" y="106"/>
+        </collectionReusableView>
+    </objects>
+    <resources>
+        <image name="profile_avatar" width="45" height="45"/>
+        <namedColor name="Body">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Divider">
+            <color red="0.86274509803921573" green="0.8784313725490196" blue="0.8901960784313725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="HeaderBG">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="ListBG">
+            <color red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="PrimaryText">
+            <color red="0.16078431372549021" green="0.17254901960784313" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="ReceivedIcon">
+            <color red="0.50980392156862742" green="0.70588235294117652" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="SecondaryText">
+            <color red="0.55686274509803924" green="0.58823529411764708" blue="0.61176470588235299" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Text">
+            <color red="0.23529411764705882" green="0.24705882352941178" blue="0.25490196078431371" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

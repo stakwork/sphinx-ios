@@ -28,8 +28,6 @@ internal enum StoryboardScene {
         internal static let storyboardName = "Chat"
         internal static let chatViewController = SceneType<ChatViewController>(storyboard: Chat.self, identifier: "ChatViewController")
 
-        internal static let chatListViewController = SceneType<ChatListViewController>(storyboard: Chat.self, identifier: "ChatListViewController")
-
         internal static let createInvoiceViewController = SceneType<CreateInvoiceViewController>(storyboard: Chat.self, identifier: "CreateInvoiceViewController")
 
         internal static let payInvoiceViewController = SceneType<PayInvoiceViewController>(storyboard: Chat.self, identifier: "PayInvoiceViewController")
@@ -47,6 +45,89 @@ internal enum StoryboardScene {
         internal static let messageOptionsViewController = SceneType<MessageOptionsViewController>(storyboard: Chat.self, identifier: "MessageOptionsViewController")
         
         internal static let paidMessagePreviewViewController = SceneType<PaidMessagePreviewViewController>(storyboard: Chat.self, identifier: "PaidMessagePreviewViewController")
+        
+        internal static let tribeMemberPopupViewController = SceneType<TribeMemberPopupViewController>(storyboard: Chat.self, identifier: "TribeMemberPopupViewController")
+        
+        internal static let notificationsLevelViewController = SceneType<NotificationsLevelViewController>(storyboard: Chat.self, identifier: "NotificationsLevelViewController")
+        
+        internal static let tribeMemberProfileViewController = SceneType<TribeMemberProfileViewController>(storyboard: Chat.self, identifier: "TribeMemberProfileViewController")
+    }
+    
+    internal enum Dashboard: StoryboardType {
+        internal static let storyboardName = "Dashboard"
+        
+        internal static let dashboardRootViewController = SceneType<DashboardRootViewController>(storyboard: Dashboard.self, identifier: "DashboardRootViewController")
+        
+        
+        internal static let feedsContainerViewController = SceneType<DashboardFeedsContainerViewController>(
+            storyboard: Dashboard.self,
+            identifier: "DashboardFeedsContainerViewController"
+        )
+        
+        
+        internal static let dashboardFeedsEmptyStateViewController = SceneType<DashboardFeedsEmptyStateViewController>(
+            storyboard: Dashboard.self,
+            identifier: "DashboardFeedsEmptyStateViewController"
+        )
+        
+        
+        internal static let allTribeFeedsCollectionViewController = SceneType<AllTribeFeedsCollectionViewController>(
+            storyboard: Dashboard.self,
+            identifier: "AllTribeFeedsCollectionViewController"
+        )
+        
+        
+        internal static let FeedSearchContainerViewController = SceneType<FeedSearchContainerViewController>(
+            storyboard: Dashboard.self,
+            identifier: "FeedSearchContainerViewController"
+        )
+        
+        
+        internal static let FeedSearchEmptyStateViewController = SceneType<FeedSearchEmptyStateViewController>(
+            storyboard: Dashboard.self,
+            identifier: "FeedSearchEmptyStateViewController"
+        )
+        
+        
+        internal static let FeedSearchResultsCollectionViewController = SceneType<FeedSearchResultsCollectionViewController>(
+            storyboard: Dashboard.self,
+            identifier: "FeedSearchResultsCollectionViewController"
+        )
+        
+        
+        internal static let chatsContainerViewController = SceneType<ChatsContainerViewController>(
+            storyboard: Dashboard.self,
+            identifier: "ChatsContainerViewController"
+        )
+        
+        
+        internal static let chatsCollectionViewController = SceneType<ChatsCollectionViewController>(
+            storyboard: Dashboard.self,
+            identifier: "ChatsCollectionViewController"
+        )
+        
+        internal static let feedFilterChipsCollectionViewController = SceneType<FeedFilterChipsCollectionViewController>(
+            storyboard: Dashboard.self,
+            identifier: "FeedFilterChipsCollectionViewController"
+        )
+        
+        
+        internal static let podcastFeedCollectionViewController = SceneType<PodcastFeedCollectionViewController>(
+            storyboard: Dashboard.self,
+            identifier: "PodcastFeedCollectionViewController"
+        )
+        
+        
+        internal static let videoFeedCollectionViewController = SceneType<DashboardVideoFeedCollectionViewController>(
+            storyboard: Dashboard.self,
+            identifier: "VideoFeedCollectionViewController"
+        )
+        
+        internal static let newsletterFeedCollectionViewController = SceneType<DashboardNewsletterFeedCollectionViewController>(
+            storyboard: Dashboard.self,
+            identifier: "NewsletterFeedCollectionViewController"
+        )
+        
     }
     
     internal enum LeftMenu: StoryboardType {
@@ -55,10 +136,6 @@ internal enum StoryboardScene {
         internal static let leftMenuViewController = SceneType<LeftMenuViewController>(storyboard: LeftMenu.self, identifier: "LeftMenuViewController")
         
         internal static let supportViewController = SceneType<SupportViewController>(storyboard: LeftMenu.self, identifier: "SupportViewController")
-        
-        internal static let addSatsAppViewController = SceneType<AddSatsAppViewController>(storyboard: LeftMenu.self, identifier: "AddSatsAppViewController")
-        
-        internal static let addSatsViewController = SceneType<AddSatsViewController>(storyboard: LeftMenu.self, identifier: "AddSatsViewController")
     }
     
     internal enum QRCodeScanner: StoryboardType {
@@ -84,8 +161,6 @@ internal enum StoryboardScene {
     internal enum Invite: StoryboardType {
         internal static let storyboardName = "Invite"
         
-        internal static let inviteCodeViewController = SceneType<InviteCodeViewController>(storyboard: Invite.self, identifier: "InviteCodeViewController")
-        
         internal static let inviteWelcomeViewController = SceneType<InviteWelcomeViewController>(storyboard: Invite.self, identifier: "InviteWelcomeViewController")
         
         internal static let setProfileImageViewController = SceneType<SetProfileImageViewController>(storyboard: Invite.self, identifier: "SetProfileImageViewController")
@@ -102,6 +177,41 @@ internal enum StoryboardScene {
         
         internal static let keychainRestoreViewController = SceneType<KeychainRestoreViewController>(storyboard: Invite.self, identifier: "KeychainRestoreViewController")
     }
+    
+    internal enum Welcome: StoryboardType {
+        internal static let storyboardName = "Welcome"
+        
+        internal static let initialWelcomeViewController = SceneType<InitialWelcomeViewController>(storyboard: Welcome.self, identifier: "InitialWelcomeViewController")
+        
+        internal static let welcomeCompleteViewController = SceneType<WelcomeCompleteViewController>(storyboard: Welcome.self, identifier: "WelcomeCompleteViewController")
+    }
+    
+    internal enum RestoreUser: StoryboardType {
+        internal static let storyboardName = "RestoreUser"
+        
+        internal static let restoreUserDescriptionViewController = SceneType<RestoreUserDescriptionViewController>(storyboard: RestoreUser.self, identifier: "RestoreUserDescriptionViewController")
+        
+        internal static let restoreUserFormViewController = SceneType<RestoreUserFormViewController>(storyboard: RestoreUser.self, identifier: "RestoreUserFormViewController")
+        
+        internal static let restoreUserConnectingViewController = SceneType<RestoreUserConnectingViewController>(storyboard: RestoreUser.self, identifier: "RestoreUserConnectingViewController")
+    }
+    
+    
+    internal enum NewUserSignup: StoryboardType {
+        internal static let storyboardName = "NewUserSignup"
+        
+        
+        internal static let newUserSignupOptionsViewController = SceneType<NewUserSignupOptionsViewController>(storyboard: NewUserSignup.self, identifier: "NewUserSignupOptionsViewController")
+        
+        internal static let newUserSignupDescriptionViewController = SceneType<NewUserSignupDescriptionViewController>(storyboard: NewUserSignup.self, identifier: "NewUserSignupDescriptionViewController")
+        
+        internal static let newUserSignupFormViewController = SceneType<NewUserSignupFormViewController>(storyboard: NewUserSignup.self, identifier: "NewUserSignupFormViewController")
+        
+        internal static let newUserGreetingViewController = SceneType<NewUserGreetingViewController>(storyboard: NewUserSignup.self, identifier: "NewUserGreetingViewController")
+        
+        internal static let sphinxDesktopAdViewController = SceneType<SphinxDesktopAdViewController>(storyboard: NewUserSignup.self, identifier: "SphinxDesktopAdViewController")
+    }
+    
     
     internal enum Contacts: StoryboardType {
         internal static let storyboardName = "Contacts"
@@ -143,6 +253,8 @@ internal enum StoryboardScene {
         internal static let newPublicGroupViewController = SceneType<NewPublicGroupViewController>(storyboard: Groups.self, identifier: "NewPublicGroupViewController")
         
         internal static let groupTagsViewController = SceneType<GroupTagsViewController>(storyboard: Groups.self, identifier: "GroupTagsViewController")
+        
+        internal static let addTribeMemberViewController = SceneType<AddTribeMemberViewController>(storyboard: Groups.self, identifier: "AddTribeMemberViewController")
     }
     
     internal enum Stakwork: StoryboardType {
@@ -150,6 +262,13 @@ internal enum StoryboardScene {
         internal static let storyboardName = "Stakwork"
         
         internal static let stakworkAuthorizeViewController = SceneType<StakworkAuthorizeViewController>(storyboard: Stakwork.self, identifier: "StakworkAuthorizeViewController")
+    }
+    
+    internal enum People: StoryboardType {
+        
+        internal static let storyboardName = "People"
+        
+        internal static let peopleModalsViewController = SceneType<PeopleModalsViewController>(storyboard: People.self, identifier: "PeopleModalsViewController")
     }
     
     internal enum WebApps: StoryboardType {
@@ -164,6 +283,34 @@ internal enum StoryboardScene {
         internal static let pickerViewController = SceneType<PickerViewController>(storyboard: WebApps.self, identifier: "PickerViewController")
         
         internal static let podcastNewEpisodeViewController = SceneType<PodcastNewEpisodeViewController>(storyboard: WebApps.self, identifier: "PodcastNewEpisodeViewController")
+    }
+    
+    
+    internal enum VideoFeed: StoryboardType {
+        internal static let storyboardName = "VideoFeed"
+        
+        
+        internal static let videoFeedEpisodePlayerContainerViewController = SceneType<VideoFeedEpisodePlayerContainerViewController>(storyboard: VideoFeed.self, identifier: "VideoFeedEpisodePlayerContainerViewController")
+        
+        
+        internal static let youtubeVideoFeedEpisodePlayerViewController = SceneType<YouTubeVideoFeedEpisodePlayerViewController>(storyboard: VideoFeed.self, identifier: "YouTubeVideoFeedEpisodePlayerViewController")
+
+        
+        internal static let generalVideoFeedEpisodePlayerViewController = SceneType<GeneralVideoFeedEpisodePlayerViewController>(storyboard: VideoFeed.self, identifier: "GeneralVideoFeedEpisodePlayerViewController")
+        
+        
+        internal static let videoFeedEpisodePlayerCollectionViewController = SceneType<VideoFeedEpisodePlayerCollectionViewController>(storyboard: VideoFeed.self, identifier: "VideoFeedEpisodePlayerCollectionViewController")
+    }
+    
+    internal enum NewsletterFeed: StoryboardType {
+        internal static let storyboardName = "NewsletterFeed"
+        
+        
+        internal static let newsletterItemDetailViewController = SceneType<NewsletterItemDetailViewController>(storyboard: NewsletterFeed.self, identifier: "NewsletterItemDetailViewController")
+        
+        internal static let newsletterFeedContainerViewController = SceneType<NewsletterFeedContainerViewController>(storyboard: NewsletterFeed.self, identifier: "NewsletterFeedContainerViewController")
+        
+        internal static let newsletterFeedItemsCollectionViewController = SceneType<NewsletterFeedItemsCollectionViewController>(storyboard: NewsletterFeed.self, identifier: "NewsletterFeedItemsCollectionViewController")
     }
     
 }

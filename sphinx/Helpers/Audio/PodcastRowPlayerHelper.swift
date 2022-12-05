@@ -9,9 +9,14 @@
 import Foundation
 import AVKit
 
+@objc protocol PodcastPlayerRowDelegate : class {
+    func shouldUpdateLabels(duration: Int, currentTime: Int)
+    func shouldToggleLoadingWheel(loading: Bool)
+}
+
 class PodcastRowPlayerHelper {
     
-    weak var delegate: PodcastPlayerDelegate?
+    weak var delegate: PodcastPlayerRowDelegate?
     
     var currentTime: Int = 0
     var playedSeconds: Int = 0
@@ -35,7 +40,7 @@ class PodcastRowPlayerHelper {
     
     func createPlayerItemWith(podcastComment: PodcastComment,
                               podcast: PodcastFeed?,
-                              delegate: PodcastPlayerDelegate,
+                              delegate: PodcastPlayerRowDelegate,
                               for messageId: Int,
                               completion: @escaping (Int) -> ()) {
         
@@ -215,10 +220,17 @@ class PodcastRowPlayerHelper {
     }
     
     func processPayment() {
-        let itemId = self.podcastComment?.itemId ?? 0
+        let itemId = self.podcastComment?.itemId ?? ""
         let clipSenderPK = self.podcastComment?.pubkey
         let uuid = self.podcastComment?.uuid
-        self.podcastPaymentsHelper.processPaymentsFor(podcastFeed: self.podcast, itemId: itemId, currentTime: Int(self.currentTime), clipSenderPubKey: clipSenderPK, uuid: uuid)
+        
+        self.podcastPaymentsHelper.processPaymentsFor(
+            podcastFeed: self.podcast,
+            itemId: itemId,
+            currentTime: Int(self.currentTime),
+            clipSenderPubKey: clipSenderPK,
+            uuid: uuid
+        )
     }
     
     func audioDidFinishPlaying() {

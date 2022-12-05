@@ -23,6 +23,7 @@ import SDWebImage
     func shouldScrollToBottom()
     func shouldGoBackToDashboard()
     func didTapOnPubKey(pubkey: String)
+    func didTapAvatarView(message: TransactionMessage)
     func fileDownloadButtonTouched(message: TransactionMessage, data: Data, button: UIButton)
 }
 
@@ -137,7 +138,7 @@ class CommonChatTableViewCell: SwipableReplyCell, RowWithLinkPreviewProtocol {
         dateLabel.text = (messageRow.date ?? Date()).getStringDate(format: "hh:mm a")
         dateLabel.font = UIFont(name: "Roboto-Regular", size: 10.0)!
         
-        chatAvatarView?.configureFor(messageRow: messageRow, contact: contact, and: chat)
+        chatAvatarView?.configureFor(messageRow: messageRow, contact: contact, chat: chat, with: self)
 
         rightLineContainer?.layer.sublayers?.forEach { $0.removeFromSuperlayer() }
         leftLineContainer?.layer.sublayers?.forEach { $0.removeFromSuperlayer() }
@@ -194,7 +195,7 @@ class CommonChatTableViewCell: SwipableReplyCell, RowWithLinkPreviewProtocol {
             linkPreviewView?.roundCorners(corners: corners, radius: 10.0)
             linkPreviewView?.isHidden = true
             
-            self.contentView.addSubview(linkPreviewView!)
+            allContentView.addSubview(linkPreviewView!)
             linkPreviewView?.addConstraintsTo(bubbleView: bubbleView, messageRow: messageRow)
             
             linkPreviewView?.configurePreview(messageRow: messageRow, doneCompletion: { messageId in
@@ -222,7 +223,7 @@ class CommonChatTableViewCell: SwipableReplyCell, RowWithLinkPreviewProtocol {
             if tribeLinkPreviewView == nil {
                 let linkHeight = CommonChatTableViewCell.getLinkPreviewHeight(messageRow: messageRow) - Constants.kBubbleBottomMargin
                 tribeLinkPreviewView = TribeLinkPreviewView(frame: CGRect(x: 0, y: 0, width: Constants.kLinkBubbleMaxWidth, height: linkHeight))
-                contentView.addSubview(tribeLinkPreviewView!)
+                allContentView.addSubview(tribeLinkPreviewView!)
             }
             tribeLinkPreviewView?.isHidden = !messageRow.shouldShowTribeLinkPreview()
             
@@ -258,7 +259,7 @@ class CommonChatTableViewCell: SwipableReplyCell, RowWithLinkPreviewProtocol {
             if contactLinkPreviewView == nil {
                 let linkHeight = CommonChatTableViewCell.getLinkPreviewHeight(messageRow: messageRow) - Constants.kBubbleBottomMargin
                 contactLinkPreviewView = ContactLinkPreviewView(frame: CGRect(x: 0, y: 0, width: Constants.kLinkBubbleMaxWidth, height: linkHeight))
-                contentView.addSubview(contactLinkPreviewView!)
+                allContentView.addSubview(contactLinkPreviewView!)
             }
             contactLinkPreviewView?.addConstraintsTo(bubbleView: bubbleView, messageRow: messageRow)
             contactLinkPreviewView?.configureView(messageRow: messageRow, delegate: self)
@@ -404,6 +405,14 @@ extension CommonChatTableViewCell : LinkPreviewDelegate {
     func didTapOnContactButton() {
         if let link = messageRow?.getMessageContent().stringFirstPubKey {
             delegate?.didTapOnPubKey(pubkey: link)
+        }
+    }
+}
+
+extension CommonChatTableViewCell : ChatAvatarViewDelegate {
+    func didTapAvatarView() {
+        if let message = messageRow?.transactionMessage, (chat?.isPublicGroup() ?? false) {
+            delegate?.didTapAvatarView(message: message)
         }
     }
 }

@@ -9,24 +9,28 @@
 import UIKit
 import CoreData
 
-extension Chat : ChatListCommonObject {
+extension Chat: ChatListCommonObject {
     
-    public func getObjectId() -> Int {
-        return self.id
+    public func getObjectId() -> String {
+        return "chat-\(self.id)"
     }
     
     public func getOrderDate() -> Date? {
-        var date = createdAt
+        var date: Date? = nil
         
         if let lastMessage = lastMessage {
             date = lastMessage.date
         }
         
-        if let webAppLastDate = webAppLastDate, webAppLastDate > date {
-            date = webAppLastDate
+        if let webAppLastDate = webAppLastDate {
+            if date == nil {
+                date = webAppLastDate
+            } else if let savedDate = date, webAppLastDate > savedDate {
+                date = webAppLastDate
+            }
         }
         
-        return date
+        return date ?? createdAt
     }
     
     func getConversationContact() -> UserContact? {
@@ -59,6 +63,14 @@ extension Chat : ChatListCommonObject {
         return false
     }
     
+    public func isMuted() -> Bool {
+        return self.notify == NotificationLevel.MuteChat.rawValue
+    }
+    
+    public func isOnlyMentions() -> Bool {
+        return self.notify == NotificationLevel.OnlyMentions.rawValue
+    }
+    
     public func shouldShowSingleImage() -> Bool {
         if isPublicGroup() || isConversation() {
             return true
@@ -88,12 +100,8 @@ extension Chat : ChatListCommonObject {
         return image
     }
     
-    public func getConversation() -> Chat? {
+    public func getChat() -> Chat? {
         return self
-    }
-    
-    public func isGroupObject() -> Bool {
-        return true
     }
     
     public func getColor() -> UIColor {
@@ -107,5 +115,17 @@ extension Chat : ChatListCommonObject {
     public func deleteColor() {
         let key = "chat-\(self.id)-color"
         UIColor.removeColorFor(key: key)
+    }
+    
+    public func getInvite() -> UserInvite? {
+        return nil
+    }
+    
+    public func getContactStatus() -> Int? {
+        return UserContact.Status.Confirmed.rawValue
+    }
+    
+    public func getInviteStatus() -> Int? {
+        return UserInvite.Status.Complete.rawValue
     }
 }

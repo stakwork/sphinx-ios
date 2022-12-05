@@ -21,6 +21,7 @@ public class UserInvite: NSManagedObject {
         case Complete
         case Expired
         case PaymentPending
+        case ProcessingPayment = 100
     }
     
     public static func getInviteInstance(inviteString: String, managedContext: NSManagedObjectContext) -> UserInvite {
@@ -66,15 +67,8 @@ public class UserInvite: NSManagedObject {
         if let contact = UserContact.getContactWith(id: contactId) {
             contact.invite = invite
         }
-
-        managedContext.mergePolicy = NSMergePolicy.overwrite
         
-        do {
-            try managedContext.save()
-            return invite
-        } catch {
-            return nil
-        }
+        return invite
     }
     
     public func isExpired() -> Bool {
@@ -94,7 +88,7 @@ public class UserInvite: NSManagedObject {
     }
     
     public func isPendingPayment() -> Bool {
-        return status == UserInvite.Status.PaymentPending.rawValue && !self.isPaymentProcessed()
+        return status == UserInvite.Status.PaymentPending.rawValue
     }
     
     public func getInviteStatusForAlert() -> (Bool, String, String) {
@@ -116,9 +110,6 @@ public class UserInvite: NSManagedObject {
     
     public func getDataForRow() -> (String, UIColor, String) {
         let userNickname = self.contact?.nickname ?? "New user"
-        
-//        let hours = Date().getHousDifference(from: Date().addingTimeInterval(-4000))
-//        return ("done", UIColor.Sphinx.PrimaryGreen, " Ready! Tap to share. Expires in \(hours) hrs")
         
         switch(status) {
         case UserInvite.Status.Pending.rawValue:

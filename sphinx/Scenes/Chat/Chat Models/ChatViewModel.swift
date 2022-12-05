@@ -21,12 +21,14 @@ final class ChatViewModel: NSObject {
         public var encryptedMessage: String?
         public var remoteEncryptedMessage: String?
         public var muid: String?
+        public var messageUUID: String?
         public var dim: String?
     }
     
-    var currentPayment : PaymentModel!
+    var currentPayment = PaymentModel()
+    let contactsService = ContactsService()
     
-    override init() {
+    func resetCurrentPayment() {
         self.currentPayment = PaymentModel()
     }
     
@@ -72,11 +74,11 @@ final class ChatViewModel: NSObject {
         return true
     }
     
-    func resetCurrentPayment() {
-        self.currentPayment = PaymentModel()
-    }
-    
-    func shouldSendDirectPayment(parameters: [String: AnyObject], callback: @escaping (TransactionMessage?) -> (), errorCallback: @escaping () -> ()) {
+    func shouldSendDirectPayment(
+        parameters: [String: AnyObject],
+        callback: @escaping (TransactionMessage?) -> (),
+        errorCallback: @escaping () -> ()
+    ) {
         API.sharedInstance.sendDirectPayment(params: parameters, callback: { payment in
             if let payment = payment {
                 let (messageObject, success) = self.createLocalMessages(message: payment)
@@ -101,7 +103,10 @@ final class ChatViewModel: NSObject {
         return (nil, false)
     }
     
-    func getParams(contacts: [UserContact]?, chat: Chat?) -> [String: AnyObject] {
+    func getParams(
+        contacts: [UserContact]?,
+        chat: Chat?
+    ) -> [String: AnyObject] {
         var parameters = [String : AnyObject]()
         
         if let amount = currentPayment.amount {
@@ -171,7 +176,10 @@ final class ChatViewModel: NSObject {
         return parameters
     }
     
-    func toggleVolumeOn(chat: Chat, completion: @escaping (Chat?) -> ()) {
+    func toggleVolumeOn(
+        chat: Chat,
+        completion: @escaping (Chat?) -> ()
+    ) {
         let currentMode = chat.isMuted()
         
         API.sharedInstance.toggleChatSound(chatId: chat.id, muted: !currentMode, callback: { chatJson in
@@ -181,5 +189,50 @@ final class ChatViewModel: NSObject {
         }, errorCallback: {
             completion(nil)
         })
+    }
+    
+    func sendFlagMessageFor(_ message: TransactionMessage) {
+        DispatchQueue.global().async {
+            let supportContact = SignupHelper.getSupportContact()
+            
+            if let pubkey = supportContact["pubkey"].string {
+                
+                if let contact = UserContact.getContactWith(pubkey: pubkey) {
+                    
+                    let messageSender = message.getMessageSender()
+                    
+                    var flagMessageContent = """
+                    Message Flagged
+                    - Message: \(message.uuid ?? "Empty Message UUID")
+                    - Sender: \(messageSender?.publicKey ?? "Empty Sender")
+                    """
+                    
+                    if let chat = message.chat, chat.isPublicGroup() {
+                        flagMessageContent = "\(flagMessageContent)\n- Tribe: \(chat.uuid ?? "Empty Tribe UUID")"
+                    }
+                    
+                    self.sendFlagMessage(
+                        contact: contact,
+                        text: flagMessageContent
+                    )
+                    return
+                }
+            }
+        }
+    }
+    
+    func sendFlagMessage(
+        contact: UserContact,
+        text: String
+    ) {
+        guard let params = TransactionMessage.getMessageParams(
+                contact: contact,
+                type: TransactionMessage.TransactionMessageType.message,
+                text: text
+        ) else {
+            return
+        }
+        
+        API.sharedInstance.sendMessage(params: params, callback: { _ in }, errorCallback: {})
     }
 }

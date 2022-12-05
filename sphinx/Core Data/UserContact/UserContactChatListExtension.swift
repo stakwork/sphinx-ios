@@ -11,8 +11,8 @@ import CoreData
 
 extension UserContact : ChatListCommonObject {
     
-    public func getObjectId() -> Int {
-        return self.id
+    public func getObjectId() -> String {
+        return "user-\(self.id)"
     }
     
     public func getOrderDate() -> Date? {
@@ -44,13 +44,6 @@ extension UserContact : ChatListCommonObject {
         return avatarUrl
     }
     
-    public func getCachedImage() -> UIImage? {
-        if let url = getPhotoUrl(), let cachedImage = MediaLoader.getImageFromCachedUrl(url: url) {
-            return cachedImage
-        }
-        return nil
-    }
-    
     public func setImage(image: UIImage)  {
         self.image = image
     }
@@ -63,7 +56,11 @@ extension UserContact : ChatListCommonObject {
         return true
     }
     
-    public func isGroupObject() -> Bool {
+    public func isConversation() -> Bool {
+        return true
+    }
+    
+    public func isPublicGroup() -> Bool {
         return false
     }
     
@@ -75,5 +72,31 @@ extension UserContact : ChatListCommonObject {
     public func deleteColor() {
         let key = "\(self.id)-color"
         UIColor.removeColorFor(key: key)
+    }
+    
+    public func getContact() -> UserContact? {
+        return self
+    }
+    
+    public func getInvite() -> UserInvite? {
+        return self.invite
+    }
+    
+    public func getContactStatus() -> Int? {
+        return status
+    }
+    
+    public func getInviteStatus() -> Int? {
+        if let invite = invite {
+            if (invite.isPendingPayment() && invite.isPaymentProcessed()) {
+                return UserInvite.Status.ProcessingPayment.rawValue
+            }
+            return invite.status
+        }
+        return nil
+    }
+    
+    public func isMuted() -> Bool {
+        return conversation?.isMuted() ?? false
     }
 }

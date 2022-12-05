@@ -70,11 +70,14 @@ class SphinxSocketManager {
             if let urlString = urlString, let url = url {
                 let secure = urlString.starts(with: "wss")
                 var socketConfiguration : SocketIOClientConfiguration!
+                let headers = UserData.sharedInstance.getAuthenticationHeader()
+                
                 if onionConnector.usingTor() {
-                    socketConfiguration = [.compress, .forcePolling(true), .secure(secure), .extraHeaders(["X-User-Token" : UserData.sharedInstance.getAuthToken()])]
+                    socketConfiguration = [.compress, .forcePolling(true), .secure(secure), .extraHeaders(headers)]
                 } else {
-                    socketConfiguration = [.compress, .secure(secure), .extraHeaders(["X-User-Token" : UserData.sharedInstance.getAuthToken()])]
+                    socketConfiguration = [.compress, .secure(secure), .extraHeaders(headers)]
                 }
+                
                 manager = SocketManager(socketURL: url, config: socketConfiguration)
                 socket = manager?.defaultSocket
             }
@@ -221,7 +224,10 @@ extension SphinxSocketManager {
     }
     
     func togglePaidInvoiceIfNeeded(string: String) {
-        if let vc = delegate as? ChatListViewController, let presentedVC = vc.presentedViewController as? UINavigationController {
+        if
+            let vc = delegate as? DashboardRootViewController,
+            let presentedVC = vc.presentedViewController as? UINavigationController
+        {
             let viewControllers = presentedVC.viewControllers
             if viewControllers.count > 1 {
                 if let invoiceDetailsVC = viewControllers[1] as? QRCodeDetailViewController {
@@ -243,14 +249,8 @@ extension SphinxSocketManager {
     func didReceiveMessage(type: String, messageJson: JSON) {
         let isConfirmation = type == "confirmation"
         let messageFromUpdatedContact = didUpdateContact(messageJson: messageJson)
-        let messageId = messageJson["id"].intValue
-        let existingMessage = TransactionMessage.getMessageWith(id: messageId)
         
-        if isConfirmation && (existingMessage?.isConfirmedAsReceived() ?? false) {
-            return
-        }
-        
-        if let message = TransactionMessage.insertMessage(m: messageJson, existingMessage: existingMessage).0 {
+        if let message = TransactionMessage.insertMessage(m: messageJson).0 {
             updateBalanceIfNeeded(type: type)
             
             message.setPaymentInvoiceAsPaid()
@@ -358,8 +358,6 @@ extension SphinxSocketManager {
                 chat = chatObject
                 
                 if let chat = chat {
-                    CoreDataManager.sharedManager.saveContext()
-                    
                     if shouldUpdateObjectsOnView(chat: chat) {
                         delegate?.didUpdateChat?(chat: chat)
                     }
@@ -404,7 +402,7 @@ extension SphinxSocketManager {
     }
     
     func shouldUpdateObjectsOnView(contact: UserContact? = nil, chat: Chat? = nil) -> Bool {
-        if let _ = delegate as? ChatListViewController {
+        if delegate is DashboardRootViewController {
             return true
         }
         
@@ -439,7 +437,27 @@ extension SphinxSocketManager {
             return false
         }
         
-        if outgoing || delegate is ChatListViewController {
+        if outgoing || delegate is DashboardRootViewController {
+            return false
+        }
+        
+        if message.chat?.isMuted() ?? false {
+            return false
+        }
+        
+        if (message.chat?.isOnlyMentions() ?? false) && !message.push {
+            return false
+        }
+        
+        if message.isPodcastPayment() {
+            return false
+        }
+        
+        if message.chat?.isMuted() ?? false {
+            return false
+        }
+        
+        if message.isPodcastPayment() {
             return false
         }
         
@@ -485,7 +503,6 @@ extension SphinxSocketManager {
     
     func setChatSeen(message: TransactionMessage, value: Bool) {
         message.chat?.seen = value
-        message.saveMessage()
     }
     
     func shouldMarkAsSeen(message: TransactionMessage) -> Bool {

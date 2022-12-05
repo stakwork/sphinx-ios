@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="haF-cf-D4W">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="haF-cf-D4W">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -185,6 +185,7 @@
                                 </constraints>
                             </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="8yo-Sv-04g"/>
                         <color key="backgroundColor" name="Body"/>
                         <constraints>
                             <constraint firstItem="FO0-i1-a0R" firstAttribute="leading" secondItem="8yo-Sv-04g" secondAttribute="leading" constant="35" id="1Fi-LX-sLh"/>
@@ -203,7 +204,6 @@
                             <constraint firstItem="L8D-UZ-e8P" firstAttribute="top" secondItem="8yo-Sv-04g" secondAttribute="top" id="wz4-xz-KEC"/>
                             <constraint firstItem="y4m-nP-Zly" firstAttribute="leading" secondItem="8yo-Sv-04g" secondAttribute="leading" constant="30" id="z8a-cP-eh4"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="8yo-Sv-04g"/>
                     </view>
                     <size key="freeformSize" width="375" height="667"/>
                     <connections>
@@ -299,6 +299,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="dLw-px-GaX"/>
                         <color key="backgroundColor" name="Body"/>
                         <constraints>
                             <constraint firstItem="UpK-HK-cg1" firstAttribute="centerX" secondItem="7Wx-kS-wfR" secondAttribute="centerX" id="04m-nD-gI5"/>
@@ -319,7 +320,6 @@
                             <constraint firstItem="Eej-fz-fO1" firstAttribute="centerX" secondItem="dLw-px-GaX" secondAttribute="centerX" id="kuB-F1-oe7"/>
                             <constraint firstItem="UpK-HK-cg1" firstAttribute="centerY" secondItem="dLw-px-GaX" secondAttribute="centerY" constant="30" id="ouc-7s-ceS"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="dLw-px-GaX"/>
                     </view>
                     <connections>
                         <outlet property="confirmButton" destination="4kd-55-TFX" id="Krc-UL-9VD"/>

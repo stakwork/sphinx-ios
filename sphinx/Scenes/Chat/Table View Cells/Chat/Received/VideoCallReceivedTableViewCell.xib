@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -44,11 +44,11 @@
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sTb-xo-OSt" customClass="ChatAvatarView" customModule="sphinx" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="56" height="56"/>
+                        <rect key="frame" x="15" y="4" width="33" height="33"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="56" id="7Np-nF-foN"/>
-                            <constraint firstAttribute="height" constant="56" id="RcX-bX-HgH"/>
+                            <constraint firstAttribute="width" constant="33" id="7Np-nF-foN"/>
+                            <constraint firstAttribute="height" constant="33" id="RcX-bX-HgH"/>
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jkm-3c-RFI">
@@ -62,14 +62,14 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Monday 6:05 AM" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ehF-hV-1ZK">
-                                <rect key="frame" x="4" y="2" width="77" height="12"/>
+                                <rect key="frame" x="4" y="2" width="76" height="12"/>
                                 <color key="backgroundColor" name="Body"/>
                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="10"/>
                                 <color key="textColor" name="SecondaryText"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="lock" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bos-IT-nWS">
-                                <rect key="frame" x="84" y="-0.5" width="24.5" height="15.5"/>
+                                <rect key="frame" x="83" y="0.5" width="13" height="13"/>
                                 <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="13"/>
                                 <color key="textColor" name="SecondaryText"/>
                                 <nil key="highlightedColor"/>
@@ -101,7 +101,7 @@
                 <constraints>
                     <constraint firstItem="fBD-xh-fcx" firstAttribute="trailing" secondItem="5LG-w3-mlu" secondAttribute="trailing" id="3on-YY-ME9"/>
                     <constraint firstAttribute="bottom" secondItem="5LG-w3-mlu" secondAttribute="bottom" constant="4" id="8n6-eM-nOD"/>
-                    <constraint firstItem="sTb-xo-OSt" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="9mU-1k-BFe"/>
+                    <constraint firstItem="sTb-xo-OSt" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="9mU-1k-BFe"/>
                     <constraint firstItem="5LG-w3-mlu" firstAttribute="top" secondItem="jkm-3c-RFI" secondAttribute="bottom" id="BEH-AJ-hDM"/>
                     <constraint firstItem="fBD-xh-fcx" firstAttribute="leading" secondItem="5LG-w3-mlu" secondAttribute="leading" constant="4" id="FLQ-cv-JeJ"/>
                     <constraint firstItem="5LG-w3-mlu" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="21" id="NoB-ff-B1O"/>
@@ -111,7 +111,7 @@
                     <constraint firstItem="jkm-3c-RFI" firstAttribute="trailing" secondItem="5LG-w3-mlu" secondAttribute="trailing" id="cSG-n3-C8D"/>
                     <constraint firstItem="5LG-w3-mlu" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="56" id="dsG-g8-RYh"/>
                     <constraint firstItem="gyP-37-ulT" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="75.5" id="gjD-El-4jE"/>
-                    <constraint firstItem="sTb-xo-OSt" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="jqm-pv-He8"/>
+                    <constraint firstItem="sTb-xo-OSt" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="4" id="jqm-pv-He8"/>
                     <constraint firstItem="jkm-3c-RFI" firstAttribute="leading" secondItem="5LG-w3-mlu" secondAttribute="leading" id="mWM-St-CVr"/>
                     <constraint firstItem="fBD-xh-fcx" firstAttribute="bottom" secondItem="5LG-w3-mlu" secondAttribute="bottom" id="oBm-KF-x2C"/>
                     <constraint firstItem="zPJ-V6-V9f" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="qaH-Ee-cx5"/>
@@ -119,8 +119,8 @@
                     <constraint firstAttribute="trailing" secondItem="zPJ-V6-V9f" secondAttribute="trailing" constant="28" id="uHS-AM-ydO"/>
                 </constraints>
             </tableViewCellContentView>
-            <color key="backgroundColor" name="Body"/>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <color key="backgroundColor" name="Body"/>
             <connections>
                 <outlet property="bubbleView" destination="5LG-w3-mlu" id="e5g-FJ-boj"/>
                 <outlet property="chatAvatarView" destination="sTb-xo-OSt" id="9tq-DL-HMr"/>

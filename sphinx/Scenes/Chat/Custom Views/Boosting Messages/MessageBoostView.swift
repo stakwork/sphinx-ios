@@ -86,12 +86,22 @@ class MessageBoostView: UIView {
         var i = 0
         for (name, (color, image)) in reactions.users {
             if i >= 3 { return }
-            if let container = containers[i] { showInitialsFor(name, color: color, and: image, in: container, incoming: incoming) }
+            
+            if let container = containers[i] {
+                showInitialsFor(name, color: color, and: image, in: container, incoming: incoming)
+                
+            }
+            
             i = i + 1
         }
     }
     
-    func showInitialsFor(_ name: String, color: UIColor, and image: UIImage?, in container: UIView, incoming: Bool) {
+    func showInitialsFor(
+        _ name: String,
+        color: UIColor,
+        and imageUrl: String?,
+        in container: UIView, incoming: Bool
+    ) {
         container.isHidden = false
         container.layer.cornerRadius = container.frame.size.height / 2
         
@@ -104,13 +114,20 @@ class MessageBoostView: UIView {
             } else if let imageView = view as? UIImageView {
                 imageView.layer.cornerRadius = imageView.frame.size.height / 2
                 
-                if let image = image {
-                    imageView.image = image
+                if let imageUrl = imageUrl {
+                    if let url = URL(string: imageUrl) {
+                        imageView.sd_setImage(
+                            with: url,
+                            placeholderImage: UIImage(named: "profile_avatar"),
+                            options: [.scaleDownLargeImages, .decodeFirstFrameOnly, .lowPriority],
+                            progress: nil
+                        )
+                    }
                 } else {
                     imageView.image = nil
                 }
             } else {
-                view.backgroundColor = (image != nil) ? UIColor.clear : color
+                view.backgroundColor = color
                 view.layer.cornerRadius = view.frame.size.height / 2
             }
         }

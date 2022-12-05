@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Roboto-Regular.ttf">
+            <string>Roboto-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CustomBoostView" customModule="sphinx" customModuleProvider="target">
+            <connections>
+                <outlet property="amountTextField" destination="W9c-zy-aWI" id="6VC-v6-xAZ"/>
+                <outlet property="boostButton" destination="gDY-WZ-BhJ" id="rvx-1F-27W"/>
+                <outlet property="contentView" destination="iN0-l3-epB" id="yvK-p5-GDl"/>
+                <outlet property="viewGreenContainer" destination="BSr-iF-Wmd" id="hif-i1-4QX"/>
+                <outlet property="whiteCircle" destination="OUl-S6-bxp" id="cBI-1X-Jmq"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="90" height="40"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BSr-iF-Wmd">
+                    <rect key="frame" x="0.0" y="0.0" width="90" height="40"/>
+                    <subviews>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="0" textAlignment="center" adjustsFontForContentSizeCategory="YES" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="W9c-zy-aWI">
+                            <rect key="frame" x="2" y="0.0" width="50" height="40"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
+                            <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done"/>
+                        </textField>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OUl-S6-bxp">
+                            <rect key="frame" x="54" y="4" width="32" height="32"/>
+                            <subviews>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="boostIcon" translatesAutoresizingMaskIntoConstraints="NO" id="xtS-rc-jvv">
+                                    <rect key="frame" x="5" y="5" width="22" height="22"/>
+                                    <color key="tintColor" name="PrimaryGreen"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="22" id="Bjk-61-4pE"/>
+                                        <constraint firstAttribute="width" secondItem="xtS-rc-jvv" secondAttribute="height" id="ta6-lt-DxW"/>
+                                    </constraints>
+                                </imageView>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gDY-WZ-BhJ">
+                                    <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
+                                    <connections>
+                                        <action selector="boostButtonTouched" destination="-1" eventType="touchUpInside" id="Kqr-pn-4np"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstItem="gDY-WZ-BhJ" firstAttribute="top" secondItem="OUl-S6-bxp" secondAttribute="top" id="Dt4-BP-Y0f"/>
+                                <constraint firstItem="xtS-rc-jvv" firstAttribute="centerX" secondItem="OUl-S6-bxp" secondAttribute="centerX" id="Krd-vr-OGX"/>
+                                <constraint firstAttribute="height" constant="32" id="P8E-sT-8YU"/>
+                                <constraint firstItem="gDY-WZ-BhJ" firstAttribute="leading" secondItem="OUl-S6-bxp" secondAttribute="leading" id="Q5s-s4-pm4"/>
+                                <constraint firstAttribute="bottom" secondItem="gDY-WZ-BhJ" secondAttribute="bottom" id="ZxU-CL-S0l"/>
+                                <constraint firstAttribute="trailing" secondItem="gDY-WZ-BhJ" secondAttribute="trailing" id="krc-xs-hjB"/>
+                                <constraint firstAttribute="width" constant="32" id="tO8-4S-1qa"/>
+                                <constraint firstItem="xtS-rc-jvv" firstAttribute="centerY" secondItem="OUl-S6-bxp" secondAttribute="centerY" id="yEi-Ks-jac"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" name="PrimaryGreen"/>
+                    <constraints>
+                        <constraint firstItem="W9c-zy-aWI" firstAttribute="top" secondItem="BSr-iF-Wmd" secondAttribute="top" id="213-aI-FfV"/>
+                        <constraint firstAttribute="trailing" secondItem="OUl-S6-bxp" secondAttribute="trailing" constant="4" id="9uM-ev-GSt"/>
+                        <constraint firstItem="W9c-zy-aWI" firstAttribute="leading" secondItem="BSr-iF-Wmd" secondAttribute="leading" constant="2" id="WJR-ir-4dm"/>
+                        <constraint firstAttribute="bottom" secondItem="W9c-zy-aWI" secondAttribute="bottom" id="gxW-5f-wwy"/>
+                        <constraint firstItem="OUl-S6-bxp" firstAttribute="centerY" secondItem="BSr-iF-Wmd" secondAttribute="centerY" id="lGY-Oo-y5K"/>
+                        <constraint firstItem="OUl-S6-bxp" firstAttribute="leading" secondItem="W9c-zy-aWI" secondAttribute="trailing" constant="2" id="q1Q-ct-aWh"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="BSr-iF-Wmd" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="LFu-CL-lVS"/>
+                <constraint firstAttribute="bottom" secondItem="BSr-iF-Wmd" secondAttribute="bottom" id="RvW-p9-6Hb"/>
+                <constraint firstAttribute="trailing" secondItem="BSr-iF-Wmd" secondAttribute="trailing" id="a4s-wy-1iu"/>
+                <constraint firstItem="BSr-iF-Wmd" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="gvT-Ah-f4y"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="75" y="62"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="boostIcon" width="40" height="40"/>
+        <namedColor name="PrimaryGreen">
+            <color red="0.28627450980392155" green="0.78823529411764703" blue="0.59607843137254901" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

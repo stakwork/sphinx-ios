@@ -9,6 +9,8 @@
 import UIKit
 import GiphyUISDK
 import SDWebImage
+import Photos
+import PhotosUI
 
 extension ChatAttachmentViewController {
     func isButtonDisabled(option: OptionsButton) -> Bool {
@@ -20,10 +22,12 @@ extension ChatAttachmentViewController {
             if !publicGroup {
                 return false
             }
-            if self.chat?.tribesInfo?.hasLoopoutBot ?? false {
+            if self.chat?.tribeInfo?.hasLoopoutBot ?? false {
                 sendOptionTitle.text = "Send Onchain"
                 return false
             }
+            return true
+        case OptionsButton.Message:
             return true
         default:
             break
@@ -45,13 +49,20 @@ extension ChatAttachmentViewController : AttachmentsDelegate {
 
 extension ChatAttachmentViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        hideOptionsContainer()
-        
         DispatchQueue.main.async {
             if let chosenImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-                if let imageURL = info[UIImagePickerController.InfoKey.imageURL] as? URL, let data = try? Data(contentsOf: imageURL), data.isAnimatedImage() {
-                    let animated = SDAnimatedImage(data: data)
-                    self.gifSelected(animatedImage: animated, staticImage: chosenImage)
+                if let asset = info[UIImagePickerController.InfoKey.phAsset] as? PHAsset {
+                    let requestOptions = PHImageRequestOptions()
+                    requestOptions.isSynchronous = true
+                    
+                    PHImageManager.default().requestImageDataAndOrientation(for: asset, options: requestOptions, resultHandler: { (imageData, _, _, _) in
+                        if let data = imageData, data.isAnimatedImage() {
+                            let animated = SDAnimatedImage(data: data)
+                            self.gifSelected(animatedImage: animated, staticImage: chosenImage)
+                        } else {
+                            self.imageSelected(image: chosenImage)
+                        }
+                    })
                 } else {
                     self.imageSelected(image: chosenImage)
                 }
@@ -60,10 +71,11 @@ extension ChatAttachmentViewController : UIImagePickerControllerDelegate, UINavi
             }
             picker.dismiss(animated:true, completion: nil)
         }
-
     }
     
     func gifSelected(animatedImage: SDAnimatedImage?, staticImage: UIImage?, allowPrice: Bool = true) {
+        hideOptionsContainer()
+        
         viewTitle.text = "send.gif.upper".localized
         selectedAnimatedImage = animatedImage
         selectedImage = staticImage
@@ -71,6 +83,8 @@ extension ChatAttachmentViewController : UIImagePickerControllerDelegate, UINavi
     }
     
     func imageSelected(image: UIImage?) {
+        hideOptionsContainer()
+        
         viewTitle.text = "send.image.upper".localized
         selectedImage = image
         showImagePreview(image: image)
@@ -127,8 +141,10 @@ extension ChatAttachmentViewController : UIImagePickerControllerDelegate, UINavi
     }
     
     func videoSelected(videoURL: NSURL) {
+        hideOptionsContainer()
+        
         viewTitle.text = "send.video.upper".localized
-        selectedVideo = MediaLoader.getDataFromUrl(videoURL: videoURL as URL)
+        selectedVideo = MediaLoader.getDataFromUrl(url: videoURL as URL)
         
         if let thumbnail = AttachmentsManager.sharedInstance.getThumbnailFromVideo(videoURL: videoURL as URL) {
             selectedImage = thumbnail

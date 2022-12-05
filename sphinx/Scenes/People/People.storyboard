@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--People Modals View Controller-->
+        <scene sceneID="Nnp-nd-EPt">
+            <objects>
+                <viewController storyboardIdentifier="PeopleModalsViewController" id="fcS-Nm-Dhr" customClass="PeopleModalsViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="AvN-Gs-h4f">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M0d-NU-3XH" customClass="PersonModalView" customModule="sphinx" customModuleProvider="target">
+                                <rect key="frame" x="77" y="268" width="260" height="370"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="370" id="47i-7b-eEG"/>
+                                    <constraint firstAttribute="width" constant="260" id="ZLf-kV-7iI"/>
+                                </constraints>
+                            </view>
+                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3bj-dk-fFz" customClass="AuthExternalView" customModule="sphinx" customModuleProvider="target">
+                                <rect key="frame" x="87" y="303" width="240" height="300"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="6u6-Nx-W2M"/>
+                                    <constraint firstAttribute="height" constant="300" id="PxM-Ro-Sqv"/>
+                                </constraints>
+                            </view>
+                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wwz-Zs-yv0" customClass="PeopleTorActionsView" customModule="sphinx" customModuleProvider="target">
+                                <rect key="frame" x="87" y="303" width="240" height="300"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="300" id="XKC-Wr-BBt"/>
+                                    <constraint firstAttribute="width" constant="240" id="c8y-5J-PJQ"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Ava-m9-YW2"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="3bj-dk-fFz" firstAttribute="centerX" secondItem="Ava-m9-YW2" secondAttribute="centerX" id="34o-28-d2f"/>
+                            <constraint firstItem="M0d-NU-3XH" firstAttribute="centerY" secondItem="Ava-m9-YW2" secondAttribute="centerY" id="5tc-yx-msG"/>
+                            <constraint firstItem="wwz-Zs-yv0" firstAttribute="centerX" secondItem="Ava-m9-YW2" secondAttribute="centerX" id="D6G-nZ-RNO"/>
+                            <constraint firstItem="3bj-dk-fFz" firstAttribute="centerY" secondItem="Ava-m9-YW2" secondAttribute="centerY" id="beW-xg-IJM"/>
+                            <constraint firstItem="wwz-Zs-yv0" firstAttribute="centerY" secondItem="Ava-m9-YW2" secondAttribute="centerY" id="nSi-Jq-I51"/>
+                            <constraint firstItem="M0d-NU-3XH" firstAttribute="centerX" secondItem="Ava-m9-YW2" secondAttribute="centerX" id="xqi-VT-pz7"/>
+                        </constraints>
+                    </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <connections>
+                        <outlet property="authExternalView" destination="3bj-dk-fFz" id="RmV-Cy-Scr"/>
+                        <outlet property="peopleTorActionsView" destination="wwz-Zs-yv0" id="3ra-rU-dor"/>
+                        <outlet property="personModalView" destination="M0d-NU-3XH" id="a8Z-MP-lrA"/>
+                        <outlet property="personModalViewVerticalCenterConstraint" destination="5tc-yx-msG" id="YGn-sD-cNH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Mdf-w9-hAW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="179" y="114"/>
+        </scene>
+    </scenes>
+</document>

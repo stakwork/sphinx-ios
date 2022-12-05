@@ -21,8 +21,9 @@ class PaidAttachmentView: UIView {
     @IBOutlet weak var purchaseDeniedContainer: UIView!
     @IBOutlet weak var purchaseAcceptContainer: UIView!
     @IBOutlet weak var processingLoadingWheel: UIActivityIndicatorView!
+    @IBOutlet weak var paymentsNotSupportedLabel: UILabel!
     
-    static let kViewHeight:CGFloat = 50
+    static let kViewHeight: CGFloat = 50
     
     @IBOutlet private var contentView: UIView!
     
@@ -53,6 +54,7 @@ class PaidAttachmentView: UIView {
         guard let message = messageRow.transactionMessage else {
             return
         }
+        
         let shouldShow = messageRow.shouldShowPaidAttachmentView()
         isHidden = !shouldShow
         removeBorderLayer()
@@ -65,10 +67,17 @@ class PaidAttachmentView: UIView {
         
         let price = message.getAttachmentPrice() ?? 0
         let status = message.getPurchaseStatus(queryDB: false)
-        let isDenied = status == TransactionMessage.TransactionMessageType.purchaseDeny
-        let borderColor = isDenied ? UIColor.Sphinx.PrimaryRed : UIColor.Sphinx.PrimaryGreen
         
-        roundCorners(corners: [.bottomLeft, .bottomRight], radius: 10.0, borderColor: borderColor)
+        //  ⚠️ Tentatively denying purchase ability in order to comply with our current App Store review approval needs.
+//        let isDenied = status == TransactionMessage.TransactionMessageType.purchaseDeny
+//        let borderColor = isDenied ? UIColor.Sphinx.PrimaryRed : UIColor.Sphinx.PrimaryGreen
+        let borderColor = UIColor.Sphinx.SecondaryText
+        
+        roundCorners(
+            corners: [.bottomLeft, .bottomRight],
+            radius: 10.0,
+            borderColor: borderColor
+        )
         
         if message.consecutiveMessages.nextMessage {
             roundCorners(corners: [.bottomRight], radius: 10.0, borderColor: borderColor)
@@ -77,31 +86,36 @@ class PaidAttachmentView: UIView {
         configure(status: status, price: price)
     }
     
+    
     func configure(status: TransactionMessage.TransactionMessageType, price: Int) {
-        let priceString = price.formattedWithSeparator
-        purchaseAmountLabel.text = "\(priceString) SAT"
         
-        payAttachmentContainer.isHidden = true
-        processingPaymentContainer.isHidden = true
-        purchaseAcceptContainer.isHidden = true
-        purchaseDeniedContainer.isHidden = true
-        loading = false
+        paymentsNotSupportedLabel.text = "paid-message.payment-not-supported".localized
         
-        switch(status) {
-        case TransactionMessage.TransactionMessageType.purchase:
-            processingPaymentContainer.isHidden = false
-            loading = true
-            break
-        case TransactionMessage.TransactionMessageType.purchaseAccept:
-            purchaseAcceptContainer.isHidden = false
-            break
-        case TransactionMessage.TransactionMessageType.purchaseDeny:
-            purchaseDeniedContainer.isHidden = false
-            break
-        default:
-            payAttachmentContainer.isHidden = false
-            break
-        }
+        //  ⚠️ Tentatively disabled in order to comply with our current App Store review approval needs.
+//        let priceString = price.formattedWithSeparator
+//        purchaseAmountLabel.text = "\(priceString) SAT"
+//
+//        payAttachmentContainer.isHidden = true
+//        processingPaymentContainer.isHidden = true
+//        purchaseAcceptContainer.isHidden = true
+//        purchaseDeniedContainer.isHidden = true
+//        loading = false
+//
+//        switch(status) {
+//        case TransactionMessage.TransactionMessageType.purchase:
+//            processingPaymentContainer.isHidden = false
+//            loading = true
+//            break
+//        case TransactionMessage.TransactionMessageType.purchaseAccept:
+//            purchaseAcceptContainer.isHidden = false
+//            break
+//        case TransactionMessage.TransactionMessageType.purchaseDeny:
+//            purchaseDeniedContainer.isHidden = false
+//            break
+//        default:
+//            payAttachmentContainer.isHidden = false
+//            break
+//        }
     }
     
     @IBAction func payButtonTouched() {

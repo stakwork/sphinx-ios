@@ -711,7 +711,7 @@
                                 <color key="backgroundColor" name="Body"/>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="zjV-dK-x6s">
-                                <rect key="frame" x="0.0" y="73" width="375" height="267"/>
+                                <rect key="frame" x="0.0" y="65" width="375" height="602"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Th-x2-Khv">
@@ -749,12 +749,12 @@
                             <constraint firstItem="VmL-9e-Jha" firstAttribute="top" secondItem="5Th-x2-Khv" secondAttribute="bottom" id="Kl9-Tu-iLM"/>
                             <constraint firstItem="VmL-9e-Jha" firstAttribute="leading" secondItem="brL-Ct-zEB" secondAttribute="leading" id="KwF-ZA-BXC"/>
                             <constraint firstItem="3Kz-Z8-810" firstAttribute="leading" secondItem="brL-Ct-zEB" secondAttribute="leading" id="SMz-Qu-R9b"/>
-                            <constraint firstItem="zjV-dK-x6s" firstAttribute="height" secondItem="3Kz-Z8-810" secondAttribute="height" multiplier="0.4" id="Vel-l7-uW0"/>
                             <constraint firstAttribute="bottom" secondItem="3Kz-Z8-810" secondAttribute="bottom" id="X7K-x8-W1w"/>
                             <constraint firstItem="7SB-f8-Drm" firstAttribute="trailing" secondItem="Spb-Cp-V9e" secondAttribute="trailing" constant="-10" id="YhV-9U-fZ9"/>
+                            <constraint firstItem="zjV-dK-x6s" firstAttribute="bottom" secondItem="3Kz-Z8-810" secondAttribute="bottom" id="aLw-ct-wR4"/>
                             <constraint firstItem="VmL-9e-Jha" firstAttribute="bottom" secondItem="7SB-f8-Drm" secondAttribute="bottom" id="dkz-hJ-ttr"/>
                             <constraint firstItem="5Th-x2-Khv" firstAttribute="trailing" secondItem="7SB-f8-Drm" secondAttribute="trailing" id="doZ-fo-gZs"/>
-                            <constraint firstItem="zjV-dK-x6s" firstAttribute="top" secondItem="5Th-x2-Khv" secondAttribute="bottom" constant="8" id="ed5-ZN-uYb"/>
+                            <constraint firstItem="zjV-dK-x6s" firstAttribute="top" secondItem="5Th-x2-Khv" secondAttribute="bottom" id="ed5-ZN-uYb"/>
                             <constraint firstItem="5Th-x2-Khv" firstAttribute="top" secondItem="brL-Ct-zEB" secondAttribute="top" id="fhk-7e-55P"/>
                             <constraint firstItem="Z7i-o3-ZlM" firstAttribute="top" secondItem="7SB-f8-Drm" secondAttribute="top" id="h4k-Ue-EmJ"/>
                             <constraint firstItem="zjV-dK-x6s" firstAttribute="leading" secondItem="3Kz-Z8-810" secondAttribute="leading" id="whA-KV-4V0"/>

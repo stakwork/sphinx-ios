@@ -208,4 +208,12 @@ extension RecommendationResult : DashboardFeedSquaredThumbnailCollectionViewItem
             return UIColor.Sphinx.Text
         }
     }
+    
+    var isPodcast: Bool {
+        return type == PODCAST_TYPE
+    }
+    
+    var isYoutubeVideo: Bool {
+        return type == YOUTUBE_VIDEO_TYPE
+    }
 }

@@ -36,12 +36,17 @@ class RecommendationFeedPlayerContainerViewController: UIViewController {
                 )
                 
                 self.youtubeVideoPlayerViewController.videoItem = recommendation
+                self.podcastPlayerViewController.podcastItem = recommendation
             }
         }
     }
 
     internal lazy var youtubeVideoPlayerViewController: YoutubeRecommendationFeedPlayerViewController = {
         YoutubeRecommendationFeedPlayerViewController.instantiate(videoItem: recommendation)
+    }()
+    
+    internal lazy var podcastPlayerViewController: PodcastRecommendationFeedPlayerViewController = {
+        PodcastRecommendationFeedPlayerViewController.instantiate(podcastItem: recommendation)
     }()
     
     internal lazy var collectionViewController: RecommendationFeedItemsCollectionViewController = {
@@ -87,8 +92,27 @@ extension RecommendationFeedPlayerContainerViewController {
 extension RecommendationFeedPlayerContainerViewController {
     
     private func configurePlayerView() {
+        if recommendation.isPodcast {
+            addPodcastPlayerView()
+        } else if recommendation.isYoutubeVideo {
+            addVideoPlayerView()
+        }
+    }
+    
+    private func addVideoPlayerView() {
+        removeChildVC(child: podcastPlayerViewController)
+        
         addChildVC(
             child: youtubeVideoPlayerViewController,
+            container: playerContainerView
+        )
+    }
+    
+    private func addPodcastPlayerView() {
+        removeChildVC(child: youtubeVideoPlayerViewController)
+        
+        addChildVC(
+            child: podcastPlayerViewController,
             container: playerContainerView
         )
     }
@@ -114,5 +138,7 @@ extension RecommendationFeedPlayerContainerViewController {
         }
         
         self.recommendation = recommendation
+        
+        configurePlayerView()
     }
 }

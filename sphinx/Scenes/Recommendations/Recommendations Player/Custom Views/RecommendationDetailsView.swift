@@ -15,6 +15,7 @@ class RecommendationDetailsView: UIView {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var podcastPlayerControlsView: PodcastPlayerControlsView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -45,5 +46,7 @@ extension RecommendationDetailsView {
         } else {
             dateLabel.text = "-"
         }
+        
+        podcastPlayerControlsView.configure(withRecommendation: recommendation)
     }
 }

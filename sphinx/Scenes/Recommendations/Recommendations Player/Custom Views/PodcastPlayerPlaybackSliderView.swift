@@ -9,13 +9,35 @@
 import UIKit
 
 class PodcastPlayerPlaybackSliderView: UIView {
+    
+    @IBOutlet var contentView: UIView!
+    
+    @IBOutlet weak var currentTimeLabel: UILabel!
+    @IBOutlet weak var durationLabel: UILabel!
+    @IBOutlet weak var durationLine: UIView!
+    @IBOutlet weak var progressLine: UIView!
+    @IBOutlet weak var progressLineWidth: NSLayoutConstraint!
+    @IBOutlet weak var currentTimeDot: UIView!
+    @IBOutlet weak var gestureHandlerView: UIView!
+    @IBOutlet weak var audioLoadingWheel: UIActivityIndicatorView!
 
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setup()
     }
-    */
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setup()
+    }
+
+    private func setup() {
+        Bundle.main.loadNibNamed("PodcastPlayerPlaybackSliderView", owner: self, options: nil)
+        addSubview(contentView)
+        contentView.frame = self.bounds
+        contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        
+        currentTimeDot.layer.cornerRadius = currentTimeDot.frame.size.height / 2
+    }
 
 }

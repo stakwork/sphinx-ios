@@ -11,14 +11,15 @@ import UIKit
 class PodcastRecommendationFeedPlayerViewController: UIViewController {
 
     @IBOutlet weak var recommendationItemImageView: UIImageView!
+    @IBOutlet weak var podcastPlaybackSliderView: PodcastPlayerPlaybackSliderView!
     
     var podcastItem: RecommendationResult! {
         didSet {
-//            DispatchQueue.main.async { [weak self] in
-//                guard let self = self else { return }
-//
-//                self.updateVideoPlayer(withNewEpisode: self.videoItem)
-//            }
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+
+                self.updatePodcastPlayer(withNewEpisode: self.podcastItem)
+            }
         }
     }
     
@@ -33,8 +34,7 @@ class PodcastRecommendationFeedPlayerViewController: UIViewController {
 extension PodcastRecommendationFeedPlayerViewController {
     
     static func instantiate(
-        podcastItem: RecommendationResult,
-        onDismiss: (() -> Void)?
+        podcastItem: RecommendationResult
     ) -> PodcastRecommendationFeedPlayerViewController {
         let viewController = StoryboardScene
             .Recommendations
@@ -44,5 +44,22 @@ extension PodcastRecommendationFeedPlayerViewController {
         viewController.podcastItem = podcastItem
     
         return viewController
+    }
+}
+
+// MARK: -  Private Helpers
+extension PodcastRecommendationFeedPlayerViewController {
+    
+    private func updatePodcastPlayer(withNewEpisode item: RecommendationResult) {
+        if let imageURLString = item.imageURLPath, let url = URL(string: imageURLString) {
+            recommendationItemImageView.sd_setImage(
+                with: url,
+                placeholderImage: UIImage(named: item.placeholderImageName ?? "podcastPlaceholder"),
+                options: [.highPriority],
+                progress: nil
+            )
+        } else {
+            recommendationItemImageView.image = UIImage(named: item.placeholderImageName ?? "podcastPlaceholder")
+        }
     }
 }

@@ -301,23 +301,18 @@ extension RecommendationFeedItemsCollectionViewController {
     }
     
     
-//    func updateWithNew(
-//        videoPlayerEpisode: Video,
-//        shouldAnimate: Bool = true
-//    ) {
-//        self.videoPlayerEpisode = videoPlayerEpisode
-//
-//        if (self.videoFeedEpisodes.count != videoPlayerEpisode.videoFeed?.videosArray.count) {
-//            self.videoFeedEpisodes = videoPlayerEpisode.videoFeed?.videosArray ?? []
-//        }
-//
-//        if let dataSource = dataSource {
-//            dataSource.apply(
-//                makeSnapshotForCurrentState(),
-//                animatingDifferences: shouldAnimate
-//            )
-//        }
-//    }
+    func updateWithNew(
+        recommendation: RecommendationResult
+    ) {
+        self.recommendation = recommendation
+
+        if let dataSource = dataSource {
+            dataSource.apply(
+                makeSnapshotForCurrentState(),
+                animatingDifferences: true
+            )
+        }
+    }
 }
 
 // MARK: - `UICollectionViewDelegate` Methods

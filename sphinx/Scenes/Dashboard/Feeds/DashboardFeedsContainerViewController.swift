@@ -40,6 +40,12 @@ protocol DashboardFeedsListContainerViewControllerDelegate: AnyObject {
         didSelectNewsletterItemWithID newsletterItemID: NSManagedObjectID
     )
     
+    func viewController(
+        _ viewController: UIViewController,
+        didSelectRecommendationWithId recommendationId: String,
+        from recommendations: [RecommendationResult]
+    )
+    
     func viewControllerContentScrolled(
         scrollView: UIScrollView
     )
@@ -306,7 +312,11 @@ extension DashboardFeedsContainerViewController {
         _ recommendations: [RecommendationResult],
         _ selectedRecommendationId: String
     ) {
-        
+        feedsListContainerDelegate?.viewController(
+            self,
+            didSelectRecommendationWithId: selectedRecommendationId,
+            from: recommendations
+        )
     }
     
     func handleFeedScroll(scrollView: UIScrollView) {

@@ -313,6 +313,19 @@ internal enum StoryboardScene {
         internal static let newsletterFeedItemsCollectionViewController = SceneType<NewsletterFeedItemsCollectionViewController>(storyboard: NewsletterFeed.self, identifier: "NewsletterFeedItemsCollectionViewController")
     }
     
+    internal enum Recommendations: StoryboardType {
+        internal static let storyboardName = "Recommendations"
+        
+        internal static let recommendationFeedPlayerContainerViewController = SceneType<RecommendationFeedPlayerContainerViewController>(storyboard: Recommendations.self, identifier: "RecommendationFeedPlayerContainerViewController")
+        
+        internal static let youtubeRecommendationFeedPlayerViewController = SceneType<YoutubeRecommendationFeedPlayerViewController>(storyboard: Recommendations.self, identifier: "YoutubeRecommendationFeedPlayerViewController")
+        
+        internal static let podcastRecommendationFeedPlayerViewController = SceneType<PodcastRecommendationFeedPlayerViewController>(storyboard: Recommendations.self, identifier: "PodcastRecommendationFeedPlayerViewController")
+        
+        internal static let recommendationFeedItemsCollectionViewController = SceneType<RecommendationFeedItemsCollectionViewController>(storyboard: Recommendations.self, identifier: "RecommendationFeedItemsCollectionViewController")
+        
+    }
+    
 }
 
 internal protocol StoryboardType {

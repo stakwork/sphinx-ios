@@ -124,6 +124,14 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
         
         presentItemWebView(for: newsletterFeedItem)
     }
+    
+    func viewController(
+        _ viewController: UIViewController,
+        didSelectRecommendationWithId recommendationId: String,
+        from recommendations: [RecommendationResult]
+    ) {
+        
+    }
 }
 
 

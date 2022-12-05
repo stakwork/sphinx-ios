@@ -97,6 +97,17 @@
 		472161B42939158B0088B87B /* NoRecommendationsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472161B22939158B0088B87B /* NoRecommendationsCollectionViewCell.swift */; };
 		472161B6293915E20088B87B /* NoRecommendationsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 472161B8293915E20088B87B /* NoRecommendationsCollectionViewCell.xib */; };
 		472161BD293916250088B87B /* LoadingRecommendationsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 472161BF293916250088B87B /* LoadingRecommendationsCollectionViewCell.xib */; };
+		472161C6293A65DA0088B87B /* Recommendations.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 472161C5293A65DA0088B87B /* Recommendations.storyboard */; };
+		472161CB293A66EE0088B87B /* RecommendationFeedPlayerContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472161CA293A66EE0088B87B /* RecommendationFeedPlayerContainerViewController.swift */; };
+		472161CD293A67A50088B87B /* YoutubeRecommendationFeedPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472161CC293A67A50088B87B /* YoutubeRecommendationFeedPlayerViewController.swift */; };
+		472161CF293A67C80088B87B /* PodcastRecommendationFeedPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472161CE293A67C80088B87B /* PodcastRecommendationFeedPlayerViewController.swift */; };
+		472161D1293A67EA0088B87B /* RecommendationFeedItemsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472161D0293A67EA0088B87B /* RecommendationFeedItemsCollectionViewController.swift */; };
+		472161D3293A680F0088B87B /* RecommendationDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472161D2293A680F0088B87B /* RecommendationDetailsView.swift */; };
+		472161D5293A681D0088B87B /* RecommendationDetailsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 472161D4293A681D0088B87B /* RecommendationDetailsView.xib */; };
+		472161D8293A68400088B87B /* RecommendationItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472161D6293A68400088B87B /* RecommendationItemCollectionViewCell.swift */; };
+		472161D9293A68400088B87B /* RecommendationItemCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 472161D7293A68400088B87B /* RecommendationItemCollectionViewCell.xib */; };
+		472161DC293A686A0088B87B /* RecommendationsHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472161DA293A686A0088B87B /* RecommendationsHeaderCollectionReusableView.swift */; };
+		472161DE293A6FC20088B87B /* RecommendationsHeaderCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 472161E0293A6FC20088B87B /* RecommendationsHeaderCollectionReusableView.xib */; };
 		4724BC1325474B440012BD76 /* WebApps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4724BC1525474B440012BD76 /* WebApps.storyboard */; };
 		4726A40D24C09C38005A66B4 /* ChatListHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4726A40C24C09C38005A66B4 /* ChatListHeader.swift */; };
 		4726A40F24C09C4C005A66B4 /* ChatListHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4726A40E24C09C4C005A66B4 /* ChatListHeader.xib */; };
@@ -832,6 +843,19 @@
 		472161BE293916250088B87B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LoadingRecommendationsCollectionViewCell.xib; sourceTree = "<group>"; };
 		472161C1293916290088B87B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LoadingRecommendationsCollectionViewCell.strings; sourceTree = "<group>"; };
 		472161C32939162A0088B87B /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LoadingRecommendationsCollectionViewCell.strings; sourceTree = "<group>"; };
+		472161C5293A65DA0088B87B /* Recommendations.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Recommendations.storyboard; sourceTree = "<group>"; };
+		472161CA293A66EE0088B87B /* RecommendationFeedPlayerContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationFeedPlayerContainerViewController.swift; sourceTree = "<group>"; };
+		472161CC293A67A50088B87B /* YoutubeRecommendationFeedPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubeRecommendationFeedPlayerViewController.swift; sourceTree = "<group>"; };
+		472161CE293A67C80088B87B /* PodcastRecommendationFeedPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastRecommendationFeedPlayerViewController.swift; sourceTree = "<group>"; };
+		472161D0293A67EA0088B87B /* RecommendationFeedItemsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationFeedItemsCollectionViewController.swift; sourceTree = "<group>"; };
+		472161D2293A680F0088B87B /* RecommendationDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationDetailsView.swift; sourceTree = "<group>"; };
+		472161D4293A681D0088B87B /* RecommendationDetailsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecommendationDetailsView.xib; sourceTree = "<group>"; };
+		472161D6293A68400088B87B /* RecommendationItemCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationItemCollectionViewCell.swift; sourceTree = "<group>"; };
+		472161D7293A68400088B87B /* RecommendationItemCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecommendationItemCollectionViewCell.xib; sourceTree = "<group>"; };
+		472161DA293A686A0088B87B /* RecommendationsHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
+		472161DF293A6FC20088B87B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/RecommendationsHeaderCollectionReusableView.xib; sourceTree = "<group>"; };
+		472161E2293A6FC30088B87B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/RecommendationsHeaderCollectionReusableView.strings; sourceTree = "<group>"; };
+		472161E4293A6FC40088B87B /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/RecommendationsHeaderCollectionReusableView.strings; sourceTree = "<group>"; };
 		4724BC1425474B440012BD76 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/WebApps.storyboard; sourceTree = "<group>"; };
 		4724BC1725474B4A0012BD76 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/WebApps.strings; sourceTree = "<group>"; };
 		4724BC1925474B4B0012BD76 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/WebApps.strings; sourceTree = "<group>"; };
@@ -1822,6 +1846,48 @@
 			path = Recommendations;
 			sourceTree = "<group>";
 		};
+		472161C4293A65C30088B87B /* Recommendations */ = {
+			isa = PBXGroup;
+			children = (
+				472161C7293A65E00088B87B /* Recommendations Player */,
+				472161C5293A65DA0088B87B /* Recommendations.storyboard */,
+			);
+			path = Recommendations;
+			sourceTree = "<group>";
+		};
+		472161C7293A65E00088B87B /* Recommendations Player */ = {
+			isa = PBXGroup;
+			children = (
+				472161C9293A66210088B87B /* Custom Views */,
+				472161C8293A65EB0088B87B /* Recommendation Cell */,
+				472161CA293A66EE0088B87B /* RecommendationFeedPlayerContainerViewController.swift */,
+				472161CC293A67A50088B87B /* YoutubeRecommendationFeedPlayerViewController.swift */,
+				472161CE293A67C80088B87B /* PodcastRecommendationFeedPlayerViewController.swift */,
+				472161D0293A67EA0088B87B /* RecommendationFeedItemsCollectionViewController.swift */,
+			);
+			path = "Recommendations Player";
+			sourceTree = "<group>";
+		};
+		472161C8293A65EB0088B87B /* Recommendation Cell */ = {
+			isa = PBXGroup;
+			children = (
+				472161DA293A686A0088B87B /* RecommendationsHeaderCollectionReusableView.swift */,
+				472161E0293A6FC20088B87B /* RecommendationsHeaderCollectionReusableView.xib */,
+				472161D6293A68400088B87B /* RecommendationItemCollectionViewCell.swift */,
+				472161D7293A68400088B87B /* RecommendationItemCollectionViewCell.xib */,
+			);
+			path = "Recommendation Cell";
+			sourceTree = "<group>";
+		};
+		472161C9293A66210088B87B /* Custom Views */ = {
+			isa = PBXGroup;
+			children = (
+				472161D2293A680F0088B87B /* RecommendationDetailsView.swift */,
+				472161D4293A681D0088B87B /* RecommendationDetailsView.xib */,
+			);
+			path = "Custom Views";
+			sourceTree = "<group>";
+		};
 		4726A40B24C09C23005A66B4 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
@@ -2184,6 +2250,7 @@
 		4756DE0C232ABDED001BAFD6 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				472161C4293A65C30088B87B /* Recommendations */,
 				4756DE12232AC0F9001BAFD6 /* Chat */,
 				47468FE7233905820072124A /* Contacts */,
 				F373BEFD26A9CA340093C886 /* Dashboard */,
@@ -3937,6 +4004,7 @@
 				47D03DF62510EDAA0077A968 /* FileInfoView.xib in Resources */,
 				47904C0C24BF352300710E7A /* aurora.caf in Resources */,
 				47D46A2D237B1D140005A548 /* SubscriptionFormButtonTableViewCell.xib in Resources */,
+				472161DE293A6FC20088B87B /* RecommendationsHeaderCollectionReusableView.xib in Resources */,
 				475BDD91232C087A00C5BBD6 /* TransactionPaymentReceivedTableViewCell.xib in Resources */,
 				F3188B942719DA1600890DDD /* DashboardVideoEpisodeCollectionViewCell.xib in Resources */,
 				4712994829228ED20049CBE3 /* TribeMemberProfileView.xib in Resources */,
@@ -3959,6 +4027,7 @@
 				475BDD0A232AC24600C5BBD6 /* PaidInvoiceReceivedTableViewCell.xib in Resources */,
 				47158D77273083E200601F00 /* NewsletterFeed.storyboard in Resources */,
 				4797E76B24B8E4C900D13270 /* AddFriendRowButton.xib in Resources */,
+				472161C6293A65DA0088B87B /* Recommendations.storyboard in Resources */,
 				4754FAA7272B2060006295A5 /* NewsletterItemsSectionCollectionReusableView.xib in Resources */,
 				472161BD293916250088B87B /* LoadingRecommendationsCollectionViewCell.xib in Resources */,
 				4797E7F924B8F9C300D13270 /* SubscriptionTimeIntervalView.xib in Resources */,
@@ -3966,6 +4035,7 @@
 				4797E79D24B8EEC800D13270 /* InvoiceSentTableViewCell.xib in Resources */,
 				4797E89324BCFCA200D13270 /* DeletedMessageReceivedTableViewCell.xib in Resources */,
 				4797E76724B8E12E00D13270 /* Localizable.strings in Resources */,
+				472161D5293A681D0088B87B /* RecommendationDetailsView.xib in Resources */,
 				474FE32723F588C000C06FC8 /* VideoSentTableViewCell.xib in Resources */,
 				47A79D402444EEFF005CD72F /* MessageOptionView.xib in Resources */,
 				F3CE638126AFF93F006E37A0 /* FeedFilterChipCollectionViewCell.xib in Resources */,
@@ -4000,6 +4070,7 @@
 				4785C10024D1EE1F004E2D6C /* GroupRequestTableViewCell.xib in Resources */,
 				479608F6256EAEBD00A68FC1 /* MessageBoostView.xib in Resources */,
 				47822C6E2449EEEE0011D832 /* PaidMessageReceivedTableViewCell.xib in Resources */,
+				472161D9293A68400088B87B /* RecommendationItemCollectionViewCell.xib in Resources */,
 				473633E825558F0B007405F2 /* PodcastSatsView.xib in Resources */,
 				476EB47623C50662009745E2 /* GroupContactTableViewCell.xib in Resources */,
 				4726A40F24C09C4C005A66B4 /* ChatListHeader.xib in Resources */,
@@ -4170,6 +4241,7 @@
 				F38744E1271FD7CB00E28C84 /* Video+DisplayUtils.swift in Sources */,
 				F358212F2698BE6800A314F1 /* API+HubError.swift in Sources */,
 				47949BD624AA12C7000D697B /* CommonDeletedMessageTableViewCell.swift in Sources */,
+				472161CD293A67A50088B87B /* YoutubeRecommendationFeedPlayerViewController.swift in Sources */,
 				47A79D3A2444A15C005CD72F /* MessageOptionsView.swift in Sources */,
 				475BDCBE232AC1F000C5BBD6 /* ChatDataSource.swift in Sources */,
 				47308E0824FEE6E600FFAC6F /* SocketEngineClient.swift in Sources */,
@@ -4203,6 +4275,7 @@
 				F32A696126CFEF600004B8B3 /* PodcastEpisode+Properties.swift in Sources */,
 				47B9A648233BB6AE00D2B022 /* AddressBookHeaderView.swift in Sources */,
 				475BDD05232AC24600C5BBD6 /* ExpiredInvoiceReceivedTableViewCell.swift in Sources */,
+				472161DC293A686A0088B87B /* RecommendationsHeaderCollectionReusableView.swift in Sources */,
 				479A39D7244E26FA00A37899 /* AttachmentObject.swift in Sources */,
 				470708A424B3669200A98DCA /* MetaDataCache.swift in Sources */,
 				479EAB6723E311D4001013AB /* LoadingMoreTableViewCell.swift in Sources */,
@@ -4261,6 +4334,7 @@
 				4789E26E24F406F3003991BE /* RelayURLUpdateHelper.swift in Sources */,
 				475BDD5C232AE26E00C5BBD6 /* TransactionMessage+CoreDataClass.swift in Sources */,
 				478BD8B92829B70700C733FD /* TribeMemberPopupView.swift in Sources */,
+				472161D1293A67EA0088B87B /* RecommendationFeedItemsCollectionViewController.swift in Sources */,
 				475723A9247EBB56001ADC7E /* CustomAudioPlayer.swift in Sources */,
 				47D76E6927F10D89000DC021 /* API+AuthenticationExtension.swift in Sources */,
 				473842F7239197E700AA640F /* FullScreenImageView.swift in Sources */,
@@ -4362,6 +4436,7 @@
 				4789E24A24EDB73B003991BE /* WebAppViewController.swift in Sources */,
 				F3D04027268BABFF00D54A94 /* InviteActionsHelper.swift in Sources */,
 				F3531C3D26BD505F00E9586C /* DashboardChatsListDelegate.swift in Sources */,
+				472161D8293A68400088B87B /* RecommendationItemCollectionViewCell.swift in Sources */,
 				F3188B822717942000890DDD /* VideoFeed+Computeds.swift in Sources */,
 				F3D04020268BAB7500D54A94 /* InviteWelcomeViewController.swift in Sources */,
 				475154B32423E7FE00477384 /* VideoCallSentTableViewCell.swift in Sources */,
@@ -4469,6 +4544,7 @@
 				47308E0D24FEE6E700FFAC6F /* SocketEngine.swift in Sources */,
 				475BDD95232C2F9100C5BBD6 /* UILabel.swift in Sources */,
 				F3188B7B271792C400890DDD /* Video+Properties.swift in Sources */,
+				472161D3293A680F0088B87B /* RecommendationDetailsView.swift in Sources */,
 				F352073926F228A7004B2518 /* CodingUserInfoKey.swift in Sources */,
 				47904C2224BF54DA00710E7A /* NotificationSoundHelper.swift in Sources */,
 				473258AC241BD700006E6602 /* CommonPaymentViewController.swift in Sources */,
@@ -4497,6 +4573,7 @@
 				470396DC2535D2EB007F9C23 /* PodcastEpisodesDataSource.swift in Sources */,
 				F32A697B26D565E50004B8B3 /* PodcastModel+Computeds.swift in Sources */,
 				471161D7291563A2008EAFF2 /* ActionTrack+CoreDataClass.swift in Sources */,
+				472161CB293A66EE0088B87B /* RecommendationFeedPlayerContainerViewController.swift in Sources */,
 				475BDCE1232AC23B00C5BBD6 /* ExpiredInvoiceSentTableViewCell.swift in Sources */,
 				47D0046125E7F3EC00E74063 /* Download.swift in Sources */,
 				477DB72824B4BBF200D6323F /* GroupRemovedTableViewCell.swift in Sources */,
@@ -4608,6 +4685,7 @@
 				4787F86F24741EB900CCE8B9 /* NewPublicGroupViewController.swift in Sources */,
 				47FA18DC24362F1D00469C8F /* AttachmentPriceView.swift in Sources */,
 				47CD9508265EC2A4009B06A4 /* CommonModalView.swift in Sources */,
+				472161CF293A67C80088B87B /* PodcastRecommendationFeedPlayerViewController.swift in Sources */,
 				475BDD28232AC97500C5BBD6 /* API.swift in Sources */,
 				F3188B8C2719CAE200890DDD /* VideoFeed+FetchUtils.swift in Sources */,
 				4703CF852518FA3F007B685C /* FileSentTableViewCell.swift in Sources */,
@@ -4717,6 +4795,16 @@
 				472161C32939162A0088B87B /* es */,
 			);
 			name = LoadingRecommendationsCollectionViewCell.xib;
+			sourceTree = "<group>";
+		};
+		472161E0293A6FC20088B87B /* RecommendationsHeaderCollectionReusableView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				472161DF293A6FC20088B87B /* Base */,
+				472161E2293A6FC30088B87B /* en */,
+				472161E4293A6FC40088B87B /* es */,
+			);
+			name = RecommendationsHeaderCollectionReusableView.xib;
 			sourceTree = "<group>";
 		};
 		4724BC1525474B440012BD76 /* WebApps.storyboard */ = {

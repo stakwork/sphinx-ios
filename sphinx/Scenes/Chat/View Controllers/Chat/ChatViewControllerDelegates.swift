@@ -163,7 +163,11 @@ extension ChatViewController : PresentedViewControllerDelegate {
 extension ChatViewController : ChatAccessoryViewDelegate {
     
     func didDetectPossibleMention(mentionText:String) {
-        let possibleMentions = self.chat?.aliases.filter({$0.lowercased().contains(mentionText)}).sorted()
+        let possibleMentions = self.chat?.aliases.filter(
+            {
+                let substring = $0.substring(range: NSRange(location: 0, length: mentionText.count))
+                return substring.lowercased() == mentionText
+            }).sorted()
         if let datasource = chatMentionAutocompleteDataSource,
         let mentions = possibleMentions{
             datasource.updateMentionSuggestions(suggestions: mentions)

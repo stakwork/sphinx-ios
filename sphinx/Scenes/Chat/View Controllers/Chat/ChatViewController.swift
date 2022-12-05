@@ -247,6 +247,8 @@ class ChatViewController: KeyboardHandlerViewController {
     }
     
     func configureMentionAutocompleteTableView(){
+        mentionAutoCompleteTableView.backgroundColor = UIColor.Sphinx.Body
+        mentionAutoCompleteTableView.separatorColor = UIColor.Sphinx.Divider
         mentionAutoCompleteTableView.isHidden = true
         chatMentionAutocompleteDataSource = ChatMentionAutocompleteDataSource(tableView: mentionAutoCompleteTableView,delegate:self)
         mentionAutoCompleteTableView.delegate = chatMentionAutocompleteDataSource

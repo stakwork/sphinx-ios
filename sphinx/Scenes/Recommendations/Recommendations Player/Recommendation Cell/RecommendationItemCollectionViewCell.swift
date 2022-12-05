@@ -23,3 +23,14 @@ class RecommendationItemCollectionViewCell: UICollectionViewCell {
     }
 
 }
+
+// MARK: - Static Properties
+extension RecommendationItemCollectionViewCell {
+    
+    static let reuseID = "RecommendationItemCollectionViewCell"
+    
+    static let nib: UINib = .init(
+        nibName: "RecommendationItemCollectionViewCell",
+        bundle: nil
+    )
+}

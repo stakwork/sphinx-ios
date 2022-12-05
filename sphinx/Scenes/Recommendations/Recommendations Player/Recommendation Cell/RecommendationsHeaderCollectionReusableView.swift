@@ -18,3 +18,14 @@ class RecommendationsHeaderCollectionReusableView: UICollectionReusableView {
     }
     
 }
+
+// MARK: - Static Properties
+extension RecommendationsHeaderCollectionReusableView {
+    
+    static let reuseID = "RecommendationsHeaderCollectionReusableView"
+    
+    static let nib: UINib = .init(
+        nibName: "RecommendationsHeaderCollectionReusableView",
+        bundle: nil
+    )
+}

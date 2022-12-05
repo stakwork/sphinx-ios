@@ -10,21 +10,39 @@ import UIKit
 
 class PodcastRecommendationFeedPlayerViewController: UIViewController {
 
+    @IBOutlet weak var recommendationItemImageView: UIImageView!
+    
+    var podcastItem: RecommendationResult! {
+        didSet {
+//            DispatchQueue.main.async { [weak self] in
+//                guard let self = self else { return }
+//
+//                self.updateVideoPlayer(withNewEpisode: self.videoItem)
+//            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
+}
+
+// MARK: -  Static Methods
+extension PodcastRecommendationFeedPlayerViewController {
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    static func instantiate(
+        podcastItem: RecommendationResult,
+        onDismiss: (() -> Void)?
+    ) -> PodcastRecommendationFeedPlayerViewController {
+        let viewController = StoryboardScene
+            .Recommendations
+            .podcastRecommendationFeedPlayerViewController
+            .instantiate()
+        
+        viewController.podcastItem = podcastItem
+    
+        return viewController
     }
-    */
-
 }

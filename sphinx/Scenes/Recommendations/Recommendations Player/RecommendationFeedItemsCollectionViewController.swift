@@ -11,79 +11,331 @@ import UIKit
 private let reuseIdentifier = "Cell"
 
 class RecommendationFeedItemsCollectionViewController: UICollectionViewController {
+    
+    var recommendation: RecommendationResult!
+    var recommendations: [RecommendationResult]!
 
+    var onRecommendationCellSelected: ((String) -> Void)!
+    
+    private var currentDataSnapshot: DataSourceSnapshot!
+    private var dataSource: DataSource!
+}
+
+// MARK: -  Static Methods
+extension RecommendationFeedItemsCollectionViewController {
+    
+    static func instantiate(
+        recommendation: RecommendationResult,
+        recommendations: [RecommendationResult],
+        onRecommendationCellSelected: @escaping ((String) -> Void) = { _ in }
+    ) -> RecommendationFeedItemsCollectionViewController {
+        let viewController = StoryboardScene
+            .Recommendations
+            .recommendationFeedItemsCollectionViewController
+            .instantiate()
+        
+        viewController.recommendation = recommendation
+        viewController.recommendations = recommendations
+        
+        viewController.onRecommendationCellSelected = onRecommendationCellSelected
+    
+        return viewController
+    }
+}
+
+// MARK: - Layout & Data Structure
+extension RecommendationFeedItemsCollectionViewController {
+    
+    enum CollectionViewSection: Int, CaseIterable {
+        case recommendations
+    }
+    
+    enum DataSourceItem: Hashable {
+        case recommendation(RecommendationResult)
+    }
+
+    typealias RecommendationCell = RecommendationItemCollectionViewCell
+    typealias CellDataItem = DataSourceItem
+    typealias DataSource = UICollectionViewDiffableDataSource<CollectionViewSection, CellDataItem>
+    typealias DataSourceSnapshot = NSDiffableDataSourceSnapshot<CollectionViewSection, CellDataItem>
+}
+
+// MARK: -  Lifecycle
+extension RecommendationFeedItemsCollectionViewController {
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
+        registerViews(for: collectionView)
+        configure(collectionView)
+        configureDataSource(for: collectionView)
+    }
+}
 
-        // Register cell classes
-        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+// MARK: - Layout Composition
+extension RecommendationFeedItemsCollectionViewController {
 
-        // Do any additional setup after loading the view.
+    func makeRecommendationsSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
+        let headerSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .estimated(60)
+        )
+        
+        let headerItem = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerSize,
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top
+        )
+        
+        return headerItem
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-    // MARK: UICollectionViewDataSource
-
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
-
-
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
-        return 0
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
     
-        // Configure the cell
+    func makeRecommendationsSection() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .fractionalHeight(1.0)
+        )
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        item.contentInsets = .zero
+
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .estimated(103.0)
+        )
+        
+        let group = NSCollectionLayoutGroup.horizontal(
+            layoutSize: groupSize,
+            subitems: [item]
+        )
+        
+        let sectionHeader = makeRecommendationsSectionHeader()
+        
+        sectionHeader.pinToVisibleBounds = true
+
+        let section = NSCollectionLayoutSection(group: group)
+
+        section.orthogonalScrollingBehavior = .none
+        section.boundarySupplementaryItems = [sectionHeader]
+        section.contentInsets = .zero
+
+        return section
+    }
+
+
+    func makeSectionProvider() -> UICollectionViewCompositionalLayoutSectionProvider {
+        { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
+            switch CollectionViewSection(rawValue: sectionIndex)! {
+            case .recommendations:
+                return self.makeRecommendationsSection()
+            }
+        }
+    }
+
+
+    func makeLayout() -> UICollectionViewLayout {
+        let layoutConfiguration = UICollectionViewCompositionalLayoutConfiguration()
+
+        layoutConfiguration.interSectionSpacing = .zero
+
+        let layout = UICollectionViewCompositionalLayout(
+            sectionProvider: makeSectionProvider()
+        )
+
+        layout.configuration = layoutConfiguration
+
+        return layout
+    }
+}
+
+// MARK: - Collection View Configuration and View Registration
+extension RecommendationFeedItemsCollectionViewController {
+
+    func registerViews(for collectionView: UICollectionView) {
+        collectionView.register(
+            RecommendationsHeaderCollectionReusableView.nib,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: RecommendationsHeaderCollectionReusableView.reuseID
+        )
+        
+        collectionView.register(
+            RecommendationItemCollectionViewCell.nib,
+            forCellWithReuseIdentifier: RecommendationItemCollectionViewCell.reuseID
+        )
+    }
+
+
+    func configure(_ collectionView: UICollectionView) {
+        collectionView.contentInset = .zero
+        collectionView.collectionViewLayout = makeLayout()
+        collectionView.alwaysBounceVertical = true
+        collectionView.backgroundColor = .Sphinx.ListBG
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.scrollsToTop = false
+        
+        collectionView.delegate = self
+    }
+}
+
+// MARK: - Data Source Configuration
+extension RecommendationFeedItemsCollectionViewController {
+
+    func makeDataSource(for collectionView: UICollectionView) -> DataSource {
+        let dataSource = DataSource(
+            collectionView: collectionView,
+            cellProvider: makeCellProvider(for: collectionView)
+        )
+
+        dataSource.supplementaryViewProvider = makeSupplementaryViewProvider(
+            for: collectionView
+        )
+
+        return dataSource
+    }
+
+
+    func configureDataSource(for collectionView: UICollectionView) {
+        dataSource = makeDataSource(for: collectionView)
+
+        let snapshot = makeSnapshotForCurrentState()
+
+        dataSource.apply(snapshot, animatingDifferences: false)
+    }
+}
+
+// MARK: - Data Source View Providers
+extension RecommendationFeedItemsCollectionViewController {
+
+    func makeCellProvider(for collectionView: UICollectionView) -> DataSource.CellProvider {
+        { (collectionView, indexPath, dataSourceItem) -> UICollectionViewCell in
+            guard
+                let section = CollectionViewSection(rawValue: indexPath.section)
+            else {
+                preconditionFailure("Unexpected Section index path")
+            }
+            
+            switch section {
+            case .recommendations:
+                guard
+                    let recommendationCell = collectionView.dequeueReusableCell(
+                        withReuseIdentifier: RecommendationItemCollectionViewCell.reuseID,
+                        for: indexPath
+                    ) as? RecommendationItemCollectionViewCell
+                else {
+                    preconditionFailure("Failed to dequeue expected reusable cell type")
+                }
+
+//                recommendationCell.configure(
+//                    withVideoEpisode: videoEpisode,
+//                    and: self.boostDelegate
+//                )
+
+                return recommendationCell
+            }
+        }
+    }
+
+    func makeSupplementaryViewProvider(
+        for collectionView: UICollectionView
+    ) -> DataSource.SupplementaryViewProvider {
+        {(
+            collectionView: UICollectionView,
+            kind: String,
+            indexPath: IndexPath
+        ) -> UICollectionReusableView in
+            guard
+                let section = CollectionViewSection(rawValue: indexPath.section)
+            else {
+                preconditionFailure()
+            }
+        
+            switch section {
+            case .recommendations:
+                switch kind {
+                case UICollectionView.elementKindSectionHeader:
+                    guard let headerView = collectionView.dequeueReusableSupplementaryView(
+                        ofKind: kind,
+                        withReuseIdentifier: RecommendationsHeaderCollectionReusableView.reuseID,
+                        for: indexPath
+                    ) as? RecommendationsHeaderCollectionReusableView else {
+                        preconditionFailure()
+                    }
+                    
+//                        headerView.configure(
+//                            withEpisode: self.videoPlayerEpisode,
+//                            onFeedSubscribed: self.onFeedSubscriptionSelected,
+//                            onFeedUnsubscribed: self.onFeedSubscriptionCancellationSelected
+//                        )
+                    
+                    return headerView
+                default:
+                    preconditionFailure()
+                }
+            }
+        }
+    }
+}
+
+// MARK: - Data Source Snapshot
+extension RecommendationFeedItemsCollectionViewController {
+
+    func makeSnapshotForCurrentState() -> DataSourceSnapshot {
+        var snapshot = DataSourceSnapshot()
+
+        snapshot.appendSections(CollectionViewSection.allCases)
+
+        snapshot.appendItems(
+            recommendations.map { DataSourceItem.recommendation($0) },
+            toSection: .recommendations
+        )
+
+        return snapshot
+    }
+
+
+    func updateSnapshot(shouldAnimate: Bool = true) {
+        let snapshot = makeSnapshotForCurrentState()
+
+        dataSource.apply(snapshot, animatingDifferences: shouldAnimate)
+    }
     
-        return cell
-    }
-
-    // MARK: UICollectionViewDelegate
-
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
     
-    }
-    */
+//    func updateWithNew(
+//        videoPlayerEpisode: Video,
+//        shouldAnimate: Bool = true
+//    ) {
+//        self.videoPlayerEpisode = videoPlayerEpisode
+//
+//        if (self.videoFeedEpisodes.count != videoPlayerEpisode.videoFeed?.videosArray.count) {
+//            self.videoFeedEpisodes = videoPlayerEpisode.videoFeed?.videosArray ?? []
+//        }
+//
+//        if let dataSource = dataSource {
+//            dataSource.apply(
+//                makeSnapshotForCurrentState(),
+//                animatingDifferences: shouldAnimate
+//            )
+//        }
+//    }
+}
 
+// MARK: - `UICollectionViewDelegate` Methods
+extension RecommendationFeedItemsCollectionViewController {
+
+    override func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath
+    ) {
+        guard
+            let dataSourceItem = dataSource.itemIdentifier(for: indexPath)
+        else {
+            return
+        }
+        
+        switch dataSourceItem {
+        case .recommendation(let recommendation):
+            self.onRecommendationCellSelected(recommendation.id)
+        }
+    }
 }

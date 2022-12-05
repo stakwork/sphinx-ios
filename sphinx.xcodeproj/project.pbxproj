@@ -177,6 +177,10 @@
 		473F7BA6268B7F970063D0E0 /* OnionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473F7BA5268B7F970063D0E0 /* OnionManager.swift */; };
 		4740538C244CFE0000826533 /* CustomImageScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4740538B244CFE0000826533 /* CustomImageScrollView.swift */; };
 		474064932745581C00FB7F93 /* PeopleTorActionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474064922745581C00FB7F93 /* PeopleTorActionsView.swift */; };
+		47468079293E564B00F51457 /* PodcastPlayerControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47468078293E564B00F51457 /* PodcastPlayerControlsView.swift */; };
+		4746807B293E565800F51457 /* PodcastPlayerControlsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4746807A293E565800F51457 /* PodcastPlayerControlsView.xib */; };
+		4746807D293E566700F51457 /* PodcastPlayerPlaybackSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4746807C293E566700F51457 /* PodcastPlayerPlaybackSliderView.swift */; };
+		4746807F293E566D00F51457 /* PodcastPlayerPlaybackSliderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4746807E293E566D00F51457 /* PodcastPlayerPlaybackSliderView.xib */; };
 		47468FCE233131B40072124A /* NSManagedObjectContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47468FCD233131B40072124A /* NSManagedObjectContext.swift */; };
 		47468FD323314EE80072124A /* PinCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47468FD223314EE80072124A /* PinCodeViewController.swift */; };
 		47468FD5233162D40072124A /* AlertHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47468FD4233162D40072124A /* AlertHelper.swift */; };
@@ -936,6 +940,10 @@
 		473F7BA5268B7F970063D0E0 /* OnionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnionManager.swift; sourceTree = "<group>"; };
 		4740538B244CFE0000826533 /* CustomImageScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImageScrollView.swift; sourceTree = "<group>"; };
 		474064922745581C00FB7F93 /* PeopleTorActionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleTorActionsView.swift; sourceTree = "<group>"; };
+		47468078293E564B00F51457 /* PodcastPlayerControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastPlayerControlsView.swift; sourceTree = "<group>"; };
+		4746807A293E565800F51457 /* PodcastPlayerControlsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PodcastPlayerControlsView.xib; sourceTree = "<group>"; };
+		4746807C293E566700F51457 /* PodcastPlayerPlaybackSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastPlayerPlaybackSliderView.swift; sourceTree = "<group>"; };
+		4746807E293E566D00F51457 /* PodcastPlayerPlaybackSliderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PodcastPlayerPlaybackSliderView.xib; sourceTree = "<group>"; };
 		47468FCD233131B40072124A /* NSManagedObjectContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSManagedObjectContext.swift; sourceTree = "<group>"; };
 		47468FD223314EE80072124A /* PinCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinCodeViewController.swift; sourceTree = "<group>"; };
 		47468FD4233162D40072124A /* AlertHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertHelper.swift; sourceTree = "<group>"; };
@@ -1884,6 +1892,10 @@
 			children = (
 				472161D2293A680F0088B87B /* RecommendationDetailsView.swift */,
 				472161D4293A681D0088B87B /* RecommendationDetailsView.xib */,
+				47468078293E564B00F51457 /* PodcastPlayerControlsView.swift */,
+				4746807A293E565800F51457 /* PodcastPlayerControlsView.xib */,
+				4746807C293E566700F51457 /* PodcastPlayerPlaybackSliderView.swift */,
+				4746807E293E566D00F51457 /* PodcastPlayerPlaybackSliderView.xib */,
 			);
 			path = "Custom Views";
 			sourceTree = "<group>";
@@ -3946,11 +3958,13 @@
 				477D9692244DFCDA00830406 /* GifOverlayView.xib in Resources */,
 				475BDD48232AD00D00C5BBD6 /* Montserrat-Regular.otf in Resources */,
 				472F9D3F2416BA0200EFC30A /* AudioRecordingTooltip.xib in Resources */,
+				4746807F293E566D00F51457 /* PodcastPlayerPlaybackSliderView.xib in Resources */,
 				4754FA94272ADB02006295A5 /* DashboardNewsletterItemCollectionViewCell.xib in Resources */,
 				47F258D0253F6B1500122A5A /* PodcastSmallPlayer.xib in Resources */,
 				4789E25324EEB8D8003991BE /* AuthorizeAppView.xib in Resources */,
 				47904C1124BF352300710E7A /* tri-tone.caf in Resources */,
 				475BDD49232AD00D00C5BBD6 /* Montserrat-SemiBold.otf in Resources */,
+				4746807B293E565800F51457 /* PodcastPlayerControlsView.xib in Resources */,
 				F33119A5268FA097005082EB /* XcodeStoreKitTestCertificate.cer in Resources */,
 				4780783023916CA800187906 /* PictureSentTableViewCell.xib in Resources */,
 				F3188BA3271CDA4200890DDD /* VideoFeed.storyboard in Resources */,
@@ -4189,6 +4203,7 @@
 				470F5CAF243E8881007E054F /* VideoCallPayButton.swift in Sources */,
 				47183CBF2549E1BE00E6FD19 /* PodcastBoostSentTableViewCell.swift in Sources */,
 				47B46F66254AFE1C007F61CD /* ChatHeaderView.swift in Sources */,
+				47468079293E564B00F51457 /* PodcastPlayerControlsView.swift in Sources */,
 				47893AA2240E857F002F675B /* AVAudioSession.swift in Sources */,
 				47F6CA10287C695B005EBCB6 /* Nonce.swift in Sources */,
 				4712994329227B450049CBE3 /* TribeMemberProfileViewController.swift in Sources */,
@@ -4307,6 +4322,7 @@
 				473BC88D25F287340070E519 /* PodcastNewEpisodeViewController.swift in Sources */,
 				F32A696726CFEF600004B8B3 /* PodcastModel+Properties.swift in Sources */,
 				47FA18C224253BDD00469C8F /* InvoiceManager.swift in Sources */,
+				4746807D293E566700F51457 /* PodcastPlayerPlaybackSliderView.swift in Sources */,
 				471161DF29156480008EAFF2 /* NSObject.swift in Sources */,
 				47771C6E259B848300990467 /* GroupPinView.swift in Sources */,
 				F313024626BA62B300A1396E /* ChatsCollectionViewController.swift in Sources */,

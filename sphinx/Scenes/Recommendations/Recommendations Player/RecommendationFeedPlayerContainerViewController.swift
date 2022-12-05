@@ -9,22 +9,35 @@
 import UIKit
 
 class RecommendationFeedPlayerContainerViewController: UIViewController {
+    
+    @IBOutlet weak var playerContainerView: UIView!
+    @IBOutlet weak var recommendationDetailsView: RecommendationDetailsView!
+    @IBOutlet weak var collectionViewContainer: UIView!
+    
+    var recommendations: [RecommendationResult]!
+    var recommendation: RecommendationResult!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
+
+// MARK: -  Static Methods
+extension RecommendationFeedPlayerContainerViewController {
+    
+    static func instantiate(
+        recommendations: [RecommendationResult],
+        recommendation: RecommendationResult
+    ) -> RecommendationFeedPlayerContainerViewController {
+        let viewController = StoryboardScene
+            .Recommendations
+            .recommendationFeedPlayerContainerViewController
+            .instantiate()
+        
+        viewController.recommendations = recommendations
+        viewController.recommendation = recommendation
+    
+        return viewController
+    }
+}
+

@@ -29,7 +29,6 @@ class ChatViewController: KeyboardHandlerViewController {
     @IBOutlet weak var loadingWheel: UIActivityIndicatorView!
     @IBOutlet weak var scrollDownLabel: UILabel!
     @IBOutlet weak var webAppContainerView: UIView!
-    @IBOutlet weak var mentionAutoCompleteTableView: UITableView!
     
     
     var unseenMessagesCount = 0

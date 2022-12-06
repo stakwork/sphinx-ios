@@ -24,33 +24,26 @@ class ChatMentionAutocompleteDataSource : NSObject {
         super.init()
         self.tableView = tableView
         self.delegate = delegate
-        tableView.backgroundColor = UIColor.Sphinx.Body
+        tableView.backgroundColor = .clear
         tableView.separatorColor = UIColor.Sphinx.Divider
         tableView.estimatedRowHeight = mentionCellHeight
         tableView.rowHeight = UITableView.automaticDimension
-        //tableView.transform = CGAffineTransform(scaleX: 1, y: -1)
+        tableView.transform = CGAffineTransform(scaleX: 1, y: -1)
     }
     
     func updateMentionSuggestions(suggestions:[String]){
         self.tableView.isHidden = (suggestions.isEmpty == true)
         self.mentionSuggestions = suggestions
-        
         tableView.reloadData()
+        if(suggestions.isEmpty == false){
+            let bottom = IndexPath(
+                row: 0,
+                section: 0)
+            tableView.scrollToRow(at: bottom, at: .bottom, animated: true)
+        }
+        
     }
     
-    func updateTableContentInset() {
-        let numRows = self.tableView.numberOfRows(inSection: 0)
-        var contentInsetTop = self.tableView.bounds.size.height
-        for i in 0..<numRows {
-            let rowRect = self.tableView.rectForRow(at: IndexPath(item: i, section: 0))
-            contentInsetTop -= rowRect.size.height
-            if contentInsetTop <= 0 {
-                contentInsetTop = 0
-                break
-            }
-        }
-        self.tableView.contentInset = UIEdgeInsets(top: contentInsetTop,left: 0,bottom: 0,right: 0)
-    }
 }
 
 extension ChatMentionAutocompleteDataSource : UITableViewDataSource{
@@ -65,7 +58,8 @@ extension ChatMentionAutocompleteDataSource : UITableViewDataSource{
         label.text = mentionSuggestions[indexPath.row]
         label.font = UIFont(name: "Roboto", size: label.font.pointSize)
         cell.addSubview(label)
-        
+        cell.transform = CGAffineTransform(scaleX: 1, y: -1)
+        cell.backgroundColor = UIColor.Sphinx.Body
         return cell
     }
     

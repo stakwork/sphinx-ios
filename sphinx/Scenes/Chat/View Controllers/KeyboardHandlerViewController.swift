@@ -12,6 +12,7 @@ class KeyboardHandlerViewController: OrientationHandlerViewController {
     @IBOutlet weak var chatTableView: UITableView!
     @IBOutlet weak var scrollDownContainer: UIView!
     @IBOutlet weak var scrollDownViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var mentionAutoCompleteTableView: UITableView!
 
     let windowInsets = getWindowInsets()
     let kSmallHeaderHeight: CGFloat = 55
@@ -93,9 +94,7 @@ class KeyboardHandlerViewController: OrientationHandlerViewController {
         bottomContentInset = bottomBarHeight
         chatTableView.contentInset.bottom = bottomContentInset
         chatTableView.verticalScrollIndicatorInsets.bottom = bottomContentInset
-        if let vc = self as? ChatViewController{
-            vc.mentionAutoCompleteTableView.contentInset.bottom = bottomContentInset
-        }
+        mentionAutoCompleteTableView.contentInset.top = bottomContentInset - ChatAccessoryView.kTableBottomPadding
         setTopInset()
     }
     

@@ -38,6 +38,7 @@ class PodcastPlayerHelper {
         case smallPlayer = "smallPlayer"
         case podcastPlayerVC = "podcastPlayerVC"
         case dashboard = "dashboardSmallPlayer"
+        case recommendationsPlayer = "recommendationsPlayer"
     }
     
     func addDelegate(
@@ -213,15 +214,15 @@ class PodcastPlayerHelper {
             return
         }
         
-        for d in self.delegates.values {
-            d.loadingState(podcastId: podcast.feedID, loading: true)
-        }
-        
         let didChangeEpisode = setNewEpisodeWith(
             index: index,
             in: podcast,
             episodeId: episode.itemID
         )
+        
+        for d in self.delegates.values {
+            d.loadingState(podcastId: podcast.feedID, loading: true)
+        }
         
         if didChangeEpisode {
             shouldPause()

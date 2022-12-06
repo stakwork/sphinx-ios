@@ -9,7 +9,7 @@ import CoreData
 
 public class PodcastEpisode: NSObject {
     
-    public var objectID: NSManagedObjectID
+    public var objectID: NSManagedObjectID?
     public var itemID: String
     public var title: String?
     public var author: String?
@@ -21,7 +21,7 @@ public class PodcastEpisode: NSObject {
     public var linkURLPath: String?
     public var feed: PodcastFeed?
     
-    init(_ objectID: NSManagedObjectID, _ itemID: String) {
+    init(_ objectID: NSManagedObjectID?, _ itemID: String) {
         self.objectID = objectID
         self.itemID = itemID
     }

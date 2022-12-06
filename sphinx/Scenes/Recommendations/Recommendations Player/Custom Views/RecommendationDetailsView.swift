@@ -10,6 +10,8 @@ import UIKit
 
 class RecommendationDetailsView: UIView {
     
+    weak var delegate: RecommendationPlayerViewDelegate?
+    
     @IBOutlet var contentView: UIView!
 
     @IBOutlet weak var titleLabel: UILabel!
@@ -37,7 +39,11 @@ class RecommendationDetailsView: UIView {
 
 // MARK: - Public methods
 extension RecommendationDetailsView {
-    func configure(withRecommendation recommendation: RecommendationResult) {
+    func configure(
+        withRecommendation recommendation: RecommendationResult,
+        podcast: PodcastFeed,
+        andDelegate delegate: RecommendationPlayerViewDelegate?
+    ) {
         titleLabel.text = recommendation.title
         descriptionLabel.text = recommendation.subtitle
         
@@ -47,6 +53,23 @@ extension RecommendationDetailsView {
             dateLabel.text = "-"
         }
         
-        podcastPlayerControlsView.configure(withRecommendation: recommendation)
+        podcastPlayerControlsView.configure(
+            withRecommendation: recommendation,
+            podcast: podcast,
+            andDelegate: delegate
+        )
+    }
+    
+    func configureControls(
+        playing: Bool,
+        speedDescription: String
+    ) {
+        podcastPlayerControlsView.configureControls(playing: playing, speedDescription: speedDescription)
+    }
+}
+
+extension RecommendationDetailsView : RecommendationPlayerViewDelegate {
+    func shouldShowSpeedPicker() {
+        delegate?.shouldShowSpeedPicker()
     }
 }

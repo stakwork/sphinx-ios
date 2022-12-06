@@ -10,7 +10,7 @@ import SwiftyJSON
 
 public class PodcastFeed: NSObject {
     
-    public var objectID: NSManagedObjectID
+    public var objectID: NSManagedObjectID?
     public var feedID: String
     public var title: String?
     public var podcastDescription: String?
@@ -27,7 +27,7 @@ public class PodcastFeed: NSObject {
     public var destinations: Array<PodcastDestination>?
     
     init(
-        _ objectID: NSManagedObjectID,
+        _ objectID: NSManagedObjectID?,
         _ feedID: String,
         _ isSubscribedToFromSearch: Bool) {
         

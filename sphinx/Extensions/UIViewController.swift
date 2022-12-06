@@ -26,8 +26,10 @@ extension UIViewController {
     
     
     func removeChildVC(child: UIViewController) {
-        child.willMove(toParent: nil)
-        child.removeFromParent()
-        child.view.removeFromSuperview()
+        if let _ = child.parent {
+            child.willMove(toParent: nil)
+            child.removeFromParent()
+            child.view.removeFromSuperview()
+        }
     }
 }

@@ -8,7 +8,13 @@
 
 import UIKit
 
+protocol RecommendationPlayerViewDelegate: AnyObject {
+    func shouldShowSpeedPicker()
+}
+
 class PodcastPlayerControlsView: UIView {
+    
+    weak var delegate: RecommendationPlayerViewDelegate?
 
     @IBOutlet var contentView: UIView!
     
@@ -45,6 +51,9 @@ class PodcastPlayerControlsView: UIView {
         case PlayPause
         case Forward30
     }
+    
+    var playerHelper: PodcastPlayerHelper = PodcastPlayerHelper.sharedInstance
+    var podcast: PodcastFeed!
 }
 
 // MARK: - Actions handlers
@@ -52,30 +61,40 @@ extension PodcastPlayerControlsView {
     @IBAction func controlButtonTouched(_ sender: UIButton) {
         switch(sender.tag) {
         case ControlButtons.PlayerSpeed.rawValue:
-//            delegate?.shouldShowSpeedPicker()
-            break
-        case ControlButtons.ShareClip.rawValue:
-//            let comment = podcast.getPodcastComment()
-//            delegate?.shouldShareClip(comment: comment)
+            delegate?.shouldShowSpeedPicker()
             break
         case ControlButtons.Replay15.rawValue:
-//            seekTo(seconds: -15)
+            seekTo(seconds: -15)
             break
         case ControlButtons.Forward30.rawValue:
-//            seekTo(seconds: 30)
+            seekTo(seconds: 30)
             break
         case ControlButtons.PlayPause.rawValue:
-//            togglePlayState()
+            togglePlayState()
             break
         default:
             break
         }
     }
+    
+    func togglePlayState() {
+        playerHelper.togglePlayStateFor(podcast)
+    }
+    
+    func seekTo(seconds: Double) {
+        playerHelper.seek(podcast, to: seconds)
+    }
 }
 
 // MARK: - Public methods
 extension PodcastPlayerControlsView {
-    func configure(withRecommendation recommendation: RecommendationResult) {
+    func configure(
+        withRecommendation recommendation: RecommendationResult,
+        podcast: PodcastFeed,
+        andDelegate delegate: RecommendationPlayerViewDelegate?
+    ) {
+        self.delegate = delegate
+        self.podcast = podcast
         
         speedButton.isHidden = recommendation.isYoutubeVideo
         clipButton.isHidden = recommendation.isYoutubeVideo
@@ -87,5 +106,13 @@ extension PodcastPlayerControlsView {
         clipButton.isEnabled = false
         
         boostView.alpha = 0.5
+    }
+    
+    func configureControls(
+        playing: Bool,
+        speedDescription: String
+    ) {
+        playPauseButton.setTitle(playing ? "pause" : "play_arrow", for: .normal)
+        speedButton.setTitle(speedDescription + "x", for: .normal)
     }
 }

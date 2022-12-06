@@ -97,7 +97,9 @@ class PodcastPlayerView: UIView {
             withKey: PodcastPlayerHelper.DelegateKeys.podcastPlayerVC.rawValue
         )
         
-        feedBoostHelper.configure(with: podcast.objectID, and: chat)
+        if let objectID = podcast.objectID {
+            feedBoostHelper.configure(with: objectID, and: chat)
+        }
         
         setupView()
         setupActions(fromDashboard)
@@ -416,7 +418,9 @@ extension PodcastPlayerView : PodcastPlayerDelegate {
 
 extension PodcastPlayerView: CustomBoostViewDelegate {
     func didTouchBoostButton(withAmount amount: Int) {
-        if let episode = podcast.getCurrentEpisode() {
+        if let episode = podcast.getCurrentEpisode(),
+           let objectID = episode.objectID {
+            
             let itemID = episode.itemID
             let currentTime = podcast.currentTime
             
@@ -430,7 +434,7 @@ extension PodcastPlayerView: CustomBoostViewDelegate {
                 
                 feedBoostHelper.sendBoostMessage(
                     message: boostMessage,
-                    itemObjectID: episode.objectID,
+                    itemObjectID: objectID,
                     amount: amount,
                     completion: { (message, success) in
                         self.boostDelegate?.didSendBoostMessage(success: success, message: message)

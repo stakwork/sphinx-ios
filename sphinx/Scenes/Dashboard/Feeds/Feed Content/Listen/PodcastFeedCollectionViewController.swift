@@ -449,7 +449,9 @@ extension PodcastFeedCollectionViewController {
 
         switch dataSourceItem {
         case .listenNowEpisode(let podcastEpisode):
-            onPodcastEpisodeCellSelected(podcastEpisode.objectID)
+            if let objectID = podcastEpisode.objectID {
+                onPodcastEpisodeCellSelected(objectID)
+            }
         case .subscribedPodcastFeed(let podcastFeed):
             onSubscribedPodcastFeedCellSelected(podcastFeed)
         }

@@ -32,6 +32,7 @@ public class RecommendationResult: NSObject {
     let PODCAST_TYPE = "podcast"
     let YOUTUBE_VIDEO_TYPE = "youtube"
     let NEWSLETTER_TYPE = "newsletter"
+    let TWITTER_TYPE = "twitter_space"
     
     init(
         _ pubKey: String,
@@ -210,7 +211,7 @@ extension RecommendationResult : DashboardFeedSquaredThumbnailCollectionViewItem
     }
     
     var isPodcast: Bool {
-        return type == PODCAST_TYPE
+        return type == PODCAST_TYPE || type == TWITTER_TYPE
     }
     
     var isYoutubeVideo: Bool {

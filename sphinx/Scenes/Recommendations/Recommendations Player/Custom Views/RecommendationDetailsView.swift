@@ -40,24 +40,24 @@ class RecommendationDetailsView: UIView {
 // MARK: - Public methods
 extension RecommendationDetailsView {
     func configure(
-        withRecommendation recommendation: RecommendationResult,
-        podcast: PodcastFeed,
+        withPodcast podcast: PodcastFeed,
         andDelegate delegate: RecommendationPlayerViewDelegate?
     ) {
-        titleLabel.text = recommendation.title
-        descriptionLabel.text = recommendation.subtitle
-        
-        if let date = recommendation.date {
-            dateLabel.text = Date(timeIntervalSince1970: TimeInterval(date)).getLastMessageDateFormat()
-        } else {
-            dateLabel.text = "-"
+        if let item = podcast.getCurrentEpisode() {
+            titleLabel.text = item.title
+            descriptionLabel.text = item.subtitle
+            
+            if let date = item.datePublished {
+                dateLabel.text = date.getLastMessageDateFormat()
+            } else {
+                dateLabel.text = "-"
+            }
+            
+            podcastPlayerControlsView.configure(
+                podcast: podcast,
+                andDelegate: delegate
+            )
         }
-        
-        podcastPlayerControlsView.configure(
-            withRecommendation: recommendation,
-            podcast: podcast,
-            andDelegate: delegate
-        )
     }
     
     func configureControls(

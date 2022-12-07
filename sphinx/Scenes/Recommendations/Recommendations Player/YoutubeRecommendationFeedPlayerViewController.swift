@@ -15,13 +15,14 @@ class YoutubeRecommendationFeedPlayerViewController: UIViewController {
     @IBOutlet private weak var dismissButton: UIButton!
     
     let podcastPlayer = PodcastPlayerHelper.sharedInstance
-    
-    var videoItem: RecommendationResult! {
+    var podcast: PodcastFeed! {
         didSet {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
-                
-                self.updateVideoPlayer(withNewEpisode: self.videoItem)
+
+                if let item = self.podcast.getCurrentEpisode() {
+                    self.updateVideoPlayer(withEpisode: item)
+                }
             }
         }
     }
@@ -51,14 +52,14 @@ extension YoutubeRecommendationFeedPlayerViewController {
 extension YoutubeRecommendationFeedPlayerViewController {
     
     static func instantiate(
-        videoItem: RecommendationResult
+        podcast: PodcastFeed
     ) -> YoutubeRecommendationFeedPlayerViewController {
         let viewController = StoryboardScene
             .Recommendations
             .youtubeRecommendationFeedPlayerViewController
             .instantiate()
         
-        viewController.videoItem = videoItem
+        viewController.podcast = podcast
     
         return viewController
     }
@@ -72,13 +73,15 @@ extension YoutubeRecommendationFeedPlayerViewController {
     }
     
     
-    private func updateVideoPlayer(withNewEpisode video: RecommendationResult) {
+    private func updateVideoPlayer(withEpisode video: PodcastEpisode) {
         var youtubeVideoId: String? = nil
         
-        if let range = videoItem.link.range(of: "v=") {
-            youtubeVideoId = String(videoItem.link[range.upperBound...])
-        } else if let range = videoItem.link.range(of: "v/") {
-            youtubeVideoId = String(videoItem.link[range.upperBound...])
+        if let urlPath = video.linkURLPath {
+            if let range = urlPath.range(of: "v=") {
+                youtubeVideoId = String(urlPath[range.upperBound...])
+            } else if let range = urlPath.range(of: "v/") {
+                youtubeVideoId = String(urlPath[range.upperBound...])
+            }
         }
         
         if let youtubeVideoId = youtubeVideoId {

@@ -181,6 +181,7 @@
 		4746807B293E565800F51457 /* PodcastPlayerControlsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4746807A293E565800F51457 /* PodcastPlayerControlsView.xib */; };
 		4746807D293E566700F51457 /* PodcastPlayerPlaybackSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4746807C293E566700F51457 /* PodcastPlayerPlaybackSliderView.swift */; };
 		4746807F293E566D00F51457 /* PodcastPlayerPlaybackSliderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4746807E293E566D00F51457 /* PodcastPlayerPlaybackSliderView.xib */; };
+		474680812940DD8000F51457 /* RecommendationsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474680802940DD7F00F51457 /* RecommendationsHelper.swift */; };
 		47468FCE233131B40072124A /* NSManagedObjectContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47468FCD233131B40072124A /* NSManagedObjectContext.swift */; };
 		47468FD323314EE80072124A /* PinCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47468FD223314EE80072124A /* PinCodeViewController.swift */; };
 		47468FD5233162D40072124A /* AlertHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47468FD4233162D40072124A /* AlertHelper.swift */; };
@@ -944,6 +945,7 @@
 		4746807A293E565800F51457 /* PodcastPlayerControlsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PodcastPlayerControlsView.xib; sourceTree = "<group>"; };
 		4746807C293E566700F51457 /* PodcastPlayerPlaybackSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastPlayerPlaybackSliderView.swift; sourceTree = "<group>"; };
 		4746807E293E566D00F51457 /* PodcastPlayerPlaybackSliderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PodcastPlayerPlaybackSliderView.xib; sourceTree = "<group>"; };
+		474680802940DD7F00F51457 /* RecommendationsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsHelper.swift; sourceTree = "<group>"; };
 		47468FCD233131B40072124A /* NSManagedObjectContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSManagedObjectContext.swift; sourceTree = "<group>"; };
 		47468FD223314EE80072124A /* PinCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinCodeViewController.swift; sourceTree = "<group>"; };
 		47468FD4233162D40072124A /* AlertHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertHelper.swift; sourceTree = "<group>"; };
@@ -1872,6 +1874,7 @@
 				472161CC293A67A50088B87B /* YoutubeRecommendationFeedPlayerViewController.swift */,
 				472161CE293A67C80088B87B /* PodcastRecommendationFeedPlayerViewController.swift */,
 				472161D0293A67EA0088B87B /* RecommendationFeedItemsCollectionViewController.swift */,
+				474680802940DD7F00F51457 /* RecommendationsHelper.swift */,
 			);
 			path = "Recommendations Player";
 			sourceTree = "<group>";
@@ -4400,6 +4403,7 @@
 				47308E0A24FEE6E600FFAC6F /* SocketEnginePollable.swift in Sources */,
 				47183CC22549E2F100E6FD19 /* CommonPodcastBoostTableViewCell.swift in Sources */,
 				47669F4623D1FBA500C17A77 /* GroupMembersDataSource.swift in Sources */,
+				474680812940DD8000F51457 /* RecommendationsHelper.swift in Sources */,
 				479EAB6323E30BAC001013AB /* HistoryDataSource.swift in Sources */,
 				4764B2AA2375DF51009508BA /* SubscriptionManager.swift in Sources */,
 				471161D129156354008EAFF2 /* FeedSearchAction.swift in Sources */,

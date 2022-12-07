@@ -121,6 +121,7 @@ class PodcastPlayerHelper {
     ]
     
     var podcast: PodcastFeed? = nil
+    var recommendationsPodcast: PodcastFeed? = nil
     
     var chat: Chat? {
         get {
@@ -255,6 +256,22 @@ class PodcastPlayerHelper {
             trackItemFinished(shouldSaveAction: true)
             
             podcast.currentEpisodeId = episodeId
+            
+            return true
+        }
+        return false
+    }
+    
+    func setNewEpisodeWith(
+        episodeId: String,
+        in podcast: PodcastFeed
+    ) -> Bool {
+        if (podcast.currentEpisodeId != episodeId) {
+            
+            trackItemFinished(shouldSaveAction: true)
+            
+            podcast.currentEpisodeId = episodeId
+            podcast.currentEpisodeIndex = podcast.getCurrentEpisodeIndex()
             
             return true
         }

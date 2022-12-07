@@ -153,15 +153,39 @@ extension VideoFeed: DashboardFeedSquaredThumbnailCollectionViewItem {
 
 
 extension PodcastEpisode: DashboardFeedSquaredThumbnailCollectionViewItem {
+    
     var placeholderImageName: String? {
-        "podcastPlaceholder"
+        switch type {
+        case RecommendationsHelper.PODCAST_TYPE:
+            return "podcastPlaceholder"
+        case RecommendationsHelper.YOUTUBE_VIDEO_TYPE:
+            return "videoPlaceholder"
+        case RecommendationsHelper.NEWSLETTER_TYPE:
+            return "newsletterPlaceholder"
+        default:
+            return "podcastPlaceholder"
+        }
+    }
+    
+    var typeIconImage: String? {
+        get {
+            switch type {
+            case RecommendationsHelper.PODCAST_TYPE:
+                return "podcastTypeIcon"
+            case RecommendationsHelper.YOUTUBE_VIDEO_TYPE:
+                return "youtubeVideoTypeIcon"
+            case RecommendationsHelper.NEWSLETTER_TYPE:
+                return "newsletterPlaceholder"
+            default:
+                return "podcastTypeIcon"
+            }
+        }
     }
 
     var subtitle: String? {
         formattedDescription
     }
     
-    var typeIconImage: String? { get { nil }}
     var titleFontColor: UIColor? { get { nil }}
     var subTitleFontColor: UIColor? { get { nil }}
 }

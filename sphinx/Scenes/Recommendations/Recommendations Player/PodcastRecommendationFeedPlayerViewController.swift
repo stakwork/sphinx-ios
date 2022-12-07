@@ -14,17 +14,18 @@ class PodcastRecommendationFeedPlayerViewController: UIViewController {
     @IBOutlet weak var recommendationItemImageView: UIImageView!
     @IBOutlet weak var podcastPlaybackSliderView: PodcastPlayerPlaybackSliderView!
     
-    var podcastItem: RecommendationResult! {
+    var podcast: PodcastFeed! {
         didSet {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
 
-                self.updatePodcastPlayer(withNewEpisode: self.podcastItem)
+                if let item = self.podcast.getCurrentEpisode() {
+                    self.updatePodcastPlayer(withEpisode: item)
+                }
             }
         }
+
     }
-    
-    var podcast: PodcastFeed!
     
     var audioLoading = false {
         didSet {
@@ -47,15 +48,13 @@ extension PodcastRecommendationFeedPlayerViewController {
 extension PodcastRecommendationFeedPlayerViewController {
     
     static func instantiate(
-        podcastItem: RecommendationResult,
-        andPodcast podcast: PodcastFeed
+        podcast: PodcastFeed
     ) -> PodcastRecommendationFeedPlayerViewController {
         let viewController = StoryboardScene
             .Recommendations
             .podcastRecommendationFeedPlayerViewController
             .instantiate()
         
-        viewController.podcastItem = podcastItem
         viewController.podcast = podcast
     
         return viewController
@@ -65,7 +64,7 @@ extension PodcastRecommendationFeedPlayerViewController {
 // MARK: -  Private Helpers
 extension PodcastRecommendationFeedPlayerViewController {
     
-    private func updatePodcastPlayer(withNewEpisode item: RecommendationResult) {
+    private func updatePodcastPlayer(withEpisode item: PodcastEpisode) {
         if let imageURLString = item.imageURLPath, let url = URL(string: imageURLString) {
             recommendationItemImageView.sd_setImage(
                 with: url,

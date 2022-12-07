@@ -8,84 +8,25 @@
 
 import UIKit
 
-protocol CommonPlayerViewController: UIViewController {
-    var recommendation: RecommendationResult! { get set }
-}
-
 class RecommendationFeedPlayerContainerViewController: UIViewController {
     
     @IBOutlet weak var playerContainerView: UIView!
     @IBOutlet weak var recommendationDetailsView: RecommendationDetailsView!
     @IBOutlet weak var collectionViewContainer: UIView!
     
-    static let kRecommendationPodcastId = "Recommendations-Feed"
-    
-    var recommendations: [RecommendationResult]!
-    
-    var recommendation: RecommendationResult! {
-        didSet {
-            DispatchQueue.main.async { [weak self] in
-                guard
-                    let self = self,
-                    let recommendation = self.recommendation
-                else { return }
-                
-                self.collectionViewController
-                    .updateWithNew(recommendation: recommendation)
-                
-                self.recommendationDetailsView.configure(
-                    withRecommendation: recommendation,
-                    podcast: self.podcast,
-                    andDelegate: self
-                )
-                
-                self.youtubeVideoPlayerViewController.videoItem = recommendation
-                self.podcastPlayerViewController.podcastItem = recommendation
-            }
-        }
-    }
-    
-    internal lazy var podcast: PodcastFeed = {
-        let podcast = PodcastFeed(nil, RecommendationFeedPlayerContainerViewController.kRecommendationPodcastId, false)
-        
-        podcast.title = "Recommendations"
-        podcast.podcastDescription = "Feed Recommendations"
-        
-        var episodes: [PodcastEpisode] = []
-        
-        for item in recommendations {
-            if (item.isPodcast) {
-                let episode = PodcastEpisode(nil, item.id)
-                episode.title = item.title
-                episode.episodeDescription = item.subtitle
-                episode.datePublished = Date(timeIntervalSince1970: TimeInterval(item.date ?? 0))
-                episode.dateUpdated = Date(timeIntervalSince1970: TimeInterval(item.date ?? 0))
-                episode.urlPath = item.link
-                episode.imageURLPath = item.imageURLPath
-                episode.linkURLPath = item.link
-                episode.feed = podcast
-                
-                episodes.append(episode)
-            }
-        }
-        
-        podcast.episodes = episodes
-        
-        return podcast
-    }()
+    var podcast: PodcastFeed!
 
     internal lazy var youtubeVideoPlayerViewController: YoutubeRecommendationFeedPlayerViewController = {
-        YoutubeRecommendationFeedPlayerViewController.instantiate(videoItem: recommendation)
+        YoutubeRecommendationFeedPlayerViewController.instantiate(podcast: podcast)
     }()
     
     internal lazy var podcastPlayerViewController: PodcastRecommendationFeedPlayerViewController = {
-        PodcastRecommendationFeedPlayerViewController.instantiate(podcastItem: recommendation, andPodcast: podcast)
+        PodcastRecommendationFeedPlayerViewController.instantiate(podcast: podcast)
     }()
     
     internal lazy var collectionViewController: RecommendationFeedItemsCollectionViewController = {
         RecommendationFeedItemsCollectionViewController.instantiate(
-            recommendation: recommendation,
-            recommendations: recommendations,
+            podcast: podcast,
             onRecommendationCellSelected: handleRecommendationCellSelection(_:)
         )
     }()
@@ -97,16 +38,14 @@ class RecommendationFeedPlayerContainerViewController: UIViewController {
 extension RecommendationFeedPlayerContainerViewController {
     
     static func instantiate(
-        recommendations: [RecommendationResult],
-        recommendation: RecommendationResult
+        podcast: PodcastFeed
     ) -> RecommendationFeedPlayerContainerViewController {
         let viewController = StoryboardScene
             .Recommendations
             .recommendationFeedPlayerContainerViewController
             .instantiate()
         
-        viewController.recommendations = recommendations
-        viewController.recommendation = recommendation
+        viewController.podcast = podcast
     
         return viewController
     }
@@ -125,7 +64,18 @@ extension RecommendationFeedPlayerContainerViewController {
         if playerHelper.isPlaying(podcast.feedID) {
             return
         }
-        loadAndPlayEpisode(recommendationId: recommendation.id)
+        
+        if let item = podcast.getCurrentEpisode() {
+            loadAndPlayEpisode(recommendationId: item.itemID)
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if isBeingDismissed {
+            playerHelper.removeFromDelegatesWith(key: PodcastPlayerHelper.DelegateKeys.recommendationsPlayer.rawValue)
+        }
     }
 }
 
@@ -133,20 +83,23 @@ extension RecommendationFeedPlayerContainerViewController {
 extension RecommendationFeedPlayerContainerViewController {
     
     private func setPlayingEpisode() {
-        if playerHelper.isPlaying(podcast.feedID) {
-            if let playingEpisodeId = podcast.getCurrentEpisode()?.itemID,
-                let recommendation = recommendations.filter({ $0.id == playingEpisodeId }).first {
-                
-                self.recommendation = recommendation
-            }
-        }
+        guard
+            let _ = self.podcast.getCurrentEpisode()
+        else { return }
+
+        self.recommendationDetailsView.configure(withPodcast: podcast, andDelegate: self)
+
+        self.youtubeVideoPlayerViewController.podcast = podcast
+        self.podcastPlayerViewController.podcast = podcast
     }
     
     private func configurePlayerView() {
-        if recommendation.isPodcast {
-            addPodcastPlayerView()
-        } else if recommendation.isYoutubeVideo {
-            addVideoPlayerView()
+        if let item = podcast.getCurrentEpisode() {
+            if item.isPodcast {
+                addPodcastPlayerView()
+            } else if item.isYoutubeVideo {
+                addVideoPlayerView()
+            }
         }
     }
     
@@ -191,14 +144,9 @@ extension RecommendationFeedPlayerContainerViewController {
     private func handleRecommendationCellSelection(
         _ recommendationId: String
     ) {
-        guard
-            let recommendation = recommendations.filter({ $0.id == recommendationId }).first
-        else {
-            preconditionFailure()
-        }
+        let _ = playerHelper.setNewEpisodeWith(episodeId: recommendationId, in: podcast)
         
-        self.recommendation = recommendation
-        
+        setPlayingEpisode()
         configurePlayerView()
         
         loadAndPlayEpisode(recommendationId: recommendationId)

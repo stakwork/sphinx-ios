@@ -107,7 +107,7 @@ extension PodcastFeed {
         podcastFeed.generator = searchResult[ContentFeed.CodingKeys.generator.rawValue].stringValue
         
         return podcastFeed
-    }
+    }    
 }
 
 extension PodcastFeed: Identifiable {}

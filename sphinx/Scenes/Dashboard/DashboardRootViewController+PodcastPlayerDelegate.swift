@@ -10,10 +10,6 @@ import Foundation
 
 extension DashboardRootViewController : PodcastPlayerDelegate {
     func playingState(podcastId: String, duration: Int, currentTime: Int) {
-        if (podcastId == RecommendationFeedPlayerContainerViewController.kRecommendationPodcastId) {
-            return
-        }
-        
         if podcastSmallPlayer.configureWith(podcastId: podcastId, and: self) {
             loadingState(podcastId: podcastId, loading: false)
         }

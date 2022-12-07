@@ -29,11 +29,6 @@ public class RecommendationResult: NSObject {
     public var episodeTitle: String
     public var link: String
     
-    let PODCAST_TYPE = "podcast"
-    let YOUTUBE_VIDEO_TYPE = "youtube"
-    let NEWSLETTER_TYPE = "newsletter"
-    let TWITTER_TYPE = "twitter_space"
-    
     init(
         _ pubKey: String,
         _ type: String,
@@ -172,11 +167,11 @@ extension RecommendationResult : DashboardFeedSquaredThumbnailCollectionViewItem
     
     var placeholderImageName: String? {
         switch type {
-        case PODCAST_TYPE:
+        case RecommendationsHelper.PODCAST_TYPE:
             return "podcastPlaceholder"
-        case YOUTUBE_VIDEO_TYPE:
+        case RecommendationsHelper.YOUTUBE_VIDEO_TYPE:
             return "videoPlaceholder"
-        case NEWSLETTER_TYPE:
+        case RecommendationsHelper.NEWSLETTER_TYPE:
             return "newsletterPlaceholder"
         default:
             return "podcastPlaceholder"
@@ -186,11 +181,11 @@ extension RecommendationResult : DashboardFeedSquaredThumbnailCollectionViewItem
     var typeIconImage: String? {
         get {
             switch type {
-            case PODCAST_TYPE:
+            case RecommendationsHelper.PODCAST_TYPE:
                 return "podcastTypeIcon"
-            case YOUTUBE_VIDEO_TYPE:
+            case RecommendationsHelper.YOUTUBE_VIDEO_TYPE:
                 return "youtubeVideoTypeIcon"
-            case NEWSLETTER_TYPE:
+            case RecommendationsHelper.NEWSLETTER_TYPE:
                 return "newsletterPlaceholder"
             default:
                 return "podcastTypeIcon"
@@ -208,13 +203,5 @@ extension RecommendationResult : DashboardFeedSquaredThumbnailCollectionViewItem
         get {
             return UIColor.Sphinx.Text
         }
-    }
-    
-    var isPodcast: Bool {
-        return type == PODCAST_TYPE || type == TWITTER_TYPE
-    }
-    
-    var isYoutubeVideo: Bool {
-        return type == YOUTUBE_VIDEO_TYPE
     }
 }

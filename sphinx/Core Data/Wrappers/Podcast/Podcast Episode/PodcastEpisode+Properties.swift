@@ -20,6 +20,9 @@ public class PodcastEpisode: NSObject {
     public var imageURLPath: String?
     public var linkURLPath: String?
     public var feed: PodcastFeed?
+
+    //For recommendations podcast
+    public var type: String?
     
     init(_ objectID: NSManagedObjectID?, _ itemID: String) {
         self.objectID = objectID
@@ -80,4 +83,13 @@ extension PodcastEpisode {
         
         return podcastEpisode
     }
+    
+    var isPodcast: Bool {
+        return type == RecommendationsHelper.PODCAST_TYPE || type == RecommendationsHelper.TWITTER_TYPE
+    }
+    
+    var isYoutubeVideo: Bool {
+        return type == RecommendationsHelper.YOUTUBE_VIDEO_TYPE
+    }
+
 }

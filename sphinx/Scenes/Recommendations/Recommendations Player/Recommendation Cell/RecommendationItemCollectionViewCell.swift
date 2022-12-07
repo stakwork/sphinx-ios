@@ -16,7 +16,7 @@ class RecommendationItemCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var itemDescriptionLabel: UILabel!
     @IBOutlet weak var separatorLine: UIView!
     
-    var recommendation: RecommendationResult! {
+    var item: PodcastEpisode! {
         didSet {
             DispatchQueue.main.async { [weak self] in
                 self?.updateViewsWithVideoEpisode()
@@ -60,8 +60,8 @@ extension RecommendationItemCollectionViewCell {
 // MARK: - Public Methods
 extension RecommendationItemCollectionViewCell {
     
-    func configure(withRecommendation recommendation: RecommendationResult) {
-        self.recommendation = recommendation
+    func configure(withItem item: PodcastEpisode) {
+        self.item = item
     }
 }
 
@@ -72,25 +72,25 @@ extension RecommendationItemCollectionViewCell {
     private func updateViewsWithVideoEpisode() {
         itemImageView.sd_cancelCurrentImageLoad()
         
-        if let imageURLString = recommendation.imageURLPath, let url = URL(string: imageURLString) {
+        if let imageURLString = item.imageURLPath, let url = URL(string: imageURLString) {
             itemImageView.sd_setImage(
                 with: url,
-                placeholderImage: UIImage(named: recommendation.placeholderImageName ?? "podcastPlaceholder"),
+                placeholderImage: UIImage(named: item.placeholderImageName ?? "podcastPlaceholder"),
                 options: [.highPriority],
                 progress: nil
             )
         } else {
-            itemImageView.image = UIImage(named: recommendation.placeholderImageName ?? "podcastPlaceholder")
+            itemImageView.image = UIImage(named: item.placeholderImageName ?? "podcastPlaceholder")
         }
 
-        if let typeIcon = recommendation.typeIconImage {
+        if let typeIcon = item.typeIconImage {
             typeIconImageView.image = UIImage(named: typeIcon)
             typeIconImageView.isHidden = false
         } else {
             typeIconImageView.isHidden = true
         }
 
-        itemTitleLabel.text = recommendation.title
-        itemDescriptionLabel.text = recommendation.subtitle
+        itemTitleLabel.text = item.title
+        itemDescriptionLabel.text = item.subtitle
     }
 }

@@ -12,8 +12,7 @@ private let reuseIdentifier = "Cell"
 
 class RecommendationFeedItemsCollectionViewController: UICollectionViewController {
     
-    var recommendation: RecommendationResult!
-    var recommendations: [RecommendationResult]!
+    var podcast: PodcastFeed!
 
     var onRecommendationCellSelected: ((String) -> Void)!
     
@@ -25,8 +24,7 @@ class RecommendationFeedItemsCollectionViewController: UICollectionViewControlle
 extension RecommendationFeedItemsCollectionViewController {
     
     static func instantiate(
-        recommendation: RecommendationResult,
-        recommendations: [RecommendationResult],
+        podcast: PodcastFeed,
         onRecommendationCellSelected: @escaping ((String) -> Void) = { _ in }
     ) -> RecommendationFeedItemsCollectionViewController {
         let viewController = StoryboardScene
@@ -34,8 +32,7 @@ extension RecommendationFeedItemsCollectionViewController {
             .recommendationFeedItemsCollectionViewController
             .instantiate()
         
-        viewController.recommendation = recommendation
-        viewController.recommendations = recommendations
+        viewController.podcast = podcast
         
         viewController.onRecommendationCellSelected = onRecommendationCellSelected
     
@@ -51,7 +48,7 @@ extension RecommendationFeedItemsCollectionViewController {
     }
     
     enum DataSourceItem: Hashable {
-        case recommendation(RecommendationResult)
+        case recommendation(PodcastEpisode)
     }
 
     typealias RecommendationCell = RecommendationItemCollectionViewCell
@@ -232,7 +229,7 @@ extension RecommendationFeedItemsCollectionViewController {
                     preconditionFailure("Failed to find expected data source item")
                 }
 
-                recommendationCell.configure(withRecommendation: recommendation)
+                recommendationCell.configure(withItem: recommendation)
 
                 return recommendationCell
             }
@@ -265,7 +262,7 @@ extension RecommendationFeedItemsCollectionViewController {
                         preconditionFailure()
                     }
                     
-                    headerView.configure(withCount: self.recommendations.count)
+                    headerView.configure(withCount: self.podcast.episodesArray.count)
                     
                     return headerView
                 default:
@@ -285,7 +282,7 @@ extension RecommendationFeedItemsCollectionViewController {
         snapshot.appendSections(CollectionViewSection.allCases)
 
         snapshot.appendItems(
-            recommendations.map { DataSourceItem.recommendation($0) },
+            (podcast.episodes ?? []).map { DataSourceItem.recommendation($0) },
             toSection: .recommendations
         )
 
@@ -297,20 +294,6 @@ extension RecommendationFeedItemsCollectionViewController {
         let snapshot = makeSnapshotForCurrentState()
 
         dataSource.apply(snapshot, animatingDifferences: shouldAnimate)
-    }
-    
-    
-    func updateWithNew(
-        recommendation: RecommendationResult
-    ) {
-        self.recommendation = recommendation
-
-        if let dataSource = dataSource {
-            dataSource.apply(
-                makeSnapshotForCurrentState(),
-                animatingDifferences: true
-            )
-        }
     }
 }
 
@@ -329,7 +312,7 @@ extension RecommendationFeedItemsCollectionViewController {
         
         switch dataSourceItem {
         case .recommendation(let recommendation):
-            self.onRecommendationCellSelected(recommendation.id)
+            self.onRecommendationCellSelected(recommendation.itemID)
         }
     }
 }

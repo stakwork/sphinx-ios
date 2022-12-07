@@ -140,17 +140,21 @@ extension DashboardRootViewController {
     func presentPodcastPlayerFor(
         _ podcast: PodcastFeed
     ) {
-        let podcastFeedVC = NewPodcastPlayerViewController.instantiate(
-            podcast: podcast,
-            delegate: self,
-            boostDelegate: self,
-            fromDashboard: true
-        )
-        
-        podcastFeedVC.modalPresentationStyle = .automatic
-        
-        navigationController?
-            .present(podcastFeedVC, animated: true)
+        if (podcast.isRecommendationsPodcast) {
+            presentRecommendationsPlayerVC(for: podcast)
+        } else {
+            let podcastFeedVC = NewPodcastPlayerViewController.instantiate(
+                podcast: podcast,
+                delegate: self,
+                boostDelegate: self,
+                fromDashboard: true
+            )
+            
+            podcastFeedVC.modalPresentationStyle = .automatic
+            
+            navigationController?
+                .present(podcastFeedVC, animated: true)
+        }
     }
     
     
@@ -206,16 +210,27 @@ extension DashboardRootViewController {
         and recommendationId: String
     ) {
         if let recommendation = recommendations.filter({ $0.id == recommendationId}).first {
-            let viewController = RecommendationFeedPlayerContainerViewController
-                .instantiate(
-                    recommendations: recommendations,
-                    recommendation: recommendation
-                )
             
-            viewController.modalPresentationStyle = .automatic
+            let recommendationsHelper = RecommendationsHelper.sharedInstance
             
-            navigationController?
-                .present(viewController, animated: true)
+            let podcast = recommendationsHelper.getPodcastFor(
+                recommendations: recommendations,
+                selectedItem: recommendation
+            )
+            
+            presentRecommendationsPlayerVC(for: podcast)
         }
+    }
+    
+    private func presentRecommendationsPlayerVC(
+        for podcast: PodcastFeed
+    ) {
+        let viewController = RecommendationFeedPlayerContainerViewController
+            .instantiate(podcast: podcast)
+        
+        viewController.modalPresentationStyle = .automatic
+        
+        navigationController?
+            .present(viewController, animated: true)
     }
 }

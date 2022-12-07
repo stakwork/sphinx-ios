@@ -72,6 +72,10 @@ extension PodcastFeed {
         }
     }
     
+    var isRecommendationsPodcast: Bool {
+        feedID == RecommendationsHelper.kRecommendationPodcastId
+    }
+    
     var playerSpeed: Float {
         get {
             let speed = (UserDefaults.standard.value(forKey: "player-speed-\(identifier)") as? Float) ?? 1.0

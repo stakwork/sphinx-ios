@@ -89,18 +89,19 @@ extension PodcastPlayerControlsView {
 // MARK: - Public methods
 extension PodcastPlayerControlsView {
     func configure(
-        withRecommendation recommendation: RecommendationResult,
         podcast: PodcastFeed,
         andDelegate delegate: RecommendationPlayerViewDelegate?
     ) {
         self.delegate = delegate
         self.podcast = podcast
         
-        speedButton.isHidden = recommendation.isYoutubeVideo
-        clipButton.isHidden = recommendation.isYoutubeVideo
-        playPauseButton.isHidden = recommendation.isYoutubeVideo
-        skip15BackwardView.isHidden = recommendation.isYoutubeVideo
-        skip30ForwardView.isHidden = recommendation.isYoutubeVideo
+        if let item = podcast.getCurrentEpisode() {
+            speedButton.isHidden = item.isYoutubeVideo
+            clipButton.isHidden = item.isYoutubeVideo
+            playPauseButton.isHidden = item.isYoutubeVideo
+            skip15BackwardView.isHidden = item.isYoutubeVideo
+            skip30ForwardView.isHidden = item.isYoutubeVideo
+        }
         
         clipButton.alpha = 0.5
         clipButton.isEnabled = false

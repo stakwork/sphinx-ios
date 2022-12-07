@@ -665,6 +665,19 @@ class PodcastPlayerHelper {
         MPRemoteCommandCenter.shared().previousTrackCommand.removeTarget(nil)
         MPRemoteCommandCenter.shared().skipBackwardCommand.removeTarget(nil)
         MPRemoteCommandCenter.shared().skipForwardCommand.removeTarget(nil)
+        MPRemoteCommandCenter.shared().seekForwardCommand.isEnabled = true
+        MPRemoteCommandCenter.shared().seekBackwardCommand.isEnabled = true
+        
+        MPRemoteCommandCenter.shared().changePlaybackPositionCommand.addTarget { (event) -> MPRemoteCommandHandlerStatus in
+            if let changePlaybackPositionCommandEvent = event as? MPChangePlaybackPositionCommandEvent
+            {
+                let positionTime = changePlaybackPositionCommandEvent.positionTime
+                self.seekTo(newTime: positionTime, playAfterSeek: true)
+                return .success
+            } else {
+                return .commandFailed
+            }
+        }
         
         MPRemoteCommandCenter.shared().skipBackwardCommand.preferredIntervals = [15]
         MPRemoteCommandCenter.shared().skipForwardCommand.preferredIntervals = [30]

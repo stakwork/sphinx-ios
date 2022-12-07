@@ -13,6 +13,7 @@ import SDWebImage
 import Alamofire
 import GiphyUISDK
 import BackgroundTasks
+import AVFAudio
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -51,6 +52,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
+        
+        try? AVAudioSession.sharedInstance().setCategory(.playback)
         
         setAppConfiguration()
         registerAppRefresh()

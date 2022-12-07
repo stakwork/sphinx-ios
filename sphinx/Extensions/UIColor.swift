@@ -151,7 +151,7 @@ public extension UIColor {
     }
     
     static func getColorFor(key: String) -> UIColor {
-        if let colorCode = UserDefaults.standard.value(forKey: key) as? String {
+        if let colorCode = UserDefaults.standard.string(forKey: key){
             return UIColor(hex: colorCode)
         } else {
             let newColor = UIColor.random()

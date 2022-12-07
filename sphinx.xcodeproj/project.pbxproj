@@ -606,6 +606,7 @@
 		47FDDB1C2562D77200BBF15F /* boost_animation.json in Resources */ = {isa = PBXBuildFile; fileRef = 47FDDB1B2562D77100BBF15F /* boost_animation.json */; };
 		47FE9A3C23BF751C0090913F /* ChatViewControllerAttachmentDelegateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FE9A3B23BF751C0090913F /* ChatViewControllerAttachmentDelegateExtension.swift */; };
 		47FE9A3E23C381A20090913F /* UITapGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FE9A3D23C381A20090913F /* UITapGestureRecognizer.swift */; };
+		CED14D78293CF683004B8B25 /* ChatMentionAutocompleteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED14D77293CF683004B8B25 /* ChatMentionAutocompleteDataSource.swift */; };
 		F30884A72699123600CADDEB /* LeftMenuViewController+KarmaPurchaseUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30884A62699123600CADDEB /* LeftMenuViewController+KarmaPurchaseUtils.swift */; };
 		F30884A92699181200CADDEB /* API+KarmaPurchaseUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30884A82699181200CADDEB /* API+KarmaPurchaseUtils.swift */; };
 		F313024626BA62B300A1396E /* ChatsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F313024526BA62B200A1396E /* ChatsCollectionViewController.swift */; };
@@ -1478,6 +1479,7 @@
 		47FE9A3B23BF751C0090913F /* ChatViewControllerAttachmentDelegateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewControllerAttachmentDelegateExtension.swift; sourceTree = "<group>"; };
 		47FE9A3D23C381A20090913F /* UITapGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITapGestureRecognizer.swift; sourceTree = "<group>"; };
 		487E10CEB3D07B0840A84681 /* Pods_sphinx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_sphinx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CED14D77293CF683004B8B25 /* ChatMentionAutocompleteDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatMentionAutocompleteDataSource.swift; sourceTree = "<group>"; };
 		F30884A62699123600CADDEB /* LeftMenuViewController+KarmaPurchaseUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LeftMenuViewController+KarmaPurchaseUtils.swift"; sourceTree = "<group>"; };
 		F30884A82699181200CADDEB /* API+KarmaPurchaseUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+KarmaPurchaseUtils.swift"; sourceTree = "<group>"; };
 		F313024526BA62B200A1396E /* ChatsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsCollectionViewController.swift; sourceTree = "<group>"; };
@@ -2358,6 +2360,7 @@
 		475BDC95232AC15A00C5BBD6 /* Data Sources */ = {
 			isa = PBXGroup;
 			children = (
+				CED14D77293CF683004B8B25 /* ChatMentionAutocompleteDataSource.swift */,
 				4734D3CD241AA8D400D6957E /* Payment Templates */,
 				475BDCBC232AC1F000C5BBD6 /* ChatDataSource.swift */,
 			);
@@ -4303,6 +4306,7 @@
 				47468FDC233554680072124A /* ProfileViewController.swift in Sources */,
 				F3DC6B02273C9BD000458E09 /* ContentFeedItem+CoreDataProperties.swift in Sources */,
 				47D46A2C237B1D140005A548 /* SubscriptionFormButtonTableViewCell.swift in Sources */,
+				CED14D78293CF683004B8B25 /* ChatMentionAutocompleteDataSource.swift in Sources */,
 				47893A9C240D8783002F675B /* Int.swift in Sources */,
 				47FA18CF2434D21A00469C8F /* TransactionMessageQueriesExtension.swift in Sources */,
 				47893A9224095C74002F675B /* AudioBubbleView.swift in Sources */,

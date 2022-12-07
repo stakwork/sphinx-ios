@@ -710,6 +710,10 @@
                                 <rect key="frame" x="0.0" y="65" width="375" height="602"/>
                                 <color key="backgroundColor" name="Body"/>
                             </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="zjV-dK-x6s">
+                                <rect key="frame" x="0.0" y="65" width="375" height="602"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Th-x2-Khv">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="65"/>
                                 <subviews>
@@ -734,6 +738,7 @@
                         <constraints>
                             <constraint firstItem="3Kz-Z8-810" firstAttribute="bottom" secondItem="Spb-Cp-V9e" secondAttribute="bottom" constant="20" id="0Un-Wj-DFb"/>
                             <constraint firstItem="oKd-zu-TV3" firstAttribute="top" secondItem="5Th-x2-Khv" secondAttribute="bottom" id="29v-W7-Lwc"/>
+                            <constraint firstItem="zjV-dK-x6s" firstAttribute="trailing" secondItem="3Kz-Z8-810" secondAttribute="trailing" id="2J3-Hs-j3W"/>
                             <constraint firstItem="3Kz-Z8-810" firstAttribute="trailing" secondItem="brL-Ct-zEB" secondAttribute="trailing" id="5D2-ah-87n"/>
                             <constraint firstItem="oKd-zu-TV3" firstAttribute="trailing" secondItem="7SB-f8-Drm" secondAttribute="trailing" id="5mz-LX-t2I"/>
                             <constraint firstItem="oKd-zu-TV3" firstAttribute="leading" secondItem="7SB-f8-Drm" secondAttribute="leading" id="7QZ-F7-jf1"/>
@@ -746,10 +751,13 @@
                             <constraint firstItem="3Kz-Z8-810" firstAttribute="leading" secondItem="brL-Ct-zEB" secondAttribute="leading" id="SMz-Qu-R9b"/>
                             <constraint firstAttribute="bottom" secondItem="3Kz-Z8-810" secondAttribute="bottom" id="X7K-x8-W1w"/>
                             <constraint firstItem="7SB-f8-Drm" firstAttribute="trailing" secondItem="Spb-Cp-V9e" secondAttribute="trailing" constant="-10" id="YhV-9U-fZ9"/>
+                            <constraint firstItem="zjV-dK-x6s" firstAttribute="bottom" secondItem="3Kz-Z8-810" secondAttribute="bottom" id="aLw-ct-wR4"/>
                             <constraint firstItem="VmL-9e-Jha" firstAttribute="bottom" secondItem="7SB-f8-Drm" secondAttribute="bottom" id="dkz-hJ-ttr"/>
                             <constraint firstItem="5Th-x2-Khv" firstAttribute="trailing" secondItem="7SB-f8-Drm" secondAttribute="trailing" id="doZ-fo-gZs"/>
+                            <constraint firstItem="zjV-dK-x6s" firstAttribute="top" secondItem="5Th-x2-Khv" secondAttribute="bottom" id="ed5-ZN-uYb"/>
                             <constraint firstItem="5Th-x2-Khv" firstAttribute="top" secondItem="brL-Ct-zEB" secondAttribute="top" id="fhk-7e-55P"/>
                             <constraint firstItem="Z7i-o3-ZlM" firstAttribute="top" secondItem="7SB-f8-Drm" secondAttribute="top" id="h4k-Ue-EmJ"/>
+                            <constraint firstItem="zjV-dK-x6s" firstAttribute="leading" secondItem="3Kz-Z8-810" secondAttribute="leading" id="whA-KV-4V0"/>
                         </constraints>
                     </view>
                     <connections>
@@ -757,6 +765,7 @@
                         <outlet property="chatTableView" destination="3Kz-Z8-810" id="6bM-97-LmP"/>
                         <outlet property="headerView" destination="5Th-x2-Khv" id="odp-1E-wON"/>
                         <outlet property="loadingWheel" destination="VmL-9e-Jha" id="bI5-iP-IN7"/>
+                        <outlet property="mentionAutoCompleteTableView" destination="zjV-dK-x6s" id="9Iq-BF-blG"/>
                         <outlet property="scrollDownContainer" destination="Spb-Cp-V9e" id="HRB-Yi-yVS"/>
                         <outlet property="scrollDownLabel" destination="g6d-Z8-xrV" id="I6H-8H-fUc"/>
                         <outlet property="scrollDownViewBottomConstraint" destination="0Un-Wj-DFb" id="KdN-RL-YuE"/>

@@ -11,6 +11,7 @@ import UIKit
     func keyboardWillShow(_ notification: Notification)
     func keyboardWillHide(_ notification: Notification)
     func shouldSendMessage(text: String, type: Int, completion: @escaping (Bool) -> ())
+    func didDetectPossibleMention(mentionText:String)
     
     @objc optional func didChangeAccessoryViewHeight(heightDiff: CGFloat, updatedText: String)
     @objc optional func didTapAttachmentsButton()
@@ -42,6 +43,8 @@ class ChatAccessoryView: UIView {
     let kFieldFont = UIFont(name: "Roboto-Regular", size: UIDevice.current.isIpad ? 20.0 : 16.0)!
     
     var delegate: ChatAccessoryViewDelegate?
+    var autocompleteText:String? = nil
+    
     
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var viewContainer: UIView!

@@ -49,6 +49,8 @@ public class Chat: NSManagedObject {
     var ongoingMessage : String? = nil
     var image : UIImage? = nil
     var tribeInfo: GroupsManager.TribeInfo? = nil
+    var aliases : [String] = [String]()
+    
     
     static func getChatInstance(id: Int, managedContext: NSManagedObjectContext) -> Chat {
         if let ch = Chat.getChatWith(id: id) {

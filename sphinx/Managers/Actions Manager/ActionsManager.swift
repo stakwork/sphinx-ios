@@ -144,7 +144,7 @@ class ActionsManager {
         startTimestamp: Int,
         endTimestamp: Int? = nil
     ) {
-        globalThread.async {
+        globalThread.sync {
             if let contentConsumedAction = self.contentConsumedAction {
                 
                 if let endTimestamp = endTimestamp {

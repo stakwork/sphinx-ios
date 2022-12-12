@@ -167,6 +167,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setBadge(application: application)
         
         PodcastPlayerHelper.sharedInstance.finishAndSaveContentConsumed()
+        ActionsManager.sharedInstance.syncActions()
         CoreDataManager.sharedManager.saveContext()
         
         scheduleAppRefresh()

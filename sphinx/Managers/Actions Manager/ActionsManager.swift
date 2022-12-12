@@ -33,7 +33,7 @@ class ActionsManager {
     }
     
     func trackFeedSearch(searchTerm: String) {
-        globalThread.async {
+        globalThread.sync {
             let count = ActionTrack.getSearchCountFor(searchTerm: searchTerm)
             
             let searchAction = FeedSearchAction(frequency: count + 1, searchTerm: searchTerm.lowerClean, currentTimestamp: Date())
@@ -49,7 +49,7 @@ class ActionsManager {
     }
     
     func trackMessageSent(message: TransactionMessage) {
-//        globalThread.async {
+//        globalThread.sync {
 //            guard let messagesContent = message.messageContent, !messagesContent.isEmpty else {
 //                return
 //            }
@@ -82,7 +82,7 @@ class ActionsManager {
         amount: Int,
         feedItem: ContentFeedItem
     ) {
-        globalThread.async {
+        globalThread.sync {
             let contentBoostAction = ContentBoostAction(
                 boost: amount,
                 feedId: feedItem.contentFeed?.feedID ?? "FeedId",
@@ -108,7 +108,7 @@ class ActionsManager {
     func trackClipComment(
         podcastComment: PodcastComment
     ) {
-        globalThread.async {
+        globalThread.sync {
             guard let feedItemObjectId = podcastComment.feedItemObjectId,
                   let feedItem: ContentFeedItem = CoreDataManager.sharedManager.getObjectWith(objectId: feedItemObjectId),
                   let timestamp = podcastComment.timestamp else {
@@ -144,7 +144,7 @@ class ActionsManager {
         startTimestamp: Int,
         endTimestamp: Int? = nil
     ) {
-        globalThread.async {
+        globalThread.sync {
             if let contentConsumedAction = self.contentConsumedAction {
                 
                 if let endTimestamp = endTimestamp {
@@ -186,7 +186,7 @@ class ActionsManager {
         timestamp: Int,
         shouldSaveAction: Bool = false
     ) {
-        globalThread.async {
+        globalThread.sync {
             if let contentConsumedAction = self.contentConsumedAction {
                 if contentConsumedAction.feedId == item.contentFeed?.feedID {
                     
@@ -209,7 +209,7 @@ class ActionsManager {
     }
     
     func finishAndSaveContentConsumed() {
-        globalThread.async {
+        globalThread.sync {
             if let contentConsumedAction = self.contentConsumedAction {
                 self.finishAndSaveHistoryItem()
                 
@@ -229,7 +229,7 @@ class ActionsManager {
     }
     
     func finishAndSaveHistoryItem() {
-        globalThread.async {
+        globalThread.sync {
             if let contentConsumedHistoryItem = self.contentConsumedHistoryItem {
                 if contentConsumedHistoryItem.isValid() {
                     self.contentConsumedAction?.addItem(historyItem: contentConsumedHistoryItem)
@@ -240,7 +240,7 @@ class ActionsManager {
     }
     
     func trackNewsletterConsumed(newsletterItem: NewsletterItem) {
-        globalThread.async {
+        globalThread.sync {
             let contentConsumedHistoryItem = ContentConsumedHistoryItem(startTimestamp: 0, currentTimestamp: Date())
             contentConsumedHistoryItem.endTimestamp = 0
             contentConsumedHistoryItem.topics = []

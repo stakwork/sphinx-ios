@@ -17,6 +17,8 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
                 self.viewController(self, didSelectNewsletterFeedWithID: contentFeed.objectID)
             }
         }
+        
+        actionsManager.saveFeedSearches()
     }
     
     func viewController(

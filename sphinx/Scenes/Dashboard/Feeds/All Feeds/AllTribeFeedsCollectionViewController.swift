@@ -664,7 +664,8 @@ extension AllTribeFeedsCollectionViewController: NSFetchedResultsControllerDeleg
                 feeds: foundFeeds
             )
             
-            self?.onNewResultsFetched(foundFeeds.count)
+            //Sent 1 to always show recommendations
+            self?.onNewResultsFetched(1)
         }
     }
 }

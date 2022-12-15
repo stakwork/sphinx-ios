@@ -67,6 +67,10 @@ extension Chat: ChatListCommonObject {
         return self.notify == NotificationLevel.MuteChat.rawValue
     }
     
+    public func isSeen() -> Bool {
+        return (self.lastMessage?.seen ?? false) && self.seen
+    }
+    
     public func isOnlyMentions() -> Bool {
         return self.notify == NotificationLevel.OnlyMentions.rawValue
     }

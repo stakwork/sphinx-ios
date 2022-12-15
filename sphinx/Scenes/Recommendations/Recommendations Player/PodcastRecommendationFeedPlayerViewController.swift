@@ -29,7 +29,7 @@ class PodcastRecommendationFeedPlayerViewController: UIViewController {
     
     var audioLoading = false {
         didSet {
-            podcastPlaybackSliderView.audioLoading = audioLoading
+            podcastPlaybackSliderView?.audioLoading = audioLoading
         }
     }
     
@@ -66,14 +66,14 @@ extension PodcastRecommendationFeedPlayerViewController {
     
     private func updatePodcastPlayer(withEpisode item: PodcastEpisode) {
         if let imageURLString = item.imageURLPath, let url = URL(string: imageURLString) {
-            recommendationItemImageView.sd_setImage(
+            recommendationItemImageView?.sd_setImage(
                 with: url,
                 placeholderImage: UIImage(named: item.placeholderImageName ?? "podcastPlaceholder"),
                 options: [.highPriority],
                 progress: nil
             )
         } else {
-            recommendationItemImageView.image = UIImage(named: item.placeholderImageName ?? "podcastPlaceholder")
+            recommendationItemImageView?.image = UIImage(named: item.placeholderImageName ?? "podcastPlaceholder")
         }
     }
 }
@@ -81,12 +81,12 @@ extension PodcastRecommendationFeedPlayerViewController {
 // MARK: -  Podcast Player Delegate
 extension PodcastRecommendationFeedPlayerViewController {
     func playingState(podcastId: String, duration: Int, currentTime: Int) {
-        let didChangeTime = podcastPlaybackSliderView.setProgress(duration: duration, currentTime: currentTime)
+        let didChangeTime = podcastPlaybackSliderView?.setProgress(duration: duration, currentTime: currentTime)
         audioLoading = !didChangeTime
     }
     
     func pausedState(podcastId: String, duration: Int, currentTime: Int) {
-        let _ = podcastPlaybackSliderView.setProgress(duration: duration, currentTime: currentTime)
+        let _ = podcastPlaybackSliderView?.setProgress(duration: duration, currentTime: currentTime)
         audioLoading = false
     }
     
@@ -104,7 +104,7 @@ extension PodcastRecommendationFeedPlayerViewController {
         let episode = podcast.getCurrentEpisode()
         
         if let duration = episode?.duration {
-            let _ = podcastPlaybackSliderView.setProgress(
+            let _ = podcastPlaybackSliderView?.setProgress(
                 duration: duration,
                 currentTime: podcast.currentTime
             )
@@ -116,7 +116,7 @@ extension PodcastRecommendationFeedPlayerViewController {
                 episode?.duration = duration
                 
                 DispatchQueue.main.async {
-                    let _ = self.podcastPlaybackSliderView.setProgress(
+                    let _ = self.podcastPlaybackSliderView?.setProgress(
                         duration: duration,
                         currentTime: self.podcast.currentTime
                     )

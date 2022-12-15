@@ -43,7 +43,7 @@ extension YoutubeRecommendationFeedPlayerViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
         
-        videoPlayerView.stopVideo()
+        videoPlayerView?.stopVideo()
         podcastPlayer.finishAndSaveContentConsumed()
     }
 }
@@ -69,7 +69,7 @@ extension YoutubeRecommendationFeedPlayerViewController {
 extension YoutubeRecommendationFeedPlayerViewController {
     
     private func setupViews() {
-        videoPlayerView.delegate = self
+        videoPlayerView?.delegate = self
     }
     
     
@@ -85,7 +85,7 @@ extension YoutubeRecommendationFeedPlayerViewController {
         }
         
         if let youtubeVideoId = youtubeVideoId {
-            videoPlayerView.load(withVideoId: youtubeVideoId)
+            videoPlayerView?.load(withVideoId: youtubeVideoId)
         }
     }
 }

@@ -185,8 +185,8 @@ extension RecommendationResult : DashboardFeedSquaredThumbnailCollectionViewItem
                 return "podcastTypeIcon"
             case RecommendationsHelper.YOUTUBE_VIDEO_TYPE:
                 return "youtubeVideoTypeIcon"
-            case RecommendationsHelper.NEWSLETTER_TYPE:
-                return "newsletterPlaceholder"
+            case RecommendationsHelper.TWITTER_TYPE:
+                return "twitterTypeIcon"
             default:
                 return "podcastTypeIcon"
             }

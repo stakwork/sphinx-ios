@@ -84,8 +84,16 @@ extension PodcastEpisode {
         return podcastEpisode
     }
     
-    var isPodcast: Bool {
+    var isMusicClip: Bool {
         return type == RecommendationsHelper.PODCAST_TYPE || type == RecommendationsHelper.TWITTER_TYPE
+    }
+    
+    var isPodcast: Bool {
+        return type == RecommendationsHelper.PODCAST_TYPE
+    }
+    
+    var isTwitterSpace: Bool {
+        return type == RecommendationsHelper.TWITTER_TYPE
     }
     
     var isYoutubeVideo: Bool {

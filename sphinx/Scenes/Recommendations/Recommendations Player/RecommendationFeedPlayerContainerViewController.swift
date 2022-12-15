@@ -98,7 +98,6 @@ extension RecommendationFeedPlayerContainerViewController {
     
     private func configurePlayerView() {
         if let item = podcast.getCurrentEpisode() {
-            
             if item.isMusicClip {
                 addPodcastPlayerView()
             } else if item.isYoutubeVideo {
@@ -148,11 +147,13 @@ extension RecommendationFeedPlayerContainerViewController {
     private func handleRecommendationCellSelection(
         _ recommendationId: String
     ) {
-        let _ = playerHelper.setNewEpisodeWith(episodeId: recommendationId, in: podcast)
+        if let episode = podcast.getEpisodeWith(id: recommendationId), episode.isYoutubeVideo {
+            //Set video episode as current episode. If it's podcast it will be set on load and play
+            let _ = playerHelper.setNewEpisodeWith(episodeId: recommendationId, in: podcast)
+        }
         
         setPlayingEpisode()
         configurePlayerView()
-        
         loadAndPlayEpisode(recommendationId: recommendationId)
     }
     

@@ -110,6 +110,10 @@ extension PodcastFeed {
         return (episode?.title ?? "Episode with no title", episode?.imageURLPath ?? "")
     }
     
+    func getEpisodeWith(id: String) -> PodcastEpisode? {
+        return episodesArray.first(where: { $0.itemID == id })
+    }
+    
     func getImageURL() -> URL? {
         let (_, episodeImage) = getEpisodeInfo()
         if let imageURL = URL(string: episodeImage), !episodeImage.isEmpty {

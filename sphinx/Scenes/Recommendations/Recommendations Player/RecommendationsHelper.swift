@@ -50,7 +50,7 @@ class RecommendationsHelper {
         
         for item in recommendations {
             let episode = PodcastEpisode(nil, item.id)
-            episode.title = item.itemTitle
+            episode.title = item.episodeTitle
             episode.episodeDescription = item.itemDescription
             episode.datePublished = Date(timeIntervalSince1970: TimeInterval(item.date ?? 0))
             episode.dateUpdated = Date(timeIntervalSince1970: TimeInterval(item.date ?? 0))

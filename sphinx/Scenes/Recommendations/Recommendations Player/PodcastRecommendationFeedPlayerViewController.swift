@@ -81,7 +81,7 @@ extension PodcastRecommendationFeedPlayerViewController {
 // MARK: -  Podcast Player Delegate
 extension PodcastRecommendationFeedPlayerViewController {
     func playingState(podcastId: String, duration: Int, currentTime: Int) {
-        let didChangeTime = podcastPlaybackSliderView?.setProgress(duration: duration, currentTime: currentTime)
+        let didChangeTime = podcastPlaybackSliderView?.setProgress(duration: duration, currentTime: currentTime) ?? false
         audioLoading = !didChangeTime
     }
     

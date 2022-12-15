@@ -26,6 +26,8 @@ class YoutubeRecommendationFeedPlayerViewController: UIViewController {
             }
         }
     }
+    
+    private var didSeekToStartTime = false
 }
 
 // MARK: -  Lifecycle
@@ -86,6 +88,7 @@ extension YoutubeRecommendationFeedPlayerViewController {
         
         if let youtubeVideoId = youtubeVideoId {
             videoPlayerView?.load(withVideoId: youtubeVideoId)
+            
         }
     }
 }
@@ -100,6 +103,7 @@ extension YoutubeRecommendationFeedPlayerViewController: YTPlayerViewDelegate {
         playerView.currentTime({ (time, error) in
             switch (state) {
             case .playing:
+                self.seekToStartTime()
                 break
             case .paused:
                 break
@@ -109,5 +113,14 @@ extension YoutubeRecommendationFeedPlayerViewController: YTPlayerViewDelegate {
                 break
             }
         })
+    }
+    
+    private func seekToStartTime() {
+        if let startTime = podcast.getCurrentEpisode()?.clipEndTime {
+            if (!didSeekToStartTime) {
+                videoPlayerView?.seek(toSeconds: Float(startTime), allowSeekAhead: true)
+            }
+            didSeekToStartTime = true
+        }
     }
 }

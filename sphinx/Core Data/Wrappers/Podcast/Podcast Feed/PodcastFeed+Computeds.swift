@@ -65,6 +65,9 @@ extension PodcastFeed {
     
     var currentTime: Int {
         get {
+            if let episode = getCurrentEpisode(), let startTime = episode.clipStartTime {
+                return startTime
+            }
             return (UserDefaults.standard.value(forKey: "current-time-\(identifier)") as? Int) ?? 0
         }
         set {

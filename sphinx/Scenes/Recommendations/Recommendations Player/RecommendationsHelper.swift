@@ -59,6 +59,8 @@ class RecommendationsHelper {
             episode.linkURLPath = item.link
             episode.feed = podcast
             episode.type = item.type
+            episode.clipStartTime = item.startSeconds
+            episode.clipEndTime = item.endSeconds
             
             episodes.append(episode)
         }

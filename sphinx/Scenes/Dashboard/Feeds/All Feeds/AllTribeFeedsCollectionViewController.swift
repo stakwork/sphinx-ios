@@ -614,14 +614,14 @@ extension AllTribeFeedsCollectionViewController {
         forceRefresh: Bool = false
     ) {
         if (!recommendationsHelper.recommendations.isEmpty && !forceRefresh) {
-            self.updateWithNew(recommendations: recommendationsHelper.recommendations)
+            self.updateWithNew(recommendations: self.getSavedRecommendations())
             return
         }
         
         updateLoadingRecommendations()
         
         API.sharedInstance.getFeedRecommendations(callback: { recommendations in
-            self.recommendationsHelper.recommendations = recommendations
+            self.recommendationsHelper.persistRecommendations(recommendations)
             self.updateWithNew(recommendations: recommendations)
         }, errorCallback: {
             self.updateNoRecommendationsFound()

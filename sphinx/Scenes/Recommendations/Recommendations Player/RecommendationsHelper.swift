@@ -28,10 +28,14 @@ class RecommendationsHelper {
     static let NEWSLETTER_TYPE = "newsletter"
     static let TWITTER_TYPE = "twitter_space"
     
-    var recommendations: [RecommendationResult] = []
+    private var recommendations: [RecommendationResult] = []
+    
+    func getSavedRecommendations() -> [RecommendationResult] {
+        return self.recommendations
+    }
     
     func persistRecommendations(
-        recommendations: [RecommendationResult]
+        _ recommendations: [RecommendationResult]
     ) {
         self.recommendations = recommendations
     }

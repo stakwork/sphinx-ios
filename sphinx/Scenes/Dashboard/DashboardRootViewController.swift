@@ -46,6 +46,7 @@ class DashboardRootViewController: RootViewController {
     internal var managedObjectContext: NSManagedObjectContext!
     internal let onionConnector = SphinxOnionConnector.sharedInstance
     internal let socketManager = SphinxSocketManager.sharedInstance
+    internal let actionsManager = ActionsManager.sharedInstance
     internal let refreshControl = UIRefreshControl()
     
     internal let newBubbleHelper = NewMessageBubbleHelper()

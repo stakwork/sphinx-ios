@@ -32,18 +32,30 @@ class ActionsManager {
         return Static.instance
     }
     
+    
+    var searchActions: [FeedSearchAction] = []
     func trackFeedSearch(searchTerm: String) {
         globalThread.sync {
+            if let sa = searchActions.last {
+                if (searchTerm.lowerClean.contains(sa.searchTerm)) {
+                    searchActions.removeLast()
+                }
+            }
+            
             let count = ActionTrack.getSearchCountFor(searchTerm: searchTerm)
             
-            let searchAction = FeedSearchAction(frequency: count + 1, searchTerm: searchTerm.lowerClean, currentTimestamp: Date())
-            if let jsonString = searchAction.jsonString() {
-                
-                print("SAVING FEED SEARCH")
-                print(jsonString)
-                print("SAVING FEED SEARCH")
-                
-                let _ = ActionTrack.createObject(type: ActionType.FeedSearch.rawValue, uploaded: false, metaData: jsonString)
+            searchActions.append(
+                FeedSearchAction(frequency: count + 1, searchTerm: searchTerm.lowerClean, currentTimestamp: Date())
+            )
+        }
+    }
+    
+    func saveFeedSearches() {
+        globalThread.sync {
+            for searchAction in self.searchActions {
+                if let jsonString = searchAction.jsonString() {
+                    let _ = ActionTrack.createObject(type: ActionType.FeedSearch.rawValue, uploaded: false, metaData: jsonString)
+                }
             }
         }
     }
@@ -95,11 +107,6 @@ class ActionsManager {
             )
             
             if let jsonString = contentBoostAction.jsonString() {
-                
-                print("SAVING CONTENT BOOST")
-                print(jsonString)
-                print("SAVING CONTENT BOOST")
-                
                 let _ = ActionTrack.createObject(type: ActionType.ContentBoost.rawValue, uploaded: false, metaData: jsonString)
             }
         }
@@ -129,11 +136,6 @@ class ActionsManager {
             )
             
             if let jsonString = podcastClipAction.jsonString() {
-                
-                print("SAVING CLIP COMMENT")
-                print(jsonString)
-                print("SAVING CLIP COMMENT")
-                
                 let _ = ActionTrack.createObject(type: ActionType.PodcastClipComment.rawValue, uploaded: false, metaData: jsonString)
             }
         }
@@ -215,11 +217,6 @@ class ActionsManager {
                 
                 if contentConsumedAction.isValid() {
                     if let jsonString = contentConsumedAction.jsonString() {
-                        
-                        print("SAVING CONTENT CONSUMED")
-                        print(jsonString)
-                        print("SAVING CONTENT CONSUMED")
-                        
                         let _ = ActionTrack.createObject(type: ActionType.ContentConsumed.rawValue, uploaded: false, metaData: jsonString)
                     }
                 }
@@ -256,11 +253,6 @@ class ActionsManager {
             contentConsumedAction.addItem(historyItem: contentConsumedHistoryItem)
             
             if let jsonString = contentConsumedAction.jsonString() {
-                
-                print("SAVING CONTENT CONSUMED")
-                print(jsonString)
-                print("SAVING CONTENT CONSUMED")
-                
                 let _ = ActionTrack.createObject(type: ActionType.ContentConsumed.rawValue, uploaded: false, metaData: jsonString)
             }
         }

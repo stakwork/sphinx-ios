@@ -24,6 +24,8 @@ class AllTribeFeedsCollectionViewController: UICollectionViewController {
     private var fetchedResultsController: NSFetchedResultsController<ContentFeed>!
     private var currentDataSnapshot: DataSourceSnapshot!
     private var dataSource: DataSource!
+    
+    private var recommendationsHelper = RecommendationsHelper.sharedInstance
 
     private let itemContentInsets = NSDirectionalEdgeInsets(
         top: 0,
@@ -608,10 +610,18 @@ extension AllTribeFeedsCollectionViewController {
         }
     }
     
-    func loadRecommendations() {
+    func loadRecommendations(
+        forceRefresh: Bool = false
+    ) {
+        if (!recommendationsHelper.recommendations.isEmpty && !forceRefresh) {
+            self.updateWithNew(recommendations: self.getSavedRecommendations())
+            return
+        }
+        
         updateLoadingRecommendations()
         
         API.sharedInstance.getFeedRecommendations(callback: { recommendations in
+            self.recommendationsHelper.persistRecommendations(recommendations)
             self.updateWithNew(recommendations: recommendations)
         }, errorCallback: {
             self.updateNoRecommendationsFound()
@@ -664,14 +674,15 @@ extension AllTribeFeedsCollectionViewController: NSFetchedResultsControllerDeleg
                 feeds: foundFeeds
             )
             
-            self?.onNewResultsFetched(foundFeeds.count)
+            //Sent 1 to always show recommendations
+            self?.onNewResultsFetched(1)
         }
     }
 }
 
 extension AllTribeFeedsCollectionViewController: DashboardFeedHeaderDelegate {
     func didTapOnRefresh() {
-        loadRecommendations()
+        loadRecommendations(forceRefresh: true)
     }
 }
 

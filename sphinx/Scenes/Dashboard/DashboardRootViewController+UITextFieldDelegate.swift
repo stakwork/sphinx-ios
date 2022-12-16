@@ -140,5 +140,7 @@ extension DashboardRootViewController {
             child: feedsContainerViewController,
             container: mainContentContainerView
         )
+        
+        actionsManager.saveFeedSearches()
     }
 }

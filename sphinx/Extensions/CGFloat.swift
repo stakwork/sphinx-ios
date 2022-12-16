@@ -12,6 +12,15 @@ extension CGFloat {
     static func random() -> CGFloat {
         return CGFloat(arc4random()) / CGFloat(UInt32.max)
     }
+    
+    var finiteNonZero: CGFloat {
+        get {
+            if !self.isFinite || self < 0 {
+                return CGFloat(0)
+            }
+            return self
+        }
+    }
 }
 
 extension Float {

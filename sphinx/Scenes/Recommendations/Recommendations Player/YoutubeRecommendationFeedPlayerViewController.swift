@@ -87,8 +87,8 @@ extension YoutubeRecommendationFeedPlayerViewController {
         }
         
         if let youtubeVideoId = youtubeVideoId {
+            didSeekToStartTime = false
             videoPlayerView?.load(withVideoId: youtubeVideoId)
-            
         }
     }
 }
@@ -97,6 +97,7 @@ extension YoutubeRecommendationFeedPlayerViewController {
 // MARK: -  YTPlayerViewDelegate
 extension YoutubeRecommendationFeedPlayerViewController: YTPlayerViewDelegate {
     func playerView(_ playerView: YTPlayerView, didPlayTime playTime: Float) {
+        
     }
     
     func playerView(_ playerView: YTPlayerView, didChangeTo state: YTPlayerState) {

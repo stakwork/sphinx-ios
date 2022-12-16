@@ -75,18 +75,22 @@ extension PodcastRecommendationFeedPlayerViewController {
         } else {
             recommendationItemImageView?.image = UIImage(named: item.placeholderImageName ?? "podcastPlaceholder")
         }
+        
+        if let startTime = item.clipStartTime {
+            podcast.currentTime = startTime
+        }
     }
 }
 
 // MARK: -  Podcast Player Delegate
 extension PodcastRecommendationFeedPlayerViewController {
     func playingState(podcastId: String, duration: Int, currentTime: Int) {
-        let didChangeTime = podcastPlaybackSliderView?.setProgress(duration: duration, currentTime: currentTime) ?? false
+        let didChangeTime = setProgress(duration: duration, currentTime: currentTime)
         audioLoading = !didChangeTime
     }
     
     func pausedState(podcastId: String, duration: Int, currentTime: Int) {
-        let _ = podcastPlaybackSliderView?.setProgress(duration: duration, currentTime: currentTime)
+        let _ = setProgress(duration: duration, currentTime: currentTime)
         audioLoading = false
     }
     
@@ -104,7 +108,7 @@ extension PodcastRecommendationFeedPlayerViewController {
         let episode = podcast.getCurrentEpisode()
         
         if let duration = episode?.duration {
-            let _ = podcastPlaybackSliderView?.setProgress(
+            let _ = setProgress(
                 duration: duration,
                 currentTime: podcast.currentTime
             )
@@ -116,7 +120,7 @@ extension PodcastRecommendationFeedPlayerViewController {
                 episode?.duration = duration
                 
                 DispatchQueue.main.async {
-                    let _ = self.podcastPlaybackSliderView?.setProgress(
+                    let _ = self.setProgress(
                         duration: duration,
                         currentTime: self.podcast.currentTime
                     )
@@ -124,5 +128,21 @@ extension PodcastRecommendationFeedPlayerViewController {
                 }
             })
         }
+    }
+    
+    private func setProgress(
+        duration: Int,
+        currentTime: Int
+    ) -> Bool {
+        let episode = podcast.getCurrentEpisode()
+        
+        let didChangeTime = podcastPlaybackSliderView?.setProgress(
+            duration: duration,
+            currentTime: currentTime,
+            clipStartTime: episode?.clipStartTime,
+            clipEndTime: episode?.clipEndTime
+        ) ?? false
+        
+        return didChangeTime
     }
 }

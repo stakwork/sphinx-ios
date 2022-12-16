@@ -613,8 +613,10 @@ extension AllTribeFeedsCollectionViewController {
     func loadRecommendations(
         forceRefresh: Bool = false
     ) {
-        if (!recommendationsHelper.recommendations.isEmpty && !forceRefresh) {
-            self.updateWithNew(recommendations: self.getSavedRecommendations())
+        let savedRecommendations = recommendationsHelper.getSavedRecommendations()
+        
+        if (!savedRecommendations.isEmpty && !forceRefresh) {
+            updateWithNew(recommendations: savedRecommendations)
             return
         }
         

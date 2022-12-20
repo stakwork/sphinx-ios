@@ -188,6 +188,7 @@ class ProfileViewController: KeyboardEventsViewController {
             }
             
             sharePhotoSwitch.isOn = !profile.privatePhoto
+            trackRecommendationsSwitch.isOn =  UserDefaults.Keys.shouldTrackActions.get(defaultValue: false)
             
             let nickname = profile.nickname ?? ""
             nameLabel.text = nickname.getNameStyleString()
@@ -262,6 +263,7 @@ class ProfileViewController: KeyboardEventsViewController {
     }
     @IBAction func trackRecommendationsSwitchChanged(_ sender: Any) {
         print("Changed")
+        UserDefaults.Keys.shouldTrackActions.set(trackRecommendationsSwitch.isOn)
     }
     
     @IBAction func qrCodeButtonTouched() {

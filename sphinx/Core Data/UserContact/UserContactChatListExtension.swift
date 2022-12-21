@@ -99,4 +99,8 @@ extension UserContact : ChatListCommonObject {
     public func isMuted() -> Bool {
         return conversation?.isMuted() ?? false
     }
+    
+    public func isSeen() -> Bool {
+        return (self.getChat()?.lastMessage?.seen ?? false) && (self.getChat()?.seen ?? false)
+    }
 }

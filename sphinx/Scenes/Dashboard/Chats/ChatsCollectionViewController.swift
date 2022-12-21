@@ -315,7 +315,7 @@ extension ChatsCollectionViewController {
             DataSourceItem(
                 objectId: $0.getObjectId(),
                 messageId: $0.lastMessage?.id,
-                messageSeen: $0.lastMessage?.seen ?? false,
+                messageSeen: $0.isSeen(),
                 contactStatus: $0.getContactStatus(),
                 inviteStatus: $0.getInviteStatus(),
                 muted: $0.isMuted()

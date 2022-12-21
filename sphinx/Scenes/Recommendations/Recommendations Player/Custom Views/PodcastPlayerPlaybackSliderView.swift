@@ -19,6 +19,9 @@ class PodcastPlayerPlaybackSliderView: UIView {
     @IBOutlet weak var progressLineWidth: NSLayoutConstraint!
     @IBOutlet weak var currentTimeDot: UIView!
     @IBOutlet weak var gestureHandlerView: UIView!
+    @IBOutlet weak var clipLine: UIView!
+    @IBOutlet weak var clipLineWidth: NSLayoutConstraint!
+    @IBOutlet weak var clipLineStart: NSLayoutConstraint!
     @IBOutlet weak var audioLoadingWheel: UIActivityIndicatorView!
     
     var audioLoading = false {
@@ -53,7 +56,12 @@ class PodcastPlayerPlaybackSliderView: UIView {
         addDotGesture()
     }
     
-    func setProgress(duration: Int, currentTime: Int) -> Bool {
+    func setProgress(
+        duration: Int,
+        currentTime: Int,
+        clipStartTime: Int? = 0,
+        clipEndTime: Int? = 0
+    ) -> Bool {
         let currentTimeString = currentTime.getPodcastTimeString()
         let didChangeCurrentTime = currentTimeLabel.text != currentTimeString
         
@@ -62,16 +70,53 @@ class PodcastPlayerPlaybackSliderView: UIView {
         
         let progress = (Double(currentTime) * 100 / Double(duration))/100
         let durationLineWidth = UIScreen.main.bounds.width - 64
-        var progressWidth = durationLineWidth * CGFloat(progress)
-        
-        if !progressWidth.isFinite || progressWidth < 0 {
-            progressWidth = 0
-        }
+        let progressWidth = (durationLineWidth * CGFloat(progress)).finiteNonZero
         
         progressLineWidth.constant = progressWidth
         progressLine.layoutIfNeeded()
         
+        configureClip(
+            duration: duration,
+            clipStartTime: clipStartTime,
+            clipEndTime: clipEndTime
+        )
+        
         return didChangeCurrentTime
+    }
+    
+    private func configureClip(
+        duration: Int,
+        clipStartTime: Int? = 0,
+        clipEndTime: Int? = 0
+    ) {
+        guard let clipStartTime = clipStartTime, let clipEndTime = clipEndTime else {
+            clipLineWidth.constant = 0
+            clipLineStart.constant = 0
+            clipLine.superview?.layoutIfNeeded()
+            return
+        }
+        
+        let durationLineWidth = UIScreen.main.bounds.width - 64
+        
+        let startProgress = (Double(clipStartTime) * 100 / Double(duration))/100
+        let startProgressWidth = (durationLineWidth * CGFloat(startProgress)).finiteNonZero
+        
+        let clipDuration = clipEndTime - clipStartTime
+        let durationProgress = (Double(clipDuration) * 100 / Double(duration))/100
+        let clipDurationWidth = (durationLineWidth * CGFloat(durationProgress)).finiteNonZero
+        
+        if (
+            clipLineStart.constant == startProgressWidth &&
+            clipLineWidth.constant == clipDurationWidth
+        ) {
+            return
+        }
+        
+        clipLineStart.constant = startProgressWidth
+        clipLineWidth.constant = clipDurationWidth
+        
+        clipLine.superview?.layoutIfNeeded()
+        
     }
     
     func configureWith(podcast: PodcastFeed) {

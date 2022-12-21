@@ -285,6 +285,10 @@ extension PodcastFeedCollectionViewController {
     func makeSnapshotForCurrentState() -> DataSourceSnapshot {
         var snapshot = DataSourceSnapshot()
 
+        if (followedPodcastFeeds.isEmpty) {
+            return snapshot
+        }
+        
         snapshot.appendSections(CollectionViewSection.allCases)
 
         snapshot.appendItems(

@@ -185,8 +185,8 @@ extension RecommendationResult : DashboardFeedSquaredThumbnailCollectionViewItem
                 return "podcastTypeIcon"
             case RecommendationsHelper.YOUTUBE_VIDEO_TYPE:
                 return "youtubeVideoTypeIcon"
-            case RecommendationsHelper.NEWSLETTER_TYPE:
-                return "newsletterPlaceholder"
+            case RecommendationsHelper.TWITTER_TYPE:
+                return "twitterTypeIcon"
             default:
                 return "podcastTypeIcon"
             }
@@ -203,5 +203,37 @@ extension RecommendationResult : DashboardFeedSquaredThumbnailCollectionViewItem
         get {
             return UIColor.Sphinx.Text
         }
+    }
+    
+    var startSeconds: Int {
+        get {
+            if let substring = timestamp.split(separator: "-").first {
+                return String(substring).toSeconds()
+            }
+            return 0
+        }
+    }
+            
+
+    var endSeconds: Int {
+        get {
+            if let substring = timestamp.split(separator: "-").last {
+                return String(substring).toSeconds()
+            }
+            return 0
+        }
+    }
+}
+
+extension String {
+    func toSeconds() -> Int {
+        let elements = self.split(separator: ":")
+        if (elements.count == 3) {
+            let hours = Int(elements[0]) ?? 0
+            let minutes = Int(elements[1]) ?? 0
+            let seconds = Int(elements[2]) ?? 0
+            return (seconds) + (minutes * 60) + (hours * 60 * 60)
+        }
+        return 0
     }
 }

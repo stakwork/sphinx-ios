@@ -58,6 +58,7 @@ extension ChatMentionAutocompleteDataSource : UITableViewDataSource{
         let label = UILabel(frame: CGRect(origin: CGPoint(x: labelXOffset, y: 0.0), size: CGSize(width: cell.frame.width - labelXOffset, height: mentionCellHeight)))
         label.text = mentionSuggestions[indexPath.row]
         label.font = UIFont(name: "Roboto", size: label.font.pointSize)
+        label.textColor = UIColor.Sphinx.SecondaryText
         
         cell.addSubview(label)
         cell.transform = CGAffineTransform(scaleX: 1, y: -1)

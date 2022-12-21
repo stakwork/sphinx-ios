@@ -28,6 +28,18 @@ class RecommendationsHelper {
     static let NEWSLETTER_TYPE = "newsletter"
     static let TWITTER_TYPE = "twitter_space"
     
+    private var recommendations: [RecommendationResult] = []
+    
+    func getSavedRecommendations() -> [RecommendationResult] {
+        return self.recommendations
+    }
+    
+    func persistRecommendations(
+        _ recommendations: [RecommendationResult]
+    ) {
+        self.recommendations = recommendations
+    }
+    
     func getPodcastFor(
         recommendations: [RecommendationResult],
         selectedItem: RecommendationResult
@@ -42,7 +54,7 @@ class RecommendationsHelper {
         
         for item in recommendations {
             let episode = PodcastEpisode(nil, item.id)
-            episode.title = item.itemTitle
+            episode.title = item.episodeTitle
             episode.episodeDescription = item.itemDescription
             episode.datePublished = Date(timeIntervalSince1970: TimeInterval(item.date ?? 0))
             episode.dateUpdated = Date(timeIntervalSince1970: TimeInterval(item.date ?? 0))
@@ -51,6 +63,8 @@ class RecommendationsHelper {
             episode.linkURLPath = item.link
             episode.feed = podcast
             episode.type = item.type
+            episode.clipStartTime = item.startSeconds
+            episode.clipEndTime = item.endSeconds
             
             episodes.append(episode)
         }

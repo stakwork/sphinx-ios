@@ -19,6 +19,8 @@ public class PodcastEpisode: NSObject {
     public var urlPath: String?
     public var imageURLPath: String?
     public var linkURLPath: String?
+    public var clipStartTime: Int?
+    public var clipEndTime: Int?
     public var feed: PodcastFeed?
 
     //For recommendations podcast
@@ -30,6 +32,7 @@ public class PodcastEpisode: NSObject {
     }
     
     var downloaded: Bool? = nil
+    
     public var isDownloaded: Bool {
         get {
             if let downloaded = downloaded {
@@ -84,8 +87,16 @@ extension PodcastEpisode {
         return podcastEpisode
     }
     
-    var isPodcast: Bool {
+    var isMusicClip: Bool {
         return type == RecommendationsHelper.PODCAST_TYPE || type == RecommendationsHelper.TWITTER_TYPE
+    }
+    
+    var isPodcast: Bool {
+        return type == RecommendationsHelper.PODCAST_TYPE
+    }
+    
+    var isTwitterSpace: Bool {
+        return type == RecommendationsHelper.TWITTER_TYPE
     }
     
     var isYoutubeVideo: Bool {

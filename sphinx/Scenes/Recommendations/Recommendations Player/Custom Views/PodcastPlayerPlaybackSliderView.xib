@@ -16,6 +16,9 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PodcastPlayerPlaybackSliderView" customModule="sphinx" customModuleProvider="target">
             <connections>
                 <outlet property="audioLoadingWheel" destination="dv3-6a-iz5" id="zq1-aj-6q6"/>
+                <outlet property="clipLine" destination="fXh-FT-MiV" id="chL-bN-oO2"/>
+                <outlet property="clipLineStart" destination="7xd-ge-N2O" id="80w-Xo-TYD"/>
+                <outlet property="clipLineWidth" destination="ugw-Vi-D1w" id="2BC-8M-Uxt"/>
                 <outlet property="contentView" destination="iN0-l3-epB" id="AI5-j9-f6D"/>
                 <outlet property="currentTimeDot" destination="aGh-c9-WLQ" id="XDX-Ji-kN6"/>
                 <outlet property="currentTimeLabel" destination="PBV-Hv-GGd" id="qaX-In-J70"/>
@@ -36,6 +39,13 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="4" id="UeP-ad-3EU"/>
+                    </constraints>
+                </view>
+                <view alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fXh-FT-MiV">
+                    <rect key="frame" x="32" y="36" width="0.0" height="8"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="width" id="ugw-Vi-D1w"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sbD-Bl-lPC">
@@ -81,10 +91,13 @@
                 <constraint firstItem="BmI-mG-dnh" firstAttribute="top" secondItem="BPn-TA-w81" secondAttribute="top" constant="-12" id="1af-d1-Mkd"/>
                 <constraint firstItem="PBV-Hv-GGd" firstAttribute="top" secondItem="BPn-TA-w81" secondAttribute="bottom" constant="10" id="1mz-as-6mb"/>
                 <constraint firstItem="BPn-TA-w81" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="5jO-Ap-fMb"/>
+                <constraint firstItem="fXh-FT-MiV" firstAttribute="leading" secondItem="BPn-TA-w81" secondAttribute="leading" id="7xd-ge-N2O"/>
                 <constraint firstItem="7xN-D0-c3t" firstAttribute="leading" secondItem="dv3-6a-iz5" secondAttribute="trailing" constant="5" id="BIM-L8-Ndr"/>
+                <constraint firstItem="fXh-FT-MiV" firstAttribute="bottom" secondItem="BPn-TA-w81" secondAttribute="bottom" constant="2" id="FUV-ny-ade"/>
                 <constraint firstItem="BmI-mG-dnh" firstAttribute="bottom" secondItem="BPn-TA-w81" secondAttribute="bottom" constant="12" id="H9i-rT-YaC"/>
                 <constraint firstItem="aGh-c9-WLQ" firstAttribute="centerY" secondItem="BPn-TA-w81" secondAttribute="centerY" id="K5o-E4-He2"/>
                 <constraint firstItem="sbD-Bl-lPC" firstAttribute="bottom" secondItem="BPn-TA-w81" secondAttribute="bottom" id="NXg-Qu-FNi"/>
+                <constraint firstItem="fXh-FT-MiV" firstAttribute="top" secondItem="BPn-TA-w81" secondAttribute="top" constant="-2" id="O6D-r4-Lsh"/>
                 <constraint firstItem="sbD-Bl-lPC" firstAttribute="leading" secondItem="BPn-TA-w81" secondAttribute="leading" id="UYE-Cv-R5U"/>
                 <constraint firstItem="7xN-D0-c3t" firstAttribute="trailing" secondItem="BPn-TA-w81" secondAttribute="trailing" id="X5e-qN-ASK"/>
                 <constraint firstItem="sbD-Bl-lPC" firstAttribute="top" secondItem="BPn-TA-w81" secondAttribute="top" id="YMK-UA-Kb6"/>

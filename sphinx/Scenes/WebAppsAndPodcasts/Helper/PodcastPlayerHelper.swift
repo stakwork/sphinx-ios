@@ -678,6 +678,7 @@ class PodcastPlayerHelper {
                 return .commandFailed
             }
         }
+        MPRemoteCommandCenter.shared().changePlaybackPositionCommand.isEnabled = true
         
         MPRemoteCommandCenter.shared().skipBackwardCommand.preferredIntervals = [15]
         MPRemoteCommandCenter.shared().skipForwardCommand.preferredIntervals = [30]

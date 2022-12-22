@@ -107,6 +107,13 @@ class PodcastEpisodeTableViewCell: SwipableCell {
         }
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        progressLabel.text = ""
+        downloadButton.setTitle("", for: .normal)
+        episodeLabel.text = ""
+    }
+    
     func updateProgress(progress: Float) {
         progressLabel.text = progress == 1 ? "" : "\(Int(progress * 100))%"
     }

@@ -84,18 +84,21 @@ extension RecommendationFeedPlayerContainerViewController {
     
     private func setPlayingEpisode() {
         guard
-            let _ = self.podcast.getCurrentEpisode()
+            let episode = self.podcast.getCurrentEpisode()
         else { return }
 
         self.recommendationDetailsView.configure(withPodcast: podcast, andDelegate: self)
 
-        self.youtubeVideoPlayerViewController.podcast = podcast
-        self.podcastPlayerViewController.podcast = podcast
+        if (episode.isMusicClip) {
+            self.podcastPlayerViewController.podcast = podcast
+        } else if (episode.isYoutubeVideo) {
+            self.youtubeVideoPlayerViewController.podcast = podcast
+        }
     }
     
     private func configurePlayerView() {
         if let item = podcast.getCurrentEpisode() {
-            if item.isPodcast {
+            if item.isMusicClip {
                 addPodcastPlayerView()
             } else if item.isYoutubeVideo {
                 addVideoPlayerView()
@@ -144,11 +147,13 @@ extension RecommendationFeedPlayerContainerViewController {
     private func handleRecommendationCellSelection(
         _ recommendationId: String
     ) {
-        let _ = playerHelper.setNewEpisodeWith(episodeId: recommendationId, in: podcast)
+        if let episode = podcast.getEpisodeWith(id: recommendationId), episode.isYoutubeVideo {
+            //Set video episode as current episode. If it's podcast it will be set on load and play
+            let _ = playerHelper.setNewEpisodeWith(episodeId: recommendationId, in: podcast)
+        }
         
         setPlayingEpisode()
         configurePlayerView()
-        
         loadAndPlayEpisode(recommendationId: recommendationId)
     }
     

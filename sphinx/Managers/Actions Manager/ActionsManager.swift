@@ -32,24 +32,36 @@ class ActionsManager {
         return Static.instance
     }
     
+    
+    var searchActions: [FeedSearchAction] = []
     func trackFeedSearch(searchTerm: String) {
-        globalThread.async {
+        globalThread.sync {
+            if let sa = searchActions.last {
+                if (searchTerm.lowerClean.contains(sa.searchTerm)) {
+                    searchActions.removeLast()
+                }
+            }
+            
             let count = ActionTrack.getSearchCountFor(searchTerm: searchTerm)
             
-            let searchAction = FeedSearchAction(frequency: count + 1, searchTerm: searchTerm.lowerClean, currentTimestamp: Date())
-            if let jsonString = searchAction.jsonString() {
-                
-                print("SAVING FEED SEARCH")
-                print(jsonString)
-                print("SAVING FEED SEARCH")
-                
-                let _ = ActionTrack.createObject(type: ActionType.FeedSearch.rawValue, uploaded: false, metaData: jsonString)
+            searchActions.append(
+                FeedSearchAction(frequency: count + 1, searchTerm: searchTerm.lowerClean, currentTimestamp: Date())
+            )
+        }
+    }
+    
+    func saveFeedSearches() {
+        globalThread.sync {
+            for searchAction in self.searchActions {
+                if let jsonString = searchAction.jsonString() {
+                    let _ = ActionTrack.createObject(type: ActionType.FeedSearch.rawValue, uploaded: false, metaData: jsonString)
+                }
             }
         }
     }
     
     func trackMessageSent(message: TransactionMessage) {
-//        globalThread.async {
+//        globalThread.sync {
 //            guard let messagesContent = message.messageContent, !messagesContent.isEmpty else {
 //                return
 //            }
@@ -82,7 +94,7 @@ class ActionsManager {
         amount: Int,
         feedItem: ContentFeedItem
     ) {
-        globalThread.async {
+        globalThread.sync {
             let contentBoostAction = ContentBoostAction(
                 boost: amount,
                 feedId: feedItem.contentFeed?.feedID ?? "FeedId",
@@ -95,11 +107,6 @@ class ActionsManager {
             )
             
             if let jsonString = contentBoostAction.jsonString() {
-                
-                print("SAVING CONTENT BOOST")
-                print(jsonString)
-                print("SAVING CONTENT BOOST")
-                
                 let _ = ActionTrack.createObject(type: ActionType.ContentBoost.rawValue, uploaded: false, metaData: jsonString)
             }
         }
@@ -108,7 +115,7 @@ class ActionsManager {
     func trackClipComment(
         podcastComment: PodcastComment
     ) {
-        globalThread.async {
+        globalThread.sync {
             guard let feedItemObjectId = podcastComment.feedItemObjectId,
                   let feedItem: ContentFeedItem = CoreDataManager.sharedManager.getObjectWith(objectId: feedItemObjectId),
                   let timestamp = podcastComment.timestamp else {
@@ -129,11 +136,6 @@ class ActionsManager {
             )
             
             if let jsonString = podcastClipAction.jsonString() {
-                
-                print("SAVING CLIP COMMENT")
-                print(jsonString)
-                print("SAVING CLIP COMMENT")
-                
                 let _ = ActionTrack.createObject(type: ActionType.PodcastClipComment.rawValue, uploaded: false, metaData: jsonString)
             }
         }
@@ -144,7 +146,7 @@ class ActionsManager {
         startTimestamp: Int,
         endTimestamp: Int? = nil
     ) {
-        globalThread.async {
+        globalThread.sync {
             if let contentConsumedAction = self.contentConsumedAction {
                 
                 if let endTimestamp = endTimestamp {
@@ -186,7 +188,7 @@ class ActionsManager {
         timestamp: Int,
         shouldSaveAction: Bool = false
     ) {
-        globalThread.async {
+        globalThread.sync {
             if let contentConsumedAction = self.contentConsumedAction {
                 if contentConsumedAction.feedId == item.contentFeed?.feedID {
                     
@@ -209,17 +211,12 @@ class ActionsManager {
     }
     
     func finishAndSaveContentConsumed() {
-        globalThread.async {
+        globalThread.sync {
             if let contentConsumedAction = self.contentConsumedAction {
                 self.finishAndSaveHistoryItem()
                 
                 if contentConsumedAction.isValid() {
                     if let jsonString = contentConsumedAction.jsonString() {
-                        
-                        print("SAVING CONTENT CONSUMED")
-                        print(jsonString)
-                        print("SAVING CONTENT CONSUMED")
-                        
                         let _ = ActionTrack.createObject(type: ActionType.ContentConsumed.rawValue, uploaded: false, metaData: jsonString)
                     }
                 }
@@ -229,7 +226,7 @@ class ActionsManager {
     }
     
     func finishAndSaveHistoryItem() {
-        globalThread.async {
+        globalThread.sync {
             if let contentConsumedHistoryItem = self.contentConsumedHistoryItem {
                 if contentConsumedHistoryItem.isValid() {
                     self.contentConsumedAction?.addItem(historyItem: contentConsumedHistoryItem)
@@ -240,7 +237,7 @@ class ActionsManager {
     }
     
     func trackNewsletterConsumed(newsletterItem: NewsletterItem) {
-        globalThread.async {
+        globalThread.sync {
             let contentConsumedHistoryItem = ContentConsumedHistoryItem(startTimestamp: 0, currentTimestamp: Date())
             contentConsumedHistoryItem.endTimestamp = 0
             contentConsumedHistoryItem.topics = []
@@ -256,11 +253,6 @@ class ActionsManager {
             contentConsumedAction.addItem(historyItem: contentConsumedHistoryItem)
             
             if let jsonString = contentConsumedAction.jsonString() {
-                
-                print("SAVING CONTENT CONSUMED")
-                print(jsonString)
-                print("SAVING CONTENT CONSUMED")
-                
                 let _ = ActionTrack.createObject(type: ActionType.ContentConsumed.rawValue, uploaded: false, metaData: jsonString)
             }
         }

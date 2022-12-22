@@ -26,6 +26,8 @@ class YoutubeRecommendationFeedPlayerViewController: UIViewController {
             }
         }
     }
+    
+    private var didSeekToStartTime = false
 }
 
 // MARK: -  Lifecycle
@@ -43,7 +45,7 @@ extension YoutubeRecommendationFeedPlayerViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
         
-        videoPlayerView.stopVideo()
+        videoPlayerView?.stopVideo()
         podcastPlayer.finishAndSaveContentConsumed()
     }
 }
@@ -69,7 +71,7 @@ extension YoutubeRecommendationFeedPlayerViewController {
 extension YoutubeRecommendationFeedPlayerViewController {
     
     private func setupViews() {
-        videoPlayerView.delegate = self
+        videoPlayerView?.delegate = self
     }
     
     
@@ -85,7 +87,8 @@ extension YoutubeRecommendationFeedPlayerViewController {
         }
         
         if let youtubeVideoId = youtubeVideoId {
-            videoPlayerView.load(withVideoId: youtubeVideoId)
+            didSeekToStartTime = false
+            videoPlayerView?.load(withVideoId: youtubeVideoId)
         }
     }
 }
@@ -94,12 +97,14 @@ extension YoutubeRecommendationFeedPlayerViewController {
 // MARK: -  YTPlayerViewDelegate
 extension YoutubeRecommendationFeedPlayerViewController: YTPlayerViewDelegate {
     func playerView(_ playerView: YTPlayerView, didPlayTime playTime: Float) {
+        
     }
     
     func playerView(_ playerView: YTPlayerView, didChangeTo state: YTPlayerState) {
         playerView.currentTime({ (time, error) in
             switch (state) {
             case .playing:
+                self.seekToStartTime()
                 break
             case .paused:
                 break
@@ -109,5 +114,14 @@ extension YoutubeRecommendationFeedPlayerViewController: YTPlayerViewDelegate {
                 break
             }
         })
+    }
+    
+    private func seekToStartTime() {
+        if let startTime = podcast.getCurrentEpisode()?.clipEndTime {
+            if (!didSeekToStartTime) {
+                videoPlayerView?.seek(toSeconds: Float(startTime), allowSeekAhead: true)
+            }
+            didSeekToStartTime = true
+        }
     }
 }

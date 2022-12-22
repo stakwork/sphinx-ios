@@ -411,6 +411,10 @@ extension DashboardNewsletterFeedCollectionViewController {
 
     func makeSnapshotForCurrentState() -> DataSourceSnapshot {
         var snapshot = DataSourceSnapshot()
+        
+        if (newsletterFeeds.isEmpty) {
+            return snapshot
+        }
 
         snapshot.appendSections(CollectionViewSection.allCases)
         

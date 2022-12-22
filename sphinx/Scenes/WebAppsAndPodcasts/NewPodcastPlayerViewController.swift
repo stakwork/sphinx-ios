@@ -16,6 +16,7 @@ protocol PodcastPlayerVCDelegate: AnyObject {
 
 protocol CustomBoostDelegate: AnyObject {
     func didSendBoostMessage(success: Bool, message: TransactionMessage?)
+    func didStartEditingBoostAmount()
 }
 
 class NewPodcastPlayerViewController: UIViewController {
@@ -198,6 +199,14 @@ extension NewPodcastPlayerViewController : PodcastPlayerViewDelegate {
 }
 
 extension NewPodcastPlayerViewController : CustomBoostDelegate {
+    @objc func didStartEditingBoostAmount() {
+        if tableView.numberOfRows(inSection: 0) < 2{
+            return
+        }
+        let ip = IndexPath(item: 1, section: 0)
+        self.tableView.scrollToRow(at: ip, at: .middle, animated: true)
+    }
+    
     func didSendBoostMessage(success: Bool, message: TransactionMessage?) {
         boostDelegate?.didSendBoostMessage(success: success, message: message)
     }

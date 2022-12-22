@@ -418,7 +418,7 @@ extension PodcastPlayerView : PodcastPlayerDelegate {
 
 extension PodcastPlayerView: CustomBoostViewDelegate {
     func didStartBoostAmountEdit() {
-        self.boostDelegate?.didStartEditingBoostAmount()
+        self.boostDelegate?.didStartEditingBoostAmount?()
     }
     
     func didTouchBoostButton(withAmount amount: Int) {

@@ -14,9 +14,9 @@ protocol PodcastPlayerVCDelegate: AnyObject {
     func shouldGoToPlayer(podcast: PodcastFeed)
 }
 
-protocol CustomBoostDelegate: AnyObject {
+@objc protocol CustomBoostDelegate: AnyObject {
     func didSendBoostMessage(success: Bool, message: TransactionMessage?)
-    func didStartEditingBoostAmount()
+    @objc optional func didStartEditingBoostAmount()
 }
 
 class NewPodcastPlayerViewController: UIViewController {
@@ -199,7 +199,7 @@ extension NewPodcastPlayerViewController : PodcastPlayerViewDelegate {
 }
 
 extension NewPodcastPlayerViewController : CustomBoostDelegate {
-    @objc func didStartEditingBoostAmount() {
+    func didStartEditingBoostAmount() {
         if tableView.numberOfRows(inSection: 0) < 2{
             return
         }

@@ -13,10 +13,6 @@ extension DashboardRootViewController: PodcastPlayerVCDelegate {
 }
 
 extension DashboardRootViewController : CustomBoostDelegate {
-    func didStartEditingBoostAmount() {
-        
-    }
-    
     func didSendBoostMessage(success: Bool, message: TransactionMessage?) {
         chatsListViewModel.updateContactsAndChats()
         updateCurrentViewControllerData()

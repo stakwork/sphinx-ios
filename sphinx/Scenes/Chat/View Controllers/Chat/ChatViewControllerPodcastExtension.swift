@@ -9,9 +9,6 @@
 import UIKit
 
 extension ChatViewController : CustomBoostDelegate {
-    func didStartEditingBoostAmount() {
-        
-    }
     func didSendBoostMessage(success: Bool, message: TransactionMessage?) {
         guard let message = message, success else {
             DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: {

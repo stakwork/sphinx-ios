@@ -109,9 +109,12 @@ class PodcastEpisodeTableViewCell: SwipableCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        
         progressLabel.text = ""
-        downloadButton.setTitle("", for: .normal)
         episodeLabel.text = ""
+        
+        downloadButton.setTitle("", for: .normal)
+        downloadButton.setTitleColor(UIColor.Sphinx.Text, for: .normal)
     }
     
     func updateProgress(progress: Float) {

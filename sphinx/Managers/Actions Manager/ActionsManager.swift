@@ -102,7 +102,12 @@ class ActionsManager {
                 feedUrl: feedItem.contentFeed?.feedURL?.absoluteString ?? "",
                 feedItemId: feedItem.itemID,
                 feedItemUrl: feedItem.enclosureURL?.absoluteString ?? "",
+                showTitle: feedItem.contentFeed?.title ?? "",
+                episodeTitle: feedItem.title,
+                description: feedItem.itemDescription ?? "",
                 topics: [], //Get topics from description with KeyBERT
+                people: feedItem.people,
+                publishDate: feedItem.datePublished ?? Date(),
                 currentTimestamp: Date()
             )
             
@@ -129,7 +134,12 @@ class ActionsManager {
                 feedUrl: feedItem.contentFeed?.feedURL?.absoluteString ?? "",
                 feedItemId: feedItem.itemID,
                 feedItemUrl: feedItem.enclosureURL?.absoluteString ?? "",
+                showTitle: feedItem.contentFeed?.title ?? "",
+                episodeTitle: feedItem.title,
+                description: feedItem.itemDescription ?? "",
                 topics: [], //Get topics from description with KeyBERT
+                people: feedItem.people,
+                publishDate: feedItem.datePublished ?? Date(),
                 startTimestamp: timestamp,
                 endTimestamp: timestamp,
                 currentTimestamp: Date()
@@ -172,7 +182,13 @@ class ActionsManager {
                     feedType: Int(item.contentFeed?.feedKind.rawValue ?? -1),
                     feedUrl: item.contentFeed?.feedURL?.absoluteString ?? "",
                     feedItemId: item.itemID,
-                    feedItemUrl: item.enclosureURL?.absoluteString ?? ""
+                    feedItemUrl: item.enclosureURL?.absoluteString ?? "",
+                    clipRank: 0,
+                    showTitle: item.contentFeed?.title ?? "",
+                    episodeTitle: item.title,
+                    description: item.itemDescription ?? "",
+                    people: item.people,
+                    publishDate: item.datePublished ?? Date()
                 )
                 
                 self.contentConsumedHistoryItem = ContentConsumedHistoryItem(startTimestamp: 0, currentTimestamp: Date())
@@ -188,12 +204,90 @@ class ActionsManager {
         timestamp: Int,
         shouldSaveAction: Bool = false
     ) {
+        trackItemFinished(
+            feedId: item.contentFeed?.feedID,
+            feedItemId: item.itemID,
+            timestamp: timestamp,
+            shouldSaveAction: shouldSaveAction
+        )
+    }
+    
+    func trackItemConsumed(
+        item: PodcastEpisode,
+        podcast: PodcastFeed,
+        startTimestamp: Int,
+        endTimestamp: Int? = nil
+    ) {
         globalThread.sync {
             if let contentConsumedAction = self.contentConsumedAction {
-                if contentConsumedAction.feedId == item.contentFeed?.feedID {
+                
+                if let endTimestamp = endTimestamp {
+                    self.trackItemFinished(
+                        item: item,
+                        podcast: podcast,
+                        timestamp: endTimestamp
+                    )
+                }
+                
+                if contentConsumedAction.feedId != podcast.feedID {
+                    self.finishAndSaveContentConsumed()
+                }
+                
+                self.contentConsumedHistoryItem = ContentConsumedHistoryItem(startTimestamp: 0, currentTimestamp: Date())
+                self.contentConsumedHistoryItem?.startTimestamp = startTimestamp * 1000
+                self.contentConsumedHistoryItem?.currentTimestamp = Date()
+                self.contentConsumedHistoryItem?.topics = []
+                
+            } else {
+                
+                self.contentConsumedAction = ContentConsumedAction(
+                    feedId: podcast.feedID,
+                    feedType: item.intType,
+                    feedUrl: podcast.feedURLPath ?? "",
+                    feedItemId: item.itemID,
+                    feedItemUrl: item.linkURLPath ?? "",
+                    clipRank: podcast.getItemRankForEpisodeWithId(id: item.itemID),
+                    showTitle: podcast.title ?? "",
+                    episodeTitle: item.title ?? "",
+                    description: item.episodeDescription ?? "",
+                    people: item.people,
+                    publishDate: item.datePublished ?? Date()
+                )
+                
+                self.contentConsumedHistoryItem = ContentConsumedHistoryItem(startTimestamp: 0, currentTimestamp: Date())
+                self.contentConsumedHistoryItem?.startTimestamp = startTimestamp * 1000
+                self.contentConsumedHistoryItem?.currentTimestamp = Date()
+                self.contentConsumedHistoryItem?.topics = []
+            }
+        }
+    }
+    
+    func trackItemFinished(
+        item: PodcastEpisode,
+        podcast: PodcastFeed,
+        timestamp: Int,
+        shouldSaveAction: Bool = false
+    ) {
+        trackItemFinished(
+            feedId: podcast.feedID,
+            feedItemId: item.itemID,
+            timestamp: timestamp,
+            shouldSaveAction: shouldSaveAction
+        )
+    }
+    
+    func trackItemFinished(
+        feedId: String?,
+        feedItemId: String,
+        timestamp: Int,
+        shouldSaveAction: Bool = false
+    ) {
+        globalThread.sync {
+            if let contentConsumedAction = self.contentConsumedAction {
+                if contentConsumedAction.feedId == feedId {
                     
                     if let historyItem = self.contentConsumedHistoryItem {
-                        if contentConsumedAction.feedItemId == item.itemID {
+                        if contentConsumedAction.feedItemId == feedItemId {
                             if historyItem.endTimestamp == nil {
                                 historyItem.endTimestamp = timestamp * 1000
                             }
@@ -238,6 +332,10 @@ class ActionsManager {
     
     func trackNewsletterConsumed(newsletterItem: NewsletterItem) {
         globalThread.sync {
+            guard let feedItem: ContentFeedItem = CoreDataManager.sharedManager.getObjectWith(objectId: newsletterItem.objectID) else {
+                return
+            }
+            
             let contentConsumedHistoryItem = ContentConsumedHistoryItem(startTimestamp: 0, currentTimestamp: Date())
             contentConsumedHistoryItem.endTimestamp = 0
             contentConsumedHistoryItem.topics = []
@@ -247,7 +345,13 @@ class ActionsManager {
                 feedType: Int(FeedType.Newsletter.rawValue),
                 feedUrl: newsletterItem.newsletterFeed?.feedURL?.absoluteString ?? "",
                 feedItemId: newsletterItem.itemID,
-                feedItemUrl: newsletterItem.itemUrl?.absoluteString ?? ""
+                feedItemUrl: newsletterItem.itemUrl?.absoluteString ?? "",
+                clipRank: 0,
+                showTitle: feedItem.contentFeed?.title ?? "",
+                episodeTitle: newsletterItem.title ?? "",
+                description: newsletterItem.itemDescription ?? "",
+                people: feedItem.people,
+                publishDate: newsletterItem.datePublished ?? Date()
             )
             
             contentConsumedAction.addItem(historyItem: contentConsumedHistoryItem)

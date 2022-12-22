@@ -73,9 +73,6 @@ class RecommendationsHelper {
         
         podcast.episodes = episodes
         
-        if !podcastPlayerHelper.isPlaying(podcast.feedID) {
-            let _ = podcastPlayerHelper.setNewEpisodeWith(episodeId: selectedItem.id, in: podcast)
-        }
         podcastPlayerHelper.recommendationsPodcast = podcast
         
         return podcast

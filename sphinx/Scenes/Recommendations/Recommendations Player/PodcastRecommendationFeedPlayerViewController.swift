@@ -42,6 +42,12 @@ extension PodcastRecommendationFeedPlayerViewController {
         
         podcastPlaybackSliderView.configureWith(podcast: podcast)
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        PodcastPlayerHelper.sharedInstance.finishAndSaveContentConsumed()
+    }
 }
 
 // MARK: -  Static Methods

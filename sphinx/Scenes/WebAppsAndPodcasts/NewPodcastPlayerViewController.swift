@@ -55,7 +55,6 @@ class NewPodcastPlayerViewController: UIViewController {
         }
     }
     
-    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
@@ -70,6 +69,8 @@ class NewPodcastPlayerViewController: UIViewController {
                     withKey: PodcastPlayerHelper.DelegateKeys.podcastPlayerVC.rawValue
                 )
             }
+            
+            PodcastPlayerHelper.sharedInstance.finishAndSaveContentConsumed()
         }
     }
     

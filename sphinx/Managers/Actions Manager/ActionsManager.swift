@@ -32,13 +32,14 @@ class ActionsManager {
         return Static.instance
     }
     
-    func isTrackingEnabled()->Bool{
+    func isTrackingEnabled() -> Bool {
         return UserDefaults.Keys.shouldTrackActions.get(defaultValue: false)
     }
     
     var searchActions: [FeedSearchAction] = []
     func trackFeedSearch(searchTerm: String) {
-        if(isTrackingEnabled() == false){return}
+        if(!isTrackingEnabled()) { return }
+        
         globalThread.sync {
             if let sa = searchActions.last {
                 if (searchTerm.lowerClean.contains(sa.searchTerm)) {
@@ -54,6 +55,8 @@ class ActionsManager {
     }
     
     func saveFeedSearches() {
+        if(!isTrackingEnabled()) { return }
+        
         globalThread.sync {
             for searchAction in self.searchActions {
                 if let jsonString = searchAction.jsonString() {
@@ -64,7 +67,8 @@ class ActionsManager {
     }
     
     func trackMessageSent(message: TransactionMessage) {
-        if(isTrackingEnabled() == false){return}
+        if(!isTrackingEnabled()) { return }
+        
 //        globalThread.sync {
 //            guard let messagesContent = message.messageContent, !messagesContent.isEmpty else {
 //                return
@@ -98,7 +102,8 @@ class ActionsManager {
         amount: Int,
         feedItem: ContentFeedItem
     ) {
-        if(isTrackingEnabled() == false){return}
+        if(!isTrackingEnabled()) { return }
+        
         globalThread.sync {
             let contentBoostAction = ContentBoostAction(
                 boost: amount,
@@ -120,7 +125,8 @@ class ActionsManager {
     func trackClipComment(
         podcastComment: PodcastComment
     ) {
-        if(isTrackingEnabled() == false){return}
+        if(!isTrackingEnabled()) { return }
+        
         globalThread.sync {
             guard let feedItemObjectId = podcastComment.feedItemObjectId,
                   let feedItem: ContentFeedItem = CoreDataManager.sharedManager.getObjectWith(objectId: feedItemObjectId),
@@ -152,7 +158,8 @@ class ActionsManager {
         startTimestamp: Int,
         endTimestamp: Int? = nil
     ) {
-        if(isTrackingEnabled() == false){return}
+        if(!isTrackingEnabled()) { return }
+        
         globalThread.sync {
             if let contentConsumedAction = self.contentConsumedAction {
                 
@@ -195,7 +202,8 @@ class ActionsManager {
         timestamp: Int,
         shouldSaveAction: Bool = false
     ) {
-        if(isTrackingEnabled() == false){return}
+        if(!isTrackingEnabled()) { return }
+        
         globalThread.sync {
             if let contentConsumedAction = self.contentConsumedAction {
                 if contentConsumedAction.feedId == item.contentFeed?.feedID {
@@ -219,7 +227,8 @@ class ActionsManager {
     }
     
     func finishAndSaveContentConsumed() {
-        if(isTrackingEnabled() == false){return}
+        if(!isTrackingEnabled()) { return }
+        
         globalThread.sync {
             if let contentConsumedAction = self.contentConsumedAction {
                 self.finishAndSaveHistoryItem()
@@ -235,7 +244,8 @@ class ActionsManager {
     }
     
     func finishAndSaveHistoryItem() {
-        if(isTrackingEnabled() == false){return}
+        if(!isTrackingEnabled()) { return }
+        
         globalThread.sync {
             if let contentConsumedHistoryItem = self.contentConsumedHistoryItem {
                 if contentConsumedHistoryItem.isValid() {
@@ -247,7 +257,8 @@ class ActionsManager {
     }
     
     func trackNewsletterConsumed(newsletterItem: NewsletterItem) {
-        if(isTrackingEnabled() == false){return}
+        if(!isTrackingEnabled()) { return }
+        
         globalThread.sync {
             let contentConsumedHistoryItem = ContentConsumedHistoryItem(startTimestamp: 0, currentTimestamp: Date())
             contentConsumedHistoryItem.endTimestamp = 0
@@ -270,7 +281,8 @@ class ActionsManager {
     }
     
     func syncActions() {
-        if(isTrackingEnabled() == false){return}
+        if(!isTrackingEnabled()) { return }
+        
         let dispatchQueue = DispatchQueue(label: "sync-actions")
         dispatchQueue.async {
             let actions = ActionTrack.getUnsynced()
@@ -303,7 +315,8 @@ class ActionsManager {
     }
     
     func updateSyncedActions(objectIds: [NSManagedObjectID]) {
-        if(isTrackingEnabled() == false){return}
+        if(!isTrackingEnabled()) { return }
+        
         let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
         
         if let entityDescription = NSEntityDescription.entity(forEntityName: "ActionTrack", in: managedContext) {

@@ -252,7 +252,7 @@ class ActionsManager {
                 self.contentConsumedHistoryItem = ContentConsumedHistoryItem(startTimestamp: 0, currentTimestamp: Date())
                 self.contentConsumedHistoryItem?.startTimestamp = startTimestamp * 1000
                 self.contentConsumedHistoryItem?.currentTimestamp = Date()
-                self.contentConsumedHistoryItem?.topics = []
+                self.contentConsumedHistoryItem?.topics = item.topics
                 
             } else {
                 
@@ -273,7 +273,7 @@ class ActionsManager {
                 self.contentConsumedHistoryItem = ContentConsumedHistoryItem(startTimestamp: 0, currentTimestamp: Date())
                 self.contentConsumedHistoryItem?.startTimestamp = startTimestamp * 1000
                 self.contentConsumedHistoryItem?.currentTimestamp = Date()
-                self.contentConsumedHistoryItem?.topics = []
+                self.contentConsumedHistoryItem?.topics = item.topics
             }
         }
     }

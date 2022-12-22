@@ -114,7 +114,7 @@ public class ContentConsumedAction: Codable {
                     CodingKeys.showTitle.rawValue : self.showTitle,
                     CodingKeys.episodeTitle.rawValue : self.episodeTitle,
                     CodingKeys.description.rawValue : self.description,
-                    CodingKeys.publishDate.rawValue : self.publishDate,
+                    CodingKeys.publishDate.rawValue : round(self.publishDate.timeIntervalSince1970 * 1000),
                     CodingKeys.people.rawValue : self.people,
                     CodingKeys.history.rawValue : historyArray,
                 ]

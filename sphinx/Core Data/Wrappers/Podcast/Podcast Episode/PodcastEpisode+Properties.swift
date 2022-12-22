@@ -23,6 +23,7 @@ public class PodcastEpisode: NSObject {
     public var clipEndTime: Int?
     public var feed: PodcastFeed?
     public var people: [String] = []
+    public var topics: [String] = []
 
     //For recommendations podcast
     public var type: String?

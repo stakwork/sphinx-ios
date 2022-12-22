@@ -240,7 +240,7 @@ extension DashboardFeedsContainerViewController {
             container: feedContentCollectionViewContainer
         )
         
-        if activeFilterOption == .allContent {
+        if activeFilterOption.id == ContentFilterOption.allContent.id {
             actionsManager.saveFeedSearches()
             actionsManager.syncActions()
         }

@@ -18,7 +18,12 @@ public class PodcastClipAction: Codable {
         try container.encode(self.feedUrl, forKey: .feedUrl)
         try container.encode(self.feedItemId, forKey: .feedItemId)
         try container.encode(self.feedItemUrl, forKey: .feedItemUrl)
+        try container.encode(self.showTitle, forKey: .showTitle)
+        try container.encode(self.episodeTitle, forKey: .episodeTitle)
+        try container.encode(self.description, forKey: .description)
         try container.encode(self.topics, forKey: .topics)
+        try container.encode(self.people, forKey: .people)
+        try container.encode(self.publishDate, forKey: .publishDate)
         try container.encode(self.startTimestamp, forKey: .startTimestamp)
         try container.encode(self.endTimestamp, forKey: .endTimestamp)
         try container.encode(self.currentTimestamp, forKey: .currentTimestamp)
@@ -32,7 +37,12 @@ public class PodcastClipAction: Codable {
         let feedUrl = try values.decode(String.self, forKey: .feedUrl)
         let feedItemId = try values.decode(String.self, forKey: .feedItemId)
         let feedItemUrl = try values.decode(String.self, forKey: .feedItemUrl)
+        let showTitle = try values.decode(String.self, forKey: .showTitle)
+        let episodeTitle = try values.decode(String.self, forKey: .episodeTitle)
+        let description = try values.decode(String.self, forKey: .description)
         let topics = try values.decode([String].self, forKey: .topics)
+        let people = try values.decode([String].self, forKey: .people)
+        let publishDate = try values.decode(Date.self, forKey: .publishDate)
         let startTimestamp = try values.decode(Int.self, forKey: .startTimestamp)
         let endTimestamp = try values.decode(Int.self, forKey: .endTimestamp)
         let currentTimestamp = try values.decode(Date.self, forKey: .currentTimestamp)
@@ -42,7 +52,12 @@ public class PodcastClipAction: Codable {
         self.feedUrl = feedUrl
         self.feedItemId = feedItemId
         self.feedItemUrl = feedItemUrl
+        self.showTitle = showTitle
+        self.episodeTitle = episodeTitle
+        self.description = description
         self.topics = topics
+        self.people = people
+        self.publishDate = publishDate
         self.startTimestamp = startTimestamp
         self.endTimestamp = endTimestamp
         self.currentTimestamp = currentTimestamp
@@ -54,7 +69,12 @@ public class PodcastClipAction: Codable {
     public var feedUrl: String
     public var feedItemId: String
     public var feedItemUrl: String
+    public var showTitle: String
+    public var episodeTitle: String
+    public var description: String
     public var topics: [String] = []
+    public var people: [String] = []
+    public var publishDate: Date
     public var startTimestamp: Int
     public var endTimestamp: Int
     public var currentTimestamp: Date
@@ -65,7 +85,12 @@ public class PodcastClipAction: Codable {
         feedUrl: String,
         feedItemId: String,
         feedItemUrl: String,
+        showTitle: String,
+        episodeTitle: String,
+        description: String,
         topics: [String] = [],
+        people: [String] = [],
+        publishDate: Date,
         startTimestamp: Int,
         endTimestamp: Int,
         currentTimestamp: Date
@@ -75,7 +100,12 @@ public class PodcastClipAction: Codable {
         self.feedUrl = feedUrl
         self.feedItemId = feedItemId
         self.feedItemUrl = feedItemUrl
+        self.showTitle = showTitle
+        self.episodeTitle = episodeTitle
+        self.description = description
         self.topics = topics
+        self.people = people
+        self.publishDate = publishDate
         self.startTimestamp = startTimestamp
         self.endTimestamp = endTimestamp
         self.currentTimestamp = currentTimestamp
@@ -83,18 +113,23 @@ public class PodcastClipAction: Codable {
     
     func getParamsDictionary() -> [String: Any] {
         let json: [String: Any] = [
-            "type": ActionsManager.ActionType.PodcastClipComment.rawValue,
-            "meta_data":
+            ActionTrack.CodingKeys.type.rawValue : ActionsManager.ActionType.PodcastClipComment.rawValue,
+            ActionTrack.CodingKeys.metaData.rawValue :
                 [
-                    "feed_id" : self.feedId,
-                    "feed_type" : self.feedType,
-                    "feed_url" : self.feedUrl,
-                    "feed_item_id" : self.feedItemId,
-                    "feed_item_url" : self.feedItemUrl,
-                    "topics" : self.topics,
-                    "start_timestamp" : self.startTimestamp,
-                    "end_timestamp" : self.endTimestamp,
-                    "current_timestamp" : round(self.currentTimestamp.timeIntervalSince1970 * 1000),
+                    CodingKeys.feedId.rawValue : self.feedId,
+                    CodingKeys.feedType.rawValue : self.feedType,
+                    CodingKeys.feedUrl.rawValue : self.feedUrl,
+                    CodingKeys.feedItemId.rawValue : self.feedItemId,
+                    CodingKeys.feedItemUrl.rawValue : self.feedItemUrl,
+                    CodingKeys.showTitle.rawValue : self.showTitle,
+                    CodingKeys.episodeTitle.rawValue : self.episodeTitle,
+                    CodingKeys.description.rawValue : self.description,
+                    CodingKeys.topics.rawValue : self.topics,
+                    CodingKeys.people.rawValue : self.people,
+                    CodingKeys.publishDate.rawValue : round(self.publishDate.timeIntervalSince1970 * 1000),
+                    CodingKeys.startTimestamp.rawValue : self.startTimestamp,
+                    CodingKeys.endTimestamp.rawValue : self.endTimestamp,
+                    CodingKeys.currentTimestamp.rawValue : round(self.currentTimestamp.timeIntervalSince1970 * 1000),
                 ]
         ]
         return json
@@ -133,7 +168,12 @@ extension PodcastClipAction {
         case feedUrl = "feed_url"
         case feedItemId = "feed_item_id"
         case feedItemUrl = "feed_item_url"
+        case showTitle = "show_title"
+        case episodeTitle = "episode_title"
+        case description = "description"
+        case people = "people"
         case topics = "topics"
+        case publishDate = "publish_date"
         case startTimestamp = "start_timestamp"
         case endTimestamp = "end_timestamp"
         case currentTimestamp = "current_timestamp"

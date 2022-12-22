@@ -21,6 +21,7 @@ class ProfileViewController: KeyboardEventsViewController {
     @IBOutlet weak var addressTextField: UITextField!
     @IBOutlet weak var routeHintTextField: UITextField!
     @IBOutlet weak var sharePhotoSwitch: UISwitch!
+    @IBOutlet weak var trackRecommendationsSwitch: UISwitch!
     @IBOutlet weak var notificationSoundButton: UIButton!
     @IBOutlet weak var inviteServerTextField: UITextField!
     @IBOutlet weak var memesServerTextField: UITextField!
@@ -111,6 +112,7 @@ class ProfileViewController: KeyboardEventsViewController {
         profileImageView.layer.cornerRadius = profileImageView.frame.size.height / 2
         profileImageView.clipsToBounds = true
         sharePhotoSwitch.onTintColor = UIColor.Sphinx.PrimaryBlue
+        trackRecommendationsSwitch.onTintColor = UIColor.Sphinx.PrimaryBlue
         
         exportKeyButton.layer.cornerRadius = exportKeyButton.frame.height / 2
         privacyPinLabel.text = (GroupsPinManager.sharedInstance.isPrivacyPinSet() ? "change.privacy.pin" : "set.privacy.pin").localized
@@ -186,6 +188,7 @@ class ProfileViewController: KeyboardEventsViewController {
             }
             
             sharePhotoSwitch.isOn = !profile.privatePhoto
+            trackRecommendationsSwitch.isOn =  UserDefaults.Keys.shouldTrackActions.get(defaultValue: false)
             
             let nickname = profile.nickname ?? ""
             nameLabel.text = nickname.getNameStyleString()
@@ -257,6 +260,10 @@ class ProfileViewController: KeyboardEventsViewController {
     
     @IBAction func sharePhotoSwitchChanged(_ sender: UISwitch) {
         updateProfile()
+    }
+    @IBAction func trackRecommendationsSwitchChanged(_ sender: Any) {
+        print("Changed")
+        UserDefaults.Keys.shouldTrackActions.set(trackRecommendationsSwitch.isOn)
     }
     
     @IBAction func qrCodeButtonTouched() {

@@ -65,15 +65,14 @@ class RecommendationsHelper {
             episode.type = item.type
             episode.clipStartTime = item.startSeconds
             episode.clipEndTime = item.endSeconds
+            episode.people = item.guests
+            episode.topics = selectedItem.topics
             
             episodes.append(episode)
         }
         
         podcast.episodes = episodes
         
-        if !podcastPlayerHelper.isPlaying(podcast.feedID) {
-            let _ = podcastPlayerHelper.setNewEpisodeWith(episodeId: selectedItem.id, in: podcast)
-        }
         podcastPlayerHelper.recommendationsPodcast = podcast
         
         return podcast

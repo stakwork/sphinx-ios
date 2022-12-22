@@ -712,22 +712,46 @@ class PodcastPlayerHelper {
     func trackItemStarted(
         endTimestamp: Int? = nil
     ) {
-        if let episode = podcast?.getCurrentEpisode(),
-           let feedItem: ContentFeedItem = ContentFeedItem.getItemWith(itemID: episode.itemID),
-           let time = podcast?.currentTime {
-
-            actionsManager.trackItemConsumed(item: feedItem, startTimestamp: time, endTimestamp: endTimestamp)
+        if let podcast = podcast,
+            let episode = podcast.getCurrentEpisode() {
+            
+            if let feedItem: ContentFeedItem = ContentFeedItem.getItemWith(itemID: episode.itemID) {
+                actionsManager.trackItemConsumed(
+                    item: feedItem,
+                    startTimestamp: podcast.currentTime,
+                    endTimestamp: endTimestamp
+                )
+            } else if podcast.isRecommendationsPodcast {
+                actionsManager.trackItemConsumed(
+                    item: episode,
+                    podcast: podcast,
+                    startTimestamp: podcast.currentTime,
+                    endTimestamp: endTimestamp
+                )
+            }
         }
     }
 
     func trackItemFinished(
         shouldSaveAction: Bool = false
     ) {
-        if let episode = podcast?.getCurrentEpisode(),
-           let feedItem: ContentFeedItem = ContentFeedItem.getItemWith(itemID: episode.itemID),
-            let time = podcast?.currentTime {
-
-            actionsManager.trackItemFinished(item: feedItem, timestamp: time, shouldSaveAction: shouldSaveAction)
+        if let podcast = podcast,
+            let episode = podcast.getCurrentEpisode() {
+            
+            if let feedItem: ContentFeedItem = ContentFeedItem.getItemWith(itemID: episode.itemID) {
+                actionsManager.trackItemFinished(
+                    item: feedItem,
+                    timestamp: podcast.currentTime,
+                    shouldSaveAction: shouldSaveAction
+                )
+            } else if podcast.isRecommendationsPodcast {
+                actionsManager.trackItemFinished(
+                    item: episode,
+                    podcast: podcast,
+                    timestamp: podcast.currentTime,
+                    shouldSaveAction: shouldSaveAction
+                )
+            }
         }
     }
     

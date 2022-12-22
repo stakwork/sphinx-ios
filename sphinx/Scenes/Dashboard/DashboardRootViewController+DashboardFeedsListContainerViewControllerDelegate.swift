@@ -220,8 +220,23 @@ extension DashboardRootViewController {
                 selectedItem: recommendation
             )
             
+            pausePlayingIfNeeded(podcast: podcast, itemId: recommendationId)
+            
             presentRecommendationsPlayerVC(for: podcast)
         }
+    }
+    
+    private func pausePlayingIfNeeded(
+        podcast: PodcastFeed,
+        itemId: String
+    ) {
+        if podcastPlayerHelper.isPlaying(podcast.feedID) {
+            if podcast.getCurrentEpisode()?.itemID != itemId {
+                podcastPlayerHelper.shouldPause()
+            }
+        }
+        
+        let _ = podcastPlayerHelper.setNewEpisodeWith(episodeId: itemId, in: podcast)
     }
     
     private func presentRecommendationsPlayerVC(

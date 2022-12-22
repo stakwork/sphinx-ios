@@ -15,6 +15,7 @@ public class RecommendationResult: NSObject {
     public var type: String
     public var id: String
     public var topics: [String]
+    public var guests: [String]
     public var weight: Double
     public var itemDescription: String
     public var date: Int?
@@ -34,6 +35,7 @@ public class RecommendationResult: NSObject {
         _ type: String,
         _ id: String,
         _ topics: [String],
+        _ guests: [String],
         _ weight: Double,
         _ description: String,
         _ date: Int,
@@ -52,6 +54,7 @@ public class RecommendationResult: NSObject {
         self.type = type
         self.id = id
         self.topics = topics
+        self.guests = guests
         self.weight = weight
         self.itemDescription = description
         self.date = date
@@ -96,11 +99,20 @@ public class RecommendationResult: NSObject {
             }
         }
         
+        var guestsArray: [String] = []
+        
+        if let guests = recommendationResult[RecommendationResult.CodingKeys.guests.rawValue].array {
+            guestsArray = guests.map {
+                $0.stringValue
+            }
+        }
+        
         return RecommendationResult(
             pubkey,
             type,
             id,
             topicsArray,
+            guestsArray,
             weight,
             description,
             date,

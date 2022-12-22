@@ -71,7 +71,9 @@ extension API {
         callback: @escaping RecommendationsCallback,
         errorCallback: @escaping EmptyCallback
     ) {
-        
+        if(UserDefaults.Keys.shouldTrackActions.get(defaultValue: false) == false){
+            callback([])//skip the request and return nothing
+        }
         guard let request = getURLRequest(route: "/feeds", method: "GET") else {
             errorCallback()
             return

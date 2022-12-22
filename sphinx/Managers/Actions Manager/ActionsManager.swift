@@ -32,16 +32,20 @@ class ActionsManager {
         return Static.instance
     }
     
+    func isTrackingEnabled() -> Bool {
+        return UserDefaults.Keys.shouldTrackActions.get(defaultValue: false)
+    }
     
     var searchActions: [FeedSearchAction] = []
     func trackFeedSearch(searchTerm: String) {
+        if(!isTrackingEnabled()) { return }
+        
         globalThread.sync {
             if let sa = searchActions.last {
                 if (searchTerm.lowerClean.contains(sa.searchTerm)) {
                     searchActions.removeLast()
                 }
             }
-            
             let count = ActionTrack.getSearchCountFor(searchTerm: searchTerm)
             
             searchActions.append(
@@ -51,6 +55,8 @@ class ActionsManager {
     }
     
     func saveFeedSearches() {
+        if(!isTrackingEnabled()) { return }
+        
         globalThread.sync {
             for searchAction in self.searchActions {
                 if let jsonString = searchAction.jsonString() {
@@ -61,6 +67,8 @@ class ActionsManager {
     }
     
     func trackMessageSent(message: TransactionMessage) {
+        if(!isTrackingEnabled()) { return }
+        
 //        globalThread.sync {
 //            guard let messagesContent = message.messageContent, !messagesContent.isEmpty else {
 //                return
@@ -94,6 +102,8 @@ class ActionsManager {
         amount: Int,
         feedItem: ContentFeedItem
     ) {
+        if(!isTrackingEnabled()) { return }
+        
         globalThread.sync {
             let contentBoostAction = ContentBoostAction(
                 boost: amount,
@@ -120,6 +130,8 @@ class ActionsManager {
     func trackClipComment(
         podcastComment: PodcastComment
     ) {
+        if(!isTrackingEnabled()) { return }
+        
         globalThread.sync {
             guard let feedItemObjectId = podcastComment.feedItemObjectId,
                   let feedItem: ContentFeedItem = CoreDataManager.sharedManager.getObjectWith(objectId: feedItemObjectId),
@@ -156,6 +168,8 @@ class ActionsManager {
         startTimestamp: Int,
         endTimestamp: Int? = nil
     ) {
+        if(!isTrackingEnabled()) { return }
+        
         globalThread.sync {
             if let contentConsumedAction = self.contentConsumedAction {
                 
@@ -218,6 +232,8 @@ class ActionsManager {
         startTimestamp: Int,
         endTimestamp: Int? = nil
     ) {
+        if(!isTrackingEnabled()) { return }
+        
         globalThread.sync {
             if let contentConsumedAction = self.contentConsumedAction {
                 
@@ -282,6 +298,8 @@ class ActionsManager {
         timestamp: Int,
         shouldSaveAction: Bool = false
     ) {
+        if(!isTrackingEnabled()) { return }
+        
         globalThread.sync {
             if let contentConsumedAction = self.contentConsumedAction {
                 if contentConsumedAction.feedId == feedId {
@@ -305,6 +323,8 @@ class ActionsManager {
     }
     
     func finishAndSaveContentConsumed() {
+        if(!isTrackingEnabled()) { return }
+        
         globalThread.sync {
             if let contentConsumedAction = self.contentConsumedAction {
                 self.finishAndSaveHistoryItem()
@@ -320,6 +340,8 @@ class ActionsManager {
     }
     
     func finishAndSaveHistoryItem() {
+        if(!isTrackingEnabled()) { return }
+        
         globalThread.sync {
             if let contentConsumedHistoryItem = self.contentConsumedHistoryItem {
                 if contentConsumedHistoryItem.isValid() {
@@ -331,6 +353,8 @@ class ActionsManager {
     }
     
     func trackNewsletterConsumed(newsletterItem: NewsletterItem) {
+        if(!isTrackingEnabled()) { return }
+        
         globalThread.sync {
             guard let feedItem: ContentFeedItem = CoreDataManager.sharedManager.getObjectWith(objectId: newsletterItem.objectID) else {
                 return
@@ -363,6 +387,8 @@ class ActionsManager {
     }
     
     func syncActions() {
+        if(!isTrackingEnabled()) { return }
+        
         let dispatchQueue = DispatchQueue(label: "sync-actions")
         dispatchQueue.async {
             let actions = ActionTrack.getUnsynced()

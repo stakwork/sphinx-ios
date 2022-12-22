@@ -178,6 +178,8 @@ extension FeedSearchContainerViewController {
             )
         }
         
+        ActionsManager.sharedInstance.trackFeedSearch(searchTerm: searchQuery)
+        
         if let type = type {
             searchTimer?.invalidate()
             searchTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(fetchRemoteResults(timer:)), userInfo: ["search_query": searchQuery, "feed_type" : type], repeats: false)
@@ -196,8 +198,6 @@ extension FeedSearchContainerViewController {
                     matching: searchQuery
                 ) { [weak self] result in
                     guard let self = self else { return }
-                    
-                    ActionsManager.sharedInstance.trackFeedSearch(searchTerm: searchQuery)
                     
                     DispatchQueue.main.async {
                         switch result {

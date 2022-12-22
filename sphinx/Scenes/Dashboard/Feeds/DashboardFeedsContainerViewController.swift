@@ -75,6 +75,7 @@ class DashboardFeedsContainerViewController: UIViewController {
         }
     }
     
+    let actionsManager = ActionsManager.sharedInstance
     
     internal lazy var emptyStateViewController: DashboardFeedsEmptyStateViewController = {
         DashboardFeedsEmptyStateViewController.instantiate(
@@ -238,6 +239,11 @@ extension DashboardFeedsContainerViewController {
             child: newViewController,
             container: feedContentCollectionViewContainer
         )
+        
+        if oldFilterOption == .allContent {
+            actionsManager.saveFeedSearches()
+            actionsManager.syncActions()
+        }
     }
     
     

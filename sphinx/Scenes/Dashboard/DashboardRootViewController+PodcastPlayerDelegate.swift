@@ -26,6 +26,10 @@ extension DashboardRootViewController : PodcastPlayerDelegate {
         podcastSmallPlayer.loadingState(podcastId: podcastId, loading: loading)
     }
     
+    func errorState(podcastId: String) {
+        podcastSmallPlayer.loadingState(podcastId: podcastId, loading: false)
+    }
+    
     func showSmallPodcastPlayer() {
         if podcastSmallPlayer.isHidden {
             podcastSmallPlayer.isHidden = false

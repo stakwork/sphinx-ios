@@ -274,4 +274,6 @@ extension PodcastSmallPlayer : PodcastPlayerDelegate {
         showEpisodeInfo()
         audioLoading = loading
     }
+    
+    func errorState(podcastId: String) {}
 }

@@ -225,4 +225,9 @@ extension RecommendationFeedPlayerContainerViewController : PodcastPlayerDelegat
         }
         podcastPlayerViewController.loadingState(podcastId: podcastId, loading: loading)
     }
+    
+    func errorState(podcastId: String) {
+        configureControls(playing: false)
+        AlertHelper.showAlert(title: "Error", message: "This clip can't be played", on: self)
+    }
 }

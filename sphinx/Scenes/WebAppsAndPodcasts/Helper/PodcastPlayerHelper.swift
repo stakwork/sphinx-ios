@@ -15,6 +15,7 @@ import SwiftyJSON
     func playingState(podcastId: String, duration: Int, currentTime: Int)
     func pausedState(podcastId: String, duration: Int, currentTime: Int)
     func loadingState(podcastId: String, loading: Bool)
+    func errorState(podcastId: String)
 }
 
 class PodcastPlayerHelper {
@@ -441,13 +442,19 @@ class PodcastPlayerHelper {
             
             let duration = Int(Double(item.asset.duration.value) / Double(item.asset.duration.timescale))
             
-            for d in delegates.values {
-                d.playingState(podcastId: podcast.feedID, duration: duration, currentTime: podcast.currentTime)
+            if (duration > 0) {
+                for d in delegates.values {
+                    d.playingState(podcastId: podcast.feedID, duration: duration, currentTime: podcast.currentTime)
+                }
+                
+                configureTimer()
+                
+                trackItemStarted(endTimestamp: previousItemTimestamp)
+            } else {
+                for d in delegates.values {
+                    d.errorState(podcastId: podcast.feedID)
+                }
             }
-            
-            configureTimer()
-            
-            trackItemStarted(endTimestamp: previousItemTimestamp)
         } else {
             prepareEpisodeWith(index: podcast.currentEpisodeIndex, in: podcast, autoPlay: true, completion: {})
         }

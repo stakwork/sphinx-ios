@@ -269,6 +269,8 @@ class PodcastPlayerHelper {
     ) -> Bool {
         if (podcast.currentEpisodeId != episodeId) {
             
+            self.podcast = podcast
+            
             trackItemFinished(shouldSaveAction: true)
             
             podcast.currentEpisodeId = episodeId

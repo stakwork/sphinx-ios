@@ -147,14 +147,9 @@ extension RecommendationFeedPlayerContainerViewController {
     private func handleRecommendationCellSelection(
         _ recommendationId: String
     ) {
-        if let episode = podcast.getEpisodeWith(id: recommendationId), episode.isYoutubeVideo {
-            //Set video episode as current episode. If it's podcast it will be set on load and play
-            let _ = playerHelper.setNewEpisodeWith(episodeId: recommendationId, in: podcast)
-        }
-        
+        loadAndPlayEpisode(recommendationId: recommendationId)
         setPlayingEpisode()
         configurePlayerView()
-        loadAndPlayEpisode(recommendationId: recommendationId)
     }
     
     func loadAndPlayEpisode(recommendationId: String) {

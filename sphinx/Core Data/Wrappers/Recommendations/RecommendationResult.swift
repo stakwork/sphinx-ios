@@ -205,18 +205,6 @@ extension RecommendationResult : DashboardFeedSquaredThumbnailCollectionViewItem
         }
     }
     
-    var titleFontColor: UIColor? {
-        get {
-            return UIColor.Sphinx.SecondaryText
-        }
-    }
-    
-    var subTitleFontColor: UIColor? {
-        get {
-            return UIColor.Sphinx.Text
-        }
-    }
-    
     var startSeconds: Int {
         get {
             if let substring = timestamp.split(separator: "-").first {

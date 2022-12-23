@@ -49,6 +49,8 @@ protocol DashboardFeedsListContainerViewControllerDelegate: AnyObject {
     func viewControllerContentScrolled(
         scrollView: UIScrollView
     )
+    
+    func viewControllerRecommendationsRefreshed()
 }
 
 
@@ -90,7 +92,8 @@ class DashboardFeedsContainerViewController: UIViewController {
             onCellSelected: handleAllFeedsCellSelection(_:),
             onRecommendationSelected: handleRecommendationSelection(_:_:),
             onNewResultsFetched: handleNewResultsFetch(_:),
-            onContentScrolled: handleFeedScroll(scrollView:)
+            onContentScrolled: handleFeedScroll(scrollView:),
+            onRefreshRecommendations: handleRecomendationsRefresh
         )
     }()
     
@@ -202,6 +205,10 @@ extension DashboardFeedsContainerViewController {
         } else {
             removeEmptyStateViewController()
         }
+    }
+    
+    private func handleRecomendationsRefresh() {
+        feedsListContainerDelegate?.viewControllerRecommendationsRefreshed()
     }
     
     

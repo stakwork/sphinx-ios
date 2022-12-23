@@ -475,6 +475,10 @@ class PodcastPlayerHelper {
         return playing && self.podcast?.feedID == podcastId
     }
     
+    func isPlayingRecommendations() -> Bool {
+        return (isPlaying() && podcast?.isRecommendationsPodcast == true)
+    }
+    
     func togglePlayStateFor(
         _ podcast: PodcastFeed
     ) {

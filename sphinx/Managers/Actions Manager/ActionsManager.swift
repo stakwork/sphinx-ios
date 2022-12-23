@@ -263,7 +263,7 @@ class ActionsManager {
                     feedItemId: item.itemID,
                     feedItemUrl: item.linkURLPath ?? "",
                     clipRank: podcast.getItemRankForEpisodeWithId(id: item.itemID),
-                    showTitle: podcast.title ?? "",
+                    showTitle: item.showTitle ?? podcast.title ?? "",
                     episodeTitle: item.title ?? "",
                     description: item.episodeDescription ?? "",
                     people: item.people,

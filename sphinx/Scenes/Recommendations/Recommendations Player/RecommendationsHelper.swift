@@ -67,6 +67,7 @@ class RecommendationsHelper {
             episode.clipEndTime = item.endSeconds
             episode.people = item.guests
             episode.topics = selectedItem.topics
+            episode.showTitle = item.showTitle
             
             episodes.append(episode)
         }

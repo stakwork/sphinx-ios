@@ -21,6 +21,7 @@ public class PodcastEpisode: NSObject {
     public var linkURLPath: String?
     public var clipStartTime: Int?
     public var clipEndTime: Int?
+    public var showTitle: String?
     public var feed: PodcastFeed?
     public var people: [String] = []
     public var topics: [String] = []

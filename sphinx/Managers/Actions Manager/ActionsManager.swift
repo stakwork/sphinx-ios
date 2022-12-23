@@ -63,6 +63,7 @@ class ActionsManager {
                     let _ = ActionTrack.createObject(type: ActionType.FeedSearch.rawValue, uploaded: false, metaData: jsonString)
                 }
             }
+            self.searchActions.removeAll()
         }
     }
     

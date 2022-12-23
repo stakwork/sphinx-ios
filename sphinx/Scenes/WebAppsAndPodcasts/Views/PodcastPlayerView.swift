@@ -414,6 +414,8 @@ extension PodcastPlayerView : PodcastPlayerDelegate {
         delegate?.shouldReloadEpisodesTable()
         audioLoading = false
     }
+    
+    func errorState(podcastId: String) {}
 }
 
 extension PodcastPlayerView: CustomBoostViewDelegate {

@@ -99,25 +99,25 @@ extension YoutubeRecommendationFeedPlayerViewController: YTPlayerViewDelegate {
             case .playing:
                 let startTime = self.seekToStartTime()
                 
-                if let youtubeVideoId = self.podcast.getCurrentEpisode()?.youtubeVideoId {
+                if let episode = self.podcast.getCurrentEpisode() {
                     self.trackItemStarted(
-                        videoId: youtubeVideoId,
+                        episode: episode,
                         startTime ?? time
                     )
                 }
                 break
             case .paused:
-                if let youtubeVideoId = self.podcast.getCurrentEpisode()?.youtubeVideoId {
+                if let episode = self.podcast.getCurrentEpisode() {
                     self.trackItemFinished(
-                        videoId: youtubeVideoId,
+                        episode: episode,
                         time
                     )
                 }
                 break
             case .ended:
-                if let youtubeVideoId = self.podcast.getCurrentEpisode()?.youtubeVideoId {
+                if let episode = self.podcast.getCurrentEpisode() {
                     self.trackItemFinished(
-                        videoId: youtubeVideoId,
+                        episode: episode,
                         time,
                         shouldSaveAction: true
                     )
@@ -142,23 +142,19 @@ extension YoutubeRecommendationFeedPlayerViewController: YTPlayerViewDelegate {
     }
     
     func trackItemStarted(
-        videoId: String,
+        episode: PodcastEpisode,
         _ currentTime: Float
     ) {
-//        if let feedItem: ContentFeedItem = ContentFeedItem.getItemWith(itemID: videoId) {
-//            let time = Int(round(currentTime)) * 1000
-//            actionsManager.trackItemConsumed(item: feedItem, startTimestamp: time)
-//        }
+        let time = Int(round(currentTime)) * 1000
+        actionsManager.trackItemConsumed(item: episode, podcast: podcast, startTimestamp: time)
     }
 
     func trackItemFinished(
-        videoId: String,
+        episode: PodcastEpisode,
         _ currentTime: Float,
         shouldSaveAction: Bool = false
     ) {
-//        if let feedItem: ContentFeedItem = ContentFeedItem.getItemWith(itemID: videoId) {
-//            let time = Int(round(currentTime)) * 1000
-//            actionsManager.trackItemFinished(item: feedItem, timestamp: time, shouldSaveAction: shouldSaveAction)
-//        }
+        let time = Int(round(currentTime)) * 1000
+        actionsManager.trackItemFinished(item: episode, podcast: podcast, timestamp: time, shouldSaveAction: shouldSaveAction)
     }
 }

@@ -13,8 +13,6 @@ protocol DashboardFeedSquaredThumbnailCollectionViewItem {
     var subtitle: String? { get }
     var placeholderImageName: String? { get }
     var typeIconImage: String? { get }
-    var titleFontColor: UIColor? { get }
-    var subTitleFontColor: UIColor? { get }
 }
 
 
@@ -82,8 +80,8 @@ extension DashboardFeedSquaredThumbnailCollectionViewCell {
         titleLabel.text = item.title
         subtitleLabel.text = item.subtitle
         
-        titleLabel.textColor = item.titleFontColor ?? UIColor.Sphinx.Text
-        subtitleLabel.textColor = item.subTitleFontColor ?? UIColor.Sphinx.SecondaryText
+        titleLabel.textColor = UIColor.Sphinx.Text
+        subtitleLabel.textColor = UIColor.Sphinx.SecondaryText
         
         if let typeIcon = item.typeIconImage {
             typeIconImageView.image = UIImage(named: typeIcon)
@@ -127,8 +125,6 @@ extension ContentFeed: DashboardFeedSquaredThumbnailCollectionViewItem {
     }
     
     var typeIconImage: String? { get { nil }}
-    var titleFontColor: UIColor? { get { nil }}
-    var subTitleFontColor: UIColor? { get { nil }}
 }
 
 extension VideoFeed: DashboardFeedSquaredThumbnailCollectionViewItem {
@@ -146,8 +142,6 @@ extension VideoFeed: DashboardFeedSquaredThumbnailCollectionViewItem {
     }
     
     var typeIconImage: String? { get { nil }}
-    var titleFontColor: UIColor? { get { nil }}
-    var subTitleFontColor: UIColor? { get { nil }}
 }
 
 
@@ -185,9 +179,6 @@ extension PodcastEpisode: DashboardFeedSquaredThumbnailCollectionViewItem {
     var subtitle: String? {
         formattedDescription
     }
-    
-    var titleFontColor: UIColor? { get { nil }}
-    var subTitleFontColor: UIColor? { get { nil }}
 }
 
 
@@ -201,6 +192,4 @@ extension PodcastFeed: DashboardFeedSquaredThumbnailCollectionViewItem {
     }
     
     var typeIconImage: String? { get { nil }}
-    var titleFontColor: UIColor? { get { nil }}
-    var subTitleFontColor: UIColor? { get { nil }}
 }

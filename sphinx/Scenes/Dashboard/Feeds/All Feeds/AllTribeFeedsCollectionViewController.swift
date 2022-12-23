@@ -19,6 +19,7 @@ class AllTribeFeedsCollectionViewController: UICollectionViewController {
     var onRecommendationSelected: (([RecommendationResult], String) -> Void)!
     var onContentScrolled: ((UIScrollView) -> Void)?
     var onNewResultsFetched: ((Int) -> Void)!
+    var onRefreshRecommendations: (() -> Void)!
 
     private var managedObjectContext: NSManagedObjectContext!
     private var fetchedResultsController: NSFetchedResultsController<ContentFeed>!
@@ -74,7 +75,8 @@ extension AllTribeFeedsCollectionViewController {
         onCellSelected: ((NSManagedObjectID) -> Void)!,
         onRecommendationSelected: (([RecommendationResult], String) -> Void)!,
         onNewResultsFetched: @escaping ((Int) -> Void) = { _ in },
-        onContentScrolled: ((UIScrollView) -> Void)? = nil
+        onContentScrolled: ((UIScrollView) -> Void)? = nil,
+        onRefreshRecommendations: (() -> Void)? = nil
     ) -> AllTribeFeedsCollectionViewController {
         let viewController = StoryboardScene
             .Dashboard
@@ -88,6 +90,7 @@ extension AllTribeFeedsCollectionViewController {
         viewController.onRecommendationSelected = onRecommendationSelected
         viewController.onNewResultsFetched = onNewResultsFetched
         viewController.onContentScrolled = onContentScrolled
+        viewController.onRefreshRecommendations = onRefreshRecommendations
         
         viewController.fetchedResultsController = Self.makeFetchedResultsController(using: managedObjectContext)
         viewController.fetchedResultsController.delegate = viewController
@@ -693,7 +696,12 @@ extension AllTribeFeedsCollectionViewController: NSFetchedResultsControllerDeleg
 
 extension AllTribeFeedsCollectionViewController: DashboardFeedHeaderDelegate {
     func didTapOnRefresh() {
-        loadRecommendations(forceRefresh: true)
+        if (PodcastPlayerHelper.sharedInstance.isPlayingRecommendations()) {
+            AlertHelper.showAlert(title: "Recommendations", message: "You can't get new recommendations while playing them. Please stop playing before refreshing.", on: self)
+        } else {
+            loadRecommendations(forceRefresh: true)
+            onRefreshRecommendations?()
+        }
     }
 }
 

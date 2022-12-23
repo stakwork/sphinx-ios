@@ -105,6 +105,10 @@ extension PodcastRecommendationFeedPlayerViewController {
         showTimeInfo()
     }
     
+    func errorState(podcastId: String) {
+        audioLoading = false
+    }
+    
     func showTimeInfo() {
         audioLoading = true
         loadTime()

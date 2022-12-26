@@ -256,6 +256,10 @@ extension DashboardRootViewController {
             loadDataOnTabChange(to: activeTab)
         }
     }
+    
+    func cleanupView(){
+        self.searchBar.endEditing(true)
+    }
 }
 
 
@@ -363,6 +367,7 @@ extension DashboardRootViewController {
     private func mainContentViewController(
         forActiveTab activeTab: DashboardTab
     ) -> UIViewController {
+        self.cleanupView()
         switch activeTab {
         case .feed:
             return feedsContainerViewController

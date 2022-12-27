@@ -187,7 +187,7 @@ extension PodcastFeedCollectionViewController {
 
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .absolute(160.0),
-            heightDimension: .absolute(240.0)
+            heightDimension: .absolute(255.0)
         )
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
 

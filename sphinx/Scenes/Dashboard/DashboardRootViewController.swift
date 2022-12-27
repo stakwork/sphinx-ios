@@ -412,6 +412,7 @@ extension DashboardRootViewController {
     
     internal func resetSearchField() {
         searchTextField?.text = ""
+        view.endEditing(true)
     }
     
     

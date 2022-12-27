@@ -129,6 +129,7 @@ extension NewsletterItemDetailViewController : WKNavigationDelegate {
 }
 
 extension NewsletterItemDetailViewController: CustomBoostViewDelegate {
+    
     func didStartBoostAmountEdit() {
         
     }

@@ -37,6 +37,9 @@ class GroupDetailsViewController: UIViewController {
     @IBOutlet weak var imageUploadLabel: UILabel!
     @IBOutlet weak var groupPinContainer: GroupPinView!
     
+    @IBOutlet weak var badgeManagementContainerView: UIView!
+    @IBOutlet weak var badgeManagementContainerHeight : NSLayoutConstraint!
+    
     @IBOutlet var keyboardAccessoryView: UIView!
     
     var imagePickerManager = ImagePickerManager.sharedInstance
@@ -44,6 +47,7 @@ class GroupDetailsViewController: UIViewController {
     
     let kGroupNameTop: CGFloat = 31
     let kGroupNameWithPricesTop: CGFloat = 23
+    
     
     var chat: Chat!
     
@@ -104,6 +108,7 @@ class GroupDetailsViewController: UIViewController {
         updateTribePrices()
         configurePodcastView()
         configureTribeMemberView()
+        configureBadgeManagementView()
     }
     
     func updateTribePrices() {
@@ -141,6 +146,24 @@ class GroupDetailsViewController: UIViewController {
             )
             
             tribeMemberInfoContainer.isHidden = false
+        }
+    }
+    
+    func configureBadgeManagementView(){
+        if let chat = chat,
+           chat.isMyPublicGroup() || true{
+            badgeManagementContainerHeight.constant = 70
+            badgeManagementContainerView.isHidden = false
+            badgeManagementContainerView.backgroundColor = .purple
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+                self.badgeManagementContainerView.layoutIfNeeded()
+                let label = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 70))
+                label.text = "placeholder for badge button"
+                label.textColor = .black
+                self.badgeManagementContainerView.addSubview(label)
+                self.badgeManagementContainerView.bringSubviewToFront(label)
+                print("this is my chat")
+            })
         }
     }
     

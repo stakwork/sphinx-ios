@@ -13,7 +13,6 @@ protocol GroupDetailsDelegate: class {
 }
 
 class GroupDetailsViewController: UIViewController {
-    
     var rootViewController : RootViewController!
     
     weak var delegate: GroupDetailsDelegate?
@@ -160,7 +159,8 @@ class GroupDetailsViewController: UIViewController {
     }
     
     @objc func didTapBadgeManagementView(){
-        print("tapped")
+        let badgeManagementVC = BadgeManagementListVC.instantiate(rootViewController: rootViewController)
+        self.navigationController?.pushViewController(badgeManagementVC, animated: true)
     }
     
     func configureTableView() {

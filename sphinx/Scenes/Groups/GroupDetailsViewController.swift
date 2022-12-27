@@ -154,17 +154,13 @@ class GroupDetailsViewController: UIViewController {
            chat.isMyPublicGroup() || true{
             badgeManagementContainerHeight.constant = 70
             badgeManagementContainerView.isHidden = false
-            badgeManagementContainerView.backgroundColor = .purple
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
-                self.badgeManagementContainerView.layoutIfNeeded()
-                let label = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 70))
-                label.text = "placeholder for badge button"
-                label.textColor = .black
-                self.badgeManagementContainerView.addSubview(label)
-                self.badgeManagementContainerView.bringSubviewToFront(label)
-                print("this is my chat")
-            })
+            badgeManagementContainerView.isUserInteractionEnabled = true
+            badgeManagementContainerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapBadgeManagementView)))
         }
+    }
+    
+    @objc func didTapBadgeManagementView(){
+        print("tapped")
     }
     
     func configureTableView() {

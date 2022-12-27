@@ -168,13 +168,24 @@ extension RecommendationResult : DashboardFeedSquaredThumbnailCollectionViewItem
         mediumImageUrl ?? largeImageUrl ?? smallImageUrl
     }
     
+    var titleLines: Int {
+        3
+    }
+    
     
     var subtitle: String? {
-        itemDescription
+        episodeTitle
     }
     
     var title: String? {
-        episodeTitle
+        itemDescription
+    }
+    
+    var publishDate: Date? {
+        if let date = self.date, date > 0 {
+            return Date(timeIntervalSince1970: TimeInterval(date))
+        }
+        return nil
     }
     
     var placeholderImageName: String? {

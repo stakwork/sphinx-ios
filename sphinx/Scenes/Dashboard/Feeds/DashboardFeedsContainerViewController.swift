@@ -249,7 +249,15 @@ extension DashboardFeedsContainerViewController {
         
         if activeFilterOption.id == ContentFilterOption.allContent.id {
             actionsManager.saveFeedSearches()
-            actionsManager.syncActions()
+            synActionsAndRefreshRecommendations()
+        }
+    }
+    
+    private func synActionsAndRefreshRecommendations() {
+        allTribeFeedsCollectionViewController.updateLoadingRecommendations()
+        
+        actionsManager.syncActions() {
+            self.allTribeFeedsCollectionViewController.loadRecommendations(forceRefresh: true)
         }
     }
     

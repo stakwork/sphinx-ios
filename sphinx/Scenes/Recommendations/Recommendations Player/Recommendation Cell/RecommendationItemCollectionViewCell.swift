@@ -90,7 +90,7 @@ extension RecommendationItemCollectionViewCell {
             typeIconImageView.isHidden = true
         }
 
-        itemTitleLabel.text = item.title
-        itemDescriptionLabel.text = item.subtitle
+        itemTitleLabel.text = item.episodeDescription
+        itemDescriptionLabel.text = item.title
     }
 }

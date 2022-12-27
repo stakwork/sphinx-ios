@@ -37,13 +37,16 @@ class ActionsManager {
     }
     
     var searchActions: [FeedSearchAction] = []
+    
     func trackFeedSearch(searchTerm: String) {
         if(!isTrackingEnabled()) { return }
         
         globalThread.sync {
             if let sa = searchActions.last {
-                if (searchTerm.lowerClean.contains(sa.searchTerm)) {
+                if (searchTerm.contains(sa.searchTerm)) {
                     searchActions.removeLast()
+                } else if (sa.searchTerm.contains(searchTerm)) {
+                    return
                 }
             }
             let count = ActionTrack.getSearchCountFor(searchTerm: searchTerm)
@@ -387,14 +390,20 @@ class ActionsManager {
         }
     }
     
-    func syncActions() {
-        if(!isTrackingEnabled()) { return }
+    func syncActions(
+        completion: (() -> ())? = nil
+    ) {
+        if(!isTrackingEnabled()) {
+            completion?()
+            return
+        }
         
         let dispatchQueue = DispatchQueue(label: "sync-actions")
         dispatchQueue.async {
             let actions = ActionTrack.getUnsynced()
             
             guard actions.count > 0 else {
+                completion?()
                 return
             }
             
@@ -418,6 +427,8 @@ class ActionsManager {
                 
                 dispatchSemaphore.wait()
             }
+            
+            completion?()
         }
     }
     

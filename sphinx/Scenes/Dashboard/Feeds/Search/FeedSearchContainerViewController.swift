@@ -178,7 +178,7 @@ extension FeedSearchContainerViewController {
             )
         }
         
-        ActionsManager.sharedInstance.trackFeedSearch(searchTerm: searchQuery)
+        ActionsManager.sharedInstance.trackFeedSearch(searchTerm: searchQuery.lowerClean)
         
         if let type = type {
             searchTimer?.invalidate()

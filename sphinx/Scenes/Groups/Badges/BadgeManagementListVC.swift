@@ -10,6 +10,10 @@ import Foundation
 import UIKit
 
 class BadgeManagementListVC: UIViewController{
+    
+    
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var viewTitle: UILabel!
     private var rootViewController: RootViewController!
     
     static func instantiate(
@@ -19,5 +23,14 @@ class BadgeManagementListVC: UIViewController{
         //viewController.rootViewController = rootViewController
         
         return viewController
+    }
+    
+    override func viewDidLoad() {
+        
+    }
+    
+    
+    @IBAction func backButtonTapped(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
     }
 }

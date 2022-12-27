@@ -4,10 +4,22 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="MaterialIcons-Regular.ttf">
+            <string>MaterialIcons-Regular</string>
+        </array>
+        <array key="Roboto-Medium.ttf">
+            <string>Roboto-Medium</string>
+        </array>
+        <array key="Roboto-Regular.ttf">
+            <string>Roboto-Regular</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--Badge Management ListVC-->
         <scene sceneID="s0d-6b-0kx">
@@ -16,9 +28,99 @@
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mSd-1C-8IE">
+                                <rect key="frame" x="0.0" y="59" width="393" height="55"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nci-gd-mFG">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="55"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="50" id="9GN-Th-tQh"/>
+                                            <constraint firstAttribute="height" constant="55" id="Pvo-QY-vob"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="21"/>
+                                        <state key="normal" title="">
+                                            <color key="titleColor" name="WashedOutReceivedText"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="backButtonTapped:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="CWo-93-7pd"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tribe Badges" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2jB-Hd-Qt9">
+                                        <rect key="frame" x="58" y="17.666666666666671" width="100" height="20"/>
+                                        <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="17"/>
+                                        <color key="textColor" name="Text"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u9S-DV-rSU" customClass="UIActivityIndicatorView">
+                                        <rect key="frame" x="158" y="2.6666666666666643" width="50" height="50"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="L6g-60-Tce"/>
+                                            <constraint firstAttribute="width" constant="50" id="fzP-2n-MTd"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="nci-gd-mFG" secondAttribute="bottom" id="2aN-Nf-YLZ"/>
+                                    <constraint firstItem="nci-gd-mFG" firstAttribute="top" secondItem="mSd-1C-8IE" secondAttribute="top" id="72O-hM-2Bo"/>
+                                    <constraint firstItem="u9S-DV-rSU" firstAttribute="leading" secondItem="2jB-Hd-Qt9" secondAttribute="trailing" id="Hbr-we-6Ud"/>
+                                    <constraint firstAttribute="height" constant="55" id="KAk-ld-13w"/>
+                                    <constraint firstItem="2jB-Hd-Qt9" firstAttribute="leading" secondItem="nci-gd-mFG" secondAttribute="trailing" constant="8" id="XQt-37-7hn"/>
+                                    <constraint firstItem="nci-gd-mFG" firstAttribute="leading" secondItem="mSd-1C-8IE" secondAttribute="leading" id="dqS-ZV-ZFJ"/>
+                                    <constraint firstItem="u9S-DV-rSU" firstAttribute="centerY" secondItem="mSd-1C-8IE" secondAttribute="centerY" id="nUl-Gy-tZZ"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="55" id="set-HI-lA3"/>
+                                    <constraint firstItem="2jB-Hd-Qt9" firstAttribute="centerY" secondItem="nci-gd-mFG" secondAttribute="centerY" id="uGz-hO-B7B"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NHW-j4-okO">
+                                <rect key="frame" x="0.0" y="114" width="393" height="180"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="customizeBadgeIcon" translatesAutoresizingMaskIntoConstraints="NO" id="31P-KS-Pjb">
+                                        <rect key="frame" x="174.66666666666666" y="40" width="44" height="52"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="52" id="FwW-s5-oP3"/>
+                                            <constraint firstAttribute="width" constant="44" id="XPm-i1-hDa"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select and Customize Your Tribe Badges" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wpa-AL-IM4">
+                                        <rect key="frame" x="86.666666666666686" y="112" width="219.99999999999994" height="56"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="56" id="ZsQ-Rf-Jfl"/>
+                                            <constraint firstAttribute="width" constant="220" id="rrV-e8-0oK"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="31P-KS-Pjb" firstAttribute="centerX" secondItem="NHW-j4-okO" secondAttribute="centerX" id="P9e-JO-vAL"/>
+                                    <constraint firstItem="Wpa-AL-IM4" firstAttribute="centerX" secondItem="31P-KS-Pjb" secondAttribute="centerX" id="gWb-hA-xV5"/>
+                                    <constraint firstItem="31P-KS-Pjb" firstAttribute="top" secondItem="NHW-j4-okO" secondAttribute="top" constant="40" id="mB9-m5-bxG"/>
+                                    <constraint firstItem="Wpa-AL-IM4" firstAttribute="top" secondItem="31P-KS-Pjb" secondAttribute="bottom" constant="20" id="trN-wg-cVN"/>
+                                    <constraint firstAttribute="height" constant="180" id="wga-B2-w8s"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
-                        <color key="backgroundColor" systemColor="systemIndigoColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="NHW-j4-okO" firstAttribute="top" secondItem="mSd-1C-8IE" secondAttribute="bottom" id="8Nk-TE-Zq4"/>
+                            <constraint firstItem="NHW-j4-okO" firstAttribute="leading" secondItem="5EZ-qb-Rvc" secondAttribute="leading" id="A84-EC-m43"/>
+                            <constraint firstItem="mSd-1C-8IE" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="Csl-m9-r8b"/>
+                            <constraint firstItem="mSd-1C-8IE" firstAttribute="leading" secondItem="5EZ-qb-Rvc" secondAttribute="leading" id="Kiy-iP-DKX"/>
+                            <constraint firstAttribute="trailing" secondItem="mSd-1C-8IE" secondAttribute="trailing" id="ZiY-GP-8rp"/>
+                            <constraint firstItem="NHW-j4-okO" firstAttribute="centerX" secondItem="vDu-zF-Fre" secondAttribute="centerX" id="aet-zS-6ju"/>
+                            <constraint firstAttribute="trailing" secondItem="NHW-j4-okO" secondAttribute="trailing" id="evE-RU-MPg"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="activityIndicator" destination="u9S-DV-rSU" id="9yw-cD-T14"/>
+                        <outlet property="viewTitle" destination="2jB-Hd-Qt9" id="QV3-NH-Zp6"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -26,8 +128,15 @@
         </scene>
     </scenes>
     <resources>
-        <systemColor name="systemIndigoColor">
-            <color red="0.34509803921568627" green="0.33725490196078434" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <image name="customizeBadgeIcon" width="36" height="52"/>
+        <namedColor name="Text">
+            <color red="0.23529411764705882" green="0.24705882352941178" blue="0.25490196078431371" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="WashedOutReceivedText">
+            <color red="0.69019607843137254" green="0.71764705882352942" blue="0.73725490196078436" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>
 </document>

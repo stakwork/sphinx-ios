@@ -610,6 +610,8 @@
 		CE3A38DF295B83BA00800D8D /* BadgeManagement.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE3A38DE295B83BA00800D8D /* BadgeManagement.storyboard */; };
 		CECE4F21295C7E3C0065BC2B /* Badge.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECE4F20295C7E3C0065BC2B /* Badge.swift */; };
 		CECE4F23295C7FA20065BC2B /* BadgeManagementListDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECE4F22295C7FA20065BC2B /* BadgeManagementListDataSource.swift */; };
+		CECE4F27295C86C00065BC2B /* BadgeListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECE4F25295C86C00065BC2B /* BadgeListTableViewCell.swift */; };
+		CECE4F28295C86C00065BC2B /* BadgeListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CECE4F26295C86C00065BC2B /* BadgeListTableViewCell.xib */; };
 		CED14D78293CF683004B8B25 /* ChatMentionAutocompleteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED14D77293CF683004B8B25 /* ChatMentionAutocompleteDataSource.swift */; };
 		F30884A72699123600CADDEB /* LeftMenuViewController+KarmaPurchaseUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30884A62699123600CADDEB /* LeftMenuViewController+KarmaPurchaseUtils.swift */; };
 		F30884A92699181200CADDEB /* API+KarmaPurchaseUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30884A82699181200CADDEB /* API+KarmaPurchaseUtils.swift */; };
@@ -1487,6 +1489,8 @@
 		CE3A38DE295B83BA00800D8D /* BadgeManagement.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = BadgeManagement.storyboard; sourceTree = "<group>"; };
 		CECE4F20295C7E3C0065BC2B /* Badge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Badge.swift; sourceTree = "<group>"; };
 		CECE4F22295C7FA20065BC2B /* BadgeManagementListDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeManagementListDataSource.swift; sourceTree = "<group>"; };
+		CECE4F25295C86C00065BC2B /* BadgeListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeListTableViewCell.swift; sourceTree = "<group>"; };
+		CECE4F26295C86C00065BC2B /* BadgeListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BadgeListTableViewCell.xib; sourceTree = "<group>"; };
 		CED14D77293CF683004B8B25 /* ChatMentionAutocompleteDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatMentionAutocompleteDataSource.swift; sourceTree = "<group>"; };
 		F30884A62699123600CADDEB /* LeftMenuViewController+KarmaPurchaseUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LeftMenuViewController+KarmaPurchaseUtils.swift"; sourceTree = "<group>"; };
 		F30884A82699181200CADDEB /* API+KarmaPurchaseUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+KarmaPurchaseUtils.swift"; sourceTree = "<group>"; };
@@ -3485,10 +3489,9 @@
 		CE3A38DB295B7EE700800D8D /* Badges */ = {
 			isa = PBXGroup;
 			children = (
+				CECE4F24295C855D0065BC2B /* Views */,
 				CECE4F1F295C7E260065BC2B /* Models */,
-				CE3A38DC295B7FD000800D8D /* BadgeManagementListVC.swift */,
 				CECE4F22295C7FA20065BC2B /* BadgeManagementListDataSource.swift */,
-				CE3A38DE295B83BA00800D8D /* BadgeManagement.storyboard */,
 			);
 			path = Badges;
 			sourceTree = "<group>";
@@ -3499,6 +3502,17 @@
 				CECE4F20295C7E3C0065BC2B /* Badge.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		CECE4F24295C855D0065BC2B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				CE3A38DE295B83BA00800D8D /* BadgeManagement.storyboard */,
+				CE3A38DC295B7FD000800D8D /* BadgeManagementListVC.swift */,
+				CECE4F25295C86C00065BC2B /* BadgeListTableViewCell.swift */,
+				CECE4F26295C86C00065BC2B /* BadgeListTableViewCell.xib */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		F313024426BA628D00A1396E /* Chats */ = {
@@ -3977,6 +3991,7 @@
 				47AF0D2F254AFE4900C98398 /* ChatHeaderView.xib in Resources */,
 				475BDD43232AD00D00C5BBD6 /* MaterialIcons-Regular.ttf in Resources */,
 				47904C0A24BF352300710E7A /* horn.caf in Resources */,
+				CECE4F28295C86C00065BC2B /* BadgeListTableViewCell.xib in Resources */,
 				4780783423916D4900187906 /* PictureReceivedTableViewCell.xib in Resources */,
 				47F258C12539DA1600122A5A /* PodcastCommentReceivedTableViewCell.xib in Resources */,
 				475BDD44232AD00D00C5BBD6 /* Montserrat-Black.otf in Resources */,
@@ -4566,6 +4581,7 @@
 				47893A8F24095A43002F675B /* AudioReceivedTableViewCell.swift in Sources */,
 				47341E8428C79A8B00426055 /* CustomAlertController.swift in Sources */,
 				477D9696244E0B5500830406 /* ChatAttachmentViewControllerExtension.swift in Sources */,
+				CECE4F27295C86C00065BC2B /* BadgeListTableViewCell.swift in Sources */,
 				47AAFC80238EC5AA00E30BDA /* NewQRScannerProcessingCodeExtension.swift in Sources */,
 				471F3ABB255ADECB00E2AC79 /* PodcastLiveDataSource.swift in Sources */,
 				47308E1524FEE6E700FFAC6F /* SocketIOStatus.swift in Sources */,

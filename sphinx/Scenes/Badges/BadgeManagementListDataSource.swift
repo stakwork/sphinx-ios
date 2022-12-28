@@ -54,11 +54,8 @@ extension BadgeManagementListDataSource : UITableViewDelegate,UITableViewDataSou
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        let label = UILabel(frame: cell.frame)
-        let badge = getBadge(index: indexPath.row)
-        label.text = badge.name
-        cell.addSubview(label)
+        let cell = BadgeListTableViewCell()
+        cell.configureCell()
         return cell
     }
     

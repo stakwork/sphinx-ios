@@ -608,6 +608,8 @@
 		47FE9A3E23C381A20090913F /* UITapGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FE9A3D23C381A20090913F /* UITapGestureRecognizer.swift */; };
 		CE3A38DD295B7FD000800D8D /* BadgeManagementListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3A38DC295B7FD000800D8D /* BadgeManagementListVC.swift */; };
 		CE3A38DF295B83BA00800D8D /* BadgeManagement.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE3A38DE295B83BA00800D8D /* BadgeManagement.storyboard */; };
+		CECE4F21295C7E3C0065BC2B /* Badge.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECE4F20295C7E3C0065BC2B /* Badge.swift */; };
+		CECE4F23295C7FA20065BC2B /* BadgeManagementListDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECE4F22295C7FA20065BC2B /* BadgeManagementListDataSource.swift */; };
 		CED14D78293CF683004B8B25 /* ChatMentionAutocompleteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED14D77293CF683004B8B25 /* ChatMentionAutocompleteDataSource.swift */; };
 		F30884A72699123600CADDEB /* LeftMenuViewController+KarmaPurchaseUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30884A62699123600CADDEB /* LeftMenuViewController+KarmaPurchaseUtils.swift */; };
 		F30884A92699181200CADDEB /* API+KarmaPurchaseUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30884A82699181200CADDEB /* API+KarmaPurchaseUtils.swift */; };
@@ -1483,6 +1485,8 @@
 		487E10CEB3D07B0840A84681 /* Pods_sphinx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_sphinx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE3A38DC295B7FD000800D8D /* BadgeManagementListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeManagementListVC.swift; sourceTree = "<group>"; };
 		CE3A38DE295B83BA00800D8D /* BadgeManagement.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = BadgeManagement.storyboard; sourceTree = "<group>"; };
+		CECE4F20295C7E3C0065BC2B /* Badge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Badge.swift; sourceTree = "<group>"; };
+		CECE4F22295C7FA20065BC2B /* BadgeManagementListDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeManagementListDataSource.swift; sourceTree = "<group>"; };
 		CED14D77293CF683004B8B25 /* ChatMentionAutocompleteDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatMentionAutocompleteDataSource.swift; sourceTree = "<group>"; };
 		F30884A62699123600CADDEB /* LeftMenuViewController+KarmaPurchaseUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LeftMenuViewController+KarmaPurchaseUtils.swift"; sourceTree = "<group>"; };
 		F30884A82699181200CADDEB /* API+KarmaPurchaseUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+KarmaPurchaseUtils.swift"; sourceTree = "<group>"; };
@@ -2012,7 +2016,6 @@
 		4733C7DF23C4DE97006A2C51 /* Groups */ = {
 			isa = PBXGroup;
 			children = (
-				CE3A38DB295B7EE700800D8D /* Badges */,
 				4797E80924B8FA6700D13270 /* Groups.storyboard */,
 				47FA18C6242D35E100469C8F /* Common */,
 				476EB46E23C50602009745E2 /* Data Sources */,
@@ -2276,6 +2279,7 @@
 				4756DE12232AC0F9001BAFD6 /* Chat */,
 				47468FE7233905820072124A /* Contacts */,
 				F373BEFD26A9CA340093C886 /* Dashboard */,
+				CE3A38DB295B7EE700800D8D /* Badges */,
 				4733C7DF23C4DE97006A2C51 /* Groups */,
 				475BDD82232C084E00C5BBD6 /* History */,
 				47468FE0233564370072124A /* Invite */,
@@ -3481,10 +3485,20 @@
 		CE3A38DB295B7EE700800D8D /* Badges */ = {
 			isa = PBXGroup;
 			children = (
+				CECE4F1F295C7E260065BC2B /* Models */,
 				CE3A38DC295B7FD000800D8D /* BadgeManagementListVC.swift */,
+				CECE4F22295C7FA20065BC2B /* BadgeManagementListDataSource.swift */,
 				CE3A38DE295B83BA00800D8D /* BadgeManagement.storyboard */,
 			);
 			path = Badges;
+			sourceTree = "<group>";
+		};
+		CECE4F1F295C7E260065BC2B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				CECE4F20295C7E3C0065BC2B /* Badge.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		F313024426BA628D00A1396E /* Chats */ = {
@@ -4340,6 +4354,7 @@
 				476A10B823A7E9E500817892 /* ContactTableViewCell.swift in Sources */,
 				4740538C244CFE0000826533 /* CustomImageScrollView.swift in Sources */,
 				4711B2BD24522C4E0056ED25 /* ChatAccessoryViewDelegateExtension.swift in Sources */,
+				CECE4F21295C7E3C0065BC2B /* Badge.swift in Sources */,
 				4787F88724746A5400CCE8B9 /* AlignedCollectionViewFlowLayout.swift in Sources */,
 				473BC88D25F287340070E519 /* PodcastNewEpisodeViewController.swift in Sources */,
 				F32A696726CFEF600004B8B3 /* PodcastModel+Properties.swift in Sources */,
@@ -4390,6 +4405,7 @@
 				47352E4C2440FEB800E5CC7F /* WindowsManager.swift in Sources */,
 				47183CB22548AA4400E6FD19 /* PodcastPlayerView.swift in Sources */,
 				F34BFED7267B350D003F6D55 /* RestoreUserDescriptionViewController.swift in Sources */,
+				CECE4F23295C7FA20065BC2B /* BadgeManagementListDataSource.swift in Sources */,
 				4712994529227C460049CBE3 /* TribeMemberProfileView.swift in Sources */,
 				47FA440923749D0B005D8C63 /* SubscriptionFormTableHeaderView.swift in Sources */,
 				F3DC6B23273F60FF00458E09 /* ContentFeedPaymentDestination+CoreDataClass.swift in Sources */,

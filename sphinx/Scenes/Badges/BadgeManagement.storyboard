@@ -85,7 +85,7 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select and Customize Your Tribe Badges" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wpa-AL-IM4">
-                                        <rect key="frame" x="86.666666666666686" y="112" width="219.99999999999994" height="56"/>
+                                        <rect key="frame" x="86.666666666666686" y="112" width="220" height="56"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="56" id="ZsQ-Rf-Jfl"/>
                                             <constraint firstAttribute="width" constant="220" id="rrV-e8-0oK"/>
@@ -104,6 +104,10 @@
                                     <constraint firstAttribute="height" constant="180" id="wga-B2-w8s"/>
                                 </constraints>
                             </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="962-pw-MZe">
+                                <rect key="frame" x="0.0" y="294" width="393" height="524"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -111,14 +115,19 @@
                             <constraint firstItem="NHW-j4-okO" firstAttribute="top" secondItem="mSd-1C-8IE" secondAttribute="bottom" id="8Nk-TE-Zq4"/>
                             <constraint firstItem="NHW-j4-okO" firstAttribute="leading" secondItem="5EZ-qb-Rvc" secondAttribute="leading" id="A84-EC-m43"/>
                             <constraint firstItem="mSd-1C-8IE" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="Csl-m9-r8b"/>
+                            <constraint firstItem="962-pw-MZe" firstAttribute="top" secondItem="NHW-j4-okO" secondAttribute="bottom" id="DEf-Ex-Ygb"/>
                             <constraint firstItem="mSd-1C-8IE" firstAttribute="leading" secondItem="5EZ-qb-Rvc" secondAttribute="leading" id="Kiy-iP-DKX"/>
                             <constraint firstAttribute="trailing" secondItem="mSd-1C-8IE" secondAttribute="trailing" id="ZiY-GP-8rp"/>
                             <constraint firstItem="NHW-j4-okO" firstAttribute="centerX" secondItem="vDu-zF-Fre" secondAttribute="centerX" id="aet-zS-6ju"/>
                             <constraint firstAttribute="trailing" secondItem="NHW-j4-okO" secondAttribute="trailing" id="evE-RU-MPg"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="962-pw-MZe" secondAttribute="bottom" id="iY7-IP-6L9"/>
+                            <constraint firstAttribute="trailing" secondItem="962-pw-MZe" secondAttribute="trailing" id="lxm-Xm-6DN"/>
+                            <constraint firstItem="962-pw-MZe" firstAttribute="leading" secondItem="5EZ-qb-Rvc" secondAttribute="leading" id="uIR-5L-9D7"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="activityIndicator" destination="u9S-DV-rSU" id="9yw-cD-T14"/>
+                        <outlet property="badgeTableView" destination="962-pw-MZe" id="7bU-xf-GYN"/>
                         <outlet property="viewTitle" destination="2jB-Hd-Qt9" id="QV3-NH-Zp6"/>
                     </connections>
                 </viewController>

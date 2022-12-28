@@ -14,7 +14,10 @@ class BadgeManagementListVC: UIViewController{
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var viewTitle: UILabel!
+    @IBOutlet weak var badgeTableView: UITableView!
+    
     private var rootViewController: RootViewController!
+    var badgeManagementListDataSource : BadgeManagementListDataSource?
     
     static func instantiate(
         rootViewController: RootViewController
@@ -26,7 +29,12 @@ class BadgeManagementListVC: UIViewController{
     }
     
     override func viewDidLoad() {
-        
+        setupBadgeTable()
+    }
+    
+    func setupBadgeTable(){
+        badgeManagementListDataSource = BadgeManagementListDataSource(vc: self)
+        badgeManagementListDataSource?.setupDataSource()
     }
     
     

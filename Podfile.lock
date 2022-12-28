@@ -22,6 +22,7 @@ PODS:
   - libwebp/webp (1.2.0)
   - lottie-ios (3.2.3)
   - MarqueeLabel (4.3.0)
+  - ObjectMapper (4.2.0)
   - PINCache (3.0.3):
     - PINCache/Arc-exception-safe (= 3.0.3)
     - PINCache/Core (= 3.0.3)
@@ -58,6 +59,7 @@ DEPENDENCIES:
   - KYDrawerController
   - lottie-ios
   - MarqueeLabel
+  - ObjectMapper
   - ReachabilitySwift
   - RNCryptor (~> 5.0)
   - SDWebImage (~> 5.11)
@@ -83,6 +85,7 @@ SPEC REPOS:
     - libwebp
     - lottie-ios
     - MarqueeLabel
+    - ObjectMapper
     - PINCache
     - PINOperation
     - ReachabilitySwift
@@ -119,6 +122,7 @@ SPEC CHECKSUMS:
   libwebp: e90b9c01d99205d03b6bb8f2c8c415e5a4ef66f0
   lottie-ios: c058aeafa76daa4cf64d773554bccc8385d0150e
   MarqueeLabel: 02f5ac8fd6877c94564556cb93fa86c70c08baeb
+  ObjectMapper: 1eb41f610210777375fa806bf161dc39fb832b81
   PINCache: 7a8fc1a691173d21dbddbf86cd515de6efa55086
   PINOperation: 00c935935f1e8cf0d1e2d6b542e75b88fc3e5e20
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
@@ -134,6 +138,6 @@ SPEC CHECKSUMS:
   Tor: fad2cec0e7ef5f889fecdaf69e5edd6df0438326
   youtube-ios-player-helper: 0185c57db23c80d63d6ca11251d110abb8a4ca61
 
-PODFILE CHECKSUM: de731ae5dcb0a4d4a3f154dc1382cce5393018e5
+PODFILE CHECKSUM: 796ec2a2a498204b5902d69dd8073f88f8acfde8
 
 COCOAPODS: 1.11.3

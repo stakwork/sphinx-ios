@@ -16,7 +16,13 @@ class BadgeDetailVC : UIViewController{
     @IBOutlet weak var changeIconView: UIView!
     @IBOutlet weak var badgeNameTextField: UITextField!
     @IBOutlet weak var vcScrollView: UIScrollView!
+    @IBOutlet weak var badgeRequirementDescriptionLabel: UILabel!
     @IBOutlet weak var saveBadgeButton: UIButton!
+    @IBOutlet weak var iconRequirementsLabel: UILabel!
+    @IBOutlet weak var requirementLabel: UILabel!
+    @IBOutlet weak var badgeTitleLabel: UILabel!
+    @IBOutlet weak var quantityLabel: UILabel!
+    @IBOutlet weak var pricePerBadgeLabel: UILabel!
     
     var associatedBadge : Badge? = nil
     
@@ -42,6 +48,11 @@ class BadgeDetailVC : UIViewController{
     
     func styleSubViews(){
         view.backgroundColor = UIColor.Sphinx.Body
+        requirementLabel.textColor = UIColor.Sphinx.SecondaryText
+        badgeTitleLabel.textColor = UIColor.Sphinx.SecondaryText
+        quantityLabel.textColor = UIColor.Sphinx.SecondaryText
+        pricePerBadgeLabel.textColor = UIColor.Sphinx.SecondaryText
+        iconRequirementsLabel.textColor = UIColor.Sphinx.SecondaryText
         changeIconView.layer.cornerRadius = 20
         changeIconView.layer.borderWidth = 1
         changeIconView.layer.borderColor = UIColor.Sphinx.BubbleShadow.cgColor
@@ -60,16 +71,20 @@ class BadgeDetailVC : UIViewController{
         print("Changing icon")
     }
     
+    
+    @IBAction func createBadgeButtonTap(_ sender: Any) {
+        //Call API
+    }
+    
     func loadWithBadge(badge:Badge){
         if let valid_icon = badge.icon_url{
             badgeImageView.sd_setImage(with: URL(string: valid_icon))
         }
-        
-        if let valid_name = badge.name{
-            badgeNameTextField.text = valid_name
-        }
+        badgeNameTextField.text = badge.name ?? ""
+        badgeRequirementDescriptionLabel.text = badge.requirements ?? ""
         
     }
+    
     
 }
 

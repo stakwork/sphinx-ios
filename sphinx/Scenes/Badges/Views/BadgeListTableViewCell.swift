@@ -48,4 +48,12 @@ class BadgeListTableViewCell: UITableViewCell {
         remainingAmountLabelContainerView.layer.cornerRadius = 8
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        badgeNameLabel.text = ""
+        badgeDescriptionLabel.text = ""
+        remainingAmountLabel.text = ""
+        badgeImageView.image = nil
+    }
+    
 }

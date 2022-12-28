@@ -309,7 +309,7 @@
                                             <constraint firstAttribute="height" constant="49" id="Fwj-ts-8Ga"/>
                                             <constraint firstAttribute="width" constant="139" id="RQS-q5-5S1"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -322,6 +322,9 @@
                                         <color key="tintColor" red="0.20392156859999999" green="0.6588235294" blue="0.32549019610000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="filled" title="Create Badge"/>
+                                        <connections>
+                                            <action selector="createBadgeButtonTap:" destination="voF-kw-WQJ" eventType="touchUpInside" id="RWz-23-RHU"/>
+                                        </connections>
                                     </button>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="createBadgeIcon" translatesAutoresizingMaskIntoConstraints="NO" id="GHs-OK-jbg">
                                         <rect key="frame" x="325" y="727.66666666666663" width="29" height="23"/>
@@ -387,8 +390,14 @@
                     <connections>
                         <outlet property="badgeImageView" destination="9K9-OV-BdR" id="TGf-c1-6fn"/>
                         <outlet property="badgeNameTextField" destination="yH0-Fk-Xuy" id="X1t-14-iUV"/>
+                        <outlet property="badgeRequirementDescriptionLabel" destination="w4B-hd-Vt8" id="FMg-z8-vJO"/>
+                        <outlet property="badgeTitleLabel" destination="FfI-EE-seY" id="Unx-lf-96g"/>
                         <outlet property="changeIconView" destination="aUd-jX-XZQ" id="ReJ-3G-oZz"/>
+                        <outlet property="iconRequirementsLabel" destination="Vj0-9m-NZj" id="5Zp-h8-lm4"/>
                         <outlet property="navBarView" destination="oOY-jr-FfO" id="htf-jU-nAc"/>
+                        <outlet property="pricePerBadgeLabel" destination="tUb-p6-mJE" id="OsJ-gC-6gA"/>
+                        <outlet property="quantityLabel" destination="sPJ-QO-Qdr" id="IHb-6C-8Ox"/>
+                        <outlet property="requirementLabel" destination="uEQ-ON-1VX" id="C8r-9z-xEO"/>
                         <outlet property="saveBadgeButton" destination="Eci-5K-l1M" id="9g6-1f-DFk"/>
                         <outlet property="vcScrollView" destination="Jh0-sy-745" id="zrz-3U-CJo"/>
                         <outlet property="viewTitle" destination="npT-Ia-qGU" id="5ym-vn-EPz"/>

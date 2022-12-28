@@ -49,6 +49,9 @@ class BadgeManagementListVC: UIViewController{
     
     func showBadgeDetail(badge:Badge){
         let badgeDetailVC = BadgeDetailVC.instantiate(rootViewController: rootViewController)
+        if let valid_detailVC = badgeDetailVC as? BadgeDetailVC{
+            valid_detailVC.associatedBadge = badge
+        }
         self.navigationController?.pushViewController(badgeDetailVC, animated: true)
     }
 }

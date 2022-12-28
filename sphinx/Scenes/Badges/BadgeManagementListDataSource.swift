@@ -34,6 +34,8 @@ class BadgeManagementListDataSource : NSObject{
         for i in 0...n_badges{
             let new_badge = Badge()
             new_badge.name = "my_badge\(i)"
+            new_badge.icon_url = "https://static-00.iconduck.com/assets.00/whale-icon-512x415-xtgxbil4.png"
+            new_badge.requirements = "My badge is the best badge. Ok folks?👌👌 All other badges are a disgrace. My badges are for winners only folks. Everyone agrees."
             self.badges.append(new_badge)
         }
         self.vc.badgeTableView.reloadData()

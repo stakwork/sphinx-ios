@@ -28,9 +28,11 @@ class BadgeListTableViewCell: UITableViewCell {
     }
     
     func configureCell(badge:Badge){
-        self.badgeImageView.sd_setImage(with: URL(string: "https://static-00.iconduck.com/assets.00/whale-icon-512x415-xtgxbil4.png"))
+        if let valid_icon = badge.icon_url{
+            self.badgeImageView.sd_setImage(with: URL(string: valid_icon))
+        }
         self.badgeNameLabel.text = badge.name
-        self.badgeDescriptionLabel.text = "My badge is the best badge. Ok folks?👌👌 All other badges are a disgrace. My badges are for winners only folks. Everyone agrees."
+        self.badgeDescriptionLabel.text = badge.requirements
         self.badgeDescriptionLabel.sizeToFit()
         self.remainingAmountLabel.text = "100"
         

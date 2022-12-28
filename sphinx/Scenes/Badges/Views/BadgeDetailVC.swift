@@ -18,11 +18,16 @@ class BadgeDetailVC : UIViewController{
     @IBOutlet weak var vcScrollView: UIScrollView!
     @IBOutlet weak var saveBadgeButton: UIButton!
     
+    var associatedBadge : Badge? = nil
+    
     
     override func viewDidLoad() {
         changeIconView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleChangeIcon)))
         vcScrollView.isScrollEnabled = true
-        vcScrollView.contentSize = CGSize(width: self.view.frame.width, height: 1000.0)
+        vcScrollView.contentSize = CGSize(width: self.view.frame.width, height: 900.0)
+        if let valid_badge = associatedBadge{
+            loadWithBadge(badge: valid_badge)
+        }
         styleSubViews()
     }
     
@@ -53,6 +58,17 @@ class BadgeDetailVC : UIViewController{
     
     @objc func handleChangeIcon(){
         print("Changing icon")
+    }
+    
+    func loadWithBadge(badge:Badge){
+        if let valid_icon = badge.icon_url{
+            badgeImageView.sd_setImage(with: URL(string: valid_icon))
+        }
+        
+        if let valid_name = badge.name{
+            badgeNameTextField.text = valid_name
+        }
+        
     }
     
 }

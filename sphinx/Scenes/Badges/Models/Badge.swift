@@ -17,6 +17,7 @@ class Badge: Mappable {
     var chat_id: Int?
     var claim_amount: Int?
     var reward_type: Int?
+    var requirements: String?
 
     
     required convenience init(map: Map) {
@@ -31,5 +32,6 @@ class Badge: Mappable {
         chat_id              <- map["chat_id"]
         claim_amount              <- map["claim_amount"]
         reward_type              <- map["reward_type"]
+        requirements            <- map["requirements"]
     }
 }

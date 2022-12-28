@@ -14,9 +14,15 @@ class BadgeDetailVC : UIViewController{
     @IBOutlet weak var badgeImageView: UIImageView!
     @IBOutlet weak var viewTitle: UILabel!
     @IBOutlet weak var changeIconView: UIView!
+    @IBOutlet weak var badgeNameTextField: UITextField!
+    @IBOutlet weak var vcScrollView: UIScrollView!
+    @IBOutlet weak var saveBadgeButton: UIButton!
+    
     
     override func viewDidLoad() {
         changeIconView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleChangeIcon)))
+        vcScrollView.isScrollEnabled = true
+        vcScrollView.contentSize = CGSize(width: self.view.frame.width, height: 1000.0)
         styleSubViews()
     }
     
@@ -35,6 +41,9 @@ class BadgeDetailVC : UIViewController{
         changeIconView.layer.borderWidth = 1
         changeIconView.layer.borderColor = UIColor.Sphinx.BubbleShadow.cgColor
         badgeImageView.addLineDashedStroke(pattern: [2, 2], radius: 0, color: UIColor.gray.cgColor)
+        saveBadgeButton.layer.cornerRadius = 36.0
+        saveBadgeButton.backgroundColor = UIColor.Sphinx.PrimaryGreen
+        saveBadgeButton.tintColor = .clear
     }
     
     @IBAction func backButtonPressed(_ sender: Any) {

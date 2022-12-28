@@ -24,8 +24,8 @@ class BadgeManagementListVC: UIViewController{
     static func instantiate(
         rootViewController: RootViewController
     ) -> UIViewController {
-        let viewController = StoryboardScene.BadgeManagement.badgeManagementListViewController.instantiate()
-        //viewController.rootViewController = rootViewController
+        let viewController = StoryboardScene.BadgeManagement.badgeManagementListViewController.instantiate() as! BadgeManagementListVC
+        viewController.rootViewController = rootViewController
         
         return viewController
     }
@@ -45,5 +45,10 @@ class BadgeManagementListVC: UIViewController{
     
     @IBAction func backButtonTapped(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    func showBadgeDetail(badge:Badge){
+        let badgeDetailVC = BadgeDetailVC.instantiate(rootViewController: rootViewController)
+        self.navigationController?.pushViewController(badgeDetailVC, animated: true)
     }
 }

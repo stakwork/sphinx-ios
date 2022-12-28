@@ -182,6 +182,7 @@ internal enum StoryboardScene {
         internal static let storyboardName = "BadgeManagement"
         
         internal static let badgeManagementListViewController = SceneType<UIViewController>(storyboard: BadgeManagement.self, identifier: "BadgeManagementListVC")
+        internal static let badgeDetailViewController = SceneType<UIViewController>(storyboard: BadgeManagement.self, identifier: "BadgeDetailViewController")
     }
     
     internal enum Welcome: StoryboardType {

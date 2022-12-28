@@ -612,6 +612,7 @@
 		CECE4F23295C7FA20065BC2B /* BadgeManagementListDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECE4F22295C7FA20065BC2B /* BadgeManagementListDataSource.swift */; };
 		CECE4F27295C86C00065BC2B /* BadgeListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECE4F25295C86C00065BC2B /* BadgeListTableViewCell.swift */; };
 		CECE4F28295C86C00065BC2B /* BadgeListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CECE4F26295C86C00065BC2B /* BadgeListTableViewCell.xib */; };
+		CECE4F2A295CA34D0065BC2B /* BadgeDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECE4F29295CA34D0065BC2B /* BadgeDetailVC.swift */; };
 		CED14D78293CF683004B8B25 /* ChatMentionAutocompleteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED14D77293CF683004B8B25 /* ChatMentionAutocompleteDataSource.swift */; };
 		F30884A72699123600CADDEB /* LeftMenuViewController+KarmaPurchaseUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30884A62699123600CADDEB /* LeftMenuViewController+KarmaPurchaseUtils.swift */; };
 		F30884A92699181200CADDEB /* API+KarmaPurchaseUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30884A82699181200CADDEB /* API+KarmaPurchaseUtils.swift */; };
@@ -1491,6 +1492,7 @@
 		CECE4F22295C7FA20065BC2B /* BadgeManagementListDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeManagementListDataSource.swift; sourceTree = "<group>"; };
 		CECE4F25295C86C00065BC2B /* BadgeListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeListTableViewCell.swift; sourceTree = "<group>"; };
 		CECE4F26295C86C00065BC2B /* BadgeListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BadgeListTableViewCell.xib; sourceTree = "<group>"; };
+		CECE4F29295CA34D0065BC2B /* BadgeDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeDetailVC.swift; sourceTree = "<group>"; };
 		CED14D77293CF683004B8B25 /* ChatMentionAutocompleteDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatMentionAutocompleteDataSource.swift; sourceTree = "<group>"; };
 		F30884A62699123600CADDEB /* LeftMenuViewController+KarmaPurchaseUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LeftMenuViewController+KarmaPurchaseUtils.swift"; sourceTree = "<group>"; };
 		F30884A82699181200CADDEB /* API+KarmaPurchaseUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+KarmaPurchaseUtils.swift"; sourceTree = "<group>"; };
@@ -3509,6 +3511,7 @@
 			children = (
 				CE3A38DE295B83BA00800D8D /* BadgeManagement.storyboard */,
 				CE3A38DC295B7FD000800D8D /* BadgeManagementListVC.swift */,
+				CECE4F29295CA34D0065BC2B /* BadgeDetailVC.swift */,
 				CECE4F25295C86C00065BC2B /* BadgeListTableViewCell.swift */,
 				CECE4F26295C86C00065BC2B /* BadgeListTableViewCell.xib */,
 			);
@@ -4666,6 +4669,7 @@
 				474064932745581C00FB7F93 /* PeopleTorActionsView.swift in Sources */,
 				47468FD723353C880072124A /* LeftMenuOptionTableViewCell.swift in Sources */,
 				47FA44172374B6F7005D8C63 /* SubscriptionEndRuleView.swift in Sources */,
+				CECE4F2A295CA34D0065BC2B /* BadgeDetailVC.swift in Sources */,
 				478DCFA02344E5EF009A03D6 /* CameraHelper.swift in Sources */,
 				F39F2C8126E2805D00D357F6 /* FeedSearchResultCollectionViewCell.swift in Sources */,
 				4754FA8F2729DD38006295A5 /* DashboardNewsletterFeedCollectionViewController.swift in Sources */,

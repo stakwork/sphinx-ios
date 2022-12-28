@@ -42,7 +42,7 @@ class BadgeListTableViewCell: UITableViewCell {
         remainingAmountLabel.textColor = UIColor.Sphinx.Text
         badgeDescriptionLabel.textColor = UIColor.Sphinx.Text
         badgeNameLabel.textColor = UIColor.Sphinx.Text
-        remainingAmountLabelContainerView.backgroundColor = UIColor.Sphinx.BubbleShadow
+        remainingAmountLabelContainerView.backgroundColor = UIColor.Sphinx.TextInverted
         remainingAmountLabelContainerView.layer.cornerRadius = 8
     }
     

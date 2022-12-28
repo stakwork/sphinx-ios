@@ -67,4 +67,8 @@ extension BadgeManagementListDataSource : UITableViewDelegate,UITableViewDataSou
         return 140
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        vc.showBadgeDetail(badge: getBadge(index: indexPath.row))
+    }
+    
 }

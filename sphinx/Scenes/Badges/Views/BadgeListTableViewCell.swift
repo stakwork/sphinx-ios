@@ -9,7 +9,11 @@
 import UIKit
 
 class BadgeListTableViewCell: UITableViewCell {
-
+    
+    @IBOutlet weak var badgeImageView: UIImageView!
+    @IBOutlet weak var badgeNameLabel: UILabel!
+    @IBOutlet weak var badgeDescriptionLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -22,7 +26,11 @@ class BadgeListTableViewCell: UITableViewCell {
     }
     
     func configureCell(badge:Badge){
-        self.contentView.backgroundColor = UIColor.Sphinx.SphinxOrange
+        self.contentView.backgroundColor = UIColor.Sphinx.Body
+        self.badgeImageView.sd_setImage(with: URL(string: "https://static-00.iconduck.com/assets.00/whale-icon-512x415-xtgxbil4.png"))
+        self.badgeNameLabel.text = badge.name
+        self.badgeDescriptionLabel.text = "lorum ipsum blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah"
+        self.badgeDescriptionLabel.sizeToFit()
     }
     
 }

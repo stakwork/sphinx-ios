@@ -22,6 +22,7 @@ class BadgeManagementListDataSource : NSObject{
     func setupDataSource(){
         vc.badgeTableView.delegate = self
         vc.badgeTableView.dataSource = self
+        vc.badgeTableView.register(UINib(nibName: "BadgeListTableViewCell", bundle: nil), forCellReuseIdentifier: "BadgeListTableViewCell")
         fetchBadges()
     }
     
@@ -29,7 +30,7 @@ class BadgeManagementListDataSource : NSObject{
         //TODO: Add call to service here
         
         //Fake data here:
-        let n_badges = 10
+        let n_badges = 15
         for i in 0...n_badges{
             let new_badge = Badge()
             new_badge.name = "my_badge\(i)"
@@ -54,9 +55,16 @@ extension BadgeManagementListDataSource : UITableViewDelegate,UITableViewDataSou
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = BadgeListTableViewCell()
-        cell.configureCell()
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: "BadgeListTableViewCell",
+            for: indexPath
+        ) as! BadgeListTableViewCell
+        cell.configureCell(badge: self.getBadge(index: indexPath.row))
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 140
     }
     
 }

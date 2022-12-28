@@ -128,6 +128,8 @@
                     <connections>
                         <outlet property="activityIndicator" destination="u9S-DV-rSU" id="9yw-cD-T14"/>
                         <outlet property="badgeTableView" destination="962-pw-MZe" id="7bU-xf-GYN"/>
+                        <outlet property="navBarView" destination="mSd-1C-8IE" id="rWQ-CV-tX3"/>
+                        <outlet property="topContainerView" destination="NHW-j4-okO" id="oZ1-tV-jR0"/>
                         <outlet property="viewTitle" destination="2jB-Hd-Qt9" id="QV3-NH-Zp6"/>
                     </connections>
                 </viewController>

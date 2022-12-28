@@ -12,6 +12,8 @@ import UIKit
 class BadgeManagementListVC: UIViewController{
     
     
+    @IBOutlet weak var navBarView: UIView!
+    @IBOutlet weak var topContainerView: UIView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var viewTitle: UILabel!
     @IBOutlet weak var badgeTableView: UITableView!
@@ -33,6 +35,9 @@ class BadgeManagementListVC: UIViewController{
     }
     
     func setupBadgeTable(){
+        topContainerView.backgroundColor = UIColor.Sphinx.Body
+        viewTitle.textColor = UIColor.Sphinx.Text
+        navBarView.backgroundColor = UIColor.Sphinx.Body
         badgeManagementListDataSource = BadgeManagementListDataSource(vc: self)
         badgeManagementListDataSource?.setupDataSource()
     }

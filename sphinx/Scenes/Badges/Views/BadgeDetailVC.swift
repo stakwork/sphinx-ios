@@ -68,7 +68,14 @@ class BadgeDetailVC : UIViewController{
     }
     
     @objc func handleChangeIcon(){
-        print("Changing icon")
+        if AttachmentsManager.sharedInstance.uploading || self.presentedViewController != nil {
+            return
+        }
+        
+        let viewController = ChatAttachmentViewController.instantiate(delegate: self, chat: nil)
+        viewController.presentationContext = .fromBadgeCreateUpdate
+        viewController.modalPresentationStyle = .overCurrentContext
+        self.present(viewController, animated: false)
     }
     
     
@@ -82,6 +89,34 @@ class BadgeDetailVC : UIViewController{
         }
         badgeNameTextField.text = badge.name ?? ""
         badgeRequirementDescriptionLabel.text = badge.requirements ?? ""
+        
+    }
+    
+    
+}
+
+extension BadgeDetailVC : AttachmentsDelegate{
+    func willDismissPresentedVC() {
+        
+    }
+    
+    func shouldStartUploading(attachmentObject: AttachmentObject) {
+        badgeImageView.image = attachmentObject.image
+    }
+    
+    func shouldSendGiphy(message: String) {
+        
+    }
+    
+    func didCloseReplyView() {
+        
+    }
+    
+    func didTapSendButton() {
+        
+    }
+    
+    func didTapReceiveButton() {
         
     }
     

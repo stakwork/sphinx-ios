@@ -66,13 +66,9 @@ class AllTribeFeedsCollectionViewController: UICollectionViewController {
             }.first
             if let valid_item = lastItem{
                 var lastEpisode = PodcastEpisode.convertFrom(contentFeedItem: valid_item)
-                //lastEpisode.urlPath = valid_item.linkURL?.absoluteString
-                print(lastEpisode.title)
-                let serialQueue = DispatchQueue(label: "pod_cache_queue")
-                serialQueue.sync {//@Tom my intent is to have them download sequentially but this didn't seem to work
-                    let downloadService = DownloadService.sharedInstance
-                    downloadService.startDownload(lastEpisode)
-                }
+                //print(lastEpisode.title)
+                let downloadService = DownloadService.sharedInstance
+                downloadService.startDownload(lastEpisode)
             }
         }
     }

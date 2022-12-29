@@ -35,7 +35,6 @@ class AllTribeFeedsCollectionViewController: UICollectionViewController {
     )
     
     func preCacheTopPods(){
-        let downloadService = DownloadService.sharedInstance
         //1. Fetch results from memory
         guard
             let resultController = fetchedResultsController as? NSFetchedResultsController<NSManagedObject>,
@@ -69,26 +68,13 @@ class AllTribeFeedsCollectionViewController: UICollectionViewController {
                 var lastEpisode = PodcastEpisode.convertFrom(contentFeedItem: valid_item)
                 //lastEpisode.urlPath = valid_item.linkURL?.absoluteString
                 print(lastEpisode.title)
-                downloadService.startDownload(lastEpisode)
+                let serialQueue = DispatchQueue(label: "pod_cache_queue")
+                serialQueue.sync {//@Tom my intent is to have them download sequentially but this didn't seem to work
+                    let downloadService = DownloadService.sharedInstance
+                    downloadService.startDownload(lastEpisode)
+                }
             }
         }
-        
-        /*
-        API.sharedInstance.getFeedRecommendations(callback: { recommendations in
-            for pod in recommendations.filter({$0.type == "podcast"}){
-                let feed = RecommendationsHelper.sharedInstance.getPodcastFor(recommendations: recommendations, selectedItem: pod)
-                if let episodes = feed.episodes,
-                   let episode = episodes.first{
-                    print(episode)
-                    downloadService.startDownload(episode)
-                }
-                print("-----")
-                //downloadService.startDownload(episode)
-            }
-        }, errorCallback: {
-            print("failure")
-        })
-        */
     }
     
     override var collectionViewLayout: UICollectionViewLayout {

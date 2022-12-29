@@ -23,6 +23,10 @@ class BadgeDetailVC : UIViewController{
     @IBOutlet weak var badgeTitleLabel: UILabel!
     @IBOutlet weak var quantityLabel: UILabel!
     @IBOutlet weak var pricePerBadgeLabel: UILabel!
+    @IBOutlet weak var stepperPlaceholderView: UIView!
+    @IBOutlet weak var stepperMinusButton: UIButton!
+    @IBOutlet weak var stepperPlusButton: UIButton!
+    
     
     var associatedBadge : Badge? = nil
     
@@ -35,6 +39,7 @@ class BadgeDetailVC : UIViewController{
             loadWithBadge(badge: valid_badge)
         }
         styleSubViews()
+       // setupStepperControl()
     }
     
     static func instantiate(
@@ -45,9 +50,16 @@ class BadgeDetailVC : UIViewController{
         
         return viewController
     }
+
     
     func styleSubViews(){
         view.backgroundColor = UIColor.Sphinx.Body
+        stepperMinusButton.setTitle("", for: .normal)
+        stepperPlusButton.setTitle("", for: .normal)
+        stepperMinusButton.backgroundColor = UIColor.Sphinx.PlusMinusBackground
+        stepperPlusButton.backgroundColor = UIColor.Sphinx.PlusMinusBackground
+        stepperMinusButton.layer.cornerRadius = view.layer.bounds.width / 2
+        stepperPlusButton.layer.cornerRadius = view.layer.bounds.width / 2
         requirementLabel.textColor = UIColor.Sphinx.SecondaryText
         badgeTitleLabel.textColor = UIColor.Sphinx.SecondaryText
         quantityLabel.textColor = UIColor.Sphinx.SecondaryText

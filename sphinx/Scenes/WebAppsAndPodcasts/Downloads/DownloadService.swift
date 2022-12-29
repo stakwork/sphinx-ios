@@ -80,6 +80,7 @@ class DownloadService : NSObject {
 
     func startDownload(_ episode: PodcastEpisode) {
         guard let urlString = episode.urlPath, let url = URL(string: urlString) else { return }
+        if episode.isDownloaded == true {return}
 
         let download = Download(episode: episode)
         download.task = downloadsSession.downloadTask(with: url)

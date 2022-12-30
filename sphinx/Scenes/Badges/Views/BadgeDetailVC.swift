@@ -26,9 +26,15 @@ class BadgeDetailVC : UIViewController{
     @IBOutlet weak var stepperPlaceholderView: UIView!
     @IBOutlet weak var stepperMinusButton: UIButton!
     @IBOutlet weak var stepperPlusButton: UIButton!
-    
+    @IBOutlet weak var stepperValueLabel: UILabel!
     
     var associatedBadge : Badge? = nil
+    var currentSatsValue : Int = 100 {
+        didSet{
+            print("Value is now \(currentSatsValue)")
+            stepperValueLabel.text = "\(currentSatsValue)"
+        }
+    }
     
     
     override func viewDidLoad() {
@@ -56,8 +62,10 @@ class BadgeDetailVC : UIViewController{
         view.backgroundColor = UIColor.Sphinx.Body
         stepperMinusButton.setTitle("", for: .normal)
         stepperPlusButton.setTitle("", for: .normal)
-        stepperMinusButton.backgroundColor = UIColor.Sphinx.PlusMinusBackground
-        stepperPlusButton.backgroundColor = UIColor.Sphinx.PlusMinusBackground
+        stepperMinusButton.backgroundColor = UIColor.Sphinx.LightBG
+        stepperPlusButton.backgroundColor = UIColor.Sphinx.LightBG
+        stepperPlaceholderView.backgroundColor = UIColor.Sphinx.DashboardSearch
+        stepperPlaceholderView.layer.cornerRadius = 16.0
         stepperMinusButton.layer.cornerRadius = view.layer.bounds.width / 2
         stepperPlusButton.layer.cornerRadius = view.layer.bounds.width / 2
         requirementLabel.textColor = UIColor.Sphinx.SecondaryText
@@ -101,6 +109,32 @@ class BadgeDetailVC : UIViewController{
         }
         badgeNameTextField.text = badge.name ?? ""
         badgeRequirementDescriptionLabel.text = badge.requirements ?? ""
+        
+    }
+    
+    
+    @IBAction func plusMinusButtonTouch(_ sender: Any) {
+        let maxValue = 200
+        let minValue = 0
+        if let buttonSender = sender as? UIButton{
+            var incrementValue = 0
+            if buttonSender == stepperPlusButton{
+                print("plus")
+                incrementValue = 1
+            }
+            else if buttonSender == stepperMinusButton{
+                print("minus")
+                incrementValue = -1
+            }
+            currentSatsValue += incrementValue
+            currentSatsValue = (currentSatsValue >= maxValue) ? maxValue : currentSatsValue
+            currentSatsValue = (currentSatsValue <= minValue) ? minValue : currentSatsValue
+            UIButton.animate(withDuration: 0.05, animations: {
+                let alphaChange = 0.5
+                buttonSender.alpha -= alphaChange
+                buttonSender.alpha += alphaChange
+            })
+        }
         
     }
     

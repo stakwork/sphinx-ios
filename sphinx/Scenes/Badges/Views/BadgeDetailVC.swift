@@ -64,12 +64,12 @@ class BadgeDetailVC : UIViewController{
         view.backgroundColor = UIColor.Sphinx.Body
         stepperMinusButton.setTitle("", for: .normal)
         stepperPlusButton.setTitle("", for: .normal)
-        //stepperMinusButton.backgroundColor = UIColor.Sphinx.LightBG
-        //stepperPlusButton.backgroundColor = UIColor.Sphinx.LightBG
+        stepperMinusButton.backgroundColor = UIColor.Sphinx.LightBG
+        stepperPlusButton.backgroundColor = UIColor.Sphinx.LightBG
         stepperPlaceholderView.backgroundColor = UIColor.Sphinx.DashboardSearch
         stepperPlaceholderView.layer.cornerRadius = 16.0
-        stepperMinusButton.layer.cornerRadius = view.layer.bounds.width / 2
-        stepperPlusButton.layer.cornerRadius = view.layer.bounds.width / 2
+        stepperMinusButton.layer.cornerRadius = stepperMinusButton.layer.bounds.width / 2
+        stepperPlusButton.layer.cornerRadius = stepperMinusButton.layer.bounds.width / 2
         requirementLabel.textColor = UIColor.Sphinx.SecondaryText
         badgeTitleLabel.textColor = UIColor.Sphinx.SecondaryText
         quantityLabel.textColor = UIColor.Sphinx.SecondaryText

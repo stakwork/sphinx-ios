@@ -523,14 +523,14 @@
                                 <rect key="frame" x="0.0" y="298" width="414" height="0.0"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tribe_badges_icon" translatesAutoresizingMaskIntoConstraints="NO" id="JCX-k1-W1l">
-                                        <rect key="frame" x="21" y="-8" width="12" height="16"/>
+                                        <rect key="frame" x="30" y="-8" width="12" height="16"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="12" id="8E3-A7-MpO"/>
                                             <constraint firstAttribute="height" constant="16" id="OA8-ZL-VBo"/>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tribe Badges" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mpu-h1-TPp">
-                                        <rect key="frame" x="56" y="-27.5" width="215" height="55"/>
+                                        <rect key="frame" x="65" y="-27.5" width="215" height="55"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="215" id="4KQ-rT-fdZ"/>
                                             <constraint firstAttribute="height" constant="55" id="e4d-ld-t8p"/>
@@ -540,7 +540,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="disclosureIndicator" translatesAutoresizingMaskIntoConstraints="NO" id="gIO-UG-few">
-                                        <rect key="frame" x="300" y="-20" width="40" height="40"/>
+                                        <rect key="frame" x="325" y="-20" width="40" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="40" id="3Cu-jA-fKl"/>
                                             <constraint firstAttribute="width" secondItem="gIO-UG-few" secondAttribute="height" multiplier="1:1" id="ZCb-iu-woZ"/>
@@ -553,9 +553,9 @@
                                     <constraint firstItem="JCX-k1-W1l" firstAttribute="centerY" secondItem="Ac4-o6-mAn" secondAttribute="centerY" id="BCt-FK-n5g"/>
                                     <constraint firstItem="mpu-h1-TPp" firstAttribute="leading" secondItem="JCX-k1-W1l" secondAttribute="trailing" constant="23" id="CrQ-9z-dua"/>
                                     <constraint firstItem="gIO-UG-few" firstAttribute="centerY" secondItem="Ac4-o6-mAn" secondAttribute="centerY" id="EtU-w3-2jW"/>
-                                    <constraint firstItem="JCX-k1-W1l" firstAttribute="leading" secondItem="Ac4-o6-mAn" secondAttribute="leading" constant="21" id="HSh-Wc-Pti"/>
+                                    <constraint firstItem="JCX-k1-W1l" firstAttribute="leading" secondItem="Ac4-o6-mAn" secondAttribute="leading" constant="30" id="HSh-Wc-Pti"/>
                                     <constraint firstItem="mpu-h1-TPp" firstAttribute="centerY" secondItem="JCX-k1-W1l" secondAttribute="centerY" id="W0M-sH-wBr"/>
-                                    <constraint firstItem="gIO-UG-few" firstAttribute="leading" secondItem="mpu-h1-TPp" secondAttribute="trailing" constant="29" id="m7t-Rs-3lQ"/>
+                                    <constraint firstItem="gIO-UG-few" firstAttribute="leading" secondItem="mpu-h1-TPp" secondAttribute="trailing" constant="45" id="m7t-Rs-3lQ"/>
                                     <constraint firstAttribute="height" id="xkr-QM-vuH"/>
                                 </constraints>
                             </view>

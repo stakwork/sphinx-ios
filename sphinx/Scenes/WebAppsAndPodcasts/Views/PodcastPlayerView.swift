@@ -15,6 +15,8 @@ protocol PodcastPlayerViewDelegate: AnyObject {
     func shouldShareClip(comment: PodcastComment)
     func shouldSyncPodcast()
     func shouldShowSpeedPicker()
+    func getCurrentEpisodeIndex()->Int?
+    func getTotalEpisodeCount()->Int?
 }
 
 class PodcastPlayerView: UIView {
@@ -60,7 +62,7 @@ class PodcastPlayerView: UIView {
     
     let feedBoostHelper = FeedBoostHelper()
     var playerHelper: PodcastPlayerHelper = PodcastPlayerHelper.sharedInstance
-    
+    var startingIndex : Int = 0
     var podcast: PodcastFeed! = nil
     
     var chat: Chat? {
@@ -81,7 +83,8 @@ class PodcastPlayerView: UIView {
         podcast: PodcastFeed,
         delegate: PodcastPlayerViewDelegate,
         boostDelegate: CustomBoostDelegate,
-        fromDashboard: Bool
+        fromDashboard: Bool,
+        startingIndex:Int = 0
     ) {
         let windowWidth = WindowsManager.getWindowWidth()
         let frame = CGRect(x: 0, y: 0, width: windowWidth, height: windowWidth + PodcastPlayerView.kPlayerHeight)
@@ -103,6 +106,21 @@ class PodcastPlayerView: UIView {
         
         setupView()
         setupActions(fromDashboard)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
+            self.playNextMusicTrack()
+        })
+    }
+    
+    func playNextMusicTrack(){
+        if let valid_episode = podcast.getCurrentEpisode(),
+           (valid_episode.isMostLikelyMusic()),
+           let valid_delegate = delegate,
+           let valid_index = valid_delegate.getCurrentEpisodeIndex(),
+           let valid_total = valid_delegate.getTotalEpisodeCount(),
+           valid_total >= valid_index + 1{
+            self.didTapEpisodeAt(index: valid_index + 1)
+        }
     }
     
     private var subscriptionToggleButtonTitle: String {
@@ -167,7 +185,6 @@ class PodcastPlayerView: UIView {
     
     func loadTime() {
         let episode = podcast.getCurrentEpisode()
-        
         if let duration = episode?.duration {
             let _ = setProgress(
                 duration: duration,

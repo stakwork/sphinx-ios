@@ -166,6 +166,13 @@ extension NewPodcastPlayerViewController : PodcastEpisodesDSDelegate {
 }
 
 extension NewPodcastPlayerViewController : PodcastPlayerViewDelegate {
+    func getCurrentEpisodeIndex() -> Int? {
+        return self.tableDataSource.podcast.getCurrentEpisodeIndex()
+    }
+    
+    func getTotalEpisodeCount() -> Int? {
+        return tableView.numberOfRows(inSection: 0)
+    }
     
     func didTapSubscriptionToggleButton() {
         if let objectID = podcast.objectID {

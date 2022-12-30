@@ -87,6 +87,18 @@ extension PodcastEpisode {
         return podcastEpisode
     }
     
+    func isMostLikelyMusic()->Bool{
+        if let valid_feed = self.feed,
+                let valid_pd = valid_feed.podcastDescription,
+                valid_pd.contains("music"){
+            return true
+        }
+        else if(self.duration ?? 0 < (60 * 10)){
+            return true
+        }
+        return false
+    }
+    
     var isMusicClip: Bool {
         return type == RecommendationsHelper.PODCAST_TYPE || type == RecommendationsHelper.TWITTER_TYPE
     }

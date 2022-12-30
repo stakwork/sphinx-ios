@@ -26,13 +26,15 @@ class BadgeDetailVC : UIViewController{
     @IBOutlet weak var stepperPlaceholderView: UIView!
     @IBOutlet weak var stepperMinusButton: UIButton!
     @IBOutlet weak var stepperPlusButton: UIButton!
-    @IBOutlet weak var stepperValueLabel: UILabel!
+    @IBOutlet weak var badgeQuantityStepperLabel: UILabel!
+    @IBOutlet weak var satsTotalLabel: UILabel!
     
     var associatedBadge : Badge? = nil
-    var currentSatsValue : Int = 100 {
+    let pricePerBadge : Int = 10
+    var badgeQuantity : Int = 100 {
         didSet{
-            print("Value is now \(currentSatsValue)")
-            stepperValueLabel.text = "\(currentSatsValue)"
+            print("Value is now \(badgeQuantity)")
+            updateBadgeQuantities()
         }
     }
     
@@ -62,8 +64,8 @@ class BadgeDetailVC : UIViewController{
         view.backgroundColor = UIColor.Sphinx.Body
         stepperMinusButton.setTitle("", for: .normal)
         stepperPlusButton.setTitle("", for: .normal)
-        stepperMinusButton.backgroundColor = UIColor.Sphinx.LightBG
-        stepperPlusButton.backgroundColor = UIColor.Sphinx.LightBG
+        //stepperMinusButton.backgroundColor = UIColor.Sphinx.LightBG
+        //stepperPlusButton.backgroundColor = UIColor.Sphinx.LightBG
         stepperPlaceholderView.backgroundColor = UIColor.Sphinx.DashboardSearch
         stepperPlaceholderView.layer.cornerRadius = 16.0
         stepperMinusButton.layer.cornerRadius = view.layer.bounds.width / 2
@@ -103,6 +105,17 @@ class BadgeDetailVC : UIViewController{
         //Call API
     }
     
+    func updateBadgeQuantities(){
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal
+        if let formattedQuantity = numberFormatter.string(from: NSNumber(value:badgeQuantity)),
+        let formattedTotal = numberFormatter.string(from: NSNumber(value:badgeQuantity * pricePerBadge)){
+            badgeQuantityStepperLabel.text = "\(String(describing: formattedQuantity))"
+            satsTotalLabel.text = "\(String(describing: formattedTotal)) sats"
+        }
+        
+    }
+    
     func loadWithBadge(badge:Badge){
         if let valid_icon = badge.icon_url{
             badgeImageView.sd_setImage(with: URL(string: valid_icon))
@@ -126,9 +139,9 @@ class BadgeDetailVC : UIViewController{
                 print("minus")
                 incrementValue = -1
             }
-            currentSatsValue += incrementValue
-            currentSatsValue = (currentSatsValue >= maxValue) ? maxValue : currentSatsValue
-            currentSatsValue = (currentSatsValue <= minValue) ? minValue : currentSatsValue
+            badgeQuantity += incrementValue
+            badgeQuantity = (badgeQuantity >= maxValue) ? maxValue : badgeQuantity
+            badgeQuantity = (badgeQuantity <= minValue) ? minValue : badgeQuantity
             UIButton.animate(withDuration: 0.05, animations: {
                 let alphaChange = 0.5
                 buttonSender.alpha -= alphaChange

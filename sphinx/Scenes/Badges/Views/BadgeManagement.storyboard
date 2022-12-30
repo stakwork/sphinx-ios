@@ -343,7 +343,7 @@
                                             <constraint firstAttribute="width" constant="29" id="DtM-89-rkT"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10,000 sats" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G2g-jX-Xtl">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1,000 sats" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G2g-jX-Xtl">
                                         <rect key="frame" x="222" y="640" width="139" height="49"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="139" id="0wT-cc-4lp"/>
@@ -369,7 +369,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ycp-LJ-HiN">
-                                                <rect key="frame" x="95" y="0.0" width="44" height="48"/>
+                                                <rect key="frame" x="107" y="0.0" width="44" height="48"/>
                                                 <color key="backgroundColor" name="sphinxOrange"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" image="plus_sign"/>
@@ -378,7 +378,7 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yTb-MJ-Qlb">
-                                                <rect key="frame" x="44" y="0.0" width="51" height="48"/>
+                                                <rect key="frame" x="44" y="0.0" width="63" height="48"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -389,7 +389,7 @@
                                             <constraint firstItem="Ycp-LJ-HiN" firstAttribute="bottom" secondItem="cr8-Y7-USt" secondAttribute="bottom" id="5ab-ob-cfj"/>
                                             <constraint firstItem="Ycp-LJ-HiN" firstAttribute="top" secondItem="cr8-Y7-USt" secondAttribute="top" id="9vZ-8R-i6J"/>
                                             <constraint firstItem="cr8-Y7-USt" firstAttribute="leading" secondItem="2Z5-Fr-xVS" secondAttribute="leading" id="Ayv-pC-ekA"/>
-                                            <constraint firstAttribute="trailing" secondItem="Ycp-LJ-HiN" secondAttribute="trailing" id="FSL-o9-RpM"/>
+                                            <constraint firstAttribute="trailing" secondItem="Ycp-LJ-HiN" secondAttribute="trailing" constant="-12" id="FSL-o9-RpM"/>
                                             <constraint firstItem="yTb-MJ-Qlb" firstAttribute="centerY" secondItem="cr8-Y7-USt" secondAttribute="centerY" id="IEd-L9-LXs"/>
                                             <constraint firstItem="yTb-MJ-Qlb" firstAttribute="leading" secondItem="cr8-Y7-USt" secondAttribute="trailing" id="PTZ-lu-fBU"/>
                                             <constraint firstItem="yTb-MJ-Qlb" firstAttribute="top" secondItem="2Z5-Fr-xVS" secondAttribute="top" id="T7e-Bz-zE5"/>
@@ -465,6 +465,7 @@
                     <connections>
                         <outlet property="badgeImageView" destination="9K9-OV-BdR" id="TGf-c1-6fn"/>
                         <outlet property="badgeNameTextField" destination="yH0-Fk-Xuy" id="X1t-14-iUV"/>
+                        <outlet property="badgeQuantityStepperLabel" destination="yTb-MJ-Qlb" id="wr4-9S-JEB"/>
                         <outlet property="badgeRequirementDescriptionLabel" destination="w4B-hd-Vt8" id="FMg-z8-vJO"/>
                         <outlet property="badgeTitleLabel" destination="FfI-EE-seY" id="Unx-lf-96g"/>
                         <outlet property="changeIconView" destination="aUd-jX-XZQ" id="ReJ-3G-oZz"/>
@@ -473,11 +474,11 @@
                         <outlet property="pricePerBadgeLabel" destination="tUb-p6-mJE" id="OsJ-gC-6gA"/>
                         <outlet property="quantityLabel" destination="sPJ-QO-Qdr" id="IHb-6C-8Ox"/>
                         <outlet property="requirementLabel" destination="uEQ-ON-1VX" id="C8r-9z-xEO"/>
+                        <outlet property="satsTotalLabel" destination="G2g-jX-Xtl" id="Dao-44-sYh"/>
                         <outlet property="saveBadgeButton" destination="Eci-5K-l1M" id="9g6-1f-DFk"/>
                         <outlet property="stepperMinusButton" destination="cr8-Y7-USt" id="3jX-pi-mxf"/>
                         <outlet property="stepperPlaceholderView" destination="2Z5-Fr-xVS" id="R3n-jN-g5P"/>
                         <outlet property="stepperPlusButton" destination="Ycp-LJ-HiN" id="Jbr-Pm-QNv"/>
-                        <outlet property="stepperValueLabel" destination="yTb-MJ-Qlb" id="wr4-9S-JEB"/>
                         <outlet property="vcScrollView" destination="Jh0-sy-745" id="zrz-3U-CJo"/>
                         <outlet property="viewTitle" destination="npT-Ia-qGU" id="5ym-vn-EPz"/>
                     </connections>

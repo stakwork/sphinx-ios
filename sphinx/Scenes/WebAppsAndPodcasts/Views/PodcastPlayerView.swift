@@ -64,6 +64,7 @@ class PodcastPlayerView: UIView {
     var playerHelper: PodcastPlayerHelper = PodcastPlayerHelper.sharedInstance
     var startingIndex : Int = 0
     var podcast: PodcastFeed! = nil
+    var isHittingNextTrack = false
     
     var chat: Chat? {
         get {
@@ -119,7 +120,12 @@ class PodcastPlayerView: UIView {
            let valid_index = valid_delegate.getCurrentEpisodeIndex(),
            let valid_total = valid_delegate.getTotalEpisodeCount(),
            valid_total > valid_index{
-            self.didTapEpisodeAt(index: valid_index + 1)
+            DispatchQueue.main.async {
+                if(self.isHittingNextTrack == false){
+                    self.isHittingNextTrack = true
+                    self.didTapEpisodeAt(index: valid_index + 1)
+                }
+            }
         }
     }
     
@@ -283,6 +289,10 @@ class PodcastPlayerView: UIView {
         if(progress >= 0.995){
             playNextMusicTrack()
         }
+        else if(progress >= 0.01){
+            self.isHittingNextTrack = false
+        }
+        
         return didChangeCurrentTime
     }
     

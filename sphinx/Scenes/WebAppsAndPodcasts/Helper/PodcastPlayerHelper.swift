@@ -560,6 +560,8 @@ class PodcastPlayerHelper {
     ) {
         var newTime = podcast.currentTime + Int(seconds)
         newTime = newTime > 0 ? newTime : 0
+        let duration = podcast.getCurrentEpisode()?.duration ?? 0
+        newTime = newTime > duration ? duration : newTime
         
         if podcast.feedID != self.podcast?.feedID {
             podcast.currentTime = newTime

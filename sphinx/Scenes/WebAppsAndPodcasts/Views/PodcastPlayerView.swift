@@ -108,7 +108,7 @@ class PodcastPlayerView: UIView {
         setupActions(fromDashboard)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
-            self.playNextMusicTrack()
+            //self.playNextMusicTrack()
         })
     }
     
@@ -118,7 +118,7 @@ class PodcastPlayerView: UIView {
            let valid_delegate = delegate,
            let valid_index = valid_delegate.getCurrentEpisodeIndex(),
            let valid_total = valid_delegate.getTotalEpisodeCount(),
-           valid_total >= valid_index + 1{
+           valid_total > valid_index{
             self.didTapEpisodeAt(index: valid_index + 1)
         }
     }
@@ -280,6 +280,9 @@ class PodcastPlayerView: UIView {
         progressLineWidth.constant = progressWidth
         progressLine.layoutIfNeeded()
         
+        if(progress >= 0.995){
+            playNextMusicTrack()
+        }
         return didChangeCurrentTime
     }
     

@@ -330,7 +330,8 @@ class PodcastPlayerHelper {
         guard let player = player, let item = player.currentItem else {
             return
         }
-        
+        print(player.currentTime().value)
+        print(player.currentTime().timescale)
         let duration = Int(Double(item.asset.duration.value) / Double(item.asset.duration.timescale))
         let currentTime = Int(round(Double(player.currentTime().value) / Double(player.currentTime().timescale)))
          

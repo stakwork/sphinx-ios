@@ -464,8 +464,11 @@ extension AllTribeFeedsCollectionViewController {
                 ) as? ReusableHeaderView else {
                     preconditionFailure()
                 }
-
-                let section = CollectionViewSection.allCases[indexPath.section]
+                
+                var section = CollectionViewSection.allCases[indexPath.section]
+                if(section == .recommendations && self.isTrackingEnabled() == false){
+                    section = .followedFeeds
+                }
                 
                 let firstDataSourceItem = self.dataSource.itemIdentifier(for: IndexPath(row: 0, section: 0))
                 let isLoadingRecommendations = firstDataSourceItem?.isLoading == true
@@ -488,36 +491,42 @@ extension AllTribeFeedsCollectionViewController {
 // MARK: - Data Source Snapshot
 extension AllTribeFeedsCollectionViewController {
 
+    func isTrackingEnabled()->Bool{
+        return UserDefaults.Keys.shouldTrackActions.get(defaultValue: false)
+    }
     func makeSnapshotForCurrentState(
         loadingRecommendations: Bool = false
     ) -> DataSourceSnapshot {
         var snapshot = DataSourceSnapshot()
         
-        snapshot.appendSections([CollectionViewSection.recommendations])
-        
-        if loadingRecommendations {
-            snapshot.appendItems(
-                [DataSourceItem.loading],
-                toSection: .recommendations
-            )
-        } else {
+        if(isTrackingEnabled()){
+            snapshot.appendSections([CollectionViewSection.recommendations])
             
-            let recommendedSourceItems = recommendedFeeds.compactMap { recommendations -> DataSourceItem? in
-                return DataSourceItem.recommendedFeed(recommendations)
-            }
-            
-            if recommendedSourceItems.count > 0 {
+            if loadingRecommendations {
                 snapshot.appendItems(
-                    recommendedSourceItems,
+                    [DataSourceItem.loading],
                     toSection: .recommendations
                 )
             } else {
-                snapshot.appendItems(
-                    [DataSourceItem.noResults],
-                    toSection: .recommendations
-                )
+                
+                let recommendedSourceItems = recommendedFeeds.compactMap { recommendations -> DataSourceItem? in
+                    return DataSourceItem.recommendedFeed(recommendations)
+                }
+                
+                if recommendedSourceItems.count > 0 {
+                    snapshot.appendItems(
+                        recommendedSourceItems,
+                        toSection: .recommendations
+                    )
+                } else {
+                    snapshot.appendItems(
+                        [DataSourceItem.noResults],
+                        toSection: .recommendations
+                    )
+                }
             }
         }
+        
   
         let followedSourceItems = followedFeeds.sorted { (first, second) in
             let firstDate = first.dateUpdated ?? first.datePublished ?? Date.init(timeIntervalSince1970: 0)

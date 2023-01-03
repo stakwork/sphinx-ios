@@ -607,6 +607,8 @@
 		47FE9A3C23BF751C0090913F /* ChatViewControllerAttachmentDelegateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FE9A3B23BF751C0090913F /* ChatViewControllerAttachmentDelegateExtension.swift */; };
 		47FE9A3E23C381A20090913F /* UITapGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FE9A3D23C381A20090913F /* UITapGestureRecognizer.swift */; };
 		CED14D78293CF683004B8B25 /* ChatMentionAutocompleteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED14D77293CF683004B8B25 /* ChatMentionAutocompleteDataSource.swift */; };
+		CEF821D62963B68600CBB28F /* DiscoverTribesWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF821D52963B68600CBB28F /* DiscoverTribesWebViewController.swift */; };
+		CEF821D82963B69B00CBB28F /* Discover.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEF821D72963B69B00CBB28F /* Discover.storyboard */; };
 		F30884A72699123600CADDEB /* LeftMenuViewController+KarmaPurchaseUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30884A62699123600CADDEB /* LeftMenuViewController+KarmaPurchaseUtils.swift */; };
 		F30884A92699181200CADDEB /* API+KarmaPurchaseUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30884A82699181200CADDEB /* API+KarmaPurchaseUtils.swift */; };
 		F313024626BA62B300A1396E /* ChatsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F313024526BA62B200A1396E /* ChatsCollectionViewController.swift */; };
@@ -1480,6 +1482,8 @@
 		47FE9A3D23C381A20090913F /* UITapGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITapGestureRecognizer.swift; sourceTree = "<group>"; };
 		487E10CEB3D07B0840A84681 /* Pods_sphinx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_sphinx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CED14D77293CF683004B8B25 /* ChatMentionAutocompleteDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatMentionAutocompleteDataSource.swift; sourceTree = "<group>"; };
+		CEF821D52963B68600CBB28F /* DiscoverTribesWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTribesWebViewController.swift; sourceTree = "<group>"; };
+		CEF821D72963B69B00CBB28F /* Discover.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Discover.storyboard; sourceTree = "<group>"; };
 		F30884A62699123600CADDEB /* LeftMenuViewController+KarmaPurchaseUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LeftMenuViewController+KarmaPurchaseUtils.swift"; sourceTree = "<group>"; };
 		F30884A82699181200CADDEB /* API+KarmaPurchaseUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+KarmaPurchaseUtils.swift"; sourceTree = "<group>"; };
 		F313024526BA62B200A1396E /* ChatsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsCollectionViewController.swift; sourceTree = "<group>"; };
@@ -2267,6 +2271,7 @@
 		4756DE0C232ABDED001BAFD6 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				CEF821D42963B67000CBB28F /* DiscoverTribes */,
 				472161C4293A65C30088B87B /* Recommendations */,
 				4756DE12232AC0F9001BAFD6 /* Chat */,
 				47468FE7233905820072124A /* Contacts */,
@@ -3473,6 +3478,15 @@
 			path = "Custom Views";
 			sourceTree = "<group>";
 		};
+		CEF821D42963B67000CBB28F /* DiscoverTribes */ = {
+			isa = PBXGroup;
+			children = (
+				CEF821D52963B68600CBB28F /* DiscoverTribesWebViewController.swift */,
+				CEF821D72963B69B00CBB28F /* Discover.storyboard */,
+			);
+			path = DiscoverTribes;
+			sourceTree = "<group>";
+		};
 		F313024426BA628D00A1396E /* Chats */ = {
 			isa = PBXGroup;
 			children = (
@@ -4103,6 +4117,7 @@
 				47893A8C24095A30002F675B /* AudioSentTableViewCell.xib in Resources */,
 				470396D92535D12D007F9C23 /* PodcastEpisodeTableViewCell.xib in Resources */,
 				475BDD8E232C087A00C5BBD6 /* TransactionPaymentSentTableViewCell.xib in Resources */,
+				CEF821D82963B69B00CBB28F /* Discover.storyboard in Resources */,
 				475BDCB8232AC1E800C5BBD6 /* PaymentInvoiceView.xib in Resources */,
 				4797E79E24B8EF3600D13270 /* ExpiredInvoiceReceivedTableViewCell.xib in Resources */,
 				F3D86DC226B157D400EB9711 /* DashboardFeedCollectionViewSectionHeader.xib in Resources */,
@@ -4470,6 +4485,7 @@
 				472782122729A547007D5F1F /* NewsletterFeed+FetchUtils.swift in Sources */,
 				F3446B9326BABAB400855516 /* ChatListCollectionViewCell.swift in Sources */,
 				475BDD34232ACC4800C5BBD6 /* UIView.swift in Sources */,
+				CEF821D62963B68600CBB28F /* DiscoverTribesWebViewController.swift in Sources */,
 				474A667D24929D45002C2D10 /* CommonReplyTableViewCell.swift in Sources */,
 				F3188B80271792CE00890DDD /* VideoFeed+Properties.swift in Sources */,
 				476EB47523C50662009745E2 /* GroupContactTableViewCell.swift in Sources */,

@@ -25,6 +25,11 @@ class DashboardRootViewController: RootViewController {
     
     @IBOutlet weak var bottomBarBottomConstraint: NSLayoutConstraint!
     
+    let buttonTitles : [String] = [
+        "dashboard.tabs.feed".localized,
+        "dashboard.tabs.friends".localized,
+        "dashboard.tabs.tribes".localized,
+    ]
     @IBOutlet weak var dashboardNavigationTabs: CustomSegmentedControl! {
         didSet {
             dashboardNavigationTabs.configureFromOutlet(

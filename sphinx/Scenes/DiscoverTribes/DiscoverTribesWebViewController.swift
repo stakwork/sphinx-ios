@@ -62,6 +62,7 @@ extension DiscoverTribesWebViewController : WKNavigationDelegate{
                    if DeepLinksHandlerHelper.storeLinkQueryFrom(url: url),
                       let appDelegate = UIApplication.shared.delegate as? AppDelegate{
                        appDelegate.setInitialVC(launchingApp: false, deepLink: true)
+                       self.navigationController?.popViewController(animated: true)
                    }
                }
                decisionHandler(WKNavigationActionPolicy.cancel)

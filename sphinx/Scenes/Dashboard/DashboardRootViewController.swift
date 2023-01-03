@@ -209,17 +209,6 @@ extension DashboardRootViewController {
             self,
             withKey: PodcastPlayerHelper.DelegateKeys.dashboard.rawValue
         )
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0, execute: {
-            let discoverVC = DiscoverTribesWebViewController.instantiate(
-                rootViewController: self.rootViewController
-            )
-            
-            self.navigationController?.pushViewController(
-                discoverVC,
-                animated: true
-            )
-        })
     }
     
     func setupPlayerBar() {

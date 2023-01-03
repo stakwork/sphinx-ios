@@ -35,6 +35,10 @@ class AllTribeFeedsCollectionViewController: UICollectionViewController {
     )
     
     func preCacheTopPods(){
+        //0. Stop if setting not enabled
+        if UserDefaults.Keys.shouldAutoDownloadSubscribedPods.get(defaultValue: false) == false{
+            return
+        }
         //1. Fetch results from memory
         guard
             let resultController = fetchedResultsController as? NSFetchedResultsController<NSManagedObject>,

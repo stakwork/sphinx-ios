@@ -116,6 +116,33 @@ extension API {
         }
     }
     
+    func getAllTribes(
+        callback: @escaping GetAllTribesCallback,
+        errorCallback: @escaping EmptyCallback
+    ) {
+        let url = API.getUrl(route: "https://tribes.sphinx.chat/tribes")
+        let tribeRequest : URLRequest? = createRequest(url, bodyParams: nil, method: "GET")
+        
+        guard let request = tribeRequest else {
+            errorCallback()
+            return
+        }
+        
+        //NEEDS TO BE CHANGED
+        sphinxRequest(request) { response in
+            switch response.result {
+            case .success(let data):
+                if let json = data as? [NSDictionary] {
+                    callback((json))
+                } else {
+                    errorCallback()
+                }
+            case .failure(_):
+                errorCallback()
+            }
+        }
+    }
+    
     func getTribeInfo(
         host: String,
         uuid: String,

@@ -19,6 +19,20 @@ class DiscoverTribeTableViewDataSource : NSObject{
         self.tableView = tableView
     }
     
+    func fetchTribeData(){
+        API.sharedInstance.getAllTribes(callback: { allTribes in
+            let topTribes = self.filterTribes(allTribes: allTribes)
+        }, errorCallback: {
+            //completion()
+        })
+    }
+    
+    func filterTribes(allTribes:[Any])->[Any]{
+        let tribesLimit = 50
+        var result = Array(allTribes[0..<min(tribesLimit,allTribes.count)])
+        return result
+    }
+    
 }
 
 
@@ -41,3 +55,4 @@ extension DiscoverTribeTableViewDataSource : UITableViewDataSource{
 extension DiscoverTribeTableViewDataSource : UITableViewDelegate{
     
 }
+

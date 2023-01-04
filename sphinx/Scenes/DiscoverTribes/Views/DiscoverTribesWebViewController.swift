@@ -32,7 +32,7 @@ class DiscoverTribesWebViewController : UIViewController{
     var rootViewController: RootViewController!
     //let urlString = "localhost:5000"
     var delegate: DiscoverTribesWVVCDelegate? = nil
-    var shouldUseWebview = true
+    var shouldUseWebview = false
     
     
     

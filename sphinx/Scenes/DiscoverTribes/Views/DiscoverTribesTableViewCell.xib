@@ -1,21 +1,86 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13142" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12042"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="Roboto-Medium.ttf">
+            <string>Roboto-Medium</string>
+        </array>
+        <array key="Roboto-Regular.ttf">
+            <string>Roboto-Regular</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="DiscoverTribesTableViewCell" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+        <tableViewCell contentMode="scaleToFill" restorationIdentifier="DiscoverTribesTableViewCell" selectionStyle="default" indentationWidth="10" rowHeight="131" id="KGk-i7-Jjw" customClass="DiscoverTribesTableViewCell" customModule="sphinx" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="333" height="130"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <rect key="frame" x="0.0" y="0.0" width="333" height="130"/>
                 <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="QSy-OL-BRt">
+                        <rect key="frame" x="18" y="16" width="68" height="68"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="68" id="CEX-Vh-2CT"/>
+                            <constraint firstAttribute="width" secondItem="QSy-OL-BRt" secondAttribute="height" multiplier="1:1" id="Gyj-Yd-7Y0"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qKb-wf-NCP">
+                        <rect key="frame" x="115" y="16" width="191" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21.000000000000004" id="PB7-TY-KU2"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="COE-my-hxa">
+                        <rect key="frame" x="115" y="44.333333333333336" width="191" height="21.000000000000007"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21.000000000000004" id="ECV-sf-cJJ"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="12"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L9M-sx-phJ">
+                        <rect key="frame" x="206" y="84" width="100" height="35"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="100" id="Guf-nD-7KJ"/>
+                        </constraints>
+                        <state key="normal" title="Button"/>
+                        <buttonConfiguration key="configuration" style="plain" title="Join"/>
+                    </button>
+                </subviews>
+                <color key="backgroundColor" red="0.86666666670000003" green="0.88235294119999996" blue="0.8980392157" alpha="1" colorSpace="calibratedRGB"/>
+                <constraints>
+                    <constraint firstItem="COE-my-hxa" firstAttribute="top" secondItem="qKb-wf-NCP" secondAttribute="bottom" constant="7.3333333333333286" id="BkK-1N-SJF"/>
+                    <constraint firstItem="QSy-OL-BRt" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="FF6-mG-8UY"/>
+                    <constraint firstItem="L9M-sx-phJ" firstAttribute="top" secondItem="COE-my-hxa" secondAttribute="bottom" constant="18.666666666666657" id="GTd-95-9wI"/>
+                    <constraint firstAttribute="trailing" secondItem="qKb-wf-NCP" secondAttribute="trailing" constant="27" id="PsH-Ps-HDl"/>
+                    <constraint firstItem="qKb-wf-NCP" firstAttribute="leading" secondItem="QSy-OL-BRt" secondAttribute="trailing" constant="29" id="YwX-d0-Xdy"/>
+                    <constraint firstItem="L9M-sx-phJ" firstAttribute="trailing" secondItem="COE-my-hxa" secondAttribute="trailing" id="bSI-5O-EDf"/>
+                    <constraint firstItem="qKb-wf-NCP" firstAttribute="top" secondItem="QSy-OL-BRt" secondAttribute="top" id="dwJ-WA-ZGD"/>
+                    <constraint firstItem="COE-my-hxa" firstAttribute="leading" secondItem="qKb-wf-NCP" secondAttribute="leading" id="lrU-YP-McN"/>
+                    <constraint firstItem="COE-my-hxa" firstAttribute="trailing" secondItem="qKb-wf-NCP" secondAttribute="trailing" id="vkN-C9-eaU"/>
+                    <constraint firstItem="QSy-OL-BRt" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="18" id="wqZ-s0-SuO"/>
+                </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="descriptionLabel" destination="COE-my-hxa" id="Enh-bv-LBf"/>
+                <outlet property="joinButton" destination="L9M-sx-phJ" id="ePX-E2-J8o"/>
+                <outlet property="titleLabel" destination="qKb-wf-NCP" id="3NA-ft-rdE"/>
+                <outlet property="tribeImageView" destination="QSy-OL-BRt" id="4nY-QQ-H4T"/>
+            </connections>
+            <point key="canvasLocation" x="-11.450381679389313" y="50.352112676056343"/>
         </tableViewCell>
     </objects>
 </document>

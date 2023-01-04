@@ -32,7 +32,7 @@ class DiscoverTribesWebViewController : UIViewController{
     var rootViewController: RootViewController!
     //let urlString = "localhost:5000"
     var delegate: DiscoverTribesWVVCDelegate? = nil
-    var shouldUseWebview = true
+    var shouldUseWebview = false
     
     
     static func instantiate(
@@ -66,6 +66,7 @@ class DiscoverTribesWebViewController : UIViewController{
     
     
     func configTableView(){
+        tableView.backgroundColor = UIColor.Sphinx.Body
         discoverTribesTableViewDataSource = DiscoverTribeTableViewDataSource(tableView: tableView, vc: self)
         if let dataSource = discoverTribesTableViewDataSource{
             tableView.delegate = dataSource
@@ -83,16 +84,27 @@ extension DiscoverTribesWebViewController : WKNavigationDelegate{
                print("link")
                print(navigationAction.request.url)
                if let url = navigationAction.request.url{
-                   if DeepLinksHandlerHelper.storeLinkQueryFrom(url: url),
-                      let appDelegate = UIApplication.shared.delegate as? AppDelegate{
-                       appDelegate.setInitialVC(launchingApp: false, deepLink: true)
-                       self.navigationController?.popViewController(animated: true)
-                   }
+                   processLink(url:url)
                }
                decisionHandler(WKNavigationActionPolicy.cancel)
                return
            }
            print("no link")
            decisionHandler(WKNavigationActionPolicy.allow)
+    }
+    
+    func processLink(url:URL){
+        if DeepLinksHandlerHelper.storeLinkQueryFrom(url: url),
+           let appDelegate = UIApplication.shared.delegate as? AppDelegate{
+            appDelegate.setInitialVC(launchingApp: false, deepLink: true)
+            self.navigationController?.popViewController(animated: true)
+        }
+    }
+}
+
+
+extension DiscoverTribesWebViewController : DiscoverTribesCellDelegate{
+    func handleJoin(url: URL) {
+        processLink(url: url)
     }
 }

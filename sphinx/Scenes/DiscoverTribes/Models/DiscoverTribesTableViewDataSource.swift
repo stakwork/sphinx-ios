@@ -19,6 +19,7 @@ class DiscoverTribeTableViewDataSource : NSObject{
     init(tableView:UITableView,vc:DiscoverTribesWebViewController){
         self.vc = vc
         self.tableView = tableView
+        tableView.register(DiscoverTribesTableViewCell.nib, forCellReuseIdentifier: DiscoverTribesTableViewCell.reuseID)
     }
     
     func fetchTribeData(){
@@ -47,15 +48,15 @@ extension DiscoverTribeTableViewDataSource : UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        let label = UILabel(frame: CGRect(x: 0.0, y: 0.0, width: 100.0, height: 100.0))
-        let tribe = tribes[indexPath.row]
-        label.text = tribe.name
-        cell.addSubview(label)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "DiscoverTribesTableViewCell", for: indexPath) as! DiscoverTribesTableViewCell
+        cell.configureCell(tribeData: tribes[indexPath.row])
+        cell.delegate = vc
         return cell
     }
     
-    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 130.0
+    }
 }
 
 extension DiscoverTribeTableViewDataSource : UITableViewDelegate{

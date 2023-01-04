@@ -13,6 +13,8 @@ class DiscoverTribeData: Mappable {
     var imgURL: String?
     var description: String?
     var name: String?
+    var uuid : String?
+    var host : String?
     
     required convenience init(map: Map) {
         self.init()
@@ -22,5 +24,7 @@ class DiscoverTribeData: Mappable {
         imgURL              <- map["img"]
         name              <- map["name"]
         description              <- map["description"]
+        uuid              <- map["uuid"]
+        host              <- map["host"]
     }
 }

@@ -15,6 +15,7 @@ class DiscoverTribeTableViewDataSource : NSObject{
     var tableView : UITableView
     var vc : DiscoverTribesWebViewController
     var tribes = [DiscoverTribeData]()
+    private lazy var spinner: UIActivityIndicatorView = makeSpinner()
     
     init(tableView:UITableView,vc:DiscoverTribesWebViewController){
         self.vc = vc
@@ -23,10 +24,13 @@ class DiscoverTribeTableViewDataSource : NSObject{
     }
     
     func fetchTribeData(){
+        setupSpinner()
+        spinner.startAnimating()
         API.sharedInstance.getAllTribes(callback: { allTribes in
             self.filterTribes(allTribes: allTribes)
+            self.spinner.isHidden = true
         }, errorCallback: {
-            //completion()
+            self.spinner.isHidden = true
         })
     }
     
@@ -63,3 +67,29 @@ extension DiscoverTribeTableViewDataSource : UITableViewDelegate{
     
 }
 
+
+
+extension DiscoverTribeTableViewDataSource {
+    func setupSpinner() {
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        vc.view.addSubview(spinner)
+
+        NSLayoutConstraint.activate([
+            spinner.centerXAnchor.constraint(equalTo: vc.view.centerXAnchor),
+            spinner.centerYAnchor.constraint(equalTo: vc.view.centerYAnchor),
+        ])
+        
+        spinner.startAnimating()
+    }
+    
+    
+    func makeSpinner() -> UIActivityIndicatorView {
+        let spinner = UIActivityIndicatorView(style: .large)
+        spinner.color = UIColor.white
+
+        spinner.sizeToFit()
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        
+        return spinner
+    }
+}

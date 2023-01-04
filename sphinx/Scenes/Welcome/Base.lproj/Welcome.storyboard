@@ -276,6 +276,9 @@
                                         <state key="normal" title="">
                                             <color key="titleColor" name="WashedOutReceivedText"/>
                                         </state>
+                                        <connections>
+                                            <action selector="backButtonTapped:" destination="7MT-bP-iHZ" eventType="touchUpInside" id="mfe-IE-hQB"/>
+                                        </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Back" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7KZ-Dm-UwY">
                                         <rect key="frame" x="58" y="17.5" width="38" height="20"/>

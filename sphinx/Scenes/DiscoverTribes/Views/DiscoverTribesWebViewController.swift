@@ -46,6 +46,10 @@ class DiscoverTribesWebViewController : UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.backgroundColor = UIColor.Sphinx.Body
+        webView.backgroundColor = UIColor.Sphinx.Body
+        self.view.backgroundColor = UIColor.Sphinx.Body
+        
         if(shouldUseWebview){
             loadDiscoverTribesWebView()
             tableView.isHidden = true
@@ -66,7 +70,7 @@ class DiscoverTribesWebViewController : UIViewController{
     
     
     func configTableView(){
-        tableView.backgroundColor = UIColor.Sphinx.Body
+        
         discoverTribesTableViewDataSource = DiscoverTribeTableViewDataSource(tableView: tableView, vc: self)
         if let dataSource = discoverTribesTableViewDataSource{
             tableView.delegate = dataSource
@@ -75,6 +79,13 @@ class DiscoverTribesWebViewController : UIViewController{
             tableView.reloadData()
         }
     }
+    
+    @IBAction func backButtonTapped(_ sender: Any) {
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate{
+            appDelegate.setInitialVC(launchingApp: false, deepLink: true)
+        }
+    }
+    
     
 }
 
@@ -98,7 +109,6 @@ extension DiscoverTribesWebViewController : WKNavigationDelegate{
         if DeepLinksHandlerHelper.storeLinkQueryFrom(url: url),
            let appDelegate = UIApplication.shared.delegate as? AppDelegate{
             appDelegate.setInitialVC(launchingApp: false, deepLink: true)
-            self.navigationController?.popViewController(animated: true)
         }
     }
 }

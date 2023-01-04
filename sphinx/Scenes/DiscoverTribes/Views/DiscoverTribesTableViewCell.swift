@@ -54,6 +54,7 @@ class DiscoverTribesTableViewCell: UITableViewCell {
     
     func styleCell(){
         self.backgroundColor = UIColor.Sphinx.Body
+        self.contentView.backgroundColor = UIColor.Sphinx.Body
         self.titleLabel.textColor = UIColor.Sphinx.PrimaryText
         self.descriptionLabel.textColor = UIColor.Sphinx.SecondaryText
     }

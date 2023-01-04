@@ -136,7 +136,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0TY-qZ-adA" userLabel="Content Container">
-                                <rect key="frame" x="30" y="299.5" width="354" height="297.5"/>
+                                <rect key="frame" x="30" y="299.5" width="354" height="297"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uMO-XI-ahv" userLabel="Check Mark Image">
                                         <rect key="frame" x="143.5" y="0.0" width="67" height="67"/>
@@ -147,7 +147,7 @@
                                         <imageReference key="image" image="confirmedIcon"/>
                                     </imageView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FPF-Gi-pUc" userLabel="Text Container">
-                                        <rect key="frame" x="0.0" y="117" width="354" height="73.5"/>
+                                        <rect key="frame" x="0.0" y="117" width="354" height="73"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WELCOME!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VTI-Xp-fYI">
                                                 <rect key="frame" x="0.0" y="0.0" width="354" height="37"/>
@@ -156,7 +156,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your app is now connected." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1m3-3F-3Hg">
-                                                <rect key="frame" x="0.0" y="47" width="354" height="26.5"/>
+                                                <rect key="frame" x="0.0" y="47" width="354" height="26"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                                 <color key="textColor" name="SecondaryText"/>
                                                 <nil key="highlightedColor"/>
@@ -174,7 +174,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0F2-At-Nlb" userLabel="Continue Button Container">
-                                        <rect key="frame" x="0.0" y="235.5" width="354" height="62"/>
+                                        <rect key="frame" x="0.0" y="235" width="354" height="62"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AXO-py-VQq">
                                                 <rect key="frame" x="0.0" y="0.0" width="354" height="62"/>
@@ -259,17 +259,26 @@
                                     <wkPreferences key="preferences"/>
                                 </wkWebViewConfiguration>
                             </wkWebView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="egN-am-QGO">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="UPr-NY-GMp"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="egN-am-QGO" secondAttribute="trailing" id="G7b-cg-pfk"/>
+                            <constraint firstItem="egN-am-QGO" firstAttribute="top" secondItem="W9u-oD-2bv" secondAttribute="top" id="LPh-jb-2gF"/>
                             <constraint firstAttribute="bottom" secondItem="AEx-h7-rlC" secondAttribute="bottom" id="bjs-6T-Rm3"/>
+                            <constraint firstItem="egN-am-QGO" firstAttribute="leading" secondItem="W9u-oD-2bv" secondAttribute="leading" id="je0-yT-bgo"/>
                             <constraint firstItem="AEx-h7-rlC" firstAttribute="top" secondItem="W9u-oD-2bv" secondAttribute="top" id="l6m-9q-vjU"/>
                             <constraint firstItem="AEx-h7-rlC" firstAttribute="leading" secondItem="W9u-oD-2bv" secondAttribute="leading" id="u6e-ds-b2y"/>
                             <constraint firstAttribute="trailing" secondItem="AEx-h7-rlC" secondAttribute="trailing" id="uSx-jb-hrQ"/>
+                            <constraint firstAttribute="bottom" secondItem="egN-am-QGO" secondAttribute="bottom" id="vXV-E0-D1a"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="tableView" destination="egN-am-QGO" id="Cuf-uX-Cya"/>
                         <outlet property="webView" destination="AEx-h7-rlC" id="gVg-od-prW"/>
                     </connections>
                 </viewController>

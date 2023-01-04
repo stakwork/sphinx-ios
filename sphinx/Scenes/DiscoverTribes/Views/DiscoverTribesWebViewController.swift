@@ -49,17 +49,12 @@ class DiscoverTribesWebViewController : UIViewController{
         super.viewDidLoad()
         if(shouldUseWebview){
             loadDiscoverTribesWebView()
-            //tableView.isHidden = true
+            tableView.isHidden = true
         }
         else{
             configTableView()
             webView.isHidden = true
         }
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        //self.configTableView()
     }
     
     func loadDiscoverTribesWebView(){
@@ -72,7 +67,6 @@ class DiscoverTribesWebViewController : UIViewController{
     
     
     func configTableView(){
-        _ = self.view
         discoverTribesTableViewDataSource = DiscoverTribeTableViewDataSource(tableView: tableView, vc: self)
         if let dataSource = discoverTribesTableViewDataSource{
             tableView.delegate = dataSource

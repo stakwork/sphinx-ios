@@ -61,10 +61,9 @@ class DiscoverTribesTableViewCell: UITableViewCell {
     func configureJoinButton(tribeData:DiscoverTribeData){
         joinButton.titleLabel?.textColor = .white
         joinButton.titleLabel?.font = UIFont(name: "Roboto-Bold", size: 14.0)
+        let host = tribeData.host ?? "tribes.sphinx.chat"
         if let uuid = tribeData.uuid//,
-           //var host = tribeData.host
         {
-            var host = "tribes.sphinx.chat" // temproary hack
             joinButton.backgroundColor = UIColor.Sphinx.PrimaryBlue
             cellURL = URL(string: "sphinx.chat://?action=tribe&uuid=\(uuid)&host=\(host)")
             joinButton.addTarget(self, action: #selector(handleJoinTap), for: .touchUpInside)

@@ -252,7 +252,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AEx-h7-rlC">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <rect key="frame" x="0.0" y="103" width="414" height="793"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <wkWebViewConfiguration key="configuration">
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
@@ -260,18 +260,53 @@
                                 </wkWebViewConfiguration>
                             </wkWebView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="egN-am-QGO">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <rect key="frame" x="0.0" y="103" width="414" height="793"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="md1-MA-i55">
+                                <rect key="frame" x="0.0" y="48" width="414" height="55"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tfc-c5-VKv">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="55"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="55" id="56Q-K6-Sqt"/>
+                                            <constraint firstAttribute="width" constant="50" id="cWi-lp-I10"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="21"/>
+                                        <state key="normal" title="">
+                                            <color key="titleColor" name="WashedOutReceivedText"/>
+                                        </state>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Back" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7KZ-Dm-UwY">
+                                        <rect key="frame" x="58" y="17.5" width="38" height="20"/>
+                                        <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="17"/>
+                                        <color key="textColor" name="Text"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="7KZ-Dm-UwY" firstAttribute="centerY" secondItem="Tfc-c5-VKv" secondAttribute="centerY" id="2Jp-lM-ngq"/>
+                                    <constraint firstAttribute="height" constant="55" id="B3Z-Pm-eu2"/>
+                                    <constraint firstItem="7KZ-Dm-UwY" firstAttribute="leading" secondItem="Tfc-c5-VKv" secondAttribute="trailing" constant="8" id="By3-rG-Gdv"/>
+                                    <constraint firstAttribute="bottom" secondItem="Tfc-c5-VKv" secondAttribute="bottom" id="VRN-DZ-uDk"/>
+                                    <constraint firstItem="Tfc-c5-VKv" firstAttribute="leading" secondItem="md1-MA-i55" secondAttribute="leading" id="Xnw-0T-rh7"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="7KZ-Dm-UwY" secondAttribute="trailing" constant="20" symbolic="YES" id="wfY-3e-EAN"/>
+                                    <constraint firstItem="Tfc-c5-VKv" firstAttribute="top" secondItem="md1-MA-i55" secondAttribute="top" id="zLr-4N-jwR"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="UPr-NY-GMp"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="UPr-NY-GMp" firstAttribute="leading" secondItem="md1-MA-i55" secondAttribute="leading" id="Bfk-NC-HTY"/>
+                            <constraint firstItem="AEx-h7-rlC" firstAttribute="top" secondItem="md1-MA-i55" secondAttribute="bottom" id="DiN-Er-1dt"/>
                             <constraint firstAttribute="trailing" secondItem="egN-am-QGO" secondAttribute="trailing" id="G7b-cg-pfk"/>
-                            <constraint firstItem="egN-am-QGO" firstAttribute="top" secondItem="W9u-oD-2bv" secondAttribute="top" id="LPh-jb-2gF"/>
+                            <constraint firstItem="UPr-NY-GMp" firstAttribute="trailing" secondItem="md1-MA-i55" secondAttribute="trailing" id="Vye-hw-YC6"/>
+                            <constraint firstItem="UPr-NY-GMp" firstAttribute="top" secondItem="md1-MA-i55" secondAttribute="top" id="Wu8-dO-0bG"/>
                             <constraint firstAttribute="bottom" secondItem="AEx-h7-rlC" secondAttribute="bottom" id="bjs-6T-Rm3"/>
                             <constraint firstItem="egN-am-QGO" firstAttribute="leading" secondItem="W9u-oD-2bv" secondAttribute="leading" id="je0-yT-bgo"/>
-                            <constraint firstItem="AEx-h7-rlC" firstAttribute="top" secondItem="W9u-oD-2bv" secondAttribute="top" id="l6m-9q-vjU"/>
+                            <constraint firstItem="egN-am-QGO" firstAttribute="top" secondItem="md1-MA-i55" secondAttribute="bottom" id="qIE-y4-voK"/>
                             <constraint firstItem="AEx-h7-rlC" firstAttribute="leading" secondItem="W9u-oD-2bv" secondAttribute="leading" id="u6e-ds-b2y"/>
                             <constraint firstAttribute="trailing" secondItem="AEx-h7-rlC" secondAttribute="trailing" id="uSx-jb-hrQ"/>
                             <constraint firstAttribute="bottom" secondItem="egN-am-QGO" secondAttribute="bottom" id="vXV-E0-D1a"/>
@@ -284,7 +319,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nMx-jI-2u1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1562" y="90"/>
+            <point key="canvasLocation" x="1560.8695652173915" y="89.732142857142847"/>
         </scene>
     </scenes>
     <resources>
@@ -297,6 +332,12 @@
         </namedColor>
         <namedColor name="SecondaryText">
             <color red="0.55686274509803924" green="0.58823529411764708" blue="0.61176470588235299" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Text">
+            <color red="0.23529411764705882" green="0.24705882352941178" blue="0.25490196078431371" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="WashedOutReceivedText">
+            <color red="0.69019607843137254" green="0.71764705882352942" blue="0.73725490196078436" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

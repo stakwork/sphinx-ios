@@ -81,4 +81,12 @@ class DiscoverTribesTableViewCell: UITableViewCell {
         }
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        joinButton.titleLabel?.textColor = .white
+        tribeImageView.image = nil
+        descriptionLabel.text = ""
+        titleLabel.text = ""
+    }
+    
 }

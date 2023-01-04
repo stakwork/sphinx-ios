@@ -606,6 +606,10 @@
 		47FDDB1C2562D77200BBF15F /* boost_animation.json in Resources */ = {isa = PBXBuildFile; fileRef = 47FDDB1B2562D77100BBF15F /* boost_animation.json */; };
 		47FE9A3C23BF751C0090913F /* ChatViewControllerAttachmentDelegateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FE9A3B23BF751C0090913F /* ChatViewControllerAttachmentDelegateExtension.swift */; };
 		47FE9A3E23C381A20090913F /* UITapGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FE9A3D23C381A20090913F /* UITapGestureRecognizer.swift */; };
+		CECFBEFE2965C84400BAD935 /* DiscoverTribesTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECFBEFD2965C84400BAD935 /* DiscoverTribesTableViewDataSource.swift */; };
+		CECFBF012965C85B00BAD935 /* DiscoverTribesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECFBEFF2965C85B00BAD935 /* DiscoverTribesTableViewCell.swift */; };
+		CECFBF022965C85B00BAD935 /* DiscoverTribesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CECFBF002965C85B00BAD935 /* DiscoverTribesTableViewCell.xib */; };
+		CECFBF062965C8E600BAD935 /* DiscoverTribeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECFBF052965C8E600BAD935 /* DiscoverTribeData.swift */; };
 		CED14D78293CF683004B8B25 /* ChatMentionAutocompleteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED14D77293CF683004B8B25 /* ChatMentionAutocompleteDataSource.swift */; };
 		CEF821D62963B68600CBB28F /* DiscoverTribesWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF821D52963B68600CBB28F /* DiscoverTribesWebViewController.swift */; };
 		CEF821D82963B69B00CBB28F /* Discover.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEF821D72963B69B00CBB28F /* Discover.storyboard */; };
@@ -1481,6 +1485,10 @@
 		47FE9A3B23BF751C0090913F /* ChatViewControllerAttachmentDelegateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewControllerAttachmentDelegateExtension.swift; sourceTree = "<group>"; };
 		47FE9A3D23C381A20090913F /* UITapGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITapGestureRecognizer.swift; sourceTree = "<group>"; };
 		487E10CEB3D07B0840A84681 /* Pods_sphinx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_sphinx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CECFBEFD2965C84400BAD935 /* DiscoverTribesTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTribesTableViewDataSource.swift; sourceTree = "<group>"; };
+		CECFBEFF2965C85B00BAD935 /* DiscoverTribesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTribesTableViewCell.swift; sourceTree = "<group>"; };
+		CECFBF002965C85B00BAD935 /* DiscoverTribesTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DiscoverTribesTableViewCell.xib; sourceTree = "<group>"; };
+		CECFBF052965C8E600BAD935 /* DiscoverTribeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTribeData.swift; sourceTree = "<group>"; };
 		CED14D77293CF683004B8B25 /* ChatMentionAutocompleteDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatMentionAutocompleteDataSource.swift; sourceTree = "<group>"; };
 		CEF821D52963B68600CBB28F /* DiscoverTribesWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTribesWebViewController.swift; sourceTree = "<group>"; };
 		CEF821D72963B69B00CBB28F /* Discover.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Discover.storyboard; sourceTree = "<group>"; };
@@ -3478,11 +3486,31 @@
 			path = "Custom Views";
 			sourceTree = "<group>";
 		};
-		CEF821D42963B67000CBB28F /* DiscoverTribes */ = {
+		CECFBF032965C8A500BAD935 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				CEF821D52963B68600CBB28F /* DiscoverTribesWebViewController.swift */,
+				CECFBEFF2965C85B00BAD935 /* DiscoverTribesTableViewCell.swift */,
+				CECFBF002965C85B00BAD935 /* DiscoverTribesTableViewCell.xib */,
 				CEF821D72963B69B00CBB28F /* Discover.storyboard */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		CECFBF042965C8C000BAD935 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				CECFBEFD2965C84400BAD935 /* DiscoverTribesTableViewDataSource.swift */,
+				CECFBF052965C8E600BAD935 /* DiscoverTribeData.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		CEF821D42963B67000CBB28F /* DiscoverTribes */ = {
+			isa = PBXGroup;
+			children = (
+				CECFBF042965C8C000BAD935 /* Models */,
+				CECFBF032965C8A500BAD935 /* Views */,
 			);
 			path = DiscoverTribes;
 			sourceTree = "<group>";
@@ -3979,6 +4007,7 @@
 				475BDD48232AD00D00C5BBD6 /* Montserrat-Regular.otf in Resources */,
 				472F9D3F2416BA0200EFC30A /* AudioRecordingTooltip.xib in Resources */,
 				4746807F293E566D00F51457 /* PodcastPlayerPlaybackSliderView.xib in Resources */,
+				CECFBF022965C85B00BAD935 /* DiscoverTribesTableViewCell.xib in Resources */,
 				4754FA94272ADB02006295A5 /* DashboardNewsletterItemCollectionViewCell.xib in Resources */,
 				47F258D0253F6B1500122A5A /* PodcastSmallPlayer.xib in Resources */,
 				4789E25324EEB8D8003991BE /* AuthorizeAppView.xib in Resources */,
@@ -4208,6 +4237,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				47F258C8253A292B00122A5A /* SocketPacket.swift in Sources */,
+				CECFBF062965C8E600BAD935 /* DiscoverTribeData.swift in Sources */,
 				47F258C52539F39800122A5A /* PodcastRowPlayerHelper.swift in Sources */,
 				475BDD77232BF91A00C5BBD6 /* ContactsService.swift in Sources */,
 				F3B2518D26D8DD1800C96D42 /* PodcastFeed+FetchUtils.swift in Sources */,
@@ -4309,6 +4339,7 @@
 				4787F8942476B8E600CCE8B9 /* CGFloat.swift in Sources */,
 				47484B94251255CF00F82AAC /* MessageWebViewTableViewCell.swift in Sources */,
 				F32A696126CFEF600004B8B3 /* PodcastEpisode+Properties.swift in Sources */,
+				CECFBEFE2965C84400BAD935 /* DiscoverTribesTableViewDataSource.swift in Sources */,
 				47B9A648233BB6AE00D2B022 /* AddressBookHeaderView.swift in Sources */,
 				475BDD05232AC24600C5BBD6 /* ExpiredInvoiceReceivedTableViewCell.swift in Sources */,
 				472161DC293A686A0088B87B /* RecommendationsHeaderCollectionReusableView.swift in Sources */,
@@ -4593,6 +4624,7 @@
 				476A10BE23AA8C8E00817892 /* SubscriptionDetailsViewController.swift in Sources */,
 				476A10BB23A91FCE00817892 /* API+ChatsExtension.swift in Sources */,
 				4703CFA125278C40007B685C /* API+RedeemSatsExtension.swift in Sources */,
+				CECFBF012965C85B00BAD935 /* DiscoverTribesTableViewCell.swift in Sources */,
 				470396D82535D12D007F9C23 /* PodcastEpisodeTableViewCell.swift in Sources */,
 				47018F9B27D65B8D00797E0B /* CustomDismissibleView.swift in Sources */,
 				4726F0A625791CF900E20EA9 /* TribeLinkPreviewView.swift in Sources */,

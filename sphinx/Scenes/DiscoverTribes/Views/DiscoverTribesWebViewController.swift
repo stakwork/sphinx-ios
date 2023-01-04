@@ -25,10 +25,16 @@ extension DashboardRootViewController : DiscoverTribesWVVCDelegate{
 
 class DiscoverTribesWebViewController : UIViewController{
     @IBOutlet weak var webView: WKWebView!
+    @IBOutlet weak var tableView: UITableView!
+    
+    var discoverTribesTableViewDataSource : DiscoverTribeTableViewDataSource? = nil
     let urlString = "https://community.sphinx.chat/t"
     var rootViewController: RootViewController!
     //let urlString = "localhost:5000"
     var delegate: DiscoverTribesWVVCDelegate? = nil
+    var shouldUseWebview = true
+    
+    
     
     static func instantiate(
         rootViewController: RootViewController
@@ -40,14 +46,38 @@ class DiscoverTribesWebViewController : UIViewController{
     }
     
     override func viewDidLoad() {
-        loadDiscoverTribes()
+        super.viewDidLoad()
+        if(shouldUseWebview){
+            loadDiscoverTribesWebView()
+            //tableView.isHidden = true
+        }
+        else{
+            configTableView()
+            webView.isHidden = true
+        }
     }
     
-    func loadDiscoverTribes(){
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        //self.configTableView()
+    }
+    
+    func loadDiscoverTribesWebView(){
         if let link = URL(string:urlString){
             let request = URLRequest(url: link)
             webView.load(request)
             self.webView.navigationDelegate = self
+        }
+    }
+    
+    
+    func configTableView(){
+        _ = self.view
+        discoverTribesTableViewDataSource = DiscoverTribeTableViewDataSource(tableView: tableView, vc: self)
+        if let dataSource = discoverTribesTableViewDataSource{
+            tableView.delegate = dataSource
+            tableView.dataSource = dataSource
+            tableView.reloadData()
         }
     }
 }

@@ -25,17 +25,28 @@
                                     <wkPreferences key="preferences"/>
                                 </wkWebViewConfiguration>
                             </wkWebView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="s1g-JV-NK4">
+                                <rect key="frame" x="76.666666666666686" y="362" width="240" height="128"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="128" id="T6B-wv-JeT"/>
+                                    <constraint firstAttribute="width" constant="240" id="p62-TG-vkU"/>
+                                </constraints>
+                            </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="LOR-N0-PAa" firstAttribute="top" secondItem="5EZ-qb-Rvc" secondAttribute="top" id="A9X-I5-S8e"/>
                             <constraint firstAttribute="trailing" secondItem="LOR-N0-PAa" secondAttribute="trailing" id="F1x-sX-TRP"/>
+                            <constraint firstItem="s1g-JV-NK4" firstAttribute="centerY" secondItem="LOR-N0-PAa" secondAttribute="centerY" id="aTa-P2-cfC"/>
                             <constraint firstItem="LOR-N0-PAa" firstAttribute="leading" secondItem="5EZ-qb-Rvc" secondAttribute="leading" id="haV-pX-3Fj"/>
                             <constraint firstAttribute="bottom" secondItem="LOR-N0-PAa" secondAttribute="bottom" id="hvb-u6-sS0"/>
+                            <constraint firstItem="s1g-JV-NK4" firstAttribute="centerX" secondItem="LOR-N0-PAa" secondAttribute="centerX" id="xPV-Gx-fIE"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="tableView" destination="s1g-JV-NK4" id="7Mp-Kp-F3e"/>
                         <outlet property="webView" destination="LOR-N0-PAa" id="8Fa-Qm-t0J"/>
                     </connections>
                 </viewController>

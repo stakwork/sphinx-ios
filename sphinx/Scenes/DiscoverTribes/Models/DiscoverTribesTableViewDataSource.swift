@@ -8,11 +8,13 @@
 
 import Foundation
 import UIKit
+import ObjectMapper
 
 
 class DiscoverTribeTableViewDataSource : NSObject{
     var tableView : UITableView
     var vc : DiscoverTribesWebViewController
+    var tribes = [DiscoverTribeData]()
     
     init(tableView:UITableView,vc:DiscoverTribesWebViewController){
         self.vc = vc
@@ -21,16 +23,19 @@ class DiscoverTribeTableViewDataSource : NSObject{
     
     func fetchTribeData(){
         API.sharedInstance.getAllTribes(callback: { allTribes in
-            let topTribes = self.filterTribes(allTribes: allTribes)
+            self.filterTribes(allTribes: allTribes)
         }, errorCallback: {
             //completion()
         })
     }
     
-    func filterTribes(allTribes:[Any])->[Any]{
+    func filterTribes(allTribes:[NSDictionary]){
         let tribesLimit = 50
-        var result = Array(allTribes[0..<min(tribesLimit,allTribes.count)])
-        return result
+        let results = Array(allTribes[0..<min(tribesLimit,allTribes.count)])
+        if let mappedResults = Mapper<DiscoverTribeData>().mapArray(JSONObject: results){
+            self.tribes = mappedResults
+            tableView.reloadData()
+        }
     }
     
 }
@@ -38,13 +43,14 @@ class DiscoverTribeTableViewDataSource : NSObject{
 
 extension DiscoverTribeTableViewDataSource : UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return tribes.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         let label = UILabel(frame: CGRect(x: 0.0, y: 0.0, width: 100.0, height: 100.0))
-        label.text = "Hi"
+        let tribe = tribes[indexPath.row]
+        label.text = tribe.name
         cell.addSubview(label)
         return cell
     }

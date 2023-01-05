@@ -195,7 +195,6 @@ extension DashboardRootViewController {
         
         navigationController?.isNavigationBarHidden = true
         searchTextField.delegate = self
-        activeTab = .feed
         
         setupHeaderViews()
         listenForEvents()
@@ -210,8 +209,14 @@ extension DashboardRootViewController {
             withKey: PodcastPlayerHelper.DelegateKeys.dashboard.rawValue
         )
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01, execute: {
-            self.activeTab = .friends
+        runTribesManagerInBackground()
+    }
+    
+    func runTribesManagerInBackground(){
+        let tribeManager = AllTribesManager()
+        tribeManager.fetchItems()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+            tribeManager.preCacheTopPods()
         })
     }
     

@@ -91,7 +91,6 @@ class DiscoverTribesWebViewController : UIViewController{
         if let dataSource = discoverTribesTableViewDataSource{
             tableView.delegate = dataSource
             tableView.dataSource = dataSource
-            dataSource.fetchTribeData()
             dataSource.fetchTribeData(shouldAppend: true)
         }
     }

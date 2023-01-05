@@ -22,6 +22,7 @@ class DiscoverTribeTableViewDataSource : NSObject{
         self.vc = vc
         self.tableView = tableView
         tableView.register(DiscoverTribesTableViewCell.nib, forCellReuseIdentifier: DiscoverTribesTableViewCell.reuseID)
+        tableView.registerCell(LoadingMoreTableViewCell.self)
     }
     
     func fetchTribeData(searchTerm:String?=nil,shouldAppend:Bool){
@@ -67,10 +68,18 @@ extension DiscoverTribeTableViewDataSource : UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "DiscoverTribesTableViewCell", for: indexPath) as! DiscoverTribesTableViewCell
-        cell.configureCell(tribeData: tribes[indexPath.row])
-        cell.delegate = vc
-        return cell
+        if(indexPath.row + 1  == tribes.count){
+            let cell = tableView.dequeueReusableCell(withIdentifier: "LoadingMoreTableViewCell", for: indexPath) as! LoadingMoreTableViewCell
+            cell.configureCell(text: "")
+            cell.loadingMoreLabel.text = "Loading more tribes..."
+            return cell
+        }
+        else{
+            let cell = tableView.dequeueReusableCell(withIdentifier: "DiscoverTribesTableViewCell", for: indexPath) as! DiscoverTribesTableViewCell
+            cell.configureCell(tribeData: tribes[indexPath.row])
+            cell.delegate = vc
+            return cell
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

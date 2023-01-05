@@ -23,15 +23,17 @@ class DiscoverTribeTableViewDataSource : NSObject{
         tableView.register(DiscoverTribesTableViewCell.nib, forCellReuseIdentifier: DiscoverTribesTableViewCell.reuseID)
     }
     
-    func fetchTribeData(){
+    func fetchTribeData(searchTerm:String?=nil){
         setupSpinner()
         spinner.startAnimating()
-        API.sharedInstance.getAllTribes(callback: { allTribes in
+        API.sharedInstance.getTribesList(callback: { allTribes in
             self.filterTribes(allTribes: allTribes)
             self.spinner.isHidden = true
+            self.tableView.reloadData()
         }, errorCallback: {
             self.spinner.isHidden = true
-        })
+        },
+        searchTerm: searchTerm)
     }
     
     func filterTribes(allTribes:[NSDictionary]){

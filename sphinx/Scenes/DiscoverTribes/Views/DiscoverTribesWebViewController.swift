@@ -26,6 +26,9 @@ extension DashboardRootViewController : DiscoverTribesWVVCDelegate{
 class DiscoverTribesWebViewController : UIViewController{
     @IBOutlet weak var webView: WKWebView!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var searchBar: UIView!
+    @IBOutlet weak var searchTextField: UITextField!
+    @IBOutlet weak var searchBarContainer: UIView!
     
     var discoverTribesTableViewDataSource : DiscoverTribeTableViewDataSource? = nil
     let urlString = "https://community.sphinx.chat/t"
@@ -52,12 +55,14 @@ class DiscoverTribesWebViewController : UIViewController{
         
         if(shouldUseWebview){
             loadDiscoverTribesWebView()
+            searchBar.isHidden = true
             tableView.isHidden = true
         }
         else{
             configTableView()
             webView.isHidden = true
         }
+        setupHeaderViews()
     }
     
     func loadDiscoverTribesWebView(){
@@ -68,6 +73,17 @@ class DiscoverTribesWebViewController : UIViewController{
         }
     }
     
+    internal func setupHeaderViews() {
+        searchTextField.delegate = self
+        searchBarContainer.addShadow(
+            location: VerticalLocation.bottom,
+            opacity: 0.15,
+            radius: 3.0
+        )
+        
+        searchBar.layer.cornerRadius = searchBar.frame.height / 2
+    }
+    
     
     func configTableView(){
         
@@ -76,7 +92,6 @@ class DiscoverTribesWebViewController : UIViewController{
             tableView.delegate = dataSource
             tableView.dataSource = dataSource
             dataSource.fetchTribeData()
-            tableView.reloadData()
         }
     }
     
@@ -117,5 +132,16 @@ extension DiscoverTribesWebViewController : WKNavigationDelegate{
 extension DiscoverTribesWebViewController : DiscoverTribesCellDelegate{
     func handleJoin(url: URL) {
         processLink(url: url)
+    }
+}
+
+
+extension DiscoverTribesWebViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        view.endEditing(true)
+        let searchTerm = (searchTextField.text == "") ? nil : searchTextField.text
+        discoverTribesTableViewDataSource?.fetchTribeData(searchTerm: searchTerm)
+        return true
     }
 }

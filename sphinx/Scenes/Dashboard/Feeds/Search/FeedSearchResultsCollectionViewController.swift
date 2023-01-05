@@ -62,13 +62,13 @@ extension FeedSearchResultsCollectionViewController {
     
     enum CollectionViewSection: Int, CaseIterable {
         case subscribedFeedsResults
-        case FeedSearchResults
+        case feedSearchResults
         
         var titleForDisplay: String {
             switch self {
             case .subscribedFeedsResults:
                 return "dashboard.feeds.section-headings.following".localized
-            case .FeedSearchResults:
+            case .feedSearchResults:
                 return "dashboard.feeds.section-headings.directory".localized
             }
         }
@@ -254,7 +254,7 @@ extension FeedSearchResultsCollectionViewController {
             (collectionView: UICollectionView, kind: String, indexPath: IndexPath)
         -> UICollectionReusableView? in
             switch kind {
-            case UICollectionView.elementKindSectionHeader:
+            case UICollectionView.elementKindSectionHeader:                
                 guard let headerView = collectionView.dequeueReusableSupplementaryView(
                     ofKind: kind,
                     withReuseIdentifier: ReusableHeaderView.reuseID,
@@ -262,8 +262,8 @@ extension FeedSearchResultsCollectionViewController {
                 ) as? ReusableHeaderView else {
                     preconditionFailure()
                 }
-
-                let section = CollectionViewSection.allCases[indexPath.section]
+                
+                let section = self.getSectionFor(indexPath)
 
                 headerView.render(withTitle: section.titleForDisplay)
 
@@ -272,6 +272,13 @@ extension FeedSearchResultsCollectionViewController {
                 return UICollectionReusableView()
             }
         }
+    }
+    
+    func getSectionFor(_ indexPath: IndexPath) -> CollectionViewSection {
+        if subscribedFeeds.isEmpty && indexPath.section == 0 {
+            return CollectionViewSection.allCases[indexPath.section + 1]
+        }
+        return CollectionViewSection.allCases[indexPath.section]
     }
 }
 
@@ -282,24 +289,21 @@ extension FeedSearchResultsCollectionViewController {
     func makeSnapshotForCurrentState() -> DataSourceSnapshot {
         var snapshot = DataSourceSnapshot()
         
-        if feedSearchResults.count > 0 {
-            snapshot.appendSections(CollectionViewSection.allCases)
-            
-            snapshot.appendItems(
-                subscribedFeeds.map { DataSourceItem.subscribedFeeds($0) },
-                toSection: .subscribedFeedsResults
-            )
-            
-            snapshot.appendItems(
-                feedSearchResults.map { DataSourceItem.feedSearchResult($0) },
-                toSection: .FeedSearchResults
-            )
-        } else {
+        if subscribedFeeds.count > 0 {
             snapshot.appendSections([CollectionViewSection.subscribedFeedsResults])
             
             snapshot.appendItems(
                 subscribedFeeds.map { DataSourceItem.subscribedFeeds($0) },
                 toSection: .subscribedFeedsResults
+            )
+        }
+        
+        if feedSearchResults.count > 0 {
+            snapshot.appendSections([CollectionViewSection.feedSearchResults])
+            
+            snapshot.appendItems(
+                feedSearchResults.map { DataSourceItem.feedSearchResult($0) },
+                toSection: .feedSearchResults
             )
         }
 
@@ -347,11 +351,12 @@ extension FeedSearchResultsCollectionViewController {
         didSelectItemAt indexPath: IndexPath
     ) {
         guard
-            let section = CollectionViewSection(rawValue: indexPath.section),
             let dataSourceItem = dataSource.itemIdentifier(for: indexPath)
         else {
             return
         }
+        
+        let section = getSectionFor(indexPath)
 
         switch section {
         case .subscribedFeedsResults:
@@ -362,7 +367,7 @@ extension FeedSearchResultsCollectionViewController {
             }
             
             onSubscribedFeedCellSelected?(searchRsults)
-        case .FeedSearchResults:
+        case .feedSearchResults:
             guard
                 case let .feedSearchResult(directorySearchResult) = dataSourceItem
             else {

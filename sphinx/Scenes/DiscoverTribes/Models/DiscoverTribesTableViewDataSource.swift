@@ -15,6 +15,7 @@ class DiscoverTribeTableViewDataSource : NSObject{
     var tableView : UITableView
     var vc : DiscoverTribesWebViewController
     var tribes = [DiscoverTribeData]()
+    var pageNum : Int = 1
     private lazy var spinner: UIActivityIndicatorView = makeSpinner()
     
     init(tableView:UITableView,vc:DiscoverTribesWebViewController){
@@ -23,26 +24,38 @@ class DiscoverTribeTableViewDataSource : NSObject{
         tableView.register(DiscoverTribesTableViewCell.nib, forCellReuseIdentifier: DiscoverTribesTableViewCell.reuseID)
     }
     
-    func fetchTribeData(searchTerm:String?=nil){
+    func fetchTribeData(searchTerm:String?=nil,shouldAppend:Bool){
         setupSpinner()
         spinner.startAnimating()
         API.sharedInstance.getTribesList(callback: { allTribes in
-            self.filterTribes(allTribes: allTribes)
+            self.parseIncomingTribes(allTribes: allTribes, shouldAppend:shouldAppend)
             self.spinner.isHidden = true
             self.tableView.reloadData()
         }, errorCallback: {
             self.spinner.isHidden = true
         },
-        searchTerm: searchTerm)
+        searchTerm: searchTerm,
+        pageNum : pageNum
+        )
     }
     
-    func filterTribes(allTribes:[NSDictionary]){
-        let tribesLimit = 50
-        let results = Array(allTribes[0..<min(tribesLimit,allTribes.count)])
+    func parseIncomingTribes(allTribes:[NSDictionary],shouldAppend:Bool){
+        let results = Array(allTribes)
         if let mappedResults = Mapper<DiscoverTribeData>().mapArray(JSONObject: results){
-            self.tribes = mappedResults
+            if shouldAppend == true{
+                self.tribes += mappedResults
+            }
+            else{
+                self.tribes = mappedResults
+                self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .bottom, animated: true)
+            }
             tableView.reloadData()
         }
+    }
+    
+    func performSearch(searchTerm:String?){
+        pageNum = 1 // resets on search
+        fetchTribeData(searchTerm: searchTerm,shouldAppend: false)
     }
     
 }
@@ -62,6 +75,14 @@ extension DiscoverTribeTableViewDataSource : UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 130.0
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row + 1 == tribes.count {
+            pageNum += 1
+            fetchTribeData(searchTerm: vc.searchTextField.text, shouldAppend: true)
+            print("reached the end!")
+        }
     }
 }
 

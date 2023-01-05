@@ -119,10 +119,11 @@ extension API {
     func getTribesList(
         callback: @escaping GetAllTribesCallback,
         errorCallback: @escaping EmptyCallback,
-        limit : Int = 100,
-        searchTerm:String? = nil
+        limit : Int = 20,
+        searchTerm:String? = nil,
+        pageNum : Int = 0
     ) {
-        var url = API.getUrl(route: "https://tribes.sphinx.chat/tribes?limit=\(limit)&sortBy=member_count")
+        var url = API.getUrl(route: "https://tribes.sphinx.chat/tribes?limit=\(limit)&sortBy=member_count&page=\(pageNum)")
         url += (searchTerm == nil) ? "" : "&search=\(searchTerm!)"
         let tribeRequest : URLRequest? = createRequest(url, bodyParams: nil, method: "GET")
         

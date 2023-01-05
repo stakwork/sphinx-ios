@@ -92,6 +92,7 @@ class DiscoverTribesWebViewController : UIViewController{
             tableView.delegate = dataSource
             tableView.dataSource = dataSource
             dataSource.fetchTribeData()
+            dataSource.fetchTribeData(shouldAppend: true)
         }
     }
     
@@ -141,7 +142,7 @@ extension DiscoverTribesWebViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         view.endEditing(true)
         let searchTerm = (searchTextField.text == "") ? nil : searchTextField.text
-        discoverTribesTableViewDataSource?.fetchTribeData(searchTerm: searchTerm)
+        discoverTribesTableViewDataSource?.performSearch(searchTerm: searchTerm)
         return true
     }
 }

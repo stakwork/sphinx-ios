@@ -311,8 +311,7 @@ extension PodcastFeedCollectionViewController {
                 
                 return firstDate > secondDate
             }.compactMap { feed in
-                feed.getCurrentEpisode()
-                ?? feed.episodesArray.last
+                feed.episodesArray.last
             }
             .map { episode in
                 DataSourceItem.listenNowEpisode(episode)

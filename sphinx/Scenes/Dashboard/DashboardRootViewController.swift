@@ -210,14 +210,15 @@ extension DashboardRootViewController {
         )
         
         runTribesManagerInBackground()
+        activeTab = .friends
     }
     
     func runTribesManagerInBackground(){
         let tribeManager = AllTribesManager()
         tribeManager.fetchItems()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+        DispatchQueue.global().sync {
             tribeManager.preCacheTopPods()
-        })
+        }
     }
     
     func setupPlayerBar() {

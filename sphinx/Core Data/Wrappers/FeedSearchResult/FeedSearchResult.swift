@@ -12,7 +12,6 @@ import SwiftyJSON
 
 public class FeedSearchResult: NSObject {
     
-    public var objectID: NSManagedObjectID
     public var feedId: String
     public var title: String
     public var feedDescription: String?
@@ -21,7 +20,6 @@ public class FeedSearchResult: NSObject {
     public var feedType: FeedType
     
     init(
-        _ objectID: NSManagedObjectID,
         _ feedId: String,
         _ title: String,
         _ feedDescription: String?,
@@ -29,7 +27,6 @@ public class FeedSearchResult: NSObject {
         _ feedURLPath: String,
         _ feedType: FeedType) {
         
-        self.objectID = objectID
         self.feedId = feedId
         self.title = title
         self.feedDescription = feedDescription
@@ -43,7 +40,6 @@ public class FeedSearchResult: NSObject {
     ) -> FeedSearchResult {
         
         let feed = FeedSearchResult(
-            contentFeed.objectID,
             contentFeed.feedID,
             contentFeed.title ?? "",
             contentFeed.feedDescription,
@@ -67,8 +63,7 @@ public class FeedSearchResult: NSObject {
         let feedURLPath = searchResult[ContentFeed.CodingKeys.feedURL.rawValue].stringValue
         
         let feed = FeedSearchResult(
-            NSManagedObjectID.init(),
-            feedId,
+            feedId.fixedFeedId(feedUrl: feedURLPath),
             title,
             feedDescription,
             imageUrl,

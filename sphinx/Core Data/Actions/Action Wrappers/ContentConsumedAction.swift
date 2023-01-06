@@ -18,6 +18,12 @@ public class ContentConsumedAction: Codable {
         try container.encode(self.feedUrl, forKey: .feedUrl)
         try container.encode(self.feedItemId, forKey: .feedItemId)
         try container.encode(self.feedItemUrl, forKey: .feedItemUrl)
+        try container.encode(self.clipRank, forKey: .clipRank)
+        try container.encode(self.showTitle, forKey: .showTitle)
+        try container.encode(self.episodeTitle, forKey: .episodeTitle)
+        try container.encode(self.description, forKey: .description)
+        try container.encode(self.publishDate, forKey: .publishDate)
+        try container.encode(self.people, forKey: .people)
         try container.encode(self.history, forKey: .history)
     }
     
@@ -29,6 +35,12 @@ public class ContentConsumedAction: Codable {
         let feedUrl = try values.decode(String.self, forKey: .feedUrl)
         let feedItemId = try values.decode(String.self, forKey: .feedItemId)
         let feedItemUrl = try values.decode(String.self, forKey: .feedItemUrl)
+        let clipRank = try values.decode(Int.self, forKey: .clipRank)
+        let showTitle = try values.decode(String.self, forKey: .showTitle)
+        let episodeTitle = try values.decode(String.self, forKey: .episodeTitle)
+        let description = try values.decode(String.self, forKey: .description)
+        let publishDate = try values.decode(Date.self, forKey: .publishDate)
+        let people = try values.decode([String].self, forKey: .people)
         let history = try values.decode([ContentConsumedHistoryItem].self, forKey: .history)
 
         self.feedId = feedId
@@ -36,6 +48,12 @@ public class ContentConsumedAction: Codable {
         self.feedUrl = feedUrl
         self.feedItemId = feedItemId
         self.feedItemUrl = feedItemUrl
+        self.clipRank = clipRank
+        self.showTitle = showTitle
+        self.episodeTitle = episodeTitle
+        self.description = description
+        self.publishDate = publishDate
+        self.people = people
         self.history = history
     }
     
@@ -44,6 +62,12 @@ public class ContentConsumedAction: Codable {
     public var feedUrl: String
     public var feedItemId: String
     public var feedItemUrl: String
+    public var clipRank: Int
+    public var showTitle: String
+    public var episodeTitle: String
+    public var description: String
+    public var publishDate: Date
+    public var people: [String] = []
     public var history: [ContentConsumedHistoryItem] = []
     
     init(
@@ -51,13 +75,25 @@ public class ContentConsumedAction: Codable {
         feedType: Int,
         feedUrl: String,
         feedItemId: String,
-        feedItemUrl: String
+        feedItemUrl: String,
+        clipRank: Int,
+        showTitle: String,
+        episodeTitle: String,
+        description: String,
+        people: [String] = [],
+        publishDate: Date
     ) {
         self.feedId = feedId
         self.feedType = feedType
         self.feedUrl = feedUrl
         self.feedItemId = feedItemId
         self.feedItemUrl = feedItemUrl
+        self.clipRank = clipRank
+        self.showTitle = showTitle
+        self.episodeTitle = episodeTitle
+        self.description = description
+        self.people = people
+        self.publishDate = publishDate
     }
     
     func getParamsDictionary() -> [String: Any] {
@@ -66,15 +102,21 @@ public class ContentConsumedAction: Codable {
         }
         
         let json: [String: Any] = [
-            "type": ActionsManager.ActionType.ContentConsumed.rawValue,
-            "meta_data":
+            ActionTrack.CodingKeys.type.rawValue : ActionsManager.ActionType.ContentConsumed.rawValue,
+            ActionTrack.CodingKeys.metaData.rawValue :
                 [
-                    "feed_id" : self.feedId,
-                    "feed_type" : self.feedType,
-                    "feed_url" : self.feedUrl,
-                    "feed_item_id" : self.feedItemId,
-                    "feed_item_url" : self.feedItemUrl,
-                    "history" : historyArray,
+                    CodingKeys.feedId.rawValue : self.feedId,
+                    CodingKeys.feedType.rawValue : self.feedType,
+                    CodingKeys.feedUrl.rawValue : self.feedUrl,
+                    CodingKeys.feedItemId.rawValue : self.feedItemId,
+                    CodingKeys.feedItemUrl.rawValue : self.feedItemUrl,
+                    CodingKeys.clipRank.rawValue : self.clipRank,
+                    CodingKeys.showTitle.rawValue : self.showTitle,
+                    CodingKeys.episodeTitle.rawValue : self.episodeTitle,
+                    CodingKeys.description.rawValue : self.description,
+                    CodingKeys.publishDate.rawValue : round(self.publishDate.timeIntervalSince1970 * 1000),
+                    CodingKeys.people.rawValue : self.people,
+                    CodingKeys.history.rawValue : historyArray,
                 ]
         ]
         return json
@@ -121,7 +163,13 @@ extension ContentConsumedAction {
         case feedUrl = "feed_url"
         case feedItemId = "feed_item_id"
         case feedItemUrl = "feed_item_url"
+        case clipRank = "clip_rank"
+        case showTitle = "show_title"
+        case episodeTitle = "episode_title"
+        case description = "description"
         case firstInteraction = "first_interaction"
+        case publishDate = "publish_date"
+        case people = "people"
         case history = "history"
     }
 }

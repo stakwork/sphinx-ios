@@ -56,8 +56,15 @@ class RecommendationsHelper {
             let episode = PodcastEpisode(nil, item.id)
             episode.title = item.episodeTitle
             episode.episodeDescription = item.itemDescription
-            episode.datePublished = Date(timeIntervalSince1970: TimeInterval(item.date ?? 0))
-            episode.dateUpdated = Date(timeIntervalSince1970: TimeInterval(item.date ?? 0))
+            
+            if let date = item.date, date > 0 {
+                episode.datePublished = Date(timeIntervalSince1970: TimeInterval(date))
+                episode.dateUpdated = Date(timeIntervalSince1970: TimeInterval(date))
+            } else {
+                episode.datePublished = nil
+                episode.dateUpdated = nil
+            }
+            
             episode.urlPath = item.link
             episode.imageURLPath = item.mediumImageUrl ?? item.smallImageUrl
             episode.linkURLPath = item.link
@@ -65,15 +72,15 @@ class RecommendationsHelper {
             episode.type = item.type
             episode.clipStartTime = item.startSeconds
             episode.clipEndTime = item.endSeconds
+            episode.people = item.guests
+            episode.topics = selectedItem.topics
+            episode.showTitle = item.showTitle
             
             episodes.append(episode)
         }
         
         podcast.episodes = episodes
         
-        if !podcastPlayerHelper.isPlaying(podcast.feedID) {
-            let _ = podcastPlayerHelper.setNewEpisodeWith(episodeId: selectedItem.id, in: podcast)
-        }
         podcastPlayerHelper.recommendationsPodcast = podcast
         
         return podcast

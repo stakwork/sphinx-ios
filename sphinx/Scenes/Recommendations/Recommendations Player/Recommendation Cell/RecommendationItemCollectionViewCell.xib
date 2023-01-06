@@ -36,16 +36,17 @@
                             <constraint firstAttribute="width" constant="20" id="UI0-w8-IeE"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is an episode title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5RY-9D-ddu">
-                        <rect key="frame" x="104" y="16" width="255" height="15"/>
-                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="12"/>
-                        <color key="textColor" name="SecondaryText"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is an episode description to see how it looks with a large text of more than 1 line" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cku-ST-t2s">
-                        <rect key="frame" x="104" y="37" width="255" height="49.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5RY-9D-ddu">
+                        <rect key="frame" x="104" y="16" width="255" height="49.5"/>
+                        <string key="text">This is an episode title This is an episode title This is an episode title This is an episode title This is an episode title This is an episode title </string>
                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                         <color key="textColor" name="Text"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is an episode description to see how it looks with a large text of more than 1 line" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cku-ST-t2s">
+                        <rect key="frame" x="104" y="71.5" width="255" height="15.5"/>
+                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="13"/>
+                        <color key="textColor" name="SecondaryText"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LQf-Y4-AJu">

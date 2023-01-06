@@ -220,10 +220,14 @@ extension DashboardRootViewController {
         addBlurToBottomBars()
         
         dismissibleBar.onViewDimissed = {
-            self.podcastSmallPlayer.pauseIfPlaying()
-            self.hideSmallPodcastPlayer()
-            self.podcastPlayerHelper.finishAndSaveContentConsumed()
+            self.onPlayerBarDismissed()
         }
+    }
+    
+    func onPlayerBarDismissed() {
+        podcastSmallPlayer.pauseIfPlaying()
+        hideSmallPodcastPlayer()
+        podcastPlayerHelper.finishAndSaveContentConsumed()
     }
     
     func addBlurEffectTo(_ view: UIView) {
@@ -413,6 +417,7 @@ extension DashboardRootViewController {
     
     internal func resetSearchField() {
         searchTextField?.text = ""
+        view.endEditing(true)
     }
     
     

@@ -44,11 +44,11 @@ extension RecommendationDetailsView {
         andDelegate delegate: RecommendationPlayerViewDelegate?
     ) {
         if let item = podcast.getCurrentEpisode() {
-            titleLabel.text = item.title
-            descriptionLabel.text = item.subtitle
+            titleLabel.text = item.episodeDescription
+            descriptionLabel.text = item.title
             
             if let date = item.datePublished {
-                dateLabel.text = date.getLastMessageDateFormat()
+                dateLabel.text = date.getStringDate(format: "MMM dd, yyyy")
             } else {
                 dateLabel.text = "-"
             }

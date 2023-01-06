@@ -15,6 +15,7 @@ import SwiftyJSON
     func playingState(podcastId: String, duration: Int, currentTime: Int)
     func pausedState(podcastId: String, duration: Int, currentTime: Int)
     func loadingState(podcastId: String, loading: Bool)
+    func errorState(podcastId: String)
 }
 
 class PodcastPlayerHelper {
@@ -268,6 +269,8 @@ class PodcastPlayerHelper {
     ) -> Bool {
         if (podcast.currentEpisodeId != episodeId) {
             
+            self.podcast = podcast
+            
             trackItemFinished(shouldSaveAction: true)
             
             podcast.currentEpisodeId = episodeId
@@ -441,13 +444,19 @@ class PodcastPlayerHelper {
             
             let duration = Int(Double(item.asset.duration.value) / Double(item.asset.duration.timescale))
             
-            for d in delegates.values {
-                d.playingState(podcastId: podcast.feedID, duration: duration, currentTime: podcast.currentTime)
+            if (duration > 0) {
+                for d in delegates.values {
+                    d.playingState(podcastId: podcast.feedID, duration: duration, currentTime: podcast.currentTime)
+                }
+                
+                configureTimer()
+                
+                trackItemStarted(endTimestamp: previousItemTimestamp)
+            } else {
+                for d in delegates.values {
+                    d.errorState(podcastId: podcast.feedID)
+                }
             }
-            
-            configureTimer()
-            
-            trackItemStarted(endTimestamp: previousItemTimestamp)
         } else {
             prepareEpisodeWith(index: podcast.currentEpisodeIndex, in: podcast, autoPlay: true, completion: {})
         }
@@ -473,6 +482,10 @@ class PodcastPlayerHelper {
         }
         
         return playing && self.podcast?.feedID == podcastId
+    }
+    
+    func isPlayingRecommendations() -> Bool {
+        return (isPlaying() && podcast?.isRecommendationsPodcast == true)
     }
     
     func togglePlayStateFor(
@@ -678,6 +691,7 @@ class PodcastPlayerHelper {
                 return .commandFailed
             }
         }
+        MPRemoteCommandCenter.shared().changePlaybackPositionCommand.isEnabled = true
         
         MPRemoteCommandCenter.shared().skipBackwardCommand.preferredIntervals = [15]
         MPRemoteCommandCenter.shared().skipForwardCommand.preferredIntervals = [30]
@@ -711,22 +725,46 @@ class PodcastPlayerHelper {
     func trackItemStarted(
         endTimestamp: Int? = nil
     ) {
-        if let episode = podcast?.getCurrentEpisode(),
-           let feedItem: ContentFeedItem = ContentFeedItem.getItemWith(itemID: episode.itemID),
-           let time = podcast?.currentTime {
-
-            actionsManager.trackItemConsumed(item: feedItem, startTimestamp: time, endTimestamp: endTimestamp)
+        if let podcast = podcast,
+            let episode = podcast.getCurrentEpisode() {
+            
+            if let feedItem: ContentFeedItem = ContentFeedItem.getItemWith(itemID: episode.itemID) {
+                actionsManager.trackItemConsumed(
+                    item: feedItem,
+                    startTimestamp: podcast.currentTime,
+                    endTimestamp: endTimestamp
+                )
+            } else if podcast.isRecommendationsPodcast {
+                actionsManager.trackItemConsumed(
+                    item: episode,
+                    podcast: podcast,
+                    startTimestamp: podcast.currentTime,
+                    endTimestamp: endTimestamp
+                )
+            }
         }
     }
 
     func trackItemFinished(
         shouldSaveAction: Bool = false
     ) {
-        if let episode = podcast?.getCurrentEpisode(),
-           let feedItem: ContentFeedItem = ContentFeedItem.getItemWith(itemID: episode.itemID),
-            let time = podcast?.currentTime {
-
-            actionsManager.trackItemFinished(item: feedItem, timestamp: time, shouldSaveAction: shouldSaveAction)
+        if let podcast = podcast,
+            let episode = podcast.getCurrentEpisode() {
+            
+            if let feedItem: ContentFeedItem = ContentFeedItem.getItemWith(itemID: episode.itemID) {
+                actionsManager.trackItemFinished(
+                    item: feedItem,
+                    timestamp: podcast.currentTime,
+                    shouldSaveAction: shouldSaveAction
+                )
+            } else if podcast.isRecommendationsPodcast {
+                actionsManager.trackItemFinished(
+                    item: episode,
+                    podcast: podcast,
+                    timestamp: podcast.currentTime,
+                    shouldSaveAction: shouldSaveAction
+                )
+            }
         }
     }
     

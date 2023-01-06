@@ -19,6 +19,7 @@ class AllTribeFeedsCollectionViewController: UICollectionViewController {
     var onRecommendationSelected: (([RecommendationResult], String) -> Void)!
     var onContentScrolled: ((UIScrollView) -> Void)?
     var onNewResultsFetched: ((Int) -> Void)!
+    var onRefreshRecommendations: (() -> Void)!
 
     private var managedObjectContext: NSManagedObjectContext!
     private var fetchedResultsController: NSFetchedResultsController<ContentFeed>!
@@ -74,7 +75,8 @@ extension AllTribeFeedsCollectionViewController {
         onCellSelected: ((NSManagedObjectID) -> Void)!,
         onRecommendationSelected: (([RecommendationResult], String) -> Void)!,
         onNewResultsFetched: @escaping ((Int) -> Void) = { _ in },
-        onContentScrolled: ((UIScrollView) -> Void)? = nil
+        onContentScrolled: ((UIScrollView) -> Void)? = nil,
+        onRefreshRecommendations: (() -> Void)? = nil
     ) -> AllTribeFeedsCollectionViewController {
         let viewController = StoryboardScene
             .Dashboard
@@ -88,6 +90,7 @@ extension AllTribeFeedsCollectionViewController {
         viewController.onRecommendationSelected = onRecommendationSelected
         viewController.onNewResultsFetched = onNewResultsFetched
         viewController.onContentScrolled = onContentScrolled
+        viewController.onRefreshRecommendations = onRefreshRecommendations
         
         viewController.fetchedResultsController = Self.makeFetchedResultsController(using: managedObjectContext)
         viewController.fetchedResultsController.delegate = viewController
@@ -240,7 +243,7 @@ extension AllTribeFeedsCollectionViewController {
 
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .absolute(160.0),
-            heightDimension: .absolute(240.0)
+            heightDimension: .absolute(255.0)
         )
         
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
@@ -264,7 +267,7 @@ extension AllTribeFeedsCollectionViewController {
 
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
-            heightDimension: .absolute(240.0)
+            heightDimension: .absolute(255.0)
         )
         
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
@@ -420,8 +423,11 @@ extension AllTribeFeedsCollectionViewController {
                 ) as? ReusableHeaderView else {
                     preconditionFailure()
                 }
-
-                let section = CollectionViewSection.allCases[indexPath.section]
+                
+                var section = CollectionViewSection.allCases[indexPath.section]
+                if(section == .recommendations && self.isTrackingEnabled() == false){
+                    section = .followedFeeds
+                }
                 
                 let firstDataSourceItem = self.dataSource.itemIdentifier(for: IndexPath(row: 0, section: 0))
                 let isLoadingRecommendations = firstDataSourceItem?.isLoading == true
@@ -444,36 +450,42 @@ extension AllTribeFeedsCollectionViewController {
 // MARK: - Data Source Snapshot
 extension AllTribeFeedsCollectionViewController {
 
+    func isTrackingEnabled()->Bool{
+        return UserDefaults.Keys.shouldTrackActions.get(defaultValue: false)
+    }
     func makeSnapshotForCurrentState(
         loadingRecommendations: Bool = false
     ) -> DataSourceSnapshot {
         var snapshot = DataSourceSnapshot()
         
-        snapshot.appendSections([CollectionViewSection.recommendations])
-        
-        if loadingRecommendations {
-            snapshot.appendItems(
-                [DataSourceItem.loading],
-                toSection: .recommendations
-            )
-        } else {
+        if(isTrackingEnabled()){
+            snapshot.appendSections([CollectionViewSection.recommendations])
             
-            let recommendedSourceItems = recommendedFeeds.compactMap { recommendations -> DataSourceItem? in
-                return DataSourceItem.recommendedFeed(recommendations)
-            }
-            
-            if recommendedSourceItems.count > 0 {
+            if loadingRecommendations {
                 snapshot.appendItems(
-                    recommendedSourceItems,
+                    [DataSourceItem.loading],
                     toSection: .recommendations
                 )
             } else {
-                snapshot.appendItems(
-                    [DataSourceItem.noResults],
-                    toSection: .recommendations
-                )
+                
+                let recommendedSourceItems = recommendedFeeds.compactMap { recommendations -> DataSourceItem? in
+                    return DataSourceItem.recommendedFeed(recommendations)
+                }
+                
+                if recommendedSourceItems.count > 0 {
+                    snapshot.appendItems(
+                        recommendedSourceItems,
+                        toSection: .recommendations
+                    )
+                } else {
+                    snapshot.appendItems(
+                        [DataSourceItem.noResults],
+                        toSection: .recommendations
+                    )
+                }
             }
         }
+        
   
         let followedSourceItems = followedFeeds.sorted { (first, second) in
             let firstDate = first.dateUpdated ?? first.datePublished ?? Date.init(timeIntervalSince1970: 0)
@@ -684,7 +696,12 @@ extension AllTribeFeedsCollectionViewController: NSFetchedResultsControllerDeleg
 
 extension AllTribeFeedsCollectionViewController: DashboardFeedHeaderDelegate {
     func didTapOnRefresh() {
-        loadRecommendations(forceRefresh: true)
+        if (PodcastPlayerHelper.sharedInstance.isPlayingRecommendations()) {
+            AlertHelper.showAlert(title: "Recommendations", message: "You can't get new recommendations while playing them. Please stop playing before refreshing.", on: self)
+        } else {
+            loadRecommendations(forceRefresh: true)
+            onRefreshRecommendations?()
+        }
     }
 }
 

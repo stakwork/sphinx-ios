@@ -4,10 +4,8 @@ import CoreData
 
 extension DashboardRootViewController: DashboardFeedsListContainerViewControllerDelegate, NewsletterFeedContainerViewControllerDelegate {
     
-    func viewController(_ viewController: UIViewController, didSelectFeedSearchResult searchResult: FeedSearchResult) {
-        let contentFeed: ContentFeed? = CoreDataManager.sharedManager.getObjectWith(objectId: searchResult.objectID)
-        
-        if let contentFeed = contentFeed {
+    func viewController(_ viewController: UIViewController, didSelectFeedSearchResult feedId: String) {
+        if let contentFeed = ContentFeed.getFeedWith(feedId: feedId) {
             if contentFeed.isPodcast {
                 let podcastFeed = PodcastFeed.convertFrom(contentFeed: contentFeed)
                 self.viewController(self, didSelectPodcastFeed: podcastFeed)
@@ -66,6 +64,8 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
 
         if let latestEpisode = videoFeed.videosArray.first {
             presentVideoPlayer(for: latestEpisode)
+        } else {
+            AlertHelper.showAlert(title: "Invalid channel or playlist", message: "No videos available")
         }
     }
     
@@ -220,8 +220,23 @@ extension DashboardRootViewController {
                 selectedItem: recommendation
             )
             
+            pausePlayingIfNeeded(podcast: podcast, itemId: recommendationId)
+            
             presentRecommendationsPlayerVC(for: podcast)
         }
+    }
+    
+    private func pausePlayingIfNeeded(
+        podcast: PodcastFeed,
+        itemId: String
+    ) {
+        if podcastPlayerHelper.isPlaying(podcast.feedID) {
+            if podcast.getCurrentEpisode()?.itemID != itemId {
+                podcastPlayerHelper.shouldPause()
+            }
+        }
+        
+        let _ = podcastPlayerHelper.setNewEpisodeWith(episodeId: itemId, in: podcast)
     }
     
     private func presentRecommendationsPlayerVC(

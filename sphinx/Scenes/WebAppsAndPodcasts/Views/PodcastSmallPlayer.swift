@@ -139,7 +139,7 @@ class PodcastSmallPlayer: UIView {
         let episode = podcast.getCurrentEpisode()
         
         episodeLabel.text = episode?.title ?? "Episode with no title"
-        contributorLabel.text = podcast.author ?? podcast.title ?? ""
+        contributorLabel.text = podcast.author ?? episode?.showTitle ?? podcast.title ?? ""
         
         if let imageUrlString = episode?.imageURLPath,
            let imageURL = URL(string: imageUrlString), !imageUrlString.isEmpty {
@@ -274,4 +274,6 @@ extension PodcastSmallPlayer : PodcastPlayerDelegate {
         showEpisodeInfo()
         audioLoading = loading
     }
+    
+    func errorState(podcastId: String) {}
 }

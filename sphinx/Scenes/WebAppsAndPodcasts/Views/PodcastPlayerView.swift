@@ -414,9 +414,15 @@ extension PodcastPlayerView : PodcastPlayerDelegate {
         delegate?.shouldReloadEpisodesTable()
         audioLoading = false
     }
+    
+    func errorState(podcastId: String) {}
 }
 
 extension PodcastPlayerView: CustomBoostViewDelegate {
+    func didStartBoostAmountEdit() {
+        self.boostDelegate?.didStartEditingBoostAmount?()
+    }
+    
     func didTouchBoostButton(withAmount amount: Int) {
         if let episode = podcast.getCurrentEpisode(),
            let objectID = episode.objectID {

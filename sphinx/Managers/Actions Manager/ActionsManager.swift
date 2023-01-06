@@ -398,38 +398,35 @@ class ActionsManager {
             return
         }
         
-        let dispatchQueue = DispatchQueue(label: "sync-actions")
-        dispatchQueue.async {
-            let actions = ActionTrack.getUnsynced()
-            
-            guard actions.count > 0 else {
-                completion?()
-                return
-            }
-            
-            let chunkedActions = actions.chunked(into: 50)
-            
-            let dispatchGroup = DispatchGroup()
-            let dispatchSemaphore = DispatchSemaphore(value: 0)
-            
-            for chunk in chunkedActions {
-                
-                dispatchGroup.enter()
-                
-                API.sharedInstance.syncActions(actions: chunk, callback: { success in
-                    if (success) {
-                        self.updateSyncedActions(objectIds: chunk.map { $0.objectID })
-                    }
-                    
-                    dispatchSemaphore.signal()
-                    dispatchGroup.leave()
-                })
-                
-                dispatchSemaphore.wait()
-            }
-            
+        let actions = ActionTrack.getUnsynced()
+        
+        guard actions.count > 0 else {
             completion?()
+            return
         }
+        
+        let chunkedActions = actions.chunked(into: 50)
+        
+        let dispatchGroup = DispatchGroup()
+        let dispatchSemaphore = DispatchSemaphore(value: 0)
+        
+        for chunk in chunkedActions {
+            
+            dispatchGroup.enter()
+            
+            API.sharedInstance.syncActions(actions: chunk, callback: { success in
+                if (success) {
+                    self.updateSyncedActions(objectIds: chunk.map { $0.objectID })
+                }
+                
+                dispatchSemaphore.signal()
+                dispatchGroup.leave()
+            })
+            
+            dispatchSemaphore.wait()
+        }
+        
+        completion?()
     }
     
     func updateSyncedActions(objectIds: [NSManagedObjectID]) {

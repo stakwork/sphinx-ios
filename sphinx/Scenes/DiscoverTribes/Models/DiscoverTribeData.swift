@@ -21,9 +21,9 @@ class DiscoverTribeData: Mappable {
     }
     
     func mapping(map: Map) {
-        imgURL              <- map["img"]
+        imgURL            <- map["img"]
         name              <- map["name"]
-        description              <- map["description"]
+        description       <- map["description"]
         uuid              <- map["uuid"]
         host              <- map["host"]
     }

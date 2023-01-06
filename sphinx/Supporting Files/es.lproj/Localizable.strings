@@ -67,6 +67,8 @@
 "left-menu.dashboard" = "Inicio";
 "left-menu.contacts" = "Contactos";
 "left-menu.profile" = "Perfil";
+"left-menu.discover" = "Buscar Tribus";
+
 "left-menu.buy-karma-button" = "Comprar 1000 Karma";
 "support.describe.problem" = "Describe tu problema aquí...";
 "support.logs.copied" = "Registros copiados al portapapeles";

@@ -41,8 +41,11 @@ class DiscoverTribesTableViewCell: UITableViewCell {
     
     func configureCell(tribeData:DiscoverTribeData){
         if let urlString = tribeData.imgURL,
-           let url = URL(string: urlString){
-            self.tribeImageView.sd_setImage(with: url)
+           let url = URL(string: urlString) {
+            
+            tribeImageView.sd_setImage(with: url, placeholderImage: UIImage(named: "tribePlaceholder"))
+            tribeImageView.layer.cornerRadius = 10
+            tribeImageView.clipsToBounds = true
         }
         
         titleLabel.text = tribeData.name
@@ -64,13 +67,11 @@ class DiscoverTribesTableViewCell: UITableViewCell {
         joinButton.titleLabel?.font = UIFont(name: "Roboto-Bold", size: 14.0)
         joinButton.layer.cornerRadius = 4.0
         let host = tribeData.host ?? API.kTribesServerBaseURL.replacingOccurrences(of: "https://", with: "")
-        if let uuid = tribeData.uuid//,
-        {
+        if let uuid = tribeData.uuid {
             joinButton.backgroundColor = UIColor.Sphinx.PrimaryBlue
             cellURL = URL(string: "sphinx.chat://?action=tribe&uuid=\(uuid)&host=\(host)")
             joinButton.addTarget(self, action: #selector(handleJoinTap), for: .touchUpInside)
-        }
-        else{
+        } else {
             joinButton.backgroundColor = UIColor.lightGray
             joinButton.isEnabled = false
         }

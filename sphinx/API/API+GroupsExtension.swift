@@ -121,27 +121,21 @@ extension API {
         errorCallback: @escaping EmptyCallback,
         limit : Int = 20,
         searchTerm:String? = nil,
-        pageNum : Int = 0
+        page : Int = 0
     ) {
-        var url = API.getUrl(route: "https://tribes.sphinx.chat/tribes?limit=\(limit)&sortBy=member_count&page=\(pageNum)")
+        var url = API.getUrl(route: "\(API.kTribesServerBaseURL)/tribes?limit=\(limit)&sortBy=member_count&page=\(page)")
         url += (searchTerm == nil) ? "" : "&search=\(searchTerm!)"
-        let tribeRequest : URLRequest? = createRequest(url, bodyParams: nil, method: "GET")
         
-        guard let request = tribeRequest else {
+        guard let request = createRequest(url.percentEscaped ?? url, bodyParams: nil, method: "GET") else {
             errorCallback()
             return
         }
         
-        //NEEDS TO BE CHANGED
-        sphinxRequest(request) { response in
+        AF.request(request).responseJSON { response in
             switch response.result {
             case .success(let data):
-                if let json = data as? [NSDictionary] {
-                    callback((json))
-                } else {
-                    errorCallback()
-                }
-            case .failure(_):
+                callback(data as? [NSDictionary] ?? [])
+            case .failure(let error):
                 errorCallback()
             }
         }

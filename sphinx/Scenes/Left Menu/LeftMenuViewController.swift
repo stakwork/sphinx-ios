@@ -33,21 +33,34 @@ class LeftMenuViewController: UIViewController {
 
     var buttonsCount = 2
     
-    let menuOptions:[MenuOption] = [
-        MenuOption(iconCharacter: "", optionTitle: "left-menu.dashboard".localized),
-        MenuOption(iconCharacter: "", optionTitle: "left-menu.contacts".localized),
-        MenuOption(iconCharacter: "", optionTitle: "left-menu.profile".localized),
-        MenuOption(iconCharacter: "🔍", optionTitle: "Discover")
+    enum MenuOptions: Int {
+        case Dashboard
+        case Contacts
+        case Profile
+        case Discover
+    }
+    
+    let menuOptions: [MenuOption] = [
+        MenuOption(tag: MenuOptions.Dashboard, iconCharacter: "", optionTitle: "left-menu.dashboard".localized),
+        MenuOption(tag: MenuOptions.Contacts, iconCharacter: "", optionTitle: "left-menu.contacts".localized),
+        MenuOption(tag: MenuOptions.Profile, iconCharacter: "", optionTitle: "left-menu.profile".localized),
+        MenuOption(tag: MenuOptions.Discover, iconCharacter: "search", optionTitle: "left-menu.discover".localized)
     ]
     
     let kMenuRowHeight: CGFloat = 65
     let kButtonRowHeight: CGFloat = 75
     
     struct MenuOption {
-        var iconCharacter = ""
-        var optionTitle = ""
+        var iconCharacter: String
+        var optionTitle: String
+        var tag: MenuOptions
         
-        init(iconCharacter: String, optionTitle: String) {
+        init(
+            tag: MenuOptions,
+            iconCharacter: String,
+            optionTitle: String
+        ) {
+            self.tag = tag
             self.iconCharacter = iconCharacter
             self.optionTitle = optionTitle
         }
@@ -215,27 +228,25 @@ extension LeftMenuViewController : UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let option = menuOptions[indexPath.row]
         
-        switch (option.optionTitle) {
-        case "left-menu.profile".localized:
+        switch (option.tag) {
+        case MenuOptions.Profile:
             let profile = ProfileViewController.instantiate(rootViewController: rootViewController, delegate: self)
             goTo(vc: profile)
-        case "left-menu.contacts".localized:
+        case MenuOptions.Contacts:
             let addressBook = AddressBookViewController.instantiate(rootViewController: rootViewController)
             goTo(vc: addressBook)
-        case "left-menu.dashboard".localized:
+        case MenuOptions.Dashboard:
             let dashboardRootVC = DashboardRootViewController.instantiate(
                 rootViewController: rootViewController,
                 leftMenuDelegate: self
             )
             
             goTo(vc: dashboardRootVC)
-        case "Discover":
+        case MenuOptions.Discover:
             let discoverVC = DiscoverTribesWebViewController.instantiate(
                 rootViewController: self.rootViewController
             )
             goTo(vc: discoverVC)
-        default:
-            break
         }
     }
 }

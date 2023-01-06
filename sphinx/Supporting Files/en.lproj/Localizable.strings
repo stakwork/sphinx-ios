@@ -68,6 +68,8 @@
 "left-menu.dashboard" = "Dashboard";
 "left-menu.contacts" = "Contacts";
 "left-menu.profile" = "Profile";
+"left-menu.discover" = "Discover Tribes";
+
 "left-menu.buy-karma-button" = "Buy 1000 Karma";
 "support.describe.problem" = "Describe your problem here...";
 "support.logs.copied" = "Logs copied to clipboard";

@@ -49,6 +49,8 @@ protocol DashboardFeedsListContainerViewControllerDelegate: AnyObject {
     func viewControllerContentScrolled(
         scrollView: UIScrollView
     )
+    
+    func viewControllerRecommendationsRefreshed()
 }
 
 
@@ -75,6 +77,7 @@ class DashboardFeedsContainerViewController: UIViewController {
         }
     }
     
+    let actionsManager = ActionsManager.sharedInstance
     
     internal lazy var emptyStateViewController: DashboardFeedsEmptyStateViewController = {
         DashboardFeedsEmptyStateViewController.instantiate(
@@ -89,7 +92,8 @@ class DashboardFeedsContainerViewController: UIViewController {
             onCellSelected: handleAllFeedsCellSelection(_:),
             onRecommendationSelected: handleRecommendationSelection(_:_:),
             onNewResultsFetched: handleNewResultsFetch(_:),
-            onContentScrolled: handleFeedScroll(scrollView:)
+            onContentScrolled: handleFeedScroll(scrollView:),
+            onRefreshRecommendations: handleRecomendationsRefresh
         )
     }()
     
@@ -203,6 +207,10 @@ extension DashboardFeedsContainerViewController {
         }
     }
     
+    private func handleRecomendationsRefresh() {
+        feedsListContainerDelegate?.viewControllerRecommendationsRefreshed()
+    }
+    
     
     private func mainContentViewController(
         for filterChip: ContentFilterOption
@@ -238,6 +246,19 @@ extension DashboardFeedsContainerViewController {
             child: newViewController,
             container: feedContentCollectionViewContainer
         )
+        
+        if activeFilterOption.id == ContentFilterOption.allContent.id {
+            actionsManager.saveFeedSearches()
+            synActionsAndRefreshRecommendations()
+        }
+    }
+    
+    private func synActionsAndRefreshRecommendations() {
+        allTribeFeedsCollectionViewController.updateLoadingRecommendations()
+        
+        actionsManager.syncActions() {
+            self.allTribeFeedsCollectionViewController.loadRecommendations(forceRefresh: true)
+        }
     }
     
     

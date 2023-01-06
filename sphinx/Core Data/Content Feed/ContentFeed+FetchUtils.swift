@@ -41,11 +41,14 @@ extension ContentFeed {
         public static func matching(feedID: String) -> NSPredicate {
             let keyword = "IN"
             let formatSpecifier = "%@"
+            let rawFeedId = feedID
+                .replacingOccurrences(of: "yt:channel:", with: "")
+                .replacingOccurrences(of: "yt:playlist:", with: "")
 
             return NSPredicate(
                 format: "%K \(keyword) \(formatSpecifier)",
                 "feedID",
-                [feedID, "yt:channel:\(feedID)", "yt:playlist:\(feedID)"]
+                [feedID, "yt:channel:\(rawFeedId)", "yt:playlist:\(rawFeedId)"]
             )
         }
         

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Roboto-Medium.ttf">
+            <string>Roboto-Medium</string>
+        </array>
+        <array key="Roboto-Regular.ttf">
+            <string>Roboto-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" restorationIdentifier="DiscoverTribesTableViewCell" selectionStyle="default" indentationWidth="10" rowHeight="131" id="KGk-i7-Jjw" customClass="DiscoverTribesTableViewCell" customModule="sphinx" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="333" height="130"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="333" height="130"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="QSy-OL-BRt">
+                        <rect key="frame" x="18" y="16" width="82" height="82"/>
+                        <color key="tintColor" name="MainBottomIcons"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="QSy-OL-BRt" secondAttribute="height" multiplier="1:1" id="Gyj-Yd-7Y0"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qKb-wf-NCP">
+                        <rect key="frame" x="116" y="16" width="201" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21.000000000000004" id="PB7-TY-KU2"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="17"/>
+                        <color key="textColor" name="Text"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description label Description label Description label Description label Description label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="COE-my-hxa">
+                        <rect key="frame" x="116" y="42" width="201" height="28.5"/>
+                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="12"/>
+                        <color key="textColor" name="SecondaryText"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L9M-sx-phJ">
+                        <rect key="frame" x="217" y="83" width="100" height="31"/>
+                        <color key="backgroundColor" name="PrimaryBlue"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="100" id="Guf-nD-7KJ"/>
+                        </constraints>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <state key="normal" title="Button"/>
+                        <buttonConfiguration key="configuration" style="plain" title="Join"/>
+                    </button>
+                </subviews>
+                <color key="backgroundColor" name="Body"/>
+                <constraints>
+                    <constraint firstItem="COE-my-hxa" firstAttribute="top" secondItem="qKb-wf-NCP" secondAttribute="bottom" constant="5" id="BkK-1N-SJF"/>
+                    <constraint firstItem="QSy-OL-BRt" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="FF6-mG-8UY"/>
+                    <constraint firstAttribute="trailing" secondItem="qKb-wf-NCP" secondAttribute="trailing" constant="16" id="PsH-Ps-HDl"/>
+                    <constraint firstItem="qKb-wf-NCP" firstAttribute="leading" secondItem="QSy-OL-BRt" secondAttribute="trailing" constant="16" id="YwX-d0-Xdy"/>
+                    <constraint firstAttribute="bottom" secondItem="L9M-sx-phJ" secondAttribute="bottom" constant="16" id="bJT-Xv-en1"/>
+                    <constraint firstAttribute="bottom" secondItem="QSy-OL-BRt" secondAttribute="bottom" constant="32" id="bJc-9k-EZp"/>
+                    <constraint firstItem="L9M-sx-phJ" firstAttribute="trailing" secondItem="COE-my-hxa" secondAttribute="trailing" id="bSI-5O-EDf"/>
+                    <constraint firstItem="qKb-wf-NCP" firstAttribute="top" secondItem="QSy-OL-BRt" secondAttribute="top" id="dwJ-WA-ZGD"/>
+                    <constraint firstItem="COE-my-hxa" firstAttribute="leading" secondItem="qKb-wf-NCP" secondAttribute="leading" id="lrU-YP-McN"/>
+                    <constraint firstItem="COE-my-hxa" firstAttribute="trailing" secondItem="qKb-wf-NCP" secondAttribute="trailing" id="vkN-C9-eaU"/>
+                    <constraint firstItem="QSy-OL-BRt" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="18" id="wqZ-s0-SuO"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="descriptionLabel" destination="COE-my-hxa" id="Enh-bv-LBf"/>
+                <outlet property="joinButton" destination="L9M-sx-phJ" id="ePX-E2-J8o"/>
+                <outlet property="titleLabel" destination="qKb-wf-NCP" id="3NA-ft-rdE"/>
+                <outlet property="tribeImageView" destination="QSy-OL-BRt" id="4nY-QQ-H4T"/>
+            </connections>
+            <point key="canvasLocation" x="-11.450381679389313" y="50.352112676056343"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <namedColor name="Body">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="MainBottomIcons">
+            <color red="0.37254901960784315" green="0.38823529411764707" blue="0.40784313725490196" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="PrimaryBlue">
+            <color red="0.38039215686274508" green="0.54117647058823526" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="SecondaryText">
+            <color red="0.55686274509803924" green="0.58823529411764708" blue="0.61176470588235299" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Text">
+            <color red="0.23529411764705882" green="0.24705882352941178" blue="0.25490196078431371" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

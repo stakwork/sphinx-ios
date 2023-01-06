@@ -30,14 +30,16 @@ public class ContentFeed: NSManagedObject {
             contentFeed = ContentFeed(entity: ContentFeed.entity(), insertInto: nil)
         }
         
-        contentFeed.feedID = feedId
+        let feedUrl = json[CodingKeys.feedURL.rawValue].stringValue
+        
+        contentFeed.feedURL = URL(string: feedUrl)
+        contentFeed.feedID = feedId.fixedFeedId(feedUrl: feedUrl)
         
         contentFeed.title = json[CodingKeys.title.rawValue].stringValue
         contentFeed.feedKindValue = FeedType(rawValue: json[CodingKeys.feedKindValue.rawValue].int16Value)?.rawValue ?? 0
         contentFeed.ownerURL = URL(string: json[CodingKeys.ownerURL.rawValue].stringValue)
         contentFeed.generator = json[CodingKeys.generator.rawValue].stringValue
         contentFeed.authorName = json[CodingKeys.authorName.rawValue].stringValue
-        contentFeed.feedURL = URL(string: json[CodingKeys.feedURL.rawValue].stringValue)
         contentFeed.linkURL = URL(string: json[CodingKeys.linkURL.rawValue].stringValue)
         contentFeed.datePublished = Date(timeIntervalSince1970: json[CodingKeys.datePublished.rawValue].doubleValue)
         contentFeed.dateUpdated = Date(timeIntervalSince1970: json[CodingKeys.dateUpdated.rawValue].doubleValue)
@@ -200,5 +202,19 @@ public class ContentFeed: NSManagedObject {
                 completionHandler?(.failure((API.RequestError.failedToFetchContentFeed)))
             }
         )
+    }
+}
+
+extension String {
+    func fixedFeedId(feedUrl: String) -> String {
+        if feedUrl.isYouTubeRSSFeed {
+            if let range = feedUrl.range(of: "?playlist_id=") {
+                return "yt:playlist:\(feedUrl[range.upperBound...])"
+            }
+            if let range = feedUrl.range(of: "?channel_id=") {
+                return "yt:channel:\(feedUrl[range.upperBound...])"
+            }
+        }
+        return self
     }
 }

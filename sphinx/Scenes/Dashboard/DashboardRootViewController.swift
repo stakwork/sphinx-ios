@@ -25,6 +25,11 @@ class DashboardRootViewController: RootViewController {
     
     @IBOutlet weak var bottomBarBottomConstraint: NSLayoutConstraint!
     
+    let buttonTitles : [String] = [
+        "dashboard.tabs.feed".localized,
+        "dashboard.tabs.friends".localized,
+        "dashboard.tabs.tribes".localized,
+    ]
     @IBOutlet weak var dashboardNavigationTabs: CustomSegmentedControl! {
         didSet {
             dashboardNavigationTabs.configureFromOutlet(
@@ -225,10 +230,14 @@ extension DashboardRootViewController {
         addBlurToBottomBars()
         
         dismissibleBar.onViewDimissed = {
-            self.podcastSmallPlayer.pauseIfPlaying()
-            self.hideSmallPodcastPlayer()
-            self.podcastPlayerHelper.finishAndSaveContentConsumed()
+            self.onPlayerBarDismissed()
         }
+    }
+    
+    func onPlayerBarDismissed() {
+        podcastSmallPlayer.pauseIfPlaying()
+        hideSmallPodcastPlayer()
+        podcastPlayerHelper.finishAndSaveContentConsumed()
     }
     
     func addBlurEffectTo(_ view: UIView) {
@@ -418,6 +427,7 @@ extension DashboardRootViewController {
     
     internal func resetSearchField() {
         searchTextField?.text = ""
+        view.endEditing(true)
     }
     
     

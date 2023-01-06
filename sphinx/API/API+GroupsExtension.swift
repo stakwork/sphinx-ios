@@ -116,6 +116,31 @@ extension API {
         }
     }
     
+    func getTribesList(
+        callback: @escaping GetAllTribesCallback,
+        errorCallback: @escaping EmptyCallback,
+        limit : Int = 20,
+        searchTerm:String? = nil,
+        page : Int = 0
+    ) {
+        var url = API.getUrl(route: "\(API.kTribesServerBaseURL)/tribes?limit=\(limit)&sortBy=member_count&page=\(page)")
+        url += (searchTerm == nil) ? "" : "&search=\(searchTerm!)"
+        
+        guard let request = createRequest(url.percentEscaped ?? url, bodyParams: nil, method: "GET") else {
+            errorCallback()
+            return
+        }
+        
+        AF.request(request).responseJSON { response in
+            switch response.result {
+            case .success(let data):
+                callback(data as? [NSDictionary] ?? [])
+            case .failure(let error):
+                errorCallback()
+            }
+        }
+    }
+    
     func getTribeInfo(
         host: String,
         uuid: String,

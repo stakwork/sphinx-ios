@@ -187,6 +187,13 @@ class JoinGroupDetailsViewController: KeyboardEventsViewController {
                     if let feedUrl = tribeInfo.feedUrl {
                         ContentFeed.fetchChatFeedContentInBackground(feedUrl: feedUrl, chatObjectID: chat.objectID, completion: {
                             self.delegate?.shouldReloadContacts?(reload: true)
+                            if let dashboardDelegate = self.delegate as? DashboardRootViewController,
+                               let tribesIndex = dashboardDelegate.buttonTitles.firstIndex(where: {
+                                   $0 == "dashboard.tabs.tribes".localized
+                               }){
+                                dashboardDelegate.activeTab = .tribes
+                                dashboardDelegate.segmentedControlDidSwitch(dashboardDelegate.dashboardNavigationTabs, to: tribesIndex)
+                            }
                             self.closeButtonTouched()
                         })
                     }

@@ -197,7 +197,7 @@ extension PodcastFeedCollectionViewController {
 
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .absolute(160.0),
-            heightDimension: .absolute(240.0)
+            heightDimension: .absolute(255.0)
         )
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
 
@@ -321,8 +321,7 @@ extension PodcastFeedCollectionViewController {
                 
                 return firstDate > secondDate
             }.compactMap { feed in
-                feed.getCurrentEpisode()
-                ?? feed.episodesArray.last
+                feed.episodesArray.last
             }
             .map { episode in
                 DataSourceItem.listenNowEpisode(episode)

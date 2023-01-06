@@ -27,5 +27,17 @@ extension ContentFeedItem {
             mediaKindValue = newValue.rawValue
         }
     }
+    
+    public var people: [String] {
+        get {
+            if let author = self.authorName, !author.isEmpty {
+                return [author]
+            }
+            if let author = self.contentFeed?.authorName, !author.isEmpty {
+                return [author]
+            }
+            return []
+        }
+    }
 }
     

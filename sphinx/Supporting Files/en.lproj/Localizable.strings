@@ -68,6 +68,8 @@
 "left-menu.dashboard" = "Dashboard";
 "left-menu.contacts" = "Contacts";
 "left-menu.profile" = "Profile";
+"left-menu.discover" = "Discover Tribes";
+
 "left-menu.buy-karma-button" = "Buy 1000 Karma";
 "support.describe.problem" = "Describe your problem here...";
 "support.logs.copied" = "Logs copied to clipboard";
@@ -526,3 +528,13 @@
 "feed.search-video-quantity" = "thousands of videos";
 "feed.search-video-source" = "on Youtube";
 "feed.search-other-source" = "your subscribed feeds";
+
+//TIME
+"time.in-the-future" = "in the future";
+"time.moments-ago" = "moments ago";
+"time.a-minute-ago" = "a minute ago";
+"time.minutes-ago" = "%d minutes ago";
+"time.an-hour-ago" = "an hour ago";
+"time.hours-ago" = "%d hours ago";
+"time.yesterday" = "yesterday";
+"time.days-ago" = "%d days ago";

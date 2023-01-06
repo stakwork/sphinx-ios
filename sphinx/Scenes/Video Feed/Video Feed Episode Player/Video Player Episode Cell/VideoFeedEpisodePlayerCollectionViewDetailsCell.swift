@@ -139,6 +139,10 @@ extension VideoFeedEpisodePlayerCollectionViewDetailsCell {
 }
 
 extension VideoFeedEpisodePlayerCollectionViewDetailsCell : CustomBoostViewDelegate {
+    func didStartBoostAmountEdit() {
+        
+    }
+    
     func didTouchBoostButton(withAmount amount: Int) {
         let itemID = videoEpisode.videoID
         

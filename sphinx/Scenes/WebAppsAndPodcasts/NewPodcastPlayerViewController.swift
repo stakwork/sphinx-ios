@@ -14,8 +14,9 @@ protocol PodcastPlayerVCDelegate: AnyObject {
     func shouldGoToPlayer(podcast: PodcastFeed)
 }
 
-protocol CustomBoostDelegate: AnyObject {
+@objc protocol CustomBoostDelegate: AnyObject {
     func didSendBoostMessage(success: Bool, message: TransactionMessage?)
+    @objc optional func didStartEditingBoostAmount()
 }
 
 class NewPodcastPlayerViewController: UIViewController {
@@ -55,7 +56,6 @@ class NewPodcastPlayerViewController: UIViewController {
         }
     }
     
-    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
@@ -70,6 +70,8 @@ class NewPodcastPlayerViewController: UIViewController {
                     withKey: PodcastPlayerHelper.DelegateKeys.podcastPlayerVC.rawValue
                 )
             }
+            
+            PodcastPlayerHelper.sharedInstance.finishAndSaveContentConsumed()
         }
     }
     
@@ -198,6 +200,14 @@ extension NewPodcastPlayerViewController : PodcastPlayerViewDelegate {
 }
 
 extension NewPodcastPlayerViewController : CustomBoostDelegate {
+    func didStartEditingBoostAmount() {
+        if tableView.numberOfRows(inSection: 0) < 2{
+            return
+        }
+        let ip = IndexPath(item: 1, section: 0)
+        self.tableView.scrollToRow(at: ip, at: .middle, animated: true)
+    }
+    
     func didSendBoostMessage(success: Bool, message: TransactionMessage?) {
         boostDelegate?.didSendBoostMessage(success: success, message: message)
     }

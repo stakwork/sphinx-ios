@@ -20,7 +20,7 @@ extension PodcastFeed {
             let typeFormatSpecifier = "%d"
 
             return NSPredicate(
-                format: "%K \(keyword) \(formatSpecifier) AND feedKindValue == \(typeFormatSpecifier)",
+                format: "%K \(keyword) \(formatSpecifier) AND feedKindValue == \(typeFormatSpecifier) AND (isSubscribedToFromSearch == true OR chat != nil)",
                 "title",
                 searchQuery,
                 FeedType.Podcast.rawValue

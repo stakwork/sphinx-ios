@@ -24,6 +24,7 @@ target 'sphinx' do
     pod "youtube-ios-player-helper", "~> 1.0.3"
     pod 'MarqueeLabel'
     pod 'HDWalletKit'
+    pod 'ObjectMapper'
     
     post_install do |installer|
       installer.pods_project.targets.each do |target|

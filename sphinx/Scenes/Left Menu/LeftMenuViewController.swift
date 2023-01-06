@@ -36,7 +36,8 @@ class LeftMenuViewController: UIViewController {
     let menuOptions:[MenuOption] = [
         MenuOption(iconCharacter: "", optionTitle: "left-menu.dashboard".localized),
         MenuOption(iconCharacter: "", optionTitle: "left-menu.contacts".localized),
-        MenuOption(iconCharacter: "", optionTitle: "left-menu.profile".localized)
+        MenuOption(iconCharacter: "", optionTitle: "left-menu.profile".localized),
+        MenuOption(iconCharacter: "🔍", optionTitle: "Discover")
     ]
     
     let kMenuRowHeight: CGFloat = 65
@@ -228,6 +229,11 @@ extension LeftMenuViewController : UITableViewDelegate {
             )
             
             goTo(vc: dashboardRootVC)
+        case "Discover":
+            let discoverVC = DiscoverTribesWebViewController.instantiate(
+                rootViewController: self.rootViewController
+            )
+            goTo(vc: discoverVC)
         default:
             break
         }

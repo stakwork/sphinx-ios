@@ -22,7 +22,6 @@ class AllTribesManager : NSObject{
             return
         }
         
-
         //1. Fetch results from memory
         guard
             let resultController = fetchedResultsController as? NSFetchedResultsController<NSManagedObject>,
@@ -32,23 +31,55 @@ class AllTribesManager : NSObject{
             return
         }
         //Pull only the followed podcasts
-        let followedPodFeeds = foundFeeds.sorted { (first, second) in
+        let followedFeeds = foundFeeds.sorted { (first, second) in
             let firstDate = first.dateUpdated ?? first.datePublished ?? Date.init(timeIntervalSince1970: 0)
             let secondDate = second.dateUpdated ?? second.datePublished ?? Date.init(timeIntervalSince1970: 0)
 
             return firstDate > secondDate
-        }.filter({$0.isPodcast == true})
-        print(followedPodFeeds)
+        }//.filter({$0.isPodcast == true})
+        print(followedFeeds)
         //2. Walk through each podcast feed
-        for feed in followedPodFeeds{
-            if let valid_url = feed.feedURL{
-                ContentFeed.fetchFeedItemsInBackground(feedUrl: valid_url.absoluteString, contentFeedObjectID: feed.objectID, completion: {
-                    self.downloadLastPod(feed: feed)
-                })
+        var didRetrieveMediaTypeLookup : [ContentFeedMediaKind : Bool] = [
+            .video : false,
+            .newsletter : false,
+            .podcast : false
+        ]
+        
+        for feed in followedFeeds{
+            switch(feed.contentMediaKind){
+            case .podcast:
+                if let valid_url = feed.feedURL{
+                    ContentFeed.fetchFeedItemsInBackground(feedUrl: valid_url.absoluteString, contentFeedObjectID: feed.objectID, completion: {
+                        self.downloadLastPod(feed: feed)
+                    })
+                }
+                else{
+                    downloadLastPod(feed: feed)
+                }
+                didRetrieveMediaTypeLookup[.podcast] = true
+                break
+            case .video:
+                didRetrieveMediaTypeLookup[.video] = true
+                break
+            case .newsletter:
+                didRetrieveMediaTypeLookup[.newsletter] = true
+                break
             }
-            else{
-                downloadLastPod(feed: feed)
-            }
+        }
+        
+        if let shouldRefreshVideo = (didRetrieveMediaTypeLookup[.video]),
+           shouldRefreshVideo == true{
+            NotificationCenter.default.post(name: .refreshVideoUI, object: nil)
+        }
+        
+        if let shouldRefreshNL = (didRetrieveMediaTypeLookup[.newsletter]),
+        shouldRefreshNL == true{
+            NotificationCenter.default.post(name: .refreshNewsletterUI, object: nil)
+        }
+        
+        if let shouldRefreshPodcast = (didRetrieveMediaTypeLookup[.podcast]),
+        shouldRefreshPodcast == true{
+            NotificationCenter.default.post(name: .refreshPodcastUI, object: nil)
         }
     }
     

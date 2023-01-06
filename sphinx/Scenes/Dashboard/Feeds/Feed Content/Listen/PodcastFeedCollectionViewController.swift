@@ -153,7 +153,17 @@ extension PodcastFeedCollectionViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
+        NSNotification.Name("RefreshPodcastUI")
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshPodcasts), name: NSNotification.Name("RefreshPodcastUI"), object: nil)
+        fetchItems()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name("RefreshPodcastUI"), object: nil)
+    }
+    
+    @objc func refreshPodcasts(){
         fetchItems()
     }
 }

@@ -160,9 +160,19 @@ extension DashboardNewsletterFeedCollectionViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshNewsletters), name: .refreshNewsletterUI, object: nil)
         fetchItems()
     }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        NotificationCenter.default.removeObserver(self, name: .refreshNewsletterUI, object: nil)
+    }
+    
+    @objc func refreshNewsletters(){
+        fetchItems()
+    }
+    
 }
 
 

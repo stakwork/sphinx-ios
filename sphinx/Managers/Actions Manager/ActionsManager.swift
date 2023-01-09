@@ -390,6 +390,14 @@ class ActionsManager {
         }
     }
     
+    func syncActionsInBackground() {    
+        let dispatchQueue = DispatchQueue(label: "sync-actions", qos: .default)
+        dispatchQueue.async {
+            self.syncActions()
+        }
+    }
+    
+    
     func syncActions(
         completion: (() -> ())? = nil
     ) {

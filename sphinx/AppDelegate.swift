@@ -167,7 +167,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setBadge(application: application)
         
         PodcastPlayerHelper.sharedInstance.finishAndSaveContentConsumed()
-        ActionsManager.sharedInstance.syncActions()
+        ActionsManager.sharedInstance.syncActionsInBackground()
         CoreDataManager.sharedManager.saveContext()
         
         scheduleAppRefresh()
@@ -252,7 +252,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if isUserLogged {
             syncDeviceId()
             getRelayKeys()
-            ActionsManager.sharedInstance.syncActions()
+            ActionsManager.sharedInstance.syncActionsInBackground()
         }
 
         takeUserToInitialVC(isUserLogged: isUserLogged)

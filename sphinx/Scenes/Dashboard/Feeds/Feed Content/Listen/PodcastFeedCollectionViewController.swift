@@ -153,7 +153,16 @@ extension PodcastFeedCollectionViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshPodcasts), name: NSNotification.Name("RefreshPodcastUI"), object: nil)
+        fetchItems()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name("RefreshPodcastUI"), object: nil)
+    }
+    
+    @objc func refreshPodcasts(){
         fetchItems()
     }
 }
@@ -311,7 +320,7 @@ extension PodcastFeedCollectionViewController {
                 
                 return firstDate > secondDate
             }.compactMap { feed in
-                feed.episodesArray.last
+                feed.episodesArray.first
             }
             .map { episode in
                 DataSourceItem.listenNowEpisode(episode)

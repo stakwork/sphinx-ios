@@ -158,7 +158,15 @@ extension DashboardVideoFeedCollectionViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshVideos), name: .refreshVideoUI, object: nil)
+        fetchItems()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self, name: .refreshVideoUI, object: nil)
+    }
+    
+    @objc func refreshVideos(){
         fetchItems()
     }
 }

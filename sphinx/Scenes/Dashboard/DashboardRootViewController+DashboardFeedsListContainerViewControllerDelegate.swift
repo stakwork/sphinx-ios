@@ -31,8 +31,16 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
         }
         
         if let contentFeed = contentFeedItem.contentFeed {
-            
             let podcastFeed = PodcastFeed.convertFrom(contentFeed:  contentFeed)
+            
+            if let index = podcastFeed.getIndexForEpisodeWith(id: contentFeedItem.itemID) {
+                podcastPlayerHelper.prepareEpisodeWith(
+                    index: index,
+                    in: podcastFeed,
+                    autoPlay: false
+                ) {}
+            }
+
             presentPodcastPlayerFor(podcastFeed)
         }
     }

@@ -296,6 +296,7 @@ class PodcastPlayerHelper {
                 
                 if self.player == nil {
                     self.player = AVPlayer(playerItem:playerItem)
+                    self.player?.automaticallyWaitsToMinimizeStalling = false
                     self.player?.rate = podcast.playerSpeed;
                 } else {
                     self.player?.replaceCurrentItem(with: playerItem)

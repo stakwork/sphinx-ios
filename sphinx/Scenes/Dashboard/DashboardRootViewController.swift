@@ -200,7 +200,6 @@ extension DashboardRootViewController {
         
         navigationController?.isNavigationBarHidden = true
         searchTextField.delegate = self
-        activeTab = .friends
         
         setupHeaderViews()
         listenForEvents()
@@ -214,6 +213,8 @@ extension DashboardRootViewController {
             self,
             withKey: PodcastPlayerHelper.DelegateKeys.dashboard.rawValue
         )
+        
+        activeTab = .friends
     }
     
     func setupPlayerBar() {

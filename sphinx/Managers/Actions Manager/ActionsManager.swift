@@ -408,7 +408,7 @@ class ActionsManager {
         let chunkedActions = actions.chunked(into: 50)
         
         let dispatchGroup = DispatchGroup()
-        let dispatchSemaphore = DispatchSemaphore(value: 0)
+        let dispatchSemaphore = DispatchSemaphore(value: 1)
         
         for chunk in chunkedActions {
             

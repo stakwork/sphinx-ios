@@ -49,7 +49,16 @@ public class PodcastEpisode: NSObject {
         }
     }
     
-    var duration: Int? = nil
+    var duration: Int? {
+        get {
+            return UserDefaults.standard.value(forKey: "duration-\(itemID)") as? Int
+        }
+        set {
+            if (newValue ?? 0 > 0) {
+                UserDefaults.standard.set(newValue, forKey: "duration-\(itemID)")
+            }
+        }
+    }
     
     var youtubeVideoId: String? {
         get {

@@ -606,6 +606,7 @@
 		47FDDB1C2562D77200BBF15F /* boost_animation.json in Resources */ = {isa = PBXBuildFile; fileRef = 47FDDB1B2562D77100BBF15F /* boost_animation.json */; };
 		47FE9A3C23BF751C0090913F /* ChatViewControllerAttachmentDelegateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FE9A3B23BF751C0090913F /* ChatViewControllerAttachmentDelegateExtension.swift */; };
 		47FE9A3E23C381A20090913F /* UITapGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FE9A3D23C381A20090913F /* UITapGestureRecognizer.swift */; };
+		CE6784602968B0E000342905 /* AllTribesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE67845F2968B0E000342905 /* AllTribesManager.swift */; };
 		CECFBEFE2965C84400BAD935 /* DiscoverTribesTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECFBEFD2965C84400BAD935 /* DiscoverTribesTableViewDataSource.swift */; };
 		CECFBF012965C85B00BAD935 /* DiscoverTribesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECFBEFF2965C85B00BAD935 /* DiscoverTribesTableViewCell.swift */; };
 		CECFBF022965C85B00BAD935 /* DiscoverTribesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CECFBF002965C85B00BAD935 /* DiscoverTribesTableViewCell.xib */; };
@@ -1484,6 +1485,7 @@
 		47FE9A3B23BF751C0090913F /* ChatViewControllerAttachmentDelegateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewControllerAttachmentDelegateExtension.swift; sourceTree = "<group>"; };
 		47FE9A3D23C381A20090913F /* UITapGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITapGestureRecognizer.swift; sourceTree = "<group>"; };
 		487E10CEB3D07B0840A84681 /* Pods_sphinx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_sphinx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE67845F2968B0E000342905 /* AllTribesManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllTribesManager.swift; sourceTree = "<group>"; };
 		CECFBEFD2965C84400BAD935 /* DiscoverTribesTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTribesTableViewDataSource.swift; sourceTree = "<group>"; };
 		CECFBEFF2965C85B00BAD935 /* DiscoverTribesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTribesTableViewCell.swift; sourceTree = "<group>"; };
 		CECFBF002965C85B00BAD935 /* DiscoverTribesTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DiscoverTribesTableViewCell.xib; sourceTree = "<group>"; };
@@ -3805,6 +3807,7 @@
 		F3D52183272A8EA400918267 /* All Feeds */ = {
 			isa = PBXGroup;
 			children = (
+				CE67845F2968B0E000342905 /* AllTribesManager.swift */,
 				F3D52184272A939900918267 /* AllTribeFeedsCollectionViewController.swift */,
 			);
 			path = "All Feeds";
@@ -4235,6 +4238,7 @@
 				47F258C8253A292B00122A5A /* SocketPacket.swift in Sources */,
 				CECFBF062965C8E600BAD935 /* DiscoverTribeData.swift in Sources */,
 				47F258C52539F39800122A5A /* PodcastRowPlayerHelper.swift in Sources */,
+				CE6784602968B0E000342905 /* AllTribesManager.swift in Sources */,
 				475BDD77232BF91A00C5BBD6 /* ContactsService.swift in Sources */,
 				F3B2518D26D8DD1800C96D42 /* PodcastFeed+FetchUtils.swift in Sources */,
 				4735D5C22411416000BEE3D4 /* LinkPreviewView.swift in Sources */,

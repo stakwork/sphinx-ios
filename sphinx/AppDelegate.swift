@@ -252,11 +252,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if isUserLogged {
             syncDeviceId()
             getRelayKeys()
+            runFeedsPreloadInBackground()
             ActionsManager.sharedInstance.syncActions()
         }
 
         takeUserToInitialVC(isUserLogged: isUserLogged)
         presentPINIfNeeded()
+    }
+    
+    func runFeedsPreloadInBackground() {
+        let feedsManager = FeedsManager()
+        feedsManager.fetchItems()
+        
+        DispatchQueue.global().sync {
+            feedsManager.preCacheTopPods()
+        }
     }
 
     func presentPINIfNeeded() {

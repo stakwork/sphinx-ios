@@ -214,16 +214,7 @@ extension DashboardRootViewController {
             withKey: PodcastPlayerHelper.DelegateKeys.dashboard.rawValue
         )
         
-        runTribesManagerInBackground()
         activeTab = .friends
-    }
-    
-    func runTribesManagerInBackground(){
-        let tribeManager = AllTribesManager()
-        tribeManager.fetchItems()
-        DispatchQueue.global().sync {
-            tribeManager.preCacheTopPods()
-        }
     }
     
     func setupPlayerBar() {

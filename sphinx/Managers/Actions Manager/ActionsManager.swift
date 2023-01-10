@@ -391,7 +391,7 @@ class ActionsManager {
     }
     
     func syncActionsInBackground() {    
-        let dispatchQueue = DispatchQueue(label: "sync-actions", qos: .default)
+        let dispatchQueue = DispatchQueue.global()
         dispatchQueue.async {
             self.syncActions()
         }

@@ -11,27 +11,18 @@ import CoreData
 import AVFoundation
 
 class FeedsManager : NSObject{
-    private var fetchedResultsController: NSFetchedResultsController<ContentFeed>!
-    
-    override init() {
-        self.fetchedResultsController = FeedsManager.makeFetchedResultsController(using: CoreDataManager.sharedManager.persistentContainer.viewContext)
-    }
     
     func preCacheTopPods(){
         //1. Fetch results from memory
-        guard
-            let resultController = fetchedResultsController as? NSFetchedResultsController<NSManagedObject>,
-            let firstSection = resultController.sections?.first,
-            let foundFeeds = firstSection.objects as? [ContentFeed]
-        else {
+        var followedFeeds: [ContentFeed] = []
+        let fetchRequest = ContentFeed.FetchRequests.followedFeeds()
+        let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
+        
+        do {
+            followedFeeds = try managedContext.fetch(fetchRequest)
+        } catch let error as NSError {
+            print("Error: " + error.localizedDescription)
             return
-        }
-        //Pull only the followed feed
-        let followedFeeds = foundFeeds.sorted { (first, second) in
-            let firstDate = first.dateUpdated ?? first.datePublished ?? Date.init(timeIntervalSince1970: 0)
-            let secondDate = second.dateUpdated ?? second.datePublished ?? Date.init(timeIntervalSince1970: 0)
-
-            return firstDate > secondDate
         }
             
         //2. Walk through each feed
@@ -131,16 +122,5 @@ class FeedsManager : NSObject{
             sectionNameKeyPath: nil,
             cacheName: nil
         )
-    }
-    
-    func fetchItems() {
-        do {
-            try fetchedResultsController.performFetch()
-        } catch {
-            AlertHelper.showAlert(
-                title: "Data Loading Error",
-                message: "\(error)"
-            )
-        }
     }
 }

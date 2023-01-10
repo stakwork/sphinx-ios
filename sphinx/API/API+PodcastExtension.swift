@@ -143,28 +143,31 @@ extension API {
     }
     
     func saveContentFeedStatusesToRemote(
-        params: [String: Any],
+        params: [[String: Any]],
         callback: @escaping EmptyCallback,
         errorCallback: @escaping EmptyCallback
     ) {
-        guard let request = getURLRequest(route: "TODO: Set this to the correct url", params: params as NSDictionary?, method: "PUT") else {
-            errorCallback()
-            return
-        }
-        
-        sphinxRequest(request) { response in
-            switch response.result {
-            case .success(let data):
-                if let json = data as? NSDictionary {
-                    if let success = json["success"] as? Bool, success {
-                        callback()
-                        return
+        for paramSet in params{
+            guard let request = getURLRequest(route: "TODO: Set this to the correct url", params: paramSet as NSDictionary?, method: "PUT") else {
+                errorCallback()
+                return
+            }
+            
+            sphinxRequest(request) { response in
+                switch response.result {
+                case .success(let data):
+                    if let json = data as? NSDictionary {
+                        if let success = json["success"] as? Bool, success {
+                            callback()
+                            return
+                        }
                     }
+                    errorCallback()
+                case .failure(_):
+                    errorCallback()
                 }
-                errorCallback()
-            case .failure(_):
-                errorCallback()
             }
         }
+        
     }
 }

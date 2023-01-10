@@ -176,6 +176,7 @@ extension AllTribeFeedsCollectionViewController {
                 hasher.combine(recommendation.link)
             }
         }
+        
     }
 
     
@@ -211,8 +212,17 @@ extension AllTribeFeedsCollectionViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+        updateContentStatus()
         fetchItems()
+    }
+    
+    func updateContentStatus(){
+        API.sharedInstance.getAllContentFeedStatuses(url: "", callback: {
+            result in
+            print(result)
+        }, errorCallback: {
+            print("error")
+        })
     }
 }
 

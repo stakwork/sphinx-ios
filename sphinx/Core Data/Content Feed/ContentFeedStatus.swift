@@ -24,7 +24,10 @@ class ContentFeedStatus: Mappable {
     func mapping(map: Map) {
         feedID            <- map["feed_id"]
         subscriptionStatus            <- map["subscription_status"]
-        lastItemInfo            <- map["last_item_info"]
+        let json = map.JSON
+        if let valid_last_item = json["last_item_info"] as? ContentFeedLastItem{
+            lastItemInfo         = valid_last_item
+        }
         feedURL            <- map["feed_url"]
         chatID            <- map["chat_id"]
     }

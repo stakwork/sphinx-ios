@@ -10,6 +10,7 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 import CoreData
+import ObjectMapper
 
 extension API {
     
@@ -100,5 +101,44 @@ extension API {
                 errorCallback()
             }
         }
+    }
+    
+    func getAllContentFeedStatuses(
+        url: String,
+        persistingIn managedObjectContext: NSManagedObjectContext? = nil,
+        callback: @escaping AllContentFeedStatusCallback,
+        errorCallback: @escaping EmptyCallback
+    ) {
+        /*
+        guard let request = createRequest(url, bodyParams: nil, method: "GET") else {
+            errorCallback()
+            return
+        }
+         */
+        
+        var status_array = [[String:Any]]()
+        var status1_json = [String:Any]()
+        status1_json["chat_id"] = "abc456"
+        var lastItem = ContentFeedLastItem()
+        lastItem.contentID = "xyz123"
+        lastItem.playbackDuration = 45
+        lastItem.lastPlayedTime = 10
+        status1_json["last_item_info"] = lastItem
+        status_array.append(status1_json)
+        if let status1 = Mapper<ContentFeedStatus>().mapArray(JSONObject: status_array){
+            callback(status1)
+        }
+        else{
+            errorCallback()
+        }
+        /*
+        AF.request(request).responseJSON { response in
+            if let data = response.data {
+                callback(JSON(data))
+            } else {
+                errorCallback()
+            }
+        }
+        */
     }
 }

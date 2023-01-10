@@ -143,7 +143,7 @@ extension API {
     }
     
     func saveContentFeedStatusesToRemote(
-        params: [String: AnyObject],
+        params: [String: Any],
         callback: @escaping EmptyCallback,
         errorCallback: @escaping EmptyCallback
     ) {

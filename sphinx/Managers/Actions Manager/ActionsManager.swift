@@ -397,6 +397,16 @@ class ActionsManager {
         }
     }
     
+    func saveContentFeedStatus(){
+        let contentFeedStatus = [ContentFeedStatus]().map({$0.toJSON()})//TODO: actually pull this from the feed correctly
+        API.sharedInstance.saveContentFeedStatusesToRemote(params: contentFeedStatus,
+        callback: {
+            
+        }, errorCallback: {
+            
+        })
+    }
+    
     
     func syncActions(
         completion: (() -> ())? = nil

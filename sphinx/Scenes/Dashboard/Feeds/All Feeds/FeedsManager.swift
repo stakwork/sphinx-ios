@@ -17,6 +17,17 @@ class FeedsManager : NSObject{
         self.fetchedResultsController = FeedsManager.makeFetchedResultsController(using: CoreDataManager.sharedManager.persistentContainer.viewContext)
     }
     
+    func getFollowedFeeds()->[ContentFeed]{
+        guard
+            let resultController = fetchedResultsController as? NSFetchedResultsController<NSManagedObject>,
+            let firstSection = resultController.sections?.first,
+            let foundFeeds = firstSection.objects as? [ContentFeed]
+        else {
+            return []
+        }
+        return foundFeeds
+    }
+    
     func preCacheTopPods(){
         //1. Fetch results from memory
         guard

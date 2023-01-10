@@ -394,12 +394,26 @@ class ActionsManager {
         let dispatchQueue = DispatchQueue(label: "sync-actions", qos: .default)
         dispatchQueue.async {
             self.syncActions()
+            self.saveContentFeedStatus()
         }
     }
     
     func saveContentFeedStatus(){
-        let contentFeedStatus = [ContentFeedStatus]().map({$0.toJSON()})//TODO: actually pull this from the feed correctly
-        API.sharedInstance.saveContentFeedStatusesToRemote(params: contentFeedStatus,
+        let followedFeeds = FeedsManager().getFollowedFeeds()
+        let contentFeedStatuses = followedFeeds.map({
+            let status = ContentFeedStatus()
+            status.feedID = $0.feedID
+            status.feedURL = $0.feedURL?.absoluteString
+            if let valid_chat = $0.chat{
+                status.chatID = String(valid_chat.id)
+            }
+            let lastItemStatus = ContentFeedLastItem()
+            //TODO: figure out how to pull content feed
+            status.lastItemInfo = lastItemStatus
+            return status
+        })
+        let contentFeedStatusParams = contentFeedStatuses.map({$0.toJSON()})//TODO: actually pull this from the feed correctly
+        API.sharedInstance.saveContentFeedStatusesToRemote(params: contentFeedStatusParams,
         callback: {
             
         }, errorCallback: {

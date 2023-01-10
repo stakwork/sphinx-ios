@@ -606,6 +606,8 @@
 		47FDDB1C2562D77200BBF15F /* boost_animation.json in Resources */ = {isa = PBXBuildFile; fileRef = 47FDDB1B2562D77100BBF15F /* boost_animation.json */; };
 		47FE9A3C23BF751C0090913F /* ChatViewControllerAttachmentDelegateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FE9A3B23BF751C0090913F /* ChatViewControllerAttachmentDelegateExtension.swift */; };
 		47FE9A3E23C381A20090913F /* UITapGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FE9A3D23C381A20090913F /* UITapGestureRecognizer.swift */; };
+		CE0C4676296DC5E200E82353 /* ContentFeedStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0C4675296DC5E200E82353 /* ContentFeedStatus.swift */; };
+		CE0C4678296DC6B800E82353 /* ContentFeedLastItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0C4677296DC6B800E82353 /* ContentFeedLastItem.swift */; };
 		CE6784602968B0E000342905 /* FeedsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE67845F2968B0E000342905 /* FeedsManager.swift */; };
 		CECFBEFE2965C84400BAD935 /* DiscoverTribesTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECFBEFD2965C84400BAD935 /* DiscoverTribesTableViewDataSource.swift */; };
 		CECFBF012965C85B00BAD935 /* DiscoverTribesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECFBEFF2965C85B00BAD935 /* DiscoverTribesTableViewCell.swift */; };
@@ -1485,6 +1487,8 @@
 		47FE9A3B23BF751C0090913F /* ChatViewControllerAttachmentDelegateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewControllerAttachmentDelegateExtension.swift; sourceTree = "<group>"; };
 		47FE9A3D23C381A20090913F /* UITapGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITapGestureRecognizer.swift; sourceTree = "<group>"; };
 		487E10CEB3D07B0840A84681 /* Pods_sphinx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_sphinx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE0C4675296DC5E200E82353 /* ContentFeedStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentFeedStatus.swift; sourceTree = "<group>"; };
+		CE0C4677296DC6B800E82353 /* ContentFeedLastItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentFeedLastItem.swift; sourceTree = "<group>"; };
 		CE67845F2968B0E000342905 /* FeedsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedsManager.swift; sourceTree = "<group>"; };
 		CECFBEFD2965C84400BAD935 /* DiscoverTribesTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTribesTableViewDataSource.swift; sourceTree = "<group>"; };
 		CECFBEFF2965C85B00BAD935 /* DiscoverTribesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTribesTableViewCell.swift; sourceTree = "<group>"; };
@@ -3835,6 +3839,8 @@
 				F3DC6B08273CABED00458E09 /* ContentFeed+CoreDataProperties.swift */,
 				F31EFCB32746968C00C05FF4 /* ContentFeed+FetchUtils.swift */,
 				F3DC6B05273C9D8600458E09 /* ContentFeedKind.swift */,
+				CE0C4675296DC5E200E82353 /* ContentFeedStatus.swift */,
+				CE0C4677296DC6B800E82353 /* ContentFeedLastItem.swift */,
 			);
 			path = "Content Feed";
 			sourceTree = "<group>";
@@ -4426,6 +4432,7 @@
 				F3DC6B23273F60FF00458E09 /* ContentFeedPaymentDestination+CoreDataClass.swift in Sources */,
 				47893A8B24095A30002F675B /* AudioSentTableViewCell.swift in Sources */,
 				47FA440223748EB6005D8C63 /* SubscriptionFormViewControllerExtensions.swift in Sources */,
+				CE0C4676296DC5E200E82353 /* ContentFeedStatus.swift in Sources */,
 				478DCF982343D24D009A03D6 /* SetProfileImageViewController.swift in Sources */,
 				F37D799B271E340900CAB15F /* YouTubeVideoFeedEpisodePlayerViewController.swift in Sources */,
 				47F258BC2539DA0100122A5A /* PodcastCommentSentTableViewCell.swift in Sources */,
@@ -4750,6 +4757,7 @@
 				47BE85462464928800BE4AE8 /* KeychainRestoreViewController.swift in Sources */,
 				47F258CE253F6B0100122A5A /* PodcastSmallPlayer.swift in Sources */,
 				476EB47023C50640009745E2 /* GroupAddedContactsDataSource.swift in Sources */,
+				CE0C4678296DC6B800E82353 /* ContentFeedLastItem.swift in Sources */,
 				F3E9C02026FB76A100718942 /* DashboardFeedsEmptyStateViewController.swift in Sources */,
 				47BA7A9124118F6B0001773F /* CustomSwiftLinkPreview.swift in Sources */,
 				4787F8922475BE3300CCE8B9 /* LoadingWheelHelper.swift in Sources */,

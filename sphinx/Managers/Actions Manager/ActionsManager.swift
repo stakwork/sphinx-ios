@@ -404,11 +404,16 @@ class ActionsManager {
             let status = ContentFeedStatus()
             status.feedID = $0.feedID
             status.feedURL = $0.feedURL?.absoluteString
+            //status.subscriptionStatus =
             if let valid_chat = $0.chat{
                 status.chatID = String(valid_chat.id)
             }
+            let podFeed = PodcastFeed.convertFrom(contentFeed: $0)
+            status.subscriptionStatus = podFeed.isSubscribedToFromSearch
             let lastItemStatus = ContentFeedLastItem()
-            //TODO: figure out how to pull content feed
+            lastItemStatus.contentID = podFeed.lastEpisodeId
+            lastItemStatus.lastPlayedTime = podFeed.currentTime
+            //lastItemStatus.playbackDuration TODO: figure out how to get this
             status.lastItemInfo = lastItemStatus
             return status
         })

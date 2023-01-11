@@ -229,7 +229,7 @@ class PodcastPlayerHelper {
         if didChangeEpisode {
             shouldPause()
             
-            podcast.currentTime = 0
+            podcast.currentTime = episode.currentTime ?? 0
             
             for d in self.delegates.values {
                 d.playingState(podcastId: podcast.feedID, duration: 0, currentTime: 0)
@@ -348,6 +348,7 @@ class PodcastPlayerHelper {
         }
         
         podcast.currentTime = currentTime
+        podcast.getCurrentEpisode()?.currentTime = currentTime
         
         if currentTime >= duration {
             didEndEpisode()
@@ -556,7 +557,9 @@ class PodcastPlayerHelper {
     ) {
         if podcast.feedID != self.podcast?.feedID {
             if let episode = podcast.getCurrentEpisode(), let duration = episode.duration {
-                podcast.currentTime = Int(Double(duration) * progress)
+                let currentTime = Int(Double(duration) * progress)
+                podcast.currentTime = currentTime
+                episode.currentTime = currentTime
             }
             return
         }
@@ -576,6 +579,11 @@ class PodcastPlayerHelper {
         
         if podcast.feedID != self.podcast?.feedID {
             podcast.currentTime = newTime
+            
+            if let episode = podcast.getCurrentEpisode() {
+                episode.currentTime = newTime
+            }
+            
             return
         }
         
@@ -599,6 +607,10 @@ class PodcastPlayerHelper {
             player.seek(to: CMTime(seconds: newTime, preferredTimescale: 1))
             
             podcast.currentTime = Int(newTime)
+            
+            if let episode = podcast.getCurrentEpisode() {
+                episode.currentTime = Int(newTime)
+            }
             
             configurePlayingInfoCenter(duration: Int(duration), currentTime: Int(newTime), forceUpdate: playAfterSeek)
         }

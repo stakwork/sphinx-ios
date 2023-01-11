@@ -399,7 +399,9 @@ class ActionsManager {
     }
     
     func saveContentFeedStatus(){
-        let followedFeeds = FeedsManager().getFollowedFeeds()
+        let fm = FeedsManager()
+        fm.fetchItems()
+        let followedFeeds = fm.getFollowedFeeds()
         let contentFeedStatuses = followedFeeds.map({
             let status = ContentFeedStatus()
             status.feedID = $0.feedID
@@ -417,13 +419,15 @@ class ActionsManager {
             status.lastItemInfo = lastItemStatus
             return status
         })
-        let contentFeedStatusParams = contentFeedStatuses.map({$0.toJSON()})//TODO: actually pull this from the feed correctly
+        let contentFeedStatusParams = contentFeedStatuses.map({$0.toJSON()})
+        /*
         API.sharedInstance.saveContentFeedStatusesToRemote(params: contentFeedStatusParams,
         callback: {
             
         }, errorCallback: {
             
         })
+        */
     }
     
     

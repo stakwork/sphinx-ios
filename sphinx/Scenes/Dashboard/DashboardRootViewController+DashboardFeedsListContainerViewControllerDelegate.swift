@@ -34,11 +34,23 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
             let podcastFeed = PodcastFeed.convertFrom(contentFeed:  contentFeed)
             
             if let index = podcastFeed.getIndexForEpisodeWith(id: contentFeedItem.itemID) {
-                podcastPlayerHelper.prepareEpisodeWith(
-                    index: index,
-                    in: podcastFeed,
-                    autoPlay: false
-                ) {}
+                
+                let isPlayingEpisode = podcastPlayerHelper.isPlaying(
+                    podcastFeed.feedID,
+                    episodeId: contentFeedItem.itemID
+                )
+                
+                let isPlayingPodcast = podcastPlayerHelper.isPlaying(
+                    podcastFeed.feedID
+                )
+                
+                if !isPlayingEpisode && isPlayingPodcast {
+                    podcastPlayerHelper.prepareEpisodeWith(
+                        index: index,
+                        in: podcastFeed,
+                        autoPlay: false
+                    ) {}
+                }
             }
 
             presentPodcastPlayerFor(podcastFeed)

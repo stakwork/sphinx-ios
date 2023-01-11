@@ -31,9 +31,7 @@ extension Int {
             string += "\(hours) hr"
         }
         
-        if minutes > 0 {
-            string += " \(minutes) min"
-        }
+        string += " \(minutes) min"
         
         if isOnProgress {
             string += " left"

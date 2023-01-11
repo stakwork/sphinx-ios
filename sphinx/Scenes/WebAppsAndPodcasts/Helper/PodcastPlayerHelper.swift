@@ -222,8 +222,10 @@ class PodcastPlayerHelper {
             episodeId: episode.itemID
         )
         
-        for d in self.delegates.values {
-            d.loadingState(podcastId: podcast.feedID, loading: true)
+        if autoPlay {
+            for d in self.delegates.values {
+                d.loadingState(podcastId: podcast.feedID, loading: true)
+            }
         }
         
         if didChangeEpisode {
@@ -231,8 +233,10 @@ class PodcastPlayerHelper {
             
             podcast.currentTime = episode.currentTime ?? 0
             
-            for d in self.delegates.values {
-                d.playingState(podcastId: podcast.feedID, duration: 0, currentTime: 0)
+            if autoPlay {
+                for d in self.delegates.values {
+                    d.playingState(podcastId: podcast.feedID, duration: 0, currentTime: 0)
+                }
             }
         }
         
@@ -309,8 +313,6 @@ class PodcastPlayerHelper {
                 DispatchQueue.main.async {
                     if autoPlay {
                         self.shouldPlay()
-                    } else {
-                        self.shouldPause()
                     }
                     completion()
                 }
@@ -473,7 +475,8 @@ class PodcastPlayerHelper {
     }
     
     func isPlaying(
-        _ podcastId: String? = nil
+        _ podcastId: String? = nil,
+        episodeId: String? = nil
     ) -> Bool {
         
         let playing = player?.timeControlStatus == AVPlayer.TimeControlStatus.playing ||
@@ -483,7 +486,11 @@ class PodcastPlayerHelper {
             return playing
         }
         
-        return playing && self.podcast?.feedID == podcastId
+        guard let episodeId = episodeId else {
+            return playing && self.podcast?.feedID == podcastId
+        }
+        
+        return playing && self.podcast?.feedID == podcastId && self.podcast?.getCurrentEpisode()?.itemID == episodeId
     }
     
     func isPlayingRecommendations() -> Bool {

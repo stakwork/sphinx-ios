@@ -60,6 +60,15 @@ public class PodcastEpisode: NSObject {
         }
     }
     
+    var currentTime: Int? {
+        get {
+            return UserDefaults.standard.value(forKey: "current-time-\(itemID)") as? Int
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "current-time-\(itemID)")
+        }
+    }
+    
     var youtubeVideoId: String? {
         get {
             var videoId: String? = nil

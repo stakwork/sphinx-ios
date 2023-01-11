@@ -17,10 +17,10 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="DashboardFeedSquaredThumbnailCollectionViewCell" reuseIdentifier="DashboardFeedSquaredThumbnailCollectionViewCell" id="O8E-9W-2Nc" customClass="DashboardFeedSquaredThumbnailCollectionViewCell" customModule="sphinx" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="160" height="255"/>
+            <rect key="frame" x="0.0" y="0.0" width="160" height="285"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Hrc-a5-xt4">
-                <rect key="frame" x="0.0" y="0.0" width="160" height="255"/>
+                <rect key="frame" x="0.0" y="0.0" width="160" height="285"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5Sq-GQ-zBf" userLabel="Thumbnail Image View">
@@ -49,24 +49,64 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="10 days ago" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u6C-fh-WJT" userLabel="Subtitle Label">
-                        <rect key="frame" x="0.0" y="235" width="160" height="20"/>
-                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="10"/>
+                        <rect key="frame" x="0.0" y="243" width="160" height="11"/>
+                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="9"/>
                         <color key="textColor" name="SecondaryText"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PtV-c4-DjA">
+                        <rect key="frame" x="0.0" y="262" width="160" height="20"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="1 hrs 20 min" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="20Z-DY-oJM" userLabel="Subtitle Label">
+                                <rect key="frame" x="0.0" y="4" width="56" height="12"/>
+                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="10"/>
+                                <color key="textColor" name="BlueTextAccent"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view alpha="0.20000000000000001" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gTx-JZ-dGS">
+                                <rect key="frame" x="64" y="8" width="40" height="4"/>
+                                <color key="backgroundColor" name="BlueTextAccent"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="4" id="D9e-2I-4pI"/>
+                                    <constraint firstAttribute="width" constant="40" id="SdE-el-UfH"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CyB-Ks-3Vt">
+                                <rect key="frame" x="64" y="8" width="20" height="4"/>
+                                <color key="backgroundColor" name="BlueTextAccent"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" id="Siu-PH-WuJ"/>
+                                    <constraint firstAttribute="height" constant="4" id="zy9-nm-ebC"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="20Z-DY-oJM" firstAttribute="centerY" secondItem="PtV-c4-DjA" secondAttribute="centerY" id="4DK-DW-hp8"/>
+                            <constraint firstItem="CyB-Ks-3Vt" firstAttribute="leading" secondItem="gTx-JZ-dGS" secondAttribute="leading" id="990-9j-6Pa"/>
+                            <constraint firstItem="CyB-Ks-3Vt" firstAttribute="bottom" secondItem="gTx-JZ-dGS" secondAttribute="bottom" id="FRc-4G-YKB"/>
+                            <constraint firstItem="CyB-Ks-3Vt" firstAttribute="top" secondItem="gTx-JZ-dGS" secondAttribute="top" id="HJM-rA-2b3"/>
+                            <constraint firstItem="gTx-JZ-dGS" firstAttribute="leading" secondItem="20Z-DY-oJM" secondAttribute="trailing" constant="8" id="bil-4x-3tM"/>
+                            <constraint firstAttribute="height" constant="20" id="dSt-QM-ddn"/>
+                            <constraint firstItem="gTx-JZ-dGS" firstAttribute="centerY" secondItem="PtV-c4-DjA" secondAttribute="centerY" id="faT-de-xKd"/>
+                            <constraint firstItem="20Z-DY-oJM" firstAttribute="leading" secondItem="PtV-c4-DjA" secondAttribute="leading" id="pZx-ax-BTd"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="Pxc-LX-oZX" secondAttribute="trailing" id="0n9-Sp-eH6"/>
+                    <constraint firstItem="PtV-c4-DjA" firstAttribute="leading" secondItem="Hrc-a5-xt4" secondAttribute="leading" id="69O-2K-dAA"/>
+                    <constraint firstAttribute="trailing" secondItem="PtV-c4-DjA" secondAttribute="trailing" id="ASu-D4-baH"/>
                     <constraint firstItem="vmK-qy-DXG" firstAttribute="leading" secondItem="Hrc-a5-xt4" secondAttribute="leading" id="Kvd-xc-73R"/>
                     <constraint firstItem="Pxc-LX-oZX" firstAttribute="top" secondItem="5Sq-GQ-zBf" secondAttribute="bottom" constant="8" id="OIJ-Gh-fF1"/>
-                    <constraint firstItem="u6C-fh-WJT" firstAttribute="top" secondItem="vmK-qy-DXG" secondAttribute="bottom" id="U7U-6G-dT7"/>
+                    <constraint firstItem="u6C-fh-WJT" firstAttribute="top" secondItem="vmK-qy-DXG" secondAttribute="bottom" constant="8" id="U7U-6G-dT7"/>
                     <constraint firstItem="5Sq-GQ-zBf" firstAttribute="leading" secondItem="Hrc-a5-xt4" secondAttribute="leading" id="VMC-WB-CcZ"/>
                     <constraint firstItem="u6C-fh-WJT" firstAttribute="leading" secondItem="Hrc-a5-xt4" secondAttribute="leading" id="WIr-np-Lj2"/>
                     <constraint firstItem="QJT-ww-ZpO" firstAttribute="leading" secondItem="5Sq-GQ-zBf" secondAttribute="leading" constant="5" id="X0S-So-evP"/>
                     <constraint firstAttribute="trailing" secondItem="u6C-fh-WJT" secondAttribute="trailing" id="XWf-z2-KPc"/>
                     <constraint firstItem="5Sq-GQ-zBf" firstAttribute="bottom" secondItem="QJT-ww-ZpO" secondAttribute="bottom" constant="5" id="drX-wd-3bX"/>
-                    <constraint firstAttribute="bottom" secondItem="u6C-fh-WJT" secondAttribute="bottom" id="eEQ-oY-4rJ"/>
                     <constraint firstAttribute="trailing" secondItem="5Sq-GQ-zBf" secondAttribute="trailing" id="fY3-oM-p4Z"/>
+                    <constraint firstItem="PtV-c4-DjA" firstAttribute="top" secondItem="u6C-fh-WJT" secondAttribute="bottom" constant="8" id="hA1-cR-z0u"/>
                     <constraint firstAttribute="trailing" secondItem="vmK-qy-DXG" secondAttribute="trailing" id="hFD-QL-E6Y"/>
                     <constraint firstItem="Pxc-LX-oZX" firstAttribute="leading" secondItem="Hrc-a5-xt4" secondAttribute="leading" id="jh7-HW-dhm"/>
                     <constraint firstItem="vmK-qy-DXG" firstAttribute="top" secondItem="Pxc-LX-oZX" secondAttribute="bottom" constant="8" id="m8z-T9-zU8"/>
@@ -75,8 +115,13 @@
             </collectionViewCellContentView>
             <connections>
                 <outlet property="dateLabel" destination="u6C-fh-WJT" id="poD-yu-xMj"/>
+                <outlet property="progressContainerView" destination="gTx-JZ-dGS" id="usn-eh-9nl"/>
+                <outlet property="progressView" destination="CyB-Ks-3Vt" id="0OJ-GQ-bhk"/>
+                <outlet property="progressViewWidthConstraint" destination="Siu-PH-WuJ" id="zKy-om-AGo"/>
                 <outlet property="subtitleLabel" destination="vmK-qy-DXG" id="OoN-xV-tc6"/>
                 <outlet property="thumbnailImageView" destination="5Sq-GQ-zBf" id="Z5I-n9-R2Q"/>
+                <outlet property="timeContainerView" destination="PtV-c4-DjA" id="BEz-Db-tRg"/>
+                <outlet property="timeLabel" destination="20Z-DY-oJM" id="Wf7-sT-Lpp"/>
                 <outlet property="titleLabel" destination="Pxc-LX-oZX" id="aul-8Z-oqz"/>
                 <outlet property="typeIconImageView" destination="QJT-ww-ZpO" id="Xos-GL-4tv"/>
             </connections>
@@ -84,6 +129,9 @@
         </collectionViewCell>
     </objects>
     <resources>
+        <namedColor name="BlueTextAccent">
+            <color red="0.36470588235294116" green="0.5607843137254902" blue="0.8666666666666667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="SecondaryText">
             <color red="0.55686274509803924" green="0.58823529411764708" blue="0.61176470588235299" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

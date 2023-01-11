@@ -54,8 +54,4 @@ extension DashboardRootViewController: DashboardChatsListDelegate {
             })
         }
     }
-    
-    func viewControllerRecommendationsRefreshed() {
-        onPlayerBarDismissed()
-    }
 }

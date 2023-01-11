@@ -72,6 +72,8 @@ class NewPodcastPlayerViewController: UIViewController {
             }
             
             PodcastPlayerHelper.sharedInstance.finishAndSaveContentConsumed()
+            
+            NotificationCenter.default.post(name: .refreshPodcastUI, object: nil)
         }
     }
     

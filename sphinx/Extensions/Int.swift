@@ -17,6 +17,31 @@ extension Int {
         }
     }
     
+    func getEpisodeTimeString(
+        isOnProgress: Bool
+    ) -> String {
+        let hours = Int((self % 86400) / 3600)
+        let minutes = Int((self % 3600) / 60)
+        
+        var string = ""
+        
+        if hours > 1 {
+            string += "\(hours) hrs"
+        } else if hours > 0 {
+            string += "\(hours) hr"
+        }
+        
+        if minutes > 0 {
+            string += " \(minutes) min"
+        }
+        
+        if isOnProgress {
+            string += " left"
+        }
+        
+        return string
+    }
+    
     func getPodcastTimeString() -> String {
         let hours = Int((self % 86400) / 3600).timeString
         let minutes = Int((self % 3600) / 60).timeString

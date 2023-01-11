@@ -25,6 +25,11 @@ class DashboardFeedSquaredThumbnailCollectionViewCell: UICollectionViewCell {
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var subtitleLabel: UILabel!
     @IBOutlet private weak var dateLabel: UILabel!
+    @IBOutlet private weak var timeContainerView: UIView!
+    @IBOutlet private weak var timeLabel: UILabel!
+    @IBOutlet private weak var progressContainerView: UIView!
+    @IBOutlet private weak var progressView: UIView!
+    @IBOutlet private weak var progressViewWidthConstraint: NSLayoutConstraint!
     
     var item: DashboardFeedSquaredThumbnailCollectionViewItem! {
         didSet {
@@ -33,6 +38,8 @@ class DashboardFeedSquaredThumbnailCollectionViewCell: UICollectionViewCell {
             }
         }
     }
+    
+    let kProgressViewContainerWidth: CGFloat = 40.0
 }
 
 
@@ -57,6 +64,12 @@ extension DashboardFeedSquaredThumbnailCollectionViewCell {
         
         typeIconImageView.layer.cornerRadius = 4.0
         typeIconImageView.clipsToBounds = true
+        
+        progressContainerView.layer.cornerRadius = 2.0
+        progressContainerView.clipsToBounds = true
+        
+        progressView.layer.cornerRadius = 2.0
+        progressView.clipsToBounds = true
         
         typeIconImageView.isHidden = true
     }
@@ -96,7 +109,40 @@ extension DashboardFeedSquaredThumbnailCollectionViewCell {
             typeIconImageView.isHidden = true
         }
         
-        dateLabel.text = item.publishDate?.timeIntervalSince1970.getDayDiffString() ?? ""
+        dateLabel.text = item.publishDate?.timeIntervalSince1970.getDayDiffString() ?? "Date unavailable"
+        
+        configureTimeView()
+    }
+    
+    private func configureTimeView() {
+        if let podcastEpisode = item as? PodcastEpisode,
+            let duration = podcastEpisode.duration, duration > 0 {
+            
+            let currentTime = podcastEpisode.currentTime ?? 0
+            
+            progressContainerView.isHidden = currentTime == 0
+            progressView.isHidden = currentTime == 0
+            
+            progressViewWidthConstraint.constant = CGFloat(currentTime) / CGFloat(duration) * kProgressViewContainerWidth
+            progressView.layoutIfNeeded()
+            
+            setTimeLabel(duration: duration, currentTime: currentTime)
+            
+            timeContainerView.isHidden = false
+        } else {
+            timeContainerView.isHidden = true
+        }
+    }
+    
+    private func setTimeLabel(
+        duration: Int,
+        currentTime: Int
+    ) {
+        let timeString = (duration - currentTime).getEpisodeTimeString(
+            isOnProgress: currentTime > 0
+        )
+        
+        timeLabel.text = timeString
     }
 }
 

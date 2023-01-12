@@ -144,7 +144,7 @@ extension API {
         errorCallback: @escaping EmptyCallback
     ) {
         for paramSet in params{
-            guard let request = getURLRequest(route: "TODO: Set this to the correct url", params: paramSet as NSDictionary?, method: "PUT") else {
+            guard let request = getURLRequest(route: "TODO: Set this to the correct url", params: paramSet as NSDictionary?, method: "POST") else {
                 errorCallback()
                 return
             }

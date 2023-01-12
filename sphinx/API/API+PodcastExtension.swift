@@ -119,11 +119,7 @@ extension API {
         var status_array = [[String:Any]]()
         var status1_json = [String:Any]()
         status1_json["chat_id"] = "abc456"
-        var lastItem = ContentFeedLastItem()
-        lastItem.contentID = "xyz123"
-        lastItem.playbackDuration = 45
-        lastItem.lastPlayedTime = 10
-        status1_json["last_item_info"] = lastItem
+        status1_json["feed_id"] = "xyz89"
         status_array.append(status1_json)
         if let status1 = Mapper<ContentFeedStatus>().mapArray(JSONObject: status_array){
             callback(status1)

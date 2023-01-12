@@ -405,18 +405,17 @@ class ActionsManager {
         let contentFeedStatuses = followedFeeds.map({
             let status = ContentFeedStatus()
             status.feedID = $0.feedID
-            status.feedURL = $0.feedURL?.absoluteString
-            //status.subscriptionStatus =
+            status.feedURL = $0.feedURL?.absoluteString ?? ""
             if let valid_chat = $0.chat{
                 status.chatID = String(valid_chat.id)
+                status.satsPerMinute = (UserDefaults.standard.value(forKey: "podcast-sats-\(valid_chat.id)") as? Int) ?? 0
             }
             let podFeed = PodcastFeed.convertFrom(contentFeed: $0)
             status.subscriptionStatus = podFeed.isSubscribedToFromSearch
-            let lastItemStatus = ContentFeedLastItem()
-            lastItemStatus.contentID = podFeed.lastEpisodeId
-            lastItemStatus.lastPlayedTime = podFeed.currentTime
+            status.playerSpeed = podFeed.playerSpeed
+            status.itemID = podFeed.lastEpisodeId
+            status.lastPlayedTime = podFeed.currentTime
             //lastItemStatus.playbackDuration TODO: figure out how to get this
-            status.lastItemInfo = lastItemStatus
             return status
         })
         let contentFeedStatusParams = contentFeedStatuses.map({$0.toJSON()})

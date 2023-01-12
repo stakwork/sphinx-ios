@@ -183,6 +183,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         reloadMessagesData()
         presentPINIfNeeded()
+        loadContentFeedStatus()
         
         PodcastPlayerHelper.sharedInstance.finishAndSaveContentConsumed()
     }
@@ -191,6 +192,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if #available(iOS 13.0, *) {
             style = UITraitCollection.current.userInterfaceStyle
         }
+    }
+    
+    func loadContentFeedStatus(){
+        API.sharedInstance.getAllContentFeedStatuses(url: "",
+        callback: { results in
+            //do something with coredata layer
+        }, errorCallback: {
+            
+        })
     }
 
     func reloadAppIfStyleChanged() {

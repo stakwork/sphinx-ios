@@ -213,9 +213,6 @@ extension AllTribeFeedsCollectionViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         fetchItems()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
-            ActionsManager.sharedInstance.saveContentFeedStatus()
-        })
     }
 }
 

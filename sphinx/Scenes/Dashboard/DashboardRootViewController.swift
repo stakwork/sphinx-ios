@@ -432,15 +432,6 @@ extension DashboardRootViewController {
         }
     }
     
-    func loadContentFeedStatus(){
-        API.sharedInstance.getAllContentFeedStatuses(url: "",
-        callback: { results in
-            //do something with coredata layer
-        }, errorCallback: {
-            
-        })
-    }
-    
     
     internal func loadContactsAndSyncMessages(
         shouldShowHeaderLoadingWheel: Bool = false
@@ -476,8 +467,6 @@ extension DashboardRootViewController {
                     self.finishLoading()
                 }
             )
-            
-            self.loadContentFeedStatus()
         }
     }
     

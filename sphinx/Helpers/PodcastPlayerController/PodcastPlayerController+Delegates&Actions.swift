@@ -30,7 +30,7 @@ extension PodcastPlayerController {
         case .Seek(let podcastData):
             seek(podcastData)
         case .AdjustSpeed(let podcastData):
-            break
+            adjustSpeed(podcastData)
         }
     }
 }
@@ -52,8 +52,6 @@ extension PodcastPlayerController {
         _ podcastData: PodcastData
     ) {
         if podcastData.podcastId != self.podcastData?.podcastId {
-            //Podcast changed. Need to reload some data
-            
             pausePlaying()
             
             for d in self.delegates.values {
@@ -139,8 +137,11 @@ extension PodcastPlayerController {
     func seek(
         _ podcastData: PodcastData
     ) {
+        
+        // Update feed status
+        // feedStatus.currentTime = time
+        
         if podcastData.episodeId != self.podcastData?.episodeId {
-            //Update current time on podcastData
             return
         }
         
@@ -151,6 +152,31 @@ extension PodcastPlayerController {
             player.seek(to: CMTime(seconds: Double(currentTime), preferredTimescale: 1))
             
             configurePlayingInfoCenterWith(podcastData)
+        }
+    }
+    
+    func adjustSpeed(
+        _ podcastData: PodcastData
+    ) {
+        
+        // Update feed status
+        // feedStatus.playerSpeed = value
+        
+        if podcastData.podcastId != self.podcastData?.podcastId {
+            return
+        }
+        
+        self.podcastData?.speed = podcastData.speed
+        
+        if let player = player, isPlaying {
+            player.playImmediately(atRate: podcastData.speed)
+        }
+    }
+    
+    var isPlaying: Bool {
+        get {
+            return player?.timeControlStatus == AVPlayer.TimeControlStatus.playing ||
+                   player?.timeControlStatus == AVPlayer.TimeControlStatus.waitingToPlayAtSpecifiedRate
         }
     }
     
@@ -194,7 +220,8 @@ extension PodcastPlayerController {
         
         configurePlayingInfoCenterWith(podcastData)
         
-        //Set current time on podcast episode
+        // Update feed status
+        // feedStatus.currenTime = currentTime
         
         if currentTime >= duration {
             didEndEpisode()
@@ -204,9 +231,10 @@ extension PodcastPlayerController {
     func didEndEpisode() {
 //        trackItemFinished(shouldSaveAction: true)
 //        pausePlaying()
-        
-//            let _ = move(podcast, toEpisodeWith: podcast.currentEpisodeIndex - 1)
-//            chat?.updateMetaData()
+
+        // Update feed status
+        // feedStatus.episodeId = episodeId
+        // feedStatus.episodeUrl = episodeUrl
         
         guard let podcastData = self.podcastData else {
             return

@@ -22,6 +22,7 @@ class DiscoverTribesTableViewCell: UITableViewCell {
     var cellURL : URL? = nil
     var delegate : DiscoverTribesCellDelegate? = nil
     
+    
     static let reuseID = "DiscoverTribesTableViewCell"
     
     static let nib: UINib = {
@@ -39,19 +40,19 @@ class DiscoverTribesTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func configureCell(tribeData:DiscoverTribeData){
+    func configureCell(tribeData:DiscoverTribeData,wasJoined:Bool){
         if let urlString = tribeData.imgURL,
            let url = URL(string: urlString) {
             
             tribeImageView.sd_setImage(with: url, placeholderImage: UIImage(named: "tribePlaceholder"))
-            tribeImageView.layer.cornerRadius = 10
+            tribeImageView.layer.cornerRadius = 24
             tribeImageView.clipsToBounds = true
         }
         
         titleLabel.text = tribeData.name
         descriptionLabel.text = tribeData.description
         
-        configureJoinButton(tribeData: tribeData)
+        configureJoinButton(tribeData: tribeData,wasJoined:wasJoined)
         styleCell()
     }
     
@@ -62,13 +63,21 @@ class DiscoverTribesTableViewCell: UITableViewCell {
         self.descriptionLabel.textColor = UIColor.Sphinx.SecondaryText
     }
     
-    func configureJoinButton(tribeData:DiscoverTribeData){
-        joinButton.titleLabel?.textColor = .white
+    func configureJoinButton(tribeData:DiscoverTribeData,wasJoined:Bool){
+        if wasJoined{
+            joinButton.titleLabel?.textColor = .black
+            joinButton.backgroundColor = UIColor.Sphinx.ReceivedMsgBG
+            joinButton.setTitle("Open", for: .normal)
+        }
+        else{
+            joinButton.titleLabel?.textColor = .white
+            joinButton.backgroundColor = UIColor.Sphinx.PrimaryBlue
+        }
+        
         joinButton.titleLabel?.font = UIFont(name: "Roboto-Bold", size: 14.0)
-        joinButton.layer.cornerRadius = 4.0
+        joinButton.layer.cornerRadius = 15.0
         let host = tribeData.host ?? API.kTribesServerBaseURL.replacingOccurrences(of: "https://", with: "")
         if let uuid = tribeData.uuid {
-            joinButton.backgroundColor = UIColor.Sphinx.PrimaryBlue
             cellURL = URL(string: "sphinx.chat://?action=tribe&uuid=\(uuid)&host=\(host)")
             joinButton.addTarget(self, action: #selector(handleJoinTap), for: .touchUpInside)
         } else {
@@ -86,6 +95,7 @@ class DiscoverTribesTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         joinButton.titleLabel?.textColor = .white
+        joinButton.setTitle("Join", for: .normal)
         tribeImageView.image = nil
         descriptionLabel.text = ""
         titleLabel.text = ""

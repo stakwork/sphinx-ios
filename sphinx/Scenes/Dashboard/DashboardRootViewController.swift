@@ -226,10 +226,16 @@ extension DashboardRootViewController {
             self,
             withKey: PodcastPlayerHelper.DelegateKeys.dashboard.rawValue
         )
-        
-        addTribeButton.addTarget(self, action: #selector(handleAddTribeTouch), for: .touchUpInside)
+        setupAddTribeButton()
         
         activeTab = .friends
+    }
+    
+    func setupAddTribeButton(){
+        addTribeButton.addTarget(self, action: #selector(handleAddTribeTouch), for: .touchUpInside)
+        addTribeButton.layer.cornerRadius = 22.0
+        addTribeButton.titleLabel?.font = UIFont(name: "Roboto", size: 14.0)
+        addTribeButton.titleLabel?.textColor = UIColor.Sphinx.BodyInverted
     }
     
     @objc func handleAddTribeTouch(){

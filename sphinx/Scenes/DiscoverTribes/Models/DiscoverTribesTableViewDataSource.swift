@@ -20,6 +20,12 @@ class DiscoverTribeTableViewDataSource : NSObject{
     var loadingWheelCell : Int = 0
     
     private lazy var spinner: UIActivityIndicatorView = makeSpinner()
+    lazy var joinedChatIds : [String] = {
+        let contactsService = ContactsService()
+        return contactsService
+            .getChatListObjects()
+            .filter { $0.isPublicGroup() }.compactMap({$0.getChat()?.uuid})
+    }()
     
     init(tableView:UITableView,vc:DiscoverTribesWebViewController){
         self.vc = vc
@@ -87,8 +93,10 @@ extension DiscoverTribeTableViewDataSource : UITableViewDataSource, UITableViewD
             cell.loadingMoreLabel.text = "Loading more tribes..."
             return cell
         } else {
+            let tribeOfInterest = tribes[indexPath.row]
+            let wasJoined = joinedChatIds.contains(tribeOfInterest.uuid ?? "")
             let cell = tableView.dequeueReusableCell(withIdentifier: "DiscoverTribesTableViewCell", for: indexPath) as! DiscoverTribesTableViewCell
-            cell.configureCell(tribeData: tribes[indexPath.row])
+            cell.configureCell(tribeData: tribeOfInterest,wasJoined: wasJoined)
             cell.delegate = vc
             return cell
         }

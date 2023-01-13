@@ -22,7 +22,9 @@ class DashboardRootViewController: RootViewController {
     @IBOutlet weak var searchBarContainer: UIView!
     @IBOutlet weak var mainContentContainerView: UIView!
     @IBOutlet weak var restoreProgressView: RestoreProgressView!
-    
+    @IBOutlet weak var addTribeWidth: NSLayoutConstraint!
+    @IBOutlet weak var addTribeTrailing: NSLayoutConstraint!
+    @IBOutlet weak var addTribeButton: UIButton!
     @IBOutlet weak var bottomBarBottomConstraint: NSLayoutConstraint!
     
     let buttonTitles : [String] = [
@@ -105,6 +107,17 @@ class DashboardRootViewController: RootViewController {
             resetSearchField()
             loadDataOnTabChange(to: activeTab)
             feedViewMode = .rootList
+            
+            if(activeTab == .tribes){
+                addTribeWidth.constant = 119
+                addTribeTrailing.constant = 15
+                searchBarContainer.layoutIfNeeded()
+            }
+            else{
+                addTribeWidth.constant = 0
+                addTribeTrailing.constant = 0
+                searchBarContainer.layoutIfNeeded()
+            }
         }
     }
     
@@ -214,7 +227,16 @@ extension DashboardRootViewController {
             withKey: PodcastPlayerHelper.DelegateKeys.dashboard.rawValue
         )
         
+        addTribeButton.addTarget(self, action: #selector(handleAddTribeTouch), for: .touchUpInside)
+        
         activeTab = .friends
+    }
+    
+    @objc func handleAddTribeTouch(){
+        let discoverVC = DiscoverTribesWebViewController.instantiate(
+                        rootViewController: self.rootViewController
+        )
+        navigationController?.pushViewController(discoverVC, animated: true)
     }
     
     func setupPlayerBar() {
@@ -299,6 +321,8 @@ extension DashboardRootViewController {
 
 // MARK: -  Action Handling
 extension DashboardRootViewController {
+    
+    
     
     @IBAction func bottomBarButtonTouched(_ sender: UIButton) {
         guard let button = BottomBarButton(rawValue: sender.tag) else {

@@ -757,7 +757,7 @@ extension ChatViewController : MessageOptionsVCDelegate {
     
     func updateMessageRowFor(_ message: TransactionMessage) {
         chatDataSource?.updateRowForMessage(message)
-        PlayAudioHelper.playHaptic()
+        SoundsPlayer.playHaptic()
     }
 }
 

@@ -30,6 +30,9 @@ extension PodcastFeed {
 
 extension PodcastFeed {
     
+    public static let kClipPrefix = "clip::"
+    public static let kBoostPrefix = "boost::"
+    
     var identifier: Int {
         get {
             chat?.id ?? Int(feedID) ?? -1

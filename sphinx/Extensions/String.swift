@@ -434,13 +434,13 @@ extension String {
     
     var isPodcastComment: Bool {
         get {
-            return self.starts(with: PodcastPlayerHelper.kClipPrefix)
+            return self.starts(with: PodcastFeed.kClipPrefix)
         }
     }
     
     var isPodcastBoost: Bool {
         get {
-            return self.starts(with: PodcastPlayerHelper.kBoostPrefix)
+            return self.starts(with: PodcastFeed.kBoostPrefix)
         }
     }
     

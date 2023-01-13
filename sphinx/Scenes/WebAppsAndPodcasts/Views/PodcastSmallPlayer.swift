@@ -79,7 +79,7 @@ class PodcastSmallPlayer: UIView {
             
             return true
         } else if podcastId == RecommendationsHelper.kRecommendationPodcastId {
-            self.podcast = playerHelper.recommendationsPodcast
+            self.podcast = RecommendationsHelper.sharedInstance.recommendationsPodcast
             self.delegate = delegate
             
             return true

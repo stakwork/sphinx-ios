@@ -231,19 +231,15 @@ extension DashboardRootViewController {
         for recommendations: [RecommendationResult],
         and recommendationId: String
     ) {
-        if let recommendation = recommendations.filter({ $0.id == recommendationId}).first {
-            
-            let recommendationsHelper = RecommendationsHelper.sharedInstance
-            
-            let podcast = recommendationsHelper.getPodcastFor(
-                recommendations: recommendations,
-                selectedItem: recommendation
-            )
-            
-            pausePlayingIfNeeded(podcast: podcast, itemId: recommendationId)
-            
-            presentRecommendationsPlayerVC(for: podcast)
-        }
+        let recommendationsHelper = RecommendationsHelper.sharedInstance
+        
+        let podcast = recommendationsHelper.getPodcastFor(
+            recommendations: recommendations
+        )
+        
+        pausePlayingIfNeeded(podcast: podcast, itemId: recommendationId)
+        
+        presentRecommendationsPlayerVC(for: podcast)
     }
     
     private func pausePlayingIfNeeded(

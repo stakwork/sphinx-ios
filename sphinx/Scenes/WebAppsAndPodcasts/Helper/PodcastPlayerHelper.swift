@@ -106,12 +106,10 @@ class PodcastPlayerHelper {
         }
     }
     
-    let audioPlayerHelper = PlayAudioHelper()
+    let audioPlayerHelper = SoundsPlayer()
     let podcastPaymentsHelper = PodcastPaymentsHelper()
     let actionsManager = ActionsManager.sharedInstance
     
-    public static let kClipPrefix = "clip::"
-    public static let kBoostPrefix = "boost::"
     public static let kSecondsBeforePMT = 60
     
     let sounds = [
@@ -122,7 +120,6 @@ class PodcastPlayerHelper {
     ]
     
     var podcast: PodcastFeed? = nil
-    var recommendationsPodcast: PodcastFeed? = nil
     
     var chat: Chat? {
         get {
@@ -134,29 +131,6 @@ class PodcastPlayerHelper {
         trackItemFinished(shouldSaveAction: true)
         stopPlaying()
         self.podcast = podcast
-    }
-    
-    func getBoostMessage(amount: Int) -> String? {
-        guard let podcast = self.podcast else {
-            return nil
-        }
-        
-        let feedID = Int(podcast.feedID) ?? -1
-        let itemID = Int(podcast.getCurrentEpisode()?.itemID ?? "") ?? -1
-        
-        guard feedID > 0 else {
-            return nil
-        }
-        
-        guard itemID > 0 else {
-            return nil
-        }
-        
-        if amount == 0 {
-            return nil
-        }
-        
-        return "{\"feedID\":\(feedID),\"itemID\":\(itemID),\"ts\":\(podcast.currentTime),\"amount\":\(amount)}"
     }
     
     func loadEpisodeImage() {

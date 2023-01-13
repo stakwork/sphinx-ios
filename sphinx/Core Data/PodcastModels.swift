@@ -47,11 +47,11 @@ struct PodcastComment {
                 
         if #available(iOS 13.0, *) {
             if let strJson = JSON(json).rawString(.utf8, options: .withoutEscapingSlashes) {
-                return "\(PodcastPlayerHelper.kClipPrefix)\(strJson)"
+                return "\(PodcastFeed.kClipPrefix)\(strJson)"
             }
         } else {
             if let strJson = JSON(json).rawString() {
-                return "\(PodcastPlayerHelper.kClipPrefix)\(strJson)"
+                return "\(PodcastFeed.kClipPrefix)\(strJson)"
             }
         }
         return nil

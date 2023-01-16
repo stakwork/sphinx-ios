@@ -66,6 +66,15 @@ extension PodcastFeed {
         }
     }
     
+    var duration: Int {
+        get {
+            return getCurrentEpisode()?.duration ?? 0
+        }
+        set {
+            getCurrentEpisode()?.duration = newValue
+        }
+    }
+    
     var isRecommendationsPodcast: Bool {
         feedID == RecommendationsHelper.kRecommendationPodcastId
     }
@@ -121,6 +130,13 @@ extension PodcastFeed {
     
     func getIndexForEpisodeWith(id: String) -> Int? {
         return episodesArray.firstIndex(where: { $0.itemID == id })
+    }
+    
+    func getEpisodeWith(index: Int) -> PodcastEpisode? {
+        if episodesArray.count > index {
+            return episodesArray[index]
+        }
+        return nil
     }
     
     func getItemRankForEpisodeWithId(id: String) -> Int {

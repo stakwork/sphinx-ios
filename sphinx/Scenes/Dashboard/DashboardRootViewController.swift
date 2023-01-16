@@ -210,11 +210,6 @@ extension DashboardRootViewController {
         
         isLoading = true
         
-//        podcastPlayerHelper.addDelegate(
-//            self,
-//            withKey: PodcastPlayerHelper.DelegateKeys.dashboard.rawValue
-//        )
-        
         activeTab = .friends
     }
     
@@ -253,8 +248,18 @@ extension DashboardRootViewController {
         rootViewController.setStatusBarColor(light: true)
         socketManager.setDelegate(delegate: self)
         headerView.delegate = self
+        
+        podcastPlayerController.addDelegate(
+            self,
+            withKey: PodcastDelegateKeys.DashboardView.rawValue
+        )
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        podcastPlayerController.removeFromDelegatesWith(key: PodcastDelegateKeys.DashboardView.rawValue)
+    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)

@@ -210,6 +210,8 @@
 		475043CB29719E5F00830E9E /* PodcastPlayerController+InfoCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475043CA29719E5F00830E9E /* PodcastPlayerController+InfoCenter.swift */; };
 		475043CD2971A85200830E9E /* PodcastPlayerController+AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475043CC2971A85200830E9E /* PodcastPlayerController+AudioPlayer.swift */; };
 		475043CF2971AA0700830E9E /* PodcastPlayerController+Delegates&Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475043CE2971AA0700830E9E /* PodcastPlayerController+Delegates&Actions.swift */; };
+		475043D22975C0B300830E9E /* PodcastPlayerView+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475043D12975C0B300830E9E /* PodcastPlayerView+UI.swift */; };
+		475043D42975C2ED00830E9E /* PodcastPlayerView+Delegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475043D32975C2ED00830E9E /* PodcastPlayerView+Delegates.swift */; };
 		475103CF243B6E550043C748 /* ProfileViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475103CE243B6E550043C748 /* ProfileViewControllerExtensions.swift */; };
 		475154A62423B3B000477384 /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475154A52423B3B000477384 /* URL.swift */; };
 		475154AD2423E75F00477384 /* VideoCallReceivedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475154AB2423E75F00477384 /* VideoCallReceivedTableViewCell.swift */; };
@@ -993,6 +995,8 @@
 		475043CA29719E5F00830E9E /* PodcastPlayerController+InfoCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PodcastPlayerController+InfoCenter.swift"; sourceTree = "<group>"; };
 		475043CC2971A85200830E9E /* PodcastPlayerController+AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PodcastPlayerController+AudioPlayer.swift"; sourceTree = "<group>"; };
 		475043CE2971AA0700830E9E /* PodcastPlayerController+Delegates&Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PodcastPlayerController+Delegates&Actions.swift"; sourceTree = "<group>"; };
+		475043D12975C0B300830E9E /* PodcastPlayerView+UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PodcastPlayerView+UI.swift"; sourceTree = "<group>"; };
+		475043D32975C2ED00830E9E /* PodcastPlayerView+Delegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PodcastPlayerView+Delegates.swift"; sourceTree = "<group>"; };
 		475103CE243B6E550043C748 /* ProfileViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewControllerExtensions.swift; sourceTree = "<group>"; };
 		475154A52423B3B000477384 /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		475154AB2423E75F00477384 /* VideoCallReceivedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCallReceivedTableViewCell.swift; sourceTree = "<group>"; };
@@ -2216,6 +2220,17 @@
 			path = PodcastPlayerController;
 			sourceTree = "<group>";
 		};
+		475043D02975C09900830E9E /* PodcastPlayerView */ = {
+			isa = PBXGroup;
+			children = (
+				47183CB12548AA4400E6FD19 /* PodcastPlayerView.swift */,
+				47183CB32548AA5100E6FD19 /* PodcastPlayerView.xib */,
+				475043D12975C0B300830E9E /* PodcastPlayerView+UI.swift */,
+				475043D32975C2ED00830E9E /* PodcastPlayerView+Delegates.swift */,
+			);
+			path = PodcastPlayerView;
+			sourceTree = "<group>";
+		};
 		475154B92423F8DA00477384 /* Bubble Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -3084,8 +3099,7 @@
 				4789E25524EEB8D8003991BE /* AuthorizeAppView.xib */,
 				47F258CD253F6B0100122A5A /* PodcastSmallPlayer.swift */,
 				47F258CF253F6B1500122A5A /* PodcastSmallPlayer.xib */,
-				47183CB12548AA4400E6FD19 /* PodcastPlayerView.swift */,
-				47183CB32548AA5100E6FD19 /* PodcastPlayerView.xib */,
+				475043D02975C09900830E9E /* PodcastPlayerView */,
 				47183CB52548B74E00E6FD19 /* EpisodesHeaderView.swift */,
 				47183CB72548B75B00E6FD19 /* EpisodesHeaderView.xib */,
 				47AF0D30254B236C00C98398 /* BoostButtonView.swift */,
@@ -4341,6 +4355,7 @@
 				47308E0024FEE6E600FFAC6F /* SocketLogger.swift in Sources */,
 				475BDCB4232AC1E800C5BBD6 /* MessageBubbleView.swift in Sources */,
 				4794CA79252F72D2007C5022 /* PodcastPlayerHelper.swift in Sources */,
+				475043D22975C0B300830E9E /* PodcastPlayerView+UI.swift in Sources */,
 				472F9D3B2412F95100EFC30A /* Data.swift in Sources */,
 				47F258D2253F705800122A5A /* ChatViewControllerPodcastExtension.swift in Sources */,
 				F3188B99271CD36D00890DDD /* DashboardRootViewController+VideoPlayerViewControllerDelegate.swift in Sources */,
@@ -4474,6 +4489,7 @@
 				475BDCA2232AC1CF00C5BBD6 /* ChatViewModel.swift in Sources */,
 				47308E0A24FEE6E600FFAC6F /* SocketEnginePollable.swift in Sources */,
 				47183CC22549E2F100E6FD19 /* CommonPodcastBoostTableViewCell.swift in Sources */,
+				475043D42975C2ED00830E9E /* PodcastPlayerView+Delegates.swift in Sources */,
 				47669F4623D1FBA500C17A77 /* GroupMembersDataSource.swift in Sources */,
 				474680812940DD8000F51457 /* RecommendationsHelper.swift in Sources */,
 				479EAB6323E30BAC001013AB /* HistoryDataSource.swift in Sources */,

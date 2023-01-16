@@ -137,7 +137,8 @@ class NewPodcastPlayerViewController: UIViewController {
             episode.itemID,
             url,
             episode.currentTime,
-            episode.duration
+            episode.duration,
+            podcast.playerSpeed
         )
     }
 }
@@ -194,6 +195,12 @@ extension NewPodcastPlayerViewController : PodcastPlayerViewDelegate {
         }
     }
     
+    func didFailPlayingPodcast() {
+        AlertHelper.showAlert(title: "generic.error.title".localized, message: "error.playing".localized, completion: {
+            self.dismiss(animated: true)
+        })
+    }
+    
     func shouldReloadEpisodesTable() {
         tableView.reloadData()
     }
@@ -231,12 +238,12 @@ extension NewPodcastPlayerViewController : CustomBoostDelegate {
 extension NewPodcastPlayerViewController : PickerViewDelegate {
     func didSelectValue(value: String) {
         if let newSpeed = Float(value), newSpeed >= 0.5 && newSpeed <= 2.1 {
-            guard var podcastData = getPodcastData() else {
-                return
-            }
             
             podcast?.playerSpeed = newSpeed
-            podcastData.speed = newSpeed
+            
+            guard let podcastData = getPodcastData() else {
+                return
+            }
             
             podcastPlayerController.submitAction(
                 UserAction.AdjustSpeed(podcastData)

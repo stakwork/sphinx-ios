@@ -40,12 +40,13 @@ extension PodcastPlayerController {
     func play(
         _ podcastData: PodcastData
     ) {
-        if let pd = self.podcastData, podcastData.episodeId == pd.episodeId && isPlaying {
-            return
-        }
         
-        if let pd = self.podcastData, podcastData.podcastId != pd.podcastId && isPlaying {
-            pausePlaying()
+        if let pd = self.podcastData, isPlaying {
+            if podcastData.episodeId == pd.episodeId {
+                return
+            } else {
+                pausePlaying()
+            }
         }
         
         for d in self.delegates.values {
@@ -217,14 +218,14 @@ extension PodcastPlayerController {
             return
         }
         
-        guard let podcastData = podcastData else {
-            return
-        }
-        
         let duration = Int(Double(item.asset.duration.value) / Double(item.asset.duration.timescale))
         let currentTime = Int(round(Double(player.currentTime().value) / Double(player.currentTime().timescale)))
         
         self.podcastData?.currentTime = currentTime
+        
+        guard let podcastData = podcastData else {
+            return
+        }
          
         for d in delegates.values {
             d.playingState(podcastData)
@@ -239,8 +240,10 @@ extension PodcastPlayerController {
     
     func didEndEpisode() {
 //        trackItemFinished(shouldSaveAction: true)
-//        pausePlaying()
+        pausePlaying()
 
+        self.podcastData?.currentTime = 0
+        
         guard let podcastData = self.podcastData else {
             return
         }

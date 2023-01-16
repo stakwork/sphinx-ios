@@ -36,24 +36,11 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
         
         let podcastFeed = PodcastFeed.convertFrom(contentFeed:  contentFeed)
         
-        guard let episode = podcastFeed.getCurrentEpisode(), let url = episode.getAudioUrl() else {
-            return
-        }
+        pausePlayingIfNeeded(podcast: podcastFeed, itemId: contentFeedItem.itemID)
         
-        podcastPlayerController.submitAction(
-            UserAction.Play(
-                PodcastData(
-                    contentFeed.chat?.id,
-                    podcastFeed.feedID,
-                    episode.itemID,
-                    url,
-                    episode.currentTime,
-                    episode.duration,
-                    podcastFeed.playerSpeed
-                )
-            )
-        )
+        podcastFeed.currentEpisodeId = contentFeedItem.itemID
         
+        podcastSmallPlayer.configureWith(podcastId: podcastFeed.feedID, and: self)
         presentPodcastPlayerFor(podcastFeed)
     }
     

@@ -8,34 +8,19 @@
 
 import Foundation
 
-extension DashboardRootViewController : PodcastPlayerDelegate {
-    func playingState(podcastId: String, duration: Int, currentTime: Int) {
-        if podcastSmallPlayer.configureWith(podcastId: podcastId, and: self) {
-            loadingState(podcastId: podcastId, loading: false)
-        }
-        
-        showSmallPodcastPlayer()
-        podcastSmallPlayer.playingState(podcastId: podcastId, duration: duration, currentTime: currentTime)
+extension DashboardRootViewController : PlayerDelegate {
+    func loadingState(_ podcastData: PodcastData) {}
+    
+    func playingState(_ podcastData: PodcastData) {
+        podcastSmallPlayer.configureWith(podcastId: podcastData.podcastId, and: self)
+        dismissibleBar.isHidden = false
     }
     
-    func pausedState(podcastId: String, duration: Int, currentTime: Int) {
-        podcastSmallPlayer.pausedState(podcastId: podcastId, duration: duration, currentTime: currentTime)
-    }
+    func pausedState(_ podcastData: PodcastData) {}
     
-    func loadingState(podcastId: String, loading: Bool) {
-        podcastSmallPlayer.loadingState(podcastId: podcastId, loading: loading)
-    }
+    func endedState(_ podcastData: PodcastData) {}
     
-    func errorState(podcastId: String) {
-        podcastSmallPlayer.loadingState(podcastId: podcastId, loading: false)
-    }
-    
-    func showSmallPodcastPlayer() {
-        if podcastSmallPlayer.isHidden {
-            podcastSmallPlayer.isHidden = false
-            dismissibleBar.isHidden = false
-        }
-    }
+    func errorState(_ podcastData: PodcastData) {}
     
     func hideSmallPodcastPlayer() {
         podcastSmallPlayer.isHidden = true

@@ -56,9 +56,9 @@ enum UserAction {
 }
 
 enum PodcastDelegateKeys: String {
-    case ChatViewPlayerBar = "ChatViewPlayerBar"
+    case SmallPlayerBar = "SmallPlayerBar"
     case PodcastPlayerView = "PodcastPlayerView"
-    case DashboardPlayerBar = "DashboardPlayerBar"
+    case DashboardView = "DashboardView"
     case RecommendationsPlayerView = "RecommendationsPlayerView"
 }
 

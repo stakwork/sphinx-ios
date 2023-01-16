@@ -36,6 +36,7 @@ class DiscoverTribeTableViewDataSource : NSObject{
     
     func fetchTribeData(
         searchTerm: String? = nil,
+        tags:[String] = [],
         shouldAppend: Bool
     ){
         setupSpinner()
@@ -51,7 +52,8 @@ class DiscoverTribeTableViewDataSource : NSObject{
             },
             limit: itemsPerPage,
             searchTerm: searchTerm,
-            page: pageNum
+            page: pageNum,
+            tags:tags
         )
     }
     

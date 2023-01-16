@@ -18,9 +18,11 @@ class DiscoverTribesTagSelectionVC : UIViewController{
     
     @IBOutlet weak var filterIcon: UILabel!
     @IBOutlet weak var applyButton: UIButton!
+    @IBOutlet weak var collectionView: UICollectionView!
+    
     var delegate : DiscoverTribesTagSelectionDelegate?
     lazy var discoverTribeTagSelectionVM: DiscoverTribesTagSelectionVM = {
-        return DiscoverTribesTagSelectionVM(vc: self)
+        return DiscoverTribesTagSelectionVM(vc: self, collectionView: collectionView)
     }()
     
     static func instantiate(
@@ -38,6 +40,11 @@ class DiscoverTribesTagSelectionVC : UIViewController{
         styleApplyButton()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.setupCollectionView()
+    }
+    
     func styleLabels(){
         filterIcon.font = UIFont(name: "Material Icons", size: 18.0)
         filterIcon.text = "search"
@@ -47,6 +54,12 @@ class DiscoverTribesTagSelectionVC : UIViewController{
     func styleApplyButton(){
         applyButton.layer.cornerRadius = 24.0
         applyButton.addTarget(self, action: #selector(handleApplyTap), for: .touchUpInside)
+    }
+    
+    func setupCollectionView(){
+        //TODO: fix this to make it dynamic. Right now it crashes
+        collectionView.delegate = discoverTribeTagSelectionVM
+        collectionView.dataSource = discoverTribeTagSelectionVM
     }
     
     @objc func handleApplyTap(){

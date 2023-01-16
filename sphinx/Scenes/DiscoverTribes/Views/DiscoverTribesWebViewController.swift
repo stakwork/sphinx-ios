@@ -26,7 +26,7 @@ class DiscoverTribesWebViewController : UIViewController{
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var searchBarContainer: UIView!
     @IBOutlet weak var tagsButton: UIButton!
-    
+    var currentTags : [String] = []
     
     var discoverTribesTableViewDataSource : DiscoverTribeTableViewDataSource? = nil
     var rootViewController: RootViewController!
@@ -59,7 +59,7 @@ class DiscoverTribesWebViewController : UIViewController{
         )
         searchBar.layer.cornerRadius = searchBar.frame.height / 2
         tagsButton.layer.cornerRadius = 14.0
-        tagsButton.titleLabel?.textColor = UIColor.Sphinx.BodyInverted
+        tagsButton.setTitleColor(UIColor.Sphinx.BodyInverted, for: [.normal,.highlighted,.selected])
     }
     
     
@@ -89,6 +89,7 @@ class DiscoverTribesWebViewController : UIViewController{
                         rootViewController: self.rootViewController
         )
         discoverVC.modalPresentationStyle = .automatic
+        discoverVC.discoverTribeTagSelectionVM.selectedTags = currentTags
         self.navigationController?.present(discoverVC, animated: true)
         discoverVC.delegate = self
     }
@@ -120,7 +121,14 @@ extension DiscoverTribesWebViewController: UITextFieldDelegate {
 
 extension DiscoverTribesWebViewController : DiscoverTribesTagSelectionDelegate{
     func didSelect(selections: [String]) {
-        print(selections)
+        let newSet = Set(selections)
+        let oldSet = Set(currentTags)
+        if(newSet != oldSet){
+            self.currentTags = selections
+            if let dataSource = discoverTribesTableViewDataSource{
+                dataSource.fetchTribeData(tags: currentTags, shouldAppend: false)
+            }
+        }
     }
     
 }

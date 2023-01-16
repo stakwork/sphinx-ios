@@ -609,6 +609,7 @@
 		CE6784602968B0E000342905 /* FeedsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE67845F2968B0E000342905 /* FeedsManager.swift */; };
 		CEBF0D032975B20B006C1F21 /* DiscoverTribesTagSelectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBF0D022975B20B006C1F21 /* DiscoverTribesTagSelectionVC.swift */; };
 		CEBF0D052975C367006C1F21 /* DiscoverTribesTagSelectionVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBF0D042975C367006C1F21 /* DiscoverTribesTagSelectionVM.swift */; };
+		CEBF0D07297603B0006C1F21 /* TribeTagSelectionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBF0D06297603B0006C1F21 /* TribeTagSelectionCollectionViewCell.swift */; };
 		CECFBEFE2965C84400BAD935 /* DiscoverTribesTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECFBEFD2965C84400BAD935 /* DiscoverTribesTableViewDataSource.swift */; };
 		CECFBF012965C85B00BAD935 /* DiscoverTribesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECFBEFF2965C85B00BAD935 /* DiscoverTribesTableViewCell.swift */; };
 		CECFBF022965C85B00BAD935 /* DiscoverTribesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CECFBF002965C85B00BAD935 /* DiscoverTribesTableViewCell.xib */; };
@@ -1490,6 +1491,7 @@
 		CE67845F2968B0E000342905 /* FeedsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedsManager.swift; sourceTree = "<group>"; };
 		CEBF0D022975B20B006C1F21 /* DiscoverTribesTagSelectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTribesTagSelectionVC.swift; sourceTree = "<group>"; };
 		CEBF0D042975C367006C1F21 /* DiscoverTribesTagSelectionVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTribesTagSelectionVM.swift; sourceTree = "<group>"; };
+		CEBF0D06297603B0006C1F21 /* TribeTagSelectionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TribeTagSelectionCollectionViewCell.swift; sourceTree = "<group>"; };
 		CECFBEFD2965C84400BAD935 /* DiscoverTribesTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTribesTableViewDataSource.swift; sourceTree = "<group>"; };
 		CECFBEFF2965C85B00BAD935 /* DiscoverTribesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTribesTableViewCell.swift; sourceTree = "<group>"; };
 		CECFBF002965C85B00BAD935 /* DiscoverTribesTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DiscoverTribesTableViewCell.xib; sourceTree = "<group>"; };
@@ -3495,6 +3497,7 @@
 			children = (
 				CEF821D52963B68600CBB28F /* DiscoverTribesWebViewController.swift */,
 				CEBF0D022975B20B006C1F21 /* DiscoverTribesTagSelectionVC.swift */,
+				CEBF0D06297603B0006C1F21 /* TribeTagSelectionCollectionViewCell.swift */,
 				CECFBEFF2965C85B00BAD935 /* DiscoverTribesTableViewCell.swift */,
 				CECFBF002965C85B00BAD935 /* DiscoverTribesTableViewCell.xib */,
 			);
@@ -4472,6 +4475,7 @@
 				47ACBC22265E9D0800D2FE47 /* PersonModalView.swift in Sources */,
 				47FA18CC2434C66C00469C8F /* TransactionMessageMediaExtension.swift in Sources */,
 				475BDD32232ACBB900C5BBD6 /* UIFont.swift in Sources */,
+				CEBF0D07297603B0006C1F21 /* TribeTagSelectionCollectionViewCell.swift in Sources */,
 				47669F4F23D63D5000C17A77 /* GroupActionMessageTableViewCell.swift in Sources */,
 				475BDD0D232AC25100C5BBD6 /* DayHeaderTableViewCell.swift in Sources */,
 				475BDD1D232AC47C00C5BBD6 /* ChatViewControllerDelegates.swift in Sources */,

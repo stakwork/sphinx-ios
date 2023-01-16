@@ -121,9 +121,13 @@ extension API {
         errorCallback: @escaping EmptyCallback,
         limit : Int = 20,
         searchTerm:String? = nil,
-        page : Int = 0
+        page : Int = 0,
+        tags : [String] = []
     ) {
         var url = API.getUrl(route: "\(API.kTribesServerBaseURL)/tribes?limit=\(limit)&sortBy=member_count&page=\(page)")
+        for tag in tags{
+            url.append("&tags=\(tag)")
+        }
         url += (searchTerm == nil) ? "" : "&search=\(searchTerm!)"
         
         guard let request = createRequest(url.percentEscaped ?? url, bodyParams: nil, method: "GET") else {

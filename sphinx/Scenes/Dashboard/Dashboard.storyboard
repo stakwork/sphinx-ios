@@ -81,17 +81,31 @@
                                             <color key="baseForegroundColor" systemColor="secondaryLabelColor"/>
                                         </buttonConfiguration>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3p2-Mz-7oz">
+                                        <rect key="frame" x="280" y="27.5" width="35" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="35" id="43I-cF-SKf"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" name="DashboardHeader"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="70" id="18l-RX-1R6"/>
                                     <constraint firstAttribute="bottom" secondItem="52N-Az-4on" secondAttribute="bottom" constant="10" id="2aK-GL-9NT"/>
+                                    <constraint firstItem="vfi-ch-n2c" firstAttribute="leading" secondItem="3p2-Mz-7oz" secondAttribute="leading" id="4eA-PX-nk8"/>
+                                    <constraint firstItem="vfi-ch-n2c" firstAttribute="leading" secondItem="3p2-Mz-7oz" secondAttribute="leading" id="5cf-3A-6iq"/>
                                     <constraint firstAttribute="trailing" secondItem="vfi-ch-n2c" secondAttribute="trailing" constant="15" id="E6K-br-Tql"/>
+                                    <constraint firstItem="vfi-ch-n2c" firstAttribute="leading" secondItem="3p2-Mz-7oz" secondAttribute="leading" id="Egi-XM-Nmh"/>
                                     <constraint firstItem="52N-Az-4on" firstAttribute="leading" secondItem="Yxo-is-Yxg" secondAttribute="leading" constant="16" id="JK9-te-pp2"/>
                                     <constraint firstItem="vfi-ch-n2c" firstAttribute="bottom" secondItem="52N-Az-4on" secondAttribute="bottom" id="OWx-7K-jgE"/>
                                     <constraint firstItem="vfi-ch-n2c" firstAttribute="top" secondItem="52N-Az-4on" secondAttribute="top" id="RvB-6E-hAr"/>
                                     <constraint firstItem="vfi-ch-n2c" firstAttribute="leading" secondItem="52N-Az-4on" secondAttribute="trailing" constant="15" id="WkA-cH-VWC"/>
+                                    <constraint firstItem="3p2-Mz-7oz" firstAttribute="height" secondItem="vfi-ch-n2c" secondAttribute="height" multiplier="0.477273" id="cnc-qt-Pie"/>
                                     <constraint firstItem="52N-Az-4on" firstAttribute="top" secondItem="Yxo-is-Yxg" secondAttribute="top" constant="16" id="lJj-Qu-n2t"/>
+                                    <constraint firstItem="3p2-Mz-7oz" firstAttribute="centerY" secondItem="vfi-ch-n2c" secondAttribute="centerY" id="p6w-0c-DT2"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="875-dS-sJM" customClass="CustomSegmentedControl" customModule="sphinx" customModuleProvider="target">

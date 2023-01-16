@@ -39,15 +39,6 @@ extension PodcastFeed {
         }
     }
     
-    var currentEpisodeIndex: Int {
-        get {
-            return (UserDefaults.standard.value(forKey: "current-episode-\(identifier)") as? Int) ?? 0
-        }
-        set {
-            UserDefaults.standard.set(newValue, forKey: "current-episode-\(identifier)")
-        }
-    }
-    
     var currentEpisodeId: String {
         get {
             return (UserDefaults.standard.value(forKey: "current-episode-item-id-\(identifier)") as? String) ?? ""
@@ -68,10 +59,10 @@ extension PodcastFeed {
     
     var currentTime: Int {
         get {
-            return (UserDefaults.standard.value(forKey: "current-time-\(identifier)") as? Int) ?? 0
+            return getCurrentEpisode()?.currentTime ?? 0
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: "current-time-\(identifier)")
+            getCurrentEpisode()?.currentTime = newValue
         }
     }
     
@@ -90,21 +81,32 @@ extension PodcastFeed {
     }
     
     func getCurrentEpisode() -> PodcastEpisode? {
-        let currentEpisodeIndex = getCurrentEpisodeIndex()
-        let episodes = self.episodesArray
-        
-        guard !episodes.isEmpty && currentEpisodeIndex < episodes.count
-        else { return nil }
-        
-        return episodes[currentEpisodeIndex]
+        if let currentEpisode = episodesArray.first(where: { $0.itemID == currentEpisodeId }) {
+            return currentEpisode
+        }
+        return episodesArray.first
     }
     
-    func getCurrentEpisodeIndex() -> Int {
-        let currentEId = currentEpisodeId
-        
-        return episodesArray
-            .firstIndex(where: { $0.itemID == currentEId })
-            ?? currentEpisodeIndex
+    var currentEpisodeIndex: Int? {
+        get {
+            return episodesArray.firstIndex(where: { $0.itemID == currentEpisodeId })
+        }
+    }
+    
+    var nextEpisodeIndex: Int {
+        get {
+            let currentEId = currentEpisodeId
+            
+            if let currentIndex = episodesArray.firstIndex(where: { $0.itemID == currentEId }) {
+                if currentIndex > 0 {
+                    return currentIndex - 1
+                } else {
+                    return currentIndex
+                }
+            }
+            
+            return 0
+        }
     }
     
     func getEpisodeInfo() -> (String, String) {
@@ -151,7 +153,7 @@ extension PodcastFeed {
         comment.itemId = episode?.itemID
         comment.title = episode?.title
         comment.url = episode?.urlPath
-        comment.timestamp = currentTime
+        comment.timestamp = episode?.currentTime ?? 0
         
         return comment
     }

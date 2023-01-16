@@ -49,8 +49,6 @@ class PodcastPlayerView: UIView {
     
     var livePodcastDataSource: PodcastLiveDataSource? = nil
     var liveMessages: [Int: [TransactionMessage]] = [:]
-
-    var wasPlayingOnDrag = false
     
     var audioLoading = false {
         didSet {
@@ -59,7 +57,8 @@ class PodcastPlayerView: UIView {
     }
     
     let feedBoostHelper = FeedBoostHelper()
-    var playerHelper: PodcastPlayerHelper = PodcastPlayerHelper.sharedInstance
+    
+    var podcastPlayerController = PodcastPlayerController.sharedInstance
     
     var podcast: PodcastFeed! = nil
     
@@ -91,11 +90,6 @@ class PodcastPlayerView: UIView {
         self.delegate = delegate
         self.boostDelegate = boostDelegate
         self.podcast = podcast
-        
-        playerHelper.addDelegate(
-            self,
-            withKey: PodcastPlayerHelper.DelegateKeys.podcastPlayerVC.rawValue
-        )
         
         if let objectID = podcast.objectID {
             feedBoostHelper.configure(with: objectID, and: chat)
@@ -152,6 +146,21 @@ class PodcastPlayerView: UIView {
         }
     }
     
+    private func getPodcastData() -> PodcastData? {
+        guard let episode = podcast.getCurrentEpisode(), let url = episode.getAudioUrl() else {
+            return nil
+        }
+        
+        return PodcastData(
+            chat?.id,
+            podcast.feedID,
+            episode.itemID,
+            url,
+            episode.currentTime,
+            episode.duration
+        )
+    }
+    
     func showInfo() {
         audioLoading = true
         
@@ -171,7 +180,7 @@ class PodcastPlayerView: UIView {
         if let duration = episode?.duration {
             let _ = setProgress(
                 duration: duration,
-                currentTime: podcast.currentTime
+                currentTime: episode?.currentTime ?? 0
             )
             audioLoading = false
         } else if let url = episode?.getAudioUrl() {
@@ -183,7 +192,7 @@ class PodcastPlayerView: UIView {
                 DispatchQueue.main.async {
                     let _ = self.setProgress(
                         duration: duration,
-                        currentTime: self.podcast.currentTime
+                        currentTime: episode?.currentTime ?? 0
                     )
                     self.audioLoading = false
                 }
@@ -240,12 +249,16 @@ class PodcastPlayerView: UIView {
     func configureControls(
         playing: Bool? = nil
     ) {
-        let isPlaying = playing ?? playerHelper.isPlaying(podcast.feedID)
+        let isPlaying = playing ?? podcastPlayerController.isPlaying(podcastId: podcast.feedID)
         playPauseButton.setTitle(isPlaying ? "pause" : "play_arrow", for: .normal)
         speedButton.setTitle(podcast.playerSpeed.speedDescription + "x", for: .normal)
     }
     
-    func setProgress(duration: Int, currentTime: Int) -> Bool {
+    func setProgress(
+        duration: Int,
+        currentTime: Int
+    ) -> Bool {
+        
         let currentTimeString = currentTime.getPodcastTimeString()
         let didChangeCurrentTime = currentTimeLabel.text != currentTimeString
         
@@ -267,7 +280,7 @@ class PodcastPlayerView: UIView {
     }
     
     func addMessagesFor(ts: Int) {
-        if !playerHelper.isPlaying(podcast.feedID) {
+        if !podcastPlayerController.isPlaying(podcastId: podcast.feedID) {
             return
         }
         
@@ -281,27 +294,43 @@ class PodcastPlayerView: UIView {
         gestureHandlerView.addGestureRecognizer(dragGesture)
     }
     
+    var dragging = false
     @objc func wasDragged(gestureRecognizer: UIPanGestureRecognizer) {
         let gestureXLocation = gestureRecognizer.location(in: durationLine).x
         
         if gestureRecognizer.state == .began {
+            dragging = true
             livePodcastDataSource?.resetData()
             gestureDidBegin(gestureXLocation: gestureXLocation)
         } else if gestureRecognizer.state == .changed {
             updateProgressLineAndLabel(gestureXLocation: gestureXLocation)
         } else if gestureRecognizer.state == .ended {
-            let progress = ((progressLineWidth.constant * 100) / durationLine.frame.size.width) / 100
+            dragging = false
             
-            playerHelper.seek(podcast, to: Double(progress), playAfterSeek: wasPlayingOnDrag)
-            wasPlayingOnDrag = false
+            guard let episode = podcast.getCurrentEpisode(), let duration = episode.duration else {
+                return
+            }
+            
+            let progress = ((progressLineWidth.constant * 100) / durationLine.frame.size.width) / 100
+            let currentTime = Int(Double(duration) * progress)
+            
+            guard var podcastData = getPodcastData() else {
+                return
+            }
+            
+            podcast?.getCurrentEpisode()?.currentTime = currentTime
+            
+            podcastData.currentTime = currentTime
+            
+            podcastPlayerController.submitAction(
+                UserAction.Seek(podcastData)
+            )
             
             delegate?.shouldSyncPodcast()
         }
     }
     
     func gestureDidBegin(gestureXLocation: CGFloat) {
-        wasPlayingOnDrag = playerHelper.isPlaying(podcast.feedID)
-        playerHelper.didStartDraggingProgressFor(podcast)
         updateProgressLineAndLabel(gestureXLocation: gestureXLocation)
     }
     
@@ -316,17 +345,29 @@ class PodcastPlayerView: UIView {
         progressLineWidth.constant = translation
         progressLine.layoutIfNeeded()
         
-        let progress = ((progressLineWidth.constant * 100) / durationLine.frame.size.width) / 100
+        guard let episode = podcast.getCurrentEpisode(), let duration = episode.duration else {
+            return
+        }
         
-        playerHelper.shouldUpdateTimeLabelsTo(
-            progress: Double(progress),
-            with: podcast.getCurrentEpisode()?.duration ?? 0,
-            in: podcast
-        )
+        let progress = ((progressLineWidth.constant * 100) / durationLine.frame.size.width) / 100
+        let currentTime = Int(Double(duration) * progress)
+        let _ = setProgress(duration: duration, currentTime: currentTime)
     }
     
     func togglePlayState() {
-        playerHelper.togglePlayStateFor(podcast)
+        guard let podcastData = getPodcastData() else {
+            return
+        }
+        
+        if podcastPlayerController.isPlaying(podcastId: podcast.feedID) {
+            podcastPlayerController.submitAction(
+                UserAction.Play(podcastData)
+            )
+        } else {
+            podcastPlayerController.submitAction(
+                UserAction.Pause(podcastData)
+            )
+        }
         delegate?.shouldReloadEpisodesTable()
     }
     
@@ -365,60 +406,76 @@ class PodcastPlayerView: UIView {
     func didTapEpisodeAt(index: Int) {
         audioLoading = true
         
-        playerHelper.prepareEpisodeWith(
-            index: index,
-            in: podcast,
-            autoPlay: true,
-            completion: {
-                
-            self.configureControls()
-            self.delegate?.shouldReloadEpisodesTable()
-        })
+//        playerHelper.prepareEpisodeWith(
+//            index: index,
+//            in: podcast,
+//            autoPlay: true,
+//            completion: {
+//
+//            self.configureControls()
+//            self.delegate?.shouldReloadEpisodesTable()
+//        })
+        
+        //Should Play episode
+        
         delegate?.shouldReloadEpisodesTable()
         showInfo()
     }
     
     func seekTo(seconds: Double) {
         livePodcastDataSource?.resetData()
-        playerHelper.seek(podcast, to: seconds)
+        
+        guard var podcastData = getPodcastData() else {
+            return
+        }
+        
+        var newTime = podcastData.currentTime ?? 0 + Int(seconds)
+        newTime = max(newTime, 0)
+        newTime = min(0, podcastData.duration ?? 0)
+        
+        podcastData.currentTime = newTime
+        podcast?.currentTime = newTime
+        
+        podcastPlayerController.submitAction(
+            UserAction.Seek(podcastData)
+        )
     }
 }
 
-extension PodcastPlayerView : PodcastPlayerDelegate {
-    func loadingState(podcastId: String, loading: Bool) {
-        guard podcastId == podcast.feedID else {
-            return
-        }
-        configureControls(playing: loading)
+extension PodcastPlayerView : PlayerDelegate {
+    func loadingState(_ podcastData: PodcastData) {
+        audioLoading = true
+        configureControls(playing: true)
         delegate?.shouldReloadEpisodesTable()
         showInfo()
-        audioLoading = loading
     }
     
-    func playingState(podcastId: String, duration: Int, currentTime: Int) {
-        guard podcastId == podcast.feedID else {
+    func playingState(_ podcastData: PodcastData) {
+        if dragging {
             return
         }
-        let didChangeTime = setProgress(duration: duration, currentTime: currentTime)
+        
+        let _ = setProgress(duration: podcastData.duration ?? 0, currentTime: podcastData.currentTime ?? 0)
         configureControls(playing: true)
-        addMessagesFor(ts: currentTime)
-        audioLoading = !didChangeTime
+        addMessagesFor(ts: podcastData.currentTime ?? 0)
+        audioLoading = false
     }
     
-    func pausedState(podcastId: String, duration: Int, currentTime: Int) {
-        guard podcastId == podcast.feedID else {
-            return
-        }
-        let _ = setProgress(duration: duration, currentTime: currentTime)
+    func pausedState(_ podcastData: PodcastData) {
         configureControls(playing: false)
         delegate?.shouldReloadEpisodesTable()
         audioLoading = false
     }
     
-    func errorState(podcastId: String) {}
+    func endedState(_ podcastData: PodcastData) {
+        
+    }
+    
+    func errorState(_ podcastData: PodcastData) {
+        
+    }
 }
 
-//default implementation
 extension CustomBoostViewDelegate{
     func didFailToBoost(message: String) {
         AlertHelper.showAlert(title: "Boost Failed", message: message)
@@ -448,7 +505,7 @@ extension PodcastPlayerView: CustomBoostViewDelegate {
            let objectID = episode.objectID {
             
             let itemID = episode.itemID
-            let currentTime = podcast.currentTime
+            let currentTime = podcast.getCurrentEpisode()?.currentTime ?? 0
             
             if let boostMessage = feedBoostHelper.getBoostMessage(itemID: itemID, amount: amount, currentTime: currentTime) {
                 

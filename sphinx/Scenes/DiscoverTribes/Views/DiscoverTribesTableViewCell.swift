@@ -66,6 +66,7 @@ class DiscoverTribesTableViewCell: UITableViewCell {
         joinButton.titleLabel?.textColor = .white
         joinButton.titleLabel?.font = UIFont(name: "Roboto-Bold", size: 14.0)
         joinButton.layer.cornerRadius = 4.0
+        
         let host = tribeData.host ?? API.kTribesServerBaseURL.replacingOccurrences(of: "https://", with: "")
         if let uuid = tribeData.uuid {
             joinButton.backgroundColor = UIColor.Sphinx.PrimaryBlue

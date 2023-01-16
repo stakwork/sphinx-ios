@@ -55,7 +55,8 @@ class DashboardRootViewController: RootViewController {
     internal let refreshControl = UIRefreshControl()
     
     internal let newBubbleHelper = NewMessageBubbleHelper()
-    internal let podcastPlayerHelper = PodcastPlayerHelper.sharedInstance
+    
+    internal let podcastPlayerController = PodcastPlayerController.sharedInstance
 
     internal lazy var chatsListViewModel: ChatListViewModel = {
         ChatListViewModel(contactsService: contactsService)
@@ -209,10 +210,10 @@ extension DashboardRootViewController {
         
         isLoading = true
         
-        podcastPlayerHelper.addDelegate(
-            self,
-            withKey: PodcastPlayerHelper.DelegateKeys.dashboard.rawValue
-        )
+//        podcastPlayerHelper.addDelegate(
+//            self,
+//            withKey: PodcastPlayerHelper.DelegateKeys.dashboard.rawValue
+//        )
         
         activeTab = .friends
     }
@@ -228,7 +229,8 @@ extension DashboardRootViewController {
     func onPlayerBarDismissed() {
         podcastSmallPlayer.pauseIfPlaying()
         hideSmallPodcastPlayer()
-        podcastPlayerHelper.finishAndSaveContentConsumed()
+        
+//        podcastPlayerHelper.finishAndSaveContentConsumed()
     }
     
     func addBlurEffectTo(_ view: UIView) {

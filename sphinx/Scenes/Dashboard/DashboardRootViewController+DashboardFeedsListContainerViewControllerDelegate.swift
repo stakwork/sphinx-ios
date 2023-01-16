@@ -27,34 +27,34 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
             let contentFeedItem = managedObjectContext.object(with: podcastEpisodeID) as? ContentFeedItem,
             contentFeedItem.contentFeed?.isPodcast == true
         else {
-            preconditionFailure()
+            return
         }
         
-        if let contentFeed = contentFeedItem.contentFeed {
-            let podcastFeed = PodcastFeed.convertFrom(contentFeed:  contentFeed)
-            
-            if let index = podcastFeed.getIndexForEpisodeWith(id: contentFeedItem.itemID) {
-                
-                let isPlayingEpisode = podcastPlayerHelper.isPlaying(
-                    podcastFeed.feedID,
-                    episodeId: contentFeedItem.itemID
-                )
-                
-                let isPlayingPodcast = podcastPlayerHelper.isPlaying(
-                    podcastFeed.feedID
-                )
-                
-                if !isPlayingEpisode && isPlayingPodcast {
-                    podcastPlayerHelper.prepareEpisodeWith(
-                        index: index,
-                        in: podcastFeed,
-                        autoPlay: false
-                    ) {}
-                }
-            }
-
-            presentPodcastPlayerFor(podcastFeed)
+        guard let contentFeed = contentFeedItem.contentFeed else {
+            return
         }
+        
+        let podcastFeed = PodcastFeed.convertFrom(contentFeed:  contentFeed)
+        
+        guard let episode = podcastFeed.getCurrentEpisode(), let url = episode.getAudioUrl() else {
+            return
+        }
+        
+        podcastPlayerController.submitAction(
+            UserAction.Play(
+                PodcastData(
+                    contentFeed.chat?.id,
+                    podcastFeed.feedID,
+                    episode.itemID,
+                    url,
+                    episode.currentTime,
+                    episode.duration,
+                    podcastFeed.playerSpeed
+                )
+            )
+        )
+        
+        presentPodcastPlayerFor(podcastFeed)
     }
     
     func viewController(
@@ -239,6 +239,8 @@ extension DashboardRootViewController {
         
         pausePlayingIfNeeded(podcast: podcast, itemId: recommendationId)
         
+        podcast.currentEpisodeId = recommendationId
+        
         presentRecommendationsPlayerVC(for: podcast)
     }
     
@@ -246,13 +248,23 @@ extension DashboardRootViewController {
         podcast: PodcastFeed,
         itemId: String
     ) {
-        if podcastPlayerHelper.isPlaying(podcast.feedID) {
-            if podcast.getCurrentEpisode()?.itemID != itemId {
-                podcastPlayerHelper.shouldPause()
+        if podcastPlayerController.isPlaying(podcastId: podcast.feedID) {
+            if let episode = podcast.getCurrentEpisode(), let url = episode.getAudioUrl(), episode.itemID != itemId {
+                podcastPlayerController.submitAction(
+                    UserAction.Pause(
+                        PodcastData(
+                            podcast.chat?.id,
+                            podcast.feedID,
+                            episode.itemID,
+                            url,
+                            episode.currentTime,
+                            episode.duration,
+                            podcast.playerSpeed
+                        )
+                    )
+                )
             }
         }
-        
-        let _ = podcastPlayerHelper.setNewEpisodeWith(episodeId: itemId, in: podcast)
     }
     
     private func presentRecommendationsPlayerVC(

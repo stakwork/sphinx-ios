@@ -22,7 +22,7 @@ struct PodcastData {
     var chatId: Int?
     var podcastId: String
     var episodeId: String
-    var episodeUrl: String
+    var episodeUrl: URL
     var currentTime: Int? = nil
     var duration: Int? = nil
     var speed: Float = 1
@@ -30,15 +30,21 @@ struct PodcastData {
 //    var destinations: [ContentFeedPaymentDestination] = 0
     
     init(
-        chatId: Int?,
-        podcastId: String,
-        episodeId: String,
-        episodeUrl: String
+        _ chatId: Int?,
+        _ podcastId: String,
+        _ episodeId: String,
+        _ episodeUrl: URL,
+        _ currentTime: Int? = nil,
+        _ duration: Int? = nil,
+        _ speed: Float = 1
     ) {
         self.chatId = chatId
         self.podcastId = podcastId
         self.episodeId = episodeId
         self.episodeUrl = episodeUrl
+        self.currentTime = currentTime
+        self.duration = duration
+        self.speed = speed
     }
 }
 
@@ -49,11 +55,11 @@ enum UserAction {
     case AdjustSpeed(PodcastData)
 }
 
-enum DelegateKeys: String {
-    case smallPlayer = "smallPlayer"
-    case podcastPlayerVC = "podcastPlayerVC"
-    case dashboard = "dashboardSmallPlayer"
-    case recommendationsPlayer = "recommendationsPlayer"
+enum PodcastDelegateKeys: String {
+    case ChatViewPlayerBar = "ChatViewPlayerBar"
+    case PodcastPlayerView = "PodcastPlayerView"
+    case DashboardPlayerBar = "DashboardPlayerBar"
+    case RecommendationsPlayerView = "RecommendationsPlayerView"
 }
 
 let kSecondsBeforePMT = 60
@@ -91,6 +97,14 @@ class PodcastPlayerController {
     
     init() {
         setupNowPlayingInfoCenter()
+    }
+    
+    func saveState() {
+        if let podcastData = podcastData, let contentFeed = ContentFeed.getFeedWith(feedId: podcastData.podcastId) {
+            let podcast = PodcastFeed.convertFrom(contentFeed: contentFeed)
+            podcast.currentTime = podcastData.currentTime ?? 0
+            podcast.currentEpisodeId = podcastData.episodeId
+        }
     }
 
 }

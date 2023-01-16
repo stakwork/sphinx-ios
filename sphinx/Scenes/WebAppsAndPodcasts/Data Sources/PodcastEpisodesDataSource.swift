@@ -27,7 +27,8 @@ class PodcastEpisodesDataSource : NSObject {
     var tableView: UITableView! = nil
     var podcast: PodcastFeed! = nil
     
-    let playerHelper = PodcastPlayerHelper.sharedInstance
+    let podcastPlayerController = PodcastPlayerController.sharedInstance
+    
     let downloadService = DownloadService.sharedInstance
     
     init(
@@ -60,7 +61,10 @@ extension PodcastEpisodesDataSource : UITableViewDelegate {
             let episode = episodes[indexPath.row]
             let download = downloadService.activeDownloads[episode.urlPath ?? ""]
             
-            let isPlaying = (podcast.getCurrentEpisodeIndex() == indexPath.row && playerHelper.isPlaying(podcast.feedID))
+            let isPlaying = (
+                podcast.currentEpisodeIndex == indexPath.row &&
+                podcastPlayerController.isPlaying(podcastId: podcast.feedID)
+            )
             
             cell.configureWith(
                 podcast: podcast,

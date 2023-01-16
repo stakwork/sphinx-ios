@@ -45,7 +45,6 @@ class RecommendationsHelper {
     func getPodcastFor(
         recommendations: [RecommendationResult]
     ) -> PodcastFeed {
-        let podcastPlayerHelper = PodcastPlayerHelper.sharedInstance
         let podcast = PodcastFeed(nil, RecommendationsHelper.kRecommendationPodcastId, false)
         
         podcast.title = RecommendationsHelper.kRecommendationTitle

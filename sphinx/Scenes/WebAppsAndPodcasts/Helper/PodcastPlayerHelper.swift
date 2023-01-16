@@ -228,8 +228,6 @@ class PodcastPlayerHelper {
         in podcast: PodcastFeed,
         episodeId: String
     ) -> Bool {
-        podcast.currentEpisodeIndex = index
-        
         if (podcast.currentEpisodeId != episodeId) {
             
             trackItemFinished(shouldSaveAction: true)
@@ -252,7 +250,6 @@ class PodcastPlayerHelper {
             trackItemFinished(shouldSaveAction: true)
             
             podcast.currentEpisodeId = episodeId
-            podcast.currentEpisodeIndex = podcast.getCurrentEpisodeIndex()
             
             return true
         }
@@ -335,8 +332,8 @@ class PodcastPlayerHelper {
         trackItemFinished(shouldSaveAction: true)
         shouldPause()
         
-        if let podcast = self.podcast {
-            let _ = move(podcast, toEpisodeWith: podcast.currentEpisodeIndex - 1)
+        if let podcast = self.podcast, let episodeIndex = podcast.currentEpisodeIndex {
+            let _ = move(podcast, toEpisodeWith: episodeIndex - 1)
             chat?.updateMetaData()
         }
     }
@@ -436,7 +433,9 @@ class PodcastPlayerHelper {
                 }
             }
         } else {
-            prepareEpisodeWith(index: podcast.currentEpisodeIndex, in: podcast, autoPlay: true, completion: {})
+            if let episodeIndex = podcast.currentEpisodeIndex {
+                prepareEpisodeWith(index: episodeIndex, in: podcast, autoPlay: true, completion: {})
+            }
         }
     }
     

@@ -26,6 +26,9 @@ class DiscoverTribesWebViewController : UIViewController{
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var searchBarContainer: UIView!
     @IBOutlet weak var tagsButton: UIButton!
+    @IBOutlet weak var tagCountContainerView: UIView!
+    @IBOutlet weak var tagCountLabel: UILabel!
+    
     var currentTags : [String] = []
     
     var discoverTribesTableViewDataSource : DiscoverTribeTableViewDataSource? = nil
@@ -59,7 +62,7 @@ class DiscoverTribesWebViewController : UIViewController{
         )
         searchBar.layer.cornerRadius = searchBar.frame.height / 2
         tagsButton.layer.cornerRadius = 14.0
-        tagsButton.setTitleColor(UIColor.Sphinx.BodyInverted, for: [.normal,.highlighted,.selected])
+        updateTagButton()
     }
     
     
@@ -125,10 +128,22 @@ extension DiscoverTribesWebViewController : DiscoverTribesTagSelectionDelegate{
         let oldSet = Set(currentTags)
         if(newSet != oldSet){
             self.currentTags = selections
+            self.updateTagButton()
             if let dataSource = discoverTribesTableViewDataSource{
                 dataSource.fetchTribeData(tags: currentTags, shouldAppend: false)
             }
         }
+    }
+    
+    func updateTagButton(){
+        self.tagsButton.backgroundColor = (currentTags.count == 0) ? UIColor.Sphinx.ReceivedMsgBG : UIColor.Sphinx.BodyInverted
+        let titleColor = (currentTags.count == 0) ? UIColor.Sphinx.BodyInverted : UIColor.Sphinx.Body
+        self.tagsButton.tintColor = titleColor
+        self.tagsButton.titleLabel?.textColor = titleColor
+        self.tagsButton.titleEdgeInsets = UIEdgeInsets(top: 10,left: 80,bottom: 10,right: 10)
+        tagCountContainerView.isHidden = currentTags.count == 0
+        tagCountContainerView.makeCircular()
+        tagCountLabel.text = "\(currentTags.count)"
     }
     
 }

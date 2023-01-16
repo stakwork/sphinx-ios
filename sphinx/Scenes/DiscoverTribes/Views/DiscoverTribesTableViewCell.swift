@@ -75,12 +75,21 @@ class DiscoverTribesTableViewCell: UITableViewCell {
         }
         
         if wasJoined{
+            let attributes: [NSAttributedString.Key: Any] = [
+                .foregroundColor: UIColor.Sphinx.BodyInverted,
+                .font: UIFont(name: "Roboto", size: 15.0)
+            ]
             joinButton.backgroundColor = UIColor.Sphinx.ReceivedMsgBG
-            joinButton.setTitle("Open", for: .normal)
-            joinButton.setTitleColor(UIColor.Sphinx.BodyInverted, for: .normal)
+            let string = NSAttributedString(string: "Open",attributes: attributes)
+            joinButton.setAttributedTitle(string, for: .normal)
         }
         else{
-            joinButton.setTitleColor(.white, for: .normal)
+            let attributes: [NSAttributedString.Key: Any] = [
+                .foregroundColor: UIColor.white,
+                .font: UIFont(name: "Roboto", size: 15.0)
+            ]
+            let string = NSAttributedString(string: "Join",attributes: attributes)
+            joinButton.setAttributedTitle(string, for: .normal)
             joinButton.backgroundColor = UIColor.Sphinx.PrimaryBlue
         }
     }

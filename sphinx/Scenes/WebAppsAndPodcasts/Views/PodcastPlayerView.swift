@@ -52,7 +52,7 @@ class PodcastPlayerView: UIView {
     
     var audioLoading = false {
         didSet {
-            LoadingWheelHelper.toggleLoadingWheel(loading: audioLoading, loadingWheel: audioLoadingWheel, loadingWheelColor: UIColor.Sphinx.Text)
+            LoadingWheelHelper.toggleLoadingWheel(loading: audioLoading, loadingWheel: audioLoadingWheel, loadingWheelColor: UIColor.Sphinx.Text, views: [playPauseButton])
         }
     }
     
@@ -162,8 +162,6 @@ class PodcastPlayerView: UIView {
     }
     
     func showInfo() {
-        audioLoading = true
-        
         if let imageURL = podcast?.getImageURL() {
             loadImage(imageURL: imageURL)
         }
@@ -182,7 +180,6 @@ class PodcastPlayerView: UIView {
                 duration: duration,
                 currentTime: episode?.currentTime ?? 0
             )
-            audioLoading = false
         } else if let url = episode?.getAudioUrl() {
             let asset = AVAsset(url: url)
             asset.loadValuesAsynchronously(forKeys: ["duration"], completionHandler: {
@@ -194,7 +191,6 @@ class PodcastPlayerView: UIView {
                         duration: duration,
                         currentTime: episode?.currentTime ?? 0
                     )
-                    self.audioLoading = false
                 }
             })
         }
@@ -361,11 +357,11 @@ class PodcastPlayerView: UIView {
         
         if podcastPlayerController.isPlaying(podcastId: podcast.feedID) {
             podcastPlayerController.submitAction(
-                UserAction.Play(podcastData)
+                UserAction.Pause(podcastData)
             )
         } else {
             podcastPlayerController.submitAction(
-                UserAction.Pause(podcastData)
+                UserAction.Play(podcastData)
             )
         }
         delegate?.shouldReloadEpisodesTable()
@@ -429,9 +425,14 @@ class PodcastPlayerView: UIView {
             return
         }
         
-        var newTime = podcastData.currentTime ?? 0 + Int(seconds)
+        var newTime = (podcastData.currentTime ?? 0) + Int(seconds)
         newTime = max(newTime, 0)
-        newTime = min(0, podcastData.duration ?? 0)
+        newTime = min(newTime, podcastData.duration ?? 0)
+        
+        let _ = setProgress(
+            duration: podcastData.duration ?? 0,
+            currentTime: newTime
+        )
         
         podcastData.currentTime = newTime
         podcast?.currentTime = newTime
@@ -454,7 +455,6 @@ extension PodcastPlayerView : PlayerDelegate {
         if dragging {
             return
         }
-        
         let _ = setProgress(duration: podcastData.duration ?? 0, currentTime: podcastData.currentTime ?? 0)
         configureControls(playing: true)
         addMessagesFor(ts: podcastData.currentTime ?? 0)
@@ -462,6 +462,8 @@ extension PodcastPlayerView : PlayerDelegate {
     }
     
     func pausedState(_ podcastData: PodcastData) {
+        podcast?.currentTime = podcastData.currentTime ?? 0
+        
         configureControls(playing: false)
         delegate?.shouldReloadEpisodesTable()
         audioLoading = false

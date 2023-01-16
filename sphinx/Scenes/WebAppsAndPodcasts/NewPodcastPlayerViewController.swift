@@ -235,6 +235,7 @@ extension NewPodcastPlayerViewController : PickerViewDelegate {
                 return
             }
             
+            podcast?.playerSpeed = newSpeed
             podcastData.speed = newSpeed
             
             podcastPlayerController.submitAction(

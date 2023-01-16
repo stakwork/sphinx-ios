@@ -362,7 +362,10 @@ extension PodcastFeedCollectionViewController {
         self.followedPodcastFeeds = followedPodcastFeeds
 
         var snapshot = makeSnapshotForCurrentState()
-        snapshot.reloadSections(CollectionViewSection.allCases)
+        
+        if (!snapshot.sectionIdentifiers.isEmpty) {
+            snapshot.reloadSections(CollectionViewSection.allCases)
+        }
         
         dataSource.apply(snapshot, animatingDifferences: false, completion: nil)
     }

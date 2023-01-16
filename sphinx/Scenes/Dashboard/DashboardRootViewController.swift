@@ -230,6 +230,7 @@ extension DashboardRootViewController {
         setupAddTribeButton()
         
         activeTab = .friends
+        
     }
     
     func setupAddTribeButton(){

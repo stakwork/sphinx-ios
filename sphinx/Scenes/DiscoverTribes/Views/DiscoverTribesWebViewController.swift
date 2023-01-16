@@ -25,6 +25,8 @@ class DiscoverTribesWebViewController : UIViewController{
     @IBOutlet weak var searchBar: UIView!
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var searchBarContainer: UIView!
+    @IBOutlet weak var tagsButton: UIButton!
+    
     
     var discoverTribesTableViewDataSource : DiscoverTribeTableViewDataSource? = nil
     var rootViewController: RootViewController!
@@ -44,6 +46,8 @@ class DiscoverTribesWebViewController : UIViewController{
         
         configTableView()
         setupHeaderViews()
+        
+        
     }
     
     internal func setupHeaderViews() {
@@ -54,6 +58,8 @@ class DiscoverTribesWebViewController : UIViewController{
             radius: 3.0
         )
         searchBar.layer.cornerRadius = searchBar.frame.height / 2
+        tagsButton.layer.cornerRadius = 14.0
+        tagsButton.titleLabel?.textColor = UIColor.Sphinx.BodyInverted
     }
     
     
@@ -71,6 +77,20 @@ class DiscoverTribesWebViewController : UIViewController{
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate{
             appDelegate.setInitialVC(launchingApp: false, deepLink: true)
         }
+    }
+    
+    @IBAction func tagsButtonTap(_ sender: Any) {
+        showTagsFilterView()
+    }
+    
+    
+    func showTagsFilterView(){
+        let discoverVC = DiscoverTribesTagSelectionVC.instantiate(
+                        rootViewController: self.rootViewController
+        )
+        discoverVC.modalPresentationStyle = .overCurrentContext
+        self.navigationController?.present(discoverVC, animated: true)
+        discoverVC.delegate = self
     }
 }
 
@@ -96,4 +116,11 @@ extension DiscoverTribesWebViewController: UITextFieldDelegate {
         discoverTribesTableViewDataSource?.performSearch(searchTerm: searchTerm)
         return true
     }
+}
+
+extension DiscoverTribesWebViewController : DiscoverTribesTagSelectionDelegate{
+    func didSelect(selections: [String]) {
+        print(selections)
+    }
+    
 }

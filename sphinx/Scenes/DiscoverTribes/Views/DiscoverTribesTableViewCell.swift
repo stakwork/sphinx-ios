@@ -64,25 +64,24 @@ class DiscoverTribesTableViewCell: UITableViewCell {
     }
     
     func configureJoinButton(tribeData:DiscoverTribeData,wasJoined:Bool){
-        if wasJoined{
-            joinButton.titleLabel?.textColor = .black
-            joinButton.backgroundColor = UIColor.Sphinx.ReceivedMsgBG
-            joinButton.setTitle("Open", for: .normal)
-        }
-        else{
-            joinButton.titleLabel?.textColor = .white
-            joinButton.backgroundColor = UIColor.Sphinx.PrimaryBlue
-        }
-        
-        joinButton.titleLabel?.font = UIFont(name: "Roboto-Bold", size: 14.0)
         joinButton.layer.cornerRadius = 15.0
         let host = tribeData.host ?? API.kTribesServerBaseURL.replacingOccurrences(of: "https://", with: "")
         if let uuid = tribeData.uuid {
             cellURL = URL(string: "sphinx.chat://?action=tribe&uuid=\(uuid)&host=\(host)")
             joinButton.addTarget(self, action: #selector(handleJoinTap), for: .touchUpInside)
         } else {
-            joinButton.backgroundColor = UIColor.lightGray
+            //joinButton.backgroundColor = UIColor.lightGray
             joinButton.isEnabled = false
+        }
+        
+        if wasJoined{
+            joinButton.backgroundColor = UIColor.Sphinx.ReceivedMsgBG
+            joinButton.setTitle("Open", for: .normal)
+            joinButton.setTitleColor(UIColor.Sphinx.BodyInverted, for: .normal)
+        }
+        else{
+            joinButton.setTitleColor(.white, for: .normal)
+            joinButton.backgroundColor = UIColor.Sphinx.PrimaryBlue
         }
     }
     
@@ -94,8 +93,8 @@ class DiscoverTribesTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        joinButton.titleLabel?.textColor = .white
-        joinButton.setTitle("Join", for: .normal)
+        //joinButton.titleLabel?.textColor = .black
+        //joinButton.setTitle("Join", for: .normal)
         tribeImageView.image = nil
         descriptionLabel.text = ""
         titleLabel.text = ""

@@ -112,6 +112,10 @@ class DashboardRootViewController: RootViewController {
                 addTribeWidth.constant = 119
                 addTribeTrailing.constant = 15
                 searchBarContainer.layoutIfNeeded()
+                let plusLabel = UILabel(frame: CGRect(x: 5.0, y: 0.0, width: addTribeButton.frame.width * 0.2, height: addTribeButton.frame.height))
+                plusLabel.textAlignment = .center
+                plusLabel.text = "+"
+                addTribeButton.addSubview(plusLabel)
             }
             else{
                 addTribeWidth.constant = 0

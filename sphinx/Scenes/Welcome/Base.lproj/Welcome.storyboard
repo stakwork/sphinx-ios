@@ -261,7 +261,7 @@
                                 <rect key="frame" x="0.0" y="103" width="414" height="70"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cla-jB-lZv">
-                                        <rect key="frame" x="16" y="16" width="294" height="44"/>
+                                        <rect key="frame" x="16" y="16" width="278" height="44"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fvj-pX-2SS">
                                                 <rect key="frame" x="16" y="11.5" width="21" height="21"/>
@@ -270,7 +270,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="4fg-wd-J7c">
-                                                <rect key="frame" x="47" y="0.0" width="231" height="44"/>
+                                                <rect key="frame" x="47" y="0.0" width="215" height="44"/>
                                                 <color key="textColor" name="Text"/>
                                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
@@ -309,8 +309,9 @@
                                     <constraint firstAttribute="height" constant="70" id="9MW-i6-DeQ"/>
                                     <constraint firstItem="Cla-jB-lZv" firstAttribute="leading" secondItem="h7M-mX-5NM" secondAttribute="leading" constant="16" id="Aqm-Dr-uS8"/>
                                     <constraint firstItem="Cla-jB-lZv" firstAttribute="top" secondItem="h7M-mX-5NM" secondAttribute="top" constant="16" id="ZK1-Si-ZRV"/>
-                                    <constraint firstItem="m1f-Xh-b5G" firstAttribute="leading" secondItem="Cla-jB-lZv" secondAttribute="trailing" id="agQ-mX-Gb4"/>
+                                    <constraint firstItem="m1f-Xh-b5G" firstAttribute="leading" secondItem="Cla-jB-lZv" secondAttribute="trailing" constant="16" id="agQ-mX-Gb4"/>
                                     <constraint firstItem="m1f-Xh-b5G" firstAttribute="bottom" secondItem="Cla-jB-lZv" secondAttribute="bottom" id="dYB-0a-d2R"/>
+                                    <constraint firstItem="m1f-Xh-b5G" firstAttribute="leading" secondItem="4fg-wd-J7c" secondAttribute="trailing" constant="16" id="do5-LU-OyO"/>
                                     <constraint firstAttribute="bottom" secondItem="Cla-jB-lZv" secondAttribute="bottom" constant="10" id="kfF-Rc-t6h"/>
                                     <constraint firstItem="m1f-Xh-b5G" firstAttribute="top" secondItem="Cla-jB-lZv" secondAttribute="top" id="n2s-Gm-fuK"/>
                                     <constraint firstAttribute="trailing" secondItem="m1f-Xh-b5G" secondAttribute="trailing" constant="29" id="oGB-Dz-5ao"/>

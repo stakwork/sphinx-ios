@@ -88,7 +88,7 @@ class DiscoverTribesWebViewController : UIViewController{
         let discoverVC = DiscoverTribesTagSelectionVC.instantiate(
                         rootViewController: self.rootViewController
         )
-        discoverVC.modalPresentationStyle = .overCurrentContext
+        discoverVC.modalPresentationStyle = .automatic
         self.navigationController?.present(discoverVC, animated: true)
         discoverVC.delegate = self
     }

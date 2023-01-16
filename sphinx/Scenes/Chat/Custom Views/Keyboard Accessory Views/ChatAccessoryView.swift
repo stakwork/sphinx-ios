@@ -290,7 +290,8 @@ class ChatAccessoryView: UIView {
     ) {
         podcastPlayerView.configureWith(
             podcastId: podcast.feedID,
-            and: delegate
+            delegate: delegate,
+            andKey: PodcastDelegateKeys.ChatSmallPlayerBar.rawValue
         )
         
         podcastPlayerView.showEpisodeInfo()

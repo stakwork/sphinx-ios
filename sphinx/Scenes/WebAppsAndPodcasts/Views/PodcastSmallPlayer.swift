@@ -82,7 +82,8 @@ class PodcastSmallPlayer: UIView {
     
     func configureWith(
         podcastId: String,
-        and delegate: PodcastPlayerVCDelegate
+        delegate: PodcastPlayerVCDelegate,
+        andKey playerDelegateKey: String
     ) {
         if self.podcast?.feedID == podcastId {
             showEpisodeInfo()
@@ -99,10 +100,13 @@ class PodcastSmallPlayer: UIView {
         
         podcastPlayerController.addDelegate(
             self,
-            withKey: PodcastDelegateKeys.SmallPlayerBar.rawValue
+            withKey: playerDelegateKey
         )
         
         showEpisodeInfo()
+        configureControls(playing: podcastPlayerController.isPlaying(podcastId: podcastId))
+        
+        isHidden = false
     }
     
     func runAnimation() {

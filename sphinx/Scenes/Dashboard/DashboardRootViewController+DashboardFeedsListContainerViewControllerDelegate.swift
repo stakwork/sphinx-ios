@@ -40,7 +40,12 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
         
         podcastFeed.currentEpisodeId = contentFeedItem.itemID
         
-        podcastSmallPlayer.configureWith(podcastId: podcastFeed.feedID, and: self)
+        podcastSmallPlayer.configureWith(
+            podcastId: podcastFeed.feedID,
+            delegate: self,
+            andKey: PodcastDelegateKeys.DashboardSmallPlayerBar.rawValue
+        )
+        
         presentPodcastPlayerFor(podcastFeed)
     }
     

@@ -291,6 +291,7 @@ class PodcastPlayerView: UIView {
         }
         
         podcast.currentEpisodeId = episode.itemID
+        podcast.currentTime = 0
         
         guard let podcastData = getPodcastData() else {
             return

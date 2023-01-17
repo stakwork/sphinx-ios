@@ -56,6 +56,7 @@ extension DiscoverTribesTagSelectionVM : UICollectionViewDataSource{
             cell.contentView.backgroundColor = UIColor.Sphinx.ReceivedMsgBG
             cell.tagLabel.textColor = UIColor.Sphinx.BodyInverted
         }
+        cell.tagLabel.font = UIFont(name: "Roboto", size: 12.0)
         cell.layer.cornerRadius = 20.0
         cell.tagLabel.text = possibleTags[indexPath.row]
         

@@ -30,7 +30,7 @@ class DiscoverTribesTagSelectionVC : UIViewController{
     ) -> DiscoverTribesTagSelectionVC {
         let viewController = StoryboardScene.Welcome.discoverTribesTagSelectionViewController.instantiate()
         //viewController.rootViewController = rootViewController
-        viewController.view.backgroundColor = UIColor.Sphinx.Body
+        viewController.view.backgroundColor = .clear//UIColor.Sphinx.Body
         
         return viewController
     }
@@ -47,7 +47,7 @@ class DiscoverTribesTagSelectionVC : UIViewController{
     
     func styleLabels(){
         filterIcon.font = UIFont(name: "Material Icons", size: 18.0)
-        filterIcon.text = "search"
+        filterIcon.text = "filter"
         filterIcon.textColor = UIColor.Sphinx.BodyInverted
     }
     
@@ -57,7 +57,6 @@ class DiscoverTribesTagSelectionVC : UIViewController{
     }
     
     func setupCollectionView(){
-        //TODO: fix this to make it dynamic. Right now it crashes
         collectionView.delegate = discoverTribeTagSelectionVM
         collectionView.dataSource = discoverTribeTagSelectionVM
     }

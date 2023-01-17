@@ -59,43 +59,63 @@ extension PodcastPlayerController {
         
         loadEpisodeImage()
         
-        let asset = AVAsset(url: podcastData.episodeUrl)
-        
-        asset.loadValuesAsynchronously(forKeys: ["duration"], completionHandler: {
-            DispatchQueue.main.async {
-                let playerItem = AVPlayerItem(asset: asset)
-                
-                if self.player == nil {
-                    self.player = AVPlayer(playerItem: playerItem)
-                    self.player?.automaticallyWaitsToMinimizeStalling = false
-                    self.player?.rate = podcastData.speed
-                } else {
-                    self.player?.replaceCurrentItem(with: playerItem)
-                }
-                
-                self.player?.pause()
-                self.player?.seek(to: CMTime(seconds: Double(podcastData.currentTime ?? 0), preferredTimescale: 1))
-                self.player?.playImmediately(atRate: podcastData.speed)
-                
-                let duration = Int(Double(playerItem.asset.duration.value) / Double(playerItem.asset.duration.timescale))
-                
-                if (duration > 0) {
-                    for d in self.delegates.values {
-                        d.playingState(podcastData)
-                    }
-                    
-                    self.configureTimer()
-                    
-    //                    trackItemStarted(endTimestamp: previousItemTimestamp)
-                } else {
-                    self.player?.pause()
-                    
-                    for d in self.delegates.values {
-                        d.errorState(podcastData)
-                    }
-                }
+        if isPlayerItemSetWith(episodeUrl: podcastData.episodeUrl) {
+            
+            player?.seek(to: CMTime(seconds: Double(podcastData.currentTime ?? 0), preferredTimescale: 1))
+            player?.playImmediately(atRate: podcastData.speed)
+            
+            if let playerItem = player?.currentItem {
+                self.didStartPlaying(playerItem)
             }
-        })
+            
+        } else {
+            
+            let asset = AVAsset(url: podcastData.episodeUrl)
+            let playerItem = AVPlayerItem(asset: asset)
+            
+            asset.loadValuesAsynchronously(forKeys: ["duration"], completionHandler: {
+                DispatchQueue.main.async {
+                    
+                    if self.player == nil {
+                        self.player = AVPlayer(playerItem: playerItem)
+                        self.player?.automaticallyWaitsToMinimizeStalling = false
+                        self.player?.rate = podcastData.speed
+                    } else {
+                        self.player?.replaceCurrentItem(with: playerItem)
+                    }
+                    
+                    self.player?.pause()
+                    self.player?.seek(to: CMTime(seconds: Double(podcastData.currentTime ?? 0), preferredTimescale: 1))
+                    self.player?.playImmediately(atRate: podcastData.speed)
+                    
+                    self.didStartPlaying(playerItem)
+                }
+            })
+        }
+    }
+    
+    func didStartPlaying(_ playerItem: AVPlayerItem) {
+        guard let podcastData = self.podcastData else {
+            return
+        }
+        
+        let duration = Int(Double(playerItem.asset.duration.value) / Double(playerItem.asset.duration.timescale))
+        
+        if (duration > 0) {
+            for d in self.delegates.values {
+                d.playingState(podcastData)
+            }
+            
+            self.configureTimer()
+            
+//                    trackItemStarted(endTimestamp: previousItemTimestamp)
+        } else {
+            self.player?.pause()
+            
+            for d in self.delegates.values {
+                d.errorState(podcastData)
+            }
+        }
     }
     
     func pause(
@@ -176,6 +196,8 @@ extension PodcastPlayerController {
         if let player = player {
             player.playImmediately(atRate: podcastData.speed)
         }
+        
+        configureTimer()
     }
     
     func isPlaying(
@@ -190,6 +212,12 @@ extension PodcastPlayerController {
         return isPlaying && podcastData?.episodeId == episodeId
     }
     
+    func isPlayerItemSetWith(
+        episodeUrl: URL
+    ) -> Bool {
+        return ((player?.currentItem?.asset) as? AVURLAsset)?.url.absoluteString == episodeUrl.absoluteString
+    }
+    
     var isPlaying: Bool {
         get {
             return player?.timeControlStatus == AVPlayer.TimeControlStatus.playing ||
@@ -200,7 +228,7 @@ extension PodcastPlayerController {
     func configureTimer() {
         playingTimer?.invalidate()
         playingTimer = Timer.scheduledTimer(
-            timeInterval: 0.2,
+            timeInterval: Double(1) / Double(podcastData?.speed ?? 1.0),
             target: self,
             selector: #selector(updateCurrentTime),
             userInfo: nil,

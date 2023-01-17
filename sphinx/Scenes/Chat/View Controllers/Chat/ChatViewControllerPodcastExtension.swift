@@ -76,4 +76,8 @@ extension ChatViewController : PodcastPlayerVCDelegate {
 
         present(podcastFeedVC, animated: true, completion: nil)
     }
+    
+    func didFailPlayingPodcast() {
+        AlertHelper.showAlert(title: "generic.error.title".localized, message: "error.playing".localized)
+    }
 }

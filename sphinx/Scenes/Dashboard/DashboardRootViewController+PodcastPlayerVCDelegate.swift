@@ -10,6 +10,10 @@ extension DashboardRootViewController: PodcastPlayerVCDelegate {
     func shouldGoToPlayer(podcast: PodcastFeed) {
         presentPodcastPlayerFor(podcast)
     }
+    
+    func didFailPlayingPodcast() {
+        AlertHelper.showAlert(title: "generic.error.title".localized, message: "error.playing".localized)
+    }
 }
 
 extension DashboardRootViewController : CustomBoostDelegate {

@@ -143,7 +143,7 @@ class PodcastSmallPlayer: UIView {
         }
         
         if let duration = episode?.duration {
-            let _ = setProgress(
+            setProgress(
                 duration: duration,
                 currentTime: podcast.currentTime
             )
@@ -154,7 +154,7 @@ class PodcastSmallPlayer: UIView {
                 episode?.duration = duration
                 
                 DispatchQueue.main.async {
-                    let _ = self.setProgress(
+                    self.setProgress(
                         duration: duration,
                         currentTime: podcast.currentTime
                     )
@@ -188,7 +188,7 @@ class PodcastSmallPlayer: UIView {
         }
     }
     
-    func setProgress(duration: Int, currentTime: Int) -> Bool {
+    func setProgress(duration: Int, currentTime: Int) {
         let progressBarMargin:CGFloat = 32
         let durationLineWidth = UIScreen.main.bounds.width - progressBarMargin
         let progress = (Double(currentTime) * 100 / Double(duration))/100
@@ -201,9 +201,7 @@ class PodcastSmallPlayer: UIView {
         if (progressLineWidth.constant != progressWidth) {
             progressLineWidth.constant = progressWidth
             progressLine.layoutIfNeeded()
-            return true
         }
-        return false
     }
     
     func togglePlayState() {
@@ -245,7 +243,7 @@ class PodcastSmallPlayer: UIView {
             return
         }
         
-        let _ = setProgress(
+        setProgress(
             duration: podcastData.duration ?? 0,
             currentTime: newTime
         )
@@ -267,56 +265,5 @@ class PodcastSmallPlayer: UIView {
         if let podcast = podcast {
             delegate?.shouldGoToPlayer(podcast: podcast)
         }
-    }
-}
-
-extension PodcastSmallPlayer : PlayerDelegate {
-    func loadingState(_ podcastData: PodcastData) {
-        if podcastData.podcastId != podcast?.feedID {
-            return
-        }
-        audioLoading = true
-        configureControls(playing: true)
-        showEpisodeInfo()
-    }
-    
-    func playingState(_ podcastData: PodcastData) {
-        if podcastData.podcastId != podcast?.feedID {
-            return
-        }
-        podcast?.currentTime = podcastData.currentTime ?? 0
-        
-        isHidden = false
-        showEpisodeInfo()
-        configureControls(playing: true)
-        audioLoading = false
-    }
-    
-    func pausedState(_ podcastData: PodcastData) {
-        if podcastData.podcastId != podcast?.feedID {
-            return
-        }
-        podcast?.currentTime = podcastData.currentTime ?? 0
-        
-        showEpisodeInfo()
-        configureControls(playing: false)
-        audioLoading = false
-    }
-    
-    func endedState(_ podcastData: PodcastData) {
-        if podcastData.podcastId != podcast?.feedID {
-            return
-        }
-        podcast?.currentTime = 0
-        
-        showEpisodeInfo()
-        configureControls(playing: false)
-    }
-    
-    func errorState(_ podcastData: PodcastData) {
-        if podcastData.podcastId != podcast?.feedID {
-            return
-        }
-//        delegate?.didFailPlayingPodcast()
     }
 }

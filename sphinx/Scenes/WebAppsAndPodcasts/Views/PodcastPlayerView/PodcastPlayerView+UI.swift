@@ -25,7 +25,7 @@ extension PodcastPlayerView {
         let episode = podcast.getCurrentEpisode()
         
         if let duration = episode?.duration {
-            let _ = setProgress(
+            setProgress(
                 duration: duration,
                 currentTime: episode?.currentTime ?? 0
             )
@@ -36,7 +36,7 @@ extension PodcastPlayerView {
                 episode?.duration = duration
                 
                 DispatchQueue.main.async {
-                    let _ = self.setProgress(
+                    self.setProgress(
                         duration: duration,
                         currentTime: episode?.currentTime ?? 0
                     )
@@ -94,10 +94,9 @@ extension PodcastPlayerView {
     func setProgress(
         duration: Int,
         currentTime: Int
-    ) -> Bool {
+    ) {
         
         let currentTimeString = currentTime.getPodcastTimeString()
-        let didChangeCurrentTime = currentTimeLabel.text != currentTimeString
         
         currentTimeLabel.text = currentTimeString
         durationLabel.text = duration.getPodcastTimeString()
@@ -112,8 +111,6 @@ extension PodcastPlayerView {
         
         progressLineWidth.constant = progressWidth
         progressLine.layoutIfNeeded()
-        
-        return didChangeCurrentTime
     }
     
     func addMessagesFor(ts: Int) {

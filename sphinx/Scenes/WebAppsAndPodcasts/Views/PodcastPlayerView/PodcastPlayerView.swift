@@ -24,8 +24,6 @@ class PodcastPlayerView: UIView {
     weak var boostDelegate: CustomBoostDelegate?
     
     @IBOutlet var contentView: UIView!
-    @IBOutlet weak var imageViewTop: NSLayoutConstraint!
-    @IBOutlet weak var imageHeight: NSLayoutConstraint!
     
     @IBOutlet weak var episodeImageView: UIImageView!
     @IBOutlet weak var episodeLabel: UILabel!
@@ -111,11 +109,6 @@ class PodcastPlayerView: UIView {
         addSubview(contentView)
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        
-        let windowInset = getWindowInsets()
-        imageViewTop.constant = -windowInset.top
-        imageHeight.constant = windowInset.top
-        episodeImageView.layoutIfNeeded()
         
         playPauseButton.layer.cornerRadius = playPauseButton.frame.size.height / 2
         currentTimeDot.layer.cornerRadius = currentTimeDot.frame.size.height / 2
@@ -231,7 +224,7 @@ class PodcastPlayerView: UIView {
         
         let progress = ((progressLineWidth.constant * 100) / durationLine.frame.size.width) / 100
         let currentTime = Int(Double(duration) * progress)
-        let _ = setProgress(duration: duration, currentTime: currentTime)
+        setProgress(duration: duration, currentTime: currentTime)
     }
     
     func togglePlayState() {
@@ -318,7 +311,7 @@ class PodcastPlayerView: UIView {
             return
         }
         
-        let _ = setProgress(
+        setProgress(
             duration: podcastData.duration ?? 0,
             currentTime: newTime
         )

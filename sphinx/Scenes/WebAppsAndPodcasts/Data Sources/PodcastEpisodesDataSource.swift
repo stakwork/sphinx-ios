@@ -36,7 +36,6 @@ class PodcastEpisodesDataSource : NSObject {
         podcast: PodcastFeed,
         delegate: PodcastEpisodesDSDelegate
     ) {
-
         super.init()
         
         self.tableView = tableView
@@ -57,6 +56,7 @@ extension PodcastEpisodesDataSource : UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? PodcastEpisodeTableViewCell {
+            
             let episodes = podcast.episodesArray
             let episode = episodes[indexPath.row]
             let download = downloadService.activeDownloads[episode.urlPath ?? ""]
@@ -80,6 +80,7 @@ extension PodcastEpisodesDataSource : UITableViewDelegate {
         if episodes.count > 0 {
             return kHeaderHeight
         }
+        
         return 0
     }
     

@@ -41,6 +41,8 @@ extension PodcastPlayerController {
         _ podcastData: PodcastData
     ) {
         
+        setAudioSession()
+        
         if let pd = self.podcastData, isPlaying {
             if podcastData.episodeId == pd.episodeId {
                 return
@@ -54,6 +56,8 @@ extension PodcastPlayerController {
         }
         
         self.podcastData = podcastData
+        
+        loadEpisodeImage()
         
         let asset = AVAsset(url: podcastData.episodeUrl)
         
@@ -156,7 +160,7 @@ extension PodcastPlayerController {
                 self.configureTimer()
             }
             
-            configurePlayingInfoCenterWith(podcastData)
+            configurePlayingInfoCenterWith()
         }
     }
     
@@ -231,7 +235,7 @@ extension PodcastPlayerController {
             d.playingState(podcastData)
         }
         
-        configurePlayingInfoCenterWith(podcastData)
+        configurePlayingInfoCenterWith()
         
         if currentTime >= duration {
             didEndEpisode()

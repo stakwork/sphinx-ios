@@ -85,7 +85,16 @@ class PodcastPlayerController {
     var paymentsTimer : Timer? = nil
     var playedSeconds: Int = 0
     
-    var podcastData: PodcastData? = nil
+    var playingEpisodeImage: UIImage? = nil
+    
+    var podcast: PodcastFeed? = nil
+    var podcastData: PodcastData? = nil {
+        didSet {
+            if let contentFeed = ContentFeed.getFeedWith(feedId: podcastData?.podcastId ?? "") {
+                self.podcast = PodcastFeed.convertFrom(contentFeed: contentFeed)
+            }
+        }
+    }
     
     class var sharedInstance : PodcastPlayerController {
         
@@ -101,10 +110,11 @@ class PodcastPlayerController {
     }
     
     func saveState() {
-        if let podcastData = podcastData, let contentFeed = ContentFeed.getFeedWith(feedId: podcastData.podcastId) {
-            let podcast = PodcastFeed.convertFrom(contentFeed: contentFeed)
-            podcast.currentTime = podcastData.currentTime ?? 0
-            podcast.currentEpisodeId = podcastData.episodeId
+        podcast?.duration = podcastData?.duration ?? 0
+        podcast?.currentTime = podcastData?.currentTime ?? 0
+        
+        if let episodeId = podcastData?.episodeId {
+            podcast?.currentEpisodeId = episodeId
         }
     }
 

@@ -50,8 +50,9 @@ extension PodcastPlayerController {
         if let interruptionType = AVAudioSession.InterruptionType(rawValue: intValue) {
             switch interruptionType {
             case .began:
-                break
-//                self.shouldPause()
+                if let podcastData = self.podcastData {
+                    self.pause(podcastData)
+                }
             default:
                 break
             }

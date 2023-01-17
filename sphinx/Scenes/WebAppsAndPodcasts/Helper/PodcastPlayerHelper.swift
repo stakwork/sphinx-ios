@@ -30,7 +30,7 @@ class PodcastPlayerHelper {
     }
     
     init() {
-        setupNowPlayingInfoCenter()
+//        setupNowPlayingInfoCenter()
     }
     
     var delegates = [String : PodcastPlayerDelegate]()

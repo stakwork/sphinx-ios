@@ -6,84 +6,136 @@
 //  Copyright © 2023 sphinx. All rights reserved.
 //
 
-import Foundation
+//import Foundation
 //import AVKit
 import MediaPlayer
 
 extension PodcastPlayerController {
-
-    func configurePlayingInfoCenterWith(
-        _ podcastData: PodcastData
-    ) {
-        let playingCenter = MPNowPlayingInfoCenter.default()
-        
-//        let size = self.playingEpisodeImage?.size ?? CGSize.zero
-//        let artwork = MPMediaItemArtwork.init(boundsSize: size, requestHandler: { (size) -> UIImage in
-//            return self.playingEpisodeImage ?? UIImage()
-//        })
-//
-//        playingCenter.nowPlayingInfo = [
-//            MPMediaItemPropertyMediaType: "\(MPMediaType.podcast)",
-//            MPMediaItemPropertyPodcastTitle: podcast.title ?? "",
-//            MPMediaItemPropertyArtwork: artwork,
-//            MPMediaItemPropertyPodcastPersistentID: podcast.id,
-//            MPMediaItemPropertyTitle: episode.title ?? "",
-//            MPMediaItemPropertyArtist: podcast.author ?? "",
-//            MPMediaItemPropertyPlaybackDuration: "\(duration)",
-//            MPNowPlayingInfoPropertyElapsedPlaybackTime: "\(currentTime)",
-//            MPNowPlayingInfoPropertyPlaybackRate: podcast.playerSpeed,
-//            MPMediaItemPropertyAlbumTrackCount: "\(podcast.episodesArray.count)",
-//            MPMediaItemPropertyAlbumTrackNumber: "\(podcast.currentEpisodeIndex)",
-//            MPMediaItemPropertyAssetURL: episode.urlPath ?? ""
-//        ]
-    }
     
-    func resetPlayingInfoCenter() {
-        MPNowPlayingInfoCenter.default().nowPlayingInfo = nil
+    func loadEpisodeImage() {
+        self.playingEpisodeImage = nil
+        
+        if let urlString = podcast?.getCurrentEpisode()?.imageURLPath, let url = URL(string: urlString) {
+            MediaLoader.loadDataFrom(
+                URL: url,
+                includeToken: false,
+                completion: { (data, fileName) in
+                    
+                    if let img = UIImage(data: data) {
+                        self.playingEpisodeImage = img
+                    }
+                }, errorCompletion: {
+                    self.playingEpisodeImage = nil
+                }
+            )
+        }
+    }
+
+    func configurePlayingInfoCenterWith() {
+        guard let podcast = podcast, let episode = podcast.getCurrentEpisode(), podcast.duration > 0 else {
+            return
+        }
+        
+        let episodeIndex = podcast.getIndexForEpisodeWith(id: episode.itemID) ?? 0
+
+        let size = playingEpisodeImage?.size ?? CGSize.zero
+        let artwork = MPMediaItemArtwork.init(boundsSize: size, requestHandler: { (size) -> UIImage in
+            return self.playingEpisodeImage ?? UIImage()
+        })
+
+        let playingCenter: [String: Any] = [
+            MPMediaItemPropertyMediaType: "\(MPMediaType.podcast)",
+            MPMediaItemPropertyPodcastTitle: podcast.title ?? "",
+            MPMediaItemPropertyArtwork: artwork,
+            MPMediaItemPropertyPodcastPersistentID: podcast.feedID,
+            MPMediaItemPropertyTitle: episode.title ?? "",
+            MPMediaItemPropertyArtist: podcast.author ?? "",
+            MPMediaItemPropertyPlaybackDuration: "\(podcast.duration)",
+            MPNowPlayingInfoPropertyElapsedPlaybackTime: "\(podcast.currentTime)",
+            MPNowPlayingInfoPropertyPlaybackRate: podcast.playerSpeed,
+            MPMediaItemPropertyAlbumTrackCount: "\(podcast.episodesArray.count)",
+            MPMediaItemPropertyAlbumTrackNumber: "\(episodeIndex)",
+            MPMediaItemPropertyAssetURL: episode.urlPath ?? ""
+        ]
+        
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = playingCenter
     }
     
     func setupNowPlayingInfoCenter() {
-        MPRemoteCommandCenter.shared().playCommand.removeTarget(nil)
-        MPRemoteCommandCenter.shared().pauseCommand.removeTarget(nil)
-        MPRemoteCommandCenter.shared().nextTrackCommand.removeTarget(nil)
-        MPRemoteCommandCenter.shared().previousTrackCommand.removeTarget(nil)
-        MPRemoteCommandCenter.shared().skipBackwardCommand.removeTarget(nil)
-        MPRemoteCommandCenter.shared().skipForwardCommand.removeTarget(nil)
         MPRemoteCommandCenter.shared().seekForwardCommand.isEnabled = true
         MPRemoteCommandCenter.shared().seekBackwardCommand.isEnabled = true
-        
-        MPRemoteCommandCenter.shared().changePlaybackPositionCommand.addTarget { (event) -> MPRemoteCommandHandlerStatus in
-            if let changePlaybackPositionCommandEvent = event as? MPChangePlaybackPositionCommandEvent
-            {
-                let positionTime = changePlaybackPositionCommandEvent.positionTime
-                //Call Seek to
-                return .success
-            } else {
-                return .commandFailed
-            }
-        }
+        MPRemoteCommandCenter.shared().playCommand.isEnabled = true
+        MPRemoteCommandCenter.shared().pauseCommand.isEnabled = true
         MPRemoteCommandCenter.shared().changePlaybackPositionCommand.isEnabled = true
         
         MPRemoteCommandCenter.shared().skipBackwardCommand.preferredIntervals = [15]
         MPRemoteCommandCenter.shared().skipForwardCommand.preferredIntervals = [30]
         
-        UIApplication.shared.beginReceivingRemoteControlEvents()
+        MPRemoteCommandCenter.shared().changePlaybackPositionCommand.addTarget { (event) -> MPRemoteCommandHandlerStatus in
+            if let changePlaybackPositionCommandEvent = event as? MPChangePlaybackPositionCommandEvent
+            {
+                let positionTime = changePlaybackPositionCommandEvent.positionTime
+
+                self.podcastData?.currentTime = Int(positionTime)
+                self.podcast?.currentTime = Int(positionTime)
+
+                if let podcastData = self.podcastData {
+                    self.seek(podcastData)
+                }
+
+                return .success
+            } else {
+                return .commandFailed
+            }
+        }
         
         MPRemoteCommandCenter.shared().playCommand.addTarget {event in
-            //Play
+            self.shouldPlay()
             return .success
         }
+        
         MPRemoteCommandCenter.shared().pauseCommand.addTarget {event in
-            //Pause
+            self.shouldPause()
             return .success
         }
+        
         MPRemoteCommandCenter.shared().skipBackwardCommand.addTarget {event in
-            //Skip -15 sec
+            self.shouldSkip15Back()
             return .success
         }
         MPRemoteCommandCenter.shared().skipForwardCommand.addTarget {event in
-            //Skip 30 sec
+            self.shouldSkip30Forward()
             return .success
+        }
+        
+        UIApplication.shared.beginReceivingRemoteControlEvents()
+    }
+    
+    func shouldSkip15Back() {
+        let newTime = (self.podcastData?.currentTime ?? 0) - 15
+        self.podcastData?.currentTime = newTime
+        self.podcast?.currentTime = newTime
+
+        if let podcastData = self.podcastData {
+            self.seek(podcastData)
+        }
+    }
+    
+    func shouldSkip30Forward() {
+        if let podcastData = self.podcastData {
+            self.play(podcastData)
+        }
+    }
+    
+    func shouldPlay() {
+        if let podcastData = self.podcastData {
+            self.play(podcastData)
+        }
+    }
+    
+    func shouldPause() {
+        if let podcastData = self.podcastData {
+            self.pause(podcastData)
         }
     }
 }

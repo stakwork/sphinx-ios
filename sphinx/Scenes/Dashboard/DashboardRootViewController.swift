@@ -227,7 +227,6 @@ extension DashboardRootViewController {
             self,
             withKey: PodcastPlayerHelper.DelegateKeys.dashboard.rawValue
         )
-        setupAddTribeButton()
         
         activeTab = .friends
         
@@ -295,6 +294,7 @@ extension DashboardRootViewController {
         if didFinishInitialLoading {
             loadDataOnTabChange(to: activeTab)
         }
+        setupAddTribeButton()
     }
 }
 

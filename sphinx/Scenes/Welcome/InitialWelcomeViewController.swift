@@ -16,7 +16,6 @@ class InitialWelcomeViewController: UIViewController {
         rootViewController: RootViewController
     ) -> InitialWelcomeViewController {
         let viewController = StoryboardScene.Welcome.initialWelcomeViewController.instantiate()
-        
         viewController.rootViewController = rootViewController
         
         return viewController

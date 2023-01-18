@@ -42,6 +42,7 @@ public extension UIColor {
         public static let TextInverted = color("TextInverted")
         public static let SecondaryText = color("SecondaryText")
         public static let SecondaryTextInverted = color("SecondaryTextInverted")
+        public static let PlusMinusBackground = color("PlusMinusBackground")
         public static let SecondaryTextSent = color("SecondaryTextSent")
         public static let TextMessages = color("TextMessages")
         public static let PlaceholderText = color("PlaceholderText")

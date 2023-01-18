@@ -13,7 +13,6 @@ protocol GroupDetailsDelegate: class {
 }
 
 class GroupDetailsViewController: UIViewController {
-    
     var rootViewController : RootViewController!
     
     weak var delegate: GroupDetailsDelegate?
@@ -37,6 +36,9 @@ class GroupDetailsViewController: UIViewController {
     @IBOutlet weak var imageUploadLabel: UILabel!
     @IBOutlet weak var groupPinContainer: GroupPinView!
     
+    @IBOutlet weak var badgeManagementContainerView: UIView!
+    @IBOutlet weak var badgeManagementContainerHeight : NSLayoutConstraint!
+    
     @IBOutlet var keyboardAccessoryView: UIView!
     
     var imagePickerManager = ImagePickerManager.sharedInstance
@@ -44,6 +46,7 @@ class GroupDetailsViewController: UIViewController {
     
     let kGroupNameTop: CGFloat = 31
     let kGroupNameWithPricesTop: CGFloat = 23
+    
     
     var chat: Chat!
     
@@ -104,6 +107,7 @@ class GroupDetailsViewController: UIViewController {
         updateTribePrices()
         configurePodcastView()
         configureTribeMemberView()
+        configureBadgeManagementView()
     }
     
     func updateTribePrices() {
@@ -142,6 +146,22 @@ class GroupDetailsViewController: UIViewController {
             
             tribeMemberInfoContainer.isHidden = false
         }
+    }
+    
+    func configureBadgeManagementView(){
+        if let chat = chat,
+           chat.isMyPublicGroup() || true{
+            badgeManagementContainerView.backgroundColor = UIColor.Sphinx.Body
+            badgeManagementContainerHeight.constant = 70
+            badgeManagementContainerView.isHidden = false
+            badgeManagementContainerView.isUserInteractionEnabled = true
+            badgeManagementContainerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapBadgeManagementView)))
+        }
+    }
+    
+    @objc func didTapBadgeManagementView(){
+        let badgeManagementVC = BadgeManagementListVC.instantiate(rootViewController: rootViewController)
+        self.navigationController?.pushViewController(badgeManagementVC, animated: true)
     }
     
     func configureTableView() {

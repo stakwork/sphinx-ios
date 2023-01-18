@@ -265,13 +265,13 @@
                                         <rect key="frame" x="16" y="16" width="258" height="44"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fvj-pX-2SS">
-                                                <rect key="frame" x="16" y="11.5" width="21" height="21"/>
+                                                <rect key="frame" x="16" y="10" width="24.5" height="24.5"/>
                                                 <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="21"/>
                                                 <color key="textColor" name="PlaceholderText"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="4fg-wd-J7c">
-                                                <rect key="frame" x="47" y="0.0" width="195" height="44"/>
+                                                <rect key="frame" x="50.5" y="0.0" width="191.5" height="44"/>
                                                 <color key="textColor" name="Text"/>
                                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
@@ -322,26 +322,37 @@
                                             <constraint firstItem="e6Z-hk-AqL" firstAttribute="centerX" secondItem="3zh-eG-EW8" secondAttribute="centerX" id="l9M-io-Jkm"/>
                                         </constraints>
                                     </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="filter_list" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7QI-70-Lyp">
+                                        <rect key="frame" x="295" y="26" width="24" height="24"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="18"/>
+                                        <color key="textColor" name="WashedOutReceivedText"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="m1f-Xh-b5G" firstAttribute="leading" secondItem="3zh-eG-EW8" secondAttribute="trailing" constant="-29" id="1LQ-MZ-4g8"/>
                                     <constraint firstAttribute="height" constant="70" id="9MW-i6-DeQ"/>
+                                    <constraint firstItem="7QI-70-Lyp" firstAttribute="top" secondItem="3zh-eG-EW8" secondAttribute="top" id="9fD-9E-UdZ"/>
                                     <constraint firstItem="Cla-jB-lZv" firstAttribute="leading" secondItem="h7M-mX-5NM" secondAttribute="leading" constant="16" id="Aqm-Dr-uS8"/>
                                     <constraint firstItem="3zh-eG-EW8" firstAttribute="width" secondItem="3zh-eG-EW8" secondAttribute="height" multiplier="1:1" id="HU3-J8-itT"/>
                                     <constraint firstItem="Cla-jB-lZv" firstAttribute="top" secondItem="h7M-mX-5NM" secondAttribute="top" constant="16" id="ZK1-Si-ZRV"/>
                                     <constraint firstItem="m1f-Xh-b5G" firstAttribute="leading" secondItem="Cla-jB-lZv" secondAttribute="trailing" constant="16" id="agQ-mX-Gb4"/>
                                     <constraint firstItem="m1f-Xh-b5G" firstAttribute="bottom" secondItem="Cla-jB-lZv" secondAttribute="bottom" id="dYB-0a-d2R"/>
                                     <constraint firstItem="m1f-Xh-b5G" firstAttribute="leading" secondItem="4fg-wd-J7c" secondAttribute="trailing" constant="16" id="do5-LU-OyO"/>
+                                    <constraint firstItem="7QI-70-Lyp" firstAttribute="bottom" secondItem="3zh-eG-EW8" secondAttribute="bottom" id="eyR-1c-vHS"/>
                                     <constraint firstAttribute="bottom" secondItem="Cla-jB-lZv" secondAttribute="bottom" constant="10" id="kfF-Rc-t6h"/>
                                     <constraint firstItem="m1f-Xh-b5G" firstAttribute="top" secondItem="Cla-jB-lZv" secondAttribute="top" id="n2s-Gm-fuK"/>
                                     <constraint firstAttribute="trailing" secondItem="m1f-Xh-b5G" secondAttribute="trailing" constant="19" id="oGB-Dz-5ao"/>
                                     <constraint firstItem="m1f-Xh-b5G" firstAttribute="centerY" secondItem="Cla-jB-lZv" secondAttribute="centerY" id="pYB-Yn-IgT"/>
+                                    <constraint firstItem="7QI-70-Lyp" firstAttribute="trailing" secondItem="3zh-eG-EW8" secondAttribute="trailing" id="qu5-Kd-4p4"/>
+                                    <constraint firstItem="7QI-70-Lyp" firstAttribute="leading" secondItem="3zh-eG-EW8" secondAttribute="leading" id="rNS-Uy-E7t"/>
                                     <constraint firstItem="3zh-eG-EW8" firstAttribute="centerY" secondItem="m1f-Xh-b5G" secondAttribute="centerY" id="wlG-9V-rgz"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Results Found" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LOo-lS-kW4">
-                                <rect key="frame" x="143.5" y="445.5" width="127.5" height="19"/>
+                                <rect key="frame" x="143" y="445.5" width="128.5" height="19"/>
                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
                                 <color key="textColor" name="SecondaryText"/>
                                 <nil key="highlightedColor"/>
@@ -368,7 +379,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DISCOVER TRIBES" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YtW-6G-FRm">
-                                        <rect key="frame" x="142" y="19" width="130" height="17.5"/>
+                                        <rect key="frame" x="146" y="19.5" width="122.5" height="16.5"/>
                                         <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="14"/>
                                         <color key="textColor" name="Text"/>
                                         <nil key="highlightedColor"/>
@@ -403,6 +414,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="filterIcon" destination="7QI-70-Lyp" id="OhB-VW-EwF"/>
                         <outlet property="searchBar" destination="Cla-jB-lZv" id="N8g-Sh-dZO"/>
                         <outlet property="searchBarContainer" destination="h7M-mX-5NM" id="Huf-He-4iw"/>
                         <outlet property="searchTextField" destination="4fg-wd-J7c" id="MsH-0y-aji"/>
@@ -427,6 +439,14 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I4V-Yt-0ri">
                                 <rect key="frame" x="0.0" y="416" width="414" height="480"/>
                                 <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JXo-lc-vLi">
+                                        <rect key="frame" x="187" y="18" width="40" height="3"/>
+                                        <color key="backgroundColor" name="ReplyDividerReceived"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="40" id="WYY-Hg-Er5"/>
+                                            <constraint firstAttribute="height" constant="3" id="vIc-oL-G6g"/>
+                                        </constraints>
+                                    </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="13" translatesAutoresizingMaskIntoConstraints="NO" id="NN1-fn-70a">
                                         <rect key="frame" x="175.5" y="40" width="63.5" height="50"/>
                                         <subviews>
@@ -512,7 +532,9 @@
                                     <constraint firstItem="NN1-fn-70a" firstAttribute="top" secondItem="I4V-Yt-0ri" secondAttribute="top" constant="40" id="AzU-R9-xK6"/>
                                     <constraint firstItem="BjR-8O-edB" firstAttribute="centerX" secondItem="I4V-Yt-0ri" secondAttribute="centerX" id="BbZ-0W-Qeg"/>
                                     <constraint firstItem="lsv-us-MAz" firstAttribute="top" secondItem="BjR-8O-edB" secondAttribute="bottom" constant="60" id="Bhf-Q7-UxD"/>
+                                    <constraint firstItem="JXo-lc-vLi" firstAttribute="top" secondItem="I4V-Yt-0ri" secondAttribute="top" constant="18" id="KVc-d4-D31"/>
                                     <constraint firstAttribute="trailing" secondItem="BjR-8O-edB" secondAttribute="trailing" constant="24" id="L6Z-LW-aEV"/>
+                                    <constraint firstItem="JXo-lc-vLi" firstAttribute="centerX" secondItem="I4V-Yt-0ri" secondAttribute="centerX" id="YJ0-Sv-GxC"/>
                                     <constraint firstItem="lsv-us-MAz" firstAttribute="centerX" secondItem="I4V-Yt-0ri" secondAttribute="centerX" id="eHg-cr-137"/>
                                     <constraint firstItem="BjR-8O-edB" firstAttribute="top" secondItem="TsO-mV-85A" secondAttribute="bottom" constant="45" id="ihx-wH-E9t"/>
                                     <constraint firstItem="NN1-fn-70a" firstAttribute="centerX" secondItem="I4V-Yt-0ri" secondAttribute="centerX" id="jQa-Yd-Tn7"/>
@@ -530,6 +552,7 @@
                         <outlet property="applyButton" destination="lsv-us-MAz" id="YyD-3J-EdL"/>
                         <outlet property="collectionView" destination="BjR-8O-edB" id="sbE-pO-w34"/>
                         <outlet property="filterIcon" destination="2Yr-FR-aGe" id="r2q-mG-5VL"/>
+                        <outlet property="tagSelectionView" destination="I4V-Yt-0ri" id="K8B-4O-tqg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IWJ-kf-BCq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -559,6 +582,9 @@
         </namedColor>
         <namedColor name="ReceivedMsgBG">
             <color red="0.94901960784313721" green="0.95294117647058818" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="ReplyDividerReceived">
+            <color red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="SecondaryText">
             <color red="0.55686274509803924" green="0.58823529411764708" blue="0.61176470588235299" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -19,6 +19,8 @@ class DiscoverTribesTagSelectionVC : UIViewController{
     @IBOutlet weak var filterIcon: UILabel!
     @IBOutlet weak var applyButton: UIButton!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var tagSelectionView: UIView!
+    
     
     var delegate : DiscoverTribesTagSelectionDelegate?
     lazy var discoverTribeTagSelectionVM: DiscoverTribesTagSelectionVM = {
@@ -30,7 +32,9 @@ class DiscoverTribesTagSelectionVC : UIViewController{
     ) -> DiscoverTribesTagSelectionVC {
         let viewController = StoryboardScene.Welcome.discoverTribesTagSelectionViewController.instantiate()
         //viewController.rootViewController = rootViewController
-        viewController.view.backgroundColor = .clear//UIColor.Sphinx.Body
+        viewController.view.backgroundColor = .clear
+        viewController.collectionView.backgroundColor = viewController.view.backgroundColor
+        //viewController.tagSelectionView.backgroundColor = viewController.tagSelectionView.backgroundColor?.withAlphaComponent(0.85)
         
         return viewController
     }

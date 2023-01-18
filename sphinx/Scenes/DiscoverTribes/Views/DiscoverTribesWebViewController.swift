@@ -28,6 +28,7 @@ class DiscoverTribesWebViewController : UIViewController{
     @IBOutlet weak var tagsButton: UIButton!
     @IBOutlet weak var tagCountContainerView: UIView!
     @IBOutlet weak var tagCountLabel: UILabel!
+    @IBOutlet weak var filterIcon: UILabel!
     
     var currentTags : [String] = []
     
@@ -136,6 +137,7 @@ extension DiscoverTribesWebViewController : DiscoverTribesTagSelectionDelegate{
     }
     
     func updateTagButton(){
+        filterIcon.isHidden = (currentTags.count > 0)
         self.tagsButton.backgroundColor = (currentTags.count == 0) ? UIColor.Sphinx.ReceivedMsgBG : UIColor.Sphinx.BodyInverted
         let titleColor = (currentTags.count == 0) ? UIColor.Sphinx.BodyInverted : UIColor.Sphinx.Body
         self.tagsButton.tintColor = titleColor

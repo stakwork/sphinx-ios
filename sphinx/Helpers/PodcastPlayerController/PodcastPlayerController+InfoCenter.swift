@@ -31,7 +31,7 @@ extension PodcastPlayerController {
         }
     }
 
-    func configurePlayingInfoCenterWith() {
+    func configurePlayingInfoCenter() {
         guard let podcast = podcast, let episode = podcast.getCurrentEpisode(), podcast.duration > 0 else {
             return
         }
@@ -42,8 +42,10 @@ extension PodcastPlayerController {
         let artwork = MPMediaItemArtwork.init(boundsSize: size, requestHandler: { (size) -> UIImage in
             return self.playingEpisodeImage ?? UIImage()
         })
+        
+        MPNowPlayingInfoCenter.default().playbackState = isPlaying ? MPNowPlayingPlaybackState.playing : MPNowPlayingPlaybackState.paused
 
-        let playingCenter: [String: Any] = [
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = [
             MPMediaItemPropertyMediaType: "\(MPMediaType.podcast)",
             MPMediaItemPropertyPodcastTitle: podcast.title ?? "",
             MPMediaItemPropertyArtwork: artwork,
@@ -57,8 +59,6 @@ extension PodcastPlayerController {
             MPMediaItemPropertyAlbumTrackNumber: "\(episodeIndex)",
             MPMediaItemPropertyAssetURL: episode.urlPath ?? ""
         ]
-        
-        MPNowPlayingInfoCenter.default().nowPlayingInfo = playingCenter
     }
     
     func setupNowPlayingInfoCenter() {
@@ -68,8 +68,8 @@ extension PodcastPlayerController {
         MPRemoteCommandCenter.shared().pauseCommand.isEnabled = true
         MPRemoteCommandCenter.shared().changePlaybackPositionCommand.isEnabled = true
         
-        MPRemoteCommandCenter.shared().skipBackwardCommand.preferredIntervals = [15]
-        MPRemoteCommandCenter.shared().skipForwardCommand.preferredIntervals = [30]
+        MPRemoteCommandCenter.shared().skipBackwardCommand.preferredIntervals = [NSNumber(value: kSkipBackSeconds)]
+        MPRemoteCommandCenter.shared().skipForwardCommand.preferredIntervals = [NSNumber(value: kSkipForwardSeconds)]
         
         MPRemoteCommandCenter.shared().changePlaybackPositionCommand.addTarget { (event) -> MPRemoteCommandHandlerStatus in
             if let changePlaybackPositionCommandEvent = event as? MPChangePlaybackPositionCommandEvent
@@ -112,7 +112,7 @@ extension PodcastPlayerController {
     }
     
     func shouldSkip15Back() {
-        let newTime = (self.podcastData?.currentTime ?? 0) - 15
+        let newTime = (self.podcastData?.currentTime ?? 0) - kSkipBackSeconds
         self.podcastData?.currentTime = newTime
         self.podcast?.currentTime = newTime
 
@@ -122,8 +122,12 @@ extension PodcastPlayerController {
     }
     
     func shouldSkip30Forward() {
+        let newTime = (self.podcastData?.currentTime ?? 0) + kSkipForwardSeconds
+        self.podcastData?.currentTime = newTime
+        self.podcast?.currentTime = newTime
+
         if let podcastData = self.podcastData {
-            self.play(podcastData)
+            self.seek(podcastData)
         }
     }
     

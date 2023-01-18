@@ -57,18 +57,22 @@ extension PodcastPlayerController {
         
         self.podcastData = podcastData
         
-        loadEpisodeImage()
-        
-        if isPlayerItemSetWith(episodeUrl: podcastData.episodeUrl) {
+        if let player = player, isPlayerItemSetWith(episodeUrl: podcastData.episodeUrl) {
+            ///If same item is set on player, then just seek and play without loading duration asynchronously
+            ///Avoid loading episode image again
             
-            player?.seek(to: CMTime(seconds: Double(podcastData.currentTime ?? 0), preferredTimescale: 1))
-            player?.playImmediately(atRate: podcastData.speed)
+            player.seek(to: CMTime(seconds: Double(podcastData.currentTime ?? 0), preferredTimescale: 1))
+            player.playImmediately(atRate: podcastData.speed)
             
-            if let playerItem = player?.currentItem {
+            if let playerItem = player.currentItem {
                 self.didStartPlaying(playerItem)
             }
             
         } else {
+            ///If new item will be played, then load episode image for info center and load duration asynchronously to prevent
+            ///UI lock when start playing
+            
+            loadEpisodeImage()
             
             let asset = AVAsset(url: podcastData.episodeUrl)
             let playerItem = AVPlayerItem(asset: asset)
@@ -164,7 +168,8 @@ extension PodcastPlayerController {
             soundsPlayer.playSound(name: sound)
         }
         
-        if !isPlaying(podcastId: podcastData.podcastId) {
+        if self.podcastData?.podcastId != podcastData.podcastId {
+            ///Avoid player actions if performing actions for a podcast that is not the current on set on player controller
             return
         }
         
@@ -174,30 +179,37 @@ extension PodcastPlayerController {
             
             self.podcastData?.currentTime = currentTime
             
-            self.invalidateTime()
+            configurePlayingInfoCenter()
+            invalidateTime()
             
             player.seek(to: CMTime(seconds: Double(currentTime), preferredTimescale: 1)) { _ in
-                self.configureTimer()
+                if self.isPlaying {
+                    /// If playing start time again to update UI every X seconds
+                    self.configureTimer()
+                } else {
+                    /// If not playing run pause state delegate to update UI in case seek was triggered from control center
+                    for d in self.delegates.values {
+                        d.pausedState(podcastData)
+                    }
+                }
             }
-            
-            configurePlayingInfoCenterWith()
         }
     }
     
     func adjustSpeed(
         _ podcastData: PodcastData
     ) {
-        if !isPlaying(podcastId: podcastData.podcastId) {
+        if self.podcastData?.podcastId != podcastData.podcastId {
+            ///Avoid player actions if performing actions for a podcast that is not the current on set on player controller
             return
         }
         
         self.podcastData?.speed = podcastData.speed
         
-        if let player = player {
+        if let player = player, isPlaying {
             player.playImmediately(atRate: podcastData.speed)
+            configureTimer()
         }
-        
-        configureTimer()
     }
     
     func isPlaying(
@@ -263,7 +275,7 @@ extension PodcastPlayerController {
             d.playingState(podcastData)
         }
         
-        configurePlayingInfoCenterWith()
+        configurePlayingInfoCenter()
         
         if currentTime >= duration {
             didEndEpisode()

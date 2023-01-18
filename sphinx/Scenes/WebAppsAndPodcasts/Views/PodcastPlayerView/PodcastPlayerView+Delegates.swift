@@ -13,9 +13,10 @@ extension PodcastPlayerView : PlayerDelegate {
         if podcastData.podcastId != podcast?.feedID {
             return
         }
-        audioLoading = true
+        
         configureControls(playing: true)
         showInfo()
+        audioLoading = true
     }
     
     func playingState(_ podcastData: PodcastData) {
@@ -28,8 +29,8 @@ extension PodcastPlayerView : PlayerDelegate {
         podcast?.currentTime = podcastData.currentTime ?? 0
         
         delegate?.shouldReloadEpisodesTable()
-        setProgress(duration: podcastData.duration ?? 0, currentTime: podcastData.currentTime ?? 0)
         configureControls(playing: true)
+        setProgress(duration: podcastData.duration ?? 0, currentTime: podcastData.currentTime ?? 0)
         addMessagesFor(ts: podcastData.currentTime ?? 0)
         audioLoading = false
     }
@@ -40,8 +41,9 @@ extension PodcastPlayerView : PlayerDelegate {
         }
         podcast?.currentTime = podcastData.currentTime ?? 0
         
-        configureControls(playing: false)
         delegate?.shouldReloadEpisodesTable()
+        configureControls(playing: false)
+        setProgress(duration: podcastData.duration ?? 0, currentTime: podcastData.currentTime ?? 0)
         audioLoading = false
     }
     

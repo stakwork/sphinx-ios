@@ -65,6 +65,9 @@ enum PodcastDelegateKeys: String {
 
 let kSecondsBeforePMT = 60
 
+let kSkipBackSeconds = 15
+let kSkipForwardSeconds = 30
+
 let sounds = [
     "skip30v1.caf",
     "skip30v2.caf",

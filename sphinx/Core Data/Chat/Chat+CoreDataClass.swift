@@ -574,7 +574,9 @@ public class Chat: NSManagedObject {
     func setMetaData(_ meta: String?) {
         if let meta = meta, !meta.isEmpty {
             
-            if PodcastPlayerHelper.sharedInstance.isPlaying(self.id) {
+            if let podcast = self.podcast, PodcastPlayerController.sharedInstance.isPlaying(
+                podcastId: podcast.feedID
+            ) {
                 return
             }
             

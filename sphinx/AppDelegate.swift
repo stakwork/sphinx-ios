@@ -168,7 +168,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setMessagesAsSeen()
         setBadge(application: application)
         
-        PodcastPlayerHelper.sharedInstance.finishAndSaveContentConsumed()
+//        PodcastPlayerHelper.sharedInstance.finishAndSaveContentConsumed()
         ActionsManager.sharedInstance.syncActionsInBackground()
         CoreDataManager.sharedManager.saveContext()
         
@@ -186,7 +186,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         reloadMessagesData()
         presentPINIfNeeded()
         
-        PodcastPlayerHelper.sharedInstance.finishAndSaveContentConsumed()
+//        PodcastPlayerHelper.sharedInstance.finishAndSaveContentConsumed()
     }
 
     func saveCurrentStyle() {
@@ -234,7 +234,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         SKPaymentQueue.default().remove(StoreKitService.shared)
 
-        PodcastPlayerHelper.sharedInstance.finishAndSaveContentConsumed()
+//        PodcastPlayerHelper.sharedInstance.finishAndSaveContentConsumed()
         CoreDataManager.sharedManager.saveContext()
     }
 

@@ -250,7 +250,7 @@ extension DashboardFeedsContainerViewController {
         
         actionsManager.syncActions() {
             
-            if (PodcastPlayerHelper.sharedInstance.isPlayingRecommendations()) {
+            if (PodcastPlayerController.sharedInstance.isPlayingRecommendations()) {
                 return
             }
             

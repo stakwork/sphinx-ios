@@ -693,7 +693,7 @@ extension AllTribeFeedsCollectionViewController: NSFetchedResultsControllerDeleg
 
 extension AllTribeFeedsCollectionViewController: DashboardFeedHeaderDelegate {
     func didTapOnRefresh() {
-        if (PodcastPlayerHelper.sharedInstance.isPlayingRecommendations()) {
+        if (PodcastPlayerController.sharedInstance.isPlayingRecommendations()) {
             AlertHelper.showAlert(title: "Recommendations", message: "You can't get new recommendations while playing them. Please stop playing before refreshing.", on: self)
         } else {
             loadRecommendations(forceRefresh: true)

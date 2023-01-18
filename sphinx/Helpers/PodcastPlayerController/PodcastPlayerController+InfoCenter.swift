@@ -132,12 +132,20 @@ extension PodcastPlayerController {
     }
     
     func shouldPlay() {
+        if isPlaying {
+            return
+        }
+        
         if let podcastData = self.podcastData {
             self.play(podcastData)
         }
     }
     
     func shouldPause() {
+        if !isPlaying {
+            return
+        }
+        
         if let podcastData = self.podcastData {
             self.pause(podcastData)
         }

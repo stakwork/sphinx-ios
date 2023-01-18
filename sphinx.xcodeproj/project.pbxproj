@@ -453,7 +453,6 @@
 		47949BD624AA12C7000D697B /* CommonDeletedMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47949BD524AA12C7000D697B /* CommonDeletedMessageTableViewCell.swift */; };
 		47949BD824AA168D000D697B /* Roboto-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 47949BD724AA168D000D697B /* Roboto-Italic.ttf */; };
 		4794CA77252F5D66007C5022 /* API+PodcastExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4794CA76252F5D66007C5022 /* API+PodcastExtension.swift */; };
-		4794CA79252F72D2007C5022 /* PodcastPlayerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4794CA78252F72D2007C5022 /* PodcastPlayerHelper.swift */; };
 		479608F4256EAEB400A68FC1 /* MessageBoostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479608F3256EAEB400A68FC1 /* MessageBoostView.swift */; };
 		479608F6256EAEBD00A68FC1 /* MessageBoostView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 479608F5256EAEBD00A68FC1 /* MessageBoostView.xib */; };
 		4797E74A24B89ECA00D13270 /* VideoCallHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4797E74924B89ECA00D13270 /* VideoCallHelper.swift */; };
@@ -1274,7 +1273,6 @@
 		47949BD524AA12C7000D697B /* CommonDeletedMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonDeletedMessageTableViewCell.swift; sourceTree = "<group>"; };
 		47949BD724AA168D000D697B /* Roboto-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Italic.ttf"; sourceTree = "<group>"; };
 		4794CA76252F5D66007C5022 /* API+PodcastExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+PodcastExtension.swift"; sourceTree = "<group>"; };
-		4794CA78252F72D2007C5022 /* PodcastPlayerHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastPlayerHelper.swift; sourceTree = "<group>"; };
 		479608F3256EAEB400A68FC1 /* MessageBoostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBoostView.swift; sourceTree = "<group>"; };
 		479608F5256EAEBD00A68FC1 /* MessageBoostView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageBoostView.xib; sourceTree = "<group>"; };
 		4797E74924B89ECA00D13270 /* VideoCallHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCallHelper.swift; sourceTree = "<group>"; };
@@ -3139,7 +3137,6 @@
 			children = (
 				47F258D82540F61F00122A5A /* PodcastPaymentsHelper.swift */,
 				4789E25124EDB77B003991BE /* WebAppHelper.swift */,
-				4794CA78252F72D2007C5022 /* PodcastPlayerHelper.swift */,
 				47018F9627D1079800797E0B /* FeedLoaderHelper.swift */,
 			);
 			path = Helper;
@@ -4378,7 +4375,6 @@
 				476EB47223C5064C009745E2 /* GroupAllContactsDataSource.swift in Sources */,
 				47308E0024FEE6E600FFAC6F /* SocketLogger.swift in Sources */,
 				475BDCB4232AC1E800C5BBD6 /* MessageBubbleView.swift in Sources */,
-				4794CA79252F72D2007C5022 /* PodcastPlayerHelper.swift in Sources */,
 				475043D22975C0B300830E9E /* PodcastPlayerView+UI.swift in Sources */,
 				472F9D3B2412F95100EFC30A /* Data.swift in Sources */,
 				47F258D2253F705800122A5A /* ChatViewControllerPodcastExtension.swift in Sources */,

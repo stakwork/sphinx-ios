@@ -182,6 +182,10 @@ class ChatAttachmentViewController: UIViewController, BackCameraVC {
         self.paidMessageOptionContainer.isHidden = true
         self.requestOptionContainer.isHidden = true
         self.sendOptionContainer.isHidden = true
+        self.accessoryView.sendButton.setTitle("publish", for: .normal)
+        self.accessoryView.textView.text = "Upload this badge icon"
+        self.accessoryView.textView.isUserInteractionEnabled = false
+        self.viewTitle.attributedText = NSAttributedString(string: "Upload an Icon")
     }
     
     func showFileInfoContainer() {

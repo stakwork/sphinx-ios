@@ -296,15 +296,5 @@ extension PodcastPlayerController {
             d.endedState(podcastData)
         }
     }
-    
-    @objc func updatePlayedTime() {
-//        playedSeconds = playedSeconds + 1
-//        
-//        if playedSeconds > 0 && playedSeconds % PodcastPlayerHelper.kSecondsBeforePMT == 0 {
-//            DispatchQueue.global().async {
-//                self.processPayment()
-//            }
-//        }
-    }
 }
 

@@ -417,6 +417,7 @@
 		4789E26224F04752003991BE /* SettingsTabsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4789E26424F04752003991BE /* SettingsTabsView.xib */; };
 		4789E26C24F05481003991BE /* ProfileViewControllerRelayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4789E26B24F05481003991BE /* ProfileViewControllerRelayExtension.swift */; };
 		4789E26E24F406F3003991BE /* RelayURLUpdateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4789E26D24F406F3003991BE /* RelayURLUpdateHelper.swift */; };
+		478B05C4297832FC00A1B254 /* PodcastPlayerController+Payments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478B05C3297832FC00A1B254 /* PodcastPlayerController+Payments.swift */; };
 		478BD8B62829B67300C733FD /* TribeMemberPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478BD8B52829B67300C733FD /* TribeMemberPopupViewController.swift */; };
 		478BD8B92829B70700C733FD /* TribeMemberPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478BD8B82829B70700C733FD /* TribeMemberPopupView.swift */; };
 		478BD8BC282AA6C600C733FD /* TribeMemberPopupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 478BD8BE282AA6C600C733FD /* TribeMemberPopupView.xib */; };
@@ -1228,6 +1229,7 @@
 		4789E26824F04758003991BE /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/SettingsTabsView.strings; sourceTree = "<group>"; };
 		4789E26B24F05481003991BE /* ProfileViewControllerRelayExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewControllerRelayExtension.swift; sourceTree = "<group>"; };
 		4789E26D24F406F3003991BE /* RelayURLUpdateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelayURLUpdateHelper.swift; sourceTree = "<group>"; };
+		478B05C3297832FC00A1B254 /* PodcastPlayerController+Payments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PodcastPlayerController+Payments.swift"; sourceTree = "<group>"; };
 		478BD8B428297FD500C733FD /* sphinx 33.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 33.xcdatamodel"; sourceTree = "<group>"; };
 		478BD8B52829B67300C733FD /* TribeMemberPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TribeMemberPopupViewController.swift; sourceTree = "<group>"; };
 		478BD8B82829B70700C733FD /* TribeMemberPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TribeMemberPopupView.swift; sourceTree = "<group>"; };
@@ -2218,6 +2220,7 @@
 				475043CA29719E5F00830E9E /* PodcastPlayerController+InfoCenter.swift */,
 				475043CC2971A85200830E9E /* PodcastPlayerController+AudioPlayer.swift */,
 				475043CE2971AA0700830E9E /* PodcastPlayerController+Delegates&Actions.swift */,
+				478B05C3297832FC00A1B254 /* PodcastPlayerController+Payments.swift */,
 			);
 			path = PodcastPlayerController;
 			sourceTree = "<group>";
@@ -4518,6 +4521,7 @@
 				47669F4F23D63D5000C17A77 /* GroupActionMessageTableViewCell.swift in Sources */,
 				475BDD0D232AC25100C5BBD6 /* DayHeaderTableViewCell.swift in Sources */,
 				475BDD1D232AC47C00C5BBD6 /* ChatViewControllerDelegates.swift in Sources */,
+				478B05C4297832FC00A1B254 /* PodcastPlayerController+Payments.swift in Sources */,
 				47651C3523DB4A4F00CBC605 /* TouchUpGestureRecognizer.swift in Sources */,
 				473F7BA6268B7F970063D0E0 /* OnionManager.swift in Sources */,
 				477C57E7234785ED00BB4E04 /* WalletBalanceService.swift in Sources */,

@@ -9,6 +9,11 @@
 import Foundation
 import UIKit
 
+public enum BadgeDetailPresentationContext{
+    case create
+    case update
+}
+
 class BadgeDetailVC : UIViewController{
     @IBOutlet weak var navBarView: UIView!
     @IBOutlet weak var badgeImageView: UIImageView!
@@ -29,6 +34,7 @@ class BadgeDetailVC : UIViewController{
     @IBOutlet weak var badgeQuantityStepperLabel: UILabel!
     @IBOutlet weak var satsTotalLabel: UILabel!
     
+    var presentationContext : BadgeDetailPresentationContext = .update//.create
     var associatedBadge : Badge? = nil
     let pricePerBadge : Int = 10
     var badgeQuantity : Int = 100 {
@@ -47,7 +53,18 @@ class BadgeDetailVC : UIViewController{
             loadWithBadge(badge: valid_badge)
         }
         styleSubViews()
-       // setupStepperControl()
+       customizeBasedOnPresentationContext()
+    }
+    
+    func customizeBasedOnPresentationContext(){
+        switch(presentationContext){
+        case .create:
+            saveBadgeButton.setTitle("Create Badge", for: .normal)
+            break
+        case .update:
+            saveBadgeButton.setTitle("Update Badge", for: .normal)
+            break
+        }
     }
     
     static func instantiate(

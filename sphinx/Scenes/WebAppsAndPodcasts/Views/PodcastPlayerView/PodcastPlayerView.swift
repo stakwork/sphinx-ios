@@ -140,22 +140,6 @@ class PodcastPlayerView: UIView {
         }
     }
     
-    private func getPodcastData() -> PodcastData? {
-        guard let episode = podcast.getCurrentEpisode(), let url = episode.getAudioUrl() else {
-            return nil
-        }
-        
-        return PodcastData(
-            chat?.id,
-            podcast.feedID,
-            episode.itemID,
-            url,
-            episode.currentTime,
-            episode.duration,
-            podcast.playerSpeed
-        )
-    }
-    
     func addToLiveMessages(message: TransactionMessage) {
         if let ts = message.getTimeStamp() {
             var existingM = liveMessages[ts] ?? Array<TransactionMessage>()
@@ -189,9 +173,9 @@ class PodcastPlayerView: UIView {
             let progress = ((progressLineWidth.constant * 100) / durationLine.frame.size.width) / 100
             let currentTime = Int(Double(duration) * progress)
             
-            podcast?.getCurrentEpisode()?.currentTime = currentTime
-            
-            guard let podcastData = getPodcastData() else {
+            guard let podcastData = getPodcastData(
+                currentTime: currentTime
+            ) else {
                 return
             }
             
@@ -283,10 +267,10 @@ class PodcastPlayerView: UIView {
             return
         }
         
-        podcast.currentEpisodeId = episode.itemID
-        podcast.currentTime = 0
-        
-        guard let podcastData = getPodcastData() else {
+        guard let podcastData = getPodcastData(
+            episodeId: episode.itemID,
+            currentTime: 0
+        ) else {
             return
         }
             
@@ -305,9 +289,9 @@ class PodcastPlayerView: UIView {
         newTime = max(newTime, 0)
         newTime = min(newTime, podcast.duration)
         
-        podcast?.currentTime = newTime
-        
-        guard let podcastData = getPodcastData() else {
+        guard let podcastData = getPodcastData(
+            currentTime: newTime
+        ) else {
             return
         }
         

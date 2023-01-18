@@ -40,7 +40,6 @@ extension PodcastPlayerController {
     func play(
         _ podcastData: PodcastData
     ) {
-        
         setAudioSession()
         
         if let pd = self.podcastData, isPlaying {
@@ -58,6 +57,14 @@ extension PodcastPlayerController {
         }
         
         self.podcastData = podcastData
+        
+        updatePodcastObject(
+            podcastId: podcastData.podcastId,
+            episodeId: podcastData.episodeId,
+            currentTime: podcastData.currentTime,
+            duration: podcastData.duration,
+            playerSpeed: podcastData.speed
+        )
         
         if let player = player, isPlayerItemSetWith(episodeUrl: podcastData.episodeUrl) {
             ///If same item is set on player, then just seek and play without loading duration asynchronously
@@ -141,6 +148,12 @@ extension PodcastPlayerController {
         self.podcastData?.currentTime = currentTime
         self.podcastData?.duration = duration
         
+        updatePodcastObject(
+            podcastId: podcastData.podcastId,
+            currentTime: currentTime,
+            duration: duration
+        )
+        
         guard let podcastData = self.podcastData else {
            return
         }
@@ -166,20 +179,33 @@ extension PodcastPlayerController {
     func seek(
         _ podcastData: PodcastData
     ) {
+        guard let currentTime = podcastData.currentTime else {
+            return
+        }
+        
+        updatePodcastObject(
+            podcastId: podcastData.podcastId,
+            currentTime: currentTime
+        )
+        
+        if self.podcastData == nil {
+            ///If seeking on player before playing, podcastData is nil, then it needs to be set
+            self.podcastData = podcastData
+        }
+        
+        if self.podcastData?.podcastId != podcastData.podcastId {
+            ///Avoid player actions if performing actions for a podcast that is not the current set on player controller
+            return
+        }
+        
+        self.podcastData?.currentTime = currentTime
+        
         if let sound = sounds.randomElement() {
             soundsPlayer.playSound(name: sound)
         }
         
-        if self.podcastData?.podcastId != podcastData.podcastId {
-            ///Avoid player actions if performing actions for a podcast that is not the current on set on player controller
-            return
-        }
-        
         if let player = player,
-           let _ = player.currentItem,
-           let currentTime = podcastData.currentTime {
-            
-            self.podcastData?.currentTime = currentTime
+           let _ = player.currentItem {
             
             configurePlayingInfoCenter()
             invalidateTime()
@@ -267,11 +293,16 @@ extension PodcastPlayerController {
         let duration = Int(Double(item.asset.duration.value) / Double(item.asset.duration.timescale))
         let currentTime = Int(round(Double(player.currentTime().value) / Double(player.currentTime().timescale)))
 
-        self.podcastData?.currentTime = currentTime
-
         guard let podcastData = podcastData else {
             return
         }
+        
+        self.podcastData?.currentTime = currentTime
+        
+        updatePodcastObject(
+            podcastId: podcastData.podcastId,
+            currentTime: currentTime
+        )
 
         for d in delegates.values {
             d.playingState(podcastData)
@@ -287,16 +318,70 @@ extension PodcastPlayerController {
     func didEndEpisode() {
 //        trackItemFinished(shouldSaveAction: true)
         pausePlaying()
-
-        self.podcastData?.currentTime = 0
         
         guard let podcastData = self.podcastData else {
             return
         }
         
+        self.podcastData?.currentTime = 0
+        
+        updatePodcastObject(
+            podcastId: podcastData.podcastId,
+            currentTime: 0
+        )
+        
         for d in delegates.values {
             d.endedState(podcastData)
         }
+    }
+}
+
+extension PodcastPlayerController {
+    func updatePodcastObject(
+        podcastId: String,
+        episodeId: String? = nil,
+        currentTime: Int? = nil,
+        duration: Int? = nil,
+        playerSpeed: Float? = nil
+    ) {
+        ///Updates attributes on podcast object to be persisted in UserDeftaults
+        
+        guard let podcast = getPodcastWith(podcastId: podcastId) else {
+            return
+        }
+        
+        if let episodeId = episodeId {
+            podcast.currentEpisodeId = episodeId
+        }
+        
+        if let currentTime = currentTime {
+            podcast.currentTime = currentTime
+        }
+        
+        if let duration = duration {
+            podcast.duration = duration
+        }
+        
+        if let playerSpeed = playerSpeed {
+            podcast.playerSpeed = playerSpeed
+        }
+        
+    }
+    
+    func getPodcastWith(podcastId: String) -> PodcastFeed? {
+        var podcast: PodcastFeed? = nil
+        
+        if let pd = self.podcast, pd.feedID == podcastId {
+            podcast = pd
+        } else {
+            if let contentFeed = ContentFeed.getFeedWith(feedId: podcastId) {
+                let podcastFeed = PodcastFeed.convertFrom(contentFeed: contentFeed)
+                
+                podcast = podcastFeed
+            }
+        }
+        
+        return podcast
     }
 }
 

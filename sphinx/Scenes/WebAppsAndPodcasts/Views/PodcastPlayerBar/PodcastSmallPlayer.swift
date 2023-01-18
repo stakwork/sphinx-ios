@@ -65,21 +65,6 @@ class PodcastSmallPlayer: UIView {
         setup()
     }
     
-    private func getPodcastData() -> PodcastData? {
-        guard let podcast = podcast, let episode = podcast.getCurrentEpisode(), let url = episode.getAudioUrl() else {
-            return nil
-        }
-        
-        return PodcastData(
-            podcast.chat?.id,
-            podcast.feedID,
-            episode.itemID,
-            url,
-            episode.currentTime,
-            episode.duration
-        )
-    }
-    
     func configureWith(
         podcastId: String,
         delegate: PodcastPlayerVCDelegate,
@@ -237,9 +222,9 @@ class PodcastSmallPlayer: UIView {
         newTime = max(newTime, 0)
         newTime = min(newTime, (podcast?.duration ?? 0))
         
-        podcast?.currentTime = newTime
-        
-        guard let podcastData = getPodcastData() else {
+        guard let podcastData = getPodcastData(
+            currentTime: newTime
+        ) else {
             return
         }
         

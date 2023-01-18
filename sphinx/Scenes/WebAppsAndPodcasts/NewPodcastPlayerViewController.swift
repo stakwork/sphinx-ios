@@ -130,7 +130,10 @@ class NewPodcastPlayerViewController: UIViewController {
         }
     }
     
-    private func getPodcastData() -> PodcastData? {
+    func getPodcastData(
+        playerSpeed: Float? = nil
+    ) -> PodcastData? {
+        
         guard let episode = podcast.getCurrentEpisode(), let url = episode.getAudioUrl() else {
             return nil
         }
@@ -142,7 +145,7 @@ class NewPodcastPlayerViewController: UIViewController {
             url,
             episode.currentTime,
             episode.duration,
-            podcast.playerSpeed
+            playerSpeed ?? podcast.playerSpeed
         )
     }
 }
@@ -243,9 +246,9 @@ extension NewPodcastPlayerViewController : PickerViewDelegate {
     func didSelectValue(value: String) {
         if let newSpeed = Float(value), newSpeed >= 0.5 && newSpeed <= 2.1 {
             
-            podcast?.playerSpeed = newSpeed
-            
-            guard let podcastData = getPodcastData() else {
+            guard let podcastData = getPodcastData(
+                playerSpeed: newSpeed
+            ) else {
                 return
             }
             

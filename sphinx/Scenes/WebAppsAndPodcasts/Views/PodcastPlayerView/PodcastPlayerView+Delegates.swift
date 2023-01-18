@@ -8,6 +8,38 @@
 
 import UIKit
 
+extension PodcastPlayerView {
+    func getPodcastData(
+        episodeId: String? = nil,
+        currentTime: Int? = nil
+    ) -> PodcastData? {
+        
+        var episode: PodcastEpisode? = nil
+        
+        if let episodeId = episodeId {
+            episode = podcast.getEpisodeWith(id: episodeId)
+        } else {
+            episode = podcast.getCurrentEpisode()
+        }
+        
+        guard let episode = episode, let url = episode.getAudioUrl() else {
+            return nil
+        }
+        
+        let currentTime = currentTime ?? episode.currentTime
+        
+        return PodcastData(
+            chat?.id,
+            podcast.feedID,
+            episode.itemID,
+            url,
+            currentTime,
+            episode.duration,
+            podcast.playerSpeed
+        )
+    }
+}
+
 extension PodcastPlayerView : PlayerDelegate {
     func loadingState(_ podcastData: PodcastData) {
         if podcastData.podcastId != podcast?.feedID {
@@ -26,8 +58,6 @@ extension PodcastPlayerView : PlayerDelegate {
         if podcastData.podcastId != podcast?.feedID {
             return
         }
-        podcast?.currentTime = podcastData.currentTime ?? 0
-        
         delegate?.shouldReloadEpisodesTable()
         configureControls(playing: true)
         setProgress(duration: podcastData.duration ?? 0, currentTime: podcastData.currentTime ?? 0)
@@ -39,8 +69,6 @@ extension PodcastPlayerView : PlayerDelegate {
         if podcastData.podcastId != podcast?.feedID {
             return
         }
-        podcast?.currentTime = podcastData.currentTime ?? 0
-        
         delegate?.shouldReloadEpisodesTable()
         configureControls(playing: false)
         setProgress(duration: podcastData.duration ?? 0, currentTime: podcastData.currentTime ?? 0)
@@ -51,8 +79,6 @@ extension PodcastPlayerView : PlayerDelegate {
         if podcastData.podcastId != podcast?.feedID {
             return
         }
-        podcast?.currentTime = 0
-        
         configureControls(playing: false)
         setProgress(duration: podcastData.duration ?? 0, currentTime: podcastData.currentTime ?? 0)
     }

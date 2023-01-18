@@ -26,8 +26,6 @@ struct PodcastData {
     var currentTime: Int? = nil
     var duration: Int? = nil
     var speed: Float = 1
-//    var satsPerMinute: Int = 0
-//    var destinations: [ContentFeedPaymentDestination] = 0
     
     init(
         _ chatId: Int?,

@@ -173,7 +173,7 @@ class PodcastPlayerView: UIView {
             let progress = ((progressLineWidth.constant * 100) / durationLine.frame.size.width) / 100
             let currentTime = Int(Double(duration) * progress)
             
-            guard let podcastData = getPodcastData(
+            guard let podcastData = podcast.getPodcastData(
                 currentTime: currentTime
             ) else {
                 return
@@ -212,7 +212,7 @@ class PodcastPlayerView: UIView {
     }
     
     func togglePlayState() {
-        guard let podcastData = getPodcastData() else {
+        guard let podcastData = podcast.getPodcastData() else {
             return
         }
         
@@ -267,7 +267,7 @@ class PodcastPlayerView: UIView {
             return
         }
         
-        guard let podcastData = getPodcastData(
+        guard let podcastData = podcast.getPodcastData(
             episodeId: episode.itemID
         ) else {
             return
@@ -278,7 +278,7 @@ class PodcastPlayerView: UIView {
         )
         
         delegate?.shouldReloadEpisodesTable()
-        showInfo()
+//        showInfo()
     }
     
     func seekTo(seconds: Double) {
@@ -288,7 +288,7 @@ class PodcastPlayerView: UIView {
         newTime = max(newTime, 0)
         newTime = min(newTime, podcast.duration)
         
-        guard let podcastData = getPodcastData(
+        guard let podcastData = podcast.getPodcastData(
             currentTime: newTime
         ) else {
             return

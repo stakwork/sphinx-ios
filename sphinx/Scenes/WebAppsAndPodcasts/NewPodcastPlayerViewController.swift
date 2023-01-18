@@ -129,25 +129,6 @@ class NewPodcastPlayerViewController: UIViewController {
             ContentFeed.fetchFeedItemsInBackground(feedUrl: feedUrl, contentFeedObjectID: objectID, completion: {})
         }
     }
-    
-    func getPodcastData(
-        playerSpeed: Float? = nil
-    ) -> PodcastData? {
-        
-        guard let episode = podcast.getCurrentEpisode(), let url = episode.getAudioUrl() else {
-            return nil
-        }
-        
-        return PodcastData(
-            chat?.id,
-            podcast.feedID,
-            episode.itemID,
-            url,
-            episode.currentTime,
-            episode.duration,
-            playerSpeed ?? podcast.playerSpeed
-        )
-    }
 }
 
 extension NewPodcastPlayerViewController : PodcastEpisodesDSDelegate {
@@ -246,7 +227,7 @@ extension NewPodcastPlayerViewController : PickerViewDelegate {
     func didSelectValue(value: String) {
         if let newSpeed = Float(value), newSpeed >= 0.5 && newSpeed <= 2.1 {
             
-            guard let podcastData = getPodcastData(
+            guard let podcastData = podcast.getPodcastData(
                 playerSpeed: newSpeed
             ) else {
                 return
@@ -276,7 +257,7 @@ extension NewPodcastPlayerViewController: URLSessionDelegate {
 extension NewPodcastPlayerViewController : DownloadServiceDelegate {
     func shouldReloadRowFor(download: Download) {
 //        if let index = podcast.getIndexForEpisodeWith(id: download.episode.itemID) {
-////            tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
+//            tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
 //        }
         tableView.reloadData()
     }

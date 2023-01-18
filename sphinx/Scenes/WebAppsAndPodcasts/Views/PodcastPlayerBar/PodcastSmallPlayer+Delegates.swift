@@ -8,42 +8,6 @@
 
 import Foundation
 
-extension PodcastSmallPlayer {
-    func getPodcastData(
-        episodeId: String? = nil,
-        currentTime: Int? = nil
-    ) -> PodcastData? {
-        
-        guard let podcast = podcast else {
-            return nil
-        }
-        
-        var episode: PodcastEpisode? = nil
-        
-        if let episodeId = episodeId {
-            episode = podcast.getEpisodeWith(id: episodeId)
-        } else {
-            episode = podcast.getCurrentEpisode()
-        }
-        
-        guard let episode = episode, let url = episode.getAudioUrl() else {
-            return nil
-        }
-        
-        let currentTime = currentTime ?? episode.currentTime
-        
-        return PodcastData(
-            podcast.chat?.id,
-            podcast.feedID,
-            episode.itemID,
-            url,
-            currentTime,
-            episode.duration,
-            podcast.playerSpeed
-        )
-    }
-}
-
 extension PodcastSmallPlayer : PlayerDelegate {
     func loadingState(_ podcastData: PodcastData) {
         if podcastData.podcastId != podcast?.feedID {

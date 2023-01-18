@@ -52,10 +52,6 @@ extension PodcastPlayerController {
             }
         }
         
-        for d in self.delegates.values {
-            d.loadingState(podcastData)
-        }
-        
         self.podcastData = podcastData
         
         updatePodcastObject(
@@ -65,6 +61,8 @@ extension PodcastPlayerController {
             duration: podcastData.duration,
             playerSpeed: podcastData.speed
         )
+        
+        runLoadingStateUpdate()
         
         if let player = player, isPlayerItemSetWith(episodeUrl: podcastData.episodeUrl) {
             ///If same item is set on player, then just seek and play without loading duration asynchronously
@@ -123,19 +121,14 @@ extension PodcastPlayerController {
         
         if (duration > 0) {
             
-            for d in self.delegates.values {
-                d.playingState(podcastData)
-            }
-            
+            self.runPlayingStateUpdate()
             self.configureTimer()
             
 //                    trackItemStarted(endTimestamp: previousItemTimestamp)
         } else {
             self.player?.pause()
             
-            for d in self.delegates.values {
-                d.errorState(podcastData)
-            }
+            runErrorStateUpdate()
         }
     }
     
@@ -161,14 +154,8 @@ extension PodcastPlayerController {
             currentTime: currentTime,
             duration: duration
         )
-        
-        guard let podcastData = self.podcastData else {
-           return
-        }
 
-        for d in delegates.values {
-            d.pausedState(podcastData)
-        }
+        runPausedStateUpdate()
     }
     
     func pausePlaying() {
@@ -216,9 +203,7 @@ extension PodcastPlayerController {
                     self.configureTimer()
                 } else {
                     /// If not playing run pause state delegate to update UI in case seek was triggered from control center
-                    for d in self.delegates.values {
-                        d.pausedState(podcastData)
-                    }
+                    self.runPausedStateUpdate()
                 }
             }
         }
@@ -237,6 +222,58 @@ extension PodcastPlayerController {
         if let player = player, isPlaying {
             player.playImmediately(atRate: podcastData.speed)
             configureTimer()
+        }
+    }
+}
+
+extension PodcastPlayerController {
+    func runLoadingStateUpdate() {
+        guard let podcastData = podcastData else {
+            return
+        }
+        
+        for d in self.delegates.values {
+            d.loadingState(podcastData)
+        }
+    }
+    
+    func runPlayingStateUpdate() {
+        guard let podcastData = podcastData else {
+            return
+        }
+        
+        for d in self.delegates.values {
+            d.playingState(podcastData)
+        }
+    }
+    
+    func runPausedStateUpdate() {
+        guard let podcastData = podcastData else {
+            return
+        }
+        
+        for d in self.delegates.values {
+            d.pausedState(podcastData)
+        }
+    }
+    
+    func runEndedStateUpdate() {
+        guard let podcastData = podcastData else {
+            return
+        }
+        
+        for d in self.delegates.values {
+            d.endedState(podcastData)
+        }
+    }
+    
+    func runErrorStateUpdate() {
+        guard let podcastData = podcastData else {
+            return
+        }
+        
+        for d in self.delegates.values {
+            d.errorState(podcastData)
         }
     }
 }

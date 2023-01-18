@@ -189,7 +189,7 @@ class PodcastSmallPlayer: UIView {
     }
     
     func togglePlayState() {
-        guard let podcastData = getPodcastData() else {
+        guard let podcastData = podcast?.getPodcastData() else {
             return
         }
         
@@ -205,7 +205,7 @@ class PodcastSmallPlayer: UIView {
     }
     
     func pauseIfPlaying() {
-        guard let podcastData = getPodcastData() else {
+        guard let podcastData = podcast?.getPodcastData() else {
             return
         }
         
@@ -221,7 +221,7 @@ class PodcastSmallPlayer: UIView {
         newTime = max(newTime, 0)
         newTime = min(newTime, (podcast?.duration ?? 0))
         
-        guard let podcastData = getPodcastData(
+        guard let podcastData = podcast?.getPodcastData(
             currentTime: newTime
         ) else {
             return

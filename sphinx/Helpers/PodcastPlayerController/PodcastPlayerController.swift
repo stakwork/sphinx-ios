@@ -96,6 +96,8 @@ class PodcastPlayerController {
             }
             if let contentFeed = ContentFeed.getFeedWith(feedId: podcastData?.podcastId ?? "") {
                 self.podcast = PodcastFeed.convertFrom(contentFeed: contentFeed)
+            } else if podcastData?.podcastId == RecommendationsHelper.kRecommendationPodcastId {
+                self.podcast = RecommendationsHelper.sharedInstance.recommendationsPodcast
             }
         }
     }

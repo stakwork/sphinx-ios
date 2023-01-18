@@ -114,11 +114,10 @@ class PodcastSmallPlayer: UIView {
         episodeLabel.text = episode?.title ?? "Episode with no title"
         contributorLabel.text = podcast.author ?? episode?.showTitle ?? podcast.title ?? ""
         
-        if let imageUrlString = episode?.imageURLPath,
-           let imageURL = URL(string: imageUrlString), !imageUrlString.isEmpty {
+        if let imageUrl = podcast.getImageURL() {
             
             episodeImageView.sd_setImage(
-                with: imageURL,
+                with: imageUrl,
                 placeholderImage: UIImage(named: "podcastPlaceholder"),
                 options: [.highPriority],
                 progress: nil

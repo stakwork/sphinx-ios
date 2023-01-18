@@ -30,6 +30,13 @@ extension PodcastPlayerView {
                 currentTime: episode?.currentTime ?? 0
             )
         } else if let url = episode?.getAudioUrl() {
+            audioLoading = true
+            
+            setProgress(
+                duration: 0,
+                currentTime: 0
+            )
+            
             let asset = AVAsset(url: url)
             asset.loadValuesAsynchronously(forKeys: ["duration"], completionHandler: {
                 let duration = Int(Double(asset.duration.value) / Double(asset.duration.timescale))
@@ -40,6 +47,7 @@ extension PodcastPlayerView {
                         duration: duration,
                         currentTime: episode?.currentTime ?? 0
                     )
+                    self.audioLoading = false
                 }
             })
         }
@@ -95,7 +103,6 @@ extension PodcastPlayerView {
         duration: Int,
         currentTime: Int
     ) {
-        
         let currentTimeString = currentTime.getPodcastTimeString()
         
         currentTimeLabel.text = currentTimeString

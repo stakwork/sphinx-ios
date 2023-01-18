@@ -114,7 +114,15 @@ extension PodcastPlayerController {
         
         let duration = Int(Double(playerItem.asset.duration.value) / Double(playerItem.asset.duration.timescale))
         
+        self.podcastData?.duration = duration
+        
+        updatePodcastObject(
+            podcastId: podcastData.podcastId,
+            duration: duration
+        )
+        
         if (duration > 0) {
+            
             for d in self.delegates.values {
                 d.playingState(podcastData)
             }
@@ -298,10 +306,12 @@ extension PodcastPlayerController {
         }
         
         self.podcastData?.currentTime = currentTime
+        self.podcastData?.duration = duration
         
         updatePodcastObject(
             podcastId: podcastData.podcastId,
-            currentTime: currentTime
+            currentTime: currentTime,
+            duration: duration
         )
 
         for d in delegates.values {

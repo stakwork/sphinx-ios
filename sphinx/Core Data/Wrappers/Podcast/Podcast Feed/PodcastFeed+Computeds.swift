@@ -114,6 +114,19 @@ extension PodcastFeed {
         return episodesArray.first(where: { $0.itemID == id })
     }
     
+    func getIndexForEpisodeWith(id: String) -> Int? {
+        return episodesArray.firstIndex(where: { $0.itemID == id })
+    }
+    
+    func getItemRankForEpisodeWithId(id: String) -> Int {
+        for (i, item) in (episodes ?? []).enumerated() {
+            if (item.itemID == id) {
+                return i + 1
+            }
+        }
+        return 0
+    }
+    
     func getImageURL() -> URL? {
         let (_, episodeImage) = getEpisodeInfo()
         if let imageURL = URL(string: episodeImage), !episodeImage.isEmpty {

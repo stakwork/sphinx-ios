@@ -21,7 +21,10 @@ public class PodcastEpisode: NSObject {
     public var linkURLPath: String?
     public var clipStartTime: Int?
     public var clipEndTime: Int?
+    public var showTitle: String?
     public var feed: PodcastFeed?
+    public var people: [String] = []
+    public var topics: [String] = []
 
     //For recommendations podcast
     public var type: String?
@@ -46,7 +49,41 @@ public class PodcastEpisode: NSObject {
         }
     }
     
-    var duration: Int? = nil
+    var duration: Int? {
+        get {
+            return UserDefaults.standard.value(forKey: "duration-\(itemID)") as? Int
+        }
+        set {
+            if (newValue ?? 0 > 0) {
+                UserDefaults.standard.set(newValue, forKey: "duration-\(itemID)")
+            }
+        }
+    }
+    
+    var currentTime: Int? {
+        get {
+            return UserDefaults.standard.value(forKey: "current-time-\(itemID)") as? Int
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "current-time-\(itemID)")
+        }
+    }
+    
+    var youtubeVideoId: String? {
+        get {
+            var videoId: String? = nil
+        
+            if let urlPath = self.linkURLPath {
+                if let range = urlPath.range(of: "v=") {
+                    videoId = String(urlPath[range.upperBound...])
+                } else if let range = urlPath.range(of: "v/") {
+                    videoId = String(urlPath[range.upperBound...])
+                }
+            }
+            
+            return videoId
+        }
+    }
 }
 
 
@@ -103,4 +140,16 @@ extension PodcastEpisode {
         return type == RecommendationsHelper.YOUTUBE_VIDEO_TYPE
     }
 
+    var intType: Int {
+        get {
+            if isMusicClip {
+                return Int(FeedType.Podcast.rawValue)
+            }
+            if isYoutubeVideo {
+                return Int(FeedType.Video.rawValue)
+            }
+            return Int(FeedType.Podcast.rawValue)
+        }
+    }
+    
 }

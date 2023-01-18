@@ -13,7 +13,7 @@ protocol FeedSearchResultsViewControllerDelegate: AnyObject {
     
     func viewController(
         _ viewController: UIViewController,
-        didSelectFeedSearchResult searchResult: FeedSearchResult
+        didSelectFeedSearchResult feedId: String
     )
 }
 
@@ -26,6 +26,8 @@ class FeedSearchContainerViewController: UIViewController {
     
     var feedType: FeedType? = nil
     var searchTimer: Timer? = nil
+    
+    let newMessageBubbleHelper = NewMessageBubbleHelper()
     
     lazy var fetchedResultsController: NSFetchedResultsController = Self
         .makeFetchedResultsController(
@@ -178,7 +180,14 @@ extension FeedSearchContainerViewController {
             )
         }
         
+        ActionsManager.sharedInstance.trackFeedSearch(searchTerm: searchQuery.lowerClean)
+        
         if let type = type {
+            
+            searchResultsViewController.updateWithNew(
+                searchResults: []
+            )
+            
             searchTimer?.invalidate()
             searchTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(fetchRemoteResults(timer:)), userInfo: ["search_query": searchQuery, "feed_type" : type], repeats: false)
         } else {
@@ -196,8 +205,6 @@ extension FeedSearchContainerViewController {
                     matching: searchQuery
                 ) { [weak self] result in
                     guard let self = self else { return }
-                    
-                    ActionsManager.sharedInstance.trackFeedSearch(searchTerm: searchQuery)
                     
                     DispatchQueue.main.async {
                         switch result {
@@ -230,7 +237,7 @@ extension FeedSearchContainerViewController {
     private func handleFeedCellSelection(_ feedSearchResult: FeedSearchResult) {
         resultsDelegate?.viewController(
             self,
-            didSelectFeedSearchResult: feedSearchResult
+            didSelectFeedSearchResult: feedSearchResult.feedId
         )
     }
     
@@ -246,9 +253,11 @@ extension FeedSearchContainerViewController {
         if let existingFeed = fetchRequestResult.first {
             resultsDelegate?.viewController(
                 self,
-                didSelectFeedSearchResult: FeedSearchResult.convertFrom(contentFeed: existingFeed)
+                didSelectFeedSearchResult: existingFeed.feedID
             )
         } else {
+            self.newMessageBubbleHelper.showLoadingWheel()
+            
             ContentFeed.fetchContentFeed(
                 at: searchResult.feedURLPath,
                 chat: nil,
@@ -257,14 +266,16 @@ extension FeedSearchContainerViewController {
                 persistingIn: managedObjectContext,
                 then: { result in
                     
-                if case .success(let contentFeed) = result {
-                    self.managedObjectContext.saveContext()
-                    
-                    self.resultsDelegate?.viewController(
-                        self,
-                        didSelectFeedSearchResult: FeedSearchResult.convertFrom(contentFeed: contentFeed)
-                    )
-                }
+                    if case .success(_) = result {
+                        self.managedObjectContext.saveContext()
+                            
+                        self.newMessageBubbleHelper.hideLoadingWheel()
+                        
+                        self.resultsDelegate?.viewController(
+                            self,
+                            didSelectFeedSearchResult: searchResult.feedId
+                        )
+                    }
             })
         }
     }
@@ -291,6 +302,8 @@ extension FeedSearchContainerViewController: NSFetchedResultsControllerDelegate 
         let subscribedFeeds: [FeedSearchResult] = foundFeeds
             .compactMap {
                 return FeedSearchResult.convertFrom(contentFeed: $0)
+            }.sorted {
+                $0.title < $1.title
             }
         
         DispatchQueue.main.async { [weak self] in

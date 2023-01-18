@@ -16,6 +16,8 @@ protocol DownloadServiceDelegate : class {
 class DownloadService : NSObject {
     
     var delegate: DownloadServiceDelegate? = nil
+    let downloadDispatchGroup = DispatchGroup()
+    let downloadDispatchSemaphore = DispatchSemaphore(value: 1)
     
     class var sharedInstance : DownloadService {
         struct Static {
@@ -29,7 +31,14 @@ class DownloadService : NSObject {
           return URLSession(configuration: configuration, delegate: self, delegateQueue: nil)
     }()
   
-    var activeDownloads: [String: Download] = [ : ]
+    var activeDownloads: [String: Download] = [ : ] {
+        didSet{
+            if(activeDownloads.keys.count < 1
+               && oldValue.keys.count >= 1){//detect going below threshold, reallow data flow if so
+                downloadDispatchSemaphore.signal()
+            }
+        }
+    }
     let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
     
     func setDelegate(delegate: DownloadServiceDelegate) {
@@ -68,24 +77,31 @@ class DownloadService : NSObject {
             return
         }
 
-        if let resumeData = download.resumeData {
-            download.task = downloadsSession.downloadTask(withResumeData: resumeData)
-        } else {
-            download.task = downloadsSession.downloadTask(with: url)
-        }
+        DispatchQueue.global().async {
+            if let resumeData = download.resumeData {
+                download.task = self.downloadsSession.downloadTask(withResumeData: resumeData)
+            } else {
+                download.task = self.downloadsSession.downloadTask(with: url)
+            }
 
-        download.task?.resume()
-        download.isDownloading = true
+            download.task?.resume()
+            download.isDownloading = true
+        }
+        
     }
 
     func startDownload(_ episode: PodcastEpisode) {
         guard let urlString = episode.urlPath, let url = URL(string: urlString) else { return }
+        if episode.isDownloaded == true {return}
 
         let download = Download(episode: episode)
-        download.task = downloadsSession.downloadTask(with: url)
-        download.task?.resume()
-        download.isDownloading = true
-        activeDownloads[urlString] = download
+        DispatchQueue.global().async {
+            self.downloadDispatchSemaphore.wait()
+            download.task = self.downloadsSession.downloadTask(with: url)
+            download.task?.resume()
+            download.isDownloading = true
+            self.activeDownloads[urlString] = download
+        }
     }
 }
 

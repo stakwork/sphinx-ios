@@ -10,6 +10,8 @@ import UIKit
 
 protocol CustomBoostViewDelegate : class {
     func didTouchBoostButton(withAmount amount: Int)
+    func didStartBoostAmountEdit()
+    func didFailToBoost(message:String)
 }
 
 class CustomBoostView: UIView {
@@ -55,6 +57,14 @@ class CustomBoostView: UIView {
         if let amountString = amountTextField.text, let amount = Int(amountString), amount > 0 {
             delegate?.didTouchBoostButton(withAmount: amount)
         }
+        else{
+            delegate?.didFailToBoost(message:"Please enter non-zero boost amount.")
+        }
+    }
+    
+    @objc func boostAmountTouched(){
+        amountTextField.text = ""
+        delegate?.didStartBoostAmountEdit()
     }
 }
 
@@ -62,5 +72,9 @@ extension CustomBoostView : UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.endEditing(true)
         return true
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        self.boostAmountTouched()
     }
 }

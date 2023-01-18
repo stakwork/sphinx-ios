@@ -158,7 +158,15 @@ extension DashboardVideoFeedCollectionViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshVideos), name: .refreshVideoUI, object: nil)
+        fetchItems()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self, name: .refreshVideoUI, object: nil)
+    }
+    
+    @objc func refreshVideos(){
         fetchItems()
     }
 }
@@ -192,7 +200,7 @@ extension DashboardVideoFeedCollectionViewController {
 
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .absolute(160.0),
-            heightDimension: .absolute(240.0)
+            heightDimension: .absolute(255.0)
         )
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
 

@@ -160,9 +160,19 @@ extension DashboardNewsletterFeedCollectionViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshNewsletters), name: .refreshNewsletterUI, object: nil)
         fetchItems()
     }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        NotificationCenter.default.removeObserver(self, name: .refreshNewsletterUI, object: nil)
+    }
+    
+    @objc func refreshNewsletters(){
+        fetchItems()
+    }
+    
 }
 
 
@@ -194,7 +204,7 @@ extension DashboardNewsletterFeedCollectionViewController {
 
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .absolute(160.0),
-            heightDimension: .absolute(240.0)
+            heightDimension: .absolute(255.0)
         )
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
 
@@ -582,8 +592,14 @@ extension NewsletterFeed: DashboardFeedSquaredThumbnailCollectionViewItem {
     }
     
     var typeIconImage: String? { get { nil }}
-    var titleFontColor: UIColor? { get { nil }}
-    var subTitleFontColor: UIColor? { get { nil }}
+    
+    var titleLines: Int {
+        1
+    }
+    
+    var publishDate: Date? {
+        return nil
+    }
 }
 
 extension NewsletterItem: DashboardFeedSquaredThumbnailCollectionViewItem {
@@ -600,8 +616,14 @@ extension NewsletterItem: DashboardFeedSquaredThumbnailCollectionViewItem {
     }
     
     var typeIconImage: String? { get { nil }}
-    var titleFontColor: UIColor? { get { nil }}
-    var subTitleFontColor: UIColor? { get { nil }}
+    
+    var titleLines: Int {
+        1
+    }
+    
+    var publishDate: Date? {
+        return nil
+    }
 }
 
 extension DashboardNewsletterFeedCollectionViewController.DataSourceItem {

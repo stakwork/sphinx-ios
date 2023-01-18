@@ -64,6 +64,8 @@ extension UserDefaults {
         public static let webViewsHeight = DefaultKey<Int>("webViewsHeight")
         
         public static let setupSigningDevice = DefaultKey<Bool>("setupSigningDevice")
+        public static let shouldTrackActions = DefaultKey<Bool>("shouldTrackActions")
+        public static let shouldAutoDownloadSubscribedPods = DefaultKey<Bool>("shouldAutoDownloadSubscribedPods")
     }
     
     class func resetUserDefaults() {

@@ -75,6 +75,7 @@ class DashboardFeedsContainerViewController: UIViewController {
         }
     }
     
+    let actionsManager = ActionsManager.sharedInstance
     
     internal lazy var emptyStateViewController: DashboardFeedsEmptyStateViewController = {
         DashboardFeedsEmptyStateViewController.instantiate(
@@ -203,7 +204,6 @@ extension DashboardFeedsContainerViewController {
         }
     }
     
-    
     private func mainContentViewController(
         for filterChip: ContentFilterOption
     ) -> UIViewController {
@@ -238,6 +238,24 @@ extension DashboardFeedsContainerViewController {
             child: newViewController,
             container: feedContentCollectionViewContainer
         )
+        
+        if activeFilterOption.id == ContentFilterOption.allContent.id {
+            actionsManager.saveFeedSearches()
+            synActionsAndRefreshRecommendations()
+        }
+    }
+    
+    private func synActionsAndRefreshRecommendations() {
+        allTribeFeedsCollectionViewController.updateLoadingRecommendations()
+        
+        actionsManager.syncActions() {
+            
+            if (PodcastPlayerHelper.sharedInstance.isPlayingRecommendations()) {
+                return
+            }
+            
+            self.allTribeFeedsCollectionViewController.loadRecommendations(forceRefresh: true)
+        }
     }
     
     

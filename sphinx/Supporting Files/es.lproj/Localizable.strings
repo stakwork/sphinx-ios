@@ -67,6 +67,8 @@
 "left-menu.dashboard" = "Inicio";
 "left-menu.contacts" = "Contactos";
 "left-menu.profile" = "Perfil";
+"left-menu.discover" = "Buscar Tribus";
+
 "left-menu.buy-karma-button" = "Comprar 1000 Karma";
 "support.describe.problem" = "Describe tu problema aquí...";
 "support.logs.copied" = "Registros copiados al portapapeles";
@@ -525,3 +527,13 @@
 "feed.search-video-quantity" = "miles de videos";
 "feed.search-video-source" = "en Youtube";
 "feed.search-other-source" = "en tus feeds";
+
+//TIME
+"time.in-the-future" = "en el futuro";
+"time.moments-ago" = "momentos atras";
+"time.a-minute-ago" = "un minuto atras";
+"time.minutes-ago" = "%d minutos atras";
+"time.an-hour-ago" = "una hora atras";
+"time.hours-ago" = "%d horas atras";
+"time.yesterday" = "ayer";
+"time.days-ago" = "%d días atras";

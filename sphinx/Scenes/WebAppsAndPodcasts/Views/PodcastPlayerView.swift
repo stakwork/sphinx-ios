@@ -414,9 +414,35 @@ extension PodcastPlayerView : PodcastPlayerDelegate {
         delegate?.shouldReloadEpisodesTable()
         audioLoading = false
     }
+    
+    func errorState(podcastId: String) {}
+}
+
+//default implementation
+extension CustomBoostViewDelegate{
+    func didFailToBoost(message: String) {
+        AlertHelper.showAlert(title: "Boost Failed", message: message)
+    }
+}
+
+extension UIView {
+    func findViewController() -> UIViewController? {
+        if let nextResponder = self.next as? UIViewController {
+            return nextResponder
+        } else if let nextResponder = self.next as? UIView {
+            return nextResponder.findViewController()
+        } else {
+            return nil
+        }
+    }
 }
 
 extension PodcastPlayerView: CustomBoostViewDelegate {
+    
+    func didStartBoostAmountEdit() {
+        self.boostDelegate?.didStartEditingBoostAmount?()
+    }
+    
     func didTouchBoostButton(withAmount amount: Int) {
         if let episode = podcast.getCurrentEpisode(),
            let objectID = episode.objectID {

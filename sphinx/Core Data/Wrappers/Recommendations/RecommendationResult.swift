@@ -15,10 +15,11 @@ public class RecommendationResult: NSObject {
     public var type: String
     public var id: String
     public var topics: [String]
+    public var guests: [String]
     public var weight: Double
     public var itemDescription: String
     public var date: Int?
-    public var itemTitle: String
+    public var showTitle: String
     public var boost: Int
     public var smallImageUrl: String?
     public var mediumImageUrl: String?
@@ -34,10 +35,11 @@ public class RecommendationResult: NSObject {
         _ type: String,
         _ id: String,
         _ topics: [String],
+        _ guests: [String],
         _ weight: Double,
         _ description: String,
         _ date: Int,
-        _ title: String,
+        _ showTitle: String,
         _ boost: Int,
         _ smallImageUrl: String,
         _ mediumImageUrl: String,
@@ -52,10 +54,11 @@ public class RecommendationResult: NSObject {
         self.type = type
         self.id = id
         self.topics = topics
+        self.guests = guests
         self.weight = weight
         self.itemDescription = description
         self.date = date
-        self.itemTitle = title
+        self.showTitle = showTitle
         self.boost = boost
         self.smallImageUrl = smallImageUrl
         self.mediumImageUrl = mediumImageUrl
@@ -77,7 +80,7 @@ public class RecommendationResult: NSObject {
         let weight = recommendationResult[RecommendationResult.CodingKeys.weight.rawValue].doubleValue
         let description = recommendationResult[RecommendationResult.CodingKeys.description.rawValue].stringValue
         let date = recommendationResult[RecommendationResult.CodingKeys.date.rawValue].intValue
-        let title = recommendationResult[RecommendationResult.CodingKeys.title.rawValue].stringValue
+        let showTitle = recommendationResult[RecommendationResult.CodingKeys.showTitle.rawValue].stringValue
         let boost = recommendationResult[RecommendationResult.CodingKeys.boost.rawValue].intValue
         let smallImageUrl = recommendationResult[RecommendationResult.CodingKeys.smallImageUrl.rawValue].stringValue
         let mediumImageUrl = recommendationResult[RecommendationResult.CodingKeys.mediumImageUrl.rawValue].stringValue
@@ -96,15 +99,24 @@ public class RecommendationResult: NSObject {
             }
         }
         
+        var guestsArray: [String] = []
+        
+        if let guests = recommendationResult[RecommendationResult.CodingKeys.guests.rawValue].array {
+            guestsArray = guests.map {
+                $0.stringValue
+            }
+        }
+        
         return RecommendationResult(
             pubkey,
             type,
             id,
             topicsArray,
+            guestsArray,
             weight,
             description,
             date,
-            title,
+            showTitle,
             boost,
             smallImageUrl,
             mediumImageUrl,
@@ -128,7 +140,7 @@ extension RecommendationResult {
         case weight = "weight"
         case description = "description"
         case date = "date"
-        case title = "show_title"
+        case showTitle = "show_title"
         case boost = "boost"
         case keyword = "keyword"
         case smallImageUrl = "s_image_url"
@@ -156,13 +168,24 @@ extension RecommendationResult : DashboardFeedSquaredThumbnailCollectionViewItem
         mediumImageUrl ?? largeImageUrl ?? smallImageUrl
     }
     
+    var titleLines: Int {
+        3
+    }
+    
     
     var subtitle: String? {
-        itemDescription
+        episodeTitle
     }
     
     var title: String? {
-        episodeTitle
+        itemDescription
+    }
+    
+    var publishDate: Date? {
+        if let date = self.date, date > 0 {
+            return Date(timeIntervalSince1970: TimeInterval(date))
+        }
+        return nil
     }
     
     var placeholderImageName: String? {
@@ -190,18 +213,6 @@ extension RecommendationResult : DashboardFeedSquaredThumbnailCollectionViewItem
             default:
                 return "podcastTypeIcon"
             }
-        }
-    }
-    
-    var titleFontColor: UIColor? {
-        get {
-            return UIColor.Sphinx.SecondaryText
-        }
-    }
-    
-    var subTitleFontColor: UIColor? {
-        get {
-            return UIColor.Sphinx.Text
         }
     }
     

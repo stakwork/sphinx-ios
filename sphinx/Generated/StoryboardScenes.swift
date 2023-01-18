@@ -34,6 +34,7 @@ internal enum StoryboardScene {
         
         internal static let chatAttachmentViewController = SceneType<ChatAttachmentViewController>(storyboard: Chat.self, identifier: "ChatAttachmentViewController")
         
+        
         internal static let attachmentPriceViewController = SceneType<AttachmentPriceViewController>(storyboard: Chat.self, identifier: "AttachmentPriceViewController")
         
         internal static let imageFullScreenViewController = SceneType<ImageFullScreenViewController>(storyboard: Chat.self, identifier: "ImageFullScreenViewController")
@@ -191,6 +192,8 @@ internal enum StoryboardScene {
         internal static let initialWelcomeViewController = SceneType<InitialWelcomeViewController>(storyboard: Welcome.self, identifier: "InitialWelcomeViewController")
         
         internal static let welcomeCompleteViewController = SceneType<WelcomeCompleteViewController>(storyboard: Welcome.self, identifier: "WelcomeCompleteViewController")
+        
+        internal static let discoverTribesWebViewController = SceneType<DiscoverTribesWebViewController>(storyboard: Welcome.self, identifier: "DiscoverTribesWebViewController")
     }
     
     internal enum RestoreUser: StoryboardType {

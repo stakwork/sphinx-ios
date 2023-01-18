@@ -30,6 +30,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     let newMessageBubbleHelper = NewMessageBubbleHelper()
     
+    let feedsManager = FeedsManager()
+    
     let chatListViewModel = ChatListViewModel(contactsService: ContactsService())
 
     func application(
@@ -167,7 +169,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setBadge(application: application)
         
         PodcastPlayerHelper.sharedInstance.finishAndSaveContentConsumed()
-        ActionsManager.sharedInstance.syncActions()
+        ActionsManager.sharedInstance.syncActionsInBackground()
         CoreDataManager.sharedManager.saveContext()
         
         scheduleAppRefresh()
@@ -217,6 +219,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             handlePush(notification: notification)
             setInitialVC(launchingApp: false)
         }
+        
+        if UserData.sharedInstance.isUserLogged() {
+            runFeedsPreloadInBackground()
+        }
     }
 
 
@@ -252,11 +258,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if isUserLogged {
             syncDeviceId()
             getRelayKeys()
-            ActionsManager.sharedInstance.syncActions()
+            ActionsManager.sharedInstance.syncActionsInBackground()
         }
 
         takeUserToInitialVC(isUserLogged: isUserLogged)
         presentPINIfNeeded()
+    }
+    
+    func runFeedsPreloadInBackground() {
+        DispatchQueue.global().async {
+            self.feedsManager.preCacheTopPods()
+        }
     }
 
     func presentPINIfNeeded() {

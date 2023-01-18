@@ -93,6 +93,9 @@ class PodcastPlayerController {
     var podcast: PodcastFeed? = nil
     var podcastData: PodcastData? = nil {
         didSet {
+            if self.podcast?.feedID == podcastData?.podcastId {
+                return
+            }
             if let contentFeed = ContentFeed.getFeedWith(feedId: podcastData?.podcastId ?? "") {
                 self.podcast = PodcastFeed.convertFrom(contentFeed: contentFeed)
             }

@@ -45,8 +45,10 @@ extension PodcastPlayerController {
         
         if let pd = self.podcastData, isPlaying {
             if podcastData.episodeId == pd.episodeId {
+                ///If playing same episode, then return
                 return
             } else {
+                ///If playing another episode, then pause first
                 pausePlaying()
             }
         }
@@ -264,19 +266,19 @@ extension PodcastPlayerController {
         
         let duration = Int(Double(item.asset.duration.value) / Double(item.asset.duration.timescale))
         let currentTime = Int(round(Double(player.currentTime().value) / Double(player.currentTime().timescale)))
-        
+
         self.podcastData?.currentTime = currentTime
-        
+
         guard let podcastData = podcastData else {
             return
         }
-         
+
         for d in delegates.values {
             d.playingState(podcastData)
         }
-        
+
         configurePlayingInfoCenter()
-        
+
         if currentTime >= duration {
             didEndEpisode()
         }

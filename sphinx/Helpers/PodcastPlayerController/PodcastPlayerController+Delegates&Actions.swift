@@ -177,11 +177,6 @@ extension PodcastPlayerController {
             currentTime: currentTime
         )
         
-        if self.podcastData == nil {
-            ///If seeking on player before playing, podcastData is nil, then it needs to be set
-            self.podcastData = podcastData
-        }
-        
         if self.podcastData?.podcastId != podcastData.podcastId {
             ///Avoid player actions if performing actions for a podcast that is not the current set on player controller
             return

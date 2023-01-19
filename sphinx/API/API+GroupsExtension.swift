@@ -128,7 +128,7 @@ extension API {
         if tags.isEmpty == false{
             url.append("&tags=")
             for tag in tags{
-                url.append("\(tag);")
+                url.append("\(tag),")
             }
             url.remove(at: url.index(url.endIndex, offsetBy: -1))
         }

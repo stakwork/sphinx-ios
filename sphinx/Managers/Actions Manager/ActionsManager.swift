@@ -416,10 +416,11 @@ class ActionsManager {
             for episode in podFeed.episodes ?? [PodcastEpisode](){
                 let episodeStatus = EpisodeStatus()
                 let episodeData = EpisodeData()
+                episodeStatus.episodeID = episode.itemID
                 episodeData.duration = episode.duration ?? 0
                 episodeData.current_time = podFeed.currentTime
                 episodeStatus.episodeData = episodeData
-                episodeStatus.episodeID = episode.itemID
+                
                 status.episodeStatus?.append(episodeStatus)
             }
             return status

@@ -18,8 +18,8 @@ class EpisodeStatus: Mappable {
     }
     
     func mapping(map: Map) {
-        episodeID                      <- map["episode_id"]
-        episodeData                  <- map["episode_data"]
+        //episodeID                      <- map["episode_id"]
+        episodeData                  <- map[episodeID]
     }
 }
 

@@ -10,5 +10,4 @@ import UIKit
 
 class TribeTagSelectionCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var tagLabel: UILabel!
-    
 }

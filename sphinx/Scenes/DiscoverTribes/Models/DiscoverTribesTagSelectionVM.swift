@@ -9,8 +9,9 @@
 import Foundation
 import UIKit
 
-class DiscoverTribesTagSelectionVM : NSObject{
+class DiscoverTribesTagSelectionVM : NSObject {
     var vc: DiscoverTribesTagSelectionVC
+    
     let possibleTags : [String] = [
         "Bitcoin",
         "NSFW",
@@ -24,17 +25,16 @@ class DiscoverTribesTagSelectionVM : NSObject{
     var selectedTags : [String] = []
     var collectionView : UICollectionView
     
-    init(vc:DiscoverTribesTagSelectionVC,collectionView:UICollectionView) {
+    init(vc: DiscoverTribesTagSelectionVC, collectionView: UICollectionView) {
         self.vc = vc
         self.collectionView = collectionView
     }
     
-    func getSelectionStatus(index:Int)->Bool{
+    func getSelectionStatus(index:Int) -> Bool {
         let tag = possibleTags[index]
-        if selectedTags.contains(tag){
+        if selectedTags.contains(tag) {
             return true
-        }
-        else{
+        } else {
             return false
         }
     }
@@ -48,15 +48,14 @@ extension DiscoverTribesTagSelectionVM : UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: "tagCell", for: indexPath) as! TribeTagSelectionCollectionViewCell
-        if(getSelectionStatus(index: indexPath.row)){
+        if (getSelectionStatus(index: indexPath.row)) {
             cell.contentView.backgroundColor = UIColor.Sphinx.BodyInverted
             cell.tagLabel.textColor = UIColor.Sphinx.Body
             cell.layer.borderColor = UIColor.clear.cgColor
-        }
-        else{
-            cell.contentView.backgroundColor = .clear//UIColor.Sphinx.ReceivedMsgBG
+        } else {
+            cell.contentView.backgroundColor = .clear
             cell.tagLabel.textColor = UIColor.Sphinx.BodyInverted
-            cell.layer.borderColor = UIColor.Sphinx.BodyInverted.cgColor
+            cell.layer.borderColor = UIColor.Sphinx.PlaceholderText.cgColor
             cell.layer.borderWidth = 1.0
         }
         cell.tagLabel.font = UIFont(name: "Roboto", size: 14.0)

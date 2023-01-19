@@ -57,11 +57,11 @@ class DiscoverTribesWebViewController : UIViewController{
     
     internal func setupHeaderViews() {
         searchTextField.delegate = self
-        let text = NSMutableAttributedString(string: "Discover Tribes")
-        text.setAttributes([NSAttributedString.Key.foregroundColor: UIColor.Sphinx.Text], range: NSRange(location: 0, length: text.string.count))
-        discoverTribesTitle.attributedText = text
-        searchBar.layer.cornerRadius = searchBar.frame.height / 2
-        tagsButton.layer.cornerRadius = 22.0
+        
+        tagCountContainerView.makeCircular()
+        searchBar.makeCircular()
+        tagsButton.makeCircular()
+        
         updateTagButton()
     }
     
@@ -87,9 +87,9 @@ class DiscoverTribesWebViewController : UIViewController{
     
     func showTagsFilterView(){
         let discoverVC = DiscoverTribesTagSelectionVC.instantiate(
-                        rootViewController: self.rootViewController
+            rootViewController: self.rootViewController
         )
-        discoverVC.modalPresentationStyle = .automatic
+        discoverVC.modalPresentationStyle = .overCurrentContext
         discoverVC.discoverTribeTagSelectionVM.selectedTags = currentTags
         self.navigationController?.present(discoverVC, animated: true)
         discoverVC.delegate = self
@@ -102,9 +102,8 @@ extension DiscoverTribesWebViewController : DiscoverTribesCellDelegate{
     }
     
     func processLink(url:URL){
-        if DeepLinksHandlerHelper.storeLinkQueryFrom(url: url),
-           let appDelegate = UIApplication.shared.delegate as? AppDelegate{
-            appDelegate.setInitialVC(launchingApp: false, deepLink: true)
+        if DeepLinksHandlerHelper.storeLinkQueryFrom(url: url) {
+            navigationController?.popViewController(animated: true)
         }
     }
 }
@@ -124,7 +123,7 @@ extension DiscoverTribesWebViewController : DiscoverTribesTagSelectionDelegate{
     func didSelect(selections: [String]) {
         let newSet = Set(selections)
         let oldSet = Set(currentTags)
-        if(newSet != oldSet){
+        if (newSet != oldSet) {
             self.currentTags = selections
             self.updateTagButton()
             if let dataSource = discoverTribesTableViewDataSource{
@@ -134,13 +133,14 @@ extension DiscoverTribesWebViewController : DiscoverTribesTagSelectionDelegate{
     }
     
     func updateTagButton(){
-        filterIcon.isHidden = (currentTags.count > 0)
-        self.tagsButton.backgroundColor = (currentTags.count == 0) ? UIColor.Sphinx.ReceivedMsgBG : UIColor.Sphinx.BodyInverted
-        let titleColor = (currentTags.count == 0) ? UIColor.Sphinx.BodyInverted : UIColor.Sphinx.Body
-        self.tagsButton.tintColor = titleColor
-        self.tagsButton.titleLabel?.textColor = titleColor
-        tagCountContainerView.isHidden = currentTags.count == 0
-        tagCountContainerView.makeCircular()
+        let tagsSelected = (currentTags.count > 0)
+        
+        filterIcon.isHidden = tagsSelected
+        tagsButton.backgroundColor = tagsSelected ? UIColor.Sphinx.BodyInverted : UIColor.Sphinx.ReceivedMsgBG
+        tagsButton.tintColor = tagsSelected ? UIColor.Sphinx.TextInverted : UIColor.Sphinx.Text
+        tagsButton.setTitleColor(tagsSelected ? UIColor.Sphinx.TextInverted : UIColor.Sphinx.Text, for: .normal)
+        
+        tagCountContainerView.isHidden = !tagsSelected
         tagCountLabel.text = "\(currentTags.count)"
     }
     

@@ -22,7 +22,6 @@ class DashboardRootViewController: RootViewController {
     @IBOutlet weak var searchBarContainer: UIView!
     @IBOutlet weak var mainContentContainerView: UIView!
     @IBOutlet weak var restoreProgressView: RestoreProgressView!
-    @IBOutlet weak var addTribeWidth: NSLayoutConstraint!
     @IBOutlet weak var addTribeTrailing: NSLayoutConstraint!
     @IBOutlet weak var addTribeButton: UIButton!
     @IBOutlet weak var bottomBarBottomConstraint: NSLayoutConstraint!
@@ -108,16 +107,14 @@ class DashboardRootViewController: RootViewController {
             loadDataOnTabChange(to: activeTab)
             feedViewMode = .rootList
             
-            if(activeTab == .tribes){
-                addTribeWidth.constant = 119
-                addTribeTrailing.constant = 15
-                searchBarContainer.layoutIfNeeded()
-                addTribeButton.titleEdgeInsets = UIEdgeInsets(top: 10,left: 40,bottom: 10,right: 10)
+            if (activeTab == .tribes) {
+                addTribeTrailing.constant = 16
+            } else {
+                addTribeTrailing.constant = -120
             }
-            else{
-                addTribeWidth.constant = 0
-                addTribeTrailing.constant = 0
-                searchBarContainer.layoutIfNeeded()
+            
+            UIView.animate(withDuration: 0.25) {
+                self.searchBarContainer.layoutIfNeeded()
             }
         }
     }

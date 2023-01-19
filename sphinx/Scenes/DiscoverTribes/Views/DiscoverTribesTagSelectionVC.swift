@@ -16,6 +16,7 @@ protocol DiscoverTribesTagSelectionDelegate{
 
 class DiscoverTribesTagSelectionVC : UIViewController{
     
+    @IBOutlet weak var blurEffectView: UIView!
     @IBOutlet weak var filterIcon: UILabel!
     @IBOutlet weak var applyButton: UIButton!
     @IBOutlet weak var collectionView: UICollectionView!
@@ -23,8 +24,8 @@ class DiscoverTribesTagSelectionVC : UIViewController{
     @IBOutlet weak var tagsLabel: UILabel!
     
     
-    
     var delegate : DiscoverTribesTagSelectionDelegate?
+    
     lazy var discoverTribeTagSelectionVM: DiscoverTribesTagSelectionVM = {
         return DiscoverTribesTagSelectionVM(vc: self, collectionView: collectionView)
     }()
@@ -36,43 +37,35 @@ class DiscoverTribesTagSelectionVC : UIViewController{
         viewController.view.backgroundColor = .clear
         viewController.collectionView.backgroundColor = .clear
         viewController.collectionView.backgroundColor = viewController.view.backgroundColor
-        viewController.tagSelectionView.layer.cornerRadius = 18.0
-        viewController.tagSelectionView.backgroundColor = viewController.tagSelectionView.backgroundColor?.withAlphaComponent(0.85)
         return viewController
-    }
-    
-    override func viewDidLoad() {
-        styleLabels()
-        styleApplyButton()
-        
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        self.setupCollectionView()
-        //addBlur()
+        
+        styleApplyButton()
+        setupCollectionView()
+        styleTagsView()
+    }
+    
+    func styleTagsView() {
+        tagSelectionView.roundCorners(corners: [.topLeft, .topRight], radius: 20.0)
+        tagSelectionView.clipsToBounds = true
+        
+        addBlur()
     }
     
     func addBlur(){
-        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.regular)
-        let blurEffectView = UIVisualEffectView(effect: blurEffect)
-        blurEffectView.frame = view.frame
-        //blurEffectView.backgroundColor = .clear
-        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        view.addSubview(blurEffectView)
-        view.sendSubviewToBack(blurEffectView)
-    }
-    
-    func styleLabels(){
-        filterIcon.font = UIFont(name: "Material Icons", size: 18.0)
-        filterIcon.text = "filter"
-        filterIcon.textColor = UIColor.Sphinx.BodyInverted
-        tagsLabel.font = UIFont(name: "Roboto", size: 20.0)
+        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.prominent)
+        let effectView = UIVisualEffectView(effect: blurEffect)
+        effectView.frame = tagSelectionView.bounds
+        effectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        tagSelectionView.addSubview(effectView)
+        tagSelectionView.sendSubviewToBack(effectView)
     }
     
     func styleApplyButton(){
-        applyButton.layer.cornerRadius = 24.0
-        applyButton.addTarget(self, action: #selector(handleApplyTap), for: .touchUpInside)
+        applyButton.makeCircular()
     }
     
     func setupCollectionView(){
@@ -80,10 +73,8 @@ class DiscoverTribesTagSelectionVC : UIViewController{
         collectionView.dataSource = discoverTribeTagSelectionVM
     }
     
-    @objc func handleApplyTap(){
+    @IBAction func applyButtonTouched() {
         delegate?.didSelect(selections: self.discoverTribeTagSelectionVM.selectedTags)
         self.dismiss(animated: true)
     }
-    
-    
 }

@@ -4,6 +4,8 @@ import CoreData
 
 class PodcastFeedCollectionViewController: UICollectionViewController {
     var followedPodcastFeeds: [PodcastFeed]!
+    var followedPodcastEpisode: [PodcastEpisode]!
+    
     var interSectionSpacing: CGFloat!
 
     var onPodcastEpisodeCellSelected: ((NSManagedObjectID) -> Void)!
@@ -40,6 +42,9 @@ extension PodcastFeedCollectionViewController {
         let viewController = StoryboardScene.Dashboard.podcastFeedCollectionViewController.instantiate()
 
         viewController.followedPodcastFeeds = followedPodcastFeeds
+        viewController.followedPodcastEpisode = followedPodcastFeeds.compactMap { feed in
+            feed.episodesArray.first
+        }
 
         viewController.managedObjectContext = managedObjectContext
         viewController.interSectionSpacing = interSectionSpacing
@@ -80,7 +85,7 @@ extension PodcastFeedCollectionViewController {
     }
 
 
-    enum DataSourceItem: Hashable {
+    enum DataSourceItem: Hashable, Equatable {
         case listenNowEpisode(PodcastEpisode)
         case subscribedPodcastFeed(PodcastFeed)
         
@@ -110,18 +115,12 @@ extension PodcastFeedCollectionViewController {
         func hash(into hasher: inout Hasher) {
             if let contentFeed = self.feedEntity {
                 hasher.combine(contentFeed.feedID)
-                hasher.combine(contentFeed.title)
-                hasher.combine(contentFeed.feedURLPath)
-                hasher.combine(contentFeed.episodesArray.count)
             }
             
             if let episode = self.episodeEntity {
                 hasher.combine(episode.itemID)
-                hasher.combine(episode.title)
-                hasher.combine(episode.currentTime)
             }
-        }
-            
+        }  
     }
 
 
@@ -159,6 +158,7 @@ extension PodcastFeedCollectionViewController {
         fetchItems()
         
         NotificationCenter.default.addObserver(self, selector: #selector(refreshPodcasts), name: .refreshPodcastUI, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshEpisode(_:)), name: .refreshEpisode, object: nil)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -168,6 +168,18 @@ extension PodcastFeedCollectionViewController {
     
     @objc func refreshPodcasts(){
         fetchItems()
+    }
+    
+    @objc func refreshEpisode(_ notification: Notification){
+        if let episodeId = notification.userInfo?["episode-id"] as? String {
+            if let episode = (followedPodcastEpisode.filter { $0.itemID == episodeId }).first {
+                let item  = DataSourceItem.listenNowEpisode(episode)
+                
+                var snapshot = dataSource.snapshot()
+                snapshot.reloadItems([item])
+                dataSource.apply(snapshot, animatingDifferences: false)
+            }
+        }
     }
 }
 
@@ -317,28 +329,14 @@ extension PodcastFeedCollectionViewController {
         snapshot.appendSections(CollectionViewSection.allCases)
 
         snapshot.appendItems(
-            followedPodcastFeeds.sorted { (first, second) in
-                let firstDate = first.dateUpdated ?? first.datePublished ?? Date.init(timeIntervalSince1970: 0)
-                let secondDate = second.dateUpdated ?? second.datePublished ?? Date.init(timeIntervalSince1970: 0)
-                
-                return firstDate > secondDate
-            }.map {
+            followedPodcastFeeds.map {
                 DataSourceItem.subscribedPodcastFeed($0)
-                
             },
             toSection: .subscribedPodcastFeeds
         )
 
         snapshot.appendItems(
-            followedPodcastFeeds.sorted { (first, second) in
-                let firstDate = first.dateUpdated ?? first.datePublished ?? Date.init(timeIntervalSince1970: 0)
-                let secondDate = second.dateUpdated ?? second.datePublished ?? Date.init(timeIntervalSince1970: 0)
-                
-                return firstDate > secondDate
-            }.compactMap { feed in
-                feed.episodesArray.first
-            }
-            .map { episode in
+            followedPodcastEpisode.map { episode in
                 DataSourceItem.listenNowEpisode(episode)
             },
             toSection: .latestPodcastEpisodes
@@ -348,24 +346,22 @@ extension PodcastFeedCollectionViewController {
     }
 
 
-    func updateSnapshot(shouldAnimate: Bool = true) {
-        let snapshot = makeSnapshotForCurrentState()
-
-        dataSource.apply(snapshot, animatingDifferences: shouldAnimate)
-    }
-
-
     func updateWithNew(
         followedPodcastFeeds: [PodcastFeed],
         shouldAnimate: Bool = true
     ) {
-        self.followedPodcastFeeds = followedPodcastFeeds
-
-        var snapshot = makeSnapshotForCurrentState()
-        
-        if (!snapshot.sectionIdentifiers.isEmpty) {
-            snapshot.reloadSections(CollectionViewSection.allCases)
+        self.followedPodcastFeeds = followedPodcastFeeds.sorted { (first, second) in
+            let firstDate = first.dateUpdated ?? first.datePublished ?? Date.init(timeIntervalSince1970: 0)
+            let secondDate = second.dateUpdated ?? second.datePublished ?? Date.init(timeIntervalSince1970: 0)
+            
+            return firstDate > secondDate
         }
+        
+        self.followedPodcastEpisode = self.followedPodcastFeeds.compactMap { feed in
+            feed.episodesArray.first
+        }
+
+        let snapshot = makeSnapshotForCurrentState()
         
         dataSource.apply(snapshot, animatingDifferences: false, completion: nil)
     }

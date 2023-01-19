@@ -65,7 +65,10 @@ class NewPodcastPlayerViewController: UIViewController {
         
         if isBeingDismissed {
             delegate?.willDismissPlayer()
-            NotificationCenter.default.post(name: .refreshPodcastUI, object: nil)
+            
+            var dataDict: [String: String] = [String: String]()
+            dataDict["episode-id"] = (podcast.getCurrentEpisode()?.itemID ?? "") as String
+            NotificationCenter.default.post(name: .refreshEpisode, object: nil, userInfo: dataDict)
         }
     }
     

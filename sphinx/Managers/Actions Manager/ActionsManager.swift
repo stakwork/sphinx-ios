@@ -399,9 +399,7 @@ class ActionsManager {
     }
     
     func saveContentFeedStatus(){
-        let fm = FeedsManager()
-        fm.fetchItems()
-        let followedFeeds = fm.getFollowedFeeds()
+        let followedFeeds = FeedsManager.fetchFeeds()
         let contentFeedStatuses = followedFeeds.map({
             let status = ContentFeedStatus()
             status.feedID = $0.feedID
@@ -414,11 +412,20 @@ class ActionsManager {
             status.subscriptionStatus = podFeed.isSubscribedToFromSearch
             status.playerSpeed = podFeed.playerSpeed
             status.itemID = podFeed.lastEpisodeId
-            status.lastPlayedTime = podFeed.currentTime
-            //lastItemStatus.playbackDuration TODO: figure out how to get this
+            status.episodeStatus = [EpisodeStatus]()
+            for episode in podFeed.episodes ?? [PodcastEpisode](){
+                let episodeStatus = EpisodeStatus()
+                let episodeData = EpisodeData()
+                episodeData.duration = episode.duration ?? 0
+                episodeData.current_time = podFeed.currentTime
+                episodeStatus.episodeData = episodeData
+                episodeStatus.episodeID = episode.itemID
+                status.episodeStatus?.append(episodeStatus)
+            }
             return status
         })
         let contentFeedStatusParams = contentFeedStatuses.map({$0.toJSON()})
+        print(contentFeedStatuses)
         /*
         API.sharedInstance.saveContentFeedStatusesToRemote(params: contentFeedStatusParams,
         callback: {

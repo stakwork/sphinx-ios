@@ -12,29 +12,24 @@ import AVFoundation
 
 class FeedsManager : NSObject {
     
-    func getFollowedFeeds()->[ContentFeed]{
-        guard
-            let resultController = fetchedResultsController as? NSFetchedResultsController<NSManagedObject>,
-            let firstSection = resultController.sections?.first,
-            let foundFeeds = firstSection.objects as? [ContentFeed]
-        else {
-            return []
-        }
-        return foundFeeds
-    }
     
-    func preCacheTopPods(){
-        //1. Fetch results from memory
+    static func fetchFeeds() -> [ContentFeed]{
         var followedFeeds: [ContentFeed] = []
         let fetchRequest = ContentFeed.FetchRequests.followedFeeds()
         let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
         
         do {
             followedFeeds = try managedContext.fetch(fetchRequest)
+            return followedFeeds
         } catch let error as NSError {
             print("Error: " + error.localizedDescription)
-            return
+            return []
         }
+    }
+    
+    func preCacheTopPods(){
+        //1. Fetch results from memory
+        var followedFeeds: [ContentFeed] = FeedsManager.fetchFeeds()
             
         //2. Walk through each feed
         for feed in followedFeeds {

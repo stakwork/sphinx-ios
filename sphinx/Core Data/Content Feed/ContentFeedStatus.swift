@@ -9,16 +9,44 @@
 import Foundation
 import ObjectMapper
 
+class EpisodeStatus: Mappable {
+    var episodeID : String = ""
+    var episodeData: EpisodeData?
+    
+    required convenience init(map: Map) {
+        self.init()
+    }
+    
+    func mapping(map: Map) {
+        episodeID                      <- map["episode_id"]
+        episodeData                  <- map["episode_data"]
+    }
+}
+
+class EpisodeData: Mappable {
+    var duration:Int = 0
+    var current_time:Int = 0
+    
+    required convenience init(map: Map) {
+        self.init()
+    }
+    
+    func mapping(map: Map) {
+        duration                      <- map["duration"]
+        current_time                  <- map["current_time"]
+    }
+}
+
+
 class ContentFeedStatus: Mappable {
     var feedID: String = ""
     var feedURL: String = ""
     var subscriptionStatus:Bool = false
     var chatID:String?
     var itemID: String?
-    var playbackDuration: Int?
-    var lastPlayedTime: Int?
     var satsPerMinute: Int?
     var playerSpeed: Float?
+    var episodeStatus: [EpisodeStatus]?
     
     
     required convenience init(map: Map) {
@@ -31,9 +59,8 @@ class ContentFeedStatus: Mappable {
         subscriptionStatus          <- map["subscription_status"]
         chatID                      <- map["chat_id"]
         itemID                      <- map["item_id"]
-        playbackDuration            <- map["playback_duration"]
-        lastPlayedTime              <- map["last_played_time"]
         satsPerMinute               <- map["sats_per_minute"]
         playerSpeed                 <- map["player_speed"]
+        episodeStatus               <- map["episodeStatus"]
     }
 }

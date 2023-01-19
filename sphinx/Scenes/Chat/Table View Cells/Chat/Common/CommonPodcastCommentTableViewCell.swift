@@ -189,10 +189,12 @@ class CommonPodcastCommentTableViewCell : CommonReplyTableViewCell, AudioCollect
     }
     
     func audioDidResumePlaying() {
-        if let chat = chat,
-            PodcastPlayerHelper.sharedInstance.isPlaying(chat.id) {
-            PodcastPlayerHelper.sharedInstance.shouldPause()
+        let podcastPlayerController = PodcastPlayerController.sharedInstance
+        
+        if let chat = chat, let podcast = chat.podcast, podcastPlayerController.isPlaying(podcastId: podcast.feedID) {
+            podcastPlayerController.shouldPause()
         }
+        
         updateControls(buttonTitle: "pause", color: CommonAudioTableViewCell.kBlueControlsColor)
     }
     

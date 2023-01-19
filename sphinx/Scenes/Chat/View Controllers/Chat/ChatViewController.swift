@@ -149,8 +149,8 @@ class ChatViewController: KeyboardHandlerViewController {
         if isMovingFromParent {
             accessoryView.removeKeyboardObservers()
             
-            PodcastPlayerHelper.sharedInstance.removeFromDelegatesWith(
-                key: PodcastPlayerHelper.DelegateKeys.smallPlayer.rawValue
+            PodcastPlayerController.sharedInstance.removeFromDelegatesWith(
+                key: PodcastDelegateKeys.ChatSmallPlayerBar.rawValue
             )
         }
         

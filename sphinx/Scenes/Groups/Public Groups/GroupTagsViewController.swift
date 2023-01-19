@@ -45,7 +45,7 @@ extension GroupTagsViewController : UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        PlayAudioHelper.playHaptic()
+        SoundsPlayer.playHaptic()
         updateTag(index: indexPath.row)
         tableView.reloadRows(at: [indexPath], with: .none)
     }

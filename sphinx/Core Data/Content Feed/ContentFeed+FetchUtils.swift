@@ -31,7 +31,7 @@ extension ContentFeed {
             let formatSpecifier = "%@"
 
             return NSPredicate(
-                format: "%K \(keyword) \(formatSpecifier)",
+                format: "%K \(keyword) \(formatSpecifier) AND (isSubscribedToFromSearch == true OR chat != nil)",
                 #keyPath(ContentFeed.title),
                 searchQuery
             )

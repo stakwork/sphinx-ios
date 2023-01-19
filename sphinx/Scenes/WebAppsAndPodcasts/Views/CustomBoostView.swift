@@ -52,7 +52,7 @@ class CustomBoostView: UIView {
     @IBAction func boostButtonTouched() {
         self.endEditing(true)
         
-        PlayAudioHelper.playHaptic()
+        SoundsPlayer.playHaptic()
         
         if let amountString = amountTextField.text, let amount = Int(amountString), amount > 0 {
             delegate?.didTouchBoostButton(withAmount: amount)

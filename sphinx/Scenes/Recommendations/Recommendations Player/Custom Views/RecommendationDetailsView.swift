@@ -72,4 +72,14 @@ extension RecommendationDetailsView : RecommendationPlayerViewDelegate {
     func shouldShowSpeedPicker() {
         delegate?.shouldShowSpeedPicker()
     }
+    
+    func shouldSetProgress(
+        duration: Int,
+        currentTime: Int
+    ) {
+        delegate?.shouldSetProgress(
+            duration: duration,
+            currentTime: currentTime
+        )
+    }
 }

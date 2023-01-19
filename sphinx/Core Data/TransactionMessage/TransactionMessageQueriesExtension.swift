@@ -147,7 +147,7 @@ extension TransactionMessage {
     static func getLiveMessagesFor(chat: Chat, episodeId: String) -> [TransactionMessage] {
         let episodeString = "\"itemID\":\"\(episodeId)\""
         let episodeString2 = "\"itemID\":\(episodeId)"
-        let predicate = NSPredicate(format: "chat == %@ && ((type == %d && (messageContent BEGINSWITH[c] %@ OR messageContent BEGINSWITH[c] %@)) || (type == %d && replyUUID == nil)) && (messageContent CONTAINS[c] %@ || messageContent CONTAINS[c] %@)", chat, TransactionMessageType.message.rawValue, PodcastPlayerHelper.kClipPrefix, PodcastPlayerHelper.kBoostPrefix, TransactionMessageType.boost.rawValue, episodeString, episodeString2)
+        let predicate = NSPredicate(format: "chat == %@ && ((type == %d && (messageContent BEGINSWITH[c] %@ OR messageContent BEGINSWITH[c] %@)) || (type == %d && replyUUID == nil)) && (messageContent CONTAINS[c] %@ || messageContent CONTAINS[c] %@)", chat, TransactionMessageType.message.rawValue, PodcastFeed.kClipPrefix, PodcastFeed.kBoostPrefix, TransactionMessageType.boost.rawValue, episodeString, episodeString2)
         let sortDescriptors = [NSSortDescriptor(key: "id", ascending: false)]
         let boostAndClips: [TransactionMessage] = CoreDataManager.sharedManager.getObjectsOfTypeWith(predicate: predicate, sortDescriptors: sortDescriptors, entityName: "TransactionMessage")
         

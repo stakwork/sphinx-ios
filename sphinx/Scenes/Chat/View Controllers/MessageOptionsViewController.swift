@@ -132,7 +132,7 @@ class MessageOptionsViewController: UIViewController {
     }
     
     func shouldDismissViewController(_ completion: (() -> ())? = nil) {
-        PlayAudioHelper.playHaptic()
+        SoundsPlayer.playHaptic()
         
         self.dismiss(animated: false, completion: {
             self.delegate?.shouldRemoveWindow()

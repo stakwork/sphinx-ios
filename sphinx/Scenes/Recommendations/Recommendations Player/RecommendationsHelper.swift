@@ -30,6 +30,8 @@ class RecommendationsHelper {
     
     private var recommendations: [RecommendationResult] = []
     
+    var recommendationsPodcast: PodcastFeed? = nil
+    
     func getSavedRecommendations() -> [RecommendationResult] {
         return self.recommendations
     }
@@ -41,10 +43,8 @@ class RecommendationsHelper {
     }
     
     func getPodcastFor(
-        recommendations: [RecommendationResult],
-        selectedItem: RecommendationResult
+        recommendations: [RecommendationResult]
     ) -> PodcastFeed {
-        let podcastPlayerHelper = PodcastPlayerHelper.sharedInstance
         let podcast = PodcastFeed(nil, RecommendationsHelper.kRecommendationPodcastId, false)
         
         podcast.title = RecommendationsHelper.kRecommendationTitle
@@ -73,7 +73,7 @@ class RecommendationsHelper {
             episode.clipStartTime = item.startSeconds
             episode.clipEndTime = item.endSeconds
             episode.people = item.guests
-            episode.topics = selectedItem.topics
+            episode.topics = item.topics
             episode.showTitle = item.showTitle
             
             episodes.append(episode)
@@ -81,7 +81,7 @@ class RecommendationsHelper {
         
         podcast.episodes = episodes
         
-        podcastPlayerHelper.recommendationsPodcast = podcast
+        recommendationsPodcast = podcast
         
         return podcast
     }

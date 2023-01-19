@@ -100,7 +100,8 @@ extension PodcastFeedCollectionViewController {
                     
                 return
                     lhsEpisode.itemID == rhsEpisode.itemID &&
-                    lhsEpisode.title == rhsEpisode.title
+                    lhsEpisode.title == rhsEpisode.title &&
+                    lhsEpisode.currentTime == rhsEpisode.currentTime
             }
 
             return false
@@ -117,8 +118,10 @@ extension PodcastFeedCollectionViewController {
             if let episode = self.episodeEntity {
                 hasher.combine(episode.itemID)
                 hasher.combine(episode.title)
+                hasher.combine(episode.currentTime)
             }
         }
+            
     }
 
 
@@ -153,13 +156,14 @@ extension PodcastFeedCollectionViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        NotificationCenter.default.addObserver(self, selector: #selector(refreshPodcasts), name: NSNotification.Name("RefreshPodcastUI"), object: nil)
         fetchItems()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshPodcasts), name: .refreshPodcastUI, object: nil)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name("RefreshPodcastUI"), object: nil)
+        NotificationCenter.default.removeObserver(self, name: .refreshPodcastUI, object: nil)
     }
     
     @objc func refreshPodcasts(){
@@ -185,7 +189,9 @@ extension PodcastFeedCollectionViewController {
     }
 
 
-    func makeFeedContentSectionLayout() -> NSCollectionLayoutSection {
+    func makeFeedContentSectionLayout(
+        itemHeight: CGFloat
+    ) -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
             heightDimension: .fractionalHeight(1.0)
@@ -193,10 +199,9 @@ extension PodcastFeedCollectionViewController {
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = itemContentInsets
 
-
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .absolute(160.0),
-            heightDimension: .absolute(255.0)
+            heightDimension: .absolute(itemHeight)
         )
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
 
@@ -213,7 +218,18 @@ extension PodcastFeedCollectionViewController {
 
     func makeSectionProvider() -> UICollectionViewCompositionalLayoutSectionProvider {
         { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
-            self.makeFeedContentSectionLayout()
+            guard
+                let section = CollectionViewSection(rawValue: sectionIndex)
+            else {
+                preconditionFailure("Unexpected Section index path")
+            }
+            
+            switch section {
+            case .latestPodcastEpisodes:
+                return self.makeFeedContentSectionLayout(itemHeight: 285.0)
+            case .subscribedPodcastFeeds:
+                return self.makeFeedContentSectionLayout(itemHeight: 255.0)
+            }
         }
     }
 
@@ -345,12 +361,13 @@ extension PodcastFeedCollectionViewController {
     ) {
         self.followedPodcastFeeds = followedPodcastFeeds
 
-        if let dataSource = dataSource {
-            dataSource.apply(
-                makeSnapshotForCurrentState(),
-                animatingDifferences: shouldAnimate
-            )
+        var snapshot = makeSnapshotForCurrentState()
+        
+        if (!snapshot.sectionIdentifiers.isEmpty) {
+            snapshot.reloadSections(CollectionViewSection.allCases)
         }
+        
+        dataSource.apply(snapshot, animatingDifferences: false, completion: nil)
     }
 
 

@@ -46,7 +46,7 @@ extension PodcastRecommendationFeedPlayerViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        PodcastPlayerHelper.sharedInstance.finishAndSaveContentConsumed()
+//        PodcastPlayerHelper.sharedInstance.finishAndSaveContentConsumed()
     }
 }
 
@@ -90,22 +90,29 @@ extension PodcastRecommendationFeedPlayerViewController {
 
 // MARK: -  Podcast Player Delegate
 extension PodcastRecommendationFeedPlayerViewController {
-    func playingState(podcastId: String, duration: Int, currentTime: Int) {
-        let didChangeTime = setProgress(duration: duration, currentTime: currentTime)
-        audioLoading = !didChangeTime
-    }
-    
-    func pausedState(podcastId: String, duration: Int, currentTime: Int) {
-        let _ = setProgress(duration: duration, currentTime: currentTime)
-        audioLoading = false
-    }
-    
-    func loadingState(podcastId: String, loading: Bool) {
-        audioLoading = loading
+    func loadingState(_ podcastData: PodcastData) {
+        if podcastData.podcastId != podcast?.feedID {
+            return
+        }
+        audioLoading = true
         showTimeInfo()
     }
     
-    func errorState(podcastId: String) {
+    func playingState(_ podcastData: PodcastData) {
+        audioLoading = false
+        setProgress(duration: podcastData.duration ?? 0, currentTime: podcastData.currentTime ?? 0)
+    }
+    
+    func pausedState(_ podcastData: PodcastData) {
+        audioLoading = false
+        setProgress(duration: podcastData.duration ?? 0, currentTime: podcastData.currentTime ?? 0)
+    }
+    
+    func endedState(_ podcastData: PodcastData) {
+        showTimeInfo()
+    }
+    
+    func errorState(_ podcastData: PodcastData) {
         audioLoading = false
     }
     
@@ -118,12 +125,23 @@ extension PodcastRecommendationFeedPlayerViewController {
         let episode = podcast.getCurrentEpisode()
         
         if let duration = episode?.duration {
+            
             let _ = setProgress(
                 duration: duration,
                 currentTime: podcast.currentTime
             )
+            
             audioLoading = false
+            
         } else if let url = episode?.getAudioUrl() {
+            
+            audioLoading = true
+            
+            setProgress(
+                duration: 0,
+                currentTime: 0
+            )
+            
             let asset = AVAsset(url: url)
             asset.loadValuesAsynchronously(forKeys: ["duration"], completionHandler: {
                 let duration = Int(Double(asset.duration.value) / Double(asset.duration.timescale))
@@ -140,19 +158,17 @@ extension PodcastRecommendationFeedPlayerViewController {
         }
     }
     
-    private func setProgress(
+    func setProgress(
         duration: Int,
         currentTime: Int
-    ) -> Bool {
+    ) {
         let episode = podcast.getCurrentEpisode()
         
-        let didChangeTime = podcastPlaybackSliderView?.setProgress(
+        podcastPlaybackSliderView?.setProgress(
             duration: duration,
             currentTime: currentTime,
             clipStartTime: episode?.clipStartTime,
             clipEndTime: episode?.clipEndTime
-        ) ?? false
-        
-        return didChangeTime
+        )
     }
 }

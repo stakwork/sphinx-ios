@@ -43,7 +43,10 @@ public class PodcastEpisode: NSObject {
             }
             if let fileName = URL(string: urlPath ?? "")?.lastPathComponent {
                 let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent(fileName)
-                return FileManager.default.fileExists(atPath: path.path)
+                let isDownloaded = FileManager.default.fileExists(atPath: path.path)
+                self.downloaded = isDownloaded
+                
+                return isDownloaded
             }
             return false
         }
@@ -57,6 +60,15 @@ public class PodcastEpisode: NSObject {
             if (newValue ?? 0 > 0) {
                 UserDefaults.standard.set(newValue, forKey: "duration-\(itemID)")
             }
+        }
+    }
+    
+    var currentTime: Int? {
+        get {
+            return UserDefaults.standard.value(forKey: "current-time-\(itemID)") as? Int
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "current-time-\(itemID)")
         }
     }
     

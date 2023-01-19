@@ -49,8 +49,6 @@ protocol DashboardFeedsListContainerViewControllerDelegate: AnyObject {
     func viewControllerContentScrolled(
         scrollView: UIScrollView
     )
-    
-    func viewControllerRecommendationsRefreshed()
 }
 
 
@@ -92,8 +90,7 @@ class DashboardFeedsContainerViewController: UIViewController {
             onCellSelected: handleAllFeedsCellSelection(_:),
             onRecommendationSelected: handleRecommendationSelection(_:_:),
             onNewResultsFetched: handleNewResultsFetch(_:),
-            onContentScrolled: handleFeedScroll(scrollView:),
-            onRefreshRecommendations: handleRecomendationsRefresh
+            onContentScrolled: handleFeedScroll(scrollView:)
         )
     }()
     
@@ -207,11 +204,6 @@ extension DashboardFeedsContainerViewController {
         }
     }
     
-    private func handleRecomendationsRefresh() {
-        feedsListContainerDelegate?.viewControllerRecommendationsRefreshed()
-    }
-    
-    
     private func mainContentViewController(
         for filterChip: ContentFilterOption
     ) -> UIViewController {
@@ -257,6 +249,11 @@ extension DashboardFeedsContainerViewController {
         allTribeFeedsCollectionViewController.updateLoadingRecommendations()
         
         actionsManager.syncActions() {
+            
+            if (PodcastPlayerController.sharedInstance.isPlayingRecommendations()) {
+                return
+            }
+            
             self.allTribeFeedsCollectionViewController.loadRecommendations(forceRefresh: true)
         }
     }

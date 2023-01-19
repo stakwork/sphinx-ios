@@ -30,6 +30,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     let newMessageBubbleHelper = NewMessageBubbleHelper()
     
+    let feedsManager = FeedsManager()
+    
     let chatListViewModel = ChatListViewModel(contactsService: ContactsService())
 
     func application(
@@ -166,7 +168,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setMessagesAsSeen()
         setBadge(application: application)
         
-        PodcastPlayerHelper.sharedInstance.finishAndSaveContentConsumed()
+//        PodcastPlayerHelper.sharedInstance.finishAndSaveContentConsumed()
         ActionsManager.sharedInstance.syncActionsInBackground()
         CoreDataManager.sharedManager.saveContext()
         
@@ -185,7 +187,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         presentPINIfNeeded()
         loadContentFeedStatus()
         
-        PodcastPlayerHelper.sharedInstance.finishAndSaveContentConsumed()
+//        PodcastPlayerHelper.sharedInstance.finishAndSaveContentConsumed()
     }
 
     func saveCurrentStyle() {
@@ -227,6 +229,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             handlePush(notification: notification)
             setInitialVC(launchingApp: false)
         }
+        
+        if UserData.sharedInstance.isUserLogged() {
+            runFeedsPreloadInBackground()
+        }
     }
 
 
@@ -238,7 +244,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         SKPaymentQueue.default().remove(StoreKitService.shared)
 
-        PodcastPlayerHelper.sharedInstance.finishAndSaveContentConsumed()
+//        PodcastPlayerHelper.sharedInstance.finishAndSaveContentConsumed()
         CoreDataManager.sharedManager.saveContext()
     }
 
@@ -262,7 +268,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if isUserLogged {
             syncDeviceId()
             getRelayKeys()
-            runFeedsPreloadInBackground()
             ActionsManager.sharedInstance.syncActionsInBackground()
         }
 
@@ -271,11 +276,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func runFeedsPreloadInBackground() {
-        let feedsManager = FeedsManager()
-        feedsManager.fetchItems()
-        
-        DispatchQueue.global().sync {
-            feedsManager.preCacheTopPods()
+        DispatchQueue.global().async {
+            self.feedsManager.preCacheTopPods()
         }
     }
 

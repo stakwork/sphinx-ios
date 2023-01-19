@@ -10,12 +10,7 @@ import Foundation
 import CoreData
 import AVFoundation
 
-class FeedsManager : NSObject{
-    private var fetchedResultsController: NSFetchedResultsController<ContentFeed>!
-    
-    override init() {
-        self.fetchedResultsController = FeedsManager.makeFetchedResultsController(using: CoreDataManager.sharedManager.persistentContainer.viewContext)
-    }
+class FeedsManager : NSObject {
     
     func getFollowedFeeds()->[ContentFeed]{
         guard
@@ -30,19 +25,15 @@ class FeedsManager : NSObject{
     
     func preCacheTopPods(){
         //1. Fetch results from memory
-        guard
-            let resultController = fetchedResultsController as? NSFetchedResultsController<NSManagedObject>,
-            let firstSection = resultController.sections?.first,
-            let foundFeeds = firstSection.objects as? [ContentFeed]
-        else {
+        var followedFeeds: [ContentFeed] = []
+        let fetchRequest = ContentFeed.FetchRequests.followedFeeds()
+        let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
+        
+        do {
+            followedFeeds = try managedContext.fetch(fetchRequest)
+        } catch let error as NSError {
+            print("Error: " + error.localizedDescription)
             return
-        }
-        //Pull only the followed feed
-        let followedFeeds = foundFeeds.sorted { (first, second) in
-            let firstDate = first.dateUpdated ?? first.datePublished ?? Date.init(timeIntervalSince1970: 0)
-            let secondDate = second.dateUpdated ?? second.datePublished ?? Date.init(timeIntervalSince1970: 0)
-
-            return firstDate > secondDate
         }
             
         //2. Walk through each feed
@@ -110,6 +101,37 @@ class FeedsManager : NSObject{
         }
     }
     
+    func loadCurrentEpisodeDurationFor(
+        feedId: String,
+        completion: @escaping () -> ()
+    ) {
+        if let feed = ContentFeed.getFeedWith(feedId: feedId) {
+            
+            let podcast = PodcastFeed.convertFrom(contentFeed: feed)
+            
+            if let episode = podcast.getCurrentEpisode() {
+                
+                if let url = episode.getAudioUrl(), episode.duration == nil {
+                    let asset = AVAsset(url: url)
+                    asset.loadValuesAsynchronously(forKeys: ["duration"], completionHandler: {
+                        let duration = Int(Double(asset.duration.value) / Double(asset.duration.timescale))
+                        episode.duration = duration
+                        
+                        DispatchQueue.main.async {
+                            completion()
+                        }
+                    })
+                    return
+                }
+            }
+            
+            DispatchQueue.main.async {
+                completion()
+            }
+        }
+        
+    }
+    
     func downloadLastEpisodeFor(feed: ContentFeed) {
         //0. Stop if setting not enabled
         if UserDefaults.Keys.shouldAutoDownloadSubscribedPods.get(defaultValue: false) == false {
@@ -142,16 +164,5 @@ class FeedsManager : NSObject{
             sectionNameKeyPath: nil,
             cacheName: nil
         )
-    }
-    
-    func fetchItems() {
-        do {
-            try fetchedResultsController.performFetch()
-        } catch {
-            AlertHelper.showAlert(
-                title: "Data Loading Error",
-                message: "\(error)"
-            )
-        }
     }
 }

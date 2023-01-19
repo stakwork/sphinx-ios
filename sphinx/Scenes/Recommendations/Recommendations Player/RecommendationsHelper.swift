@@ -28,19 +28,7 @@ class RecommendationsHelper {
     static let NEWSLETTER_TYPE = "newsletter"
     static let TWITTER_TYPE = "twitter_space"
     
-    private var recommendations: [RecommendationResult] = []
-    
     var recommendationsPodcast: PodcastFeed? = nil
-    
-    func getSavedRecommendations() -> [RecommendationResult] {
-        return self.recommendations
-    }
-    
-    func persistRecommendations(
-        _ recommendations: [RecommendationResult]
-    ) {
-        self.recommendations = recommendations
-    }
     
     func getPodcastFor(
         recommendations: [RecommendationResult]

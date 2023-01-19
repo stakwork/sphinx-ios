@@ -86,12 +86,11 @@ class DiscoverTribesWebViewController : UIViewController{
     
     
     func showTagsFilterView(){
-        let discoverVC = DiscoverTribesTagSelectionVC.instantiate(
-            rootViewController: self.rootViewController
-        )
+        let discoverVC = DiscoverTribesTagSelectionVC.instantiate()
         discoverVC.modalPresentationStyle = .overCurrentContext
+        self.navigationController?.present(discoverVC, animated: false)
+        
         discoverVC.discoverTribeTagSelectionVM.selectedTags = currentTags
-        self.navigationController?.present(discoverVC, animated: true)
         discoverVC.delegate = self
     }
 }

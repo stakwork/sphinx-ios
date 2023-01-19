@@ -22,7 +22,10 @@ class DiscoverTribesTagSelectionVC : UIViewController{
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var tagSelectionView: UIView!
     @IBOutlet weak var tagsLabel: UILabel!
+    @IBOutlet weak var panGestureLine: UIView!
+    @IBOutlet weak var panGestureView: UIView!
     
+    @IBOutlet weak var tagsSelectionViewBottomConstraint: NSLayoutConstraint!
     
     var delegate : DiscoverTribesTagSelectionDelegate?
     
@@ -30,22 +33,44 @@ class DiscoverTribesTagSelectionVC : UIViewController{
         return DiscoverTribesTagSelectionVM(vc: self, collectionView: collectionView)
     }()
     
-    static func instantiate(
-        rootViewController: RootViewController
-    ) -> DiscoverTribesTagSelectionVC {
+    static func instantiate() -> DiscoverTribesTagSelectionVC {
         let viewController = StoryboardScene.Welcome.discoverTribesTagSelectionViewController.instantiate()
-        viewController.view.backgroundColor = .clear
-        viewController.collectionView.backgroundColor = .clear
-        viewController.collectionView.backgroundColor = viewController.view.backgroundColor
         return viewController
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
         styleApplyButton()
         setupCollectionView()
+        setupDismissableView()
         styleTagsView()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        animateView(show: true)
+    }
+    
+    func animateView(
+        show: Bool,
+        completion: (() -> ())? = nil
+    ) {
+        let newConstant: CGFloat = show ? 0 : -600
+        
+        if (tagsSelectionViewBottomConstraint.constant == newConstant) {
+            return
+        }
+        
+        tagsSelectionViewBottomConstraint.constant = newConstant
+        
+        UIView.animate(withDuration: 0.25, animations: {
+            self.tagSelectionView.superview?.layoutIfNeeded()
+            self.view.alpha = show ? 1.0 : 0.0
+        }) { _ in
+            completion?()
+        }
     }
     
     func styleTagsView() {
@@ -75,6 +100,44 @@ class DiscoverTribesTagSelectionVC : UIViewController{
     
     @IBAction func applyButtonTouched() {
         delegate?.didSelect(selections: self.discoverTribeTagSelectionVM.selectedTags)
-        self.dismiss(animated: true)
+        
+        animateView(show: false) {
+            self.dismiss(animated: false)
+        }
+    }
+    
+    func setupDismissableView() {
+        panGestureLine.makeCircular()
+        
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(panGestureRecognizerAction))
+        panGestureView.addGestureRecognizer(panGesture)
+    }
+    
+    @objc func panGestureRecognizerAction(sender: UIPanGestureRecognizer) {
+        let translation = sender.translation(in: view).y
+
+        guard translation >= 0 else { return }
+        
+        if sender.state == .began {
+            tagsSelectionViewBottomConstraint.constant = 0
+            tagSelectionView.superview?.layoutIfNeeded()
+            return
+        }
+        
+        if sender.state == .changed {
+            tagsSelectionViewBottomConstraint.constant = -translation
+            tagSelectionView.superview?.layoutIfNeeded()
+            return
+        }
+
+        if sender.state == .ended {
+            if translation > 200 {
+                animateView(show: false) {
+                    self.dismiss(animated: false)
+                }
+            } else {
+                animateView(show: true)
+            }
+        }
     }
 }

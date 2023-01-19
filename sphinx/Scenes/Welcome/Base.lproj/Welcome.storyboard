@@ -432,33 +432,44 @@
         <scene sceneID="3kD-5d-LhB">
             <objects>
                 <viewController storyboardIdentifier="DiscoverTribesTagSelectionVC" id="xa4-m4-BRo" customClass="DiscoverTribesTagSelectionVC" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="ye5-L0-SX5">
+                    <view key="view" alpha="0.0" contentMode="scaleToFill" id="ye5-L0-SX5">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I4V-Yt-0ri">
-                                <rect key="frame" x="0.0" y="416" width="414" height="480"/>
+                                <rect key="frame" x="0.0" y="1016" width="414" height="480"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hoh-7P-qkU">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="480"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JXo-lc-vLi">
-                                        <rect key="frame" x="182" y="18" width="50" height="4"/>
-                                        <color key="backgroundColor" name="ReplyDividerReceived"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A6A-gx-R2z">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="40"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JXo-lc-vLi">
+                                                <rect key="frame" x="182" y="18" width="50" height="4"/>
+                                                <color key="backgroundColor" name="ReplyDividerReceived"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="50" id="WYY-Hg-Er5"/>
+                                                    <constraint firstAttribute="height" constant="4" id="vIc-oL-G6g"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="50" id="WYY-Hg-Er5"/>
-                                            <constraint firstAttribute="height" constant="4" id="vIc-oL-G6g"/>
+                                            <constraint firstAttribute="height" constant="40" id="B50-or-qk3"/>
+                                            <constraint firstItem="JXo-lc-vLi" firstAttribute="centerX" secondItem="A6A-gx-R2z" secondAttribute="centerX" id="DlI-P8-NYr"/>
+                                            <constraint firstItem="JXo-lc-vLi" firstAttribute="centerY" secondItem="A6A-gx-R2z" secondAttribute="centerY" id="tHX-SN-y8d"/>
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="filter_list" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Yr-FR-aGe">
-                                        <rect key="frame" x="151" y="53.5" width="22" height="22"/>
+                                        <rect key="frame" x="151" y="52.5" width="22" height="22"/>
                                         <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="22"/>
                                         <color key="textColor" name="MainBottomIcons"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tags" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TsO-mV-85A">
-                                        <rect key="frame" x="185" y="54" width="44" height="21"/>
+                                        <rect key="frame" x="185" y="51.5" width="44" height="23.5"/>
                                         <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="20"/>
                                         <color key="textColor" name="BodyInverted"/>
                                         <nil key="highlightedColor"/>
@@ -529,19 +540,20 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="TsO-mV-85A" firstAttribute="top" secondItem="JXo-lc-vLi" secondAttribute="bottom" constant="32" id="32j-zp-Nb8"/>
                                     <constraint firstItem="hoh-7P-qkU" firstAttribute="leading" secondItem="I4V-Yt-0ri" secondAttribute="leading" id="4g8-fQ-NZ5"/>
                                     <constraint firstAttribute="bottom" secondItem="lsv-us-MAz" secondAttribute="bottom" constant="77" id="5bq-Gk-h9o"/>
                                     <constraint firstAttribute="height" constant="480" id="5mD-D9-Ffc"/>
                                     <constraint firstItem="BjR-8O-edB" firstAttribute="top" secondItem="TsO-mV-85A" secondAttribute="bottom" constant="40" id="A0C-sJ-7xI"/>
                                     <constraint firstItem="lsv-us-MAz" firstAttribute="top" secondItem="BjR-8O-edB" secondAttribute="bottom" constant="40" id="Bhf-Q7-UxD"/>
                                     <constraint firstItem="hoh-7P-qkU" firstAttribute="top" secondItem="I4V-Yt-0ri" secondAttribute="top" id="FIt-s1-HfO"/>
-                                    <constraint firstItem="JXo-lc-vLi" firstAttribute="top" secondItem="I4V-Yt-0ri" secondAttribute="top" constant="18" id="KVc-d4-D31"/>
+                                    <constraint firstItem="TsO-mV-85A" firstAttribute="top" secondItem="A6A-gx-R2z" secondAttribute="bottom" constant="11.5" id="J7X-Ga-ad1"/>
                                     <constraint firstAttribute="trailing" secondItem="BjR-8O-edB" secondAttribute="trailing" constant="26" id="L6Z-LW-aEV"/>
                                     <constraint firstItem="BjR-8O-edB" firstAttribute="leading" secondItem="I4V-Yt-0ri" secondAttribute="leading" constant="26" id="WDP-bV-1fl"/>
+                                    <constraint firstItem="A6A-gx-R2z" firstAttribute="top" secondItem="I4V-Yt-0ri" secondAttribute="top" id="XXX-IL-gsY"/>
                                     <constraint firstAttribute="trailing" secondItem="hoh-7P-qkU" secondAttribute="trailing" id="XpE-vS-sWe"/>
-                                    <constraint firstItem="JXo-lc-vLi" firstAttribute="centerX" secondItem="I4V-Yt-0ri" secondAttribute="centerX" id="YJ0-Sv-GxC"/>
+                                    <constraint firstItem="A6A-gx-R2z" firstAttribute="leading" secondItem="I4V-Yt-0ri" secondAttribute="leading" id="anc-Pc-qWo"/>
                                     <constraint firstItem="lsv-us-MAz" firstAttribute="centerX" secondItem="I4V-Yt-0ri" secondAttribute="centerX" id="eHg-cr-137"/>
+                                    <constraint firstAttribute="trailing" secondItem="A6A-gx-R2z" secondAttribute="trailing" id="k0P-kq-Tz0"/>
                                     <constraint firstItem="TsO-mV-85A" firstAttribute="centerX" secondItem="I4V-Yt-0ri" secondAttribute="centerX" id="nv3-zL-oNT"/>
                                     <constraint firstItem="2Yr-FR-aGe" firstAttribute="centerY" secondItem="TsO-mV-85A" secondAttribute="centerY" id="pAh-SL-Ne5"/>
                                     <constraint firstAttribute="bottom" secondItem="hoh-7P-qkU" secondAttribute="bottom" id="q0U-J3-b1K"/>
@@ -550,11 +562,11 @@
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Jpv-TN-P9W"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.14999999999999999" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="I4V-Yt-0ri" firstAttribute="leading" secondItem="ye5-L0-SX5" secondAttribute="leading" id="8ZW-Xm-aUJ"/>
-                            <constraint firstAttribute="bottom" secondItem="I4V-Yt-0ri" secondAttribute="bottom" id="Dir-GM-FDj"/>
+                            <constraint firstAttribute="bottom" secondItem="I4V-Yt-0ri" secondAttribute="bottom" constant="-600" id="Dir-GM-FDj"/>
                             <constraint firstAttribute="trailing" secondItem="I4V-Yt-0ri" secondAttribute="trailing" id="zrT-Hj-SfN"/>
                         </constraints>
                     </view>
@@ -563,8 +575,11 @@
                         <outlet property="blurEffectView" destination="hoh-7P-qkU" id="lp9-Qa-fsn"/>
                         <outlet property="collectionView" destination="BjR-8O-edB" id="sbE-pO-w34"/>
                         <outlet property="filterIcon" destination="2Yr-FR-aGe" id="r2q-mG-5VL"/>
+                        <outlet property="panGestureLine" destination="JXo-lc-vLi" id="4ZP-uJ-EVj"/>
+                        <outlet property="panGestureView" destination="A6A-gx-R2z" id="DHj-aC-fuX"/>
                         <outlet property="tagSelectionView" destination="I4V-Yt-0ri" id="K8B-4O-tqg"/>
                         <outlet property="tagsLabel" destination="TsO-mV-85A" id="3Aa-zf-gbB"/>
+                        <outlet property="tagsSelectionViewBottomConstraint" destination="Dir-GM-FDj" id="hj0-cY-CaB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IWJ-kf-BCq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

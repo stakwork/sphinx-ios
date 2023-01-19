@@ -125,9 +125,14 @@ extension API {
         tags : [String] = []
     ) {
         var url = API.getUrl(route: "\(API.kTribesServerBaseURL)/tribes?limit=\(limit)&sortBy=member_count&page=\(page)")
-        for tag in tags{
-            url.append("&tags=\(tag)")
+        if tags.isEmpty == false{
+            url.append("&tags=")
+            for tag in tags{
+                url.append("\(tag);")
+            }
+            url.remove(at: url.index(url.endIndex, offsetBy: -1))
         }
+        
         url += (searchTerm == nil) ? "" : "&search=\(searchTerm!)"
         
         guard let request = createRequest(url.percentEscaped ?? url, bodyParams: nil, method: "GET") else {

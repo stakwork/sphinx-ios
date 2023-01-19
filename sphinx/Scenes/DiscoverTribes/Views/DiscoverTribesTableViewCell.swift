@@ -57,6 +57,7 @@ class DiscoverTribesTableViewCell: UITableViewCell {
     }
     
     func styleCell(){
+        self.tribeImageView.layer.cornerRadius = 6.0
         self.backgroundColor = UIColor.Sphinx.Body
         self.contentView.backgroundColor = UIColor.Sphinx.Body
         self.titleLabel.textColor = UIColor.Sphinx.PrimaryText
@@ -77,7 +78,7 @@ class DiscoverTribesTableViewCell: UITableViewCell {
         if wasJoined{
             let attributes: [NSAttributedString.Key: Any] = [
                 .foregroundColor: UIColor.Sphinx.BodyInverted,
-                .font: UIFont(name: "Roboto", size: 15.0)
+                .font: UIFont(name: "Roboto-Medium", size: 15.0)
             ]
             joinButton.backgroundColor = UIColor.Sphinx.ReceivedMsgBG
             let string = NSAttributedString(string: "Open",attributes: attributes)
@@ -86,7 +87,7 @@ class DiscoverTribesTableViewCell: UITableViewCell {
         else{
             let attributes: [NSAttributedString.Key: Any] = [
                 .foregroundColor: UIColor.white,
-                .font: UIFont(name: "Roboto", size: 15.0)
+                .font: UIFont(name: "Roboto-Medium", size: 15.0)
             ]
             let string = NSAttributedString(string: "Join",attributes: attributes)
             joinButton.setAttributedTitle(string, for: .normal)

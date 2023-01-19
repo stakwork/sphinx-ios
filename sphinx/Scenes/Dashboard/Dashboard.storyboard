@@ -95,7 +95,7 @@
                                             <constraint firstAttribute="width" constant="35" id="43I-cF-SKf"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
+                                        <color key="textColor" name="MainBottomIcons"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>

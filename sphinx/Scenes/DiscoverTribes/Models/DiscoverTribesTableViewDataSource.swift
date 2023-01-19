@@ -32,6 +32,7 @@ class DiscoverTribeTableViewDataSource : NSObject{
         self.tableView = tableView
         tableView.register(DiscoverTribesTableViewCell.nib, forCellReuseIdentifier: DiscoverTribesTableViewCell.reuseID)
         tableView.registerCell(LoadingMoreTableViewCell.self)
+        tableView.separatorColor = .clear
     }
     
     func fetchTribeData(
@@ -92,7 +93,9 @@ extension DiscoverTribeTableViewDataSource : UITableViewDataSource, UITableViewD
         if (indexPath.row  == tribes.count) {
             let cell = tableView.dequeueReusableCell(withIdentifier: "LoadingMoreTableViewCell", for: indexPath) as! LoadingMoreTableViewCell
             cell.configureCell(text: "")
-            cell.loadingMoreLabel.text = "Loading more tribes..."
+            cell.loadingMoreLabel.text = "Loading..."
+            cell.loadingMoreLabel.font = UIFont(name: "Roboto", size: 14.0)
+            cell.loadingMoreLabel.textColor = UIColor.Sphinx.SecondaryText
             return cell
         } else {
             let tribeOfInterest = tribes[indexPath.row]

@@ -29,6 +29,8 @@ class DiscoverTribesWebViewController : UIViewController{
     @IBOutlet weak var tagCountContainerView: UIView!
     @IBOutlet weak var tagCountLabel: UILabel!
     @IBOutlet weak var filterIcon: UILabel!
+    @IBOutlet weak var discoverTribesTitle: UILabel!
+    
     
     var currentTags : [String] = []
     
@@ -50,19 +52,16 @@ class DiscoverTribesWebViewController : UIViewController{
         
         configTableView()
         setupHeaderViews()
-        
-        
     }
+    
     
     internal func setupHeaderViews() {
         searchTextField.delegate = self
-        searchBarContainer.addShadow(
-            location: VerticalLocation.bottom,
-            opacity: 0.15,
-            radius: 3.0
-        )
+        let text = NSMutableAttributedString(string: "Discover Tribes")
+        text.setAttributes([NSAttributedString.Key.foregroundColor: UIColor.Sphinx.Text], range: NSRange(location: 0, length: text.string.count))
+        discoverTribesTitle.attributedText = text
         searchBar.layer.cornerRadius = searchBar.frame.height / 2
-        tagsButton.layer.cornerRadius = 14.0
+        tagsButton.layer.cornerRadius = 22.0
         updateTagButton()
     }
     
@@ -78,9 +77,7 @@ class DiscoverTribesWebViewController : UIViewController{
     }
     
     @IBAction func backButtonTapped(_ sender: Any) {
-        if let appDelegate = UIApplication.shared.delegate as? AppDelegate{
-            appDelegate.setInitialVC(launchingApp: false, deepLink: true)
-        }
+        navigationController?.popViewController(animated: true)
     }
     
     @IBAction func tagsButtonTap(_ sender: Any) {

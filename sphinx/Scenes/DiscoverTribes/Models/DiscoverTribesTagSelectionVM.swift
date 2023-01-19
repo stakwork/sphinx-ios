@@ -51,13 +51,16 @@ extension DiscoverTribesTagSelectionVM : UICollectionViewDataSource{
         if(getSelectionStatus(index: indexPath.row)){
             cell.contentView.backgroundColor = UIColor.Sphinx.BodyInverted
             cell.tagLabel.textColor = UIColor.Sphinx.Body
+            cell.layer.borderColor = UIColor.clear.cgColor
         }
         else{
-            cell.contentView.backgroundColor = UIColor.Sphinx.ReceivedMsgBG
+            cell.contentView.backgroundColor = .clear//UIColor.Sphinx.ReceivedMsgBG
             cell.tagLabel.textColor = UIColor.Sphinx.BodyInverted
+            cell.layer.borderColor = UIColor.Sphinx.BodyInverted.cgColor
+            cell.layer.borderWidth = 1.0
         }
-        cell.tagLabel.font = UIFont(name: "Roboto", size: 12.0)
-        cell.layer.cornerRadius = 20.0
+        cell.tagLabel.font = UIFont(name: "Roboto", size: 14.0)
+        cell.layer.cornerRadius = 24.0
         cell.tagLabel.text = possibleTags[indexPath.row]
         
         return cell

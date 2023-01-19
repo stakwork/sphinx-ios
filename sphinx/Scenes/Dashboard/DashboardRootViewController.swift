@@ -236,7 +236,7 @@ extension DashboardRootViewController {
         addTribeButton.addTarget(self, action: #selector(handleAddTribeTouch), for: .touchUpInside)
         addTribeButton.layer.cornerRadius = 22.0
         addTribeButton.titleLabel?.font = UIFont(name: "Roboto", size: 14.0)
-        addTribeButton.titleLabel?.textColor = UIColor.Sphinx.BodyInverted
+        addTribeButton.titleLabel?.textColor = UIColor.Sphinx.Text
     }
     
     @objc func handleAddTribeTouch(){

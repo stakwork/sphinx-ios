@@ -20,6 +20,8 @@ class DiscoverTribesTagSelectionVC : UIViewController{
     @IBOutlet weak var applyButton: UIButton!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var tagSelectionView: UIView!
+    @IBOutlet weak var tagsLabel: UILabel!
+    
     
     
     var delegate : DiscoverTribesTagSelectionDelegate?
@@ -31,28 +33,41 @@ class DiscoverTribesTagSelectionVC : UIViewController{
         rootViewController: RootViewController
     ) -> DiscoverTribesTagSelectionVC {
         let viewController = StoryboardScene.Welcome.discoverTribesTagSelectionViewController.instantiate()
-        //viewController.rootViewController = rootViewController
         viewController.view.backgroundColor = .clear
+        viewController.collectionView.backgroundColor = .clear
         viewController.collectionView.backgroundColor = viewController.view.backgroundColor
-        //viewController.tagSelectionView.backgroundColor = viewController.tagSelectionView.backgroundColor?.withAlphaComponent(0.85)
-        
+        viewController.tagSelectionView.layer.cornerRadius = 18.0
+        viewController.tagSelectionView.backgroundColor = viewController.tagSelectionView.backgroundColor?.withAlphaComponent(0.85)
         return viewController
     }
     
     override func viewDidLoad() {
         styleLabels()
         styleApplyButton()
+        
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         self.setupCollectionView()
+        //addBlur()
+    }
+    
+    func addBlur(){
+        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.regular)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = view.frame
+        //blurEffectView.backgroundColor = .clear
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        view.addSubview(blurEffectView)
+        view.sendSubviewToBack(blurEffectView)
     }
     
     func styleLabels(){
         filterIcon.font = UIFont(name: "Material Icons", size: 18.0)
         filterIcon.text = "filter"
         filterIcon.textColor = UIColor.Sphinx.BodyInverted
+        tagsLabel.font = UIFont(name: "Roboto", size: 20.0)
     }
     
     func styleApplyButton(){

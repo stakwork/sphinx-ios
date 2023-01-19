@@ -40,7 +40,7 @@ extension YoutubeRecommendationFeedPlayerViewController {
         super.viewDidLoad()
 
         podcastPlayerController.shouldPause()
-//        podcastPlayer.finishAndSaveContentConsumed()
+        podcastPlayerController.finishAndSaveContentConsumed()
 
         setupViews()
     }
@@ -49,7 +49,7 @@ extension YoutubeRecommendationFeedPlayerViewController {
         super.viewWillDisappear(true)
         
         videoPlayerView?.stopVideo()
-//        podcastPlayerController.finishAndSaveContentConsumed()
+        podcastPlayerController.finishAndSaveContentConsumed()
     }
 }
 

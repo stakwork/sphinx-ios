@@ -46,7 +46,7 @@ extension PodcastRecommendationFeedPlayerViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-//        PodcastPlayerHelper.sharedInstance.finishAndSaveContentConsumed()
+        PodcastPlayerController.sharedInstance.finishAndSaveContentConsumed()
     }
 }
 

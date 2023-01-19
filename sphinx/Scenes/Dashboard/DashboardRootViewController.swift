@@ -225,7 +225,7 @@ extension DashboardRootViewController {
         podcastSmallPlayer.pauseIfPlaying()
         hideSmallPodcastPlayer()
         
-//        podcastPlayerHelper.finishAndSaveContentConsumed()
+        podcastPlayerController.finishAndSaveContentConsumed()
     }
     
     func addBlurEffectTo(_ view: UIView) {

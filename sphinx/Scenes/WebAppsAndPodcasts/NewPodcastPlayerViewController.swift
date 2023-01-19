@@ -73,7 +73,7 @@ class NewPodcastPlayerViewController: UIViewController {
         super.endAppearanceTransition()
         
         if isBeingDismissed {
-            // PodcastPlayerHelper.sharedInstance.finishAndSaveContentConsumed()
+            podcastPlayerController.finishAndSaveContentConsumed()
             podcastPlayerController.removeFromDelegatesWith(key: PodcastDelegateKeys.PodcastPlayerView.rawValue)
         }
     }

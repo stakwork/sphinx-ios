@@ -124,7 +124,7 @@ extension PodcastPlayerController {
             self.runPlayingStateUpdate()
             self.configureTimer()
             
-//                    trackItemStarted(endTimestamp: previousItemTimestamp)
+            self.trackItemStarted()
         } else {
             self.player?.pause()
             
@@ -136,8 +136,8 @@ extension PodcastPlayerController {
         _ podcastData: PodcastData
     ) {
         pausePlaying()
-        
-//      trackItemFinished()
+                
+        trackItemFinished()
 
         guard let player = player, let item = player.currentItem else {
             return
@@ -166,6 +166,8 @@ extension PodcastPlayerController {
     func seek(
         _ podcastData: PodcastData
     ) {
+        let previousTime = self.podcastData?.currentTime
+        
         guard let currentTime = podcastData.currentTime else {
             return
         }
@@ -199,6 +201,7 @@ extension PodcastPlayerController {
             
             player.seek(to: CMTime(seconds: Double(currentTime), preferredTimescale: 1)) { _ in
                 if self.isPlaying {
+                    self.trackItemStarted(endTimestamp: previousTime)
                     /// If playing start time again to update UI every X seconds
                     self.configureTimer()
                 } else {

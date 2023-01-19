@@ -67,7 +67,7 @@ extension YouTubeVideoFeedEpisodePlayerViewController {
         super.viewDidLoad()
         
         podcastPlayerController.shouldPause()
-//        podcastPlayerController.finishAndSaveContentConsumed()
+        podcastPlayerController.finishAndSaveContentConsumed()
 
         setupViews()
     }
@@ -77,7 +77,7 @@ extension YouTubeVideoFeedEpisodePlayerViewController {
         super.viewWillDisappear(true)
         
         videoPlayerView.stopVideo()
-//        podcastPlayerController.finishAndSaveContentConsumed()
+        podcastPlayerController.finishAndSaveContentConsumed()
     }
 }
 

@@ -210,6 +210,11 @@ extension PodcastPlayerController {
     func adjustSpeed(
         _ podcastData: PodcastData
     ) {
+        updatePodcastObject(
+            podcastId: podcastData.podcastId,
+            playerSpeed: podcastData.speed
+        )
+        
         if self.podcastData?.podcastId != podcastData.podcastId {
             ///Avoid player actions if performing actions for a podcast that is not the current on set on player controller
             return

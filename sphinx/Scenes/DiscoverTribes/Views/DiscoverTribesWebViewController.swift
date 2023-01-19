@@ -139,7 +139,6 @@ extension DiscoverTribesWebViewController : DiscoverTribesTagSelectionDelegate{
         let titleColor = (currentTags.count == 0) ? UIColor.Sphinx.BodyInverted : UIColor.Sphinx.Body
         self.tagsButton.tintColor = titleColor
         self.tagsButton.titleLabel?.textColor = titleColor
-        self.tagsButton.titleEdgeInsets = UIEdgeInsets(top: 10,left: 80,bottom: 10,right: 10)
         tagCountContainerView.isHidden = currentTags.count == 0
         tagCountContainerView.makeCircular()
         tagCountLabel.text = "\(currentTags.count)"

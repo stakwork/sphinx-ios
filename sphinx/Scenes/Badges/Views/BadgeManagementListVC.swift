@@ -18,6 +18,9 @@ class BadgeManagementListVC: UIViewController{
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var viewTitle: UILabel!
     @IBOutlet weak var badgeTableView: UITableView!
+    @IBOutlet weak var headerViewHeight: NSLayoutConstraint!
+    var viewDidLayout : Bool = false
+    
     
     private var rootViewController: RootViewController!
     var badgeManagementListDataSource : BadgeManagementListDataSource?
@@ -33,6 +36,14 @@ class BadgeManagementListVC: UIViewController{
     
     override func viewDidLoad() {
         setupBadgeTable()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+            self.viewDidLayout = true
+        })
+        
     }
     
     func setupBadgeTable(){
@@ -54,5 +65,15 @@ class BadgeManagementListVC: UIViewController{
             valid_detailVC.associatedBadge = badge
         }
         self.navigationController?.pushViewController(badgeDetailVC, animated: true)
+    }
+    
+    func animateHeader(shouldAppear:Bool){
+        topContainerView.heightAnchor.constraint(equalToConstant: 100).isActive = false
+        let newHeight = (shouldAppear) ? 100.0 : 0.0
+        topContainerView.heightAnchor.constraint(equalToConstant: newHeight).isActive = true
+        
+        UIView.animate(withDuration: 0.2, delay: 0.0,options: .curveEaseIn ,animations: {
+            self.view.layoutIfNeeded()
+        })
     }
 }

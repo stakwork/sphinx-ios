@@ -73,4 +73,19 @@ extension BadgeManagementListDataSource : UITableViewDelegate,UITableViewDataSou
         vc.showBadgeDetail(badge: getBadge(index: indexPath.row))
     }
     
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if(vc.viewDidLayout == false){
+            return
+        }
+        if indexPath.row + 1 > 5 {
+            print("leaving initial view")
+            vc.animateHeader(shouldAppear: false)
+        }
+        else if (indexPath.row == 0){
+            print("showing initial view")
+            vc.animateHeader(shouldAppear: true)
+        }
+        print("willDisplay:\(indexPath.row)")
+    }
+    
 }

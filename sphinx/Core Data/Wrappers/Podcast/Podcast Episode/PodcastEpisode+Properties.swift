@@ -34,19 +34,11 @@ public class PodcastEpisode: NSObject {
         self.itemID = itemID
     }
     
-    var downloaded: Bool? = nil
-    
     public var isDownloaded: Bool {
         get {
-            if let downloaded = downloaded {
-                return downloaded
-            }
             if let fileName = URL(string: urlPath ?? "")?.lastPathComponent {
                 let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent(fileName)
-                let isDownloaded = FileManager.default.fileExists(atPath: path.path)
-                self.downloaded = isDownloaded
-                
-                return isDownloaded
+                return FileManager.default.fileExists(atPath: path.path)
             }
             return false
         }

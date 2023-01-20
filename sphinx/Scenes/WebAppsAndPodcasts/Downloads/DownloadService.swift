@@ -132,7 +132,6 @@ extension DownloadService : URLSessionDownloadDelegate {
 
         do {
             try fileManager.copyItem(at: location, to: destinationURL)
-            download?.episode.downloaded = true
         } catch let error {
             print("Could not copy file to disk: \(error.localizedDescription)")
         }

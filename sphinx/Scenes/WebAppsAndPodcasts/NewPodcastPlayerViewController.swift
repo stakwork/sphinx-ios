@@ -259,16 +259,14 @@ extension NewPodcastPlayerViewController: URLSessionDelegate {
 
 extension NewPodcastPlayerViewController : DownloadServiceDelegate {
     func shouldReloadRowFor(download: Download) {
-//        if let index = podcast.getIndexForEpisodeWith(id: download.episode.itemID) {
-//            tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
-//        }
-        tableView.reloadData()
+        if let index = podcast.getIndexForEpisodeWith(id: download.episode.itemID) {
+            tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
+        }
     }
     
     func shouldUpdateProgressFor(download: Download) {
-//        if let index = podcast.getIndexForEpisodeWith(id: download.episode.itemID) {
-//            tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
-//        }
-        tableView.reloadData()
+        if let index = podcast.getIndexForEpisodeWith(id: download.episode.itemID) {
+            tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
+        }
     }
 }

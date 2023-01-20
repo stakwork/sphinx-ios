@@ -71,9 +71,9 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wn9-Jm-IB1">
-                                <rect key="frame" x="359" y="6" width="40" height="52"/>
+                                <rect key="frame" x="344" y="6" width="70" height="52"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="40" id="dho-J4-KPA"/>
+                                    <constraint firstAttribute="width" constant="70" id="dho-J4-KPA"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="20"/>
                                 <state key="normal" title="download">
@@ -89,7 +89,7 @@
                             <constraint firstItem="CyI-eW-P6O" firstAttribute="leading" secondItem="RwI-hJ-eGS" secondAttribute="trailing" id="5fC-hZ-8l9"/>
                             <constraint firstItem="stS-CP-8w0" firstAttribute="centerX" secondItem="Wn9-Jm-IB1" secondAttribute="centerX" id="92j-Eb-7eO"/>
                             <constraint firstAttribute="trailing" secondItem="1QS-TO-aCK" secondAttribute="trailing" constant="30" id="ArD-Nc-JLL"/>
-                            <constraint firstAttribute="trailing" secondItem="Wn9-Jm-IB1" secondAttribute="trailing" constant="15" id="Jbi-0r-17y"/>
+                            <constraint firstAttribute="trailing" secondItem="Wn9-Jm-IB1" secondAttribute="trailing" id="Jbi-0r-17y"/>
                             <constraint firstItem="RwI-hJ-eGS" firstAttribute="centerY" secondItem="LFT-ch-Aaj" secondAttribute="centerY" id="PcE-8l-rYs"/>
                             <constraint firstItem="RwI-hJ-eGS" firstAttribute="leading" secondItem="LFT-ch-Aaj" secondAttribute="leading" id="VNm-RJ-eHF"/>
                             <constraint firstItem="1QS-TO-aCK" firstAttribute="leading" secondItem="LFT-ch-Aaj" secondAttribute="leading" constant="30" id="WBC-xd-dEH"/>

@@ -74,7 +74,7 @@ class DiscoverTribesTagSelectionVC : UIViewController{
     }
     
     func styleTagsView() {
-        tagSelectionView.roundCorners(corners: [.topLeft, .topRight], radius: 20.0)
+        tagSelectionView.layer.cornerRadius = 20
         tagSelectionView.clipsToBounds = true
         
         addBlur()

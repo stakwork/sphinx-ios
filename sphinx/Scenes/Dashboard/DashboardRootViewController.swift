@@ -113,7 +113,7 @@ class DashboardRootViewController: RootViewController {
                 addTribeTrailing.constant = -120
             }
             
-            UIView.animate(withDuration: 0.25) {
+            UIView.animate(withDuration: 0.10) {
                 self.searchBarContainer.layoutIfNeeded()
             }
         }

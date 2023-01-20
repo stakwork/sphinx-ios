@@ -448,7 +448,7 @@
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JXo-lc-vLi">
                                                 <rect key="frame" x="182" y="18" width="50" height="4"/>
-                                                <color key="backgroundColor" name="ReplyDividerReceived"/>
+                                                <color key="backgroundColor" name="SecondaryText"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="50" id="WYY-Hg-Er5"/>
                                                     <constraint firstAttribute="height" constant="4" id="vIc-oL-G6g"/>
@@ -612,9 +612,6 @@
         </namedColor>
         <namedColor name="ReceivedMsgBG">
             <color red="0.94901960784313721" green="0.95294117647058818" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="ReplyDividerReceived">
-            <color red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="SecondaryText">
             <color red="0.55686274509803924" green="0.58823529411764708" blue="0.61176470588235299" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

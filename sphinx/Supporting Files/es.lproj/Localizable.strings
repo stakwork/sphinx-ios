@@ -30,6 +30,8 @@
 "name.unknown" = "Desconocido";
 "name.unknown.initials" = "D";
 "today" = "Hoy";
+"join" = "Unirse";
+"open" = "Abrir";
 "connected.to.node" = "Conectado al Nodo";
 "socket.disconnected" = "Actualizaciones en tiempo real\nno disponibles";
 "unable.to.connect" = "No es posible conectarse al Nodo";
@@ -499,6 +501,7 @@
 "suggested.out.range" = "Monto sugerido (%d sats) por encima del máximo";
 "delete.episode.title" = "Borrar Episodio";
 "delete.episode.message" = "¿Borrar Episodio de la memoria del dispositivo?";
+"error.playing" = "Hubo un error al reproducir el episodio. Por favor vuelva a intentarlo más tarde.";
 
 // VIDEOS
 "video" = "video";

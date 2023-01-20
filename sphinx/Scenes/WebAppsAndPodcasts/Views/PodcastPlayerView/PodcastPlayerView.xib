@@ -5,7 +5,6 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -32,8 +31,6 @@
                 <outlet property="episodeImageView" destination="DK5-KL-hVN" id="9M6-al-2cS"/>
                 <outlet property="episodeLabel" destination="wIY-t2-tmY" id="b60-W5-cgm"/>
                 <outlet property="gestureHandlerView" destination="KTf-4e-LmA" id="ZWi-DK-Ck3"/>
-                <outlet property="imageHeight" destination="PeD-Sl-DAh" id="bOb-mS-m8X"/>
-                <outlet property="imageViewTop" destination="5wn-nm-p8G" id="sdl-e4-1U8"/>
                 <outlet property="liveTableView" destination="P08-M5-arT" id="hb6-yh-1Ve"/>
                 <outlet property="playPauseButton" destination="hny-dv-u2n" id="DCS-45-iYO"/>
                 <outlet property="progressLine" destination="Jf7-jW-t9r" id="Zxa-RY-cwM"/>
@@ -66,7 +63,7 @@
                     </constraints>
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9rE-5F-wP7" userLabel="Subscription Button">
-                    <rect key="frame" x="305" y="66" width="89" height="26"/>
+                    <rect key="frame" x="305" y="22" width="89" height="26"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="13"/>
                     <inset key="contentEdgeInsets" minX="10" minY="5" maxX="10" maxY="5"/>
@@ -98,14 +95,14 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jf7-jW-t9r">
-                            <rect key="frame" x="32" y="116" width="50" height="4"/>
+                            <rect key="frame" x="32" y="116" width="0.0" height="4"/>
                             <color key="backgroundColor" name="ReceivedIcon"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="50" id="ZVG-Fi-rtQ"/>
+                                <constraint firstAttribute="width" id="ZVG-Fi-rtQ"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mtu-jO-ZFp">
-                            <rect key="frame" x="73" y="109" width="18" height="18"/>
+                            <rect key="frame" x="23" y="109" width="18" height="18"/>
                             <color key="backgroundColor" name="ReceivedIcon"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="18" id="0tQ-Vq-bYQ"/>
@@ -275,19 +272,18 @@
                     </constraints>
                 </view>
             </subviews>
-            <viewLayoutGuide key="safeArea" id="Btf-dk-gGg"/>
             <color key="backgroundColor" name="HeaderBG"/>
             <constraints>
-                <constraint firstItem="DK5-KL-hVN" firstAttribute="top" secondItem="Btf-dk-gGg" secondAttribute="top" constant="-44" id="5wn-nm-p8G"/>
+                <constraint firstItem="DK5-KL-hVN" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="5wn-nm-p8G"/>
                 <constraint firstAttribute="trailing" secondItem="yFL-Ym-JIV" secondAttribute="trailing" id="8v3-Y7-p4L"/>
                 <constraint firstItem="Bkm-ne-hyH" firstAttribute="top" secondItem="DK5-KL-hVN" secondAttribute="top" id="Bks-IE-cB2"/>
-                <constraint firstItem="Btf-dk-gGg" firstAttribute="trailing" secondItem="9rE-5F-wP7" secondAttribute="trailing" constant="20" id="Caz-xs-ZrQ"/>
-                <constraint firstItem="9rE-5F-wP7" firstAttribute="top" secondItem="Btf-dk-gGg" secondAttribute="top" constant="22" id="JPc-oQ-yMH"/>
+                <constraint firstAttribute="trailing" secondItem="9rE-5F-wP7" secondAttribute="trailing" constant="20" id="Caz-xs-ZrQ"/>
+                <constraint firstItem="9rE-5F-wP7" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="22" id="JPc-oQ-yMH"/>
                 <constraint firstAttribute="trailing" secondItem="DK5-KL-hVN" secondAttribute="trailing" id="JWg-FU-hZF"/>
                 <constraint firstAttribute="bottom" secondItem="yFL-Ym-JIV" secondAttribute="bottom" id="R9j-2d-yZW"/>
                 <constraint firstItem="DK5-KL-hVN" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="XLc-B4-Eus"/>
                 <constraint firstItem="P08-M5-arT" firstAttribute="top" secondItem="DK5-KL-hVN" secondAttribute="top" id="Z0h-kf-Gsg"/>
-                <constraint firstItem="Bkm-ne-hyH" firstAttribute="leading" secondItem="Btf-dk-gGg" secondAttribute="leading" id="aH4-dp-Qar"/>
+                <constraint firstItem="Bkm-ne-hyH" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="aH4-dp-Qar"/>
                 <constraint firstItem="P08-M5-arT" firstAttribute="trailing" secondItem="DK5-KL-hVN" secondAttribute="trailing" id="jFW-wA-m9P"/>
                 <constraint firstItem="P08-M5-arT" firstAttribute="bottom" secondItem="DK5-KL-hVN" secondAttribute="bottom" id="se2-JK-1TA"/>
                 <constraint firstAttribute="trailing" secondItem="Bkm-ne-hyH" secondAttribute="trailing" id="u5z-oJ-eM4"/>

@@ -306,7 +306,7 @@ class MessageReplyView: UIView {
     
     @IBAction func closeButtonTouched() {
         isHidden = true
-        PlayAudioHelper.playHaptic()
+        SoundsPlayer.playHaptic()
         delegate?.didCloseView?()
     }
 }

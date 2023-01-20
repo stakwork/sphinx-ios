@@ -26,7 +26,7 @@ class NotificationSoundViewController: UIViewController {
     var selectedSoundFile = ""
     
     var notificationSoundHelper: NotificationSoundHelper!
-    let audioPlayerHelper = PlayAudioHelper()
+    let audioPlayerHelper = SoundsPlayer()
     
     var loading = false {
         didSet {

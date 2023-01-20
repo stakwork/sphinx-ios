@@ -1,5 +1,5 @@
 //
-//  PlayAudioHelper.swift
+//  SoundsPlayer.swift
 //  sphinx
 //
 //  Created by Tomas Timinskas on 22/01/2020.
@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-class PlayAudioHelper {
+class SoundsPlayer {
     
     static let PaymentSent: SystemSoundID = 1008
     static let keySoundID: SystemSoundID = 1123
@@ -63,6 +63,6 @@ class PlayAudioHelper {
             return
         }
         
-        AudioServicesPlaySystemSound(PlayAudioHelper.MessageReceivedSoundID)
+        AudioServicesPlaySystemSound(SoundsPlayer.MessageReceivedSoundID)
     }
 }

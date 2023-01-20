@@ -12,7 +12,7 @@ class ClipboardHelper {
     
     public static func copyToClipboard(text: String, message: String? = "text.copied.clipboard".localized) {
         UIPasteboard.general.string = text
-        PlayAudioHelper.playHaptic()
+        SoundsPlayer.playHaptic()
         
         if let message = message {
             NewMessageBubbleHelper().showGenericMessageView(text: message)

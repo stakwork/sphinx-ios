@@ -30,6 +30,8 @@
 "name.unknown" = "Unknown";
 "name.unknown.initials" = "UK";
 "today" = "Today";
+"join" = "Join";
+"open" = "Open";
 "connected.to.node" = "Connected to Node";
 "socket.disconnected" = "Live updates unavailable";
 "unable.to.connect" = "Unable to connect to Node";
@@ -500,6 +502,7 @@
 "suggested.out.range" = "Suggested amount (%d sats) is above the maximum";
 "delete.episode.title" = "Delete Episode";
 "delete.episode.message" = "Delete Episode from device memory?";
+"error.playing" = "There was an error playing the episode. Please try again later.";
 
 // VIDEOS
 "video" = "video";

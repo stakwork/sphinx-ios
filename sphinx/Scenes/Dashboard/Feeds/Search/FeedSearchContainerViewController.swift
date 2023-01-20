@@ -27,7 +27,8 @@ class FeedSearchContainerViewController: UIViewController {
     var feedType: FeedType? = nil
     var searchTimer: Timer? = nil
     
-    let newMessageBubbleHelper = NewMessageBubbleHelper()
+    internal let newMessageBubbleHelper = NewMessageBubbleHelper()
+    internal let feedsManager = FeedsManager()
     
     lazy var fetchedResultsController: NSFetchedResultsController = Self
         .makeFetchedResultsController(
@@ -268,13 +269,15 @@ extension FeedSearchContainerViewController {
                     
                     if case .success(_) = result {
                         self.managedObjectContext.saveContext()
-                            
-                        self.newMessageBubbleHelper.hideLoadingWheel()
                         
-                        self.resultsDelegate?.viewController(
-                            self,
-                            didSelectFeedSearchResult: searchResult.feedId
-                        )
+                        self.feedsManager.loadCurrentEpisodeDurationFor(feedId: searchResult.feedId, completion: {
+                            self.newMessageBubbleHelper.hideLoadingWheel()
+                            
+                            self.resultsDelegate?.viewController(
+                                self,
+                                didSelectFeedSearchResult: searchResult.feedId
+                            )
+                        })
                     }
             })
         }

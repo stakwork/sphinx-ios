@@ -27,34 +27,26 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
             let contentFeedItem = managedObjectContext.object(with: podcastEpisodeID) as? ContentFeedItem,
             contentFeedItem.contentFeed?.isPodcast == true
         else {
-            preconditionFailure()
+            return
         }
         
-        if let contentFeed = contentFeedItem.contentFeed {
-            let podcastFeed = PodcastFeed.convertFrom(contentFeed:  contentFeed)
-            
-            if let index = podcastFeed.getIndexForEpisodeWith(id: contentFeedItem.itemID) {
-                
-                let isPlayingEpisode = podcastPlayerHelper.isPlaying(
-                    podcastFeed.feedID,
-                    episodeId: contentFeedItem.itemID
-                )
-                
-                let isPlayingPodcast = podcastPlayerHelper.isPlaying(
-                    podcastFeed.feedID
-                )
-                
-                if !isPlayingEpisode && isPlayingPodcast {
-                    podcastPlayerHelper.prepareEpisodeWith(
-                        index: index,
-                        in: podcastFeed,
-                        autoPlay: false
-                    ) {}
-                }
-            }
-
-            presentPodcastPlayerFor(podcastFeed)
+        guard let contentFeed = contentFeedItem.contentFeed else {
+            return
         }
+        
+        let podcastFeed = PodcastFeed.convertFrom(contentFeed:  contentFeed)
+        
+        pausePlayingIfNeeded(podcast: podcastFeed, itemId: contentFeedItem.itemID)
+        
+        podcastFeed.currentEpisodeId = contentFeedItem.itemID
+        
+        podcastSmallPlayer.configureWith(
+            podcastId: podcastFeed.feedID,
+            delegate: self,
+            andKey: PodcastDelegateKeys.DashboardSmallPlayerBar.rawValue
+        )
+        
+        presentPodcastPlayerFor(podcastFeed)
     }
     
     func viewController(
@@ -231,32 +223,40 @@ extension DashboardRootViewController {
         for recommendations: [RecommendationResult],
         and recommendationId: String
     ) {
-        if let recommendation = recommendations.filter({ $0.id == recommendationId}).first {
-            
-            let recommendationsHelper = RecommendationsHelper.sharedInstance
-            
-            let podcast = recommendationsHelper.getPodcastFor(
-                recommendations: recommendations,
-                selectedItem: recommendation
-            )
-            
-            pausePlayingIfNeeded(podcast: podcast, itemId: recommendationId)
-            
-            presentRecommendationsPlayerVC(for: podcast)
-        }
+        let recommendationsHelper = RecommendationsHelper.sharedInstance
+        
+        let podcast = recommendationsHelper.getPodcastFor(
+            recommendations: recommendations
+        )
+        
+        pausePlayingIfNeeded(podcast: podcast, itemId: recommendationId)
+        
+        podcast.currentEpisodeId = recommendationId
+        
+        presentRecommendationsPlayerVC(for: podcast)
     }
     
     private func pausePlayingIfNeeded(
         podcast: PodcastFeed,
         itemId: String
     ) {
-        if podcastPlayerHelper.isPlaying(podcast.feedID) {
-            if podcast.getCurrentEpisode()?.itemID != itemId {
-                podcastPlayerHelper.shouldPause()
+        if podcastPlayerController.isPlaying(podcastId: podcast.feedID) {
+            if let episode = podcast.getCurrentEpisode(), let url = episode.getAudioUrl(), episode.itemID != itemId {
+                podcastPlayerController.submitAction(
+                    UserAction.Pause(
+                        PodcastData(
+                            podcast.chat?.id,
+                            podcast.feedID,
+                            episode.itemID,
+                            url,
+                            episode.currentTime,
+                            episode.duration,
+                            podcast.playerSpeed
+                        )
+                    )
+                )
             }
         }
-        
-        let _ = podcastPlayerHelper.setNewEpisodeWith(episodeId: itemId, in: podcast)
     }
     
     private func presentRecommendationsPlayerVC(

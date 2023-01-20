@@ -32,6 +32,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     let feedsManager = FeedsManager()
     
+    let podcastPlayerController = PodcastPlayerController.sharedInstance
+    
     let chatListViewModel = ChatListViewModel(contactsService: ContactsService())
 
     func application(
@@ -168,7 +170,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setMessagesAsSeen()
         setBadge(application: application)
         
-        PodcastPlayerHelper.sharedInstance.finishAndSaveContentConsumed()
+        podcastPlayerController.finishAndSaveContentConsumed()
         ActionsManager.sharedInstance.syncActionsInBackground()
         CoreDataManager.sharedManager.saveContext()
         
@@ -186,7 +188,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         reloadMessagesData()
         presentPINIfNeeded()
         
-        PodcastPlayerHelper.sharedInstance.finishAndSaveContentConsumed()
+        podcastPlayerController.finishAndSaveContentConsumed()
     }
 
     func saveCurrentStyle() {
@@ -234,7 +236,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         SKPaymentQueue.default().remove(StoreKitService.shared)
 
-        PodcastPlayerHelper.sharedInstance.finishAndSaveContentConsumed()
+        podcastPlayerController.finishAndSaveContentConsumed()
         CoreDataManager.sharedManager.saveContext()
     }
 

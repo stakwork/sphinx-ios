@@ -334,10 +334,8 @@ class ActionsManager {
                 self.finishAndSaveHistoryItem()
                 
                 if contentConsumedAction.isValid() {
-                    if let jsonString = contentConsumedAction.jsonString() {
-                        print("SPHINX CONTENT CONSUMED: \(jsonString)")
-                        
-//                        let _ = ActionTrack.createObject(type: ActionType.ContentConsumed.rawValue, uploaded: false, metaData: jsonString)
+                    if let jsonString = contentConsumedAction.jsonString() {                        
+                        let _ = ActionTrack.createObject(type: ActionType.ContentConsumed.rawValue, uploaded: false, metaData: jsonString)
                     }
                 }
                 self.contentConsumedAction = nil

@@ -3,7 +3,9 @@ import UIKit
 
 extension DashboardRootViewController: PodcastPlayerVCDelegate {
     
-    func willDismissPlayer() {}
+    func willDismissPlayer() {
+        
+    }
     
     func shouldShareClip(comment: PodcastComment) {}
     

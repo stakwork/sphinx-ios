@@ -22,7 +22,8 @@ class DashboardRootViewController: RootViewController {
     @IBOutlet weak var searchBarContainer: UIView!
     @IBOutlet weak var mainContentContainerView: UIView!
     @IBOutlet weak var restoreProgressView: RestoreProgressView!
-    
+    @IBOutlet weak var addTribeTrailing: NSLayoutConstraint!
+    @IBOutlet weak var addTribeButton: UIButton!
     @IBOutlet weak var bottomBarBottomConstraint: NSLayoutConstraint!
     
     let buttonTitles : [String] = [
@@ -30,6 +31,7 @@ class DashboardRootViewController: RootViewController {
         "dashboard.tabs.friends".localized,
         "dashboard.tabs.tribes".localized,
     ]
+    
     @IBOutlet weak var dashboardNavigationTabs: CustomSegmentedControl! {
         didSet {
             dashboardNavigationTabs.configureFromOutlet(
@@ -105,6 +107,16 @@ class DashboardRootViewController: RootViewController {
             resetSearchField()
             loadDataOnTabChange(to: activeTab)
             feedViewMode = .rootList
+            
+            if (activeTab == .tribes) {
+                addTribeTrailing.constant = 16
+            } else {
+                addTribeTrailing.constant = -120
+            }
+            
+            UIView.animate(withDuration: 0.10) {
+                self.searchBarContainer.layoutIfNeeded()
+            }
         }
     }
     
@@ -215,6 +227,17 @@ extension DashboardRootViewController {
         )
         
         activeTab = .friends
+        
+    }
+    
+    func setupAddTribeButton(){
+        addTribeButton.layer.cornerRadius = 22.0
+        addTribeButton.clipsToBounds = true
+    }
+    
+    @IBAction func didTapAddTribeButton() {
+        let discoverVC = DiscoverTribesWebViewController.instantiate()
+        navigationController?.pushViewController(discoverVC, animated: true)
     }
     
     func setupPlayerBar() {
@@ -265,6 +288,7 @@ extension DashboardRootViewController {
         if didFinishInitialLoading {
             loadDataOnTabChange(to: activeTab)
         }
+        setupAddTribeButton()
     }
 }
 
@@ -299,6 +323,8 @@ extension DashboardRootViewController {
 
 // MARK: -  Action Handling
 extension DashboardRootViewController {
+    
+    
     
     @IBAction func bottomBarButtonTouched(_ sender: UIButton) {
         guard let button = BottomBarButton(rawValue: sender.tag) else {

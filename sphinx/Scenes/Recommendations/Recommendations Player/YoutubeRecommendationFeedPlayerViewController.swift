@@ -146,7 +146,7 @@ extension YoutubeRecommendationFeedPlayerViewController: YTPlayerViewDelegate {
         _ currentTime: Float
     ) {
         let time = Int(round(currentTime)) * 1000
-        actionsManager.trackItemConsumed(item: episode, podcast: podcast, startTimestamp: time)
+        actionsManager.trackItemStarted(item: episode, podcast: podcast, startTimestamp: time)
     }
 
     func trackItemFinished(

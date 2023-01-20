@@ -48,6 +48,7 @@ extension PodcastPlayerController {
                 return
             } else {
                 ///If playing another episode, then pause first
+                trackItemFinished(shouldSaveAction: true)
                 pausePlaying()
             }
         }
@@ -197,7 +198,7 @@ extension PodcastPlayerController {
             player.seek(to: CMTime(seconds: Double(currentTime), preferredTimescale: 1)) { _ in
                 if self.isPlaying {
                     self.trackItemStarted(endTimestamp: previousTime)
-                    /// If playing start time again to update UI every X seconds
+                    /// If playing start timer again to update UI every X seconds
                     self.configureTimer()
                 } else {
                     /// If not playing run pause state delegate to update UI in case seek was triggered from control center

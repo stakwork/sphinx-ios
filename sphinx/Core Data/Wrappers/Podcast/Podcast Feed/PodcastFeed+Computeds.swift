@@ -140,6 +140,8 @@ extension PodcastFeed {
     }
     
     func getItemRankForEpisodeWithId(id: String) -> Int {
+        if !isRecommendationsPodcast { return 0 }
+        
         for (i, item) in (episodes ?? []).enumerated() {
             if (item.itemID == id) {
                 return i + 1

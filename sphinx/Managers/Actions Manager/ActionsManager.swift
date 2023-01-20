@@ -39,7 +39,7 @@ class ActionsManager {
     var searchActions: [FeedSearchAction] = []
     
     func trackFeedSearch(searchTerm: String) {
-        if(!isTrackingEnabled()) { return }
+        if (!isTrackingEnabled()) { return }
         
         globalThread.sync {
             if let sa = searchActions.last {
@@ -58,7 +58,7 @@ class ActionsManager {
     }
     
     func saveFeedSearches() {
-        if(!isTrackingEnabled()) { return }
+        if (!isTrackingEnabled()) { return }
         
         globalThread.sync {
             for searchAction in self.searchActions {
@@ -71,7 +71,7 @@ class ActionsManager {
     }
     
     func trackMessageSent(message: TransactionMessage) {
-        if(!isTrackingEnabled()) { return }
+        if (!isTrackingEnabled()) { return }
         
 //        globalThread.sync {
 //            guard let messagesContent = message.messageContent, !messagesContent.isEmpty else {
@@ -106,7 +106,7 @@ class ActionsManager {
         amount: Int,
         feedItem: ContentFeedItem
     ) {
-        if(!isTrackingEnabled()) { return }
+        if (!isTrackingEnabled()) { return }
         
         globalThread.sync {
             let contentBoostAction = ContentBoostAction(
@@ -134,7 +134,7 @@ class ActionsManager {
     func trackClipComment(
         podcastComment: PodcastComment
     ) {
-        if(!isTrackingEnabled()) { return }
+        if (!isTrackingEnabled()) { return }
         
         globalThread.sync {
             guard let feedItemObjectId = podcastComment.feedItemObjectId,
@@ -167,12 +167,12 @@ class ActionsManager {
         }
     }
     
-    func trackItemConsumed(
+    func trackItemStarted(
         item: ContentFeedItem,
         startTimestamp: Int,
         endTimestamp: Int? = nil
     ) {
-        if(!isTrackingEnabled()) { return }
+        if (!isTrackingEnabled()) { return }
         
         globalThread.sync {
             if let contentConsumedAction = self.contentConsumedAction {
@@ -184,7 +184,7 @@ class ActionsManager {
                     )
                 }
                 
-                if contentConsumedAction.feedId != item.contentFeed?.feedID {
+                if contentConsumedAction.feedItemId != item.itemID {
                     self.finishAndSaveContentConsumed()
                 }
                 
@@ -230,13 +230,13 @@ class ActionsManager {
         )
     }
     
-    func trackItemConsumed(
+    func trackItemStarted(
         item: PodcastEpisode,
         podcast: PodcastFeed,
         startTimestamp: Int,
         endTimestamp: Int? = nil
     ) {
-        if(!isTrackingEnabled()) { return }
+        if (!isTrackingEnabled()) { return }
         
         globalThread.sync {
             if let contentConsumedAction = self.contentConsumedAction {
@@ -249,7 +249,7 @@ class ActionsManager {
                     )
                 }
                 
-                if contentConsumedAction.feedId != podcast.feedID {
+                if contentConsumedAction.feedItemId != item.itemID {
                     self.finishAndSaveContentConsumed()
                 }
                 
@@ -302,7 +302,7 @@ class ActionsManager {
         timestamp: Int,
         shouldSaveAction: Bool = false
     ) {
-        if(!isTrackingEnabled()) { return }
+        if (!isTrackingEnabled()) { return }
         
         globalThread.sync {
             if let contentConsumedAction = self.contentConsumedAction {
@@ -327,7 +327,7 @@ class ActionsManager {
     }
     
     func finishAndSaveContentConsumed() {
-        if(!isTrackingEnabled()) { return }
+        if (!isTrackingEnabled()) { return }
         
         globalThread.sync {
             if let contentConsumedAction = self.contentConsumedAction {
@@ -335,7 +335,9 @@ class ActionsManager {
                 
                 if contentConsumedAction.isValid() {
                     if let jsonString = contentConsumedAction.jsonString() {
-                        let _ = ActionTrack.createObject(type: ActionType.ContentConsumed.rawValue, uploaded: false, metaData: jsonString)
+                        print("SPHINX CONTENT CONSUMED: \(jsonString)")
+                        
+//                        let _ = ActionTrack.createObject(type: ActionType.ContentConsumed.rawValue, uploaded: false, metaData: jsonString)
                     }
                 }
                 self.contentConsumedAction = nil
@@ -344,7 +346,7 @@ class ActionsManager {
     }
     
     func finishAndSaveHistoryItem() {
-        if(!isTrackingEnabled()) { return }
+        if (!isTrackingEnabled()) { return }
         
         globalThread.sync {
             if let contentConsumedHistoryItem = self.contentConsumedHistoryItem {
@@ -357,7 +359,7 @@ class ActionsManager {
     }
     
     func trackNewsletterConsumed(newsletterItem: NewsletterItem) {
-        if(!isTrackingEnabled()) { return }
+        if (!isTrackingEnabled()) { return }
         
         globalThread.sync {
             guard let feedItem: ContentFeedItem = CoreDataManager.sharedManager.getObjectWith(objectId: newsletterItem.objectID) else {
@@ -401,7 +403,7 @@ class ActionsManager {
     func syncActions(
         completion: (() -> ())? = nil
     ) {
-        if(!isTrackingEnabled()) {
+        if (!isTrackingEnabled()) {
             completion?()
             return
         }

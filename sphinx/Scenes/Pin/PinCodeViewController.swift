@@ -81,12 +81,12 @@ class PinCodeViewController: UIViewController {
         
         if sender.tag == kDeleteButtonTag {
             if pinArray.count > 0 {
-                PlayAudioHelper.playKeySound(soundId: PlayAudioHelper.deleteSoundID)
+                SoundsPlayer.playKeySound(soundId: SoundsPlayer.deleteSoundID)
                 pinArray.removeLast()
             }
         } else {
             if pinArray.count < 6 {
-                PlayAudioHelper.playKeySound(soundId: PlayAudioHelper.keySoundID)
+                SoundsPlayer.playKeySound(soundId: SoundsPlayer.keySoundID)
                 pinArray.append(sender.tag)
             }
         }

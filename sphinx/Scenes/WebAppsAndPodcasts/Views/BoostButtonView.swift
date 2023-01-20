@@ -48,7 +48,7 @@ class BoostButtonView: UIView {
     }
     
     func animateButton() {
-        PlayAudioHelper.playHaptic()
+        SoundsPlayer.playHaptic()
         
         boostButton.isUserInteractionEnabled = false
         

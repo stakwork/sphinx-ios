@@ -22,19 +22,11 @@ class PodcastEpisodeTableViewCell: SwipableCell {
     @IBOutlet weak var episodeImageView: UIImageView!
     @IBOutlet weak var divider: UIView!
     @IBOutlet weak var downloadButton: UIButton!
-    @IBOutlet weak var downloadingWheel: UIActivityIndicatorView!
     @IBOutlet weak var progressLabel: UILabel!
     
     var episode: PodcastEpisode! = nil
     
     public static var podcastImage: UIImage? = nil
-    
-    var downloading = false {
-        didSet {
-            downloadButton.isHidden = downloading
-            LoadingWheelHelper.toggleLoadingWheel(loading: downloading, loadingWheel: downloadingWheel, loadingWheelColor: UIColor.Sphinx.Text)
-        }
-    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -86,39 +78,28 @@ class PodcastEpisodeTableViewCell: SwipableCell {
     }
     
     func configureDownload(episode: PodcastEpisode, download: Download?) {
-        downloading = false
-        
-        downloadButton.setTitle("", for: .normal)
-        downloadButton.setTitleColor(UIColor.Sphinx.Text, for: .normal)
-        
-        self.contentView.alpha = episode.isAvailable() ? 1.0 : 0.5
+        contentView.alpha = episode.isAvailable() ? 1.0 : 0.5
 
-        // Disable swipe actions if the episode hasn't been downloaded yet.
         recognizer?.isEnabled = episode.isDownloaded
-
-        if episode.isDownloaded {
-            downloadButton.setTitle("", for: .normal)
-            downloadButton.setTitleColor(UIColor.Sphinx.PrimaryGreen, for: .normal)
-            return
-        }
-        
-        if let _ = download {
-            downloading = true
-        }
-    }
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
         
         progressLabel.text = ""
-        episodeLabel.text = ""
+
+        if episode.isDownloaded {
+            downloadButton.setTitle("download_done", for: .normal)
+            downloadButton.setTitleColor(UIColor.Sphinx.PrimaryGreen, for: .normal)
+        } else {
+            downloadButton.setTitle("download", for: .normal)
+            downloadButton.setTitleColor(UIColor.Sphinx.Text, for: .normal)
+        }
         
-        downloadButton.setTitle("", for: .normal)
-        downloadButton.setTitleColor(UIColor.Sphinx.Text, for: .normal)
+        if let download = download {
+            updateProgress(progress: download.progress)
+        }
     }
     
-    func updateProgress(progress: Float) {
-        progressLabel.text = progress == 1 ? "" : "\(Int(progress * 100))%"
+    func updateProgress(progress: Int) {
+        progressLabel.text = (progress > 0) ? "\(progress)%" : ""
+        downloadButton.setTitle((progress > 0) ? "" : "hourglass_top", for: .normal)
     }
     
     func isDifferentEpisode(episodeId: Int) -> Bool {

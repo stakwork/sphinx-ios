@@ -18,7 +18,7 @@ class YouTubeVideoFeedEpisodePlayerViewController: UIViewController, VideoFeedEp
     @IBOutlet private weak var episodePublishDateLabel: UILabel!
     
     let actionsManager = ActionsManager.sharedInstance
-    let podcastPlayer = PodcastPlayerHelper.sharedInstance
+    let podcastPlayerController = PodcastPlayerController.sharedInstance
     
     var videoPlayerEpisode: Video! {
         didSet {
@@ -66,8 +66,8 @@ extension YouTubeVideoFeedEpisodePlayerViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        podcastPlayer.shouldPause()
-        podcastPlayer.finishAndSaveContentConsumed()
+        podcastPlayerController.shouldPause()
+        podcastPlayerController.finishAndSaveContentConsumed()
 
         setupViews()
     }
@@ -77,7 +77,7 @@ extension YouTubeVideoFeedEpisodePlayerViewController {
         super.viewWillDisappear(true)
         
         videoPlayerView.stopVideo()
-        podcastPlayer.finishAndSaveContentConsumed()
+        podcastPlayerController.finishAndSaveContentConsumed()
     }
 }
 
@@ -192,7 +192,7 @@ extension YouTubeVideoFeedEpisodePlayerViewController: YTPlayerViewDelegate {
     ) {
         if let feedItem: ContentFeedItem = ContentFeedItem.getItemWith(itemID: videoId) {
             let time = Int(round(currentTime)) * 1000
-            actionsManager.trackItemConsumed(item: feedItem, startTimestamp: time)
+            actionsManager.trackItemStarted(item: feedItem, startTimestamp: time)
         }
     }
 

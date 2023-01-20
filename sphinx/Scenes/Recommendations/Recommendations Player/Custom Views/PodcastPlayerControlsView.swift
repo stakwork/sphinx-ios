@@ -10,6 +10,7 @@ import UIKit
 
 protocol RecommendationPlayerViewDelegate: AnyObject {
     func shouldShowSpeedPicker()
+    func shouldSetProgress(duration: Int, currentTime: Int)
 }
 
 class PodcastPlayerControlsView: UIView {
@@ -52,7 +53,7 @@ class PodcastPlayerControlsView: UIView {
         case Forward30
     }
     
-    var playerHelper: PodcastPlayerHelper = PodcastPlayerHelper.sharedInstance
+    var podcastPlayerController = PodcastPlayerController.sharedInstance
     var podcast: PodcastFeed!
 }
 
@@ -78,11 +79,40 @@ extension PodcastPlayerControlsView {
     }
     
     func togglePlayState() {
-        playerHelper.togglePlayStateFor(podcast)
+        guard let podcastData = podcast.getPodcastData() else {
+            return
+        }
+        
+        if podcastPlayerController.isPlaying(podcastId: podcastData.podcastId) {
+            podcastPlayerController.submitAction(
+                UserAction.Pause(podcastData)
+            )
+        } else {
+            podcastPlayerController.submitAction(
+                UserAction.Play(podcastData)
+            )
+        }
     }
     
     func seekTo(seconds: Double) {
-        playerHelper.seek(podcast, to: seconds)
+        var newTime = (podcast?.currentTime ?? 0) + Int(seconds)
+        newTime = max(newTime, 0)
+        newTime = min(newTime, (podcast?.duration ?? 0))
+        
+        guard let podcastData = podcast.getPodcastData(
+            currentTime: newTime
+        ) else {
+            return
+        }
+        
+        delegate?.shouldSetProgress(
+            duration: podcastData.duration ?? 0,
+            currentTime: newTime
+        )
+        
+        podcastPlayerController.submitAction(
+            UserAction.Seek(podcastData)
+        )
     }
 }
 

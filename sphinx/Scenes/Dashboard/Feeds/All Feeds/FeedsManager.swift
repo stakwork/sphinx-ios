@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 import AVFoundation
 
-class FeedsManager : NSObject{
+class FeedsManager : NSObject {
     
     func preCacheTopPods(){
         //1. Fetch results from memory
@@ -88,6 +88,37 @@ class FeedsManager : NSObject{
                 })
             }
         }
+    }
+    
+    func loadCurrentEpisodeDurationFor(
+        feedId: String,
+        completion: @escaping () -> ()
+    ) {
+        if let feed = ContentFeed.getFeedWith(feedId: feedId) {
+            
+            let podcast = PodcastFeed.convertFrom(contentFeed: feed)
+            
+            if let episode = podcast.getCurrentEpisode() {
+                
+                if let url = episode.getAudioUrl(), episode.duration == nil {
+                    let asset = AVAsset(url: url)
+                    asset.loadValuesAsynchronously(forKeys: ["duration"], completionHandler: {
+                        let duration = Int(Double(asset.duration.value) / Double(asset.duration.timescale))
+                        episode.duration = duration
+                        
+                        DispatchQueue.main.async {
+                            completion()
+                        }
+                    })
+                    return
+                }
+            }
+            
+            DispatchQueue.main.async {
+                completion()
+            }
+        }
+        
     }
     
     func downloadLastEpisodeFor(feed: ContentFeed) {

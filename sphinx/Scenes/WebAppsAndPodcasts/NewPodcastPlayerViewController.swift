@@ -12,6 +12,7 @@ protocol PodcastPlayerVCDelegate: AnyObject {
     func willDismissPlayer()
     func shouldShareClip(comment: PodcastComment)
     func shouldGoToPlayer(podcast: PodcastFeed)
+    func didFailPlayingPodcast()
 }
 
 @objc protocol CustomBoostDelegate: AnyObject {
@@ -39,7 +40,8 @@ class NewPodcastPlayerViewController: UIViewController {
     
     var fromDashboard = false
     
-    var playerHelper: PodcastPlayerHelper = PodcastPlayerHelper.sharedInstance
+    var podcastPlayerController = PodcastPlayerController.sharedInstance
+    
     let downloadService = DownloadService.sharedInstance
     
     var tableDataSource: PodcastEpisodesDataSource!
@@ -64,19 +66,20 @@ class NewPodcastPlayerViewController: UIViewController {
         if isBeingDismissed {
             delegate?.willDismissPlayer()
             
-            if let tableHeaderView = tableHeaderView {
-                playerHelper.addDelegate(
-                    tableHeaderView,
-                    withKey: PodcastPlayerHelper.DelegateKeys.podcastPlayerVC.rawValue
-                )
-            }
-            
-            PodcastPlayerHelper.sharedInstance.finishAndSaveContentConsumed()
-            
-            NotificationCenter.default.post(name: .refreshPodcastUI, object: nil)
+            var dataDict: [String: String] = [String: String]()
+            dataDict["episode-id"] = (podcast.getCurrentEpisode()?.itemID ?? "") as String
+            NotificationCenter.default.post(name: .refreshEpisode, object: nil, userInfo: dataDict)
         }
     }
     
+    override func endAppearanceTransition() {
+        super.endAppearanceTransition()
+        
+        if isBeingDismissed {
+            podcastPlayerController.finishAndSaveContentConsumed()
+            podcastPlayerController.removeFromDelegatesWith(key: PodcastDelegateKeys.PodcastPlayerView.rawValue)
+        }
+    }
     
     static func instantiate(
         podcast: PodcastFeed,
@@ -120,6 +123,8 @@ class NewPodcastPlayerViewController: UIViewController {
             podcast: podcast,
             delegate: self
         )
+        
+        podcastPlayerController.addDelegate(tableHeaderView!, withKey: PodcastDelegateKeys.PodcastPlayerView.rawValue)
     }
     
     private func updateEpisodes() {
@@ -181,13 +186,19 @@ extension NewPodcastPlayerViewController : PodcastPlayerViewDelegate {
         }
     }
     
+    func didFailPlayingPodcast() {
+        AlertHelper.showAlert(title: "generic.error.title".localized, message: "error.playing".localized, completion: {
+            self.dismiss(animated: true)
+        })
+    }
+    
     func shouldReloadEpisodesTable() {
         tableView.reloadData()
     }
     
     func shouldShareClip(comment: PodcastComment) {
         self.delegate?.shouldShareClip(comment: comment)
-        self.dismiss(animated: true, completion: nil)
+        self.dismiss(animated: true)
     }
     
     func shouldSyncPodcast() {
@@ -217,8 +228,18 @@ extension NewPodcastPlayerViewController : CustomBoostDelegate {
 
 extension NewPodcastPlayerViewController : PickerViewDelegate {
     func didSelectValue(value: String) {
-        if let floatValue = Float(value), floatValue >= 0.5 && floatValue <= 2.1 {
-            playerHelper.changeSpeedTo(value: floatValue, on: podcast)
+        if let newSpeed = Float(value), newSpeed >= 0.5 && newSpeed <= 2.1 {
+            
+            guard let podcastData = podcast.getPodcastData(
+                playerSpeed: newSpeed
+            ) else {
+                return
+            }
+            
+            podcastPlayerController.submitAction(
+                UserAction.AdjustSpeed(podcastData)
+            )
+            
             tableHeaderView?.configureControls()
         }
     }
@@ -238,18 +259,14 @@ extension NewPodcastPlayerViewController: URLSessionDelegate {
 
 extension NewPodcastPlayerViewController : DownloadServiceDelegate {
     func shouldReloadRowFor(download: Download) {
-        if let index = playerHelper.getIndexFor(episode: download.episode, in: podcast) {
-            DispatchQueue.main.async {
-              self.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
-            }
+        if let index = podcast.getIndexForEpisodeWith(id: download.episode.itemID) {
+            tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
         }
     }
     
     func shouldUpdateProgressFor(download: Download) {
-        if let index = playerHelper.getIndexFor(episode: download.episode, in: podcast) {
-            if let cell = self.tableView.cellForRow(at: IndexPath(row: index, section: 0)) as? PodcastEpisodeTableViewCell {
-                cell.updateProgress(progress: download.progress)
-            }
+        if let index = podcast.getIndexForEpisodeWith(id: download.episode.itemID) {
+            tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
         }
     }
 }

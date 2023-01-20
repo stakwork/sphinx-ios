@@ -488,8 +488,10 @@ public class Chat: NSManagedObject {
                     self.tribeInfo = GroupsManager.sharedInstance.getTribesInfoFrom(json: chatJson)
                     self.updateChatFromTribesInfo()
                     
-                    if let feedUrl = self.tribeInfo?.feedUrl {
+                    if let feedUrl = self.tribeInfo?.feedUrl, !feedUrl.isEmpty {
                         ContentFeed.fetchChatFeedContentInBackground(feedUrl: feedUrl, chatObjectID: self.objectID, completion: completion)
+                    } else if let existingFeed = self.contentFeed {
+                        ContentFeed.deleteFeedWith(feedId: existingFeed.feedID)
                     }
                 },
                 errorCallback: {
@@ -574,7 +576,9 @@ public class Chat: NSManagedObject {
     func setMetaData(_ meta: String?) {
         if let meta = meta, !meta.isEmpty {
             
-            if PodcastPlayerHelper.sharedInstance.isPlaying(self.id) {
+            if let podcast = self.podcast, PodcastPlayerController.sharedInstance.isPlaying(
+                podcastId: podcast.feedID
+            ) {
                 return
             }
             

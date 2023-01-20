@@ -66,32 +66,25 @@ class DiscoverTribesTableViewCell: UITableViewCell {
     
     func configureJoinButton(tribeData:DiscoverTribeData,wasJoined:Bool){
         joinButton.layer.cornerRadius = 15.0
+        
         let host = tribeData.host ?? API.kTribesServerBaseURL.replacingOccurrences(of: "https://", with: "")
+        
         if let uuid = tribeData.uuid {
+            joinButton.isEnabled = true
             cellURL = URL(string: "sphinx.chat://?action=tribe&uuid=\(uuid)&host=\(host)")
             joinButton.addTarget(self, action: #selector(handleJoinTap), for: .touchUpInside)
         } else {
-            //joinButton.backgroundColor = UIColor.lightGray
             joinButton.isEnabled = false
         }
         
-        if wasJoined{
-            let attributes: [NSAttributedString.Key: Any] = [
-                .foregroundColor: UIColor.Sphinx.BodyInverted,
-                .font: UIFont(name: "Roboto-Medium", size: 15.0)
-            ]
+        if wasJoined {
             joinButton.backgroundColor = UIColor.Sphinx.ReceivedMsgBG
-            let string = NSAttributedString(string: "Open",attributes: attributes)
-            joinButton.setAttributedTitle(string, for: .normal)
-        }
-        else{
-            let attributes: [NSAttributedString.Key: Any] = [
-                .foregroundColor: UIColor.white,
-                .font: UIFont(name: "Roboto-Medium", size: 15.0)
-            ]
-            let string = NSAttributedString(string: "Join",attributes: attributes)
-            joinButton.setAttributedTitle(string, for: .normal)
+            joinButton.setTitle("open".localized, for: .normal)
+            joinButton.setTitleColor(UIColor.Sphinx.BodyInverted, for: .normal)
+        } else {
             joinButton.backgroundColor = UIColor.Sphinx.PrimaryBlue
+            joinButton.setTitle("join".localized, for: .normal)
+            joinButton.setTitleColor(UIColor.white, for: .normal)
         }
     }
     
@@ -103,8 +96,7 @@ class DiscoverTribesTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        //joinButton.titleLabel?.textColor = .black
-        //joinButton.setTitle("Join", for: .normal)
+
         tribeImageView.image = nil
         descriptionLabel.text = ""
         titleLabel.text = ""

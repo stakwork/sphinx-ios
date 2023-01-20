@@ -9,13 +9,13 @@
 import Foundation
 
 class Download {
-  var isDownloading = false
-  var progress: Float = 0
-  var resumeData: Data?
-  var task: URLSessionDownloadTask?
-  var episode: PodcastEpisode
-  
-  init(episode: PodcastEpisode) {
-    self.episode = episode
-  }
+    var isDownloading = false
+    var progress: Int = 0
+    var resumeData: Data?
+    var task: URLSessionDownloadTask?
+    var episode: PodcastEpisode
+
+    init(episode: PodcastEpisode) {
+        self.episode = episode
+    }
 }

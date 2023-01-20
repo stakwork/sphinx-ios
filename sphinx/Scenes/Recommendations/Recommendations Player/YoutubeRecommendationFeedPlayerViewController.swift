@@ -14,7 +14,7 @@ class YoutubeRecommendationFeedPlayerViewController: UIViewController {
     @IBOutlet private weak var videoPlayerView: YTPlayerView!
     @IBOutlet private weak var dismissButton: UIButton!
     
-    let podcastPlayer = PodcastPlayerHelper.sharedInstance
+    var podcastPlayerController = PodcastPlayerController.sharedInstance
     let actionsManager = ActionsManager.sharedInstance
     
     var podcast: PodcastFeed! {
@@ -39,8 +39,8 @@ extension YoutubeRecommendationFeedPlayerViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        podcastPlayer.shouldPause()
-        podcastPlayer.finishAndSaveContentConsumed()
+        podcastPlayerController.shouldPause()
+        podcastPlayerController.finishAndSaveContentConsumed()
 
         setupViews()
     }
@@ -49,7 +49,7 @@ extension YoutubeRecommendationFeedPlayerViewController {
         super.viewWillDisappear(true)
         
         videoPlayerView?.stopVideo()
-        podcastPlayer.finishAndSaveContentConsumed()
+        podcastPlayerController.finishAndSaveContentConsumed()
     }
 }
 
@@ -146,7 +146,7 @@ extension YoutubeRecommendationFeedPlayerViewController: YTPlayerViewDelegate {
         _ currentTime: Float
     ) {
         let time = Int(round(currentTime)) * 1000
-        actionsManager.trackItemConsumed(item: episode, podcast: podcast, startTimestamp: time)
+        actionsManager.trackItemStarted(item: episode, podcast: podcast, startTimestamp: time)
     }
 
     func trackItemFinished(

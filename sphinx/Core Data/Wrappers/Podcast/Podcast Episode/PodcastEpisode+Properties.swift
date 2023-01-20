@@ -123,6 +123,7 @@ extension PodcastEpisode {
         podcastEpisode.imageURLPath = contentFeedItem.imageURL?.absoluteString
         podcastEpisode.title = contentFeedItem.title
         podcastEpisode.feed = feed
+        podcastEpisode.type = RecommendationsHelper.PODCAST_TYPE
         
         return podcastEpisode
     }

@@ -107,8 +107,6 @@ extension RecommendationFeedPlayerContainerViewController {
             child: youtubeVideoPlayerViewController,
             container: playerContainerView
         )
-        
-        podcastPlayerController.shouldPause()
     }
     
     private func addPodcastPlayerView() {
@@ -142,7 +140,7 @@ extension RecommendationFeedPlayerContainerViewController {
     private func handleRecommendationCellSelection(
         _ recommendationId: String
     ) {
-        if let episode = podcast.getEpisodeWith(id: recommendationId), episode.isMusicClip {
+        if let episode = podcast.getEpisodeWith(id: recommendationId) {
             shouldPlay(episode)
         }
         

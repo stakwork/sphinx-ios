@@ -50,6 +50,7 @@ extension PodcastPlayerController {
                 ///If playing another episode, then pause first
                 trackItemFinished(shouldSaveAction: true)
                 pausePlaying()
+                runPausedStateUpdate()
             }
         }
         
@@ -62,6 +63,12 @@ extension PodcastPlayerController {
             duration: podcastData.duration,
             playerSpeed: podcastData.speed
         )
+        
+        if let episode = podcast?.getCurrentEpisode(), !episode.isMusicClip {
+            ///If playing video on recommendations player
+            resetPlayingInfoCenter()
+            return
+        }
         
         runLoadingStateUpdate()
         

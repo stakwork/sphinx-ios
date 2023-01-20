@@ -124,18 +124,15 @@ extension PodcastRecommendationFeedPlayerViewController {
     func loadTime() {
         let episode = podcast.getCurrentEpisode()
         
+        audioLoading = true
+        
         if let duration = episode?.duration {
             
             let _ = setProgress(
                 duration: duration,
                 currentTime: podcast.currentTime
             )
-            
-            audioLoading = false
-            
         } else if let url = episode?.getAudioUrl() {
-            
-            audioLoading = true
             
             setProgress(
                 duration: 0,
@@ -146,13 +143,12 @@ extension PodcastRecommendationFeedPlayerViewController {
             asset.loadValuesAsynchronously(forKeys: ["duration"], completionHandler: {
                 let duration = Int(Double(asset.duration.value) / Double(asset.duration.timescale))
                 episode?.duration = duration
-                
+
                 DispatchQueue.main.async {
                     let _ = self.setProgress(
                         duration: duration,
                         currentTime: self.podcast.currentTime
                     )
-                    self.audioLoading = false
                 }
             })
         }

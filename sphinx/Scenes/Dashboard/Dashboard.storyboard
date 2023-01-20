@@ -82,6 +82,9 @@
                                             <directionalEdgeInsets key="contentInsets" top="0.0" leading="20" bottom="0.0" trailing="0.0"/>
                                             <color key="baseForegroundColor" name="Text"/>
                                         </buttonConfiguration>
+                                        <connections>
+                                            <action selector="didTapAddTribeButton" destination="28a-MN-hzt" eventType="touchUpInside" id="34M-22-WBt"/>
+                                        </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="add" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3p2-Mz-7oz">
                                         <rect key="frame" x="422" y="27.5" width="35" height="21"/>

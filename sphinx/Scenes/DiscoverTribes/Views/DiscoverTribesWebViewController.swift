@@ -35,15 +35,10 @@ class DiscoverTribesWebViewController : UIViewController{
     var currentTags : [String] = []
     
     var discoverTribesTableViewDataSource : DiscoverTribeTableViewDataSource? = nil
-    var rootViewController: RootViewController!
     var delegate: DiscoverTribesWVVCDelegate? = nil
     
-    static func instantiate(
-        rootViewController: RootViewController
-    ) -> DiscoverTribesWebViewController {
+    static func instantiate() -> DiscoverTribesWebViewController {
         let viewController = StoryboardScene.Welcome.discoverTribesWebViewController.instantiate()
-        viewController.rootViewController = rootViewController
-        
         return viewController
     }
     

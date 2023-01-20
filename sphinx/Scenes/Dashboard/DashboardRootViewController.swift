@@ -31,6 +31,7 @@ class DashboardRootViewController: RootViewController {
         "dashboard.tabs.friends".localized,
         "dashboard.tabs.tribes".localized,
     ]
+    
     @IBOutlet weak var dashboardNavigationTabs: CustomSegmentedControl! {
         didSet {
             dashboardNavigationTabs.configureFromOutlet(
@@ -230,16 +231,12 @@ extension DashboardRootViewController {
     }
     
     func setupAddTribeButton(){
-        addTribeButton.addTarget(self, action: #selector(handleAddTribeTouch), for: .touchUpInside)
         addTribeButton.layer.cornerRadius = 22.0
-        addTribeButton.titleLabel?.font = UIFont(name: "Roboto", size: 14.0)
-        addTribeButton.titleLabel?.textColor = UIColor.Sphinx.Text
+        addTribeButton.clipsToBounds = true
     }
     
-    @objc func handleAddTribeTouch(){
-        let discoverVC = DiscoverTribesWebViewController.instantiate(
-                        rootViewController: self.rootViewController
-        )
+    @IBAction func didTapAddTribeButton() {
+        let discoverVC = DiscoverTribesWebViewController.instantiate()
         navigationController?.pushViewController(discoverVC, animated: true)
     }
     

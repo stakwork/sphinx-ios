@@ -139,7 +139,9 @@ extension PodcastPlayerControlsView {
         clipButton.alpha = 0.5
         clipButton.isEnabled = false
         
-        boostView.alpha = 0.5
+        let canBoost = (RecommendationsHelper.sharedInstance.pubKey != nil)
+        boostView.alpha = canBoost ? 1.0 : 0.5
+        boostView.isUserInteractionEnabled = canBoost
         boostView.delegate = self
     }
     

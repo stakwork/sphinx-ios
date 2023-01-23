@@ -107,18 +107,18 @@ class FeedBoostHelper : NSObject {
     }
     
     func sendBoostOnRecommendation(
-        itemID:String,
-        currentTime:Int,
-        amount: Int,
-        completion: @escaping ((TransactionMessage?, Bool) -> ())
+        itemID: String,
+        currentTime: Int,
+        amount: Int
     ){
-        let podFeed = RecommendationsHelper.sharedInstance.recommendationsPodcast
+        let podcast = RecommendationsHelper.sharedInstance.recommendationsPodcast
         
         var destinations = [[String: AnyObject]]()
         
-        if let valid_feed = podFeed,
-           let valid_episode = valid_feed.getCurrentEpisode(),
-           let valid_destination = valid_episode.destination{
+        if let podcast = podcast,
+           let valid_episode = podcast.getCurrentEpisode(),
+           let valid_destination = valid_episode.destination {
+            
             let destinationParams: [String: AnyObject] = [
                 "address": (valid_destination.address) as AnyObject,
                 "split": (valid_destination.split) as AnyObject,
@@ -126,13 +126,13 @@ class FeedBoostHelper : NSObject {
             ]
             destinations.append(destinationParams)
             
-            
             var params: [String: AnyObject] = [
                 "destinations": destinations as AnyObject,
                 "amount": amount as AnyObject,
                 "chat_id": -1 as AnyObject
             ]
-            params["text"] = "{\"feedID\":\"\(valid_feed.feedID)\",\"itemID\":\"\(itemID)\",\"ts\":\(currentTime)}" as AnyObject
+            
+            params["text"] = "{\"feedID\":\"\(podcast.feedID)\",\"itemID\":\"\(itemID)\",\"ts\":\(currentTime)}" as AnyObject
                 
             API.sharedInstance.streamSats(params: params, callback: {}, errorCallback: {})
         }

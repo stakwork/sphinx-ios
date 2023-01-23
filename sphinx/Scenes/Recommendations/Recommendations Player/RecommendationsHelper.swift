@@ -39,6 +39,7 @@ class RecommendationsHelper {
         podcast.podcastDescription = RecommendationsHelper.kRecommendationDescription
         
         var episodes: [PodcastEpisode] = []
+        
         for item in recommendations {
             let episode = PodcastEpisode(nil, item.id)
             episode.title = item.episodeTitle
@@ -63,21 +64,19 @@ class RecommendationsHelper {
             episode.topics = item.topics
             episode.showTitle = item.showTitle
             
-            let destination = PodcastDestination(nil)
+            let destination = PodcastDestination()
             destination.address = item.pubKey
-            destination.split = 1.0
-            destination.type = "lightning"
+            destination.split = 100
+            destination.type = "node"
+            
             episode.destination = destination
             
             episodes.append(episode)
-            
         }
         
         podcast.episodes = episodes
         
-        
         recommendationsPodcast = podcast
-        
         
         return podcast
     }

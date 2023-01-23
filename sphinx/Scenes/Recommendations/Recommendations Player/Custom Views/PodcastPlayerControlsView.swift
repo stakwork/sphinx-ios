@@ -26,6 +26,8 @@ class PodcastPlayerControlsView: UIView {
     @IBOutlet weak var skip30ForwardView: UIView!
     @IBOutlet weak var boostView: CustomBoostView!
     
+    let feedBoostHelper = FeedBoostHelper()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
@@ -119,16 +121,15 @@ extension PodcastPlayerControlsView {
 
 // MARK: - Public methods
 extension PodcastPlayerControlsView {
+    
     func configure(
         podcast: PodcastFeed,
-        andDelegate delegate: RecommendationPlayerViewDelegate?,
-        pubKey:String?=nil
+        andDelegate delegate: RecommendationPlayerViewDelegate?
     ) {
         self.delegate = delegate
         self.podcast = podcast
         
         if let item = podcast.getCurrentEpisode() {
-            //currentEpisode = item
             speedButton.isHidden = item.isYoutubeVideo
             clipButton.isHidden = item.isYoutubeVideo
             playPauseButton.isHidden = item.isYoutubeVideo
@@ -158,37 +159,22 @@ extension PodcastPlayerControlsView {
 
 extension PodcastPlayerControlsView : CustomBoostViewDelegate{
     func didTouchBoostButton(withAmount amount: Int) {
-        print("touched boost")
-        if let episode = podcast.getCurrentEpisode()//,
-           //let objectID = episode.objectID
-        {
+        if let episode = podcast.getCurrentEpisode() {
             
             let itemID = episode.itemID
             let currentTime = podcast.getCurrentEpisode()?.currentTime ?? 0
-            let feedBoostHelper = FeedBoostHelper()
-
                 
             let podcastAnimationVC = PodcastAnimationViewController.instantiate(amount: amount)
             WindowsManager.sharedInstance.showConveringWindowWith(rootVC: podcastAnimationVC)
             podcastAnimationVC.showBoostAnimation()
                 
-            feedBoostHelper.processPayment(itemID: itemID, amount: amount, currentTime: currentTime)
-                
-                
             feedBoostHelper.sendBoostOnRecommendation(
                 itemID: itemID,
                 currentTime:currentTime,
-                amount: amount,
-                completion: { (message, success) in
-                    //self.boostDelegate?.didSendBoostMessage(success: success, message: message)
-                }
+                amount: amount
             )
         }
     }
     
-    func didStartBoostAmountEdit() {
-        print("started to edit boost amount")
-    }
-    
-    
+    func didStartBoostAmountEdit() {}
 }

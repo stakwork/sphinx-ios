@@ -216,7 +216,6 @@ extension RecommendationFeedPlayerContainerViewController : PlayerDelegate {
             return
         }
         configureControls(playing: true)
-        //episodeID + currentTime
         setPlayingEpisode()
         podcastPlayerViewController.loadingState(podcastData)
     }

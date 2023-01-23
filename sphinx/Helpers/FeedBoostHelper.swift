@@ -117,21 +117,21 @@ class FeedBoostHelper : NSObject {
         
         var destinations = [[String: AnyObject]]()
         
-        let destinationParams: [String: AnyObject] = [
-            "address": (address ?? "") as AnyObject,
-            "split": (1) as AnyObject,
-            "type": ("lightning") as AnyObject
-        ]
-        destinations.append(destinationParams)
-        
-        
-        var params: [String: AnyObject] = [
-            "destinations": destinations as AnyObject,
-            "amount": amount as AnyObject,
-            "chat_id": -1 as AnyObject
-        ]
-        
-        if let valid_feed = podFeed{
+        if let valid_feed = podFeed,
+        let valid_address = address{
+            let destinationParams: [String: AnyObject] = [
+                "address": (valid_address) as AnyObject,
+                "split": (1) as AnyObject,
+                "type": ("lightning") as AnyObject
+            ]
+            destinations.append(destinationParams)
+            
+            
+            var params: [String: AnyObject] = [
+                "destinations": destinations as AnyObject,
+                "amount": amount as AnyObject,
+                "chat_id": -1 as AnyObject
+            ]
             params["text"] = "{\"feedID\":\"\(valid_feed.feedID)\",\"itemID\":\"\(itemID)\",\"ts\":\(currentTime)}" as AnyObject
                 
             API.sharedInstance.streamSats(params: params, callback: {}, errorCallback: {})

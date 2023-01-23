@@ -41,7 +41,8 @@ class RecommendationDetailsView: UIView {
 extension RecommendationDetailsView {
     func configure(
         withPodcast podcast: PodcastFeed,
-        andDelegate delegate: RecommendationPlayerViewDelegate?
+        andDelegate delegate: RecommendationPlayerViewDelegate?,
+        pubKey:String?=nil
     ) {
         if let item = podcast.getCurrentEpisode() {
             titleLabel.text = item.episodeDescription

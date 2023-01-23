@@ -107,36 +107,35 @@ class FeedBoostHelper : NSObject {
     }
     
     func sendBoostOnRecommendation(
-        message: String,
+        itemID:String,
+        currentTime:Int,
         amount: Int,
         completion: @escaping ((TransactionMessage?, Bool) -> ())
     ){
-        //if let chat = chat {
-            let boostType = TransactionMessage.TransactionMessageType.boost.rawValue
-            let provisionalMessage = TransactionMessage.createProvisionalMessage(messageContent: message, type: boostType, date: Date(), chat: chat)
-            
-            let messageType = TransactionMessage.TransactionMessageType(fromRawValue: provisionalMessage?.type ?? 0)
-            guard let params = TransactionMessage.getMessageParams(contact: nil, chat: chat, type: messageType, text: message) else {
-                completion(provisionalMessage, false)
-                return
-            }
-            
-            API.sharedInstance.sendMessage(params: params, callback: { m in
-                if let message = TransactionMessage.insertMessage(m: m, existingMessage: provisionalMessage).0 {
-                    message.setPaymentInvoiceAsPaid()
-                    
-                    completion(message, true)
-                    //self.trackBoostAction(itemObjectID: itemObjectID, amount: amount)
-                    
-                }
-            }, errorCallback: {
-                 if let provisionalMessage = provisionalMessage {
-                    provisionalMessage.status = TransactionMessage.TransactionMessageStatus.failed.rawValue
-                    
-                    completion(provisionalMessage, false)
-                 }
-            })
-        //}
+        let podFeed = RecommendationsHelper.sharedInstance.recommendationsPodcast
+        let address = RecommendationsHelper.sharedInstance.pubKey
+        
+        var destinations = [[String: AnyObject]]()
+        
+        let destinationParams: [String: AnyObject] = [
+            "address": (address ?? "") as AnyObject,
+            "split": (1) as AnyObject,
+            "type": ("lightning") as AnyObject
+        ]
+        destinations.append(destinationParams)
+        
+        
+        var params: [String: AnyObject] = [
+            "destinations": destinations as AnyObject,
+            "amount": amount as AnyObject,
+            "chat_id": -1 as AnyObject
+        ]
+        
+        if let valid_feed = podFeed{
+            params["text"] = "{\"feedID\":\"\(valid_feed.feedID)\",\"itemID\":\"\(itemID)\",\"ts\":\(currentTime)}" as AnyObject
+                
+            API.sharedInstance.streamSats(params: params, callback: {}, errorCallback: {})
+        }
     }
     
     func sendBoostMessage(

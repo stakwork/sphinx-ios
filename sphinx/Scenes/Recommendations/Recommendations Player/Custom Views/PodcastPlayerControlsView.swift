@@ -121,7 +121,8 @@ extension PodcastPlayerControlsView {
 extension PodcastPlayerControlsView {
     func configure(
         podcast: PodcastFeed,
-        andDelegate delegate: RecommendationPlayerViewDelegate?
+        andDelegate delegate: RecommendationPlayerViewDelegate?,
+        pubKey:String?=nil
     ) {
         self.delegate = delegate
         self.podcast = podcast
@@ -162,27 +163,23 @@ extension PodcastPlayerControlsView : CustomBoostViewDelegate{
             let itemID = episode.itemID
             let currentTime = podcast.getCurrentEpisode()?.currentTime ?? 0
             let feedBoostHelper = FeedBoostHelper()
-            var proposedBoostMessage : String? = nil
-            proposedBoostMessage = "{\"feedID\":\"\(podcast.feedID)\",\"itemID\":\"\(itemID)\",\"ts\":\(currentTime),\"amount\":\(amount)}"
-            
-            if let boostMessage = proposedBoostMessage {
+
                 
-                let podcastAnimationVC = PodcastAnimationViewController.instantiate(amount: amount)
-                WindowsManager.sharedInstance.showConveringWindowWith(rootVC: podcastAnimationVC)
-                podcastAnimationVC.showBoostAnimation()
+            let podcastAnimationVC = PodcastAnimationViewController.instantiate(amount: amount)
+            WindowsManager.sharedInstance.showConveringWindowWith(rootVC: podcastAnimationVC)
+            podcastAnimationVC.showBoostAnimation()
                 
-                feedBoostHelper.processPayment(itemID: itemID, amount: amount, currentTime: currentTime)
+            feedBoostHelper.processPayment(itemID: itemID, amount: amount, currentTime: currentTime)
                 
                 
-                feedBoostHelper.sendBoostOnRecommendation(
-                    message: boostMessage,
-                    amount: amount,
-                    completion: { (message, success) in
-                        //self.boostDelegate?.didSendBoostMessage(success: success, message: message)
-                    }
-                )
-                
-            }
+            feedBoostHelper.sendBoostOnRecommendation(
+                itemID: itemID,
+                currentTime:currentTime,
+                amount: amount,
+                completion: { (message, success) in
+                    //self.boostDelegate?.didSendBoostMessage(success: success, message: message)
+                }
+            )
         }
     }
     

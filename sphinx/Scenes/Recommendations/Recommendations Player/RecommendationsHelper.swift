@@ -29,6 +29,7 @@ class RecommendationsHelper {
     static let TWITTER_TYPE = "twitter_space"
     
     var recommendationsPodcast: PodcastFeed? = nil
+    var pubKey: String? = nil
     
     func getPodcastFor(
         recommendations: [RecommendationResult]

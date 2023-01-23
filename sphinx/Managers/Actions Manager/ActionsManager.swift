@@ -427,14 +427,13 @@ class ActionsManager {
         })
         let contentFeedStatusParams = contentFeedStatuses.map({$0.toJSON()})
         print(contentFeedStatuses)
-        /*
+        
         API.sharedInstance.saveContentFeedStatusesToRemote(params: contentFeedStatusParams,
         callback: {
             
         }, errorCallback: {
             
         })
-        */
     }
     
     

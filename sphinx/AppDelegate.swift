@@ -197,7 +197,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func loadContentFeedStatus(){
-        API.sharedInstance.getAllContentFeedStatuses(url: "",
+        API.sharedInstance.getAllContentFeedStatuses(
         callback: { results in
             //do something with coredata layer
         }, errorCallback: {

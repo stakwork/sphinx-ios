@@ -104,38 +104,31 @@ extension API {
     }
     
     func getAllContentFeedStatuses(
-        url: String,
         persistingIn managedObjectContext: NSManagedObjectContext? = nil,
         callback: @escaping AllContentFeedStatusCallback,
         errorCallback: @escaping EmptyCallback
     ) {
-        /*
-        guard let request = createRequest(url, bodyParams: nil, method: "GET") else {
+        
+        
+        guard let request = getURLRequest(route: "/content_feed_status", params: nil, method: "GET") else {
             errorCallback()
             return
         }
-         */
-        
-        var status_array = [[String:Any]]()
-        var status1_json = [String:Any]()
-        status1_json["chat_id"] = "abc456"
-        status1_json["feed_id"] = "xyz89"
-        status_array.append(status1_json)
-        if let status1 = Mapper<ContentFeedStatus>().mapArray(JSONObject: status_array){
-            callback(status1)
-        }
-        else{
-            errorCallback()
-        }
-        /*
-        AF.request(request).responseJSON { response in
-            if let data = response.data {
-                callback(JSON(data))
-            } else {
+
+        sphinxRequest(request) { response in
+            switch response.result {
+            case .success(let data):
+                if let json = data as? NSDictionary {
+                    if let success = json["success"] as? Bool, success {
+                        print(json)
+                        return
+                    }
+                }
+                errorCallback()
+            case .failure(_):
                 errorCallback()
             }
         }
-        */
     }
     
     func saveContentFeedStatusesToRemote(
@@ -143,25 +136,28 @@ extension API {
         callback: @escaping EmptyCallback,
         errorCallback: @escaping EmptyCallback
     ) {
-        for paramSet in params{
-            guard let request = getURLRequest(route: "TODO: Set this to the correct url", params: paramSet as NSDictionary?, method: "POST") else {
-                errorCallback()
-                return
-            }
-            
-            sphinxRequest(request) { response in
-                switch response.result {
-                case .success(let data):
-                    if let json = data as? NSDictionary {
-                        if let success = json["success"] as? Bool, success {
-                            callback()
-                            return
-                        }
+
+        var requestParams : [String:Any] = [String:Any]()
+        requestParams["content"] = params
+        
+        
+        guard let request = getURLRequest(route: "/content_feed_status", params: requestParams as NSDictionary?, method: "POST") else {
+            errorCallback()
+            return
+        }
+        
+        sphinxRequest(request) { response in
+            switch response.result {
+            case .success(let data):
+                if let json = data as? NSDictionary {
+                    if let success = json["success"] as? Bool, success {
+                        callback()
+                        return
                     }
-                    errorCallback()
-                case .failure(_):
-                    errorCallback()
                 }
+                errorCallback()
+            case .failure(_):
+                errorCallback()
             }
         }
         

@@ -55,6 +55,7 @@ class PodcastPlayerControlsView: UIView {
     
     var podcastPlayerController = PodcastPlayerController.sharedInstance
     var podcast: PodcastFeed!
+    var podcastFeed: PodcastEpisode?
 }
 
 // MARK: - Actions handlers
@@ -126,6 +127,7 @@ extension PodcastPlayerControlsView {
         self.podcast = podcast
         
         if let item = podcast.getCurrentEpisode() {
+            //currentEpisode = item
             speedButton.isHidden = item.isYoutubeVideo
             clipButton.isHidden = item.isYoutubeVideo
             playPauseButton.isHidden = item.isYoutubeVideo
@@ -137,6 +139,7 @@ extension PodcastPlayerControlsView {
         clipButton.isEnabled = false
         
         boostView.alpha = 0.5
+        boostView.delegate = self
     }
     
     func configureControls(
@@ -146,4 +149,46 @@ extension PodcastPlayerControlsView {
         playPauseButton.setTitle(playing ? "pause" : "play_arrow", for: .normal)
         speedButton.setTitle(speedDescription + "x", for: .normal)
     }
+}
+
+
+extension PodcastPlayerControlsView : CustomBoostViewDelegate{
+    func didTouchBoostButton(withAmount amount: Int) {
+        print("touched boost")
+        if let episode = podcast.getCurrentEpisode()//,
+           //let objectID = episode.objectID
+        {
+            
+            let itemID = episode.itemID
+            let currentTime = podcast.getCurrentEpisode()?.currentTime ?? 0
+            let feedBoostHelper = FeedBoostHelper()
+            var proposedBoostMessage : String? = nil
+            proposedBoostMessage = "{\"feedID\":\"\(podcast.feedID)\",\"itemID\":\"\(itemID)\",\"ts\":\(currentTime),\"amount\":\(amount)}"
+            
+            if let boostMessage = proposedBoostMessage {
+                
+                let podcastAnimationVC = PodcastAnimationViewController.instantiate(amount: amount)
+                WindowsManager.sharedInstance.showConveringWindowWith(rootVC: podcastAnimationVC)
+                podcastAnimationVC.showBoostAnimation()
+                
+                feedBoostHelper.processPayment(itemID: itemID, amount: amount, currentTime: currentTime)
+                
+                
+                feedBoostHelper.sendBoostOnRecommendation(
+                    message: boostMessage,
+                    amount: amount,
+                    completion: { (message, success) in
+                        //self.boostDelegate?.didSendBoostMessage(success: success, message: message)
+                    }
+                )
+                
+            }
+        }
+    }
+    
+    func didStartBoostAmountEdit() {
+        print("started to edit boost amount")
+    }
+    
+    
 }

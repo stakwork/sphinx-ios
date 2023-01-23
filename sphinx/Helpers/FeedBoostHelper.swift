@@ -106,6 +106,39 @@ class FeedBoostHelper : NSObject {
         API.sharedInstance.streamSats(params: params, callback: {}, errorCallback: {})
     }
     
+    func sendBoostOnRecommendation(
+        message: String,
+        amount: Int,
+        completion: @escaping ((TransactionMessage?, Bool) -> ())
+    ){
+        //if let chat = chat {
+            let boostType = TransactionMessage.TransactionMessageType.boost.rawValue
+            let provisionalMessage = TransactionMessage.createProvisionalMessage(messageContent: message, type: boostType, date: Date(), chat: chat)
+            
+            let messageType = TransactionMessage.TransactionMessageType(fromRawValue: provisionalMessage?.type ?? 0)
+            guard let params = TransactionMessage.getMessageParams(contact: nil, chat: chat, type: messageType, text: message) else {
+                completion(provisionalMessage, false)
+                return
+            }
+            
+            API.sharedInstance.sendMessage(params: params, callback: { m in
+                if let message = TransactionMessage.insertMessage(m: m, existingMessage: provisionalMessage).0 {
+                    message.setPaymentInvoiceAsPaid()
+                    
+                    completion(message, true)
+                    //self.trackBoostAction(itemObjectID: itemObjectID, amount: amount)
+                    
+                }
+            }, errorCallback: {
+                 if let provisionalMessage = provisionalMessage {
+                    provisionalMessage.status = TransactionMessage.TransactionMessageStatus.failed.rawValue
+                    
+                    completion(provisionalMessage, false)
+                 }
+            })
+        //}
+    }
+    
     func sendBoostMessage(
         message: String,
         itemObjectID: NSManagedObjectID,
@@ -127,7 +160,6 @@ class FeedBoostHelper : NSObject {
                     message.setPaymentInvoiceAsPaid()
                     
                     completion(message, true)
-                    
                     self.trackBoostAction(itemObjectID: itemObjectID, amount: amount)
                     
                 }

@@ -112,8 +112,13 @@ class PodcastSmallPlayer: UIView {
         
         let episode = podcast.getCurrentEpisode()
         
-        episodeLabel.text = episode?.title ?? "Episode with no title"
-        contributorLabel.text = podcast.author ?? episode?.showTitle ?? podcast.title ?? ""
+        if podcast.isRecommendationsPodcast {
+            episodeLabel.text = episode?.episodeDescription ?? "Episode with no title"
+            contributorLabel.text = episode?.title ?? ""
+        } else {
+            episodeLabel.text = episode?.title ?? "Episode with no title"
+            contributorLabel.text = podcast.author ?? episode?.showTitle ?? podcast.title ?? ""
+        }
         
         if let imageUrl = podcast.getImageURL() {
             

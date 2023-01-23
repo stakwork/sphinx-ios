@@ -83,8 +83,8 @@ extension PodcastRecommendationFeedPlayerViewController {
             recommendationItemImageView?.image = UIImage(named: item.placeholderImageName ?? "podcastPlaceholder")
         }
         
-        if let startTime = item.clipStartTime {
-            podcast.currentTime = startTime
+        if let startTime = item.clipStartTime, item.currentTime == nil {
+            item.currentTime = startTime
         }
     }
 }

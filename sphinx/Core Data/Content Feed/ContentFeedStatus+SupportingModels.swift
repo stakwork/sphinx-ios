@@ -61,6 +61,6 @@ class ContentFeedStatus: Mappable {
         itemID                      <- map["item_id"]
         satsPerMinute               <- map["sats_per_minute"]
         playerSpeed                 <- map["player_speed"]
-        episodeStatus               <- map["episodeStatus"]
+        episodeStatus               <- map["episode_status"]
     }
 }

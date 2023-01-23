@@ -146,6 +146,8 @@ extension API {
             return
         }
         
+        print(JSON(requestParams))
+        
         sphinxRequest(request) { response in
             switch response.result {
             case .success(let data):

@@ -134,14 +134,15 @@ extension PodcastPlayerControlsView {
             playPauseButton.isHidden = item.isYoutubeVideo
             skip15BackwardView.isHidden = item.isYoutubeVideo
             skip30ForwardView.isHidden = item.isYoutubeVideo
+            
+            let canBoost = (item.destination != nil)
+            boostView.alpha = canBoost ? 1.0 : 0.5
+            boostView.isUserInteractionEnabled = canBoost
         }
         
         clipButton.alpha = 0.5
         clipButton.isEnabled = false
-        
-        let canBoost = (RecommendationsHelper.sharedInstance.recommendationsPodcast?.destinations?.first != nil)
-        boostView.alpha = canBoost ? 1.0 : 0.5
-        boostView.isUserInteractionEnabled = canBoost
+    
         boostView.delegate = self
     }
     

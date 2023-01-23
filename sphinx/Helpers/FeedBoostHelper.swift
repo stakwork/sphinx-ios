@@ -117,8 +117,8 @@ class FeedBoostHelper : NSObject {
         var destinations = [[String: AnyObject]]()
         
         if let valid_feed = podFeed,
-           let valid_destinations = valid_feed.destinations,
-           let valid_destination = valid_destinations.first{
+           let valid_episode = valid_feed.getCurrentEpisode(),
+           let valid_destination = valid_episode.destination{
             let destinationParams: [String: AnyObject] = [
                 "address": (valid_destination.address) as AnyObject,
                 "split": (valid_destination.split) as AnyObject,

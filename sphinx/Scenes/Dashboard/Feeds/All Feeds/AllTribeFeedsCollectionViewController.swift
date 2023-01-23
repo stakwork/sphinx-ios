@@ -141,6 +141,7 @@ extension AllTribeFeedsCollectionViewController {
                let rhsContentFeed = rhs.resultEntity {
                 
                 return
+                    lhsContentFeed.uuid == rhsContentFeed.uuid &&
                     lhsContentFeed.id == rhsContentFeed.id &&
                     lhsContentFeed.link == rhsContentFeed.link
             }
@@ -165,11 +166,9 @@ extension AllTribeFeedsCollectionViewController {
         func hash(into hasher: inout Hasher) {
             if let contentFeed = self.feedEntity as? ContentFeed {
                 hasher.combine(contentFeed.feedID)
-                hasher.combine(contentFeed.feedURL?.absoluteString)
             }
             if let recommendation = self.resultEntity {
                 hasher.combine(recommendation.uuid)
-                hasher.combine(recommendation.link)
             }
         }
     }

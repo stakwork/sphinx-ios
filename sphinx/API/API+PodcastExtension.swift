@@ -119,7 +119,10 @@ extension API {
             switch response.result {
             case .success(let data):
                 if let json = data as? NSDictionary {
-                    if let success = json["success"] as? Bool, success {
+                    if let success = json["success"] as? Bool,
+                        success,
+                       let mapped_content_status = Mapper<ContentFeedStatus>().mapArray(JSONObject: json["response"]){
+                        callback(mapped_content_status)
                         print(json)
                         return
                     }

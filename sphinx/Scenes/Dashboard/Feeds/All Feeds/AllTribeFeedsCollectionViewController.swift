@@ -650,7 +650,6 @@ extension AllTribeFeedsCollectionViewController {
         if let feedEntity = dataSourceItem.feedEntity {
             onCellSelected?(feedEntity.objectID)
         } else if let recommendation = dataSourceItem.resultEntity {
-            recommendationsHelper.pubKey = recommendation.pubKey
             onRecommendationSelected?(recommendedFeeds, recommendation.id)
         }
     }

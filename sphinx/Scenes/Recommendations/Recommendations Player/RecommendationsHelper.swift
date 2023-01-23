@@ -29,7 +29,6 @@ class RecommendationsHelper {
     static let TWITTER_TYPE = "twitter_space"
     
     var recommendationsPodcast: PodcastFeed? = nil
-    var pubKey: String? = nil
     
     func getPodcastFor(
         recommendations: [RecommendationResult]
@@ -40,7 +39,7 @@ class RecommendationsHelper {
         podcast.podcastDescription = RecommendationsHelper.kRecommendationDescription
         
         var episodes: [PodcastEpisode] = []
-        
+        var destinations : [PodcastDestination] = []
         for item in recommendations {
             let episode = PodcastEpisode(nil, item.id)
             episode.title = item.episodeTitle
@@ -66,11 +65,21 @@ class RecommendationsHelper {
             episode.showTitle = item.showTitle
             
             episodes.append(episode)
+            
+            let destination = PodcastDestination(nil)
+            destination.address = item.pubKey
+            destination.split = 1.0
+            destination.type = "lightning"
+            destinations.append(destination)
         }
         
         podcast.episodes = episodes
         
+        
+        podcast.destinations = destinations
+        
         recommendationsPodcast = podcast
+        
         
         return podcast
     }

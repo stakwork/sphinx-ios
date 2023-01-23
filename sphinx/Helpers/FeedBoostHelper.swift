@@ -113,16 +113,16 @@ class FeedBoostHelper : NSObject {
         completion: @escaping ((TransactionMessage?, Bool) -> ())
     ){
         let podFeed = RecommendationsHelper.sharedInstance.recommendationsPodcast
-        let address = RecommendationsHelper.sharedInstance.pubKey
         
         var destinations = [[String: AnyObject]]()
         
         if let valid_feed = podFeed,
-        let valid_address = address{
+           let valid_destinations = valid_feed.destinations,
+           let valid_destination = valid_destinations.first{
             let destinationParams: [String: AnyObject] = [
-                "address": (valid_address) as AnyObject,
-                "split": (1) as AnyObject,
-                "type": ("lightning") as AnyObject
+                "address": (valid_destination.address) as AnyObject,
+                "split": (valid_destination.split) as AnyObject,
+                "type": (valid_destination.type) as AnyObject
             ]
             destinations.append(destinationParams)
             

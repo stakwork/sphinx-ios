@@ -14,6 +14,7 @@ public class RecommendationResult: NSObject {
     public var pubKey: String
     public var type: String
     public var id: String
+    public var uuid: String
     public var topics: [String]
     public var guests: [String]
     public var weight: Double
@@ -49,7 +50,8 @@ public class RecommendationResult: NSObject {
         _ timestamp: String,
         _ episodeTitle: String,
         _ link: String
-    ) { 
+    ) {
+        self.uuid = UUID().uuidString
         self.pubKey = pubKey
         self.type = type
         self.id = id

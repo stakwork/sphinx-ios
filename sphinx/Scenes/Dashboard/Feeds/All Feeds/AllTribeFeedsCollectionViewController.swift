@@ -168,7 +168,7 @@ extension AllTribeFeedsCollectionViewController {
                 hasher.combine(contentFeed.feedURL?.absoluteString)
             }
             if let recommendation = self.resultEntity {
-                hasher.combine(recommendation.id)
+                hasher.combine(recommendation.uuid)
                 hasher.combine(recommendation.link)
             }
         }

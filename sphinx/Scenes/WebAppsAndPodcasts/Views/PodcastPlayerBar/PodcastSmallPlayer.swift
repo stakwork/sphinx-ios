@@ -27,6 +27,7 @@ class PodcastSmallPlayer: UIView {
     @IBOutlet weak var playPauseButton: UIButton!
     @IBOutlet weak var audioLoadingWheel: UIActivityIndicatorView!
     @IBOutlet weak var playButton: UIButton!
+    @IBOutlet weak var skipButton: UIButton!
     @IBOutlet weak var pauseAnimationView: AnimationView!
     
     let podcastPlayerController = PodcastPlayerController.sharedInstance
@@ -153,6 +154,10 @@ class PodcastSmallPlayer: UIView {
         guard let podcast = podcast else {
             return
         }
+        
+        let isMusicEpisode = podcast.getCurrentEpisode()?.isMusicClip == true
+        playButton.isEnabled = isMusicEpisode
+        skipButton.isEnabled = isMusicEpisode
         
         let isPlaying = playing ?? podcastPlayerController.isPlaying(podcastId: podcast.feedID)
         

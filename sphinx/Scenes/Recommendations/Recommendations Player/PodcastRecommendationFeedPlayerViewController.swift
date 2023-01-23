@@ -21,6 +21,7 @@ class PodcastRecommendationFeedPlayerViewController: UIViewController {
 
                 if let item = self.podcast.getCurrentEpisode() {
                     self.updatePodcastPlayer(withEpisode: item)
+                    self.showTimeInfo()
                 }
             }
         }
@@ -132,6 +133,9 @@ extension PodcastRecommendationFeedPlayerViewController {
                 duration: duration,
                 currentTime: podcast.currentTime
             )
+            
+            audioLoading = false
+            
         } else if let url = episode?.getAudioUrl() {
             
             setProgress(
@@ -149,6 +153,8 @@ extension PodcastRecommendationFeedPlayerViewController {
                         duration: duration,
                         currentTime: self.podcast.currentTime
                     )
+                    
+                    self.audioLoading = false
                 }
             })
         }

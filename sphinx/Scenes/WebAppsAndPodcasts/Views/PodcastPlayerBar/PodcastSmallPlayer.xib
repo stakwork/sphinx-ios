@@ -26,6 +26,7 @@
                 <outlet property="playPauseButton" destination="dVC-vg-r3J" id="Cgr-3c-WdP"/>
                 <outlet property="progressLine" destination="wdM-ec-gI8" id="dHH-EK-nG1"/>
                 <outlet property="progressLineWidth" destination="unl-GP-sxM" id="wbW-7i-XEb"/>
+                <outlet property="skipButton" destination="KiM-LW-upY" id="yQO-Jy-nEy"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

@@ -57,8 +57,8 @@ extension RecommendationFeedPlayerContainerViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setPlayingEpisode()
         configurePlayerView()
+        setPlayingEpisode()
         configureCollectionView()
         configurePodcastPlayer()
     }
@@ -127,10 +127,6 @@ extension RecommendationFeedPlayerContainerViewController {
     
     private func configurePodcastPlayer() {
         podcastPlayerController.addDelegate(self, withKey: PodcastDelegateKeys.RecommendationsPlayerView.rawValue)
-        
-        if let episode = podcast.getCurrentEpisode() {
-            shouldPlay(episode)
-        }
     }
 }
 

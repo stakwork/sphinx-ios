@@ -25,6 +25,7 @@ public class PodcastEpisode: NSObject {
     public var feed: PodcastFeed?
     public var people: [String] = []
     public var topics: [String] = []
+    public var destination: PodcastDestination? = nil
 
     //For recommendations podcast
     public var type: String?

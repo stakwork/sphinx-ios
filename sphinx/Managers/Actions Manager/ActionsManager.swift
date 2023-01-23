@@ -420,8 +420,9 @@ class ActionsManager {
                 episodeData.duration = episode.duration ?? 0
                 episodeData.current_time = podFeed.currentTime
                 episodeStatus.episodeData = episodeData
-                
-                status.episodeStatus?.append(episodeStatus)
+                if(episodeData.current_time != 0){
+                    status.episodeStatus?.append(episodeStatus)
+                }
             }
             return status
         })

@@ -138,7 +138,7 @@ extension API {
     ) {
 
         var requestParams : [String:Any] = [String:Any]()
-        requestParams["content"] = params
+        requestParams["contents"] = params
         
         
         guard let request = getURLRequest(route: "/content_feed_status", params: requestParams as NSDictionary?, method: "POST") else {
@@ -146,7 +146,8 @@ extension API {
             return
         }
         
-        print(JSON(requestParams))
+        let json = JSON(requestParams)
+        print(json)
         
         sphinxRequest(request) { response in
             switch response.result {
@@ -161,6 +162,7 @@ extension API {
             case .failure(_):
                 errorCallback()
             }
+            print(response.response?.statusCode)
         }
         
     }

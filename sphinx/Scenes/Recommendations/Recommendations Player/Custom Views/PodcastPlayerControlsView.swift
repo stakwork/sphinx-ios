@@ -57,7 +57,6 @@ class PodcastPlayerControlsView: UIView {
     
     var podcastPlayerController = PodcastPlayerController.sharedInstance
     var podcast: PodcastFeed!
-    var podcastFeed: PodcastEpisode?
 }
 
 // MARK: - Actions handlers

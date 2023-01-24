@@ -42,7 +42,7 @@ class ContentFeedStatus: Mappable {
     var feedID: String = ""
     var feedURL: String = ""
     var subscriptionStatus:Bool = false
-    var chatID:String?
+    var chatID:Int?
     var itemID: String?
     var satsPerMinute: Int?
     var playerSpeed: Float?
@@ -61,6 +61,6 @@ class ContentFeedStatus: Mappable {
         itemID                      <- map["item_id"]
         satsPerMinute               <- map["sats_per_minute"]
         playerSpeed                 <- map["player_speed"]
-        episodeStatus               <- map["episode_status"]
+        episodeStatus               <- map["episodes_status"]
     }
 }

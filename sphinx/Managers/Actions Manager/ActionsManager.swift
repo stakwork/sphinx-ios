@@ -405,7 +405,7 @@ class ActionsManager {
             status.feedID = $0.feedID
             status.feedURL = $0.feedURL?.absoluteString ?? ""
             if let valid_chat = $0.chat{
-                status.chatID = String(valid_chat.id)
+                status.chatID = valid_chat.id
                 status.satsPerMinute = (UserDefaults.standard.value(forKey: "podcast-sats-\(valid_chat.id)") as? Int) ?? 0
             }
             let podFeed = PodcastFeed.convertFrom(contentFeed: $0)

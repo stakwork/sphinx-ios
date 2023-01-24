@@ -27,6 +27,38 @@ class FeedsManager : NSObject {
         }
     }
     
+    func syncRemoteAndLocalFeeds(remoteData:[ContentFeedStatus]){
+        let localData = FeedsManager.fetchFeeds()
+        
+        let localIDs = localData.compactMap({$0.feedID})
+        let remoteIDs = remoteData.compactMap({$0.feedID})
+        
+        let idsToAdd = remoteIDs.filter({localIDs.contains($0) == false})
+        
+        for _id in idsToAdd{
+            if let relevant_data = remoteData.filter({$0.feedID == _id}).first{
+                let relevant_feed_url = relevant_data.feedURL
+                var chat : Chat? = nil
+                let bgContext = CoreDataManager.sharedManager.getBackgroundContext()
+                if let valid_chat_id = relevant_data.chatID{
+                    chat = Chat.getChatWith(id: valid_chat_id,managedContext: bgContext)
+                }
+                
+                ContentFeed.fetchContentFeed(at: relevant_feed_url, chat: chat, persistingIn: bgContext,then: {
+                    result in
+                    if case .success(_) = result {
+                        print(result)
+                    }
+                })
+            }
+        }
+        
+        let idsToRemove = localIDs.filter({remoteIDs.contains($0) == false})
+        
+        print(idsToAdd)
+        print(idsToRemove)
+    }
+    
     func preCacheTopPods(){
         //1. Fetch results from memory
         var followedFeeds: [ContentFeed] = FeedsManager.fetchFeeds()

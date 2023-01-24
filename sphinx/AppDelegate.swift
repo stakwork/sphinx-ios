@@ -199,9 +199,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func loadContentFeedStatus(){
         API.sharedInstance.getAllContentFeedStatuses(
         callback: { results in
-            //do something with coredata layer
-        }, errorCallback: {
+            FeedsManager().syncRemoteAndLocalFeeds(remoteData: results)
             
+        }, errorCallback: {
+            //TODO: retry? Alert user?
         })
     }
 

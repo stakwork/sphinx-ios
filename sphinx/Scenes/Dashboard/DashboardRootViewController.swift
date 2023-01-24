@@ -211,6 +211,10 @@ extension DashboardRootViewController {
         isLoading = true
         
         activeTab = .friends
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+            ActionsManager().syncActionsInBackground()
+        })
     }
     
     func setupPlayerBar() {

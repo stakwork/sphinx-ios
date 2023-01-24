@@ -72,6 +72,21 @@ class FeedsManager : NSObject {
             }
         }
         
+        //4. Sync all episodes
+        for contentFeed in localData{
+            if contentFeed.feedKind == .Podcast,
+               let remoteContentStatus = remoteData.filter({$0.feedID == contentFeed.id}).first,
+               let episodeStatuses = remoteContentStatus.episodeStatus{
+                let podcastFeed = PodcastFeed.convertFrom(contentFeed: contentFeed)
+                for episodeStatus in episodeStatuses{
+                    if var podFeedEpisode = podcastFeed.episodes?.filter({$0.itemID == episodeStatus.episodeID}).first{
+                        podFeedEpisode.duration = episodeStatus.episodeData?.duration
+                        podFeedEpisode.currentTime = episodeStatus.episodeData?.current_time
+                    }
+                }
+            }
+        }
+        
         print(idsToAdd)
         print(idsToRemove)
     }

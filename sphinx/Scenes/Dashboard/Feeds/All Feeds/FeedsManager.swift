@@ -64,11 +64,10 @@ class FeedsManager : NSObject {
         //3. Iterate through each local copy that is not present in relay and unsubscribe
         let idsToRemove = localIDs.filter({remoteIDs.contains($0) == false})
         
-        for _id in idsToAdd{
-            let bgContext = CoreDataManager.sharedManager.getBackgroundContext()
+        for _id in idsToRemove{
             if let relevant_data = localData.filter({$0.feedID == _id}).first{
                 relevant_data.isSubscribedToFromSearch = false
-                CoreDataManager.sharedManager.saveContext()
+                relevant_data.managedObjectContext?.saveContext()
                 
             }
         }

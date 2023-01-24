@@ -28,11 +28,13 @@ class FeedsManager : NSObject {
     }
     
     func syncRemoteAndLocalFeeds(remoteData:[ContentFeedStatus]){
+        //1. Arrange all data and IDs
         let localData = FeedsManager.fetchFeeds()
         
         let localIDs = localData.compactMap({$0.feedID})
         let remoteIDs = remoteData.compactMap({$0.feedID})
         
+        //2. Iterate through IDs not present locally and add them
         let idsToAdd = remoteIDs.filter({localIDs.contains($0) == false})
         
         for _id in idsToAdd{
@@ -43,17 +45,33 @@ class FeedsManager : NSObject {
                 if let valid_chat_id = relevant_data.chatID{
                     chat = Chat.getChatWith(id: valid_chat_id,managedContext: bgContext)
                 }
-                
                 ContentFeed.fetchContentFeed(at: relevant_feed_url, chat: chat, persistingIn: bgContext,then: {
                     result in
                     if case .success(_) = result {
-                        print(result)
+                        do{
+                            let contentFeed = try result.get()
+                            contentFeed.isSubscribedToFromSearch = true
+                            bgContext.saveContext()
+                        }
+                        catch{
+                            print(error)
+                        }
                     }
                 })
             }
         }
         
+        //3. Iterate through each local copy that is not present in relay and unsubscribe
         let idsToRemove = localIDs.filter({remoteIDs.contains($0) == false})
+        
+        for _id in idsToAdd{
+            let bgContext = CoreDataManager.sharedManager.getBackgroundContext()
+            if let relevant_data = localData.filter({$0.feedID == _id}).first{
+                relevant_data.isSubscribedToFromSearch = false
+                CoreDataManager.sharedManager.saveContext()
+                
+            }
+        }
         
         print(idsToAdd)
         print(idsToRemove)

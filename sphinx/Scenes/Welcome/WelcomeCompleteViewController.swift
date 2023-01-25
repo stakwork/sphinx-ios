@@ -47,7 +47,7 @@ class WelcomeCompleteViewController: UIViewController {
         
         let mainCoordinator = MainCoordinator(rootViewController: self.rootViewController)
 
-        mainCoordinator.presentInitialDrawer()
+        mainCoordinator.presentInitialDrawer(isInRestoreProcess: true)
     }
 }
 

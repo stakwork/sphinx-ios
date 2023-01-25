@@ -29,7 +29,7 @@ class FeedsManager : NSObject {
     
     func syncRemoteAndLocalFeeds(remoteData:[ContentFeedStatus]){
         //1. Arrange all data and IDs
-        let localData = FeedsManager.fetchFeeds()
+        var localData = FeedsManager.fetchFeeds()
         
         let localIDs = localData.compactMap({$0.feedID})
         let remoteIDs = remoteData.compactMap({$0.feedID})
@@ -52,6 +52,7 @@ class FeedsManager : NSObject {
                             let contentFeed = try result.get()
                             contentFeed.isSubscribedToFromSearch = true
                             bgContext.saveContext()
+                            localData = FeedsManager.fetchFeeds()//update localData for future reference
                         }
                         catch{
                             print(error)

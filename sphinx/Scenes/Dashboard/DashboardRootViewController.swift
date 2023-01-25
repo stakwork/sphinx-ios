@@ -109,6 +109,7 @@ class DashboardRootViewController: RootViewController {
         }
     }
     
+    var isInRestoreProcess = false
     var didFinishInitialLoading = false
     
     var shouldShowHeaderLoadingWheel = false {
@@ -180,13 +181,15 @@ extension DashboardRootViewController {
     static func instantiate(
         rootViewController: RootViewController,
         leftMenuDelegate: LeftMenuDelegate,
-        managedObjectContext: NSManagedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext
+        managedObjectContext: NSManagedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext,
+        isInRestoreProcess:Bool = false
     ) -> DashboardRootViewController {
         let viewController = StoryboardScene.Dashboard.dashboardRootViewController.instantiate()
         
         viewController.rootViewController = rootViewController
         viewController.leftMenuDelegate = leftMenuDelegate
         viewController.managedObjectContext = managedObjectContext
+        viewController.isInRestoreProcess = isInRestoreProcess
         
         return viewController
     }
@@ -212,9 +215,11 @@ extension DashboardRootViewController {
         
         activeTab = .friends
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
-            ActionsManager().syncActionsInBackground()
-        })
+        if(isInRestoreProcess == false){//only write to endpoint if we're not restoring otherwise it zeros everything out!
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+                ActionsManager().syncActionsInBackground()
+            })
+        }
     }
     
     func setupPlayerBar() {
@@ -460,6 +465,7 @@ extension DashboardRootViewController {
             if restoring {
                 self.chatsListViewModel.updateContactsAndChats()
                 self.updateCurrentViewControllerData()
+                
             }
 
             self.chatsListViewModel.syncMessages(
@@ -472,6 +478,7 @@ extension DashboardRootViewController {
                         } else {
                             self.newBubbleHelper.showLoadingWheel(text: "fetching.old.messages".localized)
                         }
+
                     }
                 },
                 completion: { (_,_) in
@@ -526,6 +533,10 @@ extension DashboardRootViewController {
         shouldShowHeaderLoadingWheel = false
         
         updateNewMessageBadges()
+        
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate{
+            appDelegate.loadContentFeedStatus()
+        }
     }
     
     

@@ -83,11 +83,12 @@ final class MainCoordinator: NSObject {
     }
     
     
-    func presentInitialDrawer() {
+    func presentInitialDrawer(isInRestoreProcess:Bool=false) {
         let leftViewController = LeftMenuViewController.instantiate(rootViewController: rootViewController)
         let mainViewController = DashboardRootViewController.instantiate(
             rootViewController: rootViewController,
-            leftMenuDelegate:  leftViewController
+            leftMenuDelegate:  leftViewController,
+            isInRestoreProcess: isInRestoreProcess
         )
         let navigationController = UINavigationController(rootViewController: mainViewController)
         

@@ -155,6 +155,10 @@ class WindowsManager {
     }
     
     func showConveringWindowWith(rootVC: UIViewController) {
+        if let rootVController = rootVC as? RootViewController, let currentVC = rootVController.getLastCenterViewController() {
+            currentVC.view.endEditing(true)
+        }
+        
         let coveringWindow = getCoveringWindowWith(rootVC: rootVC)
         coveringWindow?.isHidden = false
     }

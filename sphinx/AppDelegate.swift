@@ -349,7 +349,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func getCurrentVC() -> UIViewController? {
         let rootVC = window?.rootViewController
 
-        if let roowVController = rootVC as? RootViewController, let currentVC = roowVController.getLastCenterViewController() {
+        if let rootVController = rootVC as? RootViewController, let currentVC = rootVController.getLastCenterViewController() {
             return currentVC
         }
         return nil

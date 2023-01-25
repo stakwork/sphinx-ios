@@ -12,6 +12,12 @@ import UIKit
 class DiscoverTribesTagSelectionVM : NSObject {
     var vc: DiscoverTribesTagSelectionVC
     
+    let columnLayout = FlowLayout(
+        minimumInteritemSpacing: 10,
+        minimumLineSpacing: 16,
+        sectionInset: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+    )
+    
     let possibleTags : [String] = [
         "Bitcoin",
         "NSFW",
@@ -28,6 +34,12 @@ class DiscoverTribesTagSelectionVM : NSObject {
     init(vc: DiscoverTribesTagSelectionVC, collectionView: UICollectionView) {
         self.vc = vc
         self.collectionView = collectionView
+        
+        super.init()
+        
+        collectionView.collectionViewLayout = columnLayout
+        collectionView.contentInsetAdjustmentBehavior = .always
+        collectionView.register(TribeTagSelectionCollectionViewCell.self, forCellWithReuseIdentifier: "TribeTagSelectionCollectionViewCell")
     }
     
     func getSelectionStatus(index:Int) -> Bool {
@@ -41,31 +53,25 @@ class DiscoverTribesTagSelectionVM : NSObject {
 }
 
 
-extension DiscoverTribesTagSelectionVM : UICollectionViewDataSource{
+extension DiscoverTribesTagSelectionVM : UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return possibleTags.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: "tagCell", for: indexPath) as! TribeTagSelectionCollectionViewCell
-        if (getSelectionStatus(index: indexPath.row)) {
-            cell.contentView.backgroundColor = UIColor.Sphinx.BodyInverted
-            cell.tagLabel.textColor = UIColor.Sphinx.Body
-            cell.layer.borderColor = UIColor.clear.cgColor
-        } else {
-            cell.contentView.backgroundColor = .clear
-            cell.tagLabel.textColor = UIColor.Sphinx.BodyInverted
-            cell.layer.borderColor = UIColor.Sphinx.PlaceholderText.cgColor
-            cell.layer.borderWidth = 1.0
-        }
-        cell.tagLabel.font = UIFont(name: "Roboto", size: 14.0)
-        cell.layer.cornerRadius = 24.0
-        cell.tagLabel.text = possibleTags[indexPath.row]
-        
+        let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: "TribeTagSelectionCollectionViewCell", for: indexPath) as! TribeTagSelectionCollectionViewCell
         return cell
     }
     
-    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if let cell = cell as? TribeTagSelectionCollectionViewCell {
+            
+            cell.configureWith(
+                tag: possibleTags[indexPath.row],
+                selected: getSelectionStatus(index: indexPath.row)
+            )
+        }
+    }
 }
 
 extension DiscoverTribesTagSelectionVM : UICollectionViewDelegate{
@@ -84,4 +90,52 @@ extension DiscoverTribesTagSelectionVM : UICollectionViewDelegate{
         }
         collectionView.reloadData()
     }
+}
+
+class FlowLayout: UICollectionViewFlowLayout {
+
+    required init(
+        minimumInteritemSpacing: CGFloat = 0,
+        minimumLineSpacing: CGFloat = 0,
+        sectionInset: UIEdgeInsets = .zero
+    ) {
+        super.init()
+
+        estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        self.minimumInteritemSpacing = minimumInteritemSpacing
+        self.minimumLineSpacing = minimumLineSpacing
+        self.sectionInset = sectionInset
+        sectionInsetReference = .fromSafeArea
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func layoutAttributesForElements(
+        in rect: CGRect
+    ) -> [UICollectionViewLayoutAttributes]? {
+        let layoutAttributes = super.layoutAttributesForElements(in: rect)!.map { $0.copy() as! UICollectionViewLayoutAttributes }
+        guard scrollDirection == .vertical else { return layoutAttributes }
+
+        let cellAttributes = layoutAttributes.filter({ $0.representedElementCategory == .cell })
+        
+        for (_, attributes) in Dictionary(grouping: cellAttributes, by: { ($0.center.y / 10).rounded(.up) * 10 }) {
+            
+            let cellsTotalWidth = attributes.reduce(CGFloat(0)) { (partialWidth, attribute) -> CGFloat in
+                partialWidth + attribute.size.width
+            }
+
+            let totalInset = collectionView!.safeAreaLayoutGuide.layoutFrame.width - cellsTotalWidth - sectionInset.left - sectionInset.right - minimumInteritemSpacing * CGFloat(attributes.count - 1)
+            var leftInset = (totalInset / 2 * 10).rounded(.down) / 10 + sectionInset.left
+
+            for attribute in attributes {
+                attribute.frame.origin.x = leftInset
+                leftInset = attribute.frame.maxX + minimumInteritemSpacing
+            }
+        }
+
+        return layoutAttributes
+    }
+
 }

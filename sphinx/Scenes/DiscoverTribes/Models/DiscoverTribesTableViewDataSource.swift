@@ -37,15 +37,14 @@ class DiscoverTribeTableViewDataSource : NSObject{
     
     func fetchTribeData(
         searchTerm: String? = nil,
-        tags:[String] = [],
-        shouldAppend: Bool
+        tags:[String] = []
     ){
         setupSpinner()
         spinner.startAnimating()
         
         API.sharedInstance.getTribesList(
             callback: { allTribes in
-                self.parseIncomingTribes(allTribes: allTribes, shouldAppend: shouldAppend)
+                self.parseIncomingTribes(allTribes: allTribes, shouldAppend: self.pageNum > 1)
                 self.spinner.isHidden = true
                 self.tableView.reloadData()
             }, errorCallback: {
@@ -78,9 +77,20 @@ class DiscoverTribeTableViewDataSource : NSObject{
         }
     }
     
-    func performSearch(searchTerm:String?){
+    func applyTags(
+        searchTerm: String?,
+        tags: [String]
+    ){
         pageNum = 1
-        fetchTribeData(searchTerm: searchTerm, shouldAppend: false)
+        fetchTribeData(searchTerm: searchTerm, tags: tags)
+    }
+    
+    func performSearch(
+        searchTerm: String?,
+        tags: [String]
+    ){
+        pageNum = 1
+        fetchTribeData(searchTerm: searchTerm, tags: tags)
     }
 }
 
@@ -118,7 +128,11 @@ extension DiscoverTribeTableViewDataSource : UITableViewDataSource, UITableViewD
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row == tribes.count {
             pageNum += 1
-            fetchTribeData(searchTerm: vc.searchTextField.text, shouldAppend: true)
+            
+            fetchTribeData(
+                searchTerm: vc.searchTextField.text,
+                tags: []
+            )
         }
     }
 }

@@ -67,7 +67,7 @@ class DiscoverTribesWebViewController : UIViewController{
         if let dataSource = discoverTribesTableViewDataSource{
             tableView.delegate = dataSource
             tableView.dataSource = dataSource
-            dataSource.fetchTribeData(shouldAppend: true)
+            dataSource.fetchTribeData()
         }
     }
     
@@ -90,12 +90,12 @@ class DiscoverTribesWebViewController : UIViewController{
     }
 }
 
-extension DiscoverTribesWebViewController : DiscoverTribesCellDelegate{
+extension DiscoverTribesWebViewController : DiscoverTribesCellDelegate {
     func handleJoin(url: URL) {
         processLink(url: url)
     }
     
-    func processLink(url:URL){
+    func processLink(url:URL) {
         if DeepLinksHandlerHelper.storeLinkQueryFrom(url: url) {
             navigationController?.popViewController(animated: true)
         }
@@ -106,27 +106,39 @@ extension DiscoverTribesWebViewController : DiscoverTribesCellDelegate{
 extension DiscoverTribesWebViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
         view.endEditing(true)
+        
         let searchTerm = (searchTextField.text == "") ? nil : searchTextField.text
-        discoverTribesTableViewDataSource?.performSearch(searchTerm: searchTerm)
+        
+        discoverTribesTableViewDataSource?.performSearch(
+            searchTerm: searchTerm,
+            tags: currentTags
+        )
+        
         return true
     }
 }
 
-extension DiscoverTribesWebViewController : DiscoverTribesTagSelectionDelegate{
+extension DiscoverTribesWebViewController : DiscoverTribesTagSelectionDelegate {
     func didSelect(selections: [String]) {
+        
         let newSet = Set(selections)
         let oldSet = Set(currentTags)
+        
         if (newSet != oldSet) {
+            
             self.currentTags = selections
             self.updateTagButton()
-            if let dataSource = discoverTribesTableViewDataSource{
-                dataSource.fetchTribeData(tags: currentTags, shouldAppend: false)
+            
+            if let dataSource = discoverTribesTableViewDataSource {
+                let searchTerm = (searchTextField.text == "") ? nil : searchTextField.text
+                dataSource.applyTags(searchTerm: searchTerm, tags: self.currentTags)
             }
         }
     }
     
-    func updateTagButton(){
+    func updateTagButton() {
         let tagsSelected = (currentTags.count > 0)
         
         filterIcon.isHidden = tagsSelected

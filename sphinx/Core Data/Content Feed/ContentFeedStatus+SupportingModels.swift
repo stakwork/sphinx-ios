@@ -61,8 +61,9 @@ class ContentFeedStatus: Mappable {
         itemID                      <- map["item_id"]
         satsPerMinute               <- map["sats_per_minute"]
         playerSpeed                 <- map["player_speed"]
-        if map.mappingType == .fromJSON,
-           let episode_statuses = map.JSON["episodes_status"] as? [[String:Any]]{//typical path for deserializing
+        
+        if map.mappingType == .fromJSON,//typical path for deserializing
+           let episode_statuses = map.JSON["episodes_status"] as? [[String:Any]]{
             var local_statuses = [EpisodeStatus]()
             for episode_status in episode_statuses{
                 let localCopy = EpisodeStatus()

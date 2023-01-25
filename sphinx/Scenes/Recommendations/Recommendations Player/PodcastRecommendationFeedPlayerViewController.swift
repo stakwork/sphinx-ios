@@ -149,10 +149,12 @@ extension PodcastRecommendationFeedPlayerViewController {
                 episode?.duration = duration
 
                 DispatchQueue.main.async {
-                    let _ = self.setProgress(
-                        duration: duration,
-                        currentTime: self.podcast.currentTime
-                    )
+                    if duration > 0 {
+                        let _ = self.setProgress(
+                            duration: duration,
+                            currentTime: self.podcast.currentTime
+                        )
+                    }
                     
                     self.audioLoading = false
                 }

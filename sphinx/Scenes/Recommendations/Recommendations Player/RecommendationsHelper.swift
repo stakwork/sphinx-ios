@@ -64,12 +64,14 @@ class RecommendationsHelper {
             episode.topics = item.topics
             episode.showTitle = item.showTitle
             
-            let destination = PodcastDestination()
-            destination.address = item.pubKey
-            destination.split = 100
-            destination.type = "node"
-            
-            episode.destination = destination
+            if !item.pubKey.isEmpty && item.pubKey.isPubKey {
+                let destination = PodcastDestination()
+                destination.address = item.pubKey
+                destination.split = 100
+                destination.type = "node"
+                
+                episode.destination = destination
+            }
             
             episodes.append(episode)
         }

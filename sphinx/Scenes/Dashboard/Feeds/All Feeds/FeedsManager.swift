@@ -82,7 +82,7 @@ class FeedsManager : NSObject {
                             bgContext.saveContext()
                             syncedFeedsCount += 1
                             progressCallback(self.getRestoreProgress(totalFeeds: totalFeedsCount, syncedFeeds: syncedFeedsCount))
-                            if(totalFeedsCount - 1 <= syncedFeedsCount){
+                            if(totalFeedsCount - 1 <= syncedFeedsCount){//signal completion when we're done copying to local
                                 completionCallback(remoteData)
                             }
                         }
@@ -110,7 +110,7 @@ class FeedsManager : NSObject {
         
         print(idsToAdd)
         print(idsToRemove)
-        if(idsToAdd.isEmpty){
+        if(idsToAdd.isEmpty){//signal completion if there's no additions happening
             completionCallback(remoteData)
         }
         
@@ -123,6 +123,9 @@ class FeedsManager : NSObject {
             if contentFeed.feedKind == .Podcast,
                let remoteContentStatus = remoteData.filter({$0.feedID == contentFeed.id}).first,
                let episodeStatuses = remoteContentStatus.episodeStatus{
+                UserDefaults.standard.set(remoteContentStatus.satsPerMinute, forKey: "podcast-sats-\(contentFeed.id)")
+                UserDefaults.standard.set(remoteContentStatus.playerSpeed, forKey: "player-speed-\(contentFeed.id)")
+                
                 let podcastFeed = PodcastFeed.convertFrom(contentFeed: contentFeed)
                 for episodeStatus in episodeStatuses{
                     if let podFeedEpisode = podcastFeed.episodes?.filter({$0.itemID == episodeStatus.episodeID}).first{

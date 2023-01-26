@@ -179,8 +179,6 @@ public class Chat: NSManagedObject {
         chat.pendingContactIds = pendingContactIds
         chat.subscription = chat.getContact()?.getCurrentSubscription()
         
-        chat.setMetaData(metaData)
-        
         if chat.isMyPublicGroup() {
             chat.pricePerMessage = NSDecimalNumber(integerLiteral: pricePerMessage)
             chat.escrowAmount = NSDecimalNumber(integerLiteral: escrowAmount)
@@ -571,39 +569,6 @@ public class Chat: NSManagedObject {
     
     func shouldShowPrice() -> Bool {
         return (pricePerMessage?.intValue ?? 0) > 0
-    }
-    
-    func setMetaData(_ meta: String?) {
-        if let meta = meta, !meta.isEmpty {
-            
-            if let podcast = self.podcast, PodcastPlayerController.sharedInstance.isPlaying(
-                podcastId: podcast.feedID
-            ) {
-                return
-            }
-            
-            if let data = meta.data(using: .utf8) {
-                if let jsonObject = try? JSON(data: data) {
-                    if let currentTime = jsonObject["ts"].int {
-                        UserDefaults.standard.set(currentTime, forKey: "current-time-\(self.id)")
-                    }
-                    
-                    if let episode = jsonObject["itemID"].int {
-                        UserDefaults.standard.set(episode, forKey: "current-episode-id-\(self.id)")
-                    }
-                    
-                    if let satsPerMinute = jsonObject["sats_per_minute"].int {
-                        UserDefaults.standard.set(satsPerMinute, forKey: "podcast-sats-\(self.id)")
-                    }
-                    
-                    if let speed = jsonObject["speed"].float {
-                        UserDefaults.standard.set(speed, forKey: "player-speed-\(self.id)")
-                    }
-                    
-                    UserDefaults.standard.synchronize()
-                }
-            }
-        }
     }
     
     func updateMetaData() {

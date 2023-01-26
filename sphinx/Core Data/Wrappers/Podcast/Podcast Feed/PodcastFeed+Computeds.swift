@@ -96,6 +96,10 @@ extension PodcastFeed {
         return episodesArray.first
     }
     
+    func getLastEpisode() -> PodcastEpisode? {
+        return episodesArray.first
+    }
+    
     var currentEpisodeIndex: Int? {
         get {
             return episodesArray.firstIndex(where: { $0.itemID == currentEpisodeId })

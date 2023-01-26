@@ -185,7 +185,7 @@ extension ContentFeed: DashboardFeedSquaredThumbnailCollectionViewItem {
     }
     
     var publishDate: Date? {
-        return nil
+        return itemsArray.first?.datePublished
     }
 }
 
@@ -210,7 +210,7 @@ extension VideoFeed: DashboardFeedSquaredThumbnailCollectionViewItem {
     }
     
     var publishDate: Date? {
-        return nil
+        return videosArray.first?.datePublished
     }
 }
 
@@ -255,7 +255,7 @@ extension PodcastEpisode: DashboardFeedSquaredThumbnailCollectionViewItem {
     }
     
     var publishDate: Date? {
-        return nil
+        return datePublished
     }
 }
 
@@ -276,7 +276,7 @@ extension PodcastFeed: DashboardFeedSquaredThumbnailCollectionViewItem {
     }
     
     var publishDate: Date? {
-        return nil
+        return getLastEpisode()?.datePublished
     }
 }
 

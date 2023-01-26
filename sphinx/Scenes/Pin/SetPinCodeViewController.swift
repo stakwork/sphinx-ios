@@ -67,14 +67,18 @@ class SetPinCodeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.endEditing(true)
-        
         loading = false
         subtitleLabel.text = subtitle
         reloadDots()
         configureButtons()
         
         titleLabel.text = (mode == SetPinMode.Set) ? kFirstTitle : kOldPinTitle
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.view.endEditing(true)
     }
     
     func configureButtons() {

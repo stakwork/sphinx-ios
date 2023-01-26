@@ -57,8 +57,8 @@ extension RecommendationFeedPlayerContainerViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setPlayingEpisode()
         configurePlayerView()
+        setPlayingEpisode()
         configureCollectionView()
         configurePodcastPlayer()
     }
@@ -67,7 +67,7 @@ extension RecommendationFeedPlayerContainerViewController {
         super.endAppearanceTransition()
         
         if isBeingDismissed {
-            // PodcastPlayerHelper.sharedInstance.finishAndSaveContentConsumed()
+            podcastPlayerController.finishAndSaveContentConsumed()
             podcastPlayerController.removeFromDelegatesWith(key: PodcastDelegateKeys.PodcastPlayerView.rawValue)
         }
     }
@@ -107,8 +107,6 @@ extension RecommendationFeedPlayerContainerViewController {
             child: youtubeVideoPlayerViewController,
             container: playerContainerView
         )
-        
-        podcastPlayerController.shouldPause()
     }
     
     private func addPodcastPlayerView() {
@@ -129,16 +127,6 @@ extension RecommendationFeedPlayerContainerViewController {
     
     private func configurePodcastPlayer() {
         podcastPlayerController.addDelegate(self, withKey: PodcastDelegateKeys.RecommendationsPlayerView.rawValue)
-        
-        if podcastPlayerController.isPlaying(podcastId: podcast.feedID) {
-            return
-        }
-        
-        if let podcastData = podcast.getPodcastData() {
-            podcastPlayerController.submitAction(
-                UserAction.Play(podcastData)
-            )
-        }
     }
 }
 
@@ -148,25 +136,27 @@ extension RecommendationFeedPlayerContainerViewController {
     private func handleRecommendationCellSelection(
         _ recommendationId: String
     ) {
-        if let episode = podcast.getEpisodeWith(id: recommendationId), episode.isMusicClip {
-            
-            let currentTime = ((episode.currentTime ?? 0) > 0) ? episode.currentTime : (episode.clipStartTime ?? 0)
-            
-            guard let podcastData = podcast.getPodcastData(
-                episodeId: recommendationId,
-                currentTime: currentTime
-            ) else {
-                return
-            }
-            
-            podcastPlayerController.submitAction(
-                UserAction.Play(podcastData)
-            )
+        if let episode = podcast.getEpisodeWith(id: recommendationId) {
+            shouldPlay(episode)
         }
         
-//        podcastPlayerViewController.showTimeInfo()
         setPlayingEpisode()
         configurePlayerView()
+    }
+    
+    func shouldPlay(_ episode: PodcastEpisode) {
+        let currentTime = ((episode.currentTime ?? 0) > 0) ? episode.currentTime : (episode.clipStartTime ?? 0)
+        
+        guard let podcastData = podcast.getPodcastData(
+            episodeId: episode.itemID,
+            currentTime: currentTime
+        ) else {
+            return
+        }
+        
+        podcastPlayerController.submitAction(
+            UserAction.Play(podcastData)
+        )
     }
 }
 

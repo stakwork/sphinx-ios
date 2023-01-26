@@ -140,8 +140,9 @@ class JoinGroupDetailsViewController: KeyboardEventsViewController {
     }
     
     func showErrorAndDismiss() {
-        AlertHelper.showAlert(title: "generic.error.title".localized, message: "generic.error.message".localized)
-        closeButtonTouched()
+        AlertHelper.showAlert(title: "generic.error.title".localized, message: "generic.error.message".localized, completion: {
+            self.closeButtonTouched()
+        })
     }
     
     @IBAction func closeButtonTouched() {

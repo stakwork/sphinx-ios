@@ -20,24 +20,31 @@ class DiscoverTribeTableViewDataSource : NSObject{
     var loadingWheelCell : Int = 0
     
     private lazy var spinner: UIActivityIndicatorView = makeSpinner()
+    lazy var joinedChatIds : [String] = {
+        let contactsService = ContactsService()
+        return contactsService
+            .getChatListObjects()
+            .filter { $0.isPublicGroup() }.compactMap({$0.getChat()?.uuid})
+    }()
     
     init(tableView:UITableView,vc:DiscoverTribesWebViewController){
         self.vc = vc
         self.tableView = tableView
         tableView.register(DiscoverTribesTableViewCell.nib, forCellReuseIdentifier: DiscoverTribesTableViewCell.reuseID)
         tableView.registerCell(LoadingMoreTableViewCell.self)
+        tableView.separatorColor = .clear
     }
     
     func fetchTribeData(
         searchTerm: String? = nil,
-        shouldAppend: Bool
+        tags:[String] = []
     ){
         setupSpinner()
         spinner.startAnimating()
         
         API.sharedInstance.getTribesList(
             callback: { allTribes in
-                self.parseIncomingTribes(allTribes: allTribes, shouldAppend: shouldAppend)
+                self.parseIncomingTribes(allTribes: allTribes, shouldAppend: self.pageNum > 1)
                 self.spinner.isHidden = true
                 self.tableView.reloadData()
             }, errorCallback: {
@@ -45,7 +52,8 @@ class DiscoverTribeTableViewDataSource : NSObject{
             },
             limit: itemsPerPage,
             searchTerm: searchTerm,
-            page: pageNum
+            page: pageNum,
+            tags:tags
         )
     }
     
@@ -69,9 +77,20 @@ class DiscoverTribeTableViewDataSource : NSObject{
         }
     }
     
-    func performSearch(searchTerm:String?){
+    func applyTags(
+        searchTerm: String?,
+        tags: [String]
+    ){
         pageNum = 1
-        fetchTribeData(searchTerm: searchTerm, shouldAppend: false)
+        fetchTribeData(searchTerm: searchTerm, tags: tags)
+    }
+    
+    func performSearch(
+        searchTerm: String?,
+        tags: [String]
+    ){
+        pageNum = 1
+        fetchTribeData(searchTerm: searchTerm, tags: tags)
     }
 }
 
@@ -84,11 +103,15 @@ extension DiscoverTribeTableViewDataSource : UITableViewDataSource, UITableViewD
         if (indexPath.row  == tribes.count) {
             let cell = tableView.dequeueReusableCell(withIdentifier: "LoadingMoreTableViewCell", for: indexPath) as! LoadingMoreTableViewCell
             cell.configureCell(text: "")
-            cell.loadingMoreLabel.text = "Loading more tribes..."
+            cell.loadingMoreLabel.text = "Loading..."
+            cell.loadingMoreLabel.font = UIFont(name: "Roboto", size: 14.0)
+            cell.loadingMoreLabel.textColor = UIColor.Sphinx.SecondaryText
             return cell
         } else {
+            let tribeOfInterest = tribes[indexPath.row]
+            let wasJoined = joinedChatIds.contains(tribeOfInterest.uuid ?? "")
             let cell = tableView.dequeueReusableCell(withIdentifier: "DiscoverTribesTableViewCell", for: indexPath) as! DiscoverTribesTableViewCell
-            cell.configureCell(tribeData: tribes[indexPath.row])
+            cell.configureCell(tribeData: tribeOfInterest,wasJoined: wasJoined)
             cell.delegate = vc
             return cell
         }
@@ -105,7 +128,11 @@ extension DiscoverTribeTableViewDataSource : UITableViewDataSource, UITableViewD
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row == tribes.count {
             pageNum += 1
-            fetchTribeData(searchTerm: vc.searchTextField.text, shouldAppend: true)
+            
+            fetchTribeData(
+                searchTerm: vc.searchTextField.text,
+                tags: []
+            )
         }
     }
 }

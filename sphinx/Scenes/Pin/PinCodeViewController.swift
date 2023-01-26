@@ -42,13 +42,17 @@ class PinCodeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.endEditing(true)
-        
         loading = false
         subtitleLabel.text = subtitle
         
         reloadDots()
         configureButtons()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        self.view.endEditing(true)
     }
     
     override func viewDidAppear(_ animated: Bool) {

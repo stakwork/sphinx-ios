@@ -65,7 +65,10 @@ class NewPodcastPlayerViewController: UIViewController {
         
         if isBeingDismissed {
             delegate?.willDismissPlayer()
-            NotificationCenter.default.post(name: .refreshPodcastUI, object: nil)
+            
+            var dataDict: [String: String] = [String: String]()
+            dataDict["episode-id"] = (podcast.getCurrentEpisode()?.itemID ?? "") as String
+            NotificationCenter.default.post(name: .refreshEpisode, object: nil, userInfo: dataDict)
         }
     }
     
@@ -73,7 +76,7 @@ class NewPodcastPlayerViewController: UIViewController {
         super.endAppearanceTransition()
         
         if isBeingDismissed {
-            // PodcastPlayerHelper.sharedInstance.finishAndSaveContentConsumed()
+            podcastPlayerController.finishAndSaveContentConsumed()
             podcastPlayerController.removeFromDelegatesWith(key: PodcastDelegateKeys.PodcastPlayerView.rawValue)
         }
     }
@@ -256,16 +259,14 @@ extension NewPodcastPlayerViewController: URLSessionDelegate {
 
 extension NewPodcastPlayerViewController : DownloadServiceDelegate {
     func shouldReloadRowFor(download: Download) {
-//        if let index = podcast.getIndexForEpisodeWith(id: download.episode.itemID) {
-//            tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
-//        }
-        tableView.reloadData()
+        if let index = podcast.getIndexForEpisodeWith(id: download.episode.itemID) {
+            tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
+        }
     }
     
     func shouldUpdateProgressFor(download: Download) {
-//        if let index = podcast.getIndexForEpisodeWith(id: download.episode.itemID) {
-//            tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
-//        }
-        tableView.reloadData()
+        if let index = podcast.getIndexForEpisodeWith(id: download.episode.itemID) {
+            tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
+        }
     }
 }

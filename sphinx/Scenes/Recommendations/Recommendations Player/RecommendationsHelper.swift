@@ -28,19 +28,7 @@ class RecommendationsHelper {
     static let NEWSLETTER_TYPE = "newsletter"
     static let TWITTER_TYPE = "twitter_space"
     
-    private var recommendations: [RecommendationResult] = []
-    
     var recommendationsPodcast: PodcastFeed? = nil
-    
-    func getSavedRecommendations() -> [RecommendationResult] {
-        return self.recommendations
-    }
-    
-    func persistRecommendations(
-        _ recommendations: [RecommendationResult]
-    ) {
-        self.recommendations = recommendations
-    }
     
     func getPodcastFor(
         recommendations: [RecommendationResult]
@@ -75,6 +63,15 @@ class RecommendationsHelper {
             episode.people = item.guests
             episode.topics = item.topics
             episode.showTitle = item.showTitle
+            
+            if !item.pubKey.isEmpty && item.pubKey.isPubKey {
+                let destination = PodcastDestination()
+                destination.address = item.pubKey
+                destination.split = 100
+                destination.type = "node"
+                
+                episode.destination = destination
+            }
             
             episodes.append(episode)
         }

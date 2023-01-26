@@ -48,7 +48,9 @@ extension PodcastPlayerController {
                 return
             } else {
                 ///If playing another episode, then pause first
+                trackItemFinished(shouldSaveAction: true)
                 pausePlaying()
+                runPausedStateUpdate()
             }
         }
         
@@ -61,6 +63,12 @@ extension PodcastPlayerController {
             duration: podcastData.duration,
             playerSpeed: podcastData.speed
         )
+        
+        if let episode = podcast?.getCurrentEpisode(), !episode.isMusicClip {
+            ///If playing video on recommendations player
+            resetPlayingInfoCenter()
+            return
+        }
         
         runLoadingStateUpdate()
         
@@ -124,7 +132,7 @@ extension PodcastPlayerController {
             self.runPlayingStateUpdate()
             self.configureTimer()
             
-//                    trackItemStarted(endTimestamp: previousItemTimestamp)
+            self.trackItemStarted()
         } else {
             self.player?.pause()
             
@@ -136,8 +144,8 @@ extension PodcastPlayerController {
         _ podcastData: PodcastData
     ) {
         pausePlaying()
-        
-//      trackItemFinished()
+                
+        trackItemFinished()
 
         guard let player = player, let item = player.currentItem else {
             return
@@ -166,6 +174,8 @@ extension PodcastPlayerController {
     func seek(
         _ podcastData: PodcastData
     ) {
+        let previousTime = self.podcastData?.currentTime
+        
         guard let currentTime = podcastData.currentTime else {
             return
         }
@@ -174,11 +184,6 @@ extension PodcastPlayerController {
             podcastId: podcastData.podcastId,
             currentTime: currentTime
         )
-        
-        if self.podcastData == nil {
-            ///If seeking on player before playing, podcastData is nil, then it needs to be set
-            self.podcastData = podcastData
-        }
         
         if self.podcastData?.podcastId != podcastData.podcastId {
             ///Avoid player actions if performing actions for a podcast that is not the current set on player controller
@@ -199,7 +204,8 @@ extension PodcastPlayerController {
             
             player.seek(to: CMTime(seconds: Double(currentTime), preferredTimescale: 1)) { _ in
                 if self.isPlaying {
-                    /// If playing start time again to update UI every X seconds
+                    self.trackItemStarted(endTimestamp: previousTime)
+                    /// If playing start timer again to update UI every X seconds
                     self.configureTimer()
                 } else {
                     /// If not playing run pause state delegate to update UI in case seek was triggered from control center
@@ -212,6 +218,11 @@ extension PodcastPlayerController {
     func adjustSpeed(
         _ podcastData: PodcastData
     ) {
+        updatePodcastObject(
+            podcastId: podcastData.podcastId,
+            playerSpeed: podcastData.speed
+        )
+        
         if self.podcastData?.podcastId != podcastData.podcastId {
             ///Avoid player actions if performing actions for a podcast that is not the current on set on player controller
             return

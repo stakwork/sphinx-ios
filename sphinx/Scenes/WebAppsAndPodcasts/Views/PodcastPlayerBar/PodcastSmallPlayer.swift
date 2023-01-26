@@ -27,6 +27,7 @@ class PodcastSmallPlayer: UIView {
     @IBOutlet weak var playPauseButton: UIButton!
     @IBOutlet weak var audioLoadingWheel: UIActivityIndicatorView!
     @IBOutlet weak var playButton: UIButton!
+    @IBOutlet weak var skipButton: UIButton!
     @IBOutlet weak var pauseAnimationView: AnimationView!
     
     let podcastPlayerController = PodcastPlayerController.sharedInstance
@@ -111,8 +112,13 @@ class PodcastSmallPlayer: UIView {
         
         let episode = podcast.getCurrentEpisode()
         
-        episodeLabel.text = episode?.title ?? "Episode with no title"
-        contributorLabel.text = podcast.author ?? episode?.showTitle ?? podcast.title ?? ""
+        if podcast.isRecommendationsPodcast {
+            episodeLabel.text = episode?.episodeDescription ?? "Episode with no title"
+            contributorLabel.text = episode?.title ?? ""
+        } else {
+            episodeLabel.text = episode?.title ?? "Episode with no title"
+            contributorLabel.text = podcast.author ?? episode?.showTitle ?? podcast.title ?? ""
+        }
         
         if let imageUrl = podcast.getImageURL() {
             
@@ -153,6 +159,10 @@ class PodcastSmallPlayer: UIView {
         guard let podcast = podcast else {
             return
         }
+        
+        let isMusicEpisode = podcast.getCurrentEpisode()?.isMusicClip == true
+        playButton.isEnabled = isMusicEpisode
+        skipButton.isEnabled = isMusicEpisode
         
         let isPlaying = playing ?? podcastPlayerController.isPlaying(podcastId: podcast.feedID)
         

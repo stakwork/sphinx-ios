@@ -121,7 +121,7 @@ extension PodcastPlayerController {
     }
     
     func didEndEpisode() {
-//        trackItemFinished(shouldSaveAction: true)
+        trackItemFinished(shouldSaveAction: true)
         pausePlaying()
         
         guard let podcastData = self.podcastData else {

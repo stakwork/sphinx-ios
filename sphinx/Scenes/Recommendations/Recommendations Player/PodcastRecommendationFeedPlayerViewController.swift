@@ -21,6 +21,7 @@ class PodcastRecommendationFeedPlayerViewController: UIViewController {
 
                 if let item = self.podcast.getCurrentEpisode() {
                     self.updatePodcastPlayer(withEpisode: item)
+                    self.showTimeInfo()
                 }
             }
         }
@@ -46,7 +47,7 @@ extension PodcastRecommendationFeedPlayerViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-//        PodcastPlayerHelper.sharedInstance.finishAndSaveContentConsumed()
+        PodcastPlayerController.sharedInstance.finishAndSaveContentConsumed()
     }
 }
 
@@ -82,8 +83,8 @@ extension PodcastRecommendationFeedPlayerViewController {
             recommendationItemImageView?.image = UIImage(named: item.placeholderImageName ?? "podcastPlaceholder")
         }
         
-        if let startTime = item.clipStartTime {
-            podcast.currentTime = startTime
+        if let startTime = item.clipStartTime, item.currentTime == nil {
+            item.currentTime = startTime
         }
     }
 }
@@ -124,6 +125,8 @@ extension PodcastRecommendationFeedPlayerViewController {
     func loadTime() {
         let episode = podcast.getCurrentEpisode()
         
+        audioLoading = true
+        
         if let duration = episode?.duration {
             
             let _ = setProgress(
@@ -135,8 +138,6 @@ extension PodcastRecommendationFeedPlayerViewController {
             
         } else if let url = episode?.getAudioUrl() {
             
-            audioLoading = true
-            
             setProgress(
                 duration: 0,
                 currentTime: 0
@@ -146,12 +147,15 @@ extension PodcastRecommendationFeedPlayerViewController {
             asset.loadValuesAsynchronously(forKeys: ["duration"], completionHandler: {
                 let duration = Int(Double(asset.duration.value) / Double(asset.duration.timescale))
                 episode?.duration = duration
-                
+
                 DispatchQueue.main.async {
-                    let _ = self.setProgress(
-                        duration: duration,
-                        currentTime: self.podcast.currentTime
-                    )
+                    if duration > 0 {
+                        let _ = self.setProgress(
+                            duration: duration,
+                            currentTime: self.podcast.currentTime
+                        )
+                    }
+                    
                     self.audioLoading = false
                 }
             })

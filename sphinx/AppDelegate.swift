@@ -32,6 +32,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     let feedsManager = FeedsManager()
     
+    let podcastPlayerController = PodcastPlayerController.sharedInstance
+    
     let chatListViewModel = ChatListViewModel(contactsService: ContactsService())
 
     func application(
@@ -168,7 +170,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setMessagesAsSeen()
         setBadge(application: application)
         
-//        PodcastPlayerHelper.sharedInstance.finishAndSaveContentConsumed()
+        podcastPlayerController.finishAndSaveContentConsumed()
         ActionsManager.sharedInstance.syncActionsInBackground()
         CoreDataManager.sharedManager.saveContext()
         
@@ -187,7 +189,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         presentPINIfNeeded()
         loadContentFeedStatus()
         
-//        PodcastPlayerHelper.sharedInstance.finishAndSaveContentConsumed()
+        podcastPlayerController.finishAndSaveContentConsumed()
     }
 
     func saveCurrentStyle() {
@@ -245,7 +247,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         SKPaymentQueue.default().remove(StoreKitService.shared)
 
-//        PodcastPlayerHelper.sharedInstance.finishAndSaveContentConsumed()
+        podcastPlayerController.finishAndSaveContentConsumed()
         CoreDataManager.sharedManager.saveContext()
     }
 
@@ -358,7 +360,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func getCurrentVC() -> UIViewController? {
         let rootVC = window?.rootViewController
 
-        if let roowVController = rootVC as? RootViewController, let currentVC = roowVController.getLastCenterViewController() {
+        if let rootVController = rootVC as? RootViewController, let currentVC = rootVController.getLastCenterViewController() {
             return currentVC
         }
         return nil

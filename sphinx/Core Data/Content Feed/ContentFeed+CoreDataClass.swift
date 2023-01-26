@@ -18,7 +18,7 @@ public class ContentFeed: NSManagedObject {
         context: NSManagedObjectContext? = nil
     ) -> ContentFeed? {
         
-        guard let feedId = json[CodingKeys.feedID.rawValue].string else {
+        guard let fId = json[CodingKeys.feedID.rawValue].string else {
             return nil
         }
         
@@ -31,9 +31,15 @@ public class ContentFeed: NSManagedObject {
         }
         
         let feedUrl = json[CodingKeys.feedURL.rawValue].stringValue
+        let feedId = fId.fixedFeedId(feedUrl: feedUrl)
         
         contentFeed.feedURL = URL(string: feedUrl)
-        contentFeed.feedID = feedId.fixedFeedId(feedUrl: feedUrl)
+        contentFeed.feedID = feedId
+        
+        guard let items = json[CodingKeys.items.rawValue].array, items.count > 0 else {
+            ContentFeed.deleteFeedWith(feedId: feedId)
+            return nil
+        }
         
         contentFeed.title = json[CodingKeys.title.rawValue].stringValue
         contentFeed.feedKindValue = FeedType(rawValue: json[CodingKeys.feedKindValue.rawValue].int16Value)?.rawValue ?? 0

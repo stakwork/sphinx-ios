@@ -67,7 +67,7 @@ extension YouTubeVideoFeedEpisodePlayerViewController {
         super.viewDidLoad()
         
         podcastPlayerController.shouldPause()
-//        podcastPlayerController.finishAndSaveContentConsumed()
+        podcastPlayerController.finishAndSaveContentConsumed()
 
         setupViews()
     }
@@ -77,7 +77,7 @@ extension YouTubeVideoFeedEpisodePlayerViewController {
         super.viewWillDisappear(true)
         
         videoPlayerView.stopVideo()
-//        podcastPlayerController.finishAndSaveContentConsumed()
+        podcastPlayerController.finishAndSaveContentConsumed()
     }
 }
 
@@ -192,7 +192,7 @@ extension YouTubeVideoFeedEpisodePlayerViewController: YTPlayerViewDelegate {
     ) {
         if let feedItem: ContentFeedItem = ContentFeedItem.getItemWith(itemID: videoId) {
             let time = Int(round(currentTime)) * 1000
-            actionsManager.trackItemConsumed(item: feedItem, startTimestamp: time)
+            actionsManager.trackItemStarted(item: feedItem, startTimestamp: time)
         }
     }
 

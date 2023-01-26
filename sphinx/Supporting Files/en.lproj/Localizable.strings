@@ -30,6 +30,8 @@
 "name.unknown" = "Unknown";
 "name.unknown.initials" = "UK";
 "today" = "Today";
+"join" = "Join";
+"open" = "Open";
 "connected.to.node" = "Connected to Node";
 "socket.disconnected" = "Live updates unavailable";
 "unable.to.connect" = "Unable to connect to Node";

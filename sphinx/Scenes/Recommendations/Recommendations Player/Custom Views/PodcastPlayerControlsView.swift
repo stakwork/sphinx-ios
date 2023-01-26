@@ -26,6 +26,8 @@ class PodcastPlayerControlsView: UIView {
     @IBOutlet weak var skip30ForwardView: UIView!
     @IBOutlet weak var boostView: CustomBoostView!
     
+    let feedBoostHelper = FeedBoostHelper()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
@@ -118,6 +120,7 @@ extension PodcastPlayerControlsView {
 
 // MARK: - Public methods
 extension PodcastPlayerControlsView {
+    
     func configure(
         podcast: PodcastFeed,
         andDelegate delegate: RecommendationPlayerViewDelegate?
@@ -131,12 +134,16 @@ extension PodcastPlayerControlsView {
             playPauseButton.isHidden = item.isYoutubeVideo
             skip15BackwardView.isHidden = item.isYoutubeVideo
             skip30ForwardView.isHidden = item.isYoutubeVideo
+            
+            let canBoost = (item.destination != nil)
+            boostView.alpha = canBoost ? 1.0 : 0.5
+            boostView.isUserInteractionEnabled = canBoost
         }
         
         clipButton.alpha = 0.5
         clipButton.isEnabled = false
-        
-        boostView.alpha = 0.5
+    
+        boostView.delegate = self
     }
     
     func configureControls(
@@ -146,4 +153,27 @@ extension PodcastPlayerControlsView {
         playPauseButton.setTitle(playing ? "pause" : "play_arrow", for: .normal)
         speedButton.setTitle(speedDescription + "x", for: .normal)
     }
+}
+
+
+extension PodcastPlayerControlsView : CustomBoostViewDelegate{
+    func didTouchBoostButton(withAmount amount: Int) {
+        if let episode = podcast.getCurrentEpisode() {
+            
+            let itemID = episode.itemID
+            let currentTime = podcast.getCurrentEpisode()?.currentTime ?? 0
+                
+            let podcastAnimationVC = PodcastAnimationViewController.instantiate(amount: amount)
+            WindowsManager.sharedInstance.showConveringWindowWith(rootVC: podcastAnimationVC)
+            podcastAnimationVC.showBoostAnimation()
+                
+            feedBoostHelper.sendBoostOnRecommendation(
+                itemID: itemID,
+                currentTime:currentTime,
+                amount: amount
+            )
+        }
+    }
+    
+    func didStartBoostAmountEdit() {}
 }

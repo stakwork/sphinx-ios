@@ -25,6 +25,7 @@ public class PodcastEpisode: NSObject {
     public var feed: PodcastFeed?
     public var people: [String] = []
     public var topics: [String] = []
+    public var destination: PodcastDestination? = nil
 
     //For recommendations podcast
     public var type: String?
@@ -34,19 +35,11 @@ public class PodcastEpisode: NSObject {
         self.itemID = itemID
     }
     
-    var downloaded: Bool? = nil
-    
     public var isDownloaded: Bool {
         get {
-            if let downloaded = downloaded {
-                return downloaded
-            }
             if let fileName = URL(string: urlPath ?? "")?.lastPathComponent {
                 let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent(fileName)
-                let isDownloaded = FileManager.default.fileExists(atPath: path.path)
-                self.downloaded = isDownloaded
-                
-                return isDownloaded
+                return FileManager.default.fileExists(atPath: path.path)
             }
             return false
         }
@@ -123,6 +116,7 @@ extension PodcastEpisode {
         podcastEpisode.imageURLPath = contentFeedItem.imageURL?.absoluteString
         podcastEpisode.title = contentFeedItem.title
         podcastEpisode.feed = feed
+        podcastEpisode.type = RecommendationsHelper.PODCAST_TYPE
         
         return podcastEpisode
     }

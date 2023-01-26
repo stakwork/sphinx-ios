@@ -11,13 +11,13 @@ import CoreData
 
 public class PodcastDestination: NSObject {
     
-    public var objectID: NSManagedObjectID
+    public var objectID: NSManagedObjectID?
     public var address: String?
     public var split: Double
     public var type: String?
     public var feed: PodcastFeed?
     
-    init(_ objectID: NSManagedObjectID) {
+    init(_ objectID: NSManagedObjectID? = nil) {
         self.objectID = objectID
         self.split = 0
     }

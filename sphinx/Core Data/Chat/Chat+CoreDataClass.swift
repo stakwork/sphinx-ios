@@ -488,8 +488,10 @@ public class Chat: NSManagedObject {
                     self.tribeInfo = GroupsManager.sharedInstance.getTribesInfoFrom(json: chatJson)
                     self.updateChatFromTribesInfo()
                     
-                    if let feedUrl = self.tribeInfo?.feedUrl {
+                    if let feedUrl = self.tribeInfo?.feedUrl, !feedUrl.isEmpty {
                         ContentFeed.fetchChatFeedContentInBackground(feedUrl: feedUrl, chatObjectID: self.objectID, completion: completion)
+                    } else if let existingFeed = self.contentFeed {
+                        ContentFeed.deleteFeedWith(feedId: existingFeed.feedID)
                     }
                 },
                 errorCallback: {

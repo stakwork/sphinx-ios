@@ -23,6 +23,16 @@ extension ContentFeed {
         let feed: ContentFeed? = CoreDataManager.sharedManager.getObjectOfTypeWith(predicate: predicate, sortDescriptors: [], entityName: "ContentFeed")
         return feed
     }
+    
+    public static func deleteFeedWith(feedId: String) {
+        if let feed: ContentFeed = CoreDataManager.sharedManager.getObjectOfTypeWith(
+            predicate: Predicates.matching(feedID: feedId),
+            sortDescriptors: [],
+            entityName: "ContentFeed"
+        ) {
+            CoreDataManager.sharedManager.deleteObject(object: feed)
+        }
+    }
 
     public enum Predicates {
         

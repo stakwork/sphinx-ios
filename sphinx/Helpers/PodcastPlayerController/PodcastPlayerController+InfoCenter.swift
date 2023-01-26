@@ -61,6 +61,10 @@ extension PodcastPlayerController {
         ]
     }
     
+    func resetPlayingInfoCenter() {
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = [:]
+    }
+    
     func setupNowPlayingInfoCenter() {
         MPRemoteCommandCenter.shared().seekForwardCommand.isEnabled = true
         MPRemoteCommandCenter.shared().seekBackwardCommand.isEnabled = true

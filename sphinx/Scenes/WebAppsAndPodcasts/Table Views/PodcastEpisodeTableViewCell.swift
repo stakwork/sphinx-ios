@@ -82,8 +82,6 @@ class PodcastEpisodeTableViewCell: SwipableCell {
 
         recognizer?.isEnabled = episode.isDownloaded
         
-        downloadButton.isHidden = false
-        
         progressLabel.text = ""
 
         if episode.isDownloaded {
@@ -96,12 +94,12 @@ class PodcastEpisodeTableViewCell: SwipableCell {
         
         if let download = download {
             updateProgress(progress: download.progress)
-            downloadButton.isHidden = true
         }
     }
     
     func updateProgress(progress: Int) {
-        progressLabel.text = "\(progress)%"
+        progressLabel.text = (progress > 0) ? "\(progress)%" : ""
+        downloadButton.setTitle((progress > 0) ? "" : "hourglass_top", for: .normal)
     }
     
     func isDifferentEpisode(episodeId: Int) -> Bool {

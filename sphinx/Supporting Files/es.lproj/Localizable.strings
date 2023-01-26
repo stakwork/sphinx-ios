@@ -30,6 +30,8 @@
 "name.unknown" = "Desconocido";
 "name.unknown.initials" = "D";
 "today" = "Hoy";
+"join" = "Unirse";
+"open" = "Abrir";
 "connected.to.node" = "Conectado al Nodo";
 "socket.disconnected" = "Actualizaciones en tiempo real\nno disponibles";
 "unable.to.connect" = "No es posible conectarse al Nodo";

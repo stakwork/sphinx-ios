@@ -189,8 +189,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         presentPINIfNeeded()
         feedsManager.restoreContentFeedStatus(
             progressCallback: {_ in},
-            completionCallback: {
-                
+            completionCallback: { remoteData in
+                self.feedsManager.restoreEpisodeStatuses(remoteData: remoteData)
             })
         
         podcastPlayerController.finishAndSaveContentConsumed()

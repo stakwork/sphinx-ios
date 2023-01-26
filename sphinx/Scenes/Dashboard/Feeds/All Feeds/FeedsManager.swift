@@ -29,7 +29,7 @@ class FeedsManager : NSObject {
     
     func restoreContentFeedStatus(
         progressCallback: @escaping (Int) -> (),
-        completionCallback: @escaping () -> ()
+        completionCallback: @escaping ([ContentFeedStatus]) -> ()
     ){
         API.sharedInstance.getAllContentFeedStatuses(
         callback: { results in
@@ -50,7 +50,7 @@ class FeedsManager : NSObject {
     func syncRemoteAndLocalFeeds(
         remoteData:[ContentFeedStatus],
         progressCallback: @escaping (Int) -> (),
-        completionCallback: @escaping () -> ()
+        completionCallback: @escaping ([ContentFeedStatus]) -> ()
     ){
         //1. Arrange all data and IDs
         let localData = FeedsManager.fetchFeeds()
@@ -77,13 +77,14 @@ class FeedsManager : NSObject {
                         do{
                             let contentFeed = try result.get()
                             contentFeed.isSubscribedToFromSearch = true
-                            
-                            self.restoreEpisodeStatuses(contentFeed: contentFeed, remoteData: remoteData)
+
                             
                             bgContext.saveContext()
                             syncedFeedsCount += 1
                             progressCallback(self.getRestoreProgress(totalFeeds: totalFeedsCount, syncedFeeds: syncedFeedsCount))
-                            
+                            if(totalFeedsCount - 1 <= syncedFeedsCount){
+                                completionCallback(remoteData)
+                            }
                         }
                         catch{
                             print(error)
@@ -105,21 +106,29 @@ class FeedsManager : NSObject {
             }
         }
         
+        //4. Still need to restore episode status for all those not touched by idsToAdd block
+        
         print(idsToAdd)
         print(idsToRemove)
-        completionCallback()
+        if(idsToAdd.isEmpty){
+            completionCallback(remoteData)
+        }
+        
     }
     
     
-    func restoreEpisodeStatuses(contentFeed:ContentFeed,remoteData:[ContentFeedStatus]){
-        if contentFeed.feedKind == .Podcast,
-           let remoteContentStatus = remoteData.filter({$0.feedID == contentFeed.id}).first,
-           let episodeStatuses = remoteContentStatus.episodeStatus{
-            let podcastFeed = PodcastFeed.convertFrom(contentFeed: contentFeed)
-            for episodeStatus in episodeStatuses{
-                if let podFeedEpisode = podcastFeed.episodes?.filter({$0.itemID == episodeStatus.episodeID}).first{
-                    podFeedEpisode.duration = episodeStatus.episodeData?.duration
-                    podFeedEpisode.currentTime = episodeStatus.episodeData?.current_time
+    func restoreEpisodeStatuses(remoteData:[ContentFeedStatus]){
+        let localData = FeedsManager.fetchFeeds()
+        for contentFeed in localData{
+            if contentFeed.feedKind == .Podcast,
+               let remoteContentStatus = remoteData.filter({$0.feedID == contentFeed.id}).first,
+               let episodeStatuses = remoteContentStatus.episodeStatus{
+                let podcastFeed = PodcastFeed.convertFrom(contentFeed: contentFeed)
+                for episodeStatus in episodeStatuses{
+                    if let podFeedEpisode = podcastFeed.episodes?.filter({$0.itemID == episodeStatus.episodeID}).first{
+                        podFeedEpisode.duration = episodeStatus.episodeData?.duration
+                        podFeedEpisode.currentTime = episodeStatus.episodeData?.current_time
+                    }
                 }
             }
         }
@@ -127,7 +136,7 @@ class FeedsManager : NSObject {
     
     func preCacheTopPods(){
         //1. Fetch results from memory
-        var followedFeeds: [ContentFeed] = FeedsManager.fetchFeeds()
+        let followedFeeds: [ContentFeed] = FeedsManager.fetchFeeds()
             
         //2. Walk through each feed
         for feed in followedFeeds {

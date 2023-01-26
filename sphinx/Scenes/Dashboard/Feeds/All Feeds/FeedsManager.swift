@@ -52,7 +52,6 @@ class FeedsManager : NSObject {
                             let contentFeed = try result.get()
                             contentFeed.isSubscribedToFromSearch = true
                             bgContext.saveContext()
-                            localData = FeedsManager.fetchFeeds()//update localData for future reference
                         }
                         catch{
                             print(error)
@@ -60,6 +59,7 @@ class FeedsManager : NSObject {
                     }
                 })
             }
+            localData = FeedsManager.fetchFeeds()//update localData for future reference
         }
         
         //3. Iterate through each local copy that is not present in relay and unsubscribe

@@ -123,6 +123,7 @@ class DashboardRootViewController: RootViewController {
     
     var isInRestoreProcess = false
     var didFinishInitialLoading = false
+    var feedsManager = FeedsManager()
     
     var shouldShowHeaderLoadingWheel = false {
         didSet {
@@ -490,27 +491,37 @@ extension DashboardRootViewController {
             if restoring {
                 self.chatsListViewModel.updateContactsAndChats()
                 self.updateCurrentViewControllerData()
-                
             }
-
-            self.chatsListViewModel.syncMessages(
-                progressCallback: { progress in
-                    if (restoring) {
-                        self.isLoading = false
-                        
-                        if (progress >= 0) {
-                            self.restoreProgressView.showRestoreProgressView(with: progress)
-                        } else {
-                            self.newBubbleHelper.showLoadingWheel(text: "fetching.old.messages".localized)
-                        }
-
+            let contentProgressShare : Float = 0.15
+            
+            self.feedsManager.restoreContentFeedStatus(
+                progressCallback: { contentProgress in
+                    if (contentProgress >= 0) {
+                        self.restoreProgressView.showRestoreProgressView(with: Int(contentProgressShare * Float(contentProgress)))
                     }
                 },
-                completion: { (_,_) in
-                    self.finishLoading()
+                completionCallback: { 
+                    self.chatsListViewModel.syncMessages(
+                        progressCallback: { progress in
+                            if (restoring) {
+                                self.isLoading = false
+                                let messagesProgress : Int = Int(Float(progress) * (1.0 - contentProgressShare))
+                                if (progress >= 0) {
+                                    self.restoreProgressView.showRestoreProgressView(with: messagesProgress + Int(contentProgressShare * 100))
+                                } else {
+                                    self.newBubbleHelper.showLoadingWheel(text: "fetching.old.messages".localized)
+                                }
+                                
+                            }
+                        },
+                        completion: { (_,_) in
+                            self.finishLoading()
+                        }
+                    )
                 }
             )
         }
+            
     }
     
     
@@ -559,9 +570,6 @@ extension DashboardRootViewController {
         
         updateNewMessageBadges()
         
-        if let appDelegate = UIApplication.shared.delegate as? AppDelegate{
-            appDelegate.loadContentFeedStatus()
-        }
     }
     
     

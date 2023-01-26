@@ -187,7 +187,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         reloadMessagesData()
         presentPINIfNeeded()
-        loadContentFeedStatus()
+        feedsManager.restoreContentFeedStatus(
+            progressCallback: {_ in},
+            completionCallback: {
+                
+            })
         
         podcastPlayerController.finishAndSaveContentConsumed()
     }
@@ -198,15 +202,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    func loadContentFeedStatus(){
-        API.sharedInstance.getAllContentFeedStatuses(
-        callback: { results in
-            FeedsManager().syncRemoteAndLocalFeeds(remoteData: results)
-            
-        }, errorCallback: {
-            //TODO: retry? Alert user?
-        })
-    }
 
     func reloadAppIfStyleChanged() {
         if #available(iOS 13.0, *) {

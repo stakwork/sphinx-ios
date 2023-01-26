@@ -27,9 +27,33 @@ class FeedsManager : NSObject {
         }
     }
     
-    func syncRemoteAndLocalFeeds(remoteData:[ContentFeedStatus]){
+    func restoreContentFeedStatus(
+        progressCallback: @escaping (Int) -> (),
+        completionCallback: @escaping () -> ()
+    ){
+        API.sharedInstance.getAllContentFeedStatuses(
+        callback: { results in
+            FeedsManager().syncRemoteAndLocalFeeds(
+                remoteData: results,
+                progressCallback: progressCallback,
+                completionCallback: completionCallback
+            )
+        }, errorCallback: {
+            //TODO: retry? Alert user?
+        })
+    }
+    
+    func getRestoreProgress(totalFeeds:Int,syncedFeeds:Int)->Int{
+        return Int(100.0 * Float(syncedFeeds)/Float(totalFeeds))
+    }
+    
+    func syncRemoteAndLocalFeeds(
+        remoteData:[ContentFeedStatus],
+        progressCallback: @escaping (Int) -> (),
+        completionCallback: @escaping () -> ()
+    ){
         //1. Arrange all data and IDs
-        var localData = FeedsManager.fetchFeeds()
+        let localData = FeedsManager.fetchFeeds()
         
         let localIDs = localData.compactMap({$0.feedID})
         let remoteIDs = remoteData.compactMap({$0.feedID})
@@ -38,6 +62,8 @@ class FeedsManager : NSObject {
         let idsToAdd = remoteIDs.filter({localIDs.contains($0) == false})
         
         for _id in idsToAdd{
+            var syncedFeedsCount = 0
+            let totalFeedsCount = idsToAdd.count
             if let relevant_data = remoteData.filter({$0.feedID == _id}).first{
                 let relevant_feed_url = relevant_data.feedURL
                 var chat : Chat? = nil
@@ -51,7 +77,13 @@ class FeedsManager : NSObject {
                         do{
                             let contentFeed = try result.get()
                             contentFeed.isSubscribedToFromSearch = true
+                            
+                            self.restoreEpisodeStatuses(contentFeed: contentFeed, remoteData: remoteData)
+                            
                             bgContext.saveContext()
+                            syncedFeedsCount += 1
+                            progressCallback(self.getRestoreProgress(totalFeeds: totalFeedsCount, syncedFeeds: syncedFeedsCount))
+                            
                         }
                         catch{
                             print(error)
@@ -59,8 +91,8 @@ class FeedsManager : NSObject {
                     }
                 })
             }
-            localData = FeedsManager.fetchFeeds()//update localData for future reference
         }
+        
         
         //3. Iterate through each local copy that is not present in relay and unsubscribe
         let idsToRemove = localIDs.filter({remoteIDs.contains($0) == false})
@@ -73,23 +105,24 @@ class FeedsManager : NSObject {
             }
         }
         
-        //4. Sync all episodes
-        for contentFeed in localData{
-            if contentFeed.feedKind == .Podcast,
-               let remoteContentStatus = remoteData.filter({$0.feedID == contentFeed.id}).first,
-               let episodeStatuses = remoteContentStatus.episodeStatus{
-                let podcastFeed = PodcastFeed.convertFrom(contentFeed: contentFeed)
-                for episodeStatus in episodeStatuses{
-                    if var podFeedEpisode = podcastFeed.episodes?.filter({$0.itemID == episodeStatus.episodeID}).first{
-                        podFeedEpisode.duration = episodeStatus.episodeData?.duration
-                        podFeedEpisode.currentTime = episodeStatus.episodeData?.current_time
-                    }
+        print(idsToAdd)
+        print(idsToRemove)
+        completionCallback()
+    }
+    
+    
+    func restoreEpisodeStatuses(contentFeed:ContentFeed,remoteData:[ContentFeedStatus]){
+        if contentFeed.feedKind == .Podcast,
+           let remoteContentStatus = remoteData.filter({$0.feedID == contentFeed.id}).first,
+           let episodeStatuses = remoteContentStatus.episodeStatus{
+            let podcastFeed = PodcastFeed.convertFrom(contentFeed: contentFeed)
+            for episodeStatus in episodeStatuses{
+                if let podFeedEpisode = podcastFeed.episodes?.filter({$0.itemID == episodeStatus.episodeID}).first{
+                    podFeedEpisode.duration = episodeStatus.episodeData?.duration
+                    podFeedEpisode.currentTime = episodeStatus.episodeData?.current_time
                 }
             }
         }
-        
-        print(idsToAdd)
-        print(idsToRemove)
     }
     
     func preCacheTopPods(){

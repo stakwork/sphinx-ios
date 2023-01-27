@@ -278,7 +278,6 @@ class PodcastPlayerView: UIView {
         )
         
         delegate?.shouldReloadEpisodesTable()
-//        showInfo()
     }
     
     func seekTo(seconds: Double) {

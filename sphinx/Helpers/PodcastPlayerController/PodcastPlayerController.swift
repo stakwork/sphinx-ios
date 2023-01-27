@@ -17,35 +17,6 @@ protocol PlayerDelegate : class {
     func errorState(_ podcastData: PodcastData)
 }
 
-struct PodcastData {
-    
-    var chatId: Int?
-    var podcastId: String
-    var episodeId: String
-    var episodeUrl: URL
-    var currentTime: Int? = nil
-    var duration: Int? = nil
-    var speed: Float = 1
-    
-    init(
-        _ chatId: Int?,
-        _ podcastId: String,
-        _ episodeId: String,
-        _ episodeUrl: URL,
-        _ currentTime: Int? = nil,
-        _ duration: Int? = nil,
-        _ speed: Float = 1
-    ) {
-        self.chatId = chatId
-        self.podcastId = podcastId
-        self.episodeId = episodeId
-        self.episodeUrl = episodeUrl
-        self.currentTime = currentTime
-        self.duration = duration
-        self.speed = speed
-    }
-}
-
 enum UserAction {
     case Play(PodcastData)
     case Pause(PodcastData)

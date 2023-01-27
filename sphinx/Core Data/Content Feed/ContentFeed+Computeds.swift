@@ -46,4 +46,20 @@ extension ContentFeed {
         
         return Array(destinations)
     }
+    
+    var itemsArray: [ContentFeedItem] {
+        guard let items = items else {
+            return []
+        }
+        
+        return items.sorted { (first, second) in
+            if first.datePublished == nil {
+                return false
+            } else if second.datePublished == nil {
+                return true
+            }
+            
+            return first.datePublished! > second.datePublished!
+        }
+    }
 }

@@ -116,6 +116,14 @@ class FeedsManager : NSObject {
         
     }
     
+    func setLocalMetaData(localContentFeed:ContentFeed,remoteContentStatus:ContentFeedStatus){
+        UserDefaults.standard.set(remoteContentStatus.satsPerMinute, forKey: "podcast-sats-\(localContentFeed.id)")
+        UserDefaults.standard.set(remoteContentStatus.playerSpeed, forKey: "player-speed-\(localContentFeed.id)")
+        let podcastFeed = PodcastFeed.convertFrom(contentFeed: localContentFeed)
+        podcastFeed.currentEpisodeId = remoteContentStatus.itemID ?? ""
+        podcastFeed.currentTime = remoteContentStatus.episodeStatus?.filter({$0.episodeID == remoteContentStatus.itemID}).first?.episodeData?.current_time ?? 0
+    }
+    
     
     func restoreEpisodeStatuses(remoteData:[ContentFeedStatus]){
         let localData = FeedsManager.fetchFeeds()
@@ -123,9 +131,7 @@ class FeedsManager : NSObject {
             if contentFeed.feedKind == .Podcast,
                let remoteContentStatus = remoteData.filter({$0.feedID == contentFeed.id}).first,
                let episodeStatuses = remoteContentStatus.episodeStatus{
-                UserDefaults.standard.set(remoteContentStatus.satsPerMinute, forKey: "podcast-sats-\(contentFeed.id)")
-                UserDefaults.standard.set(remoteContentStatus.playerSpeed, forKey: "player-speed-\(contentFeed.id)")
-                
+                setLocalMetaData(localContentFeed: contentFeed, remoteContentStatus: remoteContentStatus)
                 let podcastFeed = PodcastFeed.convertFrom(contentFeed: contentFeed)
                 for episodeStatus in episodeStatuses{
                     if let podFeedEpisode = podcastFeed.episodes?.filter({$0.itemID == episodeStatus.episodeID}).first{

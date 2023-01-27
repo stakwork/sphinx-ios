@@ -122,7 +122,6 @@ class FeedsManager : NSObject {
         podcastFeed.satsPerMinute = remoteContentStatus.satsPerMinute ?? 0
         podcastFeed.playerSpeed = remoteContentStatus.playerSpeed ?? 1.0
         podcastFeed.currentEpisodeId = remoteContentStatus.itemID ?? ""
-        podcastFeed.currentTime = remoteContentStatus.episodeStatus?.filter({$0.episodeID == remoteContentStatus.itemID}).first?.episodeData?.current_time ?? 0
     }
     
     

@@ -78,7 +78,7 @@ class PodcastEpisodeTableViewCell: SwipableCell {
     }
     
     func configureDownload(episode: PodcastEpisode, download: Download?) {
-        contentView.alpha = episode.isAvailable() ? 1.0 : 0.5
+        contentView.alpha = episode.isAvailable ? 1.0 : 0.5
 
         recognizer?.isEnabled = episode.isDownloaded
         

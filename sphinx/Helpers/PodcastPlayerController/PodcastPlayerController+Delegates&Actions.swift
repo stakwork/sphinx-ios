@@ -97,7 +97,6 @@ extension PodcastPlayerController {
                     
                     if self.player == nil {
                         self.player = AVPlayer(playerItem: playerItem)
-                        self.player?.automaticallyWaitsToMinimizeStalling = false
                         self.player?.rate = podcastData.speed
                     } else {
                         self.player?.replaceCurrentItem(with: playerItem)
@@ -135,7 +134,7 @@ extension PodcastPlayerController {
             self.trackItemStarted()
         } else {
             self.player?.pause()
-            
+
             runErrorStateUpdate()
         }
     }

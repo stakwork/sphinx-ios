@@ -55,6 +55,9 @@ extension PodcastPlayerView : PlayerDelegate {
         if podcastData.podcastId != podcast?.feedID {
             return
         }
+        audioLoading = false
+        configureControls(playing: false)
+        
         delegate?.didFailPlayingPodcast()
     }
 }

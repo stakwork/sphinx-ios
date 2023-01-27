@@ -77,18 +77,17 @@ class FeedsManager : NSObject {
                         do{
                             let contentFeed = try result.get()
                             contentFeed.isSubscribedToFromSearch = true
-
-                            
                             bgContext.saveContext()
-                            syncedFeedsCount += 1
+                            
                             progressCallback(self.getRestoreProgress(totalFeeds: totalFeedsCount, syncedFeeds: syncedFeedsCount))
-                            if(totalFeedsCount - 1 <= syncedFeedsCount){//signal completion when we're done copying to local
-                                completionCallback(remoteData)
-                            }
                         }
                         catch{
                             print(error)
                         }
+                    }
+                    syncedFeedsCount += 1
+                    if(totalFeedsCount - 1 <= syncedFeedsCount){//signal completion when we're done copying to local
+                        completionCallback(remoteData)
                     }
                 })
             }

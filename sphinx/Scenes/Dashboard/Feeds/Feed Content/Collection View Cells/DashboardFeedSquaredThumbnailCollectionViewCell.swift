@@ -8,7 +8,7 @@ import SDWebImage
 
 
 protocol DashboardFeedSquaredThumbnailCollectionViewItem {
-    var imageURLPath: String? { get }
+    var imageToShow: String? { get }
     var title: String? { get }
     var subtitle: String? { get }
     var publishDate: Date? { get }
@@ -46,7 +46,7 @@ class DashboardFeedSquaredThumbnailCollectionViewCell: UICollectionViewCell {
 extension DashboardFeedSquaredThumbnailCollectionViewCell {
     
     var imageURL: URL? {
-        item.imageURLPath.flatMap { URL(string: $0) }
+        item.imageToShow.flatMap { URL(string: $0) }
     }
     
     var placeholderImage: UIImage? {
@@ -161,7 +161,7 @@ extension DashboardFeedSquaredThumbnailCollectionViewCell {
 // MARK: - DashboardFeedSquaredThumbnailCollectionViewItem - NSManagedObject Conformance
 extension ContentFeed: DashboardFeedSquaredThumbnailCollectionViewItem {
     
-    var imageURLPath: String? {
+    var imageToShow: String? {
         imageURL?.absoluteString ?? chat?.photoUrl
     }
     
@@ -191,7 +191,7 @@ extension ContentFeed: DashboardFeedSquaredThumbnailCollectionViewItem {
 
 extension VideoFeed: DashboardFeedSquaredThumbnailCollectionViewItem {
     
-    var imageURLPath: String? {
+    var imageToShow: String? {
         imageURL?.absoluteString ?? chat?.photoUrl
     }
     
@@ -217,6 +217,10 @@ extension VideoFeed: DashboardFeedSquaredThumbnailCollectionViewItem {
 
 
 extension PodcastEpisode: DashboardFeedSquaredThumbnailCollectionViewItem {
+    
+    var imageToShow: String? {
+        imageURLPath ?? feed?.imageURLPath
+    }
     
     var placeholderImageName: String? {
         switch type {
@@ -261,6 +265,11 @@ extension PodcastEpisode: DashboardFeedSquaredThumbnailCollectionViewItem {
 
 
 extension PodcastFeed: DashboardFeedSquaredThumbnailCollectionViewItem {
+    
+    var imageToShow: String? {
+        imageURLPath
+    }
+    
     var placeholderImageName: String? {
         "podcastPlaceholder"
     }

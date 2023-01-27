@@ -69,6 +69,8 @@ extension PodcastPlayerController {
     }
     
     func configureTimer() {
+        updateCurrentTime()
+        
         playingTimer?.invalidate()
         playingTimer = Timer.scheduledTimer(
             timeInterval: Double(1) / Double(podcastData?.speed ?? 1.0),

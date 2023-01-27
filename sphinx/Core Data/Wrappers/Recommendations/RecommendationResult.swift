@@ -166,7 +166,7 @@ extension RecommendationResult {
 }
 
 extension RecommendationResult : DashboardFeedSquaredThumbnailCollectionViewItem {
-    var imageURLPath: String? {
+    var imageToShow: String? {
         mediumImageUrl ?? largeImageUrl ?? smallImageUrl
     }
     

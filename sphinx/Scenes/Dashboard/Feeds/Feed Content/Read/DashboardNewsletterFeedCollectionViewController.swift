@@ -579,7 +579,7 @@ extension DashboardNewsletterFeedCollectionViewController: NSFetchedResultsContr
 
 extension NewsletterFeed: DashboardFeedSquaredThumbnailCollectionViewItem {
     
-    var imageURLPath: String? {
+    var imageToShow: String? {
         imageURL?.absoluteString ?? chat?.photoUrl
     }
     
@@ -603,8 +603,9 @@ extension NewsletterFeed: DashboardFeedSquaredThumbnailCollectionViewItem {
 }
 
 extension NewsletterItem: DashboardFeedSquaredThumbnailCollectionViewItem {
-    var imageURLPath: String? {
-        newsletterFeed?.imageURL?.absoluteString ?? newsletterFeed?.chat?.photoUrl
+    
+    var imageToShow: String? {
+        imageUrl?.absoluteString ?? newsletterFeed?.imageURL?.absoluteString
     }
     
     var placeholderImageName: String? {

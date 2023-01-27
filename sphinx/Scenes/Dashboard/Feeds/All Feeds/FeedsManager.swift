@@ -118,9 +118,9 @@ class FeedsManager : NSObject {
     }
     
     func setLocalMetaData(localContentFeed:ContentFeed,remoteContentStatus:ContentFeedStatus){
-        UserDefaults.standard.set(remoteContentStatus.satsPerMinute, forKey: "podcast-sats-\(localContentFeed.id)")
-        UserDefaults.standard.set(remoteContentStatus.playerSpeed, forKey: "player-speed-\(localContentFeed.id)")
         let podcastFeed = PodcastFeed.convertFrom(contentFeed: localContentFeed)
+        podcastFeed.satsPerMinute = remoteContentStatus.satsPerMinute ?? 0
+        podcastFeed.playerSpeed = remoteContentStatus.playerSpeed ?? 1.0
         podcastFeed.currentEpisodeId = remoteContentStatus.itemID ?? ""
         podcastFeed.currentTime = remoteContentStatus.episodeStatus?.filter({$0.episodeID == remoteContentStatus.itemID}).first?.episodeData?.current_time ?? 0
     }

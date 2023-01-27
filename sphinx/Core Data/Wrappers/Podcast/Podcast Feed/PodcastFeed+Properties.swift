@@ -26,6 +26,7 @@ public class PodcastFeed: NSObject {
     public var episodes: Array<PodcastEpisode>?
     public var destinations: Array<PodcastDestination>?
     
+    
     init(
         _ objectID: NSManagedObjectID?,
         _ feedID: String,

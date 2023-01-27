@@ -29,7 +29,7 @@ class FeedsManager : NSObject {
     
     func restoreContentFeedStatus(
         progressCallback: @escaping (Int) -> (),
-        completionCallback: @escaping ([ContentFeedStatus]) -> ()
+        completionCallback: @escaping () -> ()
     ){
         API.sharedInstance.getAllContentFeedStatuses(
         callback: { results in
@@ -50,7 +50,7 @@ class FeedsManager : NSObject {
     func syncRemoteAndLocalFeeds(
         remoteData:[ContentFeedStatus],
         progressCallback: @escaping (Int) -> (),
-        completionCallback: @escaping ([ContentFeedStatus]) -> ()
+        completionCallback: @escaping () -> ()
     ){
         //1. Arrange all data and IDs
         let localData = FeedsManager.fetchFeeds()
@@ -87,7 +87,8 @@ class FeedsManager : NSObject {
                     }
                     syncedFeedsCount += 1
                     if(totalFeedsCount - 1 <= syncedFeedsCount){//signal completion when we're done copying to local
-                        completionCallback(remoteData)
+                        self.restoreEpisodeStatuses(remoteData: remoteData)
+                        completionCallback()
                     }
                 })
             }
@@ -110,7 +111,8 @@ class FeedsManager : NSObject {
         print(idsToAdd)
         print(idsToRemove)
         if(idsToAdd.isEmpty){//signal completion if there's no additions happening
-            completionCallback(remoteData)
+            self.restoreEpisodeStatuses(remoteData: remoteData)
+            completionCallback()
         }
         
     }

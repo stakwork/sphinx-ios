@@ -500,8 +500,7 @@ extension DashboardRootViewController {
                         self.restoreProgressView.showRestoreProgressView(with: Int(contentProgressShare * Float(contentProgress)))
                     }
                 },
-                completionCallback: { remoteData in
-                    self.feedsManager.restoreEpisodeStatuses(remoteData: remoteData)
+                completionCallback: {                     
                     self.chatsListViewModel.syncMessages(
                         progressCallback: { progress in
                             if (restoring) {

@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import ObjectMapper
 
 
 class BadgeManagementListDataSource : NSObject{
@@ -28,7 +29,21 @@ class BadgeManagementListDataSource : NSObject{
     
     func fetchBadges(){
         //TODO: Add call to service here
-        
+        API.sharedInstance.getTribeAdminBadges(
+            tribeID: "",
+            callback: { results in
+                if let badgeResults = Mapper<Badge>().mapArray(JSONObject: results){
+                    self.badges = badgeResults
+                    self.vc.badgeTableView.reloadData()
+                }
+                else{
+                    self.vc.showErrorMessage()
+                }
+            
+        },
+        errorCallback: {
+            self.vc.showErrorMessage()
+        })
         //Fake data here:
         let n_badges = 15
         for i in 0...n_badges{

@@ -76,4 +76,8 @@ class BadgeManagementListVC: UIViewController{
             self.view.layoutIfNeeded()
         })
     }
+    
+    func showErrorMessage(){
+        AlertHelper.showAlert(title: "Error Retrieving Badge List", message: "")
+    }
 }

@@ -10,6 +10,7 @@ import CoreData
 
 class AllTribeFeedsCollectionViewController: UICollectionViewController {
     var followedFeeds: [ContentFeed] = []
+    
     var recommendedFeeds: [RecommendationResult] = []
     
     var interSectionSpacing: CGFloat = 10.0
@@ -140,6 +141,7 @@ extension AllTribeFeedsCollectionViewController {
                let rhsContentFeed = rhs.resultEntity {
                 
                 return
+                    lhsContentFeed.uuid == rhsContentFeed.uuid &&
                     lhsContentFeed.id == rhsContentFeed.id &&
                     lhsContentFeed.link == rhsContentFeed.link
             }
@@ -164,13 +166,9 @@ extension AllTribeFeedsCollectionViewController {
         func hash(into hasher: inout Hasher) {
             if let contentFeed = self.feedEntity as? ContentFeed {
                 hasher.combine(contentFeed.feedID)
-                hasher.combine(contentFeed.title)
-                hasher.combine(contentFeed.feedURL?.absoluteString)
-                hasher.combine(contentFeed.items?.count)
             }
             if let recommendation = self.resultEntity {
-                hasher.combine(recommendation.id)
-                hasher.combine(recommendation.link)
+                hasher.combine(recommendation.uuid)
             }
         }
     }
@@ -260,7 +258,7 @@ extension AllTribeFeedsCollectionViewController {
             heightDimension: .fractionalHeight(1.0)
         )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets(top: 11, leading: 0, bottom: 11, trailing: 0)
+        item.contentInsets = itemContentInsets
 
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
@@ -455,7 +453,7 @@ extension AllTribeFeedsCollectionViewController {
     ) -> DataSourceSnapshot {
         var snapshot = DataSourceSnapshot()
         
-        if(isTrackingEnabled()){
+        if (isTrackingEnabled()) {
             snapshot.appendSections([CollectionViewSection.recommendations])
             
             if loadingRecommendations {
@@ -482,11 +480,10 @@ extension AllTribeFeedsCollectionViewController {
                 }
             }
         }
-        
-  
+          
         let followedSourceItems = followedFeeds.sorted { (first, second) in
-            let firstDate = first.dateUpdated ?? first.datePublished ?? Date.init(timeIntervalSince1970: 0)
-            let secondDate = second.dateUpdated ?? second.datePublished ?? Date.init(timeIntervalSince1970: 0)
+            let firstDate = first.itemsArray.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
+            let secondDate = second.itemsArray.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
 
             return firstDate > secondDate
         }.compactMap { contentFeed -> DataSourceItem? in
@@ -499,10 +496,10 @@ extension AllTribeFeedsCollectionViewController {
             }
             return nil
         }
-        
+
         if followedSourceItems.count > 0 {
             snapshot.appendSections([CollectionViewSection.followedFeeds])
-            
+
             snapshot.appendItems(
                 followedSourceItems,
                 toSection: .followedFeeds
@@ -544,7 +541,12 @@ extension AllTribeFeedsCollectionViewController {
     func updateWithNew(
         recommendations: [RecommendationResult]
     ) {
-        self.recommendedFeeds = recommendations
+        self.recommendedFeeds = recommendations.sorted { (first, second) in
+            let firstDate = first.publishDate  ?? Date.init(timeIntervalSince1970: 0)
+            let secondDate = second.publishDate ?? Date.init(timeIntervalSince1970: 0)
+            
+            return firstDate > secondDate
+        }
 
         if let dataSource = dataSource {
             
@@ -619,20 +621,10 @@ extension AllTribeFeedsCollectionViewController {
         }
     }
     
-    func loadRecommendations(
-        forceRefresh: Bool = false
-    ) {
-        let savedRecommendations = recommendationsHelper.getSavedRecommendations()
-        
-        if (!savedRecommendations.isEmpty && !forceRefresh) {
-            updateWithNew(recommendations: savedRecommendations)
-            return
-        }
-        
+    func loadRecommendations() {
         updateLoadingRecommendations()
         
         API.sharedInstance.getFeedRecommendations(callback: { recommendations in
-            self.recommendationsHelper.persistRecommendations(recommendations)
             self.updateWithNew(recommendations: recommendations)
         }, errorCallback: {
             self.updateNoRecommendationsFound()
@@ -693,10 +685,10 @@ extension AllTribeFeedsCollectionViewController: NSFetchedResultsControllerDeleg
 
 extension AllTribeFeedsCollectionViewController: DashboardFeedHeaderDelegate {
     func didTapOnRefresh() {
-        if (PodcastPlayerHelper.sharedInstance.isPlayingRecommendations()) {
+        if (PodcastPlayerController.sharedInstance.isPlayingRecommendations()) {
             AlertHelper.showAlert(title: "Recommendations", message: "You can't get new recommendations while playing them. Please stop playing before refreshing.", on: self)
         } else {
-            loadRecommendations(forceRefresh: true)
+            loadRecommendations()
         }
     }
 }

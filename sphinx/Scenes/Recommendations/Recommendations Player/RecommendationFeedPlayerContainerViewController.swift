@@ -31,7 +31,7 @@ class RecommendationFeedPlayerContainerViewController: UIViewController {
         )
     }()
     
-    var playerHelper: PodcastPlayerHelper = PodcastPlayerHelper.sharedInstance
+    var podcastPlayerController = PodcastPlayerController.sharedInstance
 }
 
 // MARK: -  Static Methods
@@ -57,24 +57,18 @@ extension RecommendationFeedPlayerContainerViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setPlayingEpisode()
         configurePlayerView()
+        setPlayingEpisode()
         configureCollectionView()
-        
-        if playerHelper.isPlaying(podcast.feedID) {
-            return
-        }
-        
-        if let item = podcast.getCurrentEpisode() {
-            loadAndPlayEpisode(recommendationId: item.itemID)
-        }
+        configurePodcastPlayer()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    override func endAppearanceTransition() {
+        super.endAppearanceTransition()
         
         if isBeingDismissed {
-            playerHelper.removeFromDelegatesWith(key: PodcastPlayerHelper.DelegateKeys.recommendationsPlayer.rawValue)
+            podcastPlayerController.finishAndSaveContentConsumed()
+            podcastPlayerController.removeFromDelegatesWith(key: PodcastDelegateKeys.PodcastPlayerView.rawValue)
         }
     }
 }
@@ -113,9 +107,6 @@ extension RecommendationFeedPlayerContainerViewController {
             child: youtubeVideoPlayerViewController,
             container: playerContainerView
         )
-        
-        playerHelper.stopPlaying()
-        playerHelper.removeFromDelegatesWith(key: PodcastPlayerHelper.DelegateKeys.recommendationsPlayer.rawValue)
     }
     
     private func addPodcastPlayerView() {
@@ -125,12 +116,6 @@ extension RecommendationFeedPlayerContainerViewController {
             child: podcastPlayerViewController,
             container: playerContainerView
         )
-        
-        playerHelper.addDelegate(
-            self,
-            withKey: PodcastPlayerHelper.DelegateKeys.recommendationsPlayer.rawValue
-        )
-
     }
 
     private func configureCollectionView() {
@@ -138,6 +123,10 @@ extension RecommendationFeedPlayerContainerViewController {
             child: collectionViewController,
             container: collectionViewContainer
         )
+    }
+    
+    private func configurePodcastPlayer() {
+        podcastPlayerController.addDelegate(self, withKey: PodcastDelegateKeys.RecommendationsPlayerView.rawValue)
     }
 }
 
@@ -147,27 +136,27 @@ extension RecommendationFeedPlayerContainerViewController {
     private func handleRecommendationCellSelection(
         _ recommendationId: String
     ) {
-        loadAndPlayEpisode(recommendationId: recommendationId)
+        if let episode = podcast.getEpisodeWith(id: recommendationId) {
+            shouldPlay(episode)
+        }
+        
         setPlayingEpisode()
         configurePlayerView()
     }
     
-    func loadAndPlayEpisode(recommendationId: String) {
-        if let index = podcast.episodesArray.firstIndex(where: { $0.itemID == recommendationId }) {
-            didTapEpisodeAt(index: index)
+    func shouldPlay(_ episode: PodcastEpisode) {
+        let currentTime = ((episode.currentTime ?? 0) > 0) ? episode.currentTime : (episode.clipStartTime ?? 0)
+        
+        guard let podcastData = podcast.getPodcastData(
+            episodeId: episode.itemID,
+            currentTime: currentTime
+        ) else {
+            return
         }
-    }
-    
-    func didTapEpisodeAt(index: Int) {
-        playerHelper.prepareEpisodeWith(
-            index: index,
-            in: podcast,
-            autoPlay: true,
-            completion: {
-                self.configureControls()
-            }
+        
+        podcastPlayerController.submitAction(
+            UserAction.Play(podcastData)
         )
-        podcastPlayerViewController.showTimeInfo()
     }
 }
 
@@ -179,9 +168,29 @@ extension RecommendationFeedPlayerContainerViewController : RecommendationPlayer
         self.present(pickerVC, animated: false, completion: nil)
     }
     
+    func shouldSetProgress(
+        duration: Int,
+        currentTime: Int
+    ) {
+        podcastPlayerViewController.setProgress(
+            duration: duration,
+            currentTime: currentTime
+        )
+    }
+    
     func didSelectValue(value: String) {
-        if let floatValue = Float(value), floatValue >= 0.5 && floatValue <= 2.1 {
-            playerHelper.changeSpeedTo(value: floatValue, on: podcast)
+        if let newSpeed = Float(value), newSpeed >= 0.5 && newSpeed <= 2.1 {
+            
+            guard let podcastData = podcast.getPodcastData(
+                playerSpeed: newSpeed
+            ) else {
+                return
+            }
+            
+            podcastPlayerController.submitAction(
+                UserAction.AdjustSpeed(podcastData)
+            )
+            
             configureControls()
         }
     }
@@ -190,39 +199,48 @@ extension RecommendationFeedPlayerContainerViewController : RecommendationPlayer
         playing: Bool? = nil
     ) {
         recommendationDetailsView.configureControls(
-            playing: playing ?? playerHelper.isPlaying(podcast.feedID),
+            playing: playing ?? podcastPlayerController.isPlaying(podcastId: podcast.feedID),
             speedDescription: podcast.playerSpeed.speedDescription
         )
     }
 }
 
 // MARK: -  Podcast Player Delegate
-extension RecommendationFeedPlayerContainerViewController : PodcastPlayerDelegate {
-    func playingState(podcastId: String, duration: Int, currentTime: Int) {
-        guard podcastId == podcast.feedID else {
+extension RecommendationFeedPlayerContainerViewController : PlayerDelegate {
+    func loadingState(_ podcastData: PodcastData) {
+        if podcastData.podcastId != podcast?.feedID {
             return
         }
         configureControls(playing: true)
-        podcastPlayerViewController.playingState(podcastId: podcastId, duration: duration, currentTime: currentTime)
+        setPlayingEpisode()
+        podcastPlayerViewController.loadingState(podcastData)
     }
     
-    func pausedState(podcastId: String, duration: Int, currentTime: Int) {
-        guard podcastId == podcast.feedID else {
+    func playingState(_ podcastData: PodcastData) {
+        if podcastData.podcastId != podcast?.feedID {
+            return
+        }
+        configureControls(playing: true)
+        podcastPlayerViewController.playingState(podcastData)
+    }
+    
+    func pausedState(_ podcastData: PodcastData) {
+        if podcastData.podcastId != podcast?.feedID {
             return
         }
         configureControls(playing: false)
-        podcastPlayerViewController.pausedState(podcastId: podcastId, duration: duration, currentTime: currentTime)
+        podcastPlayerViewController.pausedState(podcastData)
     }
     
-    func loadingState(podcastId: String, loading: Bool) {
-        guard podcastId == podcast.feedID else {
+    func endedState(_ podcastData: PodcastData) {
+        if podcastData.podcastId != podcast?.feedID {
             return
         }
-        podcastPlayerViewController.loadingState(podcastId: podcastId, loading: loading)
+        podcastPlayerViewController.endedState(podcastData)
     }
     
-    func errorState(podcastId: String) {
+    func errorState(_ podcastData: PodcastData) {
         configureControls(playing: false)
-        AlertHelper.showAlert(title: "Error", message: "This clip can't be played", on: self)
+        AlertHelper.showAlert(title: "generic.error.title".localized, message: "error.playing".localized)
     }
 }

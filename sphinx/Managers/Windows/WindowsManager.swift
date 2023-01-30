@@ -76,7 +76,7 @@ class WindowsManager {
             if let messageId = notification.userInfo?["messageId"] as? Int,
                let message = TransactionMessage.getMessageWith(id: messageId), message.getActionsMenuOptions().count > 0 {
                 
-                PlayAudioHelper.playHaptic()
+                SoundsPlayer.playHaptic()
                 NotificationCenter.default.post(name: .onMessageMenuShow, object: nil)
                 
                 let messageOptionsVC = MessageOptionsViewController.instantiate(message: message, delegate: delegate)
@@ -155,6 +155,10 @@ class WindowsManager {
     }
     
     func showConveringWindowWith(rootVC: UIViewController) {
+        if let rootVController = rootVC as? RootViewController, let currentVC = rootVController.getLastCenterViewController() {
+            currentVC.view.endEditing(true)
+        }
+        
         let coveringWindow = getCoveringWindowWith(rootVC: rootVC)
         coveringWindow?.isHidden = false
     }

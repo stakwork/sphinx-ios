@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -11,6 +11,9 @@
     <customFonts key="customFonts">
         <array key="MaterialIcons-Regular.ttf">
             <string>MaterialIcons-Regular</string>
+        </array>
+        <array key="Roboto-Medium.ttf">
+            <string>Roboto-Medium</string>
         </array>
         <array key="Roboto-Regular.ttf">
             <string>Roboto-Regular</string>
@@ -61,24 +64,19 @@
                                 <color key="textColor" name="Text"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TLj-D1-GQN" customClass="UIActivityIndicatorView">
-                                <rect key="frame" x="364" y="6" width="30" height="52"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="30" id="37O-4S-KQr"/>
-                                    <constraint firstAttribute="height" constant="52" id="KDG-d2-CY7"/>
-                                </constraints>
-                            </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="stS-CP-8w0">
-                                <rect key="frame" x="379" y="50" width="0.0" height="0.0"/>
-                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="9"/>
+                                <rect key="frame" x="379" y="32" width="0.0" height="0.0"/>
+                                <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="11"/>
                                 <color key="textColor" name="Text"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wn9-Jm-IB1">
-                                <rect key="frame" x="364" y="6" width="30" height="52"/>
+                                <rect key="frame" x="344" y="6" width="70" height="52"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="70" id="dho-J4-KPA"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="20"/>
-                                <state key="normal" title="">
+                                <state key="normal" title="download">
                                     <color key="titleColor" name="Text"/>
                                 </state>
                                 <connections>
@@ -91,20 +89,18 @@
                             <constraint firstItem="CyI-eW-P6O" firstAttribute="leading" secondItem="RwI-hJ-eGS" secondAttribute="trailing" id="5fC-hZ-8l9"/>
                             <constraint firstItem="stS-CP-8w0" firstAttribute="centerX" secondItem="Wn9-Jm-IB1" secondAttribute="centerX" id="92j-Eb-7eO"/>
                             <constraint firstAttribute="trailing" secondItem="1QS-TO-aCK" secondAttribute="trailing" constant="30" id="ArD-Nc-JLL"/>
-                            <constraint firstItem="TLj-D1-GQN" firstAttribute="trailing" secondItem="Wn9-Jm-IB1" secondAttribute="trailing" id="FNJ-GI-yJv"/>
-                            <constraint firstAttribute="trailing" secondItem="Wn9-Jm-IB1" secondAttribute="trailing" constant="20" id="Jbi-0r-17y"/>
+                            <constraint firstAttribute="trailing" secondItem="Wn9-Jm-IB1" secondAttribute="trailing" id="Jbi-0r-17y"/>
                             <constraint firstItem="RwI-hJ-eGS" firstAttribute="centerY" secondItem="LFT-ch-Aaj" secondAttribute="centerY" id="PcE-8l-rYs"/>
                             <constraint firstItem="RwI-hJ-eGS" firstAttribute="leading" secondItem="LFT-ch-Aaj" secondAttribute="leading" id="VNm-RJ-eHF"/>
                             <constraint firstItem="1QS-TO-aCK" firstAttribute="leading" secondItem="LFT-ch-Aaj" secondAttribute="leading" constant="30" id="WBC-xd-dEH"/>
                             <constraint firstItem="1QS-TO-aCK" firstAttribute="top" secondItem="Wn9-Jm-IB1" secondAttribute="bottom" constant="5" id="XxQ-5j-SDy"/>
                             <constraint firstItem="Wn9-Jm-IB1" firstAttribute="centerY" secondItem="LFT-ch-Aaj" secondAttribute="centerY" id="dWg-SJ-lNq"/>
-                            <constraint firstItem="TLj-D1-GQN" firstAttribute="centerY" secondItem="LFT-ch-Aaj" secondAttribute="centerY" id="qXh-Z2-Hlo"/>
                             <constraint firstItem="U8O-tH-aXk" firstAttribute="leading" secondItem="CyI-eW-P6O" secondAttribute="trailing" constant="17" id="rGw-lx-xQ3"/>
                             <constraint firstItem="Wn9-Jm-IB1" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="U8O-tH-aXk" secondAttribute="trailing" constant="5" id="ryR-ZH-dfs"/>
                             <constraint firstItem="U8O-tH-aXk" firstAttribute="centerY" secondItem="LFT-ch-Aaj" secondAttribute="centerY" id="v60-y3-66S"/>
                             <constraint firstItem="CyI-eW-P6O" firstAttribute="leading" secondItem="RwI-hJ-eGS" secondAttribute="trailing" id="wZj-B9-l5f"/>
                             <constraint firstItem="CyI-eW-P6O" firstAttribute="centerY" secondItem="LFT-ch-Aaj" secondAttribute="centerY" id="y0O-jc-Uip"/>
-                            <constraint firstItem="stS-CP-8w0" firstAttribute="centerY" secondItem="LFT-ch-Aaj" secondAttribute="centerY" constant="18" id="zEL-5P-J6l"/>
+                            <constraint firstItem="stS-CP-8w0" firstAttribute="centerY" secondItem="LFT-ch-Aaj" secondAttribute="centerY" id="zEL-5P-J6l"/>
                         </constraints>
                     </view>
                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="896-QC-OsQ" userLabel="Delete Swipe Action Button">
@@ -141,7 +137,6 @@
                 <outlet property="button1" destination="896-QC-OsQ" id="mVK-8R-NW7"/>
                 <outlet property="divider" destination="1QS-TO-aCK" id="M4p-qi-xfP"/>
                 <outlet property="downloadButton" destination="Wn9-Jm-IB1" id="V3S-GA-Lkj"/>
-                <outlet property="downloadingWheel" destination="TLj-D1-GQN" id="x1n-vu-JFw"/>
                 <outlet property="episodeImageView" destination="CyI-eW-P6O" id="VkL-wL-yDX"/>
                 <outlet property="episodeLabel" destination="U8O-tH-aXk" id="b3N-Ut-xlr"/>
                 <outlet property="leftConstraint" destination="pHy-Ql-RC0" id="QsQ-LC-P3m"/>

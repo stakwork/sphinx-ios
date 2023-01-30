@@ -108,7 +108,7 @@ class VideoCallManager : NSObject {
     }
 
     func paymentSent() {
-        PlayAudioHelper.playKeySound(soundId: PlayAudioHelper.PaymentSent)
+        SoundsPlayer.playKeySound(soundId: SoundsPlayer.PaymentSent)
         videoCallPayButton?.animatePayment()
     }
 

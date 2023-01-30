@@ -67,14 +67,18 @@ class SetPinCodeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.endEditing(true)
-        
         loading = false
         subtitleLabel.text = subtitle
         reloadDots()
         configureButtons()
         
         titleLabel.text = (mode == SetPinMode.Set) ? kFirstTitle : kOldPinTitle
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.view.endEditing(true)
     }
     
     func configureButtons() {
@@ -105,12 +109,12 @@ class SetPinCodeViewController: UIViewController {
         
         if sender.tag == kDeleteButtonTag {
             if pinArray.count > 0 {
-                PlayAudioHelper.playKeySound(soundId: PlayAudioHelper.deleteSoundID)
+                SoundsPlayer.playKeySound(soundId: SoundsPlayer.deleteSoundID)
                 pinArray.removeLast()
             }
         } else {
             if pinArray.count < 6 {
-                PlayAudioHelper.playKeySound(soundId: PlayAudioHelper.keySoundID)
+                SoundsPlayer.playKeySound(soundId: SoundsPlayer.keySoundID)
                 pinArray.append(sender.tag)
             }
         }

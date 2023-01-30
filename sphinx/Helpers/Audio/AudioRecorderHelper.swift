@@ -135,7 +135,7 @@ class AudioRecorderHelper : NSObject {
             recordingTimer = nil
             
             if Date().timeIntervalSince(startRecordingTime) > 1 {
-                PlayAudioHelper.playHaptic()
+                SoundsPlayer.playHaptic()
                 delegate?.didFinishRecording(success)
             } else {
                 delegate?.audioTooShort()

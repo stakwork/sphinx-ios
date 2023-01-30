@@ -10,6 +10,7 @@ import UIKit
 
 protocol RecommendationPlayerViewDelegate: AnyObject {
     func shouldShowSpeedPicker()
+    func shouldSetProgress(duration: Int, currentTime: Int)
 }
 
 class PodcastPlayerControlsView: UIView {
@@ -24,6 +25,8 @@ class PodcastPlayerControlsView: UIView {
     @IBOutlet weak var skip15BackwardView: UIView!
     @IBOutlet weak var skip30ForwardView: UIView!
     @IBOutlet weak var boostView: CustomBoostView!
+    
+    let feedBoostHelper = FeedBoostHelper()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -52,7 +55,7 @@ class PodcastPlayerControlsView: UIView {
         case Forward30
     }
     
-    var playerHelper: PodcastPlayerHelper = PodcastPlayerHelper.sharedInstance
+    var podcastPlayerController = PodcastPlayerController.sharedInstance
     var podcast: PodcastFeed!
 }
 
@@ -78,16 +81,46 @@ extension PodcastPlayerControlsView {
     }
     
     func togglePlayState() {
-        playerHelper.togglePlayStateFor(podcast)
+        guard let podcastData = podcast.getPodcastData() else {
+            return
+        }
+        
+        if podcastPlayerController.isPlaying(podcastId: podcastData.podcastId) {
+            podcastPlayerController.submitAction(
+                UserAction.Pause(podcastData)
+            )
+        } else {
+            podcastPlayerController.submitAction(
+                UserAction.Play(podcastData)
+            )
+        }
     }
     
     func seekTo(seconds: Double) {
-        playerHelper.seek(podcast, to: seconds)
+        var newTime = (podcast?.currentTime ?? 0) + Int(seconds)
+        newTime = max(newTime, 0)
+        newTime = min(newTime, (podcast?.duration ?? 0))
+        
+        guard let podcastData = podcast.getPodcastData(
+            currentTime: newTime
+        ) else {
+            return
+        }
+        
+        delegate?.shouldSetProgress(
+            duration: podcastData.duration ?? 0,
+            currentTime: newTime
+        )
+        
+        podcastPlayerController.submitAction(
+            UserAction.Seek(podcastData)
+        )
     }
 }
 
 // MARK: - Public methods
 extension PodcastPlayerControlsView {
+    
     func configure(
         podcast: PodcastFeed,
         andDelegate delegate: RecommendationPlayerViewDelegate?
@@ -101,12 +134,16 @@ extension PodcastPlayerControlsView {
             playPauseButton.isHidden = item.isYoutubeVideo
             skip15BackwardView.isHidden = item.isYoutubeVideo
             skip30ForwardView.isHidden = item.isYoutubeVideo
+            
+            let canBoost = (item.destination != nil)
+            boostView.alpha = canBoost ? 1.0 : 0.5
+            boostView.isUserInteractionEnabled = canBoost
         }
         
         clipButton.alpha = 0.5
         clipButton.isEnabled = false
-        
-        boostView.alpha = 0.5
+    
+        boostView.delegate = self
     }
     
     func configureControls(
@@ -116,4 +153,27 @@ extension PodcastPlayerControlsView {
         playPauseButton.setTitle(playing ? "pause" : "play_arrow", for: .normal)
         speedButton.setTitle(speedDescription + "x", for: .normal)
     }
+}
+
+
+extension PodcastPlayerControlsView : CustomBoostViewDelegate{
+    func didTouchBoostButton(withAmount amount: Int) {
+        if let episode = podcast.getCurrentEpisode() {
+            
+            let itemID = episode.itemID
+            let currentTime = podcast.getCurrentEpisode()?.currentTime ?? 0
+                
+            let podcastAnimationVC = PodcastAnimationViewController.instantiate(amount: amount)
+            WindowsManager.sharedInstance.showConveringWindowWith(rootVC: podcastAnimationVC)
+            podcastAnimationVC.showBoostAnimation()
+                
+            feedBoostHelper.sendBoostOnRecommendation(
+                itemID: itemID,
+                currentTime:currentTime,
+                amount: amount
+            )
+        }
+    }
+    
+    func didStartBoostAmountEdit() {}
 }

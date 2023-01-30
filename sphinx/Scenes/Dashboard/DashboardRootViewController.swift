@@ -22,7 +22,8 @@ class DashboardRootViewController: RootViewController {
     @IBOutlet weak var searchBarContainer: UIView!
     @IBOutlet weak var mainContentContainerView: UIView!
     @IBOutlet weak var restoreProgressView: RestoreProgressView!
-    
+    @IBOutlet weak var addTribeTrailing: NSLayoutConstraint!
+    @IBOutlet weak var addTribeButton: UIButton!
     @IBOutlet weak var bottomBarBottomConstraint: NSLayoutConstraint!
     
     let buttonTitles : [String] = [
@@ -30,6 +31,7 @@ class DashboardRootViewController: RootViewController {
         "dashboard.tabs.friends".localized,
         "dashboard.tabs.tribes".localized,
     ]
+    
     @IBOutlet weak var dashboardNavigationTabs: CustomSegmentedControl! {
         didSet {
             dashboardNavigationTabs.configureFromOutlet(
@@ -55,7 +57,8 @@ class DashboardRootViewController: RootViewController {
     internal let refreshControl = UIRefreshControl()
     
     internal let newBubbleHelper = NewMessageBubbleHelper()
-    internal let podcastPlayerHelper = PodcastPlayerHelper.sharedInstance
+    
+    internal let podcastPlayerController = PodcastPlayerController.sharedInstance
 
     internal lazy var chatsListViewModel: ChatListViewModel = {
         ChatListViewModel(contactsService: contactsService)
@@ -105,6 +108,16 @@ class DashboardRootViewController: RootViewController {
             resetSearchField()
             loadDataOnTabChange(to: activeTab)
             feedViewMode = .rootList
+            
+            if (activeTab == .tribes) {
+                addTribeTrailing.constant = 16
+            } else {
+                addTribeTrailing.constant = -120
+            }
+            
+            UIView.animate(withDuration: 0.10) {
+                self.searchBarContainer.layoutIfNeeded()
+            }
         }
     }
     
@@ -209,12 +222,18 @@ extension DashboardRootViewController {
         
         isLoading = true
         
-        podcastPlayerHelper.addDelegate(
-            self,
-            withKey: PodcastPlayerHelper.DelegateKeys.dashboard.rawValue
-        )
-        
         activeTab = .friends
+        
+    }
+    
+    func setupAddTribeButton(){
+        addTribeButton.layer.cornerRadius = 22.0
+        addTribeButton.clipsToBounds = true
+    }
+    
+    @IBAction func didTapAddTribeButton() {
+        let discoverVC = DiscoverTribesWebViewController.instantiate()
+        navigationController?.pushViewController(discoverVC, animated: true)
     }
     
     func setupPlayerBar() {
@@ -228,7 +247,8 @@ extension DashboardRootViewController {
     func onPlayerBarDismissed() {
         podcastSmallPlayer.pauseIfPlaying()
         hideSmallPodcastPlayer()
-        podcastPlayerHelper.finishAndSaveContentConsumed()
+        
+        podcastPlayerController.finishAndSaveContentConsumed()
     }
     
     func addBlurEffectTo(_ view: UIView) {
@@ -251,8 +271,18 @@ extension DashboardRootViewController {
         rootViewController.setStatusBarColor(light: true)
         socketManager.setDelegate(delegate: self)
         headerView.delegate = self
+        
+        podcastPlayerController.addDelegate(
+            self,
+            withKey: PodcastDelegateKeys.DashboardView.rawValue
+        )
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        podcastPlayerController.removeFromDelegatesWith(key: PodcastDelegateKeys.DashboardView.rawValue)
+    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -265,6 +295,7 @@ extension DashboardRootViewController {
         if didFinishInitialLoading {
             loadDataOnTabChange(to: activeTab)
         }
+        setupAddTribeButton()
     }
 }
 
@@ -299,6 +330,8 @@ extension DashboardRootViewController {
 
 // MARK: -  Action Handling
 extension DashboardRootViewController {
+    
+    
     
     @IBAction func bottomBarButtonTouched(_ sender: UIButton) {
         guard let button = BottomBarButton(rawValue: sender.tag) else {

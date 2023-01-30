@@ -16,7 +16,6 @@ protocol DownloadServiceDelegate : class {
 class DownloadService : NSObject {
     
     var delegate: DownloadServiceDelegate? = nil
-    let downloadDispatchGroup = DispatchGroup()
     let downloadDispatchSemaphore = DispatchSemaphore(value: 1)
     
     class var sharedInstance : DownloadService {
@@ -31,53 +30,50 @@ class DownloadService : NSObject {
           return URLSession(configuration: configuration, delegate: self, delegateQueue: nil)
     }()
   
-    var activeDownloads: [String: Download] = [ : ] {
-        didSet{
-            if(activeDownloads.keys.count < 1
-               && oldValue.keys.count >= 1){//detect going below threshold, reallow data flow if so
-                downloadDispatchSemaphore.signal()
-            }
-        }
-    }
+    var activeDownloads: [String: Download] = [:]
+
     let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
     
     func setDelegate(delegate: DownloadServiceDelegate) {
         self.delegate = delegate
     }
 
-    func cancelDownload(_ episode: PodcastEpisode) {
-        guard let urlString = episode.urlPath else { return }
-
-        guard let download = activeDownloads[urlString] else {
+    func startDownload(_ episode: PodcastEpisode) {
+        guard let url = episode.getRemoteAudioUrl() else {
             return
         }
-        download.task?.cancel()
+        
+        if episode.isDownloaded { return }
 
-        activeDownloads[urlString] = nil
-    }
-
-    func pauseDownload(_ episode: PodcastEpisode) {
-        guard let urlString = episode.urlPath else { return }
-
-        guard let download = activeDownloads[urlString], download.isDownloading else {
-            return
+        let download = activeDownloads[url.absoluteString] ?? Download(episode: episode)
+        
+        if download.isDownloading { return }
+        
+        download.progress = 0
+        download.isDownloading = true
+        activeDownloads[url.absoluteString] = download
+        
+        delegate?.shouldReloadRowFor(download: download)
+        
+        DispatchQueue.global().async {
+            self.downloadDispatchSemaphore.wait()
+            
+            download.task = self.downloadsSession.downloadTask(with: url)
+            download.task?.resume()
+            self.activeDownloads[url.absoluteString] = download
         }
-
-        download.task?.cancel(byProducingResumeData: { data in
-            download.resumeData = data
-        })
-
-        download.isDownloading = false
     }
-
+    
     func resumeDownload(_ episode: PodcastEpisode) {
-        guard let urlString = episode.urlPath, let url = URL(string: urlString) else { return }
+        guard let url = episode.getRemoteAudioUrl() else { return }
 
-        guard let download = activeDownloads[urlString] else {
+        guard let download = activeDownloads[url.absoluteString] else {
             return
         }
 
         DispatchQueue.global().async {
+            self.downloadDispatchSemaphore.wait()
+            
             if let resumeData = download.resumeData {
                 download.task = self.downloadsSession.downloadTask(withResumeData: resumeData)
             } else {
@@ -86,44 +82,64 @@ class DownloadService : NSObject {
 
             download.task?.resume()
             download.isDownloading = true
+            
+            self.activeDownloads[url.absoluteString] = download
         }
-        
+    }
+    
+    func cancelDownload(_ episode: PodcastEpisode) {
+        guard let url = episode.getRemoteAudioUrl() else { return }
+
+        guard let download = activeDownloads[url.absoluteString] else {
+            return
+        }
+        download.task?.cancel()
+
+        activeDownloads[url.absoluteString] = nil
     }
 
-    func startDownload(_ episode: PodcastEpisode) {
-        guard let urlString = episode.urlPath, let url = URL(string: urlString) else { return }
-        if episode.isDownloaded == true {return}
+    func pauseDownload(_ episode: PodcastEpisode) {
+        guard let url = episode.getRemoteAudioUrl() else { return }
 
-        let download = Download(episode: episode)
-        DispatchQueue.global().async {
-            self.downloadDispatchSemaphore.wait()
-            download.task = self.downloadsSession.downloadTask(with: url)
-            download.task?.resume()
-            download.isDownloading = true
-            self.activeDownloads[urlString] = download
+        guard let download = activeDownloads[url.absoluteString], download.isDownloading else {
+            return
         }
+
+        download.task?.cancel(byProducingResumeData: { data in
+            download.resumeData = data
+        })
+
+        download.isDownloading = false
+        activeDownloads[url.absoluteString] = download
+        
+        downloadDispatchSemaphore.signal()
     }
 }
 
 extension DownloadService : URLSessionDownloadDelegate {
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask,
                     didFinishDownloadingTo location: URL) {
-        guard let sourceURL = downloadTask.originalRequest?.url else {
+        
+        guard let url = downloadTask.originalRequest?.url else {
             return
         }
         
-        let urlString = sourceURL.absoluteString
+        let urlString = url.absoluteString
         let download = activeDownloads[urlString]
+        
+        guard let fileName = download?.episode.getLocalFileName() else {
+            return
+        }
+        
         activeDownloads[urlString] = nil
       
-        let destinationURL = localFilePath(for: sourceURL)
+        let destinationURL = localFilePath(for: fileName)
 
         let fileManager = FileManager.default
         try? fileManager.removeItem(at: destinationURL)
 
         do {
             try fileManager.copyItem(at: location, to: destinationURL)
-            download?.episode.downloaded = true
         } catch let error {
             print("Could not copy file to disk: \(error.localizedDescription)")
         }
@@ -133,21 +149,33 @@ extension DownloadService : URLSessionDownloadDelegate {
                 self.delegate?.shouldReloadRowFor(download: download)
             }
         }
+        
+        downloadDispatchSemaphore.signal()
     }
     
-    func localFilePath(for url: URL) -> URL {
-        return documentsPath.appendingPathComponent(url.lastPathComponent)
+    func localFilePath(for fileName: String) -> URL {
+        return documentsPath.appendingPathComponent(fileName)
     }
     
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask,
                     didWriteData bytesWritten: Int64, totalBytesWritten: Int64,
                     totalBytesExpectedToWrite: Int64) {
+        
         guard let url = downloadTask.originalRequest?.url, let download = activeDownloads[url.absoluteString] else {
             return
         }
 
-        download.progress = Float(totalBytesWritten) / Float(totalBytesExpectedToWrite)
+        let newProgress = Int(Float(totalBytesWritten) / Float(totalBytesExpectedToWrite) * 100)
+        
+        if (download.progress == newProgress) {
+            return
+        }
+        
+        download.progress = newProgress
+        activeDownloads[url.absoluteString] = download
+        
         let totalSize = ByteCountFormatter.string(fromByteCount: totalBytesExpectedToWrite, countStyle: .file)
+        
         print("PROGRESS: \(download.progress) FROM \(totalSize)")
         
         DispatchQueue.main.async {

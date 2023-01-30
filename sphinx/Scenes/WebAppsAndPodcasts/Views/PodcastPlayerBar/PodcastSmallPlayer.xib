@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -26,6 +26,7 @@
                 <outlet property="playPauseButton" destination="dVC-vg-r3J" id="Cgr-3c-WdP"/>
                 <outlet property="progressLine" destination="wdM-ec-gI8" id="dHH-EK-nG1"/>
                 <outlet property="progressLineWidth" destination="unl-GP-sxM" id="wbW-7i-XEb"/>
+                <outlet property="skipButton" destination="KiM-LW-upY" id="yQO-Jy-nEy"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -46,8 +47,8 @@
                     <color key="textColor" name="Text"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is an episode title example" textAlignment="natural" lineBreakMode="middleTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2uX-uJ-r0m">
-                    <rect key="frame" x="80" y="37.5" width="154.5" height="13"/>
+                <label opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is an episode title example" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2uX-uJ-r0m">
+                    <rect key="frame" x="80" y="37.5" width="155.5" height="13"/>
                     <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="11"/>
                     <color key="textColor" name="Text"/>
                     <nil key="highlightedColor"/>
@@ -118,7 +119,7 @@
                 <constraint firstItem="wdM-ec-gI8" firstAttribute="top" secondItem="XFF-oh-GuF" secondAttribute="top" id="2Yo-Qy-KQx"/>
                 <constraint firstItem="VnX-QJ-Fmu" firstAttribute="leading" secondItem="rCV-yF-Gqb" secondAttribute="trailing" constant="16" id="5Jn-MJ-h6z"/>
                 <constraint firstItem="2uX-uJ-r0m" firstAttribute="leading" secondItem="rCV-yF-Gqb" secondAttribute="trailing" constant="16" id="GQ8-py-2bI"/>
-                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="2uX-uJ-r0m" secondAttribute="trailing" constant="100" id="H8w-xh-u1H"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="2uX-uJ-r0m" secondAttribute="trailing" constant="110" id="H8w-xh-u1H"/>
                 <constraint firstAttribute="trailing" secondItem="XFF-oh-GuF" secondAttribute="trailing" constant="16" id="IuA-aS-a0H"/>
                 <constraint firstItem="wdM-ec-gI8" firstAttribute="bottom" secondItem="XFF-oh-GuF" secondAttribute="bottom" id="J2g-1c-xVe"/>
                 <constraint firstItem="VnX-QJ-Fmu" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="-10" id="KhH-oC-viX"/>
@@ -148,7 +149,7 @@
     <designables>
         <designable name="110-0W-YVr"/>
         <designable name="VnX-QJ-Fmu">
-            <size key="intrinsicContentSize" width="258.5" height="16.5"/>
+            <size key="intrinsicContentSize" width="259.5" height="16.5"/>
         </designable>
     </designables>
     <resources>

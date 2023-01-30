@@ -194,6 +194,8 @@ internal enum StoryboardScene {
         internal static let welcomeCompleteViewController = SceneType<WelcomeCompleteViewController>(storyboard: Welcome.self, identifier: "WelcomeCompleteViewController")
         
         internal static let discoverTribesWebViewController = SceneType<DiscoverTribesWebViewController>(storyboard: Welcome.self, identifier: "DiscoverTribesWebViewController")
+        
+        internal static let discoverTribesTagSelectionViewController = SceneType<DiscoverTribesTagSelectionVC>(storyboard: Welcome.self, identifier: "DiscoverTribesTagSelectionVC")
     }
     
     internal enum RestoreUser: StoryboardType {

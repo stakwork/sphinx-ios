@@ -30,10 +30,8 @@ class PodcastPlayerPlaybackSliderView: UIView {
         }
     }
     
-    var playerHelper: PodcastPlayerHelper = PodcastPlayerHelper.sharedInstance
+    var podcastPlayerController = PodcastPlayerController.sharedInstance
     var podcast: PodcastFeed!
-    
-    var wasPlayingOnDrag = false
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -61,9 +59,8 @@ class PodcastPlayerPlaybackSliderView: UIView {
         currentTime: Int,
         clipStartTime: Int? = 0,
         clipEndTime: Int? = 0
-    ) -> Bool {
+    ) {
         let currentTimeString = currentTime.getPodcastTimeString()
-        let didChangeCurrentTime = currentTimeLabel.text != currentTimeString
         
         currentTimeLabel.text = currentTimeString
         durationLabel.text = duration.getPodcastTimeString()
@@ -80,8 +77,6 @@ class PodcastPlayerPlaybackSliderView: UIView {
             clipStartTime: clipStartTime,
             clipEndTime: clipEndTime
         )
-        
-        return didChangeCurrentTime
     }
     
     private func configureClip(
@@ -128,24 +123,38 @@ class PodcastPlayerPlaybackSliderView: UIView {
         gestureHandlerView.addGestureRecognizer(dragGesture)
     }
     
+    var dragging = false
     @objc func wasDragged(gestureRecognizer: UIPanGestureRecognizer) {
         let gestureXLocation = gestureRecognizer.location(in: durationLine).x
         
         if gestureRecognizer.state == .began {
+            dragging = true
             gestureDidBegin(gestureXLocation: gestureXLocation)
         } else if gestureRecognizer.state == .changed {
             updateProgressLineAndLabel(gestureXLocation: gestureXLocation)
         } else if gestureRecognizer.state == .ended {
-            let progress = ((progressLineWidth.constant * 100) / durationLine.frame.size.width) / 100
+            dragging = false
             
-            playerHelper.seek(podcast, to: Double(progress), playAfterSeek: wasPlayingOnDrag)
-            wasPlayingOnDrag = false
+            guard let episode = podcast.getCurrentEpisode(), let duration = episode.duration else {
+                return
+            }
+            
+            let progress = ((progressLineWidth.constant * 100) / durationLine.frame.size.width) / 100
+            let currentTime = Int(Double(duration) * progress)
+            
+            guard let podcastData = podcast.getPodcastData(
+                currentTime: currentTime
+            ) else {
+                return
+            }
+            
+            podcastPlayerController.submitAction(
+                UserAction.Seek(podcastData)
+            )
         }
     }
     
     func gestureDidBegin(gestureXLocation: CGFloat) {
-        wasPlayingOnDrag = playerHelper.isPlaying(podcast.feedID)
-        playerHelper.didStartDraggingProgressFor(podcast)
         updateProgressLineAndLabel(gestureXLocation: gestureXLocation)
     }
     
@@ -160,13 +169,18 @@ class PodcastPlayerPlaybackSliderView: UIView {
         progressLineWidth.constant = translation
         progressLine.layoutIfNeeded()
         
-        let progress = ((progressLineWidth.constant * 100) / durationLine.frame.size.width) / 100
+        guard let episode = podcast.getCurrentEpisode(), let duration = episode.duration else {
+            return
+        }
         
-        playerHelper.shouldUpdateTimeLabelsTo(
-            progress: Double(progress),
-            with: podcast.getCurrentEpisode()?.duration ?? 0,
-            in: podcast
+        let progress = ((progressLineWidth.constant * 100) / durationLine.frame.size.width) / 100
+        let currentTime = Int(Double(duration) * progress)
+        
+        setProgress(
+            duration: duration,
+            currentTime: currentTime,
+            clipStartTime: episode.clipStartTime,
+            clipEndTime: episode.clipEndTime
         )
     }
-
 }

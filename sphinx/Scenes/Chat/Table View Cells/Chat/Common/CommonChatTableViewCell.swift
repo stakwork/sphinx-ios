@@ -106,7 +106,7 @@ class CommonChatTableViewCell: SwipableReplyCell, RowWithLinkPreviewProtocol {
     }
     
     override func didSwipeToReplay() {
-        PlayAudioHelper.playHaptic()
+        SoundsPlayer.playHaptic()
         
         if let message = messageRow?.transactionMessage {
             delegate?.shouldReplayToMessage(message: message)

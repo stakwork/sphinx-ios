@@ -130,9 +130,7 @@ extension NewsletterItemDetailViewController : WKNavigationDelegate {
 
 extension NewsletterItemDetailViewController: CustomBoostViewDelegate {
     
-    func didStartBoostAmountEdit() {
-        
-    }
+    func didStartBoostAmountEdit() {}
     
     func didTouchBoostButton(withAmount amount: Int) {
         let itemID = newsletterItem.itemID

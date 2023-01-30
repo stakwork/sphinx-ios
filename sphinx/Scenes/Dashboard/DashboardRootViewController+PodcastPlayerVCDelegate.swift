@@ -3,12 +3,18 @@ import UIKit
 
 extension DashboardRootViewController: PodcastPlayerVCDelegate {
     
-    func willDismissPlayer() {}
+    func willDismissPlayer() {
+        
+    }
     
     func shouldShareClip(comment: PodcastComment) {}
     
     func shouldGoToPlayer(podcast: PodcastFeed) {
         presentPodcastPlayerFor(podcast)
+    }
+    
+    func didFailPlayingPodcast() {
+        AlertHelper.showAlert(title: "generic.error.title".localized, message: "error.playing".localized)
     }
 }
 

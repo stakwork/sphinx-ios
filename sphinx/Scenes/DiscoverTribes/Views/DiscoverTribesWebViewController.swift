@@ -25,17 +25,20 @@ class DiscoverTribesWebViewController : UIViewController{
     @IBOutlet weak var searchBar: UIView!
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var searchBarContainer: UIView!
+    @IBOutlet weak var tagsButton: UIButton!
+    @IBOutlet weak var tagCountContainerView: UIView!
+    @IBOutlet weak var tagCountLabel: UILabel!
+    @IBOutlet weak var filterIcon: UILabel!
+    @IBOutlet weak var discoverTribesTitle: UILabel!
+    
+    
+    var currentTags : [String] = []
     
     var discoverTribesTableViewDataSource : DiscoverTribeTableViewDataSource? = nil
-    var rootViewController: RootViewController!
     var delegate: DiscoverTribesWVVCDelegate? = nil
     
-    static func instantiate(
-        rootViewController: RootViewController
-    ) -> DiscoverTribesWebViewController {
+    static func instantiate() -> DiscoverTribesWebViewController {
         let viewController = StoryboardScene.Welcome.discoverTribesWebViewController.instantiate()
-        viewController.rootViewController = rootViewController
-        
         return viewController
     }
     
@@ -46,14 +49,15 @@ class DiscoverTribesWebViewController : UIViewController{
         setupHeaderViews()
     }
     
+    
     internal func setupHeaderViews() {
         searchTextField.delegate = self
-        searchBarContainer.addShadow(
-            location: VerticalLocation.bottom,
-            opacity: 0.15,
-            radius: 3.0
-        )
-        searchBar.layer.cornerRadius = searchBar.frame.height / 2
+        
+        tagCountContainerView.makeCircular()
+        searchBar.makeCircular()
+        tagsButton.makeCircular()
+        
+        updateTagButton()
     }
     
     
@@ -63,26 +67,37 @@ class DiscoverTribesWebViewController : UIViewController{
         if let dataSource = discoverTribesTableViewDataSource{
             tableView.delegate = dataSource
             tableView.dataSource = dataSource
-            dataSource.fetchTribeData(shouldAppend: true)
+            dataSource.fetchTribeData()
         }
     }
     
     @IBAction func backButtonTapped(_ sender: Any) {
-        if let appDelegate = UIApplication.shared.delegate as? AppDelegate{
-            appDelegate.setInitialVC(launchingApp: false, deepLink: true)
-        }
+        navigationController?.popViewController(animated: true)
+    }
+    
+    @IBAction func tagsButtonTap(_ sender: Any) {
+        showTagsFilterView()
+    }
+    
+    
+    func showTagsFilterView(){
+        let discoverVC = DiscoverTribesTagSelectionVC.instantiate()
+        discoverVC.modalPresentationStyle = .overCurrentContext
+        self.navigationController?.present(discoverVC, animated: false)
+        
+        discoverVC.discoverTribeTagSelectionVM.selectedTags = currentTags
+        discoverVC.delegate = self
     }
 }
 
-extension DiscoverTribesWebViewController : DiscoverTribesCellDelegate{
+extension DiscoverTribesWebViewController : DiscoverTribesCellDelegate {
     func handleJoin(url: URL) {
         processLink(url: url)
     }
     
-    func processLink(url:URL){
-        if DeepLinksHandlerHelper.storeLinkQueryFrom(url: url),
-           let appDelegate = UIApplication.shared.delegate as? AppDelegate{
-            appDelegate.setInitialVC(launchingApp: false, deepLink: true)
+    func processLink(url:URL) {
+        if DeepLinksHandlerHelper.storeLinkQueryFrom(url: url) {
+            navigationController?.popViewController(animated: true)
         }
     }
 }
@@ -91,9 +106,48 @@ extension DiscoverTribesWebViewController : DiscoverTribesCellDelegate{
 extension DiscoverTribesWebViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
         view.endEditing(true)
+        
         let searchTerm = (searchTextField.text == "") ? nil : searchTextField.text
-        discoverTribesTableViewDataSource?.performSearch(searchTerm: searchTerm)
+        
+        discoverTribesTableViewDataSource?.performSearch(
+            searchTerm: searchTerm,
+            tags: currentTags
+        )
+        
         return true
     }
+}
+
+extension DiscoverTribesWebViewController : DiscoverTribesTagSelectionDelegate {
+    func didSelect(selections: [String]) {
+        
+        let newSet = Set(selections)
+        let oldSet = Set(currentTags)
+        
+        if (newSet != oldSet) {
+            
+            self.currentTags = selections
+            self.updateTagButton()
+            
+            if let dataSource = discoverTribesTableViewDataSource {
+                let searchTerm = (searchTextField.text == "") ? nil : searchTextField.text
+                dataSource.applyTags(searchTerm: searchTerm, tags: self.currentTags)
+            }
+        }
+    }
+    
+    func updateTagButton() {
+        let tagsSelected = (currentTags.count > 0)
+        
+        filterIcon.isHidden = tagsSelected
+        tagsButton.backgroundColor = tagsSelected ? UIColor.Sphinx.BodyInverted : UIColor.Sphinx.ReceivedMsgBG
+        tagsButton.tintColor = tagsSelected ? UIColor.Sphinx.TextInverted : UIColor.Sphinx.Text
+        tagsButton.setTitleColor(tagsSelected ? UIColor.Sphinx.TextInverted : UIColor.Sphinx.Text, for: .normal)
+        
+        tagCountContainerView.isHidden = !tagsSelected
+        tagCountLabel.text = "\(currentTags.count)"
+    }
+    
 }

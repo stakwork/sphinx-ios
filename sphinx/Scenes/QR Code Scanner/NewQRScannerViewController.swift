@@ -96,7 +96,7 @@ class NewQRScannerViewController: KeyboardEventsViewController {
             return
         }
         
-        PlayAudioHelper.playKeySound(soundId: PlayAudioHelper.VibrateSoundID)
+        SoundsPlayer.playKeySound(soundId: SoundsPlayer.VibrateSoundID)
         
         addressField.text = code
         confirmButton.isHidden = code == ""

@@ -126,7 +126,7 @@ class FeedsManager : NSObject {
     
     
     func restoreEpisodeStatuses(remoteData:[ContentFeedStatus]){
-        let localData = FeedsManager.fetchFeeds()
+        var localData = FeedsManager.fetchFeeds()
         for contentFeed in localData{
             if contentFeed.feedKind == .Podcast,
                let remoteContentStatus = remoteData.filter({$0.feedID == contentFeed.id}).first,
@@ -135,8 +135,11 @@ class FeedsManager : NSObject {
                 let podcastFeed = PodcastFeed.convertFrom(contentFeed: contentFeed)
                 for episodeStatus in episodeStatuses{
                     if let podFeedEpisode = podcastFeed.episodes?.filter({$0.itemID == episodeStatus.episodeID}).first{
-                        podFeedEpisode.duration = episodeStatus.episodeData?.duration
-                        podFeedEpisode.currentTime = episodeStatus.episodeData?.current_time
+                        let isEpisodePlaying = PodcastPlayerController.sharedInstance.isPlaying(episodeId: podFeedEpisode.itemID)
+                        if(isEpisodePlaying == false){
+                            podFeedEpisode.duration = episodeStatus.episodeData?.duration
+                            podFeedEpisode.currentTime = episodeStatus.episodeData?.current_time
+                        }
                     }
                 }
             }

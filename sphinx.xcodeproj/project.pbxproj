@@ -178,6 +178,7 @@
 		4740538C244CFE0000826533 /* CustomImageScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4740538B244CFE0000826533 /* CustomImageScrollView.swift */; };
 		474064932745581C00FB7F93 /* PeopleTorActionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474064922745581C00FB7F93 /* PeopleTorActionsView.swift */; };
 		4746466C2988331A00FAF58B /* Dashboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4746466E2988331A00FAF58B /* Dashboard.storyboard */; };
+		4746467429883D7C00FAF58B /* pause_animation_light.json in Resources */ = {isa = PBXBuildFile; fileRef = 4746467329883D7C00FAF58B /* pause_animation_light.json */; };
 		47468079293E564B00F51457 /* PodcastPlayerControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47468078293E564B00F51457 /* PodcastPlayerControlsView.swift */; };
 		4746807B293E565800F51457 /* PodcastPlayerControlsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4746807A293E565800F51457 /* PodcastPlayerControlsView.xib */; };
 		4746807D293E566700F51457 /* PodcastPlayerPlaybackSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4746807C293E566700F51457 /* PodcastPlayerPlaybackSliderView.swift */; };
@@ -964,6 +965,7 @@
 		4746466D2988331A00FAF58B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Dashboard.storyboard; sourceTree = "<group>"; };
 		474646702988331C00FAF58B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Dashboard.strings; sourceTree = "<group>"; };
 		474646722988334B00FAF58B /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Dashboard.strings; sourceTree = "<group>"; };
+		4746467329883D7C00FAF58B /* pause_animation_light.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = pause_animation_light.json; sourceTree = "<group>"; };
 		47468078293E564B00F51457 /* PodcastPlayerControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastPlayerControlsView.swift; sourceTree = "<group>"; };
 		4746807A293E565800F51457 /* PodcastPlayerControlsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PodcastPlayerControlsView.xib; sourceTree = "<group>"; };
 		4746807C293E566700F51457 /* PodcastPlayerPlaybackSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastPlayerPlaybackSliderView.swift; sourceTree = "<group>"; };
@@ -3307,6 +3309,7 @@
 		47AF0D3A254C9EEC00C98398 /* Animation */ = {
 			isa = PBXGroup;
 			children = (
+				4746467329883D7C00FAF58B /* pause_animation_light.json */,
 				47018F8027CFB7CD00797E0B /* pause_animation.json */,
 				47FDDB1B2562D77100BBF15F /* boost_animation.json */,
 				47AF0D3B254C9F1000C98398 /* fireworks.json */,
@@ -4114,6 +4117,7 @@
 				47904C0F24BF352300710E7A /* bell.caf in Resources */,
 				4797E77924B8EB9C00D13270 /* GroupActionMessageTableViewCell.xib in Resources */,
 				47822C6A2449EED60011D832 /* PaidMessageSentTableViewCell.xib in Resources */,
+				4746467429883D7C00FAF58B /* pause_animation_light.json in Resources */,
 				475BDCE6232AC23B00C5BBD6 /* DirectPaymentSentTableViewCell.xib in Resources */,
 				47893A9024095A43002F675B /* AudioReceivedTableViewCell.xib in Resources */,
 				470F4C3E257A984800288A9B /* ContactLinkPreviewView.xib in Resources */,

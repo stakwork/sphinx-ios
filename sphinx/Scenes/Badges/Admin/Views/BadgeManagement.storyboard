@@ -53,7 +53,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u9S-DV-rSU" customClass="UIActivityIndicatorView">
-                                        <rect key="frame" x="158" y="2.6666666666666643" width="50" height="50.000000000000007"/>
+                                        <rect key="frame" x="158" y="2.6666666666666643" width="50" height="50"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="L6g-60-Tce"/>
@@ -170,7 +170,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VY8-qH-VAp" customClass="UIActivityIndicatorView">
-                                        <rect key="frame" x="192" y="2.6666666666666643" width="50" height="50.000000000000007"/>
+                                        <rect key="frame" x="192" y="2.6666666666666643" width="50" height="50"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="5bG-Ec-4kK"/>
@@ -516,7 +516,7 @@
                                                 </constraints>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="Send Sats">
-                                                    <fontDescription key="titleFontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
+                                                    <fontDescription key="titleFontDescription" name="Roboto-Regular" family="Roboto" pointSize="12"/>
                                                     <color key="baseForegroundColor" name="Body"/>
                                                 </buttonConfiguration>
                                             </button>
@@ -527,21 +527,57 @@
                                                 </constraints>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="Earn Badges">
-                                                    <fontDescription key="titleFontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
-                                                    <color key="baseForegroundColor" name="MainBottomIcons"/>
+                                                    <fontDescription key="titleFontDescription" name="Roboto-Regular" family="Roboto" pointSize="12"/>
+                                                    <color key="baseForegroundColor" name="BodyInverted"/>
                                                 </buttonConfiguration>
+                                            </button>
+                                            <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CU8-U2-jXZ">
+                                                <rect key="frame" x="160.66666666666666" y="196.66666666666663" width="15" height="15"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="15" id="Aqc-dn-Gyn"/>
+                                                    <constraint firstAttribute="width" constant="15" id="iwI-mf-zBu"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <color key="tintColor" name="MainBottomIcons"/>
+                                                <state key="normal" image="bottomBar4">
+                                                    <color key="titleColor" name="SecondaryText"/>
+                                                </state>
+                                            </button>
+                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="hEd-1Q-eLw">
+                                                <rect key="frame" x="32" y="240" width="329" height="179"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                            </tableView>
+                                            <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TEd-YZ-tMH">
+                                                <rect key="frame" x="334" y="196.66666666666663" width="15" height="15"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="15" id="Rox-iU-fui"/>
+                                                    <constraint firstAttribute="width" constant="15" id="vb4-mc-ghe"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <color key="tintColor" name="MainBottomIcons"/>
+                                                <state key="normal" image="medalTag">
+                                                    <color key="titleColor" name="SecondaryText"/>
+                                                </state>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
+                                            <constraint firstItem="hEd-1Q-eLw" firstAttribute="top" secondItem="iUv-j0-fRn" secondAttribute="bottom" constant="16" id="7gS-Ih-QzU"/>
                                             <constraint firstItem="C0V-Lz-571" firstAttribute="leading" secondItem="iUv-j0-fRn" secondAttribute="trailing" constant="18" id="DJ7-au-2JG"/>
+                                            <constraint firstItem="hEd-1Q-eLw" firstAttribute="leading" secondItem="bfh-go-0Xm" secondAttribute="leading" constant="32" id="EO4-oa-i8Q"/>
                                             <constraint firstItem="iUv-j0-fRn" firstAttribute="leading" secondItem="bfh-go-0Xm" secondAttribute="leading" constant="32" id="QCp-hm-spp"/>
                                             <constraint firstItem="iUv-j0-fRn" firstAttribute="leading" secondItem="tbp-si-LTE" secondAttribute="leading" id="WKg-ix-NXS"/>
                                             <constraint firstAttribute="trailing" secondItem="C0V-Lz-571" secondAttribute="trailing" constant="32" id="XxN-NB-FXx"/>
                                             <constraint firstItem="C0V-Lz-571" firstAttribute="width" secondItem="iUv-j0-fRn" secondAttribute="width" id="Yff-QR-Fhx"/>
+                                            <constraint firstItem="hEd-1Q-eLw" firstAttribute="centerX" secondItem="bfh-go-0Xm" secondAttribute="centerX" id="a4t-dI-8fi"/>
                                             <constraint firstItem="C0V-Lz-571" firstAttribute="centerY" secondItem="iUv-j0-fRn" secondAttribute="centerY" id="aaK-kx-0aJ"/>
+                                            <constraint firstItem="TEd-YZ-tMH" firstAttribute="centerY" secondItem="C0V-Lz-571" secondAttribute="centerY" id="esb-PX-daw"/>
+                                            <constraint firstItem="CU8-U2-jXZ" firstAttribute="trailing" secondItem="iUv-j0-fRn" secondAttribute="trailing" constant="-12" id="gK9-Rx-TPy"/>
                                             <constraint firstItem="iUv-j0-fRn" firstAttribute="top" secondItem="tbp-si-LTE" secondAttribute="bottom" constant="32" id="iJq-J7-6R0"/>
                                             <constraint firstItem="tbp-si-LTE" firstAttribute="top" secondItem="bfh-go-0Xm" secondAttribute="top" constant="40" id="mVJ-sX-Xcp"/>
+                                            <constraint firstAttribute="bottom" secondItem="hEd-1Q-eLw" secondAttribute="bottom" constant="61" id="n1R-4n-i1f"/>
+                                            <constraint firstItem="TEd-YZ-tMH" firstAttribute="trailing" secondItem="C0V-Lz-571" secondAttribute="trailing" constant="-12" id="onG-IO-zM1"/>
+                                            <constraint firstItem="CU8-U2-jXZ" firstAttribute="centerY" secondItem="iUv-j0-fRn" secondAttribute="centerY" id="pyg-i6-lVf"/>
                                             <constraint firstAttribute="height" constant="480" id="qx9-tH-LXb"/>
                                             <constraint firstItem="tbp-si-LTE" firstAttribute="leading" secondItem="bfh-go-0Xm" secondAttribute="leading" constant="32" id="xJQ-HJ-8yM"/>
                                         </constraints>
@@ -622,9 +658,12 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="detailView" destination="bfh-go-0Xm" id="zwr-PD-LAv"/>
+                        <outlet property="detailViewHeight" destination="o3r-NL-3mE" id="Tdt-9t-DIt"/>
                         <outlet property="earnBadgesButton" destination="C0V-Lz-571" id="o2l-YU-tPA"/>
                         <outlet property="memberImageView" destination="tbp-si-LTE" id="pQr-bI-wed"/>
                         <outlet property="sendSatsButton" destination="iUv-j0-fRn" id="vhk-Tl-c7i"/>
+                        <outlet property="tableView" destination="hEd-1Q-eLw" id="rP5-l0-T6G"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CZw-2Z-rS8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -633,8 +672,10 @@
         </scene>
     </scenes>
     <resources>
+        <image name="bottomBar4" width="25" height="25"/>
         <image name="createBadgeIcon" width="29" height="24"/>
         <image name="customizeBadgeIcon" width="36" height="52"/>
+        <image name="medalTag" width="100" height="101"/>
         <image name="minus_sign" width="10" height="2"/>
         <image name="notepad" width="12" height="12"/>
         <image name="plus_sign" width="10" height="10"/>

@@ -623,6 +623,9 @@
 		CE3133B12977747E00E91E3A /* BadgeAdminDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3133AA2977747E00E91E3A /* BadgeAdminDetailVC.swift */; };
 		CE3133B22977747E00E91E3A /* BadgeAdminListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE3133AB2977747E00E91E3A /* BadgeAdminListTableViewCell.xib */; };
 		CE3133B32977747E00E91E3A /* BadgeAdminManagementListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3133AC2977747E00E91E3A /* BadgeAdminManagementListVC.swift */; };
+		CE51F350298870BF00ABBACB /* MemberBadgeDetailVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE51F34F298870BF00ABBACB /* MemberBadgeDetailVM.swift */; };
+		CE51F3562988743E00ABBACB /* MemberBadgeDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE51F3542988743E00ABBACB /* MemberBadgeDetailTableViewCell.swift */; };
+		CE51F3572988743E00ABBACB /* MemberBadgeDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE51F3552988743E00ABBACB /* MemberBadgeDetailTableViewCell.xib */; };
 		CE6784602968B0E000342905 /* FeedsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE67845F2968B0E000342905 /* FeedsManager.swift */; };
 		CE91E59A29885175008BA6EA /* MemberBadgeDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE91E59929885175008BA6EA /* MemberBadgeDetailVC.swift */; };
 		CEBF0D032975B20B006C1F21 /* DiscoverTribesTagSelectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBF0D022975B20B006C1F21 /* DiscoverTribesTagSelectionVC.swift */; };
@@ -1523,6 +1526,9 @@
 		CE3133AA2977747E00E91E3A /* BadgeAdminDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeAdminDetailVC.swift; sourceTree = "<group>"; };
 		CE3133AB2977747E00E91E3A /* BadgeAdminListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BadgeAdminListTableViewCell.xib; sourceTree = "<group>"; };
 		CE3133AC2977747E00E91E3A /* BadgeAdminManagementListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeAdminManagementListVC.swift; sourceTree = "<group>"; };
+		CE51F34F298870BF00ABBACB /* MemberBadgeDetailVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberBadgeDetailVM.swift; sourceTree = "<group>"; };
+		CE51F3542988743E00ABBACB /* MemberBadgeDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberBadgeDetailTableViewCell.swift; sourceTree = "<group>"; };
+		CE51F3552988743E00ABBACB /* MemberBadgeDetailTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MemberBadgeDetailTableViewCell.xib; sourceTree = "<group>"; };
 		CE67845F2968B0E000342905 /* FeedsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedsManager.swift; sourceTree = "<group>"; };
 		CE91E59929885175008BA6EA /* MemberBadgeDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberBadgeDetailVC.swift; sourceTree = "<group>"; };
 		CEBF0D022975B20B006C1F21 /* DiscoverTribesTagSelectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTribesTagSelectionVC.swift; sourceTree = "<group>"; };
@@ -3592,6 +3598,14 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		CE51F351298873A900ABBACB /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				CE51F34F298870BF00ABBACB /* MemberBadgeDetailVM.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		CE91E59629885097008BA6EA /* Admin */ = {
 			isa = PBXGroup;
 			children = (
@@ -3604,6 +3618,7 @@
 		CE91E59729885132008BA6EA /* Member */ = {
 			isa = PBXGroup;
 			children = (
+				CE51F351298873A900ABBACB /* Models */,
 				CE91E59829885144008BA6EA /* Views */,
 			);
 			path = Member;
@@ -3613,6 +3628,8 @@
 			isa = PBXGroup;
 			children = (
 				CE91E59929885175008BA6EA /* MemberBadgeDetailVC.swift */,
+				CE51F3542988743E00ABBACB /* MemberBadgeDetailTableViewCell.swift */,
+				CE51F3552988743E00ABBACB /* MemberBadgeDetailTableViewCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -4228,6 +4245,7 @@
 				472161C6293A65DA0088B87B /* Recommendations.storyboard in Resources */,
 				4754FAA7272B2060006295A5 /* NewsletterItemsSectionCollectionReusableView.xib in Resources */,
 				472161BD293916250088B87B /* LoadingRecommendationsCollectionViewCell.xib in Resources */,
+				CE51F3572988743E00ABBACB /* MemberBadgeDetailTableViewCell.xib in Resources */,
 				4797E7F924B8F9C300D13270 /* SubscriptionTimeIntervalView.xib in Resources */,
 				4797E7CF24B8F4DC00D13270 /* AppAppearenceView.xib in Resources */,
 				4797E79D24B8EEC800D13270 /* InvoiceSentTableViewCell.xib in Resources */,
@@ -4522,6 +4540,7 @@
 				471161DF29156480008EAFF2 /* NSObject.swift in Sources */,
 				47771C6E259B848300990467 /* GroupPinView.swift in Sources */,
 				F313024626BA62B300A1396E /* ChatsCollectionViewController.swift in Sources */,
+				CE51F350298870BF00ABBACB /* MemberBadgeDetailVM.swift in Sources */,
 				4705D39F2799C339009C0729 /* UITextField.swift in Sources */,
 				F32A697926D515AB0004B8B3 /* PodcastFeed+Computeds.swift in Sources */,
 				CE3133B32977747E00E91E3A /* BadgeAdminManagementListVC.swift in Sources */,
@@ -4572,6 +4591,7 @@
 				47FA440223748EB6005D8C63 /* SubscriptionFormViewControllerExtensions.swift in Sources */,
 				478DCF982343D24D009A03D6 /* SetProfileImageViewController.swift in Sources */,
 				F37D799B271E340900CAB15F /* YouTubeVideoFeedEpisodePlayerViewController.swift in Sources */,
+				CE51F3562988743E00ABBACB /* MemberBadgeDetailTableViewCell.swift in Sources */,
 				47F258BC2539DA0100122A5A /* PodcastCommentSentTableViewCell.swift in Sources */,
 				47935FB3249EC3BE00B39ADB /* OrientationHandlerViewController.swift in Sources */,
 				47357A192729A16C00A49EEE /* NewsletterItem+DisplayUtils.swift in Sources */,

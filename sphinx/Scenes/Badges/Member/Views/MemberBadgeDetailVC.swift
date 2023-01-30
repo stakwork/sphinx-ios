@@ -13,6 +13,8 @@ class MemberBadgeDetailVC : UIViewController{
     
     
     @IBOutlet weak var memberImageView: UIImageView!
+    @IBOutlet weak var sendSatsButton: UIButton!
+    @IBOutlet weak var earnBadgesButton: UIButton!
     
     static func instantiate(
         rootViewController: RootViewController
@@ -28,9 +30,19 @@ class MemberBadgeDetailVC : UIViewController{
     }
     
     func configHeaderView(){
+        //Member Image
         memberImageView.contentMode = .scaleAspectFill
         memberImageView.sd_setImage(with: URL(string: "https://us.123rf.com/450wm/fizkes/fizkes2010/fizkes201001384/fizkes201001384.jpg?ver=6"))
         memberImageView.makeCircular()
+        
+        //Send Sats
+        sendSatsButton.layer.cornerRadius = 13.0
+
+        //Earn Badges
+        earnBadgesButton.layer.borderWidth = 1.0
+        earnBadgesButton.layer.borderColor = UIColor.Sphinx.MainBottomIcons.cgColor
+        earnBadgesButton.layer.cornerRadius = 13.0
+        
     }
     
 }

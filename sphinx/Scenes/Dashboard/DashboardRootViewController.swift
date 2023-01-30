@@ -224,7 +224,7 @@ extension DashboardRootViewController {
         
         activeTab = .friends
         
-        //self.showMemberBadgeVC()
+        self.showMemberBadgeVC()
     }
     
     func showMemberBadgeVC(){

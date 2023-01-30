@@ -40,6 +40,7 @@ class DiscoverTribesTagSelectionVM : NSObject {
         collectionView.collectionViewLayout = columnLayout
         collectionView.contentInsetAdjustmentBehavior = .always
         collectionView.register(TribeTagSelectionCollectionViewCell.self, forCellWithReuseIdentifier: "TribeTagSelectionCollectionViewCell")
+        collectionView.reloadData()
     }
     
     func getSelectionStatus(index:Int) -> Bool {

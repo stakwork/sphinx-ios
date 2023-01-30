@@ -11,11 +11,11 @@ import UIKit
 import ObjectMapper
 
 
-class BadgeManagementListDataSource : NSObject{
+class BadgeAdminManagementListDataSource : NSObject{
     private var badges : [Badge]
-    var vc : BadgeManagementListVC
+    var vc : BadgeAdminManagementListVC
     
-    init(badges: [Badge] = [Badge](),vc:BadgeManagementListVC) {
+    init(badges: [Badge] = [Badge](),vc:BadgeAdminManagementListVC) {
         self.badges = badges
         self.vc = vc
     }
@@ -23,7 +23,7 @@ class BadgeManagementListDataSource : NSObject{
     func setupDataSource(){
         vc.badgeTableView.delegate = self
         vc.badgeTableView.dataSource = self
-        vc.badgeTableView.register(UINib(nibName: "BadgeListTableViewCell", bundle: nil), forCellReuseIdentifier: "BadgeListTableViewCell")
+        vc.badgeTableView.register(UINib(nibName: "BadgeAdminListTableViewCell", bundle: nil), forCellReuseIdentifier: "BadgeAdminListTableViewCell")
         fetchBadges()
     }
     
@@ -57,7 +57,7 @@ class BadgeManagementListDataSource : NSObject{
     }
 }
 
-extension BadgeManagementListDataSource : UITableViewDelegate,UITableViewDataSource{
+extension BadgeAdminManagementListDataSource : UITableViewDelegate,UITableViewDataSource{
     
     func getNBadges()->Int{
         return badges.count
@@ -73,9 +73,9 @@ extension BadgeManagementListDataSource : UITableViewDelegate,UITableViewDataSou
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(
-            withIdentifier: "BadgeListTableViewCell",
+            withIdentifier: "BadgeAdminListTableViewCell",
             for: indexPath
-        ) as! BadgeListTableViewCell
+        ) as! BadgeAdminListTableViewCell
         cell.configureCell(badge: self.getBadge(index: indexPath.row))
         return cell
     }

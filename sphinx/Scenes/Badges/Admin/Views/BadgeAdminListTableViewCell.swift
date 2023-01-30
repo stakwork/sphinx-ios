@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BadgeListTableViewCell: UITableViewCell {
+class BadgeAdminListTableViewCell: UITableViewCell {
     
     @IBOutlet weak var badgeImageView: UIImageView!
     @IBOutlet weak var badgeNameLabel: UILabel!

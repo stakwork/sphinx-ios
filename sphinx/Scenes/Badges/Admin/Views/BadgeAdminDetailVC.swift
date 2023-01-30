@@ -14,7 +14,7 @@ public enum BadgeDetailPresentationContext{
     case update
 }
 
-class BadgeDetailVC : UIViewController{
+class BadgeAdminDetailVC : UIViewController{
     @IBOutlet weak var navBarView: UIView!
     @IBOutlet weak var badgeImageView: UIImageView!
     @IBOutlet weak var viewTitle: UILabel!
@@ -171,7 +171,7 @@ class BadgeDetailVC : UIViewController{
     
 }
 
-extension BadgeDetailVC : AttachmentsDelegate{
+extension BadgeAdminDetailVC : AttachmentsDelegate{
     func willDismissPresentedVC() {
         
     }

@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 
-class BadgeManagementListVC: UIViewController{
+class BadgeAdminManagementListVC: UIViewController{
     
     
     @IBOutlet weak var navBarView: UIView!
@@ -23,12 +23,12 @@ class BadgeManagementListVC: UIViewController{
     
     
     private var rootViewController: RootViewController!
-    var badgeManagementListDataSource : BadgeManagementListDataSource?
+    var badgeManagementListDataSource : BadgeAdminManagementListDataSource?
     
     static func instantiate(
         rootViewController: RootViewController
     ) -> UIViewController {
-        let viewController = StoryboardScene.BadgeManagement.badgeManagementListViewController.instantiate() as! BadgeManagementListVC
+        let viewController = StoryboardScene.BadgeManagement.badgeManagementListViewController.instantiate() as! BadgeAdminManagementListVC
         viewController.rootViewController = rootViewController
         
         return viewController
@@ -50,7 +50,7 @@ class BadgeManagementListVC: UIViewController{
         topContainerView.backgroundColor = UIColor.Sphinx.Body
         viewTitle.textColor = UIColor.Sphinx.Text
         navBarView.backgroundColor = UIColor.Sphinx.Body
-        badgeManagementListDataSource = BadgeManagementListDataSource(vc: self)
+        badgeManagementListDataSource = BadgeAdminManagementListDataSource(vc: self)
         badgeManagementListDataSource?.setupDataSource()
     }
     
@@ -60,8 +60,8 @@ class BadgeManagementListVC: UIViewController{
     }
     
     func showBadgeDetail(badge:Badge){
-        let badgeDetailVC = BadgeDetailVC.instantiate(rootViewController: rootViewController)
-        if let valid_detailVC = badgeDetailVC as? BadgeDetailVC{
+        let badgeDetailVC = BadgeAdminDetailVC.instantiate(rootViewController: rootViewController)
+        if let valid_detailVC = badgeDetailVC as? BadgeAdminDetailVC{
             valid_detailVC.associatedBadge = badge
         }
         self.navigationController?.pushViewController(badgeDetailVC, animated: true)

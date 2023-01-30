@@ -482,8 +482,8 @@ extension AllTribeFeedsCollectionViewController {
         }
           
         let followedSourceItems = followedFeeds.sorted { (first, second) in
-            let firstDate = first.dateUpdated ?? first.datePublished ?? Date.init(timeIntervalSince1970: 0)
-            let secondDate = second.dateUpdated ?? second.datePublished ?? Date.init(timeIntervalSince1970: 0)
+            let firstDate = first.itemsArray.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
+            let secondDate = second.itemsArray.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
 
             return firstDate > secondDate
         }.compactMap { contentFeed -> DataSourceItem? in

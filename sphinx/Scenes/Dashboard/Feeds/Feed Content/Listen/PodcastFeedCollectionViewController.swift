@@ -351,8 +351,8 @@ extension PodcastFeedCollectionViewController {
         shouldAnimate: Bool = true
     ) {
         self.followedPodcastFeeds = followedPodcastFeeds.sorted { (first, second) in
-            let firstDate = first.dateUpdated ?? first.datePublished ?? Date.init(timeIntervalSince1970: 0)
-            let secondDate = second.dateUpdated ?? second.datePublished ?? Date.init(timeIntervalSince1970: 0)
+            let firstDate = first.getLastEpisode()?.datePublished ?? Date.init(timeIntervalSince1970: 0)
+            let secondDate = second.getLastEpisode()?.datePublished ?? Date.init(timeIntervalSince1970: 0)
             
             return firstDate > secondDate
         }

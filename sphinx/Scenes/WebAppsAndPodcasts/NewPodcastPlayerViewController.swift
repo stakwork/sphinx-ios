@@ -187,9 +187,7 @@ extension NewPodcastPlayerViewController : PodcastPlayerViewDelegate {
     }
     
     func didFailPlayingPodcast() {
-        AlertHelper.showAlert(title: "generic.error.title".localized, message: "error.playing".localized, completion: {
-            self.dismiss(animated: true)
-        })
+        AlertHelper.showAlert(title: "generic.error.title".localized, message: "error.playing".localized, on: self)
     }
     
     func shouldReloadEpisodesTable() {

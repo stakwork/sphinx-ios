@@ -35,16 +35,6 @@ public class PodcastEpisode: NSObject {
         self.itemID = itemID
     }
     
-    public var isDownloaded: Bool {
-        get {
-            if let fileName = URL(string: urlPath ?? "")?.lastPathComponent {
-                let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent(fileName)
-                return FileManager.default.fileExists(atPath: path.path)
-            }
-            return false
-        }
-    }
-    
     var duration: Int? {
         get {
             return UserDefaults.standard.value(forKey: "duration-\(itemID)") as? Int

@@ -430,8 +430,8 @@ extension DashboardNewsletterFeedCollectionViewController {
         
         snapshot.appendItems(
             newsletterFeeds.sorted { (first, second) in
-                let firstDate = first.dateUpdated ?? first.datePublished ?? Date.init(timeIntervalSince1970: 0)
-                let secondDate = second.dateUpdated ?? second.datePublished ?? Date.init(timeIntervalSince1970: 0)
+                let firstDate = first.itemsArray.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
+                let secondDate = second.itemsArray.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
                 
                 return firstDate > secondDate
             }.map { DataSourceItem.newsletterFeed($0) },
@@ -444,8 +444,8 @@ extension DashboardNewsletterFeedCollectionViewController {
         
         snapshot.appendItems(
             feedsWithArticles.sorted { (first, second) in
-                let firstDate = first.dateUpdated ?? first.datePublished ?? Date.init(timeIntervalSince1970: 0)
-                let secondDate = second.dateUpdated ?? second.datePublished ?? Date.init(timeIntervalSince1970: 0)
+                let firstDate = first.datePublished ?? Date.init(timeIntervalSince1970: 0)
+                let secondDate = second.datePublished ?? Date.init(timeIntervalSince1970: 0)
                 
                 return firstDate > secondDate
             }.map { DataSourceItem.newsletterItem($0.nextArticle) },
@@ -579,7 +579,7 @@ extension DashboardNewsletterFeedCollectionViewController: NSFetchedResultsContr
 
 extension NewsletterFeed: DashboardFeedSquaredThumbnailCollectionViewItem {
     
-    var imageURLPath: String? {
+    var imageToShow: String? {
         imageURL?.absoluteString ?? chat?.photoUrl
     }
     
@@ -603,8 +603,9 @@ extension NewsletterFeed: DashboardFeedSquaredThumbnailCollectionViewItem {
 }
 
 extension NewsletterItem: DashboardFeedSquaredThumbnailCollectionViewItem {
-    var imageURLPath: String? {
-        newsletterFeed?.imageURL?.absoluteString ?? newsletterFeed?.chat?.photoUrl
+    
+    var imageToShow: String? {
+        imageUrl?.absoluteString ?? newsletterFeed?.imageURL?.absoluteString
     }
     
     var placeholderImageName: String? {

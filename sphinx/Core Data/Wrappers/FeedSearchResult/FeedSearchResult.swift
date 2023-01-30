@@ -43,7 +43,7 @@ public class FeedSearchResult: NSObject {
             contentFeed.feedID,
             contentFeed.title ?? "",
             contentFeed.feedDescription,
-            contentFeed.imageURLPath,
+            contentFeed.imageToShow,
             contentFeed.feedURL?.absoluteString ?? "",
             contentFeed.feedKind
         )

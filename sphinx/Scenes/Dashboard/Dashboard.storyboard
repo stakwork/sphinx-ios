@@ -78,7 +78,7 @@
                                         </constraints>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Add Tribe">
-                                            <fontDescription key="titleFontDescription" name="Roboto-Medium" family="Roboto" pointSize="14"/>
+                                            <fontDescription key="titleFontDescription" name="Roboto-Medium" family="Roboto" pointSize="13"/>
                                             <directionalEdgeInsets key="contentInsets" top="0.0" leading="20" bottom="0.0" trailing="0.0"/>
                                             <color key="baseForegroundColor" name="Text"/>
                                         </buttonConfiguration>

@@ -97,17 +97,17 @@ extension PodcastPlayerController {
                     
                     if self.player == nil {
                         self.player = AVPlayer(playerItem: playerItem)
-                        self.player?.automaticallyWaitsToMinimizeStalling = false
                         self.player?.rate = podcastData.speed
                     } else {
                         self.player?.replaceCurrentItem(with: playerItem)
                     }
                     
                     self.player?.pause()
-                    self.player?.seek(to: CMTime(seconds: Double(podcastData.currentTime ?? 0), preferredTimescale: 1))
-                    self.player?.playImmediately(atRate: podcastData.speed)
                     
-                    self.didStartPlaying(playerItem)
+                    self.player?.seek(to: CMTime(seconds: Double(podcastData.currentTime ?? 0), preferredTimescale: 1)) { _ in
+                        self.player?.playImmediately(atRate: podcastData.speed)
+                        self.didStartPlaying(playerItem)
+                    }
                 }
             })
         }
@@ -128,14 +128,13 @@ extension PodcastPlayerController {
         )
         
         if (duration > 0) {
-            
             self.runPlayingStateUpdate()
             self.configureTimer()
             
             self.trackItemStarted()
         } else {
             self.player?.pause()
-            
+
             runErrorStateUpdate()
         }
     }

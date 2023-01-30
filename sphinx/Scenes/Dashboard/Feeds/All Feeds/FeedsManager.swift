@@ -12,6 +12,14 @@ import AVFoundation
 
 class FeedsManager : NSObject {
     
+    class var sharedInstance : FeedsManager {
+        struct Static {
+            static let instance = FeedsManager()
+        }
+        return Static.instance
+    }
+    
+    let podcastPlayerController = PodcastPlayerController.sharedInstance
     
     static func fetchFeeds() -> [ContentFeed]{
         var followedFeeds: [ContentFeed] = []
@@ -27,118 +35,223 @@ class FeedsManager : NSObject {
         }
     }
     
+    func saveContentFeedInBackground() {
+        let dispatchQueue = DispatchQueue.global()
+        dispatchQueue.async {
+            self.saveContentFeedStatus()
+        }
+    }
+    
+    func getContentFeedStatus(
+        for contentFeed: ContentFeed
+    ) -> ContentFeedStatus {
+        let status = ContentFeedStatus()
+        status.feedID = contentFeed.feedID
+        status.feedURL = contentFeed.feedURL?.absoluteString ?? ""
+        
+        if let valid_chat = contentFeed.chat {
+            status.chatID = valid_chat.id
+        }
+        
+        let podFeed = PodcastFeed.convertFrom(contentFeed: contentFeed)
+        status.satsPerMinute = podFeed.satsPerMinute
+        status.subscriptionStatus = podFeed.isSubscribedToFromSearch
+        status.playerSpeed = podFeed.playerSpeed
+        status.itemID = podFeed.currentEpisodeId
+        
+        status.episodeStatus = [EpisodeStatus]()
+        
+        for episode in podFeed.episodes ?? [PodcastEpisode]() {
+            
+            let episodeStatus = EpisodeStatus()
+            let episodeData = EpisodeData()
+            
+            episodeStatus.episodeID = episode.itemID
+            episodeData.duration = episode.duration ?? 0
+            episodeData.current_time = episode.currentTime ?? 0
+            episodeStatus.episodeData = episodeData
+            
+            if (episodeData.current_time != 0) {
+                status.episodeStatus?.append(episodeStatus)
+            }
+        }
+        return status
+    }
+    
+    func saveContentFeedStatus(
+        for feedId: String
+    ){
+        if let contentFeed = ContentFeed.getFeedWith(feedId: feedId) {
+            let contentFeedStatus = getContentFeedStatus(for: contentFeed)
+            let contentFeedStatusParams = contentFeedStatus.toJSON()
+         
+            print(contentFeedStatusParams)
+            
+//            API.sharedInstance.saveContentFeedStatusesToRemote(
+//                params: contentFeedStatusParams,
+//                callback: {},
+//                errorCallback: {}
+//            )
+        }
+    }
+    
+    func saveContentFeedStatus(){
+        let followedFeeds: [ContentFeed] = FeedsManager.fetchFeeds()
+        
+        let contentFeedStatuses: [ContentFeedStatus] = followedFeeds.map({
+            return self.getContentFeedStatus(for: $0)
+        })
+        
+        let contentFeedStatusParams = contentFeedStatuses.map({ $0.toJSON() })
+        print(contentFeedStatuses)
+        
+        API.sharedInstance.saveContentFeedStatusesToRemote(
+            params: contentFeedStatusParams,
+            callback: {},
+            errorCallback: {}
+        )
+    }
+    
     func restoreContentFeedStatus(
         progressCallback: @escaping (Int) -> (),
         completionCallback: @escaping () -> ()
     ){
         API.sharedInstance.getAllContentFeedStatuses(
-        callback: { results in
-            FeedsManager().syncRemoteAndLocalFeeds(
-                remoteData: results,
-                progressCallback: progressCallback,
-                completionCallback: completionCallback
-            )
-        }, errorCallback: {
-            //TODO: retry? Alert user?
-        })
+            callback: { results in
+                self.restoreFeedStatuses(
+                    from: results,
+                    progressCallback: progressCallback,
+                    completionCallback: completionCallback
+                )
+            },
+            errorCallback: {
+                completionCallback()
+                //TODO: retry? Alert user?
+            }
+        )
     }
     
     func getRestoreProgress(totalFeeds:Int,syncedFeeds:Int)->Int{
         return Int(100.0 * Float(syncedFeeds)/Float(totalFeeds))
     }
     
-    func syncRemoteAndLocalFeeds(
-        remoteData:[ContentFeedStatus],
+    func restoreFeedStatuses(
+        from remoteData: [ContentFeedStatus],
         progressCallback: @escaping (Int) -> (),
         completionCallback: @escaping () -> ()
     ){
-        //1. Arrange all data and IDs
+        let bgContext = CoreDataManager.sharedManager.getBackgroundContext()
+        
         let localData = FeedsManager.fetchFeeds()
         
-        let localIDs = localData.compactMap({$0.feedID})
-        let remoteIDs = remoteData.compactMap({$0.feedID})
+        let localIDs = localData.compactMap({ $0.feedID })
+        let remoteIDs = remoteData.compactMap({ $0.feedID })
         
-        //2. Iterate through IDs not present locally and add them
-        let idsToAdd = remoteIDs.filter({localIDs.contains($0) == false})
-        
-        for _id in idsToAdd{
-            var syncedFeedsCount = 0
-            let totalFeedsCount = idsToAdd.count
-            if let relevant_data = remoteData.filter({$0.feedID == _id}).first{
-                let relevant_feed_url = relevant_data.feedURL
-                var chat : Chat? = nil
-                let bgContext = CoreDataManager.sharedManager.getBackgroundContext()
-                if let valid_chat_id = relevant_data.chatID{
-                    chat = Chat.getChatWith(id: valid_chat_id,managedContext: bgContext)
-                }
-                ContentFeed.fetchContentFeed(at: relevant_feed_url, chat: chat, persistingIn: bgContext,then: {
-                    result in
-                    if case .success(_) = result {
-                        do{
-                            let contentFeed = try result.get()
-                            contentFeed.isSubscribedToFromSearch = true
-                            bgContext.saveContext()
-                            
-                            progressCallback(self.getRestoreProgress(totalFeeds: totalFeedsCount, syncedFeeds: syncedFeedsCount))
-                        }
-                        catch{
-                            print(error)
-                        }
-                    }
-                    syncedFeedsCount += 1
-                    if(totalFeedsCount - 1 <= syncedFeedsCount){//signal completion when we're done copying to local
-                        self.restoreEpisodeStatuses(remoteData: remoteData)
-                        completionCallback()
-                    }
-                })
-            }
-        }
-        
-        
-        //3. Iterate through each local copy that is not present in relay and unsubscribe
-        let idsToRemove = localIDs.filter({remoteIDs.contains($0) == false})
-        
-        for _id in idsToRemove{
-            if let relevant_data = localData.filter({$0.feedID == _id}).first{
-                relevant_data.isSubscribedToFromSearch = false
-                relevant_data.managedObjectContext?.saveContext()
+        ///Delete feeds not present on remote data
+        for idToRemove in localIDs.filter({ remoteIDs.contains($0) }) {
+            if let feedToRemove = localData.filter({ $0.feedID == idToRemove }).first {
+                feedToRemove.isSubscribedToFromSearch = false
+                feedToRemove.chat = nil
                 
             }
         }
         
-        //4. Still need to restore episode status for all those not touched by idsToAdd block
+        let dispatchSemaphore = DispatchSemaphore(value: 1)
         
-        print(idsToAdd)
-        print(idsToRemove)
-        if(idsToAdd.isEmpty){//signal completion if there's no additions happening
-            self.restoreEpisodeStatuses(remoteData: remoteData)
-            completionCallback()
+        ///Update feeds present in remote data
+        for (index, contentFeedStatus) in remoteData.enumerated() {
+            
+            dispatchSemaphore.wait()
+            
+            let feedUrl = contentFeedStatus.feedURL
+            
+            var chat : Chat? = nil
+            if let validChatId = contentFeedStatus.chatID {
+                chat = Chat.getChatWith(id: validChatId, managedContext: bgContext)
+            }
+            
+            ///Get feed from local db or fetch it from tribes server endpoint
+            getContentFeedFor(
+                feedId: contentFeedStatus.feedID,
+                feedUrl: feedUrl,
+                chat: chat
+            ) { contentFeed in
+                
+                ///restore status from the remote content status
+                if let contentFeed = contentFeed {
+                    self.restoreFeedStatus(
+                        remoteContentStatus: contentFeedStatus,
+                        localFeed: contentFeed
+                    )
+                }
+                
+                progressCallback(
+                    self.getRestoreProgress(totalFeeds: remoteData.count, syncedFeeds: index + 1)
+                )
+                
+                if (index + 1 == remoteData.count) {
+                    completionCallback()
+                }
+                
+                dispatchSemaphore.signal()
+            }
+        }
+    }
+    
+    func getContentFeedFor(
+        feedId: String,
+        feedUrl: String,
+        chat: Chat?,
+        completion: @escaping (ContentFeed?) -> ()
+    ) {
+        if let existingContentFeed = ContentFeed.getFeedWith(feedId: feedId) {
+            existingContentFeed.chat = chat
+            completion(existingContentFeed)
+        } else {
+            let bgContext = CoreDataManager.sharedManager.getBackgroundContext()
+            
+            ContentFeed.fetchContentFeed(at: feedUrl, chat: chat, persistingIn: bgContext, then: { result in
+                if case .success(let contentFeed) = result {
+                    completion(contentFeed)
+                    return
+                }
+                completion(nil)
+            })
+        }
+    }
+    
+    func restoreFeedStatus(
+        remoteContentStatus: ContentFeedStatus,
+        localFeed: ContentFeed
+    ) {
+        localFeed.isSubscribedToFromSearch = remoteContentStatus.subscriptionStatus
+        
+        let podcastFeed = PodcastFeed.convertFrom(contentFeed: localFeed)
+        podcastFeed.satsPerMinute = remoteContentStatus.satsPerMinute ?? 0
+        
+        if !podcastPlayerController.isPlaying(podcastId: remoteContentStatus.feedID) {
+            podcastFeed.playerSpeed = remoteContentStatus.playerSpeed ?? 1.0
+            podcastFeed.currentEpisodeId = remoteContentStatus.itemID ?? ""
         }
         
+        if let episodeStatuses = remoteContentStatus.episodeStatus {
+             for episodeStatus in episodeStatuses {
+                 restoreEpisodeStatus(
+                    on: podcastFeed,
+                    with: episodeStatus
+                 )
+             }
+        }
     }
     
-    func setLocalMetaData(localContentFeed:ContentFeed,remoteContentStatus:ContentFeedStatus){
-        let podcastFeed = PodcastFeed.convertFrom(contentFeed: localContentFeed)
-        podcastFeed.satsPerMinute = remoteContentStatus.satsPerMinute ?? 0
-        podcastFeed.playerSpeed = remoteContentStatus.playerSpeed ?? 1.0
-        podcastFeed.currentEpisodeId = remoteContentStatus.itemID ?? ""
-    }
-    
-    
-    func restoreEpisodeStatuses(remoteData:[ContentFeedStatus]){
-        let localData = FeedsManager.fetchFeeds()
-        for contentFeed in localData{
-            if contentFeed.feedKind == .Podcast,
-               let remoteContentStatus = remoteData.filter({$0.feedID == contentFeed.id}).first,
-               let episodeStatuses = remoteContentStatus.episodeStatus{
-                setLocalMetaData(localContentFeed: contentFeed, remoteContentStatus: remoteContentStatus)
-                let podcastFeed = PodcastFeed.convertFrom(contentFeed: contentFeed)
-                for episodeStatus in episodeStatuses{
-                    if let podFeedEpisode = podcastFeed.episodes?.filter({$0.itemID == episodeStatus.episodeID}).first{
-                        podFeedEpisode.duration = episodeStatus.episodeData?.duration
-                        podFeedEpisode.currentTime = episodeStatus.episodeData?.current_time
-                    }
-                }
+    func restoreEpisodeStatus(
+        on podcastFeed: PodcastFeed,
+        with episodeStatus: EpisodeStatus
+    ) {
+        if !podcastPlayerController.isPlaying(episodeId: episodeStatus.episodeID) {
+            if let episode = podcastFeed.getEpisodeWith(id: episodeStatus.episodeID) {
+                episode.duration = episodeStatus.episodeData?.duration
+                episode.currentTime = episodeStatus.episodeData?.current_time
             }
         }
     }
@@ -262,18 +375,5 @@ class FeedsManager : NSObject {
             let downloadService = DownloadService.sharedInstance
             downloadService.startDownload(lastEpisode)
         }
-    }
-    
-    static func makeFetchedResultsController(
-        using managedObjectContext: NSManagedObjectContext
-    ) -> NSFetchedResultsController<ContentFeed> {
-        let fetchRequest = ContentFeed.FetchRequests.followedFeeds()
-        
-        return NSFetchedResultsController(
-            fetchRequest: fetchRequest,
-            managedObjectContext: managedObjectContext,
-            sectionNameKeyPath: nil,
-            cacheName: nil
-        )
     }
 }

@@ -108,8 +108,6 @@ extension API {
         callback: @escaping AllContentFeedStatusCallback,
         errorCallback: @escaping EmptyCallback
     ) {
-        
-        
         guard let request = getURLRequest(route: "/content_feed_status", params: nil, method: "GET") else {
             errorCallback()
             return
@@ -119,9 +117,9 @@ extension API {
             switch response.result {
             case .success(let data):
                 if let json = data as? NSDictionary {
-                    if let success = json["success"] as? Bool,
-                        success,
-                       let mapped_content_status = Mapper<ContentFeedStatus>().mapArray(JSONObject: json["response"]){
+                    if let success = json["success"] as? Bool, success,
+                       let mapped_content_status = Mapper<ContentFeedStatus>().mapArray(JSONObject: json["response"]) {
+                        
                         callback(mapped_content_status)
                         print(json)
                         return
@@ -139,10 +137,8 @@ extension API {
         callback: @escaping EmptyCallback,
         errorCallback: @escaping EmptyCallback
     ) {
-
         var requestParams : [String:Any] = [String:Any]()
         requestParams["contents"] = params
-        
         
         guard let request = getURLRequest(route: "/content_feed_status", params: requestParams as NSDictionary?, method: "POST") else {
             errorCallback()
@@ -165,7 +161,6 @@ extension API {
             case .failure(_):
                 errorCallback()
             }
-            print(response.response?.statusCode)
         }
         
     }

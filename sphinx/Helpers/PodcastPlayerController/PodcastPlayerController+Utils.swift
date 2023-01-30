@@ -144,6 +144,26 @@ extension PodcastPlayerController {
 }
 
 extension PodcastPlayerController {
+    
+    var isPlaying: Bool {
+        get {
+            return player?.timeControlStatus == AVPlayer.TimeControlStatus.playing ||
+                   player?.timeControlStatus == AVPlayer.TimeControlStatus.waitingToPlayAtSpecifiedRate
+        }
+    }
+    
+    var playingPodcastId: String? {
+        get {
+            return podcastData?.podcastId
+        }
+    }
+    
+    var playingEpisodeId: String? {
+        get {
+            return podcastData?.episodeId
+        }
+    }
+    
     func isPlaying(
         podcastId: String
     ) -> Bool {
@@ -160,13 +180,6 @@ extension PodcastPlayerController {
         episodeUrl: URL
     ) -> Bool {
         return ((player?.currentItem?.asset) as? AVURLAsset)?.url.absoluteString == episodeUrl.absoluteString
-    }
-    
-    var isPlaying: Bool {
-        get {
-            return player?.timeControlStatus == AVPlayer.TimeControlStatus.playing ||
-                   player?.timeControlStatus == AVPlayer.TimeControlStatus.waitingToPlayAtSpecifiedRate
-        }
     }
     
     func isPlayingRecommendations() -> Bool {

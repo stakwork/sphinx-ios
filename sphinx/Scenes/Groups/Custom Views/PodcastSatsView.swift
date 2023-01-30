@@ -44,7 +44,7 @@ class PodcastSatsView: UIView {
         self.chat = chat
         
         if let podcast = chat.podcast {
-            if let storedAmount = UserDefaults.standard.value(forKey: "podcast-sats-\(chat.id)") as? Int {
+            if let storedAmount = podcast.satsPerMinute {
                 setSliderValue(value: storedAmount)
             } else {
                 let suggestedSats = podcast.model?.suggestedSats ?? 0
@@ -72,7 +72,7 @@ class PodcastSatsView: UIView {
                 sliderValueChanged(slider)
                 break
             case .ended:
-                chat.updateMetaData()
+                // Should sync podcast Status
                 break
             default:
                 break
@@ -92,8 +92,9 @@ class PodcastSatsView: UIView {
         let realValue = sliderValues[sliderValue]
         amountLabel.text = "\(realValue)"
         
-        UserDefaults.standard.set(realValue, forKey: "podcast-sats-\(chat.id)")
-        UserDefaults.standard.synchronize()
+        if let podcast = chat.podcast {
+            podcast.satsPerMinute = realValue
+        }
         
         setOutOfRangeLabel(value: realValue)
     }

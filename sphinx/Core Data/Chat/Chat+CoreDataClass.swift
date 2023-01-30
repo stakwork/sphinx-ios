@@ -275,10 +275,10 @@ public class Chat: NSManagedObject {
         return Chat.insertChat(chat: chat)
     }
     
-    static func getChatWith(id: Int,managedContext:NSManagedObjectContext?=nil) -> Chat? {
+    static func getChatWith(id: Int, managedContext:NSManagedObjectContext? = nil) -> Chat? {
         let predicate = NSPredicate(format: "id == %d", id)
         let sortDescriptors = [NSSortDescriptor(key: "id", ascending: false)]
-        let chat:Chat? = CoreDataManager.sharedManager.getObjectOfTypeWith(predicate: predicate, sortDescriptors: sortDescriptors, entityName: "Chat",managedContext:managedContext)
+        let chat:Chat? = CoreDataManager.sharedManager.getObjectOfTypeWith(predicate: predicate, sortDescriptors: sortDescriptors, entityName: "Chat", managedContext:managedContext)
         return chat
     }
     
@@ -569,16 +569,6 @@ public class Chat: NSManagedObject {
     
     func shouldShowPrice() -> Bool {
         return (pricePerMessage?.intValue ?? 0) > 0
-    }
-    
-    func updateMetaData() {
-        let satsPerMinute = (UserDefaults.standard.value(forKey: "podcast-sats-\(self.id)") as? Int) ?? 0
-        let currentTime = (UserDefaults.standard.value(forKey: "current-time-\(self.id)") as? Int) ?? 0
-        let currentEpisode = (UserDefaults.standard.value(forKey: "current-episode-id-\(self.id)") as? Int) ?? -1
-        let speed = ((UserDefaults.standard.value(forKey: "player-speed-\(self.id)") as? Float) ?? 0.0).speedDescription
-        
-        let params: [String: AnyObject] = ["meta" :"{\"itemID\":\(currentEpisode),\"sats_per_minute\":\(satsPerMinute),\"ts\":\(currentTime), \"speed\":\(speed)}" as AnyObject]
-        API.sharedInstance.updateChat(chatId: id, params: params, callback: {}, errorCallback: {})
     }
     
     func isGroup() -> Bool {

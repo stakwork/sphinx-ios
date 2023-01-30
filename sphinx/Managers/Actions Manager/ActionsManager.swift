@@ -390,51 +390,11 @@ class ActionsManager {
         }
     }
     
-    func syncActionsInBackground() {    
+    func syncActionsInBackground() {
         let dispatchQueue = DispatchQueue.global()
         dispatchQueue.async {
             self.syncActions()
-            self.saveContentFeedStatus()
         }
-    }
-    
-    func saveContentFeedStatus(){
-        let followedFeeds = FeedsManager.fetchFeeds()
-        let contentFeedStatuses = followedFeeds.map({
-            let status = ContentFeedStatus()
-            status.feedID = $0.feedID
-            status.feedURL = $0.feedURL?.absoluteString ?? ""
-            if let valid_chat = $0.chat{
-                status.chatID = valid_chat.id
-                status.satsPerMinute = (UserDefaults.standard.value(forKey: "podcast-sats-\(valid_chat.id)") as? Int) ?? 0
-            }
-            let podFeed = PodcastFeed.convertFrom(contentFeed: $0)
-            status.subscriptionStatus = podFeed.isSubscribedToFromSearch
-            status.playerSpeed = podFeed.playerSpeed
-            status.itemID = podFeed.lastEpisodeId
-            status.episodeStatus = [EpisodeStatus]()
-            for episode in podFeed.episodes ?? [PodcastEpisode](){
-                let episodeStatus = EpisodeStatus()
-                let episodeData = EpisodeData()
-                episodeStatus.episodeID = episode.itemID
-                episodeData.duration = episode.duration ?? 0
-                episodeData.current_time = episode.currentTime ?? 0
-                episodeStatus.episodeData = episodeData
-                if(episodeData.current_time != 0){
-                    status.episodeStatus?.append(episodeStatus)
-                }
-            }
-            return status
-        })
-        let contentFeedStatusParams = contentFeedStatuses.map({$0.toJSON()})
-        print(contentFeedStatuses)
-        
-        API.sharedInstance.saveContentFeedStatusesToRemote(params: contentFeedStatusParams,
-        callback: {
-            
-        }, errorCallback: {
-            
-        })
     }
     
     
@@ -461,6 +421,7 @@ class ActionsManager {
         for chunk in chunkedActions {
             
             dispatchGroup.enter()
+            dispatchSemaphore.wait()
             
             API.sharedInstance.syncActions(actions: chunk, callback: { success in
                 if (success) {
@@ -470,8 +431,6 @@ class ActionsManager {
                 dispatchSemaphore.signal()
                 dispatchGroup.leave()
             })
-            
-            dispatchSemaphore.wait()
         }
         
         completion?()

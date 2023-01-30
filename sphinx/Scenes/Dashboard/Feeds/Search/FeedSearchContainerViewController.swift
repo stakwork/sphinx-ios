@@ -28,7 +28,7 @@ class FeedSearchContainerViewController: UIViewController {
     var searchTimer: Timer? = nil
     
     internal let newMessageBubbleHelper = NewMessageBubbleHelper()
-    internal let feedsManager = FeedsManager()
+    internal let feedsManager = FeedsManager.sharedInstance
     
     lazy var fetchedResultsController: NSFetchedResultsController = Self
         .makeFetchedResultsController(

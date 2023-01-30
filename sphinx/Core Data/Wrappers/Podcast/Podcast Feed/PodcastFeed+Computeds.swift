@@ -89,10 +89,9 @@ extension PodcastFeed {
         }
     }
     
-    var satsPerMinute: Int {
+    var satsPerMinute: Int? {
         get {
-            let sats = (UserDefaults.standard.value(forKey: "podcast-sats-\(identifier)") as? Int) ?? 0
-            return sats
+            return (UserDefaults.standard.value(forKey: "podcast-sats-\(identifier)") as? Int)
         }
         set {
             UserDefaults.standard.set(newValue, forKey: "podcast-sats-\(identifier)")

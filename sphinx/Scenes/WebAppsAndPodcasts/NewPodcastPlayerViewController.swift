@@ -200,7 +200,7 @@ extension NewPodcastPlayerViewController : PodcastPlayerViewDelegate {
     }
     
     func shouldSyncPodcast() {
-        chat?.updateMetaData()
+        // Should sync podcast status
     }
     
     func shouldShowSpeedPicker() {

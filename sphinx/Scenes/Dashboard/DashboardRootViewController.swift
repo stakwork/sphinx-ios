@@ -121,9 +121,8 @@ class DashboardRootViewController: RootViewController {
         }
     }
     
-    var isInRestoreProcess = false
     var didFinishInitialLoading = false
-    var feedsManager = FeedsManager()
+    let feedsManager = FeedsManager.sharedInstance
     
     var shouldShowHeaderLoadingWheel = false {
         didSet {
@@ -194,15 +193,13 @@ extension DashboardRootViewController {
     static func instantiate(
         rootViewController: RootViewController,
         leftMenuDelegate: LeftMenuDelegate,
-        managedObjectContext: NSManagedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext,
-        isInRestoreProcess:Bool = false
+        managedObjectContext: NSManagedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext
     ) -> DashboardRootViewController {
         let viewController = StoryboardScene.Dashboard.dashboardRootViewController.instantiate()
         
         viewController.rootViewController = rootViewController
         viewController.leftMenuDelegate = leftMenuDelegate
         viewController.managedObjectContext = managedObjectContext
-        viewController.isInRestoreProcess = isInRestoreProcess
         
         return viewController
     }
@@ -227,12 +224,6 @@ extension DashboardRootViewController {
         isLoading = true
         
         activeTab = .friends
-        
-        if(isInRestoreProcess == false){//only write to endpoint if we're not restoring otherwise it zeros everything out!
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
-                ActionsManager().syncActionsInBackground()
-            })
-        }
     }
     
     func setupAddTribeButton(){

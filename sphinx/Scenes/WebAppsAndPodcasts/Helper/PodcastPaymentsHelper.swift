@@ -35,13 +35,11 @@ class PodcastPaymentsHelper {
         let myPubKey = UserData.sharedInstance.getUserPubKey()
         var destinations = podcastFeed?.destinationsArray ?? []
         var clipSenderDestination: PodcastDestination? = nil
-        var shouldUpdateMeta = true
         
         if
             let clipSenderPubKey = clipSenderPubKey,
             clipSenderPubKey != myPubKey
         {
-            shouldUpdateMeta = false
             clipSenderDestination = PodcastDestination(NSManagedObjectID.init())
             
             if let clipSenderDestination = clipSenderDestination {
@@ -53,10 +51,6 @@ class PodcastPaymentsHelper {
             }
         }
         
-        if let _ = boostAmount {
-            shouldUpdateMeta = false
-        }
-        
         if
             let podcastFeed = podcastFeed,
             let chatId = podcastFeed.chat?.id,
@@ -65,7 +59,7 @@ class PodcastPaymentsHelper {
             streamSats(
                 podcastId: podcastFeed.feedID,
                 podcastDestinations: destinations,
-                updateMeta: shouldUpdateMeta,
+                updateMeta: false,
                 amount: satsAmt,
                 chatId: chatId,
                 itemId: itemId,
@@ -80,8 +74,7 @@ class PodcastPaymentsHelper {
         
         if
             let chatId = podcastFeed?.chat?.id,
-            let savedAmount = UserDefaults.standard.value(forKey: "podcast-sats-\(chatId)") as? Int,
-                chatId > 0
+            let savedAmount = podcastFeed?.satsPerMinute, chatId > 0
         {
             suggestedAmount = savedAmount
         }

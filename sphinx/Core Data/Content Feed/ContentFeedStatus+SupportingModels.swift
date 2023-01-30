@@ -18,7 +18,6 @@ class EpisodeStatus: Mappable {
     }
     
     func mapping(map: Map) {
-        //episodeID                      <- map["episode_id"]
         episodeData                  <- map[episodeID]
     }
 }
@@ -63,24 +62,31 @@ class ContentFeedStatus: Mappable {
         playerSpeed                 <- map["player_speed"]
         
         if map.mappingType == .fromJSON,//typical path for deserializing
-           let episode_statuses = map.JSON["episodes_status"] as? [[String:Any]]{
+           let episode_statuses = map.JSON["episodes_status"] as? [[String:Any]] {
+            
             var local_statuses = [EpisodeStatus]()
-            for episode_status in episode_statuses{
+            
+            for episode_status in episode_statuses {
+                
                 let localCopy = EpisodeStatus()
                 let key = episode_status.keys.first ?? ""
                 localCopy.episodeID = key
+                
                 let episodeData = EpisodeData()
+                
                 if let jsonEStatus = episode_status["\(key)"] as? [String:Any],
-                let current_time = jsonEStatus["current_time"] as? Int,
-                let duration = jsonEStatus["duration"] as? Int{
+                   let current_time = jsonEStatus["current_time"] as? Int,
+                   let duration = jsonEStatus["duration"] as? Int {
+                    
                     episodeData.current_time = current_time
                     episodeData.duration = duration
                 }
+                
                 localCopy.episodeData = episodeData
                 local_statuses.append(localCopy)
             }
+            
             episodeStatus = local_statuses
-            print(episode_statuses)
         }
         else{//typical path for serializing
             episodeStatus               <- map["episodes_status"]

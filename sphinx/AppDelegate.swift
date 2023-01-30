@@ -30,7 +30,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     let newMessageBubbleHelper = NewMessageBubbleHelper()
     
-    let feedsManager = FeedsManager()
+    let actionsManager = ActionsManager.sharedInstance
+    let feedsManager = FeedsManager.sharedInstance
     
     let podcastPlayerController = PodcastPlayerController.sharedInstance
     
@@ -171,7 +172,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setBadge(application: application)
         
         podcastPlayerController.finishAndSaveContentConsumed()
-        ActionsManager.sharedInstance.syncActionsInBackground()
+        actionsManager.syncActionsInBackground()
+        feedsManager.saveContentFeedInBackground()
+        
         CoreDataManager.sharedManager.saveContext()
         
         scheduleAppRefresh()
@@ -187,9 +190,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         reloadMessagesData()
         presentPINIfNeeded()
+        
         feedsManager.restoreContentFeedStatus(
             progressCallback: {_ in},
-            completionCallback: {})
+            completionCallback: {
+                self.feedsManager.saveContentFeedInBackground()
+            }
+        )
         
         podcastPlayerController.finishAndSaveContentConsumed()
     }
@@ -264,7 +271,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if isUserLogged {
             syncDeviceId()
             getRelayKeys()
-            ActionsManager.sharedInstance.syncActionsInBackground()
+            actionsManager.syncActionsInBackground()
         }
 
         takeUserToInitialVC(isUserLogged: isUserLogged)

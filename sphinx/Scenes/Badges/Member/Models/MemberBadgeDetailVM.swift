@@ -12,10 +12,14 @@ import UIKit
 class MemberBadgeDetailVM : NSObject {
     var vc: MemberBadgeDetailVC
     var tableView: UITableView
+    var presentationContext : MemberBadgeDetailPresentationContext
+    
+    
     
     init(vc: MemberBadgeDetailVC, tableView: UITableView) {
         self.vc = vc
         self.tableView = tableView
+        self.presentationContext = vc.presentationContext
     }
     
     func configTable(){
@@ -27,27 +31,41 @@ class MemberBadgeDetailVM : NSObject {
         tableView.reloadData()
     }
     
+    func getCellTypeOrder() -> [MemberBadgeDetailCellType] {
+        switch(presentationContext){
+        case .member:
+            return [
+                .posts,
+                .contributions,
+                .earnings
+            ]
+            break
+        case .admin:
+            return [
+                .badges,
+                .posts,
+                .contributions,
+                .earnings
+            ]
+            break
+        }
+    }
+    
 }
 
 
 extension MemberBadgeDetailVM : UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return getCellTypeOrder().count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        /*
-        let cell = UITableViewCell()
-        let label = UILabel(frame: CGRect(x: 0.0, y: 0.0, width: cell.frame.width, height: cell.frame.height))
-        label.text = "\(indexPath.row)"
-        label.textColor = UIColor.Sphinx.BodyInverted
-        cell.addSubview(label)
-        */
         
         let cell = tableView.dequeueReusableCell(
             withIdentifier: MemberBadgeDetailTableViewCell.reuseID,
             for: indexPath
         ) as! MemberBadgeDetailTableViewCell
+        cell.configureCell(type: getCellTypeOrder()[indexPath.row])
         
         return cell
     }

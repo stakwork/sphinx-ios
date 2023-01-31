@@ -35,14 +35,23 @@
                                 <color key="textColor" name="SecondaryText"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TfG-oh-XAP">
+                                <rect key="frame" x="147" y="0.0" width="180" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="180" id="Qds-xk-Ott"/>
+                                </constraints>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" name="Body"/>
                         <constraints>
                             <constraint firstItem="QN5-r7-EdQ" firstAttribute="centerY" secondItem="zOC-ey-KTX" secondAttribute="centerY" id="Fd1-Vg-eMJ"/>
+                            <constraint firstItem="TfG-oh-XAP" firstAttribute="top" secondItem="zOC-ey-KTX" secondAttribute="top" id="Q63-4D-XSo"/>
                             <constraint firstItem="QN5-r7-EdQ" firstAttribute="top" secondItem="zOC-ey-KTX" secondAttribute="top" id="VZp-dE-4J8"/>
                             <constraint firstAttribute="height" constant="48" id="aPt-RQ-PJW"/>
+                            <constraint firstAttribute="bottom" secondItem="TfG-oh-XAP" secondAttribute="bottom" id="cSV-Sf-Xfo"/>
                             <constraint firstAttribute="bottom" secondItem="QN5-r7-EdQ" secondAttribute="bottom" id="f2f-jL-BzJ"/>
                             <constraint firstItem="QN5-r7-EdQ" firstAttribute="leading" secondItem="zOC-ey-KTX" secondAttribute="leading" constant="32" id="nuj-Pn-rqJ"/>
+                            <constraint firstAttribute="trailing" secondItem="TfG-oh-XAP" secondAttribute="trailing" id="rRM-fc-GI1"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -54,6 +63,11 @@
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="stackView" destination="TfG-oh-XAP" id="abJ-Xm-hF6"/>
+                <outlet property="stackViewWidth" destination="Qds-xk-Ott" id="tXM-71-FkB"/>
+                <outlet property="titleLabel" destination="QN5-r7-EdQ" id="kjo-tz-TWc"/>
+            </connections>
             <point key="canvasLocation" x="5.343511450381679" y="-6.6901408450704229"/>
         </tableViewCell>
     </objects>

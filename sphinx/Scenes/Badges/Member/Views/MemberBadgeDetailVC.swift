@@ -9,6 +9,12 @@
 import Foundation
 import UIKit
 
+
+public enum MemberBadgeDetailPresentationContext {
+    case member
+    case admin
+}
+
 class MemberBadgeDetailVC : UIViewController{
     
     @IBOutlet weak var memberImageView: UIImageView!
@@ -17,6 +23,8 @@ class MemberBadgeDetailVC : UIViewController{
     @IBOutlet weak var detailViewHeight: NSLayoutConstraint!
     @IBOutlet weak var detailView: UIView!
     @IBOutlet weak var tableView: UITableView!
+    
+    var presentationContext : MemberBadgeDetailPresentationContext = .admin
     
     lazy var memberBadgeDetailVM : MemberBadgeDetailVM = {
        return MemberBadgeDetailVM(vc: self, tableView: tableView)
@@ -58,6 +66,7 @@ class MemberBadgeDetailVC : UIViewController{
     
     func configTableView(){
         memberBadgeDetailVM.configTable()
+        tableView.backgroundColor = .clear
     }
     
 }

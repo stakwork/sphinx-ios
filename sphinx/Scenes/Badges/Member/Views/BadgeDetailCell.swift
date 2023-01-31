@@ -12,7 +12,8 @@ class BadgeDetailCell: UITableViewCell {
 
     @IBOutlet weak var badgeImageView: UIImageView!
     @IBOutlet weak var badgeTitleLabel: UILabel!
-    
+    @IBOutlet weak var badgeStatsLabel: UILabel!
+    @IBOutlet weak var badgeStatusLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -28,6 +29,8 @@ class BadgeDetailCell: UITableViewCell {
     func configCell(badge:Badge){
         badgeTitleLabel.text = badge.name ?? ""
         badgeImageView.sd_setImage(with: URL(string: badge.icon_url ?? ""))
+        badgeStatsLabel.text = "3/10"
+        badgeStatusLabel.text = "PENDING"
     }
     
 }

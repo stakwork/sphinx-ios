@@ -49,36 +49,39 @@ class FeedsManager : NSObject {
         let status = ContentFeedStatus()
         status.feedID = contentFeed.feedID
         status.feedURL = contentFeed.feedURL?.absoluteString ?? ""
+        status.subscriptionStatus = contentFeed.isSubscribedToFromSearch
         
         if let valid_chat = contentFeed.chat {
             status.chatID = valid_chat.id
         }
         
-        let podFeed = PodcastFeed.convertFrom(contentFeed: contentFeed)
-        status.satsPerMinute = podFeed.satsPerMinute
-        status.subscriptionStatus = podFeed.isSubscribedToFromSearch
-        status.playerSpeed = podFeed.playerSpeed
-        status.itemID = podFeed.currentEpisodeId
-        
-        status.episodeStatus = [EpisodeStatus]()
-        
-        for episode in podFeed.episodes ?? [PodcastEpisode]() {
+        if contentFeed.isPodcast {
+            let podFeed = PodcastFeed.convertFrom(contentFeed: contentFeed)
+            status.satsPerMinute = podFeed.satsPerMinute
+            status.playerSpeed = podFeed.playerSpeed
+            status.itemID = podFeed.currentEpisodeId
             
-            let episodeData = EpisodeData()
-            episodeData.duration = episode.duration ?? 0
-            episodeData.current_time = episode.currentTime ?? 0
+            status.episodeStatus = [EpisodeStatus]()
             
-            let episodeStatus = EpisodeStatus()
-            episodeStatus.episodeID = episode.itemID
-            episodeStatus.episodeData = episodeData
-            
-            if (
-                episodeData.current_time > 0 ||
-                episodeData.duration > 0
-            ) {
-                status.episodeStatus?.append(episodeStatus)
+            for episode in podFeed.episodes ?? [PodcastEpisode]() {
+                
+                let episodeData = EpisodeData()
+                episodeData.duration = episode.duration ?? 0
+                episodeData.current_time = episode.currentTime ?? 0
+                
+                let episodeStatus = EpisodeStatus()
+                episodeStatus.episodeID = episode.itemID
+                episodeStatus.episodeData = episodeData
+                
+                if (
+                    episodeData.current_time > 0 ||
+                    episodeData.duration > 0
+                ) {
+                    status.episodeStatus?.append(episodeStatus)
+                }
             }
         }
+        
         return status
     }
     

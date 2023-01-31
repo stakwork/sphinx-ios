@@ -15,12 +15,13 @@ public enum MemberBadgeDetailCellType{
     case earnings
 }
 
-class MemberBadgeDetailTableViewCell: UITableViewCell {
+class MemberDetailTableViewCell: UITableViewCell {
 
     @IBOutlet weak var stackViewWidth: NSLayoutConstraint!
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var titleLabel: UILabel!
-    
+    var subviewLabels : [UILabel?] = []
+    var subviewImageViews : [UIImageView?] = []
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -52,6 +53,18 @@ class MemberBadgeDetailTableViewCell: UITableViewCell {
         configureStackView(type: type)
     }
     
+    override func prepareForReuse() {
+        for label in subviewLabels.compactMap({$0}){
+            label.text = ""
+            label.removeFromSuperview()
+        }
+        
+        for imageView in subviewImageViews.compactMap({$0}){
+            imageView.image = nil
+            imageView.removeFromSuperview()
+        }
+    }
+    
     func configureStackView(type:MemberBadgeDetailCellType){
         switch(type){
             case .contributions:
@@ -64,6 +77,7 @@ class MemberBadgeDetailTableViewCell: UITableViewCell {
                 satsLabelAttributedText.addAttribute(.font,value: UIFont(name: "Roboto", size: 15.0), range: NSRange(location: satsString.distance(from: String.Index(utf16Offset: 0, in: satsString), to: String.Index(utf16Offset: 0, in: satsString)), length: satsString.count))
                 satsLabel.attributedText = satsLabelAttributedText
                 satsLabel.textAlignment = .right
+                self.subviewLabels.append(satsLabel)
                 stackView.addSubview(satsLabel)
                 
                 
@@ -73,6 +87,7 @@ class MemberBadgeDetailTableViewCell: UITableViewCell {
                 rankLabel.font = UIFont(name: "Roboto", size: 15.0)
                 rankLabel.textAlignment = .right
                 rankLabel.textColor = UIColor.Sphinx.SecondaryText
+                self.subviewLabels.append(rankLabel)
                 stackView.addSubview(rankLabel)
                 
                 stackViewWidth.constant = rankLabel.frame.width + satsLabel.frame.width
@@ -88,6 +103,7 @@ class MemberBadgeDetailTableViewCell: UITableViewCell {
                 satsLabelAttributedText.addAttribute(.font,value: UIFont(name: "Roboto", size: 15.0), range: NSRange(location: satsString.distance(from: String.Index(utf16Offset: 0, in: satsString), to: String.Index(utf16Offset: 0, in: satsString)), length: satsString.count))
                 satsLabel.attributedText = satsLabelAttributedText
                 satsLabel.textAlignment = .right
+                self.subviewLabels.append(satsLabel)
                 stackView.addSubview(satsLabel)
                 
                 
@@ -97,6 +113,7 @@ class MemberBadgeDetailTableViewCell: UITableViewCell {
                 rankLabel.font = UIFont(name: "Roboto", size: 15.0)
                 rankLabel.textAlignment = .right
                 rankLabel.textColor = UIColor.Sphinx.SecondaryText
+                self.subviewLabels.append(rankLabel)
                 stackView.addSubview(rankLabel)
                 
                 
@@ -106,6 +123,7 @@ class MemberBadgeDetailTableViewCell: UITableViewCell {
             case .badges:
                 let imageUrls : [String] = [
                     "https://i.ibb.co/Ch8mwg0/badge-Example.png",
+                    "https://i.ibb.co/0Bs3Xsk/badge-example2.png",
                     "https://i.ibb.co/0Bs3Xsk/badge-example2.png"
                 ]
                 let imageWidth : CGFloat = 40.0
@@ -118,16 +136,17 @@ class MemberBadgeDetailTableViewCell: UITableViewCell {
                     image1.sd_setImage(with: URL(string: imageUrl))
                     image1.makeCircular()
                     stackView.addSubview(image1)
+                    self.subviewImageViews.append(image1)
                     
                     cursorValue += (imageWidth + imageSpacing)
                 }
             
                 if(imageUrls.count >= 3){
                     let bubble = UIView(frame: CGRect(x: cursorValue, y: 0.0, width: imageWidth, height: 40.0))
-                    bubble.backgroundColor = UIColor.Sphinx.MainBottomIcons
+                    bubble.backgroundColor = UIColor.Sphinx.SecondaryText
                     let bubbleLabel = UILabel(frame: bubble.bounds)
                     bubbleLabel.text = "+3"
-                    bubbleLabel.textColor = UIColor.Sphinx.BodyInverted
+                    bubbleLabel.textColor = UIColor.Sphinx.MainBottomIcons
                     bubbleLabel.textAlignment = .center
                     bubble.makeCircular()
                     bubble.addSubview(bubbleLabel)
@@ -147,6 +166,7 @@ class MemberBadgeDetailTableViewCell: UITableViewCell {
                     postsLabel.textAlignment = .right
                 stackView.addSubview(postsLabel)
                 stackViewWidth.constant = postsLabel.frame.width
+                self.subviewLabels.append(postsLabel)
                 self.layoutIfNeeded()
                 break
         }
@@ -155,7 +175,7 @@ class MemberBadgeDetailTableViewCell: UITableViewCell {
 }
 
 // MARK: - Static Properties
-extension MemberBadgeDetailTableViewCell {
+extension MemberDetailTableViewCell {
     static let reuseID = "MemberBadgeDetailTableViewCell"
     
     static let nib: UINib = {

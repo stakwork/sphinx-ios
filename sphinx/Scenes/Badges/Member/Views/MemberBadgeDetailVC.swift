@@ -70,4 +70,22 @@ class MemberBadgeDetailVC : UIViewController{
         tableView.isScrollEnabled = false
     }
     
+    func dismissBadgeDetails(){
+        detailView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.isScrollEnabled = true
+        detailViewHeight.constant = 480.0
+        UIView.animate(withDuration: 0.25, delay: 0.0, animations: {
+            self.detailView.layoutIfNeeded()
+        })
+    }
+    
+    func expandBadgeDetail(){
+        detailView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.isScrollEnabled = true
+        detailViewHeight.constant = self.view.frame.height * 0.9
+        UIView.animate(withDuration: 0.25, delay: 0.0, animations: {
+            self.detailView.layoutIfNeeded()
+        })
+    }
+    
 }

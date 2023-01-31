@@ -624,8 +624,10 @@
 		CE3133B22977747E00E91E3A /* BadgeAdminListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE3133AB2977747E00E91E3A /* BadgeAdminListTableViewCell.xib */; };
 		CE3133B32977747E00E91E3A /* BadgeAdminManagementListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3133AC2977747E00E91E3A /* BadgeAdminManagementListVC.swift */; };
 		CE51F350298870BF00ABBACB /* MemberBadgeDetailVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE51F34F298870BF00ABBACB /* MemberBadgeDetailVM.swift */; };
-		CE51F3562988743E00ABBACB /* MemberBadgeDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE51F3542988743E00ABBACB /* MemberBadgeDetailTableViewCell.swift */; };
+		CE51F3562988743E00ABBACB /* MemberDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE51F3542988743E00ABBACB /* MemberDetailTableViewCell.swift */; };
 		CE51F3572988743E00ABBACB /* MemberBadgeDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE51F3552988743E00ABBACB /* MemberBadgeDetailTableViewCell.xib */; };
+		CE51F35A2989B19800ABBACB /* BadgeDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE51F3582989B19800ABBACB /* BadgeDetailCell.swift */; };
+		CE51F35B2989B19800ABBACB /* BadgeDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE51F3592989B19800ABBACB /* BadgeDetailCell.xib */; };
 		CE6784602968B0E000342905 /* FeedsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE67845F2968B0E000342905 /* FeedsManager.swift */; };
 		CE91E59A29885175008BA6EA /* MemberBadgeDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE91E59929885175008BA6EA /* MemberBadgeDetailVC.swift */; };
 		CEBF0D032975B20B006C1F21 /* DiscoverTribesTagSelectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBF0D022975B20B006C1F21 /* DiscoverTribesTagSelectionVC.swift */; };
@@ -1527,8 +1529,10 @@
 		CE3133AB2977747E00E91E3A /* BadgeAdminListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BadgeAdminListTableViewCell.xib; sourceTree = "<group>"; };
 		CE3133AC2977747E00E91E3A /* BadgeAdminManagementListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeAdminManagementListVC.swift; sourceTree = "<group>"; };
 		CE51F34F298870BF00ABBACB /* MemberBadgeDetailVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberBadgeDetailVM.swift; sourceTree = "<group>"; };
-		CE51F3542988743E00ABBACB /* MemberBadgeDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberBadgeDetailTableViewCell.swift; sourceTree = "<group>"; };
+		CE51F3542988743E00ABBACB /* MemberDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberDetailTableViewCell.swift; sourceTree = "<group>"; };
 		CE51F3552988743E00ABBACB /* MemberBadgeDetailTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MemberBadgeDetailTableViewCell.xib; sourceTree = "<group>"; };
+		CE51F3582989B19800ABBACB /* BadgeDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeDetailCell.swift; sourceTree = "<group>"; };
+		CE51F3592989B19800ABBACB /* BadgeDetailCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BadgeDetailCell.xib; sourceTree = "<group>"; };
 		CE67845F2968B0E000342905 /* FeedsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedsManager.swift; sourceTree = "<group>"; };
 		CE91E59929885175008BA6EA /* MemberBadgeDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberBadgeDetailVC.swift; sourceTree = "<group>"; };
 		CEBF0D022975B20B006C1F21 /* DiscoverTribesTagSelectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTribesTagSelectionVC.swift; sourceTree = "<group>"; };
@@ -3628,7 +3632,9 @@
 			isa = PBXGroup;
 			children = (
 				CE91E59929885175008BA6EA /* MemberBadgeDetailVC.swift */,
-				CE51F3542988743E00ABBACB /* MemberBadgeDetailTableViewCell.swift */,
+				CE51F3542988743E00ABBACB /* MemberDetailTableViewCell.swift */,
+				CE51F3582989B19800ABBACB /* BadgeDetailCell.swift */,
+				CE51F3592989B19800ABBACB /* BadgeDetailCell.xib */,
 				CE51F3552988743E00ABBACB /* MemberBadgeDetailTableViewCell.xib */,
 			);
 			path = Views;
@@ -4141,6 +4147,7 @@
 				47904C0B24BF352300710E7A /* bamboo.caf in Resources */,
 				4797E80724B8FA6700D13270 /* Groups.storyboard in Resources */,
 				47AF0D2F254AFE4900C98398 /* ChatHeaderView.xib in Resources */,
+				CE51F35B2989B19800ABBACB /* BadgeDetailCell.xib in Resources */,
 				475BDD43232AD00D00C5BBD6 /* MaterialIcons-Regular.ttf in Resources */,
 				47904C0A24BF352300710E7A /* horn.caf in Resources */,
 				4780783423916D4900187906 /* PictureReceivedTableViewCell.xib in Resources */,
@@ -4591,7 +4598,7 @@
 				47FA440223748EB6005D8C63 /* SubscriptionFormViewControllerExtensions.swift in Sources */,
 				478DCF982343D24D009A03D6 /* SetProfileImageViewController.swift in Sources */,
 				F37D799B271E340900CAB15F /* YouTubeVideoFeedEpisodePlayerViewController.swift in Sources */,
-				CE51F3562988743E00ABBACB /* MemberBadgeDetailTableViewCell.swift in Sources */,
+				CE51F3562988743E00ABBACB /* MemberDetailTableViewCell.swift in Sources */,
 				47F258BC2539DA0100122A5A /* PodcastCommentSentTableViewCell.swift in Sources */,
 				47935FB3249EC3BE00B39ADB /* OrientationHandlerViewController.swift in Sources */,
 				47357A192729A16C00A49EEE /* NewsletterItem+DisplayUtils.swift in Sources */,
@@ -4801,6 +4808,7 @@
 				47018F9B27D65B8D00797E0B /* CustomDismissibleView.swift in Sources */,
 				4726F0A625791CF900E20EA9 /* TribeLinkPreviewView.swift in Sources */,
 				4734D3D4241AADD900D6957E /* PaymentTemplateCollectionViewCell.swift in Sources */,
+				CE51F35A2989B19800ABBACB /* BadgeDetailCell.swift in Sources */,
 				47FA18C8242D35F700469C8F /* CommonGroupContactsViewController.swift in Sources */,
 				47949BD324AA1044000D697B /* DeletedMessageReceivedTableViewCell.swift in Sources */,
 				47308E0B24FEE6E600FFAC6F /* SocketEngineSpec.swift in Sources */,

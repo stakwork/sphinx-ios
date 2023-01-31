@@ -485,13 +485,14 @@ extension DashboardRootViewController {
             }
             let contentProgressShare : Float = 0.15
             
-            self.feedsManager.restoreContentFeedStatus(
-                progressCallback: { contentProgress in
+            self.syncContentFeedStatus(
+                restoring: restoring,
+                progressCallback:  { contentProgress in
                     if (contentProgress >= 0) {
                         self.restoreProgressView.showRestoreProgressView(with: Int(contentProgressShare * Float(contentProgress)))
                     }
                 },
-                completionCallback: {                     
+                completionCallback: {
                     self.chatsListViewModel.syncMessages(
                         progressCallback: { progress in
                             if (restoring) {
@@ -512,7 +513,26 @@ extension DashboardRootViewController {
                 }
             )
         }
-            
+    }
+    
+    internal func syncContentFeedStatus(
+        restoring: Bool,
+        progressCallback: @escaping (Int) -> (),
+        completionCallback: @escaping () -> ()
+    ) {
+        if !restoring {
+            completionCallback()
+            return
+        }
+        
+        feedsManager.restoreContentFeedStatus(
+            progressCallback: { contentProgress in
+                progressCallback(contentProgress)
+            },
+            completionCallback: {
+                completionCallback()
+            }
+        )
     }
     
     

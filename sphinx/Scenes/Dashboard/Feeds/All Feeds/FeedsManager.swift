@@ -125,7 +125,10 @@ class FeedsManager : NSObject {
                 self.restoreFeedStatuses(
                     from: results,
                     progressCallback: progressCallback,
-                    completionCallback: completionCallback
+                    completionCallback: {
+                        self.refreshFeedUI()
+                        completionCallback()
+                    }
                 )
             },
             errorCallback: {
@@ -160,46 +163,55 @@ class FeedsManager : NSObject {
             }
         }
         
-        let dispatchSemaphore = DispatchSemaphore(value: 1)
+        DispatchQueue.global().async {
         
-        ///Update feeds present in remote data
-        for (index, contentFeedStatus) in remoteData.enumerated() {
+            let dispatchSemaphore = DispatchSemaphore(value: 1)
             
-            dispatchSemaphore.wait()
-            
-            let feedUrl = contentFeedStatus.feedURL
-            
-            var chat : Chat? = nil
-            if let validChatId = contentFeedStatus.chatID {
-                chat = Chat.getChatWith(id: validChatId, managedContext: bgContext)
-            }
-            
-            ///Get feed from local db or fetch it from tribes server endpoint
-            getContentFeedFor(
-                feedId: contentFeedStatus.feedID,
-                feedUrl: feedUrl,
-                chat: chat
-            ) { contentFeed in
+            ///Update feeds present in remote data
+            for (index, contentFeedStatus) in remoteData.enumerated() {
                 
-                ///restore status from the remote content status
-                if let contentFeed = contentFeed {
-                    self.restoreFeedStatus(
-                        remoteContentStatus: contentFeedStatus,
-                        localFeed: contentFeed
+                dispatchSemaphore.wait()
+                
+                let feedUrl = contentFeedStatus.feedURL
+                
+                var chat : Chat? = nil
+                if let validChatId = contentFeedStatus.chatID {
+                    chat = Chat.getChatWith(id: validChatId, managedContext: bgContext)
+                }
+                
+                ///Get feed from local db or fetch it from tribes server endpoint
+                self.getContentFeedFor(
+                    feedId: contentFeedStatus.feedID,
+                    feedUrl: feedUrl,
+                    chat: chat
+                ) { contentFeed in
+                    
+                    ///restore status from the remote content status
+                    if let contentFeed = contentFeed {
+                        self.restoreFeedStatus(
+                            remoteContentStatus: contentFeedStatus,
+                            localFeed: contentFeed
+                        )
+                    }
+                    
+                    progressCallback(
+                        self.getRestoreProgress(totalFeeds: remoteData.count, syncedFeeds: index + 1)
                     )
+                    
+                    if (index + 1 == remoteData.count) {
+                        completionCallback()
+                    }
+                    
+                    dispatchSemaphore.signal()
                 }
-                
-                progressCallback(
-                    self.getRestoreProgress(totalFeeds: remoteData.count, syncedFeeds: index + 1)
-                )
-                
-                if (index + 1 == remoteData.count) {
-                    completionCallback()
-                }
-                
-                dispatchSemaphore.signal()
             }
         }
+    }
+    
+    func refreshFeedUI() {
+        NotificationCenter.default.post(name: .refreshPodcastUI, object: nil)
+        NotificationCenter.default.post(name: .refreshVideoUI, object: nil)
+        NotificationCenter.default.post(name: .refreshNewsletterUI, object: nil)
     }
     
     func getContentFeedFor(

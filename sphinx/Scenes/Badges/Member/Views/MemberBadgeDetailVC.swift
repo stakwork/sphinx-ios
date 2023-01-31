@@ -67,6 +67,7 @@ class MemberBadgeDetailVC : UIViewController{
     func configTableView(){
         memberBadgeDetailVM.configTable()
         tableView.backgroundColor = .clear
+        tableView.isScrollEnabled = false
     }
     
 }

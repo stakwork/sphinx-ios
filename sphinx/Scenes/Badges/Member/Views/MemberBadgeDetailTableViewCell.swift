@@ -106,8 +106,7 @@ class MemberBadgeDetailTableViewCell: UITableViewCell {
             case .badges:
                 let imageUrls : [String] = [
                     "https://i.ibb.co/Ch8mwg0/badge-Example.png",
-                    "https://i.ibb.co/0Bs3Xsk/badge-example2.png",
-                    "https://i.ibb.co/FJXZfSf/example3.png"
+                    "https://i.ibb.co/0Bs3Xsk/badge-example2.png"
                 ]
                 let imageWidth : CGFloat = 40.0
                 let imageSpacing : CGFloat = 8.0

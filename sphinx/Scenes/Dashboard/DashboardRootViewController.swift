@@ -480,14 +480,19 @@ extension DashboardRootViewController {
             guard let self = self else { return }
             
             if restoring {
+                self.chatsListViewModel.askForNotificationPermissions()
+                
                 self.chatsListViewModel.updateContactsAndChats()
                 self.updateCurrentViewControllerData()
             }
-            let contentProgressShare : Float = 0.15
+            
+            var contentProgressShare : Float = 0.0
             
             self.syncContentFeedStatus(
                 restoring: restoring,
                 progressCallback:  { contentProgress in
+                    contentProgressShare = 0.1
+                    
                     if (contentProgress >= 0) {
                         self.restoreProgressView.showRestoreProgressView(with: Int(contentProgressShare * Float(contentProgress)))
                     }
@@ -498,6 +503,7 @@ extension DashboardRootViewController {
                             if (restoring) {
                                 self.isLoading = false
                                 let messagesProgress : Int = Int(Float(progress) * (1.0 - contentProgressShare))
+                                
                                 if (progress >= 0) {
                                     self.restoreProgressView.showRestoreProgressView(with: messagesProgress + Int(contentProgressShare * 100))
                                 } else {

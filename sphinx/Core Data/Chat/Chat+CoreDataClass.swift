@@ -275,7 +275,7 @@ public class Chat: NSManagedObject {
         return Chat.insertChat(chat: chat)
     }
     
-    static func getChatWith(id: Int, managedContext:NSManagedObjectContext? = nil) -> Chat? {
+    static func getChatWith(id: Int, managedContext: NSManagedObjectContext? = nil) -> Chat? {
         let predicate = NSPredicate(format: "id == %d", id)
         let sortDescriptors = [NSSortDescriptor(key: "id", ascending: false)]
         let chat:Chat? = CoreDataManager.sharedManager.getObjectOfTypeWith(predicate: predicate, sortDescriptors: sortDescriptors, entityName: "Chat", managedContext:managedContext)

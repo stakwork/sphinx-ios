@@ -42,49 +42,6 @@ class FeedsManager : NSObject {
         }
     }
     
-    func getContentFeedStatus(
-        for contentFeed: ContentFeed
-    ) -> ContentFeedStatus {
-        
-        let status = ContentFeedStatus()
-        status.feedID = contentFeed.feedID
-        status.feedURL = contentFeed.feedURL?.absoluteString ?? ""
-        status.subscriptionStatus = contentFeed.isSubscribedToFromSearch
-        
-        if let valid_chat = contentFeed.chat {
-            status.chatID = valid_chat.id
-        }
-        
-        if contentFeed.isPodcast {
-            let podFeed = PodcastFeed.convertFrom(contentFeed: contentFeed)
-            status.satsPerMinute = podFeed.satsPerMinute
-            status.playerSpeed = podFeed.playerSpeed
-            status.itemID = podFeed.currentEpisodeId
-            
-            status.episodeStatus = [EpisodeStatus]()
-            
-            for episode in podFeed.episodes ?? [PodcastEpisode]() {
-                
-                let episodeData = EpisodeData()
-                episodeData.duration = episode.duration ?? 0
-                episodeData.current_time = episode.currentTime ?? 0
-                
-                let episodeStatus = EpisodeStatus()
-                episodeStatus.episodeID = episode.itemID
-                episodeStatus.episodeData = episodeData
-                
-                if (
-                    episodeData.current_time > 0 ||
-                    episodeData.duration > 0
-                ) {
-                    status.episodeStatus?.append(episodeStatus)
-                }
-            }
-        }
-        
-        return status
-    }
-    
     func saveContentFeedStatus(
         for feedId: String
     ){
@@ -105,6 +62,10 @@ class FeedsManager : NSObject {
     func saveContentFeedStatus(){
         let followedFeeds: [ContentFeed] = FeedsManager.fetchFeeds()
         
+        if followedFeeds.isEmpty {
+            return
+        }
+        
         let contentFeedStatuses: [ContentFeedStatus] = followedFeeds.map({
             return self.getContentFeedStatus(for: $0)
         })
@@ -117,6 +78,46 @@ class FeedsManager : NSObject {
             callback: {},
             errorCallback: {}
         )
+    }
+    
+    func getContentFeedStatus(
+        for contentFeed: ContentFeed
+    ) -> ContentFeedStatus {
+        
+        let status = ContentFeedStatus()
+        status.feedID = contentFeed.feedID
+        status.feedURL = contentFeed.feedURL?.absoluteString ?? ""
+        status.subscriptionStatus = contentFeed.isSubscribedToFromSearch
+        status.chatID = contentFeed.chat?.id
+        
+        if contentFeed.isPodcast {
+            let podFeed = PodcastFeed.convertFrom(contentFeed: contentFeed)
+            status.satsPerMinute = podFeed.satsPerMinute
+            status.playerSpeed = podFeed.playerSpeed
+            status.itemID = podFeed.currentEpisodeId
+
+            status.episodeStatus = [EpisodeStatus]()
+
+            for episode in podFeed.episodes ?? [PodcastEpisode]() {
+
+                let episodeData = EpisodeData()
+                episodeData.duration = episode.duration ?? 0
+                episodeData.current_time = episode.currentTime ?? 0
+
+                let episodeStatus = EpisodeStatus()
+                episodeStatus.episodeID = episode.itemID
+                episodeStatus.episodeData = episodeData
+
+                if (
+                    episodeData.current_time > 0 ||
+                    episodeData.duration > 0
+                ) {
+                    status.episodeStatus.append(episodeStatus)
+                }
+            }
+        }
+        
+        return status
     }
     
     func restoreContentFeedStatus(
@@ -192,7 +193,8 @@ class FeedsManager : NSObject {
                 self.getContentFeedFor(
                     feedId: contentFeedStatus.feedID,
                     feedUrl: feedUrl,
-                    chat: chat
+                    chat: chat,
+                    context: bgContext
                 ) { contentFeed in
                     
                     ///restore status from the remote content status
@@ -228,15 +230,14 @@ class FeedsManager : NSObject {
         feedId: String,
         feedUrl: String,
         chat: Chat?,
+        context: NSManagedObjectContext,
         completion: @escaping (ContentFeed?) -> ()
     ) {
-        if let existingContentFeed = ContentFeed.getFeedWith(feedId: feedId) {
+        if let existingContentFeed = ContentFeed.getFeedWith(feedId: feedId, managedContext: context) {
             existingContentFeed.chat = chat
             completion(existingContentFeed)
         } else {
-            let bgContext = CoreDataManager.sharedManager.getBackgroundContext()
-            
-            ContentFeed.fetchContentFeed(at: feedUrl, chat: chat, persistingIn: bgContext, then: { result in
+            ContentFeed.fetchContentFeed(at: feedUrl, chat: chat, persistingIn: context, then: { result in
                 if case .success(let contentFeed) = result {
                     completion(contentFeed)
                     return
@@ -252,6 +253,10 @@ class FeedsManager : NSObject {
     ) {
         localFeed.isSubscribedToFromSearch = remoteContentStatus.subscriptionStatus
         
+        if !localFeed.isPodcast {
+            return
+        }
+        
         let podcastFeed = PodcastFeed.convertFrom(contentFeed: localFeed)
         podcastFeed.satsPerMinute = remoteContentStatus.satsPerMinute ?? 0
         
@@ -260,13 +265,11 @@ class FeedsManager : NSObject {
             podcastFeed.currentEpisodeId = remoteContentStatus.itemID ?? ""
         }
         
-        if let episodeStatuses = remoteContentStatus.episodeStatus {
-             for episodeStatus in episodeStatuses {
-                 restoreEpisodeStatus(
-                    on: podcastFeed,
-                    with: episodeStatus
-                 )
-             }
+        for episodeStatus in remoteContentStatus.episodeStatus {
+            restoreEpisodeStatus(
+               on: podcastFeed,
+               with: episodeStatus
+            )
         }
     }
     

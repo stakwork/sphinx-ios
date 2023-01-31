@@ -18,9 +18,9 @@ extension ContentFeed {
         return feeds
     }
     
-    public static func getFeedWith(feedId: String) -> ContentFeed? {
+    public static func getFeedWith(feedId: String, managedContext: NSManagedObjectContext? = nil) -> ContentFeed? {
         let predicate = Predicates.matching(feedID: feedId)
-        let feed: ContentFeed? = CoreDataManager.sharedManager.getObjectOfTypeWith(predicate: predicate, sortDescriptors: [], entityName: "ContentFeed")
+        let feed: ContentFeed? = CoreDataManager.sharedManager.getObjectOfTypeWith(predicate: predicate, sortDescriptors: [], entityName: "ContentFeed", managedContext: managedContext)
         return feed
     }
     

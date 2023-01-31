@@ -45,7 +45,7 @@ class ContentFeedStatus: Mappable {
     var itemID: String?
     var satsPerMinute: Int?
     var playerSpeed: Float?
-    var episodeStatus: [EpisodeStatus]?
+    var episodeStatus: [EpisodeStatus] = []
     
     
     required convenience init(map: Map) {

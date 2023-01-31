@@ -197,6 +197,8 @@
 "restore.invalid-code.relay-qr-code" = "This looks like a connection code from the Sphinx Relay app. To restore an existing account, you need to enter your backup string.";
 "resume-restoring" = "Resuming Restore...";
 "restoring-progress" = "Restoring:";
+"restoring-content" = "Restoring content:";
+"restoring-messages" = "Restoring messages:";
 
 //SIGNUP NEW USER
 "signup.signup-options.connection-code-button" = "I Have a Connection Code";

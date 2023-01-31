@@ -494,7 +494,10 @@ extension DashboardRootViewController {
                     contentProgressShare = 0.1
                     
                     if (contentProgress >= 0) {
-                        self.restoreProgressView.showRestoreProgressView(with: Int(contentProgressShare * Float(contentProgress)))
+                        self.restoreProgressView.showRestoreProgressView(
+                            with: Int(contentProgressShare * Float(contentProgress)),
+                            messagesStartProgress: Int(contentProgressShare * Float(100))
+                        )
                     }
                 },
                 completionCallback: {
@@ -505,7 +508,10 @@ extension DashboardRootViewController {
                                 let messagesProgress : Int = Int(Float(progress) * (1.0 - contentProgressShare))
                                 
                                 if (progress >= 0) {
-                                    self.restoreProgressView.showRestoreProgressView(with: messagesProgress + Int(contentProgressShare * 100))
+                                    self.restoreProgressView.showRestoreProgressView(
+                                        with: messagesProgress + Int(contentProgressShare * 100),
+                                        messagesStartProgress: Int(contentProgressShare * Float(100))
+                                    )
                                 } else {
                                     self.newBubbleHelper.showLoadingWheel(text: "fetching.old.messages".localized)
                                 }

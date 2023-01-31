@@ -45,6 +45,7 @@ class FeedsManager : NSObject {
     func getContentFeedStatus(
         for contentFeed: ContentFeed
     ) -> ContentFeedStatus {
+        
         let status = ContentFeedStatus()
         status.feedID = contentFeed.feedID
         status.feedURL = contentFeed.feedURL?.absoluteString ?? ""
@@ -63,15 +64,18 @@ class FeedsManager : NSObject {
         
         for episode in podFeed.episodes ?? [PodcastEpisode]() {
             
-            let episodeStatus = EpisodeStatus()
             let episodeData = EpisodeData()
-            
-            episodeStatus.episodeID = episode.itemID
             episodeData.duration = episode.duration ?? 0
             episodeData.current_time = episode.currentTime ?? 0
+            
+            let episodeStatus = EpisodeStatus()
+            episodeStatus.episodeID = episode.itemID
             episodeStatus.episodeData = episodeData
             
-            if (episodeData.current_time != 0) {
+            if (
+                episodeData.current_time > 0 ||
+                episodeData.duration > 0
+            ) {
                 status.episodeStatus?.append(episodeStatus)
             }
         }

@@ -72,7 +72,9 @@ class PodcastSatsView: UIView {
                 sliderValueChanged(slider)
                 break
             case .ended:
-                // Should sync podcast Status
+                if let contentFeed = chat.contentFeed {
+                    FeedsManager.sharedInstance.saveContentFeedStatus(for: contentFeed.feedID)
+                }
                 break
             default:
                 break

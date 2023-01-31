@@ -66,6 +66,9 @@ extension PodcastPlayerController {
         
         paymentsTimer?.invalidate()
         paymentsTimer = nil
+        
+        syncPodcastTimer?.invalidate()
+        syncPodcastTimer = nil
     }
     
     func configureTimer() {
@@ -88,6 +91,21 @@ extension PodcastPlayerController {
             userInfo: nil,
             repeats: true
         )
+        
+        syncPodcastTimer?.invalidate()
+        syncPodcastTimer = Timer.scheduledTimer(
+            timeInterval: 15,
+            target: self,
+            selector: #selector(shouldSyncPodcast),
+            userInfo: nil,
+            repeats: true
+        )
+    }
+    
+    @objc func shouldSyncPodcast() {
+        if let feedId = podcast?.feedID {
+            FeedsManager.sharedInstance.saveContentFeedStatus(for: feedId)
+        }
     }
     
     @objc func updateCurrentTime() {
@@ -111,10 +129,7 @@ extension PodcastPlayerController {
             duration: duration
         )
 
-        for d in delegates.values {
-            d.playingState(podcastData)
-        }
-
+        runPlayingStateUpdate()
         configurePlayingInfoCenter()
 
         if currentTime >= duration {
@@ -137,9 +152,7 @@ extension PodcastPlayerController {
             currentTime: 0
         )
         
-        for d in delegates.values {
-            d.endedState(podcastData)
-        }
+        runEndedStateUpdate()
     }
 }
 

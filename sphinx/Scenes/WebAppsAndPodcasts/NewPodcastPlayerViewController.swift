@@ -200,7 +200,9 @@ extension NewPodcastPlayerViewController : PodcastPlayerViewDelegate {
     }
     
     func shouldSyncPodcast() {
-        // Should sync podcast status
+        if let podcast = podcast {
+            FeedsManager.sharedInstance.saveContentFeedStatus(for: podcast.feedID)
+        }
     }
     
     func shouldShowSpeedPicker() {

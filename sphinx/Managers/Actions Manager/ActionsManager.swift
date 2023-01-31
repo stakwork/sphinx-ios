@@ -393,7 +393,7 @@ class ActionsManager {
     func syncActionsInBackground(
         completion: (() -> ())? = nil
     ) {
-        let dispatchQueue = DispatchQueue.global()
+        let dispatchQueue = DispatchQueue.global(qos: .userInitiated)
         dispatchQueue.async {
             self.syncActions()
         }

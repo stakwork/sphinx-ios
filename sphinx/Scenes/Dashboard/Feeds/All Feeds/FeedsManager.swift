@@ -35,8 +35,8 @@ class FeedsManager : NSObject {
         }
     }
     
-    func saveContentFeedInBackground() {
-        let dispatchQueue = DispatchQueue.global()
+    func saveContentFeedStatusInBackground() {
+        let dispatchQueue = DispatchQueue.global(qos: .userInitiated)
         dispatchQueue.async {
             self.saveContentFeedStatus()
         }
@@ -150,6 +150,12 @@ class FeedsManager : NSObject {
         progressCallback: @escaping (Int) -> (),
         completionCallback: @escaping () -> ()
     ){
+        
+        if remoteData.isEmpty {
+            completionCallback()
+            return
+        }
+        
         let bgContext = CoreDataManager.sharedManager.getBackgroundContext()
         
         let localData = FeedsManager.fetchFeeds()
@@ -202,6 +208,7 @@ class FeedsManager : NSObject {
                     )
                     
                     if (index + 1 == remoteData.count) {
+                        CoreDataManager.sharedManager.save(context: bgContext)
                         completionCallback()
                     }
                     

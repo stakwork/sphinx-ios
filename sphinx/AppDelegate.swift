@@ -172,8 +172,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setBadge(application: application)
         
         podcastPlayerController.finishAndSaveContentConsumed()
+        
         actionsManager.syncActionsInBackground()
-        feedsManager.saveContentFeedInBackground()
+        feedsManager.saveContentFeedStatusInBackground()
         
         CoreDataManager.sharedManager.saveContext()
         
@@ -194,7 +195,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         feedsManager.restoreContentFeedStatus(
             progressCallback: {_ in},
             completionCallback: {
-                self.feedsManager.saveContentFeedInBackground()
+                self.feedsManager.saveContentFeedStatusInBackground()
             }
         )
         

@@ -104,34 +104,39 @@ class MemberBadgeDetailTableViewCell: UITableViewCell {
                 self.layoutIfNeeded()
                 break
             case .badges:
+                let imageUrls : [String] = [
+                    "https://i.ibb.co/Ch8mwg0/badge-Example.png",
+                    "https://i.ibb.co/0Bs3Xsk/badge-example2.png",
+                    "https://i.ibb.co/FJXZfSf/example3.png"
+                ]
+                let imageWidth : CGFloat = 40.0
+                let imageSpacing : CGFloat = 8.0
+                var cursorValue : CGFloat = 0.0
                 stackView.translatesAutoresizingMaskIntoConstraints = false
-                let image1 = UIImageView(frame: CGRect(x: 0.0, y: 0.0, width: 40.0, height: 40.0))
-                image1.sd_setImage(with: URL(string: "https://i.ibb.co/Ch8mwg0/badge-Example.png"))
-                image1.makeCircular()
-                stackView.addSubview(image1)
-                stackViewWidth.constant = image1.frame.width
+            
+                for imageUrl in imageUrls{
+                    let image1 = UIImageView(frame: CGRect(x: cursorValue, y: 0.0, width: imageWidth, height: 40.0))
+                    image1.sd_setImage(with: URL(string: imageUrl))
+                    image1.makeCircular()
+                    stackView.addSubview(image1)
+                    
+                    cursorValue += (imageWidth + imageSpacing)
+                }
+            
+                if(imageUrls.count >= 3){
+                    let bubble = UIView(frame: CGRect(x: cursorValue, y: 0.0, width: imageWidth, height: 40.0))
+                    bubble.backgroundColor = UIColor.Sphinx.MainBottomIcons
+                    let bubbleLabel = UILabel(frame: bubble.bounds)
+                    bubbleLabel.text = "+3"
+                    bubbleLabel.textColor = UIColor.Sphinx.BodyInverted
+                    bubbleLabel.textAlignment = .center
+                    bubble.makeCircular()
+                    bubble.addSubview(bubbleLabel)
+                    stackView.addSubview(bubble)
+                    cursorValue += (imageWidth + imageSpacing)
+                }
                 
-                let image2 = UIImageView(frame: CGRect(x: image1.frame.width, y: 0.0, width: 40.0, height: 40.0))
-                image2.sd_setImage(with: URL(string: "https://i.ibb.co/0Bs3Xsk/badge-example2.png"))
-                image2.makeCircular()
-                stackView.addSubview(image2)
-            
-                let image3 = UIImageView(frame: CGRect(x: image1.frame.width + image2.frame.width, y: 0.0, width: 40.0, height: 40.0))
-                image3.sd_setImage(with: URL(string: "https://i.ibb.co/FJXZfSf/example3.png"))
-                image3.makeCircular()
-                stackView.addSubview(image3)
-            
-                let bubble = UIView(frame: CGRect(x: image1.frame.width + image2.frame.width + image3.frame.width, y: 0.0, width: 40.0, height: 40.0))
-                bubble.backgroundColor = UIColor.Sphinx.MainBottomIcons
-                let bubbleLabel = UILabel(frame: bubble.bounds)
-                bubbleLabel.text = "+3"
-                bubbleLabel.textColor = UIColor.Sphinx.BodyInverted
-                bubbleLabel.textAlignment = .center
-                bubble.makeCircular()
-                bubble.addSubview(bubbleLabel)
-                stackView.addSubview(bubble)
-            
-            stackViewWidth.constant = image3.frame.width + image2.frame.width + image1.frame.width + bubble.frame.width
+                stackViewWidth.constant = cursorValue
                 self.layoutIfNeeded()
                 break
             case .posts:

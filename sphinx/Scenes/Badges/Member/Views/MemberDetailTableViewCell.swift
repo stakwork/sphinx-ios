@@ -21,6 +21,8 @@ class MemberDetailTableViewCell: UITableViewCell {
     @IBOutlet weak var stackViewWidth: NSLayoutConstraint!
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var titleLabel: UILabel!
+    
+    let badgeLimit = 3
     var subviewLabels : [UILabel?] = []
     var subviewImageViews : [UIImageView?] = []
     
@@ -35,7 +37,7 @@ class MemberDetailTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func configureCell(type:MemberBadgeDetailCellType){
+    func configureCell(type:MemberBadgeDetailCellType,badges:[Badge]){
         switch(type){
         case .badges:
             titleLabel.text = "Badges:"
@@ -53,7 +55,7 @@ class MemberDetailTableViewCell: UITableViewCell {
             break
         }
         
-        configureStackView(type: type)
+        configureStackView(type: type,badges: badges)
     }
     
     override func prepareForReuse() {
@@ -68,7 +70,7 @@ class MemberDetailTableViewCell: UITableViewCell {
         }
     }
     
-    func configureStackView(type:MemberBadgeDetailCellType){
+    func configureStackView(type:MemberBadgeDetailCellType,badges:[Badge]){
         switch(type){
             case .contributions:
                 let satsLabel = UILabel(frame: CGRect(x: 0.0, y: 0.0, width: 97.0, height: stackView.frame.height))
@@ -124,17 +126,17 @@ class MemberDetailTableViewCell: UITableViewCell {
                 self.layoutIfNeeded()
                 break
             case .badges:
-                let imageUrls : [String] = [
-                    "https://i.ibb.co/Ch8mwg0/badge-Example.png",
-                    "https://i.ibb.co/0Bs3Xsk/badge-example2.png",
-                    "https://i.ibb.co/0Bs3Xsk/badge-example2.png"
-                ]
+                let imageUrls : [String] = badges.compactMap({$0.icon_url})
+                var clippedUrls = [String]()
+                for i in 0..<min(badgeLimit, imageUrls.count){
+                    clippedUrls.append(imageUrls[i])
+                }
                 let imageWidth : CGFloat = 40.0
                 let imageSpacing : CGFloat = 8.0
                 var cursorValue : CGFloat = 0.0
                 stackView.translatesAutoresizingMaskIntoConstraints = false
             
-                for imageUrl in imageUrls{
+                for imageUrl in clippedUrls{
                     let image1 = UIImageView(frame: CGRect(x: cursorValue, y: 0.0, width: imageWidth, height: 40.0))
                     image1.sd_setImage(with: URL(string: imageUrl))
                     image1.makeCircular()
@@ -148,7 +150,7 @@ class MemberDetailTableViewCell: UITableViewCell {
                     let bubble = UIView(frame: CGRect(x: cursorValue, y: 0.0, width: imageWidth, height: 40.0))
                     bubble.backgroundColor = UIColor.Sphinx.SecondaryText
                     let bubbleLabel = UILabel(frame: bubble.bounds)
-                    bubbleLabel.text = "+3"
+                    bubbleLabel.text = "+\(badges.count - badgeLimit)"
                     bubbleLabel.textColor = UIColor.Sphinx.MainBottomIcons
                     bubbleLabel.textAlignment = .center
                     bubble.makeCircular()

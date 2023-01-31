@@ -25,11 +25,14 @@ class MemberBadgeDetailVM : NSObject {
         badge.name = "Early Adopter"
         badge.icon_url = "https://i.ibb.co/Ch8mwg0/badge-Example.png"
         let badge2 = Badge()
-        badge2.name = "Early Adopter2"
-        badge2.icon_url = "https://i.ibb.co/Ch8mwg0/badge-Example.png"
+        badge2.name = "Whale!"
+        badge2.icon_url = "https://i.ibb.co/0Bs3Xsk/badge-example2.png"
         self.badges = [
             badge,
-            badge2
+            badge2,
+            badge,
+            badge2,
+            badge 
         ]
     }
     
@@ -45,23 +48,15 @@ class MemberBadgeDetailVM : NSObject {
     
     func getCellTypeOrder() -> [MemberBadgeDetailCellType] {
         var result = [MemberBadgeDetailCellType]()
-        switch(presentationContext){
-        case .member:
-            result = [
-                .posts,
-                .contributions,
-                .earnings
-            ]
-            break
-        case .admin:
-            result = [
-                .badges,
-                .posts,
-                .contributions,
-                .earnings
-            ]
-            break
+        result = [
+            .posts,
+            .contributions,
+            .earnings
+        ]
+        if(badges.count > 0){
+            result.insert(.badges, at: 0)
         }
+        
         if(badgeDetailExpansionState == true){
             for badge in badges{
                 result.insert(.details, at: 1)
@@ -97,7 +92,7 @@ extension MemberBadgeDetailVM : UITableViewDelegate,UITableViewDataSource{
                 withIdentifier: MemberDetailTableViewCell.reuseID,
                 for: indexPath
             ) as! MemberDetailTableViewCell
-            cell.configureCell(type: getCellTypeOrder()[indexPath.row])
+            cell.configureCell(type: getCellTypeOrder()[indexPath.row], badges: badges)
             
             return cell
         }
@@ -105,7 +100,7 @@ extension MemberBadgeDetailVM : UITableViewDelegate,UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if(indexPath.row == 0){
+        if(getCellTypeOrder()[indexPath.row] == .badges){
             (badgeDetailExpansionState == false) ? vc.expandBadgeDetail() : vc.dismissBadgeDetails()
             badgeDetailExpansionState = !badgeDetailExpansionState
             tableView.reloadData()

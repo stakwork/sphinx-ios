@@ -246,7 +246,7 @@ extension DashboardFeedsContainerViewController {
     }
     
     private func synActionsAndRefreshRecommendations() {
-        actionsManager.syncActions() {
+        actionsManager.syncActionsInBackground() {
             
             if (PodcastPlayerController.sharedInstance.isPlayingRecommendations()) {
                 return

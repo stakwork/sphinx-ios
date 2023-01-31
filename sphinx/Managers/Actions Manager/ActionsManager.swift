@@ -390,7 +390,9 @@ class ActionsManager {
         }
     }
     
-    func syncActionsInBackground() {
+    func syncActionsInBackground(
+        completion: (() -> ())? = nil
+    ) {
         let dispatchQueue = DispatchQueue.global()
         dispatchQueue.async {
             self.syncActions()
@@ -415,21 +417,17 @@ class ActionsManager {
         
         let chunkedActions = actions.chunked(into: 50)
         
-        let dispatchGroup = DispatchGroup()
         let dispatchSemaphore = DispatchSemaphore(value: 1)
         
         for chunk in chunkedActions {
             
-            dispatchGroup.enter()
             dispatchSemaphore.wait()
             
             API.sharedInstance.syncActions(actions: chunk, callback: { success in
                 if (success) {
                     self.updateSyncedActions(objectIds: chunk.map { $0.objectID })
                 }
-                
                 dispatchSemaphore.signal()
-                dispatchGroup.leave()
             })
         }
         

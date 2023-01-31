@@ -14,11 +14,23 @@ class MemberBadgeDetailVM : NSObject {
     var tableView: UITableView
     var presentationContext : MemberBadgeDetailPresentationContext
     var badgeDetailExpansionState : Bool = false
+    var badges : [Badge] = []
     
     init(vc: MemberBadgeDetailVC, tableView: UITableView) {
         self.vc = vc
         self.tableView = tableView
         self.presentationContext = vc.presentationContext
+        //TODO: replace with API call
+        let badge = Badge()
+        badge.name = "Early Adopter"
+        badge.icon_url = "https://i.ibb.co/Ch8mwg0/badge-Example.png"
+        let badge2 = Badge()
+        badge2.name = "Early Adopter2"
+        badge2.icon_url = "https://i.ibb.co/Ch8mwg0/badge-Example.png"
+        self.badges = [
+            badge,
+            badge2
+        ]
     }
     
     func configTable(){
@@ -32,16 +44,17 @@ class MemberBadgeDetailVM : NSObject {
     }
     
     func getCellTypeOrder() -> [MemberBadgeDetailCellType] {
+        var result = [MemberBadgeDetailCellType]()
         switch(presentationContext){
         case .member:
-            return [
+            result = [
                 .posts,
                 .contributions,
                 .earnings
             ]
             break
         case .admin:
-            return [
+            result = [
                 .badges,
                 .posts,
                 .contributions,
@@ -49,6 +62,13 @@ class MemberBadgeDetailVM : NSObject {
             ]
             break
         }
+        if(badgeDetailExpansionState == true){
+            for badge in badges{
+                result.insert(.details, at: 1)
+            }
+        }
+        
+        return result
     }
     
 }
@@ -61,13 +81,14 @@ extension MemberBadgeDetailVM : UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if(indexPath.row == 1 && badgeDetailExpansionState == true){
+        let cellTypes = getCellTypeOrder()
+        let cellType = cellTypes[indexPath.row]
+        if(cellType == .details){
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: BadgeDetailCell.reuseID,
                 for: indexPath
             ) as! BadgeDetailCell
-            //cell.configureCell(type: getCellTypeOrder()[indexPath.row])
-            cell.configCell()
+            cell.configCell(badge: badges[indexPath.row - 1])
             
             return cell
         }
@@ -86,8 +107,8 @@ extension MemberBadgeDetailVM : UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if(indexPath.row == 0){
             (badgeDetailExpansionState == false) ? vc.expandBadgeDetail() : vc.dismissBadgeDetails()
-            tableView.reloadData()
             badgeDetailExpansionState = !badgeDetailExpansionState
+            tableView.reloadData()
         }
     }
     

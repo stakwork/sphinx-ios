@@ -11,6 +11,7 @@ import UIKit
 public enum MemberBadgeDetailCellType{
     case badges
     case posts
+    case details
     case contributions
     case earnings
 }
@@ -47,6 +48,8 @@ class MemberDetailTableViewCell: UITableViewCell {
             break
         case .posts:
             titleLabel.text = "Posts:"
+            break
+        default:
             break
         }
         
@@ -168,6 +171,9 @@ class MemberDetailTableViewCell: UITableViewCell {
                 stackViewWidth.constant = postsLabel.frame.width
                 self.subviewLabels.append(postsLabel)
                 self.layoutIfNeeded()
+                break
+            default:
+            
                 break
         }
     }

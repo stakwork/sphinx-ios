@@ -25,9 +25,9 @@ class BadgeDetailCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func configCell(){
-        badgeTitleLabel.text = "Early Adopter"
-        badgeImageView.sd_setImage(with: URL(string: "https://i.ibb.co/Ch8mwg0/badge-Example.png"))
+    func configCell(badge:Badge){
+        badgeTitleLabel.text = badge.name ?? ""
+        badgeImageView.sd_setImage(with: URL(string: badge.icon_url ?? ""))
     }
     
 }

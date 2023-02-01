@@ -86,7 +86,7 @@ extension PodcastFeedCollectionViewController {
 
 
     enum DataSourceItem: Hashable, Equatable {
-        case listenNowEpisode(PodcastEpisode)
+        case listenNowEpisode(PodcastEpisode, Int)
         case subscribedPodcastFeed(PodcastFeed)
         
         static func == (lhs: DataSourceItem, rhs: DataSourceItem) -> Bool {
@@ -104,9 +104,9 @@ extension PodcastFeedCollectionViewController {
                let rhsEpisode = rhs.episodeEntity {
                     
                 return
-                    lhsEpisode.itemID == rhsEpisode.itemID &&
-                    lhsEpisode.title == rhsEpisode.title &&
-                    lhsEpisode.currentTime == rhsEpisode.currentTime
+                    lhsEpisode.0.itemID == rhsEpisode.0.itemID &&
+                    lhsEpisode.0.title == rhsEpisode.0.title &&
+                    lhsEpisode.1 == rhsEpisode.1
             }
 
             return false
@@ -118,7 +118,7 @@ extension PodcastFeedCollectionViewController {
             }
             
             if let episode = self.episodeEntity {
-                hasher.combine(episode.itemID)
+                hasher.combine(episode.0.itemID)
             }
         }  
     }
@@ -335,7 +335,7 @@ extension PodcastFeedCollectionViewController {
 
         snapshot.appendItems(
             followedPodcastEpisode.map { episode in
-                DataSourceItem.listenNowEpisode(episode)
+                DataSourceItem.listenNowEpisode(episode, episode.currentTime ?? 0)
             },
             toSection: .latestPodcastEpisodes
         )
@@ -360,12 +360,7 @@ extension PodcastFeedCollectionViewController {
         }
 
         let snapshot = makeSnapshotForCurrentState()
-        
-//        if #available(iOS 15.0, *) {
-//            dataSource.applySnapshotUsingReloadData(snapshot, completion: nil)
-//        } else {
-            dataSource.apply(snapshot, animatingDifferences: false, completion: nil)
-//        }
+        dataSource.apply(snapshot, animatingDifferences: false, completion: nil)
     }
 
 
@@ -399,7 +394,7 @@ extension PodcastFeedCollectionViewController {
             }
 
             switch dataSourceItem {
-            case .listenNowEpisode(let podcastEpisode):
+            case .listenNowEpisode(let podcastEpisode, _):
                 cell.configure(withItem: podcastEpisode)
             case .subscribedPodcastFeed(let podcastFeed):
                 cell.configure(withItem: podcastFeed)
@@ -475,7 +470,7 @@ extension PodcastFeedCollectionViewController {
         }
 
         switch dataSourceItem {
-        case .listenNowEpisode(let podcastEpisode):
+        case .listenNowEpisode(let podcastEpisode, _):
             if let objectID = podcastEpisode.objectID {
                 onPodcastEpisodeCellSelected(objectID)
             }
@@ -529,10 +524,10 @@ extension PodcastFeedCollectionViewController.DataSourceItem {
         }
     }
     
-    var episodeEntity: PodcastEpisode? {
+    var episodeEntity: (PodcastEpisode, Int)? {
         switch self {
-        case .listenNowEpisode(let podcastEpisode):
-            return podcastEpisode
+        case .listenNowEpisode(let podcastEpisode, let currentTime):
+            return (podcastEpisode, currentTime)
         default:
             return nil
         }

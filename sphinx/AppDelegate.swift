@@ -195,9 +195,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         feedsManager.restoreContentFeedStatus(
             progressCallback: {_ in},
-            completionCallback: {
-                self.feedsManager.saveContentFeedStatusInBackground()
-            }
+            completionCallback: {}
         )
         
         podcastPlayerController.finishAndSaveContentConsumed()

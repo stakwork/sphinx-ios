@@ -213,13 +213,12 @@ class FeedsManager : NSObject {
                         )
                     }
                     
-                    context.saveContext()
-                    
                     progressCallback(
                         self.getRestoreProgress(totalFeeds: contentFeedStatuses.count, syncedFeeds: index + 1)
                     )
                     
                     if (index + 1 == contentFeedStatuses.count) {
+                        context.saveContext()
                         completionCallback()
                     }
                     

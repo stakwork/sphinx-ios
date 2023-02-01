@@ -131,7 +131,6 @@ public class ContentFeed: NSManagedObject {
         
         API.sharedInstance.getContentFeed(
             url: tribesServerURL,
-            persistingIn: managedObjectContext,
             callback: { feedJSON in
                 
                 if let contentFeed = ContentFeed.createObjectFrom(
@@ -190,7 +189,6 @@ public class ContentFeed: NSManagedObject {
         
         API.sharedInstance.getContentFeed(
             url: tribesServerURL,
-            persistingIn: managedObjectContext,
             callback: { feedJSON in
                 if let contentFeed = contentFeed {
                     if let items = feedJSON[ContentFeed.CodingKeys.items.rawValue].array {

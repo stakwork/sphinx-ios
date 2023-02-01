@@ -88,34 +88,34 @@ public class Chat: NSManagedObject {
             let myAlias = chat["my_alias"].string
             let myPhotoUrl = chat["my_photo_url"].string
             let notify = chat["notify"].intValue
-            let metaData = chat["meta"].string
             let date = Date.getDateFromString(dateString: chat["created_at"].stringValue) ?? Date()
             
             let contactIds = chat["contact_ids"].arrayObject as? [NSNumber] ?? []
             let pendingContactIds = chat["pending_contact_ids"].arrayObject as? [NSNumber] ?? []
             
-            let chat = Chat.createObject(id: id,
-                                         name: name,
-                                         photoUrl: photoUrl,
-                                         uuid: uuid,
-                                         type: type,
-                                         status: status,
-                                         muted: muted,
-                                         seen: seen,
-                                         unlisted: unlisted,
-                                         privateTribe: privateTribe,
-                                         host: host,
-                                         groupKey: groupKey,
-                                         ownerPubkey:ownerPubkey,
-                                         pricePerMessage: pricePerMessage,
-                                         escrowAmount: escrowAmount,
-                                         myAlias: myAlias,
-                                         myPhotoUrl: myPhotoUrl,
-                                         notify: notify,
-                                         contactIds: contactIds,
-                                         pendingContactIds: pendingContactIds,
-                                         date: date,
-                                         metaData: metaData)
+            let chat = Chat.createObject(
+                id: id,
+                name: name,
+                photoUrl: photoUrl,
+                uuid: uuid,
+                type: type,
+                status: status,
+                muted: muted,
+                seen: seen,
+                unlisted: unlisted,
+                privateTribe: privateTribe,
+                host: host,
+                groupKey: groupKey,
+                ownerPubkey:ownerPubkey,
+                pricePerMessage: pricePerMessage,
+                escrowAmount: escrowAmount,
+                myAlias: myAlias,
+                myPhotoUrl: myPhotoUrl,
+                notify: notify,
+                contactIds: contactIds,
+                pendingContactIds: pendingContactIds,
+                date: date
+            )
             
             return chat
         }
@@ -132,28 +132,29 @@ public class Chat: NSManagedObject {
         return id
     }
     
-    static func createObject(id: Int,
-                             name: String,
-                             photoUrl: String?,
-                             uuid: String?,
-                             type: Int,
-                             status: Int,
-                             muted: Bool,
-                             seen: Bool,
-                             unlisted: Bool,
-                             privateTribe: Bool,
-                             host: String?,
-                             groupKey: String?,
-                             ownerPubkey: String?,
-                             pricePerMessage: Int,
-                             escrowAmount: Int,
-                             myAlias: String?,
-                             myPhotoUrl: String?,
-                             notify: Int,
-                             contactIds: [NSNumber],
-                             pendingContactIds: [NSNumber],
-                             date: Date,
-                             metaData: String?) -> Chat? {
+    static func createObject(
+        id: Int,
+        name: String,
+        photoUrl: String?,
+        uuid: String?,
+        type: Int,
+        status: Int,
+        muted: Bool,
+        seen: Bool,
+        unlisted: Bool,
+        privateTribe: Bool,
+        host: String?,
+        groupKey: String?,
+        ownerPubkey: String?,
+        pricePerMessage: Int,
+        escrowAmount: Int,
+        myAlias: String?,
+        myPhotoUrl: String?,
+        notify: Int,
+        contactIds: [NSNumber],
+        pendingContactIds: [NSNumber],
+        date: Date
+    ) -> Chat? {
         
         let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
         

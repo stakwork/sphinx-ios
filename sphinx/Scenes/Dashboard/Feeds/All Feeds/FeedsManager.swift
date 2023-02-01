@@ -21,19 +21,37 @@ class FeedsManager : NSObject {
     
     let podcastPlayerController = PodcastPlayerController.sharedInstance
     
-    static func fetchFeeds() -> [ContentFeed]{
-        var followedFeeds: [ContentFeed] = []
-        let fetchRequest = ContentFeed.FetchRequests.followedFeeds()
+    // MARK: - Content Feed fetch requests
+    
+    func fetchFeeds() -> [ContentFeed]{
+        var feeds: [ContentFeed] = []
+        let fetchRequest = ContentFeed.FetchRequests.default()
         let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
         
         do {
-            followedFeeds = try managedContext.fetch(fetchRequest)
-            return followedFeeds
+            feeds = try managedContext.fetch(fetchRequest)
+            return feeds
         } catch let error as NSError {
             print("Error: " + error.localizedDescription)
             return []
         }
     }
+    
+    func fetchFollowedFeeds() -> [ContentFeed]{
+        var feeds: [ContentFeed] = []
+        let fetchRequest = ContentFeed.FetchRequests.followedFeeds()
+        let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
+        
+        do {
+            feeds = try managedContext.fetch(fetchRequest)
+            return feeds
+        } catch let error as NSError {
+            print("Error: " + error.localizedDescription)
+            return []
+        }
+    }
+    
+    // MARK: - Saving content feed status to relay
     
     func saveContentFeedStatusInBackground() {
         let dispatchQueue = DispatchQueue.global(qos: .userInitiated)
@@ -60,13 +78,13 @@ class FeedsManager : NSObject {
     }
     
     func saveContentFeedStatus(){
-        let followedFeeds: [ContentFeed] = FeedsManager.fetchFeeds()
+        let feeds = fetchFeeds()
         
-        if followedFeeds.isEmpty {
+        if feeds.isEmpty {
             return
         }
         
-        let contentFeedStatuses: [ContentFeedStatus] = followedFeeds.map({
+        let contentFeedStatuses: [ContentFeedStatus] = feeds.map({
             return self.getContentFeedStatus(for: $0)
         })
         
@@ -120,6 +138,8 @@ class FeedsManager : NSObject {
         return status
     }
     
+    // MARK: - Getting content feed status from relay and restoring
+    
     func restoreContentFeedStatus(
         progressCallback: @escaping (Int) -> (),
         completionCallback: @escaping () -> ()
@@ -147,26 +167,26 @@ class FeedsManager : NSObject {
     }
     
     func restoreFeedStatuses(
-        from remoteData: [ContentFeedStatus],
+        from contentFeedStatuses: [ContentFeedStatus],
         progressCallback: @escaping (Int) -> (),
         completionCallback: @escaping () -> ()
     ){
         
-        if remoteData.isEmpty {
+        if contentFeedStatuses.isEmpty {
             completionCallback()
             return
         }
         
-        let bgContext = CoreDataManager.sharedManager.getBackgroundContext()
+        let context = CoreDataManager.sharedManager.persistentContainer.viewContext
         
-        let localData = FeedsManager.fetchFeeds()
+        let feeds = fetchFeeds()
         
-        let localIDs = localData.compactMap({ $0.feedID })
-        let remoteIDs = remoteData.compactMap({ $0.feedID })
+        let localIDs = feeds.compactMap({ $0.feedID })
+        let remoteIDs = contentFeedStatuses.compactMap({ $0.feedID })
         
         ///Delete feeds not present on remote data
         for idToRemove in localIDs.filter({ remoteIDs.contains($0) }) {
-            if let feedToRemove = localData.filter({ $0.feedID == idToRemove }).first {
+            if let feedToRemove = feeds.filter({ $0.feedID == idToRemove }).first {
                 feedToRemove.isSubscribedToFromSearch = false
                 feedToRemove.chat = nil
                 
@@ -178,7 +198,7 @@ class FeedsManager : NSObject {
             let dispatchSemaphore = DispatchSemaphore(value: 1)
             
             ///Update feeds present in remote data
-            for (index, contentFeedStatus) in remoteData.enumerated() {
+            for (index, contentFeedStatus) in contentFeedStatuses.enumerated() {
                 
                 dispatchSemaphore.wait()
                 
@@ -186,7 +206,7 @@ class FeedsManager : NSObject {
                 
                 var chat : Chat? = nil
                 if let validChatId = contentFeedStatus.chatID {
-                    chat = Chat.getChatWith(id: validChatId, managedContext: bgContext)
+                    chat = Chat.getChatWith(id: validChatId, managedContext: context)
                 }
                 
                 ///Get feed from local db or fetch it from tribes server endpoint
@@ -194,7 +214,7 @@ class FeedsManager : NSObject {
                     feedId: contentFeedStatus.feedID,
                     feedUrl: feedUrl,
                     chat: chat,
-                    context: bgContext
+                    context: context
                 ) { contentFeed in
                     
                     ///restore status from the remote content status
@@ -206,11 +226,11 @@ class FeedsManager : NSObject {
                     }
                     
                     progressCallback(
-                        self.getRestoreProgress(totalFeeds: remoteData.count, syncedFeeds: index + 1)
+                        self.getRestoreProgress(totalFeeds: contentFeedStatuses.count, syncedFeeds: index + 1)
                     )
                     
-                    if (index + 1 == remoteData.count) {
-                        CoreDataManager.sharedManager.save(context: bgContext)
+                    if (index + 1 == contentFeedStatuses.count) {
+                        context.saveContext()
                         completionCallback()
                     }
                     
@@ -221,9 +241,11 @@ class FeedsManager : NSObject {
     }
     
     func refreshFeedUI() {
-        NotificationCenter.default.post(name: .refreshPodcastUI, object: nil)
-        NotificationCenter.default.post(name: .refreshVideoUI, object: nil)
-        NotificationCenter.default.post(name: .refreshNewsletterUI, object: nil)
+        DispatchQueue.main.async {
+            NotificationCenter.default.post(name: .refreshPodcastUI, object: nil)
+            NotificationCenter.default.post(name: .refreshVideoUI, object: nil)
+            NotificationCenter.default.post(name: .refreshNewsletterUI, object: nil)
+        }
     }
     
     func getContentFeedFor(
@@ -234,7 +256,7 @@ class FeedsManager : NSObject {
         completion: @escaping (ContentFeed?) -> ()
     ) {
         if let existingContentFeed = ContentFeed.getFeedWith(feedId: feedId, managedContext: context) {
-            existingContentFeed.chat = chat
+            chat?.contentFeed = existingContentFeed
             completion(existingContentFeed)
         } else {
             ContentFeed.fetchContentFeed(at: feedUrl, chat: chat, persistingIn: context, then: { result in
@@ -271,6 +293,9 @@ class FeedsManager : NSObject {
                with: episodeStatus
             )
         }
+        
+        downloadLastEpisodeFor(feed: localFeed)
+        loadEpisodesDurationFor(feed: localFeed)
     }
     
     func restoreEpisodeStatus(
@@ -285,12 +310,20 @@ class FeedsManager : NSObject {
         }
     }
     
-    func preCacheTopPods(){
-        //1. Fetch results from memory
-        let followedFeeds: [ContentFeed] = FeedsManager.fetchFeeds()
+    // MARK: - Pre load and cache content feeds
+    
+    func preCacheContentFeedsInBackground() {
+        DispatchQueue.global().async {
+            self.preCacheContentFeeds()
+        }
+    }
+    
+    func preCacheContentFeeds(){
+        ///1. Fetch results from memory
+        let feeds: [ContentFeed] = fetchFollowedFeeds()
             
-        //2. Walk through each feed
-        for feed in followedFeeds {
+        ///2. Walk through each feed
+        for feed in feeds {
             
             if let feedType = FeedType(rawValue: feed.feedKindValue) {
                 switch(feedType) {
@@ -386,12 +419,12 @@ class FeedsManager : NSObject {
     }
     
     func downloadLastEpisodeFor(feed: ContentFeed) {
-        //0. Stop if setting not enabled
+        ///1. Stop if setting not enabled
         if UserDefaults.Keys.shouldAutoDownloadSubscribedPods.get(defaultValue: false) == false {
             return
         }
         
-        //2. Pluck the latest episode and download it for each feed
+        ///2. Pluck the latest episode and download it for each feed
         let lastItem = Array(feed.items ?? []).sorted { (first, second) in
             let firstDate = first.dateUpdated ?? first.datePublished ?? Date.init(timeIntervalSince1970: 0)
             let secondDate = second.dateUpdated ?? second.datePublished ?? Date.init(timeIntervalSince1970: 0)

@@ -493,7 +493,7 @@ extension DashboardRootViewController {
                 progressCallback:  { contentProgress in
                     contentProgressShare = 0.1
                     
-                    if (contentProgress >= 0) {
+                    if (contentProgress >= 0 && restoring) {
                         self.restoreProgressView.showRestoreProgressView(
                             with: Int(contentProgressShare * Float(contentProgress)),
                             messagesStartProgress: Int(contentProgressShare * Float(100))

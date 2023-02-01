@@ -16,7 +16,6 @@ extension API {
     
     func getContentFeed(
         url: String,
-        persistingIn managedObjectContext: NSManagedObjectContext? = nil,
         callback: @escaping ContentFeedCallback,
         errorCallback: @escaping EmptyCallback
     ) {

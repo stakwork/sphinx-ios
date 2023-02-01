@@ -189,6 +189,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if !UserData.sharedInstance.isUserLogged() {
             return
         }
+        
         reloadMessagesData()
         presentPINIfNeeded()
         
@@ -226,17 +227,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(
         _ application: UIApplication
     ) {
-        SphinxSocketManager.sharedInstance.connectWebsocket(forceConnect: true)
         reloadAppIfStyleChanged()
+        
+        if !UserData.sharedInstance.isUserLogged() {
+            return
+        }
+        
+        SphinxSocketManager.sharedInstance.connectWebsocket(forceConnect: true)
 
         if let notification = notificationUserInfo {
             handlePush(notification: notification)
             setInitialVC(launchingApp: false)
         }
         
-        if UserData.sharedInstance.isUserLogged() {
-            runFeedsPreloadInBackground()
-        }
+        feedsManager.preCacheContentFeedsInBackground()
     }
 
 
@@ -277,12 +281,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         takeUserToInitialVC(isUserLogged: isUserLogged)
         presentPINIfNeeded()
-    }
-    
-    func runFeedsPreloadInBackground() {
-        DispatchQueue.global().async {
-            self.feedsManager.preCacheTopPods()
-        }
     }
 
     func presentPINIfNeeded() {

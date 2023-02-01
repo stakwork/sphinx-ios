@@ -9,6 +9,7 @@
 import UIKit
 
 public enum MemberBadgeDetailCellType{
+    case header
     case badges
     case posts
     case details

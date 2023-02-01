@@ -28,8 +28,8 @@ class MemberBadgeDetailVC : UIViewController{
     
     
     var presentationContext : MemberBadgeDetailPresentationContext = .admin
-    var message : TransactionMessage? = nil
     var delegate : TribeMemberViewDelegate? = nil
+    var message : TransactionMessage? = nil
     
     lazy var memberBadgeDetailVM : MemberBadgeDetailVM = {
        return MemberBadgeDetailVM(vc: self, tableView: tableView)
@@ -52,25 +52,28 @@ class MemberBadgeDetailVC : UIViewController{
     
     override func viewDidLoad() {
         configHeaderView()
-        configTableView()
+        
         dismissBadgeDetails()
+        detailView.backgroundColor = UIColor.Sphinx.Body
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        loadProfileData()
+        configTableView()
     }
     
     @IBAction func sendSatsButtonTapped(_ sender: Any) {
-        if let valid_message = message{
-            self.dismiss(animated: false,completion: {
-                self.delegate?.shouldGoToSendPayment(message: valid_message)
-            })
-        }
+        
+    }
+    
+    func handleSatsButtonSend(message:TransactionMessage){
+        self.dismiss(animated: false,completion: {
+            self.delegate?.shouldGoToSendPayment(message: message)
+        })
     }
     
     
     func configHeaderView(){
-        detailView.backgroundColor = UIColor.Sphinx.Body
+        
         //Member Image
         memberImageView.contentMode = .scaleAspectFill
         memberImageView.sd_setImage(with: URL(string: "https://us.123rf.com/450wm/fizkes/fizkes2010/fizkes201001384/fizkes201001384.jpg?ver=6"))
@@ -89,9 +92,12 @@ class MemberBadgeDetailVC : UIViewController{
     }
     
     func configTableView(){
+        memberBadgeDetailVM.message = self.message
         memberBadgeDetailVM.configTable()
+        tableView.separatorColor = .clear
         tableView.backgroundColor = .clear
         tableView.isScrollEnabled = false
+        tableView.showsVerticalScrollIndicator = false
     }
     
     
@@ -113,25 +119,5 @@ class MemberBadgeDetailVC : UIViewController{
         })
     }
     
-    func configView(personInfo:TribeMemberStruct){
-        print(personInfo)
-        self.memberImageView.sd_setImage(with: URL(string: personInfo.img))
-        self.memberNameLabel.text = personInfo.ownerAlias
-    }
-    
-    func loadProfileData() {
-        guard let person = message?.person else {
-            //dismissView()
-            return
-        }
-        
-        API.sharedInstance.getTribeMemberInfo(person: person, callback: { (success, personInfo) in
-            if let personInfo = personInfo, success {
-                self.configView(personInfo: personInfo)
-            } else {
-                //self.dismissView()
-            }
-        })
-    }
     
 }

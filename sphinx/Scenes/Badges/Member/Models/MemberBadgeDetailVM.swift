@@ -9,12 +9,21 @@
 import Foundation
 import UIKit
 
+protocol MemberBadgeDetailVMDisplayDelegate{
+    func reloadHeaderView(personInfo:TribeMemberStruct)
+    func getImageViewReference()->UIImageView
+}
+
 class MemberBadgeDetailVM : NSObject {
     var vc: MemberBadgeDetailVC
     var tableView: UITableView
     var presentationContext : MemberBadgeDetailPresentationContext
     var badgeDetailExpansionState : Bool = false
+    var message : TransactionMessage? = nil
     var badges : [Badge] = []
+    let headerOffset : Int = 0
+    let badgeDetailOffset : Int = 2
+    var delegate: MemberBadgeDetailVMDisplayDelegate? = nil
     
     init(vc: MemberBadgeDetailVC, tableView: UITableView) {
         self.vc = vc
@@ -26,6 +35,7 @@ class MemberBadgeDetailVM : NSObject {
         tableView.delegate = self
         tableView.dataSource = self
         
+        tableView.register(UINib(nibName: "MemberBadgeHeaderCell", bundle: nil), forCellReuseIdentifier: MemberBadgeHeaderCell.reuseID)
         tableView.register(UINib(nibName: "MemberBadgeDetailTableViewCell", bundle: nil), forCellReuseIdentifier: MemberDetailTableViewCell.reuseID)
         tableView.register(UINib(nibName: "BadgeDetailCell", bundle: nil), forCellReuseIdentifier: BadgeDetailCell.reuseID)
         
@@ -33,8 +43,11 @@ class MemberBadgeDetailVM : NSObject {
             self.loadBadges()
         })
         
+        loadProfileData()
+        
         tableView.reloadData()
     }
+    
     
     func loadBadges(){
         //TODO: replace with API call
@@ -59,21 +72,46 @@ class MemberBadgeDetailVM : NSObject {
     func getCellTypeOrder() -> [MemberBadgeDetailCellType] {
         var result = [MemberBadgeDetailCellType]()
         result = [
+            .header,
             .posts,
             .contributions,
             .earnings
         ]
         if(badges.count > 0){
-            result.insert(.badges, at: 0)
+            result.insert(.badges, at: headerOffset + 1)
         }
         
         if(badgeDetailExpansionState == true){
             for badge in badges{
-                result.insert(.details, at: 1)
+                result.insert(.details, at: badgeDetailOffset)
             }
         }
         
         return result
+    }
+    
+    func configHeaderView(personInfo:TribeMemberStruct){
+        print(personInfo)
+        delegate?.reloadHeaderView(personInfo: personInfo)
+        let iv = delegate?.getImageViewReference()
+        iv?.sd_setImage(with: URL(string: personInfo.img))
+        //self.memberImageView.sd_setImage(with: URL(string: personInfo.img))
+        //self.memberNameLabel.text = personInfo.ownerAlias
+    }
+    
+    func loadProfileData() {
+        guard let person = message?.person else {
+            //dismissView()
+            return
+        }
+        
+        API.sharedInstance.getTribeMemberInfo(person: person, callback: { (success, personInfo) in
+            if let personInfo = personInfo, success {
+                self.configHeaderView(personInfo: personInfo)
+            } else {
+                //self.dismissView()
+            }
+        })
     }
     
 }
@@ -81,19 +119,30 @@ class MemberBadgeDetailVM : NSObject {
 
 extension MemberBadgeDetailVM : UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return getCellTypeOrder().count
+        let count = getCellTypeOrder().count
+        return count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cellTypes = getCellTypeOrder()
         let cellType = cellTypes[indexPath.row]
-        if(cellType == .details){
+        if(cellType == .header){
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: MemberBadgeHeaderCell.reuseID,
+                for: indexPath
+            ) as! MemberBadgeHeaderCell
+            self.delegate = cell
+            cell.initHeaderView()
+            
+            return cell
+        }
+        else if(cellType == .details){
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: BadgeDetailCell.reuseID,
                 for: indexPath
             ) as! BadgeDetailCell
-            cell.configCell(badge: badges[indexPath.row - 1])
+            cell.configCell(badge: badges[indexPath.row - badgeDetailOffset])
             
             return cell
         }

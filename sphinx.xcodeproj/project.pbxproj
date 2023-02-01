@@ -629,6 +629,8 @@
 		CE51F35A2989B19800ABBACB /* BadgeDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE51F3582989B19800ABBACB /* BadgeDetailCell.swift */; };
 		CE51F35B2989B19800ABBACB /* BadgeDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE51F3592989B19800ABBACB /* BadgeDetailCell.xib */; };
 		CE6784602968B0E000342905 /* FeedsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE67845F2968B0E000342905 /* FeedsManager.swift */; };
+		CE842DE0298ADECF00620AD3 /* MemberBadgeHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE842DDE298ADECF00620AD3 /* MemberBadgeHeaderCell.swift */; };
+		CE842DE1298ADECF00620AD3 /* MemberBadgeHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE842DDF298ADECF00620AD3 /* MemberBadgeHeaderCell.xib */; };
 		CE91E59A29885175008BA6EA /* MemberBadgeDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE91E59929885175008BA6EA /* MemberBadgeDetailVC.swift */; };
 		CEBF0D032975B20B006C1F21 /* DiscoverTribesTagSelectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBF0D022975B20B006C1F21 /* DiscoverTribesTagSelectionVC.swift */; };
 		CEBF0D052975C367006C1F21 /* DiscoverTribesTagSelectionVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBF0D042975C367006C1F21 /* DiscoverTribesTagSelectionVM.swift */; };
@@ -1534,6 +1536,8 @@
 		CE51F3582989B19800ABBACB /* BadgeDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeDetailCell.swift; sourceTree = "<group>"; };
 		CE51F3592989B19800ABBACB /* BadgeDetailCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BadgeDetailCell.xib; sourceTree = "<group>"; };
 		CE67845F2968B0E000342905 /* FeedsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedsManager.swift; sourceTree = "<group>"; };
+		CE842DDE298ADECF00620AD3 /* MemberBadgeHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberBadgeHeaderCell.swift; sourceTree = "<group>"; };
+		CE842DDF298ADECF00620AD3 /* MemberBadgeHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MemberBadgeHeaderCell.xib; sourceTree = "<group>"; };
 		CE91E59929885175008BA6EA /* MemberBadgeDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberBadgeDetailVC.swift; sourceTree = "<group>"; };
 		CEBF0D022975B20B006C1F21 /* DiscoverTribesTagSelectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTribesTagSelectionVC.swift; sourceTree = "<group>"; };
 		CEBF0D042975C367006C1F21 /* DiscoverTribesTagSelectionVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTribesTagSelectionVM.swift; sourceTree = "<group>"; };
@@ -3633,6 +3637,8 @@
 			children = (
 				CE91E59929885175008BA6EA /* MemberBadgeDetailVC.swift */,
 				CE51F3542988743E00ABBACB /* MemberDetailTableViewCell.swift */,
+				CE842DDE298ADECF00620AD3 /* MemberBadgeHeaderCell.swift */,
+				CE842DDF298ADECF00620AD3 /* MemberBadgeHeaderCell.xib */,
 				CE51F3582989B19800ABBACB /* BadgeDetailCell.swift */,
 				CE51F3592989B19800ABBACB /* BadgeDetailCell.xib */,
 				CE51F3552988743E00ABBACB /* MemberBadgeDetailTableViewCell.xib */,
@@ -4268,6 +4274,7 @@
 				475BDCFE232AC24600C5BBD6 /* DirectPaymentReceivedTableViewCell.xib in Resources */,
 				475BDCEA232AC23B00C5BBD6 /* PaymentSentTableViewCell.xib in Resources */,
 				4797E80E24B8FBC200D13270 /* Stakwork.storyboard in Resources */,
+				CE842DE1298ADECF00620AD3 /* MemberBadgeHeaderCell.xib in Resources */,
 				F3D86DC026B14E5E00EB9711 /* DashboardFeedSquaredThumbnailCollectionViewCell.xib in Resources */,
 				475154B82423F09900477384 /* VideoCallBubbleView.xib in Resources */,
 				47771C73259B9B9400990467 /* GroupPinView.xib in Resources */,
@@ -4807,6 +4814,7 @@
 				470396D82535D12D007F9C23 /* PodcastEpisodeTableViewCell.swift in Sources */,
 				47018F9B27D65B8D00797E0B /* CustomDismissibleView.swift in Sources */,
 				4726F0A625791CF900E20EA9 /* TribeLinkPreviewView.swift in Sources */,
+				CE842DE0298ADECF00620AD3 /* MemberBadgeHeaderCell.swift in Sources */,
 				4734D3D4241AADD900D6957E /* PaymentTemplateCollectionViewCell.swift in Sources */,
 				CE51F35A2989B19800ABBACB /* BadgeDetailCell.swift in Sources */,
 				47FA18C8242D35F700469C8F /* CommonGroupContactsViewController.swift in Sources */,

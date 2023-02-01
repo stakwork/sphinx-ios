@@ -445,12 +445,12 @@ extension ChatViewController : MessageCellDelegate {
     }
     
     func didTapAvatarView(message: TransactionMessage) {
-        /*
+        
         let vc = MemberBadgeDetailVC.instantiate(rootViewController: self.rootViewController,message:message,delegate:self)
         vc.modalPresentationStyle = .overCurrentContext
         self.navigationController?.present(vc, animated: false)
-        */
         
+        /*
         if let _ = message.person {
             accessoryView.hide()
             
@@ -461,7 +461,7 @@ extension ChatViewController : MessageCellDelegate {
             let tribeMemberPopupVC = TribeMemberPopupViewController.instantiate(message: message, delegate: self)
             WindowsManager.sharedInstance.showConveringWindowWith(rootVC: tribeMemberPopupVC)
         }
-        
+        */
     }
 }
 

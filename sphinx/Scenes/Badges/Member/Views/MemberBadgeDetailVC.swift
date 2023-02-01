@@ -23,6 +23,8 @@ class MemberBadgeDetailVC : UIViewController{
     @IBOutlet weak var detailViewHeight: NSLayoutConstraint!
     @IBOutlet weak var detailView: UIView!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var moderatorBadgeImageView: UIImageView!
+    
     
     var presentationContext : MemberBadgeDetailPresentationContext = .admin
     

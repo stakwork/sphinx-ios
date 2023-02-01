@@ -561,6 +561,13 @@
                                                     <color key="titleColor" name="SecondaryText"/>
                                                 </state>
                                             </button>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="moderatorBadge" translatesAutoresizingMaskIntoConstraints="NO" id="mHa-6M-kii">
+                                                <rect key="frame" x="126" y="52" width="34" height="34"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="34" id="I6M-en-xGW"/>
+                                                    <constraint firstAttribute="width" constant="34" id="zHs-0L-s4s"/>
+                                                </constraints>
+                                            </imageView>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
@@ -569,6 +576,7 @@
                                             <constraint firstItem="hEd-1Q-eLw" firstAttribute="leading" secondItem="bfh-go-0Xm" secondAttribute="leading" constant="32" id="EO4-oa-i8Q"/>
                                             <constraint firstItem="iUv-j0-fRn" firstAttribute="leading" secondItem="bfh-go-0Xm" secondAttribute="leading" constant="32" id="QCp-hm-spp"/>
                                             <constraint firstItem="iUv-j0-fRn" firstAttribute="leading" secondItem="tbp-si-LTE" secondAttribute="leading" id="WKg-ix-NXS"/>
+                                            <constraint firstItem="mHa-6M-kii" firstAttribute="leading" secondItem="tbp-si-LTE" secondAttribute="leading" constant="94" id="WV1-ro-0Sz"/>
                                             <constraint firstAttribute="trailing" secondItem="C0V-Lz-571" secondAttribute="trailing" constant="32" id="XxN-NB-FXx"/>
                                             <constraint firstItem="C0V-Lz-571" firstAttribute="width" secondItem="iUv-j0-fRn" secondAttribute="width" id="Yff-QR-Fhx"/>
                                             <constraint firstItem="hEd-1Q-eLw" firstAttribute="centerX" secondItem="bfh-go-0Xm" secondAttribute="centerX" id="a4t-dI-8fi"/>
@@ -581,6 +589,7 @@
                                             <constraint firstItem="TEd-YZ-tMH" firstAttribute="trailing" secondItem="C0V-Lz-571" secondAttribute="trailing" constant="-12" id="onG-IO-zM1"/>
                                             <constraint firstItem="CU8-U2-jXZ" firstAttribute="centerY" secondItem="iUv-j0-fRn" secondAttribute="centerY" id="pyg-i6-lVf"/>
                                             <constraint firstAttribute="height" constant="480" id="qx9-tH-LXb"/>
+                                            <constraint firstItem="mHa-6M-kii" firstAttribute="top" secondItem="tbp-si-LTE" secondAttribute="top" constant="12" id="vGA-RK-SKx"/>
                                             <constraint firstItem="tbp-si-LTE" firstAttribute="leading" secondItem="bfh-go-0Xm" secondAttribute="leading" constant="32" id="xJQ-HJ-8yM"/>
                                         </constraints>
                                     </view>
@@ -664,6 +673,7 @@
                         <outlet property="detailViewHeight" destination="o3r-NL-3mE" id="Tdt-9t-DIt"/>
                         <outlet property="earnBadgesButton" destination="C0V-Lz-571" id="o2l-YU-tPA"/>
                         <outlet property="memberImageView" destination="tbp-si-LTE" id="pQr-bI-wed"/>
+                        <outlet property="moderatorBadgeImageView" destination="mHa-6M-kii" id="3fa-6X-Og2"/>
                         <outlet property="sendSatsButton" destination="iUv-j0-fRn" id="vhk-Tl-c7i"/>
                         <outlet property="tableView" destination="hEd-1Q-eLw" id="rP5-l0-T6G"/>
                     </connections>
@@ -679,6 +689,7 @@
         <image name="customizeBadgeIcon" width="36" height="52"/>
         <image name="medalTag" width="100" height="101"/>
         <image name="minus_sign" width="10" height="2"/>
+        <image name="moderatorBadge" width="44" height="44"/>
         <image name="notepad" width="12" height="12"/>
         <image name="plus_sign" width="10" height="10"/>
         <image name="sphinxTagIcon" width="44" height="44"/>

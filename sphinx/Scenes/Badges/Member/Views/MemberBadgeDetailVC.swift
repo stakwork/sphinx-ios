@@ -65,6 +65,32 @@ class MemberBadgeDetailVC : UIViewController{
         })
     }
     
+    func addShimmerLoadingView(){
+        let loadingViewFrame = detailView.frame
+        loadingView = UIView(frame: loadingViewFrame)
+        loadingView?.isUserInteractionEnabled = false
+        loadingView?.backgroundColor = UIColor.Sphinx.Body
+        if let loadingView = loadingView{
+            let imageView : UIImageView = UIImageView(frame: loadingView.frame)
+            imageView.image = UIImage(named: "memberBadgeLoadingView")
+            imageView.contentMode = .scaleAspectFit
+            let shimmerView = ShimmerView(frame: imageView.frame)
+            shimmerView.alpha = 0.075
+            loadingView.addSubview(shimmerView)
+            loadingView.addSubview(imageView)
+            detailView.addSubview(loadingView)
+            detailView.bringSubviewToFront(loadingView)
+            tableView.isHidden = true
+            shimmerView.startShimmerAnimation()
+        }
+    }
+    
+    func removeShimmerView(){
+        tableView.isHidden = false
+        loadingView?.removeFromSuperview()
+        loadingView = nil
+    }
+    
     func configTableView(){
         memberBadgeDetailVM.message = self.message
         memberBadgeDetailVM.configTable()

@@ -27,29 +27,10 @@ class MemberBadgeDetailVM : NSObject {
     var isLoading : Bool {
         didSet{
             if(isLoading){
-                let loadingViewFrame = vc.detailView.frame
-                vc.loadingView = UIView(frame: loadingViewFrame)
-                vc.loadingView?.isUserInteractionEnabled = false
-                vc.loadingView?.backgroundColor = UIColor.Sphinx.Body
-                if let loadingView = vc.loadingView{
-                    let imageView : UIImageView = UIImageView(frame: loadingView.frame)
-                    imageView.image = UIImage(named: "memberBadgeLoadingView")
-                    imageView.contentMode = .scaleAspectFit
-                    let shimmerView = ShimmerView(frame: imageView.frame)
-                    shimmerView.alpha = 0.075
-                    vc.loadingView?.addSubview(shimmerView)
-                    vc.loadingView?.addSubview(imageView)
-                    vc.detailView.addSubview(loadingView)
-                    vc.detailView.bringSubviewToFront(loadingView)
-                    vc.tableView.isHidden = true
-                    shimmerView.startShimmerAnimation()
-                }
-                
+                vc.addShimmerLoadingView()
             }
             else{
-                vc.tableView.isHidden = false
-                vc.loadingView?.removeFromSuperview()
-                vc.loadingView = nil
+                vc.removeShimmerView()
             }
         }
     }
@@ -77,7 +58,6 @@ class MemberBadgeDetailVM : NSObject {
         
         tableView.reloadData()
     }
-    
     
     func loadBadges(){
         //TODO: replace with API call

@@ -149,12 +149,13 @@ class MemberDetailTableViewCell: UITableViewCell {
                 if(imageUrls.count >= 3){
                     let bubble = UIView(frame: CGRect(x: cursorValue, y: 0.0, width: imageWidth, height: 40.0))
                     bubble.backgroundColor = UIColor.Sphinx.SecondaryText
-                    let bubbleLabel = UILabel(frame: bubble.bounds)
+                    let bubbleLabel = UILabel(frame: bubble.frame)
                     bubbleLabel.text = "+\(badges.count - badgeLimit)"
                     bubbleLabel.textColor = UIColor.Sphinx.MainBottomIcons
                     bubbleLabel.textAlignment = .center
                     bubble.makeCircular()
-                    bubble.addSubview(bubbleLabel)
+                    bubble.alpha = 0.1
+                    stackView.addSubview(bubbleLabel)
                     stackView.addSubview(bubble)
                     cursorValue += (imageWidth + imageSpacing)
                 }

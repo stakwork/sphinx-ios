@@ -130,8 +130,8 @@ class FeedsManager : NSObject {
     // MARK: - Getting content feed status from relay and restoring
     
     func restoreContentFeedStatus(
-        progressCallback: @escaping (Int) -> (),
-        completionCallback: @escaping () -> ()
+        progressCallback: ((Int) -> ())? = nil,
+        completionCallback: (() -> ())? = nil
     ){
         API.sharedInstance.getAllContentFeedStatuses(
             callback: { results in
@@ -140,13 +140,14 @@ class FeedsManager : NSObject {
                     progressCallback: progressCallback,
                     completionCallback: {
                         self.refreshFeedUI()
-                        completionCallback()
+                        completionCallback?()
+                        
+                        self.fetchNewItems()
                     }
                 )
             },
             errorCallback: {
-                completionCallback()
-                //TODO: retry? Alert user?
+                completionCallback?()
             }
         )
     }
@@ -157,12 +158,12 @@ class FeedsManager : NSObject {
     
     func restoreFeedStatuses(
         from contentFeedStatuses: [ContentFeedStatus],
-        progressCallback: @escaping (Int) -> (),
-        completionCallback: @escaping () -> ()
+        progressCallback: ((Int) -> ())? = nil,
+        completionCallback: (() -> ())? = nil
     ){
         
         if contentFeedStatuses.isEmpty {
-            completionCallback()
+            completionCallback?()
             return
         }
         
@@ -213,13 +214,13 @@ class FeedsManager : NSObject {
                         )
                     }
                     
-                    progressCallback(
+                    progressCallback?(
                         self.getRestoreProgress(totalFeeds: contentFeedStatuses.count, syncedFeeds: index + 1)
                     )
                     
                     if (index + 1 == contentFeedStatuses.count) {
                         context.saveContext()
-                        completionCallback()
+                        completionCallback?()
                     }
                     
                     dispatchSemaphore.signal()
@@ -239,15 +240,8 @@ class FeedsManager : NSObject {
         context: NSManagedObjectContext,
         completion: @escaping (ContentFeed?) -> ()
     ) {
-        if let existingContentFeed = ContentFeed.getFeedWith(feedId: feedId, managedContext: context), let url = existingContentFeed.feedURL {
-            ContentFeed.fetchFeedItems(
-                feedUrl: url.absoluteString,
-                contentFeedObjectID: existingContentFeed.objectID,
-                context: context,
-                completion: { _ in
-                    completion(existingContentFeed)
-                }
-            )
+        if let existingContentFeed = ContentFeed.getFeedWith(feedId: feedId, managedContext: context) {
+            completion(existingContentFeed)
         } else {
             ContentFeed.fetchContentFeed(at: feedUrl, chat: chat, persistingIn: context, then: { result in
                 if case .success(let contentFeed) = result {
@@ -256,6 +250,35 @@ class FeedsManager : NSObject {
                 }
                 completion(nil)
             })
+        }
+    }
+    
+    func fetchNewItems() {
+        let context = CoreDataManager.sharedManager.getBackgroundContext()
+        
+        context.perform {
+            
+            let dispatchSemaphore = DispatchSemaphore(value: 0)
+
+            for feed in self.fetchFeeds(context: context) {
+                
+                if let url = feed.feedURL {
+                    
+                    ContentFeed.fetchFeedItems(
+                        feedUrl: url.absoluteString,
+                        contentFeedObjectID: feed.objectID,
+                        context: context,
+                        completion: { _ in
+                            dispatchSemaphore.signal()
+                        }
+                    )
+                    
+                    dispatchSemaphore.wait()
+                }
+            }
+            
+            context.saveContext()
+            self.refreshFeedUI()
         }
     }
     

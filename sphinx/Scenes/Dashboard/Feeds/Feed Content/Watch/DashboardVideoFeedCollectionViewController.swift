@@ -157,27 +157,6 @@ extension DashboardVideoFeedCollectionViewController {
         collectionView.contentInset.bottom = bottomBarHeight + windowInsets.bottom
         collectionView.verticalScrollIndicatorInsets.bottom = bottomBarHeight + windowInsets.bottom
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        NotificationCenter.default.removeObserver(self, name: .refreshFeedUI, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(forceItemsRefresh), name: .refreshFeedUI, object: nil)
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        NotificationCenter.default.removeObserver(self, name: .refreshFeedUI, object: nil)
-    }
-    
-    @objc func forceItemsRefresh(){
-        DispatchQueue.main.async { [weak self] in
-            if let feeds = self?.videoFeeds {
-                self?.updateWithNew(videoFeeds: feeds)
-                
-                self?.onNewResultsFetched(feeds.count)
-            }
-        }
-    }
 }
 
 

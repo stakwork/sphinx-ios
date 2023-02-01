@@ -29,6 +29,7 @@ class MemberBadgeDetailVC : UIViewController{
     
     var presentationContext : MemberBadgeDetailPresentationContext = .admin
     var message : TransactionMessage? = nil
+    var delegate : TribeMemberViewDelegate? = nil
     
     lazy var memberBadgeDetailVM : MemberBadgeDetailVM = {
        return MemberBadgeDetailVM(vc: self, tableView: tableView)
@@ -36,12 +37,14 @@ class MemberBadgeDetailVC : UIViewController{
     
     static func instantiate(
         rootViewController: RootViewController,
-        message: TransactionMessage
+        message: TransactionMessage,
+        delegate: TribeMemberViewDelegate
     ) -> UIViewController {
         let viewController = StoryboardScene.BadgeManagement.memberBadgeDetailVC.instantiate()
         viewController.view.backgroundColor = .clear
         if let vc = viewController as? MemberBadgeDetailVC{
             vc.message = message
+            vc.delegate = delegate
         }
         
         return viewController
@@ -57,6 +60,15 @@ class MemberBadgeDetailVC : UIViewController{
         loadProfileData()
     }
     
+    @IBAction func sendSatsButtonTapped(_ sender: Any) {
+        if let valid_message = message{
+            self.dismiss(animated: false,completion: {
+                self.delegate?.shouldGoToSendPayment(message: valid_message)
+            })
+        }
+    }
+    
+    
     func configHeaderView(){
         detailView.backgroundColor = UIColor.Sphinx.Body
         //Member Image
@@ -65,14 +77,14 @@ class MemberBadgeDetailVC : UIViewController{
         memberImageView.makeCircular()
         
         //Send Sats
-        sendSatsButton.layer.cornerRadius = 18.0
+        sendSatsButton.layer.cornerRadius = sendSatsButton.frame.height/2.0
         sendSatsButton.titleLabel?.font = UIFont(name: "Roboto", size: 14.0)
 
         //Earn Badges
         earnBadgesButton.titleLabel?.font = UIFont(name: "Roboto", size: 14.0)
         earnBadgesButton.layer.borderWidth = 1.0
         earnBadgesButton.layer.borderColor = UIColor.Sphinx.MainBottomIcons.cgColor
-        earnBadgesButton.layer.cornerRadius = 18.0
+        earnBadgesButton.layer.cornerRadius = earnBadgesButton.frame.height/2.0
         
     }
     
@@ -101,6 +113,12 @@ class MemberBadgeDetailVC : UIViewController{
         })
     }
     
+    func configView(personInfo:TribeMemberStruct){
+        print(personInfo)
+        self.memberImageView.sd_setImage(with: URL(string: personInfo.img))
+        self.memberNameLabel.text = personInfo.ownerAlias
+    }
+    
     func loadProfileData() {
         guard let person = message?.person else {
             //dismissView()
@@ -109,10 +127,7 @@ class MemberBadgeDetailVC : UIViewController{
         
         API.sharedInstance.getTribeMemberInfo(person: person, callback: { (success, personInfo) in
             if let personInfo = personInfo, success {
-                print(personInfo)
-                self.memberImageView.sd_setImage(with: URL(string: personInfo.img))
-                self.memberNameLabel.text = personInfo.ownerAlias
-                //self.loading = false
+                self.configView(personInfo: personInfo)
             } else {
                 //self.dismissView()
             }

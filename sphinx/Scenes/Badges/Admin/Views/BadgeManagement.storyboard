@@ -520,6 +520,9 @@
                                                     <directionalEdgeInsets key="contentInsets" top="0.0" leading="-10" bottom="0.0" trailing="0.0"/>
                                                     <color key="baseForegroundColor" name="Body"/>
                                                 </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="sendSatsButtonTapped:" destination="LuO-qo-PHW" eventType="touchUpInside" id="Kqo-El-0eo"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C0V-Lz-571">
                                                 <rect key="frame" x="205.66666666666663" y="184" width="155.33333333333337" height="40"/>
@@ -690,7 +693,7 @@
         <image name="customizeBadgeIcon" width="36" height="52"/>
         <image name="medalTag" width="100" height="101"/>
         <image name="minus_sign" width="10" height="2"/>
-        <image name="moderatorBadge" width="44" height="44"/>
+        <image name="moderatorBadge" width="512" height="512"/>
         <image name="notepad" width="12" height="12"/>
         <image name="plus_sign" width="10" height="10"/>
         <image name="sphinxTagIcon" width="44" height="44"/>

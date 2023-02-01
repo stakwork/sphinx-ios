@@ -20,6 +20,23 @@ class MemberBadgeDetailVM : NSObject {
         self.vc = vc
         self.tableView = tableView
         self.presentationContext = vc.presentationContext
+    }
+    
+    func configTable(){
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        tableView.register(UINib(nibName: "MemberBadgeDetailTableViewCell", bundle: nil), forCellReuseIdentifier: MemberDetailTableViewCell.reuseID)
+        tableView.register(UINib(nibName: "BadgeDetailCell", bundle: nil), forCellReuseIdentifier: BadgeDetailCell.reuseID)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0, execute: {
+            self.loadBadges()
+        })
+        
+        tableView.reloadData()
+    }
+    
+    func loadBadges(){
         //TODO: replace with API call
         let badge = Badge()
         badge.name = "Early Adopter"
@@ -32,17 +49,10 @@ class MemberBadgeDetailVM : NSObject {
             badge2,
             badge,
             badge2,
-            badge 
+            badge
         ]
-    }
-    
-    func configTable(){
-        tableView.delegate = self
-        tableView.dataSource = self
         
-        tableView.register(UINib(nibName: "MemberBadgeDetailTableViewCell", bundle: nil), forCellReuseIdentifier: MemberDetailTableViewCell.reuseID)
-        tableView.register(UINib(nibName: "BadgeDetailCell", bundle: nil), forCellReuseIdentifier: BadgeDetailCell.reuseID)
-        
+        vc.dismissBadgeDetails()
         tableView.reloadData()
     }
     

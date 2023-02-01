@@ -48,10 +48,9 @@ class MemberBadgeDetailVC : UIViewController{
     }
     
     override func viewDidLoad() {
-        //self.view.backgroundColor = .green
-        
         configHeaderView()
         configTableView()
+        dismissBadgeDetails()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -87,7 +86,7 @@ class MemberBadgeDetailVC : UIViewController{
     func dismissBadgeDetails(){
         detailView.translatesAutoresizingMaskIntoConstraints = false
         tableView.isScrollEnabled = false
-        detailViewHeight.constant = 480.0
+        detailViewHeight.constant = (memberBadgeDetailVM.badges.count > 0) ? 492.0 : 444.0
         UIView.animate(withDuration: 0.25, delay: 0.0, animations: {
             self.detailView.layoutIfNeeded()
         })

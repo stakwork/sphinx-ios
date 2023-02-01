@@ -252,6 +252,8 @@ extension NewPodcastPlayerViewController : PickerViewDelegate {
             )
             
             tableHeaderView?.configureControls()
+            
+            shouldSyncPodcast()
         }
     }
 }

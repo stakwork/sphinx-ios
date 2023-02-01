@@ -169,7 +169,7 @@ extension API {
         callback: @escaping EmptyCallback,
         errorCallback: @escaping EmptyCallback
     ) {
-        var requestParams: [String:Any] = [:]()
+        var requestParams: [String: Any] = [String: Any]()
         requestParams["content"] = params
         
         guard let request = getURLRequest(route: "/content_feed_status/\(feedId)", params: requestParams as NSDictionary?, method: "PUT") else {

@@ -224,13 +224,6 @@ extension DashboardRootViewController {
         
         activeTab = .friends
         
-        self.showMemberBadgeVC()
-    }
-    
-    func showMemberBadgeVC(){
-        let vc = MemberBadgeDetailVC.instantiate(rootViewController: self.rootViewController)
-        vc.modalPresentationStyle = .overCurrentContext
-        self.navigationController?.present(vc, animated: false)
     }
     
     func setupAddTribeButton(){

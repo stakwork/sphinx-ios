@@ -142,7 +142,20 @@ extension NewsletterFeedContainerViewController {
         if let objectId = self.newsletterFeed?.objectID,
            let feedUrl = self.newsletterFeed?.feedURL?.absoluteString {
             
-            ContentFeed.fetchFeedItemsInBackground(feedUrl: feedUrl, contentFeedObjectID: objectId, completion: {})
+            let bgContext = CoreDataManager.sharedManager.getBackgroundContext()
+            
+            bgContext.perform {
+                ContentFeed.fetchFeedItems(
+                    feedUrl: feedUrl,
+                    contentFeedObjectID: objectId,
+                    context: bgContext,
+                    completion: { result in
+                        if case .success(_) = result {
+                            bgContext.saveContext()
+                        }
+                    }
+                )
+            }
         }
     }
 }

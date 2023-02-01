@@ -69,11 +69,12 @@ class FeedsManager : NSObject {
          
             print(contentFeedStatusParams)
             
-//            API.sharedInstance.saveContentFeedStatusesToRemote(
-//                params: contentFeedStatusParams,
-//                callback: {},
-//                errorCallback: {}
-//            )
+            API.sharedInstance.saveContentFeedStatusToRemote(
+                params: contentFeedStatusParams,
+                feedId: feedId,
+                callback: {},
+                errorCallback: {}
+            )
         }
     }
     
@@ -177,7 +178,7 @@ class FeedsManager : NSObject {
             return
         }
         
-        let context = CoreDataManager.sharedManager.persistentContainer.viewContext
+        let context = CoreDataManager.sharedManager.getBackgroundContext()
         
         let feeds = fetchFeeds()
         
@@ -241,11 +242,7 @@ class FeedsManager : NSObject {
     }
     
     func refreshFeedUI() {
-        DispatchQueue.main.async {
-            NotificationCenter.default.post(name: .refreshPodcastUI, object: nil)
-            NotificationCenter.default.post(name: .refreshVideoUI, object: nil)
-            NotificationCenter.default.post(name: .refreshNewsletterUI, object: nil)
-        }
+        NotificationCenter.default.post(name: .refreshFeedUI, object: nil)
     }
     
     func getContentFeedFor(
@@ -255,9 +252,15 @@ class FeedsManager : NSObject {
         context: NSManagedObjectContext,
         completion: @escaping (ContentFeed?) -> ()
     ) {
-        if let existingContentFeed = ContentFeed.getFeedWith(feedId: feedId, managedContext: context) {
-            chat?.contentFeed = existingContentFeed
-            completion(existingContentFeed)
+        if let existingContentFeed = ContentFeed.getFeedWith(feedId: feedId, managedContext: context), let url = existingContentFeed.feedURL {
+            ContentFeed.fetchFeedItems(
+                feedUrl: url.absoluteString,
+                contentFeedObjectID: existingContentFeed.objectID,
+                context: context,
+                completion: { _ in
+                    completion(existingContentFeed)
+                
+            })
         } else {
             ContentFeed.fetchContentFeed(at: feedUrl, chat: chat, persistingIn: context, then: { result in
                 if case .success(let contentFeed) = result {
@@ -310,69 +313,7 @@ class FeedsManager : NSObject {
         }
     }
     
-    // MARK: - Pre load and cache content feeds
-    
-    func preCacheContentFeedsInBackground() {
-        DispatchQueue.global().async {
-            self.preCacheContentFeeds()
-        }
-    }
-    
-    func preCacheContentFeeds(){
-        ///1. Fetch results from memory
-        let feeds: [ContentFeed] = fetchFollowedFeeds()
-            
-        ///2. Walk through each feed
-        for feed in feeds {
-            
-            if let feedType = FeedType(rawValue: feed.feedKindValue) {
-                switch(feedType) {
-                case .Podcast:
-                    if let valid_url = feed.feedURL {
-                        ContentFeed.fetchFeedItemsInBackground(feedUrl: valid_url.absoluteString, contentFeedObjectID: feed.objectID, completion: {
-                            self.refreshUI(feedType)
-                            self.downloadLastEpisodeFor(feed: feed)
-                            self.loadEpisodesDurationFor(feed: feed)
-                        })
-                    } else {
-                        refreshUI(feedType)
-                        downloadLastEpisodeFor(feed: feed)
-                        loadEpisodesDurationFor(feed: feed)
-                    }
-                    break
-                case .Video:
-                    if let valid_url = feed.feedURL {
-                        ContentFeed.fetchFeedItemsInBackground(feedUrl: valid_url.absoluteString, contentFeedObjectID: feed.objectID, completion: {
-                            self.refreshUI(feedType)
-                        })
-                    }
-                    break
-                case .Newsletter:
-                    if let valid_url = feed.feedURL {
-                        ContentFeed.fetchFeedItemsInBackground(feedUrl: valid_url.absoluteString, contentFeedObjectID: feed.objectID, completion: {
-                            self.refreshUI(feedType)
-                        })
-                    }
-                    break
-                }
-            }
-        }
-    }
-    
-    func refreshUI(_ feedType : FeedType) {
-        switch(feedType) {
-        case .Podcast:
-            NotificationCenter.default.post(name: .refreshPodcastUI, object: nil)
-            break
-        case .Video:
-            NotificationCenter.default.post(name: .refreshVideoUI, object: nil)
-            break
-        case .Newsletter:
-            NotificationCenter.default.post(name: .refreshNewsletterUI, object: nil)
-            break
-        }
-    }
-    
+    // MARK: - Pre load and cache content feeds    
     func loadEpisodesDurationFor(feed: ContentFeed) {
         for item in feed.items ?? [] {
             let episode = PodcastEpisode.convertFrom(contentFeedItem: item)

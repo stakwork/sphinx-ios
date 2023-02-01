@@ -204,7 +204,20 @@ extension VideoFeedEpisodePlayerContainerViewController {
         if  let videoFeed = self.videoPlayerEpisode?.videoFeed,
             let feedUrl = videoFeed.feedURL?.absoluteString {
             
-            ContentFeed.fetchFeedItemsInBackground(feedUrl: feedUrl, contentFeedObjectID: videoFeed.objectID, completion: {})
+            let bgContext = CoreDataManager.sharedManager.getBackgroundContext()
+            
+            bgContext.perform {
+                ContentFeed.fetchFeedItems(
+                    feedUrl: feedUrl,
+                    contentFeedObjectID: videoFeed.objectID,
+                    context: bgContext,
+                    completion: { result in
+                        if case .success(_) = result {
+                            bgContext.saveContext()
+                        }
+                    }
+                )
+            }
         }
     }
 }

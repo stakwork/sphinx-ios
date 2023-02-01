@@ -65,10 +65,7 @@ class NewPodcastPlayerViewController: UIViewController {
         
         if isBeingDismissed {
             delegate?.willDismissPlayer()
-            
-            var dataDict: [String: String] = [String: String]()
-            dataDict["episode-id"] = (podcast.getCurrentEpisode()?.itemID ?? "") as String
-            NotificationCenter.default.post(name: .refreshEpisode, object: nil, userInfo: dataDict)
+            NotificationCenter.default.post(name: .refreshFeedUI, object: nil)
         }
     }
     
@@ -129,7 +126,21 @@ class NewPodcastPlayerViewController: UIViewController {
     
     private func updateEpisodes() {
         if let feedUrl = podcast.feedURLPath, let objectID = podcast.objectID {
-            ContentFeed.fetchFeedItemsInBackground(feedUrl: feedUrl, contentFeedObjectID: objectID, completion: {})
+            
+            let bgContext = CoreDataManager.sharedManager.getBackgroundContext()
+            
+            bgContext.perform {
+                ContentFeed.fetchFeedItems(
+                    feedUrl: feedUrl,
+                    contentFeedObjectID: objectID,
+                    context: bgContext,
+                    completion: { result in
+                        if case .success(_) = result {
+                            bgContext.saveContext()
+                        }
+                    }
+                )
+            }
         }
     }
 }

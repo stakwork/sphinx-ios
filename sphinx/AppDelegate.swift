@@ -239,8 +239,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             handlePush(notification: notification)
             setInitialVC(launchingApp: false)
         }
-        
-        feedsManager.preCacheContentFeedsInBackground()
     }
 
 

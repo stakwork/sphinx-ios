@@ -45,8 +45,6 @@ public final class ContactsService {
         insertChats(chats: chats)
         insertSubscriptions(subscriptions: subscriptions)
         insertInvites(invites: invites)
-        
-        CoreDataManager.sharedManager.saveContext()
     }
     
     public func insertInvites(invites: [JSON]) {

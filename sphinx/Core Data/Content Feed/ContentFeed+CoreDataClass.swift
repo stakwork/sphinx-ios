@@ -152,29 +152,22 @@ public class ContentFeed: NSManagedObject {
         )
     }
     
-    public static func fetchFeedItemsInBackground(
+    public static func fetchFeedItems(
         feedUrl: String,
         contentFeedObjectID: NSManagedObjectID,
-        completion: @escaping () -> ()
+        context: NSManagedObjectContext,
+        completion: @escaping (Result<ContentFeed, Error>) -> ()
     ) {
-        let backgroundContext = CoreDataManager.sharedManager.getBackgroundContext()
+        let backgroundContentFeed: ContentFeed? = context.object(with: contentFeedObjectID) as? ContentFeed
         
-        backgroundContext.perform {
-            let backgroundContentFeed: ContentFeed? = backgroundContext.object(with: contentFeedObjectID) as? ContentFeed
+        fetchContentFeedItems(
+            at: feedUrl,
+            contentFeed: backgroundContentFeed,
+            persistingIn: context
+        ) { result in
             
-            fetchContentFeedItems(
-                at: feedUrl,
-                contentFeed: backgroundContentFeed,
-                persistingIn: backgroundContext
-            ) { result in
-                
-                if case .success(_) = result {
-                    backgroundContext.saveContext()
-                }
-
-                DispatchQueue.main.async {
-                    completion()
-                }
+            DispatchQueue.main.async {
+                completion(result)
             }
         }
     }

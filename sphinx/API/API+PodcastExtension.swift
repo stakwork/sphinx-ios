@@ -161,6 +161,38 @@ extension API {
                 errorCallback()
             }
         }
+    }
+    
+    func saveContentFeedStatusToRemote(
+        params: [String: Any],
+        feedId: String,
+        callback: @escaping EmptyCallback,
+        errorCallback: @escaping EmptyCallback
+    ) {
+        var requestParams: [String:Any] = [:]()
+        requestParams["content"] = params
         
+        guard let request = getURLRequest(route: "/content_feed_status/\(feedId)", params: requestParams as NSDictionary?, method: "PUT") else {
+            errorCallback()
+            return
+        }
+        
+        let json = JSON(requestParams)
+        print(json)
+        
+        sphinxRequest(request) { response in
+            switch response.result {
+            case .success(let data):
+                if let json = data as? NSDictionary {
+                    if let success = json["success"] as? Bool, success {
+                        callback()
+                        return
+                    }
+                }
+                errorCallback()
+            case .failure(_):
+                errorCallback()
+            }
+        }
     }
 }

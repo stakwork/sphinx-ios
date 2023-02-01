@@ -673,6 +673,7 @@
                         <outlet property="detailViewHeight" destination="o3r-NL-3mE" id="Tdt-9t-DIt"/>
                         <outlet property="earnBadgesButton" destination="C0V-Lz-571" id="o2l-YU-tPA"/>
                         <outlet property="memberImageView" destination="tbp-si-LTE" id="pQr-bI-wed"/>
+                        <outlet property="memberNameLabel" destination="fn0-22-RBQ" id="8pp-eM-vnQ"/>
                         <outlet property="moderatorBadgeImageView" destination="mHa-6M-kii" id="3fa-6X-Og2"/>
                         <outlet property="sendSatsButton" destination="iUv-j0-fRn" id="vhk-Tl-c7i"/>
                         <outlet property="tableView" destination="hEd-1Q-eLw" id="rP5-l0-T6G"/>

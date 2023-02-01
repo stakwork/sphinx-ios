@@ -446,7 +446,7 @@ extension ChatViewController : MessageCellDelegate {
     
     func didTapAvatarView(message: TransactionMessage) {
         
-        let vc = MemberBadgeDetailVC.instantiate(rootViewController: self.rootViewController)
+        let vc = MemberBadgeDetailVC.instantiate(rootViewController: self.rootViewController,message:message)
         vc.modalPresentationStyle = .overCurrentContext
         self.navigationController?.present(vc, animated: false)
         

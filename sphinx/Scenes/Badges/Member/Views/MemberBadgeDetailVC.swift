@@ -18,6 +18,7 @@ public enum MemberBadgeDetailPresentationContext {
 class MemberBadgeDetailVC : UIViewController{
     
     @IBOutlet weak var memberImageView: UIImageView!
+    @IBOutlet weak var memberNameLabel: UILabel!
     @IBOutlet weak var sendSatsButton: UIButton!
     @IBOutlet weak var earnBadgesButton: UIButton!
     @IBOutlet weak var detailViewHeight: NSLayoutConstraint!
@@ -27,24 +28,34 @@ class MemberBadgeDetailVC : UIViewController{
     
     
     var presentationContext : MemberBadgeDetailPresentationContext = .admin
+    var message : TransactionMessage? = nil
     
     lazy var memberBadgeDetailVM : MemberBadgeDetailVM = {
        return MemberBadgeDetailVM(vc: self, tableView: tableView)
     }()
     
     static func instantiate(
-        rootViewController: RootViewController
+        rootViewController: RootViewController,
+        message: TransactionMessage
     ) -> UIViewController {
         let viewController = StoryboardScene.BadgeManagement.memberBadgeDetailVC.instantiate()
         viewController.view.backgroundColor = .clear
+        if let vc = viewController as? MemberBadgeDetailVC{
+            vc.message = message
+        }
         
         return viewController
     }
     
     override func viewDidLoad() {
         //self.view.backgroundColor = .green
+        
         configHeaderView()
         configTableView()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        loadProfileData()
     }
     
     func configHeaderView(){
@@ -72,6 +83,7 @@ class MemberBadgeDetailVC : UIViewController{
         tableView.isScrollEnabled = false
     }
     
+    
     func dismissBadgeDetails(){
         detailView.translatesAutoresizingMaskIntoConstraints = false
         tableView.isScrollEnabled = false
@@ -87,6 +99,24 @@ class MemberBadgeDetailVC : UIViewController{
         detailViewHeight.constant = self.view.frame.height * 0.9
         UIView.animate(withDuration: 0.25, delay: 0.0, animations: {
             self.detailView.layoutIfNeeded()
+        })
+    }
+    
+    func loadProfileData() {
+        guard let person = message?.person else {
+            //dismissView()
+            return
+        }
+        
+        API.sharedInstance.getTribeMemberInfo(person: person, callback: { (success, personInfo) in
+            if let personInfo = personInfo, success {
+                print(personInfo)
+                self.memberImageView.sd_setImage(with: URL(string: personInfo.img))
+                self.memberNameLabel.text = personInfo.ownerAlias
+                //self.loading = false
+            } else {
+                //self.dismissView()
+            }
         })
     }
     

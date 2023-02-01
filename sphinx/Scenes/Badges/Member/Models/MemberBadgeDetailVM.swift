@@ -92,7 +92,7 @@ extension MemberBadgeDetailVM : UITableViewDelegate,UITableViewDataSource{
                 withIdentifier: MemberDetailTableViewCell.reuseID,
                 for: indexPath
             ) as! MemberDetailTableViewCell
-            cell.configureCell(type: getCellTypeOrder()[indexPath.row], badges: badges)
+            cell.configureCell(type: getCellTypeOrder()[indexPath.row], badges: badges,isExpanded: badgeDetailExpansionState)
             
             return cell
         }

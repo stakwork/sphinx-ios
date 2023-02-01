@@ -37,7 +37,7 @@ class MemberDetailTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func configureCell(type:MemberBadgeDetailCellType,badges:[Badge]){
+    func configureCell(type:MemberBadgeDetailCellType,badges:[Badge],isExpanded:Bool){
         switch(type){
         case .badges:
             titleLabel.text = "Badges:"
@@ -55,22 +55,29 @@ class MemberDetailTableViewCell: UITableViewCell {
             break
         }
         
-        configureStackView(type: type,badges: badges)
+        configureStackView(type: type,badges: badges, isExpanded: isExpanded)
     }
     
     override func prepareForReuse() {
+        clearLabels()
+        clearImageViews()
+    }
+    
+    func clearLabels(){
         for label in subviewLabels.compactMap({$0}){
             label.text = ""
             label.removeFromSuperview()
         }
-        
+    }
+    
+    func clearImageViews(){
         for imageView in subviewImageViews.compactMap({$0}){
             imageView.image = nil
             imageView.removeFromSuperview()
         }
     }
     
-    func configureStackView(type:MemberBadgeDetailCellType,badges:[Badge]){
+    func configureStackView(type:MemberBadgeDetailCellType,badges:[Badge],isExpanded:Bool){
         switch(type){
             case .contributions:
                 let satsLabel = UILabel(frame: CGRect(x: 0.0, y: 0.0, width: 97.0, height: stackView.frame.height))
@@ -126,6 +133,18 @@ class MemberDetailTableViewCell: UITableViewCell {
                 self.layoutIfNeeded()
                 break
             case .badges:
+                if(isExpanded == true){
+                    clearLabels()
+                    clearImageViews()
+                    let disclosureImageView = UIImageView(frame: CGRect(x: 0.0, y: 0.0, width: stackView.frame.height, height: stackView.frame.height))
+                    disclosureImageView.image = UIImage(named: "disclosureIndicator")
+                    disclosureImageView.transform = disclosureImageView.transform.rotated(by: .pi/2)
+                    stackView.addSubview(disclosureImageView)
+                    stackViewWidth.constant = disclosureImageView.frame.width
+                    self.layoutIfNeeded()
+                    return
+                }
+            
                 let imageUrls : [String] = badges.compactMap({$0.icon_url})
                 var clippedUrls = [String]()
                 for i in 0..<min(badgeLimit, imageUrls.count){

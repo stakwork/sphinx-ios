@@ -139,6 +139,7 @@ class MemberDetailTableViewCell: UITableViewCell {
                     let disclosureImageView = UIImageView(frame: CGRect(x: 0.0, y: 0.0, width: stackView.frame.height, height: stackView.frame.height))
                     disclosureImageView.image = UIImage(named: "disclosureIndicator")
                     disclosureImageView.transform = disclosureImageView.transform.rotated(by: .pi/2)
+                    self.subviewImageViews.append(disclosureImageView)
                     stackView.addSubview(disclosureImageView)
                     stackViewWidth.constant = disclosureImageView.frame.width
                     self.layoutIfNeeded()

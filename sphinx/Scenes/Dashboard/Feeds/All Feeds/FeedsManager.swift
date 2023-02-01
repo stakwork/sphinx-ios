@@ -23,24 +23,12 @@ class FeedsManager : NSObject {
     
     // MARK: - Content Feed fetch requests
     
-    func fetchFeeds() -> [ContentFeed]{
+    func fetchFeeds(
+        context: NSManagedObjectContext? = nil
+    ) -> [ContentFeed]{
         var feeds: [ContentFeed] = []
         let fetchRequest = ContentFeed.FetchRequests.default()
-        let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
-        
-        do {
-            feeds = try managedContext.fetch(fetchRequest)
-            return feeds
-        } catch let error as NSError {
-            print("Error: " + error.localizedDescription)
-            return []
-        }
-    }
-    
-    func fetchFollowedFeeds() -> [ContentFeed]{
-        var feeds: [ContentFeed] = []
-        let fetchRequest = ContentFeed.FetchRequests.followedFeeds()
-        let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
+        let managedContext = context ?? CoreDataManager.sharedManager.persistentContainer.viewContext
         
         do {
             feeds = try managedContext.fetch(fetchRequest)
@@ -180,22 +168,20 @@ class FeedsManager : NSObject {
         
         let context = CoreDataManager.sharedManager.getBackgroundContext()
         
-        let feeds = fetchFeeds()
-        
-        let localIDs = feeds.compactMap({ $0.feedID })
-        let remoteIDs = contentFeedStatuses.compactMap({ $0.feedID })
-        
-        ///Delete feeds not present on remote data
-        for idToRemove in localIDs.filter({ remoteIDs.contains($0) }) {
-            if let feedToRemove = feeds.filter({ $0.feedID == idToRemove }).first {
-                feedToRemove.isSubscribedToFromSearch = false
-                feedToRemove.chat = nil
-                
+        context.perform {
+            let feeds = self.fetchFeeds(context: context)
+            
+            let localIDs = feeds.compactMap({ $0.feedID })
+            let remoteIDs = contentFeedStatuses.compactMap({ $0.feedID })
+            
+            ///Delete feeds not present on remote data
+            for idToRemove in localIDs.filter({ remoteIDs.contains($0) }) {
+                if let feedToRemove = feeds.filter({ $0.feedID == idToRemove }).first {
+                    feedToRemove.isSubscribedToFromSearch = false
+                    feedToRemove.chat = nil
+                }
             }
-        }
-        
-        DispatchQueue.global().async {
-        
+            
             let dispatchSemaphore = DispatchSemaphore(value: 1)
             
             ///Update feeds present in remote data
@@ -222,16 +208,18 @@ class FeedsManager : NSObject {
                     if let contentFeed = contentFeed {
                         self.restoreFeedStatus(
                             remoteContentStatus: contentFeedStatus,
-                            localFeed: contentFeed
+                            localFeed: contentFeed,
+                            chat: chat
                         )
                     }
+                    
+                    context.saveContext()
                     
                     progressCallback(
                         self.getRestoreProgress(totalFeeds: contentFeedStatuses.count, syncedFeeds: index + 1)
                     )
                     
                     if (index + 1 == contentFeedStatuses.count) {
-                        context.saveContext()
                         completionCallback()
                     }
                     
@@ -259,8 +247,8 @@ class FeedsManager : NSObject {
                 context: context,
                 completion: { _ in
                     completion(existingContentFeed)
-                
-            })
+                }
+            )
         } else {
             ContentFeed.fetchContentFeed(at: feedUrl, chat: chat, persistingIn: context, then: { result in
                 if case .success(let contentFeed) = result {
@@ -274,9 +262,11 @@ class FeedsManager : NSObject {
     
     func restoreFeedStatus(
         remoteContentStatus: ContentFeedStatus,
-        localFeed: ContentFeed
+        localFeed: ContentFeed,
+        chat: Chat?
     ) {
         localFeed.isSubscribedToFromSearch = remoteContentStatus.subscriptionStatus
+        localFeed.chat = chat
         
         if !localFeed.isPodcast {
             return

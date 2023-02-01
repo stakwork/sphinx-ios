@@ -395,7 +395,7 @@ class ActionsManager {
     ) {
         let dispatchQueue = DispatchQueue.global(qos: .userInitiated)
         dispatchQueue.async {
-            self.syncActions()
+            self.syncActions(completion: completion)
         }
     }
     

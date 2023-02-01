@@ -148,6 +148,8 @@ extension DashboardNewsletterFeedCollectionViewController {
         configure(collectionView)
         configureDataSource(for: collectionView)
         addTableBottomInset(for: collectionView)
+        
+        fetchItems()
     }
     
     func addTableBottomInset(for collectionView: UICollectionView) {
@@ -160,17 +162,24 @@ extension DashboardNewsletterFeedCollectionViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        NotificationCenter.default.addObserver(self, selector: #selector(refreshNewsletters), name: .refreshNewsletterUI, object: nil)
-        fetchItems()
+
+        NotificationCenter.default.removeObserver(self, name: .refreshFeedUI, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(forceItemsRefresh), name: .refreshFeedUI, object: nil)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        NotificationCenter.default.removeObserver(self, name: .refreshNewsletterUI, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .refreshFeedUI, object: nil)
     }
     
-    @objc func refreshNewsletters(){
-        fetchItems()
+    @objc func forceItemsRefresh(){
+        DispatchQueue.main.async { [weak self] in
+            if let feeds = self?.newsletterFeeds {
+                self?.updateWithNew(newsletterFeeds: feeds)
+                
+                self?.onNewResultsFetched(feeds.count)
+            }
+        }
     }
     
 }

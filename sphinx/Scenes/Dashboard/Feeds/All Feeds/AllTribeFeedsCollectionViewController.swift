@@ -193,6 +193,7 @@ extension AllTribeFeedsCollectionViewController {
         configureDataSource(for: collectionView)
         addTableBottomInset(for: collectionView)
         
+        fetchItems()
         loadRecommendations()
     }
     
@@ -202,12 +203,6 @@ extension AllTribeFeedsCollectionViewController {
         
         collectionView.contentInset.bottom = bottomBarHeight + windowInsets.bottom
         collectionView.verticalScrollIndicatorInsets.bottom = bottomBarHeight + windowInsets.bottom
-    }
-    
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        fetchItems()
     }
 }
 
@@ -551,6 +546,7 @@ extension AllTribeFeedsCollectionViewController {
         if let dataSource = dataSource {
             
             let snapshot = makeSnapshotForCurrentState()
+            
             if #available(iOS 15.0, *) {
                 dataSource.applySnapshotUsingReloadData(snapshot, completion: nil)
             } else {
@@ -608,7 +604,6 @@ extension AllTribeFeedsCollectionViewController {
             cacheName: nil
         )
     }
-    
     
     func fetchItems() {
         do {

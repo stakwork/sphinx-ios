@@ -143,6 +143,8 @@ extension PodcastFeedCollectionViewController {
         configure(collectionView)
         configureDataSource(for: collectionView)
         addTableBottomInset(for: collectionView)
+        
+        fetchItems()
     }
     
     func addTableBottomInset(for collectionView: UICollectionView) {
@@ -155,29 +157,25 @@ extension PodcastFeedCollectionViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        fetchItems()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(refreshPodcasts), name: .refreshPodcastUI, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(refreshEpisode(_:)), name: .refreshEpisode, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .refreshFeedUI, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(forceItemsRefresh), name: .refreshFeedUI, object: nil)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        NotificationCenter.default.removeObserver(self, name: .refreshPodcastUI, object: nil)
+        
+        NotificationCenter.default.removeObserver(self, name: .refreshFeedUI, object: nil)
     }
     
-    @objc func refreshPodcasts(){
-        fetchItems()
-    }
-    
-    @objc func refreshEpisode(_ notification: Notification){
-        if let episodeId = notification.userInfo?["episode-id"] as? String {
-            if let episode = (followedPodcastEpisode.filter { $0.itemID == episodeId }).first {
-                let item  = DataSourceItem.listenNowEpisode(episode)
+    @objc func forceItemsRefresh(){
+        DispatchQueue.main.async { [weak self] in
+            if let feeds = self?.followedPodcastFeeds {
+                self?.updateWithNew(
+                    followedPodcastFeeds: feeds
+                )
                 
-                var snapshot = dataSource.snapshot()
-                snapshot.reloadItems([item])
-                dataSource.apply(snapshot, animatingDifferences: false)
+                self?.onNewResultsFetched(feeds.count)
             }
         }
     }
@@ -363,7 +361,11 @@ extension PodcastFeedCollectionViewController {
 
         let snapshot = makeSnapshotForCurrentState()
         
-        dataSource.apply(snapshot, animatingDifferences: false, completion: nil)
+//        if #available(iOS 15.0, *) {
+//            dataSource.applySnapshotUsingReloadData(snapshot, completion: nil)
+//        } else {
+            dataSource.apply(snapshot, animatingDifferences: false, completion: nil)
+//        }
     }
 
 

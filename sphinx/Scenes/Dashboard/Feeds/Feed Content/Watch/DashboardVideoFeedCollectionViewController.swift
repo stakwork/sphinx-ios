@@ -146,6 +146,8 @@ extension DashboardVideoFeedCollectionViewController {
         configure(collectionView)
         configureDataSource(for: collectionView)
         addTableBottomInset(for: collectionView)
+        
+        fetchItems()
     }
     
     func addTableBottomInset(for collectionView: UICollectionView) {
@@ -158,16 +160,23 @@ extension DashboardVideoFeedCollectionViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        NotificationCenter.default.addObserver(self, selector: #selector(refreshVideos), name: .refreshVideoUI, object: nil)
-        fetchItems()
+        
+        NotificationCenter.default.removeObserver(self, name: .refreshFeedUI, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(forceItemsRefresh), name: .refreshFeedUI, object: nil)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        NotificationCenter.default.removeObserver(self, name: .refreshVideoUI, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .refreshFeedUI, object: nil)
     }
     
-    @objc func refreshVideos(){
-        fetchItems()
+    @objc func forceItemsRefresh(){
+        DispatchQueue.main.async { [weak self] in
+            if let feeds = self?.videoFeeds {
+                self?.updateWithNew(videoFeeds: feeds)
+                
+                self?.onNewResultsFetched(feeds.count)
+            }
+        }
     }
 }
 
@@ -459,21 +468,6 @@ extension DashboardVideoFeedCollectionViewController {
     ) {
         self.videoFeeds = videoFeeds
         videoEpisodes = videoFeeds.compactMap(\.videosArray.first)
-
-        if let dataSource = dataSource {
-            dataSource.apply(
-                makeSnapshotForCurrentState(),
-                animatingDifferences: shouldAnimate
-            )
-        }
-    }
-    
-    
-    func updateWithNew(
-        videoEpisodes: [Video],
-        shouldAnimate: Bool = true
-    ) {
-        self.videoEpisodes = videoEpisodes
 
         if let dataSource = dataSource {
             dataSource.apply(

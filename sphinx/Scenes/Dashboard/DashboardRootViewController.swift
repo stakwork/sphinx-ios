@@ -537,6 +537,8 @@ extension DashboardRootViewController {
             return
         }
         
+        CoreDataManager.sharedManager.saveContext()
+        
         feedsManager.restoreContentFeedStatus(
             progressCallback: { contentProgress in
                 progressCallback(contentProgress)

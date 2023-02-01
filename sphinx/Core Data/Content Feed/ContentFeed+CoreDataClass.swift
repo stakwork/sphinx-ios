@@ -125,10 +125,6 @@ public class ContentFeed: NSManagedObject {
     ) {
         let tribesServerURL = "\(API.kTribesServerBaseURL)/feed?url=\(feedURLPath)"
         
-        if let existingContenFeed = chat?.contentFeed {
-            managedObjectContext.delete(existingContenFeed)
-        }
-        
         API.sharedInstance.getContentFeed(
             url: tribesServerURL,
             callback: { feedJSON in

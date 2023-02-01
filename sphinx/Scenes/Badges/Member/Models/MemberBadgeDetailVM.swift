@@ -24,8 +24,37 @@ class MemberBadgeDetailVM : NSObject {
     let headerOffset : Int = 0
     let badgeDetailOffset : Int = 2
     var delegate: MemberBadgeDetailVMDisplayDelegate? = nil
+    var isLoading : Bool {
+        didSet{
+            if(isLoading){
+                let loadingViewFrame = vc.detailView.frame
+                vc.loadingView = UIView(frame: loadingViewFrame)
+                vc.loadingView?.backgroundColor = UIColor.Sphinx.Body
+                if let loadingView = vc.loadingView{
+                    let imageView : UIImageView = UIImageView(frame: loadingView.frame)
+                    imageView.image = UIImage(named: "memberBadgeLoadingView")
+                    imageView.contentMode = .scaleAspectFit
+                    let shimmerView = ShimmerView(frame: imageView.frame)
+                    shimmerView.alpha = 0.075
+                    vc.loadingView?.addSubview(shimmerView)
+                    vc.loadingView?.addSubview(imageView)
+                    vc.detailView.addSubview(loadingView)
+                    vc.detailView.bringSubviewToFront(loadingView)
+                    vc.tableView.isHidden = true
+                    shimmerView.startShimmerAnimation()
+                }
+                
+            }
+            else{
+                vc.tableView.isHidden = false
+                vc.loadingView?.removeFromSuperview()
+                vc.loadingView = nil
+            }
+        }
+    }
     
     init(vc: MemberBadgeDetailVC, tableView: UITableView) {
+        self.isLoading = false
         self.vc = vc
         self.tableView = tableView
         self.presentationContext = vc.presentationContext
@@ -95,8 +124,6 @@ class MemberBadgeDetailVM : NSObject {
         delegate?.reloadHeaderView(personInfo: personInfo)
         let iv = delegate?.getImageViewReference()
         iv?.sd_setImage(with: URL(string: personInfo.img))
-        //self.memberImageView.sd_setImage(with: URL(string: personInfo.img))
-        //self.memberNameLabel.text = personInfo.ownerAlias
     }
     
     func loadProfileData() {
@@ -105,13 +132,18 @@ class MemberBadgeDetailVM : NSObject {
             return
         }
         
-        API.sharedInstance.getTribeMemberInfo(person: person, callback: { (success, personInfo) in
-            if let personInfo = personInfo, success {
-                self.configHeaderView(personInfo: personInfo)
-            } else {
-                //self.dismissView()
-            }
+        isLoading = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 10.0, execute: {
+            API.sharedInstance.getTribeMemberInfo(person: person, callback: { (success, personInfo) in
+                if let personInfo = personInfo, success {
+                    self.isLoading = false
+                    self.configHeaderView(personInfo: personInfo)
+                } else {
+                    //self.dismissView()
+                }
+            })
         })
+        
     }
     
 }
@@ -167,4 +199,48 @@ extension MemberBadgeDetailVM : UITableViewDelegate,UITableViewDataSource{
     }
     
     
+}
+
+
+
+
+class ShimmerView : UIView {
+
+    var gradientColorOne : CGColor = UIColor(white: 0.85, alpha: 1.0).cgColor
+    var gradientColorTwo : CGColor = UIColor(white: 0.95, alpha: 1.0).cgColor
+    
+    
+    
+    func addGradientLayer() -> CAGradientLayer {
+        
+        let gradientLayer = CAGradientLayer()
+        
+        gradientLayer.frame = self.bounds
+        gradientLayer.startPoint = CGPoint(x: 0.0, y: 1.0)
+        gradientLayer.endPoint = CGPoint(x: 1.0, y: 1.0)
+        gradientLayer.colors = [gradientColorOne, gradientColorTwo, gradientColorOne]
+        gradientLayer.locations = [0.0, 0.5, 1.0]
+        self.layer.addSublayer(gradientLayer)
+        
+        return gradientLayer
+    }
+    
+    func addAnimation() -> CABasicAnimation {
+       
+        let animation = CABasicAnimation(keyPath: "locations")
+        animation.fromValue = [-1.0, -0.5, 0.0]
+        animation.toValue = [1.0, 1.5, 2.0]
+        animation.repeatCount = .infinity
+        animation.duration = 0.9
+        return animation
+    }
+    
+    func startShimmerAnimation() {
+        
+        let gradientLayer = addGradientLayer()
+        let animation = addAnimation()
+       
+        gradientLayer.add(animation, forKey: animation.keyPath)
+    }
+
 }

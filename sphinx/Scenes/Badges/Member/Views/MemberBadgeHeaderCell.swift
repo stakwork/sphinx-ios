@@ -30,7 +30,7 @@ class MemberBadgeHeaderCell: UITableViewCell {
     func initHeaderView(){
         //Member Image
         memberImageView.contentMode = .scaleAspectFill
-        memberImageView.sd_setImage(with: URL(string: "https://us.123rf.com/450wm/fizkes/fizkes2010/fizkes201001384/fizkes201001384.jpg?ver=6"))
+        //memberImageView.sd_setImage(with: URL(string: "https://us.123rf.com/450wm/fizkes/fizkes2010/fizkes201001384/fizkes201001384.jpg?ver=6"))
         memberImageView.makeCircular()
         
         //Send Sats

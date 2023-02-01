@@ -17,19 +17,15 @@ public enum MemberBadgeDetailPresentationContext {
 
 class MemberBadgeDetailVC : UIViewController{
     
-    @IBOutlet weak var memberImageView: UIImageView!
-    @IBOutlet weak var memberNameLabel: UILabel!
-    @IBOutlet weak var sendSatsButton: UIButton!
-    @IBOutlet weak var earnBadgesButton: UIButton!
     @IBOutlet weak var detailViewHeight: NSLayoutConstraint!
     @IBOutlet weak var detailView: UIView!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var moderatorBadgeImageView: UIImageView!
     
     
     var presentationContext : MemberBadgeDetailPresentationContext = .admin
     var delegate : TribeMemberViewDelegate? = nil
     var message : TransactionMessage? = nil
+    var loadingView: UIView? = nil
     
     lazy var memberBadgeDetailVM : MemberBadgeDetailVM = {
        return MemberBadgeDetailVM(vc: self, tableView: tableView)
@@ -51,8 +47,6 @@ class MemberBadgeDetailVC : UIViewController{
     }
     
     override func viewDidLoad() {
-        configHeaderView()
-        
         dismissBadgeDetails()
         detailView.backgroundColor = UIColor.Sphinx.Body
     }
@@ -69,26 +63,6 @@ class MemberBadgeDetailVC : UIViewController{
         self.dismiss(animated: false,completion: {
             self.delegate?.shouldGoToSendPayment(message: message)
         })
-    }
-    
-    
-    func configHeaderView(){
-        
-        //Member Image
-        memberImageView.contentMode = .scaleAspectFill
-        memberImageView.sd_setImage(with: URL(string: "https://us.123rf.com/450wm/fizkes/fizkes2010/fizkes201001384/fizkes201001384.jpg?ver=6"))
-        memberImageView.makeCircular()
-        
-        //Send Sats
-        sendSatsButton.layer.cornerRadius = sendSatsButton.frame.height/2.0
-        sendSatsButton.titleLabel?.font = UIFont(name: "Roboto", size: 14.0)
-
-        //Earn Badges
-        earnBadgesButton.titleLabel?.font = UIFont(name: "Roboto", size: 14.0)
-        earnBadgesButton.layer.borderWidth = 1.0
-        earnBadgesButton.layer.borderColor = UIColor.Sphinx.MainBottomIcons.cgColor
-        earnBadgesButton.layer.cornerRadius = earnBadgesButton.frame.height/2.0
-        
     }
     
     func configTableView(){

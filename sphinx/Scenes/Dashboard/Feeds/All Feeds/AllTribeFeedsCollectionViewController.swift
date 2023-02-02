@@ -443,9 +443,11 @@ extension AllTribeFeedsCollectionViewController {
     func isTrackingEnabled()->Bool{
         return UserDefaults.Keys.shouldTrackActions.get(defaultValue: false)
     }
+    
     func makeSnapshotForCurrentState(
         loadingRecommendations: Bool = false
     ) -> DataSourceSnapshot {
+        
         var snapshot = DataSourceSnapshot()
         
         if (isTrackingEnabled()) {
@@ -547,7 +549,7 @@ extension AllTribeFeedsCollectionViewController {
             
             let snapshot = makeSnapshotForCurrentState()
             
-            if #available(iOS 15.0, *) {
+            if #available(iOS 15.0, *), snapshot.numberOfSections > 1 {
                 dataSource.applySnapshotUsingReloadData(snapshot, completion: nil)
             } else {
                 dataSource.apply(snapshot, animatingDifferences: false, completion: nil)
@@ -563,7 +565,8 @@ extension AllTribeFeedsCollectionViewController {
             let snapshot = makeSnapshotForCurrentState(
                 loadingRecommendations: true
             )
-            if #available(iOS 15.0, *) {
+            
+            if #available(iOS 15.0, *), snapshot.numberOfSections > 1 {
                 dataSource.applySnapshotUsingReloadData(snapshot, completion: nil)
             } else {
                 dataSource.apply(snapshot, animatingDifferences: false, completion: nil)
@@ -579,7 +582,8 @@ extension AllTribeFeedsCollectionViewController {
             let snapshot = makeSnapshotForCurrentState(
                 loadingRecommendations: false
             )
-            if #available(iOS 15.0, *) {
+            
+            if #available(iOS 15.0, *), snapshot.numberOfSections > 1 {
                 dataSource.applySnapshotUsingReloadData(snapshot, completion: nil)
             } else {
                 dataSource.apply(snapshot, animatingDifferences: false, completion: nil)

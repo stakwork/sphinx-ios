@@ -33,8 +33,7 @@ class FeedsManager : NSObject {
         do {
             feeds = try managedContext.fetch(fetchRequest)
             return feeds
-        } catch let error as NSError {
-            print("Error: " + error.localizedDescription)
+        } catch {
             return []
         }
     }
@@ -55,8 +54,6 @@ class FeedsManager : NSObject {
             let contentFeedStatus = getContentFeedStatus(for: contentFeed)
             let contentFeedStatusParams = contentFeedStatus.toJSON()
          
-            print(contentFeedStatusParams)
-            
             API.sharedInstance.saveContentFeedStatusToRemote(
                 params: contentFeedStatusParams,
                 feedId: feedId,
@@ -78,8 +75,7 @@ class FeedsManager : NSObject {
         })
         
         let contentFeedStatusParams = contentFeedStatuses.map({ $0.toJSON() })
-        print(contentFeedStatuses)
-        
+
         API.sharedInstance.saveContentFeedStatusesToRemote(
             params: contentFeedStatusParams,
             callback: {},
@@ -128,6 +124,12 @@ class FeedsManager : NSObject {
     }
     
     // MARK: - Getting content feed status from relay and restoring
+    func restoreContentFeedStatusInBackground() {
+        let dispatchQueue = DispatchQueue.global(qos: .userInitiated)
+        dispatchQueue.async {
+            self.restoreContentFeedStatus()
+        }
+    }
     
     func restoreContentFeedStatus(
         progressCallback: ((Int) -> ())? = nil,
@@ -253,35 +255,6 @@ class FeedsManager : NSObject {
         }
     }
     
-    func fetchNewItems() {
-        let context = CoreDataManager.sharedManager.getBackgroundContext()
-        
-        context.perform {
-            
-            let dispatchSemaphore = DispatchSemaphore(value: 0)
-
-            for feed in self.fetchFeeds(context: context) {
-                
-                if let url = feed.feedURL {
-                    
-                    ContentFeed.fetchFeedItems(
-                        feedUrl: url.absoluteString,
-                        contentFeedObjectID: feed.objectID,
-                        context: context,
-                        completion: { _ in
-                            dispatchSemaphore.signal()
-                        }
-                    )
-                    
-                    dispatchSemaphore.wait()
-                }
-            }
-            
-            context.saveContext()
-            self.refreshFeedUI()
-        }
-    }
-    
     func restoreFeedStatus(
         remoteContentStatus: ContentFeedStatus,
         localFeed: ContentFeed,
@@ -325,7 +298,36 @@ class FeedsManager : NSObject {
         }
     }
     
-    // MARK: - Pre load and cache content feeds    
+    // MARK: - Pre load and cache content feeds
+    func fetchNewItems() {
+        let context = CoreDataManager.sharedManager.getBackgroundContext()
+        
+        context.perform {
+            
+            let dispatchSemaphore = DispatchSemaphore(value: 0)
+
+            for feed in self.fetchFeeds(context: context) {
+                
+                if let url = feed.feedURL {
+                    
+                    ContentFeed.fetchFeedItems(
+                        feedUrl: url.absoluteString,
+                        contentFeedObjectID: feed.objectID,
+                        context: context,
+                        completion: { _ in
+                            dispatchSemaphore.signal()
+                        }
+                    )
+                    
+                    dispatchSemaphore.wait()
+                }
+            }
+            
+            context.saveContext()
+            self.refreshFeedUI()
+        }
+    }
+    
     func loadEpisodesDurationFor(feed: ContentFeed) {
         for item in feed.items ?? [] {
             let episode = PodcastEpisode.convertFrom(contentFeedItem: item)

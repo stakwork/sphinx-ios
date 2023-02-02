@@ -193,7 +193,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         reloadMessagesData()
         presentPINIfNeeded()
         
-        feedsManager.restoreContentFeedStatus()
+        feedsManager.restoreContentFeedStatusInBackground()
         podcastPlayerController.finishAndSaveContentConsumed()
     }
 
@@ -268,7 +268,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if isUserLogged {
             syncDeviceId()
             getRelayKeys()
-            feedsManager.restoreContentFeedStatus()
+            feedsManager.restoreContentFeedStatusInBackground()
         }
 
         takeUserToInitialVC(isUserLogged: isUserLogged)

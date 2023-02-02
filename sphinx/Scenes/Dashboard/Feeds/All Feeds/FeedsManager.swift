@@ -39,14 +39,6 @@ class FeedsManager : NSObject {
     }
     
     // MARK: - Saving content feed status to relay
-    
-    func saveContentFeedStatusInBackground() {
-        let dispatchQueue = DispatchQueue.global(qos: .userInitiated)
-        dispatchQueue.async {
-            self.saveContentFeedStatus()
-        }
-    }
-    
     func saveContentFeedStatus(
         for feedId: String
     ){

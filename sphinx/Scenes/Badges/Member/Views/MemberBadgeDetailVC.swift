@@ -60,6 +60,7 @@ class MemberBadgeDetailVC : UIViewController{
     override func viewDidAppear(_ animated: Bool) {
         //animateView(show: true)
         configTableView()
+        addBlurView()
     }
     
     @IBAction func sendSatsButtonTapped(_ sender: Any) {
@@ -70,6 +71,15 @@ class MemberBadgeDetailVC : UIViewController{
         self.dismiss(animated: false,completion: {
             self.delegate?.shouldGoToSendPayment(message: message)
         })
+    }
+    
+    func addBlurView(){
+        detailView.layer.cornerRadius = 20.0
+        let blurView = UIView(frame: self.view.frame)
+        blurView.backgroundColor = .black
+        blurView.alpha = 0.75
+        self.view.addSubview(blurView)
+        self.view.sendSubviewToBack(blurView)
     }
     
     func addShimmerLoadingView(){

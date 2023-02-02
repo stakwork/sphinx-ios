@@ -206,7 +206,14 @@ extension AllTribeFeedsCollectionViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+        API.sharedInstance.getTribeAdminBadges(
+            tribeID: "",
+            callback: {results in
+                print(results)
+            },
+            errorCallback: {
+                print("error")
+            })
         fetchItems()
     }
 }

@@ -50,9 +50,9 @@ class MemberBadgeDetailVM : NSObject {
         tableView.register(UINib(nibName: "MemberBadgeDetailTableViewCell", bundle: nil), forCellReuseIdentifier: MemberDetailTableViewCell.reuseID)
         tableView.register(UINib(nibName: "BadgeDetailCell", bundle: nil), forCellReuseIdentifier: BadgeDetailCell.reuseID)
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0, execute: {
+        //DispatchQueue.main.asyncAfter(deadline: .now() + 3.0, execute: {
             self.loadBadges()
-        })
+        //})
         
         loadProfileData()
         
@@ -133,7 +133,11 @@ class MemberBadgeDetailVM : NSObject {
 
 extension MemberBadgeDetailVM : UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let count = getCellTypeOrder().count
+        let types = getCellTypeOrder()
+        let count = types.count
+        if(types.contains({MemberBadgeDetailCellType.earnings}()) == false){
+            print("failed to add earnings")
+        }
         return count
     }
     

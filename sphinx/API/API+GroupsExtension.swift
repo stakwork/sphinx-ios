@@ -296,12 +296,14 @@ extension API {
         callback: @escaping GetTribeBadgesCallback,
         errorCallback: @escaping EmptyCallback
     ){
-        let params = [String:Any]()
-        guard let request = getURLRequest(route: "/get_badges", params: params as NSDictionary?, method: "GET") else {
+        var params = [String:Any]()
+        params["limit"] = 100
+        params["offset"] = 0
+        guard let request = getURLRequest(route: "/badges", params: nil, method: "GET") else {
             errorCallback()
             return
         }
-        
+        /*
         var fakeResponse = JSON()
         
         
@@ -316,6 +318,7 @@ extension API {
         callback(JSON(fakeResponse))
         
         return
+        */
         sphinxRequest(request) { response in
             switch response.result {
             case .success(let data):
@@ -325,8 +328,10 @@ extension API {
                         return
                     }
                 }
+                print(response.response?.statusCode)
                 errorCallback()
             case .failure(_):
+                print(response.response?.statusCode)
                 errorCallback()
             }
         }

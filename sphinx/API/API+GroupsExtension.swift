@@ -287,8 +287,51 @@ extension API {
         }
     }
     
-    func createTribeAdminBadge(){
+    func createTribeAdminBadge(
+        callback: @escaping GetTribeBadgesCallback,
+        errorCallback: @escaping EmptyCallback
+    ){
+        var params = [String:Any]()
+        params["icon"] = "https://static-00.iconduck.com/assets.00/whale-icon-512x415-xtgxbil4.png"
+        params["name"] = "Jim Test"
+        params["amount"] = 10
+        params["memo"] = "my memo"
+        guard let request = getURLRequest(route: "/create_badges", params: nil, method: "POST") else {
+            errorCallback()
+            return
+        }
+        /*
+        var fakeResponse = JSON()
         
+        
+        fakeResponse = [
+            "name":"name1",
+            "icon_url":"https://static-00.iconduck.com/assets.00/whale-icon-512x415-xtgxbil4.png",
+            "amount_available":"50",
+            "amount_issued":"100",
+            "requirements":"test requirement"
+        ]
+        
+        callback(JSON(fakeResponse))
+        
+        return
+        */
+        sphinxRequest(request) { response in
+            switch response.result {
+            case .success(let data):
+                if let json = data as? NSDictionary {
+                    if let success = json["success"] as? Bool, let response = json["response"] as? NSDictionary, success {
+                        callback(JSON(response))
+                        return
+                    }
+                }
+                print(response.response?.statusCode)
+                errorCallback()
+            case .failure(_):
+                print(response.response?.statusCode)
+                errorCallback()
+            }
+        }
     }
     
     func getTribeAdminBadges(
@@ -296,10 +339,7 @@ extension API {
         callback: @escaping GetTribeBadgesCallback,
         errorCallback: @escaping EmptyCallback
     ){
-        var params = [String:Any]()
-        params["limit"] = 100
-        params["offset"] = 0
-        guard let request = getURLRequest(route: "/badges", params: nil, method: "GET") else {
+        guard let request = getURLRequest(route: "/badges?limit=100&offset=0", params: nil, method: "GET") else {
             errorCallback()
             return
         }

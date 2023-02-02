@@ -1,0 +1,5 @@
+/* Class = "UITextField"; placeholder = "Search"; ObjectID = "ef7-It-4Rs"; */
+"ef7-It-4Rs.placeholder" = "Buscar";
+
+/* Class = "UIButton"; configuration.title = "Add Tribe"; ObjectID = "vfi-ch-n2c"; */
+"vfi-ch-n2c.configuration.title" = "Agregar Tribu";

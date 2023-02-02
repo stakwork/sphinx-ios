@@ -67,6 +67,7 @@ class DiscoverTribesTagSelectionVC : UIViewController{
         
         UIView.animate(withDuration: 0.25, animations: {
             self.tagSelectionView.superview?.layoutIfNeeded()
+            self.collectionView.reloadData()
             self.view.alpha = show ? 1.0 : 0.0
         }) { _ in
             completion?()

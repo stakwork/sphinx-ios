@@ -18,7 +18,7 @@ class PodcastSatsView: UIView {
     
     let sliderValues = [0,3,3,5,5,8,8,10,10,20,20,40,40,80,80,100]
     
-    var chat: Chat! = nil
+    var podcast: PodcastFeed! = nil
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -37,19 +37,17 @@ class PodcastSatsView: UIView {
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
 
         configureSlider()
-        setSliderValue(value: 500)
+        setSliderValue(value: 7)
     }
     
-    func configureWith(chat: Chat) {
-        self.chat = chat
+    func configureWith(podcast: PodcastFeed) {
+        self.podcast = podcast
         
-        if let podcast = chat.podcast {
-            if let storedAmount = podcast.satsPerMinute {
-                setSliderValue(value: storedAmount)
-            } else {
-                let suggestedSats = podcast.model?.suggestedSats ?? 0
-                setSliderValue(value: suggestedSats)
-            }
+        if let storedAmount = podcast.satsPerMinute {
+            setSliderValue(value: storedAmount)
+        } else {
+            let suggestedSats = podcast.model?.suggestedSats ?? 5
+            setSliderValue(value: suggestedSats)
         }
     }
     
@@ -72,8 +70,8 @@ class PodcastSatsView: UIView {
                 sliderValueChanged(slider)
                 break
             case .ended:
-                if let contentFeed = chat.contentFeed {
-                    FeedsManager.sharedInstance.saveContentFeedStatus(for: contentFeed.feedID)
+                if let podcast = podcast {
+                    FeedsManager.sharedInstance.saveContentFeedStatus(for: podcast.feedID)
                 }
                 break
             default:
@@ -84,6 +82,7 @@ class PodcastSatsView: UIView {
     
     func setOutOfRangeLabel(value: Int) {
         suggestedAmountOutOfRangeLabel.text = ""
+        
         if let max = sliderValues.last, value > max {
             suggestedAmountOutOfRangeLabel.text = String(format: "suggested.out.range".localized, value)
         }
@@ -93,18 +92,16 @@ class PodcastSatsView: UIView {
         let sliderValue = Int(ceil(sender.value))
         let realValue = sliderValues[sliderValue]
         amountLabel.text = "\(realValue)"
-        
-        if let podcast = chat.podcast {
-            podcast.satsPerMinute = realValue
-        }
-        
+
+        podcast.satsPerMinute = realValue
+
         setOutOfRangeLabel(value: realValue)
     }
     
     func configureSlider() {
         amountLabel.text = "sats.per.minute".localized
         
-        let circleImage = makeCircleWith(size: CGSize(width: 15, height: 15), backgroundColor: UIColor.Sphinx.ReceivedIcon)
+        let circleImage = makeCircleWith(size: CGSize(width: 15, height: 15), backgroundColor: UIColor.white)
         amountSlider.setThumbImage(circleImage, for: .normal)
         amountSlider.setThumbImage(circleImage, for: .highlighted)
     }

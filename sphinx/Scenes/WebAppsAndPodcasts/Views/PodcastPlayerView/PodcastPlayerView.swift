@@ -41,6 +41,7 @@ class PodcastPlayerView: UIView {
     @IBOutlet weak var gestureHandlerView: UIView!
     @IBOutlet weak var customBoostView: CustomBoostView!
     @IBOutlet weak var shareClipButton: UIButton!
+    @IBOutlet weak var satsPerMinuteView: PodcastSatsView!
     
     @IBOutlet weak var audioLoadingWheel: UIActivityIndicatorView!
     
@@ -138,6 +139,8 @@ class PodcastPlayerView: UIView {
             shareClipButton.alpha = 0.3
             shareClipButton.isUserInteractionEnabled = false
         }
+        
+        satsPerMinuteView.configureWith(podcast: podcast)
     }
     
     func addToLiveMessages(message: TransactionMessage) {

@@ -8,6 +8,17 @@
 import Foundation
 import CoreData
 
+extension PodcastFeed {
+    public static func getAll() -> [ContentFeed] {
+        let feeds: [ContentFeed] = CoreDataManager.sharedManager.getObjectsOfTypeWith(
+            predicate: Predicates.podcastFeeds,
+            sortDescriptors: [NSSortDescriptor(key: "feedID", ascending: true)],
+            entityName: "ContentFeed"
+        )
+        return feeds
+    }
+}
+
 
 // MARK: - Predicates
 extension PodcastFeed {
@@ -40,7 +51,7 @@ extension PodcastFeed {
         }
         
         
-        public static let followedFeeds: NSPredicate = {
+        public static let podcastFeeds: NSPredicate = {
             NSPredicate(
                 format: "(isSubscribedToFromSearch == true OR chat != nil) AND feedKindValue == %d",
                 FeedType.Podcast.rawValue
@@ -84,7 +95,7 @@ extension PodcastFeed {
 
 // MARK: - FetchRequests
 extension PodcastFeed {
-
+    
     public enum FetchRequests {
 
         public static func baseFetchRequest<ContentFeed>() -> NSFetchRequest<ContentFeed> {
@@ -118,7 +129,7 @@ extension PodcastFeed {
         public static func followedFeeds() -> NSFetchRequest<ContentFeed> {
             let request: NSFetchRequest<ContentFeed> = baseFetchRequest()
             
-            request.predicate = Predicates.followedFeeds
+            request.predicate = Predicates.podcastFeeds
             request.sortDescriptors = []
 
             return request

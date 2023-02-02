@@ -47,6 +47,10 @@ class CoreDataManager {
         CoreDataManager.sharedManager.persistentContainer.viewContext.saveContext()
     }
     
+    func save(context: NSManagedObjectContext) {
+        context.saveContext()
+    }
+    
     func getBackgroundContext() -> NSManagedObjectContext {
         let backgroundContext = CoreDataManager.sharedManager.persistentContainer.newBackgroundContext()
         backgroundContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy

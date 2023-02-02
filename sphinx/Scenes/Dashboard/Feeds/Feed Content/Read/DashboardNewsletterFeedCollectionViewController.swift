@@ -148,6 +148,8 @@ extension DashboardNewsletterFeedCollectionViewController {
         configure(collectionView)
         configureDataSource(for: collectionView)
         addTableBottomInset(for: collectionView)
+        
+        fetchItems()
     }
     
     func addTableBottomInset(for collectionView: UICollectionView) {
@@ -156,23 +158,7 @@ extension DashboardNewsletterFeedCollectionViewController {
         
         collectionView.contentInset.bottom = bottomBarHeight + windowInsets.bottom
         collectionView.verticalScrollIndicatorInsets.bottom = bottomBarHeight + windowInsets.bottom
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        NotificationCenter.default.addObserver(self, selector: #selector(refreshNewsletters), name: .refreshNewsletterUI, object: nil)
-        fetchItems()
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        NotificationCenter.default.removeObserver(self, name: .refreshNewsletterUI, object: nil)
-    }
-    
-    @objc func refreshNewsletters(){
-        fetchItems()
-    }
-    
+    }    
 }
 
 

@@ -265,6 +265,8 @@ extension PodcastPlayerController {
         for d in self.delegates.values {
             d.pausedState(podcastData)
         }
+        
+        shouldSyncPodcast()
     }
     
     func runEndedStateUpdate() {
@@ -275,6 +277,8 @@ extension PodcastPlayerController {
         for d in self.delegates.values {
             d.endedState(podcastData)
         }
+        
+        shouldSyncPodcast()
     }
     
     func runErrorStateUpdate() {

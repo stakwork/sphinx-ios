@@ -251,7 +251,7 @@ extension DashboardFeedsContainerViewController {
             if (PodcastPlayerController.sharedInstance.isPlayingRecommendations()) {
                 return
             }
-            
+
             self.allTribeFeedsCollectionViewController.loadRecommendations()
         }
     }

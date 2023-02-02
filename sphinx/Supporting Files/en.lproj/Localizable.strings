@@ -197,6 +197,8 @@
 "restore.invalid-code.relay-qr-code" = "This looks like a connection code from the Sphinx Relay app. To restore an existing account, you need to enter your backup string.";
 "resume-restoring" = "Resuming Restore...";
 "restoring-progress" = "Restoring:";
+"restoring-content" = "Restoring content:";
+"restoring-messages" = "Restoring messages:";
 
 //SIGNUP NEW USER
 "signup.signup-options.connection-code-button" = "I Have a Connection Code";
@@ -498,7 +500,7 @@
 "price.per.minute" = "Price per minute: %d sats";
 "contributed.sats" = "Contributed: %d sats";
 "earned.sats" = "Earned: %d sats";
-"sats.per.minute" = "Podcast: sats per minute";
+"sats.per.minute" = "Sats per minute";
 "suggested.out.range" = "Suggested amount (%d sats) is above the maximum";
 "delete.episode.title" = "Delete Episode";
 "delete.episode.message" = "Delete Episode from device memory?";

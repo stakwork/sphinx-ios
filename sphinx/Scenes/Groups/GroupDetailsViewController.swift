@@ -27,8 +27,6 @@ class GroupDetailsViewController: UIViewController {
     @IBOutlet weak var loadingWheel: UIActivityIndicatorView!
     @IBOutlet weak var groupOptionsButton: UIButton!
     @IBOutlet weak var viewTitle: UILabel!
-    @IBOutlet weak var podcastSatsView: PodcastSatsView!
-    @IBOutlet weak var podcastSatsViewHeight: NSLayoutConstraint!
     @IBOutlet weak var tribeMemberInfoContainer: UIView!
     @IBOutlet weak var tribeMemberInfoView: TribeMemberInfoView!
     @IBOutlet weak var tribeMemberInfoContainerHeight: NSLayoutConstraint!
@@ -102,7 +100,6 @@ class GroupDetailsViewController: UIViewController {
         groupDateLabel.text = createdOn
         
         updateTribePrices()
-        configurePodcastView()
         configureTribeMemberView()
     }
     
@@ -112,17 +109,6 @@ class GroupDetailsViewController: UIViewController {
                 self.groupPriceLabel.text = String(format: "group.price.text".localized, "\(prices.0)", "\(prices.1)")
                 self.groupNameTop.constant = self.kGroupNameWithPricesTop
             }
-        }
-    }
-    
-    func configurePodcastView() {
-        if let chat = chat,
-           let _ = chat.getFeedUrl(),
-           let _ = chat.podcast
-        {
-            podcastSatsViewHeight.constant = 70
-            podcastSatsView.configureWith(chat: chat)
-            podcastSatsView.isHidden = false
         }
     }
     

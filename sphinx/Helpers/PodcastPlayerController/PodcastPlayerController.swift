@@ -55,6 +55,8 @@ class PodcastPlayerController {
     var player: AVPlayer?
     var playingTimer : Timer? = nil
     var paymentsTimer : Timer? = nil
+    var syncPodcastTimer : Timer? = nil
+    
     var playedSeconds: Int = 0
     
     var playingEpisodeImage: UIImage? = nil

@@ -125,13 +125,8 @@ public class ContentFeed: NSManagedObject {
     ) {
         let tribesServerURL = "\(API.kTribesServerBaseURL)/feed?url=\(feedURLPath)"
         
-        if let existingContenFeed = chat?.contentFeed {
-            managedObjectContext.delete(existingContenFeed)
-        }
-        
         API.sharedInstance.getContentFeed(
             url: tribesServerURL,
-            persistingIn: managedObjectContext,
             callback: { feedJSON in
                 
                 if let contentFeed = ContentFeed.createObjectFrom(
@@ -153,29 +148,22 @@ public class ContentFeed: NSManagedObject {
         )
     }
     
-    public static func fetchFeedItemsInBackground(
+    public static func fetchFeedItems(
         feedUrl: String,
         contentFeedObjectID: NSManagedObjectID,
-        completion: @escaping () -> ()
+        context: NSManagedObjectContext,
+        completion: @escaping (Result<ContentFeed, Error>) -> ()
     ) {
-        let backgroundContext = CoreDataManager.sharedManager.getBackgroundContext()
+        let backgroundContentFeed: ContentFeed? = context.object(with: contentFeedObjectID) as? ContentFeed
         
-        backgroundContext.perform {
-            let backgroundContentFeed: ContentFeed? = backgroundContext.object(with: contentFeedObjectID) as? ContentFeed
+        fetchContentFeedItems(
+            at: feedUrl,
+            contentFeed: backgroundContentFeed,
+            persistingIn: context
+        ) { result in
             
-            fetchContentFeedItems(
-                at: feedUrl,
-                contentFeed: backgroundContentFeed,
-                persistingIn: backgroundContext
-            ) { result in
-                
-                if case .success(_) = result {
-                    backgroundContext.saveContext()
-                }
-
-                DispatchQueue.main.async {
-                    completion()
-                }
+            DispatchQueue.main.async {
+                completion(result)
             }
         }
     }
@@ -190,7 +178,6 @@ public class ContentFeed: NSManagedObject {
         
         API.sharedInstance.getContentFeed(
             url: tribesServerURL,
-            persistingIn: managedObjectContext,
             callback: { feedJSON in
                 if let contentFeed = contentFeed {
                     if let items = feedJSON[ContentFeed.CodingKeys.items.rawValue].array {

@@ -84,16 +84,17 @@ class MemberBadgeDetailVC : UIViewController{
     
     func addShimmerLoadingView(){
         let xOffset : CGFloat = 32.0
-        let loadingViewFrame = CGRect(x: xOffset * 0.5, y: tableView.frame.minY, width: detailView.frame.width - (2 * xOffset), height: detailView.frame.height - tableView.frame.minY)
+        let loadingViewFrame = detailView.frame
         loadingView = UIView(frame: loadingViewFrame)
         loadingView?.isUserInteractionEnabled = false
         loadingView?.backgroundColor = UIColor.Sphinx.Body
         if let loadingView = loadingView{
-            let imageView : UIImageView = UIImageView(frame: loadingView.frame)
+            let imageView : UIImageView = UIImageView(frame: tableView.frame)
             imageView.image = UIImage(named: "memberBadgeLoadingView")
             imageView.contentMode = .scaleAspectFit
-            let shimmerView = ShimmerView(frame: imageView.frame)
-            shimmerView.alpha = 0.045
+            imageView.alpha = 0.5
+            let shimmerView = ShimmerView(frame: loadingViewFrame)
+            shimmerView.alpha = 0.065
             loadingView.addSubview(shimmerView)
             loadingView.addSubview(imageView)
             detailView.addSubview(loadingView)

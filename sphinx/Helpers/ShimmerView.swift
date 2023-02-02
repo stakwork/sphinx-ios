@@ -11,7 +11,7 @@ import UIKit
 
 class ShimmerView : UIView {
 
-    var gradientColorOne : CGColor = UIColor(white: 0.85, alpha: 1.0).cgColor
+    var gradientColorOne : CGColor = UIColor.Sphinx.BodyInverted.cgColor
     var gradientColorTwo : CGColor = UIColor(white: 0.95, alpha: 1.0).cgColor
     
     

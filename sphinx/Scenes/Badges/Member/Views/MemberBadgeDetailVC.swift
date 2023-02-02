@@ -20,6 +20,11 @@ class MemberBadgeDetailVC : UIViewController{
     @IBOutlet weak var detailViewHeight: NSLayoutConstraint!
     @IBOutlet weak var detailView: UIView!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var panGestureLine: UIView!
+    @IBOutlet weak var panGestureView: UIView!
+    
+    @IBOutlet weak var detailViewBottomConstraint: NSLayoutConstraint!
+    
     
     
     var presentationContext : MemberBadgeDetailPresentationContext = .admin
@@ -49,9 +54,11 @@ class MemberBadgeDetailVC : UIViewController{
     override func viewDidLoad() {
         dismissBadgeDetails()
         detailView.backgroundColor = UIColor.Sphinx.Body
+        setupDismissableView()
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        //animateView(show: true)
         configTableView()
     }
     
@@ -119,5 +126,60 @@ class MemberBadgeDetailVC : UIViewController{
         })
     }
     
+    
+    func setupDismissableView() {
+        panGestureLine.makeCircular()
+        
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(panGestureRecognizerAction))
+        panGestureView.addGestureRecognizer(panGesture)
+    }
+    
+    @objc func panGestureRecognizerAction(sender: UIPanGestureRecognizer) {
+        let translation = sender.translation(in: view).y
+
+        guard translation >= 0 else { return }
+        
+        if sender.state == .began {
+            detailViewBottomConstraint.constant = 0
+            detailView.superview?.layoutIfNeeded()
+            return
+        }
+        
+        if sender.state == .changed {
+            detailViewBottomConstraint.constant = -translation
+            detailView.superview?.layoutIfNeeded()
+            return
+        }
+
+        if sender.state == .ended {
+            if translation > 200 {
+                animateView(show: false) {
+                    self.dismiss(animated: false)
+                }
+            } else {
+                animateView(show: true)
+            }
+        }
+    }
+    
+    func animateView(
+        show: Bool,
+        completion: (() -> ())? = nil
+    ) {
+        let newConstant: CGFloat = show ? 0 : -600
+        
+        if (detailViewBottomConstraint.constant == newConstant) {
+            return
+        }
+        
+        detailViewBottomConstraint.constant = newConstant
+        
+        UIView.animate(withDuration: 0.25, animations: {
+            self.detailView.superview?.layoutIfNeeded()
+            self.view.alpha = show ? 1.0 : 0.0
+        }) { _ in
+            completion?()
+        }
+    }
     
 }

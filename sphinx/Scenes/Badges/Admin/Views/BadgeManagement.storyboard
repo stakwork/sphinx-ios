@@ -556,7 +556,10 @@
                     </view>
                     <connections>
                         <outlet property="detailView" destination="bfh-go-0Xm" id="zwr-PD-LAv"/>
+                        <outlet property="detailViewBottomConstraint" destination="uOL-cR-0hT" id="Nrg-G1-hEH"/>
                         <outlet property="detailViewHeight" destination="o3r-NL-3mE" id="Tdt-9t-DIt"/>
+                        <outlet property="panGestureLine" destination="uK2-lC-avr" id="ss0-tw-Bs2"/>
+                        <outlet property="panGestureView" destination="OO3-zl-XQj" id="Ya2-7p-M54"/>
                         <outlet property="tableView" destination="hEd-1Q-eLw" id="rP5-l0-T6G"/>
                     </connections>
                 </viewController>

@@ -114,7 +114,8 @@ class MemberBadgeDetailVM : NSObject {
         }
         
         isLoading = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + 10.0, execute: {
+        //Fake 10s delay for debug
+        //DispatchQueue.main.asyncAfter(deadline: .now() + 10.0, execute: {
             API.sharedInstance.getTribeMemberInfo(person: person, callback: { (success, personInfo) in
                 if let personInfo = personInfo, success {
                     self.isLoading = false
@@ -123,7 +124,7 @@ class MemberBadgeDetailVM : NSObject {
                     //self.dismissView()
                 }
             })
-        })
+        //})
         
     }
     

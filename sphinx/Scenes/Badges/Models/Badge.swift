@@ -12,12 +12,14 @@ import ObjectMapper
 class Badge: Mappable {
     var icon_url: String?
     var name: String?
-    var amount_available: Int?
+    var amount_created: Int?
     var amount_issued: Int?
     var chat_id: Int?
     var claim_amount: Int?
     var reward_type: Int?
     var requirements: String?
+    var memo: String?
+    var asset: String?
 
     
     required convenience init(map: Map) {
@@ -25,10 +27,14 @@ class Badge: Mappable {
     }
     
     func mapping(map: Map) {
-        icon_url              <- map["icon_url"]
+        icon_url              <- map["icon"]
         name              <- map["name"]
-        amount_available              <- map["amount_available"]
+        amount_created              <- map["amount_created"]
         amount_issued              <- map["amount_issued"]
+        //New Fields?
+        memo              <- map["memo"]
+        asset              <- map["asset"]
+        //Ommitted Fields: Are these on the chopping block?
         chat_id              <- map["chat_id"]
         claim_amount              <- map["claim_amount"]
         reward_type              <- map["reward_type"]

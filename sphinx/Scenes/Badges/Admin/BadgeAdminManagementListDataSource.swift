@@ -24,6 +24,7 @@ class BadgeAdminManagementListDataSource : NSObject{
         vc.badgeTableView.delegate = self
         vc.badgeTableView.dataSource = self
         vc.badgeTableView.register(UINib(nibName: "BadgeAdminListTableViewCell", bundle: nil), forCellReuseIdentifier: "BadgeAdminListTableViewCell")
+        vc.badgeTableView.register(UINib(nibName: "BadgeAdminListHeaderCell", bundle: nil), forCellReuseIdentifier: "BadgeAdminListHeaderCell")
         fetchBadges()
     }
     
@@ -59,7 +60,6 @@ class BadgeAdminManagementListDataSource : NSObject{
         new_badge2.requirements = "Earn at least 1k in the Tribe."
         self.badges.append(new_badge2)
         
-        
         self.vc.badgeTableView.reloadData()
     }
 }
@@ -75,39 +75,41 @@ extension BadgeAdminManagementListDataSource : UITableViewDelegate,UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return getNBadges()
+        return getNBadges() + 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(
-            withIdentifier: "BadgeAdminListTableViewCell",
-            for: indexPath
-        ) as! BadgeAdminListTableViewCell
-        cell.configureCell(badge: self.getBadge(index: indexPath.row))
-        return cell
+        if(indexPath.row == 0){
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: "BadgeAdminListHeaderCell",
+                for: indexPath
+            ) as! BadgeAdminListHeaderCell
+            return cell
+        }
+        else{
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: "BadgeAdminListTableViewCell",
+                for: indexPath
+            ) as! BadgeAdminListTableViewCell
+            cell.configureCell(badge: self.getBadge(index: indexPath.row - 1))
+            return cell
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 140
+        if(indexPath.row == 0){
+            return 180
+        }
+        else{
+            return 140
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        vc.showBadgeDetail(badge: getBadge(index: indexPath.row))
+        if(indexPath.row < 1){return}
+        vc.showBadgeDetail(badge: getBadge(index: indexPath.row - 1))
     }
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if(vc.viewDidLayout == false){
-            return
-        }
-        if indexPath.row + 1 > 5 {
-            print("leaving initial view")
-            vc.animateHeader(shouldAppear: false)
-        }
-        else if (indexPath.row == 0){
-            print("showing initial view")
-            vc.animateHeader(shouldAppear: true)
-        }
-        print("willDisplay:\(indexPath.row)")
-    }
     
 }

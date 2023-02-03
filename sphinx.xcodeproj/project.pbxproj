@@ -636,6 +636,8 @@
 		CE842DE8298C67A500620AD3 /* KnownBadgeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE842DE6298C67A500620AD3 /* KnownBadgeCell.swift */; };
 		CE842DE9298C67A500620AD3 /* KnownBadgeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE842DE7298C67A500620AD3 /* KnownBadgeCell.xib */; };
 		CE842DEB298C680400620AD3 /* BadgeMemberKnownBadgesVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE842DEA298C680400620AD3 /* BadgeMemberKnownBadgesVM.swift */; };
+		CE842DEE298D61CF00620AD3 /* BadgeAdminListHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE842DEC298D61CF00620AD3 /* BadgeAdminListHeaderCell.swift */; };
+		CE842DEF298D61CF00620AD3 /* BadgeAdminListHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE842DED298D61CF00620AD3 /* BadgeAdminListHeaderCell.xib */; };
 		CE91E59A29885175008BA6EA /* MemberBadgeDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE91E59929885175008BA6EA /* MemberBadgeDetailVC.swift */; };
 		CEBF0D032975B20B006C1F21 /* DiscoverTribesTagSelectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBF0D022975B20B006C1F21 /* DiscoverTribesTagSelectionVC.swift */; };
 		CEBF0D052975C367006C1F21 /* DiscoverTribesTagSelectionVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBF0D042975C367006C1F21 /* DiscoverTribesTagSelectionVM.swift */; };
@@ -1548,6 +1550,8 @@
 		CE842DE6298C67A500620AD3 /* KnownBadgeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnownBadgeCell.swift; sourceTree = "<group>"; };
 		CE842DE7298C67A500620AD3 /* KnownBadgeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KnownBadgeCell.xib; sourceTree = "<group>"; };
 		CE842DEA298C680400620AD3 /* BadgeMemberKnownBadgesVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeMemberKnownBadgesVM.swift; sourceTree = "<group>"; };
+		CE842DEC298D61CF00620AD3 /* BadgeAdminListHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeAdminListHeaderCell.swift; sourceTree = "<group>"; };
+		CE842DED298D61CF00620AD3 /* BadgeAdminListHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BadgeAdminListHeaderCell.xib; sourceTree = "<group>"; };
 		CE91E59929885175008BA6EA /* MemberBadgeDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberBadgeDetailVC.swift; sourceTree = "<group>"; };
 		CEBF0D022975B20B006C1F21 /* DiscoverTribesTagSelectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTribesTagSelectionVC.swift; sourceTree = "<group>"; };
 		CEBF0D042975C367006C1F21 /* DiscoverTribesTagSelectionVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTribesTagSelectionVM.swift; sourceTree = "<group>"; };
@@ -3609,6 +3613,8 @@
 			isa = PBXGroup;
 			children = (
 				CE3133A82977747E00E91E3A /* BadgeAdminListTableViewCell.swift */,
+				CE842DEC298D61CF00620AD3 /* BadgeAdminListHeaderCell.swift */,
+				CE842DED298D61CF00620AD3 /* BadgeAdminListHeaderCell.xib */,
 				CE3133A92977747E00E91E3A /* BadgeManagement.storyboard */,
 				CE3133AA2977747E00E91E3A /* BadgeAdminDetailVC.swift */,
 				CE3133AB2977747E00E91E3A /* BadgeAdminListTableViewCell.xib */,
@@ -4205,6 +4211,7 @@
 				F34BFEDF267B3C30003F6D55 /* RestoreUser.storyboard in Resources */,
 				F39F2C8626E2840500D357F6 /* FeedSearchResultsCollectionViewSectionHeader.xib in Resources */,
 				47C7D704278749CF006D2809 /* PeopleTorActionsView.xib in Resources */,
+				CE842DEF298D61CF00620AD3 /* BadgeAdminListHeaderCell.xib in Resources */,
 				F39F2C8626E2840500D357F6 /* FeedSearchResultsCollectionViewSectionHeader.xib in Resources */,
 				4724BC1325474B440012BD76 /* WebApps.storyboard in Resources */,
 				4785C10724D4A6A0004E2D6C /* AppSizeView.xib in Resources */,
@@ -4821,6 +4828,7 @@
 				472161D3293A680F0088B87B /* RecommendationDetailsView.swift in Sources */,
 				F352073926F228A7004B2518 /* CodingUserInfoKey.swift in Sources */,
 				47904C2224BF54DA00710E7A /* NotificationSoundHelper.swift in Sources */,
+				CE842DEE298D61CF00620AD3 /* BadgeAdminListHeaderCell.swift in Sources */,
 				473258AC241BD700006E6602 /* CommonPaymentViewController.swift in Sources */,
 				475BDD2C232ACA0700C5BBD6 /* String.swift in Sources */,
 				47F7273825791D8600A794B9 /* ContactLinkPreviewView.swift in Sources */,

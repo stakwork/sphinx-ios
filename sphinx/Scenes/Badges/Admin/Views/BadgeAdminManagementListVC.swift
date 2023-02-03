@@ -14,7 +14,6 @@ class BadgeAdminManagementListVC: UIViewController{
     
     
     @IBOutlet weak var navBarView: UIView!
-    @IBOutlet weak var topContainerView: UIView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var viewTitle: UILabel!
     @IBOutlet weak var badgeTableView: UITableView!
@@ -47,7 +46,6 @@ class BadgeAdminManagementListVC: UIViewController{
     }
     
     func setupBadgeTable(){
-        topContainerView.backgroundColor = UIColor.Sphinx.Body
         viewTitle.textColor = UIColor.Sphinx.Text
         navBarView.backgroundColor = UIColor.Sphinx.Body
         badgeManagementListDataSource = BadgeAdminManagementListDataSource(vc: self)
@@ -65,16 +63,6 @@ class BadgeAdminManagementListVC: UIViewController{
             valid_detailVC.associatedBadge = badge
         }
         self.navigationController?.pushViewController(badgeDetailVC, animated: true)
-    }
-    
-    func animateHeader(shouldAppear:Bool){
-        topContainerView.heightAnchor.constraint(equalToConstant: 100).isActive = false
-        let newHeight = (shouldAppear) ? 100.0 : 0.0
-        topContainerView.heightAnchor.constraint(equalToConstant: newHeight).isActive = true
-        
-        UIView.animate(withDuration: 0.2, delay: 0.0,options: .curveEaseIn ,animations: {
-            self.view.layoutIfNeeded()
-        })
     }
     
     func showErrorMessage(){

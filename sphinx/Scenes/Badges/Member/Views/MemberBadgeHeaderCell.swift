@@ -15,6 +15,7 @@ class MemberBadgeHeaderCell: UITableViewCell {
     @IBOutlet weak var sendSatsButton: UIButton!
     @IBOutlet weak var earnBadgesButton: UIButton!
     @IBOutlet weak var moderatorBadgeImageView: UIImageView!
+    var presentingVC : MemberBadgeDetailVC?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -27,7 +28,8 @@ class MemberBadgeHeaderCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func initHeaderView(){
+    func initHeaderView(presentingVC:MemberBadgeDetailVC){
+        self.presentingVC = presentingVC
         //Member Image
         memberImageView.contentMode = .scaleAspectFill
         //memberImageView.sd_setImage(with: URL(string: "https://us.123rf.com/450wm/fizkes/fizkes2010/fizkes201001384/fizkes201001384.jpg?ver=6"))
@@ -43,6 +45,14 @@ class MemberBadgeHeaderCell: UITableViewCell {
         earnBadgesButton.layer.borderColor = UIColor.Sphinx.MainBottomIcons.cgColor
         earnBadgesButton.layer.cornerRadius = earnBadgesButton.frame.height/2.0
         
+    }
+    
+    @IBAction func sendSatsTapped(_ sender: Any) {
+        presentingVC?.handleSatsButtonSend()
+    }
+    
+    @IBAction func earnBadgesTapped(_ sender: Any) {
+        presentingVC?.handleEarnBadgesTap()
     }
     
 }

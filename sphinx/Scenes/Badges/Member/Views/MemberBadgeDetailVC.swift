@@ -32,6 +32,8 @@ class MemberBadgeDetailVC : UIViewController{
     var message : TransactionMessage? = nil
     var loadingView: UIView? = nil
     
+    private var rootViewController: RootViewController!
+    
     lazy var memberBadgeDetailVM : MemberBadgeDetailVM = {
        return MemberBadgeDetailVM(vc: self, tableView: tableView)
     }()
@@ -44,6 +46,7 @@ class MemberBadgeDetailVC : UIViewController{
         let viewController = StoryboardScene.BadgeManagement.memberBadgeDetailVC.instantiate()
         viewController.view.backgroundColor = .clear
         if let vc = viewController as? MemberBadgeDetailVC{
+            vc.rootViewController = rootViewController
             vc.message = message
             vc.delegate = delegate
         }
@@ -63,14 +66,20 @@ class MemberBadgeDetailVC : UIViewController{
         addBlurView()
     }
     
-    @IBAction func sendSatsButtonTapped(_ sender: Any) {
-        
+    func handleEarnBadgesTap(){
+        self.dismiss(animated: true, completion: {
+            if let vc = self.delegate as? ChatViewController{
+                vc.displayKnownBadges()
+            }
+        })
     }
     
-    func handleSatsButtonSend(message:TransactionMessage){
-        self.dismiss(animated: false,completion: {
-            self.delegate?.shouldGoToSendPayment(message: message)
-        })
+    func handleSatsButtonSend(){
+        if let valid_message = message{
+            self.dismiss(animated: false,completion: {
+                self.delegate?.shouldGoToSendPayment(message: valid_message)
+            })
+        }
     }
     
     func addBlurView(){
@@ -80,6 +89,11 @@ class MemberBadgeDetailVC : UIViewController{
         blurView.alpha = 0.75
         self.view.addSubview(blurView)
         self.view.sendSubviewToBack(blurView)
+    }
+    
+    func displayKnownBadges(){
+        let badgeVC = BadgeMemberKnownBadgesVC.instantiate(rootViewController: rootViewController)
+        self.navigationController?.pushViewController(badgeVC, animated: true)
     }
     
     func addShimmerLoadingView(){

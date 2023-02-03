@@ -482,6 +482,11 @@ extension ChatViewController : TribeMemberViewDelegate {
         presentNavigationControllerWith(vc: viewController)
     }
     
+    func displayKnownBadges(){
+        let badgeVC = BadgeMemberKnownBadgesVC.instantiate(rootViewController: rootViewController)
+        self.navigationController?.pushViewController(badgeVC, animated: true)
+    }
+    
     func didDismissTribeMemberVC() {
         accessoryView.show()
     }

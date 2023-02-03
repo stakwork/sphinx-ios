@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 
 class BadgeMemberKnownBadgesVC : UIViewController{
-    
     @IBOutlet weak var tableView: UITableView!
     private var rootViewController: RootViewController!
     
@@ -30,5 +29,10 @@ class BadgeMemberKnownBadgesVC : UIViewController{
     override func viewDidLoad() {
         badgeMemberKnownBadgesVM.configureTable()
     }
+    
+    @IBAction func backButtonTapped(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
     
 }

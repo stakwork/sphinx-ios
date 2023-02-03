@@ -10,6 +10,11 @@ import UIKit
 
 class KnownBadgeCell: UITableViewCell {
 
+    @IBOutlet weak var knownBadgeImageView: UIImageView!
+    @IBOutlet weak var knownBadgeNameLabel: UILabel!
+    @IBOutlet weak var knownBadgeDescriptionLabel: UILabel!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -19,6 +24,13 @@ class KnownBadgeCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    func configureCell(badge:Badge){
+        knownBadgeImageView.makeCircular()
+        knownBadgeImageView.sd_setImage(with: URL(string: badge.icon_url ?? ""))
+        knownBadgeNameLabel.text = badge.name
+        knownBadgeDescriptionLabel.text = badge.memo
     }
     
 }

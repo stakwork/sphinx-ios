@@ -48,6 +48,9 @@
                                     <directionalEdgeInsets key="contentInsets" top="0.0" leading="-10" bottom="0.0" trailing="0.0"/>
                                     <color key="baseForegroundColor" name="Body"/>
                                 </buttonConfiguration>
+                                <connections>
+                                    <action selector="sendSatsTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="SKB-I8-G4c"/>
+                                </connections>
                             </button>
                             <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IFw-CP-eU0">
                                 <rect key="frame" x="152.66666666666666" y="198" width="12" height="12"/>
@@ -72,6 +75,9 @@
                                     <directionalEdgeInsets key="contentInsets" top="0.0" leading="-10" bottom="0.0" trailing="0.0"/>
                                     <color key="baseForegroundColor" name="BodyInverted"/>
                                 </buttonConfiguration>
+                                <connections>
+                                    <action selector="earnBadgesTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Qnk-tD-lOZ"/>
+                                </connections>
                             </button>
                             <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vub-1U-Ys7">
                                 <rect key="frame" x="312.33333333333331" y="196.66666666666666" width="15" height="15"/>

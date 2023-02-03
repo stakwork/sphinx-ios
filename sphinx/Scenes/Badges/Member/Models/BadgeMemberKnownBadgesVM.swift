@@ -13,6 +13,7 @@ class BadgeMemberKnownBadgesVM : NSObject {
     
     var tableView : UITableView
     var vc : BadgeMemberKnownBadgesVC
+    var knownBadges : [Badge] = []
     
     init(vc: BadgeMemberKnownBadgesVC, tableView: UITableView) {
         self.vc = vc
@@ -24,7 +25,17 @@ class BadgeMemberKnownBadgesVM : NSObject {
         tableView.dataSource = self
         tableView.register(UINib(nibName: "KnownBadgeCell", bundle: nil), forCellReuseIdentifier: KnownBadgeCell.reuseID)
         
+        fetchKnownBadges()
+        
         tableView.reloadData()
+    }
+    
+    func fetchKnownBadges(){
+        let badge = Badge()
+        badge.name = "my badge"
+        badge.memo = "dexription of my badge"
+        badge.icon_url = "https://i.ibb.co/Ch8mwg0/badge-Example.png"
+        knownBadges.append(badge)
     }
     
 }
@@ -32,18 +43,17 @@ class BadgeMemberKnownBadgesVM : NSObject {
 
 extension BadgeMemberKnownBadgesVM : UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return knownBadges.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        let label = UILabel(frame: CGRect(x: 0.0, y: 0.0, width: 100.0, height: cell.frame.height))
-        var text = ""
-        for _ in 0..<10{
-            text += "\(indexPath.row)"
-        }
-        label.text = text
-        cell.addSubview(label)
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: KnownBadgeCell.reuseID,
+            for: indexPath
+        ) as! KnownBadgeCell
+        
+        cell.configureCell(badge: knownBadges[indexPath.row])
+        
         return cell
     }
     

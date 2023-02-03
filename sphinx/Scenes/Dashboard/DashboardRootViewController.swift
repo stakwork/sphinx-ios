@@ -223,13 +223,6 @@ extension DashboardRootViewController {
         isLoading = true
         
         activeTab = .friends
-        
-        //displayKnownBadges()
-    }
-    
-    func displayKnownBadges(){
-        let badgeVC = BadgeMemberKnownBadgesVC.instantiate(rootViewController: rootViewController)
-        self.navigationController?.pushViewController(badgeVC, animated: true)
     }
     
     func setupAddTribeButton(){

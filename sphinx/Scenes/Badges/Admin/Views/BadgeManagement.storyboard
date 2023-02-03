@@ -553,6 +553,9 @@
                                         <state key="normal" title="">
                                             <color key="titleColor" name="WashedOutReceivedText"/>
                                         </state>
+                                        <connections>
+                                            <action selector="backButtonTapped:" destination="pqy-KQ-EYR" eventType="touchUpInside" id="Mo1-mG-VBw"/>
+                                        </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="List of Known Badges" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XEg-kV-wEh">
                                         <rect key="frame" x="58" y="17.666666666666671" width="167" height="20"/>

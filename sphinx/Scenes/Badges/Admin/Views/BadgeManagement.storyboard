@@ -84,7 +84,7 @@
                                             <constraint firstAttribute="width" constant="44" id="XPm-i1-hDa"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select and Customize Your Tribe Badges" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wpa-AL-IM4">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select and Purchase Your Tribe Badges" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wpa-AL-IM4">
                                         <rect key="frame" x="86.666666666666686" y="112" width="220" height="56"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="56" id="ZsQ-Rf-Jfl"/>
@@ -163,14 +163,14 @@
                                             <action selector="backButtonTapped:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="svs-IS-1sR"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Customize Badge" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="npT-Ia-qGU">
-                                        <rect key="frame" x="58" y="17.666666666666671" width="134" height="20"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Purchase Badges" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="npT-Ia-qGU">
+                                        <rect key="frame" x="58" y="17.666666666666671" width="133.33333333333334" height="20"/>
                                         <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="17"/>
                                         <color key="textColor" name="Text"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VY8-qH-VAp" customClass="UIActivityIndicatorView">
-                                        <rect key="frame" x="192" y="2.6666666666666643" width="50" height="50"/>
+                                        <rect key="frame" x="191.33333333333334" y="2.6666666666666643" width="50" height="50"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="5bG-Ec-4kK"/>
@@ -242,7 +242,7 @@
                                             <constraint firstItem="PHW-i2-fME" firstAttribute="leading" secondItem="aUd-jX-XZQ" secondAttribute="leading" constant="16" id="wxX-mI-AJv"/>
                                         </constraints>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PNG, GIF or SVG, Min. Size 512x512 px" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vj0-9m-NZj">
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PNG, GIF or SVG, Min. Size 512x512 px" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vj0-9m-NZj">
                                         <rect key="frame" x="60" y="329" width="273" height="32"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="32" id="bfM-yd-bpq"/>
@@ -566,6 +566,81 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CZw-2Z-rS8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1482" y="-38"/>
+        </scene>
+        <!--Badge Member Known BadgesVC-->
+        <scene sceneID="DnP-wv-Q3O">
+            <objects>
+                <viewController storyboardIdentifier="BadgeMemberKnownBadgesVC" id="pqy-KQ-EYR" customClass="BadgeMemberKnownBadgesVC" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="G0N-oO-ymE">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sAQ-zm-hVm">
+                                <rect key="frame" x="0.0" y="59" width="393" height="55"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7PJ-BT-iAh">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="55"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="50" id="LPn-WS-i3n"/>
+                                            <constraint firstAttribute="height" constant="55" id="qVm-cj-opT"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="21"/>
+                                        <state key="normal" title="">
+                                            <color key="titleColor" name="WashedOutReceivedText"/>
+                                        </state>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="List of Known Badges" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XEg-kV-wEh">
+                                        <rect key="frame" x="58" y="17.666666666666671" width="167" height="20"/>
+                                        <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="17"/>
+                                        <color key="textColor" name="Text"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Duo-Hf-Gov" customClass="UIActivityIndicatorView">
+                                        <rect key="frame" x="225" y="2.6666666666666643" width="50" height="50"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="50" id="3dN-Wl-2eM"/>
+                                            <constraint firstAttribute="height" constant="50" id="wPI-ZX-OOd"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="XEg-kV-wEh" firstAttribute="leading" secondItem="7PJ-BT-iAh" secondAttribute="trailing" constant="8" id="Br8-qe-It3"/>
+                                    <constraint firstItem="XEg-kV-wEh" firstAttribute="centerY" secondItem="7PJ-BT-iAh" secondAttribute="centerY" id="EhW-G5-gkW"/>
+                                    <constraint firstItem="Duo-Hf-Gov" firstAttribute="centerY" secondItem="sAQ-zm-hVm" secondAttribute="centerY" id="LzZ-kI-4Yr"/>
+                                    <constraint firstAttribute="height" constant="55" id="S23-xb-RPp"/>
+                                    <constraint firstItem="7PJ-BT-iAh" firstAttribute="leading" secondItem="sAQ-zm-hVm" secondAttribute="leading" id="VPS-Y2-cIm"/>
+                                    <constraint firstItem="Duo-Hf-Gov" firstAttribute="leading" secondItem="XEg-kV-wEh" secondAttribute="trailing" id="Vy1-3l-d7j"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="55" id="aV3-rY-738"/>
+                                    <constraint firstItem="7PJ-BT-iAh" firstAttribute="top" secondItem="sAQ-zm-hVm" secondAttribute="top" id="f8Y-1V-6Vm"/>
+                                    <constraint firstAttribute="bottom" secondItem="7PJ-BT-iAh" secondAttribute="bottom" id="mla-Hh-adv"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="ghg-xr-8IB">
+                                <rect key="frame" x="0.0" y="114" width="393" height="704"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="URo-74-FrL"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="sAQ-zm-hVm" firstAttribute="top" secondItem="URo-74-FrL" secondAttribute="top" id="Bj0-bO-sdQ"/>
+                            <constraint firstItem="ghg-xr-8IB" firstAttribute="leading" secondItem="G0N-oO-ymE" secondAttribute="leading" id="DRL-4Z-Jt2"/>
+                            <constraint firstItem="ghg-xr-8IB" firstAttribute="top" secondItem="sAQ-zm-hVm" secondAttribute="bottom" id="UKE-CN-OYe"/>
+                            <constraint firstAttribute="trailing" secondItem="ghg-xr-8IB" secondAttribute="trailing" id="YFq-ho-kH1"/>
+                            <constraint firstItem="sAQ-zm-hVm" firstAttribute="leading" secondItem="G0N-oO-ymE" secondAttribute="leading" id="gUz-RO-3rb"/>
+                            <constraint firstAttribute="trailing" secondItem="sAQ-zm-hVm" secondAttribute="trailing" id="sUo-Dy-Iva"/>
+                            <constraint firstItem="URo-74-FrL" firstAttribute="bottom" secondItem="ghg-xr-8IB" secondAttribute="bottom" id="tpS-3f-nJS"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="ghg-xr-8IB" id="wZR-MY-8pa"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kfa-6H-jWU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2273" y="-6"/>
         </scene>
     </scenes>
     <resources>

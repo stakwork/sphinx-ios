@@ -632,6 +632,10 @@
 		CE842DE0298ADECF00620AD3 /* MemberBadgeHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE842DDE298ADECF00620AD3 /* MemberBadgeHeaderCell.swift */; };
 		CE842DE1298ADECF00620AD3 /* MemberBadgeHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE842DDF298ADECF00620AD3 /* MemberBadgeHeaderCell.xib */; };
 		CE842DE3298B289D00620AD3 /* ShimmerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE842DE2298B289D00620AD3 /* ShimmerView.swift */; };
+		CE842DE5298C656C00620AD3 /* BadgeMemberKnownBadgesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE842DE4298C656C00620AD3 /* BadgeMemberKnownBadgesVC.swift */; };
+		CE842DE8298C67A500620AD3 /* KnownBadgeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE842DE6298C67A500620AD3 /* KnownBadgeCell.swift */; };
+		CE842DE9298C67A500620AD3 /* KnownBadgeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE842DE7298C67A500620AD3 /* KnownBadgeCell.xib */; };
+		CE842DEB298C680400620AD3 /* BadgeMemberKnownBadgesVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE842DEA298C680400620AD3 /* BadgeMemberKnownBadgesVM.swift */; };
 		CE91E59A29885175008BA6EA /* MemberBadgeDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE91E59929885175008BA6EA /* MemberBadgeDetailVC.swift */; };
 		CEBF0D032975B20B006C1F21 /* DiscoverTribesTagSelectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBF0D022975B20B006C1F21 /* DiscoverTribesTagSelectionVC.swift */; };
 		CEBF0D052975C367006C1F21 /* DiscoverTribesTagSelectionVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBF0D042975C367006C1F21 /* DiscoverTribesTagSelectionVM.swift */; };
@@ -1540,6 +1544,10 @@
 		CE842DDE298ADECF00620AD3 /* MemberBadgeHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberBadgeHeaderCell.swift; sourceTree = "<group>"; };
 		CE842DDF298ADECF00620AD3 /* MemberBadgeHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MemberBadgeHeaderCell.xib; sourceTree = "<group>"; };
 		CE842DE2298B289D00620AD3 /* ShimmerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerView.swift; sourceTree = "<group>"; };
+		CE842DE4298C656C00620AD3 /* BadgeMemberKnownBadgesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeMemberKnownBadgesVC.swift; sourceTree = "<group>"; };
+		CE842DE6298C67A500620AD3 /* KnownBadgeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnownBadgeCell.swift; sourceTree = "<group>"; };
+		CE842DE7298C67A500620AD3 /* KnownBadgeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KnownBadgeCell.xib; sourceTree = "<group>"; };
+		CE842DEA298C680400620AD3 /* BadgeMemberKnownBadgesVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeMemberKnownBadgesVM.swift; sourceTree = "<group>"; };
 		CE91E59929885175008BA6EA /* MemberBadgeDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberBadgeDetailVC.swift; sourceTree = "<group>"; };
 		CEBF0D022975B20B006C1F21 /* DiscoverTribesTagSelectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTribesTagSelectionVC.swift; sourceTree = "<group>"; };
 		CEBF0D042975C367006C1F21 /* DiscoverTribesTagSelectionVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTribesTagSelectionVM.swift; sourceTree = "<group>"; };
@@ -3613,6 +3621,7 @@
 			isa = PBXGroup;
 			children = (
 				CE51F34F298870BF00ABBACB /* MemberBadgeDetailVM.swift */,
+				CE842DEA298C680400620AD3 /* BadgeMemberKnownBadgesVM.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -3645,6 +3654,9 @@
 				CE51F3582989B19800ABBACB /* BadgeDetailCell.swift */,
 				CE51F3592989B19800ABBACB /* BadgeDetailCell.xib */,
 				CE51F3552988743E00ABBACB /* MemberBadgeDetailTableViewCell.xib */,
+				CE842DE4298C656C00620AD3 /* BadgeMemberKnownBadgesVC.swift */,
+				CE842DE6298C67A500620AD3 /* KnownBadgeCell.swift */,
+				CE842DE7298C67A500620AD3 /* KnownBadgeCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -4187,6 +4199,7 @@
 				F3188BA3271CDA4200890DDD /* VideoFeed.storyboard in Resources */,
 				47893A9424095C80002F675B /* AudioBubbleView.xib in Resources */,
 				470F5CAD243E8823007E054F /* VideoCallPayButton.xib in Resources */,
+				CE842DE9298C67A500620AD3 /* KnownBadgeCell.xib in Resources */,
 				475BDD4A232AD00D00C5BBD6 /* MyriadPro-Regular.otf in Resources */,
 				47D46A29237B1D030005A548 /* SubscriptionFormTableViewCell.xib in Resources */,
 				F34BFEDF267B3C30003F6D55 /* RestoreUser.storyboard in Resources */,
@@ -4411,6 +4424,7 @@
 				CECFBF062965C8E600BAD935 /* DiscoverTribeData.swift in Sources */,
 				47F258C52539F39800122A5A /* PodcastRowPlayerHelper.swift in Sources */,
 				CE6784602968B0E000342905 /* FeedsManager.swift in Sources */,
+				CE842DE8298C67A500620AD3 /* KnownBadgeCell.swift in Sources */,
 				475BDD77232BF91A00C5BBD6 /* ContactsService.swift in Sources */,
 				F3B2518D26D8DD1800C96D42 /* PodcastFeed+FetchUtils.swift in Sources */,
 				4735D5C22411416000BEE3D4 /* LinkPreviewView.swift in Sources */,
@@ -4868,6 +4882,7 @@
 				4787F885247462F600CCE8B9 /* TagsAddedDataSource.swift in Sources */,
 				4787F8902475970400CCE8B9 /* ConnectivityHelper.swift in Sources */,
 				47FA18CA2433AEDA00469C8F /* AttachmentPriceViewController.swift in Sources */,
+				CE842DEB298C680400620AD3 /* BadgeMemberKnownBadgesVM.swift in Sources */,
 				F3531C3F26BD511300E9586C /* DashboardRootViewController+DashboardChatsListDelegate.swift in Sources */,
 				474FE32D23F588E400C06FC8 /* CommonVideoTableViewCell.swift in Sources */,
 				F3A35CA826C43508007D35BD /* DashboardRootViewController+SocketManagerDelegate.swift in Sources */,
@@ -4893,6 +4908,7 @@
 				474FE32623F588C000C06FC8 /* VideoSentTableViewCell.swift in Sources */,
 				47CD9510265EC70E009B06A4 /* API+PeopleExtension.swift in Sources */,
 				470F5CB2243FA2D0007E054F /* VideoCallManager.swift in Sources */,
+				CE842DE5298C656C00620AD3 /* BadgeMemberKnownBadgesVC.swift in Sources */,
 				47308E0F24FEE6E700FFAC6F /* SocketAnyEvent.swift in Sources */,
 				4794CA77252F5D66007C5022 /* API+PodcastExtension.swift in Sources */,
 				F3CE637726AFC44D006E37A0 /* DashboardRootViewController+MiscDelegateUtils.swift in Sources */,

@@ -34,7 +34,8 @@ class BadgeAdminDetailVC : UIViewController{
     @IBOutlet weak var badgeQuantityStepperLabel: UILabel!
     @IBOutlet weak var satsTotalLabel: UILabel!
     
-    var presentationContext : BadgeDetailPresentationContext = .update//.create
+    
+    var presentationContext : BadgeDetailPresentationContext = .create
     var associatedBadge : Badge? = nil
     let pricePerBadge : Int = 10
     var badgeQuantity : Int = 100 {
@@ -54,12 +55,20 @@ class BadgeAdminDetailVC : UIViewController{
         }
         styleSubViews()
        customizeBasedOnPresentationContext()
+        
+        disableEditing()
+    }
+    
+    func disableEditing(){
+        changeIconView.isHidden = true
+        badgeNameTextField.isUserInteractionEnabled = false
+        
     }
     
     func customizeBasedOnPresentationContext(){
         switch(presentationContext){
         case .create:
-            saveBadgeButton.setTitle("Create Badge", for: .normal)
+            saveBadgeButton.setTitle("Purchase Badges", for: .normal)
             break
         case .update:
             saveBadgeButton.setTitle("Update Badge", for: .normal)

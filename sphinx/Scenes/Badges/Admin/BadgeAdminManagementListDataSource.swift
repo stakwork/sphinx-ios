@@ -29,6 +29,7 @@ class BadgeAdminManagementListDataSource : NSObject{
     
     func fetchBadges(){
         //TODO: Add call to service here
+        /*
         API.sharedInstance.getTribeAdminBadges(
             tribeID: "",
             callback: { results in
@@ -44,15 +45,21 @@ class BadgeAdminManagementListDataSource : NSObject{
         errorCallback: {
             self.vc.showErrorMessage()
         })
+        */
         //Fake data here:
-        let n_badges = 15
-        for i in 0...n_badges{
-            let new_badge = Badge()
-            new_badge.name = "my_badge\(i)"
-            new_badge.icon_url = "https://static-00.iconduck.com/assets.00/whale-icon-512x415-xtgxbil4.png"
-            new_badge.requirements = "My badge is the best badge. Ok folks?👌👌 All other badges are a disgrace. My badges are for winners only folks. Everyone agrees."
-            self.badges.append(new_badge)
-        }
+        let new_badge = Badge()
+        new_badge.name = "1k Spend Club"
+        new_badge.icon_url = "https://i.ibb.co/2nvyW7t/1k-badge.png"
+        new_badge.requirements = "Spend at least 1k in the Tribe."
+        self.badges.append(new_badge)
+        
+        let new_badge2 = Badge()
+        new_badge2.name = "1k Earn Club"
+        new_badge2.icon_url = "https://i.ibb.co/2nvyW7t/1k-badge.png"
+        new_badge2.requirements = "Earn at least 1k in the Tribe."
+        self.badges.append(new_badge2)
+        
+        
         self.vc.badgeTableView.reloadData()
     }
 }

@@ -23,7 +23,7 @@ class MemberDetailTableViewCell: UITableViewCell {
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var titleLabel: UILabel!
     
-    let badgeLimit = 3
+    let badgeLimit = 4
     var subviewLabels : [UILabel?] = []
     var subviewImageViews : [UIImageView?] = []
     

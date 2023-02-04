@@ -27,7 +27,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="327" height="48"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Badges:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QN5-r7-EdQ">
-                                <rect key="frame" x="32" y="0.0" width="127" height="48"/>
+                                <rect key="frame" x="0.0" y="0.0" width="127" height="48"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="127" id="FYC-Ti-tnz"/>
                                 </constraints>
@@ -50,7 +50,7 @@
                             <constraint firstAttribute="height" constant="48" id="aPt-RQ-PJW"/>
                             <constraint firstAttribute="bottom" secondItem="TfG-oh-XAP" secondAttribute="bottom" id="cSV-Sf-Xfo"/>
                             <constraint firstAttribute="bottom" secondItem="QN5-r7-EdQ" secondAttribute="bottom" id="f2f-jL-BzJ"/>
-                            <constraint firstItem="QN5-r7-EdQ" firstAttribute="leading" secondItem="zOC-ey-KTX" secondAttribute="leading" constant="32" id="nuj-Pn-rqJ"/>
+                            <constraint firstItem="QN5-r7-EdQ" firstAttribute="leading" secondItem="zOC-ey-KTX" secondAttribute="leading" id="nuj-Pn-rqJ"/>
                             <constraint firstAttribute="trailing" secondItem="TfG-oh-XAP" secondAttribute="trailing" id="rRM-fc-GI1"/>
                         </constraints>
                     </view>

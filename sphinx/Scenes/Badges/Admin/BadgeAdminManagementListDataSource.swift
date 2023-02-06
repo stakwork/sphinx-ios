@@ -91,7 +91,7 @@ extension BadgeAdminManagementListDataSource : UITableViewDelegate,UITableViewDa
                 withIdentifier: "BadgeAdminListTableViewCell",
                 for: indexPath
             ) as! BadgeAdminListTableViewCell
-            cell.configureCell(badge: self.getBadge(index: indexPath.row - 1))
+            cell.configureCell(badge: self.getBadge(index: indexPath.row - 1),type: .inactive)
             return cell
         }
     }

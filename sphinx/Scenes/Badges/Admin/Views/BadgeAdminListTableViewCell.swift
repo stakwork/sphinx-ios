@@ -8,6 +8,12 @@
 
 import UIKit
 
+public enum BadgeAdminCellType {
+    case template
+    case active
+    case inactive
+}
+
 class BadgeAdminListTableViewCell: UITableViewCell {
     
     @IBOutlet weak var badgeImageView: UIImageView!
@@ -15,6 +21,8 @@ class BadgeAdminListTableViewCell: UITableViewCell {
     @IBOutlet weak var badgeDescriptionLabel: UILabel!
     @IBOutlet weak var remainingAmountLabelContainerView: UIView!
     @IBOutlet weak var remainingAmountLabel: UILabel!
+    @IBOutlet weak var statusButton: UIButton!
+    @IBOutlet weak var totalAvailableLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -27,7 +35,7 @@ class BadgeAdminListTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func configureCell(badge:Badge){
+    func configureCell(badge:Badge,type:BadgeAdminCellType){
         if let valid_icon = badge.icon_url{
             self.badgeImageView.sd_setImage(with: URL(string: valid_icon))
         }
@@ -36,7 +44,58 @@ class BadgeAdminListTableViewCell: UITableViewCell {
         self.badgeDescriptionLabel.sizeToFit()
         self.remainingAmountLabel.text = "100"
         
+        configureStatusButton(type:type)
+        
         styleView()
+    }
+    
+    func configureStatusButton(type:BadgeAdminCellType){
+        statusButton.isUserInteractionEnabled = false
+        statusButton.layer.cornerRadius = statusButton.frame.height/2.0
+        remainingAmountLabelContainerView.backgroundColor = .clear
+        totalAvailableLabel.textColor = UIColor.Sphinx.PlaceholderText
+        remainingAmountLabelContainerView.isHidden = false
+        remainingAmountLabel.backgroundColor = .clear
+        totalAvailableLabel.isHidden = false
+        
+        switch(type){
+        case .active:
+            //statusButton.setTitle("ACTIVE", for: [.normal])
+            statusButton.backgroundColor = UIColor.Sphinx.BodyInverted.withAlphaComponent(1.0)
+            statusButton.setTitleColor(UIColor.Sphinx.Body, for: [.normal,.selected])
+            
+            let string = "ACTIVE"
+            let attributedString = NSMutableAttributedString(string: string)
+            attributedString.addAttribute(.foregroundColor, value: statusButton.titleLabel?.textColor, range: NSRange(location: 0, length: string.count))
+            attributedString.addAttribute(.font, value: UIFont(name: "Roboto", size: 11.0), range: NSRange(location: 0, length: string.count))
+            statusButton.titleLabel?.attributedText = attributedString
+            break
+        case .inactive:
+            //statusButton.setTitle("INACTIVE", for: [.normal])
+            statusButton.backgroundColor = UIColor.Sphinx.BodyInverted.withAlphaComponent(0.07)
+            statusButton.setTitleColor(UIColor.Sphinx.SecondaryText, for: [.normal,.selected])
+            
+            let string = "INACTIVE"
+            let attributedString = NSMutableAttributedString(string: string)
+            attributedString.addAttribute(.foregroundColor, value: statusButton.titleLabel?.textColor, range: NSRange(location: 0, length: string.count))
+            attributedString.addAttribute(.font, value: UIFont(name: "Roboto", size: 11.0), range: NSRange(location: 0, length: string.count))
+            statusButton.titleLabel?.attributedText = attributedString
+            
+            break
+        case .template:
+            //statusButton.setTitle("TEMPLATE", for: [.normal])
+            statusButton.backgroundColor = UIColor.Sphinx.PrimaryBlue.withAlphaComponent(1.0)
+            statusButton.setTitleColor(UIColor.white, for: [.normal,.selected])
+            remainingAmountLabelContainerView.isHidden = true
+            totalAvailableLabel.isHidden = true
+            
+            let string = "TEMPLATE"
+            let attributedString = NSMutableAttributedString(string: string)
+            attributedString.addAttribute(.foregroundColor, value: statusButton.titleLabel?.textColor, range: NSRange(location: 0, length: string.count))
+            attributedString.addAttribute(.font, value: UIFont(name: "Roboto", size: 11.0), range: NSRange(location: 0, length: string.count))
+            statusButton.titleLabel?.attributedText = attributedString
+            break
+        }
     }
     
     func styleView(){
@@ -44,7 +103,6 @@ class BadgeAdminListTableViewCell: UITableViewCell {
         remainingAmountLabel.textColor = UIColor.Sphinx.Text
         badgeDescriptionLabel.textColor = UIColor.Sphinx.Text
         badgeNameLabel.textColor = UIColor.Sphinx.Text
-        remainingAmountLabelContainerView.backgroundColor = UIColor.Sphinx.TextInverted
         remainingAmountLabelContainerView.layer.cornerRadius = 8
     }
     

@@ -44,7 +44,7 @@
                                 </constraints>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Send Sats">
-                                    <fontDescription key="titleFontDescription" name="Roboto-Regular" family="Roboto" pointSize="12"/>
+                                    <fontDescription key="titleFontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                                     <directionalEdgeInsets key="contentInsets" top="0.0" leading="-10" bottom="0.0" trailing="0.0"/>
                                     <color key="baseForegroundColor" name="Body"/>
                                 </buttonConfiguration>
@@ -53,16 +53,14 @@
                                 </connections>
                             </button>
                             <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IFw-CP-eU0">
-                                <rect key="frame" x="149" y="198" width="12" height="12"/>
+                                <rect key="frame" x="143" y="195" width="18" height="18"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="12" id="Cju-11-Vjs"/>
-                                    <constraint firstAttribute="height" constant="12" id="nkw-y7-4dB"/>
+                                    <constraint firstAttribute="width" constant="18" id="Cju-11-Vjs"/>
+                                    <constraint firstAttribute="height" constant="18" id="nkw-y7-4dB"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="tintColor" name="MainBottomIcons"/>
-                                <state key="normal" image="bottomBar4">
-                                    <color key="titleColor" name="SecondaryText"/>
-                                </state>
+                                <state key="normal" image="bottomBar4"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kof-iK-Cjc">
                                 <rect key="frame" x="191" y="184" width="173" height="40"/>
@@ -71,7 +69,7 @@
                                 </constraints>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Earn Badges">
-                                    <fontDescription key="titleFontDescription" name="Roboto-Regular" family="Roboto" pointSize="12"/>
+                                    <fontDescription key="titleFontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                                     <directionalEdgeInsets key="contentInsets" top="0.0" leading="-10" bottom="0.0" trailing="0.0"/>
                                     <color key="baseForegroundColor" name="BodyInverted"/>
                                 </buttonConfiguration>
@@ -80,10 +78,10 @@
                                 </connections>
                             </button>
                             <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vub-1U-Ys7">
-                                <rect key="frame" x="337" y="196.66666666666666" width="15" height="15"/>
+                                <rect key="frame" x="332" y="194" width="20" height="20"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="15" id="SNb-OK-LWk"/>
-                                    <constraint firstAttribute="height" constant="15" id="dd5-Y8-hBd"/>
+                                    <constraint firstAttribute="width" constant="20" id="SNb-OK-LWk"/>
+                                    <constraint firstAttribute="height" constant="20" id="dd5-Y8-hBd"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="tintColor" name="MainBottomIcons"/>

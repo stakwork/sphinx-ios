@@ -35,7 +35,12 @@ class BadgeMemberKnownBadgesVM : NSObject {
         badge.name = "my badge"
         badge.memo = "dexription of my badge"
         badge.icon_url = "https://i.ibb.co/Ch8mwg0/badge-Example.png"
+        let badge2 = Badge()
+        badge2.name = "my badge"
+        badge2.memo = "dexription of my badge"
+        badge2.icon_url = "https://i.ibb.co/Ch8mwg0/badge-Example.png"
         knownBadges.append(badge)
+        knownBadges.append(badge2)
     }
     
 }

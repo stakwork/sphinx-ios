@@ -91,7 +91,7 @@ class BadgeAdminListTableViewCell: UITableViewCell {
             
             let string = "TEMPLATE"
             let attributedString = NSMutableAttributedString(string: string)
-            attributedString.addAttribute(.foregroundColor, value: statusButton.titleLabel?.textColor, range: NSRange(location: 0, length: string.count))
+            attributedString.addAttribute(.foregroundColor, value: UIColor.white, range: NSRange(location: 0, length: string.count))
             attributedString.addAttribute(.font, value: UIFont(name: "Roboto", size: 11.0), range: NSRange(location: 0, length: string.count))
             statusButton.titleLabel?.attributedText = attributedString
             break

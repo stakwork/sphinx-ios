@@ -12,11 +12,13 @@ import UIKit
 
 class BadgeAdminManagementListVC: UIViewController{
     
-    
+    @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var navBarView: UIView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var viewTitle: UILabel!
     @IBOutlet weak var badgeTableView: UITableView!
+    @IBOutlet weak var badgeTemplateHeaderLabel: UILabel!
+    
     @IBOutlet weak var headerViewHeight: NSLayoutConstraint!
     var viewDidLayout : Bool = false
     
@@ -34,6 +36,7 @@ class BadgeAdminManagementListVC: UIViewController{
     }
     
     override func viewDidLoad() {
+        self.view.backgroundColor = UIColor.Sphinx.Body
         setupBadgeTable()
     }
     

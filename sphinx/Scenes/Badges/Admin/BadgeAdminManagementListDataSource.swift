@@ -25,29 +25,40 @@ class BadgeAdminManagementListDataSource : NSObject{
         vc.badgeTableView.dataSource = self
         vc.badgeTableView.register(UINib(nibName: "BadgeAdminListTableViewCell", bundle: nil), forCellReuseIdentifier: "BadgeAdminListTableViewCell")
         vc.badgeTableView.register(UINib(nibName: "BadgeAdminListHeaderCell", bundle: nil), forCellReuseIdentifier: "BadgeAdminListHeaderCell")
+        fetchTemplates()
         fetchBadges()
+    }
+    
+    func fetchTemplates(){
+        API.sharedInstance.getTribeAdminBadgeTemplates(
+            tribeID: "",
+            callback: {results in
+                if let mappedResults = Mapper<BadgeTemplate>().mapArray(JSONObject: Array(results)){
+                    print(mappedResults)
+                    for result in mappedResults{
+                        let newBadge = Badge()
+                        newBadge.name = result.name
+                        newBadge.icon_url = result.icon_url
+                        if let req = result.rewardRequirement,
+                           let type = result.getHumanizedRewardType(){
+                            newBadge.requirements = "\(type) at least \(req) sats in this tribe."
+                        }
+                        self.badgeTemplates.append(newBadge)
+                    }
+                    self.vc.badgeTableView.reloadData()
+                }
+            },
+            errorCallback: {
+                print("error")
+        })
     }
     
     func fetchBadges(){
         //TODO: Add call to service here
-        /*
-        API.sharedInstance.getTribeAdminBadges(
-            tribeID: "",
-            callback: { results in
-                if let badgeResults = Mapper<Badge>().mapArray(JSONObject: results){
-                    self.badges = badgeResults
-                    self.vc.badgeTableView.reloadData()
-                }
-                else{
-                    self.vc.showErrorMessage()
-                }
-            
-        },
-        errorCallback: {
-            self.vc.showErrorMessage()
-        })
-        */
+        
+        
         //Fake data here:
+        /*
         let new_badge = Badge()
         new_badge.name = "1k Spend Club"
         new_badge.icon_url = "https://i.ibb.co/2nvyW7t/1k-badge.png"
@@ -59,6 +70,7 @@ class BadgeAdminManagementListDataSource : NSObject{
         new_badge2.icon_url = "https://i.ibb.co/2nvyW7t/1k-badge.png"
         new_badge2.requirements = "Earn at least 1k in the Tribe."
         self.badgeTemplates.append(new_badge2)
+        */
         
         let new_badge3 = Badge()
         new_badge3.name = "1k Spend Club"

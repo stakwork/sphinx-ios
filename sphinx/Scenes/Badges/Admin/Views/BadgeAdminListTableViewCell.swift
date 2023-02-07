@@ -39,6 +39,7 @@ class BadgeAdminListTableViewCell: UITableViewCell {
     func configureCell(badge:Badge,type:BadgeAdminCellType){
         if let valid_icon = badge.icon_url{
             self.badgeImageView.sd_setImage(with: URL(string: valid_icon))
+            
         }
         self.badgeNameLabel.text = badge.name
         self.badgeDescriptionLabel.text = badge.requirements

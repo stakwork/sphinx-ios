@@ -296,7 +296,7 @@ extension API {
         params["name"] = "Jim Test"
         params["amount"] = 10
         params["memo"] = "my memo"
-        guard let request = getURLRequest(route: "/create_badges", params: nil, method: "POST") else {
+        guard let request = getURLRequest(route: "/create_badge", params: params as? NSDictionary, method: "POST") else {
             errorCallback()
             return
         }
@@ -320,8 +320,39 @@ extension API {
             switch response.result {
             case .success(let data):
                 if let json = data as? NSDictionary {
-                    if let success = json["success"] as? Bool, let response = json["response"] as? NSDictionary, success {
-                        callback(JSON(response))
+                    if let success = json["success"] as? Bool,
+                        let response = json["response"] as? String,
+                        success {
+                        //callback((response))
+                        return
+                    }
+                }
+                print(response.response?.statusCode)
+                errorCallback()
+            case .failure(_):
+                print(response.response?.statusCode)
+                errorCallback()
+            }
+        }
+    }
+    
+    func getTribeAdminBadgeTemplates(
+        tribeID:String,
+        callback: @escaping GetTribeBadgesCallback,
+        errorCallback: @escaping EmptyCallback
+    ){
+        guard let request = getURLRequest(route: "/badge_templates", params: nil, method: "GET") else {
+            errorCallback()
+            return
+        }
+        sphinxRequest(request) { response in
+            switch response.result {
+            case .success(let data):
+                if let json = data as? NSDictionary {
+                    if let success = json["success"] as? Bool,
+                        let response = json["response"] as? [NSDictionary],
+                        success {
+                        callback(response)
                         return
                     }
                 }
@@ -339,6 +370,7 @@ extension API {
         callback: @escaping GetTribeBadgesCallback,
         errorCallback: @escaping EmptyCallback
     ){
+        
         guard let request = getURLRequest(route: "/badges?limit=100&offset=0", params: nil, method: "GET") else {
             errorCallback()
             return
@@ -363,8 +395,10 @@ extension API {
             switch response.result {
             case .success(let data):
                 if let json = data as? NSDictionary {
-                    if let success = json["success"] as? Bool, let response = json["response"] as? NSDictionary, success {
-                        callback(JSON(response))
+                    if let success = json["success"] as? Bool,
+                        let response = json["response"] as? [NSDictionary],
+                        success {
+                        callback((response))
                         return
                     }
                 }

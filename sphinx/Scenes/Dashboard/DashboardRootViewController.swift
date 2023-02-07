@@ -223,6 +223,7 @@ extension DashboardRootViewController {
         isLoading = true
         
         activeTab = .friends
+        
     }
     
     func setupAddTribeButton(){

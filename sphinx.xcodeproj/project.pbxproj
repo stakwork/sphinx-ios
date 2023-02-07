@@ -638,6 +638,7 @@
 		CE842DEB298C680400620AD3 /* BadgeMemberKnownBadgesVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE842DEA298C680400620AD3 /* BadgeMemberKnownBadgesVM.swift */; };
 		CE842DEE298D61CF00620AD3 /* BadgeAdminListHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE842DEC298D61CF00620AD3 /* BadgeAdminListHeaderCell.swift */; };
 		CE842DEF298D61CF00620AD3 /* BadgeAdminListHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE842DED298D61CF00620AD3 /* BadgeAdminListHeaderCell.xib */; };
+		CE842DF12992D0F400620AD3 /* BadgeTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE842DF02992D0F400620AD3 /* BadgeTemplate.swift */; };
 		CE91E59A29885175008BA6EA /* MemberBadgeDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE91E59929885175008BA6EA /* MemberBadgeDetailVC.swift */; };
 		CEBF0D032975B20B006C1F21 /* DiscoverTribesTagSelectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBF0D022975B20B006C1F21 /* DiscoverTribesTagSelectionVC.swift */; };
 		CEBF0D052975C367006C1F21 /* DiscoverTribesTagSelectionVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBF0D042975C367006C1F21 /* DiscoverTribesTagSelectionVM.swift */; };
@@ -1552,6 +1553,7 @@
 		CE842DEA298C680400620AD3 /* BadgeMemberKnownBadgesVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeMemberKnownBadgesVM.swift; sourceTree = "<group>"; };
 		CE842DEC298D61CF00620AD3 /* BadgeAdminListHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeAdminListHeaderCell.swift; sourceTree = "<group>"; };
 		CE842DED298D61CF00620AD3 /* BadgeAdminListHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BadgeAdminListHeaderCell.xib; sourceTree = "<group>"; };
+		CE842DF02992D0F400620AD3 /* BadgeTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeTemplate.swift; sourceTree = "<group>"; };
 		CE91E59929885175008BA6EA /* MemberBadgeDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberBadgeDetailVC.swift; sourceTree = "<group>"; };
 		CEBF0D022975B20B006C1F21 /* DiscoverTribesTagSelectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTribesTagSelectionVC.swift; sourceTree = "<group>"; };
 		CEBF0D042975C367006C1F21 /* DiscoverTribesTagSelectionVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTribesTagSelectionVM.swift; sourceTree = "<group>"; };
@@ -3605,6 +3607,7 @@
 			isa = PBXGroup;
 			children = (
 				CE3133A62977747E00E91E3A /* Badge.swift */,
+				CE842DF02992D0F400620AD3 /* BadgeTemplate.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -4734,6 +4737,7 @@
 				F30884A92699181200CADDEB /* API+KarmaPurchaseUtils.swift in Sources */,
 				4787F8982478112F00CCE8B9 /* ChatAvatarView.swift in Sources */,
 				47308E0E24FEE6E700FFAC6F /* SocketIOClientConfiguration.swift in Sources */,
+				CE842DF12992D0F400620AD3 /* BadgeTemplate.swift in Sources */,
 				47308E1124FEE6E700FFAC6F /* SocketIOClientOption.swift in Sources */,
 				47FB189B23A299000097695B /* SignupHelper.swift in Sources */,
 				47669F3F23CF7CB300C17A77 /* ChatListCommonObject.swift in Sources */,

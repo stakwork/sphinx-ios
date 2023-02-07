@@ -10,6 +10,7 @@ target 'sphinx' do
     pod 'SwiftyJSON'
     pod 'SDWebImage', '~> 5.11'
     pod 'SDWebImageFLPlugin'
+    pod 'SDWebImageSVGCoder'
     pod 'KYDrawerController'
     pod 'SwiftyRSA'
     pod 'RNCryptor', '~> 5.0'

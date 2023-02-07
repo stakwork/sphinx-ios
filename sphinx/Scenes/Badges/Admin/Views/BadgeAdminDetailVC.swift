@@ -186,7 +186,8 @@ class BadgeAdminDetailVC : UIViewController{
     
     func loadWithBadge(badge:Badge){
         if let valid_icon = badge.icon_url{
-            badgeImageView.sd_setImage(with: URL(string: valid_icon))
+            let bitmapSize = CGSize(width: 500, height: 500)
+            badgeImageView.sd_setImage(with: URL(string: valid_icon), placeholderImage: nil, options: [], context: [.imageThumbnailPixelSize : bitmapSize])
         }
         //badgeNameTextField.text = badge.name ?? ""
         viewTitle.text = badge.name ?? ""

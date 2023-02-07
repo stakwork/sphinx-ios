@@ -91,6 +91,8 @@ class BadgeAdminDetailVC : UIViewController{
             badgeActivationContainerView.isHidden = true
             badgeActivationContainerHeight.constant = 0
             //saveBadgeButton.setTitle("Update Badge", for: .normal)
+            vcScrollView.contentSize = CGSize(width: self.view.frame.width, height: 700.0)
+            print(vcScrollView.contentSize.height)
             break
         }
     }

@@ -23,6 +23,7 @@ class BadgeAdminListTableViewCell: UITableViewCell {
     @IBOutlet weak var remainingAmountLabel: UILabel!
     @IBOutlet weak var statusButton: UIButton!
     @IBOutlet weak var totalAvailableLabel: UILabel!
+    var cellType: BadgeAdminCellType? = nil
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -57,44 +58,50 @@ class BadgeAdminListTableViewCell: UITableViewCell {
         remainingAmountLabelContainerView.isHidden = false
         remainingAmountLabel.backgroundColor = .clear
         totalAvailableLabel.isHidden = false
-        
-        switch(type){
-        case .active:
-            //statusButton.setTitle("ACTIVE", for: [.normal])
-            statusButton.backgroundColor = UIColor.Sphinx.BodyInverted.withAlphaComponent(1.0)
-            statusButton.setTitleColor(UIColor.Sphinx.Body, for: [.normal,.selected])
-            
-            let string = "ACTIVE"
-            let attributedString = NSMutableAttributedString(string: string)
-            attributedString.addAttribute(.foregroundColor, value: statusButton.titleLabel?.textColor, range: NSRange(location: 0, length: string.count))
-            attributedString.addAttribute(.font, value: UIFont(name: "Roboto", size: 11.0), range: NSRange(location: 0, length: string.count))
-            statusButton.titleLabel?.attributedText = attributedString
-            break
-        case .inactive:
-            //statusButton.setTitle("INACTIVE", for: [.normal])
-            statusButton.backgroundColor = UIColor.Sphinx.BodyInverted.withAlphaComponent(0.07)
-            statusButton.setTitleColor(UIColor.Sphinx.SecondaryText, for: [.normal,.selected])
-            
-            let string = "INACTIVE"
-            let attributedString = NSMutableAttributedString(string: string)
-            attributedString.addAttribute(.foregroundColor, value: statusButton.titleLabel?.textColor, range: NSRange(location: 0, length: string.count))
-            attributedString.addAttribute(.font, value: UIFont(name: "Roboto", size: 11.0), range: NSRange(location: 0, length: string.count))
-            statusButton.titleLabel?.attributedText = attributedString
-            
-            break
-        case .template:
-            //statusButton.setTitle("TEMPLATE", for: [.normal])
-            statusButton.backgroundColor = UIColor.Sphinx.PrimaryBlue.withAlphaComponent(1.0)
-            statusButton.setTitleColor(UIColor.white, for: [.normal,.selected])
-            remainingAmountLabelContainerView.isHidden = true
-            totalAvailableLabel.isHidden = true
-            
-            let string = "TEMPLATE"
-            let attributedString = NSMutableAttributedString(string: string)
-            attributedString.addAttribute(.foregroundColor, value: UIColor.white, range: NSRange(location: 0, length: string.count))
-            attributedString.addAttribute(.font, value: UIFont(name: "Roboto", size: 11.0), range: NSRange(location: 0, length: string.count))
-            statusButton.titleLabel?.attributedText = attributedString
-            break
+        self.cellType = type
+        configureCellByType()
+    }
+    
+    func configureCellByType(){
+        if(cellType != nil){
+            switch(cellType!){
+            case .active:
+                //statusButton.setTitle("ACTIVE", for: [.normal])
+                statusButton.backgroundColor = UIColor.Sphinx.BodyInverted.withAlphaComponent(1.0)
+                statusButton.setTitleColor(UIColor.Sphinx.Body, for: [.normal,.selected])
+                
+                let string = "ACTIVE"
+                let attributedString = NSMutableAttributedString(string: string)
+                attributedString.addAttribute(.foregroundColor, value: UIColor.Sphinx.Body, range: NSRange(location: 0, length: string.count))
+                attributedString.addAttribute(.font, value: UIFont(name: "Roboto", size: 11.0), range: NSRange(location: 0, length: string.count))
+                statusButton.titleLabel?.attributedText = attributedString
+                break
+            case .inactive:
+                //statusButton.setTitle("INACTIVE", for: [.normal])
+                statusButton.backgroundColor = UIColor.Sphinx.BodyInverted.withAlphaComponent(0.07)
+                statusButton.setTitleColor(UIColor.Sphinx.SecondaryText, for: [.normal,.selected])
+                
+                let string = "INACTIVE"
+                let attributedString = NSMutableAttributedString(string: string)
+                attributedString.addAttribute(.foregroundColor, value: statusButton.titleLabel?.textColor, range: NSRange(location: 0, length: string.count))
+                attributedString.addAttribute(.font, value: UIFont(name: "Roboto", size: 11.0), range: NSRange(location: 0, length: string.count))
+                statusButton.titleLabel?.attributedText = attributedString
+                
+                break
+            case .template:
+                //statusButton.setTitle("TEMPLATE", for: [.normal])
+                statusButton.backgroundColor = UIColor.Sphinx.PrimaryBlue.withAlphaComponent(1.0)
+                statusButton.setTitleColor(UIColor.white, for: [.normal,.selected])
+                remainingAmountLabelContainerView.isHidden = true
+                totalAvailableLabel.isHidden = true
+                
+                let string = "TEMPLATE"
+                let attributedString = NSMutableAttributedString(string: string)
+                attributedString.addAttribute(.foregroundColor, value: UIColor.white, range: NSRange(location: 0, length: string.count))
+                attributedString.addAttribute(.font, value: UIFont(name: "Roboto", size: 11.0), range: NSRange(location: 0, length: string.count))
+                statusButton.titleLabel?.attributedText = attributedString
+                break
+            }
         }
     }
     
@@ -108,6 +115,7 @@ class BadgeAdminListTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        
         badgeNameLabel.text = ""
         badgeDescriptionLabel.text = ""
         remainingAmountLabel.text = ""

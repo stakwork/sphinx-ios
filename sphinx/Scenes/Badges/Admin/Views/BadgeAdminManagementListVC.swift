@@ -40,6 +40,11 @@ class BadgeAdminManagementListVC: UIViewController{
         setupBadgeTable()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        badgeTableView.reloadData()
+    }
+    
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {

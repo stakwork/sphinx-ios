@@ -60,10 +60,11 @@ class BadgeAdminManagementListVC: UIViewController{
         self.navigationController?.popViewController(animated: true)
     }
     
-    func showBadgeDetail(badge:Badge){
+    func showBadgeDetail(badge:Badge,presentationContext:BadgeDetailPresentationContext){
         let badgeDetailVC = BadgeAdminDetailVC.instantiate(rootViewController: rootViewController)
         if let valid_detailVC = badgeDetailVC as? BadgeAdminDetailVC{
             valid_detailVC.associatedBadge = badge
+            valid_detailVC.presentationContext = presentationContext
         }
         self.navigationController?.pushViewController(badgeDetailVC, animated: true)
     }

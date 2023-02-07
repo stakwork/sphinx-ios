@@ -136,10 +136,10 @@ extension BadgeAdminManagementListDataSource : UITableViewDelegate,UITableViewDa
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if(indexPath.row < getNTemplates()){
-            vc.showBadgeDetail(badge: getTemplate(index: indexPath.row))
+            vc.showBadgeDetail(badge: getTemplate(index: indexPath.row),presentationContext: .template)
         }
         else if(indexPath.row > getNTemplates()){
-            vc.showBadgeDetail(badge: getBadge(index: indexPath.row))
+            vc.showBadgeDetail(badge: getBadge(index: indexPath.row), presentationContext: .existing)
             //TODO: set it up for badge assets
         }
         

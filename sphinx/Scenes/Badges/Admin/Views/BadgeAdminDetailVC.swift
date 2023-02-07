@@ -10,8 +10,8 @@ import Foundation
 import UIKit
 
 public enum BadgeDetailPresentationContext{
-    case create
-    case update
+    case template
+    case existing
 }
 
 class BadgeAdminDetailVC : UIViewController{
@@ -33,9 +33,17 @@ class BadgeAdminDetailVC : UIViewController{
     @IBOutlet weak var stepperPlusButton: UIButton!
     @IBOutlet weak var badgeQuantityStepperLabel: UILabel!
     @IBOutlet weak var satsTotalLabel: UILabel!
+    @IBOutlet weak var badgeNameLabel: UILabel!
+    @IBOutlet weak var totalStaticLabel: UILabel!
+    @IBOutlet weak var pricePerBadgeAmountLabel: UILabel!
+    @IBOutlet weak var badgeActivationContainerView: UIView!
+    @IBOutlet weak var badgeActivateDeactivateLabel: UILabel!
+    @IBOutlet weak var badgeActivateDeactivateSwitch: UISwitch!
+    @IBOutlet weak var badgeActivationContainerHeight: NSLayoutConstraint!
+    @IBOutlet weak var createBadgeImage: UIImageView!
     
     
-    var presentationContext : BadgeDetailPresentationContext = .create
+    var presentationContext : BadgeDetailPresentationContext = .template
     var associatedBadge : Badge? = nil
     let pricePerBadge : Int = 10
     var badgeQuantity : Int = 100 {
@@ -47,7 +55,7 @@ class BadgeAdminDetailVC : UIViewController{
     
     
     override func viewDidLoad() {
-        changeIconView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleChangeIcon)))
+        //changeIconView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleChangeIcon)))
         vcScrollView.isScrollEnabled = true
         vcScrollView.contentSize = CGSize(width: self.view.frame.width, height: 900.0)
         if let valid_badge = associatedBadge{
@@ -60,18 +68,29 @@ class BadgeAdminDetailVC : UIViewController{
     }
     
     func disableEditing(){
-        changeIconView.isHidden = true
-        badgeNameTextField.isUserInteractionEnabled = false
+        //changeIconView.isHidden = true
+        //badgeNameTextField.isUserInteractionEnabled = false
         
     }
     
     func customizeBasedOnPresentationContext(){
         switch(presentationContext){
-        case .create:
-            saveBadgeButton.setTitle("Purchase Badges", for: .normal)
+        case .existing:
+            saveBadgeButton.isHidden = true
+            quantityLabel.isHidden = true
+            stepperPlaceholderView.isHidden = true
+            pricePerBadgeLabel.isHidden = true
+            satsTotalLabel.isHidden = true
+            pricePerBadgeAmountLabel.isHidden = true
+            totalStaticLabel.isHidden = true
+            createBadgeImage.isHidden = true
+            vcScrollView.contentSize = CGSize(width: self.view.frame.width, height: 400.0)
             break
-        case .update:
-            saveBadgeButton.setTitle("Update Badge", for: .normal)
+        case .template:
+            saveBadgeButton.setTitle("Purchase Badges", for: .normal)
+            badgeActivationContainerView.isHidden = true
+            badgeActivationContainerHeight.constant = 0
+            //saveBadgeButton.setTitle("Update Badge", for: .normal)
             break
         }
     }
@@ -96,16 +115,16 @@ class BadgeAdminDetailVC : UIViewController{
         stepperPlaceholderView.layer.cornerRadius = 16.0
         stepperMinusButton.layer.cornerRadius = stepperMinusButton.layer.bounds.width / 2
         stepperPlusButton.layer.cornerRadius = stepperMinusButton.layer.bounds.width / 2
-        requirementLabel.textColor = UIColor.Sphinx.SecondaryText
-        badgeTitleLabel.textColor = UIColor.Sphinx.SecondaryText
+        //requirementLabel.textColor = UIColor.Sphinx.SecondaryText
+       // badgeTitleLabel.textColor = UIColor.Sphinx.SecondaryText
         quantityLabel.textColor = UIColor.Sphinx.SecondaryText
         pricePerBadgeLabel.textColor = UIColor.Sphinx.SecondaryText
-        iconRequirementsLabel.textColor = UIColor.Sphinx.SecondaryText
-        changeIconView.layer.cornerRadius = 20
-        changeIconView.layer.borderWidth = 1
-        changeIconView.layer.borderColor = UIColor.Sphinx.BubbleShadow.cgColor
-        badgeImageView.addLineDashedStroke(pattern: [2, 2], radius: 0, color: UIColor.gray.cgColor)
-        saveBadgeButton.layer.cornerRadius = 36.0
+        //iconRequirementsLabel.textColor = UIColor.Sphinx.SecondaryText
+        //changeIconView.layer.cornerRadius = 20
+        //changeIconView.layer.borderWidth = 1
+        //changeIconView.layer.borderColor = UIColor.Sphinx.BubbleShadow.cgColor
+        //badgeImageView.addLineDashedStroke(pattern: [2, 2], radius: 0, color: UIColor.gray.cgColor)
+        saveBadgeButton.layer.cornerRadius = saveBadgeButton.frame.height/2.0
         saveBadgeButton.backgroundColor = UIColor.Sphinx.PrimaryGreen
         saveBadgeButton.tintColor = .clear
     }
@@ -146,7 +165,9 @@ class BadgeAdminDetailVC : UIViewController{
         if let valid_icon = badge.icon_url{
             badgeImageView.sd_setImage(with: URL(string: valid_icon))
         }
-        badgeNameTextField.text = badge.name ?? ""
+        //badgeNameTextField.text = badge.name ?? ""
+        viewTitle.text = badge.name ?? ""
+        badgeNameLabel.text = badge.name ?? ""
         badgeRequirementDescriptionLabel.text = badge.requirements ?? ""
         
     }
@@ -176,6 +197,8 @@ class BadgeAdminDetailVC : UIViewController{
         }
         
     }
+    
+    
     
     
 }

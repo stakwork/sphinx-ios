@@ -160,7 +160,7 @@ class GroupDetailsViewController: UIViewController {
     }
     
     @objc func didTapBadgeManagementView(){
-        let badgeManagementVC = BadgeAdminManagementListVC.instantiate(rootViewController: rootViewController)
+        let badgeManagementVC = BadgeAdminManagementListVC.instantiate(rootViewController: rootViewController,chatID: chat.id)
         self.navigationController?.pushViewController(badgeManagementVC, animated: true)
     }
     

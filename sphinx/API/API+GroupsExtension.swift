@@ -300,22 +300,7 @@ extension API {
             errorCallback()
             return
         }
-        /*
-        var fakeResponse = JSON()
         
-        
-        fakeResponse = [
-            "name":"name1",
-            "icon_url":"https://static-00.iconduck.com/assets.00/whale-icon-512x415-xtgxbil4.png",
-            "amount_available":"50",
-            "amount_issued":"100",
-            "requirements":"test requirement"
-        ]
-        
-        callback(JSON(fakeResponse))
-        
-        return
-        */
         sphinxRequest(request) { response in
             switch response.result {
             case .success(let data):
@@ -337,7 +322,6 @@ extension API {
     }
     
     func getTribeAdminBadgeTemplates(
-        tribeID:String,
         callback: @escaping GetTribeBadgesCallback,
         errorCallback: @escaping EmptyCallback
     ){
@@ -366,31 +350,17 @@ extension API {
     }
     
     func getTribeAdminBadges(
-        tribeID:String,
+        tribeID:Int?,
         callback: @escaping GetTribeBadgesCallback,
         errorCallback: @escaping EmptyCallback
     ){
-        
-        guard let request = getURLRequest(route: "/badges?limit=100&offset=0", params: nil, method: "GET") else {
+        let urlString = (tribeID == nil) ? "/badges?limit=100&offset=0" : "/badge_per_tribe/\(tribeID!)?limit=100&offset=0"
+        //let params : [String:Any]? = (tribeID == nil) ? nil : ["chat_id" : tribeID!]
+        guard let request = getURLRequest(route: urlString, params: nil, method: "GET") else {
             errorCallback()
             return
         }
-        /*
-        var fakeResponse = JSON()
-        
-        
-        fakeResponse = [
-            "name":"name1",
-            "icon_url":"https://static-00.iconduck.com/assets.00/whale-icon-512x415-xtgxbil4.png",
-            "amount_available":"50",
-            "amount_issued":"100",
-            "requirements":"test requirement"
-        ]
-        
-        callback(JSON(fakeResponse))
-        
-        return
-        */
+
         sphinxRequest(request) { response in
             switch response.result {
             case .success(let data):

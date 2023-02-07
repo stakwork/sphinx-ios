@@ -15,9 +15,11 @@ class BadgeAdminManagementListDataSource : NSObject{
     private var badgeTemplates : [Badge] = [Badge]()
     private var badges : [Badge] =  [Badge]()
     var vc : BadgeAdminManagementListVC
+    var chatID : Int?
     
-    init(vc:BadgeAdminManagementListVC) {
+    init(vc:BadgeAdminManagementListVC,chatID:Int?) {
         self.vc = vc
+        self.chatID = chatID
     }
     
     func setupDataSource(){
@@ -31,7 +33,6 @@ class BadgeAdminManagementListDataSource : NSObject{
     
     func fetchTemplates(){
         API.sharedInstance.getTribeAdminBadgeTemplates(
-            tribeID: "",
             callback: {results in
                 if let mappedResults = Mapper<BadgeTemplate>().mapArray(JSONObject: Array(results)){
                     print(mappedResults)
@@ -54,24 +55,19 @@ class BadgeAdminManagementListDataSource : NSObject{
     }
     
     func fetchBadges(){
-        //TODO: Add call to service here
         
-        
-        //Fake data here:
+        API.sharedInstance.getTribeAdminBadges(
+            tribeID: nil,
+            callback: { results in
+               print(results)
+                if let mappedResults = Mapper<Badge>().mapArray(JSONObject: Array(results)){
+                    self.badges = mappedResults
+                }
+            },
+            errorCallback: {
+                
+            })
         /*
-        let new_badge = Badge()
-        new_badge.name = "1k Spend Club"
-        new_badge.icon_url = "https://i.ibb.co/2nvyW7t/1k-badge.png"
-        new_badge.requirements = "Spend at least 1k in the Tribe."
-        self.badgeTemplates.append(new_badge)
-        
-        let new_badge2 = Badge()
-        new_badge2.name = "1k Earn Club"
-        new_badge2.icon_url = "https://i.ibb.co/2nvyW7t/1k-badge.png"
-        new_badge2.requirements = "Earn at least 1k in the Tribe."
-        self.badgeTemplates.append(new_badge2)
-        */
-        
         let new_badge3 = Badge()
         new_badge3.name = "1k Spend Club"
         new_badge3.icon_url = "https://i.ibb.co/2nvyW7t/1k-badge.png"
@@ -79,6 +75,7 @@ class BadgeAdminManagementListDataSource : NSObject{
         new_badge3.amount_issued = 100
         new_badge3.amount_created = 1000
         self.badges.append(new_badge3)
+         */
         
         self.vc.badgeTableView.reloadData()
     }
@@ -103,7 +100,7 @@ extension BadgeAdminManagementListDataSource : UITableViewDelegate,UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return getNBadges() + getNTemplates() + 1
+        return getNBadges() + getNTemplates() + ((badges.count > 0) ? 1 : 0)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

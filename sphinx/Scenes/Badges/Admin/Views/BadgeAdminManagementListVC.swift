@@ -22,16 +22,19 @@ class BadgeAdminManagementListVC: UIViewController{
     @IBOutlet weak var headerViewHeight: NSLayoutConstraint!
     
     var viewDidLayout : Bool = false
+    var chatID:Int? = nil
     
     
     private var rootViewController: RootViewController!
     var badgeManagementListDataSource : BadgeAdminManagementListDataSource?
     
     static func instantiate(
-        rootViewController: RootViewController
+        rootViewController: RootViewController,
+        chatID:Int?
     ) -> UIViewController {
         let viewController = StoryboardScene.BadgeManagement.badgeManagementListViewController.instantiate() as! BadgeAdminManagementListVC
         viewController.rootViewController = rootViewController
+        viewController.chatID = chatID
         
         return viewController
     }
@@ -57,7 +60,7 @@ class BadgeAdminManagementListVC: UIViewController{
     func setupBadgeTable(){
         viewTitle.textColor = UIColor.Sphinx.Text
         navBarView.backgroundColor = UIColor.Sphinx.Body
-        badgeManagementListDataSource = BadgeAdminManagementListDataSource(vc: self)
+        badgeManagementListDataSource = BadgeAdminManagementListDataSource(vc: self,chatID: chatID)
         badgeManagementListDataSource?.setupDataSource()
     }
     

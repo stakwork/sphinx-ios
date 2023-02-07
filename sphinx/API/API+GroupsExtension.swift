@@ -288,14 +288,15 @@ extension API {
     }
     
     func createTribeAdminBadge(
-        callback: @escaping GetTribeBadgesCallback,
+        badge: Badge,
+        amount:Int,
+        callback: @escaping CreateTribeBadgeCallback,
         errorCallback: @escaping EmptyCallback
     ){
         var params = [String:Any]()
-        params["icon"] = "https://static-00.iconduck.com/assets.00/whale-icon-512x415-xtgxbil4.png"
-        params["name"] = "Jim Test"
-        params["amount"] = 10
-        params["memo"] = "my memo"
+        params = badge.toJSON()
+        params["amount"] = amount//10
+        
         guard let request = getURLRequest(route: "/create_badge", params: params as? NSDictionary, method: "POST") else {
             errorCallback()
             return
@@ -306,9 +307,8 @@ extension API {
             case .success(let data):
                 if let json = data as? NSDictionary {
                     if let success = json["success"] as? Bool,
-                        let response = json["response"] as? String,
                         success {
-                        //callback((response))
+                        callback(success)
                         return
                     }
                 }

@@ -48,6 +48,7 @@ class BadgeAdminDetailVC : UIViewController{
     @IBOutlet weak var badgeStatsLabelBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var badgeStatsLabelTopConstraint: NSLayoutConstraint!
     
+    private lazy var loadingViewController = LoadingViewController()
     var presentationContext : BadgeDetailPresentationContext = .template
     var associatedBadge : Badge? = nil
     let pricePerBadge : Int = 10
@@ -171,6 +172,35 @@ class BadgeAdminDetailVC : UIViewController{
     
     @IBAction func createBadgeButtonTap(_ sender: Any) {
         //Call API
+        addChildVC(
+            child: loadingViewController,
+            container: self.view
+        )
+        
+        if let valid_badge = self.associatedBadge{
+            API.sharedInstance.createTribeAdminBadge(
+                badge: valid_badge,
+                amount: self.badgeQuantity,
+                callback: { success in
+                    self.removeChildVC(child: self.loadingViewController)
+                    AlertHelper.showAlert(
+                    title: "Badge Created",
+                    message: "Successfully created \(self.badgeQuantity) copies of \(String(describing: valid_badge.name ?? "your badge"))",
+                    completion: {
+                        self.navigationController?.popViewController(animated: true)
+                    })
+                    print(success)
+                },
+                errorCallback: {
+                    self.removeChildVC(child: self.loadingViewController)
+                    AlertHelper.showAlert(title: "Error", message: "Error creating this badge. Please try again.")
+                })
+        }
+        else{
+            //handle error
+            self.removeChildVC(child: loadingViewController)
+            AlertHelper.showAlert(title: "Error", message: "Error creating this badge. Please try again.")
+        }
     }
     
     func updateBadgeQuantities(){
@@ -192,7 +222,7 @@ class BadgeAdminDetailVC : UIViewController{
         //badgeNameTextField.text = badge.name ?? ""
         viewTitle.text = badge.name ?? ""
         badgeNameLabel.text = badge.name ?? ""
-        badgeRequirementDescriptionLabel.text = badge.requirements ?? ""
+        badgeRequirementDescriptionLabel.text = badge.memo ?? ""
         
     }
     

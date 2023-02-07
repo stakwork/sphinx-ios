@@ -42,7 +42,7 @@ class BadgeAdminListTableViewCell: UITableViewCell {
             
         }
         self.badgeNameLabel.text = badge.name
-        self.badgeDescriptionLabel.text = badge.requirements
+        self.badgeDescriptionLabel.text = badge.memo
         self.badgeDescriptionLabel.sizeToFit()
         
         if let badgesCreated = badge.amount_created,

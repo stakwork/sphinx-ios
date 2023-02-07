@@ -17,9 +17,9 @@ class Badge: Mappable {
     var chat_id: Int?
     var claim_amount: Int?
     var reward_type: Int?
-    var requirements: String?
+    var reward_requirement: Int?
     var memo: String?
-    var asset: String?
+    //var asset: String?
     var activationState : Bool = false
 
     
@@ -34,11 +34,10 @@ class Badge: Mappable {
         amount_issued              <- map["amount_issued"]
         //New Fields?
         memo              <- map["memo"]
-        asset              <- map["asset"]
-        //Ommitted Fields: Are these on the chopping block?
+        //asset              <- map["asset"]
         chat_id              <- map["chat_id"]
         claim_amount              <- map["claim_amount"]
         reward_type              <- map["reward_type"]
-        requirements            <- map["requirements"]
+        reward_requirement            <- map["reward_requirement"]
     }
 }

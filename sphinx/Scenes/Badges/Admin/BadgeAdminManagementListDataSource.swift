@@ -41,8 +41,12 @@ class BadgeAdminManagementListDataSource : NSObject{
                         newBadge.name = result.name
                         newBadge.icon_url = result.icon_url
                         if let req = result.rewardRequirement,
-                           let type = result.getHumanizedRewardType(){
-                            newBadge.requirements = "\(type) at least \(req) sats in this tribe."
+                           let type = result.rewardType,
+                           let humanizedType = result.getHumanizedRewardType(){
+                            newBadge.chat_id = self.chatID
+                            newBadge.reward_requirement = req
+                            newBadge.reward_type = type
+                            newBadge.memo = "\(humanizedType) at least \(req) sats in this tribe."
                         }
                         self.badgeTemplates.append(newBadge)
                     }
@@ -55,9 +59,8 @@ class BadgeAdminManagementListDataSource : NSObject{
     }
     
     func fetchBadges(){
-        
         API.sharedInstance.getTribeAdminBadges(
-            tribeID: nil,
+            tribeID: chatID,
             callback: { results in
                print(results)
                 if let mappedResults = Mapper<Badge>().mapArray(JSONObject: Array(results)){

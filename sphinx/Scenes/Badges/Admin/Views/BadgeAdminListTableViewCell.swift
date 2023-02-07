@@ -43,7 +43,16 @@ class BadgeAdminListTableViewCell: UITableViewCell {
         self.badgeNameLabel.text = badge.name
         self.badgeDescriptionLabel.text = badge.requirements
         self.badgeDescriptionLabel.sizeToFit()
-        self.remainingAmountLabel.text = "100"
+        
+        if let badgesCreated = badge.amount_created,
+           let badgesIssued = badge.amount_issued{
+            let remainingAmountText = String(max(0, badgesCreated - badgesIssued))
+            let fullText = "\(remainingAmountText) of \(badgesCreated) left"
+            remainingAmountLabel.text = remainingAmountText
+            remainingAmountLabel.textColor = UIColor.Sphinx.BodyInverted
+            totalAvailableLabel.text = "of \(badgesCreated) left"
+            totalAvailableLabel.textColor = UIColor.Sphinx.PlaceholderText
+        }
         
         configureStatusButton(type:type)
         

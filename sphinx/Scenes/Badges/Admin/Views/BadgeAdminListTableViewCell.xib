@@ -56,10 +56,13 @@
                         </constraints>
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="07f-ZP-Jye">
-                        <rect key="frame" x="173.33333333333334" y="94" width="47" height="24"/>
+                        <rect key="frame" x="188" y="94" width="30" height="24"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="heA-Tg-vbI">
-                                <rect key="frame" x="0.0" y="0.0" width="47" height="24"/>
+                                <rect key="frame" x="0.0" y="0.0" width="30" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="30" id="Ipd-Ie-fB9"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -71,18 +74,17 @@
                             <constraint firstAttribute="height" constant="24" id="MwR-C4-ft0"/>
                             <constraint firstAttribute="trailing" secondItem="heA-Tg-vbI" secondAttribute="trailing" id="PG8-hN-Lq8"/>
                             <constraint firstItem="heA-Tg-vbI" firstAttribute="leading" secondItem="07f-ZP-Jye" secondAttribute="leading" id="eAh-9S-z5u"/>
-                            <constraint firstAttribute="width" constant="47" id="hrg-Rx-AsF"/>
                             <constraint firstItem="heA-Tg-vbI" firstAttribute="top" secondItem="07f-ZP-Jye" secondAttribute="top" id="lsU-1s-qXI"/>
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="of 100 Left" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QVa-Pc-Pro">
-                        <rect key="frame" x="225.33333333333334" y="94" width="62.666666666666657" height="24"/>
+                        <rect key="frame" x="223" y="94" width="65" height="24"/>
                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="13"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s8f-4p-UjZ">
-                        <rect key="frame" x="90" y="92.666666666666671" width="65.333333333333314" height="27"/>
+                        <rect key="frame" x="90" y="92.666666666666671" width="80" height="27"/>
                         <color key="backgroundColor" name="BodyInverted"/>
                         <constraints>
                             <constraint firstAttribute="width" relation="lessThanOrEqual" priority="999" constant="80" id="4VV-hf-qdU"/>
@@ -110,7 +112,6 @@
                     <constraint firstAttribute="trailing" secondItem="Mal-tI-UCh" secondAttribute="trailing" constant="40" id="McB-5I-tq4"/>
                     <constraint firstItem="QVa-Pc-Pro" firstAttribute="top" secondItem="07f-ZP-Jye" secondAttribute="top" id="NqP-Fh-XCo"/>
                     <constraint firstItem="QVa-Pc-Pro" firstAttribute="top" secondItem="07f-ZP-Jye" secondAttribute="top" id="PMC-1V-rZC"/>
-                    <constraint firstItem="s8f-4p-UjZ" firstAttribute="centerY" secondItem="heA-Tg-vbI" secondAttribute="centerY" id="QnZ-bs-phd"/>
                     <constraint firstItem="fFp-iq-Vjf" firstAttribute="trailing" secondItem="Mal-tI-UCh" secondAttribute="trailing" id="TI5-sy-mG3"/>
                     <constraint firstItem="QVa-Pc-Pro" firstAttribute="bottom" secondItem="07f-ZP-Jye" secondAttribute="bottom" id="Tbf-7n-zWf"/>
                     <constraint firstItem="heA-Tg-vbI" firstAttribute="leading" secondItem="s8f-4p-UjZ" secondAttribute="trailing" constant="18" id="U1S-5a-WWV"/>
@@ -123,6 +124,7 @@
                     <constraint firstAttribute="trailing" secondItem="o9C-HP-0oQ" secondAttribute="trailing" constant="12" id="m6g-kn-way"/>
                     <constraint firstItem="gOQ-Cd-qV1" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="28" id="nDe-Le-XMX"/>
                     <constraint firstItem="07f-ZP-Jye" firstAttribute="top" secondItem="fFp-iq-Vjf" secondAttribute="bottom" constant="14" id="skz-37-dsK"/>
+                    <constraint firstItem="s8f-4p-UjZ" firstAttribute="top" secondItem="fFp-iq-Vjf" secondAttribute="bottom" constant="12.666666666666671" id="ymr-72-VdV"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

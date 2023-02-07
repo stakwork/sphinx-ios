@@ -42,6 +42,8 @@ class BadgeAdminDetailVC : UIViewController{
     @IBOutlet weak var badgeActivationContainerHeight: NSLayoutConstraint!
     @IBOutlet weak var createBadgeImage: UIImageView!
     
+    
+    @IBOutlet weak var badgeStatsLabel: UILabel!
     @IBOutlet weak var badgeStatsLabelHeight: NSLayoutConstraint!
     @IBOutlet weak var badgeStatsLabelBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var badgeStatsLabelTopConstraint: NSLayoutConstraint!
@@ -87,6 +89,19 @@ class BadgeAdminDetailVC : UIViewController{
             pricePerBadgeAmountLabel.isHidden = true
             totalStaticLabel.isHidden = true
             createBadgeImage.isHidden = true
+            if let valid_badge = associatedBadge,
+               let badgesCreated = valid_badge.amount_created,
+               let badgesIssued = valid_badge.amount_issued{
+                let remainingAmountText = String(max(0, badgesCreated - badgesIssued))
+                let fullText = "\(remainingAmountText) of \(badgesCreated) left"
+                let attributedString = NSMutableAttributedString(string: fullText)
+                attributedString.addAttribute(.foregroundColor, value: UIColor.Sphinx.BodyInverted, range: NSRange(location: 0, length: remainingAmountText.count))
+                
+                badgeStatsLabel.attributedText = attributedString
+                
+                badgeActivateDeactivateLabel.text = (valid_badge.activationState == true) ? "Deactivate Badge" : "Activate Badge"
+                badgeActivateDeactivateSwitch.isOn = valid_badge.activationState
+            }
             vcScrollView.contentSize = CGSize(width: self.view.frame.width, height: 400.0)
             break
         case .template:

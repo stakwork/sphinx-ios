@@ -20,6 +20,7 @@ class Badge: Mappable {
     var requirements: String?
     var memo: String?
     var asset: String?
+    var activationState : Bool = false
 
     
     required convenience init(map: Map) {

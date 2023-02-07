@@ -416,6 +416,9 @@
                         <outlet property="badgeNameLabel" destination="rz5-XE-y1v" id="aSM-kl-bzg"/>
                         <outlet property="badgeQuantityStepperLabel" destination="yTb-MJ-Qlb" id="wr4-9S-JEB"/>
                         <outlet property="badgeRequirementDescriptionLabel" destination="0FQ-gK-dGS" id="ciy-Tx-2c8"/>
+                        <outlet property="badgeStatsLabelBottomConstraint" destination="T7e-b1-Vzn" id="aD6-g9-vMh"/>
+                        <outlet property="badgeStatsLabelHeight" destination="o5G-sv-JFv" id="N8W-7y-rlD"/>
+                        <outlet property="badgeStatsLabelTopConstraint" destination="Wsu-kJ-3hz" id="fQG-Im-GCS"/>
                         <outlet property="createBadgeImage" destination="GHs-OK-jbg" id="1tv-1o-XBg"/>
                         <outlet property="navBarView" destination="oOY-jr-FfO" id="htf-jU-nAc"/>
                         <outlet property="pricePerBadgeAmountLabel" destination="cAN-HD-juc" id="A8N-HH-Dm8"/>

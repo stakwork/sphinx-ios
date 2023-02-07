@@ -20,6 +20,7 @@ class BadgeAdminManagementListVC: UIViewController{
     @IBOutlet weak var badgeTemplateHeaderLabel: UILabel!
     
     @IBOutlet weak var headerViewHeight: NSLayoutConstraint!
+    
     var viewDidLayout : Bool = false
     
     

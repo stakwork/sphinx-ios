@@ -42,6 +42,9 @@ class BadgeAdminDetailVC : UIViewController{
     @IBOutlet weak var badgeActivationContainerHeight: NSLayoutConstraint!
     @IBOutlet weak var createBadgeImage: UIImageView!
     
+    @IBOutlet weak var badgeStatsLabelHeight: NSLayoutConstraint!
+    @IBOutlet weak var badgeStatsLabelBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var badgeStatsLabelTopConstraint: NSLayoutConstraint!
     
     var presentationContext : BadgeDetailPresentationContext = .template
     var associatedBadge : Badge? = nil
@@ -90,8 +93,11 @@ class BadgeAdminDetailVC : UIViewController{
             saveBadgeButton.setTitle("Purchase Badges", for: .normal)
             badgeActivationContainerView.isHidden = true
             badgeActivationContainerHeight.constant = 0
+            badgeStatsLabelHeight.constant = 0
+            badgeStatsLabelTopConstraint.constant = 0
+            badgeStatsLabelBottomConstraint.constant = 0
             //saveBadgeButton.setTitle("Update Badge", for: .normal)
-            vcScrollView.contentSize = CGSize(width: self.view.frame.width, height: 700.0)
+            vcScrollView.contentSize = CGSize(width: self.view.frame.width, height: 650.0)
             print(vcScrollView.contentSize.height)
             break
         }

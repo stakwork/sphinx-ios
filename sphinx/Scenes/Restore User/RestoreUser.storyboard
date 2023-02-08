@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19115.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19107.5"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -288,7 +288,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7l4-ZX-NBu" userLabel="Content Container">
                                 <rect key="frame" x="104.5" y="359.5" width="205" height="177"/>
                                 <subviews>
-                                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0Td-da-UZ9">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0Td-da-UZ9">
                                         <rect key="frame" x="0.0" y="0.0" width="205" height="127"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="127" id="4Fy-NO-coO"/>
@@ -324,7 +324,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="connectingGIFImageView" destination="0Td-da-UZ9" id="CTR-Qw-etH"/>
+                        <outlet property="connectingImageView" destination="0Td-da-UZ9" id="9sF-xE-iyA"/>
                         <outlet property="connectingLabel" destination="SSi-Bs-4jk" id="66V-cy-wYA"/>
                         <outlet property="contentContainer" destination="7l4-ZX-NBu" id="slo-7g-llj"/>
                     </connections>

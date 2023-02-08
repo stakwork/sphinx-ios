@@ -305,7 +305,7 @@ class BadgeAdminDetailVC : UIViewController{
         associatedBadge?.activationState = badgeActivateDeactivateSwitch.isOn
         let activationString = (badgeActivateDeactivateSwitch.isOn == true) ? "activat" : "deactivat"
         if let valid_badge = associatedBadge{
-            API.sharedInstance.changeActivationStateeAdminBadgeTemplates(
+            API.sharedInstance.changeActivationStateAdminBadgeTemplates(
             badge: valid_badge,
             callback: { success in
                 self.removeChildVC(child: self.loadingViewController)

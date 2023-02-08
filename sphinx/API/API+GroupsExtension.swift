@@ -287,6 +287,46 @@ extension API {
         }
     }
     
+    func getTribeLeaderboard(
+        tribeUUID:String,
+        callback: @escaping GetTribeBadgesCallback,
+        errorCallback: @escaping EmptyCallback
+    ){
+        let urlPath = API.kTribesServerBaseURL + "/leaderboard/\(tribeUUID)"
+        
+        var urlComponents = URLComponents(string: urlPath)!
+
+        guard let urlString = urlComponents.url?.absoluteString else {
+            errorCallback()
+            return
+        }
+
+        guard let request = createRequest(
+            urlString,
+            bodyParams: nil,
+            method: "GET"
+        ) else {
+            errorCallback()
+            return
+        }
+
+        sphinxRequest(request) { response in
+            switch response.result {
+            case .success(let data):
+                if let json = data as? [NSDictionary] {
+                    print(json)
+                    callback(json)
+                    return
+                }
+                print(response.response?.statusCode)
+                errorCallback()
+            case .failure(_):
+                print(response.response?.statusCode)
+                errorCallback()
+            }
+        }
+    }
+    
     func createTribeAdminBadge(
         badge: Badge,
         amount:Int,
@@ -321,7 +361,7 @@ extension API {
         }
     }
     
-    func changeActivationStateeAdminBadgeTemplates(
+    func changeActivationStateAdminBadgeTemplates(
         badge: Badge,
         callback: @escaping SuccessCallback,
         errorCallback: @escaping EmptyCallback
@@ -394,11 +434,11 @@ extension API {
     }
     
     func getTribeAdminBadges(
-        tribeID:Int?,
+        chatID:Int?,
         callback: @escaping GetTribeBadgesCallback,
         errorCallback: @escaping EmptyCallback
     ){
-        let urlString = (tribeID == nil) ? "/badges?limit=100&offset=0" : "/badge_per_tribe/\(tribeID!)?limit=100&offset=0"
+        let urlString = (chatID == nil) ? "/badges?limit=100&offset=0" : "/badge_per_tribe/\(chatID!)?limit=100&offset=0"
         //let params : [String:Any]? = (tribeID == nil) ? nil : ["chat_id" : tribeID!]
         guard let request = getURLRequest(route: urlString, params: nil, method: "GET") else {
             errorCallback()

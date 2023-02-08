@@ -616,6 +616,7 @@
 		47FDDB1C2562D77200BBF15F /* boost_animation.json in Resources */ = {isa = PBXBuildFile; fileRef = 47FDDB1B2562D77100BBF15F /* boost_animation.json */; };
 		47FE9A3C23BF751C0090913F /* ChatViewControllerAttachmentDelegateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FE9A3B23BF751C0090913F /* ChatViewControllerAttachmentDelegateExtension.swift */; };
 		47FE9A3E23C381A20090913F /* UITapGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FE9A3D23C381A20090913F /* UITapGestureRecognizer.swift */; };
+		CE1F033F2994458B002E1079 /* ChatLeaderboardEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1F033E2994458B002E1079 /* ChatLeaderboardEntry.swift */; };
 		CE3133AD2977747E00E91E3A /* BadgeAdminManagementListDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3133A42977747E00E91E3A /* BadgeAdminManagementListDataSource.swift */; };
 		CE3133AE2977747E00E91E3A /* Badge.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3133A62977747E00E91E3A /* Badge.swift */; };
 		CE3133AF2977747E00E91E3A /* BadgeAdminListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3133A82977747E00E91E3A /* BadgeAdminListTableViewCell.swift */; };
@@ -1531,6 +1532,7 @@
 		47FE9A3B23BF751C0090913F /* ChatViewControllerAttachmentDelegateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewControllerAttachmentDelegateExtension.swift; sourceTree = "<group>"; };
 		47FE9A3D23C381A20090913F /* UITapGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITapGestureRecognizer.swift; sourceTree = "<group>"; };
 		487E10CEB3D07B0840A84681 /* Pods_sphinx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_sphinx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE1F033E2994458B002E1079 /* ChatLeaderboardEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLeaderboardEntry.swift; sourceTree = "<group>"; };
 		CE3133A42977747E00E91E3A /* BadgeAdminManagementListDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeAdminManagementListDataSource.swift; sourceTree = "<group>"; };
 		CE3133A62977747E00E91E3A /* Badge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Badge.swift; sourceTree = "<group>"; };
 		CE3133A82977747E00E91E3A /* BadgeAdminListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeAdminListTableViewCell.swift; sourceTree = "<group>"; };
@@ -2525,6 +2527,7 @@
 			isa = PBXGroup;
 			children = (
 				475BDC9F232AC1CE00C5BBD6 /* ChatListViewModel.swift */,
+				CE1F033E2994458B002E1079 /* ChatLeaderboardEntry.swift */,
 				475BDCA0232AC1CE00C5BBD6 /* ChatViewModel.swift */,
 			);
 			path = "Chat Models";
@@ -4868,6 +4871,7 @@
 				475043CF2971AA0700830E9E /* PodcastPlayerController+Delegates&Actions.swift in Sources */,
 				477DB72824B4BBF200D6323F /* GroupRemovedTableViewCell.swift in Sources */,
 				47A06CA624A3AC9A00BE468C /* DeepLinksHandlerHelper.swift in Sources */,
+				CE1F033F2994458B002E1079 /* ChatLeaderboardEntry.swift in Sources */,
 				478DCF9E2343D7AC009A03D6 /* SetDataViewController.swift in Sources */,
 				47357A112729A13600A49EEE /* NewsletterFeed+DisplayUtils.swift in Sources */,
 				4705D3992799AAB5009C0729 /* CustomBoostView.swift in Sources */,

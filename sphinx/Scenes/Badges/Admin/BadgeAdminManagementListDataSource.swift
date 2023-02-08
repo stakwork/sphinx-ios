@@ -61,7 +61,7 @@ class BadgeAdminManagementListDataSource : NSObject{
     func fetchBadges(){
         vc.addLoadingView()
         API.sharedInstance.getTribeAdminBadges(
-            tribeID: chatID,
+            chatID: chatID,
             callback: { results in
                print(results)
                 if var mappedResults = Mapper<Badge>().mapArray(JSONObject: Array(results)){

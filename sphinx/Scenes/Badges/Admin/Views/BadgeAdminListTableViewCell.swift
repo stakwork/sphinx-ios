@@ -88,12 +88,12 @@ class BadgeAdminListTableViewCell: UITableViewCell {
                 break
             case .inactive:
                 //statusButton.setTitle("INACTIVE", for: [.normal])
-                statusButton.backgroundColor = UIColor.Sphinx.BodyInverted.withAlphaComponent(0.07)
+                statusButton.backgroundColor = UIColor.Sphinx.PlaceholderText.withAlphaComponent(0.07)
                 statusButton.setTitleColor(UIColor.Sphinx.SecondaryText, for: [.normal,.selected])
                 
                 let string = "INACTIVE"
                 let attributedString = NSMutableAttributedString(string: string)
-                attributedString.addAttribute(.foregroundColor, value: statusButton.titleLabel?.textColor, range: NSRange(location: 0, length: string.count))
+            attributedString.addAttribute(.foregroundColor, value: UIColor.Sphinx.SecondaryText, range: NSRange(location: 0, length: string.count))
                 attributedString.addAttribute(.font, value: UIFont(name: "Roboto", size: 11.0), range: NSRange(location: 0, length: string.count))
                 statusButton.titleLabel?.attributedText = attributedString
                 

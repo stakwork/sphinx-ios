@@ -20,6 +20,7 @@ class BadgeAdminManagementListVC: UIViewController{
     @IBOutlet weak var badgeTemplateHeaderLabel: UILabel!
     
     @IBOutlet weak var headerViewHeight: NSLayoutConstraint!
+    private lazy var loadingViewController = LoadingViewController()
     
     var viewDidLayout : Bool = false
     var chatID:Int? = nil
@@ -61,6 +62,17 @@ class BadgeAdminManagementListVC: UIViewController{
             self.viewDidLayout = true
         })
         
+    }
+    
+    func addLoadingView(){
+        addChildVC(
+            child: loadingViewController,
+            container: self.view
+        )
+    }
+    
+    func removeLoadingView(){
+        self.removeChildVC(child: self.loadingViewController)
     }
     
     func setupBadgeTable(){

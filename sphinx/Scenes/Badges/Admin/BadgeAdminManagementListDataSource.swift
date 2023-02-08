@@ -59,6 +59,7 @@ class BadgeAdminManagementListDataSource : NSObject{
     }
     
     func fetchBadges(){
+        vc.addLoadingView()
         API.sharedInstance.getTribeAdminBadges(
             tribeID: chatID,
             callback: { results in
@@ -66,6 +67,7 @@ class BadgeAdminManagementListDataSource : NSObject{
                 if var mappedResults = Mapper<Badge>().mapArray(JSONObject: Array(results)){
                     mappedResults.map({$0.chat_id = self.chatID})
                     self.badges = mappedResults
+                    self.vc.removeLoadingView()
                     self.vc.badgeTableView.reloadData()
                 }
             },

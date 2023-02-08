@@ -150,7 +150,7 @@ class GroupDetailsViewController: UIViewController {
     
     func configureBadgeManagementView(){
         if let chat = chat,
-           chat.isMyPublicGroup() || true{
+           chat.isMyPublicGroup(){
             badgeManagementContainerView.backgroundColor = UIColor.Sphinx.Body
             badgeManagementContainerHeight.constant = 70
             badgeManagementContainerView.isHidden = false

@@ -11,7 +11,8 @@ import UIKit
 
 public enum BadgeDetailPresentationContext{
     case template
-    case existing
+    case active
+    case inactive
 }
 
 class BadgeAdminDetailVC : UIViewController{
@@ -43,6 +44,7 @@ class BadgeAdminDetailVC : UIViewController{
     @IBOutlet weak var createBadgeImage: UIImageView!
     
     
+    @IBOutlet weak var statusButton: UIButton!
     @IBOutlet weak var badgeStatsLabel: UILabel!
     @IBOutlet weak var badgeStatsLabelHeight: NSLayoutConstraint!
     @IBOutlet weak var badgeStatsLabelBottomConstraint: NSLayoutConstraint!
@@ -81,7 +83,18 @@ class BadgeAdminDetailVC : UIViewController{
     
     func customizeBasedOnPresentationContext(){
         switch(presentationContext){
-        case .existing:
+        case .template:
+            saveBadgeButton.setTitle("Purchase Badges", for: .normal)
+            badgeActivationContainerView.isHidden = true
+            badgeActivationContainerHeight.constant = 0
+            badgeStatsLabelHeight.constant = 0
+            badgeStatsLabelTopConstraint.constant = 0
+            badgeStatsLabelBottomConstraint.constant = 0
+            //saveBadgeButton.setTitle("Update Badge", for: .normal)
+            vcScrollView.contentSize = CGSize(width: self.view.frame.width, height: 650.0)
+            print(vcScrollView.contentSize.height)
+            break
+        default:
             saveBadgeButton.isHidden = true
             quantityLabel.isHidden = true
             stepperPlaceholderView.isHidden = true
@@ -105,17 +118,6 @@ class BadgeAdminDetailVC : UIViewController{
             }
             vcScrollView.contentSize = CGSize(width: self.view.frame.width, height: 400.0)
             break
-        case .template:
-            saveBadgeButton.setTitle("Purchase Badges", for: .normal)
-            badgeActivationContainerView.isHidden = true
-            badgeActivationContainerHeight.constant = 0
-            badgeStatsLabelHeight.constant = 0
-            badgeStatsLabelTopConstraint.constant = 0
-            badgeStatsLabelBottomConstraint.constant = 0
-            //saveBadgeButton.setTitle("Update Badge", for: .normal)
-            vcScrollView.contentSize = CGSize(width: self.view.frame.width, height: 650.0)
-            print(vcScrollView.contentSize.height)
-            break
         }
     }
     
@@ -130,6 +132,7 @@ class BadgeAdminDetailVC : UIViewController{
 
     
     func styleSubViews(){
+        styleStatusButton()
         view.backgroundColor = UIColor.Sphinx.Body
         stepperMinusButton.setTitle("", for: .normal)
         stepperPlusButton.setTitle("", for: .normal)
@@ -200,6 +203,46 @@ class BadgeAdminDetailVC : UIViewController{
             //handle error
             self.removeChildVC(child: loadingViewController)
             AlertHelper.showAlert(title: "Error", message: "Error creating this badge. Please try again.")
+        }
+    }
+    
+    func styleStatusButton(){
+        statusButton.layer.cornerRadius = statusButton.frame.height/2.0
+        switch(presentationContext){
+            case .active:
+                //statusButton.setTitle("ACTIVE", for: [.normal])
+                statusButton.backgroundColor = UIColor.Sphinx.BodyInverted.withAlphaComponent(1.0)
+                statusButton.setTitleColor(UIColor.Sphinx.Body, for: [.normal,.selected])
+                
+                let string = "ACTIVE"
+                let attributedString = NSMutableAttributedString(string: string)
+                attributedString.addAttribute(.foregroundColor, value: UIColor.Sphinx.Body, range: NSRange(location: 0, length: string.count))
+                attributedString.addAttribute(.font, value: UIFont(name: "Roboto", size: 11.0), range: NSRange(location: 0, length: string.count))
+                statusButton.titleLabel?.attributedText = attributedString
+                break
+            case .inactive:
+                //statusButton.setTitle("INACTIVE", for: [.normal])
+                statusButton.backgroundColor = UIColor.Sphinx.BodyInverted.withAlphaComponent(0.07)
+                statusButton.setTitleColor(UIColor.Sphinx.SecondaryText, for: [.normal,.selected])
+                
+                let string = "INACTIVE"
+                let attributedString = NSMutableAttributedString(string: string)
+                attributedString.addAttribute(.foregroundColor, value: statusButton.titleLabel?.textColor, range: NSRange(location: 0, length: string.count))
+                attributedString.addAttribute(.font, value: UIFont(name: "Roboto", size: 11.0), range: NSRange(location: 0, length: string.count))
+                statusButton.titleLabel?.attributedText = attributedString
+                
+                break
+            case .template:
+                //statusButton.setTitle("TEMPLATE", for: [.normal])
+                statusButton.backgroundColor = UIColor.Sphinx.PrimaryBlue.withAlphaComponent(1.0)
+                statusButton.setTitleColor(UIColor.white, for: [.normal,.selected])
+                
+                let string = "TEMPLATE"
+                let attributedString = NSMutableAttributedString(string: string)
+                attributedString.addAttribute(.foregroundColor, value: UIColor.white, range: NSRange(location: 0, length: string.count))
+                attributedString.addAttribute(.font, value: UIFont(name: "Roboto", size: 11.0), range: NSRange(location: 0, length: string.count))
+                statusButton.titleLabel?.attributedText = attributedString
+                break
         }
     }
     

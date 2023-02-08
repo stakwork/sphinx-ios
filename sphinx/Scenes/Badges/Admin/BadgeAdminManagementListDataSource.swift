@@ -162,7 +162,9 @@ extension BadgeAdminManagementListDataSource : UITableViewDelegate,UITableViewDa
             vc.showBadgeDetail(badge: templateAsBadge,presentationContext: .template)
         }
         else if(indexPath.row > getNTemplates()){
-            vc.showBadgeDetail(badge: getBadge(index: indexPath.row), presentationContext: .existing)
+            let badge = getBadge(index: indexPath.row)
+            let context : BadgeDetailPresentationContext = (badge.activationState == true) ? .active : .inactive
+            vc.showBadgeDetail(badge: badge, presentationContext: context)
         }
         
     }

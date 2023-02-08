@@ -63,8 +63,10 @@ class BadgeAdminManagementListDataSource : NSObject{
             tribeID: chatID,
             callback: { results in
                print(results)
-                if let mappedResults = Mapper<Badge>().mapArray(JSONObject: Array(results)){
+                if var mappedResults = Mapper<Badge>().mapArray(JSONObject: Array(results)){
+                    mappedResults.map({$0.chat_id = self.chatID})
                     self.badges = mappedResults
+                    self.vc.badgeTableView.reloadData()
                 }
             },
             errorCallback: {
@@ -78,9 +80,10 @@ class BadgeAdminManagementListDataSource : NSObject{
         new_badge3.amount_issued = 100
         new_badge3.amount_created = 1000
         self.badges.append(new_badge3)
+         self.vc.badgeTableView.reloadData()
          */
         
-        self.vc.badgeTableView.reloadData()
+        
     }
 }
 
@@ -134,7 +137,9 @@ extension BadgeAdminManagementListDataSource : UITableViewDelegate,UITableViewDa
                 withIdentifier: "BadgeAdminListTableViewCell",
                 for: indexPath
             ) as! BadgeAdminListTableViewCell
-            cell.configureCell(badge: self.getBadge(index: indexPath.row),type: .active)
+            let badge = self.getBadge(index: indexPath.row)
+            let type : BadgeAdminCellType = (badge.activationState == true) ? .active : .inactive
+            cell.configureCell(badge: self.getBadge(index: indexPath.row),type: type)
             return cell
         }
         
@@ -150,11 +155,12 @@ extension BadgeAdminManagementListDataSource : UITableViewDelegate,UITableViewDa
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if(indexPath.row < getNTemplates()){
-            vc.showBadgeDetail(badge: getTemplate(index: indexPath.row),presentationContext: .template)
+            let templateAsBadge = getTemplate(index: indexPath.row)
+            templateAsBadge.chat_id = chatID
+            vc.showBadgeDetail(badge: templateAsBadge,presentationContext: .template)
         }
         else if(indexPath.row > getNTemplates()){
             vc.showBadgeDetail(badge: getBadge(index: indexPath.row), presentationContext: .existing)
-            //TODO: set it up for badge assets
         }
         
     }

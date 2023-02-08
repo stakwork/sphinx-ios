@@ -321,6 +321,50 @@ extension API {
         }
     }
     
+    func changeActivationStateeAdminBadgeTemplates(
+        badge: Badge,
+        callback: @escaping SuccessCallback,
+        errorCallback: @escaping EmptyCallback
+    ){
+        var params = [String:Any]()
+        if let id = badge.badge_id,
+           let chatId = badge.chat_id{
+            params = [
+                "badge_id" : id,
+                "chat_id" : chatId
+            ]
+        }
+        else{
+            errorCallback()
+            return
+        }
+        
+        let route = (badge.activationState == true) ? "/add_badge" : "/remove_badge"
+        guard let request = getURLRequest(route: route, params: params as? NSDictionary, method: "POST") else {
+            errorCallback()
+            return
+        }
+        
+        sphinxRequest(request) { response in
+            switch response.result {
+            case .success(let data):
+                if let json = data as? NSDictionary {
+                    if let success = json["success"] as? Bool,
+                        success {
+                        callback(true)
+                        return
+                    }
+                }
+                print(response.response?.statusCode)
+                errorCallback()
+            case .failure(_):
+                print(response.response?.statusCode)
+                errorCallback()
+            }
+        }
+        
+    }
+    
     func getTribeAdminBadgeTemplates(
         callback: @escaping GetTribeBadgesCallback,
         errorCallback: @escaping EmptyCallback

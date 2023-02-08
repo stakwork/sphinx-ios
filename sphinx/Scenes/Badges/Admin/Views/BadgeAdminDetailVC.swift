@@ -252,6 +252,39 @@ class BadgeAdminDetailVC : UIViewController{
         
     }
     
+    @IBAction func changedActivationState(_ sender: Any) {
+        addChildVC(
+            child: loadingViewController,
+            container: self.view
+        )
+        
+        associatedBadge?.activationState = badgeActivateDeactivateSwitch.isOn
+        let activationString = (badgeActivateDeactivateSwitch.isOn == true) ? "activat" : "deactivat"
+        if let valid_badge = associatedBadge{
+            API.sharedInstance.changeActivationStateeAdminBadgeTemplates(
+            badge: valid_badge,
+            callback: { success in
+                self.removeChildVC(child: self.loadingViewController)
+                if(success){
+                    AlertHelper.showAlert(
+                        title: "Success",
+                        message: "Successfully \(activationString)ed badge.",
+                        completion: {
+                            self.navigationController?.popViewController(animated: true)
+                    })
+                }
+                else{
+                    self.badgeActivateDeactivateSwitch.isOn = !self.badgeActivateDeactivateSwitch.isOn
+                    AlertHelper.showAlert(title: "Error", message: "There was an error \(activationString)ing the badge.")
+                }
+            },
+            errorCallback: {
+                self.removeChildVC(child: self.loadingViewController)
+                self.badgeActivateDeactivateSwitch.isOn = !self.badgeActivateDeactivateSwitch.isOn 
+                AlertHelper.showAlert(title: "Error", message: "There was an error \(activationString)ing the badge.")
+            })
+        }
+    }
     
     
     

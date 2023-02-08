@@ -10,6 +10,7 @@ import Foundation
 import ObjectMapper
 
 class Badge: Mappable {
+    var badge_id: Int?
     var icon_url: String?
     var name: String?
     var amount_created: Int?
@@ -28,16 +29,18 @@ class Badge: Mappable {
     }
     
     func mapping(map: Map) {
-        icon_url              <- map["icon"]
-        name              <- map["name"]
-        amount_created              <- map["amount_created"]
+        icon_url                    <- map["icon"]
+        name                        <- map["name"]
+        amount_created             <- map["amount_created"]
         amount_issued              <- map["amount_issued"]
         //New Fields?
-        memo              <- map["memo"]
+        memo                        <- map["memo"]
         //asset              <- map["asset"]
-        chat_id              <- map["chat_id"]
-        claim_amount              <- map["claim_amount"]
-        reward_type              <- map["reward_type"]
-        reward_requirement            <- map["reward_requirement"]
+        chat_id                     <- map["chat_id"]
+        claim_amount                <- map["claim_amount"]
+        reward_type                 <- map["reward_type"]
+        reward_requirement          <- map["reward_requirement"]
+        activationState             <- map["active"]
+        badge_id                    <- map["badge_id"]
     }
 }

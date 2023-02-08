@@ -339,6 +339,9 @@
                                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1Qs-bX-MOr">
                                                 <rect key="frame" x="268" y="18.666666666666629" width="51" height="31"/>
                                                 <color key="onTintColor" name="PrimaryBlue"/>
+                                                <connections>
+                                                    <action selector="changedActivationState:" destination="voF-kw-WQJ" eventType="valueChanged" id="VG2-St-Vhf"/>
+                                                </connections>
                                             </switch>
                                         </subviews>
                                         <constraints>

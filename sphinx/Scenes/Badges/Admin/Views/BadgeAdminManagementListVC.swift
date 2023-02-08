@@ -27,6 +27,7 @@ class BadgeAdminManagementListVC: UIViewController{
     
     private var rootViewController: RootViewController!
     var badgeManagementListDataSource : BadgeAdminManagementListDataSource?
+    var isFirstLoad : Bool = true
     
     static func instantiate(
         rootViewController: RootViewController,
@@ -45,7 +46,12 @@ class BadgeAdminManagementListVC: UIViewController{
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        badgeTableView.reloadData()
+        if(isFirstLoad == false){
+            badgeManagementListDataSource?.fetchBadges()
+        }
+        else{
+            isFirstLoad = false
+        }
     }
     
     

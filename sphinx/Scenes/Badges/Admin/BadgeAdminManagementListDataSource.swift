@@ -157,9 +157,15 @@ extension BadgeAdminManagementListDataSource : UITableViewDelegate,UITableViewDa
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if(indexPath.row < getNTemplates()){
+            let badgeTypes = badges.map({$0.reward_type})
             let templateAsBadge = getTemplate(index: indexPath.row)
             templateAsBadge.chat_id = chatID
-            vc.showBadgeDetail(badge: templateAsBadge,presentationContext: .template)
+            if(badgeTypes.contains(templateAsBadge.reward_type)){
+                AlertHelper.showAlert(title: "Can't Make Badge", message: "You already have a badge of this type. You can manage it in the Existing Badges section.")
+            }
+            else{
+                vc.showBadgeDetail(badge: templateAsBadge,presentationContext: .template)
+            }
         }
         else if(indexPath.row > getNTemplates()){
             let badge = getBadge(index: indexPath.row)

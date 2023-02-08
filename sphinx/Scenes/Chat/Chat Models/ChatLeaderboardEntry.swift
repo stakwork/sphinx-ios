@@ -15,6 +15,8 @@ class ChatLeaderboardEntry: Mappable {
     var spent: Int?
     var tribeUUID:String?
     var reputation:Int?
+    var spentRank:Int?
+    var earnedRank:Int?
 
     
     required convenience init(map: Map) {

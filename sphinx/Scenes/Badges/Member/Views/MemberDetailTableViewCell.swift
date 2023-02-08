@@ -56,7 +56,7 @@ class MemberDetailTableViewCell: UITableViewCell {
             break
         }
         
-        configureStackView(type: type,badges: badges, isExpanded: isExpanded)
+        configureStackView(type: type,badges: badges, leaderboardData: ChatLeaderboardEntry(), isExpanded: isExpanded)
     }
     
     override func prepareForReuse() {
@@ -78,7 +78,7 @@ class MemberDetailTableViewCell: UITableViewCell {
         }
     }
     
-    func configureStackView(type:MemberBadgeDetailCellType,badges:[Badge],isExpanded:Bool){
+    func configureStackView(type:MemberBadgeDetailCellType,badges:[Badge],leaderboardData:ChatLeaderboardEntry,isExpanded:Bool){
         switch(type){
             case .contributions:
                 let satsLabel = UILabel(frame: CGRect(x: 0.0, y: 0.0, width: 97.0, height: stackView.frame.height))

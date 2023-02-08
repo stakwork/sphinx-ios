@@ -63,6 +63,8 @@ extension ChatViewController : PodcastPlayerVCDelegate {
     func presentPodcastPlayerFor(
         _ podcast: PodcastFeed
     ) {
+        FeedsManager.sharedInstance.restoreContentFeedStatusInBackgroundFor(feedId: podcast.feedID)
+        
         accessoryView.hide()
         
         let podcastFeedVC = NewPodcastPlayerViewController.instantiate(

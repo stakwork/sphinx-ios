@@ -166,8 +166,7 @@ extension DashboardRootViewController {
             
             podcastFeedVC.modalPresentationStyle = .automatic
             
-            navigationController?
-                .present(podcastFeedVC, animated: true)
+            navigationController?.present(podcastFeedVC, animated: true)
         }
     }
     

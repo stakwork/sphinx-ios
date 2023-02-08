@@ -116,6 +116,36 @@ class FeedsManager : NSObject {
     }
     
     // MARK: - Getting content feed status from relay and restoring
+    func restoreContentFeedStatusInBackgroundFor(
+        feedId: String
+    ) {
+        let dispatchQueue = DispatchQueue.global(qos: .userInitiated)
+        dispatchQueue.async {
+            self.restoreContentFeedStatusFor(feedId: feedId)
+        }
+    }
+    
+    func restoreContentFeedStatusFor(
+        feedId: String,
+        completionCallback: ((() -> ()))? = nil
+    ){
+        API.sharedInstance.getContentFeedStatusFor(
+            feedId: feedId,
+            callback: { result in
+                self.restore(
+                    contentFeedStatus: result,
+                    with: CoreDataManager.sharedManager.persistentContainer.viewContext
+                ) {
+                    self.refreshFeedUI()
+                    completionCallback?()
+                }
+            },
+            errorCallback: {
+                completionCallback?()
+            }
+        )
+    }
+    
     func restoreContentFeedStatusInBackground() {
         let dispatchQueue = DispatchQueue.global(qos: .userInitiated)
         dispatchQueue.async {
@@ -184,29 +214,10 @@ class FeedsManager : NSObject {
                 
                 dispatchSemaphore.wait()
                 
-                let feedUrl = contentFeedStatus.feedURL
-                
-                var chat : Chat? = nil
-                if let validChatId = contentFeedStatus.chatID {
-                    chat = Chat.getChatWith(id: validChatId, managedContext: context)
-                }
-                
-                ///Get feed from local db or fetch it from tribes server endpoint
-                self.getContentFeedFor(
-                    feedId: contentFeedStatus.feedID,
-                    feedUrl: feedUrl,
-                    chat: chat,
-                    context: context
-                ) { contentFeed in
-                    
-                    ///restore status from the remote content status
-                    if let contentFeed = contentFeed {
-                        self.restoreFeedStatus(
-                            remoteContentStatus: contentFeedStatus,
-                            localFeed: contentFeed,
-                            chat: chat
-                        )
-                    }
+                self.restore(
+                    contentFeedStatus: contentFeedStatus,
+                    with: context
+                ) {
                     
                     progressCallback?(
                         self.getRestoreProgress(totalFeeds: contentFeedStatuses.count, syncedFeeds: index + 1)
@@ -220,6 +231,39 @@ class FeedsManager : NSObject {
                     dispatchSemaphore.signal()
                 }
             }
+        }
+    }
+    
+    func restore(
+        contentFeedStatus: ContentFeedStatus,
+        with context: NSManagedObjectContext,
+        completion: @escaping () -> ()
+    ) {
+        let feedUrl = contentFeedStatus.feedURL
+        
+        var chat : Chat? = nil
+        if let validChatId = contentFeedStatus.chatID {
+            chat = Chat.getChatWith(id: validChatId, managedContext: context)
+        }
+        
+        ///Get feed from local db or fetch it from tribes server endpoint
+        self.getContentFeedFor(
+            feedId: contentFeedStatus.feedID,
+            feedUrl: feedUrl,
+            chat: chat,
+            context: context
+        ) { contentFeed in
+            
+            ///restore status from the remote content status
+            if let contentFeed = contentFeed {
+                self.restoreFeedStatus(
+                    remoteContentStatus: contentFeedStatus,
+                    localFeed: contentFeed,
+                    chat: chat
+                )
+            }
+            
+            completion()
         }
     }
     
@@ -317,6 +361,26 @@ class FeedsManager : NSObject {
             
             context.saveContext()
             self.refreshFeedUI()
+        }
+    }
+    
+    func fetchItemsFor(
+        feedUrl: String,
+        objectID: NSManagedObjectID
+    ) {
+        let bgContext = CoreDataManager.sharedManager.getBackgroundContext()
+        
+        bgContext.perform {
+            ContentFeed.fetchFeedItems(
+                feedUrl: feedUrl,
+                contentFeedObjectID: objectID,
+                context: bgContext,
+                completion: { result in
+                    if case .success(_) = result {
+                        bgContext.saveContext()
+                    }
+                }
+            )
         }
     }
     

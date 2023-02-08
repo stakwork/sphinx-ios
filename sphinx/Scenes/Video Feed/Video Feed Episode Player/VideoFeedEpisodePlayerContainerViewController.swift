@@ -124,7 +124,7 @@ extension VideoFeedEpisodePlayerContainerViewController {
         configurePlayerView()
         configureCollectionView()
         
-        updateEpisodes()
+        updateFeed()
     }
 }
 
@@ -200,24 +200,11 @@ extension VideoFeedEpisodePlayerContainerViewController {
     }
     
     
-    private func updateEpisodes() {
+    private func updateFeed() {
         if  let videoFeed = self.videoPlayerEpisode?.videoFeed,
             let feedUrl = videoFeed.feedURL?.absoluteString {
             
-            let bgContext = CoreDataManager.sharedManager.getBackgroundContext()
-            
-            bgContext.perform {
-                ContentFeed.fetchFeedItems(
-                    feedUrl: feedUrl,
-                    contentFeedObjectID: videoFeed.objectID,
-                    context: bgContext,
-                    completion: { result in
-                        if case .success(_) = result {
-                            bgContext.saveContext()
-                        }
-                    }
-                )
-            }
+            FeedsManager.sharedInstance.fetchItemsFor(feedUrl: feedUrl, objectID: videoFeed.objectID)
         }
     }
 }

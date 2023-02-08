@@ -52,16 +52,21 @@ class NewPodcastPlayerViewController: UIViewController {
         downloadService.setDelegate(delegate: self)
         
         showPodcastInfo()
+        updateFeed()
         
         NotificationCenter.default.addObserver(forName: .onConnectionStatusChanged, object: nil, queue: OperationQueue.main) { (n: Notification) in
             self.tableView.reloadData()
         }
+        
+        NotificationCenter.default.removeObserver(self, name: .refreshFeedUI, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(showPodcastInfo), name: .refreshFeedUI, object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         NotificationCenter.default.removeObserver(self, name: .onConnectionStatusChanged, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .refreshFeedUI, object: nil)
         
         if isBeingDismissed {
             delegate?.willDismissPlayer()
@@ -94,18 +99,7 @@ class NewPodcastPlayerViewController: UIViewController {
         return viewController
     }
     
-    func preparePlayer() {
-        tableView.reloadData()
-        updateEpisodes()
-    }
-    
-    
-    func showPodcastInfo() {
-        showEpisodesTable()
-        preparePlayer()
-    }
-    
-    func showEpisodesTable() {
+    @objc func showPodcastInfo() {
         tableHeaderView = PodcastPlayerView(
             podcast: podcast,
             delegate: self,
@@ -124,23 +118,11 @@ class NewPodcastPlayerViewController: UIViewController {
         podcastPlayerController.addDelegate(tableHeaderView!, withKey: PodcastDelegateKeys.PodcastPlayerView.rawValue)
     }
     
-    private func updateEpisodes() {
+    private func updateFeed() {
         if let feedUrl = podcast.feedURLPath, let objectID = podcast.objectID {
             
-            let bgContext = CoreDataManager.sharedManager.getBackgroundContext()
-            
-            bgContext.perform {
-                ContentFeed.fetchFeedItems(
-                    feedUrl: feedUrl,
-                    contentFeedObjectID: objectID,
-                    context: bgContext,
-                    completion: { result in
-                        if case .success(_) = result {
-                            bgContext.saveContext()
-                        }
-                    }
-                )
-            }
+            let feedsManager = FeedsManager.sharedInstance
+            feedsManager.fetchItemsFor(feedUrl: feedUrl, objectID: objectID)
         }
     }
 }

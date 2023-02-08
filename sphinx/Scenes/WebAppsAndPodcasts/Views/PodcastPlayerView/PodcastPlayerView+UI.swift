@@ -11,7 +11,7 @@ import AVFoundation
 
 extension PodcastPlayerView {
     func showInfo() {
-        if let imageURL = podcast?.getImageURL() {
+        if let imageURL = podcast.getImageURL() {
             loadImage(imageURL: imageURL)
         }
 
@@ -55,14 +55,14 @@ extension PodcastPlayerView {
     
     func loadImage(imageURL: URL?) {
         guard let imageURL = imageURL else {
-            self.episodeImageView.image = UIImage(named: "profile_avatar")!
+            self.episodeImageView.image = UIImage(named: "podcastPlaceholder")!
             return
         }
         
         MediaLoader.asyncLoadImage(imageView: episodeImageView, nsUrl: imageURL, placeHolderImage: nil, completion: { img in
             self.episodeImageView.image = img
         }, errorCompletion: { _ in
-            self.episodeImageView.image = UIImage(named: "profile_avatar")!
+            self.episodeImageView.image = UIImage(named: "podcastPlaceholder")!
         })
     }
     

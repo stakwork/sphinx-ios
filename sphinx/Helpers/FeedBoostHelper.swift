@@ -173,11 +173,11 @@ class FeedBoostHelper : NSObject {
     }
     
     func trackBoostAction(
-            itemObjectID: NSManagedObjectID,
-            amount: Int
-        ) {
-            if let contentFeedItem: ContentFeedItem = CoreDataManager.sharedManager.getObjectWith(objectId: itemObjectID) {
-                ActionsManager.sharedInstance.trackContentBoost(amount: amount, feedItem: contentFeedItem)
-            }
+        itemObjectID: NSManagedObjectID,
+        amount: Int
+    ) {
+        if let contentFeedItem: ContentFeedItem = CoreDataManager.sharedManager.getObjectWith(objectId: itemObjectID) {
+            ActionsManager.sharedInstance.trackContentBoost(amount: amount, feedItem: contentFeedItem)
         }
+    }
 }

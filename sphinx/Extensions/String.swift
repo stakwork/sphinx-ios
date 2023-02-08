@@ -428,10 +428,6 @@ extension String {
         }
     }
     
-    var isYouTubeRSSFeedURL: Bool {
-        contains("www.youtube.com")
-    }
-    
     var isPodcastComment: Bool {
         get {
             return self.starts(with: PodcastFeed.kClipPrefix)

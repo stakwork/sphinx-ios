@@ -93,10 +93,13 @@ class PodcastRowPlayerHelper {
         if let duration = duration {
             return duration
         }
+        if let itemId = podcastComment?.itemId, let duration = podcast?.getEpisodeWith(id: itemId)?.duration {
+            self.duration = Double(duration)
+            return self.duration!
+        }
         guard let item = item else {
             return 0
         }
-        
         duration = Double(item.asset.duration.value) / Double(item.asset.duration.timescale)
         return duration!
     }

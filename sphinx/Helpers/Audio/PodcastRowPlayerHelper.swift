@@ -50,21 +50,35 @@ class PodcastRowPlayerHelper {
         
         if let urlString = podcastComment.url, let url = URL(string: urlString) {
             
-            if self.item != nil {
-                let _ = self.getAudioDuration()
+            if let _ = self.item {
                 completion(messageId)
                 return
             }
             
             let asset = AVAsset(url: url)
-            asset.loadValuesAsynchronously(forKeys: ["duration"], completionHandler: {
+            
+            loadAudioDurationFor(asset: asset, completion: {
                 if self.item == nil {
                     self.item = AVPlayerItem(asset: asset)
                 }
-                let _ = self.getAudioDuration()
                 DispatchQueue.main.async {
                     completion(messageId)
                 }
+            })
+        }
+    }
+    
+    func loadAudioDurationFor(
+        asset: AVAsset,
+        completion: @escaping () -> ()
+    ) {
+        let duration = getAudioDuration()
+        
+        if duration > 0 {
+            completion()
+        } else {
+            asset.loadValuesAsynchronously(forKeys: ["duration"], completionHandler: {
+                completion()
             })
         }
     }

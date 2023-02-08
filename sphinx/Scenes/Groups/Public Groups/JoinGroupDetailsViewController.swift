@@ -186,7 +186,13 @@ class JoinGroupDetailsViewController: KeyboardEventsViewController {
                     
                     
                     if let feedUrl = tribeInfo.feedUrl {
-                        ContentFeed.fetchChatFeedContentInBackground(feedUrl: feedUrl, chatObjectID: chat.objectID, completion: {
+                        ContentFeed.fetchChatFeedContentInBackground(feedUrl: feedUrl, chatObjectID: chat.objectID, completion: { feedId in
+                            
+                            if let feedId = feedId {
+                                chat.contentFeed = ContentFeed.getFeedWith(feedId: feedId)
+                                chat.saveChat()
+                            }
+                            
                             self.delegate?.shouldReloadContacts?(reload: true)
                             if let dashboardDelegate = self.delegate as? DashboardRootViewController,
                                let tribesIndex = dashboardDelegate.buttonTitles.firstIndex(where: {

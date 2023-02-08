@@ -488,7 +488,13 @@ public class Chat: NSManagedObject {
                     self.updateChatFromTribesInfo()
                     
                     if let feedUrl = self.tribeInfo?.feedUrl, !feedUrl.isEmpty {
-                        ContentFeed.fetchChatFeedContentInBackground(feedUrl: feedUrl, chatObjectID: self.objectID, completion: completion)
+                        ContentFeed.fetchChatFeedContentInBackground(feedUrl: feedUrl, chatObjectID: self.objectID) { feedId in
+                            if let feedId = feedId {
+                                self.contentFeed = ContentFeed.getFeedWith(feedId: feedId)
+                                self.saveChat()
+                            }
+                            completion()
+                        }
                     } else if let existingFeed = self.contentFeed {
                         ContentFeed.deleteFeedWith(feedId: existingFeed.feedID)
                     }
@@ -616,5 +622,9 @@ public class Chat: NSManagedObject {
     
     func getJoinChatLink() -> String {
         return "sphinx.chat://?action=tribe&uuid=\(self.uuid ?? "")&host=\(self.host ?? "")"
+    }
+    
+    func saveChat() {
+        CoreDataManager.sharedManager.saveContext()
     }
 }

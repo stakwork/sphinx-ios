@@ -24,13 +24,15 @@ class MemberBadgeDetailVC : UIViewController{
     @IBOutlet weak var panGestureView: UIView!
     
     @IBOutlet weak var detailViewBottomConstraint: NSLayoutConstraint!
-    
+    private lazy var loadingViewController = LoadingViewController()
     
     
     var presentationContext : MemberBadgeDetailPresentationContext = .admin
     var delegate : TribeMemberViewDelegate? = nil
     var message : TransactionMessage? = nil
     var loadingView: UIView? = nil
+    var isModerator : Bool = false
+    var chatID: Int? = nil
     
     private var rootViewController: RootViewController!
     
@@ -42,7 +44,9 @@ class MemberBadgeDetailVC : UIViewController{
         rootViewController: RootViewController,
         message: TransactionMessage,
         leaderboardEntry:ChatLeaderboardEntry,
-        delegate: TribeMemberViewDelegate
+        delegate: TribeMemberViewDelegate,
+        chatID:Int,
+        isOwner: Bool = false
     ) -> UIViewController {
         let viewController = StoryboardScene.BadgeManagement.memberBadgeDetailVC.instantiate()
         viewController.view.backgroundColor = .clear
@@ -51,6 +55,7 @@ class MemberBadgeDetailVC : UIViewController{
             vc.rootViewController = rootViewController
             vc.message = message
             vc.delegate = delegate
+            vc.isModerator = isOwner
         }
         
         return viewController
@@ -94,7 +99,7 @@ class MemberBadgeDetailVC : UIViewController{
     }
     
     func displayKnownBadges(){
-        let badgeVC = BadgeMemberKnownBadgesVC.instantiate(rootViewController: rootViewController)
+        let badgeVC = BadgeMemberKnownBadgesVC.instantiate(rootViewController: rootViewController, chatID: chatID)
         self.navigationController?.pushViewController(badgeVC, animated: true)
     }
     

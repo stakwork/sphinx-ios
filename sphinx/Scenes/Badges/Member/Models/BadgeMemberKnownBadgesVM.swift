@@ -8,14 +8,16 @@
 
 import Foundation
 import UIKit
+import ObjectMapper
 
 class BadgeMemberKnownBadgesVM : NSObject {
     
     var tableView : UITableView
     var vc : BadgeMemberKnownBadgesVC
     var knownBadges : [Badge] = []
+    var chatID : Int? = nil
     
-    init(vc: BadgeMemberKnownBadgesVC, tableView: UITableView) {
+    init(vc: BadgeMemberKnownBadgesVC, tableView: UITableView,chatID:Int?) {
         self.vc = vc
         self.tableView = tableView
     }
@@ -31,6 +33,7 @@ class BadgeMemberKnownBadgesVM : NSObject {
     }
     
     func fetchKnownBadges(){
+        /*
         let badge = Badge()
         badge.name = "my badge"
         badge.memo = "dexription of my badge"
@@ -41,6 +44,24 @@ class BadgeMemberKnownBadgesVM : NSObject {
         badge2.icon_url = "https://i.ibb.co/Ch8mwg0/badge-Example.png"
         knownBadges.append(badge)
         knownBadges.append(badge2)
+        */
+        vc.addLoadingView()
+        if let valid_id = chatID{
+            API.sharedInstance.getTribeAdminBadges(
+                chatID: valid_id,
+                callback: { results in
+                   print(results)
+                    if var mappedResults = Mapper<Badge>().mapArray(JSONObject: Array(results)){
+                        mappedResults.map({$0.chat_id = valid_id})
+                        self.knownBadges = mappedResults
+                        self.vc.removeLoadingView()
+                        self.tableView.reloadData()
+                    }
+                },
+                errorCallback: {
+                    self.vc.removeLoadingView()
+                })
+        }
     }
     
 }

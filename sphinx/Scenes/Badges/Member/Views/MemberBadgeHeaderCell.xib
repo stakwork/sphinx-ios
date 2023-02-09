@@ -107,7 +107,7 @@
                                 <color key="textColor" name="MainBottomIcons"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3458" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gEG-ao-gBr">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3458" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gEG-ao-gBr">
                                 <rect key="frame" x="136" y="117" width="40" height="17"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="40" id="kRn-6u-Ovc"/>
@@ -164,6 +164,7 @@
                 <outlet property="memberImageView" destination="CGM-mG-wyD" id="np4-Jl-6b5"/>
                 <outlet property="memberNameLabel" destination="3A2-sS-HO6" id="R2F-Wh-Rf8"/>
                 <outlet property="moderatorBadgeImageView" destination="mma-g5-NDu" id="P6k-Ew-DQE"/>
+                <outlet property="moderatorLabel" destination="GY5-GR-BGc" id="HnD-68-bjk"/>
                 <outlet property="sendSatsButton" destination="xyS-En-AHY" id="kGz-8X-aYI"/>
             </connections>
             <point key="canvasLocation" x="-80.916030534351137" y="81.338028169014095"/>

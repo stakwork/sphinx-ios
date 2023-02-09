@@ -51,10 +51,6 @@ class MemberBadgeDetailVM : NSObject {
         tableView.register(UINib(nibName: "MemberBadgeDetailTableViewCell", bundle: nil), forCellReuseIdentifier: MemberDetailTableViewCell.reuseID)
         tableView.register(UINib(nibName: "BadgeDetailCell", bundle: nil), forCellReuseIdentifier: BadgeDetailCell.reuseID)
         
-        //DispatchQueue.main.asyncAfter(deadline: .now() + 3.0, execute: {
-            self.loadBadges()
-        //})
-        
         loadProfileData()
         
         tableView.reloadData()
@@ -84,7 +80,7 @@ class MemberBadgeDetailVM : NSObject {
         var result = [MemberBadgeDetailCellType]()
         result = [
             .header,
-            .posts,
+            .reputation,
             .contributions,
             .earnings
         ]
@@ -110,26 +106,42 @@ class MemberBadgeDetailVM : NSObject {
     
     func loadProfileData() {
         guard let person = message?.person else {
-            vc.dismiss(animated: true)
+            //vc.dismiss(animated: true)
             return
         }
         
         isLoading = true
-        //Fake 10s delay for debug
-        //DispatchQueue.main.asyncAfter(deadline: .now() + 10.0, execute: {
-            API.sharedInstance.getTribeMemberInfo(person: person, callback: { (success, personInfo) in
-                if let personInfo = personInfo, success {
-                    self.isLoading = false
-                    self.configHeaderView(personInfo: personInfo)
-                } else {
-                    //self.dismissView()
-                }
-            })
-        //})
         
+        API.sharedInstance.getTribeMemberInfo(person: person, callback: { (success, personInfo) in
+            if let personInfo = personInfo, success {
+                self.isLoading = false
+                self.configHeaderView(personInfo: personInfo)
+                if let valid_uuid = person.personUUID{
+                    //self.getBadgeAssets(id: valid_uuid)
+                    self.getBadgeAssets(id: "cd9dm5ua5fdtsj2c2mtg")//debug only
+                }
+            } else {
+                //TODO: error handling? Timeout?
+            }
+        })
     }
     
+    func getBadgeAssets(id:String){
+        API.sharedInstance.getBadgeAssets(
+            user_uuid: id,
+            callback: { results in
+                print(results)
+                self.badges = results
+                self.vc.dismissBadgeDetails()
+                self.tableView.reloadData()
+            },
+            errorCallback: {
+                
+            })
+    }
 }
+
+
 
 
 extension MemberBadgeDetailVM : UITableViewDelegate,UITableViewDataSource{
@@ -153,6 +165,8 @@ extension MemberBadgeDetailVM : UITableViewDelegate,UITableViewDataSource{
             ) as! MemberBadgeHeaderCell
             self.delegate = cell
             cell.initHeaderView(presentingVC: vc)
+            cell.moderatorBadgeImageView.isHidden = vc.isModerator == false
+            cell.moderatorLabel.isHidden = vc.isModerator == false
             
             return cell
         }

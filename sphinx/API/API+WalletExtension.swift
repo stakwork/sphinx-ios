@@ -9,6 +9,7 @@
 import Foundation
 import Alamofire
 import SwiftyJSON
+import ObjectMapper
 
 extension API {
     func getWalletBalance(
@@ -88,4 +89,80 @@ extension API {
             }
         }
     }
+    
+    func getAssets(
+        assetIDs:[Int],
+        callback: @escaping BalanceCallback,
+        errorCallback: @escaping EmptyCallback
+    ){
+        let params = [
+            "ids":assetIDs
+        ]
+        guard let request = getURLRequest(
+                route: "/asset/filter",
+                params: params as? NSDictionary,
+                method: "POST"
+        ) else {
+            errorCallback()
+            return
+        }
+        
+        sphinxRequest(request) { response in
+            switch response.result {
+            case .success(let data):
+                if let json = data as? NSDictionary {
+                    if let success = json["success"] as? Bool, let response = json["response"], success {
+                        let data = JSON(response).dictionaryValue
+                            print(data)
+                            return
+                    }
+                }
+                errorCallback()
+            case .failure(_):
+                errorCallback()
+            }
+        }
+    }
+    
+    func getBadgeAssets(
+        user_uuid:String,
+        callback: @escaping GetBadgeCallback,
+        errorCallback: @escaping EmptyCallback
+    ){
+        let urlPath = API.kTribesServerBaseURL + "/person/uuid/\(user_uuid)/assets"
+        
+        var urlComponents = URLComponents(string: urlPath)!
+        
+        guard let urlString = urlComponents.url?.absoluteString else {
+            errorCallback()
+            return
+        }
+        
+        guard let request = createRequest(
+            urlString,
+            bodyParams: nil,
+            method: "GET"
+        ) else {
+            errorCallback()
+            return
+        }
+        sphinxRequest(request) { response in
+            switch response.result {
+            case .success(let data):
+                if let json = data as? [NSDictionary],
+                   let mappedValues = Mapper<Badge>().mapArray(JSONObject: json){
+                    print(json)
+                    callback(mappedValues)
+                    //callback(json)
+                    return
+                }
+                print(response.response?.statusCode)
+                errorCallback()
+            case .failure(_):
+                print(response.response?.statusCode)
+                errorCallback()
+            }
+        }
+    }
+
 }

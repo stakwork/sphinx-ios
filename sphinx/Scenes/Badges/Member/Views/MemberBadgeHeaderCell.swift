@@ -15,6 +15,8 @@ class MemberBadgeHeaderCell: UITableViewCell {
     @IBOutlet weak var sendSatsButton: UIButton!
     @IBOutlet weak var earnBadgesButton: UIButton!
     @IBOutlet weak var moderatorBadgeImageView: UIImageView!
+    @IBOutlet weak var moderatorLabel: UILabel!
+    
     var presentingVC : MemberBadgeDetailVC?
 
     override func awakeFromNib() {

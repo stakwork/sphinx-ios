@@ -74,16 +74,6 @@ class BadgeAdminManagementListDataSource : NSObject{
             errorCallback: {
                 
             })
-        /*
-        let new_badge3 = Badge()
-        new_badge3.name = "1k Spend Club"
-        new_badge3.icon_url = "https://i.ibb.co/2nvyW7t/1k-badge.png"
-        new_badge3.requirements = "Spend at least 1k in the Tribe."
-        new_badge3.amount_issued = 100
-        new_badge3.amount_created = 1000
-        self.badges.append(new_badge3)
-         self.vc.badgeTableView.reloadData()
-         */
         
         
     }

@@ -11,7 +11,7 @@ import UIKit
 public enum MemberBadgeDetailCellType{
     case header
     case badges
-    case posts
+    case reputation
     case details
     case contributions
     case earnings
@@ -49,8 +49,8 @@ class MemberDetailTableViewCell: UITableViewCell {
         case .earnings:
             titleLabel.text = "Earnings:"
             break
-        case .posts:
-            titleLabel.text = "Posts:"
+        case .reputation:
+            titleLabel.text = "Reputation:"
             break
         default:
             break
@@ -213,10 +213,15 @@ class MemberDetailTableViewCell: UITableViewCell {
                 stackViewWidth.constant = cursorValue
                 self.layoutIfNeeded()
                 break
-            case .posts:
+            case .reputation:
                 stackView.translatesAutoresizingMaskIntoConstraints = false
                     let postsLabel = UILabel(frame: CGRect(x: 0.0, y: 0.0, width: 48.0, height: stackView.frame.height))
-                    postsLabel.text = "150"
+                    postsLabel.text = ""
+                    if let valid_leaderboard = leaderboardData,
+                       let valid_rep = valid_leaderboard.reputation{
+                        postsLabel.text = "\(valid_rep)"
+                    }
+                    
                     postsLabel.font = UIFont(name: "Roboto", size: 15.0)
                     postsLabel.textColor = UIColor.Sphinx.BodyInverted
                     postsLabel.textAlignment = .right

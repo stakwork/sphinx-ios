@@ -24,6 +24,7 @@ class MemberBadgeDetailVM : NSObject {
     let headerOffset : Int = 0
     let badgeDetailOffset : Int = 2
     var delegate: MemberBadgeDetailVMDisplayDelegate? = nil
+    var leaderBoardData : ChatLeaderboardEntry? = nil
     var isLoading : Bool {
         didSet{
             if(isLoading){
@@ -169,7 +170,7 @@ extension MemberBadgeDetailVM : UITableViewDelegate,UITableViewDataSource{
                 withIdentifier: MemberDetailTableViewCell.reuseID,
                 for: indexPath
             ) as! MemberDetailTableViewCell
-            cell.configureCell(type: getCellTypeOrder()[indexPath.row], badges: badges,isExpanded: badgeDetailExpansionState)
+            cell.configureCell(type: getCellTypeOrder()[indexPath.row], badges: badges, leaderboardData: leaderBoardData,isExpanded: badgeDetailExpansionState)
             
             return cell
         }

@@ -38,7 +38,7 @@ class MemberDetailTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func configureCell(type:MemberBadgeDetailCellType,badges:[Badge],isExpanded:Bool){
+    func configureCell(type:MemberBadgeDetailCellType,badges:[Badge],leaderboardData:ChatLeaderboardEntry?=nil,isExpanded:Bool){
         switch(type){
         case .badges:
             titleLabel.text = "Badges:"
@@ -56,7 +56,7 @@ class MemberDetailTableViewCell: UITableViewCell {
             break
         }
         
-        configureStackView(type: type,badges: badges, leaderboardData: ChatLeaderboardEntry(), isExpanded: isExpanded)
+        configureStackView(type: type,badges: badges, leaderboardData: leaderboardData, isExpanded: isExpanded)
     }
     
     override func prepareForReuse() {
@@ -78,25 +78,39 @@ class MemberDetailTableViewCell: UITableViewCell {
         }
     }
     
-    func configureStackView(type:MemberBadgeDetailCellType,badges:[Badge],leaderboardData:ChatLeaderboardEntry,isExpanded:Bool){
+    func configureStackView(type:MemberBadgeDetailCellType,badges:[Badge],leaderboardData:ChatLeaderboardEntry?=nil,isExpanded:Bool){
         switch(type){
             case .contributions:
                 let satsLabel = UILabel(frame: CGRect(x: 0.0, y: 0.0, width: 97.0, height: stackView.frame.height))
-                let satsString = "5000 sats"
-                let numLength = satsString.count - "sats".count
-                let satsLabelAttributedText = NSMutableAttributedString(string: satsString)
-                satsLabelAttributedText.addAttribute(.foregroundColor, value: UIColor.Sphinx.BlueTextAccent, range: NSRange(location: satsString.distance(from: String.Index(utf16Offset: 0, in: satsString), to: String.Index(utf16Offset: 0, in: satsString)), length: numLength))
+                if let valid_leaderboard = leaderboardData,
+                   let valid_sats_count = valid_leaderboard.spent{
+                    let satsString = "\(valid_sats_count) sats"
+                    let numLength = satsString.count - "sats".count
+                    let satsLabelAttributedText = NSMutableAttributedString(string: satsString)
+                    satsLabelAttributedText.addAttribute(.foregroundColor, value: UIColor.Sphinx.BlueTextAccent, range: NSRange(location: satsString.distance(from: String.Index(utf16Offset: 0, in: satsString), to: String.Index(utf16Offset: 0, in: satsString)), length: numLength))
+                    
+                    satsLabelAttributedText.addAttribute(.font,value: UIFont(name: "Roboto", size: 15.0), range: NSRange(location: satsString.distance(from: String.Index(utf16Offset: 0, in: satsString), to: String.Index(utf16Offset: 0, in: satsString)), length: satsString.count))
+                    satsLabel.attributedText = satsLabelAttributedText
+                    satsLabel.textAlignment = .right
+                }
+                else{
+                    satsLabel.text = ""
+                }
                 
-                satsLabelAttributedText.addAttribute(.font,value: UIFont(name: "Roboto", size: 15.0), range: NSRange(location: satsString.distance(from: String.Index(utf16Offset: 0, in: satsString), to: String.Index(utf16Offset: 0, in: satsString)), length: satsString.count))
-                satsLabel.attributedText = satsLabelAttributedText
-                satsLabel.textAlignment = .right
                 self.subviewLabels.append(satsLabel)
                 stackView.addSubview(satsLabel)
                 
                 
                 stackView.translatesAutoresizingMaskIntoConstraints = false
                 let rankLabel = UILabel(frame: CGRect(x: satsLabel.frame.width, y: 0.0, width: 34.0, height: stackView.frame.height))
-                rankLabel.text = "6th"
+                if let valid_leaderboard = leaderboardData,
+                   let valid_rank = valid_leaderboard.spentRank,
+                   let valid_ordinal = valid_rank.ordinal{
+                    rankLabel.text = "\(valid_ordinal)"
+                }
+                else{
+                    rankLabel.text = ""
+                }
                 rankLabel.font = UIFont(name: "Roboto", size: 15.0)
                 rankLabel.textAlignment = .right
                 rankLabel.textColor = UIColor.Sphinx.SecondaryText
@@ -108,21 +122,36 @@ class MemberDetailTableViewCell: UITableViewCell {
                 break
             case .earnings:
                 let satsLabel = UILabel(frame: CGRect(x: 0.0, y: 0.0, width: 97.0, height: stackView.frame.height))
-                let satsString = "3000 sats"
-                let numLength = satsString.count - "sats".count
-                let satsLabelAttributedText = NSMutableAttributedString(string: satsString)
-                satsLabelAttributedText.addAttribute(.foregroundColor, value: UIColor.Sphinx.PrimaryGreen, range: NSRange(location: satsString.distance(from: String.Index(utf16Offset: 0, in: satsString), to: String.Index(utf16Offset: 0, in: satsString)), length: numLength))
+                if let valid_leaderboard = leaderboardData,
+                   let valid_sats_count = valid_leaderboard.earned{
+                    let satsString = "\(valid_sats_count) sats"
+                    let numLength = satsString.count - "sats".count
+                    let satsLabelAttributedText = NSMutableAttributedString(string: satsString)
+                    satsLabelAttributedText.addAttribute(.foregroundColor, value: UIColor.Sphinx.PrimaryGreen, range: NSRange(location: satsString.distance(from: String.Index(utf16Offset: 0, in: satsString), to: String.Index(utf16Offset: 0, in: satsString)), length: numLength))
+                    
+                    satsLabelAttributedText.addAttribute(.font,value: UIFont(name: "Roboto", size: 15.0), range: NSRange(location: satsString.distance(from: String.Index(utf16Offset: 0, in: satsString), to: String.Index(utf16Offset: 0, in: satsString)), length: satsString.count))
+                    satsLabel.attributedText = satsLabelAttributedText
+                    satsLabel.textAlignment = .right
+                }
+                else{
+                    satsLabel.text = ""
+                }
                 
-                satsLabelAttributedText.addAttribute(.font,value: UIFont(name: "Roboto", size: 15.0), range: NSRange(location: satsString.distance(from: String.Index(utf16Offset: 0, in: satsString), to: String.Index(utf16Offset: 0, in: satsString)), length: satsString.count))
-                satsLabel.attributedText = satsLabelAttributedText
-                satsLabel.textAlignment = .right
                 self.subviewLabels.append(satsLabel)
                 stackView.addSubview(satsLabel)
+            
                 
                 
                 stackView.translatesAutoresizingMaskIntoConstraints = false
                 let rankLabel = UILabel(frame: CGRect(x: satsLabel.frame.width, y: 0.0, width: 34.0, height: stackView.frame.height))
-                rankLabel.text = "8th"
+                if let valid_leaderboard = leaderboardData,
+                   let valid_rank = valid_leaderboard.earnedRank,
+                   let valid_ordinal = valid_rank.ordinal{
+                    rankLabel.text = "\(valid_ordinal)"
+                }
+                else{
+                    rankLabel.text = ""
+                }
                 rankLabel.font = UIFont(name: "Roboto", size: 15.0)
                 rankLabel.textAlignment = .right
                 rankLabel.textColor = UIColor.Sphinx.SecondaryText
@@ -211,4 +240,17 @@ extension MemberDetailTableViewCell {
     static let nib: UINib = {
         UINib(nibName: "MemberBadgeDetailTableViewCell", bundle: nil)
     }()
+}
+
+
+private var ordinalFormatter: NumberFormatter = {
+    let formatter = NumberFormatter()
+    formatter.numberStyle = .ordinal
+    return formatter
+}()
+
+extension Int {
+    var ordinal: String? {
+        return ordinalFormatter.string(from: NSNumber(value: self))
+    }
 }

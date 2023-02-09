@@ -41,11 +41,13 @@ class MemberBadgeDetailVC : UIViewController{
     static func instantiate(
         rootViewController: RootViewController,
         message: TransactionMessage,
+        leaderboardEntry:ChatLeaderboardEntry,
         delegate: TribeMemberViewDelegate
     ) -> UIViewController {
         let viewController = StoryboardScene.BadgeManagement.memberBadgeDetailVC.instantiate()
         viewController.view.backgroundColor = .clear
         if let vc = viewController as? MemberBadgeDetailVC{
+            vc.memberBadgeDetailVM.leaderBoardData = leaderboardEntry
             vc.rootViewController = rootViewController
             vc.message = message
             vc.delegate = delegate

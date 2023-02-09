@@ -445,23 +445,21 @@ extension ChatViewController : MessageCellDelegate {
     }
     
     func didTapAvatarView(message: TransactionMessage) {
-        
-        let vc = MemberBadgeDetailVC.instantiate(rootViewController: self.rootViewController,message:message,delegate:self)
-        vc.modalPresentationStyle = .overCurrentContext
-        self.navigationController?.present(vc, animated: false)
-        
-        /*
-        if let _ = message.person {
-            accessoryView.hide()
+        if let _ = message.person,
+           let matchedLeaderboardEntry = chatListViewModel.chatLeaderboard.filter({$0.alias == message.senderAlias}).first{
+            print("Sender Alias:\(message.senderAlias)")
+            print(chatListViewModel.chatLeaderboard.map({$0.alias}))
+            print("")
             
-            let tribeMemberProfileVC = TribeMemberProfileViewController.instantiate(message: message, delegate: self)
-            tribeMemberProfileVC.modalPresentationStyle = .overCurrentContext
-            self.navigationController?.present(tribeMemberProfileVC, animated: false)
-        } else {
+            let vc = MemberBadgeDetailVC.instantiate(rootViewController: self.rootViewController,message:message, leaderboardEntry: matchedLeaderboardEntry,delegate:self)
+            vc.modalPresentationStyle = .overCurrentContext
+            self.navigationController?.present(vc, animated: false)
+        }
+        else {
             let tribeMemberPopupVC = TribeMemberPopupViewController.instantiate(message: message, delegate: self)
             WindowsManager.sharedInstance.showConveringWindowWith(rootVC: tribeMemberPopupVC)
         }
-        */
+        
     }
 }
 

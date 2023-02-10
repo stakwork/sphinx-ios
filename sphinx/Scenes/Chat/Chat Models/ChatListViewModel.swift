@@ -195,6 +195,7 @@ final class ChatListViewModel: NSObject {
                     tribeUUID: valid_uuid,
                     callback: { results in
                         if var chatLeaderboardEntries = Mapper<ChatLeaderboardEntry>().mapArray(JSONObject: Array(results)){
+                            /*
                             chatLeaderboardEntries.sort(by: {$0.earned ?? 0 > $1.earned ?? 0})
                             chatLeaderboardEntries.map({
                                 let alias = $0.alias
@@ -216,6 +217,7 @@ final class ChatListViewModel: NSObject {
                                     $0.spentRank = -1
                                 }
                             })
+                            */
                             
                             self.chatLeaderboard = chatLeaderboardEntries
                         }

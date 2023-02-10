@@ -161,7 +161,7 @@ class MemberDetailTableViewCell: UITableViewCell {
         }
     }
     
-    func configRankedStackViewParams(shouldIncludeRank:Bool=true,leaderboardData:ChatLeaderboardEntry?,type:MemberBadgeDetailCellType){
+    func configRankedStackViewParams(shouldIncludeRank:Bool=false,leaderboardData:ChatLeaderboardEntry?,type:MemberBadgeDetailCellType){
         
         //1. Configure row specific data
         var color : UIColor!

@@ -6,6 +6,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -123,6 +124,10 @@
                                     <constraint firstAttribute="width" constant="34" id="q9u-23-JMx"/>
                                 </constraints>
                             </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QGC-E0-rQL" customClass="ChatAvatarView" customModule="sphinx" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="40" width="112" height="112"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" name="Body"/>
                         <constraints>
@@ -130,9 +135,12 @@
                             <constraint firstAttribute="height" constant="240" id="8vD-eB-Iz8"/>
                             <constraint firstItem="Kof-iK-Cjc" firstAttribute="width" secondItem="xyS-En-AHY" secondAttribute="width" id="92c-4E-991"/>
                             <constraint firstItem="mma-g5-NDu" firstAttribute="leading" secondItem="CGM-mG-wyD" secondAttribute="leading" constant="94" id="CjA-Bf-T7M"/>
+                            <constraint firstItem="QGC-E0-rQL" firstAttribute="bottom" secondItem="CGM-mG-wyD" secondAttribute="bottom" id="Dfn-XA-bDl"/>
                             <constraint firstItem="CGM-mG-wyD" firstAttribute="top" secondItem="fFe-ph-CzK" secondAttribute="top" constant="40" id="I2s-7W-wCT"/>
                             <constraint firstItem="gEG-ao-gBr" firstAttribute="top" secondItem="3A2-sS-HO6" secondAttribute="bottom" constant="8" id="JD0-w7-WsH"/>
                             <constraint firstItem="IFw-CP-eU0" firstAttribute="centerY" secondItem="xyS-En-AHY" secondAttribute="centerY" id="Jz6-in-bnA"/>
+                            <constraint firstItem="QGC-E0-rQL" firstAttribute="top" secondItem="CGM-mG-wyD" secondAttribute="top" id="ObR-DP-azk"/>
+                            <constraint firstItem="QGC-E0-rQL" firstAttribute="trailing" secondItem="CGM-mG-wyD" secondAttribute="trailing" id="Qig-hA-nFT"/>
                             <constraint firstItem="IFw-CP-eU0" firstAttribute="trailing" secondItem="xyS-En-AHY" secondAttribute="trailing" constant="-12" id="Sbg-HZ-BTo"/>
                             <constraint firstItem="3A2-sS-HO6" firstAttribute="trailing" secondItem="GY5-GR-BGc" secondAttribute="trailing" id="T0d-Sq-TaR"/>
                             <constraint firstItem="Kof-iK-Cjc" firstAttribute="leading" secondItem="xyS-En-AHY" secondAttribute="trailing" constant="18" id="Tv0-zn-IXX"/>
@@ -145,6 +153,7 @@
                             <constraint firstItem="3A2-sS-HO6" firstAttribute="leading" secondItem="GY5-GR-BGc" secondAttribute="leading" id="mA3-0Q-niR"/>
                             <constraint firstItem="Vub-1U-Ys7" firstAttribute="trailing" secondItem="Kof-iK-Cjc" secondAttribute="trailing" constant="-12" id="sUS-f6-R3I"/>
                             <constraint firstItem="3A2-sS-HO6" firstAttribute="leading" secondItem="CGM-mG-wyD" secondAttribute="trailing" constant="24" id="vrM-sI-rnN"/>
+                            <constraint firstItem="QGC-E0-rQL" firstAttribute="leading" secondItem="CGM-mG-wyD" secondAttribute="leading" id="xDJ-tM-yWg"/>
                             <constraint firstItem="xyS-En-AHY" firstAttribute="leading" secondItem="CGM-mG-wyD" secondAttribute="leading" id="y1i-HL-frN"/>
                             <constraint firstItem="gEG-ao-gBr" firstAttribute="leading" secondItem="3A2-sS-HO6" secondAttribute="leading" id="yQq-Yd-jpT"/>
                             <constraint firstItem="3A2-sS-HO6" firstAttribute="top" secondItem="GY5-GR-BGc" secondAttribute="bottom" constant="4" id="z6e-OZ-xuh"/>
@@ -160,6 +169,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="chatAvatarView" destination="QGC-E0-rQL" id="qIn-5P-xQd"/>
                 <outlet property="earnBadgesButton" destination="Kof-iK-Cjc" id="1V5-8X-aOM"/>
                 <outlet property="memberImageView" destination="CGM-mG-wyD" id="np4-Jl-6b5"/>
                 <outlet property="memberNameLabel" destination="3A2-sS-HO6" id="R2F-Wh-Rf8"/>
@@ -186,5 +196,8 @@
         <namedColor name="SecondaryText">
             <color red="0.55686274509803924" green="0.58823529411764708" blue="0.61176470588235299" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

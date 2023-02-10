@@ -29,7 +29,8 @@ class BadgeDetailCell: UITableViewCell {
     func configCell(badge:Badge){
         badgeTitleLabel.text = badge.name ?? ""
         let bitmapSize = CGSize(width: 500, height: 500)
-        badgeImageView.sd_setImage(with: URL(string: badge.icon_url ?? ""), placeholderImage: nil, options: [], context: [.imageThumbnailPixelSize : bitmapSize])
+        let defaultImage = #imageLiteral(resourceName: "appPinIcon")
+        badgeImageView.sd_setImage(with: URL(string: badge.icon_url ?? ""), placeholderImage: defaultImage, options: [], context: [.imageThumbnailPixelSize : bitmapSize])
         badgeImageView.makeCircular()
         badgeStatsLabel.text = "3/10"
         badgeStatusLabel.text = "PENDING"

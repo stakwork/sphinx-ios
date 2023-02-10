@@ -112,8 +112,9 @@ class MemberDetailTableViewCell: UITableViewCell {
                 stackView.translatesAutoresizingMaskIntoConstraints = false
             
                 for imageUrl in clippedUrls{
+                    let defaultImage = #imageLiteral(resourceName: "appPinIcon")
                     let image1 = UIImageView(frame: CGRect(x: cursorValue, y: 0.0, width: imageWidth, height: 40.0))
-                    image1.sd_setImage(with: URL(string: imageUrl))
+                    image1.sd_setImage(with: URL(string: imageUrl),placeholderImage: defaultImage)
                     image1.makeCircular()
                     stackView.addSubview(image1)
                     self.subviewImageViews.append(image1)

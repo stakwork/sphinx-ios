@@ -16,6 +16,7 @@ class MemberBadgeHeaderCell: UITableViewCell {
     @IBOutlet weak var earnBadgesButton: UIButton!
     @IBOutlet weak var moderatorBadgeImageView: UIImageView!
     @IBOutlet weak var moderatorLabel: UILabel!
+    @IBOutlet weak var chatAvatarView: ChatAvatarView!
     
     var presentingVC : MemberBadgeDetailVC?
 
@@ -69,9 +70,16 @@ extension MemberBadgeHeaderCell {
 }
 
 extension MemberBadgeHeaderCell: MemberBadgeDetailVMDisplayDelegate{
-    func reloadHeaderView(personInfo:TribeMemberStruct){
+    func reloadHeaderView(personInfo:TribeMemberStruct,message:TransactionMessage?){
         print(personInfo)
         self.memberNameLabel.text = personInfo.ownerAlias
+        if let valid_message = message{
+            self.chatAvatarView.configureForSenderWith(message: valid_message)
+            self.chatAvatarView.setInitialLabelSize(size: 30)
+        }
+        else{
+            self.chatAvatarView.isHidden = true
+        }
     }
     
     func getImageViewReference()->UIImageView{

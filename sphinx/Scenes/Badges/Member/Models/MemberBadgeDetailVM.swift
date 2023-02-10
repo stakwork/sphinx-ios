@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 protocol MemberBadgeDetailVMDisplayDelegate{
-    func reloadHeaderView(personInfo:TribeMemberStruct)
+    func reloadHeaderView(personInfo:TribeMemberStruct,message:TransactionMessage?)
     func getImageViewReference()->UIImageView
 }
 
@@ -97,9 +97,9 @@ class MemberBadgeDetailVM : NSObject {
         return result
     }
     
-    func configHeaderView(personInfo:TribeMemberStruct){
+    func configHeaderView(personInfo:TribeMemberStruct,message:TransactionMessage?){
         print(personInfo)
-        delegate?.reloadHeaderView(personInfo: personInfo)
+        delegate?.reloadHeaderView(personInfo: personInfo, message: message)
         let iv = delegate?.getImageViewReference()
         iv?.sd_setImage(with: URL(string: personInfo.img))
     }
@@ -115,7 +115,7 @@ class MemberBadgeDetailVM : NSObject {
         API.sharedInstance.getTribeMemberInfo(person: person, callback: { (success, personInfo) in
             if let personInfo = personInfo, success {
                 self.isLoading = false
-                self.configHeaderView(personInfo: personInfo)
+                self.configHeaderView(personInfo: personInfo,message: self.message)
                 if let valid_uuid = person.personUUID{
                     self.getBadgeAssets(id: valid_uuid)
                     //self.getBadgeAssets(id: "cd9dm5ua5fdtsj2c2mtg")//debug only

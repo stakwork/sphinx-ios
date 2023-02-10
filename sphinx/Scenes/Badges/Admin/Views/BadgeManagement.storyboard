@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_12" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -23,11 +23,11 @@
             <objects>
                 <viewController storyboardIdentifier="BadgeManagementListVC" id="Y6W-OH-hqX" customClass="BadgeAdminManagementListVC" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mSd-1C-8IE">
-                                <rect key="frame" x="0.0" y="59" width="393" height="55"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="55"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nci-gd-mFG">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="55"/>
@@ -44,13 +44,13 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create New Badge" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2jB-Hd-Qt9">
-                                        <rect key="frame" x="58" y="17.666666666666671" width="140" height="20"/>
+                                        <rect key="frame" x="58" y="17.5" width="140" height="20"/>
                                         <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="17"/>
                                         <color key="textColor" name="Text"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u9S-DV-rSU" customClass="UIActivityIndicatorView">
-                                        <rect key="frame" x="198" y="2.6666666666666643" width="50" height="50"/>
+                                        <rect key="frame" x="198" y="2.5" width="50" height="50"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="L6g-60-Tce"/>
@@ -72,7 +72,7 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="962-pw-MZe">
-                                <rect key="frame" x="0.0" y="114" width="393" height="704"/>
+                                <rect key="frame" x="0.0" y="99" width="414" height="763"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
                         </subviews>
@@ -111,7 +111,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oOY-jr-FfO">
-                                <rect key="frame" x="0.0" y="59" width="393" height="55"/>
+                                <rect key="frame" x="0.0" y="44" width="393" height="55"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7vh-RQ-qV9">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="55"/>
@@ -129,13 +129,13 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Purchase Badges" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="npT-Ia-qGU">
-                                        <rect key="frame" x="58" y="17.666666666666671" width="134.33333333333334" height="20"/>
+                                        <rect key="frame" x="58" y="17.5" width="133.5" height="20"/>
                                         <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="17"/>
                                         <color key="textColor" name="Text"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VY8-qH-VAp" customClass="UIActivityIndicatorView">
-                                        <rect key="frame" x="192.33333333333334" y="2.6666666666666643" width="50" height="50"/>
+                                        <rect key="frame" x="191.5" y="2.5" width="50" height="50"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="5bG-Ec-4kK"/>
@@ -182,7 +182,7 @@
                                 <rect key="frame" x="0.0" y="114" width="393" height="886"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sphinxTagIcon" translatesAutoresizingMaskIntoConstraints="NO" id="9K9-OV-BdR">
-                                        <rect key="frame" x="124.66666666666669" y="40" width="144" height="144"/>
+                                        <rect key="frame" x="124.5" y="40" width="144" height="144"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="144" id="fSg-Pl-eW0"/>
                                             <constraint firstAttribute="width" constant="144" id="pk4-KR-gcl"/>
@@ -242,7 +242,7 @@
                                         </connections>
                                     </button>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="createBadgeIcon" translatesAutoresizingMaskIntoConstraints="NO" id="GHs-OK-jbg">
-                                        <rect key="frame" x="325" y="677.66666666666663" width="29" height="23"/>
+                                        <rect key="frame" x="325" y="677.5" width="29" height="23"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="GHs-OK-jbg" secondAttribute="height" multiplier="29:23" id="Bei-6H-MeQ"/>
                                             <constraint firstAttribute="width" constant="29" id="DtM-89-rkT"/>
@@ -359,7 +359,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1Qs-bX-MOr">
-                                                <rect key="frame" x="268" y="18.666666666666629" width="51" height="31"/>
+                                                <rect key="frame" x="268" y="18.5" width="51" height="31"/>
                                                 <color key="onTintColor" name="PrimaryBlue"/>
                                                 <connections>
                                                     <action selector="changedActivationState:" destination="voF-kw-WQJ" eventType="valueChanged" id="VG2-St-Vhf"/>
@@ -470,24 +470,17 @@
             <objects>
                 <viewController storyboardIdentifier="MemberBadgeDetailVC" id="LuO-qo-PHW" customClass="MemberBadgeDetailVC" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="1TR-dg-0Rt">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KiA-cP-s0r">
-                                <rect key="frame" x="0.0" y="372" width="393" height="480"/>
+                                <rect key="frame" x="0.0" y="1016" width="414" height="480"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bfh-go-0Xm">
-                                        <rect key="frame" x="0.0" y="0.0" width="393" height="480"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="480" id="qx9-tH-LXb"/>
-                                        </constraints>
-                                    </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OO3-zl-XQj">
-                                        <rect key="frame" x="0.0" y="0.0" width="393" height="40"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="40"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uK2-lC-avr">
-                                                <rect key="frame" x="171.66666666666666" y="18" width="50" height="4"/>
+                                                <rect key="frame" x="182" y="18" width="50" height="4"/>
                                                 <color key="backgroundColor" name="SecondaryText"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="50" id="7ht-t2-I9E"/>
@@ -503,7 +496,7 @@
                                         </constraints>
                                     </view>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="hEd-1Q-eLw">
-                                        <rect key="frame" x="32" y="30" width="329" height="419"/>
+                                        <rect key="frame" x="32" y="30" width="350" height="419"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     </tableView>
                                 </subviews>
@@ -511,15 +504,12 @@
                                 <constraints>
                                     <constraint firstItem="hEd-1Q-eLw" firstAttribute="leading" secondItem="KiA-cP-s0r" secondAttribute="leading" constant="32" id="468-qy-EN4"/>
                                     <constraint firstItem="hEd-1Q-eLw" firstAttribute="centerX" secondItem="KiA-cP-s0r" secondAttribute="centerX" id="9fN-Nm-TDN"/>
-                                    <constraint firstAttribute="bottom" secondItem="bfh-go-0Xm" secondAttribute="bottom" id="O8z-PB-ycb"/>
-                                    <constraint firstItem="bfh-go-0Xm" firstAttribute="leading" secondItem="KiA-cP-s0r" secondAttribute="leading" id="Vm1-rD-jAE"/>
                                     <constraint firstAttribute="bottom" secondItem="hEd-1Q-eLw" secondAttribute="bottom" constant="31" id="W8q-5f-6wR"/>
+                                    <constraint firstAttribute="trailing" secondItem="hEd-1Q-eLw" secondAttribute="trailing" constant="32" id="WuZ-Eg-NHT"/>
                                     <constraint firstItem="hEd-1Q-eLw" firstAttribute="top" secondItem="OO3-zl-XQj" secondAttribute="bottom" constant="-10" id="dNq-VX-J6a"/>
                                     <constraint firstItem="OO3-zl-XQj" firstAttribute="leading" secondItem="KiA-cP-s0r" secondAttribute="leading" id="egs-fL-P3t"/>
-                                    <constraint firstItem="bfh-go-0Xm" firstAttribute="top" secondItem="KiA-cP-s0r" secondAttribute="top" id="hzJ-9i-NwD"/>
                                     <constraint firstAttribute="height" constant="480" id="o3r-NL-3mE"/>
                                     <constraint firstItem="OO3-zl-XQj" firstAttribute="top" secondItem="KiA-cP-s0r" secondAttribute="top" id="p28-gc-0AJ"/>
-                                    <constraint firstAttribute="trailing" secondItem="bfh-go-0Xm" secondAttribute="trailing" id="q5k-SE-HPP"/>
                                     <constraint firstAttribute="trailing" secondItem="OO3-zl-XQj" secondAttribute="trailing" id="xbM-hj-1Ug"/>
                                 </constraints>
                             </view>
@@ -529,11 +519,11 @@
                         <constraints>
                             <constraint firstItem="KiA-cP-s0r" firstAttribute="leading" secondItem="1TR-dg-0Rt" secondAttribute="leading" id="5lS-jx-bdf"/>
                             <constraint firstAttribute="trailing" secondItem="KiA-cP-s0r" secondAttribute="trailing" id="aEW-eH-KxN"/>
-                            <constraint firstAttribute="bottom" secondItem="KiA-cP-s0r" secondAttribute="bottom" id="uOL-cR-0hT"/>
+                            <constraint firstAttribute="bottom" secondItem="KiA-cP-s0r" secondAttribute="bottom" constant="-600" id="uOL-cR-0hT"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="detailView" destination="bfh-go-0Xm" id="zwr-PD-LAv"/>
+                        <outlet property="detailView" destination="KiA-cP-s0r" id="Nk5-te-vJn"/>
                         <outlet property="detailViewBottomConstraint" destination="uOL-cR-0hT" id="Nrg-G1-hEH"/>
                         <outlet property="detailViewHeight" destination="o3r-NL-3mE" id="Tdt-9t-DIt"/>
                         <outlet property="panGestureLine" destination="uK2-lC-avr" id="ss0-tw-Bs2"/>
@@ -550,11 +540,11 @@
             <objects>
                 <viewController storyboardIdentifier="BadgeMemberKnownBadgesVC" id="pqy-KQ-EYR" customClass="BadgeMemberKnownBadgesVC" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="G0N-oO-ymE">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sAQ-zm-hVm">
-                                <rect key="frame" x="0.0" y="59" width="393" height="55"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="55"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7PJ-BT-iAh">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="55"/>
@@ -571,13 +561,13 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="List of Known Badges" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XEg-kV-wEh">
-                                        <rect key="frame" x="58" y="17.666666666666671" width="167" height="20"/>
+                                        <rect key="frame" x="58" y="17.5" width="167" height="20"/>
                                         <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="17"/>
                                         <color key="textColor" name="BodyInverted"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Duo-Hf-Gov" customClass="UIActivityIndicatorView">
-                                        <rect key="frame" x="225" y="2.6666666666666643" width="50" height="50"/>
+                                        <rect key="frame" x="225" y="2.5" width="50" height="50"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="50" id="3dN-Wl-2eM"/>
@@ -599,7 +589,7 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="ghg-xr-8IB">
-                                <rect key="frame" x="0.0" y="114" width="393" height="704"/>
+                                <rect key="frame" x="0.0" y="99" width="414" height="763"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
                         </subviews>

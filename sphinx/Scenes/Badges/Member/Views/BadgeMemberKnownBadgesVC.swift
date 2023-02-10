@@ -10,9 +10,10 @@ import Foundation
 import UIKit
 
 class BadgeMemberKnownBadgesVC : UIViewController{
+    
     @IBOutlet weak var tableView: UITableView!
-    private var rootViewController: RootViewController!
-    var chatID:Int? = nil
+    
+    var chatID: Int? = nil
     private lazy var loadingViewController = LoadingViewController()
     
     lazy var badgeMemberKnownBadgesVM : BadgeMemberKnownBadgesVM = {
@@ -20,11 +21,9 @@ class BadgeMemberKnownBadgesVC : UIViewController{
     }()
     
     static func instantiate(
-        rootViewController: RootViewController,
         chatID:Int?
     ) -> UIViewController {
         let viewController = StoryboardScene.BadgeManagement.badgeMemberKnownBadgesVC.instantiate() as! BadgeMemberKnownBadgesVC
-        viewController.rootViewController = rootViewController
         viewController.chatID = chatID
         
         return viewController

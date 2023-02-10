@@ -33,44 +33,42 @@ class MemberBadgeDetailVC : UIViewController{
     var loadingView: UIView? = nil
     var isModerator : Bool = false
     var chatID: Int? = nil
-    
-    private var rootViewController: RootViewController!
-    
+
     lazy var memberBadgeDetailVM : MemberBadgeDetailVM = {
        return MemberBadgeDetailVM(vc: self, tableView: tableView)
     }()
     
     static func instantiate(
-        rootViewController: RootViewController,
         message: TransactionMessage,
-        leaderboardEntry:ChatLeaderboardEntry,
-        delegate: TribeMemberViewDelegate,
-        chatID:Int,
-        isOwner: Bool = false
+        leaderboardEntry: ChatLeaderboardEntry,
+        delegate: TribeMemberViewDelegate
     ) -> UIViewController {
+        
         let viewController = StoryboardScene.BadgeManagement.memberBadgeDetailVC.instantiate()
         viewController.view.backgroundColor = .clear
+        
         if let vc = viewController as? MemberBadgeDetailVC{
             vc.memberBadgeDetailVM.leaderBoardData = leaderboardEntry
-            vc.rootViewController = rootViewController
             vc.message = message
             vc.delegate = delegate
-            vc.isModerator = isOwner
+            vc.isModerator = message.senderAlias == message.chat?.ownerPubkey
+            vc.chatID = message.chat?.id
         }
         
         return viewController
     }
     
     override func viewDidLoad() {
-        dismissBadgeDetails()
+        configureBadgeDetails()
         detailView.backgroundColor = UIColor.Sphinx.Body
         setupDismissableView()
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        //animateView(show: true)
         configTableView()
-        addBlurView()
+        addSemiTransparentBack()
+        
+        animateView(show: true)
     }
     
     func handleEarnBadgesTap(){
@@ -89,27 +87,27 @@ class MemberBadgeDetailVC : UIViewController{
         }
     }
     
-    func addBlurView(){
-        detailView.layer.cornerRadius = 20.0
-        let blurView = UIView(frame: self.view.frame)
-        blurView.backgroundColor = .black
-        blurView.alpha = 0.75
-        self.view.addSubview(blurView)
-        self.view.sendSubviewToBack(blurView)
+    func addSemiTransparentBack(){
+        let backView = UIView(frame: self.view.frame)
+        backView.backgroundColor = .black
+        backView.alpha = 0.75
+        self.view.addSubview(backView)
+        self.view.sendSubviewToBack(backView)
     }
     
     func displayKnownBadges(){
-        let badgeVC = BadgeMemberKnownBadgesVC.instantiate(rootViewController: rootViewController, chatID: chatID)
+        let badgeVC = BadgeMemberKnownBadgesVC.instantiate(chatID: chatID)
         self.navigationController?.pushViewController(badgeVC, animated: true)
     }
     
     func addShimmerLoadingView(){
-        let xOffset : CGFloat = 32.0
         let loadingViewFrame = detailView.frame
+        
         loadingView = UIView(frame: loadingViewFrame)
         loadingView?.isUserInteractionEnabled = false
         loadingView?.backgroundColor = UIColor.Sphinx.Body
-        if let loadingView = loadingView{
+        
+        if let loadingView = loadingView {
             let imageView : UIImageView = UIImageView(frame: tableView.frame)
             imageView.image = UIImage(named: "memberBadgeLoadingView")
             imageView.contentMode = .scaleAspectFit
@@ -140,22 +138,27 @@ class MemberBadgeDetailVC : UIViewController{
         tableView.showsVerticalScrollIndicator = false
     }
     
+    func configureBadgeDetails() {
+        detailView.layer.cornerRadius = 20.0
+        detailViewHeight.constant = (memberBadgeDetailVM.badges.count > 0) ? 492.0 : 444.0
+        detailView.superview?.layoutSubviews()
+    }
     
     func dismissBadgeDetails(){
-        detailView.translatesAutoresizingMaskIntoConstraints = false
         tableView.isScrollEnabled = false
         detailViewHeight.constant = (memberBadgeDetailVM.badges.count > 0) ? 492.0 : 444.0
+        
         UIView.animate(withDuration: 0.25, delay: 0.0, animations: {
-            self.detailView.layoutIfNeeded()
+            self.detailView.superview?.layoutSubviews()
         })
     }
     
     func expandBadgeDetail(){
-        detailView.translatesAutoresizingMaskIntoConstraints = false
         tableView.isScrollEnabled = true
         detailViewHeight.constant = self.view.frame.height * 0.9
+        
         UIView.animate(withDuration: 0.25, delay: 0.0, animations: {
-            self.detailView.layoutIfNeeded()
+            self.detailView.superview?.layoutSubviews()
         })
     }
     
@@ -174,13 +177,13 @@ class MemberBadgeDetailVC : UIViewController{
         
         if sender.state == .began {
             detailViewBottomConstraint.constant = 0
-            detailView.superview?.layoutIfNeeded()
+            detailView.superview?.layoutSubviews()
             return
         }
         
         if sender.state == .changed {
             detailViewBottomConstraint.constant = -translation
-            detailView.superview?.layoutIfNeeded()
+            detailView.superview?.layoutSubviews()
             return
         }
 
@@ -199,17 +202,17 @@ class MemberBadgeDetailVC : UIViewController{
         show: Bool,
         completion: (() -> ())? = nil
     ) {
-        let newConstant: CGFloat = show ? 0 : -600
+        let windowInset = getWindowInsets()
+        let newConstant: CGFloat = show ? 0 : -(detailViewHeight.constant + windowInset.bottom)
         
         if (detailViewBottomConstraint.constant == newConstant) {
             return
         }
         
-        detailViewBottomConstraint.constant = newConstant
+        self.detailViewBottomConstraint.constant = newConstant
         
         UIView.animate(withDuration: 0.25, animations: {
-            self.detailView.superview?.layoutIfNeeded()
-            self.view.alpha = show ? 1.0 : 0.0
+            self.detailView.superview?.layoutSubviews()
         }) { _ in
             completion?()
         }

@@ -446,13 +446,9 @@ extension ChatViewController : MessageCellDelegate {
     
     func didTapAvatarView(message: TransactionMessage) {
         if let _ = message.person,
-           let matchedLeaderboardEntry = chatListViewModel.chatLeaderboard.filter({$0.alias == message.senderAlias}).first,
-           let valid_chat = chat{
-            print("Sender Alias:\(message.senderAlias)")
-            print(chatListViewModel.chatLeaderboard.map({$0.alias}))
-            print("")
-            let isModerator = message.senderAlias == chat?.ownerPubkey
-            let vc = MemberBadgeDetailVC.instantiate(rootViewController: self.rootViewController,message:message, leaderboardEntry: matchedLeaderboardEntry,delegate:self, chatID: valid_chat.id, isOwner: isModerator)
+           let matchedLeaderboardEntry = chatListViewModel.chatLeaderboard.filter({$0.alias == message.senderAlias}).first {
+            
+            let vc = MemberBadgeDetailVC.instantiate(message:message, leaderboardEntry: matchedLeaderboardEntry, delegate:self)
             vc.modalPresentationStyle = .overCurrentContext
             self.navigationController?.present(vc, animated: false)
         }
@@ -482,7 +478,7 @@ extension ChatViewController : TribeMemberViewDelegate {
     }
     
     func displayKnownBadges(){
-        let badgeVC = BadgeMemberKnownBadgesVC.instantiate(rootViewController: rootViewController, chatID: chat?.id)
+        let badgeVC = BadgeMemberKnownBadgesVC.instantiate(chatID: chat?.id)
         self.navigationController?.pushViewController(badgeVC, animated: true)
     }
     

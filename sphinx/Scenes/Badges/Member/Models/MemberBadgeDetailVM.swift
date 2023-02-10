@@ -117,8 +117,8 @@ class MemberBadgeDetailVM : NSObject {
                 self.isLoading = false
                 self.configHeaderView(personInfo: personInfo)
                 if let valid_uuid = person.personUUID{
-                    //self.getBadgeAssets(id: valid_uuid)
-                    self.getBadgeAssets(id: "cd9dm5ua5fdtsj2c2mtg")//debug only
+                    self.getBadgeAssets(id: valid_uuid)
+                    //self.getBadgeAssets(id: "cd9dm5ua5fdtsj2c2mtg")//debug only
                 }
             } else {
                 //TODO: error handling? Timeout?

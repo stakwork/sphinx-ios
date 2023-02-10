@@ -20,6 +20,7 @@ class BadgeMemberKnownBadgesVM : NSObject {
     init(vc: BadgeMemberKnownBadgesVC, tableView: UITableView,chatID:Int?) {
         self.vc = vc
         self.tableView = tableView
+        self.chatID = chatID
     }
     
     func configureTable(){
@@ -45,8 +46,9 @@ class BadgeMemberKnownBadgesVM : NSObject {
         knownBadges.append(badge)
         knownBadges.append(badge2)
         */
-        vc.addLoadingView()
+        
         if let valid_id = chatID{
+            vc.addLoadingView()
             API.sharedInstance.getTribeAdminBadges(
                 chatID: valid_id,
                 callback: { results in

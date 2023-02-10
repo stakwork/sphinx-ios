@@ -190,38 +190,41 @@ final class ChatListViewModel: NSObject {
     
     func getChatLeaderboards(){
         if let valid_uuid = tribeUUID{
-            API.sharedInstance.getTribeLeaderboard(
-                tribeUUID: valid_uuid,
-                callback: { results in
-                    if var chatLeaderboardEntries = Mapper<ChatLeaderboardEntry>().mapArray(JSONObject: Array(results)){
-                        chatLeaderboardEntries.sort(by: {$0.earned ?? 0 > $1.earned ?? 0})
-                        chatLeaderboardEntries.map({
-                            let alias = $0.alias
-                            if let match = chatLeaderboardEntries.firstIndex(where: {$0.alias == alias}){
-                                $0.earnedRank = match + 1
-                            }
-                            else{
-                                $0.earnedRank = -1
-                            }
-                        })
+            DispatchQueue.main.async {
+                API.sharedInstance.getTribeLeaderboard(
+                    tribeUUID: valid_uuid,
+                    callback: { results in
+                        if var chatLeaderboardEntries = Mapper<ChatLeaderboardEntry>().mapArray(JSONObject: Array(results)){
+                            chatLeaderboardEntries.sort(by: {$0.earned ?? 0 > $1.earned ?? 0})
+                            chatLeaderboardEntries.map({
+                                let alias = $0.alias
+                                if let match = chatLeaderboardEntries.firstIndex(where: {$0.alias == alias}){
+                                    $0.earnedRank = match + 1
+                                }
+                                else{
+                                    $0.earnedRank = -1
+                                }
+                            })
+                            
+                            chatLeaderboardEntries.sort(by: {$0.spent ?? 0 > $1.spent ?? 0})
+                            chatLeaderboardEntries.map({
+                                let alias = $0.alias
+                                if let match = chatLeaderboardEntries.firstIndex(where: {$0.alias == alias}){
+                                    $0.spentRank = match + 1
+                                }
+                                else{
+                                    $0.spentRank = -1
+                                }
+                            })
+                            
+                            self.chatLeaderboard = chatLeaderboardEntries
+                        }
+                    },
+                    errorCallback: {
                         
-                        chatLeaderboardEntries.sort(by: {$0.spent ?? 0 > $1.spent ?? 0})
-                        chatLeaderboardEntries.map({
-                            let alias = $0.alias
-                            if let match = chatLeaderboardEntries.firstIndex(where: {$0.alias == alias}){
-                                $0.spentRank = match + 1
-                            }
-                            else{
-                                $0.spentRank = -1
-                            }
-                        })
-                        
-                        self.chatLeaderboard = chatLeaderboardEntries
-                    }
-                },
-                errorCallback: {
-                    
-                })
+                    })
+            }
+            
         }
     }
     

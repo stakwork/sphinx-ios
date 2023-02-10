@@ -573,7 +573,7 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="List of Known Badges" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XEg-kV-wEh">
                                         <rect key="frame" x="58" y="17.666666666666671" width="167" height="20"/>
                                         <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="17"/>
-                                        <color key="textColor" name="Text"/>
+                                        <color key="textColor" name="BodyInverted"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Duo-Hf-Gov" customClass="UIActivityIndicatorView">

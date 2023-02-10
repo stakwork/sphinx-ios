@@ -90,19 +90,18 @@ extension API {
         }
     }
     
-    func getAssets(
+    func getAssetsByID(
         assetIDs:[Int],
-        callback: @escaping BalanceCallback,
+        callback: @escaping GetBadgeCallback,
         errorCallback: @escaping EmptyCallback
     ){
         let params = [
             "ids":assetIDs
         ]
-        guard let request = getURLRequest(
-                route: "/asset/filter",
-                params: params as? NSDictionary,
-                method: "POST"
-        ) else {
+        
+        let baseURL = "https://liquid.sphinx.chat"
+        let url = baseURL + "/asset/filter"
+        guard let request = createRequest(url, bodyParams: params as? NSDictionary, method: "POST") else {
             errorCallback()
             return
         }
@@ -110,15 +109,16 @@ extension API {
         sphinxRequest(request) { response in
             switch response.result {
             case .success(let data):
-                if let json = data as? NSDictionary {
-                    if let success = json["success"] as? Bool, let response = json["response"], success {
-                        let data = JSON(response).dictionaryValue
-                            print(data)
-                            return
+                if let results = data as? NSArray {
+                    print(results)
+                    if let mappedResults = Mapper<Badge>().mapArray(JSONObject: Array(results)){
+                        callback(mappedResults)
                     }
                 }
+                print(response.response?.statusCode)
                 errorCallback()
             case .failure(_):
+                print(response.response?.statusCode)
                 errorCallback()
             }
         }

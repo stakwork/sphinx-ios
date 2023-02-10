@@ -31,6 +31,7 @@ extension GroupsManager {
         var feedContentType : FeedContentType? = nil
         var ownerRouteHint : String? = nil
         var bots : [Bot] = []
+        var badgeIds: [Int] = []
         
         var hasLoopoutBot : Bool {
             get {

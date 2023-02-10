@@ -13,6 +13,7 @@ final class ChatListViewModel: NSObject {
     
     var contactsService: ContactsService!
     var chatLeaderboard : [ChatLeaderboardEntry] = [ChatLeaderboardEntry]()
+    var availableBadges : [Badge] = [Badge]()
     var tribeUUID : String? = nil
     
     public static let kMessagesPerPage: Int = 200
@@ -184,6 +185,7 @@ final class ChatListViewModel: NSObject {
         syncMessagesTask?.perform()
         
         getChatLeaderboards()
+        
     }
     
     func getChatLeaderboards(){
@@ -193,29 +195,6 @@ final class ChatListViewModel: NSObject {
                     tribeUUID: valid_uuid,
                     callback: { results in
                         if var chatLeaderboardEntries = Mapper<ChatLeaderboardEntry>().mapArray(JSONObject: Array(results)){
-                            /*
-                            chatLeaderboardEntries.sort(by: {$0.earned ?? 0 > $1.earned ?? 0})
-                            chatLeaderboardEntries.map({
-                                let alias = $0.alias
-                                if let match = chatLeaderboardEntries.firstIndex(where: {$0.alias == alias}){
-                                    $0.earnedRank = match + 1
-                                }
-                                else{
-                                    $0.earnedRank = -1
-                                }
-                            })
-                            
-                            chatLeaderboardEntries.sort(by: {$0.spent ?? 0 > $1.spent ?? 0})
-                            chatLeaderboardEntries.map({
-                                let alias = $0.alias
-                                if let match = chatLeaderboardEntries.firstIndex(where: {$0.alias == alias}){
-                                    $0.spentRank = match + 1
-                                }
-                                else{
-                                    $0.spentRank = -1
-                                }
-                            })
-                            */
                             
                             self.chatLeaderboard = chatLeaderboardEntries
                         }
@@ -225,6 +204,19 @@ final class ChatListViewModel: NSObject {
                     })
             }
             
+        }
+    }
+    
+    func getChatBadges(chat:Chat?){
+        if let valid_chat = chat,
+           let valid_tribe = valid_chat.tribeInfo{
+            API.sharedInstance.getAssetsByID(
+                assetIDs: valid_tribe.badgeIds,
+                callback: { results in
+                    self.availableBadges = results
+            }, errorCallback: {
+                
+            })
         }
     }
     

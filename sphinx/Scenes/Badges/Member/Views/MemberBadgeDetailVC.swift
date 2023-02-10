@@ -95,11 +95,6 @@ class MemberBadgeDetailVC : UIViewController{
         self.view.sendSubviewToBack(backView)
     }
     
-    func displayKnownBadges(){
-        let badgeVC = BadgeMemberKnownBadgesVC.instantiate(chatID: chatID)
-        self.navigationController?.pushViewController(badgeVC, animated: true)
-    }
-    
     func addShimmerLoadingView(){
         let loadingViewFrame = detailView.frame
         

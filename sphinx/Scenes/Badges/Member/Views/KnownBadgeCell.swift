@@ -27,8 +27,9 @@ class KnownBadgeCell: UITableViewCell {
     }
     
     func configureCell(badge:Badge){
+        let defaultImage = #imageLiteral(resourceName: "appPinIcon")
         knownBadgeImageView.makeCircular()
-        knownBadgeImageView.sd_setImage(with: URL(string: badge.icon_url ?? ""))
+        knownBadgeImageView.sd_setImage(with: URL(string: badge.icon_url ?? ""),placeholderImage: defaultImage)
         knownBadgeNameLabel.text = badge.name
         knownBadgeDescriptionLabel.text = badge.memo
     }

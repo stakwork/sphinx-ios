@@ -14,6 +14,7 @@ class BadgeMemberKnownBadgesVC : UIViewController{
     @IBOutlet weak var tableView: UITableView!
     
     var chatID: Int? = nil
+    var badges : [Badge] = []
     private lazy var loadingViewController = LoadingViewController()
     
     lazy var badgeMemberKnownBadgesVM : BadgeMemberKnownBadgesVM = {
@@ -30,6 +31,7 @@ class BadgeMemberKnownBadgesVC : UIViewController{
     }
     
     override func viewDidLoad() {
+        badgeMemberKnownBadgesVM.knownBadges = badges
         badgeMemberKnownBadgesVM.configureTable()
     }
     

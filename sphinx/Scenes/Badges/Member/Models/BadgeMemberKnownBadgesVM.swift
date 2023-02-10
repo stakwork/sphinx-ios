@@ -23,12 +23,16 @@ class BadgeMemberKnownBadgesVM : NSObject {
         self.chatID = chatID
     }
     
+    func setBadges(badges:[Badge]){
+        self.knownBadges = badges
+    }
+    
     func configureTable(){
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: "KnownBadgeCell", bundle: nil), forCellReuseIdentifier: KnownBadgeCell.reuseID)
         
-        fetchKnownBadges()
+        //fetchKnownBadges()
         
         tableView.reloadData()
     }

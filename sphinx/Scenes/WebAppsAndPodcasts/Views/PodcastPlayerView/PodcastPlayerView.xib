@@ -35,6 +35,7 @@
                 <outlet property="playPauseButton" destination="hny-dv-u2n" id="DCS-45-iYO"/>
                 <outlet property="progressLine" destination="Jf7-jW-t9r" id="Zxa-RY-cwM"/>
                 <outlet property="progressLineWidth" destination="ZVG-Fi-rtQ" id="jmn-59-9Hg"/>
+                <outlet property="satsPerMinuteView" destination="0uE-RU-E2n" id="tug-PR-kWl"/>
                 <outlet property="shareClipButton" destination="Tb8-08-zgd" id="Lhp-y0-uuN"/>
                 <outlet property="speedButton" destination="VV8-QB-b2B" id="OVT-TI-kJw"/>
                 <outlet property="subscriptionToggleButton" destination="9rE-5F-wP7" id="dNu-6f-kCd"/>
@@ -229,7 +230,7 @@
                             </connections>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="backgroundColor" name="HeaderSemiTransparentBG"/>
                     <constraints>
                         <constraint firstItem="VV8-QB-b2B" firstAttribute="centerX" secondItem="hny-dv-u2n" secondAttribute="centerX" id="24D-gD-hru"/>
                         <constraint firstItem="iDW-iO-P0o" firstAttribute="leading" secondItem="hlq-Ib-TyG" secondAttribute="leading" id="3wg-tp-VXP"/>
@@ -271,6 +272,13 @@
                         <constraint firstItem="hlq-Ib-TyG" firstAttribute="leading" secondItem="yFL-Ym-JIV" secondAttribute="leading" constant="32" id="zQM-Mz-qBJ"/>
                     </constraints>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0uE-RU-E2n" customClass="PodcastSatsView" customModule="sphinx" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="354" width="414" height="60"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="displayP3"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="60" id="kmk-DI-qjB"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" name="HeaderBG"/>
             <constraints>
@@ -278,13 +286,16 @@
                 <constraint firstAttribute="trailing" secondItem="yFL-Ym-JIV" secondAttribute="trailing" id="8v3-Y7-p4L"/>
                 <constraint firstItem="Bkm-ne-hyH" firstAttribute="top" secondItem="DK5-KL-hVN" secondAttribute="top" id="Bks-IE-cB2"/>
                 <constraint firstAttribute="trailing" secondItem="9rE-5F-wP7" secondAttribute="trailing" constant="20" id="Caz-xs-ZrQ"/>
+                <constraint firstItem="0uE-RU-E2n" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="E3E-nG-WCH"/>
                 <constraint firstItem="9rE-5F-wP7" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="22" id="JPc-oQ-yMH"/>
                 <constraint firstAttribute="trailing" secondItem="DK5-KL-hVN" secondAttribute="trailing" id="JWg-FU-hZF"/>
                 <constraint firstAttribute="bottom" secondItem="yFL-Ym-JIV" secondAttribute="bottom" id="R9j-2d-yZW"/>
                 <constraint firstItem="DK5-KL-hVN" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="XLc-B4-Eus"/>
                 <constraint firstItem="P08-M5-arT" firstAttribute="top" secondItem="DK5-KL-hVN" secondAttribute="top" id="Z0h-kf-Gsg"/>
+                <constraint firstAttribute="trailing" secondItem="0uE-RU-E2n" secondAttribute="trailing" id="ZAF-bo-0b3"/>
                 <constraint firstItem="Bkm-ne-hyH" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="aH4-dp-Qar"/>
                 <constraint firstItem="P08-M5-arT" firstAttribute="trailing" secondItem="DK5-KL-hVN" secondAttribute="trailing" id="jFW-wA-m9P"/>
+                <constraint firstItem="0uE-RU-E2n" firstAttribute="bottom" secondItem="DK5-KL-hVN" secondAttribute="bottom" id="qnu-tJ-DLy"/>
                 <constraint firstItem="P08-M5-arT" firstAttribute="bottom" secondItem="DK5-KL-hVN" secondAttribute="bottom" id="se2-JK-1TA"/>
                 <constraint firstAttribute="trailing" secondItem="Bkm-ne-hyH" secondAttribute="trailing" id="u5z-oJ-eM4"/>
                 <constraint firstItem="yFL-Ym-JIV" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="vVN-5L-IdK"/>
@@ -301,6 +312,9 @@
         <image name="imageFullScreenShadow" width="414" height="105"/>
         <namedColor name="HeaderBG">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="HeaderSemiTransparentBG">
+            <color red="1" green="1" blue="1" alpha="0.64999997615814209" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="MainBottomIcons">
             <color red="0.37254901960784315" green="0.38823529411764707" blue="0.40784313725490196" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

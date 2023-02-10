@@ -9,6 +9,17 @@
 import Foundation
 import CoreData
 
+extension NewsletterFeed {
+    public static func getAll() -> [ContentFeed] {
+        let feeds: [ContentFeed] = CoreDataManager.sharedManager.getObjectsOfTypeWith(
+            predicate: Predicates.newsletterFeeds,
+            sortDescriptors: [NSSortDescriptor(key: "feedID", ascending: true)],
+            entityName: "ContentFeed"
+        )
+        return feeds
+    }
+}
+
 
 // MARK: - Predicates
 extension NewsletterFeed {

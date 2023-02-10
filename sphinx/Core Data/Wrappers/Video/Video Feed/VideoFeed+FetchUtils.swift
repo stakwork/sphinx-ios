@@ -8,6 +8,17 @@
 import Foundation
 import CoreData
 
+extension VideoFeed {
+    public static func getAll() -> [ContentFeed] {
+        let feeds: [ContentFeed] = CoreDataManager.sharedManager.getObjectsOfTypeWith(
+            predicate: Predicates.videoFeeds,
+            sortDescriptors: [NSSortDescriptor(key: "feedID", ascending: true)],
+            entityName: "ContentFeed"
+        )
+        return feeds
+    }
+}
+
 
 // MARK: - Predicates
 extension VideoFeed {

@@ -16,6 +16,9 @@
         <array key="Roboto-Bold.ttf">
             <string>Roboto-Bold</string>
         </array>
+        <array key="Roboto-Medium.ttf">
+            <string>Roboto-Medium</string>
+        </array>
         <array key="Roboto-Regular.ttf">
             <string>Roboto-Regular</string>
         </array>
@@ -76,12 +79,12 @@
                                         <constraints>
                                             <constraint firstAttribute="width" constant="120" id="RW8-ug-zCL"/>
                                         </constraints>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Add Tribe">
-                                            <fontDescription key="titleFontDescription" name="Roboto-Medium" family="Roboto" pointSize="13"/>
-                                            <directionalEdgeInsets key="contentInsets" top="0.0" leading="20" bottom="0.0" trailing="0.0"/>
-                                            <color key="baseForegroundColor" name="Text"/>
-                                        </buttonConfiguration>
+                                        <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="13"/>
+                                        <inset key="titleEdgeInsets" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="Add Tribe">
+                                            <color key="titleColor" name="Text"/>
+                                        </state>
                                         <connections>
                                             <action selector="didTapAddTribeButton" destination="28a-MN-hzt" eventType="touchUpInside" id="34M-22-WBt"/>
                                         </connections>

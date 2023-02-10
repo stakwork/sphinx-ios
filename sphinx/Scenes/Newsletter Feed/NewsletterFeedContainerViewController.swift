@@ -53,7 +53,7 @@ extension NewsletterFeedContainerViewController {
         loadFeed()
         configureCollectionView()
         
-        updateItems()
+        updateFeed()
     }
 }
 
@@ -138,11 +138,11 @@ extension NewsletterFeedContainerViewController {
     }
     
     
-    private func updateItems() {
-        if let objectId = self.newsletterFeed?.objectID,
+    private func updateFeed() {
+        if let objectID = self.newsletterFeed?.objectID,
            let feedUrl = self.newsletterFeed?.feedURL?.absoluteString {
             
-            ContentFeed.fetchFeedItemsInBackground(feedUrl: feedUrl, contentFeedObjectID: objectId, completion: {})
+            FeedsManager.sharedInstance.fetchItemsFor(feedUrl: feedUrl, objectID: objectID)
         }
     }
 }

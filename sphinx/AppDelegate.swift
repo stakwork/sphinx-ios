@@ -31,7 +31,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     let newMessageBubbleHelper = NewMessageBubbleHelper()
     
-    let feedsManager = FeedsManager()
+    let actionsManager = ActionsManager.sharedInstance
+    let feedsManager = FeedsManager.sharedInstance
     
     let podcastPlayerController = PodcastPlayerController.sharedInstance
     
@@ -180,7 +181,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setBadge(application: application)
         
         podcastPlayerController.finishAndSaveContentConsumed()
-        ActionsManager.sharedInstance.syncActionsInBackground()
+        
+        actionsManager.syncActionsInBackground()
+        feedsManager.saveContentFeedStatus()
+        
         CoreDataManager.sharedManager.saveContext()
         
         scheduleAppRefresh()
@@ -194,9 +198,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if !UserData.sharedInstance.isUserLogged() {
             return
         }
+        
         reloadMessagesData()
         presentPINIfNeeded()
         
+        feedsManager.restoreContentFeedStatusInBackground()
         podcastPlayerController.finishAndSaveContentConsumed()
     }
 
@@ -205,6 +211,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             style = UITraitCollection.current.userInterfaceStyle
         }
     }
+    
 
     func reloadAppIfStyleChanged() {
         if #available(iOS 13.0, *) {
@@ -223,16 +230,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(
         _ application: UIApplication
     ) {
-        SphinxSocketManager.sharedInstance.connectWebsocket(forceConnect: true)
         reloadAppIfStyleChanged()
+        
+        if !UserData.sharedInstance.isUserLogged() {
+            return
+        }
+        
+        SphinxSocketManager.sharedInstance.connectWebsocket(forceConnect: true)
 
         if let notification = notificationUserInfo {
             handlePush(notification: notification)
             setInitialVC(launchingApp: false)
-        }
-        
-        if UserData.sharedInstance.isUserLogged() {
-            runFeedsPreloadInBackground()
         }
     }
 
@@ -269,17 +277,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if isUserLogged {
             syncDeviceId()
             getRelayKeys()
-            ActionsManager.sharedInstance.syncActionsInBackground()
+            feedsManager.restoreContentFeedStatusInBackground()
         }
 
         takeUserToInitialVC(isUserLogged: isUserLogged)
         presentPINIfNeeded()
-    }
-    
-    func runFeedsPreloadInBackground() {
-        DispatchQueue.global().async {
-            self.feedsManager.preCacheTopPods()
-        }
     }
 
     func presentPINIfNeeded() {

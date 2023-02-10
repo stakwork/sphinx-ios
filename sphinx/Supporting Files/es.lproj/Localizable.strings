@@ -194,8 +194,10 @@
 "restore.form.paste.keys.placeholder" = "Pegá tus claves...";
 "submit" = "Enviar";
 "restore.invalid-code.relay-qr-code" = "Parece que estas utilizando un código de conexión de Sphinx Relay. Para restaurar una cuenta existente, debes ingresar un código de restauración.";
-"resume-restoring" = "Continuar Restauración...";
+"resume-restoring" = "Resumiendo Restauración...";
 "restoring-progress" = "Restaurando:";
+"restoring-content" = "Restaurando contenido:";
+"restoring-messages" = "Restaurando mensajes:";
 
 //SIGNUP NEW USER
 "signup.signup-options.connection-code-button" = "Tengo un código de conexión";
@@ -497,7 +499,7 @@
 "price.per.minute" = "Precio por minuto: %d sats";
 "contributed.sats" = "Contribuídos: %d sats";
 "earned.sats" = "Recibidos: %d sats";
-"sats.per.minute" = "Podcast: sats por minuto";
+"sats.per.minute" = "Sats por minuto";
 "suggested.out.range" = "Monto sugerido (%d sats) por encima del máximo";
 "delete.episode.title" = "Borrar Episodio";
 "delete.episode.message" = "¿Borrar Episodio de la memoria del dispositivo?";

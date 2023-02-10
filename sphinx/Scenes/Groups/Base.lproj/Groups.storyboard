@@ -636,10 +636,8 @@
                         <color key="backgroundColor" name="Body"/>
                         <constraints>
                             <constraint firstItem="FNt-uu-L7g" firstAttribute="trailing" secondItem="IG5-LU-glL" secondAttribute="trailing" id="3EG-rp-rqC"/>
-                            <constraint firstItem="fS6-iJ-Zbb" firstAttribute="leading" secondItem="IG5-LU-glL" secondAttribute="leading" id="562-Pf-xUm"/>
                             <constraint firstItem="l4Y-Ty-ao5" firstAttribute="leading" secondItem="IG5-LU-glL" secondAttribute="leading" id="7VV-Xc-Q3F"/>
                             <constraint firstItem="whN-O7-b3P" firstAttribute="trailing" secondItem="IG5-LU-glL" secondAttribute="trailing" id="8JK-7V-czh"/>
-                            <constraint firstItem="fS6-iJ-Zbb" firstAttribute="trailing" secondItem="IG5-LU-glL" secondAttribute="trailing" id="C9x-Fw-9cB"/>
                             <constraint firstItem="3PJ-qo-JXp" firstAttribute="trailing" secondItem="IG5-LU-glL" secondAttribute="trailing" id="FTy-ca-LOc"/>
                             <constraint firstAttribute="bottom" secondItem="whN-O7-b3P" secondAttribute="bottom" id="I5b-0Y-hRq"/>
                             <constraint firstItem="FNt-uu-L7g" firstAttribute="leading" secondItem="IG5-LU-glL" secondAttribute="leading" id="MjI-C0-aSP"/>
@@ -647,7 +645,8 @@
                             <constraint firstItem="6AY-vH-qQi" firstAttribute="leading" secondItem="IG5-LU-glL" secondAttribute="leading" id="OEl-yG-t1G"/>
                             <constraint firstItem="whN-O7-b3P" firstAttribute="top" secondItem="Ac4-o6-mAn" secondAttribute="bottom" id="T0Y-DA-r2l"/>
                             <constraint firstItem="l4Y-Ty-ao5" firstAttribute="top" secondItem="6AY-vH-qQi" secondAttribute="bottom" id="TUg-4d-IaD"/>
-                            <constraint firstItem="6AY-vH-qQi" firstAttribute="top" secondItem="fS6-iJ-Zbb" secondAttribute="bottom" id="aE9-AP-AdF"/>
+                            <constraint firstItem="6AY-vH-qQi" firstAttribute="top" secondItem="3PJ-qo-JXp" secondAttribute="bottom" id="Wgn-v1-mdY"/>
+                            <constraint firstItem="whN-O7-b3P" firstAttribute="top" secondItem="l4Y-Ty-ao5" secondAttribute="bottom" id="cK6-fv-Opi"/>
                             <constraint firstItem="whN-O7-b3P" firstAttribute="leading" secondItem="IG5-LU-glL" secondAttribute="leading" id="fb0-Cb-MCM"/>
                             <constraint firstItem="IG5-LU-glL" firstAttribute="trailing" secondItem="6AY-vH-qQi" secondAttribute="trailing" id="fmv-Sv-uDS"/>
                             <constraint firstItem="3PJ-qo-JXp" firstAttribute="top" secondItem="FNt-uu-L7g" secondAttribute="bottom" constant="5" id="o7g-vH-JNU"/>
@@ -674,8 +673,6 @@
                         <outlet property="keyboardAccessoryView" destination="7O8-aE-SRL" id="zDD-ks-Xpy"/>
                         <outlet property="loadingWheel" destination="Vrn-c8-bPI" id="laR-Qp-kIL"/>
                         <outlet property="membersTableView" destination="whN-O7-b3P" id="BAK-Yy-Uwm"/>
-                        <outlet property="podcastSatsView" destination="fS6-iJ-Zbb" id="ly9-ey-U9j"/>
-                        <outlet property="podcastSatsViewHeight" destination="YIB-yt-b1k" id="Cfn-PF-0Ia"/>
                         <outlet property="tribeMemberInfoContainer" destination="6AY-vH-qQi" id="pgy-YM-Iw7"/>
                         <outlet property="tribeMemberInfoContainerHeight" destination="evN-t3-rMm" id="fEE-Io-4A2"/>
                         <outlet property="tribeMemberInfoView" destination="sYn-X1-1Q2" id="Jjm-Iv-xZG"/>
@@ -1710,7 +1707,7 @@
                                 <rect key="frame" x="0.0" y="103" width="414" height="793"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading Group info..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c99-Vi-65m">
-                                        <rect key="frame" x="146" y="346" width="122" height="15.5"/>
+                                        <rect key="frame" x="146" y="348" width="122" height="15.5"/>
                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="13"/>
                                         <color key="textColor" name="SecondaryText"/>
                                         <nil key="highlightedColor"/>

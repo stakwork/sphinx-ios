@@ -138,6 +138,13 @@ class ChatDataSource : NSObject {
             let message = messagesArray[x]
             
             if message.isUnknownType() || message.isMessageReaction() {
+                addLoadingMoreAndFirstDateRows(x: x, limit: limit, date: message.date)
+                
+                let previousMessage = x - 1 >= limit ? messagesArray[x - 1] : nil
+                
+                if TransactionMessage.isDifferentDayMessage(lastMessage: message, newMessage: previousMessage) {
+                    messageRowsArray.insert(getDayHeaderRow(date: message.date), at: 0)
+                }
                 continue
             }
             
@@ -201,6 +208,19 @@ class ChatDataSource : NSObject {
                     dayHeaderRow.headerDate = message.date
                     messageRowsArray.insert(dayHeaderRow, at: 0)
                 }
+            }
+        }
+    }
+    
+    func addLoadingMoreAndFirstDateRows(x: Int, limit: Int, date: Date?) {
+        if x == limit {
+            if chatMessagesCount > messagesArray.count {
+                let loadingMoreRow = TransactionMessageRow()
+                messageRowsArray.insert(loadingMoreRow, at: 0)
+            } else {
+                let dayHeaderRow = TransactionMessageRow()
+                dayHeaderRow.headerDate = date
+                messageRowsArray.insert(dayHeaderRow, at: 0)
             }
         }
     }

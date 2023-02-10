@@ -146,6 +146,8 @@ extension DashboardVideoFeedCollectionViewController {
         configure(collectionView)
         configureDataSource(for: collectionView)
         addTableBottomInset(for: collectionView)
+        
+        fetchItems()
     }
     
     func addTableBottomInset(for collectionView: UICollectionView) {
@@ -154,20 +156,6 @@ extension DashboardVideoFeedCollectionViewController {
         
         collectionView.contentInset.bottom = bottomBarHeight + windowInsets.bottom
         collectionView.verticalScrollIndicatorInsets.bottom = bottomBarHeight + windowInsets.bottom
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        NotificationCenter.default.addObserver(self, selector: #selector(refreshVideos), name: .refreshVideoUI, object: nil)
-        fetchItems()
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        NotificationCenter.default.removeObserver(self, name: .refreshVideoUI, object: nil)
-    }
-    
-    @objc func refreshVideos(){
-        fetchItems()
     }
 }
 
@@ -459,21 +447,6 @@ extension DashboardVideoFeedCollectionViewController {
     ) {
         self.videoFeeds = videoFeeds
         videoEpisodes = videoFeeds.compactMap(\.videosArray.first)
-
-        if let dataSource = dataSource {
-            dataSource.apply(
-                makeSnapshotForCurrentState(),
-                animatingDifferences: shouldAnimate
-            )
-        }
-    }
-    
-    
-    func updateWithNew(
-        videoEpisodes: [Video],
-        shouldAnimate: Bool = true
-    ) {
-        self.videoEpisodes = videoEpisodes
 
         if let dataSource = dataSource {
             dataSource.apply(

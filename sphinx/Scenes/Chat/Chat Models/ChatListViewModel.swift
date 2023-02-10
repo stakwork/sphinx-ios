@@ -158,9 +158,7 @@ final class ChatListViewModel: NSObject {
             
             let restoring = self.isRestoring()
             
-            if (restoring) {
-                self.askForNotificationPermissions()
-            } else {
+            if !restoring {
                 UserDefaults.Keys.messagesFetchPage.removeValue()
             }
             

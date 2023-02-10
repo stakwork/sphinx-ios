@@ -122,6 +122,7 @@ class DashboardRootViewController: RootViewController {
     }
     
     var didFinishInitialLoading = false
+    let feedsManager = FeedsManager.sharedInstance
     
     var shouldShowHeaderLoadingWheel = false {
         didSet {
@@ -223,7 +224,6 @@ extension DashboardRootViewController {
         isLoading = true
         
         activeTab = .friends
-        
     }
     
     func setupAddTribeButton(){
@@ -480,27 +480,73 @@ extension DashboardRootViewController {
             guard let self = self else { return }
             
             if restoring {
+                self.chatsListViewModel.askForNotificationPermissions()
+                
                 self.chatsListViewModel.updateContactsAndChats()
                 self.updateCurrentViewControllerData()
             }
-
-            self.chatsListViewModel.syncMessages(
-                progressCallback: { progress in
-                    if (restoring) {
-                        self.isLoading = false
-                        
-                        if (progress >= 0) {
-                            self.restoreProgressView.showRestoreProgressView(with: progress)
-                        } else {
-                            self.newBubbleHelper.showLoadingWheel(text: "fetching.old.messages".localized)
-                        }
+            
+            var contentProgressShare : Float = 0.0
+            
+            self.syncContentFeedStatus(
+                restoring: restoring,
+                progressCallback:  { contentProgress in
+                    contentProgressShare = 0.1
+                    
+                    if (contentProgress >= 0 && restoring) {
+                        self.restoreProgressView.showRestoreProgressView(
+                            with: Int(contentProgressShare * Float(contentProgress)),
+                            messagesStartProgress: Int(contentProgressShare * Float(100))
+                        )
                     }
                 },
-                completion: { (_,_) in
-                    self.finishLoading()
+                completionCallback: {
+                    self.chatsListViewModel.syncMessages(
+                        progressCallback: { progress in
+                            if (restoring) {
+                                self.isLoading = false
+                                let messagesProgress : Int = Int(Float(progress) * (1.0 - contentProgressShare))
+                                
+                                if (progress >= 0) {
+                                    self.restoreProgressView.showRestoreProgressView(
+                                        with: messagesProgress + Int(contentProgressShare * 100),
+                                        messagesStartProgress: Int(contentProgressShare * Float(100))
+                                    )
+                                } else {
+                                    self.newBubbleHelper.showLoadingWheel(text: "fetching.old.messages".localized)
+                                }
+                                
+                            }
+                        },
+                        completion: { (_,_) in
+                            self.finishLoading()
+                        }
+                    )
                 }
             )
         }
+    }
+    
+    internal func syncContentFeedStatus(
+        restoring: Bool,
+        progressCallback: @escaping (Int) -> (),
+        completionCallback: @escaping () -> ()
+    ) {
+        if !restoring {
+            completionCallback()
+            return
+        }
+        
+        CoreDataManager.sharedManager.saveContext()
+        
+        feedsManager.restoreContentFeedStatus(
+            progressCallback: { contentProgress in
+                progressCallback(contentProgress)
+            },
+            completionCallback: {
+                completionCallback()
+            }
+        )
     }
     
     
@@ -548,6 +594,7 @@ extension DashboardRootViewController {
         shouldShowHeaderLoadingWheel = false
         
         updateNewMessageBadges()
+        
     }
     
     

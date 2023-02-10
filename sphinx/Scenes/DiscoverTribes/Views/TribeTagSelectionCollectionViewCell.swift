@@ -39,11 +39,13 @@ class TribeTagSelectionCollectionViewCell: UICollectionViewCell {
         layer.borderColor = selected ? UIColor.clear.cgColor : UIColor.Sphinx.PlaceholderText.cgColor
         layer.borderWidth = selected ? 0.0 : 1.0
         
-        tagLabel.preferredMaxLayoutWidth = 100
-        tagLabel.numberOfLines = 0
+        tagLabel.textAlignment = .center
+        tagLabel.numberOfLines = 1
+        tagLabel.adjustsFontSizeToFitWidth = true
         tagLabel.font = UIFont(name: "Roboto", size: 14.0)
         tagLabel.text = tag
         tagLabel.textColor = selected ? UIColor.Sphinx.Body : UIColor.Sphinx.BodyInverted
+        tagLabel.sizeToFit()
         
         layer.cornerRadius = 24.0
     }

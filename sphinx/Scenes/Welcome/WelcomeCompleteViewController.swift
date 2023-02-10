@@ -45,8 +45,7 @@ class WelcomeCompleteViewController: UIViewController {
         SignupHelper.completeSignup()
         UserDefaults.Keys.lastPinDate.set(Date())
         
-        let mainCoordinator = MainCoordinator(rootViewController: self.rootViewController)
-
+        let mainCoordinator = MainCoordinator(rootViewController: rootViewController)
         mainCoordinator.presentInitialDrawer()
     }
 }

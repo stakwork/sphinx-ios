@@ -52,23 +52,25 @@ class NewPodcastPlayerViewController: UIViewController {
         downloadService.setDelegate(delegate: self)
         
         showPodcastInfo()
+        updateFeed()
         
         NotificationCenter.default.addObserver(forName: .onConnectionStatusChanged, object: nil, queue: OperationQueue.main) { (n: Notification) in
             self.tableView.reloadData()
         }
+        
+        NotificationCenter.default.removeObserver(self, name: .refreshFeedUI, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(showPodcastInfo), name: .refreshFeedUI, object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         NotificationCenter.default.removeObserver(self, name: .onConnectionStatusChanged, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .refreshFeedUI, object: nil)
         
         if isBeingDismissed {
             delegate?.willDismissPlayer()
-            
-            var dataDict: [String: String] = [String: String]()
-            dataDict["episode-id"] = (podcast.getCurrentEpisode()?.itemID ?? "") as String
-            NotificationCenter.default.post(name: .refreshEpisode, object: nil, userInfo: dataDict)
+            NotificationCenter.default.post(name: .refreshFeedUI, object: nil)
         }
     }
     
@@ -97,18 +99,7 @@ class NewPodcastPlayerViewController: UIViewController {
         return viewController
     }
     
-    func preparePlayer() {
-        tableView.reloadData()
-        updateEpisodes()
-    }
-    
-    
-    func showPodcastInfo() {
-        showEpisodesTable()
-        preparePlayer()
-    }
-    
-    func showEpisodesTable() {
+    @objc func showPodcastInfo() {
         tableHeaderView = PodcastPlayerView(
             podcast: podcast,
             delegate: self,
@@ -127,9 +118,11 @@ class NewPodcastPlayerViewController: UIViewController {
         podcastPlayerController.addDelegate(tableHeaderView!, withKey: PodcastDelegateKeys.PodcastPlayerView.rawValue)
     }
     
-    private func updateEpisodes() {
+    private func updateFeed() {
         if let feedUrl = podcast.feedURLPath, let objectID = podcast.objectID {
-            ContentFeed.fetchFeedItemsInBackground(feedUrl: feedUrl, contentFeedObjectID: objectID, completion: {})
+            
+            let feedsManager = FeedsManager.sharedInstance
+            feedsManager.fetchItemsFor(feedUrl: feedUrl, objectID: objectID)
         }
     }
 }
@@ -200,7 +193,9 @@ extension NewPodcastPlayerViewController : PodcastPlayerViewDelegate {
     }
     
     func shouldSyncPodcast() {
-        chat?.updateMetaData()
+        if let podcast = podcast {
+            FeedsManager.sharedInstance.saveContentFeedStatus(for: podcast.feedID)
+        }
     }
     
     func shouldShowSpeedPicker() {
@@ -239,6 +234,8 @@ extension NewPodcastPlayerViewController : PickerViewDelegate {
             )
             
             tableHeaderView?.configureControls()
+            
+            shouldSyncPodcast()
         }
     }
 }

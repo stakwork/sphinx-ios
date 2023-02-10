@@ -89,6 +89,15 @@ extension PodcastFeed {
         }
     }
     
+    var satsPerMinute: Int? {
+        get {
+            return (UserDefaults.standard.value(forKey: "podcast-sats-\(identifier)") as? Int)
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "podcast-sats-\(identifier)")
+        }
+    }
+    
     func getCurrentEpisode() -> PodcastEpisode? {
         if let currentEpisode = episodesArray.first(where: { $0.itemID == currentEpisodeId }) {
             return currentEpisode

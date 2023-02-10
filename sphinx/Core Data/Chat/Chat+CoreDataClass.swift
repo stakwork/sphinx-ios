@@ -88,34 +88,34 @@ public class Chat: NSManagedObject {
             let myAlias = chat["my_alias"].string
             let myPhotoUrl = chat["my_photo_url"].string
             let notify = chat["notify"].intValue
-            let metaData = chat["meta"].string
             let date = Date.getDateFromString(dateString: chat["created_at"].stringValue) ?? Date()
             
             let contactIds = chat["contact_ids"].arrayObject as? [NSNumber] ?? []
             let pendingContactIds = chat["pending_contact_ids"].arrayObject as? [NSNumber] ?? []
             
-            let chat = Chat.createObject(id: id,
-                                         name: name,
-                                         photoUrl: photoUrl,
-                                         uuid: uuid,
-                                         type: type,
-                                         status: status,
-                                         muted: muted,
-                                         seen: seen,
-                                         unlisted: unlisted,
-                                         privateTribe: privateTribe,
-                                         host: host,
-                                         groupKey: groupKey,
-                                         ownerPubkey:ownerPubkey,
-                                         pricePerMessage: pricePerMessage,
-                                         escrowAmount: escrowAmount,
-                                         myAlias: myAlias,
-                                         myPhotoUrl: myPhotoUrl,
-                                         notify: notify,
-                                         contactIds: contactIds,
-                                         pendingContactIds: pendingContactIds,
-                                         date: date,
-                                         metaData: metaData)
+            let chat = Chat.createObject(
+                id: id,
+                name: name,
+                photoUrl: photoUrl,
+                uuid: uuid,
+                type: type,
+                status: status,
+                muted: muted,
+                seen: seen,
+                unlisted: unlisted,
+                privateTribe: privateTribe,
+                host: host,
+                groupKey: groupKey,
+                ownerPubkey:ownerPubkey,
+                pricePerMessage: pricePerMessage,
+                escrowAmount: escrowAmount,
+                myAlias: myAlias,
+                myPhotoUrl: myPhotoUrl,
+                notify: notify,
+                contactIds: contactIds,
+                pendingContactIds: pendingContactIds,
+                date: date
+            )
             
             return chat
         }
@@ -132,28 +132,29 @@ public class Chat: NSManagedObject {
         return id
     }
     
-    static func createObject(id: Int,
-                             name: String,
-                             photoUrl: String?,
-                             uuid: String?,
-                             type: Int,
-                             status: Int,
-                             muted: Bool,
-                             seen: Bool,
-                             unlisted: Bool,
-                             privateTribe: Bool,
-                             host: String?,
-                             groupKey: String?,
-                             ownerPubkey: String?,
-                             pricePerMessage: Int,
-                             escrowAmount: Int,
-                             myAlias: String?,
-                             myPhotoUrl: String?,
-                             notify: Int,
-                             contactIds: [NSNumber],
-                             pendingContactIds: [NSNumber],
-                             date: Date,
-                             metaData: String?) -> Chat? {
+    static func createObject(
+        id: Int,
+        name: String,
+        photoUrl: String?,
+        uuid: String?,
+        type: Int,
+        status: Int,
+        muted: Bool,
+        seen: Bool,
+        unlisted: Bool,
+        privateTribe: Bool,
+        host: String?,
+        groupKey: String?,
+        ownerPubkey: String?,
+        pricePerMessage: Int,
+        escrowAmount: Int,
+        myAlias: String?,
+        myPhotoUrl: String?,
+        notify: Int,
+        contactIds: [NSNumber],
+        pendingContactIds: [NSNumber],
+        date: Date
+    ) -> Chat? {
         
         let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
         
@@ -178,8 +179,6 @@ public class Chat: NSManagedObject {
         chat.contactIds = contactIds
         chat.pendingContactIds = pendingContactIds
         chat.subscription = chat.getContact()?.getCurrentSubscription()
-        
-        chat.setMetaData(metaData)
         
         if chat.isMyPublicGroup() {
             chat.pricePerMessage = NSDecimalNumber(integerLiteral: pricePerMessage)
@@ -277,10 +276,10 @@ public class Chat: NSManagedObject {
         return Chat.insertChat(chat: chat)
     }
     
-    static func getChatWith(id: Int) -> Chat? {
+    static func getChatWith(id: Int, managedContext: NSManagedObjectContext? = nil) -> Chat? {
         let predicate = NSPredicate(format: "id == %d", id)
         let sortDescriptors = [NSSortDescriptor(key: "id", ascending: false)]
-        let chat:Chat? = CoreDataManager.sharedManager.getObjectOfTypeWith(predicate: predicate, sortDescriptors: sortDescriptors, entityName: "Chat")
+        let chat:Chat? = CoreDataManager.sharedManager.getObjectOfTypeWith(predicate: predicate, sortDescriptors: sortDescriptors, entityName: "Chat", managedContext: managedContext)
         return chat
     }
     
@@ -489,7 +488,13 @@ public class Chat: NSManagedObject {
                     self.updateChatFromTribesInfo()
                     
                     if let feedUrl = self.tribeInfo?.feedUrl, !feedUrl.isEmpty {
-                        ContentFeed.fetchChatFeedContentInBackground(feedUrl: feedUrl, chatObjectID: self.objectID, completion: completion)
+                        ContentFeed.fetchChatFeedContentInBackground(feedUrl: feedUrl, chatObjectID: self.objectID) { feedId in
+                            if let feedId = feedId {
+                                self.contentFeed = ContentFeed.getFeedWith(feedId: feedId)
+                                self.saveChat()
+                            }
+                            completion()
+                        }
                     } else if let existingFeed = self.contentFeed {
                         ContentFeed.deleteFeedWith(feedId: existingFeed.feedID)
                     }
@@ -573,49 +578,6 @@ public class Chat: NSManagedObject {
         return (pricePerMessage?.intValue ?? 0) > 0
     }
     
-    func setMetaData(_ meta: String?) {
-        if let meta = meta, !meta.isEmpty {
-            
-            if let podcast = self.podcast, PodcastPlayerController.sharedInstance.isPlaying(
-                podcastId: podcast.feedID
-            ) {
-                return
-            }
-            
-            if let data = meta.data(using: .utf8) {
-                if let jsonObject = try? JSON(data: data) {
-                    if let currentTime = jsonObject["ts"].int {
-                        UserDefaults.standard.set(currentTime, forKey: "current-time-\(self.id)")
-                    }
-                    
-                    if let episode = jsonObject["itemID"].int {
-                        UserDefaults.standard.set(episode, forKey: "current-episode-id-\(self.id)")
-                    }
-                    
-                    if let satsPerMinute = jsonObject["sats_per_minute"].int {
-                        UserDefaults.standard.set(satsPerMinute, forKey: "podcast-sats-\(self.id)")
-                    }
-                    
-                    if let speed = jsonObject["speed"].float {
-                        UserDefaults.standard.set(speed, forKey: "player-speed-\(self.id)")
-                    }
-                    
-                    UserDefaults.standard.synchronize()
-                }
-            }
-        }
-    }
-    
-    func updateMetaData() {
-        let satsPerMinute = (UserDefaults.standard.value(forKey: "podcast-sats-\(self.id)") as? Int) ?? 0
-        let currentTime = (UserDefaults.standard.value(forKey: "current-time-\(self.id)") as? Int) ?? 0
-        let currentEpisode = (UserDefaults.standard.value(forKey: "current-episode-id-\(self.id)") as? Int) ?? -1
-        let speed = ((UserDefaults.standard.value(forKey: "player-speed-\(self.id)") as? Float) ?? 0.0).speedDescription
-        
-        let params: [String: AnyObject] = ["meta" :"{\"itemID\":\(currentEpisode),\"sats_per_minute\":\(satsPerMinute),\"ts\":\(currentTime), \"speed\":\(speed)}" as AnyObject]
-        API.sharedInstance.updateChat(chatId: id, params: params, callback: {}, errorCallback: {})
-    }
-    
     func isGroup() -> Bool {
         return type == Chat.ChatType.privateGroup.rawValue || type == Chat.ChatType.publicGroup.rawValue
     }
@@ -660,5 +622,9 @@ public class Chat: NSManagedObject {
     
     func getJoinChatLink() -> String {
         return "sphinx.chat://?action=tribe&uuid=\(self.uuid ?? "")&host=\(self.host ?? "")"
+    }
+    
+    func saveChat() {
+        CoreDataManager.sharedManager.saveContext()
     }
 }

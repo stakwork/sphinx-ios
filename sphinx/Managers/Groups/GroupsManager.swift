@@ -282,15 +282,18 @@ class GroupsManager {
         tribeInfo.feedContentType = json["feed_type"].int?.toFeedContentType ?? tribeInfo.feedContentType
         tribeInfo.ownerRouteHint = json["owner_route_hint"].string ?? tribeInfo.ownerRouteHint
         
-        let rawBadgeInput : [String] = ["liquid.sphinx.chat/254","liquid.sphinx.chat/255","liquid.sphinx.chat/xe234","liquid.sphinx.chat/258"]
-        tribeInfo.badgeIds = rawBadgeInput.compactMap({
-            if let text = $0.split(separator: "/").last{
-                let string = String(text)
-                let value = Int(string)
-                return value
-            }
-            return nil
-        })
+        if let rawBadgeInput : [String] = json["badges"].rawValue as? [String]//["liquid.sphinx.chat/254","liquid.sphinx.chat/255","liquid.sphinx.chat/xe234","liquid.sphinx.chat/258"]
+        {
+            tribeInfo.badgeIds = rawBadgeInput.compactMap({
+                if let text = $0.split(separator: "/").last{
+                    let string = String(text)
+                    let value = Int(string)
+                    return value
+                }
+                return nil
+            })
+        }
+        
         
         
         var tags = getGroupTags()

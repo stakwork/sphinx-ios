@@ -512,7 +512,7 @@
                                     <constraint firstItem="5lh-oa-EFk" firstAttribute="leading" secondItem="xcb-o3-XG9" secondAttribute="trailing" id="zq6-G4-6Qy"/>
                                 </constraints>
                             </view>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fS6-iJ-Zbb" customClass="PodcastSatsView" customModule="sphinx" customModuleProvider="target">
+                            <view hidden="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fS6-iJ-Zbb" customClass="PodcastSatsView" customModule="sphinx" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="208" width="414" height="0.0"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
@@ -628,7 +628,7 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="whN-O7-b3P">
-                                <rect key="frame" x="0.0" y="298" width="414" height="598"/>
+                                <rect key="frame" x="0.0" y="348" width="414" height="548"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
                         </subviews>
@@ -643,12 +643,11 @@
                             <constraint firstItem="FNt-uu-L7g" firstAttribute="leading" secondItem="IG5-LU-glL" secondAttribute="leading" id="MjI-C0-aSP"/>
                             <constraint firstItem="l4Y-Ty-ao5" firstAttribute="trailing" secondItem="IG5-LU-glL" secondAttribute="trailing" id="MjL-XO-NQw"/>
                             <constraint firstItem="6AY-vH-qQi" firstAttribute="leading" secondItem="IG5-LU-glL" secondAttribute="leading" id="OEl-yG-t1G"/>
-                            <constraint firstItem="whN-O7-b3P" firstAttribute="top" secondItem="Ac4-o6-mAn" secondAttribute="bottom" id="T0Y-DA-r2l"/>
                             <constraint firstItem="l4Y-Ty-ao5" firstAttribute="top" secondItem="6AY-vH-qQi" secondAttribute="bottom" id="TUg-4d-IaD"/>
                             <constraint firstItem="6AY-vH-qQi" firstAttribute="top" secondItem="3PJ-qo-JXp" secondAttribute="bottom" id="Wgn-v1-mdY"/>
-                            <constraint firstItem="whN-O7-b3P" firstAttribute="top" secondItem="l4Y-Ty-ao5" secondAttribute="bottom" id="cK6-fv-Opi"/>
                             <constraint firstItem="whN-O7-b3P" firstAttribute="leading" secondItem="IG5-LU-glL" secondAttribute="leading" id="fb0-Cb-MCM"/>
                             <constraint firstItem="IG5-LU-glL" firstAttribute="trailing" secondItem="6AY-vH-qQi" secondAttribute="trailing" id="fmv-Sv-uDS"/>
+                            <constraint firstItem="whN-O7-b3P" firstAttribute="top" secondItem="Ac4-o6-mAn" secondAttribute="bottom" constant="50" id="jLa-br-UuQ"/>
                             <constraint firstItem="3PJ-qo-JXp" firstAttribute="top" secondItem="FNt-uu-L7g" secondAttribute="bottom" constant="5" id="o7g-vH-JNU"/>
                             <constraint firstItem="FNt-uu-L7g" firstAttribute="top" secondItem="IG5-LU-glL" secondAttribute="top" id="oLZ-Rc-qQY"/>
                             <constraint firstItem="3PJ-qo-JXp" firstAttribute="leading" secondItem="IG5-LU-glL" secondAttribute="leading" id="tYh-rI-by7"/>
@@ -1707,7 +1706,7 @@
                                 <rect key="frame" x="0.0" y="103" width="414" height="793"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading Group info..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c99-Vi-65m">
-                                        <rect key="frame" x="146" y="348" width="122" height="15.5"/>
+                                        <rect key="frame" x="146" y="346" width="122" height="15.5"/>
                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="13"/>
                                         <color key="textColor" name="SecondaryText"/>
                                         <nil key="highlightedColor"/>

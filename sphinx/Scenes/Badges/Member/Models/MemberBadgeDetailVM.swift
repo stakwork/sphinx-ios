@@ -151,6 +151,8 @@ extension MemberBadgeDetailVM : UITableViewDelegate,UITableViewDataSource{
         if(types.contains({MemberBadgeDetailCellType.earnings}()) == false){
             print("failed to add earnings")
         }
+        print("\n\n\nNUM CELLS COUNT:\(count) @\(Date().timeIntervalSince1970)\n\n\n")
+        
         return count
     }
     

@@ -474,13 +474,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KiA-cP-s0r">
-                                <rect key="frame" x="0.0" y="1016" width="414" height="480"/>
+                                <rect key="frame" x="0.0" y="1038" width="414" height="424"/>
                                 <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2RS-VT-kf8">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="624"/>
+                                        <color key="backgroundColor" name="Body"/>
+                                    </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OO3-zl-XQj">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="40"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="30"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uK2-lC-avr">
-                                                <rect key="frame" x="182" y="18" width="50" height="4"/>
+                                                <rect key="frame" x="182" y="13" width="50" height="4"/>
                                                 <color key="backgroundColor" name="SecondaryText"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="50" id="7ht-t2-I9E"/>
@@ -490,26 +494,30 @@
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="HAG-Wq-7hj"/>
+                                            <constraint firstAttribute="height" constant="30" id="HAG-Wq-7hj"/>
                                             <constraint firstItem="uK2-lC-avr" firstAttribute="centerX" secondItem="OO3-zl-XQj" secondAttribute="centerX" id="NOe-KN-Zqb"/>
                                             <constraint firstItem="uK2-lC-avr" firstAttribute="centerY" secondItem="OO3-zl-XQj" secondAttribute="centerY" id="jRK-Bp-jfB"/>
                                         </constraints>
                                     </view>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="hEd-1Q-eLw">
-                                        <rect key="frame" x="32" y="30" width="350" height="419"/>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="hEd-1Q-eLw">
+                                        <rect key="frame" x="32" y="30" width="350" height="384"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     </tableView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="hEd-1Q-eLw" firstAttribute="leading" secondItem="KiA-cP-s0r" secondAttribute="leading" constant="32" id="468-qy-EN4"/>
+                                    <constraint firstAttribute="trailing" secondItem="2RS-VT-kf8" secondAttribute="trailing" id="79l-xM-P58"/>
                                     <constraint firstItem="hEd-1Q-eLw" firstAttribute="centerX" secondItem="KiA-cP-s0r" secondAttribute="centerX" id="9fN-Nm-TDN"/>
-                                    <constraint firstAttribute="bottom" secondItem="hEd-1Q-eLw" secondAttribute="bottom" constant="31" id="W8q-5f-6wR"/>
+                                    <constraint firstItem="2RS-VT-kf8" firstAttribute="leading" secondItem="KiA-cP-s0r" secondAttribute="leading" id="IiL-yP-z2p"/>
+                                    <constraint firstItem="2RS-VT-kf8" firstAttribute="top" secondItem="KiA-cP-s0r" secondAttribute="top" id="VA9-hO-f8Y"/>
+                                    <constraint firstAttribute="bottom" secondItem="hEd-1Q-eLw" secondAttribute="bottom" constant="10" id="W8q-5f-6wR"/>
                                     <constraint firstAttribute="trailing" secondItem="hEd-1Q-eLw" secondAttribute="trailing" constant="32" id="WuZ-Eg-NHT"/>
-                                    <constraint firstItem="hEd-1Q-eLw" firstAttribute="top" secondItem="OO3-zl-XQj" secondAttribute="bottom" constant="-10" id="dNq-VX-J6a"/>
                                     <constraint firstItem="OO3-zl-XQj" firstAttribute="leading" secondItem="KiA-cP-s0r" secondAttribute="leading" id="egs-fL-P3t"/>
-                                    <constraint firstAttribute="height" constant="480" id="o3r-NL-3mE"/>
+                                    <constraint firstAttribute="bottom" secondItem="2RS-VT-kf8" secondAttribute="bottom" constant="-200" id="iEo-ic-Xgb"/>
+                                    <constraint firstAttribute="height" constant="424" id="o3r-NL-3mE"/>
                                     <constraint firstItem="OO3-zl-XQj" firstAttribute="top" secondItem="KiA-cP-s0r" secondAttribute="top" id="p28-gc-0AJ"/>
+                                    <constraint firstItem="hEd-1Q-eLw" firstAttribute="top" secondItem="OO3-zl-XQj" secondAttribute="bottom" id="qDP-3b-nyx"/>
                                     <constraint firstAttribute="trailing" secondItem="OO3-zl-XQj" secondAttribute="trailing" id="xbM-hj-1Ug"/>
                                 </constraints>
                             </view>
@@ -519,10 +527,11 @@
                         <constraints>
                             <constraint firstItem="KiA-cP-s0r" firstAttribute="leading" secondItem="1TR-dg-0Rt" secondAttribute="leading" id="5lS-jx-bdf"/>
                             <constraint firstAttribute="trailing" secondItem="KiA-cP-s0r" secondAttribute="trailing" id="aEW-eH-KxN"/>
-                            <constraint firstAttribute="bottom" secondItem="KiA-cP-s0r" secondAttribute="bottom" constant="-600" id="uOL-cR-0hT"/>
+                            <constraint firstItem="qCp-jU-7NB" firstAttribute="bottom" secondItem="KiA-cP-s0r" secondAttribute="bottom" constant="-600" id="uOL-cR-0hT"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="detailBackView" destination="2RS-VT-kf8" id="x13-Fa-uSN"/>
                         <outlet property="detailView" destination="KiA-cP-s0r" id="Nk5-te-vJn"/>
                         <outlet property="detailViewBottomConstraint" destination="uOL-cR-0hT" id="Nrg-G1-hEH"/>
                         <outlet property="detailViewHeight" destination="o3r-NL-3mE" id="Tdt-9t-DIt"/>

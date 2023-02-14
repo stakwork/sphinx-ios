@@ -77,19 +77,19 @@ class MemberBadgeDetailVM : NSObject {
     }
     
     func getCellTypeOrder() -> [MemberBadgeDetailCellType] {
-        var result = [MemberBadgeDetailCellType]()
-        result = [
+        var result: [MemberBadgeDetailCellType] = [
             .header,
             .reputation,
             .contributions,
             .earnings
         ]
-        if(badges.count > 0){
+        
+        if (badges.count > 0) {
             result.insert(.badges, at: headerOffset + 1)
         }
         
         if(badgeDetailExpansionState == true){
-            for badge in badges{
+            for _ in badges {
                 result.insert(.details, at: badgeDetailOffset)
             }
         }
@@ -157,14 +157,15 @@ extension MemberBadgeDetailVM : UITableViewDelegate,UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let cellTypes = getCellTypeOrder()
         let cellType = cellTypes[indexPath.row]
         if(cellType == .header){
+            
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: MemberBadgeHeaderCell.reuseID,
                 for: indexPath
             ) as! MemberBadgeHeaderCell
+            
             self.delegate = cell
             cell.initHeaderView(presentingVC: vc)
             cell.moderatorBadgeImageView.isHidden = vc.isModerator == false
@@ -200,8 +201,6 @@ extension MemberBadgeDetailVM : UITableViewDelegate,UITableViewDataSource{
             tableView.reloadData()
         }
     }
-    
-    
 }
 
 

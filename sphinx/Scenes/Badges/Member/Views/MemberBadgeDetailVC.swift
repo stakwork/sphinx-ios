@@ -19,6 +19,7 @@ class MemberBadgeDetailVC : UIViewController{
     
     @IBOutlet weak var detailViewHeight: NSLayoutConstraint!
     @IBOutlet weak var detailView: UIView!
+    @IBOutlet weak var detailBackView: UIView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var panGestureLine: UIView!
     @IBOutlet weak var panGestureView: UIView!
@@ -60,14 +61,12 @@ class MemberBadgeDetailVC : UIViewController{
     
     override func viewDidLoad() {
         configureBadgeDetails()
-        detailView.backgroundColor = UIColor.Sphinx.Body
         setupDismissableView()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         configTableView()
         addSemiTransparentBack()
-        
         animateView(show: true)
     }
     
@@ -134,14 +133,14 @@ class MemberBadgeDetailVC : UIViewController{
     }
     
     func configureBadgeDetails() {
-        detailView.layer.cornerRadius = 20.0
-        detailViewHeight.constant = (memberBadgeDetailVM.badges.count > 0) ? 492.0 : 444.0
+        detailBackView.layer.cornerRadius = 20.0
+        detailViewHeight.constant = (memberBadgeDetailVM.badges.count > 0) ? 478.0 : 430.0
         detailView.superview?.layoutSubviews()
     }
     
     func dismissBadgeDetails(){
         tableView.isScrollEnabled = false
-        detailViewHeight.constant = (memberBadgeDetailVM.badges.count > 0) ? 492.0 : 444.0
+        detailViewHeight.constant = (memberBadgeDetailVM.badges.count > 0) ? 478.0 : 430.0
         
         UIView.animate(withDuration: 0.25, delay: 0.0, animations: {
             self.detailView.superview?.layoutSubviews()

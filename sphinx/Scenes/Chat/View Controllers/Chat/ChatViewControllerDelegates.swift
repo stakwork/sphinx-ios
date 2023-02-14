@@ -448,7 +448,7 @@ extension ChatViewController : MessageCellDelegate {
         if let _ = message.person,
            let matchedLeaderboardEntry = chatListViewModel.chatLeaderboard.filter({$0.alias == message.senderAlias}).first {
             
-            let vc = MemberBadgeDetailVC.instantiate(message:message, leaderboardEntry: matchedLeaderboardEntry, delegate:self)
+            let vc = MemberBadgeDetailVC.instantiate(message:message, leaderboardEntry: matchedLeaderboardEntry, delegate:self, knownTribeBadges: chatListViewModel.availableBadges)
             vc.modalPresentationStyle = .overCurrentContext
             self.navigationController?.present(vc, animated: false)
         }

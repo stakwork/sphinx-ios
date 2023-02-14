@@ -21,6 +21,7 @@ class MemberBadgeDetailVM : NSObject {
     var badgeDetailExpansionState : Bool = false
     var message : TransactionMessage? = nil
     var badges : [Badge] = []
+    var knownTribeBadges : [Badge] = []
     let headerOffset : Int = 0
     let badgeDetailOffset : Int = 2
     var delegate: MemberBadgeDetailVMDisplayDelegate? = nil
@@ -53,26 +54,6 @@ class MemberBadgeDetailVM : NSObject {
         
         loadProfileData()
         
-        tableView.reloadData()
-    }
-    
-    func loadBadges(){
-        //TODO: replace with API call
-        let badge = Badge()
-        badge.name = "Early Adopter"
-        badge.icon_url = "https://i.ibb.co/Ch8mwg0/badge-Example.png"
-        let badge2 = Badge()
-        badge2.name = "Whale!"
-        badge2.icon_url = "https://i.ibb.co/0Bs3Xsk/badge-example2.png"
-        self.badges = [
-            badge,
-            badge2,
-            badge,
-            badge2,
-            badge
-        ]
-        
-        vc.dismissBadgeDetails()
         tableView.reloadData()
     }
     
@@ -118,7 +99,6 @@ class MemberBadgeDetailVM : NSObject {
                 self.configHeaderView(personInfo: personInfo,message: self.message)
                 if let valid_uuid = person.personUUID{
                     self.getBadgeAssets(id: valid_uuid)
-                    //self.getBadgeAssets(id: "cd9dm5ua5fdtsj2c2mtg")//debug only
                 }
             } else {
                 //TODO: error handling? Timeout?
@@ -126,12 +106,26 @@ class MemberBadgeDetailVM : NSObject {
         })
     }
     
-    func getBadgeAssets(id:String){
+    func getBadgeAssets(id:String,filterByThisTribeOnly:Bool=false){
         API.sharedInstance.getBadgeAssets(
             user_uuid: id,
             callback: { results in
                 print(results)
-                self.badges = results
+                if(filterByThisTribeOnly){
+                    let knownIds = self.knownTribeBadges.compactMap({$0.badge_id})
+                    var newBadges = [Badge]()
+                    for result in results{
+                        if let valid_id = result.badge_id,
+                           knownIds.contains(valid_id){
+                            newBadges.append(result)
+                        }
+                    }
+                    self.badges = newBadges
+                }
+                else{
+                    self.badges = results
+                }
+                
                 self.vc.dismissBadgeDetails()
                 self.tableView.reloadData()
             },

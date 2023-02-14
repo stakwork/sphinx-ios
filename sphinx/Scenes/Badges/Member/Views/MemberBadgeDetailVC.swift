@@ -34,6 +34,7 @@ class MemberBadgeDetailVC : UIViewController{
     var loadingView: UIView? = nil
     var isModerator : Bool = false
     var chatID: Int? = nil
+    var knownTribeBadges : [Badge] = []
 
     lazy var memberBadgeDetailVM : MemberBadgeDetailVM = {
        return MemberBadgeDetailVM(vc: self, tableView: tableView)
@@ -42,7 +43,8 @@ class MemberBadgeDetailVC : UIViewController{
     static func instantiate(
         message: TransactionMessage,
         leaderboardEntry: ChatLeaderboardEntry,
-        delegate: TribeMemberViewDelegate
+        delegate: TribeMemberViewDelegate,
+        knownTribeBadges:[Badge]
     ) -> UIViewController {
         
         let viewController = StoryboardScene.BadgeManagement.memberBadgeDetailVC.instantiate()
@@ -52,6 +54,7 @@ class MemberBadgeDetailVC : UIViewController{
             vc.memberBadgeDetailVM.leaderBoardData = leaderboardEntry
             vc.message = message
             vc.delegate = delegate
+            vc.knownTribeBadges = knownTribeBadges
             vc.isModerator = message.senderAlias == message.chat?.ownerPubkey
             vc.chatID = message.chat?.id
         }
@@ -124,6 +127,7 @@ class MemberBadgeDetailVC : UIViewController{
     }
     
     func configTableView(){
+        memberBadgeDetailVM.knownTribeBadges = self.knownTribeBadges
         memberBadgeDetailVM.message = self.message
         memberBadgeDetailVM.configTable()
         tableView.separatorColor = .clear

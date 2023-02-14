@@ -672,6 +672,7 @@
                         <outlet property="keyboardAccessoryView" destination="7O8-aE-SRL" id="zDD-ks-Xpy"/>
                         <outlet property="loadingWheel" destination="Vrn-c8-bPI" id="laR-Qp-kIL"/>
                         <outlet property="membersTableView" destination="whN-O7-b3P" id="BAK-Yy-Uwm"/>
+                        <outlet property="tribeBadgesLabel" destination="mpu-h1-TPp" id="pXJ-RN-mXe"/>
                         <outlet property="tribeMemberInfoContainer" destination="6AY-vH-qQi" id="pgy-YM-Iw7"/>
                         <outlet property="tribeMemberInfoContainerHeight" destination="evN-t3-rMm" id="fEE-Io-4A2"/>
                         <outlet property="tribeMemberInfoView" destination="sYn-X1-1Q2" id="Jjm-Iv-xZG"/>

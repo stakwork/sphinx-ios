@@ -32,6 +32,7 @@ class GroupDetailsViewController: UIViewController {
     @IBOutlet weak var imageUploadContainer: UIView!
     @IBOutlet weak var imageUploadLoadingWheel: UIActivityIndicatorView!
     @IBOutlet weak var imageUploadLabel: UILabel!
+    @IBOutlet weak var tribeBadgesLabel: UILabel!
     @IBOutlet weak var groupPinContainer: GroupPinView!
     
     @IBOutlet weak var badgeManagementContainerView: UIView!
@@ -74,6 +75,7 @@ class GroupDetailsViewController: UIViewController {
         super.viewDidLoad()
         
         viewTitle.text = (chat.isPublicGroup() ? "tribe.details" : "group.details").localized
+        tribeBadgesLabel.text = "badges.tribe-badges".localized
         
         loadData()
     }

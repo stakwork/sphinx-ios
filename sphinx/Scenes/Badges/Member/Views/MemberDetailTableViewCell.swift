@@ -43,16 +43,16 @@ class MemberDetailTableViewCell: UITableViewCell {
     func configureCell(type:MemberBadgeDetailCellType,badges:[Badge],leaderboardData:ChatLeaderboardEntry?=nil,isExpanded:Bool){
         switch(type){
         case .badges:
-            titleLabel.text = "Badges:"
+            titleLabel.text = "\("badges.badges".localized):"
             break
         case .contributions:
-            titleLabel.text = "Contributions:"
+            titleLabel.text = "\("badges.contributions".localized):"
             break
         case .earnings:
-            titleLabel.text = "Earnings:"
+            titleLabel.text = "\("badges.earnings".localized):"
             break
         case .reputation:
-            titleLabel.text = "Reputation:"
+            titleLabel.text = "\("badges.reputation".localized):"
             break
         default:
             break

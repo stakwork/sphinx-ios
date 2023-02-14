@@ -35,6 +35,8 @@ class BadgeMemberKnownBadgesVC : UIViewController{
     
     override func viewDidLoad() {
         viewTitle.textColor = UIColor.Sphinx.Text
+        viewTitle.text = "badges.known-badges".localized
+        noBadgesLabel.text = "badges.no-badges-message".localized
         navBarView.backgroundColor = UIColor.Sphinx.Body
         view.backgroundColor = UIColor.Sphinx.Body
         tableView.backgroundColor = UIColor.Sphinx.Body

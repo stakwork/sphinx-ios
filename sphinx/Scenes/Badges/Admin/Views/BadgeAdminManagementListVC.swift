@@ -77,6 +77,7 @@ class BadgeAdminManagementListVC: UIViewController{
     
     func setupBadgeTable(){
         viewTitle.textColor = UIColor.Sphinx.Text
+        viewTitle.text = "badges.create-new-badge".localized
         navBarView.backgroundColor = UIColor.Sphinx.Body
         badgeManagementListDataSource = BadgeAdminManagementListDataSource(vc: self,chatID: chatID)
         badgeManagementListDataSource?.setupDataSource()

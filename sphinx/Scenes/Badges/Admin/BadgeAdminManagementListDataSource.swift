@@ -118,7 +118,7 @@ extension BadgeAdminManagementListDataSource : UITableViewDelegate,UITableViewDa
             let label = UILabel(frame: frame)
             label.font = vc.badgeTemplateHeaderLabel.font
             label.textAlignment = .center
-            label.text = "Manage Existing Badges"
+            label.text = "badges.manage-existing-badges".localized
             label.textColor = UIColor.Sphinx.BodyInverted
             existingBadgeHeacerCell.addSubview(label)
             existingBadgeHeacerCell.selectionStyle = .none
@@ -151,7 +151,8 @@ extension BadgeAdminManagementListDataSource : UITableViewDelegate,UITableViewDa
             let templateAsBadge = getTemplate(index: indexPath.row)
             templateAsBadge.chat_id = chatID
             if(badgeTypes.contains(templateAsBadge.reward_type)){
-                AlertHelper.showAlert(title: "Can't Make Badge", message: "You already have a badge of this type. You can manage it in the Existing Badges section.")
+                //AlertHelper.showAlert(title: "badges.cant-make-badge".localized, message: "badges.cant-make-badge-reason".localized)
+                vc.showBadgeDetail(badge: templateAsBadge,presentationContext: .template)
             }
             else{
                 vc.showBadgeDetail(badge: templateAsBadge,presentationContext: .template)

@@ -14,7 +14,11 @@ class BadgeMemberKnownBadgesVM : NSObject {
     
     var tableView : UITableView
     var vc : BadgeMemberKnownBadgesVC
-    var knownBadges : [Badge] = []
+    var knownBadges : [Badge] = []{
+        didSet {
+            vc.noBadgesLabel.isHidden = knownBadges.isEmpty == false
+        }
+    }
     var chatID : Int? = nil
     
     init(vc: BadgeMemberKnownBadgesVC, tableView: UITableView,chatID:Int?) {

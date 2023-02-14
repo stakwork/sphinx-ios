@@ -11,7 +11,10 @@ import UIKit
 
 class BadgeMemberKnownBadgesVC : UIViewController{
     
+    @IBOutlet weak var navBarView: UIView!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var viewTitle: UILabel!
+    @IBOutlet weak var noBadgesLabel: UILabel!
     
     var chatID: Int? = nil
     var badges : [Badge] = []
@@ -31,6 +34,10 @@ class BadgeMemberKnownBadgesVC : UIViewController{
     }
     
     override func viewDidLoad() {
+        viewTitle.textColor = UIColor.Sphinx.Text
+        navBarView.backgroundColor = UIColor.Sphinx.Body
+        view.backgroundColor = UIColor.Sphinx.Body
+        tableView.backgroundColor = UIColor.Sphinx.Body
         badgeMemberKnownBadgesVM.knownBadges = badges
         badgeMemberKnownBadgesVM.configureTable()
     }

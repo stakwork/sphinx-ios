@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -16,6 +16,9 @@
         <array key="Roboto-Medium.ttf">
             <string>Roboto-Medium</string>
         </array>
+        <array key="Roboto-Regular.ttf">
+            <string>Roboto-Regular</string>
+        </array>
     </customFonts>
     <scenes>
         <!--Badge Admin Management ListVC-->
@@ -27,7 +30,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mSd-1C-8IE">
-                                <rect key="frame" x="0.0" y="44" width="414" height="55"/>
+                                <rect key="frame" x="0.0" y="48" width="414" height="55"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nci-gd-mFG">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="55"/>
@@ -72,7 +75,7 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="962-pw-MZe">
-                                <rect key="frame" x="0.0" y="99" width="414" height="763"/>
+                                <rect key="frame" x="0.0" y="103" width="414" height="759"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
                         </subviews>
@@ -111,7 +114,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oOY-jr-FfO">
-                                <rect key="frame" x="0.0" y="44" width="393" height="55"/>
+                                <rect key="frame" x="0.0" y="48" width="393" height="55"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7vh-RQ-qV9">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="55"/>
@@ -553,7 +556,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sAQ-zm-hVm">
-                                <rect key="frame" x="0.0" y="44" width="414" height="55"/>
+                                <rect key="frame" x="0.0" y="48" width="414" height="55"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7PJ-BT-iAh">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="55"/>
@@ -572,7 +575,7 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="List of Known Badges" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XEg-kV-wEh">
                                         <rect key="frame" x="58" y="17.5" width="167" height="20"/>
                                         <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="17"/>
-                                        <color key="textColor" name="BodyInverted"/>
+                                        <color key="textColor" name="Text"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Duo-Hf-Gov" customClass="UIActivityIndicatorView">
@@ -598,9 +601,19 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="ghg-xr-8IB">
-                                <rect key="frame" x="0.0" y="99" width="414" height="763"/>
+                                <rect key="frame" x="0.0" y="103" width="414" height="759"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This Tribe doesn't appear to have any known badges..." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rFB-ly-8OP">
+                                <rect key="frame" x="97" y="406.5" width="220" height="152"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="152" id="XZD-Bq-8FH"/>
+                                    <constraint firstAttribute="width" constant="220" id="zGk-n9-8db"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
+                                <color key="textColor" name="BodyInverted"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="URo-74-FrL"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -609,18 +622,23 @@
                             <constraint firstItem="ghg-xr-8IB" firstAttribute="leading" secondItem="G0N-oO-ymE" secondAttribute="leading" id="DRL-4Z-Jt2"/>
                             <constraint firstItem="ghg-xr-8IB" firstAttribute="top" secondItem="sAQ-zm-hVm" secondAttribute="bottom" id="UKE-CN-OYe"/>
                             <constraint firstAttribute="trailing" secondItem="ghg-xr-8IB" secondAttribute="trailing" id="YFq-ho-kH1"/>
+                            <constraint firstItem="rFB-ly-8OP" firstAttribute="centerX" secondItem="URo-74-FrL" secondAttribute="centerX" id="dd1-tD-saf"/>
                             <constraint firstItem="sAQ-zm-hVm" firstAttribute="leading" secondItem="G0N-oO-ymE" secondAttribute="leading" id="gUz-RO-3rb"/>
                             <constraint firstAttribute="trailing" secondItem="sAQ-zm-hVm" secondAttribute="trailing" id="sUo-Dy-Iva"/>
                             <constraint firstItem="URo-74-FrL" firstAttribute="bottom" secondItem="ghg-xr-8IB" secondAttribute="bottom" id="tpS-3f-nJS"/>
+                            <constraint firstItem="rFB-ly-8OP" firstAttribute="centerY" secondItem="ghg-xr-8IB" secondAttribute="centerY" id="zeo-b9-SNA"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="navBarView" destination="sAQ-zm-hVm" id="MIY-he-Fan"/>
+                        <outlet property="noBadgesLabel" destination="rFB-ly-8OP" id="5MH-M3-5OS"/>
                         <outlet property="tableView" destination="ghg-xr-8IB" id="wZR-MY-8pa"/>
+                        <outlet property="viewTitle" destination="XEg-kV-wEh" id="VIn-aD-Xy2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kfa-6H-jWU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2273" y="-6"/>
+            <point key="canvasLocation" x="2271.0144927536235" y="-6.0267857142857144"/>
         </scene>
     </scenes>
     <resources>

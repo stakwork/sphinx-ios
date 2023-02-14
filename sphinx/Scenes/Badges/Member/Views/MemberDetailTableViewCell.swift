@@ -22,6 +22,7 @@ class MemberDetailTableViewCell: UITableViewCell {
     @IBOutlet weak var stackViewWidth: NSLayoutConstraint!
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var stackViewTrailingConstraint: NSLayoutConstraint!
     
     let badgeLimit = 4
     var subviewLabels : [UILabel?] = []
@@ -80,12 +81,17 @@ class MemberDetailTableViewCell: UITableViewCell {
     }
     
     func configureStackView(type:MemberBadgeDetailCellType,badges:[Badge],leaderboardData:ChatLeaderboardEntry?=nil,isExpanded:Bool){
+        let baseOffset : CGFloat = -8
         switch(type){
             case .contributions:
                 configRankedStackViewParams(leaderboardData: leaderboardData, type: .contributions)
+                stackViewTrailingConstraint.constant = 14 + baseOffset
+                self.layoutIfNeeded()
                 break
             case .earnings:
                 configRankedStackViewParams(leaderboardData: leaderboardData, type: .earnings)
+                stackViewTrailingConstraint.constant = 14 + baseOffset
+                self.layoutIfNeeded()
                 break
             case .badges:
                 itemSpacing = 8.0
@@ -137,6 +143,7 @@ class MemberDetailTableViewCell: UITableViewCell {
                 }
                 
                 stackViewWidth.constant = cursorValue
+                stackViewTrailingConstraint.constant = baseOffset
                 self.layoutIfNeeded()
                 break
             case .reputation:
@@ -154,12 +161,14 @@ class MemberDetailTableViewCell: UITableViewCell {
                 stackView.addSubview(postsLabel)
                 stackViewWidth.constant = postsLabel.frame.width + itemSpacing
                 self.subviewLabels.append(postsLabel)
+                stackViewTrailingConstraint.constant = 4 + baseOffset
                 self.layoutIfNeeded()
                 break
             default:
             
                 break
         }
+        
     }
     
     func configRankedStackViewParams(shouldIncludeRank:Bool=false,leaderboardData:ChatLeaderboardEntry?,type:MemberBadgeDetailCellType){

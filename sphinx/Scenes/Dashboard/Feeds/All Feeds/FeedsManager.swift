@@ -6,7 +6,7 @@
 //  Copyright © 2023 sphinx. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import CoreData
 import AVFoundation
 
@@ -268,7 +268,11 @@ class FeedsManager : NSObject {
     }
     
     func refreshFeedUI() {
-        NotificationCenter.default.post(name: .refreshFeedUI, object: nil)
+        DispatchQueue.main.async {
+            if UIApplication.shared.applicationState == .active {
+                NotificationCenter.default.post(name: .refreshFeedUI, object: nil)
+            }
+        }
     }
     
     func getContentFeedFor(

@@ -150,7 +150,7 @@
 "ended.upper" = "FINALIZADO";
 "active.upper" = "ACTIVO";
 "inactive.upper" = "INACTIVO";
-"template.upper" = "PLANTILLO";
+"template.upper" = "PLANTILLA";
 "subscription.fields.required" = "Monto, intervalo de tiempo y finalización de pagos son obligatorios.";
 "confirm.delete.subscription" = "¿Estás seguro que deseas eliminar esta suscripción?";
 "amount.upper" = "MONTO";
@@ -547,7 +547,7 @@
 
 
 //BADGES
-"badges.earn-badges" = "Gan Insignias";
+"badges.earn-badges" = "Ganar Insignias";
 "badges.earnings" = "Ganacias";
 "badges.contributions" = "Contribuciónes";
 "badges.badges" = "Insignias";
@@ -563,3 +563,12 @@
 "badges.purchase-badges" = "Compra Insignias";
 "badges.known-badges" = "Lista de Insignias Conocidas";
 "badges.no-badges-message" = "Parace que no hay ninguna insignias para esta Tribu...";
+"badges.badges-left" = "de %d quedan";
+"badges.activate-badge" = "Activar Insignia";
+"badges.deactivate-badge" = "Desactivar Insignia";
+"badges.creation-success-title"  = "Has Creado Insignia";
+"badges.creation-success-message"  = "Has creado %d copias de";
+"badges.your-badge" = "tu insignia";
+"badges.success" = "Éxito";
+"badges.activation-success" = "Insignias fueron activado exitosamente.";
+"badges.deactivation-success" = "Insignias fueron desactivado exitosamente.";

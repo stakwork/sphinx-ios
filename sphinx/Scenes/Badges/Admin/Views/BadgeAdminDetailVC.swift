@@ -107,13 +107,15 @@ class BadgeAdminDetailVC : UIViewController{
                let badgesCreated = valid_badge.amount_created,
                let badgesIssued = valid_badge.amount_issued{
                 let remainingAmountText = String(max(0, badgesCreated - badgesIssued))
-                let fullText = "\(remainingAmountText) of \(badgesCreated) left"
+                let leftString = String(format: "badges.badges-left".localized, badgesCreated)
+                let fullText = "\(remainingAmountText) \(leftString)"
+                
                 let attributedString = NSMutableAttributedString(string: fullText)
                 attributedString.addAttribute(.foregroundColor, value: UIColor.Sphinx.BodyInverted, range: NSRange(location: 0, length: remainingAmountText.count))
                 
                 badgeStatsLabel.attributedText = attributedString
                 
-                badgeActivateDeactivateLabel.text = (valid_badge.activationState == true) ? "Deactivate Badge" : "Activate Badge"
+                badgeActivateDeactivateLabel.text = (valid_badge.activationState == true) ? "badges.deactivate-badge".localized : "badges.activate-badge".localized
                 badgeActivateDeactivateSwitch.isOn = valid_badge.activationState
             }
             vcScrollView.contentSize = CGSize(width: self.view.frame.width, height: 400.0)
@@ -183,14 +185,16 @@ class BadgeAdminDetailVC : UIViewController{
         )
         
         if let valid_badge = self.associatedBadge{
+            let titleText = "badges.creation-success-title".localized
+            let messageText = "badges.creation-success-message".localized
             API.sharedInstance.createTribeAdminBadge(
                 badge: valid_badge,
                 amount: self.badgeQuantity,
                 callback: { success in
                     self.removeChildVC(child: self.loadingViewController)
                     AlertHelper.showAlert(
-                    title: "Badge Created",
-                    message: "Successfully created \(self.badgeQuantity) copies of \(String(describing: valid_badge.name ?? "your badge"))",
+                    title: titleText,
+                    message: "\(messageText) \(String(describing: valid_badge.name ?? "badges.your-badge".localized))",
                     completion: {
                         self.navigationController?.popViewController(animated: true)
                     })
@@ -305,7 +309,7 @@ class BadgeAdminDetailVC : UIViewController{
         )
         
         associatedBadge?.activationState = badgeActivateDeactivateSwitch.isOn
-        let activationString = (badgeActivateDeactivateSwitch.isOn == true) ? "activat" : "deactivat"
+        let activationString = (badgeActivateDeactivateSwitch.isOn == true) ? "badges.activation-success".localized : "badges.deactivation-success".localized
         if let valid_badge = associatedBadge{
             API.sharedInstance.changeActivationStateAdminBadgeTemplates(
             badge: valid_badge,
@@ -313,15 +317,15 @@ class BadgeAdminDetailVC : UIViewController{
                 self.removeChildVC(child: self.loadingViewController)
                 if(success){
                     AlertHelper.showAlert(
-                        title: "Success",
-                        message: "Successfully \(activationString)ed badge.",
+                        title: "badges.success".localized,
+                        message: activationString,
                         completion: {
                             self.navigationController?.popViewController(animated: true)
                     })
                 }
                 else{
                     self.badgeActivateDeactivateSwitch.isOn = !self.badgeActivateDeactivateSwitch.isOn
-                    AlertHelper.showAlert(title: "Error", message: "There was an error \(activationString)ing the badge.")
+                    AlertHelper.showAlert(title: "Error", message: "There was an error \(activationString) the badge.")
                 }
             },
             errorCallback: {

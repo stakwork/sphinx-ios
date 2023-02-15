@@ -48,10 +48,9 @@ class BadgeAdminListTableViewCell: UITableViewCell {
         if let badgesCreated = badge.amount_created,
            let badgesIssued = badge.amount_issued{
             let remainingAmountText = String(max(0, badgesCreated - badgesIssued))
-            let fullText = "\(remainingAmountText) of \(badgesCreated) left"
             remainingAmountLabel.text = remainingAmountText
             remainingAmountLabel.textColor = UIColor.Sphinx.BodyInverted
-            totalAvailableLabel.text = "of \(badgesCreated) left"
+            totalAvailableLabel.text = String(format: "badges.badges-left".localized, badgesCreated)
             totalAvailableLabel.textColor = UIColor.Sphinx.PlaceholderText
         }
         
@@ -108,7 +107,7 @@ class BadgeAdminListTableViewCell: UITableViewCell {
                 let string = "template.upper".localized
                 let attributedString = NSMutableAttributedString(string: string)
                 attributedString.addAttribute(.foregroundColor, value: UIColor.white, range: NSRange(location: 0, length: string.count))
-                attributedString.addAttribute(.font, value: UIFont(name: "Roboto", size: 11.0), range: NSRange(location: 0, length: string.count))
+                attributedString.addAttribute(.font, value: UIFont(name: "Roboto", size: 10.0), range: NSRange(location: 0, length: string.count))
                 statusButton.titleLabel?.attributedText = attributedString
                 break
             }

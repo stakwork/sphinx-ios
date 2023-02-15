@@ -547,7 +547,7 @@
 "time.days-ago" = "%d days ago";
 
 //BADGES
-"badges.earn-badges" = "EARN BADGES";
+"badges.earn-badges" = "Earn Badges";
 "badges.earnings" = "Earnings";
 "badges.contributions" = "Contributions";
 "badges.badges" = "Badges";
@@ -563,3 +563,12 @@
 "badges.purchase-badges" = "Purchase Badges";
 "badges.known-badges" = "List of Known Badges";
 "badges.no-badges-message" = "This Tribe doesn't appear to have any known badges...";
+"badges.badges-left" = "of %d left";
+"badges.activate-badge" = "Activate Badge";
+"badges.deactivate-badge" = "Deactivate Badge";
+"badges.creation-success-title"  = "Successfully Created Badge";
+"badges.creation-success-message"  = "You've created %d copies of";
+"badges.your-badge" = "your badge";
+"badges.success" = "Success";
+"badges.activation-success" = "Badges successfully activated";
+"badges.deactivation-success" = "Badges successfully deactivated";

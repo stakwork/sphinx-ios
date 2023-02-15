@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import Foundation
 
 
 protocol ConnectionCodeSignupHandling: UIViewController, SphinxOnionConnectorDelegate {
@@ -64,6 +64,23 @@ extension ConnectionCodeSignupHandling {
 
 // MARK: - Default Method Implementations
 extension ConnectionCodeSignupHandling {
+    
+    func signUp(withSwarmConnectCode connectionCode:String){
+        presentConnectingLoadingScreenVC()
+        let splitString = connectionCode.components(separatedBy: "::")
+        if splitString.count > 2{
+            let ip = splitString[1]
+            let pubKey = splitString[2]
+            print(ip)
+            print(pubKey)
+            self.connectToNode(ip: ip, pubkey: pubKey)
+        }
+        else{
+            self.handleSignupConnectionError(
+                message: "signup.error-validation-invite-code".localized
+            )
+        }
+    }
     
     func signup(withConnectionCode connectionCode: String) {
         presentConnectingLoadingScreenVC()

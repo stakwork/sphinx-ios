@@ -58,6 +58,7 @@ class PodcastPlayerController {
     var syncPodcastTimer : Timer? = nil
     
     var playedSeconds: Int = 0
+    var isLoadingOrPlaying = false
     
     var playingEpisodeImage: UIImage? = nil
     

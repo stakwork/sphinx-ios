@@ -556,11 +556,11 @@
 "badges.tribe-badges" = "Insignias De La Tribu";
 "badges.create-new-badge" = "Crear Insignias Nuevas";
 "badges.quantity" = "Cantidad";
-"badges.manage-existing-badges" = "Administra Insignias Existentes";
+"badges.manage-existing-badges" = "Administrar Insignias Existentes";
 "badges.cant-make-badge" = "No Se Puede Hacer Insignia";
 "badges.cant-make-badge-reason" = "Ya tienes una insignia de este tipo. Se puede administrarlo en el seción de Insignias Existentes.";
 "badges.price-per-badge" = "Precio";
-"badges.purchase-badges" = "Compra Insignias";
+"badges.purchase-badges" = "Comprar Insignias";
 "badges.known-badges" = "Lista de Insignias Conocidas";
 "badges.no-badges-message" = "Parace que no hay ninguna insignias para esta Tribu...";
 "badges.badges-left" = "de %d quedan";

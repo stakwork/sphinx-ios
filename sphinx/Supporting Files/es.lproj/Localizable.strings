@@ -559,7 +559,7 @@
 "badges.manage-existing-badges" = "Administra Insignias Existentes";
 "badges.cant-make-badge" = "No Se Puede Hacer Insignia";
 "badges.cant-make-badge-reason" = "Ya tienes una insignia de este tipo. Se puede administrarlo en el seción de Insignias Existentes.";
-"badges.price-per-badge" = "Precio por";
+"badges.price-per-badge" = "Precio";
 "badges.purchase-badges" = "Compra Insignias";
 "badges.known-badges" = "Lista de Insignias Conocidas";
 "badges.no-badges-message" = "Parace que no hay ninguna insignias para esta Tribu...";

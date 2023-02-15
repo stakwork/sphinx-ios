@@ -547,19 +547,19 @@
 
 
 //BADGES
-"badges.earn-badges" = "Ganar Insignias";
+"badges.earn-badges" = "Obtener";
 "badges.earnings" = "Ganacias";
 "badges.contributions" = "Contribuciónes";
 "badges.badges" = "Insignias";
 "badges.reputation" = "Reputación";
-"badges.send-sats" = "Envia Sats";
+"badges.send-sats" = "Enviar Sats";
 "badges.tribe-badges" = "Insignias De La Tribu";
-"badges.create-new-badge" = "Crea Insignias Nuevas";
+"badges.create-new-badge" = "Crear Insignias Nuevas";
 "badges.quantity" = "Cantidad";
 "badges.manage-existing-badges" = "Administra Insignias Existentes";
 "badges.cant-make-badge" = "No Se Puede Hacer Insignia";
 "badges.cant-make-badge-reason" = "Ya tienes una insignia de este tipo. Se puede administrarlo en el seción de Insignias Existentes.";
-"badges.price-per-badge" = "Precio por Insignia";
+"badges.price-per-badge" = "Precio por";
 "badges.purchase-badges" = "Compra Insignias";
 "badges.known-badges" = "Lista de Insignias Conocidas";
 "badges.no-badges-message" = "Parace que no hay ninguna insignias para esta Tribu...";

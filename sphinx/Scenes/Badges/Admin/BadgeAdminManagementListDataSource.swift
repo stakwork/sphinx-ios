@@ -151,8 +151,7 @@ extension BadgeAdminManagementListDataSource : UITableViewDelegate,UITableViewDa
             let templateAsBadge = getTemplate(index: indexPath.row)
             templateAsBadge.chat_id = chatID
             if(badgeTypes.contains(templateAsBadge.reward_type)){
-                //AlertHelper.showAlert(title: "badges.cant-make-badge".localized, message: "badges.cant-make-badge-reason".localized)
-                vc.showBadgeDetail(badge: templateAsBadge,presentationContext: .template)
+                AlertHelper.showAlert(title: "badges.cant-make-badge".localized, message: "badges.cant-make-badge-reason".localized)
             }
             else{
                 vc.showBadgeDetail(badge: templateAsBadge,presentationContext: .template)

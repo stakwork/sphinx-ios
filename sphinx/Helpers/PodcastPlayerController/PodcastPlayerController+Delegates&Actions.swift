@@ -128,12 +128,14 @@ extension PodcastPlayerController {
         )
         
         if (duration > 0) {
-            self.runPlayingStateUpdate()
-            self.configureTimer()
+            shouldSyncPodcast()
             
-            self.trackItemStarted()
+            runPlayingStateUpdate()
+            configureTimer()
+            
+            trackItemStarted()
         } else {
-            self.player?.pause()
+            player?.pause()
 
             runErrorStateUpdate()
         }
@@ -238,6 +240,8 @@ extension PodcastPlayerController {
 
 extension PodcastPlayerController {
     func runLoadingStateUpdate() {
+        isLoadingOrPlaying = true
+        
         guard let podcastData = podcastData else {
             return
         }
@@ -248,6 +252,8 @@ extension PodcastPlayerController {
     }
     
     func runPlayingStateUpdate() {
+        isLoadingOrPlaying = true
+        
         guard let podcastData = podcastData else {
             return
         }
@@ -258,6 +264,8 @@ extension PodcastPlayerController {
     }
     
     func runPausedStateUpdate() {
+        isLoadingOrPlaying = false
+        
         guard let podcastData = podcastData else {
             return
         }
@@ -270,6 +278,8 @@ extension PodcastPlayerController {
     }
     
     func runEndedStateUpdate() {
+        isLoadingOrPlaying = false
+        
         guard let podcastData = podcastData else {
             return
         }
@@ -282,6 +292,8 @@ extension PodcastPlayerController {
     }
     
     func runErrorStateUpdate() {
+        isLoadingOrPlaying = false
+        
         guard let podcastData = podcastData else {
             return
         }

@@ -122,8 +122,10 @@ class PodcastPlayerView: UIView {
         
         subscriptionToggleButton.isHidden = chat != nil
         
+        audioLoading = podcastPlayerController.isPlaying(podcastId: podcast.feedID)
+        
         showInfo()
-        configureControls(playing: podcastPlayerController.isPlaying(podcastId: podcast.feedID))
+        configureControls()
         addDotGesture()
     }
     

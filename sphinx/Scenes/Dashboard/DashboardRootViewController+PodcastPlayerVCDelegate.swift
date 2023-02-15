@@ -10,6 +10,8 @@ extension DashboardRootViewController: PodcastPlayerVCDelegate {
     func shouldShareClip(comment: PodcastComment) {}
     
     func shouldGoToPlayer(podcast: PodcastFeed) {
+        feedsManager.restoreContentFeedStatusInBackgroundFor(feedId: podcast.feedID)
+        
         presentPodcastPlayerFor(podcast)
     }
     

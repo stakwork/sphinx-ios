@@ -55,7 +55,7 @@ extension NewUserSignupFormViewController {
             signUp(withSwarmConnectCode: code)
         }
         else if code.isSwarmClaimCode{
-            
+            signUp(withSwarmClaimCode: code)
         }
         else {
             preconditionFailure("Attempted to start sign up without a valid code.")

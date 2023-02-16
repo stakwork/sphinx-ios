@@ -128,7 +128,7 @@ extension String {
     
     var isSwarmClaimCode : Bool {
         get {
-            return self.base64Decoded?.starts(with: "claim::") ?? false
+            return self.localizedStandardContains("claim::")
         }
     }
     

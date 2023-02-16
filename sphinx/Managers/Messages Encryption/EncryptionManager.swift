@@ -163,7 +163,9 @@ class EncryptionManager {
     }
     
     func sendPublicKeyToServer(completion: (() -> ())? = nil) {
-        if let publicKey = getOwnPublicKey(), let base64PublicKey = getBase64String(key: publicKey), let owner = UserContact.getOwner() {
+        if let publicKey = getOwnPublicKey(),
+            let base64PublicKey = getBase64String(key: publicKey),
+            let owner = UserContact.getOwner() {
             if let _ = owner.contactKey {
                 return
             }

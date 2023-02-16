@@ -71,8 +71,6 @@ extension ConnectionCodeSignupHandling {
         if splitString.count > 2{
             let ip = splitString[1]
             let pubKey = splitString[2]
-            print(ip)
-            print(pubKey)
             self.connectToNode(ip: ip, pubkey: pubKey)
         }
         else{
@@ -88,15 +86,11 @@ extension ConnectionCodeSignupHandling {
         if splitString.count > 2,
          let token = splitString[2].base64Decoded{
             let ip = splitString[1]
-            
-            print(ip)
-            print(token)
             self.userData.save(ip: ip)
             userData.continueWithToken(
                 token: token,
                 completion: { [weak self] in
                     guard let self = self else { return }
-                    //self.connectToNode(ip: ip, pubkey: "")
                     self.proceedToNewUserWelcome()
                 },
                 errorCompletion: { [weak self] in

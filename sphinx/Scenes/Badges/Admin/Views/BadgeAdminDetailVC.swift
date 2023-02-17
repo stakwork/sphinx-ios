@@ -186,7 +186,7 @@ class BadgeAdminDetailVC : UIViewController{
         
         if let valid_badge = self.associatedBadge{
             let titleText = "badges.creation-success-title".localized
-            let messageText = "badges.creation-success-message".localized
+            let messageText = String(format: "badges.creation-success-message".localized, badgeQuantity)
             API.sharedInstance.createTribeAdminBadge(
                 badge: valid_badge,
                 amount: self.badgeQuantity,

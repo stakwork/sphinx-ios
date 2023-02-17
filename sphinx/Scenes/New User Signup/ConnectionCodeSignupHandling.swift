@@ -82,25 +82,29 @@ extension ConnectionCodeSignupHandling {
     
     func signUp(withSwarmClaimCode connectionCode:String){
         presentConnectingLoadingScreenVC()
+        
         let splitString = connectionCode.components(separatedBy: "::")
-        if splitString.count > 2,
-         let token = splitString[2].base64Decoded{
+        if splitString.count > 2, let token = splitString[2].base64Decoded {
+            
             let ip = splitString[1]
             self.userData.save(ip: ip)
+            
             userData.continueWithToken(
                 token: token,
                 completion: { [weak self] in
                     guard let self = self else { return }
+                    
                     self.proceedToNewUserWelcome()
                 },
                 errorCompletion: { [weak self] in
                     guard let self = self else { return }
                     
-                    self.generateTokenError(pubkey: "", token: token, password: "")
+                    self.handleSignupConnectionError(
+                        message: "signup.error-validation-invite-code".localized
+                    )
                 }
             )
-        }
-        else{
+        } else {
             self.handleSignupConnectionError(
                 message: "signup.error-validation-invite-code".localized
             )

@@ -228,11 +228,14 @@ class UserData {
         errorCompletion: @escaping () -> ()
     ) {
         getAndSaveTransportKey(completion: { transportKey in
-            
-            self.saveTokenAndContinue(
-                token: token,
-                transportKey: transportKey,
-                completion: completion)
+            if let transportKey = transportKey {
+                self.saveTokenAndContinue(
+                    token: token,
+                    transportKey: transportKey,
+                    completion: completion)
+            } else {
+                errorCompletion()
+            }
         })
         
     }

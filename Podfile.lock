@@ -1,8 +1,5 @@
 PODS:
   - Alamofire (5.0.5)
-  - CocoaLumberjack (3.8.0):
-    - CocoaLumberjack/Core (= 3.8.0)
-  - CocoaLumberjack/Core (3.8.0)
   - CryptoSwift (1.0.0)
   - FLAnimatedImage (1.0.16)
   - Giphy (2.1.1):
@@ -36,19 +33,16 @@ PODS:
   - PINOperation (1.2.1)
   - ReachabilitySwift (5.0.0)
   - RNCryptor (5.1.0)
-  - SDWebImage (5.11.1):
-    - SDWebImage/Core (= 5.11.1)
-  - SDWebImage/Core (5.11.1)
+  - SDWebImage (5.12.5):
+    - SDWebImage/Core (= 5.12.5)
+  - SDWebImage/Core (5.12.5)
   - SDWebImageFLPlugin (0.5.0):
     - FLAnimatedImage (>= 1.0.11)
     - SDWebImage/Core (~> 5.10)
-  - SDWebImageSVGCoder (0.3.0):
-    - SDWebImage/Core (~> 5.0)
-    - SVGKit (>= 2.1)
+  - SDWebImageSVGCoder (1.5.2):
+    - SDWebImage/Core (~> 5.6)
   - secp256k1.swift (0.1.4)
   - Starscream (3.1.1)
-  - SVGKit (3.0.0):
-    - CocoaLumberjack (~> 3.0)
   - SwiftLinkPreview (3.1.0)
   - SwiftyJSON (4.3.0)
   - SwiftyRSA (1.6.0):
@@ -70,9 +64,9 @@ DEPENDENCIES:
   - ObjectMapper
   - ReachabilitySwift
   - RNCryptor (~> 5.0)
-  - SDWebImage (~> 5.11)
+  - SDWebImage (~> 5.12)
   - SDWebImageFLPlugin
-  - SDWebImageSVGCoder
+  - SDWebImageSVGCoder (~> 1.5.0)
   - Starscream (~> 3.1)
   - SwiftLinkPreview (~> 3.1.0)
   - SwiftyJSON
@@ -84,7 +78,6 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Alamofire
-    - CocoaLumberjack
     - CryptoSwift
     - FLAnimatedImage
     - Giphy
@@ -105,7 +98,6 @@ SPEC REPOS:
     - SDWebImageSVGCoder
     - secp256k1.swift
     - Starscream
-    - SVGKit
     - SwiftLinkPreview
     - SwiftyJSON
     - SwiftyRSA
@@ -124,7 +116,6 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: df2f8f826963b08b9a870791ad48e07a10090b2e
-  CocoaLumberjack: 78abfb691154e2a9df8ded4350d504ee19d90732
   CryptoSwift: d81eeaa59dc5a8d03720fe919a6fd07b51f7439f
   FLAnimatedImage: 8f3e854ebf9680b71f0b6e700939687fc4d82b4b
   Giphy: 4a3ca076645091bba1a2e5579066b4c851e53d45
@@ -140,12 +131,11 @@ SPEC CHECKSUMS:
   PINOperation: 00c935935f1e8cf0d1e2d6b542e75b88fc3e5e20
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   RNCryptor: a369134686cd2ad391323cc856b62e591193ba79
-  SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
+  SDWebImage: 0905f1b7760fc8ac4198cae0036600d67478751e
   SDWebImageFLPlugin: 245c7ce1e77028b6ef415240847b3f8aa4b106b7
-  SDWebImageSVGCoder: 4b354bcdc7d74ce14d9fdb3c9ed9ab2c667f3b57
+  SDWebImageSVGCoder: b0258f66521c222aba5c13ab29bdf35520d5d536
   secp256k1.swift: a7e7a214f6db6ce5db32cc6b2b45e5c4dd633634
   Starscream: 4bb2f9942274833f7b4d296a55504dcfc7edb7b0
-  SVGKit: 1ad7513f8c74d9652f94ed64ddecda1a23864dea
   SwiftLinkPreview: 3d924eeaae8d17410a827a4b37675713af1a0a8a
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
   SwiftyRSA: 3b9c9179744217951facc6a3e9ae8d8c97061ffa
@@ -153,6 +143,6 @@ SPEC CHECKSUMS:
   Tor: fad2cec0e7ef5f889fecdaf69e5edd6df0438326
   youtube-ios-player-helper: 0185c57db23c80d63d6ca11251d110abb8a4ca61
 
-PODFILE CHECKSUM: 1890a1a1cabf6f256b98fa174637d91030d1ec42
+PODFILE CHECKSUM: a34a0704f170740e5232155f85151bf053690f95
 
 COCOAPODS: 1.11.3

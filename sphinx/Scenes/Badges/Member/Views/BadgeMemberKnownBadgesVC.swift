@@ -18,7 +18,7 @@ class BadgeMemberKnownBadgesVC : UIViewController{
     
     var chatID: Int? = nil
     var badges : [Badge] = []
-    private lazy var loadingViewController = LoadingViewController()
+    private lazy var loadingViewController = LoadingViewController(backgroundColor: UIColor.clear)
     
     lazy var badgeMemberKnownBadgesVM : BadgeMemberKnownBadgesVM = {
         return BadgeMemberKnownBadgesVM(vc: self, tableView: tableView, chatID: chatID)

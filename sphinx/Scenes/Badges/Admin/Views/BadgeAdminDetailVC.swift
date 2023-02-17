@@ -50,7 +50,7 @@ class BadgeAdminDetailVC : UIViewController{
     @IBOutlet weak var badgeStatsLabelBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var badgeStatsLabelTopConstraint: NSLayoutConstraint!
     
-    private lazy var loadingViewController = LoadingViewController()
+    private lazy var loadingViewController = LoadingViewController(backgroundColor: UIColor.clear)
     var presentationContext : BadgeDetailPresentationContext = .template
     var associatedBadge : Badge? = nil
     let pricePerBadge : Int = 10

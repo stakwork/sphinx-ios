@@ -20,7 +20,7 @@ class BadgeAdminManagementListVC: UIViewController{
     @IBOutlet weak var badgeTemplateHeaderLabel: UILabel!
     
     @IBOutlet weak var headerViewHeight: NSLayoutConstraint!
-    private lazy var loadingViewController = LoadingViewController()
+    private lazy var loadingViewController = LoadingViewController(backgroundColor: UIColor.clear)
     
     var viewDidLayout : Bool = false
     var chatID:Int? = nil
@@ -79,6 +79,7 @@ class BadgeAdminManagementListVC: UIViewController{
         viewTitle.textColor = UIColor.Sphinx.Text
         viewTitle.text = "badges.create-new-badge".localized
         navBarView.backgroundColor = UIColor.Sphinx.Body
+        badgeTableView.backgroundColor = UIColor.Sphinx.Body
         badgeManagementListDataSource = BadgeAdminManagementListDataSource(vc: self,chatID: chatID)
         badgeManagementListDataSource?.setupDataSource()
     }

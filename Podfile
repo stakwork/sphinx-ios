@@ -1,4 +1,4 @@
-platform :ios, '11.0'
+platform :ios, '13.0'
 use_frameworks!
 inhibit_all_warnings!
 
@@ -8,9 +8,9 @@ target 'sphinx' do
     pod 'Alamofire', '~> 5.0.0-rc.3'
     pod 'ReachabilitySwift'
     pod 'SwiftyJSON'
-    pod 'SDWebImage', '~> 5.11'
+    pod 'SDWebImage', '~> 5.12'
     pod 'SDWebImageFLPlugin'
-    pod 'SDWebImageSVGCoder'
+    pod 'SDWebImageSVGCoder', '~> 1.5.0'
     pod 'KYDrawerController'
     pod 'SwiftyRSA'
     pod 'RNCryptor', '~> 5.0'

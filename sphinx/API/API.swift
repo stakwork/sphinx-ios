@@ -170,7 +170,7 @@ class API {
             .replacingOccurrences(of: "https://", with: "wss://")
             .replacingOccurrences(of: "http://", with: "ws://")
         }
-        return "ws://\(route)"
+        return "wss://\(route)"
     }
 
     func session() -> Alamofire.Session? {

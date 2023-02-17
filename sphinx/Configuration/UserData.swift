@@ -222,6 +222,24 @@ class UserData {
         })
     }
     
+    func continueWithToken(
+        token: String,
+        completion: @escaping () -> (),
+        errorCompletion: @escaping () -> ()
+    ) {
+        getAndSaveTransportKey(completion: { transportKey in
+            if let transportKey = transportKey {
+                self.saveTokenAndContinue(
+                    token: token,
+                    transportKey: transportKey,
+                    completion: completion)
+            } else {
+                errorCompletion()
+            }
+        })
+        
+    }
+    
     func saveTokenAndContinue(
         token: String,
         transportKey: String?,

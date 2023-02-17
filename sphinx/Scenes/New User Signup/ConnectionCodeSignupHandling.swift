@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import Foundation
 
 
 protocol ConnectionCodeSignupHandling: UIViewController, SphinxOnionConnectorDelegate {
@@ -64,6 +64,52 @@ extension ConnectionCodeSignupHandling {
 
 // MARK: - Default Method Implementations
 extension ConnectionCodeSignupHandling {
+    
+    func signUp(withSwarmConnectCode connectionCode:String){
+        presentConnectingLoadingScreenVC()
+        let splitString = connectionCode.components(separatedBy: "::")
+        if splitString.count > 2{
+            let ip = splitString[1]
+            let pubKey = splitString[2]
+            self.connectToNode(ip: ip, pubkey: pubKey)
+        }
+        else{
+            self.handleSignupConnectionError(
+                message: "signup.error-validation-invite-code".localized
+            )
+        }
+    }
+    
+    func signUp(withSwarmClaimCode connectionCode:String){
+        presentConnectingLoadingScreenVC()
+        
+        let splitString = connectionCode.components(separatedBy: "::")
+        if splitString.count > 2, let token = splitString[2].base64Decoded {
+            
+            let ip = splitString[1]
+            self.userData.save(ip: ip)
+            
+            userData.continueWithToken(
+                token: token,
+                completion: { [weak self] in
+                    guard let self = self else { return }
+                    
+                    self.proceedToNewUserWelcome()
+                },
+                errorCompletion: { [weak self] in
+                    guard let self = self else { return }
+                    
+                    self.handleSignupConnectionError(
+                        message: "signup.error-validation-invite-code".localized
+                    )
+                }
+            )
+        } else {
+            self.handleSignupConnectionError(
+                message: "signup.error-validation-invite-code".localized
+            )
+        }
+    }
     
     func signup(withConnectionCode connectionCode: String) {
         presentConnectingLoadingScreenVC()

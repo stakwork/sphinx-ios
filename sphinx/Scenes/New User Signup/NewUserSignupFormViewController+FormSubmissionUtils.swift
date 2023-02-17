@@ -50,14 +50,21 @@ extension NewUserSignupFormViewController {
             }
         } else if code.isInviteCode {
             signup(withConnectionCode: code)
-        } else {
+        }
+        else if code.isSwarmConnectCode{
+            signUp(withSwarmConnectCode: code)
+        }
+        else if code.isSwarmClaimCode{
+            signUp(withSwarmClaimCode: code)
+        }
+        else {
             preconditionFailure("Attempted to start sign up without a valid code.")
         }
     }
     
     
     func isCodeValid(_ code: String) -> Bool {
-        code.isRelayQRCode || code.isInviteCode
+        return code.isRelayQRCode || code.isInviteCode || code.isSwarmClaimCode || code.isSwarmConnectCode
     }
     
     

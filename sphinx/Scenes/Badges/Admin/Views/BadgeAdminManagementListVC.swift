@@ -20,7 +20,7 @@ class BadgeAdminManagementListVC: UIViewController{
     @IBOutlet weak var badgeTemplateHeaderLabel: UILabel!
     
     @IBOutlet weak var headerViewHeight: NSLayoutConstraint!
-    private lazy var loadingViewController = LoadingViewController()
+    private lazy var loadingViewController = LoadingViewController(backgroundColor: UIColor.clear)
     
     var viewDidLayout : Bool = false
     var chatID:Int? = nil

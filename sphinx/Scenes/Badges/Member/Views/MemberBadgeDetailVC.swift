@@ -25,7 +25,7 @@ class MemberBadgeDetailVC : UIViewController{
     @IBOutlet weak var panGestureView: UIView!
     
     @IBOutlet weak var detailViewBottomConstraint: NSLayoutConstraint!
-    private lazy var loadingViewController = LoadingViewController()
+    private lazy var loadingViewController = LoadingViewController(backgroundColor: UIColor.clear)
     
     
     var presentationContext : MemberBadgeDetailPresentationContext = .admin

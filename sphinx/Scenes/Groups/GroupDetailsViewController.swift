@@ -140,7 +140,7 @@ class GroupDetailsViewController: UIViewController {
         if let chat = chat,
            chat.isMyPublicGroup(){
             badgeManagementContainerView.backgroundColor = UIColor.Sphinx.Body
-            badgeManagementContainerHeight.constant = 70
+            badgeManagementContainerHeight.constant = 90
             badgeManagementContainerView.isHidden = false
             badgeManagementContainerView.isUserInteractionEnabled = true
             badgeManagementContainerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapBadgeManagementView)))

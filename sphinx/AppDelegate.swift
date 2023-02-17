@@ -14,6 +14,7 @@ import Alamofire
 import GiphyUISDK
 import BackgroundTasks
 import AVFAudio
+import SDWebImageSVGCoder
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -65,6 +66,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         configureGiphy()
         configureNotificationCenter()
         configureStoreKit()
+        configureSVGRendering()
         connectTor()
         
         setInitialVC(launchingApp: true)
@@ -82,6 +84,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         BGTaskScheduler.shared.register(forTaskWithIdentifier: "com.gl.sphinx.refresh", using: nil, launchHandler: { task in
             self.handleAppRefresh(task: task)
         })
+    }
+    
+    func configureSVGRendering(){
+        // register coder, on AppDelegate
+        let SVGCoder = SDImageSVGCoder.shared
+        SDImageCodersManager.shared.addCoder(SVGCoder)
+        
     }
     
     func configureGiphy() {

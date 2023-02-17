@@ -21,6 +21,7 @@ struct TribeMemberStruct {
     let uniqueName: String
     let uuid: String
     let extras: TribeMemberProfileExtrasDto?
+    let badges: [JSON]
     
     init(json: JSON) {
         self.id = json["id"].intValue
@@ -32,6 +33,7 @@ struct TribeMemberStruct {
         self.priceToMeet = json["price_to_meet"].intValue
         self.uniqueName = json["unique_name"].stringValue
         self.uuid = json["uuid"].stringValue
+        self.badges = json["badges"].arrayValue
         
         if let extras = json["extras"].dictionary, let extrasJson = JSON(rawValue: extras) {
             self.extras = TribeMemberProfileExtrasDto(json: extrasJson)

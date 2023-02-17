@@ -179,6 +179,17 @@ internal enum StoryboardScene {
         internal static let keychainRestoreViewController = SceneType<KeychainRestoreViewController>(storyboard: Invite.self, identifier: "KeychainRestoreViewController")
     }
     
+    internal enum BadgeManagement : StoryboardType{
+        internal static let storyboardName = "BadgeManagement"
+        
+        internal static let badgeManagementListViewController = SceneType<UIViewController>(storyboard: BadgeManagement.self, identifier: "BadgeManagementListVC")
+        internal static let badgeDetailViewController = SceneType<UIViewController>(storyboard: BadgeManagement.self, identifier: "BadgeDetailViewController")
+        
+        internal static let memberBadgeDetailVC = SceneType<UIViewController>(storyboard: BadgeManagement.self, identifier: "MemberBadgeDetailVC")
+        
+        internal static let badgeMemberKnownBadgesVC = SceneType<UIViewController>(storyboard: BadgeManagement.self, identifier: "BadgeMemberKnownBadgesVC")
+    }
+    
     internal enum Welcome: StoryboardType {
         internal static let storyboardName = "Welcome"
         

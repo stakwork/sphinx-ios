@@ -23,6 +23,11 @@ protocol AttachmentsDelegate: class {
     func didTapReceiveButton()
 }
 
+public enum ChatAttachmentVCPresentationContext{
+    case fromMessages
+    case fromBadgeCreateUpdate
+}
+
 class ChatAttachmentViewController: UIViewController, BackCameraVC {
     
     weak var delegate: AttachmentsDelegate?
@@ -75,6 +80,8 @@ class ChatAttachmentViewController: UIViewController, BackCameraVC {
     var price: Int = 0
     var chat: Chat? = nil
     
+    var presentationContext : ChatAttachmentVCPresentationContext = .fromMessages
+    
     public enum OptionsButton: Int {
         case Camera
         case Library
@@ -121,6 +128,10 @@ class ChatAttachmentViewController: UIViewController, BackCameraVC {
         addSwipeToDismiss()
         
         imagePickerManager.configurePicker(vc: self)
+        
+        if(presentationContext == .fromBadgeCreateUpdate){
+            setupForBadges()
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -167,6 +178,15 @@ class ChatAttachmentViewController: UIViewController, BackCameraVC {
 //        setPriceContainer.isHidden = false
     }
     
+    func setupForBadges(){
+        self.paidMessageOptionContainer.isHidden = true
+        self.requestOptionContainer.isHidden = true
+        self.sendOptionContainer.isHidden = true
+        self.accessoryView.sendButton.setTitle("publish", for: .normal)
+        self.accessoryView.textView.text = "Upload this badge icon"
+        self.accessoryView.textView.isUserInteractionEnabled = false
+        self.viewTitle.attributedText = NSAttributedString(string: "Upload an Icon")
+    }
     
     func showFileInfoContainer() {
         fileInfoContainer.isHidden = false

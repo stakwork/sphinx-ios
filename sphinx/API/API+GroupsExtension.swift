@@ -286,4 +286,182 @@ extension API {
             }
         }
     }
+    
+    func getTribeLeaderboard(
+        tribeUUID:String,
+        callback: @escaping GetTribeBadgesCallback,
+        errorCallback: @escaping EmptyCallback
+    ){
+        let urlPath = API.kTribesServerBaseURL + "/leaderboard/\(tribeUUID)"
+        
+        var urlComponents = URLComponents(string: urlPath)!
+
+        guard let urlString = urlComponents.url?.absoluteString else {
+            errorCallback()
+            return
+        }
+
+        guard let request = createRequest(
+            urlString,
+            bodyParams: nil,
+            method: "GET"
+        ) else {
+            errorCallback()
+            return
+        }
+
+        sphinxRequest(request) { response in
+            switch response.result {
+            case .success(let data):
+                if let json = data as? [NSDictionary] {
+                    print(json)
+                    callback(json)
+                    return
+                }
+                print(response.response?.statusCode)
+                errorCallback()
+            case .failure(_):
+                print(response.response?.statusCode)
+                errorCallback()
+            }
+        }
+    }
+    
+    func createTribeAdminBadge(
+        badge: Badge,
+        amount:Int,
+        callback: @escaping CreateTribeBadgeCallback,
+        errorCallback: @escaping EmptyCallback
+    ){
+        var params = [String:Any]()
+        params = badge.toJSON()
+        params["amount"] = amount//10
+        
+        guard let request = getURLRequest(route: "/create_badge", params: params as? NSDictionary, method: "POST") else {
+            errorCallback()
+            return
+        }
+        
+        sphinxRequest(request) { response in
+            switch response.result {
+            case .success(let data):
+                if let json = data as? NSDictionary {
+                    if let success = json["success"] as? Bool,
+                        success {
+                        callback(success)
+                        return
+                    }
+                }
+                print(response.response?.statusCode)
+                errorCallback()
+            case .failure(_):
+                print(response.response?.statusCode)
+                errorCallback()
+            }
+        }
+    }
+    
+    func changeActivationStateAdminBadgeTemplates(
+        badge: Badge,
+        callback: @escaping SuccessCallback,
+        errorCallback: @escaping EmptyCallback
+    ){
+        var params = [String:Any]()
+        if let id = badge.badge_id,
+           let chatId = badge.chat_id{
+            params = [
+                "badge_id" : id,
+                "chat_id" : chatId
+            ]
+        }
+        else{
+            errorCallback()
+            return
+        }
+        
+        let route = (badge.activationState == true) ? "/add_badge" : "/remove_badge"
+        guard let request = getURLRequest(route: route, params: params as? NSDictionary, method: "POST") else {
+            errorCallback()
+            return
+        }
+        
+        sphinxRequest(request) { response in
+            switch response.result {
+            case .success(let data):
+                if let json = data as? NSDictionary {
+                    if let success = json["success"] as? Bool,
+                        success {
+                        callback(true)
+                        return
+                    }
+                }
+                print(response.response?.statusCode)
+                errorCallback()
+            case .failure(_):
+                print(response.response?.statusCode)
+                errorCallback()
+            }
+        }
+        
+    }
+    
+    func getTribeAdminBadgeTemplates(
+        callback: @escaping GetTribeBadgesCallback,
+        errorCallback: @escaping EmptyCallback
+    ){
+        guard let request = getURLRequest(route: "/badge_templates", params: nil, method: "GET") else {
+            errorCallback()
+            return
+        }
+        sphinxRequest(request) { response in
+            switch response.result {
+            case .success(let data):
+                if let json = data as? NSDictionary {
+                    if let success = json["success"] as? Bool,
+                        let response = json["response"] as? [NSDictionary],
+                        success {
+                        callback(response)
+                        return
+                    }
+                }
+                print(response.response?.statusCode)
+                errorCallback()
+            case .failure(_):
+                print(response.response?.statusCode)
+                errorCallback()
+            }
+        }
+    }
+    
+    func getTribeAdminBadges(
+        chatID:Int?,
+        callback: @escaping GetTribeBadgesCallback,
+        errorCallback: @escaping EmptyCallback
+    ){
+        let urlString = (chatID == nil) ? "/badges?limit=100&offset=0" : "/badge_per_tribe/\(chatID!)?limit=100&offset=0"
+        //let params : [String:Any]? = (tribeID == nil) ? nil : ["chat_id" : tribeID!]
+        guard let request = getURLRequest(route: urlString, params: nil, method: "GET") else {
+            errorCallback()
+            return
+        }
+
+        sphinxRequest(request) { response in
+            switch response.result {
+            case .success(let data):
+                if let json = data as? NSDictionary {
+                    if let success = json["success"] as? Bool,
+                        let response = json["response"] as? [NSDictionary],
+                        success {
+                        callback((response))
+                        return
+                    }
+                }
+                print(response.response?.statusCode)
+                errorCallback()
+            case .failure(_):
+                print(response.response?.statusCode)
+                errorCallback()
+            }
+        }
+    }
 }

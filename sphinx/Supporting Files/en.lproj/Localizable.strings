@@ -150,6 +150,8 @@
 "paused.upper" = "PAUSED";
 "ended.upper" = "ENDED";
 "active.upper" = "ACTIVE";
+"inactive.upper" = "INACTIVE";
+"template.upper" = "TEMPLATE";
 "subscription.fields.required" = "Amount, time interval and end rule are required.";
 "confirm.delete.subscription" = "Are you sure you want to delete this subscription?";
 "amount.upper" = "AMOUNT";
@@ -543,3 +545,30 @@
 "time.hours-ago" = "%d hours ago";
 "time.yesterday" = "yesterday";
 "time.days-ago" = "%d days ago";
+
+//BADGES
+"badges.earn-badges" = "Earn Badges";
+"badges.earnings" = "Earnings";
+"badges.contributions" = "Contributions";
+"badges.badges" = "Badges";
+"badges.reputation" = "Reputation";
+"badges.send-sats" = "Send Sats";
+"badges.tribe-badges" = "Tribe Badges";
+"badges.create-new-badge" = "Create New Badge";
+"badges.quantity" = "Quantity";
+"badges.manage-existing-badges" = "Manage Existing Badges";
+"badges.cant-make-badge" = "Can't Make Badge";
+"badges.cant-make-badge-reason" = "You already have a badge of this type. You can manage it in the Existing Badges section.";
+"badges.price-per-badge" = "Price per Badge";
+"badges.purchase-badges" = "Purchase Badges";
+"badges.known-badges" = "List of Known Badges";
+"badges.no-badges-message" = "This Tribe doesn't appear to have any known badges...";
+"badges.badges-left" = "of %d left";
+"badges.activate-badge" = "Activate Badge";
+"badges.deactivate-badge" = "Deactivate Badge";
+"badges.creation-success-title"  = "Successfully Created Badge";
+"badges.creation-success-message"  = "You've created %d copies of";
+"badges.your-badge" = "your badge";
+"badges.success" = "Success";
+"badges.activation-success" = "Badges successfully activated";
+"badges.deactivation-success" = "Badges successfully deactivated";

@@ -445,16 +445,18 @@ extension ChatViewController : MessageCellDelegate {
     }
     
     func didTapAvatarView(message: TransactionMessage) {
-        if let _ = message.person {
-            accessoryView.hide()
+        if let _ = message.person,
+           let matchedLeaderboardEntry = chatListViewModel.chatLeaderboard.filter({$0.alias == message.senderAlias}).first {
             
-            let tribeMemberProfileVC = TribeMemberProfileViewController.instantiate(message: message, delegate: self)
-            tribeMemberProfileVC.modalPresentationStyle = .overCurrentContext
-            self.navigationController?.present(tribeMemberProfileVC, animated: false)
-        } else {
+            let vc = MemberBadgeDetailVC.instantiate(message:message, leaderboardEntry: matchedLeaderboardEntry, delegate:self, knownTribeBadges: chatListViewModel.availableBadges)
+            vc.modalPresentationStyle = .overCurrentContext
+            self.navigationController?.present(vc, animated: false)
+        }
+        else {
             let tribeMemberPopupVC = TribeMemberPopupViewController.instantiate(message: message, delegate: self)
             WindowsManager.sharedInstance.showConveringWindowWith(rootVC: tribeMemberPopupVC)
         }
+        
     }
 }
 
@@ -473,6 +475,14 @@ extension ChatViewController : TribeMemberViewDelegate {
         )
 
         presentNavigationControllerWith(vc: viewController)
+    }
+    
+    func displayKnownBadges(){
+        let badgeVC = BadgeMemberKnownBadgesVC.instantiate(chatID: chat?.id)
+        if let valid_vc = badgeVC as? BadgeMemberKnownBadgesVC{
+            valid_vc.badges = self.chatListViewModel.availableBadges
+        }
+        self.navigationController?.pushViewController(badgeVC, animated: true)
     }
     
     func didDismissTribeMemberVC() {

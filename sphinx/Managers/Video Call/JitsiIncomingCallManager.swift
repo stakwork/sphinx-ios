@@ -7,6 +7,7 @@
 
 import Foundation
 import CallKit
+import UIKit
 
 @available(iOS 14.0, *)
 final class JitsiIncomingCallManager: NSObject, CXProviderDelegate{
@@ -20,6 +21,8 @@ final class JitsiIncomingCallManager: NSObject, CXProviderDelegate{
     
     let provider = CXProvider(configuration: CXProviderConfiguration())
     let callController = CXCallController()
+    var chatID: Int? = nil
+    var currentJitsiURL: String? = nil
     
     override init(){
         super.init()
@@ -55,6 +58,12 @@ final class JitsiIncomingCallManager: NSObject, CXProviderDelegate{
     
     func provider(_ provider: CXProvider, perform action: CXAnswerCallAction){
         action.fulfill()
+        if let valid_chat_id = chatID,
+           let appDelegate = UIApplication.shared.delegate as? AppDelegate,
+            let _ = currentJitsiURL{
+            UserDefaults.Keys.chatId.set(valid_chat_id)
+            appDelegate.setInitialVC(launchingApp: false)
+        }
         print("Call Answered")
     }
     

@@ -212,10 +212,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    func startCallManagerTest(callerName:String){
+    func startCallManagerTest(chatID:Int,callerName:String){
         if #available(iOS 14.0, *) {
             let callManager = JitsiIncomingCallManager.sharedInstance
             let id = UUID()
+            callManager.chatID = chatID
             callManager.reportIncomingCall(id: id, handle: callerName)
         } else {
             // Fallback on earlier versions

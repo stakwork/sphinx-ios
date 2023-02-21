@@ -11,9 +11,15 @@ extension DashboardRootViewController: SocketManagerDelegate {
     
     func didReceiveMessage(message: TransactionMessage, shouldSync: Bool) {
         if message.shouldInitiateCallAlert,
+           let chat = message.chat,
            let appDelegate = UIApplication.shared.delegate as? AppDelegate{
             let callerName = message.senderAlias ?? ("Caller from:\(message.chat?.name)")
-            appDelegate.startCallManagerTest(callerName: callerName)
+            if #available(iOS 14.0, *) {
+                JitsiIncomingCallManager.sharedInstance.currentJitsiURL = message.messageContent
+            } else {
+                // Fallback on earlier versions
+            }
+            appDelegate.startCallManagerTest(chatID:chat.id,callerName: callerName)
         }
         chatsListViewModel.updateContactsAndChats()
         updateCurrentViewControllerData()

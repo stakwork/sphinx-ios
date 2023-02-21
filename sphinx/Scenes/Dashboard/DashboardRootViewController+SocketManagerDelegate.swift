@@ -19,7 +19,7 @@ extension DashboardRootViewController: SocketManagerDelegate {
             } else {
                 // Fallback on earlier versions
             }
-            appDelegate.startCallManagerTest(chatID:chat.id,callerName: callerName)
+            appDelegate.handleIncomingCall(chatID:chat.id,callerName: callerName)
         }
         chatsListViewModel.updateContactsAndChats()
         updateCurrentViewControllerData()

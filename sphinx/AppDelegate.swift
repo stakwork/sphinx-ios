@@ -212,7 +212,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    func startCallManagerTest(chatID:Int,callerName:String){
+    func handleIncomingCall(chatID:Int,callerName:String){
         if #available(iOS 14.0, *) {
             let callManager = JitsiIncomingCallManager.sharedInstance
             let id = UUID()
@@ -222,6 +222,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // Fallback on earlier versions
         }
         
+    }
+    
+    func handleAccpetedCall(callLink:String){
+        VideoCallManager.sharedInstance.startVideoCall(link: callLink, audioOnly: true)
     }
     
 

@@ -57,7 +57,8 @@ final class JitsiIncomingCallManager: NSObject, CXProviderDelegate{
     }
     
     func provider(_ provider: CXProvider, perform action: CXAnswerCallAction){
-        action.fulfill()
+        let hangUpAction = CXEndCallAction(call: action.callUUID)
+        hangUpAction.fulfill()
         if let valid_chat_id = chatID,
            let appDelegate = UIApplication.shared.delegate as? AppDelegate,
             let _ = currentJitsiURL{

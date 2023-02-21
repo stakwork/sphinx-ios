@@ -11,6 +11,13 @@ import CallKit
 @available(iOS 14.0, *)
 final class JitsiIncomingCallManager: NSObject, CXProviderDelegate{
     
+    class var sharedInstance : JitsiIncomingCallManager {
+        struct Static {
+            static let instance = JitsiIncomingCallManager()
+        }
+        return Static.instance
+    }
+    
     let provider = CXProvider(configuration: CXProviderConfiguration())
     let callController = CXCallController()
     
@@ -46,9 +53,19 @@ final class JitsiIncomingCallManager: NSObject, CXProviderDelegate{
         })
     }
     
+    func provider(_ provider: CXProvider, perform action: CXAnswerCallAction){
+        action.fulfill()
+        print("Call Answered")
+    }
+    
+    func provider(_ provider: CXProvider, perform action: CXEndCallAction){
+        action.fulfill()
+        print("Call Ended")
+    }
+    
     
     func providerDidReset(_ provider: CXProvider) {
-        
+        print("Provider reset.")
     }
     
     

@@ -297,19 +297,9 @@ extension DashboardRootViewController {
         }
         setupAddTribeButton()
         
-        startCallManagerTest()
+        //startCallManagerTest()
     }
     
-    func startCallManagerTest(){
-        if #available(iOS 14.0, *) {
-            let callManager = JitsiIncomingCallManager()
-            let id = UUID()
-            callManager.reportIncomingCall(id: id, handle: "Paul Itoi")
-        } else {
-            // Fallback on earlier versions
-        }
-        
-    }
 }
 
 

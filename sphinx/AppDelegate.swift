@@ -212,6 +212,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
+    func startCallManagerTest(callerName:String){
+        if #available(iOS 14.0, *) {
+            let callManager = JitsiIncomingCallManager.sharedInstance
+            let id = UUID()
+            callManager.reportIncomingCall(id: id, handle: callerName)
+        } else {
+            // Fallback on earlier versions
+        }
+        
+    }
+    
 
     func reloadAppIfStyleChanged() {
         if #available(iOS 13.0, *) {
@@ -477,7 +488,8 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     func handlePush(
         notification: [String: AnyObject]
     ) {
-        if let aps = notification["aps"] as? [String: AnyObject], let customData = aps["custom_data"] as? [String: AnyObject] {
+        if let aps = notification["aps"] as? [String: AnyObject],
+            let customData = aps["custom_data"] as? [String: AnyObject] {
             if let chatId = customData["chat_id"] as? Int {
                 UserDefaults.Keys.chatId.set(chatId)
             }

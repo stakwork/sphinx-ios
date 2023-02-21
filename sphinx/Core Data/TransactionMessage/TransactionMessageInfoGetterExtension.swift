@@ -627,6 +627,14 @@ extension TransactionMessage {
         }
     }
     
+    var shouldInitiateCallAlert : Bool{
+        if let content = self.messageContent,
+           content.contains("https://jitsi"){
+            return true
+        }
+        return false
+    }
+    
     var isResendActionAllowed: Bool {
         get {
             return (isTextMessage() && status == TransactionMessageStatus.failed.rawValue)

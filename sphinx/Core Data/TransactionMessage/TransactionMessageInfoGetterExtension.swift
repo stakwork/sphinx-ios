@@ -629,6 +629,7 @@ extension TransactionMessage {
     
     var shouldInitiateCallAlert : Bool{
         if let content = self.messageContent,
+           self.chat?.isGroup() == false,
            content.contains("https://jitsi"){
             return true
         }

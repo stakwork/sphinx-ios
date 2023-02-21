@@ -13,7 +13,7 @@ extension DashboardRootViewController: SocketManagerDelegate {
         if message.shouldInitiateCallAlert,
            let chat = message.chat,
            let appDelegate = UIApplication.shared.delegate as? AppDelegate{
-            let callerName = message.senderAlias ?? ("Caller from:\(message.chat?.name)")
+            let callerName = message.getMessageSenderNickname()//("Caller from:\(message.chat?.name)")
             if #available(iOS 14.0, *) {
                 JitsiIncomingCallManager.sharedInstance.currentJitsiURL = message.messageContent
             } else {

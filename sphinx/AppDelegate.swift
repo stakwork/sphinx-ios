@@ -15,6 +15,7 @@ import GiphyUISDK
 import BackgroundTasks
 import AVFAudio
 import SDWebImageSVGCoder
+import PushKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -132,6 +133,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             )
         }
     }
+    
+    fileprivate func registerForVoIP(){
+        let registry = PKPushRegistry(queue: .main)
+        DispatchQueue.main.async {
+            registry.delegate = UIApplication.shared.delegate as! AppDelegate
+        }
+        registry.desiredPushTypes = [PKPushType.voIP]
+    }
+    
+    
     
     func scheduleAppRefresh() {
         let request = BGAppRefreshTaskRequest(identifier: "com.gl.sphinx.refresh")
@@ -520,5 +531,17 @@ extension AppDelegate : SphinxOnionConnectorDelegate {
         newMessageBubbleHelper.showGenericMessageView(text: "tor.connection.failed".localized)
         
         NotificationCenter.default.post(name: .onConnectionStatusChanged, object: nil)
+    }
+}
+
+
+extension AppDelegate : PKPushRegistryDelegate{
+    func pushRegistry(_ registry: PKPushRegistry, didUpdate pushCredentials: PKPushCredentials, for type: PKPushType) {
+        //Test
+    }
+    
+    func pushRegistry(_ registry: PKPushRegistry, didReceiveIncomingPushWith payload: PKPushPayload, for type: PKPushType, completion: @escaping () -> Void) {
+        //TODO analyze payload and call JitsiCallManager
+        print(payload.dictionaryPayload)
     }
 }

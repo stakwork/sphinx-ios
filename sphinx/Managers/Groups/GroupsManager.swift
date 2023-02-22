@@ -20,6 +20,7 @@ class GroupsManager {
     
     var contactIds : [Int] = []
     var name : String? = nil
+    private var chatLastReadLookup : [Int:Int] = [:]
     
     func resetData() {
         contactIds = [Int]()
@@ -82,6 +83,18 @@ class GroupsManager {
                 completion(false)
             }
         })
+    }
+    
+    //chat scroll retention
+    func setChatLastRead(chatID:Int,messageId:Int){
+        chatLastReadLookup[chatID] = messageId
+    }
+    
+    func getChatLastRead(chatID:Int)->Int?{
+        if let result = chatLastReadLookup[chatID]{
+            return result
+        }
+        return nil
     }
     
     //tribes

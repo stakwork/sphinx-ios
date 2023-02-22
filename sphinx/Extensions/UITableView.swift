@@ -47,4 +47,9 @@ extension UITableView {
             self.scrollToRow(at: indexPath, at: .bottom, animated: animated)
         }
     }
+    
+    func scrollToRow(index:Int, animated:Bool = true){
+        let indexPath = IndexPath(row: index, section: self.numberOfSections - 1)
+        self.scrollToRow(at: indexPath, at: .bottom, animated: animated)
+    }
 }

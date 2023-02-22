@@ -153,7 +153,7 @@ class ChatViewController: KeyboardHandlerViewController {
                 key: PodcastDelegateKeys.ChatSmallPlayerBar.rawValue
             )
         }
-        
+        setLastReadMessage()
         CustomAudioPlayer.sharedInstance.stopAndReset()
         API.sharedInstance.cleanMessagesRequest()
         removeObservers()
@@ -206,7 +206,19 @@ class ChatViewController: KeyboardHandlerViewController {
     
     func initialLoad(forceReload: Bool = false) {
         chatDataSource?.setDataAndReload(contact: contact, chat: chat, forceReload: forceReload)
-        scrollChatToBottom(animated: false)
+        if let chat = chat,
+           let lastReadID = GroupsManager.sharedInstance.getChatLastRead(chatID: chat.id),
+           let datasource = chatDataSource,
+           let message = datasource.messagesArray.first(where: {$0.id == lastReadID}),
+           let index = datasource.messagesArray.firstIndex(where: {$0.id == lastReadID}){
+            
+            print("lastReadID:\(lastReadID) , Content:\(message.messageContent)")
+            let targetIndex = min(datasource.messagesArray.count - 1, index + 3)
+            scrollChatToIndex(index: targetIndex)
+        }
+        else{
+            scrollChatToBottom(animated: false)
+        }
     }
         
     func fetchNewData() {
@@ -218,6 +230,19 @@ class ChatViewController: KeyboardHandlerViewController {
                     self.chatListViewModel.getChatBadges(chat: self.chat)
                 }
             }
+        }
+    }
+    
+    func setLastReadMessage(){
+        if let dataSource = chatDataSource,
+           let lastReadID = dataSource.getBottomVisibleID(),
+           let valid_chat = chat
+        {
+            let content = dataSource.messagesArray.first(where: {$0.id == lastReadID})?.messageContent
+            let index = dataSource.messagesArray.firstIndex(where: {$0.id == lastReadID})
+            let targetIndex = min(dataSource.messagesArray.count - 1, index ?? 1000 + 3)
+            print("index:\(targetIndex) lastReadID:\(lastReadID) , Content:\(content ?? "unknown")")
+            GroupsManager.sharedInstance.setChatLastRead(chatID: valid_chat.id, messageId: lastReadID)
         }
     }
     

@@ -87,6 +87,19 @@ class ChatDataSource : NSObject {
         tableView.reloadData()
     }
     
+    func getBottomVisibleID()->Int?{
+        if let visibleIndicies = tableView.indexPathsForVisibleRows,
+            let selectedIndexPath = visibleIndicies.last{
+            let selectedIndex = selectedIndexPath.item
+            let messageRow = messageRowsArray[selectedIndex]
+            let messageID = messageRow.getMessageId()
+            print("topVisibleMessageID:\(messageID) - \(messageRow.getMessageContent())")
+
+            return messageID
+        }
+           return nil
+    }
+    
     func getInitialItemsPerPage() -> Int {
         if messagesArray.count > 0 {
             return messagesArray.count

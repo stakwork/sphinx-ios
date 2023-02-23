@@ -362,7 +362,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1Qs-bX-MOr">
-                                                <rect key="frame" x="268" y="18.5" width="51" height="31"/>
+                                                <rect key="frame" x="280" y="18.5" width="51" height="31"/>
                                                 <color key="onTintColor" name="PrimaryBlue"/>
                                                 <connections>
                                                     <action selector="changedActivationState:" destination="voF-kw-WQJ" eventType="valueChanged" id="VG2-St-Vhf"/>
@@ -373,11 +373,11 @@
                                             <constraint firstItem="hGd-ht-1re" firstAttribute="leading" secondItem="4fD-b0-9N9" secondAttribute="leading" id="43J-1b-cTD"/>
                                             <constraint firstAttribute="height" constant="68" id="7YH-Cj-9cL"/>
                                             <constraint firstItem="1Qs-bX-MOr" firstAttribute="centerY" secondItem="hGd-ht-1re" secondAttribute="centerY" id="Bdk-0J-uaO"/>
-                                            <constraint firstItem="1Qs-bX-MOr" firstAttribute="leading" secondItem="hGd-ht-1re" secondAttribute="trailing" constant="118" id="EtR-K4-m2p"/>
                                             <constraint firstAttribute="trailing" secondItem="EZ1-Yp-CQR" secondAttribute="trailing" id="Fyk-Uh-wJE"/>
                                             <constraint firstAttribute="trailing" secondItem="9ho-TZ-QAe" secondAttribute="trailing" id="I89-gS-eq9"/>
                                             <constraint firstAttribute="bottom" secondItem="EZ1-Yp-CQR" secondAttribute="bottom" constant="2" id="Pxw-AH-iZz"/>
                                             <constraint firstItem="9ho-TZ-QAe" firstAttribute="top" secondItem="4fD-b0-9N9" secondAttribute="top" constant="2" id="QYx-sy-FHi"/>
+                                            <constraint firstItem="1Qs-bX-MOr" firstAttribute="trailing" secondItem="EZ1-Yp-CQR" secondAttribute="trailing" id="R2E-V5-Igd"/>
                                             <constraint firstItem="EZ1-Yp-CQR" firstAttribute="leading" secondItem="4fD-b0-9N9" secondAttribute="leading" id="VTc-Iz-jQI"/>
                                             <constraint firstItem="hGd-ht-1re" firstAttribute="top" secondItem="4fD-b0-9N9" secondAttribute="top" id="WPX-Pg-bbd"/>
                                             <constraint firstAttribute="bottom" secondItem="hGd-ht-1re" secondAttribute="bottom" id="sVn-O7-Ubs"/>

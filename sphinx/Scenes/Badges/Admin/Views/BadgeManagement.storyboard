@@ -265,7 +265,7 @@
                                         <rect key="frame" x="222" y="494" width="139" height="48"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cr8-Y7-USt">
-                                                <rect key="frame" x="0.0" y="0.0" width="44" height="48"/>
+                                                <rect key="frame" x="-2" y="0.0" width="44" height="48"/>
                                                 <color key="backgroundColor" systemColor="systemYellowColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="44" id="R1n-LT-f0g"/>
@@ -286,7 +286,7 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yTb-MJ-Qlb">
-                                                <rect key="frame" x="44" y="0.0" width="63" height="48"/>
+                                                <rect key="frame" x="42" y="0.0" width="65" height="48"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -296,7 +296,7 @@
                                         <constraints>
                                             <constraint firstItem="Ycp-LJ-HiN" firstAttribute="bottom" secondItem="cr8-Y7-USt" secondAttribute="bottom" id="5ab-ob-cfj"/>
                                             <constraint firstItem="Ycp-LJ-HiN" firstAttribute="top" secondItem="cr8-Y7-USt" secondAttribute="top" id="9vZ-8R-i6J"/>
-                                            <constraint firstItem="cr8-Y7-USt" firstAttribute="leading" secondItem="2Z5-Fr-xVS" secondAttribute="leading" id="Ayv-pC-ekA"/>
+                                            <constraint firstItem="cr8-Y7-USt" firstAttribute="leading" secondItem="2Z5-Fr-xVS" secondAttribute="leading" constant="-2" id="Ayv-pC-ekA"/>
                                             <constraint firstAttribute="trailing" secondItem="Ycp-LJ-HiN" secondAttribute="trailing" constant="-12" id="FSL-o9-RpM"/>
                                             <constraint firstItem="yTb-MJ-Qlb" firstAttribute="centerY" secondItem="cr8-Y7-USt" secondAttribute="centerY" id="IEd-L9-LXs"/>
                                             <constraint firstItem="yTb-MJ-Qlb" firstAttribute="leading" secondItem="cr8-Y7-USt" secondAttribute="trailing" id="PTZ-lu-fBU"/>

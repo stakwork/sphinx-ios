@@ -207,16 +207,10 @@ class ChatViewController: KeyboardHandlerViewController {
     func initialLoad(forceReload: Bool = false) {
         chatDataSource?.setDataAndReload(contact: contact, chat: chat, forceReload: forceReload)
         if let chat = chat,
-           let lastReadID = GroupsManager.sharedInstance.getChatLastRead(chatID: chat.id),
-           let datasource = chatDataSource,
-           let message = datasource.messagesArray.first(where: {$0.id == lastReadID}),
-           let index = datasource.messagesArray.firstIndex(where: {$0.id == lastReadID}){
+           let tablePosition = GroupsManager.sharedInstance.getChatLastRead(chatID: chat.id) {
             
-            print("lastReadID:\(lastReadID) , Content:\(message.messageContent)")
-            let targetIndex = min(datasource.messagesArray.count - 1, index + 3)
-            scrollChatToIndex(index: targetIndex)
-        }
-        else{
+            chatTableView.scrollToOffset(yPosition: tablePosition.1)
+        } else{
             scrollChatToBottom(animated: false)
         }
     }
@@ -235,14 +229,10 @@ class ChatViewController: KeyboardHandlerViewController {
     
     func setLastReadMessage(){
         if let dataSource = chatDataSource,
-           let lastReadID = dataSource.getBottomVisibleID(),
+           let tablePosition = dataSource.getTableViewPosition(),
            let valid_chat = chat
         {
-            let content = dataSource.messagesArray.first(where: {$0.id == lastReadID})?.messageContent
-            let index = dataSource.messagesArray.firstIndex(where: {$0.id == lastReadID})
-            let targetIndex = min(dataSource.messagesArray.count - 1, index ?? 1000 + 3)
-            print("index:\(targetIndex) lastReadID:\(lastReadID) , Content:\(content ?? "unknown")")
-            GroupsManager.sharedInstance.setChatLastRead(chatID: valid_chat.id, messageId: lastReadID)
+            GroupsManager.sharedInstance.setChatLastRead(chatID: valid_chat.id, tablePosition: tablePosition)
         }
     }
     

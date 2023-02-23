@@ -73,7 +73,10 @@ class ChatDataSource : NSObject {
         insertedRowsCount = 0
         
         chatMessagesCount = chat?.getAllMessagesCount() ?? 0
-        messagesArray = chat?.getAllMessages(limit: itemsPerPage) ?? [TransactionMessage]()
+        
+        let tablePosition = GroupsManager.sharedInstance.getChatLastRead(chatID: chat?.id)
+        messagesArray = chat?.getAllMessages(limit: itemsPerPage, firstMessage: tablePosition?.0) ?? [TransactionMessage]()
+        
         messageIdsArray = []
         messageRowsArray = []
         boosts = [:]
@@ -87,17 +90,11 @@ class ChatDataSource : NSObject {
         tableView.reloadData()
     }
     
-    func getBottomVisibleID()->Int?{
-        if let visibleIndicies = tableView.indexPathsForVisibleRows,
-            let selectedIndexPath = visibleIndicies.last{
-            let selectedIndex = selectedIndexPath.item
-            let messageRow = messageRowsArray[selectedIndex]
-            let messageID = messageRow.getMessageId()
-            print("topVisibleMessageID:\(messageID) - \(messageRow.getMessageContent())")
-
-            return messageID
+    func getTableViewPosition() -> (Int, CGFloat)? {
+        if let firstMessageId = messagesArray.first?.id {
+            return (firstMessageId, tableView.contentOffset.y)
         }
-           return nil
+       return nil
     }
     
     func getInitialItemsPerPage() -> Int {

@@ -119,12 +119,6 @@ class KeyboardHandlerViewController: OrientationHandlerViewController {
         chatTableView?.contentInset = UIEdgeInsets.init(top: headerHeight, left: 0, bottom: bottomContentInset, right: 0)
         chatTableView?.scrollToBottom(animated: animated)
     }
-    
-    func scrollChatToIndex(index:Int){
-        let headerHeight = windowInsets.top + kHeaderHeight
-        chatTableView?.contentInset = UIEdgeInsets.init(top: headerHeight, left: 0, bottom: bottomContentInset, right: 0)
-        chatTableView?.scrollToRow(index: index)
-    }
      
     func bottomOffset() -> CGPoint {
         return CGPoint(x: 0, y: max(-chatTableView.contentInset.top, chatTableView.contentSize.height - (chatTableView.bounds.size.height - chatTableView.contentInset.bottom)))

@@ -291,8 +291,22 @@ public class Chat: NSManagedObject {
         return chat
     }
     
-    func getAllMessages(limit: Int? = 100, messagesIdsToExclude: [Int] = [], lastMessage: TransactionMessage? = nil) -> [TransactionMessage] {
-        return TransactionMessage.getAllMessagesFor(chat: self, limit: limit, messagesIdsToExclude: messagesIdsToExclude, lastMessage: lastMessage)
+    //Added firstMessage param to the query method. If stored then chat will load all messages starting from that one and won't consider the limit param
+    func getAllMessages(
+        limit: Int? = 100,
+        messagesIdsToExclude: [Int] = [],
+        lastMessage: TransactionMessage? = nil,
+        firstMessage: TransactionMessage? = nil
+    ) -> [TransactionMessage] {
+        
+        return TransactionMessage.getAllMessagesFor(
+            chat: self,
+            limit: limit,
+            messagesIdsToExclude: messagesIdsToExclude,
+            lastMessage: lastMessage,
+            firstMessage: firstMessage
+        )
+        
     }
     
     func getAllMessagesCount() -> Int {

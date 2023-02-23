@@ -52,4 +52,8 @@ extension UITableView {
         let indexPath = IndexPath(row: index, section: self.numberOfSections - 1)
         self.scrollToRow(at: indexPath, at: .bottom, animated: animated)
     }
+    
+    func scrollToOffset(yPosition: CGFloat) {
+        self.contentOffset.y = yPosition
+    }
 }

@@ -26,6 +26,7 @@ class StakworkAuthorizeViewController: UIViewController {
         var challenge : String? = nil
         var sig : String? = nil
         var pubkey : String? = nil
+        var routeHint : String? = nil
         
         var name : String? = nil
         var token : String? = nil
@@ -72,7 +73,11 @@ class StakworkAuthorizeViewController: UIViewController {
     
     func getAuthInfo() {
         authInfo = AuthInfo()
-        authInfo?.pubkey = UserData.sharedInstance.getUserPubKey()
+
+        let owner = UserContact.getOwner()
+        
+        authInfo?.pubkey = owner?.publicKey
+        authInfo?.routeHint = owner?.routeHint
         
         if let query = query, let action = getAction() {
             let components = query.components(separatedBy: "&")
@@ -178,7 +183,12 @@ class StakworkAuthorizeViewController: UIViewController {
             return
         }
         
-        let urlString = "https://auth.sphinx.chat/oauth_verify?id=\(id)&sig=\(sig)&pubkey=\(pubkey)"
+        var urlString = "https://auth.sphinx.chat/oauth_verify?id=\(id)&sig=\(sig)&pubkey=\(pubkey)"
+        
+        if let routeHint = authInfo.routeHint, !routeHint.isEmpty {
+            urlString = urlString + "&route_hint=\(routeHint)"
+        }
+        
         if let url = URL(string: urlString) {
             closeButtonTouched()
             UIApplication.shared.open(url, options: [:], completionHandler: nil)

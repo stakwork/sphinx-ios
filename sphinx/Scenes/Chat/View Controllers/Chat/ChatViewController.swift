@@ -153,7 +153,7 @@ class ChatViewController: KeyboardHandlerViewController {
                 key: PodcastDelegateKeys.ChatSmallPlayerBar.rawValue
             )
         }
-        
+        setLastReadMessage()
         CustomAudioPlayer.sharedInstance.stopAndReset()
         API.sharedInstance.cleanMessagesRequest()
         removeObservers()
@@ -206,7 +206,13 @@ class ChatViewController: KeyboardHandlerViewController {
     
     func initialLoad(forceReload: Bool = false) {
         chatDataSource?.setDataAndReload(contact: contact, chat: chat, forceReload: forceReload)
-        scrollChatToBottom(animated: false)
+        if let chat = chat,
+           let tablePosition = GroupsManager.sharedInstance.getChatLastRead(chatID: chat.id) {
+            
+            chatTableView.scrollToOffset(yPosition: tablePosition.1)
+        } else{
+            scrollChatToBottom(animated: false)
+        }
     }
         
     func fetchNewData() {
@@ -218,6 +224,15 @@ class ChatViewController: KeyboardHandlerViewController {
                     self.chatListViewModel.getChatBadges(chat: self.chat)
                 }
             }
+        }
+    }
+    
+    func setLastReadMessage(){
+        if let dataSource = chatDataSource,
+           let tablePosition = dataSource.getTableViewPosition(),
+           let valid_chat = chat
+        {
+            GroupsManager.sharedInstance.setChatLastRead(chatID: valid_chat.id, tablePosition: tablePosition)
         }
     }
     

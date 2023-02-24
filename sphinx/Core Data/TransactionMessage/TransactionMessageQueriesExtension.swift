@@ -33,27 +33,38 @@ extension TransactionMessage {
         return message
     }
     
-    static func getAllMessagesFor(chat: Chat,
-                                  limit: Int? = nil,
-                                  messagesIdsToExclude: [Int] = [],
-                                  lastMessage: TransactionMessage? = nil) -> [TransactionMessage] {
+    //Added firstMessage param to the query method. If stored then chat will load all messages starting from that one and won't consider the limit param
+    static func getAllMessagesFor(
+        chat: Chat,
+        limit: Int? = nil,
+        messagesIdsToExclude: [Int] = [],
+        lastMessage: TransactionMessage? = nil,
+        firstMessage: TransactionMessage? = nil
+    ) -> [TransactionMessage] {
         
         var predicate : NSPredicate!
         if messagesIdsToExclude.count > 0 {
-            if let m = lastMessage {
+            if let f = firstMessage {
+                predicate = NSPredicate(format: "chat == %@ AND (NOT id IN %@) AND (date >= %@) AND NOT (type IN %@)", chat, messagesIdsToExclude, f.messageDate as NSDate, typesToExcludeFromChat)
+            } else if let m = lastMessage {
                 predicate = NSPredicate(format: "chat == %@ AND (NOT id IN %@) AND (date <= %@) AND NOT (type IN %@)", chat, messagesIdsToExclude, m.messageDate as NSDate, typesToExcludeFromChat)
             } else {
                 predicate = NSPredicate(format: "chat == %@ AND (NOT id IN %@) AND NOT (type IN %@)", chat, messagesIdsToExclude, typesToExcludeFromChat)
             }
         } else {
-            if let m = lastMessage {
+            if let f = firstMessage {
+                predicate = NSPredicate(format: "chat == %@ AND (date >= %@) AND NOT (type IN %@)", chat, f.messageDate as NSDate, typesToExcludeFromChat)
+            } else if let m = lastMessage {
                 predicate = NSPredicate(format: "chat == %@ AND (date <= %@) AND NOT (type IN %@)", chat, m.messageDate as NSDate, typesToExcludeFromChat)
             } else {
                 predicate = NSPredicate(format: "chat == %@ AND NOT (type IN %@)", chat, typesToExcludeFromChat)
             }
         }
         let sortDescriptors = [NSSortDescriptor(key: "date", ascending: false), NSSortDescriptor(key: "id", ascending: false)]
-        let messages: [TransactionMessage] = CoreDataManager.sharedManager.getObjectsOfTypeWith(predicate: predicate, sortDescriptors: sortDescriptors, entityName: "TransactionMessage", fetchLimit: limit)
+        
+        let fetchLimit = (firstMessage == nil) ? limit : nil
+        let messages: [TransactionMessage] = CoreDataManager.sharedManager.getObjectsOfTypeWith(predicate: predicate, sortDescriptors: sortDescriptors, entityName: "TransactionMessage", fetchLimit: fetchLimit)
+        
         return messages.reversed()
     }
     

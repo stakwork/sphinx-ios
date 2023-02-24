@@ -110,14 +110,15 @@ extension BadgeAdminManagementListDataSource : UITableViewDelegate,UITableViewDa
         }
         else if(indexPath.row == getNTemplates()){
             //header view
-            let existingBadgeHeacerCell = UITableViewCell(frame: CGRect(x: -8.0, y: 0.0, width: tableView.frame.width, height: 55))
-            let frame = CGRect(x: 0.0, y:0.0 , width: existingBadgeHeacerCell.frame.width, height: existingBadgeHeacerCell.frame.height)
-            existingBadgeHeacerCell.backgroundColor = UIColor.Sphinx.Body
+            let existingBadgeHeacerCell = UITableViewCell(frame: CGRect(x: 0, y: 0.0, width: tableView.frame.width, height: 55))
+            let frame = CGRect(x: 28.0, y: 0.0, width: tableView.frame.width - 28.0, height: 55)
+            existingBadgeHeacerCell.backgroundColor = UIColor.Sphinx.HeaderBG
             let label = UILabel(frame: frame)
             label.font = vc.badgeTemplateHeaderLabel.font
             label.textAlignment = .center
             label.text = "badges.manage-existing-badges".localized
-            label.textColor = UIColor.Sphinx.BodyInverted
+            label.textColor = UIColor.Sphinx.Text
+            label.textAlignment = .left
             existingBadgeHeacerCell.addSubview(label)
             existingBadgeHeacerCell.selectionStyle = .none
             return existingBadgeHeacerCell

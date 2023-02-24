@@ -95,7 +95,10 @@ extension API {
         callback: @escaping GetBadgeCallback,
         errorCallback: @escaping EmptyCallback
     ){
-        if(assetIDs.isEmpty){return}
+        if(assetIDs.isEmpty){
+            callback([])
+            return
+        }
         let params = [
             "ids":assetIDs
         ]

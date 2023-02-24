@@ -71,6 +71,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         connectTor()
         
         setInitialVC(launchingApp: true)
+        
+        registerForVoIP()
+        print(print("Device ID:\(UserDefaults.Keys.deviceId.get(defaultValue: ""))"))
 
         return true
     }
@@ -538,6 +541,11 @@ extension AppDelegate : SphinxOnionConnectorDelegate {
 extension AppDelegate : PKPushRegistryDelegate{
     func pushRegistry(_ registry: PKPushRegistry, didUpdate pushCredentials: PKPushCredentials, for type: PKPushType) {
         //Test
+        if type == PKPushType.voIP {
+            let tokenData = pushCredentials.token
+            var deviceToken: String = tokenData.reduce("", {$0 + String(format: "%02X", $1) })
+            print("TOKEN: \(deviceToken)")
+        }
     }
     
     func pushRegistry(_ registry: PKPushRegistry, didReceiveIncomingPushWith payload: PKPushPayload, for type: PKPushType, completion: @escaping () -> Void) {

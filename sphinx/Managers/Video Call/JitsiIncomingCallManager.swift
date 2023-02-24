@@ -64,7 +64,7 @@ final class JitsiIncomingCallManager: NSObject, CXProviderDelegate{
            let callURL = currentJitsiURL{
             //UserDefaults.Keys.chatId.set(valid_chat_id)
             //appDelegate.setInitialVC(launchingApp: false)
-            appDelegate.handleAccpetedCall(callLink: callURL)
+            appDelegate.handleAcceptedCall(callLink: callURL)
         }
         print("Call Answered")
     }

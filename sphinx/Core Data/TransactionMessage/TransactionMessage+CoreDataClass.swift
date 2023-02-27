@@ -53,7 +53,8 @@ public class TransactionMessage: NSManagedObject {
         case heartbeatConfirmation = 27
         case keysend = 28
         case boost = 29
-        case unknown = 30
+        case callInvite = 30
+        case unknown = 31
         case imageAttachment = 100
         case videoAttachment = 101
         case audioAttachment = 102

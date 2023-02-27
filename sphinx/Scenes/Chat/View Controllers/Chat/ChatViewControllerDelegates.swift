@@ -147,7 +147,7 @@ extension ChatViewController : ChatHeaderViewDelegate {
     
     func sendCallMessage(sender: UIButton) {
         VideoCallHelper.createCallMessage(button: sender, callback: { link in
-            let messageType = TransactionMessage.TransactionMessageType.message.rawValue
+            let messageType = TransactionMessage.TransactionMessageType.callInvite.rawValue
             self.shouldSendMessage(text: link, type: messageType, completion: { _ in })
         })
     }

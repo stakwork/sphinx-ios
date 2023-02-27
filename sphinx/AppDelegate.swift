@@ -38,7 +38,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let podcastPlayerController = PodcastPlayerController.sharedInstance
     
     let chatListViewModel = ChatListViewModel(contactsService: ContactsService())
-    let voipQueue = DispatchQueue(label: "voipQueue")
 
     func application(
         _ application: UIApplication,
@@ -139,7 +138,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     fileprivate func registerForVoIP(){
-        let registry = PKPushRegistry(queue: self.voipQueue)
+        let registry = PKPushRegistry(queue: .main)
         DispatchQueue.main.async {
             registry.delegate = UIApplication.shared.delegate as! AppDelegate
         }
@@ -550,7 +549,6 @@ extension AppDelegate : PKPushRegistryDelegate{
     }
     
     func pushRegistry(_ registry: PKPushRegistry, didReceiveIncomingPushWith payload: PKPushPayload, for type: PKPushType, completion: @escaping () -> Void) {
-        //TODO analyze payload and call JitsiCallManager
         if let dict = payload.dictionaryPayload as? [String:Any],
            let aps = dict["aps"] as? [String:Any],
             var contents = aps["alert"] as? String,
@@ -560,7 +558,9 @@ extension AppDelegate : PKPushRegistryDelegate{
            
             if #available(iOS 14.0, *) {
                 let manager = JitsiIncomingCallManager.sharedInstance
-                manager.currentJitsiURL = pushBody.linkURL
+                //print(EncryptionManager.sharedInstance.encryptMessageForOwner(message: pushBody.linkURL))
+                let (result, message) = EncryptionManager.sharedInstance.decryptMessage(message: pushBody.linkURL)
+                manager.currentJitsiURL = (result == true) ? message : pushBody.linkURL
                 self.handleIncomingCall(chatID: 0, callerName: pushBody.callerName)
             } else {
                 // Fallback on earlier versions
@@ -570,6 +570,9 @@ extension AppDelegate : PKPushRegistryDelegate{
         else{
             completion()
         }
+    }
+    func pushRegistry(_ registry: PKPushRegistry, didInvalidatePushTokenFor type: PKPushType){
+        print("invalidated token")
     }
 }
 

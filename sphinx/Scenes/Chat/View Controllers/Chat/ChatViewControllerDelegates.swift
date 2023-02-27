@@ -183,6 +183,13 @@ extension ChatViewController : ChatAccessoryViewDelegate {
         if let podcastComment = accessoryView.getReplyingPodcast() {
             messageText = podcastComment.getJsonString(withComment: text) ?? text
         }
+        else if type == TransactionMessage.TransactionMessageType.callInvite.rawValue{
+            let voipRequestMessage = VoIPRequestMessage()
+            voipRequestMessage.recurring = false
+            voipRequestMessage.link = messageText
+            voipRequestMessage.cron = ""
+            messageText = voipRequestMessage.toJSONString() ?? messageText
+        }
         
         let (botAmount, wrongAmount) = isWrongBotCommandAmount(text: messageText)
         if wrongAmount {

@@ -169,7 +169,7 @@ extension TransactionMessage {
         if let messageC = self.messageContent {
             if messageC.isEncryptedString() {
                 adjustedMC = getDecrytedMessage(dashboard: dashboard)
-            } else if messageC.isVideoCallLink {
+            } else if messageC.isVideoCallLink || self.type == TransactionMessageType.callInvite.rawValue{
                 adjustedMC = "join.call".localized
             }
         }
@@ -582,7 +582,7 @@ extension TransactionMessage {
     var isCopyTextActionAllowed: Bool {
         get {
             if let messageContent = messageContent {
-                return !messageContent.isVideoCallLink && !messageContent.isEncryptedString()
+                return !messageContent.isVideoCallLink && !messageContent.isEncryptedString() || self.type == TransactionMessageType.callInvite.rawValue
             }
             return false
         }
@@ -591,7 +591,7 @@ extension TransactionMessage {
     var isCopyLinkActionAllowed: Bool {
         get {
             if let messageContent = messageContent {
-                return !messageContent.isVideoCallLink && messageContent.stringLinks.count > 0
+                return !messageContent.isVideoCallLink && messageContent.stringLinks.count > 0 || self.type == TransactionMessageType.callInvite.rawValue
             }
             return false
         }
@@ -609,7 +609,7 @@ extension TransactionMessage {
     var isCopyCallLinkActionAllowed: Bool {
         get {
             if let messageContent = messageContent {
-                return messageContent.isVideoCallLink
+                return messageContent.isVideoCallLink || self.type == TransactionMessageType.callInvite.rawValue
             }
             return false
         }

@@ -114,9 +114,7 @@ class ChatHelper {
         switch (messageType) {
         case TransactionMessage.TransactionMessageType.message:
             if incoming {
-                if isVideoCallLink {
-                    cell = tableView.dequeueReusableCell(withIdentifier: "VideoCallReceivedTableViewCell", for: indexPath) as! VideoCallReceivedTableViewCell
-                } else if isGiphy {
+                if isGiphy {
                     cell = tableView.dequeueReusableCell(withIdentifier: "PictureReceivedTableViewCell", for: indexPath) as! PictureReceivedTableViewCell
                 } else if isPodcastComment {
                     cell = tableView.dequeueReusableCell(withIdentifier: "PodcastCommentReceivedTableViewCell", for: indexPath) as! PodcastCommentReceivedTableViewCell
@@ -126,9 +124,7 @@ class ChatHelper {
                     cell = tableView.dequeueReusableCell(withIdentifier: "MessageReceivedTableViewCell", for: indexPath) as! MessageReceivedTableViewCell
                 }
             } else {
-                if isVideoCallLink {
-                     cell = tableView.dequeueReusableCell(withIdentifier: "VideoCallSentTableViewCell", for: indexPath) as! VideoCallSentTableViewCell
-                } else if isGiphy {
+                if isGiphy {
                     cell = tableView.dequeueReusableCell(withIdentifier: "PictureSentTableViewCell", for: indexPath) as! PictureSentTableViewCell
                 } else if isPodcastComment {
                     cell = tableView.dequeueReusableCell(withIdentifier: "PodcastCommentSentTableViewCell", for: indexPath) as! PodcastCommentSentTableViewCell
@@ -137,6 +133,14 @@ class ChatHelper {
                 } else {
                     cell = tableView.dequeueReusableCell(withIdentifier: "MessageSentTableViewCell", for: indexPath) as! MessageSentTableViewCell
                 }
+            }
+        case TransactionMessage.TransactionMessageType.callInvite:
+            if incoming{
+                cell = tableView.dequeueReusableCell(withIdentifier: "VideoCallReceivedTableViewCell", for: indexPath) as! VideoCallReceivedTableViewCell
+                
+            }
+            else{
+                cell = tableView.dequeueReusableCell(withIdentifier: "VideoCallSentTableViewCell", for: indexPath) as! VideoCallSentTableViewCell
             }
         case TransactionMessage.TransactionMessageType.boost:
             if incoming {

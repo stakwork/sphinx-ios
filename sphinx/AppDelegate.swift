@@ -38,6 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let podcastPlayerController = PodcastPlayerController.sharedInstance
     
     let chatListViewModel = ChatListViewModel(contactsService: ContactsService())
+    let voipQueue = DispatchQueue(label: "voipQueue")
 
     func application(
         _ application: UIApplication,
@@ -138,7 +139,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     fileprivate func registerForVoIP(){
-        let registry = PKPushRegistry(queue: .main)
+        let registry = PKPushRegistry(queue: self.voipQueue)
         DispatchQueue.main.async {
             registry.delegate = UIApplication.shared.delegate as! AppDelegate
         }
@@ -564,6 +565,10 @@ extension AppDelegate : PKPushRegistryDelegate{
             } else {
                 // Fallback on earlier versions
             }
+            completion()
+        }
+        else{
+            completion()
         }
     }
 }

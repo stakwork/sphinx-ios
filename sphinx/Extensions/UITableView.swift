@@ -48,12 +48,29 @@ extension UITableView {
         }
     }
     
+    func isClosedToBottom(yPosition: CGFloat) -> Bool {
+        let tableViewHeight = UIScreen.main.bounds.height
+        let bottomInset = getWindowInsets().bottom + ChatAccessoryView.kAccessoryViewDefaultHeight + ChatAccessoryView.kTableBottomPadding
+        let contentHeight = (self.contentSize.height - tableViewHeight + bottomInset)
+        let difference = contentHeight - yPosition
+        
+        if abs(difference) <= 10 {
+            return true
+        }
+        return false
+    }
+    
     func scrollToRow(index:Int, animated:Bool = true){
         let indexPath = IndexPath(row: index, section: self.numberOfSections - 1)
         self.scrollToRow(at: indexPath, at: .bottom, animated: animated)
     }
     
-    func scrollToOffset(yPosition: CGFloat) {
+    func shouldScrollToOffset(yPosition: CGFloat) -> Bool {
+        if (isClosedToBottom(yPosition: self.contentOffset.y)) {
+            return false
+        }
+        
         self.contentOffset.y = yPosition
+        return true
     }
 }

@@ -20,6 +20,7 @@ class GroupsManager {
     
     var contactIds : [Int] = []
     var name : String? = nil
+    
     private var chatLastReadLookup : [Int:(Int, CGFloat)] = [:]
     
     func resetData() {

@@ -206,10 +206,18 @@ class ChatViewController: KeyboardHandlerViewController {
     
     func initialLoad(forceReload: Bool = false) {
         chatDataSource?.setDataAndReload(contact: contact, chat: chat, forceReload: forceReload)
+        
         if let chat = chat,
            let tablePosition = GroupsManager.sharedInstance.getChatLastRead(chatID: chat.id) {
             
-            chatTableView.scrollToOffset(yPosition: tablePosition.1)
+            let didScrollToOffset = chatTableView.shouldScrollToOffset(yPosition: tablePosition.1)
+            let isPositionAtBottom = chatTableView.isClosedToBottom(yPosition: tablePosition.1)
+            
+            if didScrollToOffset && !isPositionAtBottom {
+                scrollDownLabel.text = ""
+                scrollDownContainer.isHidden = false
+            }
+            
         } else{
             scrollChatToBottom(animated: false)
         }

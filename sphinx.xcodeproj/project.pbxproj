@@ -628,6 +628,7 @@
 		CE3133B12977747E00E91E3A /* BadgeAdminDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3133AA2977747E00E91E3A /* BadgeAdminDetailVC.swift */; };
 		CE3133B22977747E00E91E3A /* BadgeAdminListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE3133AB2977747E00E91E3A /* BadgeAdminListTableViewCell.xib */; };
 		CE3133B32977747E00E91E3A /* BadgeAdminManagementListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3133AC2977747E00E91E3A /* BadgeAdminManagementListVC.swift */; };
+		CE49E13229ACEFAA006D3CCE /* VoIPPushMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE49E13129ACEFAA006D3CCE /* VoIPPushMessage.swift */; };
 		CE51F350298870BF00ABBACB /* MemberBadgeDetailVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE51F34F298870BF00ABBACB /* MemberBadgeDetailVM.swift */; };
 		CE51F3562988743E00ABBACB /* MemberDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE51F3542988743E00ABBACB /* MemberDetailTableViewCell.swift */; };
 		CE51F3572988743E00ABBACB /* MemberBadgeDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE51F3552988743E00ABBACB /* MemberBadgeDetailTableViewCell.xib */; };
@@ -1549,6 +1550,7 @@
 		CE3133AA2977747E00E91E3A /* BadgeAdminDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeAdminDetailVC.swift; sourceTree = "<group>"; };
 		CE3133AB2977747E00E91E3A /* BadgeAdminListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BadgeAdminListTableViewCell.xib; sourceTree = "<group>"; };
 		CE3133AC2977747E00E91E3A /* BadgeAdminManagementListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeAdminManagementListVC.swift; sourceTree = "<group>"; };
+		CE49E13129ACEFAA006D3CCE /* VoIPPushMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoIPPushMessage.swift; sourceTree = "<group>"; };
 		CE51F34F298870BF00ABBACB /* MemberBadgeDetailVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberBadgeDetailVM.swift; sourceTree = "<group>"; };
 		CE51F3542988743E00ABBACB /* MemberDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberDetailTableViewCell.swift; sourceTree = "<group>"; };
 		CE51F3552988743E00ABBACB /* MemberBadgeDetailTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MemberBadgeDetailTableViewCell.xib; sourceTree = "<group>"; };
@@ -1908,6 +1910,7 @@
 			isa = PBXGroup;
 			children = (
 				47129950292297CB0049CBE3 /* TribeMemberProfile.swift */,
+				CE49E13129ACEFAA006D3CCE /* VoIPPushMessage.swift */,
 			);
 			path = "Parsing Models";
 			sourceTree = "<group>";
@@ -4566,6 +4569,7 @@
 				479EAB6723E311D4001013AB /* LoadingMoreTableViewCell.swift in Sources */,
 				47822C692449EED60011D832 /* PaidMessageSentTableViewCell.swift in Sources */,
 				47FA18D62434E31D00469C8F /* PaidAttachmentView.swift in Sources */,
+				CE49E13229ACEFAA006D3CCE /* VoIPPushMessage.swift in Sources */,
 				F373BF0326A9CEDD0093C886 /* DashboardFeedsContainerViewController.swift in Sources */,
 				47468FDC233554680072124A /* ProfileViewController.swift in Sources */,
 				F3DC6B02273C9BD000458E09 /* ContentFeedItem+CoreDataProperties.swift in Sources */,

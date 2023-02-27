@@ -552,35 +552,21 @@ extension AppDelegate : PKPushRegistryDelegate{
         //TODO analyze payload and call JitsiCallManager
         if let dict = payload.dictionaryPayload as? [String:Any],
            let aps = dict["aps"] as? [String:Any],
-            var contents = aps["alert"] as? String
+            var contents = aps["alert"] as? String,
+            let pushMessage = VoIPPushMessage.voipMessage(jsonString: contents),
+            let pushBody = pushMessage.body as? VoIPPushMessageBody
            {
-            /*
-            let json = JSON(contents)
-            let result = contents.replacingOccurrences(of: "\"", with: "")
-            let test = transform(result)
-            print(test)
-            */
+           
             if #available(iOS 14.0, *) {
                 let manager = JitsiIncomingCallManager.sharedInstance
-                manager.currentJitsiURL = "https://jitsi.sphinx.chat/sphinx.call.698956932.374013#config.startAudioOnly=true"
-                self.handleIncomingCall(chatID: 0, callerName: "John Doe")
+                manager.currentJitsiURL = pushBody.linkURL
+                self.handleIncomingCall(chatID: 0, callerName: pushBody.callerName)
             } else {
                 // Fallback on earlier versions
             }
         }
     }
-    
-    func transform(_ myString: String) -> [String : String] {
-            var result = [String : String]()
-            if myString.count > 2 { // case of {}
-                let temp1 = myString.dropFirst().dropLast()
-                let temp2 = temp1.split(separator: ",").map{String($0)}
-                for str in temp2 {
-                    let temp3 = str.split(separator: ":").map{String($0)}
-                    let (k,v) = (temp3[0].trim(),temp3[1].trim())
-                    result[k] = v
-                }
-            }
-            return result
-        }
 }
+
+
+

@@ -19,7 +19,7 @@ class PodcastEpisodesDataSource : NSObject {
     
     weak var delegate: PodcastEpisodesDSDelegate?
     
-    let kRowHeight: CGFloat = 64
+    let kRowHeight: CGFloat = 200
     let kHeaderHeight: CGFloat = 50
     let kHeaderLabelFont = UIFont(name: "Roboto-Medium", size: 14.0)!
     let windowTopInset = getWindowInsets().top
@@ -42,6 +42,7 @@ class PodcastEpisodesDataSource : NSObject {
         self.podcast = podcast
         self.delegate = delegate
         
+        self.tableView.registerCell(UnifiedEpisodeTableViewCell.self)
         self.tableView.registerCell(PodcastEpisodeTableViewCell.self)
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -107,9 +108,9 @@ extension PodcastEpisodesDataSource : UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         tableView.dequeueReusableCell(
-            withIdentifier: "PodcastEpisodeTableViewCell",
+            withIdentifier: "UnifiedEpisodeTableViewCell",
             for: indexPath
-        ) as! PodcastEpisodeTableViewCell
+        ) as! UnifiedEpisodeTableViewCell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

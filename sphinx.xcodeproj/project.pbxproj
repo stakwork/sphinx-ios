@@ -652,6 +652,8 @@
 		CECFBF022965C85B00BAD935 /* DiscoverTribesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CECFBF002965C85B00BAD935 /* DiscoverTribesTableViewCell.xib */; };
 		CECFBF062965C8E600BAD935 /* DiscoverTribeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECFBF052965C8E600BAD935 /* DiscoverTribeData.swift */; };
 		CED14D78293CF683004B8B25 /* ChatMentionAutocompleteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED14D77293CF683004B8B25 /* ChatMentionAutocompleteDataSource.swift */; };
+		CEE433B229AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE433B029AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.swift */; };
+		CEE433B329AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEE433B129AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.xib */; };
 		CEF821D62963B68600CBB28F /* DiscoverTribesWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF821D52963B68600CBB28F /* DiscoverTribesWebViewController.swift */; };
 		F30884A72699123600CADDEB /* LeftMenuViewController+KarmaPurchaseUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30884A62699123600CADDEB /* LeftMenuViewController+KarmaPurchaseUtils.swift */; };
 		F30884A92699181200CADDEB /* API+KarmaPurchaseUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30884A82699181200CADDEB /* API+KarmaPurchaseUtils.swift */; };
@@ -1572,6 +1574,8 @@
 		CECFBF002965C85B00BAD935 /* DiscoverTribesTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DiscoverTribesTableViewCell.xib; sourceTree = "<group>"; };
 		CECFBF052965C8E600BAD935 /* DiscoverTribeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTribeData.swift; sourceTree = "<group>"; };
 		CED14D77293CF683004B8B25 /* ChatMentionAutocompleteDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatMentionAutocompleteDataSource.swift; sourceTree = "<group>"; };
+		CEE433B029AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnifiedEpisodeTableViewCell.swift; sourceTree = "<group>"; };
+		CEE433B129AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UnifiedEpisodeTableViewCell.xib; sourceTree = "<group>"; };
 		CEF821D52963B68600CBB28F /* DiscoverTribesWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTribesWebViewController.swift; sourceTree = "<group>"; };
 		F30884A62699123600CADDEB /* LeftMenuViewController+KarmaPurchaseUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LeftMenuViewController+KarmaPurchaseUtils.swift"; sourceTree = "<group>"; };
 		F30884A82699181200CADDEB /* API+KarmaPurchaseUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+KarmaPurchaseUtils.swift"; sourceTree = "<group>"; };
@@ -1763,6 +1767,8 @@
 		470396D52535D10E007F9C23 /* Table Views */ = {
 			isa = PBXGroup;
 			children = (
+				CEE433B029AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.swift */,
+				CEE433B129AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.xib */,
 				470396D62535D12D007F9C23 /* PodcastEpisodeTableViewCell.swift */,
 				470396D72535D12D007F9C23 /* PodcastEpisodeTableViewCell.xib */,
 			);
@@ -4243,6 +4249,7 @@
 				47904C0924BF352300710E7A /* note.caf in Resources */,
 				475BDD4E232AD00D00C5BBD6 /* Roboto-Regular.ttf in Resources */,
 				4779F16F232AA0F300D35E81 /* LaunchScreen.storyboard in Resources */,
+				CEE433B329AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.xib in Resources */,
 				47018F8127CFB7CE00797E0B /* pause_animation.json in Resources */,
 				4746466C2988331A00FAF58B /* Dashboard.storyboard in Resources */,
 				47F258BD2539DA0100122A5A /* PodcastCommentSentTableViewCell.xib in Resources */,
@@ -4466,6 +4473,7 @@
 				47468079293E564B00F51457 /* PodcastPlayerControlsView.swift in Sources */,
 				47893AA2240E857F002F675B /* AVAudioSession.swift in Sources */,
 				47F6CA10287C695B005EBCB6 /* Nonce.swift in Sources */,
+				CEE433B229AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.swift in Sources */,
 				4712994329227B450049CBE3 /* TribeMemberProfileViewController.swift in Sources */,
 				F39F2C7E26E2367B00D357F6 /* FeedSearchEmptyStateViewController.swift in Sources */,
 				475BDCD0232AC23100C5BBD6 /* ExpiredInvoiceCommonTableViewCell.swift in Sources */,

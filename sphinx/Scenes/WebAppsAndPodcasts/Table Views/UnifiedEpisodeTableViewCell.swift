@@ -20,6 +20,20 @@ class UnifiedEpisodeTableViewCell: UITableViewCell {
     @IBOutlet weak var moreDetailsButton: UIButton!
     @IBOutlet weak var timeRemainingLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var progressWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var durationWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var dotView: UIView!
+    @IBOutlet weak var mediaTypeImageView: UIImageView!
+    @IBOutlet weak var durationView: UIView!
+    @IBOutlet weak var progressView: UIView!
+    
+    
+    //TODO:
+    //1. Make media type image dynamic -> x
+    //2. Make select pause if the pod is already playing
+    //3. Add download button
+    //4. Add more button action + view
+    //5. Add share button action
     
     var episode: PodcastEpisode! = nil
     weak var delegate: PodcastEpisodeRowDelegate?
@@ -45,13 +59,17 @@ class UnifiedEpisodeTableViewCell: UITableViewCell {
         self.episode = episode
         self.delegate = delegate
         
-        //contentView.backgroundColor = playing ? UIColor.Sphinx.ChatListSelected : UIColor.clear
-        playArrow.isHidden = !playing
+        episodeLabel.textColor = !playing ? UIColor.Sphinx.Text : UIColor.Sphinx.BlueTextAccent
+        playArrow.text = !playing ? "play_arrow" : "pause"
         playArrow.makeCircular()
         
         episodeLabel.text = episode.title ?? "No title"
         descriptionLabel.text = episode.episodeDescription?.nonHtmlRawString ?? "No description"
         divider.isHidden = isLastRow
+        
+        dotView.makeCircular()
+        
+        mediaTypeImageView.image = #imageLiteral(resourceName: "podcastTypeIcon")
         
         let date = episode.datePublished
         let formatter = DateFormatter()
@@ -60,6 +78,8 @@ class UnifiedEpisodeTableViewCell: UITableViewCell {
             let dateString = formatter.string(from: valid_date)
             dateLabel.text = dateString
         }
+        
+        setProgress()
         
         if let valid_elapsed = episode.currentTime,
            let valid_duration = episode.duration{
@@ -98,6 +118,26 @@ class UnifiedEpisodeTableViewCell: UITableViewCell {
                 progress: nil
             )
         }
+        
+        roundCorners()
+    }
+    
+    func roundCorners(){
+        mediaTypeImageView.layer.cornerRadius = 3.0
+        episodeImageView.layer.cornerRadius = 6.0
+        durationView.layer.cornerRadius = 3.0
+        progressView.layer.cornerRadius = 3.0
+    }
+    
+    func setProgress(){
+        let fullWidth = durationWidthConstraint.constant
+        if let valid_duration = episode.duration,
+           let valid_time = episode.currentTime{
+            let percentage = Float(valid_time) / Float(valid_duration)
+            let newProgressWidth = (percentage * Float(fullWidth))
+            progressWidthConstraint.constant = CGFloat(newProgressWidth)
+        }
+        durationView.alpha = 0.1
     }
     
 }

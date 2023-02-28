@@ -6,7 +6,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -71,9 +70,9 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" horizontalCompressionResistancePriority="253" text="1h 19 min left" textAlignment="natural" lineBreakMode="middleTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rSJ-zB-jwJ">
-                                <rect key="frame" x="117.66666666666669" y="119" width="86" height="16"/>
+                                <rect key="frame" x="117.66666666666669" y="119" width="78" height="16"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="86" id="26W-Va-E66"/>
+                                    <constraint firstAttribute="width" constant="78" id="26W-Va-E66"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="12"/>
                                 <color key="textColor" name="Text"/>
@@ -116,21 +115,6 @@
                                     <color key="titleColor" name="Text"/>
                                 </state>
                             </button>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="podcastTypeIcon" translatesAutoresizingMaskIntoConstraints="NO" id="iTl-lx-BoK">
-                                <rect key="frame" x="16" y="119" width="16" height="16"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="16" id="7Bs-rp-KMp"/>
-                                    <constraint firstAttribute="width" constant="16" id="WN3-He-lkd"/>
-                                </constraints>
-                            </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JAL-OQ-F9R">
-                                <rect key="frame" x="105.66666666666667" y="125" width="4" height="4"/>
-                                <color key="backgroundColor" systemColor="systemTealColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="4" id="4of-ih-qBL"/>
-                                    <constraint firstAttribute="width" constant="4" id="CGt-xk-Q4j"/>
-                                </constraints>
-                            </view>
                             <button opaque="NO" contentMode="scaleAspectFit" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cLk-jp-rUg">
                                 <rect key="frame" x="152" y="151" width="24" height="32"/>
                                 <constraints>
@@ -141,12 +125,44 @@
                                     <color key="titleColor" name="Text"/>
                                 </state>
                             </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="podcastTypeIcon" translatesAutoresizingMaskIntoConstraints="NO" id="iTl-lx-BoK">
+                                <rect key="frame" x="16" y="119" width="16" height="16"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="16" id="7Bs-rp-KMp"/>
+                                    <constraint firstAttribute="width" constant="16" id="WN3-He-lkd"/>
+                                </constraints>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JAL-OQ-F9R">
+                                <rect key="frame" x="105.66666666666667" y="125" width="4" height="4"/>
+                                <color key="backgroundColor" name="SecondaryText"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="4" id="4of-ih-qBL"/>
+                                    <constraint firstAttribute="width" constant="4" id="CGt-xk-Q4j"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dk2-1X-nwo">
+                                <rect key="frame" x="210.66666666666666" y="125" width="40" height="4"/>
+                                <color key="backgroundColor" name="SecondaryText"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="4" id="eTC-Fh-Caw"/>
+                                    <constraint firstAttribute="width" constant="40" id="lhD-NM-wDS"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mPL-Hp-VI9">
+                                <rect key="frame" x="210.66666666666666" y="125" width="20" height="4"/>
+                                <color key="backgroundColor" name="ReceivedIcon"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" id="9zq-6z-ekh"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" name="Body"/>
                         <constraints>
                             <constraint firstItem="iTl-lx-BoK" firstAttribute="leading" secondItem="VYz-Rt-9kj" secondAttribute="leading" id="0dF-5i-Vi1"/>
                             <constraint firstItem="VYz-Rt-9kj" firstAttribute="top" secondItem="kgw-Yy-i7l" secondAttribute="bottom" constant="10" id="0qe-bF-vI7"/>
                             <constraint firstItem="32w-Qa-JEp" firstAttribute="leading" secondItem="iTl-lx-BoK" secondAttribute="trailing" constant="11" id="30S-0b-pnA"/>
+                            <constraint firstItem="dk2-1X-nwo" firstAttribute="leading" secondItem="mPL-Hp-VI9" secondAttribute="leading" id="7d2-mc-gGW"/>
+                            <constraint firstItem="dk2-1X-nwo" firstAttribute="bottom" secondItem="mPL-Hp-VI9" secondAttribute="bottom" id="9Cv-9a-1kt"/>
                             <constraint firstItem="JAL-OQ-F9R" firstAttribute="centerY" secondItem="32w-Qa-JEp" secondAttribute="centerY" id="Amf-Bh-pF5"/>
                             <constraint firstItem="32w-Qa-JEp" firstAttribute="top" secondItem="iTl-lx-BoK" secondAttribute="top" id="EDK-Gi-85W"/>
                             <constraint firstItem="dI6-bJ-Ga2" firstAttribute="top" secondItem="ZQ9-Ju-BWw" secondAttribute="top" constant="16" id="GRF-6s-prm"/>
@@ -155,6 +171,7 @@
                             <constraint firstItem="cLk-jp-rUg" firstAttribute="leading" secondItem="2d8-WG-wY9" secondAttribute="trailing" constant="40" id="QsW-Jz-voc"/>
                             <constraint firstAttribute="bottom" secondItem="MNq-eS-IxI" secondAttribute="bottom" id="RCX-Br-rue"/>
                             <constraint firstItem="kgw-Yy-i7l" firstAttribute="bottom" secondItem="dI6-bJ-Ga2" secondAttribute="bottom" id="RVk-K6-0yI"/>
+                            <constraint firstItem="dk2-1X-nwo" firstAttribute="centerY" secondItem="rSJ-zB-jwJ" secondAttribute="centerY" id="S79-XE-TGF"/>
                             <constraint firstItem="rSJ-zB-jwJ" firstAttribute="leading" secondItem="JAL-OQ-F9R" secondAttribute="trailing" constant="8" id="T2a-Pp-WiX"/>
                             <constraint firstAttribute="trailing" secondItem="kgw-Yy-i7l" secondAttribute="trailing" constant="15" id="TSi-Qc-kNU"/>
                             <constraint firstItem="2d8-WG-wY9" firstAttribute="centerY" secondItem="mTY-iz-KYV" secondAttribute="centerY" id="Wgw-Zw-RjJ"/>
@@ -171,7 +188,9 @@
                             <constraint firstItem="rSJ-zB-jwJ" firstAttribute="bottom" secondItem="32w-Qa-JEp" secondAttribute="bottom" id="mkz-W3-fsS"/>
                             <constraint firstItem="mTY-iz-KYV" firstAttribute="top" secondItem="iTl-lx-BoK" secondAttribute="bottom" constant="24" id="nB9-Ue-P9T"/>
                             <constraint firstItem="dI6-bJ-Ga2" firstAttribute="leading" secondItem="ZQ9-Ju-BWw" secondAttribute="leading" constant="16" id="njD-ZW-gfN"/>
+                            <constraint firstItem="dk2-1X-nwo" firstAttribute="top" secondItem="mPL-Hp-VI9" secondAttribute="top" id="rME-jK-nyk"/>
                             <constraint firstItem="2d8-WG-wY9" firstAttribute="leading" secondItem="mTY-iz-KYV" secondAttribute="trailing" constant="42" id="rod-pY-evz"/>
+                            <constraint firstItem="dk2-1X-nwo" firstAttribute="leading" secondItem="rSJ-zB-jwJ" secondAttribute="trailing" constant="15" id="wZc-Tc-NB4"/>
                             <constraint firstItem="kgw-Yy-i7l" firstAttribute="trailing" secondItem="VYz-Rt-9kj" secondAttribute="trailing" id="xOt-Ld-vmh"/>
                             <constraint firstItem="cLk-jp-rUg" firstAttribute="bottom" secondItem="2d8-WG-wY9" secondAttribute="bottom" id="y6X-68-5ql"/>
                             <constraint firstItem="kgw-Yy-i7l" firstAttribute="leading" secondItem="dI6-bJ-Ga2" secondAttribute="trailing" constant="17" id="zgl-oV-Zwa"/>
@@ -190,11 +209,17 @@
                 <outlet property="dateLabel" destination="32w-Qa-JEp" id="y34-9L-tAf"/>
                 <outlet property="descriptionLabel" destination="VYz-Rt-9kj" id="0Jb-tR-jf7"/>
                 <outlet property="divider" destination="MNq-eS-IxI" id="RXi-x7-d3a"/>
+                <outlet property="dotView" destination="JAL-OQ-F9R" id="w3O-b5-KyQ"/>
                 <outlet property="downloadButton" destination="mTY-iz-KYV" id="Rlk-8S-F7S"/>
+                <outlet property="durationView" destination="dk2-1X-nwo" id="KDI-Bc-BZh"/>
+                <outlet property="durationWidthConstraint" destination="lhD-NM-wDS" id="Wzf-my-fu3"/>
                 <outlet property="episodeImageView" destination="dI6-bJ-Ga2" id="8pi-Wp-oyU"/>
                 <outlet property="episodeLabel" destination="kgw-Yy-i7l" id="n1M-n2-hb6"/>
+                <outlet property="mediaTypeImageView" destination="iTl-lx-BoK" id="5ZV-Kj-qym"/>
                 <outlet property="moreDetailsButton" destination="daD-T9-Ebg" id="NWR-Hw-4gl"/>
                 <outlet property="playArrow" destination="mr6-07-hEn" id="Wcm-LR-lr3"/>
+                <outlet property="progressView" destination="mPL-Hp-VI9" id="d1m-1i-G8x"/>
+                <outlet property="progressWidthConstraint" destination="9zq-6z-ekh" id="JMK-WB-IJ2"/>
                 <outlet property="sharebutton" destination="2d8-WG-wY9" id="64v-VP-IbW"/>
                 <outlet property="timeRemainingLabel" destination="rSJ-zB-jwJ" id="qme-ix-XP8"/>
             </connections>
@@ -210,8 +235,14 @@
         <namedColor name="MainBottomIcons">
             <color red="0.37254901960784315" green="0.38823529411764707" blue="0.40784313725490196" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <namedColor name="ReceivedIcon">
+            <color red="0.50980392156862742" green="0.70588235294117652" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="ReceivedMsgBG">
             <color red="0.94901960784313721" green="0.95294117647058818" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="SecondaryText">
+            <color red="0.55686274509803924" green="0.58823529411764708" blue="0.61176470588235299" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="Text">
             <color red="0.23529411764705882" green="0.24705882352941178" blue="0.25490196078431371" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -219,8 +250,5 @@
         <namedColor name="TextMessages">
             <color red="0.11764705882352941" green="0.12156862745098039" blue="0.14509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="systemTealColor">
-            <color red="0.18823529411764706" green="0.69019607843137254" blue="0.7803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
     </resources>
 </document>

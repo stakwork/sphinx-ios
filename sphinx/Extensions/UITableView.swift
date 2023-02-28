@@ -60,16 +60,11 @@ extension UITableView {
         return difference == 0
     }
     
-    func isClosedToBottom(yPosition: CGFloat) -> Bool {
-        let tableViewHeight = UIScreen.main.bounds.height
-        let bottomInset = getWindowInsets().bottom + ChatAccessoryView.kAccessoryViewDefaultHeight + ChatAccessoryView.kTableBottomPadding
-        let contentHeight = (self.contentSize.height - tableViewHeight + bottomInset)
+    func isPositionAtBottom(yPosition: CGFloat) -> Bool {
+        let contentHeight = (self.contentSize.height - self.frame.size.height + self.contentInset.bottom)
         let difference = contentHeight - yPosition
         
-        if abs(difference) <= 10 {
-            return true
-        }
-        return false
+        return difference == 0
     }
     
     func scrollToRow(index:Int, animated:Bool = true){

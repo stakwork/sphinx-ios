@@ -62,7 +62,6 @@ extension ChatViewController : ChatHeaderViewDelegate {
     
     func didTapBackButton() {
         UserDefaults.Keys.chatId.removeValue()
-        chat?.setChatMessagesAsSeen()
         accessoryView.shouldDismissKeyboard()
         accessoryView.hide()
         webAppVC?.stopWebView()
@@ -240,7 +239,6 @@ extension ChatViewController : ChatAccessoryViewDelegate {
              if let provisionalMessage = provisionalMessage {
                 provisionalMessage.status = TransactionMessage.TransactionMessageStatus.failed.rawValue
                 self.insertSentMessage(message: provisionalMessage, completion: completion)
-                self.scrollAfterInsert()
              }
         })
     }
@@ -319,8 +317,9 @@ extension ChatViewController : ChatAccessoryViewDelegate {
 
 extension ChatViewController : ChatDataSourceDelegate {
     func didScrollToBottom() {
-        unseenMessagesCount = 0
-        scrollDownLabel.text = "+1"
+        chat?.setChatMessagesAsSeen()
+        
+        scrollDownLabel.text = ""
         scrollDownContainer.isHidden = true
     }
     
@@ -332,6 +331,15 @@ extension ChatViewController : ChatDataSourceDelegate {
     func chatUpdated(chat: Chat) {
         messageBubbleHelper.hideLoadingWheel()
         updateViewChat(updatedChat: chat)
+    }
+    
+    func shouldScrollToBottom(force: Bool = false) {
+        if chatTableView.shouldScrollToBottom() || force {
+            chatTableView.scrollToBottom(animated: !force)
+        } else {
+            scrollDownLabel.text = chat?.unseenMessagesCountLabel ?? ""
+            scrollDownContainer.isHidden = false
+        }
     }
 }
 
@@ -576,7 +584,6 @@ extension ChatViewController : SocketManagerDelegate {
         }
         
         chatDataSource?.addMessageAndReload(message: message)
-        scrollAfterInsert()
     }
     
     func didReceiveConfirmation(message: TransactionMessage) {
@@ -585,7 +592,6 @@ extension ChatViewController : SocketManagerDelegate {
         }
         
         chatDataSource?.addMessageAndReload(message: message, confirmation: true)
-        scrollAfterInsert()
     }
     
     func didUpdateContact(contact: UserContact) {
@@ -604,8 +610,7 @@ extension ChatViewController : SocketManagerDelegate {
         if chatTableView.shouldScrollToBottom() {
             scrollChatToBottom()
         } else {
-            unseenMessagesCount = unseenMessagesCount + count
-            scrollDownLabel.text = "+\(unseenMessagesCount)"
+            scrollDownLabel.text = chat?.unseenMessagesCountLabel ?? ""
             scrollDownContainer.isHidden = false
         }
     }

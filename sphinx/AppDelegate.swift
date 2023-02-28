@@ -177,7 +177,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     ) {
         saveCurrentStyle()
         WindowsManager.sharedInstance.removeMessageOptions()
-        setMessagesAsSeen()
         setBadge(application: application)
         
         podcastPlayerController.finishAndSaveContentConsumed()
@@ -248,7 +247,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(
         _ application: UIApplication
     ) {
-        setMessagesAsSeen()
         setBadge(application: application)
 
         SKPaymentQueue.default().remove(StoreKitService.shared)

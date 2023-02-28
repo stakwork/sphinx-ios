@@ -320,7 +320,10 @@ public class Chat: NSManagedObject {
         return TransactionMessage.getNewMessagesCountFor(chat: self, lastMessageId: lastMessageId)
     }
     
-    func setChatMessagesAsSeen(shouldSync: Bool = true, shouldSave: Bool = true) {
+    func setChatMessagesAsSeen(
+        shouldSync: Bool = true,
+        shouldSave: Bool = true
+    ) {
         let receivedUnseenMessages = self.getReceivedUnseenMessages()
         if receivedUnseenMessages.count > 0 {
             for m in receivedUnseenMessages {
@@ -353,6 +356,15 @@ public class Chat: NSManagedObject {
     }
     
     var unseenMessagesCount: Int = 0
+    
+    var unseenMessagesCountLabel: String {
+        get {
+            if unseenMessagesCount > 0 {
+                return "+\(unseenMessagesCount)"
+            }
+            return ""
+        }
+    }
     
     func getReceivedUnseenMessagesCount() -> Int {
         if unseenMessagesCount == 0 {

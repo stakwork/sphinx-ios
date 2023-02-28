@@ -239,8 +239,6 @@ extension SphinxSocketManager {
     
     func didReceivePurchaseMessage(type: String, messageJson: JSON) {
         if let message = TransactionMessage.insertMessage(m: messageJson).0 {
-            markAsSeenIfNeeded(message: message)
-            
             delegate?.didReceivePurchaseUpdate?(message: message)
         }
         NotificationCenter.default.post(name: .onBalanceDidChange, object: nil)
@@ -251,10 +249,10 @@ extension SphinxSocketManager {
         let messageFromUpdatedContact = didUpdateContact(messageJson: messageJson)
         
         if let message = TransactionMessage.insertMessage(m: messageJson).0 {
+            setSeen(message: message, value: false)
             updateBalanceIfNeeded(type: type)
             
             message.setPaymentInvoiceAsPaid()
-            markAsSeenIfNeeded(message: message)
             
             if showBubbleIfNeeded(message: message) {
                 return
@@ -484,46 +482,13 @@ extension SphinxSocketManager {
         return false
     }
     
-    func markAsSeenIfNeeded(message: TransactionMessage) {
-        let outgoing = message.isOutgoing()
-        
-        if outgoing {
-            setChatSeen(message: message, value: true)
-            return
-        }
-        
-        let isSeen = shouldMarkAsSeen(message: message)
-        
-        if isSeen {
-            message.setAsSeen()
-        }
-        
-        setChatSeen(message: message, value: isSeen)
-    }
-    
-    func setChatSeen(message: TransactionMessage, value: Bool) {
+    func setSeen(
+        message: TransactionMessage,
+        value: Bool
+    ) {
+        message.seen = value
         message.chat?.seen = value
-    }
-    
-    func shouldMarkAsSeen(message: TransactionMessage) -> Bool {
-        if WindowsManager.sharedInstance.isOnMessageOptionsMenu() {
-            return false
-        }
-        
-        if UIApplication.shared.applicationState != .active {
-            return false
-        }
-        
-        if let vc = delegate as? ChatViewController {
-            if let chat = vc.chat, let messageChatId = message.chat?.id {
-                if chat.id == messageChatId {
-                    return true
-                }
-            } else if let contact = vc.contact, message.senderId == contact.id {
-                return true
-            }
-        }
-        return false
+        CoreDataManager.sharedManager.saveContext()
     }
     
     func keysendReceived(json: JSON) {

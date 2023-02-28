@@ -50,7 +50,7 @@ class UnifiedEpisodeTableViewCell: UITableViewCell {
         playArrow.makeCircular()
         
         episodeLabel.text = episode.title ?? "No title"
-        descriptionLabel.text = episode.episodeDescription ?? "No description"
+        descriptionLabel.text = episode.episodeDescription?.nonHtmlRawString ?? "No description"
         divider.isHidden = isLastRow
         
         let date = episode.datePublished

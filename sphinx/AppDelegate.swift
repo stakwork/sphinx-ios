@@ -59,6 +59,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
         
+        if #available(iOS 15.0, *) {
+            UITableView.appearance().sectionHeaderTopPadding = CGFloat(0)
+        }
+        
         try? AVAudioSession.sharedInstance().setCategory(.playback)
         
         setAppConfiguration()
@@ -177,7 +181,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     ) {
         saveCurrentStyle()
         WindowsManager.sharedInstance.removeMessageOptions()
-        setMessagesAsSeen()
         setBadge(application: application)
         
         podcastPlayerController.finishAndSaveContentConsumed()
@@ -248,7 +251,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(
         _ application: UIApplication
     ) {
-        setMessagesAsSeen()
         setBadge(application: application)
 
         SKPaymentQueue.default().remove(StoreKitService.shared)

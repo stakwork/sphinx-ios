@@ -105,7 +105,7 @@ extension API {
         
         let baseURL = "https://liquid.sphinx.chat"
         let url = baseURL + "/asset/filter"
-        guard let request = createRequest(url, bodyParams: params as? NSDictionary, method: "POST") else {
+        guard let request = createRequest(url, bodyParams: params as NSDictionary, method: "POST") else {
             errorCallback()
             return
         }
@@ -119,10 +119,8 @@ extension API {
                         callback(mappedResults)
                     }
                 }
-                print(response.response?.statusCode)
                 errorCallback()
             case .failure(_):
-                print(response.response?.statusCode)
                 errorCallback()
             }
         }
@@ -135,7 +133,7 @@ extension API {
     ){
         let urlPath = API.kTribesServerBaseURL + "/person/uuid/\(user_uuid)/assets"
         
-        var urlComponents = URLComponents(string: urlPath)!
+        let urlComponents = URLComponents(string: urlPath)!
         
         guard let urlString = urlComponents.url?.absoluteString else {
             errorCallback()
@@ -160,10 +158,8 @@ extension API {
                     //callback(json)
                     return
                 }
-                print(response.response?.statusCode)
                 errorCallback()
             case .failure(_):
-                print(response.response?.statusCode)
                 errorCallback()
             }
         }

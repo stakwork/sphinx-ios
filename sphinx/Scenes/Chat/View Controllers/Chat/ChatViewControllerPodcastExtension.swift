@@ -17,7 +17,6 @@ extension ChatViewController : CustomBoostDelegate {
             return
         }
         self.insertSentMessage(message: message, completion: { _ in })
-        self.scrollAfterInsert()
     }
 }
 

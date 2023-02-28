@@ -11,6 +11,7 @@ protocol ChatDataSourceDelegate: class {
     func didScrollToBottom()
     func didDeleteGroup()
     func chatUpdated(chat: Chat)
+    func shouldScrollToBottom(force: Bool)
 }
 
 class ChatDataSource : NSObject {
@@ -412,6 +413,8 @@ class ChatDataSource : NSObject {
     }
     
     func insertAndUpdateRows(provisional: Bool) {
+        let isAtBottom = tableView.isAtBottom()
+        
         if indexesToInsert.count > 0 {
             if shouldInsertRows() {
                 insertedRowsCount = insertedRowsCount + indexesToInsert.count
@@ -424,9 +427,7 @@ class ChatDataSource : NSObject {
             
             indexesToInsert = [IndexPath]()
             
-            if provisional {
-                tableView.scrollToBottom(animated: false)
-            }
+            delegate?.shouldScrollToBottom(force: provisional || isAtBottom)
         }
         
         if indexesToUpdate.count > 0 {
@@ -642,7 +643,7 @@ extension ChatDataSource : UITableViewDataSource {
 
 extension ChatDataSource : UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height - 50) {
+        if scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height + scrollView.contentInset.bottom) {
             delegate?.didScrollToBottom()
         }
         

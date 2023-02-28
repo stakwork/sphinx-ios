@@ -30,9 +30,6 @@ class ChatViewController: KeyboardHandlerViewController {
     @IBOutlet weak var scrollDownLabel: UILabel!
     @IBOutlet weak var webAppContainerView: UIView!
     
-    
-    var unseenMessagesCount = 0
-    
     var processingPR : TransactionMessage?
     var processingPRCell : InvoiceReceivedTableViewCell?
     var webAppVC : WebAppViewController? = nil
@@ -188,7 +185,6 @@ class ChatViewController: KeyboardHandlerViewController {
     }
     
     func reloadMessages(newMessageCount: Int = 0) {
-        chat?.setChatMessagesAsSeen()
         reloadAndScroll(newMessageCount: newMessageCount)
         loading = false
     }
@@ -196,7 +192,6 @@ class ChatViewController: KeyboardHandlerViewController {
     func reloadAndScroll(newMessageCount: Int = 0) {
         if newMessageCount > 0 {
             chatDataSource?.setDataAndReload(contact: contact, chat: chat)
-            scrollAfterInsert(count: newMessageCount)
         }
         
         DelayPerformedHelper.performAfterDelay(seconds: 0.5) {
@@ -210,15 +205,13 @@ class ChatViewController: KeyboardHandlerViewController {
         if let chat = chat,
            let tablePosition = GroupsManager.sharedInstance.getChatLastRead(chatID: chat.id) {
             
-            let didScrollToOffset = chatTableView.shouldScrollToOffset(yPosition: tablePosition.1)
-            let isPositionAtBottom = chatTableView.isClosedToBottom(yPosition: tablePosition.1)
+            chatTableView.scrollToOffset(yPosition: tablePosition.1)
             
-            if didScrollToOffset && !isPositionAtBottom {
-                scrollDownLabel.text = ""
-                scrollDownContainer.isHidden = false
-            }
+            let isPositionAtBottom = chatTableView.isPositionAtBottom(yPosition: tablePosition.1)
             
-        } else{
+            scrollDownLabel.text = chat.unseenMessagesCountLabel
+            scrollDownContainer.isHidden = isPositionAtBottom
+        } else {
             scrollChatToBottom(animated: false)
         }
     }

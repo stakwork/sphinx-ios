@@ -40,11 +40,15 @@
                                     <constraint firstAttribute="height" constant="1" id="xUd-h8-mII"/>
                                 </constraints>
                             </view>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="play_arrow" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mr6-07-hEn">
-                                <rect key="frame" x="243" y="90" width="30" height="25"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="play_arrow" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mr6-07-hEn">
+                                <rect key="frame" x="277" y="151" width="32" height="32"/>
+                                <color key="backgroundColor" name="TextMessages"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="32" id="YmO-RX-gwX"/>
+                                    <constraint firstAttribute="height" constant="32" id="dlq-0M-jMr"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="25"/>
-                                <color key="textColor" name="ReceivedIcon"/>
+                                <color key="textColor" name="Body"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sphinxTagIcon" translatesAutoresizingMaskIntoConstraints="NO" id="dI6-bJ-Ga2">
@@ -102,6 +106,16 @@
                                     <color key="titleColor" name="Text"/>
                                 </state>
                             </button>
+                            <button opaque="NO" contentMode="scaleAspectFit" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2d8-WG-wY9">
+                                <rect key="frame" x="88" y="151" width="24" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="24" id="ljc-bJ-Sr8"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="20"/>
+                                <state key="normal" title="ios_share">
+                                    <color key="titleColor" name="Text"/>
+                                </state>
+                            </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="podcastTypeIcon" translatesAutoresizingMaskIntoConstraints="NO" id="iTl-lx-BoK">
                                 <rect key="frame" x="16" y="119" width="16" height="16"/>
                                 <constraints>
@@ -117,13 +131,13 @@
                                     <constraint firstAttribute="width" constant="4" id="CGt-xk-Q4j"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleAspectFit" horizontalCompressionResistancePriority="1000" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2d8-WG-wY9">
-                                <rect key="frame" x="73" y="159" width="24" height="16"/>
+                            <button opaque="NO" contentMode="scaleAspectFit" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cLk-jp-rUg">
+                                <rect key="frame" x="152" y="151" width="24" height="32"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="24" id="ljc-bJ-Sr8"/>
+                                    <constraint firstAttribute="width" constant="24" id="bt7-UR-spv"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="20"/>
-                                <state key="normal" title="ios_share">
+                                <state key="normal" title="more_horiz">
                                     <color key="titleColor" name="Text"/>
                                 </state>
                             </button>
@@ -137,6 +151,8 @@
                             <constraint firstItem="32w-Qa-JEp" firstAttribute="top" secondItem="iTl-lx-BoK" secondAttribute="top" id="EDK-Gi-85W"/>
                             <constraint firstItem="dI6-bJ-Ga2" firstAttribute="top" secondItem="ZQ9-Ju-BWw" secondAttribute="top" constant="16" id="GRF-6s-prm"/>
                             <constraint firstItem="MNq-eS-IxI" firstAttribute="centerX" secondItem="ZQ9-Ju-BWw" secondAttribute="centerX" id="JMn-54-Taf"/>
+                            <constraint firstItem="cLk-jp-rUg" firstAttribute="top" secondItem="2d8-WG-wY9" secondAttribute="top" id="NAX-78-TD2"/>
+                            <constraint firstItem="cLk-jp-rUg" firstAttribute="leading" secondItem="2d8-WG-wY9" secondAttribute="trailing" constant="40" id="QsW-Jz-voc"/>
                             <constraint firstAttribute="bottom" secondItem="MNq-eS-IxI" secondAttribute="bottom" id="RCX-Br-rue"/>
                             <constraint firstItem="kgw-Yy-i7l" firstAttribute="bottom" secondItem="dI6-bJ-Ga2" secondAttribute="bottom" id="RVk-K6-0yI"/>
                             <constraint firstItem="rSJ-zB-jwJ" firstAttribute="leading" secondItem="JAL-OQ-F9R" secondAttribute="trailing" constant="8" id="T2a-Pp-WiX"/>
@@ -145,6 +161,8 @@
                             <constraint firstItem="rSJ-zB-jwJ" firstAttribute="top" secondItem="32w-Qa-JEp" secondAttribute="top" id="YoV-Ua-r89"/>
                             <constraint firstItem="MNq-eS-IxI" firstAttribute="leading" secondItem="ZQ9-Ju-BWw" secondAttribute="leading" constant="16" id="Zy8-8C-aah"/>
                             <constraint firstItem="JAL-OQ-F9R" firstAttribute="leading" secondItem="32w-Qa-JEp" secondAttribute="trailing" constant="4" id="c00-y6-DOF"/>
+                            <constraint firstAttribute="trailing" secondItem="mr6-07-hEn" secondAttribute="trailing" constant="16" id="ci1-Bo-RHz"/>
+                            <constraint firstItem="mr6-07-hEn" firstAttribute="centerY" secondItem="cLk-jp-rUg" secondAttribute="centerY" id="daD-T9-Ebg"/>
                             <constraint firstItem="32w-Qa-JEp" firstAttribute="bottom" secondItem="iTl-lx-BoK" secondAttribute="bottom" id="iHs-ui-Kvh"/>
                             <constraint firstItem="iTl-lx-BoK" firstAttribute="top" secondItem="VYz-Rt-9kj" secondAttribute="bottom" constant="1" id="iX2-UE-9aB"/>
                             <constraint firstItem="mTY-iz-KYV" firstAttribute="leading" secondItem="iTl-lx-BoK" secondAttribute="leading" id="jGa-AD-h26"/>
@@ -153,8 +171,9 @@
                             <constraint firstItem="rSJ-zB-jwJ" firstAttribute="bottom" secondItem="32w-Qa-JEp" secondAttribute="bottom" id="mkz-W3-fsS"/>
                             <constraint firstItem="mTY-iz-KYV" firstAttribute="top" secondItem="iTl-lx-BoK" secondAttribute="bottom" constant="24" id="nB9-Ue-P9T"/>
                             <constraint firstItem="dI6-bJ-Ga2" firstAttribute="leading" secondItem="ZQ9-Ju-BWw" secondAttribute="leading" constant="16" id="njD-ZW-gfN"/>
-                            <constraint firstItem="2d8-WG-wY9" firstAttribute="leading" secondItem="mTY-iz-KYV" secondAttribute="trailing" constant="27" id="rod-pY-evz"/>
+                            <constraint firstItem="2d8-WG-wY9" firstAttribute="leading" secondItem="mTY-iz-KYV" secondAttribute="trailing" constant="42" id="rod-pY-evz"/>
                             <constraint firstItem="kgw-Yy-i7l" firstAttribute="trailing" secondItem="VYz-Rt-9kj" secondAttribute="trailing" id="xOt-Ld-vmh"/>
+                            <constraint firstItem="cLk-jp-rUg" firstAttribute="bottom" secondItem="2d8-WG-wY9" secondAttribute="bottom" id="y6X-68-5ql"/>
                             <constraint firstItem="kgw-Yy-i7l" firstAttribute="leading" secondItem="dI6-bJ-Ga2" secondAttribute="trailing" constant="17" id="zgl-oV-Zwa"/>
                         </constraints>
                     </view>
@@ -167,6 +186,18 @@
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="dateLabel" destination="32w-Qa-JEp" id="y34-9L-tAf"/>
+                <outlet property="descriptionLabel" destination="VYz-Rt-9kj" id="0Jb-tR-jf7"/>
+                <outlet property="divider" destination="MNq-eS-IxI" id="RXi-x7-d3a"/>
+                <outlet property="downloadButton" destination="mTY-iz-KYV" id="Rlk-8S-F7S"/>
+                <outlet property="episodeImageView" destination="dI6-bJ-Ga2" id="8pi-Wp-oyU"/>
+                <outlet property="episodeLabel" destination="kgw-Yy-i7l" id="n1M-n2-hb6"/>
+                <outlet property="moreDetailsButton" destination="daD-T9-Ebg" id="NWR-Hw-4gl"/>
+                <outlet property="playArrow" destination="mr6-07-hEn" id="Wcm-LR-lr3"/>
+                <outlet property="sharebutton" destination="2d8-WG-wY9" id="64v-VP-IbW"/>
+                <outlet property="timeRemainingLabel" destination="rSJ-zB-jwJ" id="qme-ix-XP8"/>
+            </connections>
             <point key="canvasLocation" x="70.992366412213741" y="42.95774647887324"/>
         </tableViewCell>
     </objects>
@@ -179,14 +210,14 @@
         <namedColor name="MainBottomIcons">
             <color red="0.37254901960784315" green="0.38823529411764707" blue="0.40784313725490196" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="ReceivedIcon">
-            <color red="0.50980392156862742" green="0.70588235294117652" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="ReceivedMsgBG">
             <color red="0.94901960784313721" green="0.95294117647058818" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="Text">
             <color red="0.23529411764705882" green="0.24705882352941178" blue="0.25490196078431371" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="TextMessages">
+            <color red="0.11764705882352941" green="0.12156862745098039" blue="0.14509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemTealColor">
             <color red="0.18823529411764706" green="0.69019607843137254" blue="0.7803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -43,7 +43,6 @@ class PodcastEpisodesDataSource : NSObject {
         self.delegate = delegate
         
         self.tableView.registerCell(UnifiedEpisodeTableViewCell.self)
-        self.tableView.registerCell(PodcastEpisodeTableViewCell.self)
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.reloadData()
@@ -56,7 +55,7 @@ extension PodcastEpisodesDataSource : UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let cell = cell as? PodcastEpisodeTableViewCell {
+        if let cell = cell as? UnifiedEpisodeTableViewCell {
             
             let episodes = podcast.episodesArray
             let episode = episodes[indexPath.row]

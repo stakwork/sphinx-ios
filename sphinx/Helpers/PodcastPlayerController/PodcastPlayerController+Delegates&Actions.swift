@@ -31,6 +31,13 @@ extension PodcastPlayerController {
             seek(podcastData)
         case .AdjustSpeed(let podcastData):
             adjustSpeed(podcastData)
+        case .TogglePlay(let podcastData):
+            if(self.isPlaying && podcastData.episodeId == podcast?.currentEpisodeId){
+                pause(podcastData)
+            }
+            else{
+                play(podcastData)
+            }
         }
     }
 }

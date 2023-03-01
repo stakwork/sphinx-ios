@@ -26,6 +26,7 @@ class UnifiedEpisodeTableViewCell: UITableViewCell {
     @IBOutlet weak var mediaTypeImageView: UIImageView!
     @IBOutlet weak var durationView: UIView!
     @IBOutlet weak var progressView: UIView!
+    @IBOutlet weak var downloadProgressLabel: UILabel!
     
     
     //TODO:
@@ -147,14 +148,14 @@ class UnifiedEpisodeTableViewCell: UITableViewCell {
 
         //recognizer?.isEnabled = episode.isDownloaded
         
-        //progressLabel.text = ""
+        downloadProgressLabel.text = ""
 
         if episode.isDownloaded {
             downloadButton.setTitle("download_done", for: .normal)
             downloadButton.setTitleColor(UIColor.Sphinx.PrimaryGreen, for: .normal)
         } else {
             downloadButton.setTitle("download", for: .normal)
-            downloadButton.setTitleColor(UIColor.Sphinx.Text, for: .normal)
+            downloadButton.setTitleColor(UIColor.Sphinx.SecondaryText, for: .normal)
         }
         
         if let download = download {
@@ -165,7 +166,7 @@ class UnifiedEpisodeTableViewCell: UITableViewCell {
     
     func updateProgress(progress: Int) {
         print(progress)
-        //progressLabel.text = (progress > 0) ? "\(progress)%" : ""
+        downloadProgressLabel.text = (progress > 0) ? "\(progress)%" : ""
         downloadButton.setTitle((progress > 0) ? "" : "hourglass_top", for: .normal)
     }
     

@@ -12,7 +12,6 @@ public class VoIPPushMessage : Codable{
         var container = encoder.container(keyedBy: CodingKeys.self)
 
         //try container.encode(self.body, forKey: .body)
-        try container.encode(self.date, forKey: .date)
         try container.encode(self.type, forKey: .type)
     }
     
@@ -23,16 +22,13 @@ public class VoIPPushMessage : Codable{
         //let linkURL = try values.decode(String.self, forKey: .linkURL)
         
         let type = try values.decode(String.self, forKey: .type)
-        let date = try values.decode(String.self, forKey: .date)
         let body = try values.decode(VoIPPushMessageBody.self, forKey: .body)
         
-        self.date = date
         self.body = body
         self.type = type
     }
     
     public var type: String
-    public var date: String
     public var body: AnyObject
     
     init(
@@ -42,7 +38,6 @@ public class VoIPPushMessage : Codable{
     ) {
         self.body = body
         self.type = type
-        self.date = date
     }
     
     
@@ -66,7 +61,6 @@ extension VoIPPushMessage {
     enum CodingKeys: String, CodingKey {
         case body = "body"
         case type = "type"
-        case date = "date"
     }
 }
 

@@ -560,6 +560,8 @@ extension AppDelegate : PKPushRegistryDelegate{
                 //print(EncryptionManager.sharedInstance.encryptMessageForOwner(message: pushBody.linkURL))
                 let (result, message) = EncryptionManager.sharedInstance.decryptMessage(message: pushBody.linkURL)
                 manager.currentJitsiURL = (result == true) ? message : pushBody.linkURL
+                pushBody.linkURL = message
+                manager.provider.configuration.supportsVideo = pushBody.isVideoCall()
                 self.handleIncomingCall(chatID: 0, callerName: pushBody.callerName)
             } else {
                 // Fallback on earlier versions

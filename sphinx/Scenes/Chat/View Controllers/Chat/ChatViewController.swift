@@ -207,12 +207,16 @@ class ChatViewController: KeyboardHandlerViewController {
             
             chatTableView.scrollToOffset(yPosition: tablePosition.1)
             
-            let isPositionAtBottom = chatTableView.isPositionAtBottom(yPosition: tablePosition.1)
+            let isPositionAtBottom = chatTableView.isPositionAtBottom(
+                yPosition: tablePosition.1,
+                accessoryViewHeight: accessoryView.viewContentSize().height
+            )
             
             scrollDownLabel.text = chat.unseenMessagesCountLabel
             scrollDownContainer.isHidden = isPositionAtBottom
         } else {
             scrollChatToBottom(animated: false)
+            didScrollToBottom()
         }
     }
         

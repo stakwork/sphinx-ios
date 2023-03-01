@@ -61,7 +61,10 @@ extension UITableView {
     }
     
     func isPositionAtBottom(yPosition: CGFloat) -> Bool {
-        let contentHeight = (self.contentSize.height - self.frame.size.height + self.contentInset.bottom)
+        let tableViewHeight = UIScreen.main.bounds.height
+        let bottomInset = getWindowInsets().bottom + ChatAccessoryView.kAccessoryViewDefaultHeight + ChatAccessoryView.kTableBottomPadding
+        let contentHeight = (self.contentSize.height - tableViewHeight + bottomInset)
+
         let difference = contentHeight - yPosition
         
         return difference == 0

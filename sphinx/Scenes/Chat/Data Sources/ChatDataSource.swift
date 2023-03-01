@@ -39,6 +39,8 @@ class ChatDataSource : NSObject {
     var insertedRowsCount = 0
     var insertingRows = false
     
+    var yPosition: CGFloat? = nil
+    
     var paymentForInvoiceReceived: Bool = false
     var paymentForInvoiceSent: Bool = false
     var paymentHashForInvoiceSent: String? = nil
@@ -643,9 +645,13 @@ extension ChatDataSource : UITableViewDataSource {
 
 extension ChatDataSource : UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height + scrollView.contentInset.bottom) {
-            delegate?.didScrollToBottom()
+        if let yPosition = yPosition, yPosition != scrollView.contentOffset.y {
+            if scrollView.contentOffset.y == (scrollView.contentSize.height - scrollView.frame.size.height + scrollView.contentInset.bottom) {
+                delegate?.didScrollToBottom()
+            }
         }
+        
+        yPosition = scrollView.contentOffset.y
         
         if scrollView.contentOffset.y <= LoadingMoreTableViewCell.kLoadingHeight && !insertingRows {
             if chatMessagesCount <= messagesArray.count {

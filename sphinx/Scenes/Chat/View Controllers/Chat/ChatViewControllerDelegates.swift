@@ -147,8 +147,11 @@ extension ChatViewController : ChatHeaderViewDelegate {
     
     func sendCallMessage(sender: UIButton) {
         VideoCallHelper.createCallMessage(button: sender, callback: { link in
-            let messageType = TransactionMessage.TransactionMessageType.callInvite.rawValue
-            self.shouldSendMessage(text: link, type: messageType, completion: { _ in })
+            self.shouldSendMessage(
+                text: link,
+                type: TransactionMessage.TransactionMessageType.callInvite.rawValue,
+                completion: { _ in }
+            )
         })
     }
 }
@@ -231,13 +234,8 @@ extension ChatViewController : ChatAccessoryViewDelegate {
         
         askForNotificationPermissions()
         accessoryView.hideReplyView()
-        var newParams = params
-        if let valid_message = provisionalMessage{
-            let result : Bool = valid_message.type == TransactionMessage.TransactionMessageType.callInvite.rawValue
-            newParams["call"] = result as AnyObject
-        }
         
-        API.sharedInstance.sendMessage(params: newParams, callback: { m in
+        API.sharedInstance.sendMessage(params: params, callback: { m in
             if let message = TransactionMessage.insertMessage(m: m, existingMessage: provisionalMessage).0 {
                 message.setPaymentInvoiceAsPaid()
                 self.insertSentMessage(message: message, completion: completion)

@@ -23,6 +23,7 @@ extension UserDefaults {
         public static let ownerPubKey = DefaultKey<Int>("ownerPubKey")
         public static let inviteString = DefaultKey<String>("inviteString")
         public static let deviceId = DefaultKey<String>("deviceId")
+        public static let voipDeviceId = DefaultKey<String>("voipDeviceId")
         public static let chatId = DefaultKey<Int>("chatId")
         public static let contactId = DefaultKey<Int>("contactId")
         public static let subscriptionQuery = DefaultKey<String>("subscriptionQuery")

@@ -30,6 +30,10 @@ extension TransactionMessage {
             parameters["boost"] = true as AnyObject?
         }
         
+        if type == .callInvite {
+            parameters["call"] = true as AnyObject?
+        }
+        
         if let chat = chat {
             parameters["chat_id"] = chat.id as AnyObject?
             if !chat.isPublicGroup() {

@@ -540,11 +540,10 @@ extension AppDelegate : SphinxOnionConnectorDelegate {
 
 extension AppDelegate : PKPushRegistryDelegate{
     func pushRegistry(_ registry: PKPushRegistry, didUpdate pushCredentials: PKPushCredentials, for type: PKPushType) {
-        //Test
         if type == PKPushType.voIP {
             let tokenData = pushCredentials.token
-            var deviceToken: String = tokenData.reduce("", {$0 + String(format: "%02X", $1) })
-            print("TOKEN: \(deviceToken)")
+            let deviceToken: String = tokenData.reduce("", {$0 + String(format: "%02X", $1) })
+            UserContact.updateVoipDeviceId(deviceId: deviceToken)
         }
     }
     

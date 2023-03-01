@@ -169,7 +169,7 @@ extension TransactionMessage {
         if let messageC = self.messageContent {
             if messageC.isEncryptedString() {
                 adjustedMC = getDecrytedMessage(dashboard: dashboard)
-            } else if messageC.isVideoCallLink || self.type == TransactionMessageType.callInvite.rawValue{
+            } else if messageC.isVideoCallLink || self.type == TransactionMessageType.callInvite.rawValue {
                 adjustedMC = "join.call".localized
             }
         }
@@ -704,7 +704,8 @@ extension TransactionMessage {
         }
 
         switch (self.getType()) {
-        case TransactionMessage.TransactionMessageType.message.rawValue:
+        case TransactionMessage.TransactionMessageType.message.rawValue,
+             TransactionMessage.TransactionMessageType.callInvite.rawValue:
             if self.isGiphy() {
                 return "\("gif.capitalize".localized) \(directionString)"
             } else {

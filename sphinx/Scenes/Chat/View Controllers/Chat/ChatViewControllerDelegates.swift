@@ -187,7 +187,7 @@ extension ChatViewController : ChatAccessoryViewDelegate {
             let voipRequestMessage = VoIPRequestMessage()
             voipRequestMessage.recurring = false
             voipRequestMessage.link = messageText
-            voipRequestMessage.cron = ""
+            voipRequestMessage.cron = ""//"satoshi__n"
             messageText = voipRequestMessage.toJSONString() ?? messageText
         }
         
@@ -231,8 +231,13 @@ extension ChatViewController : ChatAccessoryViewDelegate {
         
         askForNotificationPermissions()
         accessoryView.hideReplyView()
+        var newParams = params
+        if let valid_message = provisionalMessage{
+            let result : Bool = valid_message.type == TransactionMessage.TransactionMessageType.callInvite.rawValue
+            newParams["call"] = result as AnyObject
+        }
         
-        API.sharedInstance.sendMessage(params: params, callback: { m in
+        API.sharedInstance.sendMessage(params: newParams, callback: { m in
             if let message = TransactionMessage.insertMessage(m: m, existingMessage: provisionalMessage).0 {
                 message.setPaymentInvoiceAsPaid()
                 self.insertSentMessage(message: message, completion: completion)
@@ -263,6 +268,7 @@ extension ChatViewController : ChatAccessoryViewDelegate {
     
     func insertSentMessage(message: TransactionMessage, completion: @escaping (Bool) -> ()) {
         updateViewChat(updatedChat: chat ?? contact?.getChat())
+        print(message)
         enableViewAndComplete(success: true, completion: completion)
         chatDataSource?.addMessageAndReload(message: message)
     }

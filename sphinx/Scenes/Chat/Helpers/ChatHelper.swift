@@ -101,6 +101,13 @@ class ChatHelper {
         
         let incoming = messageRow.isIncoming()
         
+        if let content = message.messageContent,
+           content.contains("satoshi__n"){
+            print(content)
+            print(message.type)
+            print("-")
+        }
+        
         if message.isDeleted() || message.isFlagged() {
             if incoming {
                 cell = tableView.dequeueReusableCell(withIdentifier: "DeletedMessageReceivedTableViewCell", for: indexPath) as! DeletedMessageReceivedTableViewCell

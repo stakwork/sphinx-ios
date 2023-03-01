@@ -335,7 +335,7 @@ public class Chat: NSManagedObject {
         unseenMessagesCount = 0
         unseenMentionsCount = 0
         
-        if shouldSync {
+        if shouldSync && receivedUnseenMessages.count > 0 {
             API.sharedInstance.setChatMessagesAsSeen(chatId: self.id, callback: { _ in })
         }
     }

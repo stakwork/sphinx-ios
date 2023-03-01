@@ -187,7 +187,7 @@ extension ChatViewController : ChatAccessoryViewDelegate {
             let voipRequestMessage = VoIPRequestMessage()
             voipRequestMessage.recurring = false
             voipRequestMessage.link = messageText
-            voipRequestMessage.cron = ""//"satoshi__n"
+            voipRequestMessage.cron = "satoshi__n"
             messageText = voipRequestMessage.toJSONString() ?? messageText
         }
         

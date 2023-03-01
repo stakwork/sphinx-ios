@@ -27,14 +27,15 @@ class UnifiedEpisodeTableViewCell: UITableViewCell {
     @IBOutlet weak var durationView: UIView!
     @IBOutlet weak var progressView: UIView!
     @IBOutlet weak var downloadProgressLabel: UILabel!
+    @IBOutlet weak var didPlayImageView: UIImageView!
     
     
     //TODO:
     //1. Make media type image dynamic -> x
-    //2. Make select pause if the pod is already playing
-    //3. Add download button
+    //2. Make select pause if the pod is already playing -> x
+    //3. Add download button -> x
     //4. Add more button action + view
-    //5. Add share button action
+    //5. Add share button action -> x
     
     var episode: PodcastEpisode! = nil
     weak var delegate: PodcastEpisodeRowDelegate?
@@ -92,11 +93,17 @@ class UnifiedEpisodeTableViewCell: UITableViewCell {
             var components = DateComponents()
             components.second = remaining
             let remainingString = formatter.string(from: components)
-            if let valid_string = remainingString{
+            if remaining < 60{
+                timeRemainingLabel.text = "Played"
+                didPlayImageView.isHidden = false
+            }
+            else if let valid_string = remainingString{
                 timeRemainingLabel.text = "\(valid_string) left"
+                didPlayImageView.isHidden = true
             }
             else{
                 timeRemainingLabel.text = ""
+                didPlayImageView.isHidden = true
             }
         }
         

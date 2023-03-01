@@ -537,7 +537,6 @@ extension AppDelegate : SphinxOnionConnectorDelegate {
     }
 }
 
-
 extension AppDelegate : PKPushRegistryDelegate{
     func pushRegistry(_ registry: PKPushRegistry, didUpdate pushCredentials: PKPushCredentials, for type: PKPushType) {
         if type == PKPushType.voIP {
@@ -550,27 +549,23 @@ extension AppDelegate : PKPushRegistryDelegate{
     func pushRegistry(_ registry: PKPushRegistry, didReceiveIncomingPushWith payload: PKPushPayload, for type: PKPushType, completion: @escaping () -> Void) {
         if let dict = payload.dictionaryPayload as? [String:Any],
            let aps = dict["aps"] as? [String:Any],
-            var contents = aps["alert"] as? String,
-            let pushMessage = VoIPPushMessage.voipMessage(jsonString: contents),
-            let pushBody = pushMessage.body as? VoIPPushMessageBody
-           {
+           let contents = aps["alert"] as? String,
+           let pushMessage = VoIPPushMessage.voipMessage(jsonString: contents),
+           let pushBody = pushMessage.body as? VoIPPushMessageBody {
            
             if #available(iOS 14.0, *) {
                 let manager = JitsiIncomingCallManager.sharedInstance
-                //print(EncryptionManager.sharedInstance.encryptMessageForOwner(message: pushBody.linkURL))
                 let (result, message) = EncryptionManager.sharedInstance.decryptMessage(message: pushBody.linkURL)
                 manager.currentJitsiURL = (result == true) ? message : pushBody.linkURL
                 self.handleIncomingCall(chatID: 0, callerName: pushBody.callerName)
-            } else {
-                // Fallback on earlier versions
             }
             completion()
-        }
-        else{
+        } else {
             completion()
         }
     }
-    func pushRegistry(_ registry: PKPushRegistry, didInvalidatePushTokenFor type: PKPushType){
+    
+    func pushRegistry(_ registry: PKPushRegistry, didInvalidatePushTokenFor type: PKPushType) {
         print("invalidated token")
     }
 }

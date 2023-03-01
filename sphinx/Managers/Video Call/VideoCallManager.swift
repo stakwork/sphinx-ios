@@ -43,7 +43,9 @@ class VideoCallManager : NSObject {
             return
         }
 
-        if let owner = UserContact.getOwner() {
+        if let owner = UserContact.getOwner(),
+           let call_link = VoIPRequestMessage(JSONString: link),
+           let link_url = call_link.link{
             cleanUp()
 
             let jitsiMeetView = JitsiMeetView()
@@ -51,7 +53,7 @@ class VideoCallManager : NSObject {
             self.jitsiMeetView = jitsiMeetView
 
             let options = JitsiMeetConferenceOptions.fromBuilder({(builder: JitsiMeetConferenceOptionsBuilder) -> Void in
-                builder.serverURL = URL(string: link.callServer)!
+                builder.serverURL = URL(string: link_url)!
                 builder.room = link.callRoom
                 builder.audioOnly = audioOnly
                 builder.audioMuted = false

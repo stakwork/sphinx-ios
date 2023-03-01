@@ -142,12 +142,12 @@ class UnifiedEpisodeTableViewCell: UITableViewCell {
     
     //Networking:
     func configureDownload(episode: PodcastEpisode, download: Download?) {
-        /*
+        
         contentView.alpha = episode.isAvailable ? 1.0 : 0.5
 
-        recognizer?.isEnabled = episode.isDownloaded
+        //recognizer?.isEnabled = episode.isDownloaded
         
-        progressLabel.text = ""
+        //progressLabel.text = ""
 
         if episode.isDownloaded {
             downloadButton.setTitle("download_done", for: .normal)
@@ -160,7 +160,20 @@ class UnifiedEpisodeTableViewCell: UITableViewCell {
         if let download = download {
             updateProgress(progress: download.progress)
         }
-         */
+         
     }
     
+    func updateProgress(progress: Int) {
+        print(progress)
+        //progressLabel.text = (progress > 0) ? "\(progress)%" : ""
+        downloadButton.setTitle((progress > 0) ? "" : "hourglass_top", for: .normal)
+    }
+    
+    @IBAction func downloadButtonTouched() {
+        self.delegate?.shouldStartDownloading(episode: episode, cell: self)
+    }
+    
+    @IBAction func shareButtonTouched(){
+        self.delegate?.shouldShare(episode: episode)
+    }
 }

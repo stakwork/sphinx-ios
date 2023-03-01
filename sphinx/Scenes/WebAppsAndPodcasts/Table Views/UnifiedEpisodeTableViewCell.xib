@@ -104,6 +104,9 @@
                                 <state key="normal" title="download">
                                     <color key="titleColor" name="Text"/>
                                 </state>
+                                <connections>
+                                    <action selector="downloadButtonTouched" destination="KGk-i7-Jjw" eventType="touchUpInside" id="pBA-bm-IrM"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleAspectFit" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2d8-WG-wY9">
                                 <rect key="frame" x="82" y="149" width="24" height="32"/>
@@ -114,6 +117,9 @@
                                 <state key="normal" title="ios_share">
                                     <color key="titleColor" name="Text"/>
                                 </state>
+                                <connections>
+                                    <action selector="shareButtonTouched" destination="KGk-i7-Jjw" eventType="touchUpInside" id="p5T-Cw-U6y"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleAspectFit" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cLk-jp-rUg">
                                 <rect key="frame" x="146" y="149" width="24" height="32"/>

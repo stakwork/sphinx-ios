@@ -13,6 +13,7 @@ protocol PodcastEpisodesDSDelegate : class {
     func downloadTapped(_ indexPath: IndexPath, episode: PodcastEpisode)
     func deleteTapped(_ indexPath: IndexPath, episode: PodcastEpisode)
     func shouldToggleTopView(show: Bool)
+    func shareTapped(episode:PodcastEpisode)
 }
 
 class PodcastEpisodesDataSource : NSObject {
@@ -129,15 +130,19 @@ extension PodcastEpisodesDataSource : UIScrollViewDelegate {
 
 extension PodcastEpisodesDataSource : PodcastEpisodeRowDelegate {
    
-    func shouldDeleteFile(episode: PodcastEpisode, cell: PodcastEpisodeTableViewCell) {
+    func shouldDeleteFile(episode: PodcastEpisode, cell: UITableViewCell) {
         if let indexPath = tableView.indexPath(for: cell) {
             delegate?.deleteTapped(indexPath, episode: episode)
         }
     }
     
-    func shouldStartDownloading(episode: PodcastEpisode, cell: PodcastEpisodeTableViewCell) {
-        if let indexPath = tableView.indexPath(for: cell) {
+    func shouldStartDownloading(episode: PodcastEpisode, cell: UITableViewCell) {
+        if let indexPath = tableView.indexPath(for: cell){
             delegate?.downloadTapped(indexPath, episode: episode)
         }
+    }
+    
+    func shouldShare(episode: PodcastEpisode) {
+        delegate?.shareTapped(episode: episode)
     }
 }

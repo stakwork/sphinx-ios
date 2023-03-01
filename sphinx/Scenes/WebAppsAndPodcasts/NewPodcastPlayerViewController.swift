@@ -185,8 +185,7 @@ extension NewPodcastPlayerViewController : PodcastEpisodesDSDelegate {
             UIActivity.ActivityType.addToReadingList,
             UIActivity.ActivityType.postToFlickr,
             UIActivity.ActivityType.postToVimeo,
-            UIActivity.ActivityType.postToTencentWeibo,
-            UIActivity.ActivityType.postToFacebook
+            UIActivity.ActivityType.postToTencentWeibo
         ]
         
         activityViewController.isModalInPresentation = true

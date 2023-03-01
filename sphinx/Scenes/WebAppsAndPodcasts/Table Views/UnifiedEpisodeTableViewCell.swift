@@ -99,7 +99,7 @@ class UnifiedEpisodeTableViewCell: UITableViewCell {
             }
         }
         
-        //configureDownload(episode: episode, download: download)
+        configureDownload(episode: episode, download: download)
         
         episodeImageView.sd_cancelCurrentImageLoad()
         
@@ -121,7 +121,7 @@ class UnifiedEpisodeTableViewCell: UITableViewCell {
         
         roundCorners()
     }
-    
+    //UI Stuff
     func roundCorners(){
         mediaTypeImageView.layer.cornerRadius = 3.0
         episodeImageView.layer.cornerRadius = 6.0
@@ -138,6 +138,29 @@ class UnifiedEpisodeTableViewCell: UITableViewCell {
             progressWidthConstraint.constant = CGFloat(newProgressWidth)
         }
         durationView.alpha = 0.1
+    }
+    
+    //Networking:
+    func configureDownload(episode: PodcastEpisode, download: Download?) {
+        /*
+        contentView.alpha = episode.isAvailable ? 1.0 : 0.5
+
+        recognizer?.isEnabled = episode.isDownloaded
+        
+        progressLabel.text = ""
+
+        if episode.isDownloaded {
+            downloadButton.setTitle("download_done", for: .normal)
+            downloadButton.setTitleColor(UIColor.Sphinx.PrimaryGreen, for: .normal)
+        } else {
+            downloadButton.setTitle("download", for: .normal)
+            downloadButton.setTitleColor(UIColor.Sphinx.Text, for: .normal)
+        }
+        
+        if let download = download {
+            updateProgress(progress: download.progress)
+        }
+         */
     }
     
 }

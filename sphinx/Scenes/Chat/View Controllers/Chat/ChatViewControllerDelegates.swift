@@ -146,10 +146,11 @@ extension ChatViewController : ChatHeaderViewDelegate {
     }
     
     func sendCallMessage(sender: UIButton) {
+        let type = (self.chat?.isGroup() == false) ? TransactionMessage.TransactionMessageType.callInvite.rawValue : TransactionMessage.TransactionMessageType.message.rawValue
         VideoCallHelper.createCallMessage(button: sender, callback: { link in
             self.shouldSendMessage(
                 text: link,
-                type: TransactionMessage.TransactionMessageType.callInvite.rawValue,
+                type: type,
                 completion: { _ in }
             )
         })
@@ -190,7 +191,7 @@ extension ChatViewController : ChatAccessoryViewDelegate {
             let voipRequestMessage = VoIPRequestMessage()
             voipRequestMessage.recurring = false
             voipRequestMessage.link = messageText
-            voipRequestMessage.cron = "satoshi__n"
+            voipRequestMessage.cron = ""
             messageText = voipRequestMessage.toJSONString() ?? messageText
         }
         

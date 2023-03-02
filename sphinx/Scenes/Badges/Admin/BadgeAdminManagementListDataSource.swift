@@ -68,7 +68,12 @@ class BadgeAdminManagementListDataSource : NSObject{
                     let updateResults: [Badge] = mappedResults.map({
                         $0.chat_id = self.chatID
                         return $0
-                    }).sorted { $0.activationState && !$1.activationState }
+                    }).sorted {
+                        if ($0.activationState && $1.activationState) {
+                            return ($0.name ?? "" > $1.name ?? "")
+                        }
+                        return ($0.activationState && !$1.activationState)
+                    }
                     
                     self.badges = updateResults
 

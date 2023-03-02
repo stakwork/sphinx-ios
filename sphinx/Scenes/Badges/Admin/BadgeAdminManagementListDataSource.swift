@@ -64,7 +64,14 @@ class BadgeAdminManagementListDataSource : NSObject{
             chatID: chatID,
             callback: { results in
                 if let mappedResults = Mapper<Badge>().mapArray(JSONObject: Array(results)){
-                    self.badges = mappedResults.filter({ $0.activationState })
+                    
+                    let updateResults: [Badge] = mappedResults.map({
+                        $0.chat_id = self.chatID
+                        return $0
+                    }).sorted { $0.activationState && !$1.activationState }
+                    
+                    self.badges = updateResults
+
                     self.vc.removeLoadingView()
                     self.vc.badgeTableView.reloadData()
                 }
@@ -159,6 +166,6 @@ extension BadgeAdminManagementListDataSource : UITableViewDelegate,UITableViewDa
             let badge = getBadge(index: indexPath.row)
             let context : BadgeDetailPresentationContext = (badge.activationState == true) ? .active : .inactive
             vc.showBadgeDetail(badge: badge, presentationContext: context)
-        }   
+        }
     }
 }

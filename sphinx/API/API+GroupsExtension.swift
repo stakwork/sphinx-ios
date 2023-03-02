@@ -424,7 +424,6 @@ extension API {
                         return
                     }
                 }
-                //print(response.response?.statusCode)
                 errorCallback()
             case .failure(_):
                 //print(response.response?.statusCode)

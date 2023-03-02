@@ -75,38 +75,23 @@ class UnifiedEpisodeTableViewCell: UITableViewCell {
         
         mediaTypeImageView.image = #imageLiteral(resourceName: "podcastTypeIcon")
         
-        let date = episode.datePublished
-        let formatter = DateFormatter()
-        formatter.dateFormat = "d MMM yyyy"
-        if let valid_date = date{
-            let dateString = formatter.string(from: valid_date)
-            dateLabel.text = dateString
-        }
+        dateLabel.text = episode.dateString
         
         setProgress()
         
-        if let valid_elapsed = episode.currentTime,
-           let valid_duration = episode.duration{
-            let remaining = valid_duration - valid_elapsed
-            let formatter = DateComponentsFormatter()
-            formatter.unitsStyle = .abbreviated
-            formatter.allowedUnits = (remaining > 3599) ? [.hour, .minute] : [.minute]
-            formatter.zeroFormattingBehavior = .pad
-            var components = DateComponents()
-            components.second = remaining
-            let remainingString = formatter.string(from: components)
-            if remaining < 60{
-                timeRemainingLabel.text = "Played"
+        if let valid_string = episode.getTimeString(type: .remaining){
+            if valid_string == "Played"{
+                timeRemainingLabel.text = valid_string
                 didPlayImageView.isHidden = false
             }
-            else if let valid_string = remainingString{
+            else{
                 timeRemainingLabel.text = "\(valid_string) left"
                 didPlayImageView.isHidden = true
             }
-            else{
-                timeRemainingLabel.text = ""
-                didPlayImageView.isHidden = true
-            }
+        }
+        else{
+            timeRemainingLabel.text = ""
+            didPlayImageView.isHidden = true
         }
         
         configureDownload(episode: episode, download: download)

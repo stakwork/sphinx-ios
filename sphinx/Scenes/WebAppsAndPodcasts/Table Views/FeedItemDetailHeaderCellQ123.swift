@@ -42,7 +42,9 @@ class FeedItemDetailHeaderCellQ123: UITableViewCell {
         feedItemImageView.sd_setImage(with: URL(string: episode.imageToShow ?? ""))
         feedItemImageView.layer.cornerRadius = 10.0
         sourceTypeImageView.layer.cornerRadius = 3.0
-        
+        dateLabel.text = episode.dateString
+        timeRemainingLabel.text = episode.getTimeString(type: .total)
+        sourceTypeNameLabel.text = "Podcast"
     }
     
 }

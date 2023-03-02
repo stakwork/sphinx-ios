@@ -55,6 +55,57 @@ public class PodcastEpisode: NSObject {
         }
     }
     
+    var dateString : String?{
+        let date = self.datePublished
+        let formatter = DateFormatter()
+        formatter.dateFormat = "d MMM yyyy"
+        if let valid_date = date{
+            let dateString = formatter.string(from: valid_date)
+            return dateString
+        }
+        return nil
+    }
+    
+    public enum TimeStringType{
+        case elapsed
+        case total
+        case remaining
+    }
+    
+    func getTimeString(type:TimeStringType)->String?{
+        var time : Int = 0
+        if type == .remaining,
+           let valid_elapsed = self.currentTime,
+           let valid_duration = self.duration{
+            time = valid_duration - valid_elapsed
+            if time < 60{
+                return "Played"
+            }
+        }
+        else if type == .elapsed,
+            let valid_elapsed = self.currentTime{
+            time = valid_elapsed
+        }
+        else if type == .total,
+            let valid_duration = self.duration{
+            time = valid_duration
+        }
+        else{
+            return nil
+        }
+        
+        let formatter = DateComponentsFormatter()
+        formatter.unitsStyle = .abbreviated
+        formatter.allowedUnits = (time > 3599) ? [.hour, .minute] : [.minute]
+        formatter.zeroFormattingBehavior = .pad
+        var components = DateComponents()
+        components.second = time
+        let result = formatter.string(from: components)
+        
+        
+        return result
+    }
+    
     var youtubeVideoId: String? {
         get {
             var videoId: String? = nil

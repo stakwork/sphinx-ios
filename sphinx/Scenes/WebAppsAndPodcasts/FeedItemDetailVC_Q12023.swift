@@ -10,6 +10,13 @@ import Foundation
 import UIKit
 
 class FeedItemDetailVC_Q12023 : UIViewController{
+    
+    @IBOutlet weak var tableView: UITableView!
+    
+    lazy var vm : FeedItemDetailVM_Q12023 = {
+        return FeedItemDetailVM_Q12023(vc: self, tableView: self.tableView)
+    }()
+    
     static func instantiate(
 
     ) -> FeedItemDetailVC_Q12023 {
@@ -17,5 +24,11 @@ class FeedItemDetailVC_Q12023 : UIViewController{
         //viewController.rootViewController = rootViewController
         
         return viewController
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        vm.setupTableView()
+        tableView.reloadData()
     }
 }

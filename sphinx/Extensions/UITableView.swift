@@ -52,14 +52,6 @@ extension UITableView {
         }
     }
     
-    func isAtBottom() -> Bool {
-        let y = self.contentOffset.y
-        let contentHeight = (self.contentSize.height - self.frame.size.height + self.contentInset.bottom)
-        let difference = contentHeight - y
-        
-        return difference == 0
-    }
-    
     func isPositionAtBottom(
         yPosition: CGFloat,
         accessoryViewHeight: CGFloat
@@ -70,7 +62,7 @@ extension UITableView {
 
         let difference = contentHeight - yPosition
         
-        return difference == 0
+        return round(difference) <= 0
     }
     
     func scrollToRow(index:Int, animated:Bool = true){
@@ -80,5 +72,14 @@ extension UITableView {
     
     func scrollToOffset(yPosition: CGFloat) {
         self.contentOffset.y = yPosition
+    }
+}
+
+extension UIScrollView {
+    func isAtBottom() -> Bool {
+        let currentY = round(self.contentOffset.y)
+        let bottomY = round(self.contentSize.height - self.frame.size.height + self.contentInset.bottom)
+        
+        return currentY == bottomY
     }
 }

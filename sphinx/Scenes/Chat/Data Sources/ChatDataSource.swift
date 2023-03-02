@@ -646,7 +646,7 @@ extension ChatDataSource : UITableViewDataSource {
 extension ChatDataSource : UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if let yPosition = yPosition, yPosition != scrollView.contentOffset.y {
-            if scrollView.contentOffset.y == (scrollView.contentSize.height - scrollView.frame.size.height + scrollView.contentInset.bottom) {
+            if scrollView.isAtBottom() {
                 delegate?.didScrollToBottom()
             }
         }

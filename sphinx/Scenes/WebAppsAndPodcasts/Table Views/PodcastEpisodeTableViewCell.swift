@@ -12,7 +12,7 @@ protocol PodcastEpisodeRowDelegate : class {
     func shouldStartDownloading(episode: PodcastEpisode, cell: UITableViewCell)
     func shouldDeleteFile(episode: PodcastEpisode, cell: UITableViewCell)
     func shouldShare(episode: PodcastEpisode)
-    func shouldShowMore(episode: PodcastEpisode)
+    func shouldShowMore(episode: PodcastEpisode,cell:UITableViewCell)
 }
 
 class PodcastEpisodeTableViewCell: SwipableCell {

@@ -14,19 +14,28 @@ class FeedItemDetailVC_Q12023 : UIViewController{
     @IBOutlet weak var tableView: UITableView!
     weak var episode : PodcastEpisode?
     weak var delegateReference : PodcastEpisodesDSDelegate?
+    var indexPath : IndexPath?
     
     lazy var vm : FeedItemDetailVM_Q12023 = {
-        return FeedItemDetailVM_Q12023(vc: self, tableView: self.tableView,episode:self.episode!, delegate: delegateReference!)
+        return FeedItemDetailVM_Q12023(
+            vc: self,
+            tableView: self.tableView,
+            episode:self.episode!,
+            delegate: delegateReference!,
+            indexPath:indexPath!
+        )
     }()
     
     static func instantiate(
         episode:PodcastEpisode,
-        delegate: PodcastEpisodesDSDelegate
+        delegate: PodcastEpisodesDSDelegate,
+        indexPath: IndexPath
     ) -> FeedItemDetailVC_Q12023 {
         let viewController = StoryboardScene.Dashboard.feedItemDetailVC_Q12023.instantiate()
         //viewController.rootViewController = rootViewController
         viewController.episode = episode
         viewController.delegateReference = delegate
+        viewController.indexPath = indexPath
         return viewController
     }
     

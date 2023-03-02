@@ -15,6 +15,7 @@ class FeedItemDetailVM_Q12023 : NSObject{
     weak var vc: FeedItemDetailVC_Q12023?
     weak var tableView:UITableView?
     var episode : PodcastEpisode
+    var indexPath : IndexPath
     let actionsList : [FeedItemActionType] = [
         .download,
         .share,
@@ -22,11 +23,16 @@ class FeedItemDetailVM_Q12023 : NSObject{
         .markAsPlayed
     ]
     
-    init(vc:FeedItemDetailVC_Q12023,tableView:UITableView,episode:PodcastEpisode,delegate:PodcastEpisodesDSDelegate){
+    init(vc:FeedItemDetailVC_Q12023,
+         tableView:UITableView,
+         episode:PodcastEpisode,
+         delegate:PodcastEpisodesDSDelegate,
+         indexPath:IndexPath){
         self.vc = vc
         self.tableView = tableView
         self.episode = episode
         self.delegate = delegate
+        self.indexPath = indexPath
     }
     
     func setupTableView(){
@@ -40,7 +46,10 @@ class FeedItemDetailVM_Q12023 : NSObject{
     func doAction(action:FeedItemActionType){
         switch(action){
         case .download:
-            
+            vc?.dismiss(animated: true)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+                self.delegate?.downloadTapped(self.indexPath, episode: self.episode)
+            })
             break
         case .markAsPlayed:
             

@@ -192,8 +192,8 @@ extension NewPodcastPlayerViewController : PodcastEpisodesDSDelegate {
         self.present(activityViewController, animated: true, completion: nil)
     }
     
-    func showEpisodeDetails(episode: PodcastEpisode) {
-        let vc = FeedItemDetailVC_Q12023.instantiate(episode: episode, delegate: self)
+    func showEpisodeDetails(episode: PodcastEpisode,indexPath:IndexPath) {
+        let vc = FeedItemDetailVC_Q12023.instantiate(episode: episode, delegate: self, indexPath: indexPath)
         self.present(vc, animated: true)
     }
 

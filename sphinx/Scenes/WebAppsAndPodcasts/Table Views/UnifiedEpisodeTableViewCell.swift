@@ -175,7 +175,7 @@ class UnifiedEpisodeTableViewCell: UITableViewCell {
     }
     
     @IBAction func moreButtonTouched(){
-        self.delegate?.shouldShowMore(episode: episode)
+        self.delegate?.shouldShowMore(episode: episode, cell: self)
     }
     
 }

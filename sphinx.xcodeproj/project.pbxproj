@@ -631,6 +631,8 @@
 		CE3D8CA329B10FA500EDB637 /* FeedItemDetailVM_Q12023.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3D8CA229B10FA500EDB637 /* FeedItemDetailVM_Q12023.swift */; };
 		CE3D8CAC29B1124E00EDB637 /* FeedItemDetailHeaderCellQ123.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3D8CAA29B1124E00EDB637 /* FeedItemDetailHeaderCellQ123.swift */; };
 		CE3D8CAD29B1124E00EDB637 /* FeedItemDetailHeaderCellQ123.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE3D8CAB29B1124E00EDB637 /* FeedItemDetailHeaderCellQ123.xib */; };
+		CE3D8CB029B1471900EDB637 /* FeedItemDetailActionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3D8CAE29B1471900EDB637 /* FeedItemDetailActionCell.swift */; };
+		CE3D8CB129B1471900EDB637 /* FeedItemDetailActionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE3D8CAF29B1471900EDB637 /* FeedItemDetailActionCell.xib */; };
 		CE51F350298870BF00ABBACB /* MemberBadgeDetailVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE51F34F298870BF00ABBACB /* MemberBadgeDetailVM.swift */; };
 		CE51F3562988743E00ABBACB /* MemberDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE51F3542988743E00ABBACB /* MemberDetailTableViewCell.swift */; };
 		CE51F3572988743E00ABBACB /* MemberBadgeDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE51F3552988743E00ABBACB /* MemberBadgeDetailTableViewCell.xib */; };
@@ -1557,6 +1559,8 @@
 		CE3D8CA229B10FA500EDB637 /* FeedItemDetailVM_Q12023.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItemDetailVM_Q12023.swift; sourceTree = "<group>"; };
 		CE3D8CAA29B1124E00EDB637 /* FeedItemDetailHeaderCellQ123.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItemDetailHeaderCellQ123.swift; sourceTree = "<group>"; };
 		CE3D8CAB29B1124E00EDB637 /* FeedItemDetailHeaderCellQ123.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedItemDetailHeaderCellQ123.xib; sourceTree = "<group>"; };
+		CE3D8CAE29B1471900EDB637 /* FeedItemDetailActionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItemDetailActionCell.swift; sourceTree = "<group>"; };
+		CE3D8CAF29B1471900EDB637 /* FeedItemDetailActionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedItemDetailActionCell.xib; sourceTree = "<group>"; };
 		CE51F34F298870BF00ABBACB /* MemberBadgeDetailVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberBadgeDetailVM.swift; sourceTree = "<group>"; };
 		CE51F3542988743E00ABBACB /* MemberDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberDetailTableViewCell.swift; sourceTree = "<group>"; };
 		CE51F3552988743E00ABBACB /* MemberBadgeDetailTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MemberBadgeDetailTableViewCell.xib; sourceTree = "<group>"; };
@@ -1777,6 +1781,8 @@
 			children = (
 				CEE433B029AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.swift */,
 				CE3D8CAA29B1124E00EDB637 /* FeedItemDetailHeaderCellQ123.swift */,
+				CE3D8CAE29B1471900EDB637 /* FeedItemDetailActionCell.swift */,
+				CE3D8CAF29B1471900EDB637 /* FeedItemDetailActionCell.xib */,
 				CE3D8CAB29B1124E00EDB637 /* FeedItemDetailHeaderCellQ123.xib */,
 				CEE433B129AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.xib */,
 				470396D62535D12D007F9C23 /* PodcastEpisodeTableViewCell.swift */,
@@ -4332,6 +4338,7 @@
 				475BDCFE232AC24600C5BBD6 /* DirectPaymentReceivedTableViewCell.xib in Resources */,
 				475BDCEA232AC23B00C5BBD6 /* PaymentSentTableViewCell.xib in Resources */,
 				4797E80E24B8FBC200D13270 /* Stakwork.storyboard in Resources */,
+				CE3D8CB129B1471900EDB637 /* FeedItemDetailActionCell.xib in Resources */,
 				CE842DE1298ADECF00620AD3 /* MemberBadgeHeaderCell.xib in Resources */,
 				F3D86DC026B14E5E00EB9711 /* DashboardFeedSquaredThumbnailCollectionViewCell.xib in Resources */,
 				475154B82423F09900477384 /* VideoCallBubbleView.xib in Resources */,
@@ -4745,6 +4752,7 @@
 				47CBB4EB23E9D9BE00743CBE /* API+LogsExtension.swift in Sources */,
 				475BDD5F232AE26E00C5BBD6 /* UserContact+CoreDataClass.swift in Sources */,
 				4754FA93272ADB02006295A5 /* DashboardNewsletterItemCollectionViewCell.swift in Sources */,
+				CE3D8CB029B1471900EDB637 /* FeedItemDetailActionCell.swift in Sources */,
 				477D9694244DFCED00830406 /* GifOverlayView.swift in Sources */,
 				475922F923E0B4EE00B73626 /* DelayPerformertHelper.swift in Sources */,
 				F30884A72699123600CADDEB /* LeftMenuViewController+KarmaPurchaseUtils.swift in Sources */,

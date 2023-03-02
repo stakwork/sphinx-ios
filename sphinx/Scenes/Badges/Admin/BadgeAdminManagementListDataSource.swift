@@ -33,7 +33,7 @@ class BadgeAdminManagementListDataSource : NSObject{
     
     func fetchTemplates(){
         API.sharedInstance.getTribeAdminBadgeTemplates(
-            callback: {results in
+            callback: { results in
                 if let mappedResults = Mapper<BadgeTemplate>().mapArray(JSONObject: Array(results)){
                     for result in mappedResults{
                         let newBadge = Badge()
@@ -54,7 +54,8 @@ class BadgeAdminManagementListDataSource : NSObject{
             },
             errorCallback: {
                 print("error")
-        })
+            }
+        )
     }
     
     func fetchBadges(){
@@ -62,18 +63,16 @@ class BadgeAdminManagementListDataSource : NSObject{
         API.sharedInstance.getTribeAdminBadges(
             chatID: chatID,
             callback: { results in
-                if var mappedResults = Mapper<Badge>().mapArray(JSONObject: Array(results)){
-                    mappedResults.map({$0.chat_id = self.chatID})
-                    self.badges = mappedResults
+                if let mappedResults = Mapper<Badge>().mapArray(JSONObject: Array(results)){
+                    self.badges = mappedResults.filter({ $0.activationState })
                     self.vc.removeLoadingView()
                     self.vc.badgeTableView.reloadData()
                 }
             },
             errorCallback: {
-                
-            })
-        
-        
+                print("error")
+            }
+        )
     }
 }
 
@@ -160,9 +159,6 @@ extension BadgeAdminManagementListDataSource : UITableViewDelegate,UITableViewDa
             let badge = getBadge(index: indexPath.row)
             let context : BadgeDetailPresentationContext = (badge.activationState == true) ? .active : .inactive
             vc.showBadgeDetail(badge: badge, presentationContext: context)
-        }
-        
+        }   
     }
-    
-    
 }

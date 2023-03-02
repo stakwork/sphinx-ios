@@ -486,10 +486,10 @@ extension ChatViewController : TribeMemberViewDelegate {
     }
     
     func displayKnownBadges(){
-        let badgeVC = BadgeMemberKnownBadgesVC.instantiate(chatID: chat?.id)
-        if let valid_vc = badgeVC as? BadgeMemberKnownBadgesVC{
-            valid_vc.badges = self.chatListViewModel.availableBadges
-        }
+        let badgeVC = BadgeMemberKnownBadgesVC.instantiate(
+            chatID: chat?.id,
+            badges: chatListViewModel.availableBadges
+        )
         self.navigationController?.pushViewController(badgeVC, animated: true)
     }
     

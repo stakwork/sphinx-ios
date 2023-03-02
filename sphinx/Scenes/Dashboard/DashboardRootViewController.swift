@@ -622,8 +622,6 @@ extension DashboardRootViewController {
             return
         }
         
-        chat?.setChatMessagesAsSeen()
-        
         let chatVC = ChatViewController.instantiate(
             contact: contact,
             chat: chat,

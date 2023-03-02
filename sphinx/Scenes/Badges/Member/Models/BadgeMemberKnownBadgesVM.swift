@@ -14,12 +14,15 @@ class BadgeMemberKnownBadgesVM : NSObject {
     
     var tableView : UITableView
     var vc : BadgeMemberKnownBadgesVC
+    
     var knownBadges : [Badge] = []{
         didSet {
             vc.noBadgesLabel.isHidden = knownBadges.isEmpty == false
         }
     }
     var chatID : Int? = nil
+    
+    let kRowHeight:CGFloat = 117
     
     init(vc: BadgeMemberKnownBadgesVC, tableView: UITableView,chatID:Int?) {
         self.vc = vc
@@ -36,33 +39,16 @@ class BadgeMemberKnownBadgesVM : NSObject {
         tableView.dataSource = self
         tableView.register(UINib(nibName: "KnownBadgeCell", bundle: nil), forCellReuseIdentifier: KnownBadgeCell.reuseID)
         
-        //fetchKnownBadges()
-        
         tableView.reloadData()
     }
     
     func fetchKnownBadges(){
-        /*
-        let badge = Badge()
-        badge.name = "my badge"
-        badge.memo = "dexription of my badge"
-        badge.icon_url = "https://i.ibb.co/Ch8mwg0/badge-Example.png"
-        let badge2 = Badge()
-        badge2.name = "my badge"
-        badge2.memo = "dexription of my badge"
-        badge2.icon_url = "https://i.ibb.co/Ch8mwg0/badge-Example.png"
-        knownBadges.append(badge)
-        knownBadges.append(badge2)
-        */
-        
         if let valid_id = chatID{
             vc.addLoadingView()
             API.sharedInstance.getTribeAdminBadges(
                 chatID: valid_id,
                 callback: { results in
-                   print(results)
-                    if var mappedResults = Mapper<Badge>().mapArray(JSONObject: Array(results)){
-                        mappedResults.map({$0.chat_id = valid_id})
+                    if let mappedResults = Mapper<Badge>().mapArray(JSONObject: Array(results)) {
                         self.knownBadges = mappedResults
                         self.vc.removeLoadingView()
                         self.tableView.reloadData()
@@ -93,5 +79,8 @@ extension BadgeMemberKnownBadgesVM : UITableViewDelegate, UITableViewDataSource{
         return cell
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return kRowHeight
+    }
     
 }

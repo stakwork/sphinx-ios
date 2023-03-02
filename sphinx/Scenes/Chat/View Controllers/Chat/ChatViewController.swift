@@ -30,9 +30,6 @@ class ChatViewController: KeyboardHandlerViewController {
     @IBOutlet weak var scrollDownLabel: UILabel!
     @IBOutlet weak var webAppContainerView: UIView!
     
-    
-    var unseenMessagesCount = 0
-    
     var processingPR : TransactionMessage?
     var processingPRCell : InvoiceReceivedTableViewCell?
     var webAppVC : WebAppViewController? = nil
@@ -169,7 +166,7 @@ class ChatViewController: KeyboardHandlerViewController {
                 key: PodcastDelegateKeys.ChatSmallPlayerBar.rawValue
             )
         }
-        
+        setLastReadMessage()
         CustomAudioPlayer.sharedInstance.stopAndReset()
         API.sharedInstance.cleanMessagesRequest()
         removeObservers()
@@ -204,7 +201,6 @@ class ChatViewController: KeyboardHandlerViewController {
     }
     
     func reloadMessages(newMessageCount: Int = 0) {
-        chat?.setChatMessagesAsSeen()
         reloadAndScroll(newMessageCount: newMessageCount)
         loading = false
     }
@@ -212,7 +208,6 @@ class ChatViewController: KeyboardHandlerViewController {
     func reloadAndScroll(newMessageCount: Int = 0) {
         if newMessageCount > 0 {
             chatDataSource?.setDataAndReload(contact: contact, chat: chat)
-            scrollAfterInsert(count: newMessageCount)
         }
         
         DelayPerformedHelper.performAfterDelay(seconds: 0.5) {
@@ -222,7 +217,23 @@ class ChatViewController: KeyboardHandlerViewController {
     
     func initialLoad(forceReload: Bool = false) {
         chatDataSource?.setDataAndReload(contact: contact, chat: chat, forceReload: forceReload)
-        scrollChatToBottom(animated: false)
+        
+        if let chat = chat,
+           let tablePosition = GroupsManager.sharedInstance.getChatLastRead(chatID: chat.id) {
+            
+            chatTableView.scrollToOffset(yPosition: tablePosition.1)
+            
+            let isPositionAtBottom = chatTableView.isPositionAtBottom(
+                yPosition: tablePosition.1,
+                accessoryViewHeight: accessoryView.viewContentSize().height
+            )
+            
+            scrollDownLabel.text = chat.unseenMessagesCountLabel
+            scrollDownContainer.isHidden = isPositionAtBottom
+        } else {
+            scrollChatToBottom(animated: false)
+            didScrollToBottom()
+        }
     }
         
     func fetchNewData() {
@@ -234,6 +245,15 @@ class ChatViewController: KeyboardHandlerViewController {
                     self.chatListViewModel.getChatBadges(chat: self.chat)
                 }
             }
+        }
+    }
+    
+    func setLastReadMessage(){
+        if let dataSource = chatDataSource,
+           let tablePosition = dataSource.getTableViewPosition(),
+           let valid_chat = chat
+        {
+            GroupsManager.sharedInstance.setChatLastRead(chatID: valid_chat.id, tablePosition: tablePosition)
         }
     }
     

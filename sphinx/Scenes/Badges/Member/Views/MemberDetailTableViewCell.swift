@@ -178,6 +178,7 @@ class MemberDetailTableViewCell: UITableViewCell {
         var relevantStat : Int!
         var relevnantRank : String!
         var relevantLeaderboardEntry : ChatLeaderboardEntry = leaderboardData ?? ChatLeaderboardEntry()
+        
         if(type == .earnings){
             color = UIColor.Sphinx.PrimaryGreen
             if let stat = relevantLeaderboardEntry.earned,
@@ -218,7 +219,8 @@ class MemberDetailTableViewCell: UITableViewCell {
         let satsLabelAttributedText = NSMutableAttributedString(string: satsString)
         satsLabelAttributedText.addAttribute(.foregroundColor, value: color, range: NSRange(location: satsString.distance(from: String.Index(utf16Offset: 0, in: satsString), to: String.Index(utf16Offset: 0, in: satsString)), length: numLength))
         
-        satsLabelAttributedText.addAttribute(.font,value: UIFont(name: "Roboto", size: 15.0), range: NSRange(location: satsString.distance(from: String.Index(utf16Offset: 0, in: satsString), to: String.Index(utf16Offset: 0, in: satsString)), length: satsString.count))
+        satsLabelAttributedText.addAttribute(.font, value: UIFont(name: "Roboto", size: 15.0)!, range: NSRange(location: satsString.distance(from: String.Index(utf16Offset: 0, in: satsString), to: String.Index(utf16Offset: 0, in: satsString)), length: satsString.count))
+        
         satsLabel.attributedText = satsLabelAttributedText
         satsLabel.textAlignment = .right
         

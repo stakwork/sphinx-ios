@@ -11,6 +11,7 @@ protocol ChatDataSourceDelegate: class {
     func didScrollToBottom()
     func didDeleteGroup()
     func chatUpdated(chat: Chat)
+    func shouldScrollToBottom(force: Bool)
 }
 
 class ChatDataSource : NSObject {
@@ -37,6 +38,8 @@ class ChatDataSource : NSObject {
     var itemsPerPage = 50
     var insertedRowsCount = 0
     var insertingRows = false
+    
+    var yPosition: CGFloat? = nil
     
     var paymentForInvoiceReceived: Bool = false
     var paymentForInvoiceSent: Bool = false
@@ -73,7 +76,10 @@ class ChatDataSource : NSObject {
         insertedRowsCount = 0
         
         chatMessagesCount = chat?.getAllMessagesCount() ?? 0
-        messagesArray = chat?.getAllMessages(limit: itemsPerPage) ?? [TransactionMessage]()
+        
+        let tablePosition = GroupsManager.sharedInstance.getChatLastRead(chatID: chat?.id)
+        messagesArray = chat?.getAllMessages(limit: itemsPerPage, firstMessage: tablePosition?.0) ?? [TransactionMessage]()
+        
         messageIdsArray = []
         messageRowsArray = []
         boosts = [:]
@@ -85,6 +91,13 @@ class ChatDataSource : NSObject {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.reloadData()
+    }
+    
+    func getTableViewPosition() -> (Int, CGFloat)? {
+        if let firstMessageId = messagesArray.first?.id {
+            return (firstMessageId, tableView.contentOffset.y)
+        }
+       return nil
     }
     
     func getInitialItemsPerPage() -> Int {
@@ -402,6 +415,8 @@ class ChatDataSource : NSObject {
     }
     
     func insertAndUpdateRows(provisional: Bool) {
+        let isAtBottom = tableView.isAtBottom()
+        
         if indexesToInsert.count > 0 {
             if shouldInsertRows() {
                 insertedRowsCount = insertedRowsCount + indexesToInsert.count
@@ -414,9 +429,7 @@ class ChatDataSource : NSObject {
             
             indexesToInsert = [IndexPath]()
             
-            if provisional {
-                tableView.scrollToBottom(animated: false)
-            }
+            delegate?.shouldScrollToBottom(force: provisional || isAtBottom)
         }
         
         if indexesToUpdate.count > 0 {
@@ -632,9 +645,13 @@ extension ChatDataSource : UITableViewDataSource {
 
 extension ChatDataSource : UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height - 50) {
-            delegate?.didScrollToBottom()
+        if let yPosition = yPosition, yPosition != scrollView.contentOffset.y {
+            if scrollView.isAtBottom() {
+                delegate?.didScrollToBottom()
+            }
         }
+        
+        yPosition = scrollView.contentOffset.y
         
         if scrollView.contentOffset.y <= LoadingMoreTableViewCell.kLoadingHeight && !insertingRows {
             if chatMessagesCount <= messagesArray.count {

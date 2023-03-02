@@ -163,6 +163,7 @@ class GroupDetailsViewController: UIViewController {
         membersTableView.backgroundColor = UIColor.Sphinx.Body
         membersTableView.delegate = tableDataSource
         membersTableView.dataSource = tableDataSource
+        membersTableView.contentInset.bottom = getWindowInsets().bottom
         tableDataSource.reloadContacts(chat: chat)
     }
     

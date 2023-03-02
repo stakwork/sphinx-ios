@@ -22,7 +22,11 @@ extension UITableView {
     }
     
     func shouldScrollToBottom() -> Bool {
-        if self.contentOffset.y >= (self.contentSize.height - self.frame.size.height - 150) {
+        let y = self.contentOffset.y
+        let contentHeight = (self.contentSize.height - self.frame.size.height + self.contentInset.bottom)
+        let difference = contentHeight - y
+        
+        if difference <= 50 {
             return true
         }
         return false
@@ -46,5 +50,36 @@ extension UITableView {
                 section: self.numberOfSections - 1)
             self.scrollToRow(at: indexPath, at: .bottom, animated: animated)
         }
+    }
+    
+    func isPositionAtBottom(
+        yPosition: CGFloat,
+        accessoryViewHeight: CGFloat
+    ) -> Bool {
+        let tableViewHeight = UIScreen.main.bounds.height
+        let bottomInset = getWindowInsets().bottom + accessoryViewHeight + ChatAccessoryView.kTableBottomPadding
+        let contentHeight = (self.contentSize.height - tableViewHeight + bottomInset)
+
+        let difference = contentHeight - yPosition
+        
+        return round(difference) <= 0
+    }
+    
+    func scrollToRow(index:Int, animated:Bool = true){
+        let indexPath = IndexPath(row: index, section: self.numberOfSections - 1)
+        self.scrollToRow(at: indexPath, at: .bottom, animated: animated)
+    }
+    
+    func scrollToOffset(yPosition: CGFloat) {
+        self.contentOffset.y = yPosition
+    }
+}
+
+extension UIScrollView {
+    func isAtBottom() -> Bool {
+        let currentY = round(self.contentOffset.y)
+        let bottomY = round(self.contentSize.height - self.frame.size.height + self.contentInset.bottom)
+        
+        return currentY == bottomY
     }
 }

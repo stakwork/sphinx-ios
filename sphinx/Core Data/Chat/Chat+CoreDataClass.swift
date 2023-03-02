@@ -291,8 +291,22 @@ public class Chat: NSManagedObject {
         return chat
     }
     
-    func getAllMessages(limit: Int? = 100, messagesIdsToExclude: [Int] = [], lastMessage: TransactionMessage? = nil) -> [TransactionMessage] {
-        return TransactionMessage.getAllMessagesFor(chat: self, limit: limit, messagesIdsToExclude: messagesIdsToExclude, lastMessage: lastMessage)
+    //Added firstMessage param to the query method. If stored then chat will load all messages starting from that one and won't consider the limit param
+    func getAllMessages(
+        limit: Int? = 100,
+        messagesIdsToExclude: [Int] = [],
+        lastMessage: TransactionMessage? = nil,
+        firstMessage: TransactionMessage? = nil
+    ) -> [TransactionMessage] {
+        
+        return TransactionMessage.getAllMessagesFor(
+            chat: self,
+            limit: limit,
+            messagesIdsToExclude: messagesIdsToExclude,
+            lastMessage: lastMessage,
+            firstMessage: firstMessage
+        )
+        
     }
     
     func getAllMessagesCount() -> Int {
@@ -306,7 +320,10 @@ public class Chat: NSManagedObject {
         return TransactionMessage.getNewMessagesCountFor(chat: self, lastMessageId: lastMessageId)
     }
     
-    func setChatMessagesAsSeen(shouldSync: Bool = true, shouldSave: Bool = true) {
+    func setChatMessagesAsSeen(
+        shouldSync: Bool = true,
+        shouldSave: Bool = true
+    ) {
         let receivedUnseenMessages = self.getReceivedUnseenMessages()
         if receivedUnseenMessages.count > 0 {
             for m in receivedUnseenMessages {
@@ -318,7 +335,7 @@ public class Chat: NSManagedObject {
         unseenMessagesCount = 0
         unseenMentionsCount = 0
         
-        if shouldSync {
+        if shouldSync && receivedUnseenMessages.count > 0 {
             API.sharedInstance.setChatMessagesAsSeen(chatId: self.id, callback: { _ in })
         }
     }
@@ -339,6 +356,15 @@ public class Chat: NSManagedObject {
     }
     
     var unseenMessagesCount: Int = 0
+    
+    var unseenMessagesCountLabel: String {
+        get {
+            if unseenMessagesCount > 0 {
+                return "+\(unseenMessagesCount)"
+            }
+            return ""
+        }
+    }
     
     func getReceivedUnseenMessagesCount() -> Int {
         if unseenMessagesCount == 0 {

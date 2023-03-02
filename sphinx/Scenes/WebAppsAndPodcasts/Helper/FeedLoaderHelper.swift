@@ -14,7 +14,7 @@ class FeedLoaderHelper {
         chat: Chat,
         callback: @escaping (PodcastFeed) -> ()
     ) { 
-        if let contentFeed = chat.contentFeed {
+        if let contentFeed = chat.contentFeed, contentFeed.isPodcast {
             let podcast = PodcastFeed.convertFrom(contentFeed: contentFeed)
             callback(podcast)
         }

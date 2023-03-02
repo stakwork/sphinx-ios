@@ -35,7 +35,6 @@ class MemberBadgeHeaderCell: UITableViewCell {
         self.presentingVC = presentingVC
         //Member Image
         memberImageView.contentMode = .scaleAspectFill
-        //memberImageView.sd_setImage(with: URL(string: "https://us.123rf.com/450wm/fizkes/fizkes2010/fizkes201001384/fizkes201001384.jpg?ver=6"))
         memberImageView.makeCircular()
         
         //Send Sats
@@ -74,7 +73,6 @@ extension MemberBadgeHeaderCell {
 
 extension MemberBadgeHeaderCell: MemberBadgeDetailVMDisplayDelegate{
     func reloadHeaderView(personInfo:TribeMemberStruct,message:TransactionMessage?){
-        print(personInfo)
         self.memberNameLabel.text = personInfo.ownerAlias
         if let valid_message = message{
             self.chatAvatarView.configureForSenderWith(message: valid_message)

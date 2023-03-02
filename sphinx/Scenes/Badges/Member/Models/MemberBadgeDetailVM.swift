@@ -79,7 +79,6 @@ class MemberBadgeDetailVM : NSObject {
     }
     
     func configHeaderView(personInfo:TribeMemberStruct,message:TransactionMessage?){
-        print(personInfo)
         delegate?.reloadHeaderView(personInfo: personInfo, message: message)
         let iv = delegate?.getImageViewReference()
         iv?.sd_setImage(with: URL(string: personInfo.img))
@@ -87,7 +86,6 @@ class MemberBadgeDetailVM : NSObject {
     
     func loadProfileData() {
         guard let person = message?.person else {
-            //vc.dismiss(animated: true)
             return
         }
         
@@ -110,7 +108,6 @@ class MemberBadgeDetailVM : NSObject {
         API.sharedInstance.getBadgeAssets(
             user_uuid: id,
             callback: { results in
-                print(results)
                 if(filterByThisTribeOnly){
                     let knownIds = self.knownTribeBadges.compactMap({$0.badge_id})
                     var newBadges = [Badge]()
@@ -142,10 +139,6 @@ extension MemberBadgeDetailVM : UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let types = getCellTypeOrder()
         let count = types.count
-        if(types.contains({MemberBadgeDetailCellType.earnings}()) == false){
-            print("failed to add earnings")
-        }
-        print("\n\n\nNUM CELLS COUNT:\(count) @\(Date().timeIntervalSince1970)\n\n\n")
         
         return count
     }

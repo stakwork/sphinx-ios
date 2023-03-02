@@ -62,6 +62,8 @@ class UnifiedEpisodeTableViewCell: UITableViewCell {
         self.delegate = delegate
         
         episodeLabel.textColor = !playing ? UIColor.Sphinx.Text : UIColor.Sphinx.BlueTextAccent
+        progressView.backgroundColor = !playing ? UIColor.Sphinx.Text : UIColor.Sphinx.BlueTextAccent
+        progressView.alpha = !playing ? 0.3 : 1.0
         playArrow.text = !playing ? "play_arrow" : "pause"
         playArrow.makeCircular()
         
@@ -135,6 +137,7 @@ class UnifiedEpisodeTableViewCell: UITableViewCell {
         episodeImageView.layer.cornerRadius = 6.0
         durationView.layer.cornerRadius = 3.0
         progressView.layer.cornerRadius = 3.0
+        
     }
     
     func setProgress(){
@@ -145,6 +148,7 @@ class UnifiedEpisodeTableViewCell: UITableViewCell {
             let newProgressWidth = (percentage * Float(fullWidth))
             progressWidthConstraint.constant = CGFloat(newProgressWidth)
         }
+        
         durationView.alpha = 0.1
     }
     
@@ -184,4 +188,9 @@ class UnifiedEpisodeTableViewCell: UITableViewCell {
     @IBAction func shareButtonTouched(){
         self.delegate?.shouldShare(episode: episode)
     }
+    
+    @IBAction func moreButtonTouched(){
+        self.delegate?.shouldShowMore(episode: episode)
+    }
+    
 }

@@ -14,6 +14,7 @@ protocol PodcastEpisodesDSDelegate : class {
     func deleteTapped(_ indexPath: IndexPath, episode: PodcastEpisode)
     func shouldToggleTopView(show: Bool)
     func shareTapped(episode:PodcastEpisode)
+    func showEpisodeDetails(episode:PodcastEpisode)
 }
 
 class PodcastEpisodesDataSource : NSObject {
@@ -144,5 +145,9 @@ extension PodcastEpisodesDataSource : PodcastEpisodeRowDelegate {
     
     func shouldShare(episode: PodcastEpisode) {
         delegate?.shareTapped(episode: episode)
+    }
+    
+    func shouldShowMore(episode: PodcastEpisode){
+        delegate?.showEpisodeDetails(episode: episode)
     }
 }

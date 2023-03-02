@@ -191,6 +191,11 @@ extension NewPodcastPlayerViewController : PodcastEpisodesDSDelegate {
         activityViewController.isModalInPresentation = true
         self.present(activityViewController, animated: true, completion: nil)
     }
+    
+    func showEpisodeDetails(episode: PodcastEpisode) {
+        let vc = FeedItemDetailVC_Q12023.instantiate()
+        self.present(vc, animated: true)
+    }
 
     func pauseTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {
         downloadService.pauseDownload(episode)

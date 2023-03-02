@@ -79,11 +79,22 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kBY-cv-EV4">
-                                        <rect key="frame" x="76" y="6.6666666666666856" width="4" height="4"/>
-                                        <color key="backgroundColor" name="SecondaryText"/>
+                                        <rect key="frame" x="76" y="0.66666666666668561" width="4" height="16"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="un1-gC-dPc">
+                                                <rect key="frame" x="0.0" y="6" width="4" height="4"/>
+                                                <color key="backgroundColor" name="SecondaryText"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="4" id="LLi-4q-jrb"/>
+                                                    <constraint firstAttribute="width" constant="4" id="mas-j4-XzV"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="4" id="9Ul-IG-hYx"/>
+                                            <constraint firstItem="un1-gC-dPc" firstAttribute="centerY" secondItem="kBY-cv-EV4" secondAttribute="centerY" id="8Jw-qa-CY2"/>
+                                            <constraint firstAttribute="height" constant="16" id="9Ul-IG-hYx"/>
                                             <constraint firstAttribute="width" constant="4" id="JKv-Kv-d0Y"/>
+                                            <constraint firstItem="un1-gC-dPc" firstAttribute="centerX" secondItem="kBY-cv-EV4" secondAttribute="centerX" id="dUN-ds-hiI"/>
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" horizontalCompressionResistancePriority="253" text="3 Apr 2022" textAlignment="center" lineBreakMode="middleTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4gf-Og-Tei">
@@ -96,11 +107,22 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O5E-eV-dhX">
-                                        <rect key="frame" x="146.66666666666669" y="6.6666666666666856" width="4" height="4"/>
-                                        <color key="backgroundColor" name="SecondaryText"/>
+                                        <rect key="frame" x="146.66666666666669" y="0.66666666666668561" width="4" height="16"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9fL-bL-qmO">
+                                                <rect key="frame" x="0.0" y="6" width="4" height="4"/>
+                                                <color key="backgroundColor" name="SecondaryText"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="4" id="jNg-0A-PId"/>
+                                                    <constraint firstAttribute="width" constant="4" id="lo5-Tn-I4X"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
                                         <constraints>
+                                            <constraint firstItem="9fL-bL-qmO" firstAttribute="centerX" secondItem="O5E-eV-dhX" secondAttribute="centerX" id="3eV-Ej-Z4q"/>
                                             <constraint firstAttribute="width" constant="4" id="FDf-Xd-Qrx"/>
-                                            <constraint firstAttribute="height" constant="4" id="FDo-Ql-ZKp"/>
+                                            <constraint firstAttribute="height" constant="16" id="FDo-Ql-ZKp"/>
+                                            <constraint firstItem="9fL-bL-qmO" firstAttribute="centerY" secondItem="O5E-eV-dhX" secondAttribute="centerY" id="jcK-ks-44N"/>
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" horizontalCompressionResistancePriority="253" text="2 hrs 19 min" textAlignment="center" lineBreakMode="middleTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1DL-ti-obC">

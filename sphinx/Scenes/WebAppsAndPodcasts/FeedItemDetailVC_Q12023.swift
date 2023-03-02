@@ -12,23 +12,26 @@ import UIKit
 class FeedItemDetailVC_Q12023 : UIViewController{
     
     @IBOutlet weak var tableView: UITableView!
+    weak var episode : PodcastEpisode?
     
     lazy var vm : FeedItemDetailVM_Q12023 = {
-        return FeedItemDetailVM_Q12023(vc: self, tableView: self.tableView)
+        return FeedItemDetailVM_Q12023(vc: self, tableView: self.tableView,episode:self.episode!)
     }()
     
     static func instantiate(
-
+        episode:PodcastEpisode
     ) -> FeedItemDetailVC_Q12023 {
         let viewController = StoryboardScene.Dashboard.feedItemDetailVC_Q12023.instantiate()
         //viewController.rootViewController = rootViewController
-        
+        viewController.episode = episode
         return viewController
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        vm.setupTableView()
-        tableView.reloadData()
+        if let _ = self.episode{
+            vm.setupTableView()
+            tableView.reloadData()
+        }
     }
 }

@@ -168,6 +168,17 @@
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="dateLabel" destination="4gf-Og-Tei" id="TSe-EE-5ja"/>
+                <outlet property="dotView1" destination="un1-gC-dPc" id="FkF-by-G0Z"/>
+                <outlet property="dotView2" destination="9fL-bL-qmO" id="8pM-tv-UdB"/>
+                <outlet property="feedItemImageView" destination="Jyz-dV-YlD" id="U1w-Dt-fsJ"/>
+                <outlet property="feedNameLabel" destination="C0n-ef-aeG" id="rd7-NB-iRu"/>
+                <outlet property="feedSubtitleLabel" destination="r3e-9g-eK1" id="K7r-1d-5o8"/>
+                <outlet property="sourceTypeImageView" destination="dgh-tL-az4" id="HQK-Yk-frd"/>
+                <outlet property="sourceTypeNameLabel" destination="RPJ-R4-D5M" id="lrF-tH-Bbu"/>
+                <outlet property="timeRemainingLabel" destination="1DL-ti-obC" id="hla-xc-9B0"/>
+            </connections>
             <point key="canvasLocation" x="19.083969465648853" y="104.5774647887324"/>
         </tableViewCell>
     </objects>

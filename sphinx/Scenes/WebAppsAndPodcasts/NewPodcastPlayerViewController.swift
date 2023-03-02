@@ -193,7 +193,7 @@ extension NewPodcastPlayerViewController : PodcastEpisodesDSDelegate {
     }
     
     func showEpisodeDetails(episode: PodcastEpisode) {
-        let vc = FeedItemDetailVC_Q12023.instantiate()
+        let vc = FeedItemDetailVC_Q12023.instantiate(episode: episode)
         self.present(vc, animated: true)
     }
 

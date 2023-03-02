@@ -13,10 +13,12 @@ class FeedItemDetailVM_Q12023 : NSObject{
     
     weak var vc: FeedItemDetailVC_Q12023?
     weak var tableView:UITableView?
+    var episode : PodcastEpisode
     
-    init(vc:FeedItemDetailVC_Q12023,tableView:UITableView){
+    init(vc:FeedItemDetailVC_Q12023,tableView:UITableView,episode:PodcastEpisode){
         self.vc = vc
         self.tableView = tableView
+        self.episode = episode
     }
     
     func setupTableView(){
@@ -38,6 +40,7 @@ extension FeedItemDetailVM_Q12023 : UITableViewDelegate, UITableViewDataSource{
             withIdentifier: FeedItemDetailHeaderCellQ123.reuseID,
             for: indexPath
         ) as! FeedItemDetailHeaderCellQ123
+        cell.configureView(episode: episode)
         return cell
     }
     

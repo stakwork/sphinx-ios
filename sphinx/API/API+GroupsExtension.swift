@@ -314,14 +314,14 @@ extension API {
             switch response.result {
             case .success(let data):
                 if let json = data as? [NSDictionary] {
-                    print(json)
+                    //print(json)
                     callback(json)
                     return
                 }
-                print(response.response?.statusCode)
+                //print(response.response?.statusCode)
                 errorCallback()
             case .failure(_):
-                print(response.response?.statusCode)
+                //print(response.response?.statusCode)
                 errorCallback()
             }
         }
@@ -352,10 +352,10 @@ extension API {
                         return
                     }
                 }
-                print(response.response?.statusCode)
+                //print(response.response?.statusCode)
                 errorCallback()
             case .failure(_):
-                print(response.response?.statusCode)
+                //print(response.response?.statusCode)
                 errorCallback()
             }
         }
@@ -395,10 +395,10 @@ extension API {
                         return
                     }
                 }
-                print(response.response?.statusCode)
+                //print(response.response?.statusCode)
                 errorCallback()
             case .failure(_):
-                print(response.response?.statusCode)
+                //print(response.response?.statusCode)
                 errorCallback()
             }
         }
@@ -424,10 +424,10 @@ extension API {
                         return
                     }
                 }
-                print(response.response?.statusCode)
+                //print(response.response?.statusCode)
                 errorCallback()
             case .failure(_):
-                print(response.response?.statusCode)
+                //print(response.response?.statusCode)
                 errorCallback()
             }
         }
@@ -452,14 +452,15 @@ extension API {
                     if let success = json["success"] as? Bool,
                         let response = json["response"] as? [NSDictionary],
                         success {
+                        //callback([])
                         callback((response))
                         return
                     }
                 }
-                print(response.response?.statusCode)
+                //print(response.response?.statusCode)
                 errorCallback()
             case .failure(_):
-                print(response.response?.statusCode)
+                //print(response.response?.statusCode)
                 errorCallback()
             }
         }

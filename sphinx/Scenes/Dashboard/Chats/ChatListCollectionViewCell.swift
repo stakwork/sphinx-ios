@@ -48,7 +48,7 @@ extension ChatListCollectionViewCell {
 extension ChatListCollectionViewCell {
     
     var unreadMessageCount: Int {
-        if chatListObject?.lastMessage != nil && chatListObject?.lastMessage?.seen == true {
+        if chatListObject?.isSeen() == true {
             return 0
         }
         return chatListObject?.getChat()?.getReceivedUnseenMessagesCount() ?? 0
@@ -57,7 +57,7 @@ extension ChatListCollectionViewCell {
     var hasUnreadMessages: Bool { unreadMessageCount > 0 }
     
     var unreadMentionsCount: Int {
-        if chatListObject?.lastMessage != nil && chatListObject?.lastMessage?.seen == true {
+        if chatListObject?.isSeen() == true {
             return 0
         }
         return chatListObject?.getChat()?.getReceivedUnseenMentionsCount() ?? 0

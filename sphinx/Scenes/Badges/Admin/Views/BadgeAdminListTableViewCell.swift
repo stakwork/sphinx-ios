@@ -75,7 +75,6 @@ class BadgeAdminListTableViewCell: UITableViewCell {
         if(cellType != nil){
             switch(cellType!){
             case .active:
-                //statusButton.setTitle("ACTIVE", for: [.normal])
                 statusButton.backgroundColor = UIColor.Sphinx.BodyInverted.withAlphaComponent(1.0)
                 statusButton.setTitleColor(UIColor.Sphinx.Body, for: [.normal,.selected])
                 
@@ -86,7 +85,6 @@ class BadgeAdminListTableViewCell: UITableViewCell {
                 statusButton.titleLabel?.attributedText = attributedString
                 break
             case .inactive:
-                //statusButton.setTitle("INACTIVE", for: [.normal])
                 statusButton.backgroundColor = UIColor.Sphinx.PlaceholderText.withAlphaComponent(0.07)
                 statusButton.setTitleColor(UIColor.Sphinx.SecondaryText, for: [.normal,.selected])
                 
@@ -98,7 +96,6 @@ class BadgeAdminListTableViewCell: UITableViewCell {
                 
                 break
             case .template:
-                //statusButton.setTitle("TEMPLATE", for: [.normal])
                 statusButton.backgroundColor = UIColor.Sphinx.PrimaryBlue.withAlphaComponent(1.0)
                 statusButton.setTitleColor(UIColor.white, for: [.normal,.selected])
                 remainingAmountLabelContainerView.isHidden = true

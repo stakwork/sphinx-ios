@@ -56,14 +56,12 @@ class BadgeAdminDetailVC : UIViewController{
     let pricePerBadge : Int = 10
     var badgeQuantity : Int = 100 {
         didSet{
-            print("Value is now \(badgeQuantity)")
             updateBadgeQuantities()
         }
     }
     
     
     override func viewDidLoad() {
-        //changeIconView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleChangeIcon)))
         vcScrollView.isScrollEnabled = true
         vcScrollView.contentSize = CGSize(width: self.view.frame.width, height: 900.0)
         if let valid_badge = associatedBadge{
@@ -76,8 +74,6 @@ class BadgeAdminDetailVC : UIViewController{
     }
     
     func disableEditing(){
-        //changeIconView.isHidden = true
-        //badgeNameTextField.isUserInteractionEnabled = false
         
     }
     
@@ -90,9 +86,7 @@ class BadgeAdminDetailVC : UIViewController{
             badgeStatsLabelHeight.constant = 0
             badgeStatsLabelTopConstraint.constant = 0
             badgeStatsLabelBottomConstraint.constant = 0
-            //saveBadgeButton.setTitle("Update Badge", for: .normal)
             vcScrollView.contentSize = CGSize(width: self.view.frame.width, height: 650.0)
-            print(vcScrollView.contentSize.height)
             break
         default:
             saveBadgeButton.isHidden = true
@@ -127,7 +121,6 @@ class BadgeAdminDetailVC : UIViewController{
         rootViewController: RootViewController
     ) -> UIViewController {
         let viewController = StoryboardScene.BadgeManagement.badgeDetailViewController.instantiate()
-        //viewController.rootViewController = rootViewController
         
         return viewController
     }
@@ -144,17 +137,10 @@ class BadgeAdminDetailVC : UIViewController{
         stepperPlaceholderView.layer.cornerRadius = 16.0
         stepperMinusButton.layer.cornerRadius = stepperMinusButton.layer.bounds.width / 2
         stepperPlusButton.layer.cornerRadius = stepperMinusButton.layer.bounds.width / 2
-        //requirementLabel.textColor = UIColor.Sphinx.SecondaryText
-       // badgeTitleLabel.textColor = UIColor.Sphinx.SecondaryText
         quantityLabel.textColor = UIColor.Sphinx.SecondaryText
         quantityLabel.text = "badges.quantity".localized
         pricePerBadgeLabel.textColor = UIColor.Sphinx.SecondaryText
         pricePerBadgeLabel.text = "badges.price-per-badge".localized
-        //iconRequirementsLabel.textColor = UIColor.Sphinx.SecondaryText
-        //changeIconView.layer.cornerRadius = 20
-        //changeIconView.layer.borderWidth = 1
-        //changeIconView.layer.borderColor = UIColor.Sphinx.BubbleShadow.cgColor
-        //badgeImageView.addLineDashedStroke(pattern: [2, 2], radius: 0, color: UIColor.gray.cgColor)
         saveBadgeButton.layer.cornerRadius = saveBadgeButton.frame.height/2.0
         saveBadgeButton.backgroundColor = UIColor.Sphinx.PrimaryGreen
         saveBadgeButton.tintColor = .clear
@@ -198,7 +184,6 @@ class BadgeAdminDetailVC : UIViewController{
                     completion: {
                         self.navigationController?.popViewController(animated: true)
                     })
-                    print(success)
                 },
                 errorCallback: {
                     self.removeChildVC(child: self.loadingViewController)
@@ -217,7 +202,6 @@ class BadgeAdminDetailVC : UIViewController{
         statusButton.isUserInteractionEnabled = false
         switch(presentationContext){
             case .active:
-                //statusButton.setTitle("ACTIVE", for: [.normal])
                 statusButton.backgroundColor = UIColor.Sphinx.BodyInverted.withAlphaComponent(1.0)
                 statusButton.setTitleColor(UIColor.Sphinx.Body, for: [.normal,.selected])
                 
@@ -228,7 +212,6 @@ class BadgeAdminDetailVC : UIViewController{
                 statusButton.titleLabel?.attributedText = attributedString
                 break
             case .inactive:
-                //statusButton.setTitle("INACTIVE", for: [.normal])
                 statusButton.backgroundColor = UIColor.Sphinx.PlaceholderText.withAlphaComponent(0.07)
                 statusButton.setTitleColor(UIColor.Sphinx.SecondaryText, for: [.normal,.selected])
                 
@@ -240,7 +223,6 @@ class BadgeAdminDetailVC : UIViewController{
                 
                 break
             case .template:
-                //statusButton.setTitle("TEMPLATE", for: [.normal])
                 statusButton.backgroundColor = UIColor.Sphinx.PrimaryBlue.withAlphaComponent(1.0)
                 statusButton.setTitleColor(UIColor.white, for: [.normal,.selected])
                 
@@ -269,7 +251,6 @@ class BadgeAdminDetailVC : UIViewController{
             let bitmapSize = CGSize(width: 500, height: 500)
             badgeImageView.sd_setImage(with: URL(string: valid_icon), placeholderImage: nil, options: [], context: [.imageThumbnailPixelSize : bitmapSize])
         }
-        //badgeNameTextField.text = badge.name ?? ""
         viewTitle.text = badge.name ?? ""
         badgeNameLabel.text = badge.name ?? ""
         badgeRequirementDescriptionLabel.text = badge.memo ?? ""
@@ -283,11 +264,9 @@ class BadgeAdminDetailVC : UIViewController{
         if let buttonSender = sender as? UIButton{
             var incrementValue = 0
             if buttonSender == stepperPlusButton{
-                print("plus")
                 incrementValue = 1
             }
             else if buttonSender == stepperMinusButton{
-                print("minus")
                 incrementValue = -1
             }
             badgeQuantity += incrementValue
@@ -308,8 +287,10 @@ class BadgeAdminDetailVC : UIViewController{
             container: self.view
         )
         
+        badgeActivateDeactivateSwitch.isUserInteractionEnabled = false
         associatedBadge?.activationState = badgeActivateDeactivateSwitch.isOn
         let activationString = (badgeActivateDeactivateSwitch.isOn == true) ? "badges.activation-success".localized : "badges.deactivation-success".localized
+        let failureString = (badgeActivateDeactivateSwitch.isOn == true) ? "activating" : "deactivating"
         if let valid_badge = associatedBadge{
             API.sharedInstance.changeActivationStateAdminBadgeTemplates(
             badge: valid_badge,
@@ -325,13 +306,15 @@ class BadgeAdminDetailVC : UIViewController{
                 }
                 else{
                     self.badgeActivateDeactivateSwitch.isOn = !self.badgeActivateDeactivateSwitch.isOn
-                    AlertHelper.showAlert(title: "Error", message: "There was an error \(activationString) the badge.")
+                    AlertHelper.showAlert(title: "Error", message: "There was an error \(failureString) the badge.")
                 }
+                self.badgeActivateDeactivateSwitch.isUserInteractionEnabled = true
             },
             errorCallback: {
                 self.removeChildVC(child: self.loadingViewController)
                 self.badgeActivateDeactivateSwitch.isOn = !self.badgeActivateDeactivateSwitch.isOn 
-                AlertHelper.showAlert(title: "Error", message: "There was an error \(activationString)ing the badge.")
+                AlertHelper.showAlert(title: "Error", message: "There was an error \(failureString) the badge.")
+                self.badgeActivateDeactivateSwitch.isUserInteractionEnabled = true
             })
         }
     }

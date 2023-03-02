@@ -35,7 +35,6 @@ class BadgeAdminManagementListDataSource : NSObject{
         API.sharedInstance.getTribeAdminBadgeTemplates(
             callback: {results in
                 if let mappedResults = Mapper<BadgeTemplate>().mapArray(JSONObject: Array(results)){
-                    print(mappedResults)
                     for result in mappedResults{
                         let newBadge = Badge()
                         newBadge.name = result.name
@@ -63,7 +62,6 @@ class BadgeAdminManagementListDataSource : NSObject{
         API.sharedInstance.getTribeAdminBadges(
             chatID: chatID,
             callback: { results in
-               print(results)
                 if var mappedResults = Mapper<Badge>().mapArray(JSONObject: Array(results)){
                     mappedResults.map({$0.chat_id = self.chatID})
                     self.badges = mappedResults
@@ -112,14 +110,15 @@ extension BadgeAdminManagementListDataSource : UITableViewDelegate,UITableViewDa
         }
         else if(indexPath.row == getNTemplates()){
             //header view
-            let existingBadgeHeacerCell = UITableViewCell(frame: CGRect(x: 0.0, y: 0.0, width: tableView.frame.width, height: 55))
-            let frame = CGRect(x: 0.0, y:0.0 , width: existingBadgeHeacerCell.frame.width, height: existingBadgeHeacerCell.frame.height)
-            existingBadgeHeacerCell.backgroundColor = UIColor.Sphinx.Body
+            let existingBadgeHeacerCell = UITableViewCell(frame: CGRect(x: 0, y: 0.0, width: tableView.frame.width, height: 55))
+            let frame = CGRect(x: 28.0, y: 0.0, width: tableView.frame.width - 28.0, height: 55)
+            existingBadgeHeacerCell.backgroundColor = UIColor.Sphinx.HeaderBG
             let label = UILabel(frame: frame)
             label.font = vc.badgeTemplateHeaderLabel.font
             label.textAlignment = .center
             label.text = "badges.manage-existing-badges".localized
-            label.textColor = UIColor.Sphinx.BodyInverted
+            label.textColor = UIColor.Sphinx.Text
+            label.textAlignment = .left
             existingBadgeHeacerCell.addSubview(label)
             existingBadgeHeacerCell.selectionStyle = .none
             return existingBadgeHeacerCell

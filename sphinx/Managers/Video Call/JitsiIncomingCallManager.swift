@@ -10,7 +10,7 @@ import CallKit
 import UIKit
 
 @available(iOS 14.0, *)
-final class JitsiIncomingCallManager: NSObject, CXProviderDelegate{
+final class JitsiIncomingCallManager: NSObject, CXProviderDelegate {
     
     class var sharedInstance : JitsiIncomingCallManager {
         struct Static {
@@ -26,6 +26,7 @@ final class JitsiIncomingCallManager: NSObject, CXProviderDelegate{
     
     override init(){
         super.init()
+        
         provider.setDelegate(self, queue: nil)
     }
     
@@ -37,9 +38,6 @@ final class JitsiIncomingCallManager: NSObject, CXProviderDelegate{
             if let error = error{
                 print(String(describing: error))
             }
-            else{
-                print("Incoming call reported")
-            }
         })
     }
     
@@ -47,11 +45,8 @@ final class JitsiIncomingCallManager: NSObject, CXProviderDelegate{
         let action = CXStartCallAction(call: id, handle: CXHandle(type: .generic, value: handle))
         let transaction = CXTransaction(action: action)
         callController.request(transaction, completion: { error in
-            if let error = error{
+            if let error = error {
                 print(String(describing: error))
-            }
-            else{
-                print("Starting call")
             }
         })
     }
@@ -59,19 +54,15 @@ final class JitsiIncomingCallManager: NSObject, CXProviderDelegate{
     func provider(_ provider: CXProvider, perform action: CXAnswerCallAction){
         let hangUpAction = CXEndCallAction(call: action.callUUID)
         hangUpAction.fulfill()
+        
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate,
-           //let valid_chat_id = chatID,
-           let callURL = currentJitsiURL{
-            //UserDefaults.Keys.chatId.set(valid_chat_id)
-            //appDelegate.setInitialVC(launchingApp: false)
+           let callURL = currentJitsiURL {
             appDelegate.handleAcceptedCall(callLink: callURL)
         }
-        print("Call Answered")
     }
     
     func provider(_ provider: CXProvider, perform action: CXEndCallAction){
         action.fulfill()
-        print("Call Ended")
     }
     
     

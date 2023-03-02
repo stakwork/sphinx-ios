@@ -232,11 +232,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func handleIncomingCall(chatID:Int,callerName:String){
         if #available(iOS 14.0, *) {
             let callManager = JitsiIncomingCallManager.sharedInstance
-            let id = UUID()
             callManager.chatID = chatID
-            callManager.reportIncomingCall(id: id, handle: callerName)
-        } else {
-            // Fallback on earlier versions
+            callManager.reportIncomingCall(id: UUID(), handle: callerName)
         }
         
     }
@@ -244,7 +241,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func handleAcceptedCall(callLink:String){
         VideoCallManager.sharedInstance.startVideoCall(link: callLink, audioOnly: true)
     }
-    
 
     func reloadAppIfStyleChanged() {
         if #available(iOS 13.0, *) {
@@ -557,9 +553,11 @@ extension AppDelegate : PKPushRegistryDelegate{
            
             if #available(iOS 14.0, *) {
                 let manager = JitsiIncomingCallManager.sharedInstance
-                let (result, message) = EncryptionManager.sharedInstance.decryptMessage(message: pushBody.linkURL)
-                manager.currentJitsiURL = (result == true) ? message : pushBody.linkURL
-                pushBody.linkURL = message
+                
+                let (result, link) = EncryptionManager.sharedInstance.decryptMessage(message: pushBody.linkURL)
+                manager.currentJitsiURL = (result == true) ? link : pushBody.linkURL
+                pushBody.linkURL = link
+                
                 manager.provider.configuration.supportsVideo = pushBody.isVideoCall()
                 self.handleIncomingCall(chatID: 0, callerName: pushBody.callerName)
             }

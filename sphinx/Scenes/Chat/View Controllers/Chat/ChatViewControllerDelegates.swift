@@ -145,7 +145,10 @@ extension ChatViewController : ChatHeaderViewDelegate {
     }
     
     func sendCallMessage(sender: UIButton) {
-        let type = (self.chat?.isGroup() == false) ? TransactionMessage.TransactionMessageType.callInvite.rawValue : TransactionMessage.TransactionMessageType.message.rawValue
+        let type = (self.chat?.isGroup() == false) ?
+        TransactionMessage.TransactionMessageType.callInvite.rawValue :
+        TransactionMessage.TransactionMessageType.message.rawValue
+        
         VideoCallHelper.createCallMessage(button: sender, callback: { link in
             self.shouldSendMessage(
                 text: link,
@@ -186,12 +189,14 @@ extension ChatViewController : ChatAccessoryViewDelegate {
         if let podcastComment = accessoryView.getReplyingPodcast() {
             messageText = podcastComment.getJsonString(withComment: text) ?? text
         }
-        else if type == TransactionMessage.TransactionMessageType.callInvite.rawValue{
+        
+        if type == TransactionMessage.TransactionMessageType.callInvite.rawValue {
+            
             let voipRequestMessage = VoIPRequestMessage()
             voipRequestMessage.recurring = false
-            voipRequestMessage.link = messageText
+            voipRequestMessage.link = text
             voipRequestMessage.cron = ""
-            messageText = voipRequestMessage.toJSONString() ?? messageText
+            messageText = voipRequestMessage.toJSONString() ?? text
         }
         
         let (botAmount, wrongAmount) = isWrongBotCommandAmount(text: messageText)
@@ -236,6 +241,7 @@ extension ChatViewController : ChatAccessoryViewDelegate {
         accessoryView.hideReplyView()
         
         API.sharedInstance.sendMessage(params: params, callback: { m in
+            
             if let message = TransactionMessage.insertMessage(m: m, existingMessage: provisionalMessage).0 {
                 message.setPaymentInvoiceAsPaid()
                 self.insertSentMessage(message: message, completion: completion)
@@ -246,6 +252,7 @@ extension ChatViewController : ChatAccessoryViewDelegate {
             if let podcastComment = podcastComment {
                 ActionsManager.sharedInstance.trackClipComment(podcastComment: podcastComment)
             }
+            
         }, errorCallback: {
              if let provisionalMessage = provisionalMessage {
                 provisionalMessage.status = TransactionMessage.TransactionMessageStatus.failed.rawValue
@@ -265,9 +272,21 @@ extension ChatViewController : ChatAccessoryViewDelegate {
     
     func insertSentMessage(message: TransactionMessage, completion: @escaping (Bool) -> ()) {
         updateViewChat(updatedChat: chat ?? contact?.getChat())
-        print(message)
         enableViewAndComplete(success: true, completion: completion)
         chatDataSource?.addMessageAndReload(message: message)
+        joinIfCallMessage(message: message)
+    }
+    
+    func joinIfCallMessage(message: TransactionMessage) {
+        if message.type == TransactionMessage.TransactionMessageType.callInvite.rawValue {
+            
+            if let callLink = message.messageContent {
+                accessoryView.shouldDismissKeyboard()
+                accessoryView.hide()
+                
+                VideoCallManager.sharedInstance.startVideoCall(link: callLink)
+            }
+        }
     }
     
     func enableViewAndComplete(success: Bool, completion: @escaping (Bool) -> ()) {

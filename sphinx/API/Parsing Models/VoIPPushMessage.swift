@@ -87,8 +87,9 @@ public class VoIPPushMessageBody : Codable{
     
     public var callerName: String
     public var linkURL: String
+    
     func isVideoCall() -> Bool {
-        return linkURL.contains("startAudioOnly=true") == false
+        return !linkURL.contains("startAudioOnly=true")
     }
     
     init(

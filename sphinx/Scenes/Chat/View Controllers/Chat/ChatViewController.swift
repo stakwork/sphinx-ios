@@ -138,22 +138,6 @@ class ChatViewController: KeyboardHandlerViewController {
             accessoryView.show()
         }
         addObservers()
-        
-        if #available(iOS 14.0, *) {
-            handleIncomingCallManager()
-        } else {
-            // Fallback on earlier versions
-        }
-    }
-    
-    @available(iOS 14.0, *)
-    func handleIncomingCallManager(){
-        let callManager = JitsiIncomingCallManager.sharedInstance
-        if let callLink = (callManager.currentJitsiURL){
-            self.startVideoCall(link: callLink, audioOnly: true)
-            callManager.currentJitsiURL = nil
-        }
-        callManager.chatID = nil
     }
     
     override func viewWillDisappear(_ animated: Bool) {

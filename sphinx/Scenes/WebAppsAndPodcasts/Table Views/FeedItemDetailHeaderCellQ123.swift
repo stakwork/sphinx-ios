@@ -34,6 +34,7 @@ class FeedItemDetailHeaderCellQ123: UITableViewCell {
     }
     
     func configureView(episode:PodcastEpisode){
+        self.backgroundColor = .clear
         dotView1.makeCircular()
         dotView2.makeCircular()
         

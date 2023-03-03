@@ -144,7 +144,6 @@
                                 </constraints>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" name="Body"/>
                         <constraints>
                             <constraint firstItem="4iK-NM-Bke" firstAttribute="centerX" secondItem="r3e-9g-eK1" secondAttribute="centerX" id="F3C-Bn-VA0"/>
                             <constraint firstItem="Jyz-dV-YlD" firstAttribute="centerX" secondItem="Hdn-pm-Mwq" secondAttribute="centerX" id="Fx4-my-PHi"/>
@@ -185,9 +184,6 @@
     <resources>
         <image name="appPinIcon" width="80" height="80"/>
         <image name="podcastTypeIcon" width="32" height="32"/>
-        <namedColor name="Body">
-            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="SecondaryText">
             <color red="0.55686274509803924" green="0.58823529411764708" blue="0.61176470588235299" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

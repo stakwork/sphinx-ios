@@ -276,27 +276,52 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="37K-dr-aGI">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="689"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Re9-Eb-2Gh">
+                                <rect key="frame" x="0.0" y="689" width="414" height="173"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="173" id="Hky-qo-01M"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain">
+                                    <attributedString key="attributedTitle">
+                                        <fragment content="CLOSE">
+                                            <attributes>
+                                                <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                <font key="NSFont" size="12" name="MontserratRoman-Regular"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="closeTapped:" destination="xz1-Uu-QaO" eventType="touchUpInside" id="Grb-aK-c5e"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Ptc-5U-kU2"/>
-                        <color key="backgroundColor" name="BlueTextAccent"/>
                         <constraints>
                             <constraint firstItem="37K-dr-aGI" firstAttribute="centerX" secondItem="Ptc-5U-kU2" secondAttribute="centerX" id="13L-ov-Ep2"/>
+                            <constraint firstItem="Ptc-5U-kU2" firstAttribute="bottom" secondItem="Re9-Eb-2Gh" secondAttribute="bottom" id="7U7-WR-udH"/>
+                            <constraint firstItem="Re9-Eb-2Gh" firstAttribute="centerX" secondItem="Ptc-5U-kU2" secondAttribute="centerX" id="7bs-aM-Anf"/>
                             <constraint firstItem="37K-dr-aGI" firstAttribute="top" secondItem="b2J-Dv-N32" secondAttribute="top" id="9qz-1P-kpE"/>
                             <constraint firstItem="37K-dr-aGI" firstAttribute="leading" secondItem="b2J-Dv-N32" secondAttribute="leading" id="D1D-HH-fGX"/>
                             <constraint firstAttribute="trailing" secondItem="37K-dr-aGI" secondAttribute="trailing" id="KqF-Iq-85c"/>
-                            <constraint firstAttribute="bottom" secondItem="37K-dr-aGI" secondAttribute="bottom" id="rrM-NI-qz5"/>
+                            <constraint firstAttribute="trailing" secondItem="Re9-Eb-2Gh" secondAttribute="trailing" id="Wch-Qi-Cvc"/>
+                            <constraint firstItem="Re9-Eb-2Gh" firstAttribute="top" secondItem="37K-dr-aGI" secondAttribute="bottom" id="ZC9-sh-h8z"/>
+                            <constraint firstItem="Re9-Eb-2Gh" firstAttribute="leading" secondItem="b2J-Dv-N32" secondAttribute="leading" id="vcb-kl-LDy"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="closeButton" destination="Re9-Eb-2Gh" id="yBu-LH-DiT"/>
                         <outlet property="tableView" destination="37K-dr-aGI" id="brw-SS-S0s"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U0V-HH-1cB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3365" y="1020"/>
+            <point key="canvasLocation" x="-3365.217391304348" y="1019.8660714285713"/>
         </scene>
         <!--Feed Search Container View Controller-->
         <scene sceneID="ifQ-5p-cRO">
@@ -650,9 +675,6 @@
         <image name="bottomBar3" width="25" height="25"/>
         <image name="bottomBar4" width="25" height="25"/>
         <image name="podcastIndexLogo" width="76" height="72"/>
-        <namedColor name="BlueTextAccent">
-            <color red="0.36470588235294116" green="0.5607843137254902" blue="0.8666666666666667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="DashboardHeader">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

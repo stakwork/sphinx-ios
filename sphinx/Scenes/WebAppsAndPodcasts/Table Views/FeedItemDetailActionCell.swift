@@ -34,6 +34,7 @@ class FeedItemDetailActionCell: UITableViewCell {
     }
     
     func configureView(type:FeedItemActionType){
+        self.backgroundColor = .clear
         switch(type){
         case .download:
             actionLabel.text = "Download"

@@ -51,7 +51,6 @@
                                 </state>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" name="Body"/>
                         <constraints>
                             <constraint firstItem="hcy-fY-EDW" firstAttribute="centerY" secondItem="Zcv-8O-kfs" secondAttribute="centerY" id="KbK-ZM-d8t"/>
                             <constraint firstItem="Zcv-8O-kfs" firstAttribute="centerY" secondItem="38I-vZ-Yog" secondAttribute="centerY" id="Lii-Ts-iKm"/>
@@ -77,9 +76,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <namedColor name="Body">
-            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="SecondaryText">
             <color red="0.55686274509803924" green="0.58823529411764708" blue="0.61176470588235299" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

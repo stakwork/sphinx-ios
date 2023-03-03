@@ -21,8 +21,9 @@ final class JitsiIncomingCallManager: NSObject, CXProviderDelegate {
     
     let provider = CXProvider(configuration: CXProviderConfiguration())
     let callController = CXCallController()
-    var chatID: Int? = nil
     var currentJitsiURL: String? = nil
+    var hasVideo: Bool = false
+    var uuid: UUID? = nil
     
     override init(){
         super.init()
@@ -31,21 +32,19 @@ final class JitsiIncomingCallManager: NSObject, CXProviderDelegate {
     }
     
     
-    public func reportIncomingCall(id: UUID, handle: String){
+    public func reportIncomingCall(
+        uuid: UUID,
+        handle: String
+    ){
+        self.uuid = uuid
+        
         let update = CXCallUpdate()
+        update.hasVideo = hasVideo
         update.remoteHandle = CXHandle(type: .generic, value: handle)
-        provider.reportNewIncomingCall(with: id, update: update, completion: { error in
+        
+        provider.configuration.supportsVideo = hasVideo
+        provider.reportNewIncomingCall(with: uuid, update: update, completion: { error in
             if let error = error{
-                print(String(describing: error))
-            }
-        })
-    }
-    
-    public func startCall(id:UUID,handle:String){
-        let action = CXStartCallAction(call: id, handle: CXHandle(type: .generic, value: handle))
-        let transaction = CXTransaction(action: action)
-        callController.request(transaction, completion: { error in
-            if let error = error {
                 print(String(describing: error))
             }
         })
@@ -57,18 +56,39 @@ final class JitsiIncomingCallManager: NSObject, CXProviderDelegate {
         
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate,
            let callURL = currentJitsiURL {
-            appDelegate.handleAcceptedCall(callLink: callURL)
+            
+            appDelegate.handleAcceptedCall(
+                callLink: callURL,
+                audioOnly: !hasVideo
+            )
         }
     }
     
     func provider(_ provider: CXProvider, perform action: CXEndCallAction){
+        self.uuid = nil
         action.fulfill()
     }
     
     
     func providerDidReset(_ provider: CXProvider) {
+        self.uuid = nil
         print("Provider reset.")
     }
     
-    
+    func finishCall() {
+        if let uuid = self.uuid {
+            let callController = CXCallController()
+
+            let endCallAction = CXEndCallAction(call: uuid)
+            callController.request(
+                CXTransaction(action: endCallAction),
+                completion: { error in
+                    if let error = error {
+                        print("Error: \(error)")
+                    } else {
+                        print("Success")
+                    }
+                })
+        }
+    }
 }

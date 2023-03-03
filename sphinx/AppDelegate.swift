@@ -228,18 +228,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    func handleIncomingCall(chatID:Int,callerName:String){
+    func handleIncomingCall(
+        callerName:String
+    ){
         if #available(iOS 14.0, *) {
-            let callManager = JitsiIncomingCallManager.sharedInstance
-            callManager.chatID = chatID
-            callManager.reportIncomingCall(id: UUID(), handle: callerName)
+            JitsiIncomingCallManager.sharedInstance.reportIncomingCall(
+                uuid: UUID(),
+                handle: callerName
+            )
         }
-        
     }
     
-    func handleAcceptedCall(callLink:String){
+    func handleAcceptedCall(
+        callLink:String,
+        audioOnly: Bool
+    ){
         hideAccessoryView()
-        VideoCallManager.sharedInstance.startVideoCall(link: callLink, audioOnly: true)
+        VideoCallManager.sharedInstance.startVideoCall(link: callLink, audioOnly: audioOnly)
     }
 
     func reloadAppIfStyleChanged() {
@@ -552,14 +557,14 @@ extension AppDelegate : PKPushRegistryDelegate{
            let pushBody = pushMessage.body as? VoIPPushMessageBody {
            
             if #available(iOS 14.0, *) {
-                let manager = JitsiIncomingCallManager.sharedInstance
-                
                 let (result, link) = EncryptionManager.sharedInstance.decryptMessage(message: pushBody.linkURL)
-                manager.currentJitsiURL = (result == true) ? link : pushBody.linkURL
                 pushBody.linkURL = link
                 
-                manager.provider.configuration.supportsVideo = pushBody.isVideoCall()
-                self.handleIncomingCall(chatID: 0, callerName: pushBody.callerName)
+                let manager = JitsiIncomingCallManager.sharedInstance
+                manager.currentJitsiURL = (result == true) ? link : pushBody.linkURL
+                manager.hasVideo = pushBody.isVideoCall()
+                
+                self.handleIncomingCall(callerName: pushBody.callerName)
             }
             completion()
         } else {

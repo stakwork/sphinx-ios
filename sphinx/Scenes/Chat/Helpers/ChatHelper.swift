@@ -78,7 +78,7 @@ class ChatHelper {
     }
     
     func getCellFor(messageRow: TransactionMessageRow, indexPath: IndexPath, on tableView: UITableView) -> UITableViewCell {
-        let isVideoCallLink = messageRow.isVideoCallLink
+        let isCallLink = messageRow.isCallLink
         let isGiphy = messageRow.isGiphy
         let isPodcastComment = messageRow.isPodcastComment
         let isPodcastBoost = messageRow.isPodcastBoost
@@ -121,7 +121,7 @@ class ChatHelper {
         switch (messageType) {
         case TransactionMessage.TransactionMessageType.message:
             if incoming {
-                if isVideoCallLink {
+                if isCallLink {
                     cell = tableView.dequeueReusableCell(withIdentifier: "VideoCallReceivedTableViewCell", for: indexPath) as! VideoCallReceivedTableViewCell
                 } else if isGiphy {
                     cell = tableView.dequeueReusableCell(withIdentifier: "PictureReceivedTableViewCell", for: indexPath) as! PictureReceivedTableViewCell
@@ -133,7 +133,7 @@ class ChatHelper {
                     cell = tableView.dequeueReusableCell(withIdentifier: "MessageReceivedTableViewCell", for: indexPath) as! MessageReceivedTableViewCell
                 }
             } else {
-                if isVideoCallLink {
+                if isCallLink {
                      cell = tableView.dequeueReusableCell(withIdentifier: "VideoCallSentTableViewCell", for: indexPath) as! VideoCallSentTableViewCell
                 } else if isGiphy {
                     cell = tableView.dequeueReusableCell(withIdentifier: "PictureSentTableViewCell", for: indexPath) as! PictureSentTableViewCell
@@ -145,7 +145,7 @@ class ChatHelper {
                     cell = tableView.dequeueReusableCell(withIdentifier: "MessageSentTableViewCell", for: indexPath) as! MessageSentTableViewCell
                 }
             }
-        case TransactionMessage.TransactionMessageType.callInvite:
+        case TransactionMessage.TransactionMessageType.call:
             if incoming {
                 cell = tableView.dequeueReusableCell(withIdentifier: "VideoCallReceivedTableViewCell", for: indexPath) as! VideoCallReceivedTableViewCell
             } else {
@@ -267,7 +267,7 @@ class ChatHelper {
     //Row height calculation
     func getRowHeight(incoming: Bool, messageRow: TransactionMessageRow) -> CGFloat {
         var  height: CGFloat = 0.0
-        let isVideoCallLink = messageRow.isVideoCallLink
+        let isCallLink = messageRow.isCallLink
         let isGiphy = messageRow.isGiphy
         let isPodcastComment = messageRow.isPodcastComment
         let isPodcastBoost = messageRow.isPodcastBoost
@@ -287,7 +287,7 @@ class ChatHelper {
         let messageType = TransactionMessage.TransactionMessageType(fromRawValue: Int(type))
         switch (messageType) {
         case TransactionMessage.TransactionMessageType.message, TransactionMessage.TransactionMessageType.boost:
-            if isVideoCallLink {
+            if isCallLink {
                 height = CommonVideoCallTableViewCell.getRowHeight(messageRow: messageRow)
             } else if isGiphy {
                 height = CommonPictureTableViewCell.getRowHeight(messageRow: messageRow)
@@ -380,7 +380,7 @@ class ChatHelper {
                 height = MessageReceivedTableViewCell.getRowHeight(messageRow: messageRow)
             }
             break
-        case TransactionMessage.TransactionMessageType.callInvite:
+        case TransactionMessage.TransactionMessageType.call:
             height = CommonVideoCallTableViewCell.getRowHeight(messageRow: messageRow)
             break
         default:

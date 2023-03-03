@@ -262,9 +262,9 @@ class TransactionMessageRow {
         }
     }
     
-    var isVideoCallLink: Bool {
+    var isCallLink: Bool {
         get {
-            return (transactionMessage?.messageContent ?? "").isVideoCallLink
+            return (transactionMessage?.messageContent ?? "").isCallLink
         }
     }
     

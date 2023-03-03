@@ -146,7 +146,7 @@ extension ChatViewController : ChatHeaderViewDelegate {
     
     func sendCallMessage(sender: UIButton) {
         let type = (self.chat?.isGroup() == false) ?
-        TransactionMessage.TransactionMessageType.callInvite.rawValue :
+        TransactionMessage.TransactionMessageType.call.rawValue :
         TransactionMessage.TransactionMessageType.message.rawValue
         
         VideoCallHelper.createCallMessage(button: sender, callback: { link in
@@ -190,7 +190,7 @@ extension ChatViewController : ChatAccessoryViewDelegate {
             messageText = podcastComment.getJsonString(withComment: text) ?? text
         }
         
-        if type == TransactionMessage.TransactionMessageType.callInvite.rawValue {
+        if type == TransactionMessage.TransactionMessageType.call.rawValue {
             
             let voipRequestMessage = VoIPRequestMessage()
             voipRequestMessage.recurring = false
@@ -278,7 +278,7 @@ extension ChatViewController : ChatAccessoryViewDelegate {
     }
     
     func joinIfCallMessage(message: TransactionMessage) {
-        if message.type == TransactionMessage.TransactionMessageType.callInvite.rawValue {
+        if message.type == TransactionMessage.TransactionMessageType.call.rawValue {
             
             if let callLink = message.messageContent {
                 accessoryView.shouldDismissKeyboard()

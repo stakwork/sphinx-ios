@@ -30,7 +30,7 @@ extension TransactionMessage {
             parameters["boost"] = true as AnyObject?
         }
         
-        if type == .callInvite {
+        if type == .call {
             parameters["call"] = true as AnyObject?
         }
         

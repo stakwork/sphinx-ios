@@ -169,7 +169,7 @@ extension TransactionMessage {
         if let messageC = self.messageContent {
             if messageC.isEncryptedString() {
                 adjustedMC = getDecrytedMessage(dashboard: dashboard)
-            } else if messageC.isVideoCallLink || self.type == TransactionMessageType.callInvite.rawValue {
+            } else if self.isCallLink() {
                 adjustedMC = "join.call".localized
             }
         }
@@ -419,6 +419,10 @@ extension TransactionMessage {
                     (messageContent?.contains(feedIDString1) ?? false || messageContent?.contains(feedIDString2) ?? false))
     }
     
+    func isCallLink() -> Bool {
+        return type == TransactionMessageType.call.rawValue || messageContent?.isCallLink == true
+    }
+    
     func canBeDeleted() -> Bool {
         return isOutgoing() || (self.chat?.isMyPublicGroup() ?? false)
     }
@@ -582,7 +586,7 @@ extension TransactionMessage {
     var isCopyTextActionAllowed: Bool {
         get {
             if let messageContent = messageContent {
-                return !messageContent.isVideoCallLink && !messageContent.isEncryptedString() || self.type == TransactionMessageType.callInvite.rawValue
+                return !self.isCallLink() && !messageContent.isEncryptedString()
             }
             return false
         }
@@ -591,7 +595,7 @@ extension TransactionMessage {
     var isCopyLinkActionAllowed: Bool {
         get {
             if let messageContent = messageContent {
-                return !messageContent.isVideoCallLink && messageContent.stringLinks.count > 0 || self.type == TransactionMessageType.callInvite.rawValue
+                return !self.isCallLink() && messageContent.stringLinks.count > 0
             }
             return false
         }
@@ -608,10 +612,7 @@ extension TransactionMessage {
     
     var isCopyCallLinkActionAllowed: Bool {
         get {
-            if let messageContent = messageContent {
-                return messageContent.isVideoCallLink || self.type == TransactionMessageType.callInvite.rawValue
-            }
-            return false
+            return self.isCallLink()
         }
     }
     
@@ -656,7 +657,11 @@ extension TransactionMessage {
     
     var isBoostActionAllowed: Bool {
         get {
-            return isIncoming() && !isInvoice() && !isDirectPayment() && !(messageContent ?? "").isVideoCallLink && !(uuid ?? "").isEmpty
+            return isIncoming() &&
+            !isInvoice() &&
+            !isDirectPayment() &&
+            !isCallLink() &&
+            !(uuid ?? "").isEmpty
         }
     }
     
@@ -705,7 +710,7 @@ extension TransactionMessage {
 
         switch (self.getType()) {
         case TransactionMessage.TransactionMessageType.message.rawValue,
-             TransactionMessage.TransactionMessageType.callInvite.rawValue:
+             TransactionMessage.TransactionMessageType.call.rawValue:
             if self.isGiphy() {
                 return "\("gif.capitalize".localized) \(directionString)"
             } else {

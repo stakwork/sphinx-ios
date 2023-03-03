@@ -77,7 +77,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setInitialVC(launchingApp: true)
         
         registerForVoIP()
-        print(print("Device ID:\(UserDefaults.Keys.deviceId.get(defaultValue: ""))"))
 
         return true
     }

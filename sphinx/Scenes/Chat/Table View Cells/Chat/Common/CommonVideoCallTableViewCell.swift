@@ -52,7 +52,7 @@ class CommonVideoCallTableViewCell : CommonChatTableViewCell {
 extension CommonVideoCallTableViewCell : JoinCallViewDelegate {
     func didTapCopyLink() {
         if let link = messageRow?.transactionMessage.messageContent {
-            let link_url = VoIPRequestMessage(JSONString: link)?.link ?? link
+            let link_url = VoIPRequestMessage.getFromString(link)?.link ?? link
             ClipboardHelper.copyToClipboard(text: link_url, message: "call.link.copied.clipboard".localized)
         }
     }

@@ -166,11 +166,13 @@ extension TransactionMessage {
             return "Boost"
         }
         
+        if isCallLink() {
+            adjustedMC = "join.call".localized
+        }
+        
         if let messageC = self.messageContent {
             if messageC.isEncryptedString() {
                 adjustedMC = getDecrytedMessage(dashboard: dashboard)
-            } else if self.isCallLink() {
-                adjustedMC = "join.call".localized
             }
         }
         

@@ -48,7 +48,7 @@ class VideoCallManager : NSObject {
 
         if let owner = UserContact.getOwner() {
             
-            let linkUrl = VoIPRequestMessage(JSONString: link)?.link ?? link
+            let linkUrl = VoIPRequestMessage.getFromString(link)?.link ?? link
             
             cleanUp()
 

@@ -160,7 +160,7 @@ extension ChatViewController : ChatHeaderViewDelegate {
                 voipRequestMessage.link = link
                 voipRequestMessage.cron = ""
                 
-                messageText = voipRequestMessage.toJSONString() ?? link
+                messageText = voipRequestMessage.getCallLinkMessage() ?? link
             }
             
             self.shouldSendMessage(

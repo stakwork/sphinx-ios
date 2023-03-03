@@ -145,13 +145,26 @@ extension ChatViewController : ChatHeaderViewDelegate {
     }
     
     func sendCallMessage(sender: UIButton) {
-        let type = (self.chat?.isGroup() == false) ?
-        TransactionMessage.TransactionMessageType.call.rawValue :
-        TransactionMessage.TransactionMessageType.message.rawValue
-        
         VideoCallHelper.createCallMessage(button: sender, callback: { link in
+            
+            let type = (self.chat?.isGroup() == false) ?
+            TransactionMessage.TransactionMessageType.call.rawValue :
+            TransactionMessage.TransactionMessageType.message.rawValue
+            
+            var messageText = link
+            
+            if type == TransactionMessage.TransactionMessageType.call.rawValue {
+                
+                let voipRequestMessage = VoIPRequestMessage()
+                voipRequestMessage.recurring = false
+                voipRequestMessage.link = link
+                voipRequestMessage.cron = ""
+                
+                messageText = voipRequestMessage.toJSONString() ?? link
+            }
+            
             self.shouldSendMessage(
-                text: link,
+                text: messageText,
                 type: type,
                 completion: { _ in }
             )
@@ -188,15 +201,6 @@ extension ChatViewController : ChatAccessoryViewDelegate {
         
         if let podcastComment = accessoryView.getReplyingPodcast() {
             messageText = podcastComment.getJsonString(withComment: text) ?? text
-        }
-        
-        if type == TransactionMessage.TransactionMessageType.call.rawValue {
-            
-            let voipRequestMessage = VoIPRequestMessage()
-            voipRequestMessage.recurring = false
-            voipRequestMessage.link = text
-            voipRequestMessage.cron = ""
-            messageText = voipRequestMessage.toJSONString() ?? text
         }
         
         let (botAmount, wrongAmount) = isWrongBotCommandAmount(text: messageText)

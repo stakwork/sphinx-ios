@@ -238,6 +238,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func handleAcceptedCall(callLink:String){
+        hideAccessoryView()
         VideoCallManager.sharedInstance.startVideoCall(link: callLink, audioOnly: true)
     }
 

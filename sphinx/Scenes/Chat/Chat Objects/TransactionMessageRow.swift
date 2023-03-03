@@ -264,7 +264,7 @@ class TransactionMessageRow {
     
     var isCallLink: Bool {
         get {
-            return (transactionMessage?.messageContent ?? "").isCallLink
+            return (transactionMessage?.isCallLink() ?? false)
         }
     }
     

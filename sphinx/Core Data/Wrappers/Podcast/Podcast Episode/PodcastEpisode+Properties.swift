@@ -35,6 +35,17 @@ public class PodcastEpisode: NSObject {
         self.itemID = itemID
     }
     
+    var wasPlayed: Bool? {
+        get {
+            return UserDefaults.standard.value(forKey: "wasPlayed-\(itemID)") as? Bool
+        }
+        set {
+            if (newValue ?? false != false) {
+                UserDefaults.standard.set(newValue, forKey: "wasPlayed-\(itemID)")
+            }
+        }
+    }
+    
     var duration: Int? {
         get {
             return UserDefaults.standard.value(forKey: "duration-\(itemID)") as? Int

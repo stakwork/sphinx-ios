@@ -52,7 +52,12 @@ class FeedItemDetailVM_Q12023 : NSObject{
             })
             break
         case .markAsPlayed:
-            
+            vc?.dismiss(animated: true)
+            episode.wasPlayed = true
+            NewMessageBubbleHelper().showGenericMessageView(text: "Marking episode as played!")
+            if let delegate = delegate as? NewPodcastPlayerViewController{
+                delegate.reload(indexPath.row)
+            }
             break
         case .copyLink:
             if let link = episode.linkURLPath{

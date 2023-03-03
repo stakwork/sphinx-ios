@@ -79,10 +79,13 @@ class UnifiedEpisodeTableViewCell: UITableViewCell {
         
         setProgress()
         
-        if let valid_string = episode.getTimeString(type: .remaining){
+        if let playedStatus = episode.wasPlayed,
+        playedStatus == true{
+            setUIAsPlayed()
+        }
+        else if let valid_string = episode.getTimeString(type: .remaining){
             if valid_string == "Played"{
-                timeRemainingLabel.text = valid_string
-                didPlayImageView.isHidden = false
+                setUIAsPlayed()
             }
             else{
                 timeRemainingLabel.text = "\(valid_string) left"
@@ -115,6 +118,12 @@ class UnifiedEpisodeTableViewCell: UITableViewCell {
         }
         
         roundCorners()
+    }
+    
+    func setUIAsPlayed(){
+        timeRemainingLabel.text = "Played"
+        didPlayImageView.isHidden = false
+        if episode.wasPlayed == false {episode.wasPlayed = true}
     }
     //UI Stuff
     func roundCorners(){

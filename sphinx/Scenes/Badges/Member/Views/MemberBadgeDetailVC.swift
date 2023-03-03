@@ -162,7 +162,7 @@ class MemberBadgeDetailVC : UIViewController{
     
     
     func setupDismissableView() {
-        panGestureLine.makeCircular()
+        //panGestureLine.makeCircular()
         
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(panGestureRecognizerAction))
         panGestureView.addGestureRecognizer(panGesture)

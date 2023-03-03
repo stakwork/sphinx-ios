@@ -13,11 +13,15 @@ class FeedItemDetailVC_Q12023 : UIViewController{
     
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var detailView : UIView!
+    @IBOutlet weak var detailViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var panGestureView : UIView!
     
     
     weak var episode : PodcastEpisode?
     weak var delegateReference : PodcastEpisodesDSDelegate?
     var indexPath : IndexPath?
+    
     
     lazy var vm : FeedItemDetailVM_Q12023 = {
         return FeedItemDetailVM_Q12023(
@@ -55,11 +59,27 @@ class FeedItemDetailVC_Q12023 : UIViewController{
         let closeString = "CLOSE"
         let closeButtonAttributedText = NSMutableAttributedString(string: closeString)
         closeButtonAttributedText.addAttribute(.foregroundColor, value: UIColor.Sphinx.BodyInverted, range: NSRange(location: 0, length: closeString.count))
+        closeButtonAttributedText.addAttribute(.strokeColor, value: UIColor.Sphinx.BodyInverted, range: NSRange(location: 0, length: closeString.count))
         
         closeButtonAttributedText.addAttribute(.font,value: UIFont(name: "Montserrat", size: 12.0), range: NSRange(location:0, length: closeString.count))
         closeButton.setAttributedTitle(closeButtonAttributedText, for: [.normal,.highlighted])
+        closeButton.setTitleColor(UIColor.Sphinx.BodyInverted, for: [.normal,.highlighted])
+        
+        setupDismissableView()
         
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        animateView(show: true)
+    }
+    
+    func setupDismissableView(){
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(panGestureRecognizerAction))
+        panGestureView.addGestureRecognizer(panGesture)
+    }
+    
+    
     @IBAction func closeTapped(_ sender: Any) {
         self.dismiss(animated: true)
     }
@@ -73,5 +93,53 @@ class FeedItemDetailVC_Q12023 : UIViewController{
         self.view.sendSubviewToBack(effectView)
     }
     
+    @objc func panGestureRecognizerAction(sender: UIPanGestureRecognizer) {
+        let translation = sender.translation(in: view).y
+
+        guard translation >= 0 else { return }
+        
+        if sender.state == .began {
+            detailViewBottomConstraint.constant = 0
+            detailView.superview?.layoutIfNeeded()
+            return
+        }
+        
+        if sender.state == .changed {
+            detailViewBottomConstraint.constant = -translation
+            detailView.superview?.layoutIfNeeded()
+            return
+        }
+
+        if sender.state == .ended {
+            if translation > 200 {
+                animateView(show: false) {
+                    self.dismiss(animated: false)
+                }
+            } else {
+                animateView(show: true)
+            }
+        }
+    }
+    
+    func animateView(
+        show: Bool,
+        completion: (() -> ())? = nil
+    ) {
+        let newConstant: CGFloat = show ? 0 : -600
+        
+        if (detailViewBottomConstraint.constant == newConstant) {
+            return
+        }
+        
+        detailViewBottomConstraint.constant = newConstant
+        
+        UIView.animate(withDuration: 0.25, animations: {
+            self.detailView.superview?.layoutIfNeeded()
+            self.tableView.reloadData()
+            self.view.alpha = show ? 1.0 : 0.0
+        }) { _ in
+            completion?()
+        }
+    }
     
 }

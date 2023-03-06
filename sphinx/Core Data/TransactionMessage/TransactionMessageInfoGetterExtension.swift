@@ -166,11 +166,13 @@ extension TransactionMessage {
             return "Boost"
         }
         
+        if isCallLink() {
+            adjustedMC = "join.call".localized
+        }
+        
         if let messageC = self.messageContent {
             if messageC.isEncryptedString() {
                 adjustedMC = getDecrytedMessage(dashboard: dashboard)
-            } else if messageC.isVideoCallLink {
-                adjustedMC = "join.call".localized
             }
         }
         
@@ -419,6 +421,10 @@ extension TransactionMessage {
                     (messageContent?.contains(feedIDString1) ?? false || messageContent?.contains(feedIDString2) ?? false))
     }
     
+    func isCallLink() -> Bool {
+        return type == TransactionMessageType.call.rawValue || messageContent?.isCallLink == true
+    }
+    
     func canBeDeleted() -> Bool {
         return isOutgoing() || (self.chat?.isMyPublicGroup() ?? false)
     }
@@ -582,7 +588,7 @@ extension TransactionMessage {
     var isCopyTextActionAllowed: Bool {
         get {
             if let messageContent = messageContent {
-                return !messageContent.isVideoCallLink && !messageContent.isEncryptedString()
+                return !self.isCallLink() && !messageContent.isEncryptedString()
             }
             return false
         }
@@ -591,7 +597,7 @@ extension TransactionMessage {
     var isCopyLinkActionAllowed: Bool {
         get {
             if let messageContent = messageContent {
-                return !messageContent.isVideoCallLink && messageContent.stringLinks.count > 0
+                return !self.isCallLink() && messageContent.stringLinks.count > 0
             }
             return false
         }
@@ -608,10 +614,7 @@ extension TransactionMessage {
     
     var isCopyCallLinkActionAllowed: Bool {
         get {
-            if let messageContent = messageContent {
-                return messageContent.isVideoCallLink
-            }
-            return false
+            return self.isCallLink()
         }
     }
     
@@ -625,6 +628,15 @@ extension TransactionMessage {
         get {
             return (type == TransactionMessageType.attachment.rawValue && getMediaType() != TransactionMessageType.textAttachment.rawValue) || isGiphy()
         }
+    }
+    
+    var shouldInitiateCallAlert : Bool{
+        if let content = self.messageContent,
+           self.chat?.isGroup() == false,
+           content.contains("https://jitsi"){
+            return true
+        }
+        return false
     }
     
     var isResendActionAllowed: Bool {
@@ -647,7 +659,11 @@ extension TransactionMessage {
     
     var isBoostActionAllowed: Bool {
         get {
-            return isIncoming() && !isInvoice() && !isDirectPayment() && !(messageContent ?? "").isVideoCallLink && !(uuid ?? "").isEmpty
+            return isIncoming() &&
+            !isInvoice() &&
+            !isDirectPayment() &&
+            !isCallLink() &&
+            !(uuid ?? "").isEmpty
         }
     }
     
@@ -695,7 +711,8 @@ extension TransactionMessage {
         }
 
         switch (self.getType()) {
-        case TransactionMessage.TransactionMessageType.message.rawValue:
+        case TransactionMessage.TransactionMessageType.message.rawValue,
+             TransactionMessage.TransactionMessageType.call.rawValue:
             if self.isGiphy() {
                 return "\("gif.capitalize".localized) \(directionString)"
             } else {

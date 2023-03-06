@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import Network
 
 class BadgeMemberKnownBadgesVC : UIViewController{
     
@@ -25,10 +26,12 @@ class BadgeMemberKnownBadgesVC : UIViewController{
     }()
     
     static func instantiate(
-        chatID:Int?
+        chatID:Int?,
+        badges: [Badge]
     ) -> UIViewController {
         let viewController = StoryboardScene.BadgeManagement.badgeMemberKnownBadgesVC.instantiate() as! BadgeMemberKnownBadgesVC
         viewController.chatID = chatID
+        viewController.badges = badges
         
         return viewController
     }

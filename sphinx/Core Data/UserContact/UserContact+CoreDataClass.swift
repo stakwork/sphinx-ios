@@ -344,6 +344,14 @@ public class UserContact: NSManagedObject {
         syncDeviceId(newDeviceId: deviceId)
     }
     
+    public static func updateVoipDeviceId(deviceId: String) {
+        if let currentVoipDeviceId = UserDefaults.Keys.voipDeviceId.get(defaultValue: ""), currentVoipDeviceId == deviceId {
+            return
+        }
+        
+        syncVoipDeviceId(pushKitToken: deviceId)
+    }
+    
     public static func syncDeviceId(
         newDeviceId: String? = nil
     ) {
@@ -354,6 +362,22 @@ public class UserContact: NSManagedObject {
 
             API.sharedInstance.updateUser(id: id, params: parameters, callback: { contact in
                 UserDefaults.Keys.deviceId.set(contact["device_id"].string)
+            }, errorCallback: {
+                print("Error updating device id")
+            })
+        }
+    }
+    
+    public static func syncVoipDeviceId(
+        pushKitToken: String? = nil
+    ) {
+        if let currentVoipDeviceId = pushKitToken ?? UserDefaults.Keys.voipDeviceId.get(), !currentVoipDeviceId.isEmpty {
+            
+            let parameters : [String: AnyObject] = ["push_kit_token" : currentVoipDeviceId as AnyObject]
+            let id = UserData.sharedInstance.getUserId()
+
+            API.sharedInstance.updateUser(id: id, params: parameters, callback: { contact in
+                UserDefaults.Keys.voipDeviceId.set(contact["push_kit_token"].string)
             }, errorCallback: {
                 print("Error updating device id")
             })

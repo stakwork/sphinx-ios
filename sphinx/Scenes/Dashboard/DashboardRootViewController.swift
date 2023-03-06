@@ -296,8 +296,12 @@ extension DashboardRootViewController {
             loadDataOnTabChange(to: activeTab)
         }
         setupAddTribeButton()
+        
+        //startCallManagerTest()
     }
+    
 }
+
 
 
 // MARK: -  Public Methods
@@ -617,8 +621,6 @@ extension DashboardRootViewController {
         if handleInvite(for: contact) {
             return
         }
-        
-        chat?.setChatMessagesAsSeen()
         
         let chatVC = ChatViewController.instantiate(
             contact: contact,

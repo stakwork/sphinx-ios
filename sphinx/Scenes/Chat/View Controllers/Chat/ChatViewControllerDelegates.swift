@@ -62,7 +62,6 @@ extension ChatViewController : ChatHeaderViewDelegate {
     
     func didTapBackButton() {
         UserDefaults.Keys.chatId.removeValue()
-        chat?.setChatMessagesAsSeen()
         accessoryView.shouldDismissKeyboard()
         accessoryView.hide()
         webAppVC?.stopWebView()
@@ -147,8 +146,28 @@ extension ChatViewController : ChatHeaderViewDelegate {
     
     func sendCallMessage(sender: UIButton) {
         VideoCallHelper.createCallMessage(button: sender, callback: { link in
-            let messageType = TransactionMessage.TransactionMessageType.message.rawValue
-            self.shouldSendMessage(text: link, type: messageType, completion: { _ in })
+            
+            let type = (self.chat?.isGroup() == false) ?
+            TransactionMessage.TransactionMessageType.call.rawValue :
+            TransactionMessage.TransactionMessageType.message.rawValue
+            
+            var messageText = link
+            
+            if type == TransactionMessage.TransactionMessageType.call.rawValue {
+                
+                let voipRequestMessage = VoIPRequestMessage()
+                voipRequestMessage.recurring = false
+                voipRequestMessage.link = link
+                voipRequestMessage.cron = ""
+                
+                messageText = voipRequestMessage.getCallLinkMessage() ?? link
+            }
+            
+            self.shouldSendMessage(
+                text: messageText,
+                type: type,
+                completion: { _ in }
+            )
         })
     }
 }
@@ -226,6 +245,7 @@ extension ChatViewController : ChatAccessoryViewDelegate {
         accessoryView.hideReplyView()
         
         API.sharedInstance.sendMessage(params: params, callback: { m in
+            
             if let message = TransactionMessage.insertMessage(m: m, existingMessage: provisionalMessage).0 {
                 message.setPaymentInvoiceAsPaid()
                 self.insertSentMessage(message: message, completion: completion)
@@ -236,11 +256,11 @@ extension ChatViewController : ChatAccessoryViewDelegate {
             if let podcastComment = podcastComment {
                 ActionsManager.sharedInstance.trackClipComment(podcastComment: podcastComment)
             }
+            
         }, errorCallback: {
              if let provisionalMessage = provisionalMessage {
                 provisionalMessage.status = TransactionMessage.TransactionMessageStatus.failed.rawValue
                 self.insertSentMessage(message: provisionalMessage, completion: completion)
-                self.scrollAfterInsert()
              }
         })
     }
@@ -258,6 +278,19 @@ extension ChatViewController : ChatAccessoryViewDelegate {
         updateViewChat(updatedChat: chat ?? contact?.getChat())
         enableViewAndComplete(success: true, completion: completion)
         chatDataSource?.addMessageAndReload(message: message)
+        joinIfCallMessage(message: message)
+    }
+    
+    func joinIfCallMessage(message: TransactionMessage) {
+        if message.type == TransactionMessage.TransactionMessageType.call.rawValue {
+            
+            if let callLink = message.messageContent {
+                accessoryView.shouldDismissKeyboard()
+                accessoryView.hide()
+                
+                VideoCallManager.sharedInstance.startVideoCall(link: callLink)
+            }
+        }
     }
     
     func enableViewAndComplete(success: Bool, completion: @escaping (Bool) -> ()) {
@@ -319,8 +352,9 @@ extension ChatViewController : ChatAccessoryViewDelegate {
 
 extension ChatViewController : ChatDataSourceDelegate {
     func didScrollToBottom() {
-        unseenMessagesCount = 0
-        scrollDownLabel.text = "+1"
+        chat?.setChatMessagesAsSeen()
+        
+        scrollDownLabel.text = ""
         scrollDownContainer.isHidden = true
     }
     
@@ -332,6 +366,15 @@ extension ChatViewController : ChatDataSourceDelegate {
     func chatUpdated(chat: Chat) {
         messageBubbleHelper.hideLoadingWheel()
         updateViewChat(updatedChat: chat)
+    }
+    
+    func shouldScrollToBottom(force: Bool = false) {
+        if chatTableView.shouldScrollToBottom() || force {
+            chatTableView.scrollToBottom(animated: !force)
+        } else {
+            scrollDownLabel.text = chat?.unseenMessagesCountLabel ?? ""
+            scrollDownContainer.isHidden = false
+        }
     }
 }
 
@@ -478,10 +521,10 @@ extension ChatViewController : TribeMemberViewDelegate {
     }
     
     func displayKnownBadges(){
-        let badgeVC = BadgeMemberKnownBadgesVC.instantiate(chatID: chat?.id)
-        if let valid_vc = badgeVC as? BadgeMemberKnownBadgesVC{
-            valid_vc.badges = self.chatListViewModel.availableBadges
-        }
+        let badgeVC = BadgeMemberKnownBadgesVC.instantiate(
+            chatID: chat?.id,
+            badges: chatListViewModel.availableBadges
+        )
         self.navigationController?.pushViewController(badgeVC, animated: true)
     }
     
@@ -576,7 +619,6 @@ extension ChatViewController : SocketManagerDelegate {
         }
         
         chatDataSource?.addMessageAndReload(message: message)
-        scrollAfterInsert()
     }
     
     func didReceiveConfirmation(message: TransactionMessage) {
@@ -585,7 +627,6 @@ extension ChatViewController : SocketManagerDelegate {
         }
         
         chatDataSource?.addMessageAndReload(message: message, confirmation: true)
-        scrollAfterInsert()
     }
     
     func didUpdateContact(contact: UserContact) {
@@ -604,8 +645,7 @@ extension ChatViewController : SocketManagerDelegate {
         if chatTableView.shouldScrollToBottom() {
             scrollChatToBottom()
         } else {
-            unseenMessagesCount = unseenMessagesCount + count
-            scrollDownLabel.text = "+\(unseenMessagesCount)"
+            scrollDownLabel.text = chat?.unseenMessagesCountLabel ?? ""
             scrollDownContainer.isHidden = false
         }
     }

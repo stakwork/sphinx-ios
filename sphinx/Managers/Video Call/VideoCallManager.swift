@@ -38,12 +38,18 @@ class VideoCallManager : NSObject {
         return isGroup
     }
 
-    func startVideoCall(link: String, audioOnly: Bool) {
+    func startVideoCall(
+        link: String,
+        audioOnly: Bool? = nil
+    ) {
         if activeCall {
             return
         }
 
         if let owner = UserContact.getOwner() {
+            
+            let linkUrl = VoIPRequestMessage.getFromString(link)?.link ?? link
+            
             cleanUp()
 
             let jitsiMeetView = JitsiMeetView()
@@ -51,9 +57,9 @@ class VideoCallManager : NSObject {
             self.jitsiMeetView = jitsiMeetView
 
             let options = JitsiMeetConferenceOptions.fromBuilder({(builder: JitsiMeetConferenceOptionsBuilder) -> Void in
-                builder.serverURL = URL(string: link.callServer)!
-                builder.room = link.callRoom
-                builder.audioOnly = audioOnly
+                builder.serverURL = URL(string: linkUrl)!
+                builder.room = linkUrl.callRoom
+                builder.audioOnly = audioOnly ?? linkUrl.contains("startAudioOnly=true")
                 builder.audioMuted = false
                 builder.videoMuted = false
                 builder.welcomePageEnabled = false
@@ -137,6 +143,10 @@ extension VideoCallManager : JitsiMeetViewDelegate {
             }
             
             self.videoCallDelegate?.didFinishCall()
+        }
+        
+        if #available(iOS 14.0, *) {
+            JitsiIncomingCallManager.sharedInstance.finishCall()
         }
     }
 

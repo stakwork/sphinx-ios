@@ -14,12 +14,15 @@ class BadgeMemberKnownBadgesVM : NSObject {
     
     var tableView : UITableView
     var vc : BadgeMemberKnownBadgesVC
+    
     var knownBadges : [Badge] = []{
         didSet {
             vc.noBadgesLabel.isHidden = knownBadges.isEmpty == false
         }
     }
     var chatID : Int? = nil
+    
+    let kRowHeight:CGFloat = 117
     
     init(vc: BadgeMemberKnownBadgesVC, tableView: UITableView,chatID:Int?) {
         self.vc = vc
@@ -45,8 +48,7 @@ class BadgeMemberKnownBadgesVM : NSObject {
             API.sharedInstance.getTribeAdminBadges(
                 chatID: valid_id,
                 callback: { results in
-                    if var mappedResults = Mapper<Badge>().mapArray(JSONObject: Array(results)){
-                        mappedResults.map({$0.chat_id = valid_id})
+                    if let mappedResults = Mapper<Badge>().mapArray(JSONObject: Array(results)) {
                         self.knownBadges = mappedResults
                         self.vc.removeLoadingView()
                         self.tableView.reloadData()
@@ -77,5 +79,8 @@ extension BadgeMemberKnownBadgesVM : UITableViewDelegate, UITableViewDataSource{
         return cell
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return kRowHeight
+    }
     
 }

@@ -15,6 +15,7 @@ import GiphyUISDK
 import BackgroundTasks
 import AVFAudio
 import SDWebImageSVGCoder
+import PushKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -59,6 +60,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
         
+        if #available(iOS 15.0, *) {
+            UITableView.appearance().sectionHeaderTopPadding = CGFloat(0)
+        }
+        
         try? AVAudioSession.sharedInstance().setCategory(.playback)
         
         setAppConfiguration()
@@ -70,6 +75,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         connectTor()
         
         setInitialVC(launchingApp: true)
+        
+        registerForVoIP()
 
         return true
     }
@@ -133,6 +140,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
+    fileprivate func registerForVoIP(){
+        let registry = PKPushRegistry(queue: .main)
+        DispatchQueue.main.async {
+            registry.delegate = UIApplication.shared.delegate as! AppDelegate
+        }
+        registry.desiredPushTypes = [PKPushType.voIP]
+    }
+    
+    
+    
     func scheduleAppRefresh() {
         let request = BGAppRefreshTaskRequest(identifier: "com.gl.sphinx.refresh")
         request.earliestBeginDate = Date(timeIntervalSinceNow: 15 * 60)
@@ -177,7 +194,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     ) {
         saveCurrentStyle()
         WindowsManager.sharedInstance.removeMessageOptions()
-        setMessagesAsSeen()
         setBadge(application: application)
         
         podcastPlayerController.finishAndSaveContentConsumed()
@@ -212,6 +228,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
+    func handleIncomingCall(
+        callerName:String
+    ){
+        if #available(iOS 14.0, *) {
+            JitsiIncomingCallManager.sharedInstance.reportIncomingCall(
+                uuid: UUID(),
+                handle: callerName
+            )
+        }
+    }
+    
+    func handleAcceptedCall(
+        callLink:String,
+        audioOnly: Bool
+    ){
+        hideAccessoryView()
+        VideoCallManager.sharedInstance.startVideoCall(link: callLink, audioOnly: audioOnly)
+    }
 
     func reloadAppIfStyleChanged() {
         if #available(iOS 13.0, *) {
@@ -248,7 +282,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(
         _ application: UIApplication
     ) {
-        setMessagesAsSeen()
         setBadge(application: application)
 
         SKPaymentQueue.default().remove(StoreKitService.shared)
@@ -477,7 +510,8 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     func handlePush(
         notification: [String: AnyObject]
     ) {
-        if let aps = notification["aps"] as? [String: AnyObject], let customData = aps["custom_data"] as? [String: AnyObject] {
+        if let aps = notification["aps"] as? [String: AnyObject],
+            let customData = aps["custom_data"] as? [String: AnyObject] {
             if let chatId = customData["chat_id"] as? Int {
                 UserDefaults.Keys.chatId.set(chatId)
             }
@@ -505,3 +539,43 @@ extension AppDelegate : SphinxOnionConnectorDelegate {
         NotificationCenter.default.post(name: .onConnectionStatusChanged, object: nil)
     }
 }
+
+extension AppDelegate : PKPushRegistryDelegate{
+    func pushRegistry(_ registry: PKPushRegistry, didUpdate pushCredentials: PKPushCredentials, for type: PKPushType) {
+        if type == PKPushType.voIP {
+            let tokenData = pushCredentials.token
+            let deviceToken: String = tokenData.reduce("", {$0 + String(format: "%02X", $1) })
+            UserContact.updateVoipDeviceId(deviceId: deviceToken)
+        }
+    }
+    
+    func pushRegistry(_ registry: PKPushRegistry, didReceiveIncomingPushWith payload: PKPushPayload, for type: PKPushType, completion: @escaping () -> Void) {
+        if let dict = payload.dictionaryPayload as? [String:Any],
+           let aps = dict["aps"] as? [String:Any],
+           let contents = aps["alert"] as? String,
+           let pushMessage = VoIPPushMessage.voipMessage(jsonString: contents),
+           let pushBody = pushMessage.body as? VoIPPushMessageBody {
+           
+            if #available(iOS 14.0, *) {
+                let (result, link) = EncryptionManager.sharedInstance.decryptMessage(message: pushBody.linkURL)
+                pushBody.linkURL = link
+                
+                let manager = JitsiIncomingCallManager.sharedInstance
+                manager.currentJitsiURL = (result == true) ? link : pushBody.linkURL
+                manager.hasVideo = pushBody.isVideoCall()
+                
+                self.handleIncomingCall(callerName: pushBody.callerName)
+            }
+            completion()
+        } else {
+            completion()
+        }
+    }
+    
+    func pushRegistry(_ registry: PKPushRegistry, didInvalidatePushTokenFor type: PKPushType) {
+        print("invalidated token")
+    }
+}
+
+
+

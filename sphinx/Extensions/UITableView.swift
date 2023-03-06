@@ -22,7 +22,11 @@ extension UITableView {
     }
     
     func shouldScrollToBottom() -> Bool {
-        if self.contentOffset.y >= (self.contentSize.height - self.frame.size.height - 150) {
+        let y = self.contentOffset.y
+        let contentHeight = (self.contentSize.height - self.frame.size.height + self.contentInset.bottom)
+        let difference = contentHeight - y
+        
+        if difference <= 50 {
             return true
         }
         return false
@@ -48,16 +52,17 @@ extension UITableView {
         }
     }
     
-    func isClosedToBottom(yPosition: CGFloat) -> Bool {
+    func isPositionAtBottom(
+        yPosition: CGFloat,
+        accessoryViewHeight: CGFloat
+    ) -> Bool {
         let tableViewHeight = UIScreen.main.bounds.height
-        let bottomInset = getWindowInsets().bottom + ChatAccessoryView.kAccessoryViewDefaultHeight + ChatAccessoryView.kTableBottomPadding
+        let bottomInset = getWindowInsets().bottom + accessoryViewHeight + ChatAccessoryView.kTableBottomPadding
         let contentHeight = (self.contentSize.height - tableViewHeight + bottomInset)
+
         let difference = contentHeight - yPosition
         
-        if abs(difference) <= 10 {
-            return true
-        }
-        return false
+        return round(difference) <= 0
     }
     
     func scrollToRow(index:Int, animated:Bool = true){
@@ -65,12 +70,16 @@ extension UITableView {
         self.scrollToRow(at: indexPath, at: .bottom, animated: animated)
     }
     
-    func shouldScrollToOffset(yPosition: CGFloat) -> Bool {
-        if (isClosedToBottom(yPosition: self.contentOffset.y)) {
-            return false
-        }
-        
+    func scrollToOffset(yPosition: CGFloat) {
         self.contentOffset.y = yPosition
-        return true
+    }
+}
+
+extension UIScrollView {
+    func isAtBottom() -> Bool {
+        let currentY = round(self.contentOffset.y)
+        let bottomY = round(self.contentSize.height - self.frame.size.height + self.contentInset.bottom)
+        
+        return currentY == bottomY
     }
 }

@@ -35,6 +35,7 @@ class FeedItemDetailHeaderCellQ123: UITableViewCell {
     
     func configureView(episode:PodcastEpisode){
         self.backgroundColor = .clear
+        self.contentView.backgroundColor = .clear
         dotView1.makeCircular()
         dotView2.makeCircular()
         
@@ -46,6 +47,14 @@ class FeedItemDetailHeaderCellQ123: UITableViewCell {
         dateLabel.text = episode.dateString
         timeRemainingLabel.text = episode.getTimeString(type: .total)
         sourceTypeNameLabel.text = "Podcast"
+        
+        for view in self.subviews{
+            view.backgroundColor = .clear
+        }
+        
+        for view in contentView.subviews{
+            view.backgroundColor = .clear
+        }
     }
     
 }

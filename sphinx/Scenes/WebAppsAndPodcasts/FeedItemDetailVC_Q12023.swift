@@ -49,12 +49,13 @@ class FeedItemDetailVC_Q12023 : UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .clear
-        tableView.backgroundColor = .clear
         addBlur()
         if let _ = self.episode{
             vm.setupTableView()
             tableView.reloadData()
         }
+        tableView.backgroundColor = .clear
+        closeButton.backgroundColor = .clear
         
         let closeString = "CLOSE"
         let closeButtonAttributedText = NSMutableAttributedString(string: closeString)
@@ -125,7 +126,7 @@ class FeedItemDetailVC_Q12023 : UIViewController{
         show: Bool,
         completion: (() -> ())? = nil
     ) {
-        let newConstant: CGFloat = show ? 0 : -600
+        let newConstant: CGFloat = show ? 0 : -750
         
         if (detailViewBottomConstraint.constant == newConstant) {
             return

@@ -506,6 +506,9 @@
 "delete.episode.title" = "Borrar Episodio";
 "delete.episode.message" = "¿Borrar Episodio de la memoria del dispositivo?";
 "error.playing" = "Hubo un error al reproducir el episodio. Por favor vuelva a intentarlo más tarde.";
+"download" = "Descargar";
+"mark.as.played" = "Marcar como leído";
+"share" = "Compartir";
 
 // VIDEOS
 "video" = "video";

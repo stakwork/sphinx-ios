@@ -10,9 +10,12 @@ import UIKit
 
 protocol PodcastEpisodeRowDelegate : class {
     func shouldStartDownloading(episode: PodcastEpisode, cell: UITableViewCell)
+    func shouldStartDownloading(episode: PodcastEpisode, cell: UICollectionViewCell)
     func shouldDeleteFile(episode: PodcastEpisode, cell: UITableViewCell)
-    func shouldShare(episode: PodcastEpisode)
+    func shouldDeleteFile(episode: PodcastEpisode, cell: UICollectionViewCell)
+    func shouldShowMore(episode: PodcastEpisode,cell:UICollectionViewCell)
     func shouldShowMore(episode: PodcastEpisode,cell:UITableViewCell)
+    func shouldShare(episode: PodcastEpisode)
 }
 
 class PodcastEpisodeTableViewCell: SwipableCell {

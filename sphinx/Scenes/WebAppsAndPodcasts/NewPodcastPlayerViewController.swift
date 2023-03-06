@@ -152,46 +152,6 @@ extension NewPodcastPlayerViewController : PodcastEpisodesDSDelegate {
         reload(indexPath.row)
     }
     
-    func shareTapped(episode:PodcastEpisode){
-        // Setting description
-        let firstActivityItem = "Hey I think you'd enjoy this podcast I found on Sphinx iOS: \(podcast.title ?? "")"
-
-        // Setting url
-        let secondActivityItem : NSURL = NSURL(string: episode.linkURLPath ?? "")!
-        
-        // If you want to use an image
-        let image : UIImage = #imageLiteral(resourceName: "appPinIcon")
-        let activityViewController : UIActivityViewController = UIActivityViewController(
-            activityItems: [firstActivityItem, secondActivityItem, image], applicationActivities: nil)
-        
-        // This lines is for the popover you need to show in iPad
-        activityViewController.popoverPresentationController?.sourceView = self.view
-        
-        // This line remove the arrow of the popover to show in iPad
-        activityViewController.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection.down
-        activityViewController.popoverPresentationController?.sourceRect = CGRect(x: 150, y: 150, width: 0, height: 0)
-        
-        // Pre-configuring activity items
-        activityViewController.activityItemsConfiguration = [
-        UIActivity.ActivityType.message
-        ] as? UIActivityItemsConfigurationReading
-        
-        // Anything you want to exclude
-        activityViewController.excludedActivityTypes = [
-            UIActivity.ActivityType.postToWeibo,
-            UIActivity.ActivityType.print,
-            UIActivity.ActivityType.assignToContact,
-            UIActivity.ActivityType.saveToCameraRoll,
-            UIActivity.ActivityType.addToReadingList,
-            UIActivity.ActivityType.postToFlickr,
-            UIActivity.ActivityType.postToVimeo,
-            UIActivity.ActivityType.postToTencentWeibo
-        ]
-        
-        activityViewController.isModalInPresentation = true
-        self.present(activityViewController, animated: true, completion: nil)
-    }
-    
     func showEpisodeDetails(episode: PodcastEpisode,indexPath:IndexPath) {
         let vc = FeedItemDetailVC.instantiate(episode: episode, delegate: self, indexPath: indexPath)
         self.present(vc, animated: true)
@@ -308,5 +268,47 @@ extension NewPodcastPlayerViewController : DownloadServiceDelegate {
         if let index = podcast.getIndexForEpisodeWith(id: download.episode.itemID) {
             tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
         }
+    }
+}
+
+extension UIViewController{
+    func shareTapped(episode:PodcastEpisode){
+        // Setting description
+        let firstActivityItem = "Hey I think you'd enjoy this podcast I found on Sphinx iOS: \(episode.feed?.title ?? "")"
+
+        // Setting url
+        let secondActivityItem : NSURL = NSURL(string: episode.linkURLPath ?? "")!
+        
+        // If you want to use an image
+        let image : UIImage = #imageLiteral(resourceName: "appPinIcon")
+        let activityViewController : UIActivityViewController = UIActivityViewController(
+            activityItems: [firstActivityItem, secondActivityItem, image], applicationActivities: nil)
+        
+        // This lines is for the popover you need to show in iPad
+        activityViewController.popoverPresentationController?.sourceView = self.view
+        
+        // This line remove the arrow of the popover to show in iPad
+        activityViewController.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection.down
+        activityViewController.popoverPresentationController?.sourceRect = CGRect(x: 150, y: 150, width: 0, height: 0)
+        
+        // Pre-configuring activity items
+        activityViewController.activityItemsConfiguration = [
+        UIActivity.ActivityType.message
+        ] as? UIActivityItemsConfigurationReading
+        
+        // Anything you want to exclude
+        activityViewController.excludedActivityTypes = [
+            UIActivity.ActivityType.postToWeibo,
+            UIActivity.ActivityType.print,
+            UIActivity.ActivityType.assignToContact,
+            UIActivity.ActivityType.saveToCameraRoll,
+            UIActivity.ActivityType.addToReadingList,
+            UIActivity.ActivityType.postToFlickr,
+            UIActivity.ActivityType.postToVimeo,
+            UIActivity.ActivityType.postToTencentWeibo
+        ]
+        
+        activityViewController.isModalInPresentation = true
+        self.present(activityViewController, animated: true, completion: nil)
     }
 }

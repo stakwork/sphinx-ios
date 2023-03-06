@@ -52,6 +52,7 @@ class UnifiedEpisodeView : UIView {
     var episode: PodcastEpisode! = nil
     weak var delegate: PodcastEpisodeRowDelegate?
     weak var presentingTableViewCell : UITableViewCell?
+    weak var presentingCollectionViewCell : UICollectionViewCell?
     
     
     func configureWith(podcast: PodcastFeed?,
@@ -76,7 +77,13 @@ class UnifiedEpisodeView : UIView {
         
         dotView.makeCircular()
         
-        mediaTypeImageView.image = #imageLiteral(resourceName: "podcastTypeIcon")
+        if(episode.type == "youtube"){
+            mediaTypeImageView.image = #imageLiteral(resourceName: "youtubeVideoTypeIcon")
+            downloadButton.isHidden = true
+        }
+        else{
+            mediaTypeImageView.image = #imageLiteral(resourceName: "podcastTypeIcon")
+        }
         
         dateLabel.text = episode.dateString
         
@@ -139,11 +146,23 @@ class UnifiedEpisodeView : UIView {
     
     func setProgress(){
         let fullWidth = durationWidthConstraint.constant
-        if let valid_duration = episode.duration,
+        if let feed = episode.feed,
+           feed.feedID == "Recommendations-Feed",
+           let valid_time = episode.clipStartTime,
+           let valid_duration = episode.clipEndTime{
+            let percentage = Float(valid_time) / Float(valid_duration)
+            let newProgressWidth = (percentage * Float(fullWidth))
+            progressWidthConstraint.constant = CGFloat(newProgressWidth)
+        }
+        else if let valid_duration = episode.duration,
            let valid_time = episode.currentTime{
             let percentage = Float(valid_time) / Float(valid_duration)
             let newProgressWidth = (percentage * Float(fullWidth))
             progressWidthConstraint.constant = CGFloat(newProgressWidth)
+        }
+        else{
+            durationView.isHidden = true
+            progressView.isHidden = true
         }
         
         durationView.alpha = 0.1
@@ -193,6 +212,10 @@ class UnifiedEpisodeView : UIView {
         if let delegate = delegate,
            let presentingTableViewCell = presentingTableViewCell{
             delegate.shouldShowMore(episode: episode, cell: presentingTableViewCell)
+        }
+        else if let delegate = delegate,
+                let presentingCollectionViewCell = presentingCollectionViewCell{
+            delegate.shouldShowMore(episode: episode, cell: presentingCollectionViewCell)
         }
     }
     

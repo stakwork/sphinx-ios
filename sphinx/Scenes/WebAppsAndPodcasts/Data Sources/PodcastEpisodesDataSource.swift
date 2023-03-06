@@ -130,6 +130,12 @@ extension PodcastEpisodesDataSource : UIScrollViewDelegate {
 }
 
 extension PodcastEpisodesDataSource : PodcastEpisodeRowDelegate {
+    func shouldStartDownloading(episode: PodcastEpisode, cell: UICollectionViewCell) {}
+    
+    func shouldDeleteFile(episode: PodcastEpisode, cell: UICollectionViewCell) {}
+    
+    func shouldShowMore(episode: PodcastEpisode, cell: UICollectionViewCell) {}
+    
    
     func shouldDeleteFile(episode: PodcastEpisode, cell: UITableViewCell) {
         if let indexPath = tableView.indexPath(for: cell) {

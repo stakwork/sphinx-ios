@@ -16,12 +16,24 @@ class FeedItemDetailVM : NSObject{
     weak var tableView:UITableView?
     var episode : PodcastEpisode
     var indexPath : IndexPath
-    let actionsList : [FeedItemActionType] = [
-        .download,
-        .share,
-        .copyLink,
-        .markAsPlayed
-    ]
+    
+    func getActionsList() -> [FeedItemActionType]{
+        if(episode.type == "youtube"){
+            return [
+                .share,
+                .copyLink,
+                .markAsPlayed
+            ]
+        }
+        else{
+            return [
+                .download,
+                .share,
+                .copyLink,
+                .markAsPlayed
+            ]
+        }
+    }
     
     init(vc:FeedItemDetailVC,
          tableView:UITableView,
@@ -58,6 +70,9 @@ class FeedItemDetailVM : NSObject{
             if let delegate = delegate as? NewPodcastPlayerViewController{
                 delegate.reload(indexPath.row)
             }
+            else if let delegate = delegate as? RecommendationFeedItemsCollectionViewController{
+                delegate.configureDataSource(for: delegate.collectionView)
+            }
             break
         case .copyLink:
             if let link = episode.linkURLPath{
@@ -80,7 +95,7 @@ class FeedItemDetailVM : NSObject{
 
 extension FeedItemDetailVM : UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1 + actionsList.count
+        return 1 + getActionsList().count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -97,7 +112,8 @@ extension FeedItemDetailVM : UITableViewDelegate, UITableViewDataSource{
                 withIdentifier: "FeedItemDetailActionCell",
                 for: indexPath
             ) as! FeedItemDetailActionCell
-            cell.configureView(type: actionsList[indexPath.row - 1])
+            cell.configureView(type: getActionsList()[indexPath.row - 1])
+            cell.selectionStyle = .none
             return cell
         }
         
@@ -108,18 +124,8 @@ extension FeedItemDetailVM : UITableViewDelegate, UITableViewDataSource{
             return
         }
         else{
-            let action = actionsList[indexPath.row - 1]
+            let action = getActionsList()[indexPath.row - 1]
             doAction(action: action)
         }
     }
-    /*
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if(indexPath.row == 0){
-            return 220.0
-        }
-        else{
-            return 64.0
-        }
-    }
-    */
 }

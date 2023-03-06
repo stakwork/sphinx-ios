@@ -46,7 +46,15 @@ class FeedItemDetailHeaderCell: UITableViewCell {
         sourceTypeImageView.layer.cornerRadius = 3.0
         dateLabel.text = episode.dateString
         timeRemainingLabel.text = episode.getTimeString(type: .total)
-        sourceTypeNameLabel.text = "Podcast"
+        if episode.isYoutubeVideo{
+            sourceTypeImageView.image = #imageLiteral(resourceName: "youtubeVideoTypeIcon")
+            sourceTypeNameLabel.text = "YouTube"
+        }
+        else{
+            sourceTypeImageView.image = #imageLiteral(resourceName: "podcastTypeIcon")
+            sourceTypeNameLabel.text = "Podcast"
+        }
+        
         
         for view in self.subviews{
             view.backgroundColor = .clear

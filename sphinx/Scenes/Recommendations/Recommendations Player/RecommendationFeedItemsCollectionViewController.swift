@@ -13,6 +13,7 @@ private let reuseIdentifier = "Cell"
 class RecommendationFeedItemsCollectionViewController: UICollectionViewController {
     
     var podcast: PodcastFeed!
+    let downloadService = DownloadService.sharedInstance
 
     var onRecommendationCellSelected: ((String) -> Void)!
     
@@ -62,7 +63,7 @@ extension RecommendationFeedItemsCollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        downloadService.setDelegate(delegate: self)
         registerViews(for: collectionView)
         configure(collectionView)
         configureDataSource(for: collectionView)
@@ -320,32 +321,62 @@ extension RecommendationFeedItemsCollectionViewController {
 
 
 extension RecommendationFeedItemsCollectionViewController : PodcastEpisodeRowDelegate {
-   
-    func shouldDeleteFile(episode: PodcastEpisode, cell: UITableViewCell) {
-        /*
-        if let indexPath = tableView.indexPath(for: cell) {
-            delegate?.deleteTapped(indexPath, episode: episode)
-        }
-        */
+    func shouldStartDownloading(episode: PodcastEpisode, cell: UICollectionViewCell) {
+        downloadService.startDownload(episode)
     }
     
-    func shouldStartDownloading(episode: PodcastEpisode, cell: UITableViewCell) {
-        /*
-        if let indexPath = tableView.indexPath(for: cell){
-            delegate?.downloadTapped(indexPath, episode: episode)
+    func shouldDeleteFile(episode: PodcastEpisode, cell: UICollectionViewCell) {}
+    
+    func shouldShowMore(episode: PodcastEpisode, cell: UICollectionViewCell) {
+        if let indexPath = collectionView.indexPath(for: cell){
+            showEpisodeDetails(episode: episode, indexPath: indexPath)
         }
-        */
     }
+   
+    func shouldDeleteFile(episode: PodcastEpisode, cell: UITableViewCell) {}
+    
+    func shouldStartDownloading(episode: PodcastEpisode, cell: UITableViewCell) {}
     
     func shouldShare(episode: PodcastEpisode) {
-        //delegate?.shareTapped(episode: episode)
+        shareTapped(episode: episode)
     }
     
-    func shouldShowMore(episode: PodcastEpisode, cell: UITableViewCell){
-        /*
-        if let indexPath = tableView.indexPath(for: cell) {
-            delegate?.showEpisodeDetails(episode: episode,indexPath: indexPath)
-        }
-        */
+    func shouldShowMore(episode: PodcastEpisode, cell: UITableViewCell){}
+}
+
+extension RecommendationFeedItemsCollectionViewController : PodcastEpisodesDSDelegate{
+    func didTapEpisodeAt(index: Int) {
+        
     }
+    
+    func downloadTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {
+        downloadService.startDownload(episode)
+    }
+    
+    func deleteTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {
+        
+    }
+    
+    func shouldToggleTopView(show: Bool) {
+        
+    }
+    
+    func showEpisodeDetails(episode: PodcastEpisode,indexPath:IndexPath) {
+        let vc = FeedItemDetailVC.instantiate(episode: episode, delegate: self, indexPath: indexPath)
+        self.present(vc, animated: true)
+    }
+    
+    
+}
+
+extension RecommendationFeedItemsCollectionViewController : DownloadServiceDelegate{
+    func shouldReloadRowFor(download: Download) {
+        updateSnapshot()
+    }
+    
+    func shouldUpdateProgressFor(download: Download) {
+        updateSnapshot()
+    }
+    
+    
 }

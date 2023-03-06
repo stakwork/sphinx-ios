@@ -37,19 +37,19 @@ class FeedItemDetailActionCell: UITableViewCell {
         self.backgroundColor = .clear
         switch(type){
         case .download:
-            actionLabel.text = "Download"
+            actionLabel.text = "download".localized
             actionIconButton.setTitle("download", for: .normal)
             break
         case .copyLink:
-            actionLabel.text = "Copy Link"
+            actionLabel.text = "copy.link".localized
             actionIconButton.setTitle("content_copy", for: .normal)
             break
         case .markAsPlayed:
-            actionLabel.text = "Mark as Played"
+            actionLabel.text = "mark.as.played".localized
             actionIconButton.setTitle("done", for: .normal)
             break
         case .share:
-            actionLabel.text = "Share"
+            actionLabel.text = "share".localized
             actionIconButton.setTitle("ios_share", for: .normal)
             break
         }

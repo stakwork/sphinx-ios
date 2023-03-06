@@ -12,9 +12,6 @@ class UnifiedEpisodeTableViewCell: UITableViewCell {
     
     @IBOutlet weak var unifiedEpisodeView: UnifiedEpisodeView!
 
-    
-    
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

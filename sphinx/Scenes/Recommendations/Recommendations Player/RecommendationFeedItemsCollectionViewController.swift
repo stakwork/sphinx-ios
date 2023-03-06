@@ -51,7 +51,7 @@ extension RecommendationFeedItemsCollectionViewController {
         case recommendation(PodcastEpisode)
     }
 
-    typealias RecommendationCell = RecommendationItemCollectionViewCell
+    typealias RecommendationCell = RecommendationItemWUnifiedViewCollectionViewCell
     typealias CellDataItem = DataSourceItem
     typealias DataSource = UICollectionViewDiffableDataSource<CollectionViewSection, CellDataItem>
     typealias DataSourceSnapshot = NSDiffableDataSourceSnapshot<CollectionViewSection, CellDataItem>
@@ -99,7 +99,7 @@ extension RecommendationFeedItemsCollectionViewController {
 
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
-            heightDimension: .estimated(103.0)
+            heightDimension: .estimated(200.0)
         )
         
         let group = NSCollectionLayoutGroup.horizontal(
@@ -157,8 +157,8 @@ extension RecommendationFeedItemsCollectionViewController {
         )
         
         collectionView.register(
-            RecommendationItemCollectionViewCell.nib,
-            forCellWithReuseIdentifier: RecommendationItemCollectionViewCell.reuseID
+            RecommendationItemWUnifiedViewCollectionViewCell.nib,
+            forCellWithReuseIdentifier: RecommendationItemWUnifiedViewCollectionViewCell.reuseID
         )
     }
 
@@ -216,9 +216,9 @@ extension RecommendationFeedItemsCollectionViewController {
             case .recommendations:
                 guard
                     let recommendationCell = collectionView.dequeueReusableCell(
-                        withReuseIdentifier: RecommendationItemCollectionViewCell.reuseID,
+                        withReuseIdentifier: RecommendationItemWUnifiedViewCollectionViewCell.reuseID,
                         for: indexPath
-                    ) as? RecommendationItemCollectionViewCell
+                    ) as? RecommendationItemWUnifiedViewCollectionViewCell
                 else {
                     preconditionFailure("Failed to dequeue expected reusable cell type")
                 }
@@ -228,7 +228,8 @@ extension RecommendationFeedItemsCollectionViewController {
                 else {
                     preconditionFailure("Failed to find expected data source item")
                 }
-
+                
+                recommendationCell.delegate = self
                 recommendationCell.configure(withItem: recommendation)
 
                 return recommendationCell
@@ -314,5 +315,37 @@ extension RecommendationFeedItemsCollectionViewController {
         case .recommendation(let recommendation):
             self.onRecommendationCellSelected(recommendation.itemID)
         }
+    }
+}
+
+
+extension RecommendationFeedItemsCollectionViewController : PodcastEpisodeRowDelegate {
+   
+    func shouldDeleteFile(episode: PodcastEpisode, cell: UITableViewCell) {
+        /*
+        if let indexPath = tableView.indexPath(for: cell) {
+            delegate?.deleteTapped(indexPath, episode: episode)
+        }
+        */
+    }
+    
+    func shouldStartDownloading(episode: PodcastEpisode, cell: UITableViewCell) {
+        /*
+        if let indexPath = tableView.indexPath(for: cell){
+            delegate?.downloadTapped(indexPath, episode: episode)
+        }
+        */
+    }
+    
+    func shouldShare(episode: PodcastEpisode) {
+        //delegate?.shareTapped(episode: episode)
+    }
+    
+    func shouldShowMore(episode: PodcastEpisode, cell: UITableViewCell){
+        /*
+        if let indexPath = tableView.indexPath(for: cell) {
+            delegate?.showEpisodeDetails(episode: episode,indexPath: indexPath)
+        }
+        */
     }
 }

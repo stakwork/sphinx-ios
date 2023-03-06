@@ -83,7 +83,7 @@ class UnifiedEpisodeView : UIView {
         setProgress()
         
         if let playedStatus = episode.wasPlayed,
-        playedStatus == true{
+           playedStatus == true{
             setUIAsPlayed()
         }
         else if let valid_string = episode.getTimeString(type: .remaining){

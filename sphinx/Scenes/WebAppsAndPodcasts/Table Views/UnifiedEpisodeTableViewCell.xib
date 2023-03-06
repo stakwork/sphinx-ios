@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_12" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -22,7 +22,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="UnifiedEpisodeTableViewCell" rowHeight="354" id="KGk-i7-Jjw" customClass="UnifiedEpisodeTableViewCell" customModule="sphinx" customModuleProvider="target">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="UnifiedEpisodeTableViewCell" rowHeight="354" id="KGk-i7-Jjw" customClass="UnifiedEpisodeTableViewCell" customModule="sphinx" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="325" height="198"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
@@ -64,13 +64,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" horizontalCompressionResistancePriority="253" text="3 Apr 2022" textAlignment="natural" lineBreakMode="middleTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="32w-Qa-JEp">
-                                <rect key="frame" x="43" y="119" width="58.666666666666657" height="16"/>
+                                <rect key="frame" x="43" y="119" width="58.5" height="16"/>
                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="12"/>
                                 <color key="textColor" name="Text"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" horizontalCompressionResistancePriority="253" text="Played" textAlignment="natural" lineBreakMode="middleTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rSJ-zB-jwJ">
-                                <rect key="frame" x="117.66666666666669" y="119" width="78" height="16"/>
+                                <rect key="frame" x="117.5" y="119" width="78" height="16"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="78" id="26W-Va-E66"/>
                                 </constraints>
@@ -142,7 +142,7 @@
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JAL-OQ-F9R">
-                                <rect key="frame" x="105.66666666666667" y="125" width="4" height="4"/>
+                                <rect key="frame" x="105.5" y="125" width="4" height="4"/>
                                 <color key="backgroundColor" name="SecondaryText"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="4" id="4of-ih-qBL"/>
@@ -150,7 +150,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dk2-1X-nwo">
-                                <rect key="frame" x="210.66666666666666" y="125" width="40" height="4"/>
+                                <rect key="frame" x="210.5" y="125" width="40" height="4"/>
                                 <color key="backgroundColor" name="SecondaryText"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="4" id="eTC-Fh-Caw"/>
@@ -158,14 +158,14 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mPL-Hp-VI9">
-                                <rect key="frame" x="210.66666666666666" y="125" width="20" height="4"/>
+                                <rect key="frame" x="210.5" y="125" width="20" height="4"/>
                                 <color key="backgroundColor" name="ReceivedIcon"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="20" id="9zq-6z-ekh"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rtI-E6-18o">
-                                <rect key="frame" x="18" y="164.66666666666666" width="27" height="13"/>
+                                <rect key="frame" x="18" y="164.5" width="27" height="13"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="13" id="0sA-KG-k09"/>
                                 </constraints>
@@ -174,7 +174,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="didPlayIndicator" translatesAutoresizingMaskIntoConstraints="NO" id="SaU-qb-N9y">
-                                <rect key="frame" x="159.66666666666666" y="121" width="12" height="12"/>
+                                <rect key="frame" x="159.5" y="121" width="12" height="12"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="12" id="0Vv-Ws-qnA"/>
                                     <constraint firstAttribute="width" constant="12" id="CbS-iz-c34"/>

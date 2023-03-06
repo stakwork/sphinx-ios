@@ -48,6 +48,10 @@ class CommonFileTableViewCell : CommonReplyTableViewCell {
         })
     }
     
+    override func getBubbbleView() -> UIView? {
+        return messageBubbleView
+    }
+    
     func getMediaItemInfo(messageRow: TransactionMessageRow) {
         guard let message = messageRow.transactionMessage else {
             return
@@ -111,7 +115,8 @@ class CommonFileTableViewCell : CommonReplyTableViewCell {
             let (_, bubbleSize) = MessageBubbleView.getLabelAndBubbleSize(messageRow: messageRow, maxBubbleWidth: bubbleWidth, bubbleMargin: margin)
             height = bubbleHeight + bubbleSize.height
         } else {
-            height = bubbleHeight
+            let bottomBubblePadding = messageRow.isBoosted ? Constants.kReactionsViewHeight : 0
+            height = bubbleHeight + bottomBubblePadding
         }
 
         return height + CommonChatTableViewCell.kBubbleTopMargin + CommonChatTableViewCell.kBubbleBottomMargin + payButtonHeight + replyTopPadding

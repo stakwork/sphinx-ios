@@ -46,7 +46,8 @@ class FileReceivedTableViewCell: CommonFileTableViewCell, MessageRowProtocol {
         }
         
         let hasContent = messageRow.transactionMessage.hasMessageContent()
-        let bubbleSize = CGSize(width: CommonFileTableViewCell.kFileBubbleWidth, height: CommonFileTableViewCell.kFileBubbleHeight)
+        let bottomBubblePadding = messageRow.isBoosted ? Constants.kReactionsViewHeight : 0
+        let bubbleSize = CGSize(width: CommonFileTableViewCell.kFileBubbleWidth, height: CommonFileTableViewCell.kFileBubbleHeight + bottomBubblePadding)
         bubbleView.showIncomingFileBubble(messageRow: messageRow, size: bubbleSize)
         configureReplyBubble(bubbleView: bubbleView, bubbleSize: bubbleSize, incoming: true)
         

@@ -9,7 +9,10 @@
 import Foundation
 import UIKit
 
-class UnifiedEpisodeView : UIView{
+class UnifiedEpisodeView : UIView {
+    
+    @IBOutlet var contentView: UIView!
+    
     @IBOutlet weak var episodeLabel: UILabel!
     @IBOutlet weak var playArrow: UILabel!
     @IBOutlet weak var episodeImageView: UIImageView!
@@ -28,6 +31,23 @@ class UnifiedEpisodeView : UIView{
     @IBOutlet weak var progressView: UIView!
     @IBOutlet weak var downloadProgressLabel: UILabel!
     @IBOutlet weak var didPlayImageView: UIImageView!
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setup()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setup()
+    }
+    
+    private func setup() {
+        Bundle.main.loadNibNamed("UnifiedEpisodeView", owner: self, options: nil)
+        addSubview(contentView)
+        contentView.frame = self.bounds
+        contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+    }
     
     var episode: PodcastEpisode! = nil
     weak var delegate: PodcastEpisodeRowDelegate?

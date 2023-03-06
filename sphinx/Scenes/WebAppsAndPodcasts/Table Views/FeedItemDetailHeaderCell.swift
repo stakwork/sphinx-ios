@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FeedItemDetailHeaderCellQ123: UITableViewCell {
+class FeedItemDetailHeaderCell: UITableViewCell {
     
     
     @IBOutlet weak var feedItemImageView: UIImageView!

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -33,14 +33,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LVT-UQ-uni" customClass="ChatListHeader" customModule="sphinx" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="44" width="414" height="50"/>
+                                <rect key="frame" x="0.0" y="48" width="414" height="50"/>
                                 <color key="backgroundColor" name="DashboardHeader"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="Jth-A8-d4f"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yxo-is-Yxg" userLabel="Search Bar Container">
-                                <rect key="frame" x="0.0" y="142" width="414" height="70"/>
+                                <rect key="frame" x="0.0" y="146" width="414" height="70"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="52N-Az-4on">
                                         <rect key="frame" x="16" y="16" width="383" height="44"/>
@@ -115,14 +115,14 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="875-dS-sJM" customClass="CustomSegmentedControl" customModule="sphinx" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="94" width="414" height="48"/>
+                                <rect key="frame" x="0.0" y="98" width="414" height="48"/>
                                 <color key="backgroundColor" name="DashboardHeader"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="6E0-rD-gcM"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wUN-0d-ubm" userLabel="Main Content Container View">
-                                <rect key="frame" x="0.0" y="212" width="414" height="684"/>
+                                <rect key="frame" x="0.0" y="216" width="414" height="680"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XIu-2C-BO6" customClass="CustomDismissibleView" customModule="sphinx" customModuleProvider="target">
@@ -267,16 +267,16 @@
             </objects>
             <point key="canvasLocation" x="-4599" y="1004"/>
         </scene>
-        <!--Feed Item DetailVCQ12023-->
+        <!--Feed Item DetailVC-->
         <scene sceneID="hqp-Zh-7Xy">
             <objects>
-                <viewController storyboardIdentifier="FeedItemDetailVC_Q12023" id="xz1-Uu-QaO" customClass="FeedItemDetailVC_Q12023" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FeedItemDetailVC" id="xz1-Uu-QaO" customClass="FeedItemDetailVC" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="b2J-Dv-N32">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Et-PE-60b">
-                                <rect key="frame" x="0.0" y="44" width="414" height="852"/>
+                                <rect key="frame" x="0.0" y="48" width="414" height="848"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="37K-dr-aGI">
                                         <rect key="frame" x="0.0" y="40" width="414" height="580"/>
@@ -287,7 +287,7 @@
                                         <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Re9-Eb-2Gh">
-                                        <rect key="frame" x="0.0" y="620" width="414" height="198"/>
+                                        <rect key="frame" x="0.0" y="620" width="414" height="194"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="CLOSE">
                                             <fontDescription key="titleFontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="12"/>
@@ -595,7 +595,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="saw-em-W2w">
-                                <rect key="frame" x="112.5" y="94" width="189.5" height="240.5"/>
+                                <rect key="frame" x="112.5" y="98" width="189.5" height="240.5"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="podcastIndexLogo" translatesAutoresizingMaskIntoConstraints="NO" id="fF4-Ol-xgj">
                                         <rect key="frame" x="56.5" y="0.0" width="76" height="76"/>

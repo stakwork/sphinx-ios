@@ -1,5 +1,5 @@
 //
-//  PodcastDetailViewQ12023.swift
+//  PodcastDetailView.swift
 //  sphinx
 //
 //  Created by James Carucci on 3/2/23.
@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class FeedItemDetailVC_Q12023 : UIViewController{
+class FeedItemDetailVC : UIViewController{
     
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
@@ -20,8 +20,8 @@ class FeedItemDetailVC_Q12023 : UIViewController{
     var indexPath : IndexPath?
     
     
-    lazy var vm : FeedItemDetailVM_Q12023 = {
-        return FeedItemDetailVM_Q12023(
+    lazy var vm : FeedItemDetailVM = {
+        return FeedItemDetailVM(
             vc: self,
             tableView: self.tableView,
             episode:self.episode!,
@@ -34,8 +34,8 @@ class FeedItemDetailVC_Q12023 : UIViewController{
         episode:PodcastEpisode,
         delegate: PodcastEpisodesDSDelegate,
         indexPath: IndexPath
-    ) -> FeedItemDetailVC_Q12023 {
-        let viewController = StoryboardScene.Dashboard.feedItemDetailVC_Q12023.instantiate()
+    ) -> FeedItemDetailVC {
+        let viewController = StoryboardScene.Dashboard.feedItemDetailVC.instantiate()
         viewController.episode = episode
         viewController.delegateReference = delegate
         viewController.indexPath = indexPath

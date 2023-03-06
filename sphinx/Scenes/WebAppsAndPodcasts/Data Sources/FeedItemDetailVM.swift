@@ -1,5 +1,5 @@
 //
-//  FeedItemDetailVM_Q12023.swift
+//  FeedItemDetailVM.swift
 //  sphinx
 //
 //  Created by James Carucci on 3/2/23.
@@ -9,10 +9,10 @@
 import Foundation
 import UIKit
 
-class FeedItemDetailVM_Q12023 : NSObject{
+class FeedItemDetailVM : NSObject{
     
     var delegate: PodcastEpisodesDSDelegate?
-    weak var vc: FeedItemDetailVC_Q12023?
+    weak var vc: FeedItemDetailVC?
     weak var tableView:UITableView?
     var episode : PodcastEpisode
     var indexPath : IndexPath
@@ -23,7 +23,7 @@ class FeedItemDetailVM_Q12023 : NSObject{
         .markAsPlayed
     ]
     
-    init(vc:FeedItemDetailVC_Q12023,
+    init(vc:FeedItemDetailVC,
          tableView:UITableView,
          episode:PodcastEpisode,
          delegate:PodcastEpisodesDSDelegate,
@@ -36,7 +36,7 @@ class FeedItemDetailVM_Q12023 : NSObject{
     }
     
     func setupTableView(){
-        tableView?.register(UINib(nibName: "FeedItemDetailHeaderCellQ123", bundle: nil), forCellReuseIdentifier: FeedItemDetailHeaderCellQ123.reuseID)
+        tableView?.register(UINib(nibName: "FeedItemDetailHeaderCellQ123", bundle: nil), forCellReuseIdentifier: FeedItemDetailHeaderCell.reuseID)
         tableView?.register(UINib(nibName: "FeedItemDetailActionCell", bundle: nil), forCellReuseIdentifier: "FeedItemDetailActionCell")
         
         tableView?.delegate = self
@@ -78,7 +78,7 @@ class FeedItemDetailVM_Q12023 : NSObject{
     
 }
 
-extension FeedItemDetailVM_Q12023 : UITableViewDelegate, UITableViewDataSource{
+extension FeedItemDetailVM : UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1 + actionsList.count
     }
@@ -86,9 +86,9 @@ extension FeedItemDetailVM_Q12023 : UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row  == 0{
             let cell = tableView.dequeueReusableCell(
-                withIdentifier: FeedItemDetailHeaderCellQ123.reuseID,
+                withIdentifier: FeedItemDetailHeaderCell.reuseID,
                 for: indexPath
-            ) as! FeedItemDetailHeaderCellQ123
+            ) as! FeedItemDetailHeaderCell
             cell.configureView(episode: episode)
             return cell
         }

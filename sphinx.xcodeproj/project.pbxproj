@@ -631,7 +631,7 @@
 		CE3D8CA129B0FF7100EDB637 /* FeedItemDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3D8CA029B0FF7100EDB637 /* FeedItemDetailVC.swift */; };
 		CE3D8CA329B10FA500EDB637 /* FeedItemDetailVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3D8CA229B10FA500EDB637 /* FeedItemDetailVM.swift */; };
 		CE3D8CAC29B1124E00EDB637 /* FeedItemDetailHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3D8CAA29B1124E00EDB637 /* FeedItemDetailHeaderCell.swift */; };
-		CE3D8CAD29B1124E00EDB637 /* FeedItemDetailHeaderCellQ123.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE3D8CAB29B1124E00EDB637 /* FeedItemDetailHeaderCellQ123.xib */; };
+		CE3D8CAD29B1124E00EDB637 /* FeedItemDetailHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE3D8CAB29B1124E00EDB637 /* FeedItemDetailHeaderCell.xib */; };
 		CE3D8CB029B1471900EDB637 /* FeedItemDetailActionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3D8CAE29B1471900EDB637 /* FeedItemDetailActionCell.swift */; };
 		CE3D8CB129B1471900EDB637 /* FeedItemDetailActionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE3D8CAF29B1471900EDB637 /* FeedItemDetailActionCell.xib */; };
 		CE49E13229ACEFAA006D3CCE /* VoIPPushMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE49E13129ACEFAA006D3CCE /* VoIPPushMessage.swift */; };
@@ -1564,7 +1564,7 @@
 		CE3D8CA029B0FF7100EDB637 /* FeedItemDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItemDetailVC.swift; sourceTree = "<group>"; };
 		CE3D8CA229B10FA500EDB637 /* FeedItemDetailVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItemDetailVM.swift; sourceTree = "<group>"; };
 		CE3D8CAA29B1124E00EDB637 /* FeedItemDetailHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItemDetailHeaderCell.swift; sourceTree = "<group>"; };
-		CE3D8CAB29B1124E00EDB637 /* FeedItemDetailHeaderCellQ123.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedItemDetailHeaderCellQ123.xib; sourceTree = "<group>"; };
+		CE3D8CAB29B1124E00EDB637 /* FeedItemDetailHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedItemDetailHeaderCell.xib; sourceTree = "<group>"; };
 		CE3D8CAE29B1471900EDB637 /* FeedItemDetailActionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItemDetailActionCell.swift; sourceTree = "<group>"; };
 		CE3D8CAF29B1471900EDB637 /* FeedItemDetailActionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedItemDetailActionCell.xib; sourceTree = "<group>"; };
 		CE49E13129ACEFAA006D3CCE /* VoIPPushMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoIPPushMessage.swift; sourceTree = "<group>"; };
@@ -1795,7 +1795,7 @@
 				CE3D8CAA29B1124E00EDB637 /* FeedItemDetailHeaderCell.swift */,
 				CE3D8CAE29B1471900EDB637 /* FeedItemDetailActionCell.swift */,
 				CE3D8CAF29B1471900EDB637 /* FeedItemDetailActionCell.xib */,
-				CE3D8CAB29B1124E00EDB637 /* FeedItemDetailHeaderCellQ123.xib */,
+				CE3D8CAB29B1124E00EDB637 /* FeedItemDetailHeaderCell.xib */,
 				CEE433B129AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.xib */,
 				470396D62535D12D007F9C23 /* PodcastEpisodeTableViewCell.swift */,
 				470396D72535D12D007F9C23 /* PodcastEpisodeTableViewCell.xib */,
@@ -4342,7 +4342,7 @@
 				4797E7CF24B8F4DC00D13270 /* AppAppearenceView.xib in Resources */,
 				4797E79D24B8EEC800D13270 /* InvoiceSentTableViewCell.xib in Resources */,
 				4797E89324BCFCA200D13270 /* DeletedMessageReceivedTableViewCell.xib in Resources */,
-				CE3D8CAD29B1124E00EDB637 /* FeedItemDetailHeaderCellQ123.xib in Resources */,
+				CE3D8CAD29B1124E00EDB637 /* FeedItemDetailHeaderCell.xib in Resources */,
 				4797E76724B8E12E00D13270 /* Localizable.strings in Resources */,
 				472161D5293A681D0088B87B /* RecommendationDetailsView.xib in Resources */,
 				474FE32723F588C000C06FC8 /* VideoSentTableViewCell.xib in Resources */,

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -120,6 +120,9 @@
                     <state key="normal" title="download">
                         <color key="titleColor" name="SecondaryText"/>
                     </state>
+                    <connections>
+                        <action selector="downloadButtonTouched" destination="-1" eventType="touchUpInside" id="aGQ-Db-BZW"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleAspectFit" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7G2-Kf-jQD">
                     <rect key="frame" x="76" y="149" width="24" height="32"/>
@@ -130,6 +133,9 @@
                     <state key="normal" title="ios_share">
                         <color key="titleColor" name="SecondaryText"/>
                     </state>
+                    <connections>
+                        <action selector="shareButtonTouched" destination="-1" eventType="touchUpInside" id="ndx-sv-J96"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleAspectFit" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gcO-6R-fIP">
                     <rect key="frame" x="136" y="149" width="24" height="32"/>
@@ -140,6 +146,9 @@
                     <state key="normal" title="more_horiz">
                         <color key="titleColor" name="SecondaryText"/>
                     </state>
+                    <connections>
+                        <action selector="moreButtonTouched" destination="-1" eventType="touchUpInside" id="GSf-05-tVM"/>
+                    </connections>
                 </button>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="podcastTypeIcon" translatesAutoresizingMaskIntoConstraints="NO" id="odk-59-H2e">
                     <rect key="frame" x="16" y="119" width="16" height="16"/>

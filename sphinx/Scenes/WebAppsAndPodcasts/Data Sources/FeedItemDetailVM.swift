@@ -36,7 +36,7 @@ class FeedItemDetailVM : NSObject{
     }
     
     func setupTableView(){
-        tableView?.register(UINib(nibName: "FeedItemDetailHeaderCellQ123", bundle: nil), forCellReuseIdentifier: FeedItemDetailHeaderCell.reuseID)
+        tableView?.register(UINib(nibName: "FeedItemDetailHeaderCell", bundle: nil), forCellReuseIdentifier: FeedItemDetailHeaderCell.reuseID)
         tableView?.register(UINib(nibName: "FeedItemDetailActionCell", bundle: nil), forCellReuseIdentifier: "FeedItemDetailActionCell")
         
         tableView?.delegate = self
@@ -112,6 +112,14 @@ extension FeedItemDetailVM : UITableViewDelegate, UITableViewDataSource{
             doAction(action: action)
         }
     }
-    
-    
+    /*
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if(indexPath.row == 0){
+            return 220.0
+        }
+        else{
+            return 64.0
+        }
+    }
+    */
 }

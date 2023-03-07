@@ -16,6 +16,7 @@ class FeedItemDetailVC : UIViewController{
     @IBOutlet weak var detailView : UIView!
     
     weak var episode : PodcastEpisode?
+    weak var video: Video?
     weak var delegateReference : PodcastEpisodesDSDelegate?
     var indexPath : IndexPath?
     
@@ -42,6 +43,18 @@ class FeedItemDetailVC : UIViewController{
         return viewController
     }
     
+    static func instantiate(
+        video:Video,
+        delegate: PodcastEpisodesDSDelegate,
+        indexPath: IndexPath
+    ) -> FeedItemDetailVC {
+        let viewController = StoryboardScene.Dashboard.feedItemDetailVC.instantiate()
+        viewController.video = video
+        viewController.delegateReference = delegate
+        viewController.indexPath = indexPath
+        return viewController
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -49,6 +62,9 @@ class FeedItemDetailVC : UIViewController{
         
         if let _ = self.episode{
             vm.setupTableView()
+        }
+        else if let _ = self.video{
+            
         }
     }
     

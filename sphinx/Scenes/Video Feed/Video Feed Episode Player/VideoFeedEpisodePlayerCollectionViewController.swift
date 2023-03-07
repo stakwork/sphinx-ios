@@ -72,7 +72,7 @@ extension VideoFeedEpisodePlayerCollectionViewController {
     
 
     typealias PlayerEpisodeDetailsCell = VideoFeedEpisodePlayerCollectionViewDetailsCell
-    typealias FeedEpisodeCell = VideoFeedEpisodeCollectionViewCell
+    typealias FeedEpisodeCell = RecommendationItemWUnifiedViewCollectionViewCell
     typealias CellDataItem = DataSourceItem
     typealias DataSource = UICollectionViewDiffableDataSource<CollectionViewSection, CellDataItem>
     typealias DataSourceSnapshot = NSDiffableDataSourceSnapshot<CollectionViewSection, CellDataItem>
@@ -152,7 +152,7 @@ extension VideoFeedEpisodePlayerCollectionViewController {
 
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
-            heightDimension: .estimated(100.0)
+            heightDimension: .estimated(200.0)
         )
         
         let group = NSCollectionLayoutGroup.horizontal(
@@ -316,7 +316,8 @@ extension VideoFeedEpisodePlayerCollectionViewController {
                 }
 
                 episodeCell.configure(withVideoEpisode: videoEpisode)
-
+                episodeCell.delegate = self
+                
                 return episodeCell
             }
         }
@@ -364,6 +365,42 @@ extension VideoFeedEpisodePlayerCollectionViewController {
                 }
         }
     }
+}
+
+//MARK: Unified View Delegate
+extension VideoFeedEpisodePlayerCollectionViewController:PodcastEpisodeRowDelegate,PodcastEpisodesDSDelegate{
+    func didTapEpisodeAt(index: Int) {}
+    
+    func downloadTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {}
+    
+    func deleteTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {}
+    
+    func shouldToggleTopView(show: Bool) {}
+    
+    func showEpisodeDetails(episode: PodcastEpisode, indexPath: IndexPath) {
+        
+    }
+    
+    func shouldStartDownloading(episode: PodcastEpisode, cell: UITableViewCell) {}
+    
+    func shouldStartDownloading(episode: PodcastEpisode, cell: UICollectionViewCell) {}
+    
+    func shouldDeleteFile(episode: PodcastEpisode, cell: UITableViewCell) {}
+    
+    func shouldDeleteFile(episode: PodcastEpisode, cell: UICollectionViewCell) {}
+    
+    func shouldShowMore(episode: PodcastEpisode, cell: UICollectionViewCell) {
+        if let indexPath = collectionView.indexPath(for: cell) {
+            let vc = FeedItemDetailVC.instantiate(episode: episode, delegate: self, indexPath: indexPath)
+            self.present(vc, animated: true)
+        }
+    }
+    
+    func shouldShowMore(episode: PodcastEpisode, cell: UITableViewCell) {}
+    
+    func shouldShare(episode: PodcastEpisode) {}
+    
+    
 }
 
 

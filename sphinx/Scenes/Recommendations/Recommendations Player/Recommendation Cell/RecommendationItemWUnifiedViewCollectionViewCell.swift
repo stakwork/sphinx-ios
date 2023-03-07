@@ -24,6 +24,10 @@ class RecommendationItemWUnifiedViewCollectionViewCell: UICollectionViewCell {
             unifiedEpisodeView.configureWith(podcast: feed, and: item, download: nil, delegate: delegate, isLastRow: false, playing: false)
         }
     }
+    
+    func configure(withVideoEpisode videoEpisode: Video) {
+        unifiedEpisodeView.configure(withVideoEpisode: videoEpisode)
+    }
 }
 
 // MARK: - Static Properties

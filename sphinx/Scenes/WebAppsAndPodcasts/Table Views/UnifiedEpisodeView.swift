@@ -32,6 +32,18 @@ class UnifiedEpisodeView : UIView {
     @IBOutlet weak var downloadProgressLabel: UILabel!
     @IBOutlet weak var didPlayImageView: UIImageView!
     
+    var videoEpisode: Video! {
+        didSet {
+            DispatchQueue.main.async { [weak self] in
+                self?.updateViewsWithVideoEpisode()
+            }
+        }
+    }
+    
+    var thumbnailImageViewURL: URL? {
+        videoEpisode.thumbnailURL
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
@@ -54,6 +66,10 @@ class UnifiedEpisodeView : UIView {
     weak var presentingTableViewCell : UITableViewCell?
     weak var presentingCollectionViewCell : UICollectionViewCell?
     
+    
+    func configure(withVideoEpisode videoEpisode: Video) {
+        self.videoEpisode = videoEpisode
+    }
     
     func configureWith(podcast: PodcastFeed?,
                        and episode: PodcastEpisode,
@@ -134,6 +150,40 @@ class UnifiedEpisodeView : UIView {
         roundCorners()
     }
     
+    private func updateViewsWithVideoEpisode() {
+        if let id = videoEpisode.videoID as? String,
+           let _ = id.range(of: "yt:"){
+            mediaTypeImageView.image = #imageLiteral(resourceName: "youtubeVideoTypeIcon")
+        }
+        else{
+            mediaTypeImageView.isHidden = true
+        }
+        timeRemainingLabel.isHidden = true
+        downloadButton.isHidden = true
+        progressView.isHidden = true
+        durationView.isHidden = true
+        downloadProgressLabel.isHidden = true
+        playArrow.makeCircular()
+        
+        episodeImageView.sd_cancelCurrentImageLoad()
+        
+        if let imageURL = thumbnailImageViewURL {
+            episodeImageView.sd_setImage(
+                with: imageURL,
+                placeholderImage: UIImage(named: "videoPlaceholder"),
+                options: [.highPriority],
+                progress: nil
+            )
+        } else {
+            // 📝 TODO:  Use a video placeholder here
+            episodeImageView.image = UIImage(named: "videoPlaceholder")
+        }
+
+        descriptionLabel.text = videoEpisode.videoDescription
+        episodeLabel.text = videoEpisode.titleForDisplay
+        dateLabel.text = videoEpisode.publishDateText
+    }
+    
     func setUIAsPlayed(){
         timeRemainingLabel.text = "Played"
         didPlayImageView.isHidden = false
@@ -206,7 +256,12 @@ class UnifiedEpisodeView : UIView {
     }
     
     @IBAction func shareButtonTouched(){
-        self.delegate?.shouldShare(episode: episode)
+        if let video = videoEpisode{
+            
+        }
+        else{
+            self.delegate?.shouldShare(episode: episode)
+        }
     }
     
     @IBAction func moreButtonTouched(){

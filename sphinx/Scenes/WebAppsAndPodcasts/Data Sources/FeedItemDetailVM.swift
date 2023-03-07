@@ -14,11 +14,12 @@ class FeedItemDetailVM : NSObject{
     var delegate: PodcastEpisodesDSDelegate?
     weak var vc: FeedItemDetailVC?
     weak var tableView:UITableView?
-    var episode : PodcastEpisode
+    var episode : PodcastEpisode?
+    var video: Video?
     var indexPath : IndexPath
     
     func getActionsList() -> [FeedItemActionType]{
-        if(episode.feed?.isRecommendationsPodcast ?? false){
+        if(episode?.feed?.isRecommendationsPodcast ?? false){
             return [
                 .share,
                 .copyLink,
@@ -47,6 +48,18 @@ class FeedItemDetailVM : NSObject{
         self.indexPath = indexPath
     }
     
+    init(vc:FeedItemDetailVC,
+         tableView:UITableView,
+         video:Video,
+         delegate:PodcastEpisodesDSDelegate,
+         indexPath:IndexPath){
+        self.vc = vc
+        self.tableView = tableView
+        self.video = video
+        self.delegate = delegate
+        self.indexPath = indexPath
+    }
+    
     func setupTableView(){
         tableView?.register(UINib(nibName: "FeedItemDetailHeaderCell", bundle: nil), forCellReuseIdentifier: FeedItemDetailHeaderCell.reuseID)
         tableView?.register(UINib(nibName: "FeedItemDetailActionCell", bundle: nil), forCellReuseIdentifier: "FeedItemDetailActionCell")
@@ -63,34 +76,44 @@ class FeedItemDetailVM : NSObject{
         switch(action){
         case .download:
             vc?.dismiss(animated: true)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
-                self.delegate?.downloadTapped(self.indexPath, episode: self.episode)
-            })
+            if let episode = episode{
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+                    self.delegate?.downloadTapped(self.indexPath, episode: episode)
+                })
+            }
             break
         case .markAsPlayed:
             vc?.dismiss(animated: true)
-            episode.wasPlayed = true
-            NewMessageBubbleHelper().showGenericMessageView(text: "Marking episode as played!")
-            if let delegate = delegate as? NewPodcastPlayerViewController{
-                delegate.reload(indexPath.row)
+            if let episode = episode{
+                episode.wasPlayed = true
+                NewMessageBubbleHelper().showGenericMessageView(text: "Marking episode as played!")
+                if let delegate = delegate as? NewPodcastPlayerViewController{
+                    delegate.reload(indexPath.row)
+                }
+                else if let delegate = delegate as? RecommendationFeedItemsCollectionViewController{
+                    delegate.configureDataSource(for: delegate.collectionView)
+                }
             }
-            else if let delegate = delegate as? RecommendationFeedItemsCollectionViewController{
-                delegate.configureDataSource(for: delegate.collectionView)
-            }
+            
             break
         case .copyLink:
-            if let link = episode.linkURLPath{
-                ClipboardHelper.copyToClipboard(text: link)
+            if let episode = episode{
+                if let link = episode.linkURLPath{
+                    ClipboardHelper.copyToClipboard(text: link)
+                }
+                else{
+                    NewMessageBubbleHelper().showGenericMessageView(text: "Error copying link.")
+                }
             }
-            else{
-                NewMessageBubbleHelper().showGenericMessageView(text: "Error copying link.")
-            }
+            
             break
         case .share:
-            vc?.dismiss(animated: true)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
-                self.delegate?.shareTapped(episode: self.episode)
-            })
+            if let episode = episode{
+                vc?.dismiss(animated: true)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+                    self.delegate?.shareTapped(episode: episode)
+                })
+            }
             break
         }
     }
@@ -108,7 +131,13 @@ extension FeedItemDetailVM : UITableViewDelegate, UITableViewDataSource{
                 withIdentifier: FeedItemDetailHeaderCell.reuseID,
                 for: indexPath
             ) as! FeedItemDetailHeaderCell
-            cell.configureView(episode: episode)
+            if let episode = episode{
+                cell.configureView(episode: episode)
+            }
+            else if let video = video{
+                
+            }
+            
             return cell
         }
         else{

@@ -53,6 +53,10 @@ class FeedItemDetailVM : NSObject{
         
         tableView?.delegate = self
         tableView?.dataSource = self
+        
+        DelayPerformedHelper.performAfterDelay(seconds: 0.1, completion: {
+            self.tableView?.scrollToBottom()
+        })
     }
     
     func doAction(action:FeedItemActionType){

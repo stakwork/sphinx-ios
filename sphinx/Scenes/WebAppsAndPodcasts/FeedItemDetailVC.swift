@@ -49,7 +49,6 @@ class FeedItemDetailVC : UIViewController{
         
         if let _ = self.episode{
             vm.setupTableView()
-            tableView.reloadData()
         }
     }
     

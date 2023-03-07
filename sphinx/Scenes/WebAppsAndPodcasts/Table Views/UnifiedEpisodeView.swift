@@ -163,6 +163,7 @@ class UnifiedEpisodeView : UIView {
         progressView.isHidden = true
         durationView.isHidden = true
         downloadProgressLabel.isHidden = true
+        didPlayImageView.isHidden = true
         playArrow.makeCircular()
         
         episodeImageView.sd_cancelCurrentImageLoad()
@@ -257,7 +258,7 @@ class UnifiedEpisodeView : UIView {
     
     @IBAction func shareButtonTouched(){
         if let video = videoEpisode{
-            
+            self.delegate?.shouldShare(video: video)
         }
         else{
             self.delegate?.shouldShare(episode: episode)
@@ -271,7 +272,13 @@ class UnifiedEpisodeView : UIView {
         }
         else if let delegate = delegate,
                 let presentingCollectionViewCell = presentingCollectionViewCell{
-            delegate.shouldShowMore(episode: episode, cell: presentingCollectionViewCell)
+            if let episode = episode{
+                delegate.shouldShowMore(episode: episode, cell: presentingCollectionViewCell)
+            }
+            else if let video = videoEpisode{
+                delegate.shouldShowMore(video: video, cell: presentingCollectionViewCell)
+            }
+            
         }
     }
     

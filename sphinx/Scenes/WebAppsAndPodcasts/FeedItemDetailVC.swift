@@ -22,13 +22,25 @@ class FeedItemDetailVC : UIViewController{
     
     
     lazy var vm : FeedItemDetailVM = {
-        return FeedItemDetailVM(
-            vc: self,
-            tableView: self.tableView,
-            episode:self.episode!,
-            delegate: delegateReference!,
-            indexPath:indexPath!
-        )
+        if let episode = episode{
+            return FeedItemDetailVM(
+                vc: self,
+                tableView: self.tableView,
+                episode:self.episode!,
+                delegate: delegateReference!,
+                indexPath:indexPath!
+            )
+        }
+        else{
+            return FeedItemDetailVM(
+                vc: self,
+                tableView: self.tableView,
+                video:self.video!,
+                delegate: delegateReference!,
+                indexPath:indexPath!
+            )
+        }
+        
     }()
     
     static func instantiate(
@@ -64,7 +76,7 @@ class FeedItemDetailVC : UIViewController{
             vm.setupTableView()
         }
         else if let _ = self.video{
-            
+            vm.setupTableView()
         }
     }
     

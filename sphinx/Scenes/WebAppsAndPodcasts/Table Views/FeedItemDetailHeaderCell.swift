@@ -54,14 +54,26 @@ class FeedItemDetailHeaderCell: UITableViewCell {
             sourceTypeImageView.image = #imageLiteral(resourceName: "podcastTypeIcon")
             sourceTypeNameLabel.text = "Podcast"
         }
+    }
+    
+    func configureView(video:Video){
+        self.backgroundColor = .clear
+        self.contentView.backgroundColor = .clear
+        dotView1.makeCircular()
+        dotView2.makeCircular()
         
-        
-        for view in self.subviews{
-            view.backgroundColor = .clear
-        }
-        
-        for view in contentView.subviews{
-            view.backgroundColor = .clear
+        feedNameLabel.text = video.videoFeed?.title
+        feedSubtitleLabel.text = video.title
+        feedItemImageView.sd_setImage(with: video.thumbnailURL)
+        feedItemImageView.layer.cornerRadius = 10.0
+        sourceTypeImageView.layer.cornerRadius = 3.0
+        dateLabel.text = video.publishDateText
+        timeRemainingLabel.isHidden = true
+        //timeRemainingLabel.text = episode.getTimeString(type: .total)
+        if let id = video.videoID as? String,
+           let _ = id.range(of: "yt:"){
+            sourceTypeImageView.image = #imageLiteral(resourceName: "youtubeVideoTypeIcon")
+            sourceTypeNameLabel.text = "YouTube"
         }
     }
     

@@ -130,6 +130,10 @@ extension PodcastEpisodesDataSource : UIScrollViewDelegate {
 }
 
 extension PodcastEpisodesDataSource : PodcastEpisodeRowDelegate {
+    func shouldShowMore(video: Video, cell: UICollectionViewCell) {}
+    
+    func shouldShare(video: Video) {}
+    
     func shouldStartDownloading(episode: PodcastEpisode, cell: UICollectionViewCell) {}
     
     func shouldDeleteFile(episode: PodcastEpisode, cell: UICollectionViewCell) {}

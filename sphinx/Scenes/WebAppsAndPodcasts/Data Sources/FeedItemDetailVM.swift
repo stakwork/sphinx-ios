@@ -19,6 +19,12 @@ class FeedItemDetailVM : NSObject{
     var indexPath : IndexPath
     
     func getActionsList() -> [FeedItemActionType]{
+        if(video != nil){
+            return [
+                .share,
+                .copyLink
+            ]
+        }
         if(episode?.feed?.isRecommendationsPodcast ?? false){
             return [
                 .share,
@@ -105,6 +111,14 @@ class FeedItemDetailVM : NSObject{
                     NewMessageBubbleHelper().showGenericMessageView(text: "Error copying link.")
                 }
             }
+            else if let video = video{
+                if let link = video.itemURL{
+                    ClipboardHelper.copyToClipboard(text: link.absoluteString)
+                }
+                else{
+                    NewMessageBubbleHelper().showGenericMessageView(text: "Error copying link.")
+                }
+            }
             
             break
         case .share:
@@ -114,6 +128,14 @@ class FeedItemDetailVM : NSObject{
                     self.delegate?.shareTapped(episode: episode)
                 })
             }
+            else if let episode = video,
+                let delegate = delegate as? VideoFeedEpisodePlayerCollectionViewController{
+                vc?.dismiss(animated: true)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+                    delegate.shareTapped(video:episode)
+                })
+            }
+            
             break
         }
     }
@@ -135,7 +157,7 @@ extension FeedItemDetailVM : UITableViewDelegate, UITableViewDataSource{
                 cell.configureView(episode: episode)
             }
             else if let video = video{
-                
+                cell.configureView(video: video)
             }
             
             return cell

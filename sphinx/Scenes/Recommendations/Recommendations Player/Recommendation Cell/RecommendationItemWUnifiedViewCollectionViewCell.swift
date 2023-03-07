@@ -25,8 +25,10 @@ class RecommendationItemWUnifiedViewCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    func configure(withVideoEpisode videoEpisode: Video) {
+    func configure(withVideoEpisode videoEpisode: Video, delegate: PodcastEpisodeRowDelegate) {
         unifiedEpisodeView.configure(withVideoEpisode: videoEpisode)
+        unifiedEpisodeView.delegate = delegate
+        unifiedEpisodeView.presentingCollectionViewCell = self
     }
 }
 

@@ -321,17 +321,22 @@ extension RecommendationFeedItemsCollectionViewController {
 
 
 extension RecommendationFeedItemsCollectionViewController : PodcastEpisodeRowDelegate {
+    func shouldShare(video: Video) {}
+    
+    func shouldShowMore(video: Video, cell: UICollectionViewCell) {
+        if let indexPath = collectionView.indexPath(for: cell){
+            let vc = FeedItemDetailVC.instantiate(video: video, delegate: self, indexPath: indexPath)
+            self.present(vc, animated: true)
+        }
+    }
+    
     func shouldStartDownloading(episode: PodcastEpisode, cell: UICollectionViewCell) {
         downloadService.startDownload(episode)
     }
     
     func shouldDeleteFile(episode: PodcastEpisode, cell: UICollectionViewCell) {}
     
-    func shouldShowMore(episode: PodcastEpisode, cell: UICollectionViewCell) {
-        if let indexPath = collectionView.indexPath(for: cell){
-            showEpisodeDetails(episode: episode, indexPath: indexPath)
-        }
-    }
+    func shouldShowMore(episode: PodcastEpisode, cell: UICollectionViewCell) {}
    
     func shouldDeleteFile(episode: PodcastEpisode, cell: UITableViewCell) {}
     
@@ -345,26 +350,15 @@ extension RecommendationFeedItemsCollectionViewController : PodcastEpisodeRowDel
 }
 
 extension RecommendationFeedItemsCollectionViewController : PodcastEpisodesDSDelegate{
-    func didTapEpisodeAt(index: Int) {
-        
-    }
+    func didTapEpisodeAt(index: Int) {}
     
     func downloadTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {
         downloadService.startDownload(episode)
     }
     
-    func deleteTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {
-        
-    }
-    
-    func shouldToggleTopView(show: Bool) {
-        
-    }
-    
-    func showEpisodeDetails(episode: PodcastEpisode,indexPath:IndexPath) {
-        let vc = FeedItemDetailVC.instantiate(episode: episode, delegate: self, indexPath: indexPath)
-        self.present(vc, animated: true)
-    }
+    func deleteTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {}
+    func shouldToggleTopView(show: Bool) {}
+    func showEpisodeDetails(episode: PodcastEpisode,indexPath:IndexPath) {}
     
     
 }

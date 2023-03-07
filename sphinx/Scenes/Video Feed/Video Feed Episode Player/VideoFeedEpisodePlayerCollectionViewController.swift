@@ -315,8 +315,7 @@ extension VideoFeedEpisodePlayerCollectionViewController {
                     preconditionFailure("Failed to find expected data source item")
                 }
 
-                episodeCell.configure(withVideoEpisode: videoEpisode)
-                episodeCell.delegate = self
+                episodeCell.configure(withVideoEpisode: videoEpisode, delegate: self)
                 
                 return episodeCell
             }
@@ -369,6 +368,10 @@ extension VideoFeedEpisodePlayerCollectionViewController {
 
 //MARK: Unified View Delegate
 extension VideoFeedEpisodePlayerCollectionViewController:PodcastEpisodeRowDelegate,PodcastEpisodesDSDelegate{
+    func shouldShare(video: Video) {
+        self.shareTapped(video: video)
+    }
+    
     func didTapEpisodeAt(index: Int) {}
     
     func downloadTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {}
@@ -392,6 +395,13 @@ extension VideoFeedEpisodePlayerCollectionViewController:PodcastEpisodeRowDelega
     func shouldShowMore(episode: PodcastEpisode, cell: UICollectionViewCell) {
         if let indexPath = collectionView.indexPath(for: cell) {
             let vc = FeedItemDetailVC.instantiate(episode: episode, delegate: self, indexPath: indexPath)
+            self.present(vc, animated: true)
+        }
+    }
+    
+    func shouldShowMore(video: Video, cell: UICollectionViewCell) {
+        if let indexPath = collectionView.indexPath(for: cell) {
+            let vc = FeedItemDetailVC.instantiate(video: video, delegate: self, indexPath: indexPath)
             self.present(vc, animated: true)
         }
     }

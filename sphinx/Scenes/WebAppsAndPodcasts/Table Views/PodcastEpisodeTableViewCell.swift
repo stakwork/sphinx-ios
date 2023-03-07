@@ -14,8 +14,10 @@ protocol PodcastEpisodeRowDelegate : class {
     func shouldDeleteFile(episode: PodcastEpisode, cell: UITableViewCell)
     func shouldDeleteFile(episode: PodcastEpisode, cell: UICollectionViewCell)
     func shouldShowMore(episode: PodcastEpisode,cell:UICollectionViewCell)
+    func shouldShowMore(video:Video,cell:UICollectionViewCell)
     func shouldShowMore(episode: PodcastEpisode,cell:UITableViewCell)
     func shouldShare(episode: PodcastEpisode)
+    func shouldShare(video:Video)
 }
 
 class PodcastEpisodeTableViewCell: SwipableCell {

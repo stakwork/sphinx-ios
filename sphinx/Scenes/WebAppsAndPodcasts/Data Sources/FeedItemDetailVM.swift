@@ -36,11 +36,15 @@ class FeedItemDetailVM : NSObject{
     }
     
     func setupTableView(){
-        tableView?.register(UINib(nibName: "FeedItemDetailHeaderCellQ123", bundle: nil), forCellReuseIdentifier: FeedItemDetailHeaderCell.reuseID)
+        tableView?.register(UINib(nibName: "FeedItemDetailHeaderCell", bundle: nil), forCellReuseIdentifier: FeedItemDetailHeaderCell.reuseID)
         tableView?.register(UINib(nibName: "FeedItemDetailActionCell", bundle: nil), forCellReuseIdentifier: "FeedItemDetailActionCell")
         
         tableView?.delegate = self
         tableView?.dataSource = self
+        
+        DelayPerformedHelper.performAfterDelay(seconds: 0.1, completion: {
+            self.tableView?.scrollToBottom()
+        })
     }
     
     func doAction(action:FeedItemActionType){

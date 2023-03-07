@@ -1,5 +1,5 @@
 //
-//  FeedItemDetailHeaderCellQ123.swift
+//  FeedItemDetailHeaderCell.swift
 //  sphinx
 //
 //  Created by James Carucci on 3/2/23.
@@ -21,7 +21,7 @@ class FeedItemDetailHeaderCell: UITableViewCell {
     @IBOutlet weak var dotView1: UIView!
     @IBOutlet weak var dotView2: UIView!
     
-    static let reuseID = "FeedItemDetailHeaderCellQ123"
+    static let reuseID = "FeedItemDetailHeaderCell"
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

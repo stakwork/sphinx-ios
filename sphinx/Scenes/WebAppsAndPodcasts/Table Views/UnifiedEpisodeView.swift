@@ -77,8 +77,12 @@ class UnifiedEpisodeView : UIView {
         
         dotView.makeCircular()
         
-        if(episode.type == "youtube"){
+        if(episode.type == "youtube") {
             mediaTypeImageView.image = #imageLiteral(resourceName: "youtubeVideoTypeIcon")
+            downloadButton.isHidden = true
+        }
+        else if let feed = episode.feed,
+                feed.isRecommendationsPodcast{
             downloadButton.isHidden = true
         }
         else{
@@ -147,12 +151,9 @@ class UnifiedEpisodeView : UIView {
     func setProgress(){
         let fullWidth = durationWidthConstraint.constant
         if let feed = episode.feed,
-           feed.feedID == "Recommendations-Feed",
-           let valid_time = episode.clipStartTime,
-           let valid_duration = episode.clipEndTime{
-            let percentage = Float(valid_time) / Float(valid_duration)
-            let newProgressWidth = (percentage * Float(fullWidth))
-            progressWidthConstraint.constant = CGFloat(newProgressWidth)
+           feed.isRecommendationsPodcast{
+            durationView.isHidden = true
+            progressView.isHidden = true
         }
         else if let valid_duration = episode.duration,
            let valid_time = episode.currentTime{

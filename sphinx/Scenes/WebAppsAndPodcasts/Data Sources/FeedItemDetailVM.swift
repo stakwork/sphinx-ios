@@ -18,7 +18,7 @@ class FeedItemDetailVM : NSObject{
     var indexPath : IndexPath
     
     func getActionsList() -> [FeedItemActionType]{
-        if(episode.type == "youtube"){
+        if(episode.feed?.isRecommendationsPodcast ?? false){
             return [
                 .share,
                 .copyLink,

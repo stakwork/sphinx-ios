@@ -49,7 +49,7 @@ class ChatAccessoryView: UIView {
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var viewContainer: UIView!
     @IBOutlet weak var textViewContainer: UIView!
-    @IBOutlet weak var textView: UITextView!
+    @IBOutlet weak var textView: ChatTextView!
     @IBOutlet weak var attachmentButton: UIButton!
     @IBOutlet weak var sendButtonContainer: UIView!
     @IBOutlet weak var sendButton: UIButton!
@@ -398,4 +398,25 @@ class ChatAccessoryView: UIView {
         delegate?.shouldCancelRecording?()
     }
     
+}
+
+
+class ChatTextView : UITextView{
+    override func paste(_ sender: Any?) {
+        let textAttachment = NSTextAttachment()
+        textAttachment.image = UIPasteboard.general.image
+        attributedText = NSAttributedString(attachment: textAttachment)
+        if let data = textAttachment.image?.pngData(){
+            let object = AttachmentObject(data: data , type: .Photo)
+            AttachmentsManager.sharedInstance.uploadAndSendAttachment(attachmentObject: object)
+        }
+    }
+    
+    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        if action == #selector(UIResponderStandardEditActions.paste(_:)){
+            return true
+        }
+        
+        return super.canPerformAction(action, withSender: sender)
+    }
 }

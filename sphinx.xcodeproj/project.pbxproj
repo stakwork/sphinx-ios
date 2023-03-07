@@ -619,6 +619,7 @@
 		47FE9A3C23BF751C0090913F /* ChatViewControllerAttachmentDelegateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FE9A3B23BF751C0090913F /* ChatViewControllerAttachmentDelegateExtension.swift */; };
 		47FE9A3E23C381A20090913F /* UITapGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FE9A3D23C381A20090913F /* UITapGestureRecognizer.swift */; };
 		CE0C4676296DC5E200E82353 /* ContentFeedStatus+SupportingModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0C4675296DC5E200E82353 /* ContentFeedStatus+SupportingModels.swift */; };
+		CE17231929B7BE58001DB5BA /* TopMostVCsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE17231829B7BE58001DB5BA /* TopMostVCsHelper.swift */; };
 		CE1F033F2994458B002E1079 /* ChatLeaderboardEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1F033E2994458B002E1079 /* ChatLeaderboardEntry.swift */; };
 		CE2585E929A3FE7300130641 /* JitsiIncomingCallManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2585E829A3FE7200130641 /* JitsiIncomingCallManager.swift */; };
 		CE3133AD2977747E00E91E3A /* BadgeAdminManagementListDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3133A42977747E00E91E3A /* BadgeAdminManagementListDataSource.swift */; };
@@ -1542,6 +1543,7 @@
 		47FE9A3D23C381A20090913F /* UITapGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITapGestureRecognizer.swift; sourceTree = "<group>"; };
 		487E10CEB3D07B0840A84681 /* Pods_sphinx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_sphinx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE0C4675296DC5E200E82353 /* ContentFeedStatus+SupportingModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentFeedStatus+SupportingModels.swift"; sourceTree = "<group>"; };
+		CE17231829B7BE58001DB5BA /* TopMostVCsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopMostVCsHelper.swift; sourceTree = "<group>"; };
 		CE1F033E2994458B002E1079 /* ChatLeaderboardEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLeaderboardEntry.swift; sourceTree = "<group>"; };
 		CE2585E829A3FE7200130641 /* JitsiIncomingCallManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JitsiIncomingCallManager.swift; sourceTree = "<group>"; };
 		CE3133A42977747E00E91E3A /* BadgeAdminManagementListDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeAdminManagementListDataSource.swift; sourceTree = "<group>"; };
@@ -2867,6 +2869,7 @@
 			children = (
 				475723A3247EB5C1001ADC7E /* Audio */,
 				47468FD4233162D40072124A /* AlertHelper.swift */,
+				CE17231829B7BE58001DB5BA /* TopMostVCsHelper.swift */,
 				47468FD823353E460072124A /* MediaLoader.swift */,
 				CE842DE2298B289D00620AD3 /* ShimmerView.swift */,
 				4707089124AE16DF00A98DCA /* MediaDownloader.swift */,
@@ -4906,6 +4909,7 @@
 				CE842DE3298B289D00620AD3 /* ShimmerView.swift in Sources */,
 				470F4C36257A765D00288A9B /* LinkPreviewBubbleView.swift in Sources */,
 				4707089424AE45D400A98DCA /* UserContactChatListExtension.swift in Sources */,
+				CE17231929B7BE58001DB5BA /* TopMostVCsHelper.swift in Sources */,
 				478B05CA29787B7D00A1B254 /* PodcastFeed+PlayerPodcastData.swift in Sources */,
 				471161DB291563D2008EAFF2 /* ActionTrack+FetchUtils.swift in Sources */,
 				47DAABCE2491410900EF38B0 /* MessageReplyView.swift in Sources */,

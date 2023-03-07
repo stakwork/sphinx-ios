@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -32,7 +32,7 @@
                 <outlet property="recordingTimeLabel" destination="149-Tz-oeD" id="qq1-hC-LsK"/>
                 <outlet property="sendButton" destination="Mzc-8L-8ix" id="itS-Xb-sVI"/>
                 <outlet property="sendButtonContainer" destination="xhQ-si-rOL" id="PXO-qQ-Qia"/>
-                <outlet property="textView" destination="AGK-ve-L5t" id="Mbz-mH-jsD"/>
+                <outlet property="textView" destination="AGK-ve-L5t" id="wbQ-hw-EVS"/>
                 <outlet property="textViewContainer" destination="TlK-TF-PlV" id="2u1-Xr-U9W"/>
                 <outlet property="textViewContainerHeightConstraint" destination="wrJ-lQ-LUF" id="zGR-cV-NkR"/>
                 <outlet property="textViewContainerLeftConstraint" destination="7oa-Ne-9mL" id="ycP-hp-m1M"/>
@@ -99,7 +99,7 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TlK-TF-PlV">
                             <rect key="frame" x="60" y="10" width="255" height="38"/>
                             <subviews>
-                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="AGK-ve-L5t">
+                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="AGK-ve-L5t" customClass="ChatTextView" customModule="sphinx" customModuleProvider="target">
                                     <rect key="frame" x="18" y="9.5" width="219" height="19"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>

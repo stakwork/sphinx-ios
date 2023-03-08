@@ -118,9 +118,17 @@ class MemberDetailTableViewCell: UITableViewCell {
                 stackView.translatesAutoresizingMaskIntoConstraints = false
             
                 for imageUrl in clippedUrls{
+                    let bitmapSize = CGSize(width: 500, height: 500)
                     let defaultImage = #imageLiteral(resourceName: "appPinIcon")
                     let image1 = UIImageView(frame: CGRect(x: cursorValue, y: 0.0, width: imageWidth, height: 40.0))
-                    image1.sd_setImage(with: URL(string: imageUrl),placeholderImage: defaultImage)
+
+                    image1.sd_setImage(
+                        with: URL(string: imageUrl),
+                        placeholderImage: defaultImage,
+                        options: [],
+                        context: [.imageThumbnailPixelSize : bitmapSize]
+                    )
+                    
                     image1.makeCircular()
                     stackView.addSubview(image1)
                     self.subviewImageViews.append(image1)
@@ -151,7 +159,7 @@ class MemberDetailTableViewCell: UITableViewCell {
                     let postsLabel = UILabel(frame: CGRect(x: 0.0, y: 0.0, width: 48.0, height: stackView.frame.height))
                     postsLabel.text = ""
                     if let valid_leaderboard = leaderboardData,
-                       let valid_rep = valid_leaderboard.reputation{
+                       let valid_rep = valid_leaderboard.reputation {
                         postsLabel.text = "\(valid_rep)"
                     }
                     
@@ -165,7 +173,6 @@ class MemberDetailTableViewCell: UITableViewCell {
                 self.layoutIfNeeded()
                 break
             default:
-            
                 break
         }
         

@@ -491,11 +491,23 @@ extension ChatViewController : MessageCellDelegate {
         if let _ = message.person,
            let matchedLeaderboardEntry = chatListViewModel.chatLeaderboard.filter({$0.alias == message.senderAlias}).first {
             
-            let vc = MemberBadgeDetailVC.instantiate(message:message, leaderboardEntry: matchedLeaderboardEntry, delegate:self, knownTribeBadges: chatListViewModel.availableBadges)
+            let vc = MemberBadgeDetailVC.instantiate(delegate: self)
+            
+            let vm = MemberBadgeDetailVM(
+                vc: vc,
+                leaderBoardData: matchedLeaderboardEntry,
+                message: message,
+                knownTribeBadges: chatListViewModel.availableBadges,
+                isModerator: message.senderAlias == message.chat?.ownerPubkey
+
+            )
+            
+            vc.memberBadgeDetailVM = vm
             vc.modalPresentationStyle = .overCurrentContext
-            self.navigationController?.present(vc, animated: false)
-        }
-        else {
+            
+            self.definesPresentationContext = true
+            self.present(vc, animated: false)
+        } else {
             let tribeMemberPopupVC = TribeMemberPopupViewController.instantiate(message: message, delegate: self)
             WindowsManager.sharedInstance.showConveringWindowWith(rootVC: tribeMemberPopupVC)
         }

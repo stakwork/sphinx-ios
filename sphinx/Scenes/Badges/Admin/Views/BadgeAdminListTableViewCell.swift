@@ -37,8 +37,17 @@ class BadgeAdminListTableViewCell: UITableViewCell {
     }
     
     func configureCell(badge:Badge,type:BadgeAdminCellType){
-        if let valid_icon = badge.icon_url{
-            self.badgeImageView.sd_setImage(with: URL(string: valid_icon))
+        if let valid_icon = badge.icon_url {
+            
+            let bitmapSize = CGSize(width: 500, height: 500)
+            let defaultImage = #imageLiteral(resourceName: "appPinIcon")
+
+            self.badgeImageView.sd_setImage(
+                with: URL(string: valid_icon),
+                placeholderImage: defaultImage,
+                options: [],
+                context: [.imageThumbnailPixelSize : bitmapSize]
+            )
             
         }
         self.badgeNameLabel.text = badge.name

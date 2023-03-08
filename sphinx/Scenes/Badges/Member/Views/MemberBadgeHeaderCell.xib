@@ -5,7 +5,6 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -29,13 +28,14 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fFe-ph-CzK">
                         <rect key="frame" x="0.0" y="0.0" width="364" height="240"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="CGM-mG-wyD">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QGC-E0-rQL" customClass="ChatAvatarView" customModule="sphinx" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="40" width="112" height="112"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="112" id="F2q-VS-LwV"/>
-                                    <constraint firstAttribute="width" secondItem="CGM-mG-wyD" secondAttribute="height" multiplier="1:1" id="Mka-RT-vAm"/>
+                                    <constraint firstAttribute="width" constant="112" id="EAi-ZK-oB4"/>
+                                    <constraint firstAttribute="width" secondItem="QGC-E0-rQL" secondAttribute="height" multiplier="1:1" id="pH5-DA-8Yr"/>
                                 </constraints>
-                            </imageView>
+                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xyS-En-AHY">
                                 <rect key="frame" x="0.0" y="184" width="173" height="40"/>
                                 <color key="backgroundColor" name="BodyInverted"/>
@@ -107,55 +107,36 @@
                                 <color key="textColor" name="MainBottomIcons"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3458" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gEG-ao-gBr">
-                                <rect key="frame" x="136" y="117" width="40" height="17"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="40" id="kRn-6u-Ovc"/>
-                                </constraints>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gEG-ao-gBr">
+                                <rect key="frame" x="136" y="117" width="212" height="0.0"/>
                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                                 <color key="textColor" name="MainBottomIcons"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="moderatorBadge" translatesAutoresizingMaskIntoConstraints="NO" id="mma-g5-NDu">
-                                <rect key="frame" x="94" y="52" width="34" height="34"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="34" id="lAL-e0-6jY"/>
-                                    <constraint firstAttribute="width" constant="34" id="q9u-23-JMx"/>
-                                </constraints>
-                            </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QGC-E0-rQL" customClass="ChatAvatarView" customModule="sphinx" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="40" width="112" height="112"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" name="Body"/>
                         <constraints>
                             <constraint firstItem="Vub-1U-Ys7" firstAttribute="centerY" secondItem="Kof-iK-Cjc" secondAttribute="centerY" id="1pK-IA-e8r"/>
                             <constraint firstAttribute="height" constant="240" id="8vD-eB-Iz8"/>
                             <constraint firstItem="Kof-iK-Cjc" firstAttribute="width" secondItem="xyS-En-AHY" secondAttribute="width" id="92c-4E-991"/>
-                            <constraint firstItem="mma-g5-NDu" firstAttribute="leading" secondItem="CGM-mG-wyD" secondAttribute="leading" constant="94" id="CjA-Bf-T7M"/>
-                            <constraint firstItem="QGC-E0-rQL" firstAttribute="bottom" secondItem="CGM-mG-wyD" secondAttribute="bottom" id="Dfn-XA-bDl"/>
-                            <constraint firstItem="CGM-mG-wyD" firstAttribute="top" secondItem="fFe-ph-CzK" secondAttribute="top" constant="40" id="I2s-7W-wCT"/>
+                            <constraint firstAttribute="trailing" secondItem="gEG-ao-gBr" secondAttribute="trailing" constant="16" id="HbT-6S-FCU"/>
                             <constraint firstItem="gEG-ao-gBr" firstAttribute="top" secondItem="3A2-sS-HO6" secondAttribute="bottom" constant="8" id="JD0-w7-WsH"/>
                             <constraint firstItem="IFw-CP-eU0" firstAttribute="centerY" secondItem="xyS-En-AHY" secondAttribute="centerY" id="Jz6-in-bnA"/>
-                            <constraint firstItem="QGC-E0-rQL" firstAttribute="top" secondItem="CGM-mG-wyD" secondAttribute="top" id="ObR-DP-azk"/>
-                            <constraint firstItem="QGC-E0-rQL" firstAttribute="trailing" secondItem="CGM-mG-wyD" secondAttribute="trailing" id="Qig-hA-nFT"/>
                             <constraint firstItem="IFw-CP-eU0" firstAttribute="trailing" secondItem="xyS-En-AHY" secondAttribute="trailing" constant="-12" id="Sbg-HZ-BTo"/>
                             <constraint firstItem="3A2-sS-HO6" firstAttribute="trailing" secondItem="GY5-GR-BGc" secondAttribute="trailing" id="T0d-Sq-TaR"/>
                             <constraint firstItem="Kof-iK-Cjc" firstAttribute="leading" secondItem="xyS-En-AHY" secondAttribute="trailing" constant="18" id="Tv0-zn-IXX"/>
                             <constraint firstItem="Kof-iK-Cjc" firstAttribute="centerY" secondItem="xyS-En-AHY" secondAttribute="centerY" id="Yn7-K9-TMk"/>
-                            <constraint firstItem="CGM-mG-wyD" firstAttribute="top" secondItem="mma-g5-NDu" secondAttribute="top" constant="-12" id="Z7e-gF-oGw"/>
                             <constraint firstAttribute="trailing" secondItem="Kof-iK-Cjc" secondAttribute="trailing" id="Zjr-9J-J5T"/>
-                            <constraint firstItem="xyS-En-AHY" firstAttribute="top" secondItem="CGM-mG-wyD" secondAttribute="bottom" constant="32" id="ZmM-I6-0U7"/>
-                            <constraint firstItem="3A2-sS-HO6" firstAttribute="centerY" secondItem="CGM-mG-wyD" secondAttribute="centerY" id="gIT-Yk-SAv"/>
-                            <constraint firstItem="CGM-mG-wyD" firstAttribute="leading" secondItem="fFe-ph-CzK" secondAttribute="leading" id="kL2-J9-cZu"/>
+                            <constraint firstItem="QGC-E0-rQL" firstAttribute="top" secondItem="fFe-ph-CzK" secondAttribute="top" constant="40" id="iE3-YE-5TE"/>
                             <constraint firstItem="3A2-sS-HO6" firstAttribute="leading" secondItem="GY5-GR-BGc" secondAttribute="leading" id="mA3-0Q-niR"/>
+                            <constraint firstItem="xyS-En-AHY" firstAttribute="top" secondItem="QGC-E0-rQL" secondAttribute="bottom" constant="32" id="mn9-dG-Tvr"/>
+                            <constraint firstItem="QGC-E0-rQL" firstAttribute="centerY" secondItem="3A2-sS-HO6" secondAttribute="centerY" id="oJ8-LP-Ze2"/>
+                            <constraint firstItem="QGC-E0-rQL" firstAttribute="leading" secondItem="xyS-En-AHY" secondAttribute="leading" id="q3l-y9-PCM"/>
                             <constraint firstItem="Vub-1U-Ys7" firstAttribute="trailing" secondItem="Kof-iK-Cjc" secondAttribute="trailing" constant="-12" id="sUS-f6-R3I"/>
-                            <constraint firstItem="3A2-sS-HO6" firstAttribute="leading" secondItem="CGM-mG-wyD" secondAttribute="trailing" constant="24" id="vrM-sI-rnN"/>
-                            <constraint firstItem="QGC-E0-rQL" firstAttribute="leading" secondItem="CGM-mG-wyD" secondAttribute="leading" id="xDJ-tM-yWg"/>
-                            <constraint firstItem="xyS-En-AHY" firstAttribute="leading" secondItem="CGM-mG-wyD" secondAttribute="leading" id="y1i-HL-frN"/>
                             <constraint firstItem="gEG-ao-gBr" firstAttribute="leading" secondItem="3A2-sS-HO6" secondAttribute="leading" id="yQq-Yd-jpT"/>
+                            <constraint firstItem="QGC-E0-rQL" firstAttribute="leading" secondItem="fFe-ph-CzK" secondAttribute="leading" id="z0B-mo-cxd"/>
                             <constraint firstItem="3A2-sS-HO6" firstAttribute="top" secondItem="GY5-GR-BGc" secondAttribute="bottom" constant="4" id="z6e-OZ-xuh"/>
+                            <constraint firstItem="3A2-sS-HO6" firstAttribute="leading" secondItem="QGC-E0-rQL" secondAttribute="trailing" constant="24" id="zCT-Ww-lN8"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -169,9 +150,8 @@
             <connections>
                 <outlet property="chatAvatarView" destination="QGC-E0-rQL" id="qIn-5P-xQd"/>
                 <outlet property="earnBadgesButton" destination="Kof-iK-Cjc" id="1V5-8X-aOM"/>
-                <outlet property="memberImageView" destination="CGM-mG-wyD" id="np4-Jl-6b5"/>
+                <outlet property="memberDescriptionLabel" destination="gEG-ao-gBr" id="1cF-Of-0e8"/>
                 <outlet property="memberNameLabel" destination="3A2-sS-HO6" id="R2F-Wh-Rf8"/>
-                <outlet property="moderatorBadgeImageView" destination="mma-g5-NDu" id="P6k-Ew-DQE"/>
                 <outlet property="moderatorLabel" destination="GY5-GR-BGc" id="HnD-68-bjk"/>
                 <outlet property="sendSatsButton" destination="xyS-En-AHY" id="kGz-8X-aYI"/>
             </connections>
@@ -181,7 +161,6 @@
     <resources>
         <image name="bottomBar4" width="25" height="25"/>
         <image name="medalTag" width="100" height="101"/>
-        <image name="moderatorBadge" width="512" height="512"/>
         <namedColor name="Body">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
@@ -194,8 +173,5 @@
         <namedColor name="SecondaryText">
             <color red="0.55686274509803924" green="0.58823529411764708" blue="0.61176470588235299" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
     </resources>
 </document>

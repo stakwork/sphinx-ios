@@ -23,14 +23,17 @@ class KnownBadgeCell: UITableViewCell {
     }
     
     func configureCell(badge:Badge){
+        let bitmapSize = CGSize(width: 500, height: 500)
         let defaultImage = #imageLiteral(resourceName: "appPinIcon")
-        
-        knownBadgeImageView.makeCircular()
         
         knownBadgeImageView.sd_setImage(
             with: URL(string: badge.icon_url ?? ""),
-            placeholderImage: defaultImage
+            placeholderImage: defaultImage,
+            options: [],
+            context: [.imageThumbnailPixelSize : bitmapSize]
         )
+        
+        knownBadgeImageView.makeCircular()
         
         knownBadgeNameLabel.text = badge.name
     }

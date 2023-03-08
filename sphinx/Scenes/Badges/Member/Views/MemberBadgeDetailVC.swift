@@ -27,49 +27,40 @@ class MemberBadgeDetailVC : UIViewController{
     @IBOutlet weak var detailViewBottomConstraint: NSLayoutConstraint!
     private lazy var loadingViewController = LoadingViewController(backgroundColor: UIColor.clear)
     
-    
     var presentationContext : MemberBadgeDetailPresentationContext = .admin
     var delegate : TribeMemberViewDelegate? = nil
-    var message : TransactionMessage? = nil
     var loadingView: UIView? = nil
-    var isModerator : Bool = false
     var chatID: Int? = nil
-    var knownTribeBadges : [Badge] = []
 
-    lazy var memberBadgeDetailVM : MemberBadgeDetailVM = {
-       return MemberBadgeDetailVM(vc: self, tableView: tableView)
-    }()
+    var memberBadgeDetailVM : MemberBadgeDetailVM!
     
     static func instantiate(
-        message: TransactionMessage,
-        leaderboardEntry: ChatLeaderboardEntry,
-        delegate: TribeMemberViewDelegate,
-        knownTribeBadges:[Badge]
-    ) -> UIViewController {
+        delegate: TribeMemberViewDelegate
+    ) -> MemberBadgeDetailVC {
         
-        let viewController = StoryboardScene.BadgeManagement.memberBadgeDetailVC.instantiate()
-        viewController.view.backgroundColor = .clear
-        
-        if let vc = viewController as? MemberBadgeDetailVC{
-            vc.memberBadgeDetailVM.leaderBoardData = leaderboardEntry
-            vc.message = message
-            vc.delegate = delegate
-            vc.knownTribeBadges = knownTribeBadges
-            vc.isModerator = message.senderAlias == message.chat?.ownerPubkey
-            vc.chatID = message.chat?.id
-        }
+        let viewController = StoryboardScene.BadgeManagement.memberBadgeDetailVC.instantiate() as! MemberBadgeDetailVC
+        viewController.delegate = delegate
         
         return viewController
     }
     
     override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        view.backgroundColor = .clear
+        
+        memberBadgeDetailVM.tableView = tableView
+        
         configureBadgeDetails()
         setupDismissableView()
+        configTableView()
+        
+        addSemiTransparentBack()
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        configTableView()
-        addSemiTransparentBack()
+        super.viewDidAppear(animated)
+        
         animateView(show: true)
     }
     
@@ -82,7 +73,7 @@ class MemberBadgeDetailVC : UIViewController{
     }
     
     func handleSatsButtonSend(){
-        if let valid_message = message{
+        if let valid_message = memberBadgeDetailVM.message {
             self.dismiss(animated: false,completion: {
                 self.delegate?.shouldGoToSendPayment(message: valid_message)
             })
@@ -98,37 +89,44 @@ class MemberBadgeDetailVC : UIViewController{
     }
     
     func addShimmerLoadingView(){
-        let loadingViewFrame = detailView.frame
+        if let loadingView = loadingView {
+            tableView.isHidden = true
+            loadingView.isHidden = false
+            return
+        }
+        
+        let loadingViewFrame = CGRect(
+            x: 32.0,
+            y: 10.0,
+            width: detailView.bounds.width - 64.0,
+            height: detailView.bounds.height - 10.0
+        )
         
         loadingView = UIView(frame: loadingViewFrame)
         loadingView?.isUserInteractionEnabled = false
-        loadingView?.backgroundColor = UIColor.Sphinx.Body
+        loadingView?.backgroundColor = UIColor.clear
         
         if let loadingView = loadingView {
-            let imageView : UIImageView = UIImageView(frame: tableView.frame)
+            
+            let imageView : UIImageView = UIImageView(frame: loadingView.bounds)
             imageView.image = UIImage(named: "memberBadgeLoadingView")
             imageView.contentMode = .scaleAspectFit
-            imageView.alpha = 0.5
-            let shimmerView = ShimmerView(frame: loadingViewFrame)
-            shimmerView.alpha = 0.065
-            loadingView.addSubview(shimmerView)
+            imageView.alpha = 1.0
+            
             loadingView.addSubview(imageView)
             detailView.addSubview(loadingView)
             detailView.bringSubviewToFront(loadingView)
+            
             tableView.isHidden = true
-            shimmerView.startShimmerAnimation()
         }
     }
     
     func removeShimmerView(){
         tableView.isHidden = false
         loadingView?.removeFromSuperview()
-        loadingView = nil
     }
     
     func configTableView(){
-        memberBadgeDetailVM.knownTribeBadges = self.knownTribeBadges
-        memberBadgeDetailVM.message = self.message
         memberBadgeDetailVM.configTable()
         tableView.separatorColor = .clear
         tableView.backgroundColor = .clear
@@ -163,7 +161,6 @@ class MemberBadgeDetailVC : UIViewController{
     
     func setupDismissableView() {
         panGestureLine.makeCircular()
-        
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(panGestureRecognizerAction))
         panGestureView.addGestureRecognizer(panGesture)
     }
@@ -193,6 +190,12 @@ class MemberBadgeDetailVC : UIViewController{
             } else {
                 animateView(show: true)
             }
+        }
+    }
+    
+    func dismissView() {
+        animateView(show: false) {
+            self.dismiss(animated: false)
         }
     }
     

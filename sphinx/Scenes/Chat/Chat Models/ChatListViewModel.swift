@@ -209,7 +209,7 @@ final class ChatListViewModel: NSObject {
     
     func getChatBadges(chat:Chat?){
         if let valid_chat = chat,
-           let valid_tribe = valid_chat.tribeInfo{
+           let valid_tribe = valid_chat.tribeInfo {
             API.sharedInstance.getAssetsByID(
                 assetIDs: valid_tribe.badgeIds,
                 callback: { results in

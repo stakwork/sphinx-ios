@@ -26,7 +26,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="125-Al-4Bh">
                         <rect key="frame" x="0.0" y="0.0" width="351" height="117"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Rar-0b-TVb">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon" translatesAutoresizingMaskIntoConstraints="NO" id="Rar-0b-TVb">
                                 <rect key="frame" x="16" y="16" width="85" height="85"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="85" id="IcJ-Bp-V2a"/>
@@ -70,6 +70,7 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="icon" width="128" height="128"/>
         <namedColor name="Body">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

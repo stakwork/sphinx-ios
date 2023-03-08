@@ -10,11 +10,10 @@ import UIKit
 
 class MemberBadgeHeaderCell: UITableViewCell {
     
-    @IBOutlet weak var memberImageView: UIImageView!
     @IBOutlet weak var memberNameLabel: UILabel!
+    @IBOutlet weak var memberDescriptionLabel: UILabel!
     @IBOutlet weak var sendSatsButton: UIButton!
     @IBOutlet weak var earnBadgesButton: UIButton!
-    @IBOutlet weak var moderatorBadgeImageView: UIImageView!
     @IBOutlet weak var moderatorLabel: UILabel!
     @IBOutlet weak var chatAvatarView: ChatAvatarView!
     
@@ -22,20 +21,6 @@ class MemberBadgeHeaderCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-    
-    func initHeaderView(presentingVC:MemberBadgeDetailVC){
-        self.presentingVC = presentingVC
-        //Member Image
-        memberImageView.contentMode = .scaleAspectFill
-        memberImageView.makeCircular()
         
         //Send Sats
         sendSatsButton.layer.cornerRadius = sendSatsButton.frame.height/2.0
@@ -49,7 +34,10 @@ class MemberBadgeHeaderCell: UITableViewCell {
         earnBadgesButton.layer.borderWidth = 1.0
         earnBadgesButton.layer.borderColor = UIColor.Sphinx.MainBottomIcons.cgColor
         earnBadgesButton.layer.cornerRadius = earnBadgesButton.frame.height/2.0
-        
+    }
+
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
     }
     
     @IBAction func sendSatsTapped(_ sender: Any) {
@@ -71,20 +59,25 @@ extension MemberBadgeHeaderCell {
     }()
 }
 
-extension MemberBadgeHeaderCell: MemberBadgeDetailVMDisplayDelegate{
-    func reloadHeaderView(personInfo:TribeMemberStruct,message:TransactionMessage?){
+extension MemberBadgeHeaderCell {
+    
+    func configureHeaderView(
+        presentingVC: MemberBadgeDetailVC?,
+        personInfo: TribeMemberStruct,
+        message: TransactionMessage?,
+        isModerator: Bool
+    ){
+        self.presentingVC = presentingVC
+        
+        self.moderatorLabel.text = (isModerator ? "member-profile.moderator" : "member-profile.tribe-member").localized
         self.memberNameLabel.text = personInfo.ownerAlias
-        if let valid_message = message{
-            self.chatAvatarView.configureForSenderWith(message: valid_message)
-            self.chatAvatarView.setInitialLabelSize(size: 30)
-        }
-        else{
-            self.chatAvatarView.isHidden = true
-        }
+        self.memberDescriptionLabel.text = personInfo.description
+        
+        self.chatAvatarView.configureForUserWith(
+            color: UIColor.random(),
+            alias: personInfo.ownerAlias,
+            picture: personInfo.img
+        )
+        self.chatAvatarView.setInitialLabelSize(size: 30)
     }
-    
-    func getImageViewReference()->UIImageView{
-        return memberImageView
-    }
-    
 }

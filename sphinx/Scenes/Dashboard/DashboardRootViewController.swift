@@ -498,10 +498,12 @@ extension DashboardRootViewController {
                     contentProgressShare = 0.1
                     
                     if (contentProgress >= 0 && restoring) {
-                        self.restoreProgressView.showRestoreProgressView(
-                            with: Int(contentProgressShare * Float(contentProgress)),
-                            messagesStartProgress: Int(contentProgressShare * Float(100))
-                        )
+                        DispatchQueue.main.async {
+                            self.restoreProgressView.showRestoreProgressView(
+                                with: Int(contentProgressShare * Float(contentProgress)),
+                                messagesStartProgress: Int(contentProgressShare * Float(100))
+                            )
+                        }
                     }
                 },
                 completionCallback: {

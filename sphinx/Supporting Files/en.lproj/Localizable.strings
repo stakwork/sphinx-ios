@@ -572,3 +572,5 @@
 "badges.success" = "Success";
 "badges.activation-success" = "Badges successfully activated";
 "badges.deactivation-success" = "Badges successfully deactivated";
+"member-profile.moderator" = "MODERATOR";
+"member-profile.tribe-member" = "TRIBE MEMBER";

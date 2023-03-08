@@ -32,11 +32,12 @@ class BadgeAdminListTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     
-    func configureCell(badge:Badge,type:BadgeAdminCellType){
+    func configureCell(
+        badge: Badge,
+        type: BadgeAdminCellType
+    ){
         if let valid_icon = badge.icon_url {
             
             let bitmapSize = CGSize(width: 500, height: 500)
@@ -68,53 +69,43 @@ class BadgeAdminListTableViewCell: UITableViewCell {
         styleView()
     }
     
-    func configureStatusButton(type:BadgeAdminCellType){
+    func configureStatusButton(type: BadgeAdminCellType) {
         statusButton.isUserInteractionEnabled = false
         statusButton.layer.cornerRadius = statusButton.frame.height/2.0
-        remainingAmountLabelContainerView.backgroundColor = .clear
+        
         totalAvailableLabel.textColor = UIColor.Sphinx.PlaceholderText
+        totalAvailableLabel.isHidden = false
+        
         remainingAmountLabelContainerView.isHidden = false
         remainingAmountLabel.backgroundColor = .clear
-        totalAvailableLabel.isHidden = false
+        
         self.cellType = type
+        
         configureCellByType()
     }
     
-    func configureCellByType(){
-        if(cellType != nil){
-            switch(cellType!){
+    func configureCellByType() {
+        if(cellType != nil) {
+            switch(cellType!) {
             case .active:
-                statusButton.backgroundColor = UIColor.Sphinx.BodyInverted.withAlphaComponent(1.0)
-                statusButton.setTitleColor(UIColor.Sphinx.Body, for: [.normal,.selected])
-                
-                let string = "active.upper".localized
-                let attributedString = NSMutableAttributedString(string: string)
-                attributedString.addAttribute(.foregroundColor, value: UIColor.Sphinx.Body, range: NSRange(location: 0, length: string.count))
-                attributedString.addAttribute(.font, value: UIFont(name: "Roboto", size: 11.0), range: NSRange(location: 0, length: string.count))
-                statusButton.titleLabel?.attributedText = attributedString
+                statusButton.backgroundColor = UIColor.Sphinx.BodyInverted
+                statusButton.setTitleColor(UIColor.Sphinx.Body, for: .normal)
+                statusButton.titleLabel?.text = "active.upper".localized
+                statusButton.setTitle( "active.upper".localized, for: .normal)
                 break
             case .inactive:
                 statusButton.backgroundColor = UIColor.Sphinx.PlaceholderText.withAlphaComponent(0.07)
-                statusButton.setTitleColor(UIColor.Sphinx.SecondaryText, for: [.normal,.selected])
-                
-                let string = "inactive.upper".localized
-                let attributedString = NSMutableAttributedString(string: string)
-            attributedString.addAttribute(.foregroundColor, value: UIColor.Sphinx.SecondaryText, range: NSRange(location: 0, length: string.count))
-                attributedString.addAttribute(.font, value: UIFont(name: "Roboto", size: 11.0), range: NSRange(location: 0, length: string.count))
-                statusButton.titleLabel?.attributedText = attributedString
-                
+                statusButton.setTitleColor(UIColor.Sphinx.SecondaryText, for: .normal)
+                statusButton.titleLabel?.text = "inactive.upper".localized
+                statusButton.setTitle("inactive.upper".localized, for: .normal)
                 break
             case .template:
                 statusButton.backgroundColor = UIColor.Sphinx.PrimaryBlue.withAlphaComponent(1.0)
-                statusButton.setTitleColor(UIColor.white, for: [.normal,.selected])
+                statusButton.setTitleColor(UIColor.white, for: .normal)
                 remainingAmountLabelContainerView.isHidden = true
                 totalAvailableLabel.isHidden = true
-                
-                let string = "template.upper".localized
-                let attributedString = NSMutableAttributedString(string: string)
-                attributedString.addAttribute(.foregroundColor, value: UIColor.white, range: NSRange(location: 0, length: string.count))
-                attributedString.addAttribute(.font, value: UIFont(name: "Roboto", size: 10.0), range: NSRange(location: 0, length: string.count))
-                statusButton.titleLabel?.attributedText = attributedString
+                statusButton.titleLabel?.text = "template.upper".localized
+                statusButton.setTitle("template.upper".localized, for: .normal)
                 break
             }
         }

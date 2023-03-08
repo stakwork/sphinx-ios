@@ -14,21 +14,14 @@ class BadgeAdminManagementListVC: UIViewController{
     
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var navBarView: UIView!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var viewTitle: UILabel!
     @IBOutlet weak var badgeTableView: UITableView!
     @IBOutlet weak var badgeTemplateHeaderLabel: UILabel!
     
-    @IBOutlet weak var headerViewHeight: NSLayoutConstraint!
-    private lazy var loadingViewController = LoadingViewController(backgroundColor: UIColor.clear)
-    
-    var viewDidLayout : Bool = false
     var chatID:Int? = nil
-    
     
     private var rootViewController: RootViewController!
     var badgeManagementListDataSource : BadgeAdminManagementListDataSource?
-    var isFirstLoad : Bool = true
     
     static func instantiate(
         rootViewController: RootViewController,
@@ -44,35 +37,11 @@ class BadgeAdminManagementListVC: UIViewController{
     override func viewDidLoad() {
         self.view.backgroundColor = UIColor.Sphinx.Body
         setupBadgeTable()
+        badgeManagementListDataSource?.fetchTemplates()
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        if(isFirstLoad == false){
-            badgeManagementListDataSource?.fetchBadges()
-        }
-        else{
-            isFirstLoad = false
-        }
-    }
-    
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
-            self.viewDidLayout = true
-        })
-        
-    }
-    
-    func addLoadingView(){
-        addChildVC(
-            child: loadingViewController,
-            container: self.view
-        )
-    }
-    
-    func removeLoadingView(){
-        self.removeChildVC(child: self.loadingViewController)
+        badgeManagementListDataSource?.fetchBadges()
     }
     
     func setupBadgeTable(){
@@ -84,12 +53,14 @@ class BadgeAdminManagementListVC: UIViewController{
         badgeManagementListDataSource?.setupDataSource()
     }
     
-    
     @IBAction func backButtonTapped(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
     
-    func showBadgeDetail(badge:Badge,presentationContext:BadgeDetailPresentationContext){
+    func showBadgeDetail(
+        badge: Badge,
+        presentationContext: BadgeDetailPresentationContext
+    ){
         let badgeDetailVC = BadgeAdminDetailVC.instantiate(rootViewController: rootViewController)
         if let valid_detailVC = badgeDetailVC as? BadgeAdminDetailVC{
             valid_detailVC.associatedBadge = badge

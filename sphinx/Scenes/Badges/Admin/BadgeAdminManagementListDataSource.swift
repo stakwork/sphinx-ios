@@ -25,10 +25,15 @@ class BadgeAdminManagementListDataSource : NSObject{
     func setupDataSource(){
         vc.badgeTableView.delegate = self
         vc.badgeTableView.dataSource = self
-        vc.badgeTableView.register(UINib(nibName: "BadgeAdminListTableViewCell", bundle: nil), forCellReuseIdentifier: "BadgeAdminListTableViewCell")
-        vc.badgeTableView.register(UINib(nibName: "BadgeAdminListHeaderCell", bundle: nil), forCellReuseIdentifier: "BadgeAdminListHeaderCell")
-        fetchTemplates()
-        fetchBadges()
+        
+        vc.badgeTableView.register(
+            UINib(nibName: "BadgeAdminListTableViewCell", bundle: nil),
+            forCellReuseIdentifier: "BadgeAdminListTableViewCell"
+        )
+        vc.badgeTableView.register(
+            UINib(nibName: "BadgeAdminListHeaderCell", bundle: nil),
+            forCellReuseIdentifier: "BadgeAdminListHeaderCell"
+        )
     }
     
     func fetchTemplates(){
@@ -52,14 +57,11 @@ class BadgeAdminManagementListDataSource : NSObject{
                     self.vc.badgeTableView.reloadData()
                 }
             },
-            errorCallback: {
-                print("error")
-            }
+            errorCallback: {}
         )
     }
     
     func fetchBadges(){
-        vc.addLoadingView()
         API.sharedInstance.getTribeAdminBadges(
             chatID: chatID,
             callback: { results in
@@ -76,14 +78,10 @@ class BadgeAdminManagementListDataSource : NSObject{
                     }
                     
                     self.badges = updateResults
-
-                    self.vc.removeLoadingView()
                     self.vc.badgeTableView.reloadData()
                 }
             },
-            errorCallback: {
-                print("error")
-            }
+            errorCallback: {}
         )
     }
 }
@@ -111,16 +109,7 @@ extension BadgeAdminManagementListDataSource : UITableViewDelegate,UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if(indexPath.row < getNTemplates()){
-            let cell = tableView.dequeueReusableCell(
-                withIdentifier: "BadgeAdminListTableViewCell",
-                for: indexPath
-            ) as! BadgeAdminListTableViewCell
-            cell.configureCell(badge: self.getTemplate(index: indexPath.row),type: .template)
-            return cell
-        }
-        else if(indexPath.row == getNTemplates()){
-            //header view
+        if (indexPath.row == getNTemplates()) {
             let existingBadgeHeacerCell = UITableViewCell(frame: CGRect(x: 0, y: 0.0, width: tableView.frame.width, height: 55))
             let frame = CGRect(x: 28.0, y: 0.0, width: tableView.frame.width - 28.0, height: 55)
             existingBadgeHeacerCell.backgroundColor = UIColor.Sphinx.HeaderBG
@@ -133,22 +122,29 @@ extension BadgeAdminManagementListDataSource : UITableViewDelegate,UITableViewDa
             existingBadgeHeacerCell.addSubview(label)
             existingBadgeHeacerCell.selectionStyle = .none
             return existingBadgeHeacerCell
-        }
-        else{
-            let cell = tableView.dequeueReusableCell(
+        } else {
+            return tableView.dequeueReusableCell(
                 withIdentifier: "BadgeAdminListTableViewCell",
                 for: indexPath
             ) as! BadgeAdminListTableViewCell
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let cell = cell as? BadgeAdminListTableViewCell, indexPath.row < getNTemplates() {
+            cell.configureCell(
+                badge: getTemplate(index: indexPath.row),
+                type: .template
+            )
+        } else if let cell = cell as? BadgeAdminListTableViewCell {
             let badge = self.getBadge(index: indexPath.row)
             let type : BadgeAdminCellType = (badge.activationState == true) ? .active : .inactive
             cell.configureCell(badge: self.getBadge(index: indexPath.row),type: type)
-            return cell
         }
-        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if(indexPath.row == getNTemplates()){
+        if (indexPath.row == getNTemplates()) {
             return 55
         }
         return 140
@@ -156,18 +152,16 @@ extension BadgeAdminManagementListDataSource : UITableViewDelegate,UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if(indexPath.row < getNTemplates()){
+        if (indexPath.row < getNTemplates()) {
             let badgeTypes = badges.map({$0.reward_type})
             let templateAsBadge = getTemplate(index: indexPath.row)
             templateAsBadge.chat_id = chatID
-            if(badgeTypes.contains(templateAsBadge.reward_type)){
+            if (badgeTypes.contains(templateAsBadge.reward_type)) {
                 AlertHelper.showAlert(title: "badges.cant-make-badge".localized, message: "badges.cant-make-badge-reason".localized)
-            }
-            else{
+            } else {
                 vc.showBadgeDetail(badge: templateAsBadge,presentationContext: .template)
             }
-        }
-        else if(indexPath.row > getNTemplates()){
+        } else if(indexPath.row > getNTemplates()) {
             let badge = getBadge(index: indexPath.row)
             let context : BadgeDetailPresentationContext = (badge.activationState == true) ? .active : .inactive
             vc.showBadgeDetail(badge: badge, presentationContext: context)

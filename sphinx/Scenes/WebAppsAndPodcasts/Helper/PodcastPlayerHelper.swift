@@ -336,7 +336,8 @@ class PodcastPlayerHelper {
         guard let player = player, let item = player.currentItem else {
             return
         }
-        
+        print(player.currentTime().value)
+        print(player.currentTime().timescale)
         let duration = Int(Double(item.asset.duration.value) / Double(item.asset.duration.timescale))
         let currentTime = Int(round(Double(player.currentTime().value) / Double(player.currentTime().timescale)))
          
@@ -583,6 +584,8 @@ class PodcastPlayerHelper {
     ) {
         var newTime = podcast.currentTime + Int(seconds)
         newTime = newTime > 0 ? newTime : 0
+        let duration = podcast.getCurrentEpisode()?.duration ?? 0
+        newTime = newTime > duration ? duration : newTime
         
         if podcast.feedID != self.podcast?.feedID {
             podcast.currentTime = newTime

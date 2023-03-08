@@ -41,8 +41,7 @@ class MemberBadgeDetailVM : NSObject {
         vc: MemberBadgeDetailVC,
         leaderBoardData: ChatLeaderboardEntry?,
         message: TransactionMessage?,
-        knownTribeBadges: [Badge],
-        isModerator: Bool
+        knownTribeBadges: [Badge]
     ) {
         self.isLoading = true
         self.vc = vc
@@ -50,7 +49,6 @@ class MemberBadgeDetailVM : NSObject {
         self.leaderBoardData = leaderBoardData
         self.message = message
         self.knownTribeBadges = knownTribeBadges
-        self.isModerator = isModerator
         
         self.presentationContext = vc.presentationContext
     }

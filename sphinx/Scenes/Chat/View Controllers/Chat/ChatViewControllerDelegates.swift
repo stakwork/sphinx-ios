@@ -497,9 +497,7 @@ extension ChatViewController : MessageCellDelegate {
                 vc: vc,
                 leaderBoardData: matchedLeaderboardEntry,
                 message: message,
-                knownTribeBadges: chatListViewModel.availableBadges,
-                isModerator: message.senderAlias == message.chat?.ownerPubkey
-
+                knownTribeBadges: chatListViewModel.availableBadges
             )
             
             vc.memberBadgeDetailVM = vm

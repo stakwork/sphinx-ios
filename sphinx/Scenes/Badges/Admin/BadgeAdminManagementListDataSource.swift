@@ -153,9 +153,11 @@ extension BadgeAdminManagementListDataSource : UITableViewDelegate,UITableViewDa
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if (indexPath.row < getNTemplates()) {
-            let badgeTypes = badges.map({$0.reward_type})
+            
+            let badgeTypes = badges.map({ $0.reward_type })
             let templateAsBadge = getTemplate(index: indexPath.row)
             templateAsBadge.chat_id = chatID
+            
             if (badgeTypes.contains(templateAsBadge.reward_type)) {
                 AlertHelper.showAlert(title: "badges.cant-make-badge".localized, message: "badges.cant-make-badge-reason".localized)
             } else {

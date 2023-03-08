@@ -60,7 +60,8 @@ class FileSentTableViewCell: CommonFileTableViewCell, MediaUploadingCellProtocol
         }
         
         let bubbleHeight = messageRow.isPaidSentAttachment ? CommonFileTableViewCell.kPaidFileBubbleHeight : CommonFileTableViewCell.kFileBubbleHeight
-        let bubbleSize = CGSize(width: CommonFileTableViewCell.kFileBubbleWidth, height: bubbleHeight)
+        let bottomBubblePadding = messageRow.isBoosted ? Constants.kReactionsViewHeight : 0
+        let bubbleSize = CGSize(width: CommonFileTableViewCell.kFileBubbleWidth, height: bubbleHeight + bottomBubblePadding)
         bubbleView.showOutgoingFileBubble(messageRow: messageRow, size: bubbleSize)
         configureReplyBubble(bubbleView: bubbleView, bubbleSize: bubbleSize, incoming: false)
         

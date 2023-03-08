@@ -614,13 +614,23 @@ extension DashboardRootViewController {
     internal func presentChatDetailsVC(
         for chat: Chat?,
         contact: UserContact? = nil,
-        shouldAnimate: Bool = true
+        shouldAnimate: Bool = true,
+        didRetry:Bool = false
     ) {
         let contact = contact ?? chat?.getContact()
         
         if handleInvite(for: contact) {
             return
         }
+        
+        if let topVC = topMostViewController() as? NewPodcastPlayerViewController,
+            didRetry == false{
+                topVC.dismiss(animated: false)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+                    self.presentChatDetailsVC(for: chat,didRetry: true)//retry
+                })
+                return
+            }
         
         let chatVC = ChatViewController.instantiate(
             contact: contact,

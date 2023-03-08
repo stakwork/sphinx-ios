@@ -635,6 +635,7 @@
 		CE51F35A2989B19800ABBACB /* BadgeDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE51F3582989B19800ABBACB /* BadgeDetailCell.swift */; };
 		CE51F35B2989B19800ABBACB /* BadgeDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE51F3592989B19800ABBACB /* BadgeDetailCell.xib */; };
 		CE6784602968B0E000342905 /* FeedsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE67845F2968B0E000342905 /* FeedsManager.swift */; };
+		CE6C83FC29B918BD00E9FE7C /* TopMostVCsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6C83FB29B918BD00E9FE7C /* TopMostVCsHelper.swift */; };
 		CE7E4F8029AD2D1100F000FF /* VoIPRequestMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7E4F7F29AD2D1100F000FF /* VoIPRequestMessage.swift */; };
 		CE842DE0298ADECF00620AD3 /* MemberBadgeHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE842DDE298ADECF00620AD3 /* MemberBadgeHeaderCell.swift */; };
 		CE842DE1298ADECF00620AD3 /* MemberBadgeHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE842DDF298ADECF00620AD3 /* MemberBadgeHeaderCell.xib */; };
@@ -1558,6 +1559,7 @@
 		CE51F3582989B19800ABBACB /* BadgeDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeDetailCell.swift; sourceTree = "<group>"; };
 		CE51F3592989B19800ABBACB /* BadgeDetailCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BadgeDetailCell.xib; sourceTree = "<group>"; };
 		CE67845F2968B0E000342905 /* FeedsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedsManager.swift; sourceTree = "<group>"; };
+		CE6C83FB29B918BD00E9FE7C /* TopMostVCsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopMostVCsHelper.swift; sourceTree = "<group>"; };
 		CE7E4F7F29AD2D1100F000FF /* VoIPRequestMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoIPRequestMessage.swift; sourceTree = "<group>"; };
 		CE842DDE298ADECF00620AD3 /* MemberBadgeHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberBadgeHeaderCell.swift; sourceTree = "<group>"; };
 		CE842DDF298ADECF00620AD3 /* MemberBadgeHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MemberBadgeHeaderCell.xib; sourceTree = "<group>"; };
@@ -2867,6 +2869,7 @@
 			children = (
 				475723A3247EB5C1001ADC7E /* Audio */,
 				47468FD4233162D40072124A /* AlertHelper.swift */,
+				CE6C83FB29B918BD00E9FE7C /* TopMostVCsHelper.swift */,
 				47468FD823353E460072124A /* MediaLoader.swift */,
 				CE842DE2298B289D00620AD3 /* ShimmerView.swift */,
 				4707089124AE16DF00A98DCA /* MediaDownloader.swift */,
@@ -4906,6 +4909,7 @@
 				CE842DE3298B289D00620AD3 /* ShimmerView.swift in Sources */,
 				470F4C36257A765D00288A9B /* LinkPreviewBubbleView.swift in Sources */,
 				4707089424AE45D400A98DCA /* UserContactChatListExtension.swift in Sources */,
+				CE6C83FC29B918BD00E9FE7C /* TopMostVCsHelper.swift in Sources */,
 				478B05CA29787B7D00A1B254 /* PodcastFeed+PlayerPodcastData.swift in Sources */,
 				471161DB291563D2008EAFF2 /* ActionTrack+FetchUtils.swift in Sources */,
 				47DAABCE2491410900EF38B0 /* MessageReplyView.swift in Sources */,

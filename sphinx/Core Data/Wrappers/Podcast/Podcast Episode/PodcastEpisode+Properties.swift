@@ -106,7 +106,7 @@ public class PodcastEpisode: NSObject {
         }
         
         let formatter = DateComponentsFormatter()
-        formatter.unitsStyle = .abbreviated
+        formatter.unitsStyle = .short
         formatter.allowedUnits = (time > 3599) ? [.hour, .minute] : [.minute]
         formatter.zeroFormattingBehavior = .pad
         var components = DateComponents()

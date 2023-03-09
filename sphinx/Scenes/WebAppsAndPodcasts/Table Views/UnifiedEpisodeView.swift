@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import Lottie
 
 protocol PodcastEpisodeRowDelegate : class {
     func shouldStartDownloading(episode: PodcastEpisode, cell: UITableViewCell)
@@ -43,6 +44,8 @@ class UnifiedEpisodeView : UIView {
     @IBOutlet weak var progressView: UIView!
     @IBOutlet weak var didPlayImageView: UIImageView!
     @IBOutlet weak var downloadProgressBar: CircularProgressView!
+    @IBOutlet weak var animationContainer: UIView!
+    @IBOutlet weak var animationView: AnimationView!
     
     var episode: PodcastEpisode! = nil
     var videoEpisode: Video! = nil
@@ -82,6 +85,7 @@ class UnifiedEpisodeView : UIView {
     func roundCorners(){
         mediaTypeImageView.layer.cornerRadius = 3.0
         episodeImageView.layer.cornerRadius = 6.0
+        animationContainer.layer.cornerRadius = 6.0
         durationView.layer.cornerRadius = 3.0
         progressView.layer.cornerRadius = 3.0
     }
@@ -136,6 +140,7 @@ class UnifiedEpisodeView : UIView {
         self.episode = episode
         self.delegate = delegate
         
+        animationContainer.isHidden = !playing
         episodeLabel.textColor = !playing ? UIColor.Sphinx.Text : UIColor.Sphinx.BlueTextAccent
         progressView.backgroundColor = !playing ? UIColor.Sphinx.Text : UIColor.Sphinx.BlueTextAccent
         progressView.alpha = !playing ? 0.3 : 1.0
@@ -225,12 +230,14 @@ class UnifiedEpisodeView : UIView {
     //Networking:
     func configureDownload(episode: PodcastEpisode, download: Download?) {
         if episode.isDownloaded {
-            downloadButton.setTitle("download_done", for: .normal)
-            downloadButton.setTitleColor(UIColor.Sphinx.PrimaryGreen, for: .normal)
+            downloadButton.setImage(UIImage(named: "playerListMark"), for: .normal)
+            downloadButton.tintColor = UIColor.Sphinx.PrimaryGreen
         } else {
-            downloadButton.setTitle("download", for: .normal)
-            downloadButton.setTitleColor(UIColor.Sphinx.SecondaryText, for: .normal)
+            downloadButton.setImage(UIImage(named: "playerListDownload"), for: .normal)
+            downloadButton.tintColor = UIColor.Sphinx.SecondaryText
         }
+        
+        downloadButton.tintColorDidChange()
         
         if let download = download {
             updateProgress(progress: download.progress)
@@ -250,7 +257,7 @@ class UnifiedEpisodeView : UIView {
     
     @IBAction func downloadButtonTouched() {
         if let delegate = delegate,
-           let presentingTableViewCell = presentingTableViewCell{
+           let presentingTableViewCell = presentingTableViewCell, !episode.isDownloaded {
             delegate.shouldStartDownloading(episode: episode, cell: presentingTableViewCell)
         }
     }

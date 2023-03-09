@@ -45,7 +45,8 @@
                                     <constraint firstAttribute="height" constant="16" id="gWw-gP-tFK"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="18"/>
-                                <state key="normal" title="ios_share">
+                                <color key="tintColor" name="SecondaryText"/>
+                                <state key="normal">
                                     <color key="titleColor" name="SecondaryText"/>
                                 </state>
                             </button>

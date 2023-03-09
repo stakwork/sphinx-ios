@@ -40,27 +40,27 @@ class FeedItemDetailActionCell: UITableViewCell {
         switch(type){
         case .download:
             actionLabel.text = "download".localized
-            actionIconButton.setTitle("download", for: .normal)
+            actionIconButton.setImage(UIImage(named: "itemDetailsDownload"), for: .normal)
             break
         case .copyLink:
             actionLabel.text = "copy.link".localized
-            actionIconButton.setTitle("content_copy", for: .normal)
+            actionIconButton.setImage(UIImage(named: "itemDetailsCopy"), for: .normal)
             break
         case .markAsPlayed:
             actionLabel.text = "mark.as.played".localized
-            actionIconButton.setTitle("done", for: .normal)
+            actionIconButton.setImage(UIImage(named: "itemDetailsMark"), for: .normal)
             break
         case .share:
             actionLabel.text = "share".localized
-            actionIconButton.setTitle("ios_share", for: .normal)
+            actionIconButton.setImage(UIImage(named: "itemDetailsShare"), for: .normal)
             break
         case .markAsUnplayed:
             actionLabel.text = "mark.as.unplayed".localized
-            actionIconButton.setTitle("undo", for: .normal)
+            actionIconButton.setImage(UIImage(named: "itemDetailsMark"), for: .normal)
             break
         case .erase:
             actionLabel.text = "erase.from.device".localized
-            actionIconButton.setTitle("delete", for: .normal)
+            actionIconButton.setImage(UIImage(named: "itemDetailsDownload"), for: .normal)
             break
         }
     }

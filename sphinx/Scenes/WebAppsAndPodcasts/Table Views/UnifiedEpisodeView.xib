@@ -190,7 +190,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="didPlayIndicator" translatesAutoresizingMaskIntoConstraints="NO" id="udX-jj-jgK">
-                    <rect key="frame" x="174.5" y="120" width="12" height="12"/>
+                    <rect key="frame" x="158.5" y="120" width="12" height="12"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="12" id="3qa-51-dzH"/>
                         <constraint firstAttribute="width" constant="12" id="iu1-3B-Gbd"/>
@@ -207,7 +207,7 @@
                 <constraint firstAttribute="trailing" secondItem="MKB-dJ-QPy" secondAttribute="trailing" constant="15" id="7OP-Xn-Kec"/>
                 <constraint firstItem="KHB-Zp-s7U" firstAttribute="leading" secondItem="zj6-w3-dij" secondAttribute="trailing" constant="-22" id="D0G-t8-Bno"/>
                 <constraint firstItem="MKB-dJ-QPy" firstAttribute="trailing" secondItem="9E9-4e-TCW" secondAttribute="trailing" id="Elv-H0-Mkf"/>
-                <constraint firstItem="udX-jj-jgK" firstAttribute="leading" secondItem="B6o-ZO-7g1" secondAttribute="trailing" constant="-28" id="FH5-f6-zLR"/>
+                <constraint firstItem="udX-jj-jgK" firstAttribute="leading" secondItem="B6o-ZO-7g1" secondAttribute="trailing" constant="-44" id="FH5-f6-zLR"/>
                 <constraint firstItem="odk-59-H2e" firstAttribute="top" secondItem="9E9-4e-TCW" secondAttribute="bottom" constant="8" id="FcS-Wl-4Vg"/>
                 <constraint firstItem="RXD-Tz-NED" firstAttribute="top" secondItem="9Dw-zL-FXQ" secondAttribute="top" constant="16" id="Jio-qg-sd9"/>
                 <constraint firstItem="9E9-4e-TCW" firstAttribute="top" secondItem="MKB-dJ-QPy" secondAttribute="bottom" constant="2" id="KKc-ux-4HJ"/>

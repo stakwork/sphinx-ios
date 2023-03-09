@@ -29,15 +29,15 @@ class FeedItemDetailVM : NSObject{
             return [
                 .share,
                 .copyLink,
-                .markAsPlayed
+                (episode?.wasPlayed == true) ? .markAsUnplayed : .markAsPlayed
             ]
         }
         else{
             return [
-                .download,
+                episode?.isDownloaded ?? false ? .erase : .download,
                 .share,
                 .copyLink,
-                .markAsPlayed
+                (episode?.wasPlayed == true) ? .markAsUnplayed : .markAsPlayed
             ]
         }
     }
@@ -89,18 +89,7 @@ class FeedItemDetailVM : NSObject{
             }
             break
         case .markAsPlayed:
-            vc?.dismiss(animated: true)
-            if let episode = episode{
-                episode.wasPlayed = true
-                NewMessageBubbleHelper().showGenericMessageView(text: "Marking episode as played!")
-                if let delegate = delegate as? NewPodcastPlayerViewController{
-                    delegate.reload(indexPath.row)
-                }
-                else if let delegate = delegate as? RecommendationFeedItemsCollectionViewController{
-                    delegate.configureDataSource(for: delegate.collectionView)
-                }
-            }
-            
+            setPlayedStatus(playStatus: true)
             break
         case .copyLink:
             if let episode = episode{
@@ -137,6 +126,35 @@ class FeedItemDetailVM : NSObject{
             }
             
             break
+        case .markAsUnplayed:
+            setPlayedStatus(playStatus: false)
+            break
+        case .erase:
+            vc?.dismiss(animated: true)
+            if let episode = episode{
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+                    self.delegate?.deleteTapped(self.indexPath, episode: episode)
+                })
+            }
+            break
+        }
+    }
+    
+    func setPlayedStatus(playStatus:Bool){
+        vc?.dismiss(animated: true)
+        if let valid_episode = episode{
+            valid_episode.wasPlayed = playStatus
+            let statusString = (valid_episode.wasPlayed ?? false) ? "marking.as.unplayed".localized : "marking.as.unplayed".localized
+            NewMessageBubbleHelper().showGenericMessageView(text: statusString)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+                if let delegate = self.delegate as? NewPodcastPlayerViewController{
+                    delegate.reload(self.indexPath.row)
+                }
+                else if let delegate = self.delegate as? RecommendationFeedItemsCollectionViewController{
+                    delegate.configureDataSource(for: delegate.collectionView)
+                }
+            })
+            
         }
     }
     

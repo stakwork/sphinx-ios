@@ -105,6 +105,8 @@ class UnifiedEpisodeView : UIView {
             mediaTypeImageView.image = #imageLiteral(resourceName: "podcastTypeIcon")
         }
         
+        mediaTypeImageView.layer.cornerRadius = 3.0
+        
         dateLabel.text = episode.dateString
         
         setProgress()
@@ -118,7 +120,8 @@ class UnifiedEpisodeView : UIView {
                 setUIAsPlayed()
             }
             else{
-                timeRemainingLabel.text = "\(valid_string) left"
+                let suffix = (episode.currentTime == nil || episode.currentTime == 0) ? "" : " left"
+                timeRemainingLabel.text = "\(valid_string)\(suffix)"
                 didPlayImageView.isHidden = true
             }
         }
@@ -159,12 +162,13 @@ class UnifiedEpisodeView : UIView {
             mediaTypeImageView.isHidden = true
         }
         timeRemainingLabel.isHidden = true
-        downloadButton.isHidden = true
+        downloadButton.alpha = 0.25
         progressView.isHidden = true
         durationView.isHidden = true
         downloadProgressLabel.isHidden = true
         didPlayImageView.isHidden = true
         playArrow.makeCircular()
+        dotView.isHidden = true
         
         episodeImageView.sd_cancelCurrentImageLoad()
         

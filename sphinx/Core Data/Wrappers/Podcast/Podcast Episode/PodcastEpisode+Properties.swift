@@ -86,8 +86,8 @@ public class PodcastEpisode: NSObject {
     func getTimeString(type:TimeStringType)->String?{
         var time : Int = 0
         if type == .remaining,
-           let valid_elapsed = self.currentTime,
            let valid_duration = self.duration{
+            let valid_elapsed = self.currentTime ?? 0
             time = valid_duration - valid_elapsed
             if time < 60{
                 return "Played"

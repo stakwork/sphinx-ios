@@ -13,6 +13,8 @@ public enum FeedItemActionType{
     case share
     case markAsPlayed
     case copyLink
+    case markAsUnplayed
+    case erase
 }
 
 class FeedItemDetailActionCell: UITableViewCell {
@@ -51,6 +53,14 @@ class FeedItemDetailActionCell: UITableViewCell {
         case .share:
             actionLabel.text = "share".localized
             actionIconButton.setTitle("ios_share", for: .normal)
+            break
+        case .markAsUnplayed:
+            actionLabel.text = "mark.as.unplayed".localized
+            actionIconButton.setTitle("undo", for: .normal)
+            break
+        case .erase:
+            actionLabel.text = "erase.from.device".localized
+            actionIconButton.setTitle("delete", for: .normal)
             break
         }
     }

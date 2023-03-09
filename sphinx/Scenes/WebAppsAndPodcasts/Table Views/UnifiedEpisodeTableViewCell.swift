@@ -23,14 +23,24 @@ class UnifiedEpisodeTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func configureWith(podcast: PodcastFeed?,
-                       and episode: PodcastEpisode,
-                       download: Download?,
-                       delegate: PodcastEpisodeRowDelegate,
-                       isLastRow: Bool,
-                       playing: Bool){
+    func configureWith(
+        podcast: PodcastFeed?,
+        and episode: PodcastEpisode,
+        download: Download?,
+        delegate: PodcastEpisodeRowDelegate,
+        isLastRow: Bool,
+        playing: Bool
+    ) {
         unifiedEpisodeView.presentingTableViewCell = self
-        unifiedEpisodeView.configureWith(podcast: podcast, and: episode, download: download, delegate: delegate, isLastRow: isLastRow, playing: playing)
+        
+        unifiedEpisodeView.configureWith(
+            podcast: podcast,
+            and: episode,
+            download: download,
+            delegate: delegate,
+            isLastRow: isLastRow,
+            playing: playing
+        )
     }
     
 }

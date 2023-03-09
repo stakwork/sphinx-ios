@@ -513,6 +513,7 @@
 "marking.as.unplayed" = "Marcando como no leído!";
 "erase.from.device" = "Borrar del despositivo";
 "share" = "Compartir";
+"played" = "Reproducido";
 
 // VIDEOS
 "video" = "video";

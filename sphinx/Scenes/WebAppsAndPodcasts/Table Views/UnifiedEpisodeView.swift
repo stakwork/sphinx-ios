@@ -9,6 +9,18 @@
 import Foundation
 import UIKit
 
+protocol PodcastEpisodeRowDelegate : class {
+    func shouldStartDownloading(episode: PodcastEpisode, cell: UITableViewCell)
+    func shouldStartDownloading(episode: PodcastEpisode, cell: UICollectionViewCell)
+    func shouldDeleteFile(episode: PodcastEpisode, cell: UITableViewCell)
+    func shouldDeleteFile(episode: PodcastEpisode, cell: UICollectionViewCell)
+    func shouldShowMore(episode: PodcastEpisode,cell:UICollectionViewCell)
+    func shouldShowMore(video:Video,cell:UICollectionViewCell)
+    func shouldShowMore(episode: PodcastEpisode,cell:UITableViewCell)
+    func shouldShare(episode: PodcastEpisode)
+    func shouldShare(video:Video)
+}
+
 class UnifiedEpisodeView : UIView {
     
     @IBOutlet var contentView: UIView!
@@ -29,16 +41,16 @@ class UnifiedEpisodeView : UIView {
     @IBOutlet weak var mediaTypeImageView: UIImageView!
     @IBOutlet weak var durationView: UIView!
     @IBOutlet weak var progressView: UIView!
-    @IBOutlet weak var downloadProgressLabel: UILabel!
     @IBOutlet weak var didPlayImageView: UIImageView!
+    @IBOutlet weak var downloadProgressBar: CircularProgressView!
     
-    var videoEpisode: Video! {
-        didSet {
-            DispatchQueue.main.async { [weak self] in
-                self?.updateViewsWithVideoEpisode()
-            }
-        }
-    }
+    var episode: PodcastEpisode! = nil
+    var videoEpisode: Video! = nil
+    
+    weak var delegate: PodcastEpisodeRowDelegate?
+    
+    weak var presentingTableViewCell : UITableViewCell?
+    weak var presentingCollectionViewCell : UICollectionViewCell?
     
     var thumbnailImageViewURL: URL? {
         videoEpisode.thumbnailURL
@@ -59,25 +71,68 @@ class UnifiedEpisodeView : UIView {
         addSubview(contentView)
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        
+        durationView.alpha = 0.1
+        
+        dotView.makeCircular()
+        playArrow.makeCircular()
+        roundCorners()
     }
     
-    var episode: PodcastEpisode! = nil
-    weak var delegate: PodcastEpisodeRowDelegate?
-    weak var presentingTableViewCell : UITableViewCell?
-    weak var presentingCollectionViewCell : UICollectionViewCell?
-    
+    func roundCorners(){
+        mediaTypeImageView.layer.cornerRadius = 3.0
+        episodeImageView.layer.cornerRadius = 6.0
+        durationView.layer.cornerRadius = 3.0
+        progressView.layer.cornerRadius = 3.0
+    }
     
     func configure(withVideoEpisode videoEpisode: Video) {
         self.videoEpisode = videoEpisode
+        
+        let id = videoEpisode.videoID
+        
+        if let _ = id.range(of: "yt:") {
+            mediaTypeImageView.image = UIImage(named: "youtubeVideoTypeIcon")
+        } else {
+            mediaTypeImageView.isHidden = true
+        }
+        
+        timeRemainingLabel.isHidden = true
+        progressView.isHidden = true
+        durationView.isHidden = true
+        downloadProgressBar.isHidden = true
+        didPlayImageView.isHidden = true
+        dotView.isHidden = true
+        
+        downloadButton.alpha = 0.5
+        downloadButton.isEnabled = false
+        
+        episodeImageView.sd_cancelCurrentImageLoad()
+        
+        if let imageURL = thumbnailImageViewURL {
+            episodeImageView.sd_setImage(
+                with: imageURL,
+                placeholderImage: UIImage(named: "videoPlaceholder"),
+                options: [.highPriority],
+                progress: nil
+            )
+        } else {
+            episodeImageView.image = UIImage(named: "videoPlaceholder")
+        }
+
+        descriptionLabel.text = videoEpisode.videoDescription
+        episodeLabel.text = videoEpisode.titleForDisplay
+        dateLabel.text = videoEpisode.publishDateText
     }
     
-    func configureWith(podcast: PodcastFeed?,
-                       and episode: PodcastEpisode,
-                       download: Download?,
-                       delegate: PodcastEpisodeRowDelegate,
-                       isLastRow: Bool,
-                       playing: Bool) {
-        
+    func configureWith(
+       podcast: PodcastFeed?,
+       and episode: PodcastEpisode,
+       download: Download?,
+       delegate: PodcastEpisodeRowDelegate,
+       isLastRow: Bool,
+       playing: Bool
+    ) {
         self.episode = episode
         self.delegate = delegate
         
@@ -85,53 +140,48 @@ class UnifiedEpisodeView : UIView {
         progressView.backgroundColor = !playing ? UIColor.Sphinx.Text : UIColor.Sphinx.BlueTextAccent
         progressView.alpha = !playing ? 0.3 : 1.0
         playArrow.text = !playing ? "play_arrow" : "pause"
-        playArrow.makeCircular()
         
         episodeLabel.text = episode.title ?? "No title"
         descriptionLabel.text = episode.episodeDescription?.nonHtmlRawString ?? "No description"
         divider.isHidden = isLastRow
         
-        dotView.makeCircular()
-        
-        if(episode.type == "youtube") {
-            mediaTypeImageView.image = #imageLiteral(resourceName: "youtubeVideoTypeIcon")
-            downloadButton.isHidden = true
-        }
-        else if let feed = episode.feed,
-                feed.isRecommendationsPodcast{
-            downloadButton.isHidden = true
-        }
-        else{
-            mediaTypeImageView.image = #imageLiteral(resourceName: "podcastTypeIcon")
+        if let typeIconImage = episode.typeIconImage {
+            mediaTypeImageView.image = UIImage(named: typeIconImage)
         }
         
-        mediaTypeImageView.layer.cornerRadius = 3.0
+        if podcast?.isRecommendationsPodcast == true {
+            downloadButton.isEnabled = false
+            downloadButton.alpha = 0.5
+        } else {
+            downloadButton.isEnabled = true
+            downloadButton.alpha = 1.0
+        }
         
         dateLabel.text = episode.dateString
         
-        setProgress()
-        
-        if let playedStatus = episode.wasPlayed,
-           playedStatus == true{
-            setUIAsPlayed()
-        }
-        else if let valid_string = episode.getTimeString(type: .remaining){
-            if valid_string == "Played"{
-                setUIAsPlayed()
-            }
-            else{
-                let suffix = (episode.currentTime == nil || episode.currentTime == 0) ? "" : " left"
-                timeRemainingLabel.text = "\(valid_string)\(suffix)"
-                didPlayImageView.isHidden = true
-            }
-        }
-        else{
-            timeRemainingLabel.text = ""
+        if let playedStatus = episode.wasPlayed, playedStatus == true {
+            setAsPlayed()
+        } else {
+            let duration = episode.duration ?? 0
+            let currentTime = episode.currentTime ?? 0
+            
+            let timeString = (duration - currentTime).getEpisodeTimeString(
+                isOnProgress: currentTime > 0
+            )
+            
+            timeRemainingLabel.text = timeString
             didPlayImageView.isHidden = true
         }
-        
+
+        setProgress()
         configureDownload(episode: episode, download: download)
-        
+        setImage(podcast: podcast, and: episode)
+    }
+    
+    func setImage(
+        podcast: PodcastFeed?,
+        and episode: PodcastEpisode
+    ) {
         episodeImageView.sd_cancelCurrentImageLoad()
         
         if let episodeURLPath = episode.imageURLPath, let url = URL(string: episodeURLPath) {
@@ -149,90 +199,31 @@ class UnifiedEpisodeView : UIView {
                 progress: nil
             )
         }
-        
-        roundCorners()
     }
     
-    private func updateViewsWithVideoEpisode() {
-        if let id = videoEpisode.videoID as? String,
-           let _ = id.range(of: "yt:"){
-            mediaTypeImageView.image = #imageLiteral(resourceName: "youtubeVideoTypeIcon")
-        }
-        else{
-            mediaTypeImageView.isHidden = true
-        }
-        timeRemainingLabel.isHidden = true
-        downloadButton.alpha = 0.25
-        progressView.isHidden = true
-        durationView.isHidden = true
-        downloadProgressLabel.isHidden = true
-        didPlayImageView.isHidden = true
-        playArrow.makeCircular()
-        dotView.isHidden = true
-        
-        episodeImageView.sd_cancelCurrentImageLoad()
-        
-        if let imageURL = thumbnailImageViewURL {
-            episodeImageView.sd_setImage(
-                with: imageURL,
-                placeholderImage: UIImage(named: "videoPlaceholder"),
-                options: [.highPriority],
-                progress: nil
-            )
-        } else {
-            // 📝 TODO:  Use a video placeholder here
-            episodeImageView.image = UIImage(named: "videoPlaceholder")
-        }
-
-        descriptionLabel.text = videoEpisode.videoDescription
-        episodeLabel.text = videoEpisode.titleForDisplay
-        dateLabel.text = videoEpisode.publishDateText
-    }
-    
-    func setUIAsPlayed(){
-        timeRemainingLabel.text = "Played"
+    func setAsPlayed() {
+        timeRemainingLabel.text = "played".localized
         didPlayImageView.isHidden = false
-        if episode.wasPlayed == false {episode.wasPlayed = true}
-    }
-    //UI Stuff
-    func roundCorners(){
-        mediaTypeImageView.layer.cornerRadius = 3.0
-        episodeImageView.layer.cornerRadius = 6.0
-        durationView.layer.cornerRadius = 3.0
-        progressView.layer.cornerRadius = 3.0
-        
     }
     
-    func setProgress(){
+    func setProgress() {
         let fullWidth = durationWidthConstraint.constant
-        if let feed = episode.feed,
-           feed.isRecommendationsPodcast{
-            durationView.isHidden = true
-            progressView.isHidden = true
-        }
-        else if let valid_duration = episode.duration,
-           let valid_time = episode.currentTime{
+        
+        durationView.isHidden = true
+        progressView.isHidden = true
+        
+        if let valid_duration = episode.duration, let valid_time = episode.currentTime, valid_time > 0 {
             let percentage = Float(valid_time) / Float(valid_duration)
             let newProgressWidth = (percentage * Float(fullWidth))
             progressWidthConstraint.constant = CGFloat(newProgressWidth)
+            
+            durationView.isHidden = false
+            progressView.isHidden = false
         }
-        else{
-            durationView.isHidden = true
-            progressView.isHidden = true
-        }
-        
-        durationView.alpha = 0.1
     }
     
     //Networking:
     func configureDownload(episode: PodcastEpisode, download: Download?) {
-        
-        //contentView.alpha = episode.isAvailable ? 1.0 : 0.5
-
-        //recognizer?.isEnabled = episode.isDownloaded
-        
-        downloadProgressLabel.text = ""
-
         if episode.isDownloaded {
             downloadButton.setTitle("download_done", for: .normal)
             downloadButton.setTitleColor(UIColor.Sphinx.PrimaryGreen, for: .normal)
@@ -243,14 +234,18 @@ class UnifiedEpisodeView : UIView {
         
         if let download = download {
             updateProgress(progress: download.progress)
+        } else {
+            downloadProgressBar.progressAnimation(to: 0)
+            downloadButton.isHidden = false
+            downloadProgressBar.isHidden = true
         }
-         
     }
     
     func updateProgress(progress: Int) {
-        print(progress)
-        downloadProgressLabel.text = (progress > 0) ? "\(progress)%" : ""
-        downloadButton.setTitle((progress > 0) ? "" : "hourglass_top", for: .normal)
+        let progress = CGFloat(progress) / CGFloat(100)
+        downloadButton.isHidden = true
+        downloadProgressBar.isHidden = false
+        downloadProgressBar.progressAnimation(to: progress)
     }
     
     @IBAction func downloadButtonTouched() {
@@ -270,19 +265,14 @@ class UnifiedEpisodeView : UIView {
     }
     
     @IBAction func moreButtonTouched(){
-        if let delegate = delegate,
-           let presentingTableViewCell = presentingTableViewCell{
+        if let delegate = delegate,let presentingTableViewCell = presentingTableViewCell {
             delegate.shouldShowMore(episode: episode, cell: presentingTableViewCell)
-        }
-        else if let delegate = delegate,
-                let presentingCollectionViewCell = presentingCollectionViewCell{
-            if let episode = episode{
+        } else if let delegate = delegate, let presentingCollectionViewCell = presentingCollectionViewCell {
+            if let episode = episode {
                 delegate.shouldShowMore(episode: episode, cell: presentingCollectionViewCell)
-            }
-            else if let video = videoEpisode{
+            } else if let video = videoEpisode {
                 delegate.shouldShowMore(video: video, cell: presentingCollectionViewCell)
             }
-            
         }
     }
     

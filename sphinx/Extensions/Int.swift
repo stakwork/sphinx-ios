@@ -23,6 +23,10 @@ extension Int {
         let hours = Int((self % 86400) / 3600)
         let minutes = Int((self % 3600) / 60)
         
+        if (self == 0) {
+            return ""
+        }
+        
         var string = ""
         
         if hours > 1 {

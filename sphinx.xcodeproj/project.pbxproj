@@ -17,8 +17,6 @@
 		47018F9727D1079800797E0B /* FeedLoaderHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47018F9627D1079800797E0B /* FeedLoaderHelper.swift */; };
 		47018F9927D2673200797E0B /* DashboardRootViewController+PodcastPlayerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47018F9827D2673200797E0B /* DashboardRootViewController+PodcastPlayerDelegate.swift */; };
 		47018F9B27D65B8D00797E0B /* CustomDismissibleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47018F9A27D65B8C00797E0B /* CustomDismissibleView.swift */; };
-		470396D82535D12D007F9C23 /* PodcastEpisodeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470396D62535D12D007F9C23 /* PodcastEpisodeTableViewCell.swift */; };
-		470396D92535D12D007F9C23 /* PodcastEpisodeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 470396D72535D12D007F9C23 /* PodcastEpisodeTableViewCell.xib */; };
 		470396DC2535D2EB007F9C23 /* PodcastEpisodesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470396DB2535D2EB007F9C23 /* PodcastEpisodesDataSource.swift */; };
 		4703CF852518FA3F007B685C /* FileSentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4703CF832518FA3F007B685C /* FileSentTableViewCell.swift */; };
 		4703CF862518FA3F007B685C /* FileSentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4703CF842518FA3F007B685C /* FileSentTableViewCell.xib */; };
@@ -104,8 +102,6 @@
 		472161D1293A67EA0088B87B /* RecommendationFeedItemsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472161D0293A67EA0088B87B /* RecommendationFeedItemsCollectionViewController.swift */; };
 		472161D3293A680F0088B87B /* RecommendationDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472161D2293A680F0088B87B /* RecommendationDetailsView.swift */; };
 		472161D5293A681D0088B87B /* RecommendationDetailsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 472161D4293A681D0088B87B /* RecommendationDetailsView.xib */; };
-		472161D8293A68400088B87B /* RecommendationItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472161D6293A68400088B87B /* RecommendationItemCollectionViewCell.swift */; };
-		472161D9293A68400088B87B /* RecommendationItemCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 472161D7293A68400088B87B /* RecommendationItemCollectionViewCell.xib */; };
 		472161DC293A686A0088B87B /* RecommendationsHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472161DA293A686A0088B87B /* RecommendationsHeaderCollectionReusableView.swift */; };
 		472161DE293A6FC20088B87B /* RecommendationsHeaderCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 472161E0293A6FC20088B87B /* RecommendationsHeaderCollectionReusableView.xib */; };
 		4724BC1325474B440012BD76 /* WebApps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4724BC1525474B440012BD76 /* WebApps.storyboard */; };
@@ -572,6 +568,8 @@
 		47E194CE2350DB0E004B86A1 /* SphinxSocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E194CD2350DB0E004B86A1 /* SphinxSocketManager.swift */; };
 		47E300DF234B81F800DB56DB /* LeftMenuAddFriendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E300DE234B81F800DB56DB /* LeftMenuAddFriendTableViewCell.swift */; };
 		47E300E4234B83EC00DB56DB /* AddFriendRowButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E300E3234B83EC00DB56DB /* AddFriendRowButton.swift */; };
+		47EB025B29BA343E0032CFB5 /* CircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EB025A29BA343E0032CFB5 /* CircularProgressView.swift */; };
+		47EB025D29BA37D50032CFB5 /* CircularProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47EB025C29BA37D50032CFB5 /* CircularProgressView.xib */; };
 		47F2289E23672A5E001429A4 /* ImagePickerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F2289D23672A5E001429A4 /* ImagePickerManager.swift */; };
 		47F228A0236872E8001429A4 /* SwipableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F2289F236872E8001429A4 /* SwipableCell.swift */; };
 		47F258BC2539DA0100122A5A /* PodcastCommentSentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F258BA2539DA0100122A5A /* PodcastCommentSentTableViewCell.swift */; };
@@ -812,8 +810,6 @@
 		47018F9627D1079800797E0B /* FeedLoaderHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedLoaderHelper.swift; sourceTree = "<group>"; };
 		47018F9827D2673200797E0B /* DashboardRootViewController+PodcastPlayerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DashboardRootViewController+PodcastPlayerDelegate.swift"; sourceTree = "<group>"; };
 		47018F9A27D65B8C00797E0B /* CustomDismissibleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDismissibleView.swift; sourceTree = "<group>"; };
-		470396D62535D12D007F9C23 /* PodcastEpisodeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastEpisodeTableViewCell.swift; sourceTree = "<group>"; };
-		470396D72535D12D007F9C23 /* PodcastEpisodeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PodcastEpisodeTableViewCell.xib; sourceTree = "<group>"; };
 		470396DB2535D2EB007F9C23 /* PodcastEpisodesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastEpisodesDataSource.swift; sourceTree = "<group>"; };
 		4703CF832518FA3F007B685C /* FileSentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSentTableViewCell.swift; sourceTree = "<group>"; };
 		4703CF842518FA3F007B685C /* FileSentTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FileSentTableViewCell.xib; sourceTree = "<group>"; };
@@ -916,8 +912,6 @@
 		472161D0293A67EA0088B87B /* RecommendationFeedItemsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationFeedItemsCollectionViewController.swift; sourceTree = "<group>"; };
 		472161D2293A680F0088B87B /* RecommendationDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationDetailsView.swift; sourceTree = "<group>"; };
 		472161D4293A681D0088B87B /* RecommendationDetailsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecommendationDetailsView.xib; sourceTree = "<group>"; };
-		472161D6293A68400088B87B /* RecommendationItemCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationItemCollectionViewCell.swift; sourceTree = "<group>"; };
-		472161D7293A68400088B87B /* RecommendationItemCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecommendationItemCollectionViewCell.xib; sourceTree = "<group>"; };
 		472161DA293A686A0088B87B /* RecommendationsHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
 		472161DF293A6FC20088B87B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/RecommendationsHeaderCollectionReusableView.xib; sourceTree = "<group>"; };
 		472161E2293A6FC30088B87B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/RecommendationsHeaderCollectionReusableView.strings; sourceTree = "<group>"; };
@@ -1505,6 +1499,8 @@
 		47E300DE234B81F800DB56DB /* LeftMenuAddFriendTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftMenuAddFriendTableViewCell.swift; sourceTree = "<group>"; };
 		47E300E3234B83EC00DB56DB /* AddFriendRowButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendRowButton.swift; sourceTree = "<group>"; };
 		47E61581237DC7F400630FD1 /* sphinx.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = sphinx.entitlements; sourceTree = "<group>"; };
+		47EB025A29BA343E0032CFB5 /* CircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressView.swift; sourceTree = "<group>"; };
+		47EB025C29BA37D50032CFB5 /* CircularProgressView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CircularProgressView.xib; sourceTree = "<group>"; };
 		47F2289D23672A5E001429A4 /* ImagePickerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerManager.swift; sourceTree = "<group>"; };
 		47F2289F236872E8001429A4 /* SwipableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipableCell.swift; sourceTree = "<group>"; };
 		47F258BA2539DA0100122A5A /* PodcastCommentSentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastCommentSentTableViewCell.swift; sourceTree = "<group>"; };
@@ -1801,8 +1797,6 @@
 				CE3D8CAF29B1471900EDB637 /* FeedItemDetailActionCell.xib */,
 				CE3D8CAB29B1124E00EDB637 /* FeedItemDetailHeaderCell.xib */,
 				CEE433B129AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.xib */,
-				470396D62535D12D007F9C23 /* PodcastEpisodeTableViewCell.swift */,
-				470396D72535D12D007F9C23 /* PodcastEpisodeTableViewCell.xib */,
 			);
 			path = "Table Views";
 			sourceTree = "<group>";
@@ -2020,8 +2014,6 @@
 			children = (
 				472161DA293A686A0088B87B /* RecommendationsHeaderCollectionReusableView.swift */,
 				472161E0293A6FC20088B87B /* RecommendationsHeaderCollectionReusableView.xib */,
-				472161D6293A68400088B87B /* RecommendationItemCollectionViewCell.swift */,
-				472161D7293A68400088B87B /* RecommendationItemCollectionViewCell.xib */,
 				CEF88DCF29B66B9200DC1C40 /* RecommendationItemWUnifiedViewCollectionViewCell.swift */,
 				CEF88DD029B66B9200DC1C40 /* RecommendationItemWUnifiedViewCollectionViewCell.xib */,
 			);
@@ -3236,6 +3228,8 @@
 				47AF0D38254C98DE00C98398 /* BoostFireworksAnimationView.xib */,
 				4705D3982799AAB5009C0729 /* CustomBoostView.swift */,
 				4705D39A2799AAC0009C0729 /* CustomBoostView.xib */,
+				47EB025A29BA343E0032CFB5 /* CircularProgressView.swift */,
+				47EB025C29BA37D50032CFB5 /* CircularProgressView.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -4283,6 +4277,7 @@
 				475BDD4C232AD00D00C5BBD6 /* Roboto-Light.ttf in Resources */,
 				475BDD6B232BEFFC00C5BBD6 /* Root.storyboard in Resources */,
 				47484B95251255CF00F82AAC /* MessageWebViewTableViewCell.xib in Resources */,
+				47EB025D29BA37D50032CFB5 /* CircularProgressView.xib in Resources */,
 				47ACBC3E265EA69200D2FE47 /* PersonModalView.xib in Resources */,
 				4787F8822474623F00CCE8B9 /* GroupTagCollectionViewCell.xib in Resources */,
 				475BDD4D232AD00D00C5BBD6 /* Roboto-Medium.ttf in Resources */,
@@ -4388,7 +4383,6 @@
 				4785C10024D1EE1F004E2D6C /* GroupRequestTableViewCell.xib in Resources */,
 				479608F6256EAEBD00A68FC1 /* MessageBoostView.xib in Resources */,
 				47822C6E2449EEEE0011D832 /* PaidMessageReceivedTableViewCell.xib in Resources */,
-				472161D9293A68400088B87B /* RecommendationItemCollectionViewCell.xib in Resources */,
 				473633E825558F0B007405F2 /* PodcastSatsView.xib in Resources */,
 				476EB47623C50662009745E2 /* GroupContactTableViewCell.xib in Resources */,
 				4726A40F24C09C4C005A66B4 /* ChatListHeader.xib in Resources */,
@@ -4401,7 +4395,6 @@
 				475BDCDF232AC23B00C5BBD6 /* PaidInvoiceSentTableViewCell.xib in Resources */,
 				CE3133B22977747E00E91E3A /* BadgeAdminListTableViewCell.xib in Resources */,
 				47893A8C24095A30002F675B /* AudioSentTableViewCell.xib in Resources */,
-				470396D92535D12D007F9C23 /* PodcastEpisodeTableViewCell.xib in Resources */,
 				475BDD8E232C087A00C5BBD6 /* TransactionPaymentSentTableViewCell.xib in Resources */,
 				475BDCB8232AC1E800C5BBD6 /* PaymentInvoiceView.xib in Resources */,
 				4797E79E24B8EF3600D13270 /* ExpiredInvoiceReceivedTableViewCell.xib in Resources */,
@@ -4789,7 +4782,6 @@
 				4789E24A24EDB73B003991BE /* WebAppViewController.swift in Sources */,
 				F3D04027268BABFF00D54A94 /* InviteActionsHelper.swift in Sources */,
 				F3531C3D26BD505F00E9586C /* DashboardChatsListDelegate.swift in Sources */,
-				472161D8293A68400088B87B /* RecommendationItemCollectionViewCell.swift in Sources */,
 				F3188B822717942000890DDD /* VideoFeed+Computeds.swift in Sources */,
 				F3D04020268BAB7500D54A94 /* InviteWelcomeViewController.swift in Sources */,
 				475154B32423E7FE00477384 /* VideoCallSentTableViewCell.swift in Sources */,
@@ -4816,6 +4808,7 @@
 				47669F3F23CF7CB300C17A77 /* ChatListCommonObject.swift in Sources */,
 				475BDD1E232AC47C00C5BBD6 /* PayInvoiceViewController.swift in Sources */,
 				47AA08C5234B96BF002C69E2 /* ConfirmAddFriendViewController.swift in Sources */,
+				47EB025B29BA343E0032CFB5 /* CircularProgressView.swift in Sources */,
 				47CC7CE923E4718600730E6F /* ImageFullScreenViewController.swift in Sources */,
 				474FE32A23F588D400C06FC8 /* VideoReceivedTableViewCell.swift in Sources */,
 				4703CF9025190138007B685C /* CommonFileTableViewCell.swift in Sources */,
@@ -4913,7 +4906,6 @@
 				476A10BB23A91FCE00817892 /* API+ChatsExtension.swift in Sources */,
 				4703CFA125278C40007B685C /* API+RedeemSatsExtension.swift in Sources */,
 				CECFBF012965C85B00BAD935 /* DiscoverTribesTableViewCell.swift in Sources */,
-				470396D82535D12D007F9C23 /* PodcastEpisodeTableViewCell.swift in Sources */,
 				47018F9B27D65B8D00797E0B /* CustomDismissibleView.swift in Sources */,
 				4726F0A625791CF900E20EA9 /* TribeLinkPreviewView.swift in Sources */,
 				CE842DE0298ADECF00620AD3 /* MemberBadgeHeaderCell.swift in Sources */,

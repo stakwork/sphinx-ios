@@ -40,9 +40,7 @@ public class PodcastEpisode: NSObject {
             return UserDefaults.standard.value(forKey: "wasPlayed-\(itemID)") as? Bool
         }
         set {
-            if (newValue ?? false != false) {
-                UserDefaults.standard.set(newValue, forKey: "wasPlayed-\(itemID)")
-            }
+            UserDefaults.standard.set(newValue, forKey: "wasPlayed-\(itemID)")
         }
     }
     
@@ -81,40 +79,6 @@ public class PodcastEpisode: NSObject {
         case elapsed
         case total
         case remaining
-    }
-    
-    func getTimeString(type:TimeStringType)->String?{
-        var time : Int = 0
-        if type == .remaining,
-           let valid_duration = self.duration{
-            let valid_elapsed = self.currentTime ?? 0
-            time = valid_duration - valid_elapsed
-            if time < 60{
-                return "Played"
-            }
-        }
-        else if type == .elapsed,
-            let valid_elapsed = self.currentTime{
-            time = valid_elapsed
-        }
-        else if type == .total,
-            let valid_duration = self.duration{
-            time = valid_duration
-        }
-        else{
-            return nil
-        }
-        
-        let formatter = DateComponentsFormatter()
-        formatter.unitsStyle = .short
-        formatter.allowedUnits = (time > 3599) ? [.hour, .minute] : [.minute]
-        formatter.zeroFormattingBehavior = .pad
-        var components = DateComponents()
-        components.second = time
-        let result = formatter.string(from: components)
-        
-        
-        return result
     }
     
     var youtubeVideoId: String? {
@@ -198,6 +162,36 @@ extension PodcastEpisode {
                 return Int(FeedType.Video.rawValue)
             }
             return Int(FeedType.Podcast.rawValue)
+        }
+    }
+    
+    var typeIconImage: String? {
+        get {
+            switch type {
+            case RecommendationsHelper.PODCAST_TYPE:
+                return "podcastTypeIcon"
+            case RecommendationsHelper.YOUTUBE_VIDEO_TYPE:
+                return "youtubeVideoTypeIcon"
+            case RecommendationsHelper.TWITTER_TYPE:
+                return "twitterTypeIcon"
+            default:
+                return "podcastTypeIcon"
+            }
+        }
+    }
+    
+    var typeLabel: String {
+        get {
+            switch type {
+            case RecommendationsHelper.PODCAST_TYPE:
+                return "Podcast"
+            case RecommendationsHelper.YOUTUBE_VIDEO_TYPE:
+                return "Youtube"
+            case RecommendationsHelper.TWITTER_TYPE:
+                return "Twitter"
+            default:
+                return "Podcast"
+            }
         }
     }
     

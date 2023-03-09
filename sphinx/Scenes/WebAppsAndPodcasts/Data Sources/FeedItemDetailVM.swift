@@ -140,17 +140,23 @@ class FeedItemDetailVM : NSObject{
         }
     }
     
-    func setPlayedStatus(playStatus:Bool){
+    func setPlayedStatus(
+        playStatus: Bool
+    ){
         vc?.dismiss(animated: true)
-        if let valid_episode = episode{
+        
+        if let valid_episode = episode {
+            
             valid_episode.wasPlayed = playStatus
+            
             let statusString = (valid_episode.wasPlayed ?? false) ? "marking.as.unplayed".localized : "marking.as.unplayed".localized
+            
             NewMessageBubbleHelper().showGenericMessageView(text: statusString)
+            
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
-                if let delegate = self.delegate as? NewPodcastPlayerViewController{
+                if let delegate = self.delegate as? NewPodcastPlayerViewController {
                     delegate.reload(self.indexPath.row)
-                }
-                else if let delegate = self.delegate as? RecommendationFeedItemsCollectionViewController{
+                } else if let delegate = self.delegate as? RecommendationFeedItemsCollectionViewController {
                     delegate.configureDataSource(for: delegate.collectionView)
                 }
             })

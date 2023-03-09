@@ -18,10 +18,17 @@ class RecommendationItemWUnifiedViewCollectionViewCell: UICollectionViewCell {
     }
 
     func configure(withItem item: PodcastEpisode) {
-        if let feed = item.feed,
-         let delegate = delegate{
+        if let feed = item.feed, let delegate = delegate {
             unifiedEpisodeView.presentingCollectionViewCell = self
-            unifiedEpisodeView.configureWith(podcast: feed, and: item, download: nil, delegate: delegate, isLastRow: false, playing: false)
+            
+            unifiedEpisodeView.configureWith(
+                podcast: feed,
+                and: item,
+                download: nil,
+                delegate: delegate,
+                isLastRow: false,
+                playing: false
+            )
         }
     }
     

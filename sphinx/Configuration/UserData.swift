@@ -259,6 +259,14 @@ class UserData {
         completion()
     }
     
+    func getPINNeverOverride() -> Bool{
+        return UserDefaults.Keys.pinNeverOverride.get(defaultValue: true)
+    }
+    
+    func setPINNeverOverride(isEnable:Bool){
+        return UserDefaults.Keys.pinNeverOverride.set(isEnable)
+    }
+    
     func getPINHours() -> Int {
         if GroupsPinManager.sharedInstance.isStandardPIN {
             return UserDefaults.Keys.pinHours.get(defaultValue: 12)

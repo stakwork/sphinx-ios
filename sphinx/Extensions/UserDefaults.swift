@@ -53,6 +53,7 @@ extension UserDefaults {
         public static let currentSessionPin = DefaultKey<String>("currentSessionPin")
         public static let lastPinDate = DefaultKey<Date>("lastPinDate")
         public static let pinHours = DefaultKey<Int>("pinHours")
+        public static let pinNeverOverride = DefaultKey<Bool>("pinNeverOverride")
         public static let privacyPinHours = DefaultKey<Int>("privacyPinHours")
         
         public static let inviteServerURL = DefaultKey<String>("inviteServerURL")

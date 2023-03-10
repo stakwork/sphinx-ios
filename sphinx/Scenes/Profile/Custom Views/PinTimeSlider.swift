@@ -32,9 +32,15 @@ class PinTimeSlider: UIView {
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         
-        let hours = userData.getPINHours()
-        sliderControl.value = Float(hours)
-        hoursLabel.text = getHoursLabel(hours)
+        sliderControl.maximumValue = 25
+        if userData.getPINNeverOverride(){
+            sliderControl.value = Float(25)
+        }
+        else{
+            let hours = userData.getPINHours()
+            sliderControl.value = Float(hours)
+        }
+        hoursLabel.text = getHoursLabel(Int(sliderControl.value))
     }
     
     func getHoursLabel(_ hours: Int) -> String {
@@ -44,6 +50,9 @@ class PinTimeSlider: UIView {
         if hours == 1 {
             return "\(hours) \("hour".localized)"
         }
+        if hours == 25{
+            return "Never"
+        }
         return "\(hours) \("hours".localized)"
     }
 
@@ -52,6 +61,12 @@ class PinTimeSlider: UIView {
         
         let intValue = Int(sender.value)
         hoursLabel.text = getHoursLabel(intValue)
-        userData.setPINHours(hours: intValue)
+        if(intValue < Int(sender.maximumValue)){
+            userData.setPINNeverOverride(isEnable: false)
+            userData.setPINHours(hours: intValue)
+        }
+        else{
+            userData.setPINNeverOverride(isEnable: true)
+        }
     }
 }

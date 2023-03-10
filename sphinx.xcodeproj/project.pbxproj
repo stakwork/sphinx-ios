@@ -498,6 +498,7 @@
 		47AA08C3234B8CF2002C69E2 /* AddFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47AA08C2234B8CF2002C69E2 /* AddFriendViewController.swift */; };
 		47AA08C5234B96BF002C69E2 /* ConfirmAddFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47AA08C4234B96BF002C69E2 /* ConfirmAddFriendViewController.swift */; };
 		47AA08C7234BB8E0002C69E2 /* ShareInviteCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47AA08C6234BB8E0002C69E2 /* ShareInviteCodeViewController.swift */; };
+		47AAD79B29BB6646002B70C1 /* playing_bar.json in Resources */ = {isa = PBXBuildFile; fileRef = 47AAD79A29BB6646002B70C1 /* playing_bar.json */; };
 		47AAFC742387062700E30BDA /* API+UsersExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47AAFC732387062700E30BDA /* API+UsersExtension.swift */; };
 		47AAFC762387063300E30BDA /* API+MessagesExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47AAFC752387063300E30BDA /* API+MessagesExtension.swift */; };
 		47AAFC782387063F00E30BDA /* API+SubscriptionsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47AAFC772387063F00E30BDA /* API+SubscriptionsExtension.swift */; };
@@ -1415,6 +1416,7 @@
 		47AA08C2234B8CF2002C69E2 /* AddFriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendViewController.swift; sourceTree = "<group>"; };
 		47AA08C4234B96BF002C69E2 /* ConfirmAddFriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmAddFriendViewController.swift; sourceTree = "<group>"; };
 		47AA08C6234BB8E0002C69E2 /* ShareInviteCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareInviteCodeViewController.swift; sourceTree = "<group>"; };
+		47AAD79A29BB6646002B70C1 /* playing_bar.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = playing_bar.json; sourceTree = "<group>"; };
 		47AAFC732387062700E30BDA /* API+UsersExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+UsersExtension.swift"; sourceTree = "<group>"; };
 		47AAFC752387063300E30BDA /* API+MessagesExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+MessagesExtension.swift"; sourceTree = "<group>"; };
 		47AAFC772387063F00E30BDA /* API+SubscriptionsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+SubscriptionsExtension.swift"; sourceTree = "<group>"; };
@@ -3401,6 +3403,7 @@
 		47AF0D3A254C9EEC00C98398 /* Animation */ = {
 			isa = PBXGroup;
 			children = (
+				47AAD79A29BB6646002B70C1 /* playing_bar.json */,
 				4746467329883D7C00FAF58B /* pause_animation_light.json */,
 				47018F8027CFB7CD00797E0B /* pause_animation.json */,
 				47FDDB1B2562D77100BBF15F /* boost_animation.json */,
@@ -4227,6 +4230,7 @@
 				47904C0B24BF352300710E7A /* bamboo.caf in Resources */,
 				4797E80724B8FA6700D13270 /* Groups.storyboard in Resources */,
 				47AF0D2F254AFE4900C98398 /* ChatHeaderView.xib in Resources */,
+				47AAD79B29BB6646002B70C1 /* playing_bar.json in Resources */,
 				CE51F35B2989B19800ABBACB /* BadgeDetailCell.xib in Resources */,
 				CEF88DD229B66B9200DC1C40 /* RecommendationItemWUnifiedViewCollectionViewCell.xib in Resources */,
 				475BDD43232AD00D00C5BBD6 /* MaterialIcons-Regular.ttf in Resources */,

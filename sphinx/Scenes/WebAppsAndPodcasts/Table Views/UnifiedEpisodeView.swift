@@ -80,6 +80,7 @@ class UnifiedEpisodeView : UIView {
         dotView.makeCircular()
         playArrow.makeCircular()
         roundCorners()
+        configureAnimation()
     }
     
     func roundCorners(){
@@ -88,6 +89,12 @@ class UnifiedEpisodeView : UIView {
         animationContainer.layer.cornerRadius = 6.0
         durationView.layer.cornerRadius = 3.0
         progressView.layer.cornerRadius = 3.0
+    }
+    
+    func configureAnimation() {
+        let playingAnimation = Animation.named("playing_bar")
+        animationView.animation = playingAnimation
+        animationView.loopMode = .autoReverse
     }
     
     func configure(withVideoEpisode videoEpisode: Video) {
@@ -140,7 +147,8 @@ class UnifiedEpisodeView : UIView {
         self.episode = episode
         self.delegate = delegate
         
-        animationContainer.isHidden = !playing
+        configurePlayingAnimation(playing: playing)
+        
         episodeLabel.textColor = !playing ? UIColor.Sphinx.Text : UIColor.Sphinx.BlueTextAccent
         progressView.backgroundColor = !playing ? UIColor.Sphinx.Text : UIColor.Sphinx.BlueTextAccent
         progressView.alpha = !playing ? 0.3 : 1.0
@@ -181,6 +189,16 @@ class UnifiedEpisodeView : UIView {
         setProgress()
         configureDownload(episode: episode, download: download)
         setImage(podcast: podcast, and: episode)
+    }
+    
+    func configurePlayingAnimation(playing: Bool) {
+        animationContainer.isHidden = !playing
+        
+        if playing && !animationView.isAnimationPlaying {
+            animationView.play()
+        } else if !playing && animationView.isAnimationPlaying {
+            animationView.stop()
+        }
     }
     
     func setImage(

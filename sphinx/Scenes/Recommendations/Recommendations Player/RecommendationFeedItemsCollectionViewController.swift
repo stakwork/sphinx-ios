@@ -48,7 +48,10 @@ extension RecommendationFeedItemsCollectionViewController {
     }
     
     enum DataSourceItem: Hashable {
-        case recommendation(PodcastEpisode)
+        case recommendation(
+            PodcastEpisode,
+            Bool
+        )
     }
 
     typealias RecommendationCell = RecommendationItemWUnifiedViewCollectionViewCell
@@ -223,12 +226,19 @@ extension RecommendationFeedItemsCollectionViewController {
                 }
                 
                 guard
-                    case .recommendation(let recommendation) = dataSourceItem
+                    case .recommendation(
+                        let recommendation,
+                        let playing
+                    ) = dataSourceItem
                 else {
                     preconditionFailure("Failed to find expected data source item")
                 }
                 
-                recommendationCell.configure(withItem: recommendation, andDelegate: self)
+                recommendationCell.configure(
+                    withItem: recommendation,
+                    andDelegate: self,
+                    isPlaying: playing
+                )
 
                 return recommendationCell
             }
@@ -281,7 +291,12 @@ extension RecommendationFeedItemsCollectionViewController {
         snapshot.appendSections(CollectionViewSection.allCases)
 
         snapshot.appendItems(
-            (podcast.episodes ?? []).map { DataSourceItem.recommendation($0) },
+            (podcast.episodes ?? []).map {
+                DataSourceItem.recommendation(
+                    $0,
+                    PodcastPlayerController.sharedInstance.isPlaying(episodeId: $0.itemID)
+                )
+            },
             toSection: .recommendations
         )
 
@@ -310,8 +325,9 @@ extension RecommendationFeedItemsCollectionViewController {
         }
         
         switch dataSourceItem {
-        case .recommendation(let recommendation):
+        case .recommendation(let recommendation, _):
             self.onRecommendationCellSelected(recommendation.itemID)
+            self.updateSnapshot()
         }
     }
 }

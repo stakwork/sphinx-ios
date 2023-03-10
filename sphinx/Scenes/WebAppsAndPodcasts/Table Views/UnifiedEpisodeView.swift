@@ -134,6 +134,8 @@ class UnifiedEpisodeView : UIView {
         downloadButton.alpha = 0.5
         downloadButton.isEnabled = false
         
+        playArrow.isHidden = true
+        
         episodeImageView.sd_cancelCurrentImageLoad()
         
         if let imageURL = thumbnailImageViewURL {
@@ -169,6 +171,7 @@ class UnifiedEpisodeView : UIView {
         progressView.backgroundColor = !playing ? UIColor.Sphinx.Text : UIColor.Sphinx.BlueTextAccent
         progressView.alpha = !playing ? 0.3 : 1.0
         playArrow.text = !playing ? "play_arrow" : "pause"
+        playArrow.isHidden = false
         
         episodeLabel.text = episode.title ?? "No title"
         descriptionLabel.text = episode.episodeDescription?.nonHtmlRawString ?? "No description"

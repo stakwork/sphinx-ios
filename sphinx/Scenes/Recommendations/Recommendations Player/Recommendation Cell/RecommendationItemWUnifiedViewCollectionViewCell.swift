@@ -20,7 +20,8 @@ class RecommendationItemWUnifiedViewCollectionViewCell: UICollectionViewCell {
 
     func configure(
         withItem item: PodcastEpisode,
-        andDelegate delegate: FeedItemRowDelegate
+        andDelegate delegate: FeedItemRowDelegate,
+        isPlaying: Bool
     ) {
         if let feed = item.feed {
             self.delegate = delegate
@@ -31,7 +32,7 @@ class RecommendationItemWUnifiedViewCollectionViewCell: UICollectionViewCell {
                 download: nil,
                 delegate: self,
                 isLastRow: false,
-                playing: false
+                playing: isPlaying
             )
         }
     }

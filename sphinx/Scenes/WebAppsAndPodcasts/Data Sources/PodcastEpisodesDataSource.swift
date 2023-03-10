@@ -13,13 +13,15 @@ protocol PodcastEpisodesDSDelegate : class {
     func downloadTapped(_ indexPath: IndexPath, episode: PodcastEpisode)
     func deleteTapped(_ indexPath: IndexPath, episode: PodcastEpisode)
     func shouldToggleTopView(show: Bool)
+    func shareTapped(episode:PodcastEpisode)
+    func showEpisodeDetails(episode:PodcastEpisode,indexPath:IndexPath)
 }
 
 class PodcastEpisodesDataSource : NSObject {
     
     weak var delegate: PodcastEpisodesDSDelegate?
     
-    let kRowHeight: CGFloat = 64
+    let kRowHeight: CGFloat = 200
     let kHeaderHeight: CGFloat = 50
     let kHeaderLabelFont = UIFont(name: "Roboto-Medium", size: 14.0)!
     let windowTopInset = getWindowInsets().top
@@ -42,7 +44,7 @@ class PodcastEpisodesDataSource : NSObject {
         self.podcast = podcast
         self.delegate = delegate
         
-        self.tableView.registerCell(PodcastEpisodeTableViewCell.self)
+        self.tableView.registerCell(UnifiedEpisodeTableViewCell.self)
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.reloadData()
@@ -55,7 +57,7 @@ extension PodcastEpisodesDataSource : UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let cell = cell as? PodcastEpisodeTableViewCell {
+        if let cell = cell as? UnifiedEpisodeTableViewCell {
             
             let episodes = podcast.episodesArray
             let episode = episodes[indexPath.row]
@@ -107,9 +109,9 @@ extension PodcastEpisodesDataSource : UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         tableView.dequeueReusableCell(
-            withIdentifier: "PodcastEpisodeTableViewCell",
+            withIdentifier: "UnifiedEpisodeTableViewCell",
             for: indexPath
-        ) as! PodcastEpisodeTableViewCell
+        ) as! UnifiedEpisodeTableViewCell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -127,17 +129,36 @@ extension PodcastEpisodesDataSource : UIScrollViewDelegate {
     }
 }
 
-extension PodcastEpisodesDataSource : PodcastEpisodeRowDelegate {
+extension PodcastEpisodesDataSource : FeedItemRowDelegate {
+    func shouldShowMore(video: Video, cell: UICollectionViewCell) {}
+    
+    func shouldShare(video: Video) {}
+    
+    func shouldStartDownloading(episode: PodcastEpisode, cell: UICollectionViewCell) {}
+    
+    func shouldDeleteFile(episode: PodcastEpisode, cell: UICollectionViewCell) {}
+    
+    func shouldShowMore(episode: PodcastEpisode, cell: UICollectionViewCell) {}
    
-    func shouldDeleteFile(episode: PodcastEpisode, cell: PodcastEpisodeTableViewCell) {
+    func shouldDeleteFile(episode: PodcastEpisode, cell: UITableViewCell) {
         if let indexPath = tableView.indexPath(for: cell) {
             delegate?.deleteTapped(indexPath, episode: episode)
         }
     }
     
-    func shouldStartDownloading(episode: PodcastEpisode, cell: PodcastEpisodeTableViewCell) {
-        if let indexPath = tableView.indexPath(for: cell) {
+    func shouldStartDownloading(episode: PodcastEpisode, cell: UITableViewCell) {
+        if let indexPath = tableView.indexPath(for: cell){
             delegate?.downloadTapped(indexPath, episode: episode)
+        }
+    }
+    
+    func shouldShare(episode: PodcastEpisode) {
+        delegate?.shareTapped(episode: episode)
+    }
+    
+    func shouldShowMore(episode: PodcastEpisode, cell: UITableViewCell){
+        if let indexPath = tableView.indexPath(for: cell) {
+            delegate?.showEpisodeDetails(episode: episode,indexPath: indexPath)
         }
     }
 }

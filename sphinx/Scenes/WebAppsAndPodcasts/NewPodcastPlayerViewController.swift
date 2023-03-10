@@ -151,6 +151,11 @@ extension NewPodcastPlayerViewController : PodcastEpisodesDSDelegate {
         downloadService.startDownload(episode)
         reload(indexPath.row)
     }
+    
+    func showEpisodeDetails(episode: PodcastEpisode, indexPath:IndexPath) {
+        let vc = FeedItemDetailVC.instantiate(episode: episode, delegate: self, indexPath: indexPath)
+        self.present(vc, animated: true)
+    }
 
     func pauseTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {
         downloadService.pauseDownload(episode)
@@ -262,6 +267,101 @@ extension NewPodcastPlayerViewController : DownloadServiceDelegate {
     func shouldUpdateProgressFor(download: Download) {
         if let index = podcast.getIndexForEpisodeWith(id: download.episode.itemID) {
             tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
+        }
+    }
+}
+
+extension UIViewController {
+    func shareTapped(episode: PodcastEpisode){
+        let firstActivityItem =
+        "Hey I think you'd enjoy this content I found on Sphinx iOS: \(episode.feed?.title ?? "") - \(episode.title ?? "")"
+        
+        let secondActivityItem : NSURL = NSURL(string: episode.linkURLPath ?? episode.urlPath ?? "")!
+        
+        if let imageUrl = episode.imageToShow, let url = URL(string: imageUrl) {
+            URLSession.shared.dataTask(with: url) { (data, _, _) in
+                guard let data = data, let image = UIImage(data: data) else {
+                    self.shouldShare(
+                        items: [firstActivityItem, secondActivityItem]
+                    )
+                    return
+                }
+
+                self.shouldShare(
+                    items: [firstActivityItem, secondActivityItem, image]
+                )
+            }.resume()
+        } else {
+            shouldShare(
+                items: [firstActivityItem, secondActivityItem]
+            )
+        }
+    }
+    
+    func shareTapped(video: Video) {
+        let firstActivityItem =
+        "Hey I think you'd enjoy this video I found on Sphinx iOS: \(video.videoFeed?.title ?? "") - \(video.title ?? "")"
+        
+        guard let videoURL = video.itemURL else{
+            return
+        }
+        let secondActivityItem : NSURL = videoURL as NSURL
+        
+        if let imageUrl = video.videoFeed?.imageToShow, let url = URL(string: imageUrl) {
+            URLSession.shared.dataTask(with: url) { (data, _, _) in
+                guard let data = data, let image = UIImage(data: data) else {
+                    self.shouldShare(
+                        items: [firstActivityItem, secondActivityItem]
+                    )
+                    return
+                }
+
+                self.shouldShare(
+                    items: [firstActivityItem, secondActivityItem, image]
+                )
+            }.resume()
+        } else {
+            shouldShare(
+                items: [firstActivityItem, secondActivityItem]
+            )
+        }
+    }
+    
+    func shouldShare(
+        items: [Any]
+    ) {
+        let activityViewController : UIActivityViewController = UIActivityViewController(
+            activityItems: items,
+            applicationActivities: nil
+        )
+        // This lines is for the popover you need to show in iPad
+        activityViewController.popoverPresentationController?.sourceView = self.view
+        
+        // This line remove the arrow of the popover to show in iPad
+        activityViewController.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection.down
+        activityViewController.popoverPresentationController?.sourceRect = CGRect(x: 150, y: 150, width: 0, height: 0)
+        
+        // Pre-configuring activity items
+        activityViewController.activityItemsConfiguration = [
+            UIActivity.ActivityType.message
+        ] as? UIActivityItemsConfigurationReading
+        
+        // Anything you want to exclude
+        activityViewController.excludedActivityTypes = [
+            UIActivity.ActivityType.postToWeibo,
+            UIActivity.ActivityType.print,
+            UIActivity.ActivityType.assignToContact,
+            UIActivity.ActivityType.saveToCameraRoll,
+            UIActivity.ActivityType.addToReadingList,
+            UIActivity.ActivityType.postToFlickr,
+            UIActivity.ActivityType.postToVimeo,
+            UIActivity.ActivityType.postToTencentWeibo
+        ]
+        
+        activityViewController.isModalInPresentation = true
+        
+        DispatchQueue.main.async {
+            self.present(activityViewController, animated: true, completion: nil)
         }
     }
 }

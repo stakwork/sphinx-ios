@@ -234,21 +234,6 @@ extension PodcastEpisode: DashboardFeedSquaredThumbnailCollectionViewItem {
             return "podcastPlaceholder"
         }
     }
-    
-    var typeIconImage: String? {
-        get {
-            switch type {
-            case RecommendationsHelper.PODCAST_TYPE:
-                return "podcastTypeIcon"
-            case RecommendationsHelper.YOUTUBE_VIDEO_TYPE:
-                return "youtubeVideoTypeIcon"
-            case RecommendationsHelper.TWITTER_TYPE:
-                return "twitterTypeIcon"
-            default:
-                return "podcastTypeIcon"
-            }
-        }
-    }
 
     var subtitle: String? {
         formattedDescription

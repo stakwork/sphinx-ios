@@ -136,6 +136,11 @@ extension RecommendationFeedPlayerContainerViewController {
     private func handleRecommendationCellSelection(
         _ recommendationId: String
     ) {
+        if podcastPlayerController.isPlaying(episodeId: recommendationId) {
+            recommendationDetailsView.togglePlayState()
+            return
+        }
+        
         if let episode = podcast.getEpisodeWith(id: recommendationId) {
             shouldPlay(episode)
         }
@@ -176,6 +181,10 @@ extension RecommendationFeedPlayerContainerViewController : RecommendationPlayer
             duration: duration,
             currentTime: currentTime
         )
+    }
+    
+    func shouldReloadList() {
+        collectionViewController.updateSnapshot()
     }
     
     func didSelectValue(value: String) {

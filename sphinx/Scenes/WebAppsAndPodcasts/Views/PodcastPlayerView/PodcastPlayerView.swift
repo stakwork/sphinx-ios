@@ -277,9 +277,9 @@ class PodcastPlayerView: UIView {
         ) else {
             return
         }
-            
+        
         podcastPlayerController.submitAction(
-            UserAction.Play(podcastData)
+            UserAction.TogglePlay(podcastData)
         )
         
         delegate?.shouldReloadEpisodesTable()

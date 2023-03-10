@@ -11,6 +11,7 @@ import UIKit
 protocol RecommendationPlayerViewDelegate: AnyObject {
     func shouldShowSpeedPicker()
     func shouldSetProgress(duration: Int, currentTime: Int)
+    func shouldReloadList()
 }
 
 class PodcastPlayerControlsView: UIView {
@@ -94,6 +95,8 @@ extension PodcastPlayerControlsView {
                 UserAction.Play(podcastData)
             )
         }
+        
+        delegate?.shouldReloadList()
     }
     
     func seekTo(seconds: Double) {

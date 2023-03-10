@@ -48,10 +48,13 @@ extension RecommendationFeedItemsCollectionViewController {
     }
     
     enum DataSourceItem: Hashable {
-        case recommendation(PodcastEpisode)
+        case recommendation(
+            PodcastEpisode,
+            Bool
+        )
     }
 
-    typealias RecommendationCell = RecommendationItemCollectionViewCell
+    typealias RecommendationCell = RecommendationItemWUnifiedViewCollectionViewCell
     typealias CellDataItem = DataSourceItem
     typealias DataSource = UICollectionViewDiffableDataSource<CollectionViewSection, CellDataItem>
     typealias DataSourceSnapshot = NSDiffableDataSourceSnapshot<CollectionViewSection, CellDataItem>
@@ -62,7 +65,6 @@ extension RecommendationFeedItemsCollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         registerViews(for: collectionView)
         configure(collectionView)
         configureDataSource(for: collectionView)
@@ -99,7 +101,7 @@ extension RecommendationFeedItemsCollectionViewController {
 
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
-            heightDimension: .estimated(103.0)
+            heightDimension: .estimated(200.0)
         )
         
         let group = NSCollectionLayoutGroup.horizontal(
@@ -157,8 +159,8 @@ extension RecommendationFeedItemsCollectionViewController {
         )
         
         collectionView.register(
-            RecommendationItemCollectionViewCell.nib,
-            forCellWithReuseIdentifier: RecommendationItemCollectionViewCell.reuseID
+            RecommendationItemWUnifiedViewCollectionViewCell.nib,
+            forCellWithReuseIdentifier: RecommendationItemWUnifiedViewCollectionViewCell.reuseID
         )
     }
 
@@ -216,20 +218,27 @@ extension RecommendationFeedItemsCollectionViewController {
             case .recommendations:
                 guard
                     let recommendationCell = collectionView.dequeueReusableCell(
-                        withReuseIdentifier: RecommendationItemCollectionViewCell.reuseID,
+                        withReuseIdentifier: RecommendationItemWUnifiedViewCollectionViewCell.reuseID,
                         for: indexPath
-                    ) as? RecommendationItemCollectionViewCell
+                    ) as? RecommendationItemWUnifiedViewCollectionViewCell
                 else {
                     preconditionFailure("Failed to dequeue expected reusable cell type")
                 }
                 
                 guard
-                    case .recommendation(let recommendation) = dataSourceItem
+                    case .recommendation(
+                        let recommendation,
+                        let playing
+                    ) = dataSourceItem
                 else {
                     preconditionFailure("Failed to find expected data source item")
                 }
-
-                recommendationCell.configure(withItem: recommendation)
+                
+                recommendationCell.configure(
+                    withItem: recommendation,
+                    andDelegate: self,
+                    isPlaying: playing
+                )
 
                 return recommendationCell
             }
@@ -282,7 +291,12 @@ extension RecommendationFeedItemsCollectionViewController {
         snapshot.appendSections(CollectionViewSection.allCases)
 
         snapshot.appendItems(
-            (podcast.episodes ?? []).map { DataSourceItem.recommendation($0) },
+            (podcast.episodes ?? []).map {
+                DataSourceItem.recommendation(
+                    $0,
+                    PodcastPlayerController.sharedInstance.isPlaying(episodeId: $0.itemID)
+                )
+            },
             toSection: .recommendations
         )
 
@@ -311,8 +325,48 @@ extension RecommendationFeedItemsCollectionViewController {
         }
         
         switch dataSourceItem {
-        case .recommendation(let recommendation):
+        case .recommendation(let recommendation, _):
             self.onRecommendationCellSelected(recommendation.itemID)
+            self.updateSnapshot()
         }
     }
+}
+
+
+extension RecommendationFeedItemsCollectionViewController : FeedItemRowDelegate {
+    func shouldShare(video: Video) {
+        shareTapped(video: video)
+    }
+    
+    func shouldShare(episode: PodcastEpisode) {
+        shareTapped(episode: episode)
+    }
+    
+    func shouldShowMore(video: Video, cell: UICollectionViewCell) {
+        if let indexPath = collectionView.indexPath(for: cell){
+            let vc = FeedItemDetailVC.instantiate(video: video, delegate: self, indexPath: indexPath)
+            self.present(vc, animated: true)
+        }
+    }
+    
+    func shouldShowMore(episode: PodcastEpisode, cell: UICollectionViewCell) {
+        if let indexPath = collectionView.indexPath(for: cell){
+            let vc = FeedItemDetailVC.instantiate(episode: episode, delegate: self, indexPath: indexPath)
+            self.present(vc, animated: true)
+        }
+    }
+    
+    func shouldStartDownloading(episode: PodcastEpisode, cell: UICollectionViewCell) {}
+    func shouldDeleteFile(episode: PodcastEpisode, cell: UICollectionViewCell) {}
+    func shouldDeleteFile(episode: PodcastEpisode, cell: UITableViewCell) {}
+    func shouldStartDownloading(episode: PodcastEpisode, cell: UITableViewCell) {}
+    func shouldShowMore(episode: PodcastEpisode, cell: UITableViewCell){}
+}
+
+extension RecommendationFeedItemsCollectionViewController : PodcastEpisodesDSDelegate {
+    func didTapEpisodeAt(index: Int) {}
+    func downloadTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {}
+    func deleteTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {}
+    func shouldToggleTopView(show: Bool) {}
+    func showEpisodeDetails(episode: PodcastEpisode,indexPath:IndexPath) {}
 }

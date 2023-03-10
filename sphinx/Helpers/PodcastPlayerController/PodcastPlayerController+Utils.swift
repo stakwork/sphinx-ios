@@ -144,7 +144,7 @@ extension PodcastPlayerController {
         guard let podcastData = self.podcastData else {
             return
         }
-        
+
         self.podcastData?.currentTime = 0
         
         updatePodcastObject(
@@ -152,7 +152,20 @@ extension PodcastPlayerController {
             currentTime: 0
         )
         
+        markEpisodeAsPlayed()
         runEndedStateUpdate()
+    }
+    
+    func markEpisodeAsPlayed() {
+        guard let podcastData = self.podcastData else {
+            return
+        }
+        
+        if let podcast = getPodcastWith(podcastId: podcastData.podcastId) {
+            if let episode = podcast.getEpisodeWith(id: podcastData.podcastId) {
+                episode.wasPlayed = true
+            }
+        }
     }
 }
 

@@ -101,6 +101,11 @@ internal enum StoryboardScene {
             identifier: "ChatsContainerViewController"
         )
         
+        internal static let feedItemDetailVC = SceneType<FeedItemDetailVC>(
+            storyboard: Dashboard.self,
+            identifier: "FeedItemDetailVC"
+        )
+        
         
         internal static let chatsCollectionViewController = SceneType<ChatsCollectionViewController>(
             storyboard: Dashboard.self,

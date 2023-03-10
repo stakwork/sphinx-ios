@@ -22,6 +22,7 @@ enum UserAction {
     case Pause(PodcastData)
     case Seek(PodcastData)
     case AdjustSpeed(PodcastData)
+    case TogglePlay(PodcastData)
 }
 
 enum PodcastDelegateKeys: String {

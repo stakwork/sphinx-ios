@@ -66,6 +66,10 @@ extension RecommendationDetailsView {
     ) {
         podcastPlayerControlsView.configureControls(playing: playing, speedDescription: speedDescription)
     }
+    
+    func togglePlayState() {
+        podcastPlayerControlsView.togglePlayState()
+    }
 }
 
 extension RecommendationDetailsView : RecommendationPlayerViewDelegate {
@@ -81,5 +85,9 @@ extension RecommendationDetailsView : RecommendationPlayerViewDelegate {
             duration: duration,
             currentTime: currentTime
         )
+    }
+    
+    func shouldReloadList() {
+        delegate?.shouldReloadList()
     }
 }

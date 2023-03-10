@@ -32,6 +32,8 @@ class PinTimeSlider: UIView {
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         
+        sliderControl.maximumValue = Float(UserData.kMaximumPINHoursValue)
+        
         let hours = userData.getPINHours()
         sliderControl.value = Float(hours)
         hoursLabel.text = getHoursLabel(hours)
@@ -39,10 +41,13 @@ class PinTimeSlider: UIView {
     
     func getHoursLabel(_ hours: Int) -> String {
         if hours == 0 {
-            return "Always require PIN"
+            return "always.require.pin".localized
         }
         if hours == 1 {
             return "\(hours) \("hour".localized)"
+        }
+        if hours == 25{
+            return "never.require.pin".localized
         }
         return "\(hours) \("hours".localized)"
     }

@@ -89,13 +89,21 @@ class UnifiedEpisodeView : UIView {
         
         durationView.alpha = 0.1
         
-        dotView.makeCircular()
-        playArrow.makeCircular()
         roundCorners()
         configureAnimation()
+        configureButtons()
+    }
+    
+    func configureButtons() {
+        downloadButton.tintColor = UIColor.Sphinx.Text.withAlphaComponent(0.5)
+        sharebutton.tintColor = UIColor.Sphinx.Text.withAlphaComponent(0.5)
+        moreDetailsButton.tintColor = UIColor.Sphinx.Text.withAlphaComponent(0.5)
     }
     
     func roundCorners(){
+        dotView.makeCircular()
+        playArrow.makeCircular()
+        
         mediaTypeImageView.layer.cornerRadius = 3.0
         episodeImageView.layer.cornerRadius = 6.0
         animationContainer.layer.cornerRadius = 6.0
@@ -267,11 +275,11 @@ class UnifiedEpisodeView : UIView {
     //Networking:
     func configureDownload(episode: PodcastEpisode, download: Download?) {
         if episode.isDownloaded {
-            downloadButton.setImage(UIImage(named: "playerListMark"), for: .normal)
-            downloadButton.tintColor = UIColor.Sphinx.PrimaryGreen
+            downloadButton.setImage(UIImage(named: "playerListDownloaded"), for: .normal)
+            downloadButton.tintColor = UIColor.Sphinx.ReceivedIcon
         } else {
             downloadButton.setImage(UIImage(named: "playerListDownload"), for: .normal)
-            downloadButton.tintColor = UIColor.Sphinx.SecondaryText
+            downloadButton.tintColor = UIColor.Sphinx.Text.withAlphaComponent(0.5)
         }
         
         downloadButton.tintColorDidChange()

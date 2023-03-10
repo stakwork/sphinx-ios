@@ -48,6 +48,7 @@ class FeedItemDetailHeaderCell: UITableViewCell {
             isOnProgress: currentTime > 0
         )
         
+        dotView2.isHidden = false
         timeRemainingLabel.text = timeString
         
         if let typeIconImage = episode.typeIconImage {
@@ -56,11 +57,14 @@ class FeedItemDetailHeaderCell: UITableViewCell {
         }
     }
     
-    func configureView(video:Video){
+    func configureView(video: Video){
         feedNameLabel.text = video.videoFeed?.title
         feedSubtitleLabel.text = video.title
         feedItemImageView.sd_setImage(with: video.thumbnailURL)
         dateLabel.text = video.publishDateText
+        
+        timeRemainingLabel.text = ""
+        dotView2.isHidden = true
         timeRemainingLabel.isHidden = true
         
         if let _ = video.videoID.range(of: "yt:") {

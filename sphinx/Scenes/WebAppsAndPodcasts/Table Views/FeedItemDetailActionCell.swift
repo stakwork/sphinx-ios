@@ -41,26 +41,32 @@ class FeedItemDetailActionCell: UITableViewCell {
         case .download:
             actionLabel.text = "download".localized
             actionIconButton.setImage(UIImage(named: "itemDetailsDownload"), for: .normal)
+            actionIconButton.tintColor = UIColor.Sphinx.Text.withAlphaComponent(0.5)
             break
         case .copyLink:
             actionLabel.text = "copy.link".localized
             actionIconButton.setImage(UIImage(named: "itemDetailsCopy"), for: .normal)
+            actionIconButton.tintColor = UIColor.Sphinx.Text.withAlphaComponent(0.5)
             break
         case .markAsPlayed:
             actionLabel.text = "mark.as.played".localized
             actionIconButton.setImage(UIImage(named: "itemDetailsMark"), for: .normal)
+            actionIconButton.tintColor = UIColor.Sphinx.Text.withAlphaComponent(0.5)
             break
         case .share:
             actionLabel.text = "share".localized
             actionIconButton.setImage(UIImage(named: "itemDetailsShare"), for: .normal)
+            actionIconButton.tintColor = UIColor.Sphinx.Text.withAlphaComponent(0.5)
             break
         case .markAsUnplayed:
             actionLabel.text = "mark.as.unplayed".localized
-            actionIconButton.setImage(UIImage(named: "itemDetailsMark"), for: .normal)
+            actionIconButton.setImage(UIImage(named: "itemDetailsPlayed"), for: .normal)
+            actionIconButton.tintColor = UIColor.Sphinx.ReceivedIcon
             break
         case .erase:
             actionLabel.text = "erase.from.device".localized
-            actionIconButton.setImage(UIImage(named: "itemDetailsDownload"), for: .normal)
+            actionIconButton.setImage(UIImage(named: "itemDetailsDownloaded"), for: .normal)
+            actionIconButton.tintColor = UIColor.Sphinx.ReceivedIcon
             break
         }
     }

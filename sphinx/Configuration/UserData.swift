@@ -19,6 +19,8 @@ class UserData {
     let keychainManager = KeychainManager.sharedInstance
     let onionConnector = SphinxOnionConnector.sharedInstance
     
+    public static let kMaximumPINHoursValue: Int = 25
+    
     func isUserLogged() -> Bool {
         return getAppPin() != "" &&
                getNodeIP() != "" &&
@@ -261,17 +263,21 @@ class UserData {
     
     func getPINNeverOverride() -> Bool {
         if GroupsPinManager.sharedInstance.isStandardPIN {
-            return UserDefaults.Keys.pinHours.get(defaultValue: 25) == 25
+            return UserDefaults.Keys.pinHours.get(
+                defaultValue: UserData.kMaximumPINHoursValue
+            ) == UserData.kMaximumPINHoursValue
         } else {
-            return UserDefaults.Keys.privacyPinHours.get(defaultValue: 25) == 25
+            return UserDefaults.Keys.privacyPinHours.get(
+                defaultValue: UserData.kMaximumPINHoursValue
+            ) == UserData.kMaximumPINHoursValue
         }
     }
     
     func getPINHours() -> Int {
         if GroupsPinManager.sharedInstance.isStandardPIN {
-            return UserDefaults.Keys.pinHours.get(defaultValue: 25)
+            return UserDefaults.Keys.pinHours.get(defaultValue: UserData.kMaximumPINHoursValue)
         } else {
-            return UserDefaults.Keys.privacyPinHours.get(defaultValue: 25)
+            return UserDefaults.Keys.privacyPinHours.get(defaultValue: UserData.kMaximumPINHoursValue)
         }
     }
     

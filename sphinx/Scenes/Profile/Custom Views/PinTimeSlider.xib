@@ -25,7 +25,7 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="25" translatesAutoresizingMaskIntoConstraints="NO" id="vnG-re-vI0">
+                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="vnG-re-vI0">
                     <rect key="frame" x="28" y="50" width="358" height="31"/>
                     <color key="minimumTrackTintColor" name="PrimaryBlue"/>
                     <color key="maximumTrackTintColor" name="SemitransparentText"/>

@@ -10,16 +10,30 @@ import Foundation
 import UIKit
 import Lottie
 
-protocol PodcastEpisodeRowDelegate : class {
+protocol FeedItemRowDelegate : class {
     func shouldStartDownloading(episode: PodcastEpisode, cell: UITableViewCell)
-    func shouldStartDownloading(episode: PodcastEpisode, cell: UICollectionViewCell)
     func shouldDeleteFile(episode: PodcastEpisode, cell: UITableViewCell)
-    func shouldDeleteFile(episode: PodcastEpisode, cell: UICollectionViewCell)
-    func shouldShowMore(episode: PodcastEpisode,cell:UICollectionViewCell)
-    func shouldShowMore(video:Video,cell:UICollectionViewCell)
-    func shouldShowMore(episode: PodcastEpisode,cell:UITableViewCell)
+    func shouldShowMore(episode: PodcastEpisode, cell: UITableViewCell)
     func shouldShare(episode: PodcastEpisode)
+    
+    func shouldStartDownloading(episode: PodcastEpisode, cell: UICollectionViewCell)
+    func shouldDeleteFile(episode: PodcastEpisode, cell: UICollectionViewCell)
+    func shouldShowMore(episode: PodcastEpisode,cell: UICollectionViewCell)
+    
+    func shouldShowMore(video:Video,cell: UICollectionViewCell)
     func shouldShare(video:Video)
+}
+
+protocol PodcastEpisodeRowDelegate : class {
+    func shouldStartDownloading(episode: PodcastEpisode)
+    func shouldDeleteFile(episode: PodcastEpisode)
+    func shouldShowMore(episode: PodcastEpisode)
+    func shouldShare(episode: PodcastEpisode)
+}
+
+protocol VideoRowDelegate : class {
+    func shouldShowMore(video: Video)
+    func shouldShare(video: Video)
 }
 
 class UnifiedEpisodeView : UIView {
@@ -50,10 +64,8 @@ class UnifiedEpisodeView : UIView {
     var episode: PodcastEpisode! = nil
     var videoEpisode: Video! = nil
     
-    weak var delegate: PodcastEpisodeRowDelegate?
-    
-    weak var presentingTableViewCell : UITableViewCell?
-    weak var presentingCollectionViewCell : UICollectionViewCell?
+    weak var podcastDelegate: PodcastEpisodeRowDelegate?
+    weak var videoDelegate: VideoRowDelegate?
     
     var thumbnailImageViewURL: URL? {
         videoEpisode.thumbnailURL
@@ -97,8 +109,12 @@ class UnifiedEpisodeView : UIView {
         animationView.loopMode = .autoReverse
     }
     
-    func configure(withVideoEpisode videoEpisode: Video) {
+    func configure(
+        withVideoEpisode videoEpisode: Video,
+        and delegate: VideoRowDelegate
+    ) {
         self.videoEpisode = videoEpisode
+        self.videoDelegate = delegate
         
         let id = videoEpisode.videoID
         
@@ -145,7 +161,7 @@ class UnifiedEpisodeView : UIView {
        playing: Bool
     ) {
         self.episode = episode
-        self.delegate = delegate
+        self.podcastDelegate = delegate
         
         configurePlayingAnimation(playing: playing)
         
@@ -274,30 +290,25 @@ class UnifiedEpisodeView : UIView {
     }
     
     @IBAction func downloadButtonTouched() {
-        if let delegate = delegate,
-           let presentingTableViewCell = presentingTableViewCell, !episode.isDownloaded {
-            delegate.shouldStartDownloading(episode: episode, cell: presentingTableViewCell)
+        if !episode.isDownloaded {
+            downloadProgressBar.progressAnimation(to: 0)
+            podcastDelegate?.shouldStartDownloading(episode: episode)
         }
     }
     
     @IBAction func shareButtonTouched(){
-        if let video = videoEpisode{
-            self.delegate?.shouldShare(video: video)
-        }
-        else{
-            self.delegate?.shouldShare(episode: episode)
+        if let video = videoEpisode {
+            self.videoDelegate?.shouldShare(video: video)
+        } else if let episode = episode {
+            self.podcastDelegate?.shouldShare(episode: episode)
         }
     }
     
     @IBAction func moreButtonTouched(){
-        if let delegate = delegate,let presentingTableViewCell = presentingTableViewCell {
-            delegate.shouldShowMore(episode: episode, cell: presentingTableViewCell)
-        } else if let delegate = delegate, let presentingCollectionViewCell = presentingCollectionViewCell {
-            if let episode = episode {
-                delegate.shouldShowMore(episode: episode, cell: presentingCollectionViewCell)
-            } else if let video = videoEpisode {
-                delegate.shouldShowMore(video: video, cell: presentingCollectionViewCell)
-            }
+        if let video = videoEpisode {
+            videoDelegate?.shouldShowMore(video: video)
+        } else if let episode = episode {
+            podcastDelegate?.shouldShowMore(episode: episode)
         }
     }
     

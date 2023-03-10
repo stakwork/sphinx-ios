@@ -9,33 +9,71 @@
 import UIKit
 
 class RecommendationItemWUnifiedViewCollectionViewCell: UICollectionViewCell {
+    
     @IBOutlet weak var unifiedEpisodeView: UnifiedEpisodeView!
-    weak var delegate : PodcastEpisodeRowDelegate?
+    
+    weak var delegate : FeedItemRowDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
-    func configure(withItem item: PodcastEpisode) {
-        if let feed = item.feed, let delegate = delegate {
-            unifiedEpisodeView.presentingCollectionViewCell = self
+    func configure(
+        withItem item: PodcastEpisode,
+        andDelegate delegate: FeedItemRowDelegate
+    ) {
+        if let feed = item.feed {
+            self.delegate = delegate
             
             unifiedEpisodeView.configureWith(
                 podcast: feed,
                 and: item,
                 download: nil,
-                delegate: delegate,
+                delegate: self,
                 isLastRow: false,
                 playing: false
             )
         }
     }
     
-    func configure(withVideoEpisode videoEpisode: Video, delegate: PodcastEpisodeRowDelegate) {
-        unifiedEpisodeView.configure(withVideoEpisode: videoEpisode)
-        unifiedEpisodeView.delegate = delegate
-        unifiedEpisodeView.presentingCollectionViewCell = self
+    func configure(
+        withVideoEpisode videoEpisode: Video,
+        and delegate: FeedItemRowDelegate
+    ) {
+        self.delegate = delegate
+        
+        unifiedEpisodeView.configure(
+            withVideoEpisode: videoEpisode,
+            and: self
+        )
+    }
+}
+
+extension RecommendationItemWUnifiedViewCollectionViewCell : PodcastEpisodeRowDelegate {
+    func shouldStartDownloading(episode: PodcastEpisode) {
+        delegate?.shouldStartDownloading(episode: episode, cell: self)
+    }
+    
+    func shouldDeleteFile(episode: PodcastEpisode) {
+        delegate?.shouldDeleteFile(episode: episode, cell: self)
+    }
+    
+    func shouldShowMore(episode: PodcastEpisode) {
+        delegate?.shouldShowMore(episode: episode, cell: self)
+    }
+    
+    func shouldShare(episode: PodcastEpisode) {
+        delegate?.shouldShare(episode: episode)
+    }
+}
+
+extension RecommendationItemWUnifiedViewCollectionViewCell : VideoRowDelegate {
+    func shouldShowMore(video: Video) {
+        delegate?.shouldShowMore(video: video, cell: self)
+    }
+    
+    func shouldShare(video: Video) {
+        delegate?.shouldShare(video: video)
     }
 }
 

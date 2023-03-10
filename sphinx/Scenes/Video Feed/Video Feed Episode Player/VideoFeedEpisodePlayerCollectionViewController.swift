@@ -314,8 +314,8 @@ extension VideoFeedEpisodePlayerCollectionViewController {
                 else {
                     preconditionFailure("Failed to find expected data source item")
                 }
-
-                episodeCell.configure(withVideoEpisode: videoEpisode, delegate: self)
+                
+                episodeCell.configure(withVideoEpisode: videoEpisode, and: self)
                 
                 return episodeCell
             }
@@ -367,30 +367,19 @@ extension VideoFeedEpisodePlayerCollectionViewController {
 }
 
 //MARK: Unified View Delegate
-extension VideoFeedEpisodePlayerCollectionViewController:PodcastEpisodeRowDelegate,PodcastEpisodesDSDelegate{
+extension VideoFeedEpisodePlayerCollectionViewController: FeedItemRowDelegate, PodcastEpisodesDSDelegate {
+    
+    func shouldStartDownloading(episode: PodcastEpisode, cell: UITableViewCell)  {}
+    func shouldDeleteFile(episode: PodcastEpisode, cell: UITableViewCell)  {}
+    func shouldShowMore(episode: PodcastEpisode, cell: UITableViewCell)  {}
+    func shouldShare(episode: PodcastEpisode)  {}
+    
+    func shouldStartDownloading(episode: PodcastEpisode, cell: UICollectionViewCell)  {}
+    func shouldDeleteFile(episode: PodcastEpisode, cell: UICollectionViewCell)  {}
+    
     func shouldShare(video: Video) {
         self.shareTapped(video: video)
     }
-    
-    func didTapEpisodeAt(index: Int) {}
-    
-    func downloadTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {}
-    
-    func deleteTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {}
-    
-    func shouldToggleTopView(show: Bool) {}
-    
-    func showEpisodeDetails(episode: PodcastEpisode, indexPath: IndexPath) {
-        
-    }
-    
-    func shouldStartDownloading(episode: PodcastEpisode, cell: UITableViewCell) {}
-    
-    func shouldStartDownloading(episode: PodcastEpisode, cell: UICollectionViewCell) {}
-    
-    func shouldDeleteFile(episode: PodcastEpisode, cell: UITableViewCell) {}
-    
-    func shouldDeleteFile(episode: PodcastEpisode, cell: UICollectionViewCell) {}
     
     func shouldShowMore(episode: PodcastEpisode, cell: UICollectionViewCell) {
         if let indexPath = collectionView.indexPath(for: cell) {
@@ -406,11 +395,16 @@ extension VideoFeedEpisodePlayerCollectionViewController:PodcastEpisodeRowDelega
         }
     }
     
-    func shouldShowMore(episode: PodcastEpisode, cell: UITableViewCell) {}
+    func didTapEpisodeAt(index: Int) {}
     
-    func shouldShare(episode: PodcastEpisode) {}
+    func downloadTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {}
     
+    func deleteTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {}
     
+    func shouldToggleTopView(show: Bool) {}
+    
+    func showEpisodeDetails(episode: PodcastEpisode, indexPath: IndexPath) {}
+
 }
 
 

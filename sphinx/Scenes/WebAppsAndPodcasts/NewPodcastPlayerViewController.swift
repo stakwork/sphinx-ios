@@ -152,7 +152,7 @@ extension NewPodcastPlayerViewController : PodcastEpisodesDSDelegate {
         reload(indexPath.row)
     }
     
-    func showEpisodeDetails(episode: PodcastEpisode,indexPath:IndexPath) {
+    func showEpisodeDetails(episode: PodcastEpisode, indexPath:IndexPath) {
         let vc = FeedItemDetailVC.instantiate(episode: episode, delegate: self, indexPath: indexPath)
         self.present(vc, animated: true)
     }
@@ -271,61 +271,69 @@ extension NewPodcastPlayerViewController : DownloadServiceDelegate {
     }
 }
 
-extension UIViewController{
-    func shareTapped(episode:PodcastEpisode){
-        // Setting description
-        let firstActivityItem = "Hey I think you'd enjoy this content I found on Sphinx iOS: \(episode.feed?.title ?? "")"
+extension UIViewController {
+    func shareTapped(episode: PodcastEpisode){
+        let firstActivityItem =
+        "Hey I think you'd enjoy this content I found on Sphinx iOS: \(episode.feed?.title ?? "") - \(episode.title ?? "")"
+        
+        let secondActivityItem : NSURL = NSURL(string: episode.linkURLPath ?? episode.urlPath ?? "")!
+        
+        if let imageUrl = episode.imageToShow, let url = URL(string: imageUrl) {
+            URLSession.shared.dataTask(with: url) { (data, _, _) in
+                guard let data = data, let image = UIImage(data: data) else {
+                    self.shouldShare(
+                        items: [firstActivityItem, secondActivityItem]
+                    )
+                    return
+                }
 
-        // Setting url
-        let secondActivityItem : NSURL = NSURL(string: episode.linkURLPath ?? "")!
-        
-        // If you want to use an image
-        let image : UIImage = #imageLiteral(resourceName: "appPinIcon")
-        let activityViewController : UIActivityViewController = UIActivityViewController(
-            activityItems: [firstActivityItem, secondActivityItem, image], applicationActivities: nil)
-        
-        // This lines is for the popover you need to show in iPad
-        activityViewController.popoverPresentationController?.sourceView = self.view
-        
-        // This line remove the arrow of the popover to show in iPad
-        activityViewController.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection.down
-        activityViewController.popoverPresentationController?.sourceRect = CGRect(x: 150, y: 150, width: 0, height: 0)
-        
-        // Pre-configuring activity items
-        activityViewController.activityItemsConfiguration = [
-        UIActivity.ActivityType.message
-        ] as? UIActivityItemsConfigurationReading
-        
-        // Anything you want to exclude
-        activityViewController.excludedActivityTypes = [
-            UIActivity.ActivityType.postToWeibo,
-            UIActivity.ActivityType.print,
-            UIActivity.ActivityType.assignToContact,
-            UIActivity.ActivityType.saveToCameraRoll,
-            UIActivity.ActivityType.addToReadingList,
-            UIActivity.ActivityType.postToFlickr,
-            UIActivity.ActivityType.postToVimeo,
-            UIActivity.ActivityType.postToTencentWeibo
-        ]
-        
-        activityViewController.isModalInPresentation = true
-        self.present(activityViewController, animated: true, completion: nil)
+                self.shouldShare(
+                    items: [firstActivityItem, secondActivityItem, image]
+                )
+            }.resume()
+        } else {
+            shouldShare(
+                items: [firstActivityItem, secondActivityItem]
+            )
+        }
     }
     
-    func shareTapped(video:Video){
-        // Setting description
-        let firstActivityItem = "Hey I think you'd enjoy this video I found on Sphinx iOS: \(video.title ?? "")"
-
-        // Setting url
+    func shareTapped(video: Video) {
+        let firstActivityItem =
+        "Hey I think you'd enjoy this video I found on Sphinx iOS: \(video.videoFeed?.title ?? "") - \(video.title ?? "")"
+        
         guard let videoURL = video.itemURL else{
             return
         }
         let secondActivityItem : NSURL = videoURL as NSURL
-        // If you want to use an image
-        let image : UIImage = #imageLiteral(resourceName: "appPinIcon")
-        let activityViewController : UIActivityViewController = UIActivityViewController(
-            activityItems: [firstActivityItem, secondActivityItem, image], applicationActivities: nil)
         
+        if let imageUrl = video.videoFeed?.imageToShow, let url = URL(string: imageUrl) {
+            URLSession.shared.dataTask(with: url) { (data, _, _) in
+                guard let data = data, let image = UIImage(data: data) else {
+                    self.shouldShare(
+                        items: [firstActivityItem, secondActivityItem]
+                    )
+                    return
+                }
+
+                self.shouldShare(
+                    items: [firstActivityItem, secondActivityItem, image]
+                )
+            }.resume()
+        } else {
+            shouldShare(
+                items: [firstActivityItem, secondActivityItem]
+            )
+        }
+    }
+    
+    func shouldShare(
+        items: [Any]
+    ) {
+        let activityViewController : UIActivityViewController = UIActivityViewController(
+            activityItems: items,
+            applicationActivities: nil
+        )
         // This lines is for the popover you need to show in iPad
         activityViewController.popoverPresentationController?.sourceView = self.view
         
@@ -335,7 +343,7 @@ extension UIViewController{
         
         // Pre-configuring activity items
         activityViewController.activityItemsConfiguration = [
-        UIActivity.ActivityType.message
+            UIActivity.ActivityType.message
         ] as? UIActivityItemsConfigurationReading
         
         // Anything you want to exclude
@@ -351,6 +359,9 @@ extension UIViewController{
         ]
         
         activityViewController.isModalInPresentation = true
-        self.present(activityViewController, animated: true, completion: nil)
+        
+        DispatchQueue.main.async {
+            self.present(activityViewController, animated: true, completion: nil)
+        }
     }
 }

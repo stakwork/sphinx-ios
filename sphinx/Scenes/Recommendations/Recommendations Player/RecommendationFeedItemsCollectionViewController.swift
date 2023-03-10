@@ -13,7 +13,6 @@ private let reuseIdentifier = "Cell"
 class RecommendationFeedItemsCollectionViewController: UICollectionViewController {
     
     var podcast: PodcastFeed!
-    let downloadService = DownloadService.sharedInstance
 
     var onRecommendationCellSelected: ((String) -> Void)!
     
@@ -63,7 +62,6 @@ extension RecommendationFeedItemsCollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        downloadService.setDelegate(delegate: self)
         registerViews(for: collectionView)
         configure(collectionView)
         configureDataSource(for: collectionView)
@@ -230,8 +228,7 @@ extension RecommendationFeedItemsCollectionViewController {
                     preconditionFailure("Failed to find expected data source item")
                 }
                 
-                recommendationCell.delegate = self
-                recommendationCell.configure(withItem: recommendation)
+                recommendationCell.configure(withItem: recommendation, andDelegate: self)
 
                 return recommendationCell
             }
@@ -320,8 +317,14 @@ extension RecommendationFeedItemsCollectionViewController {
 }
 
 
-extension RecommendationFeedItemsCollectionViewController : PodcastEpisodeRowDelegate {
-    func shouldShare(video: Video) {}
+extension RecommendationFeedItemsCollectionViewController : FeedItemRowDelegate {
+    func shouldShare(video: Video) {
+        shareTapped(video: video)
+    }
+    
+    func shouldShare(episode: PodcastEpisode) {
+        shareTapped(episode: episode)
+    }
     
     func shouldShowMore(video: Video, cell: UICollectionViewCell) {
         if let indexPath = collectionView.indexPath(for: cell){
@@ -330,47 +333,24 @@ extension RecommendationFeedItemsCollectionViewController : PodcastEpisodeRowDel
         }
     }
     
-    func shouldStartDownloading(episode: PodcastEpisode, cell: UICollectionViewCell) {
-        downloadService.startDownload(episode)
+    func shouldShowMore(episode: PodcastEpisode, cell: UICollectionViewCell) {
+        if let indexPath = collectionView.indexPath(for: cell){
+            let vc = FeedItemDetailVC.instantiate(episode: episode, delegate: self, indexPath: indexPath)
+            self.present(vc, animated: true)
+        }
     }
     
+    func shouldStartDownloading(episode: PodcastEpisode, cell: UICollectionViewCell) {}
     func shouldDeleteFile(episode: PodcastEpisode, cell: UICollectionViewCell) {}
-    
-    func shouldShowMore(episode: PodcastEpisode, cell: UICollectionViewCell) {}
-   
     func shouldDeleteFile(episode: PodcastEpisode, cell: UITableViewCell) {}
-    
     func shouldStartDownloading(episode: PodcastEpisode, cell: UITableViewCell) {}
-    
-    func shouldShare(episode: PodcastEpisode) {
-        shareTapped(episode: episode)
-    }
-    
     func shouldShowMore(episode: PodcastEpisode, cell: UITableViewCell){}
 }
 
-extension RecommendationFeedItemsCollectionViewController : PodcastEpisodesDSDelegate{
+extension RecommendationFeedItemsCollectionViewController : PodcastEpisodesDSDelegate {
     func didTapEpisodeAt(index: Int) {}
-    
-    func downloadTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {
-        downloadService.startDownload(episode)
-    }
-    
+    func downloadTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {}
     func deleteTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {}
     func shouldToggleTopView(show: Bool) {}
     func showEpisodeDetails(episode: PodcastEpisode,indexPath:IndexPath) {}
-    
-    
-}
-
-extension RecommendationFeedItemsCollectionViewController : DownloadServiceDelegate{
-    func shouldReloadRowFor(download: Download) {
-        updateSnapshot()
-    }
-    
-    func shouldUpdateProgressFor(download: Download) {
-        updateSnapshot()
-    }
-    
-    
 }

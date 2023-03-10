@@ -45,13 +45,13 @@ class PinTimeSlider: UIView {
     
     func getHoursLabel(_ hours: Int) -> String {
         if hours == 0 {
-            return "Always require PIN"
+            return "always.require.pin".localized
         }
         if hours == 1 {
             return "\(hours) \("hour".localized)"
         }
         if hours == 25{
-            return "Never"
+            return "never.require.pin".localized
         }
         return "\(hours) \("hours".localized)"
     }

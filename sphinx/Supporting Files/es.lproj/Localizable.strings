@@ -263,6 +263,7 @@
 "server.url.updated" = "La URL del servidor ha sido actualizada con éxito";
 "hour" = "hora";
 "hours" = "horas";
+"never.require.pin" = "Nunca solicitar PIN";
 "always.require.pin" = "Siempre solicitar PIN";
 "profile.github-pat-title" = "Github Personal Access Token";
 "profile.github-pat-message" = "Crea un Personal Access Token en Github con permisos para el repositorio";

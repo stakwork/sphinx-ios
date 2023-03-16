@@ -117,11 +117,12 @@ extension ChatViewController : ChatHeaderViewDelegate {
         let isPublicGroup = chat?.isPublicGroup() ?? false
         let isMyPublicGroup = chat?.isMyPublicGroup() ?? false
         
-        alert.addAction(UIAlertAction(title: "create.call".localized, style: .default, handler:{ (UIAlertAction) in
-            self.sendCallMessage(sender: sender)
-        }))
+        
 
         if isPublicGroup {
+            alert.addAction(UIAlertAction(title: "create.call".localized, style: .default, handler:{ (UIAlertAction) in
+                self.sendCallMessage(sender: sender)
+            }))
             alert.addAction(UIAlertAction(title: "notifications.level".localized, style: .default, handler:{ (UIAlertAction) in
                 self.goToNotificationsLevel()
             }))
@@ -130,6 +131,9 @@ extension ChatViewController : ChatHeaderViewDelegate {
                     self.goToShare()
                 }))
             }
+        }
+        else{
+            self.sendCallMessage(sender: sender)
         }
 
         alert.addAction(UIAlertAction(title: "cancel".localized, style: .cancel ))

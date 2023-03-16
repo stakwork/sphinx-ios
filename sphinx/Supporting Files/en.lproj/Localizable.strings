@@ -438,7 +438,7 @@
 "create.call" = "Create Call";
 "select.call.mode" = "Select call mode";
 "audio" = "Audio";
-"video.or.audio" = "Video or Audio";
+"video.or.audio" = "Video";
 "log.into.your.account" = "Log in to your account";
 "email.cant.be.sent" = "Email can't be sent from this device. ";
 "photo.library.denied" = "You have revoked Photo Library permissions. Go to Settings -> Sphinx to enable them again.";

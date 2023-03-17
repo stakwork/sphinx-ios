@@ -490,6 +490,7 @@ class FeedsManager : NSObject {
                             boostDelegate: drvc,
                             fromDashboard: true
                         )
+                        podcastFeedVC.deeplinkedEpisode = episode
                         drvc.navigationController?.present(
                             podcastFeedVC,
                             animated: true,

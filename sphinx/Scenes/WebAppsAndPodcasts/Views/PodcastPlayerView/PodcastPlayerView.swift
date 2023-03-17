@@ -265,13 +265,7 @@ class PodcastPlayerView: UIView {
         }
     }
     
-    func didTapEpisodeAt(index: Int) {
-        audioLoading = true
-        
-        guard let episode = podcast.getEpisodeWith(index: index) else {
-            return
-        }
-        
+    func playEpisode(episode:PodcastEpisode){
         guard let podcastData = podcast.getPodcastData(
             episodeId: episode.itemID
         ) else {
@@ -283,6 +277,15 @@ class PodcastPlayerView: UIView {
         )
         
         delegate?.shouldReloadEpisodesTable()
+    }
+    
+    func didTapEpisodeAt(index: Int) {
+        audioLoading = true
+        
+        guard let episode = podcast.getEpisodeWith(index: index) else {
+            return
+        }
+        playEpisode(episode: episode)
     }
     
     func seekTo(seconds: Double) {

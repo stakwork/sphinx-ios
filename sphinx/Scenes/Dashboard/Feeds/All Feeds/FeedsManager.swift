@@ -490,7 +490,9 @@ class FeedsManager : NSObject {
                             boostDelegate: drvc,
                             fromDashboard: true
                         )
+                        let timestamp = Int(self.extractContentDeepLinkMetaData(forKey: "atTime", components: components) ?? "-1")
                         podcastFeedVC.deeplinkedEpisode = episode
+                        podcastFeedVC.deeplinkTimestamp = timestamp == -1 ? nil : timestamp
                         drvc.navigationController?.present(
                             podcastFeedVC,
                             animated: true,

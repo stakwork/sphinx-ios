@@ -32,6 +32,7 @@ class NewPodcastPlayerViewController: UIViewController {
     
     var podcast: PodcastFeed! = nil
     var deeplinkedEpisode:PodcastEpisode? = nil
+    var deeplinkTimestamp:Int? = nil
     
     var chat: Chat? {
         get {
@@ -61,6 +62,10 @@ class NewPodcastPlayerViewController: UIViewController {
         
         NotificationCenter.default.removeObserver(self, name: .refreshFeedUI, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(showPodcastInfo), name: .refreshFeedUI, object: nil)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         if let episode = deeplinkedEpisode{
             self.tableHeaderView?.playEpisode(episode: episode)
         }

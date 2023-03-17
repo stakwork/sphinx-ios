@@ -53,6 +53,12 @@ class PodcastPlayerView: UIView {
     var audioLoading = false {
         didSet {
             LoadingWheelHelper.toggleLoadingWheel(loading: audioLoading, loadingWheel: audioLoadingWheel, loadingWheelColor: UIColor.Sphinx.Text, views: [playPauseButton])
+            if(oldValue == true),
+              let vc = delegate as? NewPodcastPlayerViewController,
+              let timestamp = vc.deeplinkTimestamp{
+                seekToFixedTime(seconds: timestamp)
+                vc.deeplinkTimestamp = nil
+            }
         }
     }
     
@@ -286,6 +292,23 @@ class PodcastPlayerView: UIView {
             return
         }
         playEpisode(episode: episode)
+    }
+    
+    func seekToFixedTime(seconds:Int){
+        guard let podcastData = podcast.getPodcastData(
+            currentTime: seconds
+        ) else {
+            return
+        }
+        
+        setProgress(
+            duration: podcastData.duration ?? 0,
+            currentTime: seconds
+        )
+        
+        podcastPlayerController.submitAction(
+            UserAction.Seek(podcastData)
+        )
     }
     
     func seekTo(seconds: Double) {

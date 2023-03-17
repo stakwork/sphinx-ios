@@ -453,4 +453,73 @@ class FeedsManager : NSObject {
             downloadService.startDownload(lastEpisode)
         }
     }
+    
+    func extractContentDeepLinkMetaData(forKey:String,components:[String])->String?{
+        if let feedComponent = components.first(where: {$0.contains(forKey)}) {
+            let elements = feedComponent.components(separatedBy: "=")
+            if elements.count > 1 {
+                return elements[1]
+            }
+        }
+        return nil
+    }
+    
+    //Navigate methods
+    func goToContentFeed(vc: UIViewController, rootViewController: RootViewController) -> Bool {
+        if let shareContentQuery = UserDefaults.Keys.shareContentQuery.get(defaultValue: ""), shareContentQuery != "" {
+            UserDefaults.Keys.shareContentQuery.removeValue()
+            
+            //1. Validate the query
+            //a. Does the feed exist?
+            //b. Does the podcast exist?
+            //c. is the timestamp possible?
+            
+            let components = shareContentQuery.components(separatedBy: "&")
+            if let feedID = extractContentDeepLinkMetaData(forKey: "feedID",components: components),
+               let itemID = extractContentDeepLinkMetaData(forKey: "itemID", components: components){
+                print(feedID)
+                print(itemID)
+                //2. Feed it forward to instantiate the correct VC
+                lookupContentFeedAndItem(feedID: feedID, itemID: itemID, completion: { feed,episode in
+                    if let valid_episode = episode,
+                        let valid_feed = feed,
+                        let drvc = vc as? DashboardRootViewController{
+                        let podcastFeedVC = NewPodcastPlayerViewController.instantiate(
+                            podcast: valid_feed,
+                            delegate: drvc,
+                            boostDelegate: drvc,
+                            fromDashboard: true
+                        )
+                        drvc.navigationController?.present(
+                            podcastFeedVC,
+                            animated: true,
+                            completion: nil
+                        )
+                    }
+                    else{
+                        //error message
+                    }
+                })
+                
+            }
+                return true
+            }
+            return false
+        }
+    
+    func lookupContentFeedAndItem(feedID:String,itemID:String,completion:@escaping (PodcastFeed?,PodcastEpisode?)->()){
+        let feeds = self.fetchFeeds()
+        if let matchingFeed = feeds.first(where:{$0.feedID == feedID}) {
+            print(matchingFeed)
+            let pf = PodcastFeed.convertFrom(contentFeed: matchingFeed)
+            if let episode = pf.episodes?.first(where: {$0.itemID == itemID}){
+                completion(pf,episode)
+            }
+        }
+        else{
+            //need to go get it from tribe server
+        }
+        
+        completion(nil,nil)
+    }
 }

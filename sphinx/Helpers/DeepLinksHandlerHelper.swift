@@ -30,6 +30,10 @@ class DeepLinksHandlerHelper {
             return true
         }
         
+        if FeedsManager.sharedInstance.goToContentFeed(vc: vc, rootViewController: rootViewController){
+            return true
+        }
+        
         if WindowsManager.sharedInstance.showStakworkAuthorizeWith() {
             return false
         }
@@ -86,6 +90,10 @@ class DeepLinksHandlerHelper {
                     break
                 case "save":
                     UserDefaults.Keys.saveQuery.set(query)
+                    shouldSetVC = true
+                    break
+                case "share_content":
+                    UserDefaults.Keys.shareContentQuery.set(query)
                     shouldSetVC = true
                     break
                 default:

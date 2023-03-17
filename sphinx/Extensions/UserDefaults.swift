@@ -45,6 +45,7 @@ extension UserDefaults {
         public static let authQuery = DefaultKey<String>("authQuery")
         public static let personQuery = DefaultKey<String>("personQuery")
         public static let saveQuery = DefaultKey<String>("saveQuery")
+        public static let shareContentQuery = DefaultKey<String>("shareContentQuery")
         
         public static let previousIP = DefaultKey<String>("previousIP")
         

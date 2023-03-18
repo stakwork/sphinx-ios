@@ -512,17 +512,44 @@ class FeedsManager : NSObject {
     
     func lookupContentFeedAndItem(feedID:String,itemID:String,completion:@escaping (PodcastFeed?,PodcastEpisode?)->()){
         let feeds = self.fetchFeeds()
-        if let matchingFeed = feeds.first(where:{$0.feedID == feedID}) {
+        if let matchingFeed = feeds.first(where:{$0.feedID == feedID})
+        {
             print(matchingFeed)
-            let pf = PodcastFeed.convertFrom(contentFeed: matchingFeed)
-            if let episode = pf.episodes?.first(where: {$0.itemID == itemID}){
-                completion(pf,episode)
-            }
+            let (pf,episode) = getPodcastAndEpisodeFromGenericFeed(contentFeed: matchingFeed, itemID: itemID)
+            completion(pf,episode)
+        }
+        else if let feedInt : Int = Int(feedID){
+            //need to go get it from tribe server
+            API.sharedInstance.getPodcastInfo(podcastId: feedInt, callback: { result in
+                let url = result["url"].stringValue as String
+                print(url)
+                self.getContentFeedFor(feedId: feedID, feedUrl: url, chat: nil, context: CoreDataManager.sharedManager.persistentContainer.viewContext, completion: { contentFeed in
+                    if let feed = contentFeed{
+                        let (pf,episode) = self.getPodcastAndEpisodeFromGenericFeed(contentFeed: feed, itemID: itemID)
+                        completion(pf,episode)
+                    }
+                    else{
+                        completion(nil,nil)
+                    }
+                    
+                })
+            }, errorCallback: {
+                //TODO: error handle
+                completion(nil,nil)
+            })
         }
         else{
-            //need to go get it from tribe server
+            //TODO: error handle
         }
         
         completion(nil,nil)
+    }
+    
+    func getPodcastAndEpisodeFromGenericFeed(contentFeed:ContentFeed,itemID:String)->(PodcastFeed?,PodcastEpisode?){
+        let pf = PodcastFeed.convertFrom(contentFeed: contentFeed)
+        if let episode = pf.episodes?.first(where: {$0.itemID == itemID}){
+            return(pf,episode)
+        }
+        return(pf,nil)
     }
 }

@@ -285,7 +285,10 @@ extension UIViewController {
         let firstActivityItem =
         "Hey I think you'd enjoy this content I found on Sphinx iOS: \(episode.feed?.title ?? "") - \(episode.title ?? "")"
         
-        let secondActivityItem : NSURL = NSURL(string: episode.linkURLPath ?? episode.urlPath ?? "")!
+        //TODO: need a way to decide whether to use time stamp
+        let link = episode.constructShareLink() ?? episode.linkURLPath ?? episode.urlPath ?? ""
+        
+        let secondActivityItem : NSURL = NSURL(string: link)!
         
         if let imageUrl = episode.imageToShow, let url = URL(string: imageUrl) {
             URLSession.shared.dataTask(with: url) { (data, _, _) in

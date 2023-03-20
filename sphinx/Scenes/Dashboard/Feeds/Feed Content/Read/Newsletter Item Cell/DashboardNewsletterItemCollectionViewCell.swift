@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol DashboardNewsLetterItemCollectionViewCellDelegate{
+    func handleShare(item:NewsletterItem)
+}
+
 class DashboardNewsletterItemCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var shadowContainer: UIView!
@@ -16,6 +20,7 @@ class DashboardNewsletterItemCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var itemDescriptionLabel: UILabel!
     @IBOutlet weak var itemIcon: UIImageView!
     @IBOutlet weak var itemDateLabel: UILabel!
+    var delegate : DashboardNewsLetterItemCollectionViewCellDelegate? = nil
     
     var newsletterItem: NewsletterItem! {
         didSet {
@@ -24,6 +29,13 @@ class DashboardNewsletterItemCollectionViewCell: UICollectionViewCell {
             }
         }
     }
+    
+    @IBAction func shareTapped(_ sender: Any) {
+        if let item = newsletterItem{
+            delegate?.handleShare(item: item)
+        }
+    }
+    
 
 }
 
@@ -97,4 +109,6 @@ extension DashboardNewsletterItemCollectionViewCell {
         itemDescriptionLabel.text = newsletterItem.itemDescription?.nonHtmlRawString
         itemDateLabel.text = newsletterItem.datePublished?.getStringFromDate(format: "MMM dd, yyyy")
     }
+    
+    
 }

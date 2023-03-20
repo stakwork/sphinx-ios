@@ -326,6 +326,34 @@ extension UIViewController {
         }
     }
     
+    func shareTapped(newsletterItem:NewsletterItem){
+        if let link = newsletterItem.constructShareLink(){
+            let firstActivityItem =
+            "Hey I think you'd enjoy this newsletter I found on Sphinx iOS: \(newsletterItem.newsletterFeed?.title ?? "") - \(newsletterItem.title ?? "")"
+            
+            
+            let secondActivityItem : NSURL = NSURL(string: link)!
+            
+            if let imageUrl = newsletterItem.imageUrl?.path, let url = URL(string: imageUrl) {
+                URLSession.shared.dataTask(with: url) { (data, _, _) in
+                    guard let data = data, let image = UIImage(data: data) else {
+                        self.shouldShare(
+                            items: [firstActivityItem, secondActivityItem]
+                        )
+                        return
+                    }
+
+                    self.shouldShare(
+                        items: [firstActivityItem, secondActivityItem, image]
+                    )
+                }.resume()
+            } else {
+                shouldShare(
+                    items: [firstActivityItem, secondActivityItem]
+                )
+            }
+        }
+    }
     
     func shareTapped(episode: PodcastEpisode){
         askForShareType(episode:episode)

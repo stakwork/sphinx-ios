@@ -518,6 +518,11 @@ class FeedsManager : NSObject {
                         drvc.navigationController?
                             .present(viewController, animated: true)
                     }
+                    else if let _ = feed as? NewsletterFeed,
+                            let newsletter = item as? NewsletterItem,
+                            let drvc = vc as? DashboardRootViewController{
+                        drvc.presentItemWebView(for: newsletter)
+                    }
                     else{
                         //error message
                         AlertHelper.showAlert(title: "Error", message: "There was an issue with the link.")
@@ -559,6 +564,11 @@ class FeedsManager : NSObject {
             let vf = VideoFeed.convertFrom(contentFeed: matchingFeed)
             let video = vf.videos?.first(where: {$0.videoID == itemID})
             return (vf,video)
+        }
+        else if matchingFeed.isNewsletter{
+            let nf = NewsletterFeed.convertFrom(contentFeed: matchingFeed)
+            let item = nf.newsletterItems?.first(where:{$0.itemID == itemID})
+            return (nf,item)
         }
         return(nil,nil)
     }

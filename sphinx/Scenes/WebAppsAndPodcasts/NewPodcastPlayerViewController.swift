@@ -281,12 +281,28 @@ extension NewPodcastPlayerViewController : DownloadServiceDelegate {
 }
 
 extension UIViewController {
-    func shareTapped(episode: PodcastEpisode){
+    
+    func askForShareType(episode:PodcastEpisode){
+        let timestampCallback: (() -> ()) = {
+            self.executeShare(episode: episode,useCurrentTime: true)
+        }
+        let noTimestampCallback: (() -> ()) = {
+            self.executeShare(episode: episode,useCurrentTime: false)
+        }
+        AlertHelper.showOptionsPopup(title: "Share from Current Timestamp?",
+                                    message: "You can share from the beginning or from current timestamp to make it easy for the recipient.",
+                                    options: ["Share from beginning","Share from current time"],
+                                    callbacks: [noTimestampCallback,timestampCallback],
+                                      sourceView: self.view,
+                                    vc: self)
+    }
+    
+    func executeShare(episode: PodcastEpisode,useCurrentTime:Bool=false){
         let firstActivityItem =
         "Hey I think you'd enjoy this content I found on Sphinx iOS: \(episode.feed?.title ?? "") - \(episode.title ?? "")"
         
         //TODO: need a way to decide whether to use time stamp
-        let link = episode.constructShareLink() ?? episode.linkURLPath ?? episode.urlPath ?? ""
+        let link = episode.constructShareLink(useTimestamp: useCurrentTime) ?? episode.linkURLPath ?? episode.urlPath ?? ""
         
         let secondActivityItem : NSURL = NSURL(string: link)!
         
@@ -308,6 +324,11 @@ extension UIViewController {
                 items: [firstActivityItem, secondActivityItem]
             )
         }
+    }
+    
+    
+    func shareTapped(episode: PodcastEpisode){
+        askForShareType(episode:episode)
     }
     
     func shareTapped(video: Video) {

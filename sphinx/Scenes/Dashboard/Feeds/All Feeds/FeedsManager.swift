@@ -476,13 +476,14 @@ class FeedsManager : NSObject {
             
             let components = shareContentQuery.components(separatedBy: "&")
             if let feedID = extractContentDeepLinkMetaData(forKey: "feedID",components: components),
-               let itemID = extractContentDeepLinkMetaData(forKey: "itemID", components: components){
+               let itemID = extractContentDeepLinkMetaData(forKey: "itemID", components: components),
+               let feedURL = extractContentDeepLinkMetaData(forKey: "feedURL", components: components){
                 print(feedID)
                 print(itemID)
                 //2. Feed it forward to instantiate the correct VC
-                lookupContentFeedAndItem(feedID: feedID, itemID: itemID, completion: { feed,episode in
-                    if let valid_episode = episode,
-                        let valid_feed = feed,
+                lookupContentFeedAndItem(feedID: feedID, itemID: itemID, feedURL: feedURL, completion: { feed,item in
+                    if let valid_feed = feed as? PodcastFeed,
+                       let valid_episode = item as? PodcastEpisode,
                         let drvc = vc as? DashboardRootViewController{
                         let podcastFeedVC = NewPodcastPlayerViewController.instantiate(
                             podcast: valid_feed,
@@ -491,7 +492,7 @@ class FeedsManager : NSObject {
                             fromDashboard: true
                         )
                         let timestamp = Int(self.extractContentDeepLinkMetaData(forKey: "atTime", components: components) ?? "-1")
-                        podcastFeedVC.deeplinkedEpisode = episode
+                        podcastFeedVC.deeplinkedEpisode = valid_episode
                         podcastFeedVC.deeplinkTimestamp = timestamp == -1 ? nil : timestamp
                         drvc.navigationController?.present(
                             podcastFeedVC,
@@ -499,8 +500,27 @@ class FeedsManager : NSObject {
                             completion: nil
                         )
                     }
+                    else if let _ = feed as? VideoFeed,
+                    let video = item as? Video,
+                    let drvc = vc as? DashboardRootViewController{
+                        let viewController = VideoFeedEpisodePlayerContainerViewController
+                            .instantiate(
+                                videoPlayerEpisode: video,
+                                dismissButtonStyle: .backArrow,
+                                delegate: drvc,
+                                boostDelegate: drvc
+                            )
+                        
+                        let timestamp = Int(self.extractContentDeepLinkMetaData(forKey: "atTime", components: components) ?? "-1")
+                        viewController.deeplinkedTimestamp = timestamp
+                        viewController.modalPresentationStyle = .automatic
+                        
+                        drvc.navigationController?
+                            .present(viewController, animated: true)
+                    }
                     else{
                         //error message
+                        AlertHelper.showAlert(title: "Error", message: "There was an issue with the link.")
                     }
                 })
                 
@@ -510,39 +530,37 @@ class FeedsManager : NSObject {
             return false
         }
     
-    func lookupContentFeedAndItem(feedID:String,itemID:String,completion:@escaping (PodcastFeed?,PodcastEpisode?)->()){
+    func lookupContentFeedAndItem(feedID:String,itemID:String,feedURL:String,completion:@escaping (Any?,Any?)->()){
         let feeds = self.fetchFeeds()
         if let matchingFeed = feeds.first(where:{$0.feedID == feedID})
         {
             print(matchingFeed)
+            let feedEpisodePair = processMatchedFeed(matchingFeed: matchingFeed, itemID: itemID)
+            completion(feedEpisodePair.0,feedEpisodePair.1)
+            return
+        }
+        //need to go get it from tribe server
+        self.getContentFeedFor(feedId: feedID, feedUrl: feedURL, chat: nil, context: CoreDataManager.sharedManager.persistentContainer.viewContext, completion: { matchingFeed in
+            if let matchingFeed = matchingFeed{
+                let feedEpisodePair = self.processMatchedFeed(matchingFeed: matchingFeed, itemID: itemID)
+                completion(feedEpisodePair.0,feedEpisodePair.1)
+                return
+            }
+            completion(nil,nil)
+        })
+    }
+    
+    func processMatchedFeed(matchingFeed:ContentFeed,itemID:String)->(Any?,Any?){
+        if matchingFeed.isPodcast{
             let (pf,episode) = getPodcastAndEpisodeFromGenericFeed(contentFeed: matchingFeed, itemID: itemID)
-            completion(pf,episode)
+            return(pf,episode)
         }
-        else if let feedInt : Int = Int(feedID){
-            //need to go get it from tribe server
-            API.sharedInstance.getPodcastInfo(podcastId: feedInt, callback: { result in
-                let url = result["url"].stringValue as String
-                print(url)
-                self.getContentFeedFor(feedId: feedID, feedUrl: url, chat: nil, context: CoreDataManager.sharedManager.persistentContainer.viewContext, completion: { contentFeed in
-                    if let feed = contentFeed{
-                        let (pf,episode) = self.getPodcastAndEpisodeFromGenericFeed(contentFeed: feed, itemID: itemID)
-                        completion(pf,episode)
-                    }
-                    else{
-                        completion(nil,nil)
-                    }
-                    
-                })
-            }, errorCallback: {
-                //TODO: error handle
-                completion(nil,nil)
-            })
+        else if matchingFeed.isVideo{
+            let vf = VideoFeed.convertFrom(contentFeed: matchingFeed)
+            let video = vf.videos?.first(where: {$0.videoID == itemID})
+            return (vf,video)
         }
-        else{
-            //TODO: error handle
-        }
-        
-        completion(nil,nil)
+        return(nil,nil)
     }
     
     func getPodcastAndEpisodeFromGenericFeed(contentFeed:ContentFeed,itemID:String)->(PodcastFeed?,PodcastEpisode?){

@@ -331,14 +331,30 @@ extension UIViewController {
         askForShareType(episode:episode)
     }
     
-    func shareTapped(video: Video) {
+    func askForShareType(video:Video,currentTime:Int){
+        let timestampCallback: (() -> ()) = {
+            self.executeShare(video: video,videoTime: currentTime)
+        }
+        let noTimestampCallback: (() -> ()) = {
+            self.executeShare(video: video)
+        }
+        AlertHelper.showOptionsPopup(title: "Share from Current Timestamp?",
+                                    message: "You can share from the beginning or from current timestamp to make it easy for the recipient.",
+                                    options: ["Share from beginning","Share from current time"],
+                                    callbacks: [noTimestampCallback,timestampCallback],
+                                      sourceView: self.view,
+                                    vc: self)
+    }
+    
+    func executeShare(video:Video,videoTime:Int?=nil){
         let firstActivityItem =
         "Hey I think you'd enjoy this video I found on Sphinx iOS: \(video.videoFeed?.title ?? "") - \(video.title ?? "")"
         
-        guard let videoURL = video.itemURL else{
-            return
-        }
-        let secondActivityItem : NSURL = videoURL as NSURL
+        
+        
+        let videoURL = video.constructShareLink(currentTimeStamp: videoTime) ?? ""
+        
+        let secondActivityItem : NSURL = NSURL(string: videoURL)!
         
         if let imageUrl = video.videoFeed?.imageToShow, let url = URL(string: imageUrl) {
             URLSession.shared.dataTask(with: url) { (data, _, _) in
@@ -357,6 +373,17 @@ extension UIViewController {
             shouldShare(
                 items: [firstActivityItem, secondActivityItem]
             )
+        }
+    }
+    
+    func shareTapped(video: Video) {
+        let videoCurrentTime = UserDefaults.standard.integer(forKey: "videoID-\(video.id)-currentTime")
+        print(videoCurrentTime)
+        if videoCurrentTime != 0{
+            askForShareType(video: video, currentTime: videoCurrentTime)
+        }
+        else{
+            executeShare(video: video)
         }
     }
     

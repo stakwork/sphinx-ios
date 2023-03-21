@@ -285,7 +285,8 @@ class UnifiedEpisodeView : UIView {
         downloadButton.tintColorDidChange()
         
         if let download = download {
-            updateProgress(progress: download.progress)
+            print("Average progress: \(download.getAverageProgress())")
+            updateProgress(progress: download.getAverageProgress())
         } else {
             downloadProgressBar.progressAnimation(to: 0)
             downloadButton.isHidden = false

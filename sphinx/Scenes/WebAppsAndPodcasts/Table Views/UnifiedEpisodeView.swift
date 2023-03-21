@@ -284,20 +284,16 @@ class UnifiedEpisodeView : UIView {
         
         downloadButton.tintColorDidChange()
         
-        if let download = download {
-            updateProgress(progress: download.progress)
-        } else {
-            downloadProgressBar.progressAnimation(to: 0)
-            downloadButton.isHidden = false
-            downloadProgressBar.isHidden = true
-        }
+        print("DOWNLOAD PROGRESS ROW \(episode.itemID): \(download?.progress ?? -1)")
+        updateProgress(progress: download?.progress ?? -1)
     }
     
     func updateProgress(progress: Int) {
         let progress = CGFloat(progress) / CGFloat(100)
-        downloadButton.isHidden = true
-        downloadProgressBar.isHidden = false
         downloadProgressBar.progressAnimation(to: progress)
+        
+        downloadButton.isHidden = progress >= 0
+        downloadProgressBar.isHidden = progress < 0
     }
     
     @IBAction func downloadButtonTouched() {

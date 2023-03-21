@@ -37,7 +37,6 @@ class CircularProgressView: UIView {
     }
     
     func createCircularPath() {
-        // created circularPath for circleLayer and progressLayer
         let circularPath = UIBezierPath(
             arcCenter: CGPoint(x: frame.size.width / 2.0, y: frame.size.height / 2.0),
             radius: frame.size.height / 2.0,
@@ -72,6 +71,9 @@ class CircularProgressView: UIView {
         to: CGFloat,
         duration: TimeInterval? = nil
     ) {
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
         progressLayer.strokeEnd = to
+        CATransaction.commit()
     }
 }

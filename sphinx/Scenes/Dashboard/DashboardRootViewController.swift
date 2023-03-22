@@ -298,6 +298,12 @@ extension DashboardRootViewController {
         setupAddTribeButton()
         
         //startCallManagerTest()
+        
+        if let stashedLink = UserDefaults.Keys.stashedQuery.get(defaultValue: ""),
+           let url = URL(string:stashedLink){
+            let _ = DeepLinksHandlerHelper.storeLinkQueryFrom(url: url)
+            self.handleLinkQueries()
+        }
     }
     
 }

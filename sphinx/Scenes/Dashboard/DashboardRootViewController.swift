@@ -299,8 +299,8 @@ extension DashboardRootViewController {
         
         //startCallManagerTest()
         
-        if let stashedLink = UserDefaults.Keys.stashedQuery.get(defaultValue: ""),
-           let url = URL(string:stashedLink){
+        if let stashedQuery = UserDefaults.Keys.stashedQuery.get(defaultValue: ""),
+           let url = URL(string:"sphinx.chat://?\(stashedQuery)"){
             let _ = DeepLinksHandlerHelper.storeLinkQueryFrom(url: url)
             self.handleLinkQueries()
         }

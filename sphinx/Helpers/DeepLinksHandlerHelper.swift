@@ -101,9 +101,9 @@ class DeepLinksHandlerHelper {
                 }
             }
         }
-        else if UserData.sharedInstance.isUserLogged() == false{
-            let path = url.absoluteString
-            UserDefaults.Keys.stashedQuery.set(path)
+        else if UserData.sharedInstance.isUserLogged() == false,
+                let query = url.query{
+            UserDefaults.Keys.stashedQuery.set(query)
         }
         
         return shouldSetVC

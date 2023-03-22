@@ -66,6 +66,12 @@ class UnifiedEpisodeView : UIView {
     
     var episode: PodcastEpisode! = nil
     var videoEpisode: Video! = nil
+    var isDownloading : Bool = false {
+        didSet{
+            let icon_value = (isDownloading) ? "pause" : "play_arrow"
+            pausePlayDownload.setTitle(icon_value, for: .normal)
+        }
+    }
     
     weak var podcastDelegate: PodcastEpisodeRowDelegate?
     weak var videoDelegate: VideoRowDelegate?
@@ -302,24 +308,24 @@ class UnifiedEpisodeView : UIView {
         downloadProgressBar.isHidden = false
         downloadProgressBar.progressAnimation(to: progress)
         pausePlayDownload.isHidden = false
-        
     }
     
     @IBAction func downloadButtonTouched() {
         if !episode.isDownloaded {
+            isDownloading = true
             downloadProgressBar.progressAnimation(to: 0)
             podcastDelegate?.shouldStartDownloading(episode: episode)
         }
     }
     
     @IBAction func pauseDownloadButtonTouched(_ sender: Any) {
-        if DownloadService.sharedInstance.isPodcastDownloading(episode: episode) == true{
+        if isDownloading == true{
+            isDownloading = false
             podcastDelegate?.togglePodcastDownloadPausePlay(episode: episode,shouldPause: true)
-            pausePlayDownload.setTitle("pause", for: .normal)
         }
         else{
+            isDownloading = true
             podcastDelegate?.togglePodcastDownloadPausePlay(episode: episode,shouldPause: false)
-            pausePlayDownload.setTitle("play_arrow", for: .normal)
         }
         
     }

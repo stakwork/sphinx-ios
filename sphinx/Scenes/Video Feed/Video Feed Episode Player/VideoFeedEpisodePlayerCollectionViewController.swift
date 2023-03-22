@@ -368,6 +368,9 @@ extension VideoFeedEpisodePlayerCollectionViewController {
 
 //MARK: Unified View Delegate
 extension VideoFeedEpisodePlayerCollectionViewController: FeedItemRowDelegate, PodcastEpisodesDSDelegate {
+    func shouldPauseResumeDownloading(episode: PodcastEpisode, cell: UITableViewCell, shouldPause: Bool) {}
+    
+    
     
     func shouldStartDownloading(episode: PodcastEpisode, cell: UITableViewCell)  {}
     func shouldDeleteFile(episode: PodcastEpisode, cell: UITableViewCell)  {}
@@ -375,6 +378,7 @@ extension VideoFeedEpisodePlayerCollectionViewController: FeedItemRowDelegate, P
     func shouldShare(episode: PodcastEpisode)  {}
     
     func shouldStartDownloading(episode: PodcastEpisode, cell: UICollectionViewCell)  {}
+    func pausePlayEpisodeTapped(_ indexPath: IndexPath, episode: PodcastEpisode,shouldPause:Bool) {}
     func shouldDeleteFile(episode: PodcastEpisode, cell: UICollectionViewCell)  {}
     
     func shouldShare(video: Video) {

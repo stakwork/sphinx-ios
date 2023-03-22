@@ -41,6 +41,10 @@ class UnifiedEpisodeTableViewCell: UITableViewCell {
 }
 
 extension UnifiedEpisodeTableViewCell : PodcastEpisodeRowDelegate {
+    func togglePodcastDownloadPausePlay(episode: PodcastEpisode,shouldPause:Bool) {
+        delegate?.shouldPauseResumeDownloading(episode: episode, cell: self, shouldPause: shouldPause)
+    }
+    
     func shouldStartDownloading(episode: PodcastEpisode) {
         delegate?.shouldStartDownloading(episode: episode, cell: self)
     }

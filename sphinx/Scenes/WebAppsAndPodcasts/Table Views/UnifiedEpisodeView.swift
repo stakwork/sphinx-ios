@@ -11,6 +11,7 @@ import UIKit
 import Lottie
 
 protocol FeedItemRowDelegate : class {
+    func shouldPauseResumeDownloading(episode: PodcastEpisode, cell: UITableViewCell,shouldPause:Bool)
     func shouldStartDownloading(episode: PodcastEpisode, cell: UITableViewCell)
     func shouldDeleteFile(episode: PodcastEpisode, cell: UITableViewCell)
     func shouldShowMore(episode: PodcastEpisode, cell: UITableViewCell)
@@ -26,6 +27,7 @@ protocol FeedItemRowDelegate : class {
 
 protocol PodcastEpisodeRowDelegate : class {
     func shouldStartDownloading(episode: PodcastEpisode)
+    func togglePodcastDownloadPausePlay(episode:PodcastEpisode,shouldPause:Bool)
     func shouldDeleteFile(episode: PodcastEpisode)
     func shouldShowMore(episode: PodcastEpisode)
     func shouldShare(episode: PodcastEpisode)
@@ -60,6 +62,7 @@ class UnifiedEpisodeView : UIView {
     @IBOutlet weak var downloadProgressBar: CircularProgressView!
     @IBOutlet weak var animationContainer: UIView!
     @IBOutlet weak var animationView: AnimationView!
+    @IBOutlet weak var pausePlayDownload: UIButton!
     
     var episode: PodcastEpisode! = nil
     var videoEpisode: Video! = nil
@@ -298,6 +301,8 @@ class UnifiedEpisodeView : UIView {
         downloadButton.isHidden = true
         downloadProgressBar.isHidden = false
         downloadProgressBar.progressAnimation(to: progress)
+        pausePlayDownload.isHidden = false
+        
     }
     
     @IBAction func downloadButtonTouched() {
@@ -306,6 +311,19 @@ class UnifiedEpisodeView : UIView {
             podcastDelegate?.shouldStartDownloading(episode: episode)
         }
     }
+    
+    @IBAction func pauseDownloadButtonTouched(_ sender: Any) {
+        if DownloadService.sharedInstance.isPodcastDownloading(episode: episode) == true{
+            podcastDelegate?.togglePodcastDownloadPausePlay(episode: episode,shouldPause: true)
+            pausePlayDownload.setTitle("pause", for: .normal)
+        }
+        else{
+            podcastDelegate?.togglePodcastDownloadPausePlay(episode: episode,shouldPause: false)
+            pausePlayDownload.setTitle("play_arrow", for: .normal)
+        }
+        
+    }
+    
     
     @IBAction func shareButtonTouched(){
         if let video = videoEpisode {

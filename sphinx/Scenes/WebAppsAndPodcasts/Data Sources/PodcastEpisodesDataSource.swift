@@ -11,6 +11,7 @@ import UIKit
 protocol PodcastEpisodesDSDelegate : class {
     func didTapEpisodeAt(index: Int)
     func downloadTapped(_ indexPath: IndexPath, episode: PodcastEpisode)
+    func pausePlayEpisodeTapped(_ indexPath: IndexPath, episode: PodcastEpisode,shouldPause:Bool)
     func deleteTapped(_ indexPath: IndexPath, episode: PodcastEpisode)
     func shouldToggleTopView(show: Bool)
     func shareTapped(episode:PodcastEpisode)
@@ -130,6 +131,7 @@ extension PodcastEpisodesDataSource : UIScrollViewDelegate {
 }
 
 extension PodcastEpisodesDataSource : FeedItemRowDelegate {
+    
     func shouldShowMore(video: Video, cell: UICollectionViewCell) {}
     
     func shouldShare(video: Video) {}
@@ -143,6 +145,12 @@ extension PodcastEpisodesDataSource : FeedItemRowDelegate {
     func shouldDeleteFile(episode: PodcastEpisode, cell: UITableViewCell) {
         if let indexPath = tableView.indexPath(for: cell) {
             delegate?.deleteTapped(indexPath, episode: episode)
+        }
+    }
+    
+    func shouldPauseResumeDownloading(episode: PodcastEpisode, cell: UITableViewCell,shouldPause:Bool) {
+        if let indexPath = tableView.indexPath(for: cell){
+            delegate?.pausePlayEpisodeTapped(indexPath, episode: episode,shouldPause:shouldPause)
         }
     }
     

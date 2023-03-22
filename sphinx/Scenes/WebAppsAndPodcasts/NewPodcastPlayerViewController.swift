@@ -128,6 +128,8 @@ class NewPodcastPlayerViewController: UIViewController {
 }
 
 extension NewPodcastPlayerViewController : PodcastEpisodesDSDelegate {
+    
+    
     func deleteTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {
         episode.shouldDeleteFile {
             self.reload(indexPath.row)
@@ -150,6 +152,15 @@ extension NewPodcastPlayerViewController : PodcastEpisodesDSDelegate {
     func downloadTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {
         downloadService.startDownload(episode)
         reload(indexPath.row)
+    }
+    
+    func pausePlayEpisodeTapped(_ indexPath: IndexPath, episode: PodcastEpisode,shouldPause:Bool) {
+        if(shouldPause){
+            downloadService.pauseDownload(episode)
+        }
+        else{
+            downloadService.resumeDownload(episode)
+        }
     }
     
     func showEpisodeDetails(episode: PodcastEpisode, indexPath:IndexPath) {

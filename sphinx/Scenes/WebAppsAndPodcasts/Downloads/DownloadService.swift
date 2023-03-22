@@ -97,6 +97,14 @@ class DownloadService : NSObject {
 
         activeDownloads[url.absoluteString] = nil
     }
+    
+    func isPodcastDownloading(episode:PodcastEpisode)->Bool?{
+        guard let url = episode.getRemoteAudioUrl() else { return nil}
+        guard let download = activeDownloads[url.absoluteString] else {
+            return nil
+        }
+        return download.isDownloading
+    }
 
     func pauseDownload(_ episode: PodcastEpisode) {
         guard let url = episode.getRemoteAudioUrl() else { return }

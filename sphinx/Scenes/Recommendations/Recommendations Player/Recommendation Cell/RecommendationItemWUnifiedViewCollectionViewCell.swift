@@ -51,6 +51,10 @@ class RecommendationItemWUnifiedViewCollectionViewCell: UICollectionViewCell {
 }
 
 extension RecommendationItemWUnifiedViewCollectionViewCell : PodcastEpisodeRowDelegate {
+    func togglePodcastDownloadPausePlay(episode: PodcastEpisode,shouldPause:Bool) {
+        //delegate?.shouldPauseResumeDownloading(episode: episode, cell: self)
+    }
+    
     func shouldStartDownloading(episode: PodcastEpisode) {
         delegate?.shouldStartDownloading(episode: episode, cell: self)
     }

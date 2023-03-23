@@ -104,6 +104,7 @@ extension AllTribeFeedsCollectionViewController {
     enum CollectionViewSection: Int, CaseIterable {
         case recommendations
         case followedFeeds
+        case recentlyConsumed
         
         var titleForDisplay: String {
             switch self {
@@ -111,6 +112,8 @@ extension AllTribeFeedsCollectionViewController {
                     return "feed.recommendations".localized
                 case .followedFeeds:
                     return "feed.following".localized
+            case .recentlyConsumed:
+                    return "My Recent Content"//TODO Localize!!
             }
         }
     }
@@ -353,7 +356,7 @@ extension AllTribeFeedsCollectionViewController {
             }
             
             switch section {
-            case .followedFeeds, .recommendations:
+            case .followedFeeds, .recommendations, .recentlyConsumed:
                 if dataSourceItem.isLoading {
                     guard
                         let loadingCell = collectionView.dequeueReusableCell(
@@ -416,7 +419,7 @@ extension AllTribeFeedsCollectionViewController {
                 
                 var section = CollectionViewSection.allCases[indexPath.section]
                 if(section == .recommendations && self.isTrackingEnabled() == false){
-                    section = .followedFeeds
+                    section = .recentlyConsumed
                 }
                 
                 let firstDataSourceItem = self.dataSource.itemIdentifier(for: IndexPath(row: 0, section: 0))
@@ -449,7 +452,6 @@ extension AllTribeFeedsCollectionViewController {
     ) -> DataSourceSnapshot {
         
         var snapshot = DataSourceSnapshot()
-        
         if (isTrackingEnabled()) {
             snapshot.appendSections([CollectionViewSection.recommendations])
             
@@ -479,10 +481,22 @@ extension AllTribeFeedsCollectionViewController {
         }
           
         let followedSourceItems = followedFeeds.sorted { (first, second) in
-            /*
             let firstDate = first.itemsArray.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
             let secondDate = second.itemsArray.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
-             */
+
+            return firstDate > secondDate
+        }.compactMap { contentFeed -> DataSourceItem? in
+            if contentFeed.isPodcast {
+                return DataSourceItem.tribePodcastFeed(contentFeed)
+            } else if contentFeed.isVideo {
+                return DataSourceItem.tribeVideoFeed(contentFeed)
+            } else if contentFeed.isNewsletter {
+                return DataSourceItem.tribeNewsletterFeed(contentFeed)
+            }
+            return nil
+        }
+        
+        let recentSourceItems = followedFeeds.sorted { (first, second) in
             let firstDate = first.dateLastConsumed ?? Date.init(timeIntervalSince1970: 0)
             let secondDate = second.dateLastConsumed ?? Date.init(timeIntervalSince1970: 0)
 
@@ -504,6 +518,15 @@ extension AllTribeFeedsCollectionViewController {
             snapshot.appendItems(
                 followedSourceItems,
                 toSection: .followedFeeds
+            )
+            
+        }
+        
+        if recentSourceItems.count > 0 {
+            snapshot.appendSections([CollectionViewSection.recentlyConsumed])
+            snapshot.appendItems(
+                recentSourceItems,
+                toSection: .recentlyConsumed
             )
         }
         

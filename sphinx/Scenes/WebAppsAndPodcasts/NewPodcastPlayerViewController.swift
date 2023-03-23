@@ -49,7 +49,10 @@ class NewPodcastPlayerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        downloadService.setDelegate(delegate: self)
+        downloadService.setDelegate(
+            delegate: self,
+            forKey: DownloadServiceDelegateKeys.PodcastPlayerDelegate
+        )
         
         showPodcastInfo()
         updateFeed()
@@ -258,42 +261,24 @@ extension NewPodcastPlayerViewController : DownloadServiceDelegate {
             tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
         }
     }
-    
-    func shouldUpdateProgressFor(download: Download) {
-        if let index = podcast.getIndexForEpisodeWith(id: download.episode.itemID) {
-            tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
-        }
-    }
 }
 
 extension UIViewController {
-    func shareTapped(episode: PodcastEpisode){
-        let firstActivityItem =
-        "Hey I think you'd enjoy this content I found on Sphinx iOS: \(episode.feed?.title ?? "") - \(episode.title ?? "")"
+    func shareTapped(
+        episode: PodcastEpisode
+    ){
+        let firstActivityItem = "Hey I think you'd enjoy this content I found on Sphinx iOS: \(episode.feed?.title ?? "") - \(episode.title ?? "")"
         
         let secondActivityItem : NSURL = NSURL(string: episode.linkURLPath ?? episode.urlPath ?? "")!
         
-        if let imageUrl = episode.imageToShow, let url = URL(string: imageUrl) {
-            URLSession.shared.dataTask(with: url) { (data, _, _) in
-                guard let data = data, let image = UIImage(data: data) else {
-                    self.shouldShare(
-                        items: [firstActivityItem, secondActivityItem]
-                    )
-                    return
-                }
-
-                self.shouldShare(
-                    items: [firstActivityItem, secondActivityItem, image]
-                )
-            }.resume()
-        } else {
-            shouldShare(
-                items: [firstActivityItem, secondActivityItem]
-            )
-        }
+        shouldShare(
+            items: [firstActivityItem, secondActivityItem]
+        )
     }
     
-    func shareTapped(video: Video) {
+    func shareTapped(
+        video: Video
+    ) {
         let firstActivityItem =
         "Hey I think you'd enjoy this video I found on Sphinx iOS: \(video.videoFeed?.title ?? "") - \(video.title ?? "")"
         
@@ -302,24 +287,9 @@ extension UIViewController {
         }
         let secondActivityItem : NSURL = videoURL as NSURL
         
-        if let imageUrl = video.videoFeed?.imageToShow, let url = URL(string: imageUrl) {
-            URLSession.shared.dataTask(with: url) { (data, _, _) in
-                guard let data = data, let image = UIImage(data: data) else {
-                    self.shouldShare(
-                        items: [firstActivityItem, secondActivityItem]
-                    )
-                    return
-                }
-
-                self.shouldShare(
-                    items: [firstActivityItem, secondActivityItem, image]
-                )
-            }.resume()
-        } else {
-            shouldShare(
-                items: [firstActivityItem, secondActivityItem]
-            )
-        }
+        shouldShare(
+            items: [firstActivityItem, secondActivityItem]
+        )
     }
     
     func shouldShare(

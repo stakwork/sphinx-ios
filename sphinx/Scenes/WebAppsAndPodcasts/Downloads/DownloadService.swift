@@ -10,12 +10,17 @@ import Foundation
 
 protocol DownloadServiceDelegate : class {
     func shouldReloadRowFor(download: Download)
-    func shouldUpdateProgressFor(download: Download)
+}
+
+enum DownloadServiceDelegateKeys: String {
+    case PodcastPlayerDelegate = "PodcastPlayerDelegate"
+    case FeedItemDetailsDelegate = "FeedItemDetailsDelegate"
 }
 
 class DownloadService : NSObject {
     
-    var delegate: DownloadServiceDelegate? = nil
+    var delegates: [String: DownloadServiceDelegate] = [:]
+    
     let downloadDispatchSemaphore = DispatchSemaphore(value: 1)
     
     class var sharedInstance : DownloadService {
@@ -34,8 +39,11 @@ class DownloadService : NSObject {
 
     let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
     
-    func setDelegate(delegate: DownloadServiceDelegate) {
-        self.delegate = delegate
+    func setDelegate(
+        delegate: DownloadServiceDelegate,
+        forKey key: DownloadServiceDelegateKeys
+    ) {
+        self.delegates[key.rawValue] = delegate
     }
 
     func startDownload(_ episode: PodcastEpisode) {
@@ -61,7 +69,9 @@ class DownloadService : NSObject {
         download.state = Download.State.downloading
         activeDownloads[url.absoluteString] = download
         
-        delegate?.shouldReloadRowFor(download: download)
+        for d in self.delegates.values {
+            d.shouldReloadRowFor(download: download)
+        }
         
         DispatchQueue.global(qos: .utility).async {
             self.downloadDispatchSemaphore.wait()
@@ -97,7 +107,9 @@ class DownloadService : NSObject {
         }
         
         DispatchQueue.main.async {
-            self.delegate?.shouldReloadRowFor(download: download)
+            for d in self.delegates.values {
+                d.shouldReloadRowFor(download: download)
+            }
         }
     }
 
@@ -119,7 +131,9 @@ class DownloadService : NSObject {
         downloadDispatchSemaphore.signal()
         
         DispatchQueue.main.async {
-            self.delegate?.shouldReloadRowFor(download: download)
+            for d in self.delegates.values {
+                d.shouldReloadRowFor(download: download)
+            }
         }
     }
 }
@@ -160,7 +174,9 @@ extension DownloadService : URLSessionDownloadDelegate {
         
         if let download = download {
             DispatchQueue.main.async {
-                self.delegate?.shouldReloadRowFor(download: download)
+                for d in self.delegates.values {
+                    d.shouldReloadRowFor(download: download)
+                }
             }
         }
         
@@ -195,7 +211,9 @@ extension DownloadService : URLSessionDownloadDelegate {
         
         DispatchQueue.main.async {
             if shouldUpdateUI {
-                self.delegate?.shouldUpdateProgressFor(download: download)
+                for d in self.delegates.values {
+                    d.shouldReloadRowFor(download: download)
+                }
             }
         }
     }

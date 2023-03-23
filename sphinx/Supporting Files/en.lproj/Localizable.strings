@@ -509,6 +509,8 @@
 "delete.episode.message" = "Delete Episode from device memory?";
 "error.playing" = "There was an error playing the episode. Please try again later.";
 "download" = "Download";
+"pause" = "Pause";
+"resume" = "Resume";
 "mark.as.played" = "Mark as Played";
 "marking.as.played" = "Marking episode as played!";
 "marking.as.unplayed" = "Marking episode as unplayed!";

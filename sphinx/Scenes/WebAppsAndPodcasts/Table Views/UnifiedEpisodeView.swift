@@ -56,7 +56,6 @@ class UnifiedEpisodeView : UIView {
     @IBOutlet weak var durationView: UIView!
     @IBOutlet weak var progressView: UIView!
     @IBOutlet weak var didPlayImageView: UIImageView!
-    @IBOutlet weak var downloadPlayPause: UILabel!
     @IBOutlet weak var downloadButtonImage: UIImageView!
     @IBOutlet weak var downloadButton: UIButton!
     @IBOutlet weak var downloadProgressBar: CircularProgressView!
@@ -278,7 +277,6 @@ class UnifiedEpisodeView : UIView {
     func configureDownload(episode: PodcastEpisode, download: Download?) {
         downloadButtonImage.isHidden = true
         downloadProgressBar.isHidden = true
-        downloadPlayPause.isHidden = true
         
         if episode.isDownloaded {
             downloadButtonImage.isHidden = false
@@ -286,7 +284,6 @@ class UnifiedEpisodeView : UIView {
             downloadButtonImage.tintColor = UIColor.Sphinx.ReceivedIcon
         } else if let download = download {
             downloadProgressBar.isHidden = false
-            downloadPlayPause.isHidden = false
             updateDownloadState(download)
         } else {
             downloadButtonImage.isHidden = false
@@ -299,14 +296,12 @@ class UnifiedEpisodeView : UIView {
     
     func updateDownloadState(_ download: Download) {
         let progress = CGFloat(download.progress) / CGFloat(100)
-        downloadProgressBar.progressAnimation(to: progress)
-        downloadPlayPause.text = download.isDownloading ? "pause" : "play_arrow"
-        
+        downloadProgressBar.progressAnimation(to: progress, active: download.isDownloading)
     }
     
     @IBAction func downloadButtonTouched() {
         if !episode.isDownloaded {
-            downloadProgressBar.progressAnimation(to: 0)
+            downloadProgressBar.progressAnimation(to: 0, active: true)
             podcastDelegate?.shouldStartDownloading(episode: episode)
         }
     }

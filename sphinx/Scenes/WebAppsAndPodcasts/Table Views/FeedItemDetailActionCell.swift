@@ -21,22 +21,24 @@ class FeedItemDetailActionCell: UITableViewCell {
 
     @IBOutlet weak var actionLabel: UILabel!
     @IBOutlet weak var actionIconButton: UIButton!
+    @IBOutlet weak var circularProgressView: CircularProgressView!
     
     var actionType : FeedItemActionType? = nil
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     
-    func configureView(type:FeedItemActionType){
-        self.backgroundColor = .clear
+    func configureView(
+        type: FeedItemActionType
+    ){
+        actionIconButton.isHidden = false
+        circularProgressView.isHidden = true
+        
         switch(type){
         case .download:
             actionLabel.text = "download".localized
@@ -69,6 +71,18 @@ class FeedItemDetailActionCell: UITableViewCell {
             actionIconButton.tintColor = UIColor.Sphinx.ReceivedIcon
             break
         }
+    }
+    
+    func configureDownloading(
+        download: Download
+    ) {
+        actionIconButton.isHidden = true
+        circularProgressView.isHidden = false
+        
+        actionLabel.text = (download.isDownloading) ? "pause".localized : "resume".localized
+        
+        let progress = CGFloat(download.progress) / CGFloat(100)
+        circularProgressView.progressAnimation(to: progress, active: download.isDownloading)
     }
     
 }

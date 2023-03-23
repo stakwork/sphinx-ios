@@ -141,11 +141,6 @@ extension NewPodcastPlayerViewController : PodcastEpisodesDSDelegate {
     func shouldToggleTopView(show: Bool) {
         topFixingView.isHidden = !show
     }
-    
-    func cancelTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {
-        downloadService.cancelDownload(episode)
-        reload(indexPath.row)
-    }
 
     func downloadTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {
         downloadService.startDownload(episode)

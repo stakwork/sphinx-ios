@@ -47,20 +47,29 @@ class DownloadService : NSObject {
 
         let download = activeDownloads[url.absoluteString] ?? Download(episode: episode)
         
-        if download.isDownloading { return }
+        if download.isDownloading {
+            pauseDownload(episode)
+            return
+        }
+        
+        if let _ = download.resumeData {
+            resumeDownload(episode)
+            return
+        }
         
         download.progress = 0
-        download.isDownloading = true
+        download.state = Download.State.downloading
         activeDownloads[url.absoluteString] = download
         
         delegate?.shouldReloadRowFor(download: download)
         
-        DispatchQueue.global().async {
+        DispatchQueue.global(qos: .utility).async {
             self.downloadDispatchSemaphore.wait()
             
             download.task = self.downloadsSession.downloadTask(with: url)
             download.task?.resume()
-            self.activeDownloads[url.absoluteString] = download
+        
+            self.activeDownloads[download.task?.currentRequest?.url?.absoluteString ?? url.absoluteString] = download
         }
     }
     
@@ -70,8 +79,10 @@ class DownloadService : NSObject {
         guard let download = activeDownloads[url.absoluteString] else {
             return
         }
+        
+        download.state = Download.State.downloading
 
-        DispatchQueue.global().async {
+        DispatchQueue.global(qos: .utility).async {
             self.downloadDispatchSemaphore.wait()
             
             if let resumeData = download.resumeData {
@@ -79,23 +90,15 @@ class DownloadService : NSObject {
             } else {
                 download.task = self.downloadsSession.downloadTask(with: url)
             }
-
+        
             download.task?.resume()
-            download.isDownloading = true
             
-            self.activeDownloads[url.absoluteString] = download
+            self.activeDownloads[download.task?.currentRequest?.url?.absoluteString ?? url.absoluteString] = download
         }
-    }
-    
-    func cancelDownload(_ episode: PodcastEpisode) {
-        guard let url = episode.getRemoteAudioUrl() else { return }
-
-        guard let download = activeDownloads[url.absoluteString] else {
-            return
+        
+        DispatchQueue.main.async {
+            self.delegate?.shouldReloadRowFor(download: download)
         }
-        download.task?.cancel()
-
-        activeDownloads[url.absoluteString] = nil
     }
 
     func pauseDownload(_ episode: PodcastEpisode) {
@@ -104,15 +107,20 @@ class DownloadService : NSObject {
         guard let download = activeDownloads[url.absoluteString], download.isDownloading else {
             return
         }
+                
+        download.state = Download.State.paused
 
-        download.task?.cancel(byProducingResumeData: { data in
-            download.resumeData = data
+        download.task?.cancel(byProducingResumeData: { resumeDataOrNil in
+            download.resumeData = resumeDataOrNil
         })
 
-        download.isDownloading = false
-        activeDownloads[url.absoluteString] = download
+        activeDownloads[download.task?.currentRequest?.url?.absoluteString ?? url.absoluteString] = download
         
         downloadDispatchSemaphore.signal()
+        
+        DispatchQueue.main.async {
+            self.delegate?.shouldReloadRowFor(download: download)
+        }
     }
 }
 
@@ -120,7 +128,7 @@ extension DownloadService : URLSessionDownloadDelegate {
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask,
                     didFinishDownloadingTo location: URL) {
         
-        guard let url = downloadTask.originalRequest?.url else {
+        guard let url = downloadTask.originalRequest?.url ?? downloadTask.currentRequest?.url else {
             return
         }
         
@@ -131,7 +139,13 @@ extension DownloadService : URLSessionDownloadDelegate {
             return
         }
         
-        activeDownloads[urlString] = nil
+        if let currentDownload = activeDownloads[urlString] {
+            activeDownloads[urlString] = nil
+            
+            if let originalUrl = currentDownload.originalUrl {
+                activeDownloads[originalUrl] = nil
+            }
+        }
       
         let destinationURL = localFilePath(for: fileName)
 
@@ -161,7 +175,7 @@ extension DownloadService : URLSessionDownloadDelegate {
                     didWriteData bytesWritten: Int64, totalBytesWritten: Int64,
                     totalBytesExpectedToWrite: Int64) {
         
-        guard let url = downloadTask.originalRequest?.url, let download = activeDownloads[url.absoluteString] else {
+        guard let url = downloadTask.originalRequest?.url ?? downloadTask.currentRequest?.url, let download = activeDownloads[url.absoluteString] else {
             return
         }
 
@@ -171,15 +185,18 @@ extension DownloadService : URLSessionDownloadDelegate {
             return
         }
         
-        download.progress = newProgress
+        let shouldUpdateUI = abs(newProgress - download.progress) > 2
+        
+        if shouldUpdateUI {
+            download.progress = newProgress
+        }
+        
         activeDownloads[url.absoluteString] = download
         
-        let totalSize = ByteCountFormatter.string(fromByteCount: totalBytesExpectedToWrite, countStyle: .file)
-        
-        print("PROGRESS: \(download.progress) FROM \(totalSize)")
-        
         DispatchQueue.main.async {
-            self.delegate?.shouldUpdateProgressFor(download: download)
+            if shouldUpdateUI {
+                self.delegate?.shouldUpdateProgressFor(download: download)
+            }
         }
     }
 }

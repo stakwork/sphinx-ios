@@ -44,7 +44,6 @@ class UnifiedEpisodeView : UIView {
     @IBOutlet weak var playArrow: UILabel!
     @IBOutlet weak var episodeImageView: UIImageView!
     @IBOutlet weak var divider: UIView!
-    @IBOutlet weak var downloadButton: UIButton!
     @IBOutlet weak var sharebutton: UIButton!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var moreDetailsButton: UIButton!
@@ -57,6 +56,9 @@ class UnifiedEpisodeView : UIView {
     @IBOutlet weak var durationView: UIView!
     @IBOutlet weak var progressView: UIView!
     @IBOutlet weak var didPlayImageView: UIImageView!
+    @IBOutlet weak var downloadPlayPause: UILabel!
+    @IBOutlet weak var downloadButtonImage: UIImageView!
+    @IBOutlet weak var downloadButton: UIButton!
     @IBOutlet weak var downloadProgressBar: CircularProgressView!
     @IBOutlet weak var animationContainer: UIView!
     @IBOutlet weak var animationView: AnimationView!
@@ -274,26 +276,32 @@ class UnifiedEpisodeView : UIView {
     
     //Networking:
     func configureDownload(episode: PodcastEpisode, download: Download?) {
+        downloadButtonImage.isHidden = true
+        downloadProgressBar.isHidden = true
+        downloadPlayPause.isHidden = true
+        
         if episode.isDownloaded {
-            downloadButton.setImage(UIImage(named: "playerListDownloaded"), for: .normal)
-            downloadButton.tintColor = UIColor.Sphinx.ReceivedIcon
+            downloadButtonImage.isHidden = false
+            downloadButtonImage.image = UIImage(named: "playerListDownloaded")
+            downloadButtonImage.tintColor = UIColor.Sphinx.ReceivedIcon
+        } else if let download = download {
+            downloadProgressBar.isHidden = false
+            downloadPlayPause.isHidden = false
+            updateDownloadState(download)
         } else {
-            downloadButton.setImage(UIImage(named: "playerListDownload"), for: .normal)
-            downloadButton.tintColor = UIColor.Sphinx.Text.withAlphaComponent(0.5)
+            downloadButtonImage.isHidden = false
+            downloadButtonImage.image = UIImage(named: "playerListDownload")
+            downloadButtonImage.tintColor = UIColor.Sphinx.Text.withAlphaComponent(0.5)
         }
         
         downloadButton.tintColorDidChange()
-        
-        print("DOWNLOAD PROGRESS ROW \(episode.itemID): \(download?.progress ?? -1)")
-        updateProgress(progress: download?.progress ?? -1)
     }
     
-    func updateProgress(progress: Int) {
-        let progress = CGFloat(progress) / CGFloat(100)
+    func updateDownloadState(_ download: Download) {
+        let progress = CGFloat(download.progress) / CGFloat(100)
         downloadProgressBar.progressAnimation(to: progress)
+        downloadPlayPause.text = download.isDownloading ? "pause" : "play_arrow"
         
-        downloadButton.isHidden = progress >= 0
-        downloadProgressBar.isHidden = progress < 0
     }
     
     @IBAction func downloadButtonTouched() {

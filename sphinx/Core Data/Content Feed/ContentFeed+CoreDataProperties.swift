@@ -49,6 +49,9 @@ extension ContentFeed {
     public var dateUpdated: Date?
     
     @NSManaged
+    public var dateLastConsumed: Date?
+    
+    @NSManaged
     public var language: String?
     
     @NSManaged

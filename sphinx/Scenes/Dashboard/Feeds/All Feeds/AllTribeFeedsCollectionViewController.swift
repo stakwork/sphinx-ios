@@ -479,8 +479,12 @@ extension AllTribeFeedsCollectionViewController {
         }
           
         let followedSourceItems = followedFeeds.sorted { (first, second) in
+            /*
             let firstDate = first.itemsArray.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
             let secondDate = second.itemsArray.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
+             */
+            let firstDate = first.dateLastConsumed ?? Date.init(timeIntervalSince1970: 0)
+            let secondDate = second.dateLastConsumed ?? Date.init(timeIntervalSince1970: 0)
 
             return firstDate > secondDate
         }.compactMap { contentFeed -> DataSourceItem? in
@@ -646,6 +650,10 @@ extension AllTribeFeedsCollectionViewController {
         }
 
         if let feedEntity = dataSourceItem.feedEntity {
+            if let cfEntity = feedEntity as? ContentFeed{
+                cfEntity.dateLastConsumed = Date()
+                cfEntity.managedObjectContext?.saveContext()
+            }
             onCellSelected?(feedEntity.objectID)
         } else if let recommendation = dataSourceItem.resultEntity {
             onRecommendationSelected?(recommendedFeeds, recommendation.id)

@@ -506,8 +506,8 @@ extension AllTribeFeedsCollectionViewController {
         }
         
         let recentlyPlayedFeed = followedFeeds.sorted { (first, second) in
-            let firstDate = first.title ?? ""
-            let secondDate = second.title ?? ""
+            let firstDate = first.publishDate ?? Date()
+            let secondDate = second.publishDate ?? Date()
 
             return firstDate > secondDate
         }.compactMap { contentFeed -> DataSourceItem? in
@@ -661,6 +661,12 @@ extension AllTribeFeedsCollectionViewController {
             self.updateNoRecommendationsFound()
         })
     }
+    
+    func scrollBackMostRecentFeed(){
+        let mostRecentSectionNumber = (isTrackingEnabled()) ? 2 : 1
+        let indexPath = IndexPath(item: 0, section: mostRecentSectionNumber)//todo: programmatically determine the most recent section #
+        self.collectionView.scrollToItem(at: indexPath, at: [.centeredVertically, .centeredHorizontally], animated: true)
+    }
 }
 
 
@@ -679,6 +685,7 @@ extension AllTribeFeedsCollectionViewController {
 
         if let feedEntity = dataSourceItem.feedEntity {
             onCellSelected?(feedEntity.objectID)
+            scrollBackMostRecentFeed()
         } else if let recommendation = dataSourceItem.resultEntity {
             onRecommendationSelected?(recommendedFeeds, recommendation.id)
         }

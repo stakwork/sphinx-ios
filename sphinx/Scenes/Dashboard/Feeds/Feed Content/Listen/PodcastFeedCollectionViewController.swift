@@ -97,7 +97,9 @@ extension PodcastFeedCollectionViewController {
                     lhsContentFeed.feedID == rhsContentFeed.feedID &&
                     lhsContentFeed.title == rhsContentFeed.title &&
                     lhsContentFeed.feedURLPath == rhsContentFeed.feedURLPath &&
-                    lhsContentFeed.episodesArray.count == rhsContentFeed.episodesArray.count
+                    lhsContentFeed.episodesArray.count == rhsContentFeed.episodesArray.count &&
+                    lhsContentFeed.getLastEpisode()?.id == rhsContentFeed.getLastEpisode()?.id &&
+                    lhsContentFeed.getLastEpisode()?.datePublished == rhsContentFeed.getLastEpisode()?.datePublished
             }
             
             if let lhsEpisode = lhs.episodeEntity,

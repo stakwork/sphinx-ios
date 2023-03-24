@@ -135,7 +135,9 @@ extension AllTribeFeedsCollectionViewController {
                     lhsContentFeed.feedID == rhsContentFeed.feedID &&
                     lhsContentFeed.title == rhsContentFeed.title &&
                     lhsContentFeed.feedURL?.absoluteString == rhsContentFeed.feedURL?.absoluteString &&
-                    lhsContentFeed.items?.count ?? 0 == rhsContentFeed.items?.count ?? 0
+                    lhsContentFeed.items?.count ?? 0 == rhsContentFeed.items?.count ?? 0 &&
+                    lhsContentFeed.itemsArray.first?.id == rhsContentFeed.itemsArray.first?.id &&
+                    lhsContentFeed.itemsArray.first?.datePublished == rhsContentFeed.itemsArray.first?.datePublished
             }
             if let lhsContentFeed = lhs.resultEntity,
                let rhsContentFeed = rhs.resultEntity {

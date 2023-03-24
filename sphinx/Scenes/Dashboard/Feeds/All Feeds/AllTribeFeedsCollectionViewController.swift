@@ -104,6 +104,7 @@ extension AllTribeFeedsCollectionViewController {
     enum CollectionViewSection: Int, CaseIterable {
         case recommendations
         case followedFeeds
+        case recentlyPlayed
         
         var titleForDisplay: String {
             switch self {
@@ -111,6 +112,8 @@ extension AllTribeFeedsCollectionViewController {
                     return "feed.recommendations".localized
                 case .followedFeeds:
                     return "feed.following".localized
+                case .recentlyPlayed:
+                    return "Recently Played"
             }
         }
     }
@@ -118,9 +121,9 @@ extension AllTribeFeedsCollectionViewController {
     
     enum DataSourceItem: Hashable {
         
-        case tribePodcastFeed(ContentFeed)
-        case tribeVideoFeed(ContentFeed)
-        case tribeNewsletterFeed(ContentFeed)
+        case tribePodcastFeed(ContentFeed, Int)
+        case tribeVideoFeed(ContentFeed, Int)
+        case tribeNewsletterFeed(ContentFeed, Int)
         
         case recommendedFeed(RecommendationResult)
         
@@ -132,10 +135,13 @@ extension AllTribeFeedsCollectionViewController {
                let rhsContentFeed = rhs.feedEntity as? ContentFeed {
                 
                 return
+                    lhs.sectionEntity == rhs.sectionEntity &&
                     lhsContentFeed.feedID == rhsContentFeed.feedID &&
                     lhsContentFeed.title == rhsContentFeed.title &&
                     lhsContentFeed.feedURL?.absoluteString == rhsContentFeed.feedURL?.absoluteString &&
-                    lhsContentFeed.items?.count ?? 0 == rhsContentFeed.items?.count ?? 0
+                    lhsContentFeed.items?.count ?? 0 == rhsContentFeed.items?.count ?? 0 &&
+                    lhsContentFeed.itemsArray.last?.datePublished == rhsContentFeed.itemsArray.last?.datePublished
+//                    lhsContentFeed.getLastEpisode()?.publishDate == rhsContentFeed.getLastEpisode()?.publishDate
             }
             if let lhsContentFeed = lhs.resultEntity,
                let rhsContentFeed = rhs.resultEntity {
@@ -150,11 +156,11 @@ extension AllTribeFeedsCollectionViewController {
 
         static func == (lhs: DataSourceItem, rhs: DataSourceItem) -> Bool {
             switch (lhs, rhs) {
-            case ( .tribePodcastFeed(_), .tribePodcastFeed(_)):
+            case ( .tribePodcastFeed(_, _), .tribePodcastFeed(_, _)):
                 return DataSourceItem.hasEqualValues(lhs, rhs)
-            case ( .tribeVideoFeed(_), .tribeVideoFeed(_)):
+            case ( .tribeVideoFeed(_, _), .tribeVideoFeed(_, _)):
                 return DataSourceItem.hasEqualValues(lhs, rhs)
-            case ( .tribeNewsletterFeed(_), .tribeNewsletterFeed(_)):
+            case ( .tribeNewsletterFeed(_, _), .tribeNewsletterFeed(_, _)):
                 return DataSourceItem.hasEqualValues(lhs, rhs)
             case ( .recommendedFeed(_), .recommendedFeed(_)):
                 return DataSourceItem.hasEqualValues(lhs, rhs)
@@ -353,7 +359,7 @@ extension AllTribeFeedsCollectionViewController {
             }
             
             switch section {
-            case .followedFeeds, .recommendations:
+            case .followedFeeds, .recommendations, .recentlyPlayed:
                 if dataSourceItem.isLoading {
                     guard
                         let loadingCell = collectionView.dequeueReusableCell(
@@ -415,8 +421,13 @@ extension AllTribeFeedsCollectionViewController {
                 }
                 
                 var section = CollectionViewSection.allCases[indexPath.section]
-                if(section == .recommendations && self.isTrackingEnabled() == false){
-                    section = .followedFeeds
+                
+                if !self.isTrackingEnabled() {
+                    if (section == .recommendations){
+                        section = .followedFeeds
+                    } else if (section == .followedFeeds){
+                        section = .recentlyPlayed
+                    }
                 }
                 
                 let firstDataSourceItem = self.dataSource.itemIdentifier(for: IndexPath(row: 0, section: 0))
@@ -440,7 +451,7 @@ extension AllTribeFeedsCollectionViewController {
 // MARK: - Data Source Snapshot
 extension AllTribeFeedsCollectionViewController {
 
-    func isTrackingEnabled()->Bool{
+    func isTrackingEnabled() -> Bool{
         return UserDefaults.Keys.shouldTrackActions.get(defaultValue: false)
     }
     
@@ -452,18 +463,18 @@ extension AllTribeFeedsCollectionViewController {
         
         if (isTrackingEnabled()) {
             snapshot.appendSections([CollectionViewSection.recommendations])
-            
+
             if loadingRecommendations {
                 snapshot.appendItems(
                     [DataSourceItem.loading],
                     toSection: .recommendations
                 )
             } else {
-                
+
                 let recommendedSourceItems = recommendedFeeds.compactMap { recommendations -> DataSourceItem? in
                     return DataSourceItem.recommendedFeed(recommendations)
                 }
-                
+
                 if recommendedSourceItems.count > 0 {
                     snapshot.appendItems(
                         recommendedSourceItems,
@@ -485,21 +496,42 @@ extension AllTribeFeedsCollectionViewController {
             return firstDate > secondDate
         }.compactMap { contentFeed -> DataSourceItem? in
             if contentFeed.isPodcast {
-                return DataSourceItem.tribePodcastFeed(contentFeed)
+                return DataSourceItem.tribePodcastFeed(contentFeed, CollectionViewSection.followedFeeds.rawValue)
             } else if contentFeed.isVideo {
-                return DataSourceItem.tribeVideoFeed(contentFeed)
+                return DataSourceItem.tribeVideoFeed(contentFeed, CollectionViewSection.followedFeeds.rawValue)
             } else if contentFeed.isNewsletter {
-                return DataSourceItem.tribeNewsletterFeed(contentFeed)
+                return DataSourceItem.tribeNewsletterFeed(contentFeed, CollectionViewSection.followedFeeds.rawValue)
+            }
+            return nil
+        }
+        
+        let recentlyPlayedFeed = followedFeeds.sorted { (first, second) in
+            let firstDate = first.title ?? ""
+            let secondDate = second.title ?? ""
+
+            return firstDate > secondDate
+        }.compactMap { contentFeed -> DataSourceItem? in
+            if contentFeed.isPodcast {
+                return DataSourceItem.tribePodcastFeed(contentFeed, CollectionViewSection.recentlyPlayed.rawValue)
+            } else if contentFeed.isVideo {
+                return DataSourceItem.tribeVideoFeed(contentFeed, CollectionViewSection.recentlyPlayed.rawValue)
+            } else if contentFeed.isNewsletter {
+                return DataSourceItem.tribeNewsletterFeed(contentFeed, CollectionViewSection.recentlyPlayed.rawValue)
             }
             return nil
         }
 
         if followedSourceItems.count > 0 {
-            snapshot.appendSections([CollectionViewSection.followedFeeds])
+            snapshot.appendSections([CollectionViewSection.followedFeeds, CollectionViewSection.recentlyPlayed])
 
             snapshot.appendItems(
                 followedSourceItems,
-                toSection: .followedFeeds
+                toSection: CollectionViewSection.followedFeeds
+            )
+            
+            snapshot.appendItems(
+                recentlyPlayedFeed,
+                toSection: CollectionViewSection.recentlyPlayed
             )
         }
         
@@ -698,12 +730,25 @@ extension AllTribeFeedsCollectionViewController.DataSourceItem {
     
     var feedEntity: NSManagedObject? {
         switch self {
-            case .tribePodcastFeed(let podcastFeed):
+            case .tribePodcastFeed(let podcastFeed, _):
                 return podcastFeed
-            case .tribeVideoFeed(let videoFeed):
+            case .tribeVideoFeed(let videoFeed, _):
                 return videoFeed
-            case .tribeNewsletterFeed(let newsletterFeed):
+            case .tribeNewsletterFeed(let newsletterFeed, _):
                 return newsletterFeed
+            default:
+                return nil
+        }
+    }
+    
+    var sectionEntity: Int? {
+        switch self {
+            case .tribePodcastFeed(_, let section):
+                return section
+            case .tribeVideoFeed(_, let section):
+                return section
+            case .tribeNewsletterFeed(_, let section):
+                return section
             default:
                 return nil
         }

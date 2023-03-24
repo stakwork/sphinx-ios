@@ -24,7 +24,8 @@ class UnifiedEpisodeTableViewCell: UITableViewCell {
         download: Download?,
         delegate: FeedItemRowDelegate,
         isLastRow: Bool,
-        playing: Bool
+        playing: Bool,
+        playingSound: Bool = false
     ) {
         self.delegate = delegate
         
@@ -34,7 +35,8 @@ class UnifiedEpisodeTableViewCell: UITableViewCell {
             download: download,
             delegate: self,
             isLastRow: isLastRow,
-            playing: playing
+            playing: playing,
+            playingSound: playingSound
         )
     }
     

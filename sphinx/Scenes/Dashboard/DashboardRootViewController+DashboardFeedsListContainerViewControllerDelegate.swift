@@ -190,7 +190,7 @@ extension DashboardRootViewController {
             .present(viewController, animated: true)
     }
     
-    private func presentItemWebView(
+    func presentItemWebView(
         for newsletterItem: NewsletterItem
     ) {
         let viewController = NewsletterItemDetailViewController

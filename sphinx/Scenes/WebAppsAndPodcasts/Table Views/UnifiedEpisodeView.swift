@@ -169,12 +169,13 @@ class UnifiedEpisodeView : UIView {
        download: Download?,
        delegate: PodcastEpisodeRowDelegate,
        isLastRow: Bool,
-       playing: Bool
+       playing: Bool,
+       playingSound: Bool = false
     ) {
         self.episode = episode
         self.podcastDelegate = delegate
         
-        configurePlayingAnimation(playing: playing)
+        configurePlayingAnimation(playing: playing && playingSound)
         
         episodeLabel.textColor = !playing ? UIColor.Sphinx.Text : UIColor.Sphinx.BlueTextAccent
         progressView.backgroundColor = !playing ? UIColor.Sphinx.Text : UIColor.Sphinx.BlueTextAccent
@@ -219,7 +220,9 @@ class UnifiedEpisodeView : UIView {
         setImage(podcast: podcast, and: episode)
     }
     
-    func configurePlayingAnimation(playing: Bool) {
+    func configurePlayingAnimation(
+        playing: Bool
+    ) {
         animationContainer.isHidden = !playing
         
         if playing && !animationView.isAnimationPlaying {

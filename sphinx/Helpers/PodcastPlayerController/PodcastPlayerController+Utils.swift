@@ -69,19 +69,33 @@ extension PodcastPlayerController {
         
         syncPodcastTimer?.invalidate()
         syncPodcastTimer = nil
+        
+        loadingTimer?.invalidate()
+        loadingTimer = nil
     }
     
     func configureTimer() {
         updateCurrentTime()
         
-        playingTimer?.invalidate()
-        playingTimer = Timer.scheduledTimer(
-            timeInterval: Double(1) / Double(podcastData?.speed ?? 1.0),
-            target: self,
-            selector: #selector(updateCurrentTime),
-            userInfo: nil,
-            repeats: true
-        )
+        if isSoundPlaying {
+            playingTimer?.invalidate()
+            playingTimer = Timer.scheduledTimer(
+                timeInterval: Double(1) / Double(podcastData?.speed ?? 1.0),
+                target: self,
+                selector: #selector(updateCurrentTime),
+                userInfo: nil,
+                repeats: true
+            )
+        } else {
+            loadingTimer?.invalidate()
+            loadingTimer = Timer.scheduledTimer(
+                timeInterval: Double(0.1),
+                target: self,
+                selector: #selector(updateCurrentTime),
+                userInfo: nil,
+                repeats: true
+            )
+        }
         
         paymentsTimer?.invalidate()
         paymentsTimer = Timer.scheduledTimer(
@@ -135,6 +149,14 @@ extension PodcastPlayerController {
         if currentTime >= duration {
             didEndEpisode()
         }
+        
+        ///If it started playing sound then invalidate faster timer and set up playing timer
+        if let _ = loadingTimer, isSoundPlaying {
+            loadingTimer?.invalidate()
+            loadingTimer = nil
+            
+            configureTimer()
+        }
     }
     
     func didEndEpisode() {
@@ -176,6 +198,12 @@ extension PodcastPlayerController {
             return player?.timeControlStatus == AVPlayer.TimeControlStatus.playing ||
                    player?.timeControlStatus == AVPlayer.TimeControlStatus.waitingToPlayAtSpecifiedRate ||
                    isLoadingOrPlaying
+        }
+    }
+    
+    var isSoundPlaying: Bool {
+        get {
+            return player?.timeControlStatus == AVPlayer.TimeControlStatus.playing
         }
     }
     

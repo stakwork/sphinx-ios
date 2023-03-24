@@ -197,6 +197,7 @@ class PodcastRowPlayerHelper {
         if play { shouldPlay() }
     }
     
+    
     func shouldUpdateTimeLabels(progress: Double) {
         guard let item = item else {
             return

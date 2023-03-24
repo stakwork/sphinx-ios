@@ -51,7 +51,10 @@ class NewPodcastPlayerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        downloadService.setDelegate(delegate: self)
+        downloadService.setDelegate(
+            delegate: self,
+            forKey: DownloadServiceDelegateKeys.PodcastPlayerDelegate
+        )
         
         showPodcastInfo()
         updateFeed()
@@ -149,11 +152,6 @@ extension NewPodcastPlayerViewController : PodcastEpisodesDSDelegate {
     
     func shouldToggleTopView(show: Bool) {
         topFixingView.isHidden = !show
-    }
-    
-    func cancelTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {
-        downloadService.cancelDownload(episode)
-        reload(indexPath.row)
     }
 
     func downloadTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {
@@ -272,65 +270,51 @@ extension NewPodcastPlayerViewController : DownloadServiceDelegate {
             tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
         }
     }
-    
-    func shouldUpdateProgressFor(download: Download) {
-        if let index = podcast.getIndexForEpisodeWith(id: download.episode.itemID) {
-            tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
-        }
-    }
 }
 
 extension UIViewController {
-    
-    func askForShareType(episode:PodcastEpisode){
+    func askForShareType(
+        episode: PodcastEpisode
+    ) {
         let timestampCallback: (() -> ()) = {
             self.executeShare(episode: episode,useCurrentTime: true)
         }
         let noTimestampCallback: (() -> ()) = {
             self.executeShare(episode: episode,useCurrentTime: false)
         }
-        AlertHelper.showOptionsPopup(title: "Share from Current Timestamp?",
-                                    message: "You can share from the beginning or from current timestamp to make it easy for the recipient.",
-                                    options: ["Share from beginning","Share from current time"],
-                                    callbacks: [noTimestampCallback,timestampCallback],
-                                      sourceView: self.view,
-                                    vc: self)
+        
+        AlertHelper.showOptionsPopup(
+            title: "Share from Current Timestamp?",
+            message: "You can share from the beginning or from current timestamp to make it easy for the recipient.",
+            options: ["Share from beginning","Share from current time"],
+            callbacks: [noTimestampCallback, timestampCallback],
+            sourceView: self.view,
+            vc: self
+        )
     }
     
-    func executeShare(episode: PodcastEpisode,useCurrentTime:Bool=false){
-        let firstActivityItem =
-        "Hey I think you'd enjoy this content I found on Sphinx iOS: \(episode.feed?.title ?? "") - \(episode.title ?? "")"
+    func executeShare(
+        episode: PodcastEpisode,
+        useCurrentTime: Bool = false
+    ){
+        let firstActivityItem = "Hey I think you'd enjoy this content I found on Sphinx iOS: \(episode.feed?.title ?? "") - \(episode.title ?? "")"
         
         //TODO: need a way to decide whether to use time stamp
         let link = episode.constructShareLink(useTimestamp: useCurrentTime) ?? episode.linkURLPath ?? episode.urlPath ?? ""
         
         let secondActivityItem : NSURL = NSURL(string: link)!
         
-        if let imageUrl = episode.imageToShow, let url = URL(string: imageUrl) {
-            URLSession.shared.dataTask(with: url) { (data, _, _) in
-                guard let data = data, let image = UIImage(data: data) else {
-                    self.shouldShare(
-                        items: [firstActivityItem, secondActivityItem]
-                    )
-                    return
-                }
-
-                self.shouldShare(
-                    items: [firstActivityItem, secondActivityItem, image]
-                )
-            }.resume()
-        } else {
-            shouldShare(
-                items: [firstActivityItem, secondActivityItem]
-            )
-        }
+        shouldShare(
+            items: [firstActivityItem, secondActivityItem]
+        )
     }
-    
-    func shareTapped(newsletterItem:NewsletterItem){
-        if let link = newsletterItem.constructShareLink(){
+
+    func shareTapped(
+        newsletterItem: NewsletterItem
+    ) {
+        if let link = newsletterItem.constructShareLink() {
             let firstActivityItem =
             "Hey I think you'd enjoy this newsletter I found on Sphinx iOS: \(newsletterItem.newsletterFeed?.title ?? "") - \(newsletterItem.title ?? "")"
-            
             
             let secondActivityItem : NSURL = NSURL(string: link)!
             
@@ -355,62 +339,56 @@ extension UIViewController {
         }
     }
     
-    func shareTapped(episode: PodcastEpisode){
+    func shareTapped(
+        episode: PodcastEpisode
+    ) {
         askForShareType(episode:episode)
     }
     
-    func askForShareType(video:Video,currentTime:Int){
+    func askForShareType(
+        video: Video,
+        currentTime: Int
+    ) {
         let timestampCallback: (() -> ()) = {
-            self.executeShare(video: video,videoTime: currentTime)
+            self.executeShare(video: video, videoTime: currentTime)
         }
         let noTimestampCallback: (() -> ()) = {
             self.executeShare(video: video)
         }
-        AlertHelper.showOptionsPopup(title: "Share from Current Timestamp?",
-                                    message: "You can share from the beginning or from current timestamp to make it easy for the recipient.",
-                                    options: ["Share from beginning","Share from current time"],
-                                    callbacks: [noTimestampCallback,timestampCallback],
-                                      sourceView: self.view,
-                                    vc: self)
+        AlertHelper.showOptionsPopup(
+            title: "Share from Current Timestamp?",
+            message: "You can share from the beginning or from current timestamp to make it easy for the recipient.",
+            options: ["Share from beginning","Share from current time"],
+            callbacks: [noTimestampCallback,timestampCallback],
+            sourceView: self.view,
+            vc: self
+        )
     }
     
-    func executeShare(video:Video,videoTime:Int?=nil){
+    func executeShare(
+        video: Video,
+        videoTime: Int? = nil
+    ) {
         let firstActivityItem =
         "Hey I think you'd enjoy this video I found on Sphinx iOS: \(video.videoFeed?.title ?? "") - \(video.title ?? "")"
-        
-        
         
         let videoURL = video.constructShareLink(currentTimeStamp: videoTime) ?? ""
         
         let secondActivityItem : NSURL = NSURL(string: videoURL)!
         
-        if let imageUrl = video.videoFeed?.imageToShow, let url = URL(string: imageUrl) {
-            URLSession.shared.dataTask(with: url) { (data, _, _) in
-                guard let data = data, let image = UIImage(data: data) else {
-                    self.shouldShare(
-                        items: [firstActivityItem, secondActivityItem]
-                    )
-                    return
-                }
-
-                self.shouldShare(
-                    items: [firstActivityItem, secondActivityItem, image]
-                )
-            }.resume()
-        } else {
-            shouldShare(
-                items: [firstActivityItem, secondActivityItem]
-            )
-        }
+        shouldShare(
+            items: [firstActivityItem, secondActivityItem]
+        )
     }
     
-    func shareTapped(video: Video) {
+    func shareTapped(
+        video: Video
+    ) {
         let videoCurrentTime = UserDefaults.standard.integer(forKey: "videoID-\(video.id)-currentTime")
-        print(videoCurrentTime)
-        if videoCurrentTime != 0{
+        
+        if videoCurrentTime != 0 {
             askForShareType(video: video, currentTime: videoCurrentTime)
-        }
-        else{
+        } else {
             executeShare(video: video)
         }
     }

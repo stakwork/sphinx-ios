@@ -9,13 +9,39 @@
 import Foundation
 
 class Download {
-    var isDownloading = false
+    var state: State = State.ready
     var progress: Int = 0
     var resumeData: Data?
+    var originalUrl: String?
     var task: URLSessionDownloadTask?
     var episode: PodcastEpisode
 
     init(episode: PodcastEpisode) {
         self.episode = episode
+        self.originalUrl = episode.getRemoteAudioUrl()?.absoluteString
+    }
+    
+    enum State: String {
+        case ready
+        case downloading
+        case paused
+    }
+    
+    var isDownloading: Bool {
+        get {
+            return state == State.downloading
+        }
+    }
+    
+    var isPaused: Bool {
+        get {
+            return state == State.paused || resumeData != nil
+        }
+    }
+    
+    var isReady: Bool {
+        get {
+            return state == State.ready || resumeData == nil
+        }
     }
 }

@@ -508,6 +508,8 @@
 "delete.episode.message" = "¿Borrar Episodio de la memoria del dispositivo?";
 "error.playing" = "Hubo un error al reproducir el episodio. Por favor vuelva a intentarlo más tarde.";
 "download" = "Descargar";
+"pause.download" = "Pausar descarga";
+"resume.download" = "Reanudar descarga";
 "mark.as.played" = "Marcar como leído";
 "mark.as.unplayed" = "Marcar como no leído";
 "marking.as.played" = "Marcando como leído!";

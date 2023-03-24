@@ -11,6 +11,7 @@ import UIKit
 class CircularProgressView: UIView {
     
     @IBOutlet var contentView: UIView!
+    @IBOutlet weak var playPauseLabel: UILabel!
     
     private var circleLayer = CAShapeLayer()
     private var progressLayer = CAShapeLayer()
@@ -33,11 +34,12 @@ class CircularProgressView: UIView {
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         
+        playPauseLabel.font = UIFont(name: "MaterialIcons-Regular", size: 15.0)
+        
         createCircularPath()
     }
     
     func createCircularPath() {
-        // created circularPath for circleLayer and progressLayer
         let circularPath = UIBezierPath(
             arcCenter: CGPoint(x: frame.size.width / 2.0, y: frame.size.height / 2.0),
             radius: frame.size.height / 2.0,
@@ -70,8 +72,14 @@ class CircularProgressView: UIView {
     
     func progressAnimation(
         to: CGFloat,
-        duration: TimeInterval? = nil
+        active: Bool
     ) {
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
         progressLayer.strokeEnd = to
+        CATransaction.commit()
+        
+        playPauseLabel.isHidden = to == 0
+        playPauseLabel.text = active ? "pause" : "play_arrow"
     }
 }

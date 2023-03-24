@@ -54,6 +54,7 @@ class PodcastPlayerController {
     let actionsManager = ActionsManager.sharedInstance
     
     var player: AVPlayer?
+    var loadingTimer : Timer? = nil
     var playingTimer : Timer? = nil
     var paymentsTimer : Timer? = nil
     var syncPodcastTimer : Timer? = nil

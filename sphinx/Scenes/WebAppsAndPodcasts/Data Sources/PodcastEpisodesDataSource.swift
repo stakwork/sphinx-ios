@@ -71,7 +71,8 @@ extension PodcastEpisodesDataSource : UITableViewDelegate {
                 download: download,
                 delegate: self,
                 isLastRow: indexPath.row + 1 == episodes.count,
-                playing: isPlaying
+                playing: isPlaying,
+                playingSound: podcastPlayerController.isSoundPlaying
             )
         }
     }

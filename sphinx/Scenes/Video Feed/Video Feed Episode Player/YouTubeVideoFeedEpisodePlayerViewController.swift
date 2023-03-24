@@ -24,17 +24,33 @@ class YouTubeVideoFeedEpisodePlayerViewController: UIViewController, VideoFeedEp
         didSet {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
-                
                 self.updateVideoPlayer(withNewEpisode: self.videoPlayerEpisode, previousEpisode: oldValue)
             }
         }
     }
     
-    var currentTime: Float = 0
+    var currentTime: Float = 0 {
+        didSet{
+            let id = videoPlayerEpisode.videoID
+            UserDefaults.standard.setValue(Int(currentTime), forKey: "videoID-\(id)-currentTime")
+        }
+    }
     var currentState: YTPlayerState = .unknown
     
     var dismissButtonStyle: ModalDismissButtonStyle = .downArrow
     var onDismiss: (() -> Void)?
+    
+    public func seekTo(time:Int){
+        videoPlayerView.seek(toSeconds: Float(time), allowSeekAhead: true)
+    }
+    
+    public func play(at:Int){
+        videoPlayerView.playVideo(at: Int32(at))
+    }
+    
+    public func startPlay(){
+        videoPlayerView.playVideo()
+    }
 }
 
 
@@ -75,7 +91,7 @@ extension YouTubeVideoFeedEpisodePlayerViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
-        
+        UserDefaults.standard.setValue(nil, forKey: "videoID-\(videoPlayerEpisode.id)-currentTime")
         videoPlayerView.stopVideo()
         podcastPlayerController.finishAndSaveContentConsumed()
     }

@@ -39,6 +39,8 @@ class VideoFeedEpisodePlayerContainerViewController: UIViewController {
     
     internal var managedObjectContext: NSManagedObjectContext!
     
+    var deeplinkedTimestamp : Int? = nil
+    
     var videoPlayerEpisode: Video! {
         didSet {
             DispatchQueue.main.async { [weak self] in
@@ -62,7 +64,7 @@ class VideoFeedEpisodePlayerContainerViewController: UIViewController {
     weak var delegate: VideoFeedEpisodePlayerViewControllerDelegate?
     weak var boostDelegate: CustomBoostDelegate?
 
-    internal lazy var youtubeVideoPlayerViewController: YouTubeVideoFeedEpisodePlayerViewController = {
+    lazy var youtubeVideoPlayerViewController: YouTubeVideoFeedEpisodePlayerViewController = {
         YouTubeVideoFeedEpisodePlayerViewController.instantiate(
             videoPlayerEpisode: videoPlayerEpisode,
             dismissButtonStyle: dismissButtonStyle,
@@ -86,6 +88,7 @@ class VideoFeedEpisodePlayerContainerViewController: UIViewController {
             onVideoEpisodeCellSelected: handleVideoEpisodeCellSelection(_:)
         )
     }()
+    
 }
 
 
@@ -125,6 +128,17 @@ extension VideoFeedEpisodePlayerContainerViewController {
         configureCollectionView()
         
         updateFeed()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5, execute: {
+            if let timestamp = self.deeplinkedTimestamp{
+                self.youtubeVideoPlayerViewController.startPlay()
+            }
+        })
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4.0, execute: {
+            if let timestamp = self.deeplinkedTimestamp{
+                self.youtubeVideoPlayerViewController.seekTo(time: timestamp)
+            }
+        })
     }
 }
 

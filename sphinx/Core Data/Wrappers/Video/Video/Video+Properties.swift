@@ -45,6 +45,20 @@ extension Video {
             return videoID.replacingOccurrences(of: "yt:video:", with: "")
         }
     }
+    
+    func constructShareLink(currentTimeStamp:Int?=nil)->String?{
+        var link : String? = nil
+        if let feedID = self.videoFeed?.feedID,
+           let feedURL = self.videoFeed?.feedURL{
+            link = "sphinx.chat://?action=share_content&feedURL=\(feedURL)&feedID=\(feedID)&itemID=\(videoID)"
+        }
+        
+        if let timestamp = currentTimeStamp,
+        let _ = link{
+            link! += "&atTime=\(timestamp)"
+        }
+        return link
+    }
 }
 
 

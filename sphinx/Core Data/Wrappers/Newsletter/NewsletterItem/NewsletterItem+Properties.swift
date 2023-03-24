@@ -26,6 +26,16 @@ class NewsletterItem: NSObject {
         self.objectID = objectID
         self.itemID = itemID
     }
+    
+    func constructShareLink()->String?{
+        var link : String? = nil
+        if let feedID = self.newsletterFeed?.feedID,
+           let feedURL = self.newsletterFeed?.feedURL{
+            link = "sphinx.chat://?action=share_content&feedURL=\(feedURL)&feedID=\(feedID)&itemID=\(itemID)"
+        }
+        
+        return link
+    }
 }
 
 extension NewsletterItem: Identifiable {

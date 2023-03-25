@@ -51,6 +51,9 @@ extension NewsletterItemDetailViewController {
         
         newsletterItem.saveAsCurrentArticle()
         newsletterItem.newsletterFeed?.chat?.updateWebAppLastDate()
+        if let feedID = newsletterItem.newsletterFeed?.feedID{
+            FeedsManager.sharedInstance.updateLastConsumedWithFeedID(feedID: feedID)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {

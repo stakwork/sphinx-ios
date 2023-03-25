@@ -161,6 +161,9 @@ extension YouTubeVideoFeedEpisodePlayerViewController: YTPlayerViewDelegate {
             switch (state) {
             case .playing:
                 self.videoPlayerEpisode?.videoFeed?.chat?.updateWebAppLastDate()
+                if let feedID = self.videoPlayerEpisode.videoFeed?.feedID{
+                    FeedsManager.sharedInstance.updateLastConsumedWithFeedID(feedID: feedID)
+                }
 
                 self.trackItemStarted(
                     videoId: self.videoPlayerEpisode.videoID,

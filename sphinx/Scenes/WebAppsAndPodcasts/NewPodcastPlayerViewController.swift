@@ -31,6 +31,8 @@ class NewPodcastPlayerViewController: UIViewController {
     var tableHeaderView: PodcastPlayerView?
     
     var podcast: PodcastFeed! = nil
+    var deeplinkedEpisode:PodcastEpisode? = nil
+    var deeplinkTimestamp:Int? = nil
     
     var chat: Chat? {
         get {
@@ -49,7 +51,10 @@ class NewPodcastPlayerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        downloadService.setDelegate(delegate: self)
+        downloadService.setDelegate(
+            delegate: self,
+            forKey: DownloadServiceDelegateKeys.PodcastPlayerDelegate
+        )
         
         showPodcastInfo()
         updateFeed()
@@ -60,6 +65,13 @@ class NewPodcastPlayerViewController: UIViewController {
         
         NotificationCenter.default.removeObserver(self, name: .refreshFeedUI, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(showPodcastInfo), name: .refreshFeedUI, object: nil)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let episode = deeplinkedEpisode{
+            self.tableHeaderView?.playEpisode(episode: episode)
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -140,11 +152,6 @@ extension NewPodcastPlayerViewController : PodcastEpisodesDSDelegate {
     
     func shouldToggleTopView(show: Bool) {
         topFixingView.isHidden = !show
-    }
-    
-    func cancelTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {
-        downloadService.cancelDownload(episode)
-        reload(indexPath.row)
     }
 
     func downloadTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {
@@ -263,67 +270,126 @@ extension NewPodcastPlayerViewController : DownloadServiceDelegate {
             tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
         }
     }
-    
-    func shouldUpdateProgressFor(download: Download) {
-        if let index = podcast.getIndexForEpisodeWith(id: download.episode.itemID) {
-            tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
-        }
-    }
 }
 
 extension UIViewController {
-    func shareTapped(episode: PodcastEpisode){
-        let firstActivityItem =
-        "Hey I think you'd enjoy this content I found on Sphinx iOS: \(episode.feed?.title ?? "") - \(episode.title ?? "")"
+    func askForShareType(
+        episode: PodcastEpisode
+    ) {
+        let timestampCallback: (() -> ()) = {
+            self.executeShare(episode: episode,useCurrentTime: true)
+        }
+        let noTimestampCallback: (() -> ()) = {
+            self.executeShare(episode: episode,useCurrentTime: false)
+        }
         
-        let secondActivityItem : NSURL = NSURL(string: episode.linkURLPath ?? episode.urlPath ?? "")!
+        AlertHelper.showOptionsPopup(
+            title: "Share from Current Timestamp?",
+            message: "You can share from the beginning or from current timestamp to make it easy for the recipient.",
+            options: ["Share from beginning","Share from current time"],
+            callbacks: [noTimestampCallback, timestampCallback],
+            sourceView: self.view,
+            vc: self
+        )
+    }
+    
+    func executeShare(
+        episode: PodcastEpisode,
+        useCurrentTime: Bool = false
+    ){
+        let firstActivityItem = "Hey I think you'd enjoy this content I found on Sphinx iOS: \(episode.feed?.title ?? "") - \(episode.title ?? "")"
         
-        if let imageUrl = episode.imageToShow, let url = URL(string: imageUrl) {
-            URLSession.shared.dataTask(with: url) { (data, _, _) in
-                guard let data = data, let image = UIImage(data: data) else {
-                    self.shouldShare(
-                        items: [firstActivityItem, secondActivityItem]
-                    )
-                    return
-                }
+        //TODO: need a way to decide whether to use time stamp
+        let link = episode.constructShareLink(useTimestamp: useCurrentTime) ?? episode.linkURLPath ?? episode.urlPath ?? ""
+        
+        let secondActivityItem : NSURL = NSURL(string: link)!
+        
+        shouldShare(
+            items: [firstActivityItem, secondActivityItem]
+        )
+    }
 
-                self.shouldShare(
-                    items: [firstActivityItem, secondActivityItem, image]
+    func shareTapped(
+        newsletterItem: NewsletterItem
+    ) {
+        if let link = newsletterItem.constructShareLink() {
+            let firstActivityItem =
+            "Hey I think you'd enjoy this newsletter I found on Sphinx iOS: \(newsletterItem.newsletterFeed?.title ?? "") - \(newsletterItem.title ?? "")"
+            
+            let secondActivityItem : NSURL = NSURL(string: link)!
+            
+            if let imageUrl = newsletterItem.imageUrl?.path, let url = URL(string: imageUrl) {
+                URLSession.shared.dataTask(with: url) { (data, _, _) in
+                    guard let data = data, let image = UIImage(data: data) else {
+                        self.shouldShare(
+                            items: [firstActivityItem, secondActivityItem]
+                        )
+                        return
+                    }
+
+                    self.shouldShare(
+                        items: [firstActivityItem, secondActivityItem, image]
+                    )
+                }.resume()
+            } else {
+                shouldShare(
+                    items: [firstActivityItem, secondActivityItem]
                 )
-            }.resume()
-        } else {
-            shouldShare(
-                items: [firstActivityItem, secondActivityItem]
-            )
+            }
         }
     }
     
-    func shareTapped(video: Video) {
+    func shareTapped(
+        episode: PodcastEpisode
+    ) {
+        askForShareType(episode:episode)
+    }
+    
+    func askForShareType(
+        video: Video,
+        currentTime: Int
+    ) {
+        let timestampCallback: (() -> ()) = {
+            self.executeShare(video: video, videoTime: currentTime)
+        }
+        let noTimestampCallback: (() -> ()) = {
+            self.executeShare(video: video)
+        }
+        AlertHelper.showOptionsPopup(
+            title: "Share from Current Timestamp?",
+            message: "You can share from the beginning or from current timestamp to make it easy for the recipient.",
+            options: ["Share from beginning","Share from current time"],
+            callbacks: [noTimestampCallback,timestampCallback],
+            sourceView: self.view,
+            vc: self
+        )
+    }
+    
+    func executeShare(
+        video: Video,
+        videoTime: Int? = nil
+    ) {
         let firstActivityItem =
         "Hey I think you'd enjoy this video I found on Sphinx iOS: \(video.videoFeed?.title ?? "") - \(video.title ?? "")"
         
-        guard let videoURL = video.itemURL else{
-            return
-        }
-        let secondActivityItem : NSURL = videoURL as NSURL
+        let videoURL = video.constructShareLink(currentTimeStamp: videoTime) ?? ""
         
-        if let imageUrl = video.videoFeed?.imageToShow, let url = URL(string: imageUrl) {
-            URLSession.shared.dataTask(with: url) { (data, _, _) in
-                guard let data = data, let image = UIImage(data: data) else {
-                    self.shouldShare(
-                        items: [firstActivityItem, secondActivityItem]
-                    )
-                    return
-                }
-
-                self.shouldShare(
-                    items: [firstActivityItem, secondActivityItem, image]
-                )
-            }.resume()
+        let secondActivityItem : NSURL = NSURL(string: videoURL)!
+        
+        shouldShare(
+            items: [firstActivityItem, secondActivityItem]
+        )
+    }
+    
+    func shareTapped(
+        video: Video
+    ) {
+        let videoCurrentTime = UserDefaults.standard.integer(forKey: "videoID-\(video.id)-currentTime")
+        
+        if videoCurrentTime != 0 {
+            askForShareType(video: video, currentTime: videoCurrentTime)
         } else {
-            shouldShare(
-                items: [firstActivityItem, secondActivityItem]
-            )
+            executeShare(video: video)
         }
     }
     

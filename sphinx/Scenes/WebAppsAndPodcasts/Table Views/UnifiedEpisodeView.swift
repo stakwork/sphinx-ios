@@ -44,7 +44,6 @@ class UnifiedEpisodeView : UIView {
     @IBOutlet weak var playArrow: UILabel!
     @IBOutlet weak var episodeImageView: UIImageView!
     @IBOutlet weak var divider: UIView!
-    @IBOutlet weak var downloadButton: UIButton!
     @IBOutlet weak var sharebutton: UIButton!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var moreDetailsButton: UIButton!
@@ -57,6 +56,8 @@ class UnifiedEpisodeView : UIView {
     @IBOutlet weak var durationView: UIView!
     @IBOutlet weak var progressView: UIView!
     @IBOutlet weak var didPlayImageView: UIImageView!
+    @IBOutlet weak var downloadButtonImage: UIImageView!
+    @IBOutlet weak var downloadButton: UIButton!
     @IBOutlet weak var downloadProgressBar: CircularProgressView!
     @IBOutlet weak var animationContainer: UIView!
     @IBOutlet weak var animationView: AnimationView!
@@ -168,12 +169,13 @@ class UnifiedEpisodeView : UIView {
        download: Download?,
        delegate: PodcastEpisodeRowDelegate,
        isLastRow: Bool,
-       playing: Bool
+       playing: Bool,
+       playingSound: Bool = false
     ) {
         self.episode = episode
         self.podcastDelegate = delegate
         
-        configurePlayingAnimation(playing: playing)
+        configurePlayingAnimation(playing: playing && playingSound)
         
         episodeLabel.textColor = !playing ? UIColor.Sphinx.Text : UIColor.Sphinx.BlueTextAccent
         progressView.backgroundColor = !playing ? UIColor.Sphinx.Text : UIColor.Sphinx.BlueTextAccent
@@ -218,7 +220,9 @@ class UnifiedEpisodeView : UIView {
         setImage(podcast: podcast, and: episode)
     }
     
-    func configurePlayingAnimation(playing: Bool) {
+    func configurePlayingAnimation(
+        playing: Bool
+    ) {
         animationContainer.isHidden = !playing
         
         if playing && !animationView.isAnimationPlaying {
@@ -274,35 +278,33 @@ class UnifiedEpisodeView : UIView {
     
     //Networking:
     func configureDownload(episode: PodcastEpisode, download: Download?) {
+        downloadButtonImage.isHidden = true
+        downloadProgressBar.isHidden = true
+        
         if episode.isDownloaded {
-            downloadButton.setImage(UIImage(named: "playerListDownloaded"), for: .normal)
-            downloadButton.tintColor = UIColor.Sphinx.ReceivedIcon
+            downloadButtonImage.isHidden = false
+            downloadButtonImage.image = UIImage(named: "playerListDownloaded")
+            downloadButtonImage.tintColor = UIColor.Sphinx.ReceivedIcon
+        } else if let download = download {
+            downloadProgressBar.isHidden = false
+            updateDownloadState(download)
         } else {
-            downloadButton.setImage(UIImage(named: "playerListDownload"), for: .normal)
-            downloadButton.tintColor = UIColor.Sphinx.Text.withAlphaComponent(0.5)
+            downloadButtonImage.isHidden = false
+            downloadButtonImage.image = UIImage(named: "playerListDownload")
+            downloadButtonImage.tintColor = UIColor.Sphinx.Text.withAlphaComponent(0.5)
         }
         
         downloadButton.tintColorDidChange()
-        
-        if let download = download {
-            updateProgress(progress: download.progress)
-        } else {
-            downloadProgressBar.progressAnimation(to: 0)
-            downloadButton.isHidden = false
-            downloadProgressBar.isHidden = true
-        }
     }
     
-    func updateProgress(progress: Int) {
-        let progress = CGFloat(progress) / CGFloat(100)
-        downloadButton.isHidden = true
-        downloadProgressBar.isHidden = false
-        downloadProgressBar.progressAnimation(to: progress)
+    func updateDownloadState(_ download: Download) {
+        let progress = CGFloat(download.progress) / CGFloat(100)
+        downloadProgressBar.progressAnimation(to: progress, active: download.isDownloading)
     }
     
     @IBAction func downloadButtonTouched() {
         if !episode.isDownloaded {
-            downloadProgressBar.progressAnimation(to: 0)
+            downloadProgressBar.progressAnimation(to: 0, active: true)
             podcastDelegate?.shouldStartDownloading(episode: episode)
         }
     }

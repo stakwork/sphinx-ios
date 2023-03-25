@@ -30,6 +30,10 @@ class DeepLinksHandlerHelper {
             return true
         }
         
+        if FeedsManager.sharedInstance.goToContentFeed(vc: vc, rootViewController: rootViewController){
+            return true
+        }
+        
         if WindowsManager.sharedInstance.showStakworkAuthorizeWith() {
             return false
         }
@@ -88,10 +92,18 @@ class DeepLinksHandlerHelper {
                     UserDefaults.Keys.saveQuery.set(query)
                     shouldSetVC = true
                     break
+                case "share_content":
+                    UserDefaults.Keys.shareContentQuery.set(query)
+                    shouldSetVC = true
+                    break
                 default:
                     break
                 }
             }
+        }
+        else if UserData.sharedInstance.isUserLogged() == false,
+                let query = url.query{
+            UserDefaults.Keys.stashedQuery.set(query)
         }
         
         return shouldSetVC

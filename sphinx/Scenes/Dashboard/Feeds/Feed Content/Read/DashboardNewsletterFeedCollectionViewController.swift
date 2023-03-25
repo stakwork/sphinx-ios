@@ -353,7 +353,7 @@ extension DashboardNewsletterFeedCollectionViewController {
                 }
                 
                 itemCell.configure(withNewsletterItem: newsletterItem)
-                
+                itemCell.delegate = self
                 return itemCell
                 
             case .newsletterFeeds:
@@ -494,6 +494,13 @@ extension DashboardNewsletterFeedCollectionViewController {
     }
 }
 
+extension DashboardNewsletterFeedCollectionViewController : DashboardNewsLetterItemCollectionViewCellDelegate{
+    
+    func handleShare(item: NewsletterItem) {
+        self.shareTapped(newsletterItem: item)
+    }
+    
+}
 
 // MARK: - `UICollectionViewDelegate` Methods
 extension DashboardNewsletterFeedCollectionViewController {

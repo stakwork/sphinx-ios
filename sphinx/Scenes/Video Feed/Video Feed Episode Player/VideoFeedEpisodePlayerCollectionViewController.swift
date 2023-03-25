@@ -378,6 +378,7 @@ extension VideoFeedEpisodePlayerCollectionViewController: FeedItemRowDelegate, P
     func shouldDeleteFile(episode: PodcastEpisode, cell: UICollectionViewCell)  {}
     
     func shouldShare(video: Video) {
+        
         self.shareTapped(video: video)
     }
     

@@ -61,7 +61,7 @@ extension PodcastEpisodesDataSource : UITableViewDelegate {
             
             let episodes = podcast.episodesArray
             let episode = episodes[indexPath.row]
-            let download = downloadService.activeDownloads[episode.urlPath ?? ""]
+            let download = downloadService.activeDownloads[episode.getRemoteAudioUrl()?.absoluteString ?? ""]
             
             let isPlaying = podcastPlayerController.isPlaying(episodeId: episode.itemID)
             
@@ -71,7 +71,8 @@ extension PodcastEpisodesDataSource : UITableViewDelegate {
                 download: download,
                 delegate: self,
                 isLastRow: indexPath.row + 1 == episodes.count,
-                playing: isPlaying
+                playing: isPlaying,
+                playingSound: podcastPlayerController.isSoundPlaying
             )
         }
     }

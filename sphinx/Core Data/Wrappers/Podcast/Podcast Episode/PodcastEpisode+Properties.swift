@@ -195,4 +195,19 @@ extension PodcastEpisode {
         }
     }
     
+    func constructShareLink(useTimestamp:Bool=false)->String?{
+        var link : String? = nil
+        if let feedID = self.feed?.feedID,
+           let feedURL = self.feed?.feedURLPath{
+            link = "sphinx.chat://?action=share_content&feedURL=\(feedURL)&feedID=\(feedID)&itemID=\(itemID)"
+        }
+        
+        if useTimestamp == true,
+        let timestamp = currentTime,
+        let _ = link{
+            link! += "&atTime=\(timestamp)"
+        }
+        return link
+    }
+    
 }

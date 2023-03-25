@@ -278,6 +278,10 @@ extension FeedSearchContainerViewController {
                                 didSelectFeedSearchResult: searchResult.feedId
                             )
                         })
+                    } else {
+                        self.newMessageBubbleHelper.hideLoadingWheel()
+                        
+                        AlertHelper.showAlert(title: "generic.error.title".localized, message: "generic.error.message".localized)
                     }
             })
         }

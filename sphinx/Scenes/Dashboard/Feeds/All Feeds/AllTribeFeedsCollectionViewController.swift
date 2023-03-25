@@ -140,10 +140,8 @@ extension AllTribeFeedsCollectionViewController {
                     lhsContentFeed.title == rhsContentFeed.title &&
                     lhsContentFeed.feedURL?.absoluteString == rhsContentFeed.feedURL?.absoluteString &&
                     lhsContentFeed.items?.count ?? 0 == rhsContentFeed.items?.count ?? 0 &&
-                    lhsContentFeed.itemsArray.last?.datePublished == rhsContentFeed.itemsArray.last?.datePublished &&
                     lhsContentFeed.itemsArray.first?.id == rhsContentFeed.itemsArray.first?.id &&
                     lhsContentFeed.itemsArray.first?.datePublished == rhsContentFeed.itemsArray.first?.datePublished
-//                    lhsContentFeed.getLastEpisode()?.publishDate == rhsContentFeed.getLastEpisode()?.publishDate
             }
             if let lhsContentFeed = lhs.resultEntity,
                let rhsContentFeed = rhs.resultEntity {

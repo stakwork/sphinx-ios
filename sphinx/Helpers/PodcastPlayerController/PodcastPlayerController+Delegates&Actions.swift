@@ -25,6 +25,9 @@ extension PodcastPlayerController {
         switch(action) {
         case .Play(let podcastData):
             play(podcastData)
+            if let feedID = podcast?.feedID{
+                FeedsManager.sharedInstance.updateLastConsumedWithFeedID(feedID: feedID)
+            }
         case .Pause(let podcastData):
             pause(podcastData)
         case .Seek(let podcastData):

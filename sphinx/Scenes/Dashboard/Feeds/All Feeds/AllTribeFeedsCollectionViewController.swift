@@ -140,7 +140,9 @@ extension AllTribeFeedsCollectionViewController {
                     lhsContentFeed.title == rhsContentFeed.title &&
                     lhsContentFeed.feedURL?.absoluteString == rhsContentFeed.feedURL?.absoluteString &&
                     lhsContentFeed.items?.count ?? 0 == rhsContentFeed.items?.count ?? 0 &&
-                    lhsContentFeed.itemsArray.last?.datePublished == rhsContentFeed.itemsArray.last?.datePublished
+                    lhsContentFeed.itemsArray.last?.datePublished == rhsContentFeed.itemsArray.last?.datePublished &&
+                    lhsContentFeed.itemsArray.first?.id == rhsContentFeed.itemsArray.first?.id &&
+                    lhsContentFeed.itemsArray.first?.datePublished == rhsContentFeed.itemsArray.first?.datePublished
 //                    lhsContentFeed.getLastEpisode()?.publishDate == rhsContentFeed.getLastEpisode()?.publishDate
             }
             if let lhsContentFeed = lhs.resultEntity,
@@ -506,8 +508,8 @@ extension AllTribeFeedsCollectionViewController {
         }
         
         let recentlyPlayedFeed = followedFeeds.sorted { (first, second) in
-            let firstDate = first.publishDate ?? Date()
-            let secondDate = second.publishDate ?? Date()
+            let firstDate = first.dateLastConsumed ?? Date.init(timeIntervalSince1970: 0)
+            let secondDate = second.dateLastConsumed ?? Date.init(timeIntervalSince1970: 0)
 
             return firstDate > secondDate
         }.compactMap { contentFeed -> DataSourceItem? in

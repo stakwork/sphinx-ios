@@ -113,7 +113,7 @@ extension AllTribeFeedsCollectionViewController {
                 case .followedFeeds:
                     return "feed.following".localized
                 case .recentlyPlayed:
-                    return "Recently Played"
+                    return "recently.played".localized
             }
         }
     }

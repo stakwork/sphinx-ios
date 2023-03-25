@@ -527,6 +527,7 @@
 //FEED
 "feed.recommendations" = "Recomendaciones";
 "feed.following" = "Siguiendo";
+"recently.played" = "Recientemente Leído";
 "feed.listen-now" = "Escuchar Ahora";
 "feed.watch-now" = "Mirar Ahora";
 "feed.read-now" = "Leer Ahora";

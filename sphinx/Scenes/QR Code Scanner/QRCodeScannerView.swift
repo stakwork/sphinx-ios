@@ -57,11 +57,15 @@ final class QRCodeScannerView: UIView {
     }
     
     func start() {
-        captureSession.startRunning()
+        DispatchQueue.global().async {
+            self.captureSession.startRunning()
+        }
     }
     
     func stop() {
-        captureSession.stopRunning()
+        DispatchQueue.global().async {
+            self.captureSession.stopRunning()
+        }
         oldCode = nil
     }
 }

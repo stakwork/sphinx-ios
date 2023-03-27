@@ -390,7 +390,7 @@ public class PaymentRequestDecoder {
             sum = sum * 32
             let charAtIndex = str.charAt(index: i)
             if let indexOf = bech32CharValues.index(of: charAtIndex) {
-                let i = indexOf.utf16Offset(in: str)
+                let i = indexOf.utf16Offset(in: bech32CharValues)
                 sum = sum + i
             }
         }
@@ -402,7 +402,7 @@ public class PaymentRequestDecoder {
         for i in 0..<str.count {
             let charAtIndex = str.charAt(index: i)
             if let indexOf = bech32CharValues.index(of: charAtIndex) {
-                let i = indexOf.utf16Offset(in: str)
+                let i = indexOf.utf16Offset(in: bech32CharValues)
                 array.append(i)
             }
         }

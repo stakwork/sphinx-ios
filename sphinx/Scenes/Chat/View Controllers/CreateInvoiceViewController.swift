@@ -40,6 +40,7 @@ class CreateInvoiceViewController: CommonPaymentViewController {
     
     let kCharacterLimit = 200
     let kMaximumAmount = 9999999
+    var preloadedPubkey : String? = nil
     
     var textColor: UIColor = UIColor.Sphinx.Text {
         didSet {
@@ -61,6 +62,7 @@ class CreateInvoiceViewController: CommonPaymentViewController {
         viewModel: ChatViewModel,
         delegate: PaymentInvoiceDelegate? = nil,
         paymentMode: paymentMode = paymentMode.receive,
+        preloadedPubkey:String?=nil,
         rootViewController: RootViewController
     ) -> CreateInvoiceViewController {
         let viewController = StoryboardScene.Chat.createInvoiceViewController.instantiate()
@@ -69,6 +71,7 @@ class CreateInvoiceViewController: CommonPaymentViewController {
         viewController.chat = chat
         viewController.delegate = delegate
         viewController.rootViewController = rootViewController
+        viewController.preloadedPubkey = preloadedPubkey
         
         if let messageUUID = messageUUID {
             viewController.message = TransactionMessage.getMessageWith(uuid: messageUUID)
@@ -227,6 +230,9 @@ class CreateInvoiceViewController: CommonPaymentViewController {
         
         switch mode {
         case .send:
+            if(preloadedPubkey != nil){
+                self.chatViewModel.currentPayment.destinationKey = preloadedPubkey
+            }
             shouldSendDirectPayment()
         case .sendOnchain:
             processOnchainPayment()

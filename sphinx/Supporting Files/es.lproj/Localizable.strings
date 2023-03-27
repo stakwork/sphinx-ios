@@ -317,6 +317,7 @@
 
 //QR CODE SCANNER
 "scan.qr.code.upper" = "ESCANEA UN CÓDIGO QR";
+"paste.invoice.invoice.or.pubkey" = "";//TODO TOM NEED HELP TRANSLATING!!
 "paste.invoice.subscription" = "Pega la solicitud de pago o el códido de suscripción";
 "contact.address.upper" = "DIRECCIÓN DEL CONTACTO";
 "enter.address" = "Ingresa la Dirección";

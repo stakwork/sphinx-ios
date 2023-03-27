@@ -33,9 +33,9 @@ extension NewQRScannerViewController {
         
         if validateSubscriptionQR(string: string) {
             return
-        } else if validateInvoice(string: string) {
-            return
         } else if validatePublicKey(string: string) {
+            return
+        }else if validateInvoice(string: string) {
             return
         } else if validateDeepLinks(string: string) {
             return
@@ -59,7 +59,7 @@ extension NewQRScannerViewController {
     func validatePublicKey(string: String) -> Bool {
         if string.isPubKey || string.isVirtualPubKey {
             dismiss(animated: true, completion: {
-                self.delegate?.didScanPublicKey?(string: string)
+                self.presentPubkeySendVC(pubkey: string)
             })
             return true
         }
@@ -75,6 +75,12 @@ extension NewQRScannerViewController {
             goToSubscriptionDetailsView(subscription: subscription)
         }
         return valid
+    }
+    
+    func presentPubkeySendVC(pubkey:String?=nil){
+        if let delegate = self.delegate as? DashboardRootViewController{
+            delegate.sendSatsButtonTouched(pubkey: pubkey)
+        }
     }
     
     func goToSubscriptionDetailsView(subscription: SubscriptionManager.SubscriptionQR) {

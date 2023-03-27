@@ -31,13 +31,17 @@ class NewQRScannerViewController: KeyboardEventsViewController {
     }
     
     enum Mode: Int {
-        case ScanAndProcess
-        case DirectPayment
-        case ScanAndDismiss
+        case ScanAndProcess//Scan Invoice
+        case DirectPayment//"send button" -> Keysend
+        case ScanAndDismiss//user sign up/contact management
         case OnchainPayment
     }
     
-    var currentMode = Mode.ScanAndProcess
+    var currentMode = Mode.ScanAndProcess{
+        didSet{
+            print(currentMode)
+        }
+    }
     
     @IBOutlet weak var viewTitle: UILabel!
     @IBOutlet weak var scannerOverlay: UIView!
@@ -112,7 +116,7 @@ class NewQRScannerViewController: KeyboardEventsViewController {
         
         switch (currentMode) {
         case Mode.ScanAndProcess:
-            setLabels(title: "scan.qr.code.upper".localized, placeHolder: "paste.invoice.subscription".localized, buttonTitle: "verify".localized)
+            setLabels(title: "scan.qr.code.upper".localized, placeHolder: "paste.invoice.invoice.or.pubkey".localized, buttonTitle: "verify".localized)
             break
         case Mode.DirectPayment:
             setLabels(title: "contact.address.upper".localized, placeHolder: "enter.address".localized, buttonTitle: "confirm".localized)

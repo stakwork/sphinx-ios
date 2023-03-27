@@ -356,7 +356,7 @@ extension DashboardRootViewController {
         case .scanQRCode:
             scanQRCodeButtonTouched()
         case .sendSats:
-            sendSatsButtonTouched()
+            scanQRCodeButtonTouched()
         }
     }
     
@@ -386,11 +386,12 @@ extension DashboardRootViewController {
     }
     
     
-    func sendSatsButtonTouched() {
+    func sendSatsButtonTouched(pubkey:String?=nil) {
         let viewController = CreateInvoiceViewController.instantiate(
             viewModel: ChatViewModel(),
             delegate: self,
             paymentMode: CreateInvoiceViewController.paymentMode.send,
+            preloadedPubkey: pubkey,
             rootViewController: rootViewController
         )
         

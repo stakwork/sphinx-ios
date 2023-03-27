@@ -53,9 +53,11 @@ class PodcastPlayerView: UIView {
     var audioLoading = false {
         didSet {
             LoadingWheelHelper.toggleLoadingWheel(loading: audioLoading, loadingWheel: audioLoadingWheel, loadingWheelColor: UIColor.Sphinx.Text, views: [playPauseButton])
-            if(oldValue == true),
+            
+            if (oldValue == true),
               let vc = delegate as? NewPodcastPlayerViewController,
-              let timestamp = vc.deeplinkTimestamp{
+              let timestamp = vc.deeplinkTimestamp {
+                
                 seekToFixedTime(seconds: timestamp)
                 vc.deeplinkTimestamp = nil
             }

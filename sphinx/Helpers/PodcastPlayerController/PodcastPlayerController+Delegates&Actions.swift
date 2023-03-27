@@ -23,6 +23,8 @@ extension PodcastPlayerController {
     
     func submitAction(_ action: UserAction) {
         switch(action) {
+        case .Preload(let podcastData):
+            preload(podcastData)
         case .Play(let podcastData):
             play(podcastData)
         case .Pause(let podcastData):
@@ -43,6 +45,83 @@ extension PodcastPlayerController {
 }
 
 extension PodcastPlayerController {
+    
+    func preloadAll() {
+        for feed in ContentFeed.getAll() {
+            let podcast = PodcastFeed.convertFrom(contentFeed: feed)
+            
+            if let lastEpisode = podcast.getLastEpisode() {
+                preloadEpisode(lastEpisode)
+            }
+            
+            if let currentEpisode = podcast.getCurrentEpisode() {
+                preloadEpisode(currentEpisode)
+            }
+        }
+        
+        func preloadEpisode(_ episode: PodcastEpisode) {
+            guard let urlPath = episode.urlPath, let url = URL(string: urlPath) else {
+                return
+            }
+            
+            if allItems[urlPath] != nil {
+                return
+            }
+            
+            let asset = AVURLAsset(url: url)
+            
+            asset.loadValuesAsynchronously(forKeys: ["playable", "duration"]) {
+                DispatchQueue.main.async {
+                    self.allItems[urlPath] = AVPlayerItem(asset: asset)
+                }
+            }
+        }
+    }
+    
+    func preload(
+        _ podcastData: PodcastData
+    ) {
+        if !isPlaying {
+            ///If not playing then release old podcast preloaded asstes
+            podcastItems = [:]
+        }
+        
+        guard let podcast = getPodcastFrom(podcastData: podcastData) else {
+            return
+        }
+        
+        for episode in podcast.episodesArray {
+            guard let urlPath = episode.urlPath, let url = URL(string: urlPath) else {
+                continue
+            }
+            
+            if podcastItems[urlPath] != nil {
+                continue
+            }
+            
+            let asset = AVURLAsset(url: url)
+            
+            asset.loadValuesAsynchronously(forKeys: ["playable", "duration"]) {
+                DispatchQueue.main.async {
+                    self.podcastItems[urlPath] = AVPlayerItem(asset: asset)
+                }
+            }
+        }
+    }
+    
+    func getPreloadedItem(url: String) -> (AVPlayerItem?, Bool) {
+        let item = podcastItems[url] ?? allItems[url]
+        
+        guard let item = item else {
+            if let url = URL(string: url) {
+                let asset = AVURLAsset(url: url)
+                return (AVPlayerItem(asset: asset), false)
+            }
+            return (nil, false)
+        }
+        
+        return (item, true)
+    }
 
     func play(
         _ podcastData: PodcastData
@@ -61,6 +140,7 @@ extension PodcastPlayerController {
             }
         }
         
+        self.isSoundPlaying = false
         self.podcastData = podcastData
         
         updatePodcastObject(
@@ -82,7 +162,6 @@ extension PodcastPlayerController {
         if let player = player, isPlayerItemSetWith(episodeUrl: podcastData.episodeUrl) {
             ///If same item is set on player, then just seek and play without loading duration asynchronously
             ///Avoid loading episode image again
-            
             player.seek(to: CMTime(seconds: Double(podcastData.currentTime ?? 0), preferredTimescale: 1))
             player.playImmediately(atRate: podcastData.speed)
             
@@ -96,27 +175,42 @@ extension PodcastPlayerController {
             
             loadEpisodeImage()
             
-            let asset = AVAsset(url: podcastData.episodeUrl)
-            let playerItem = AVPlayerItem(asset: asset)
+            let (item, preloaded) = getPreloadedItem(url: podcastData.episodeUrl.absoluteString)
             
-            asset.loadValuesAsynchronously(forKeys: ["duration"], completionHandler: {
-                DispatchQueue.main.async {
-                    
-                    if self.player == nil {
-                        self.player = AVPlayer(playerItem: playerItem)
-                        self.player?.rate = podcastData.speed
-                    } else {
-                        self.player?.replaceCurrentItem(with: playerItem)
-                    }
-                    
-                    self.player?.pause()
-                    
-                    self.player?.seek(to: CMTime(seconds: Double(podcastData.currentTime ?? 0), preferredTimescale: 1)) { _ in
-                        self.player?.playImmediately(atRate: podcastData.speed)
-                        self.didStartPlaying(playerItem)
-                    }
+            if let item = item {
+                if preloaded {
+                    playAssetAfterLoad(item)
+                } else {
+                    item.asset.loadValuesAsynchronously(forKeys: ["duration"], completionHandler: {
+                        DispatchQueue.main.async {
+                            playAssetAfterLoad(item)
+                        }
+                    })
                 }
-            })
+            }
+        }
+        
+        func playAssetAfterLoad(_ playerItem: AVPlayerItem) {
+            if self.player == nil {
+                self.player = AVPlayer(playerItem: playerItem)
+                self.player?.rate = podcastData.speed
+            } else {
+                self.player?.replaceCurrentItem(with: playerItem)
+            }
+            
+            self.player?.pause()
+            self.player?.automaticallyWaitsToMinimizeStalling = false
+            
+            if let currentTime = podcastData.currentTime, currentTime > 0 {
+                self.player?.seek(to: CMTime(seconds: Double(currentTime), preferredTimescale: 1)) { _ in
+                    self.player?.playImmediately(atRate: podcastData.speed)
+                    self.didStartPlaying(playerItem)
+                }
+            } else {
+                self.player?.playImmediately(atRate: podcastData.speed)
+                self.didStartPlaying(playerItem)
+            }
+            
         }
     }
     

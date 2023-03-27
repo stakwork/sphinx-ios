@@ -82,6 +82,22 @@ class FeedsManager : NSObject {
         )
     }
     
+    func getLastPodcastEpisodeData()->PodcastData?{
+        let feeds = self.fetchFeeds()
+        if let lastPod = feeds.filter({$0.isPodcast == true}).sorted(by: { (first, second) in
+            let firstDate = first.dateLastConsumed ?? Date.init(timeIntervalSince1970: 0)
+            let secondDate = second.dateLastConsumed ?? Date.init(timeIntervalSince1970: 0)
+            
+            return firstDate > secondDate
+        }).first{
+            let pod = PodcastFeed.convertFrom(contentFeed: lastPod)
+            if let podData = pod.getPodcastData(){
+                return podData
+            }
+        }
+        return nil
+    }
+    
     func getContentFeedStatus(
         for contentFeed: ContentFeed
     ) -> ContentFeedStatus {

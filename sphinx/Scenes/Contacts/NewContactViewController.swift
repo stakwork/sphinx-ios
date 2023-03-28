@@ -209,8 +209,9 @@ class NewContactViewController: KeyboardEventsViewController {
     }
     
     func presentScanner() {
-        let viewController = NewQRScannerViewController.instantiate()
-        viewController.currentMode = NewQRScannerViewController.Mode.ScanAndDismiss
+        let viewController = NewQRScannerViewController.instantiate(
+            currentMode: NewQRScannerViewController.Mode.ScanAndDismiss
+        )
         viewController.delegate = self
         self.present(viewController, animated: true)
     }

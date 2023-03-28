@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -177,17 +177,8 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kzB-kP-agm">
                                         <rect key="frame" x="30" y="77.5" width="315" height="45"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IJc-Gb-Lrv">
-                                                <rect key="frame" x="0.0" y="0.0" width="45" height="44"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="45" id="tkr-Rm-lNR"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
-                                                <color key="textColor" name="Text"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter Address" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Y8I-bB-gmm">
-                                                <rect key="frame" x="45" y="0.0" width="270" height="44"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="315" height="44"/>
                                                 <color key="textColor" name="Text"/>
                                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
                                                 <textInputTraits key="textInputTraits" returnKeyType="done"/>
@@ -207,17 +198,14 @@
                                         </subviews>
                                         <color key="backgroundColor" name="Body"/>
                                         <constraints>
+                                            <constraint firstItem="Y8I-bB-gmm" firstAttribute="leading" secondItem="kzB-kP-agm" secondAttribute="leading" id="2zv-bE-Coz"/>
                                             <constraint firstAttribute="trailing" secondItem="6uC-3w-Rha" secondAttribute="trailing" id="9H4-gz-NlN"/>
                                             <constraint firstAttribute="height" constant="45" id="BuH-Kr-6Td"/>
                                             <constraint firstItem="6uC-3w-Rha" firstAttribute="top" secondItem="Y8I-bB-gmm" secondAttribute="bottom" id="MQD-tz-k99"/>
-                                            <constraint firstItem="6uC-3w-Rha" firstAttribute="top" secondItem="IJc-Gb-Lrv" secondAttribute="bottom" id="Pev-uc-9pW"/>
                                             <constraint firstItem="6uC-3w-Rha" firstAttribute="leading" secondItem="kzB-kP-agm" secondAttribute="leading" id="Xi6-lc-PeA"/>
-                                            <constraint firstItem="Y8I-bB-gmm" firstAttribute="leading" secondItem="IJc-Gb-Lrv" secondAttribute="trailing" id="bWC-Hj-76x"/>
                                             <constraint firstAttribute="bottom" secondItem="6uC-3w-Rha" secondAttribute="bottom" id="le9-o0-Frg"/>
-                                            <constraint firstItem="IJc-Gb-Lrv" firstAttribute="leading" secondItem="kzB-kP-agm" secondAttribute="leading" id="sK1-rD-ail"/>
                                             <constraint firstItem="Y8I-bB-gmm" firstAttribute="top" secondItem="kzB-kP-agm" secondAttribute="top" id="tuB-zF-YB8"/>
                                             <constraint firstAttribute="trailing" secondItem="Y8I-bB-gmm" secondAttribute="trailing" id="twr-wA-vhk"/>
-                                            <constraint firstItem="IJc-Gb-Lrv" firstAttribute="top" secondItem="kzB-kP-agm" secondAttribute="top" id="xOf-vm-gId"/>
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ui2-4D-gqX">
@@ -265,7 +253,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="INVOICE DETAILS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vuM-l5-Wfj">
-                                        <rect key="frame" x="130.5" y="17" width="114" height="16.5"/>
+                                        <rect key="frame" x="126" y="16.5" width="123.5" height="17.5"/>
                                         <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="14"/>
                                         <color key="textColor" name="Text"/>
                                         <nil key="highlightedColor"/>
@@ -320,7 +308,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1000 sat" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DcV-Uo-cfm">
-                                        <rect key="frame" x="134" y="30" width="54" height="16.5"/>
+                                        <rect key="frame" x="134" y="30" width="55" height="16.5"/>
                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                                         <color key="textColor" name="Text"/>
                                         <nil key="highlightedColor"/>
@@ -332,7 +320,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mon 27th Jan, 23:00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mdU-Xg-tF0">
-                                        <rect key="frame" x="134" y="66.5" width="148.5" height="16.5"/>
+                                        <rect key="frame" x="134" y="66.5" width="147.5" height="16.5"/>
                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                                         <color key="textColor" name="Text"/>
                                         <nil key="highlightedColor"/>
@@ -344,7 +332,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is the memo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OVG-0s-veT">
-                                        <rect key="frame" x="77" y="103" width="107" height="16.5"/>
+                                        <rect key="frame" x="77" y="103" width="108.5" height="16.5"/>
                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                                         <color key="textColor" name="Text"/>
                                         <nil key="highlightedColor"/>
@@ -475,8 +463,6 @@
                         <outlet property="payingContainerBottomConstraint" destination="K9K-qG-Tte" id="HPa-Pu-ufW"/>
                         <outlet property="payingLoadingWheel" destination="9sv-bC-7rF" id="lWa-kB-AYq"/>
                         <outlet property="scannerOverlay" destination="0c8-b8-U72" id="oyh-cN-w2f"/>
-                        <outlet property="toLabel" destination="IJc-Gb-Lrv" id="mzM-hA-Fa7"/>
-                        <outlet property="toLabelWidthConstraint" destination="tkr-Rm-lNR" id="ZI1-fo-UMP"/>
                         <outlet property="viewTitle" destination="vuM-l5-Wfj" id="YT3-DL-QOu"/>
                     </connections>
                 </viewController>

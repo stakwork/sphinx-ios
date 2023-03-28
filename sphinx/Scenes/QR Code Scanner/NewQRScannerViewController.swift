@@ -31,13 +31,13 @@ class NewQRScannerViewController: KeyboardEventsViewController {
     }
     
     enum Mode: Int {
-        case ScanAndProcess
-        case DirectPayment
-        case ScanAndDismiss
+        case ScanAndProcessPayment//Pay invoice or Send Direct Payment to PubKey
+        case ScanAndProcessGeneric//Pay invoice or Send Direct Payment to PubKey, join tribe, etc
+        case ScanAndDismiss//user sign up/contact management
         case OnchainPayment
     }
     
-    var currentMode = Mode.ScanAndProcess
+    var currentMode = Mode.ScanAndProcessGeneric
     
     @IBOutlet weak var viewTitle: UILabel!
     @IBOutlet weak var scannerOverlay: UIView!
@@ -75,9 +75,12 @@ class NewQRScannerViewController: KeyboardEventsViewController {
         }
     }
     
-    static func instantiate(rootViewController : RootViewController? = nil) -> NewQRScannerViewController {
+    static func instantiate(
+        rootViewController : RootViewController? = nil,
+        currentMode: Mode
+    ) -> NewQRScannerViewController {
         let viewController = StoryboardScene.QRCodeScanner.newQrCodeScannerViewController.instantiate()
-        viewController.rootViewController = rootViewController
+        viewController.currentMode = currentMode
         return viewController
     }
     
@@ -111,31 +114,41 @@ class NewQRScannerViewController: KeyboardEventsViewController {
         bottomContainerBottomConstraint.constant = 0
         
         switch (currentMode) {
-        case Mode.ScanAndProcess:
-            setLabels(title: "scan.qr.code.upper".localized, placeHolder: "paste.invoice.subscription".localized, buttonTitle: "verify".localized)
+        case Mode.ScanAndProcessPayment:
+            setLabels(
+                title: "scan.qr.code.upper".localized,
+                placeHolder: "paste.invoice.invoice.or.pubkey".localized,
+                buttonTitle: "verify".localized
+            )
             break
-        case Mode.DirectPayment:
-            setLabels(title: "contact.address.upper".localized, placeHolder: "enter.address".localized, buttonTitle: "confirm".localized)
-            toLabel.isHidden = false
-            toLabelWidthConstraint.constant = 43
+        case Mode.ScanAndProcessGeneric:
+            setLabels(
+                title: "scan.qr.code.upper".localized,
+                placeHolder: "",
+                buttonTitle: "verify".localized
+            )
             break
         case Mode.ScanAndDismiss:
-            setLabels(title: "scan.upper".localized, placeHolder: "enter.code".localized, buttonTitle: "confirm".localized)
+            setLabels(
+                title: "scan.upper".localized,
+                placeHolder: "enter.code".localized,
+                buttonTitle: "confirm".localized
+            )
             setCompleteScannerView()
             break
         case Mode.OnchainPayment:
-            setLabels(title: "scan.btc".localized, placeHolder: "enter.btc".localized, buttonTitle: "confirm".localized)
+            setLabels(
+                title: "scan.btc".localized,
+                placeHolder: "enter.btc".localized,
+                buttonTitle: "confirm".localized
+            )
             break
         }
         
         bottomContainer.superview?.layoutIfNeeded()
-        toLabel.superview?.layoutIfNeeded()
     }
     
     func setCompleteScannerView() {
-        toLabel.isHidden = true
-        toLabelWidthConstraint.constant = 0
-        enterManuallyLabel.isHidden = true
         bottomContainerBottomConstraint.constant = -250
     }
     
@@ -188,7 +201,7 @@ class NewQRScannerViewController: KeyboardEventsViewController {
             let fixedCode = code.fixInvoiceString().trim()
             confirmButton.isHidden = fixedCode == ""
             
-            if currentMode == .ScanAndProcess {
+            if currentMode == .ScanAndProcessPayment || currentMode == .ScanAndProcessGeneric {
                 validateQRString(string: fixedCode)
             } else {
                 delegate?.didScanQRCode?(string: code)

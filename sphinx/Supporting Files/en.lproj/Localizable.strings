@@ -318,6 +318,7 @@
 
 //QR CODE SCANNER
 "scan.qr.code.upper" = "SCAN A QR CODE";
+"paste.invoice.invoice.or.pubkey" = "Invoice or Public Key";
 "paste.invoice.subscription" = "Paste Invoice or Subscription code";
 "contact.address.upper" = "CONTACT ADDRESS";
 "enter.address" = "Enter Address";

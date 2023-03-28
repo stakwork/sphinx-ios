@@ -317,7 +317,8 @@
 
 //QR CODE SCANNER
 "scan.qr.code.upper" = "ESCANEA UN CÓDIGO QR";
-"paste.invoice.subscription" = "Pega la solicitud de pago o el códido de suscripción";
+"paste.invoice.invoice.or.pubkey" = "Invoice o la Clave Pública";
+"paste.invoice.subscription" = "Pega el Invoice o el códido de suscripción";
 "contact.address.upper" = "DIRECCIÓN DEL CONTACTO";
 "enter.address" = "Ingresa la Dirección";
 "scan.upper" = "ESCANEAR";

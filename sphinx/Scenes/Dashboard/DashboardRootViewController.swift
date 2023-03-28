@@ -366,20 +366,21 @@ extension DashboardRootViewController {
         case .transactionsHistory:
             transactionsHistoryButtonTouched()
         case .scanQRCode:
-            scanQRCodeButtonTouched()
+            scanQRCodeButtonTouched(mode: NewQRScannerViewController.Mode.ScanAndProcessGeneric)
         case .sendSats:
-            sendSatsButtonTouched()
+            scanQRCodeButtonTouched(mode: NewQRScannerViewController.Mode.ScanAndProcessPayment)
         }
     }
     
-    
-    func scanQRCodeButtonTouched() {
+    func scanQRCodeButtonTouched(
+        mode: NewQRScannerViewController.Mode
+    ) {
         let viewController = NewQRScannerViewController.instantiate(
-            rootViewController: rootViewController
+            rootViewController: rootViewController,
+            currentMode: mode
         )
         
         viewController.delegate = self
-        viewController.currentMode = .ScanAndProcess
         
         let navigationController = UINavigationController(
             rootViewController: viewController
@@ -398,11 +399,12 @@ extension DashboardRootViewController {
     }
     
     
-    func sendSatsButtonTouched() {
+    func sendSatsButtonTouched(pubkey:String?=nil) {
         let viewController = CreateInvoiceViewController.instantiate(
             viewModel: ChatViewModel(),
             delegate: self,
             paymentMode: CreateInvoiceViewController.paymentMode.send,
+            preloadedPubkey: pubkey,
             rootViewController: rootViewController
         )
         

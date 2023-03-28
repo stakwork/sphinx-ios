@@ -228,9 +228,13 @@ extension DashboardRootViewController {
         loadLastPlayedPod()
     }
     
-    func loadLastPlayedPod(){
+    func loadLastPlayedPod() {
+        if podcastPlayerController.isPlaying {
+            return
+        }
+        
         if let lastPodData = feedsManager.getLastPodcastEpisodeData(){
-            self.playingState(lastPodData)
+            showSmallPodcastPlayerFor(podcastData: lastPodData)
         }
     }
     

@@ -32,10 +32,9 @@ extension PodcastPlayerController {
         case .AdjustSpeed(let podcastData):
             adjustSpeed(podcastData)
         case .TogglePlay(let podcastData):
-            if(self.isPlaying && podcastData.episodeId == podcast?.currentEpisodeId){
+            if (isPlaying && podcastData.episodeId == podcast?.currentEpisodeId) {
                 pause(podcastData)
-            }
-            else{
+            } else {
                 play(podcastData)
             }
         }
@@ -60,6 +59,8 @@ extension PodcastPlayerController {
                 runPausedStateUpdate()
             }
         }
+        
+        FeedsManager.sharedInstance.updateLastConsumedWithFeedID(feedID: podcastData.podcastId)
         
         self.podcastData = podcastData
         

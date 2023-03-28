@@ -38,6 +38,12 @@ class FeedsManager : NSObject {
         }
     }
     
+    func updateLastConsumedWithFeedID(feedID: String) {
+        if let feed = ContentFeed.getFeedWith(feedId: feedID) {
+            feed.updateLastConsumed()
+        }
+    }
+    
     // MARK: - Saving content feed status to relay
     func saveContentFeedStatus(
         for feedId: String

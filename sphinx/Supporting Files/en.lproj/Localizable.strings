@@ -530,6 +530,7 @@
 // FEED
 "feed.recommendations" = "Recommendations";
 "feed.following" = "Following";
+"recently.played" = "Recently Played";
 "feed.listen-now" = "Listen Now";
 "feed.watch-now" = "Watch Now";
 "feed.read-now" = "Read Now";

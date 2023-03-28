@@ -233,7 +233,7 @@ extension DashboardRootViewController {
             return
         }
         
-        if let lastPodData = feedsManager.getLastPodcastEpisodeData(){
+        if let lastPodData = feedsManager.getLastPlayedPodcastData(){
             showSmallPodcastPlayerFor(podcastData: lastPodData)
         }
     }

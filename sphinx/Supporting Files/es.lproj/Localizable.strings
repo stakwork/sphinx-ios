@@ -9,6 +9,7 @@
 //Generic
 "generic.success.title" = "Éxito";
 "generic.error.title" = "Error";
+"generic.error.message.url" = "El URL nuevo no es valid. Por favor vuelva a intentarlo más tarde.";
 "generic.error.message" = "Ha habido un problema. Por favor vuelva a intentarlo más tarde.";
 "generic.contact-support" = "Por favor contacta con soporte en support@stakwork.com";
 "confirm" = "Confirmar";

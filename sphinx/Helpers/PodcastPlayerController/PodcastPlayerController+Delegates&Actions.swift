@@ -70,7 +70,7 @@ extension PodcastPlayerController {
             
             let asset = AVURLAsset(url: url)
             
-            asset.loadValuesAsynchronously(forKeys: ["playable", "duration"]) {
+            asset.loadValuesAsynchronously(forKeys: ["playable", "tracks"]) {
                 DispatchQueue.main.async {
                     self.allItems[urlPath] = AVPlayerItem(asset: asset)
                 }
@@ -101,7 +101,7 @@ extension PodcastPlayerController {
             
             let asset = AVURLAsset(url: url)
             
-            asset.loadValuesAsynchronously(forKeys: ["playable", "duration"]) {
+            asset.loadValuesAsynchronously(forKeys: ["playable", "tracks"]) {
                 DispatchQueue.main.async {
                     self.podcastItems[urlPath] = AVPlayerItem(asset: asset)
                 }
@@ -172,7 +172,6 @@ extension PodcastPlayerController {
         } else {
             ///If new item will be played, then load episode image for info center and load duration asynchronously to prevent
             ///UI lock when start playing
-            
             loadEpisodeImage()
             
             let (item, preloaded) = getPreloadedItem(url: podcastData.episodeUrl.absoluteString)

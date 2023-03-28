@@ -224,7 +224,6 @@ extension NewPublicGroupViewController : UITextFieldDelegate {
     func shouldRevertValue() {
         if let currentField = currentField, let previousFieldValue = previousFieldValue {
             currentField.text = previousFieldValue
-            AlertHelper.showAlert(title: "generic.error.title".localized, message: "generic.error.message.url".localized)
         }
     }
     

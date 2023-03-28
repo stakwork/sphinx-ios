@@ -17,6 +17,16 @@ extension PodcastFeed {
         )
         return feeds
     }
+    
+    public static func getLastPlayed() -> ContentFeed? {
+        let feeds: [ContentFeed] = CoreDataManager.sharedManager.getObjectsOfTypeWith(
+            predicate: Predicates.lastPlayed,
+            sortDescriptors: [NSSortDescriptor(key: "dateLastConsumed", ascending: false)],
+            entityName: "ContentFeed",
+            fetchLimit: 1
+        )
+        return feeds.first
+    }
 }
 
 
@@ -54,6 +64,13 @@ extension PodcastFeed {
         public static let podcastFeeds: NSPredicate = {
             NSPredicate(
                 format: "(isSubscribedToFromSearch == true OR chat != nil) AND feedKindValue == %d",
+                FeedType.Podcast.rawValue
+            )
+        }()
+        
+        public static let lastPlayed: NSPredicate = {
+            NSPredicate(
+                format: "dateLastConsumed != nil AND feedKindValue == %d",
                 FeedType.Podcast.rawValue
             )
         }()

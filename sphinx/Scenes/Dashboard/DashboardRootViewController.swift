@@ -224,6 +224,18 @@ extension DashboardRootViewController {
         isLoading = true
         
         activeTab = .friends
+        
+        loadLastPlayedPod()
+    }
+    
+    func loadLastPlayedPod() {
+        if podcastPlayerController.isPlaying {
+            return
+        }
+        
+        if let lastPodData = feedsManager.getLastPlayedPodcastData(){
+            showSmallPodcastPlayerFor(podcastData: lastPodData)
+        }
     }
     
     func setupAddTribeButton(){

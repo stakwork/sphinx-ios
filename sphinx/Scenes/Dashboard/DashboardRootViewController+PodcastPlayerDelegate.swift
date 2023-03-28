@@ -12,12 +12,7 @@ extension DashboardRootViewController : PlayerDelegate {
     func loadingState(_ podcastData: PodcastData) {}
     
     func playingState(_ podcastData: PodcastData) {
-        podcastSmallPlayer.configureWith(
-            podcastId: podcastData.podcastId,
-            delegate: self,
-            andKey: PodcastDelegateKeys.DashboardSmallPlayerBar.rawValue
-        )
-        dismissibleBar.isHidden = false
+        showSmallPodcastPlayerFor(podcastData: podcastData)
     }
     
     func pausedState(_ podcastData: PodcastData) {}
@@ -25,6 +20,15 @@ extension DashboardRootViewController : PlayerDelegate {
     func endedState(_ podcastData: PodcastData) {}
     
     func errorState(_ podcastData: PodcastData) {}
+    
+    func showSmallPodcastPlayerFor(podcastData: PodcastData) {
+        podcastSmallPlayer.configureWith(
+            podcastId: podcastData.podcastId,
+            delegate: self,
+            andKey: PodcastDelegateKeys.DashboardSmallPlayerBar.rawValue
+        )
+        dismissibleBar.isHidden = false
+    }
     
     func hideSmallPodcastPlayer() {
         podcastSmallPlayer.isHidden = true

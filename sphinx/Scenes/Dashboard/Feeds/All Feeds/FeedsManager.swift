@@ -81,6 +81,20 @@ class FeedsManager : NSObject {
         )
     }
     
+    func getLastPlayedPodcastData() -> PodcastData? {
+        guard let lastPlayed = PodcastFeed.getLastPlayed() else {
+            return nil
+        }
+        
+        let pod = PodcastFeed.convertFrom(contentFeed: lastPlayed)
+        
+        if let podData = pod.getPodcastData() {
+            return podData
+        }
+        
+        return nil
+    }
+    
     func getContentFeedStatus(
         for contentFeed: ContentFeed
     ) -> ContentFeedStatus {

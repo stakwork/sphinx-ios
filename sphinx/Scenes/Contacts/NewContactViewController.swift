@@ -216,31 +216,13 @@ class NewContactViewController: KeyboardEventsViewController {
     }
     
     @IBAction func saveToContactsButtonTouched() {
-        if(validateRouteHint(hint: routeHintTextField.text ?? "") == false){
-            AlertHelper.showAlert(title: "generic.error.title".localized, message: "invalid.route.hint".localized)
-            return
-        }
-        
         loading = true
+        
         if let _ = contact {
             updateProfile()
         } else {
             createContact()
         }
-    }
-    
-    func validateRouteHint(hint:String)->Bool{
-        let components = hint.components(separatedBy: ":")
-        if components.count > 1,
-           components[0].isPubKey == true,
-           let _ = Int(components[1]){
-            return true
-        }
-        else if(hint == ""){
-            return true
-        }
-        
-        return false
     }
     
     @IBAction func subscribeButtonTouched() {

@@ -89,10 +89,8 @@ public class ContentFeed: NSManagedObject {
     }
     
     func updateLastConsumed(){
-        print(self.dateLastConsumed)
-        self.dateLastConsumed = Date()
-        self.managedObjectContext?.saveContext()
-        print(self.dateLastConsumed)
+        dateLastConsumed = Date()
+        managedObjectContext?.saveContext()
     }
     
     public static func fetchChatFeedContentInBackground(

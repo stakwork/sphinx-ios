@@ -224,7 +224,6 @@ extension NewPublicGroupViewController : UITextFieldDelegate {
     func shouldRevertValue() {
         if let currentField = currentField, let previousFieldValue = previousFieldValue {
             currentField.text = previousFieldValue
-            AlertHelper.showAlert(title: "generic.error.title".localized, message: "generic.error.message.url".localized)//
         }
     }
     
@@ -252,6 +251,7 @@ extension NewPublicGroupViewController : UITextFieldDelegate {
             if let url = textField.text, url.isValidURL || url.isEmpty {
                 groupsManager.newGroupInfo.appUrl = textField.text ?? ""
             } else {
+                newMessageBubbleHelper.showGenericMessageView(text: "invalid.url".localized, backColor: UIColor.Sphinx.BadgeRed)
                 shouldRevertValue()
             }
             break
@@ -260,6 +260,7 @@ extension NewPublicGroupViewController : UITextFieldDelegate {
                 if url.isValidURL || url.isEmpty {
                     groupsManager.newGroupInfo.feedUrl = textField.text ?? ""
                 } else {
+                    newMessageBubbleHelper.showGenericMessageView(text: "invalid.url".localized, backColor: UIColor.Sphinx.BadgeRed)
                     shouldRevertValue()
                 }
                 validateFeedUrl(url)

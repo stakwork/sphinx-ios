@@ -55,6 +55,8 @@ class NewPublicGroupViewController: KeyboardEventsViewController, BackCameraVC {
     let kTagRowHeight: CGFloat = 50
     let kTagContainerMargin: CGFloat = 10
     
+    let newMessageBubbleHelper = NewMessageBubbleHelper()
+    
     public enum GroupFields: Int {
         case Name
         case Image

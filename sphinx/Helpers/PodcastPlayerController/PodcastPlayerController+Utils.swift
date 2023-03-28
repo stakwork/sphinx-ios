@@ -69,33 +69,19 @@ extension PodcastPlayerController {
         
         syncPodcastTimer?.invalidate()
         syncPodcastTimer = nil
-        
-        loadingTimer?.invalidate()
-        loadingTimer = nil
     }
     
     func configureTimer() {
         updateCurrentTime()
         
-        if isSoundPlaying {
-            playingTimer?.invalidate()
-            playingTimer = Timer.scheduledTimer(
-                timeInterval: Double(1) / Double(podcastData?.speed ?? 1.0),
-                target: self,
-                selector: #selector(updateCurrentTime),
-                userInfo: nil,
-                repeats: true
-            )
-        } else {
-            loadingTimer?.invalidate()
-            loadingTimer = Timer.scheduledTimer(
-                timeInterval: Double(0.1),
-                target: self,
-                selector: #selector(updateCurrentTime),
-                userInfo: nil,
-                repeats: true
-            )
-        }
+        playingTimer?.invalidate()
+        playingTimer = Timer.scheduledTimer(
+            timeInterval: Double(1) / Double(podcastData?.speed ?? 1.0),
+            target: self,
+            selector: #selector(updateCurrentTime),
+            userInfo: nil,
+            repeats: true
+        )
         
         paymentsTimer?.invalidate()
         paymentsTimer = Timer.scheduledTimer(
@@ -128,34 +114,29 @@ extension PodcastPlayerController {
         }
         
         let duration = Int(Double(item.asset.duration.value) / Double(item.asset.duration.timescale))
-        let currentTime = Int(round(Double(player.currentTime().value) / Double(player.currentTime().timescale)))
+        let currentTime = Double(player.currentTime().value) / Double(player.currentTime().timescale)
+        let roundedCurrentTime = Int(round(currentTime))
 
         guard let podcastData = podcastData else {
             return
         }
         
-        self.podcastData?.currentTime = currentTime
+        isSoundPlaying = Double(self.podcastData?.currentTime ?? 0) < currentTime
+        
+        self.podcastData?.currentTime = roundedCurrentTime
         self.podcastData?.duration = duration
         
         updatePodcastObject(
             podcastId: podcastData.podcastId,
-            currentTime: currentTime,
+            currentTime: roundedCurrentTime,
             duration: duration
         )
 
         runPlayingStateUpdate()
         configurePlayingInfoCenter()
 
-        if currentTime >= duration {
+        if roundedCurrentTime >= duration {
             didEndEpisode()
-        }
-        
-        ///If it started playing sound then invalidate faster timer and set up playing timer
-        if let _ = loadingTimer, isSoundPlaying {
-            loadingTimer?.invalidate()
-            loadingTimer = nil
-            
-            configureTimer()
         }
     }
     
@@ -199,13 +180,7 @@ extension PodcastPlayerController {
                    player?.timeControlStatus == AVPlayer.TimeControlStatus.waitingToPlayAtSpecifiedRate ||
                    isLoadingOrPlaying
         }
-    }
-    
-    var isSoundPlaying: Bool {
-        get {
-            return player?.timeControlStatus == AVPlayer.TimeControlStatus.playing
-        }
-    }
+    }    
     
     var playingPodcastId: String? {
         get {

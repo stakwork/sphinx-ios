@@ -18,6 +18,7 @@ protocol PlayerDelegate : class {
 }
 
 enum UserAction {
+    case Preload(PodcastData)
     case Play(PodcastData)
     case Pause(PodcastData)
     case Seek(PodcastData)
@@ -54,13 +55,18 @@ class PodcastPlayerController {
     let actionsManager = ActionsManager.sharedInstance
     
     var player: AVPlayer?
-    var loadingTimer : Timer? = nil
+    
+    var allItems: [String: AVPlayerItem] = [:]
+    var podcastItems: [String: AVPlayerItem] = [:]
+    
     var playingTimer : Timer? = nil
     var paymentsTimer : Timer? = nil
     var syncPodcastTimer : Timer? = nil
     
     var playedSeconds: Int = 0
+    
     var isLoadingOrPlaying = false
+    var isSoundPlaying: Bool = false
     
     var playingEpisodeImage: UIImage? = nil
     
@@ -70,11 +76,7 @@ class PodcastPlayerController {
             if self.podcast?.feedID == podcastData?.podcastId {
                 return
             }
-            if let contentFeed = ContentFeed.getFeedWith(feedId: podcastData?.podcastId ?? "") {
-                self.podcast = PodcastFeed.convertFrom(contentFeed: contentFeed)
-            } else if podcastData?.podcastId == RecommendationsHelper.kRecommendationPodcastId {
-                self.podcast = RecommendationsHelper.sharedInstance.recommendationsPodcast
-            }
+            self.podcast = getPodcastFrom(podcastData: podcastData)
         }
     }
     
@@ -89,6 +91,7 @@ class PodcastPlayerController {
     
     init() {
         setupNowPlayingInfoCenter()
+        preloadAll()
     }
     
     func saveState() {
@@ -98,6 +101,15 @@ class PodcastPlayerController {
         if let episodeId = podcastData?.episodeId {
             podcast?.currentEpisodeId = episodeId
         }
+    }
+    
+    func getPodcastFrom(podcastData: PodcastData?) -> PodcastFeed? {
+        if let contentFeed = ContentFeed.getFeedWith(feedId: podcastData?.podcastId ?? "") {
+            return PodcastFeed.convertFrom(contentFeed: contentFeed)
+        } else if podcastData?.podcastId == RecommendationsHelper.kRecommendationPodcastId {
+            return RecommendationsHelper.sharedInstance.recommendationsPodcast
+        }
+        return nil
     }
 
 }

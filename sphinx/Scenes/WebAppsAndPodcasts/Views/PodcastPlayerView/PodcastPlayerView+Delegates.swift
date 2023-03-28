@@ -58,6 +58,7 @@ extension PodcastPlayerView : PlayerDelegate {
         audioLoading = false
         configureControls(playing: false)
         
+        delegate?.shouldReloadEpisodesTable()
         delegate?.didFailPlayingPodcast()
     }
 }

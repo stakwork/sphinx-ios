@@ -175,7 +175,10 @@ class UnifiedEpisodeView : UIView {
         self.episode = episode
         self.podcastDelegate = delegate
         
-        configurePlayingAnimation(playing: playing && playingSound)
+        configurePlayingAnimation(
+            playing: playing,
+            playingSound: playingSound
+        )
         
         episodeLabel.textColor = !playing ? UIColor.Sphinx.Text : UIColor.Sphinx.BlueTextAccent
         progressView.backgroundColor = !playing ? UIColor.Sphinx.Text : UIColor.Sphinx.BlueTextAccent
@@ -221,13 +224,14 @@ class UnifiedEpisodeView : UIView {
     }
     
     func configurePlayingAnimation(
-        playing: Bool
+        playing: Bool,
+        playingSound: Bool
     ) {
         animationContainer.isHidden = !playing
         
-        if playing && !animationView.isAnimationPlaying {
+        if playing && playingSound && !animationView.isAnimationPlaying {
             animationView.play()
-        } else if !playing && animationView.isAnimationPlaying {
+        } else if (!playing || !playingSound) && animationView.isAnimationPlaying {
             animationView.stop()
         }
     }

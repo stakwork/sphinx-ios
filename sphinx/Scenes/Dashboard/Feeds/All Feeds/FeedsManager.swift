@@ -38,10 +38,9 @@ class FeedsManager : NSObject {
         }
     }
     
-    func updateLastConsumedWithFeedID(feedID:String){
-        let feeds = FeedsManager.sharedInstance.fetchFeeds()
-        if let matchingFeed = feeds.first(where: {$0.feedID == feedID}){
-            matchingFeed.updateLastConsumed()
+    func updateLastConsumedWithFeedID(feedID: String) {
+        if let feed = ContentFeed.getFeedWith(feedId: feedID) {
+            feed.updateLastConsumed()
         }
     }
     

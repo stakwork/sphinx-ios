@@ -260,9 +260,10 @@ class CreateInvoiceViewController: CommonPaymentViewController {
     
     private func goToScanner() {
         loading = false
-        let viewController = NewQRScannerViewController.instantiate()
-        let scannerMode: NewQRScannerViewController.Mode = (mode == .sendOnchain) ? .OnchainPayment : .DirectPayment
-        viewController.currentMode = scannerMode
+        
+        let viewController = NewQRScannerViewController.instantiate(
+            currentMode: (mode == .sendOnchain) ? .OnchainPayment : .ScanAndProcessPayment
+        )
         viewController.delegate = self
         self.present(viewController, animated: true)
     }

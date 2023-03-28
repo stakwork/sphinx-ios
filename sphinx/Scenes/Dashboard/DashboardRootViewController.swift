@@ -354,20 +354,21 @@ extension DashboardRootViewController {
         case .transactionsHistory:
             transactionsHistoryButtonTouched()
         case .scanQRCode:
-            scanQRCodeButtonTouched()
+            scanQRCodeButtonTouched(mode: NewQRScannerViewController.Mode.ScanAndProcessGeneric)
         case .sendSats:
-            scanQRCodeButtonTouched()
+            scanQRCodeButtonTouched(mode: NewQRScannerViewController.Mode.ScanAndProcessPayment)
         }
     }
     
-    
-    func scanQRCodeButtonTouched() {
+    func scanQRCodeButtonTouched(
+        mode: NewQRScannerViewController.Mode
+    ) {
         let viewController = NewQRScannerViewController.instantiate(
-            rootViewController: rootViewController
+            rootViewController: rootViewController,
+            currentMode: mode
         )
         
         viewController.delegate = self
-        viewController.currentMode = .ScanAndProcess
         
         let navigationController = UINavigationController(
             rootViewController: viewController

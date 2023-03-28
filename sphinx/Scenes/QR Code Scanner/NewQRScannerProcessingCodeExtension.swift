@@ -125,8 +125,8 @@ extension NewQRScannerViewController {
     func animatePayingContainer(show: Bool) {
         payingContainerBottomConstraint.constant = show ? 0.0 : -250.0
         
-        UIView.animate(withDuration: 0.3, animations: {
-            self.payingContainer.superview?.layoutIfNeeded()
+        UIView.animate(withDuration: 0.2, animations: {
+            self.payingContainer.superview?.layoutSubviews()
         })
     }
     

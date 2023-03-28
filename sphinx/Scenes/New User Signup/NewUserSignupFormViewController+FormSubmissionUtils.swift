@@ -15,9 +15,9 @@ extension NewUserSignupFormViewController {
     }
     
     @IBAction func qrCodeButtonTapped() {
-        let viewController = NewQRScannerViewController.instantiate()
-        
-        viewController.currentMode = NewQRScannerViewController.Mode.ScanAndDismiss
+        let viewController = NewQRScannerViewController.instantiate(
+            currentMode: NewQRScannerViewController.Mode.ScanAndDismiss
+        )
         viewController.delegate = self
         
         present(viewController, animated: true)

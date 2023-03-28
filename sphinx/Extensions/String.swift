@@ -554,6 +554,14 @@ extension String {
         return "application/octet-stream"
     }
     
+    func withURLParam(key: String, value: String) -> String {
+        if self.contains("?") {
+            return "\(self)&\(key)=\(value)"
+        } else {
+            return "\(self)?\(key)=\(value)"
+        }
+    }
+    
     func getExtensionFromMimeType() -> String {
         let components = self.components(separatedBy: "/")
         if components.count > 1 {

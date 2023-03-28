@@ -143,6 +143,7 @@
 "waiting.admin.approval" = "Esperando aprobación del administrador";
 "picker-title.tribe-form.feed-type" = "Tipo de Feed";
 "alias.allowed-characters" = "Solo se permiten letras, números y\nguiones bajos en el alias de la tribu";
+"invalid.url" = "URL Inválida";
 
 //SUBSCRIPTIONS
 "leave.lose.unsaved.changed" = "¿Estás seguro que deseas salir? Los cambios no guardado se perderán";

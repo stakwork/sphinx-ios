@@ -251,7 +251,7 @@ extension NewPublicGroupViewController : UITextFieldDelegate {
             if let url = textField.text, url.isValidURL || url.isEmpty {
                 groupsManager.newGroupInfo.appUrl = textField.text ?? ""
             } else {
-                shouldRevertValue()
+                invalidUrl()
             }
             break
         case GroupFields.FeedUrl.rawValue:
@@ -259,7 +259,7 @@ extension NewPublicGroupViewController : UITextFieldDelegate {
                 if url.isValidURL || url.isEmpty {
                     groupsManager.newGroupInfo.feedUrl = textField.text ?? ""
                 } else {
-                    shouldRevertValue()
+                    invalidUrl()
                 }
                 validateFeedUrl(url)
             }
@@ -269,6 +269,16 @@ extension NewPublicGroupViewController : UITextFieldDelegate {
         }
         
         toggleConfirmButton()
+    }
+    
+    func invalidUrl() {
+        newMessageBubbleHelper.showGenericMessageView(
+            text: "invalid.url".localized,
+            textColor: UIColor.white,
+            backColor: UIColor.Sphinx.BadgeRed,
+            backAlpha: 1.0
+        )
+        shouldRevertValue()
     }
     
     func validateFeedUrl(_ url: String) {

@@ -176,6 +176,7 @@
 "nickname.address.required" = "Nickname and Address are required.";
 "new.contact" = "New Contact";
 "invalid.pubkey" = "Invalid Public Key";
+"invalid.route.hint" = "Invalid Route Hint";
 "address-boox.contact-delete.alert-title" = "Delete Contact";
 "address-boox.contact-delete.alert-message" = "Are you sure you want to delete this contact?";
 "address-boox.contact-block.alert-title" = "Block Contact";

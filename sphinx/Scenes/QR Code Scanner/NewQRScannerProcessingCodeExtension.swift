@@ -58,12 +58,44 @@ extension NewQRScannerViewController {
     
     func validatePublicKey(string: String) -> Bool {
         if string.isPubKey || string.isVirtualPubKey {
-            dismiss(animated: true, completion: {
-                self.presentPubkeySendVC(pubkey: string)
-            })
+            self.handleContactOrSend(string: string)
             return true
         }
         return false
+    }
+    
+    func handleContactOrSend(string:String){
+        if let _ = UserContact.getAll().filter({ !$0.isOwner && !$0.shouldBeExcluded() }).first(where: {$0.publicKey == string}){
+            self.dismiss(animated: true, completion: {
+                self.presentPubkeySendVC(pubkey: string)
+            })
+        }
+        else{
+            let alert = CustomAlertController(title: "Add Contact or Send Payment?", message: "", preferredStyle: .actionSheet)
+            
+            alert.addAction(UIAlertAction(title: "Add Contact", style: .default, handler:{ (UIAlertAction) in
+                self.showAddContact(pubkey: string)
+            }))
+
+            alert.addAction(UIAlertAction(title: "Send Payment", style: .default, handler:{ (UIAlertAction) in
+                self.dismiss(animated: true, completion: {
+                    self.presentPubkeySendVC(pubkey: string)
+                })
+            }))
+            
+            alert.popoverPresentationController?.sourceView = self.view
+            alert.popoverPresentationController?.sourceRect = self.view.bounds
+
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    func showAddContact(pubkey:String){
+        if let vc = self.delegate as? DashboardRootViewController{
+            self.dismiss(animated: true,completion: {
+                vc.presentNewContactVC(pubkey: pubkey)
+            })
+        }
     }
     
     func validateSubscriptionQR(string: String) -> Bool {

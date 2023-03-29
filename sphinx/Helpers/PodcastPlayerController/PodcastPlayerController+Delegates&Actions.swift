@@ -59,7 +59,13 @@ extension PodcastPlayerController {
         }
         
         func preloadEpisode(_ episode: PodcastEpisode) {
-            guard let urlPath = episode.urlPath, let url = URL(string: urlPath) else {
+            guard let url = episode.getAudioUrl() else {
+                return
+            }
+            
+            let urlPath = url.absoluteString
+            
+            if episode.isDownloaded {
                 return
             }
             
@@ -69,7 +75,7 @@ extension PodcastPlayerController {
             
             let asset = AVURLAsset(url: url)
             
-            asset.loadValuesAsynchronously(forKeys: ["playable", "tracks"]) {
+            asset.loadValuesAsynchronously(forKeys: ["playable", "tracks", "duration"]) {
                 DispatchQueue.main.async {
                     self.allItems[urlPath] = AVPlayerItem(asset: asset)
                 }
@@ -90,8 +96,14 @@ extension PodcastPlayerController {
         }
         
         for episode in podcast.episodesArray {
-            guard let urlPath = episode.urlPath, let url = URL(string: urlPath) else {
+            guard let url = episode.getAudioUrl() else {
                 continue
+            }
+            
+            let urlPath = url.absoluteString
+            
+            if episode.isDownloaded {
+                return
             }
             
             if podcastItems[urlPath] != nil {
@@ -100,7 +112,7 @@ extension PodcastPlayerController {
             
             let asset = AVURLAsset(url: url)
             
-            asset.loadValuesAsynchronously(forKeys: ["playable", "tracks"]) {
+            asset.loadValuesAsynchronously(forKeys: ["playable", "tracks", "duration"]) {
                 DispatchQueue.main.async {
                     self.podcastItems[urlPath] = AVPlayerItem(asset: asset)
                 }
@@ -119,7 +131,7 @@ extension PodcastPlayerController {
             return (nil, false)
         }
         
-        return (item, true)
+        return (item, item.asset.statusOfValue(forKey: "duration", error: nil) == .loaded)
     }
 
     func play(

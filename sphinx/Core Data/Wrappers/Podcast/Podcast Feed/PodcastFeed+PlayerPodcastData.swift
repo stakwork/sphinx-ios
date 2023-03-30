@@ -17,6 +17,7 @@ struct PodcastData {
     var currentTime: Int? = nil
     var duration: Int? = nil
     var speed: Float = 1
+    var downloaded: Bool = false
     
     init(
         _ chatId: Int?,
@@ -25,7 +26,8 @@ struct PodcastData {
         _ episodeUrl: URL,
         _ currentTime: Int? = nil,
         _ duration: Int? = nil,
-        _ speed: Float = 1
+        _ speed: Float = 1,
+        _ downloaded: Bool = false
     ) {
         self.chatId = chatId
         self.podcastId = podcastId
@@ -34,6 +36,7 @@ struct PodcastData {
         self.currentTime = currentTime
         self.duration = duration
         self.speed = speed
+        self.downloaded = downloaded
     }
 }
 
@@ -66,7 +69,8 @@ extension PodcastFeed {
             url,
             currentTime,
             episode.duration,
-            playerSpeed ?? self.playerSpeed
+            playerSpeed ?? self.playerSpeed,
+            episode.isDownloaded
         )
     }
 }

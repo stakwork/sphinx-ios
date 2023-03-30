@@ -209,7 +209,8 @@ extension PodcastPlayerController {
     func isPlayerItemSetWith(
         episodeUrl: URL
     ) -> Bool {
-        return ((player?.currentItem?.asset) as? AVURLAsset)?.url.absoluteString == episodeUrl.absoluteString
+        let duration = Int(Double(player?.currentItem?.asset.duration.value ?? 0) / Double(player?.currentItem?.asset.duration.timescale ?? 1))
+        return ((player?.currentItem?.asset) as? AVURLAsset)?.url.absoluteString == episodeUrl.absoluteString && duration > 0
     }
     
     func isPlayingRecommendations() -> Bool {

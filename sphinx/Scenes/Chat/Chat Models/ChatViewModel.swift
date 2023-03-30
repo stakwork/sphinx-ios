@@ -16,6 +16,7 @@ final class ChatViewModel: NSObject {
         public var remoteEncryptedMemo: String?
         public var amount: Int?
         public var destinationKey: String?
+        public var routeHint: String?
         public var BTCAddress: String?
         public var message: String?
         public var encryptedMessage: String?
@@ -122,6 +123,10 @@ final class ChatViewModel: NSObject {
         
         if let publicKey = currentPayment.destinationKey {
             parameters["destination_key"] = publicKey as AnyObject?
+        }
+        
+        if let routeHint = currentPayment.routeHint {
+            parameters["route_hint"] = routeHint as AnyObject?
         }
         
         if let muid = currentPayment.muid {

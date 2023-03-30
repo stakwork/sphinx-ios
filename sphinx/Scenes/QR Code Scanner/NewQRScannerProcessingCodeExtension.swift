@@ -65,24 +65,25 @@ extension NewQRScannerViewController {
     }
     
     func handleContactOrSend(string:String){
-        if let _ = UserContact.getAll().filter({ !$0.isOwner && !$0.shouldBeExcluded() }).first(where: {$0.publicKey == string}){
+        if string.isExistingContactPubkey().0 {
             self.dismiss(animated: true, completion: {
                 self.presentPubkeySendVC(pubkey: string)
             })
         }
         else{
-            let alert = CustomAlertController(title: "Add Contact or Send Payment?", message: "", preferredStyle: .actionSheet)
+            let alert = CustomAlertController(title: "pub.key.options".localized, message: "select.option".localized, preferredStyle: .actionSheet)
             
-            alert.addAction(UIAlertAction(title: "Add Contact", style: .default, handler:{ (UIAlertAction) in
+            alert.addAction(UIAlertAction(title: "pub.key.options-add.contact".localized, style: .default, handler:{ (UIAlertAction) in
                 self.showAddContact(pubkey: string)
             }))
 
-            alert.addAction(UIAlertAction(title: "Send Payment", style: .default, handler:{ (UIAlertAction) in
+            alert.addAction(UIAlertAction(title: "pub.key.options-send.payment".localized, style: .default, handler:{ (UIAlertAction) in
                 self.dismiss(animated: true, completion: {
                     self.presentPubkeySendVC(pubkey: string)
                 })
             }))
             
+            alert.addAction(UIAlertAction(title: "cancel".localized, style: .cancel ))
             alert.popoverPresentationController?.sourceView = self.view
             alert.popoverPresentationController?.sourceRect = self.view.bounds
 

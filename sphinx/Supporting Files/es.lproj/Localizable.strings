@@ -332,6 +332,9 @@
 "expired" = "Caducado: ";
 "invoice" = "Solicitud";
 "confirm.pay.invoice" = "¿Estás seguro que deseas pagar esta solicitud?";
+"pub.key.options" = "Opciones de Public Key";
+"pub.key.options-add.contact" = "Crear Contacto";
+"pub.key.options-send.payment" = "Enviar Pago";
 
 // CHAT
 "payment.failed.upper" = "PAGO FALLIDO";

@@ -176,7 +176,7 @@ class GroupsManager {
                 let elements = component.components(separatedBy: "=")
                 if elements.count > 1 {
                     let key = elements[0]
-                    let value = elements[1]
+                    let value = component.replacingOccurrences(of: "\(key)=", with: "")
                     
                     switch(key) {
                     case "uuid":

@@ -1,0 +1,57 @@
+
+/* Class = "UILabel"; text = "Your app is now connected."; ObjectID = "1m3-3F-3Hg"; */
+"1m3-3F-3Hg.text" = "Your app is now connected.";
+
+/* Class = "UILabel"; text = "filter_list"; ObjectID = "2Yr-FR-aGe"; */
+"2Yr-FR-aGe.text" = "filter_list";
+
+/* Class = "UITextField"; placeholder = "Search"; ObjectID = "4fg-wd-J7c"; */
+"4fg-wd-J7c.placeholder" = "Search";
+
+/* Class = "UIButton"; normalTitle = "New user"; ObjectID = "6yh-3q-mea"; */
+"6yh-3q-mea.normalTitle" = "New user";
+
+/* Class = "UILabel"; text = "filter_list"; ObjectID = "7QI-70-Lyp"; */
+"7QI-70-Lyp.text" = "filter_list";
+
+/* Class = "UIButton"; normalTitle = "Continue"; ObjectID = "AXO-py-VQq"; */
+"AXO-py-VQq.normalTitle" = "Continue";
+
+/* Class = "UILabel"; text = ""; ObjectID = "Fvj-pX-2SS"; */
+"Fvj-pX-2SS.text" = "";
+
+/* Class = "UILabel"; text = "No Results Found"; ObjectID = "LOo-lS-kW4"; */
+"LOo-lS-kW4.text" = "No Results Found";
+
+/* Class = "UIButton"; normalTitle = ""; ObjectID = "Tfc-c5-VKv"; */
+"Tfc-c5-VKv.normalTitle" = "";
+
+/* Class = "UILabel"; text = "Tags"; ObjectID = "TsO-mV-85A"; */
+"TsO-mV-85A.text" = "Tags";
+
+/* Class = "UILabel"; text = "WELCOME!"; ObjectID = "VTI-Xp-fYI"; */
+"VTI-Xp-fYI.text" = "WELCOME!";
+
+/* Class = "UILabel"; text = "Discover Tribes"; ObjectID = "YtW-6G-FRm"; */
+"YtW-6G-FRm.text" = "Discover Tribes";
+
+/* Class = "UILabel"; text = "99+"; ObjectID = "e6Z-hk-AqL"; */
+"e6Z-hk-AqL.text" = "99+";
+
+/* Class = "UIButton"; normalTitle = "Existing User"; ObjectID = "fV6-ll-BgC"; */
+"fV6-ll-BgC.normalTitle" = "Existing User";
+
+/* Class = "UIButton"; configuration.title = "Apply"; ObjectID = "lsv-us-MAz"; */
+"lsv-us-MAz.configuration.title" = "Apply";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "lsv-us-MAz"; */
+"lsv-us-MAz.normalTitle" = "Button";
+
+/* Class = "UIButton"; normalTitle = "Tags"; ObjectID = "m1f-Xh-b5G"; */
+"m1f-Xh-b5G.normalTitle" = "Tags";
+
+/* Class = "UILabel"; text = "WELCOME"; ObjectID = "p6F-1X-ODn"; */
+"p6F-1X-ODn.text" = "WELCOME";
+
+/* Class = "UILabel"; text = ""; ObjectID = "qnp-Wp-B3s"; */
+"qnp-Wp-B3s.text" = "";

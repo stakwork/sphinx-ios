@@ -1,0 +1,24 @@
+
+/* Class = "UILabel"; text = "Paid items not supported"; ObjectID = "5BU-tN-VN4"; */
+"5BU-tN-VN4.text" = "Paid items not supported";
+
+/* Class = "UILabel"; text = "Processing payment..."; ObjectID = "8g0-gq-jaf"; */
+"8g0-gq-jaf.text" = "Processing payment...";
+
+/* Class = "UILabel"; text = "Purchase Succeeded"; ObjectID = "DbX-b0-czT"; */
+"DbX-b0-czT.text" = "Purchase Succeeded";
+
+/* Class = "UILabel"; text = "check"; ObjectID = "aoj-tf-pv5"; */
+"aoj-tf-pv5.text" = "check";
+
+/* Class = "UILabel"; text = "error_outline"; ObjectID = "ftD-q2-8PK"; */
+"ftD-q2-8PK.text" = "error_outline";
+
+/* Class = "UILabel"; text = "PAY"; ObjectID = "l1j-i5-mZA"; */
+"l1j-i5-mZA.text" = "PAY";
+
+/* Class = "UILabel"; text = "10 SAT"; ObjectID = "nPC-E3-FdQ"; */
+"nPC-E3-FdQ.text" = "10 SAT";
+
+/* Class = "UILabel"; text = "Purchase Denied"; ObjectID = "sRP-LE-M0I"; */
+"sRP-LE-M0I.text" = "Purchase Denied";

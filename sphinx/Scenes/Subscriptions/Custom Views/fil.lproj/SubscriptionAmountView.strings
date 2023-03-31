@@ -1,0 +1,33 @@
+
+/* Class = "UILabel"; text = ""; ObjectID = "3nM-Xt-Ve5"; */
+"3nM-Xt-Ve5.text" = "";
+
+/* Class = "UIButton"; normalTitle = "DONE"; ObjectID = "6kD-b4-dmx"; */
+"6kD-b4-dmx.normalTitle" = "DONE";
+
+/* Class = "UILabel"; text = "500 sat"; ObjectID = "Aos-P1-YzA"; */
+"Aos-P1-YzA.text" = "500 sat";
+
+/* Class = "UILabel"; text = ""; ObjectID = "Jj2-P4-Ruw"; */
+"Jj2-P4-Ruw.text" = "";
+
+/* Class = "UILabel"; text = "sat"; ObjectID = "NJR-7b-vPZ"; */
+"NJR-7b-vPZ.text" = "sat";
+
+/* Class = "UIButton"; normalTitle = "CANCEL"; ObjectID = "OW6-Fc-9Ei"; */
+"OW6-Fc-9Ei.normalTitle" = "CANCEL";
+
+/* Class = "UILabel"; text = "Custom amount:"; ObjectID = "Z49-ZY-yl7"; */
+"Z49-ZY-yl7.text" = "Custom amount:";
+
+/* Class = "UILabel"; text = ""; ObjectID = "g2B-mI-a6Y"; */
+"g2B-mI-a6Y.text" = "";
+
+/* Class = "UILabel"; text = "2 000 sat"; ObjectID = "jip-gW-S4C"; */
+"jip-gW-S4C.text" = "2 000 sat";
+
+/* Class = "UILabel"; text = "1 000 sat"; ObjectID = "koX-rU-NO0"; */
+"koX-rU-NO0.text" = "1 000 sat";
+
+/* Class = "UILabel"; text = ""; ObjectID = "xr2-TN-5cR"; */
+"xr2-TN-5cR.text" = "";

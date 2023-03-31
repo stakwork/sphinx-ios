@@ -1,0 +1,15 @@
+
+/* Class = "UILabel"; text = "verified_user"; ObjectID = "7qZ-hB-RhI"; */
+"7qZ-hB-RhI.text" = "verified_user";
+
+/* Class = "UIButton"; normalTitle = ""; ObjectID = "HFD-Of-a9q"; */
+"HFD-Of-a9q.normalTitle" = "";
+
+/* Class = "UIButton"; normalTitle = "AUTHORIZE"; ObjectID = "NTY-E1-Rbf"; */
+"NTY-E1-Rbf.normalTitle" = "AUTHORIZE";
+
+/* Class = "UILabel"; text = "Do you want to authorize with"; ObjectID = "PLf-Qq-gka"; */
+"PLf-Qq-gka.text" = "Do you want to authorize with";
+
+/* Class = "UILabel"; text = "..."; ObjectID = "xDY-Qy-7cW"; */
+"xDY-Qy-7cW.text" = "...";

@@ -1,0 +1,138 @@
+
+/* Class = "UIButton"; normalTitle = ""; ObjectID = "0QF-ep-utG"; */
+"0QF-ep-utG.normalTitle" = "";
+
+/* Class = "UIButton"; normalTitle = ""; ObjectID = "1xZ-F7-avR"; */
+"1xZ-F7-avR.normalTitle" = "";
+
+/* Class = "UILabel"; text = "Camera"; ObjectID = "2gk-Fb-5y1"; */
+"2gk-Fb-5y1.text" = "Camera";
+
+/* Class = "UILabel"; text = "insert_drive_file"; ObjectID = "35A-Zn-OLs"; */
+"35A-Zn-OLs.text" = "insert_drive_file";
+
+/* Class = "UILabel"; text = "Set a price and enter your message."; ObjectID = "4FV-0A-lup"; */
+"4FV-0A-lup.text" = "Set a price and enter your message.";
+
+/* Class = "UILabel"; text = ""; ObjectID = "8by-dT-C7q"; */
+"8by-dT-C7q.text" = "";
+
+/* Class = "UILabel"; text = "Loading Templates..."; ObjectID = "BeD-Td-UVZ"; */
+"BeD-Td-UVZ.text" = "Loading Templates...";
+
+/* Class = "UILabel"; text = "SET PRICE"; ObjectID = "EGL-XG-Ej5"; */
+"EGL-XG-Ej5.text" = "SET PRICE";
+
+/* Class = "UILabel"; text = "Paid Message"; ObjectID = "F2I-3M-f6u"; */
+"F2I-3M-f6u.text" = "Paid Message";
+
+/* Class = "UILabel"; text = "sat"; ObjectID = "FGz-cz-rkK"; */
+"FGz-cz-rkK.text" = "sat";
+
+/* Class = "UILabel"; text = "sat"; ObjectID = "GLN-cw-ioq"; */
+"GLN-cw-ioq.text" = "sat";
+
+/* Class = "UILabel"; text = "Request"; ObjectID = "HTw-wx-D0f"; */
+"HTw-wx-D0f.text" = "Request";
+
+/* Class = "UILabel"; text = "REQUEST AMOUNT"; ObjectID = "JH8-XK-2TQ"; */
+"JH8-XK-2TQ.text" = "REQUEST AMOUNT";
+
+/* Class = "UILabel"; text = "expand_more"; ObjectID = "MwD-Ox-3Xa"; */
+"MwD-Ox-3Xa.text" = "expand_more";
+
+/* Class = "UILabel"; text = "Send"; ObjectID = "NHj-ji-e9m"; */
+"NHj-ji-e9m.text" = "Send";
+
+/* Class = "UILabel"; text = "sat"; ObjectID = "NWF-gT-r76"; */
+"NWF-gT-r76.text" = "sat";
+
+/* Class = "UIButton"; normalTitle = ""; ObjectID = "Noy-PD-0pg"; */
+"Noy-PD-0pg.normalTitle" = "";
+
+/* Class = "UITextField"; placeholder = "0"; ObjectID = "OFr-OZ-9UL"; */
+"OFr-OZ-9UL.placeholder" = "0";
+
+/* Class = "UIButton"; normalTitle = "share"; ObjectID = "OOb-Ll-9z2"; */
+"OOb-Ll-9z2.normalTitle" = "share";
+
+/* Class = "UIButton"; normalTitle = "CONFIRM"; ObjectID = "RCs-d3-bab"; */
+"RCs-d3-bab.normalTitle" = "CONFIRM";
+
+/* Class = "UILabel"; text = "NOTIFICATIONS LEVEL"; ObjectID = "SpZ-Zf-bcC"; */
+"SpZ-Zf-bcC.text" = "NOTIFICATIONS LEVEL";
+
+/* Class = "UIButton"; normalTitle = ""; ObjectID = "TR9-KC-tY5"; */
+"TR9-KC-tY5.normalTitle" = "";
+
+/* Class = "UITextField"; text = "2 500"; ObjectID = "UJh-Bb-gUB"; */
+"UJh-Bb-gUB.text" = "2 500";
+
+/* Class = "UILabel"; text = "From"; ObjectID = "UY6-eK-1Qs"; */
+"UY6-eK-1Qs.text" = "From";
+
+/* Class = "UILabel"; text = ""; ObjectID = "W2v-2a-ZYH"; */
+"W2v-2a-ZYH.text" = "";
+
+/* Class = "UITextField"; placeholder = "0"; ObjectID = "Yav-uF-MI2"; */
+"Yav-uF-MI2.placeholder" = "0";
+
+/* Class = "UILabel"; text = "SEND IMAGE"; ObjectID = "ZEJ-HW-iL9"; */
+"ZEJ-HW-iL9.text" = "SEND IMAGE";
+
+/* Class = "UIButton"; normalTitle = ""; ObjectID = "a7U-ue-whM"; */
+"a7U-ue-whM.normalTitle" = "";
+
+/* Class = "UIButton"; normalTitle = "CANCEL"; ObjectID = "bqg-tt-jE5"; */
+"bqg-tt-jE5.normalTitle" = "CANCEL";
+
+/* Class = "UIButton"; normalTitle = "CONFIRM"; ObjectID = "dgR-PH-JGP"; */
+"dgR-PH-JGP.normalTitle" = "CONFIRM";
+
+/* Class = "UIButton"; normalTitle = "CONFIRM"; ObjectID = "fwf-Iy-Dpd"; */
+"fwf-Iy-Dpd.normalTitle" = "CONFIRM";
+
+/* Class = "UILabel"; text = "+1"; ObjectID = "g6d-Z8-xrV"; */
+"g6d-Z8-xrV.text" = "+1";
+
+/* Class = "UILabel"; text = "gif"; ObjectID = "j56-2k-wfk"; */
+"j56-2k-wfk.text" = "gif";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "kBS-JQ-INj"; */
+"kBS-JQ-INj.text" = "0";
+
+/* Class = "UIButton"; normalTitle = ""; ObjectID = "kBU-1c-z9x"; */
+"kBU-1c-z9x.normalTitle" = "";
+
+/* Class = "UIButton"; normalTitle = ""; ObjectID = "lIp-6A-eUT"; */
+"lIp-6A-eUT.normalTitle" = "";
+
+/* Class = "UILabel"; text = "sat"; ObjectID = "mba-N0-xoD"; */
+"mba-N0-xoD.text" = "sat";
+
+/* Class = "UITextField"; placeholder = "No Message"; ObjectID = "mnK-0f-aOi"; */
+"mnK-0f-aOi.placeholder" = "No Message";
+
+/* Class = "UILabel"; text = "Gif"; ObjectID = "o6p-4Z-s0v"; */
+"o6p-4Z-s0v.text" = "Gif";
+
+/* Class = "UILabel"; text = "Tomas Timinskas"; ObjectID = "urZ-hI-Xh4"; */
+"urZ-hI-Xh4.text" = "Tomas Timinskas";
+
+/* Class = "UITextField"; placeholder = "Add Message"; ObjectID = "uzk-r4-4Vh"; */
+"uzk-r4-4Vh.placeholder" = "Add Message";
+
+/* Class = "UILabel"; text = "File"; ObjectID = "vI1-az-0QI"; */
+"vI1-az-0QI.text" = "File";
+
+/* Class = "UILabel"; text = "Library"; ObjectID = "vqQ-dy-2SC"; */
+"vqQ-dy-2SC.text" = "Library";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "vtk-93-j2v"; */
+"vtk-93-j2v.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "CONFIRM"; ObjectID = "x1w-R5-F90"; */
+"x1w-R5-F90.normalTitle" = "CONFIRM";
+
+/* Class = "UILabel"; text = "REQUEST: "; ObjectID = "ypU-tY-BWb"; */
+"ypU-tY-BWb.text" = "REQUEST: ";

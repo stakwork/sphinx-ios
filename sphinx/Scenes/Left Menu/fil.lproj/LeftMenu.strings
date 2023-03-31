@@ -1,0 +1,48 @@
+
+/* Class = "UILabel"; text = "karma"; ObjectID = "1ZU-UV-KSf"; */
+"1ZU-UV-KSf.text" = "karma";
+
+/* Class = "UILabel"; text = "-"; ObjectID = "3SJ-Nf-Lei"; */
+"3SJ-Nf-Lei.text" = "-";
+
+/* Class = "UIButton"; normalTitle = "DONE"; ObjectID = "8Et-S7-VDq"; */
+"8Et-S7-VDq.normalTitle" = "DONE";
+
+/* Class = "UILabel"; text = ""; ObjectID = "8jj-3H-5Sc"; */
+"8jj-3H-5Sc.text" = "";
+
+/* Class = "UIButton"; normalTitle = "Buy 1000 Karma"; ObjectID = "CCI-OS-jEn"; */
+"CCI-OS-jEn.normalTitle" = "Buy 1000 Karma";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "HAQ-va-tsh"; */
+"HAQ-va-tsh.text" = "Title";
+
+/* Class = "UILabel"; text = "email"; ObjectID = "RSB-AF-7yK"; */
+"RSB-AF-7yK.text" = "email";
+
+/* Class = "UIButton"; normalTitle = "Send Message"; ObjectID = "VUd-ZZ-tSV"; */
+"VUd-ZZ-tSV.normalTitle" = "Send Message";
+
+/* Class = "UITextView"; text = "Describe your problem here..."; ObjectID = "bKo-Co-okt"; */
+"bKo-Co-okt.text" = "Describe your problem here...";
+
+/* Class = "UIButton"; normalTitle = "Logout"; ObjectID = "cRO-aH-zEt"; */
+"cRO-aH-zEt.normalTitle" = "Logout";
+
+/* Class = "UILabel"; text = "SUPPORT"; ObjectID = "gKM-ns-Slb"; */
+"gKM-ns-Slb.text" = "SUPPORT";
+
+/* Class = "UILabel"; text = ""; ObjectID = "jDe-xP-azY"; */
+"jDe-xP-azY.text" = "";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "jUZ-jZ-gCS"; */
+"jUZ-jZ-gCS.text" = "0";
+
+/* Class = "UIButton"; normalTitle = "CANCEL"; ObjectID = "mmQ-nD-ZJe"; */
+"mmQ-nD-ZJe.normalTitle" = "CANCEL";
+
+/* Class = "UIButton"; normalTitle = "Support"; ObjectID = "qb1-rZ-TSG"; */
+"qb1-rZ-TSG.normalTitle" = "Support";
+
+/* Class = "UIButton"; normalTitle = "Copy Logs"; ObjectID = "rQP-gW-ald"; */
+"rQP-gW-ald.normalTitle" = "Copy Logs";

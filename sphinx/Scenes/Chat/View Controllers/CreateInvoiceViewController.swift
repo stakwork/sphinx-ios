@@ -78,7 +78,18 @@ class CreateInvoiceViewController: CommonPaymentViewController {
         }
         
         viewModel.resetCurrentPayment()
+        
         viewController.chatViewModel = viewModel
+        
+        if let preloadedPubkey = preloadedPubkey {
+            if preloadedPubkey.isVirtualPubKey {
+                let (pk, rh) = preloadedPubkey.pubkeyComponents
+                viewController.chatViewModel.currentPayment.destinationKey = pk
+                viewController.chatViewModel.currentPayment.routeHint = rh
+            } else {
+                viewController.chatViewModel.currentPayment.destinationKey = preloadedPubkey
+            }
+        }
         
         return viewController
     }
@@ -158,7 +169,8 @@ class CreateInvoiceViewController: CommonPaymentViewController {
         }
         
         let sending = mode == paymentMode.send
-        let nextButtonTitle = sending ? "continue.upper".localized : "confirm.upper".localized
+        let chatPayment = (contacts?.count ?? 0) > 0
+        let nextButtonTitle = sending && chatPayment ? "continue.upper".localized : "confirm.upper".localized
         nextButton.setTitle(nextButtonTitle, for: .normal)
     }
     
@@ -230,9 +242,6 @@ class CreateInvoiceViewController: CommonPaymentViewController {
         
         switch mode {
         case .send:
-            if(preloadedPubkey != nil){
-                self.chatViewModel.currentPayment.destinationKey = preloadedPubkey
-            }
             shouldSendDirectPayment()
         case .sendOnchain:
             processOnchainPayment()

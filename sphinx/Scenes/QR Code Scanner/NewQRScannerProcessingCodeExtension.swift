@@ -58,12 +58,45 @@ extension NewQRScannerViewController {
     
     func validatePublicKey(string: String) -> Bool {
         if string.isPubKey || string.isVirtualPubKey {
-            dismiss(animated: true, completion: {
-                self.presentPubkeySendVC(pubkey: string)
-            })
+            self.handleContactOrSend(string: string)
             return true
         }
         return false
+    }
+    
+    func handleContactOrSend(string:String){
+        if string.isExistingContactPubkey().0 {
+            self.dismiss(animated: true, completion: {
+                self.presentPubkeySendVC(pubkey: string)
+            })
+        }
+        else{
+            let alert = CustomAlertController(title: "pub.key.options".localized, message: "select.option".localized, preferredStyle: .actionSheet)
+            
+            alert.addAction(UIAlertAction(title: "pub.key.options-add.contact".localized, style: .default, handler:{ (UIAlertAction) in
+                self.showAddContact(pubkey: string)
+            }))
+
+            alert.addAction(UIAlertAction(title: "pub.key.options-send.payment".localized, style: .default, handler:{ (UIAlertAction) in
+                self.dismiss(animated: true, completion: {
+                    self.presentPubkeySendVC(pubkey: string)
+                })
+            }))
+            
+            alert.addAction(UIAlertAction(title: "cancel".localized, style: .cancel ))
+            alert.popoverPresentationController?.sourceView = self.view
+            alert.popoverPresentationController?.sourceRect = self.view.bounds
+
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    func showAddContact(pubkey:String){
+        if let vc = self.delegate as? DashboardRootViewController{
+            self.dismiss(animated: true,completion: {
+                vc.presentNewContactVC(pubkey: pubkey)
+            })
+        }
     }
     
     func validateSubscriptionQR(string: String) -> Bool {

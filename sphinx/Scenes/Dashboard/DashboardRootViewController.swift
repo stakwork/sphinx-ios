@@ -398,6 +398,12 @@ extension DashboardRootViewController {
         presentNavigationControllerWith(vc: viewController)
     }
     
+    func presentNewContactVC(pubkey:String){
+        let newContactVC = NewContactViewController.instantiate(rootViewController: self.rootViewController,pubkey:pubkey)
+        newContactVC.delegate = self
+        self.present(newContactVC, animated: true)
+    }
+    
     
     func sendSatsButtonTouched(pubkey:String?=nil) {
         let viewController = CreateInvoiceViewController.instantiate(

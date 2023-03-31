@@ -31,8 +31,6 @@ class NewPodcastPlayerViewController: UIViewController {
     var tableHeaderView: PodcastPlayerView?
     
     var podcast: PodcastFeed! = nil
-    var deeplinkedEpisode:PodcastEpisode? = nil
-    var deeplinkTimestamp:Int? = nil
     
     var chat: Chat? {
         get {
@@ -81,9 +79,6 @@ class NewPodcastPlayerViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if let episode = deeplinkedEpisode{
-            self.tableHeaderView?.playEpisode(episode: episode)
-        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {

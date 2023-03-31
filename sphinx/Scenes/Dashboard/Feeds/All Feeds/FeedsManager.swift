@@ -478,7 +478,8 @@ class FeedsManager : NSObject {
         if let feedComponent = components.first(where: {$0.contains(forKey)}) {
             let elements = feedComponent.components(separatedBy: "=")
             if elements.count > 1 {
-                return elements[1]
+                let key = elements[0]
+                return feedComponent.replacingOccurrences(of: "\(key)=", with: "")
             }
         }
         return nil
@@ -498,8 +499,7 @@ class FeedsManager : NSObject {
             if let feedID = extractContentDeepLinkMetaData(forKey: "feedID",components: components),
                let itemID = extractContentDeepLinkMetaData(forKey: "itemID", components: components),
                let feedURL = extractContentDeepLinkMetaData(forKey: "feedURL", components: components){
-                print(feedID)
-                print(itemID)
+                
                 //2. Feed it forward to instantiate the correct VC
                 lookupContentFeedAndItem(feedID: feedID, itemID: itemID, feedURL: feedURL, completion: { feed,item in
                     if let valid_feed = feed as? PodcastFeed,
@@ -511,9 +511,11 @@ class FeedsManager : NSObject {
                             boostDelegate: drvc,
                             fromDashboard: true
                         )
-                        let timestamp = Int(self.extractContentDeepLinkMetaData(forKey: "atTime", components: components) ?? "-1")
-                        podcastFeedVC.deeplinkedEpisode = valid_episode
-                        podcastFeedVC.deeplinkTimestamp = timestamp == -1 ? nil : timestamp
+                        if let currentTime = self.extractContentDeepLinkMetaData(forKey: "atTime", components: components) {
+                            valid_episode.currentTime = Int(currentTime)
+                        }
+                        valid_feed.currentEpisodeId = valid_episode.itemID
+
                         drvc.navigationController?.present(
                             podcastFeedVC,
                             animated: true,

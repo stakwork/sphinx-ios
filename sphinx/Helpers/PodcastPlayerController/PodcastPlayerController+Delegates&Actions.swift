@@ -24,7 +24,7 @@ extension PodcastPlayerController {
     func submitAction(_ action: UserAction) {
         switch(action) {
         case .Preload(let podcastData):
-            preload(podcastData)
+            preloadPodcastEpisodes(podcastData)
         case .Play(let podcastData):
             play(podcastData)
         case .Pause(let podcastData):
@@ -46,6 +46,9 @@ extension PodcastPlayerController {
 extension PodcastPlayerController {
     
     func preloadAll() {
+        
+        let dispatchSemaphore = DispatchSemaphore(value: 1)
+        
         for feed in ContentFeed.getAll() {
             let podcast = PodcastFeed.convertFrom(contentFeed: feed)
             
@@ -73,13 +76,25 @@ extension PodcastPlayerController {
                 return
             }
             
+            dispatchSemaphore.wait()
+            
             let asset = AVURLAsset(url: url)
             
-            asset.loadValuesAsynchronously(forKeys: ["playable", "tracks", "duration"]) {
+            asset.loadValuesAsynchronously(forKeys: ["playable"]) {
                 DispatchQueue.main.async {
                     self.allItems[urlPath] = AVPlayerItem(asset: asset)
+                    dispatchSemaphore.signal()
                 }
             }
+        }
+    }
+    
+    func preloadPodcastEpisodes(
+        _ podcastData: PodcastData
+    ) {
+        let dispatchQueue = DispatchQueue.global(qos: .userInitiated)
+        dispatchQueue.async {
+            self.preload(podcastData)
         }
     }
     
@@ -87,13 +102,15 @@ extension PodcastPlayerController {
         _ podcastData: PodcastData
     ) {
         if !isPlaying {
-            ///If not playing then release old podcast preloaded asstes
+            ///If not playing then release old podcast preloaded assets
             podcastItems = [:]
         }
         
         guard let podcast = getPodcastFrom(podcastData: podcastData) else {
             return
         }
+        
+        let dispatchSemaphore = DispatchSemaphore(value: 1)
         
         for episode in podcast.episodesArray {
             guard let url = episode.getAudioUrl() else {
@@ -103,18 +120,21 @@ extension PodcastPlayerController {
             let urlPath = url.absoluteString
             
             if episode.isDownloaded {
-                return
+                continue
             }
             
             if podcastItems[urlPath] != nil {
                 continue
             }
             
+            dispatchSemaphore.wait()
+            
             let asset = AVURLAsset(url: url)
             
-            asset.loadValuesAsynchronously(forKeys: ["playable", "tracks", "duration"]) {
+            asset.loadValuesAsynchronously(forKeys: ["playable"]) {
                 DispatchQueue.main.async {
                     self.podcastItems[urlPath] = AVPlayerItem(asset: asset)
+                    dispatchSemaphore.signal()
                 }
             }
         }
@@ -131,7 +151,7 @@ extension PodcastPlayerController {
             return (nil, false)
         }
         
-        return (item, item.asset.statusOfValue(forKey: "duration", error: nil) == .loaded)
+        return (item, item.asset.statusOfValue(forKey: "playable", error: nil) == .loaded)
     }
 
     func play(
@@ -190,10 +210,12 @@ extension PodcastPlayerController {
             let (item, preloaded) = getPreloadedItem(url: podcastData.episodeUrl.absoluteString)
             
             if let item = item {
-                if preloaded {
+                if preloaded || podcastData.downloaded {
                     playAssetAfterLoad(item)
                 } else {
-                    item.asset.loadValuesAsynchronously(forKeys: ["duration"], completionHandler: {
+                    item.asset.loadValuesAsynchronously(forKeys: ["playable"], completionHandler: {
+                        self.podcastItems[podcastData.episodeUrl.absoluteString] = item
+                        
                         DispatchQueue.main.async {
                             playAssetAfterLoad(item)
                         }

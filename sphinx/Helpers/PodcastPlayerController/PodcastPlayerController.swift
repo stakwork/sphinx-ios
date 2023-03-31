@@ -91,7 +91,11 @@ class PodcastPlayerController {
     
     init() {
         setupNowPlayingInfoCenter()
-        preloadAll()
+        
+        let dispatchQueue = DispatchQueue.global(qos: .userInitiated)
+        dispatchQueue.async {
+            self.preloadAll()
+        }
     }
     
     func saveState() {

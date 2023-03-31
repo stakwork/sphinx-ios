@@ -651,14 +651,13 @@ extension DashboardRootViewController {
             return
         }
         
-        if let topVC = topMostViewController() as? NewPodcastPlayerViewController,
-            didRetry == false{
-                topVC.dismiss(animated: false)
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
-                    self.presentChatDetailsVC(for: chat,didRetry: true)//retry
-                })
-                return
-            }
+        if let topVC = topMostViewController() as? NewPodcastPlayerViewController, didRetry == false {
+            topVC.dismiss(animated: false)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+                self.presentChatDetailsVC(for: chat,didRetry: true)///retry
+            })
+            return
+        }
         
         let chatVC = ChatViewController.instantiate(
             contact: contact,

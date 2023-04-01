@@ -81,10 +81,8 @@ extension PodcastPlayerController {
             let asset = AVURLAsset(url: url)
             
             asset.loadValuesAsynchronously(forKeys: ["playable"]) {
-                DispatchQueue.main.async {
-                    self.allItems[urlPath] = AVPlayerItem(asset: asset)
-                    dispatchSemaphore.signal()
-                }
+                self.allItems[urlPath] = AVPlayerItem(asset: asset)
+                dispatchSemaphore.signal()
             }
         }
     }
@@ -92,7 +90,7 @@ extension PodcastPlayerController {
     func preloadPodcastEpisodes(
         _ podcastData: PodcastData
     ) {
-        let dispatchQueue = DispatchQueue.global(qos: .userInitiated)
+        let dispatchQueue = DispatchQueue.global(qos: .utility)
         dispatchQueue.async {
             self.preload(podcastData)
         }
@@ -132,10 +130,8 @@ extension PodcastPlayerController {
             let asset = AVURLAsset(url: url)
             
             asset.loadValuesAsynchronously(forKeys: ["playable"]) {
-                DispatchQueue.main.async {
-                    self.podcastItems[urlPath] = AVPlayerItem(asset: asset)
-                    dispatchSemaphore.signal()
-                }
+                self.podcastItems[urlPath] = AVPlayerItem(asset: asset)
+                dispatchSemaphore.signal()
             }
         }
     }
@@ -244,7 +240,6 @@ extension PodcastPlayerController {
                 self.player?.playImmediately(atRate: podcastData.speed)
                 self.didStartPlaying(playerItem)
             }
-            
         }
     }
     

@@ -139,7 +139,7 @@ class FeedsManager : NSObject {
     func restoreContentFeedStatusInBackgroundFor(
         feedId: String
     ) {
-        let dispatchQueue = DispatchQueue.global(qos: .userInitiated)
+        let dispatchQueue = DispatchQueue(label: "feed-status", qos: .default)
         dispatchQueue.async {
             self.restoreContentFeedStatusFor(feedId: feedId)
         }
@@ -167,7 +167,7 @@ class FeedsManager : NSObject {
     }
     
     func restoreContentFeedStatusInBackground() {
-        let dispatchQueue = DispatchQueue.global(qos: .userInitiated)
+        let dispatchQueue = DispatchQueue(label: "feed-status", qos: .default)
         dispatchQueue.async {
             self.restoreContentFeedStatus()
         }

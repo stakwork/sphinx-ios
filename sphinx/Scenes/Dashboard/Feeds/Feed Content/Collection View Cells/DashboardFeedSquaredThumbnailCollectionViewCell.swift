@@ -162,13 +162,7 @@ extension DashboardFeedSquaredThumbnailCollectionViewCell {
 extension ContentFeed: DashboardFeedSquaredThumbnailCollectionViewItem {
     
     var imageToShow: String? {
-        var backupURL : String? = nil
-        if self.isVideo{
-            let vf = VideoFeed.convertFrom(contentFeed: self)
-            print(vf)
-            backupURL = vf.videos?.first?.thumbnailURL?.absoluteString
-        }
-        return imageURL?.absoluteString ?? chat?.photoUrl ?? backupURL
+        return imageURL?.absoluteString ?? chat?.photoUrl ?? itemsArray.first?.imageURL?.absoluteString
     }
     
     var placeholderImageName: String? {
@@ -198,11 +192,7 @@ extension ContentFeed: DashboardFeedSquaredThumbnailCollectionViewItem {
 extension VideoFeed: DashboardFeedSquaredThumbnailCollectionViewItem {
     
     var imageToShow: String? {
-        var backupURL : String? = nil
-        if let url = self.videos?.first?.thumbnailURL?.absoluteString{
-            backupURL = url
-        }
-        return imageURL?.absoluteString ?? chat?.photoUrl ?? backupURL
+        return imageURL?.absoluteString ?? chat?.photoUrl ?? videosArray.first?.thumbnailURL?.absoluteString
     }
     
     var placeholderImageName: String? {

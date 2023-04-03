@@ -92,7 +92,7 @@ class PodcastPlayerController {
     init() {
         setupNowPlayingInfoCenter()
         
-        let dispatchQueue = DispatchQueue.global(qos: .utility)
+        let dispatchQueue = DispatchQueue(label: "podcast-preload-all", qos: .default)
         dispatchQueue.async {
             self.preloadAll()
         }

@@ -90,7 +90,7 @@ extension PodcastPlayerController {
     func preloadPodcastEpisodes(
         _ podcastData: PodcastData
     ) {
-        let dispatchQueue = DispatchQueue.global(qos: .utility)
+        let dispatchQueue = DispatchQueue(label: "podcast-preload", qos: .default)
         dispatchQueue.async {
             self.preload(podcastData)
         }

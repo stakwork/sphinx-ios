@@ -19,9 +19,11 @@ protocol FeedItemRowDelegate : class {
     func shouldStartDownloading(episode: PodcastEpisode, cell: UICollectionViewCell)
     func shouldDeleteFile(episode: PodcastEpisode, cell: UICollectionViewCell)
     func shouldShowMore(episode: PodcastEpisode,cell: UICollectionViewCell)
+    func shouldShowDescription(episode: PodcastEpisode)
     
     func shouldShowMore(video:Video,cell: UICollectionViewCell)
     func shouldShare(video:Video)
+    func shouldShowDescription(video: Video)
 }
 
 protocol PodcastEpisodeRowDelegate : class {
@@ -29,11 +31,13 @@ protocol PodcastEpisodeRowDelegate : class {
     func shouldDeleteFile(episode: PodcastEpisode)
     func shouldShowMore(episode: PodcastEpisode)
     func shouldShare(episode: PodcastEpisode)
+    func shouldShowDescription(episode:PodcastEpisode)
 }
 
 protocol VideoRowDelegate : class {
     func shouldShowMore(video: Video)
     func shouldShare(video: Video)
+    func shouldShowDescription(video:Video)
 }
 
 class UnifiedEpisodeView : UIView {
@@ -61,6 +65,7 @@ class UnifiedEpisodeView : UIView {
     @IBOutlet weak var downloadProgressBar: CircularProgressView!
     @IBOutlet weak var animationContainer: UIView!
     @IBOutlet weak var animationView: AnimationView!
+    
     
     var episode: PodcastEpisode! = nil
     var videoEpisode: Video! = nil
@@ -158,6 +163,7 @@ class UnifiedEpisodeView : UIView {
             episodeImageView.image = UIImage(named: "videoPlaceholder")
         }
 
+        
         descriptionLabel.text = videoEpisode.videoDescription
         episodeLabel.text = videoEpisode.titleForDisplay
         dateLabel.text = videoEpisode.publishDateText
@@ -221,6 +227,9 @@ class UnifiedEpisodeView : UIView {
         setProgress()
         configureDownload(episode: episode, download: download)
         setImage(podcast: podcast, and: episode)
+        
+        episodeImageView.isUserInteractionEnabled = true
+        descriptionLabel.isUserInteractionEnabled = true
     }
     
     func configurePlayingAnimation(
@@ -304,6 +313,19 @@ class UnifiedEpisodeView : UIView {
     func updateDownloadState(_ download: Download) {
         let progress = CGFloat(download.progress) / CGFloat(100)
         downloadProgressBar.progressAnimation(to: progress, active: download.isDownloading)
+    }
+    
+    @IBAction func shouldShowDescription(){
+        //ItemDescriptionViewController
+        print("showing description")
+        if let delegate = podcastDelegate,
+        let episode = episode{
+            delegate.shouldShowDescription(episode: episode)
+        }
+        else if let delegate = videoDelegate,
+        let video = videoEpisode{
+            delegate.shouldShowDescription(video: video)
+        }
     }
     
     @IBAction func downloadButtonTouched() {

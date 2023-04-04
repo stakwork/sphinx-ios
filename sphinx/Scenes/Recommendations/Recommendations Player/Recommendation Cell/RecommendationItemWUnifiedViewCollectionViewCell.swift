@@ -51,6 +51,9 @@ class RecommendationItemWUnifiedViewCollectionViewCell: UICollectionViewCell {
 }
 
 extension RecommendationItemWUnifiedViewCollectionViewCell : PodcastEpisodeRowDelegate {
+    func shouldShowDescription(episode: PodcastEpisode) {
+        
+    }
     func shouldStartDownloading(episode: PodcastEpisode) {
         delegate?.shouldStartDownloading(episode: episode, cell: self)
     }
@@ -69,6 +72,10 @@ extension RecommendationItemWUnifiedViewCollectionViewCell : PodcastEpisodeRowDe
 }
 
 extension RecommendationItemWUnifiedViewCollectionViewCell : VideoRowDelegate {
+    func shouldShowDescription(video: Video) {
+        
+    }
+    
     func shouldShowMore(video: Video) {
         delegate?.shouldShowMore(video: video, cell: self)
     }

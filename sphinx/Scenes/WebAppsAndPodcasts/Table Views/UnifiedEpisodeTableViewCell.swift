@@ -43,6 +43,14 @@ class UnifiedEpisodeTableViewCell: UITableViewCell {
 }
 
 extension UnifiedEpisodeTableViewCell : PodcastEpisodeRowDelegate {
+    func shouldShowDescription(episode:PodcastEpisode){
+        delegate?.shouldShowDescription(episode: episode)
+    }
+    
+    func shouldShowDescription(video:Video){
+        delegate?.shouldShowDescription(video: video)
+    }
+    
     func shouldStartDownloading(episode: PodcastEpisode) {
         delegate?.shouldStartDownloading(episode: episode, cell: self)
     }

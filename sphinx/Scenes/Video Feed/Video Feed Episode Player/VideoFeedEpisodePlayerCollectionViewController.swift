@@ -368,6 +368,14 @@ extension VideoFeedEpisodePlayerCollectionViewController {
 
 //MARK: Unified View Delegate
 extension VideoFeedEpisodePlayerCollectionViewController: FeedItemRowDelegate, PodcastEpisodesDSDelegate {
+    func shouldShowDescription(episode: PodcastEpisode) {}
+    
+    func shouldShowDescription(video: Video) {
+        //todo
+    }
+    
+    func didTapForDescriptionAt(episode: PodcastEpisode) {}
+    
     
     func shouldStartDownloading(episode: PodcastEpisode, cell: UITableViewCell)  {}
     func shouldDeleteFile(episode: PodcastEpisode, cell: UITableViewCell)  {}
@@ -394,6 +402,10 @@ extension VideoFeedEpisodePlayerCollectionViewController: FeedItemRowDelegate, P
             let vc = FeedItemDetailVC.instantiate(video: video, delegate: self, indexPath: indexPath)
             self.present(vc, animated: true)
         }
+    }
+    
+    func didTapForDescriptionAt(index: Int) {
+        
     }
     
     func didTapEpisodeAt(index: Int) {}

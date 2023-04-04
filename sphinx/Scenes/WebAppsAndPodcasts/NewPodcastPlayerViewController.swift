@@ -147,10 +147,20 @@ class NewPodcastPlayerViewController: UIViewController {
 }
 
 extension NewPodcastPlayerViewController : PodcastEpisodesDSDelegate {
+    func didTapForDescriptionAt(episode: PodcastEpisode) {
+        let vc = ItemDescriptionViewController.instantiate()
+        self.present(vc, animated: true)
+        //self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
     func deleteTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {
         episode.shouldDeleteFile {
             self.reload(indexPath.row)
         }
+    }
+    
+    func didTapForDescriptionAt(index: Int) {
+        
     }
     
     func didTapEpisodeAt(index: Int) {

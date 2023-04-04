@@ -663,6 +663,7 @@
 		CED14D78293CF683004B8B25 /* ChatMentionAutocompleteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED14D77293CF683004B8B25 /* ChatMentionAutocompleteDataSource.swift */; };
 		CEE433B229AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE433B029AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.swift */; };
 		CEE433B329AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEE433B129AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.xib */; };
+		CEEBBB3F29DC47930093923D /* ItemDescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEBBB3E29DC47930093923D /* ItemDescriptionViewController.swift */; };
 		CEF821D62963B68600CBB28F /* DiscoverTribesWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF821D52963B68600CBB28F /* DiscoverTribesWebViewController.swift */; };
 		CEF88DCA29B64E5100DC1C40 /* UnifiedEpisodeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEF88DC929B64E5000DC1C40 /* UnifiedEpisodeView.xib */; };
 		CEF88DCC29B64F4F00DC1C40 /* UnifiedEpisodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF88DCB29B64F4F00DC1C40 /* UnifiedEpisodeView.swift */; };
@@ -1599,6 +1600,7 @@
 		CED14D77293CF683004B8B25 /* ChatMentionAutocompleteDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatMentionAutocompleteDataSource.swift; sourceTree = "<group>"; };
 		CEE433B029AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnifiedEpisodeTableViewCell.swift; sourceTree = "<group>"; };
 		CEE433B129AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UnifiedEpisodeTableViewCell.xib; sourceTree = "<group>"; };
+		CEEBBB3E29DC47930093923D /* ItemDescriptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDescriptionViewController.swift; sourceTree = "<group>"; };
 		CEF821D52963B68600CBB28F /* DiscoverTribesWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTribesWebViewController.swift; sourceTree = "<group>"; };
 		CEF88DC929B64E5000DC1C40 /* UnifiedEpisodeView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UnifiedEpisodeView.xib; sourceTree = "<group>"; };
 		CEF88DCB29B64F4F00DC1C40 /* UnifiedEpisodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnifiedEpisodeView.swift; sourceTree = "<group>"; };
@@ -3212,6 +3214,7 @@
 				4789E24924EDB73B003991BE /* WebAppViewController.swift */,
 				CE3D8CA029B0FF7100EDB637 /* FeedItemDetailVC.swift */,
 				47183CAF254893B100E6FD19 /* NewPodcastPlayerViewController.swift */,
+				CEEBBB3E29DC47930093923D /* ItemDescriptionViewController.swift */,
 				47AF0D34254C957200C98398 /* PodcastAnimationViewController.swift */,
 				473E5DE22575696C00697EEA /* PickerViewController.swift */,
 				473BC88C25F287340070E519 /* PodcastNewEpisodeViewController.swift */,
@@ -4545,6 +4548,7 @@
 				F3DFB78A26B87C0C00E76FBD /* DashboardFeedsContainerViewController+ContentFilterOption.swift in Sources */,
 				47935FBE24A1070800B39ADB /* StakworkAuthorizeViewController.swift in Sources */,
 				471161D9291563BB008EAFF2 /* ActionTrack+CoreDataProperties.swift in Sources */,
+				CEEBBB3F29DC47930093923D /* ItemDescriptionViewController.swift in Sources */,
 				CE3D8CAC29B1124E00EDB637 /* FeedItemDetailHeaderCell.swift in Sources */,
 				4705D39D2799B3B0009C0729 /* FeedBoostHelper.swift in Sources */,
 				4787F86D247410C500CCE8B9 /* JoinGroupDetailsViewController.swift in Sources */,

@@ -334,6 +334,14 @@ extension RecommendationFeedItemsCollectionViewController {
 
 
 extension RecommendationFeedItemsCollectionViewController : FeedItemRowDelegate {
+    func shouldShowDescription(episode: PodcastEpisode) {
+        
+    }
+    
+    func shouldShowDescription(video: Video) {
+        
+    }
+    
     func shouldShare(video: Video) {
         shareTapped(video: video)
     }
@@ -364,6 +372,8 @@ extension RecommendationFeedItemsCollectionViewController : FeedItemRowDelegate 
 }
 
 extension RecommendationFeedItemsCollectionViewController : PodcastEpisodesDSDelegate {
+    func didTapForDescriptionAt(episode: PodcastEpisode) {}
+    func didTapForDescriptionAt(index: Int) {}
     func didTapEpisodeAt(index: Int) {}
     func downloadTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {}
     func deleteTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {}

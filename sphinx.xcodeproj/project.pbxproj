@@ -617,6 +617,10 @@
 		47FDDB1C2562D77200BBF15F /* boost_animation.json in Resources */ = {isa = PBXBuildFile; fileRef = 47FDDB1B2562D77100BBF15F /* boost_animation.json */; };
 		47FE9A3C23BF751C0090913F /* ChatViewControllerAttachmentDelegateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FE9A3B23BF751C0090913F /* ChatViewControllerAttachmentDelegateExtension.swift */; };
 		47FE9A3E23C381A20090913F /* UITapGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FE9A3D23C381A20090913F /* UITapGestureRecognizer.swift */; };
+		CE07B83629DC92F900A02652 /* ItemDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE07B83429DC92F900A02652 /* ItemDescriptionTableViewCell.swift */; };
+		CE07B83729DC92F900A02652 /* ItemDescriptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE07B83529DC92F900A02652 /* ItemDescriptionTableViewCell.xib */; };
+		CE07B83A29DC9CA700A02652 /* ItemDescriptionImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE07B83829DC9CA700A02652 /* ItemDescriptionImageTableViewCell.swift */; };
+		CE07B83B29DC9CA700A02652 /* ItemDescriptionImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE07B83929DC9CA700A02652 /* ItemDescriptionImageTableViewCell.xib */; };
 		CE0C4676296DC5E200E82353 /* ContentFeedStatus+SupportingModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0C4675296DC5E200E82353 /* ContentFeedStatus+SupportingModels.swift */; };
 		CE1F033F2994458B002E1079 /* ChatLeaderboardEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1F033E2994458B002E1079 /* ChatLeaderboardEntry.swift */; };
 		CE2585E929A3FE7300130641 /* JitsiIncomingCallManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2585E829A3FE7200130641 /* JitsiIncomingCallManager.swift */; };
@@ -1555,6 +1559,10 @@
 		47FE9A3B23BF751C0090913F /* ChatViewControllerAttachmentDelegateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewControllerAttachmentDelegateExtension.swift; sourceTree = "<group>"; };
 		47FE9A3D23C381A20090913F /* UITapGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITapGestureRecognizer.swift; sourceTree = "<group>"; };
 		487E10CEB3D07B0840A84681 /* Pods_sphinx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_sphinx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE07B83429DC92F900A02652 /* ItemDescriptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDescriptionTableViewCell.swift; sourceTree = "<group>"; };
+		CE07B83529DC92F900A02652 /* ItemDescriptionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ItemDescriptionTableViewCell.xib; sourceTree = "<group>"; };
+		CE07B83829DC9CA700A02652 /* ItemDescriptionImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDescriptionImageTableViewCell.swift; sourceTree = "<group>"; };
+		CE07B83929DC9CA700A02652 /* ItemDescriptionImageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ItemDescriptionImageTableViewCell.xib; sourceTree = "<group>"; };
 		CE0C4675296DC5E200E82353 /* ContentFeedStatus+SupportingModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentFeedStatus+SupportingModels.swift"; sourceTree = "<group>"; };
 		CE1F033E2994458B002E1079 /* ChatLeaderboardEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLeaderboardEntry.swift; sourceTree = "<group>"; };
 		CE2585E829A3FE7200130641 /* JitsiIncomingCallManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JitsiIncomingCallManager.swift; sourceTree = "<group>"; };
@@ -3219,7 +3227,11 @@
 				CE3D8CA029B0FF7100EDB637 /* FeedItemDetailVC.swift */,
 				47183CAF254893B100E6FD19 /* NewPodcastPlayerViewController.swift */,
 				CEEBBB3E29DC47930093923D /* ItemDescriptionViewController.swift */,
+				CE07B83829DC9CA700A02652 /* ItemDescriptionImageTableViewCell.swift */,
+				CE07B83929DC9CA700A02652 /* ItemDescriptionImageTableViewCell.xib */,
 				CEEBBB4029DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.swift */,
+				CE07B83429DC92F900A02652 /* ItemDescriptionTableViewCell.swift */,
+				CE07B83529DC92F900A02652 /* ItemDescriptionTableViewCell.xib */,
 				CEEBBB4129DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.xib */,
 				47AF0D34254C957200C98398 /* PodcastAnimationViewController.swift */,
 				473E5DE22575696C00697EEA /* PickerViewController.swift */,
@@ -4266,6 +4278,7 @@
 				475BDD48232AD00D00C5BBD6 /* Montserrat-Regular.otf in Resources */,
 				472F9D3F2416BA0200EFC30A /* AudioRecordingTooltip.xib in Resources */,
 				4746807F293E566D00F51457 /* PodcastPlayerPlaybackSliderView.xib in Resources */,
+				CE07B83B29DC9CA700A02652 /* ItemDescriptionImageTableViewCell.xib in Resources */,
 				CECFBF022965C85B00BAD935 /* DiscoverTribesTableViewCell.xib in Resources */,
 				4754FA94272ADB02006295A5 /* DashboardNewsletterItemCollectionViewCell.xib in Resources */,
 				47F258D0253F6B1500122A5A /* PodcastSmallPlayer.xib in Resources */,
@@ -4369,6 +4382,7 @@
 				47A79D402444EEFF005CD72F /* MessageOptionView.xib in Resources */,
 				F3CE638126AFF93F006E37A0 /* FeedFilterChipCollectionViewCell.xib in Resources */,
 				47F258CC253DD43400122A5A /* PinTimeSlider.xib in Resources */,
+				CE07B83729DC92F900A02652 /* ItemDescriptionTableViewCell.xib in Resources */,
 				472161B6293915E20088B87B /* NoRecommendationsCollectionViewCell.xib in Resources */,
 				47183CBC2549DF0200E6FD19 /* PodcastBoostReceivedTableViewCell.xib in Resources */,
 				475BDCFE232AC24600C5BBD6 /* DirectPaymentReceivedTableViewCell.xib in Resources */,
@@ -4561,6 +4575,8 @@
 				4787F86D247410C500CCE8B9 /* JoinGroupDetailsViewController.swift in Sources */,
 				47A79D3824424D19005CD72F /* UITableViewCell.swift in Sources */,
 				47468FCE233131B40072124A /* NSManagedObjectContext.swift in Sources */,
+				CE07B83629DC92F900A02652 /* ItemDescriptionTableViewCell.swift in Sources */,
+				CE07B83A29DC9CA700A02652 /* ItemDescriptionImageTableViewCell.swift in Sources */,
 				47BB1D6A239934210049802B /* EncryptionManager.swift in Sources */,
 				475BDD1C232AC47C00C5BBD6 /* KeyboardHandlerViewController.swift in Sources */,
 				475154A62423B3B000477384 /* URL.swift in Sources */,

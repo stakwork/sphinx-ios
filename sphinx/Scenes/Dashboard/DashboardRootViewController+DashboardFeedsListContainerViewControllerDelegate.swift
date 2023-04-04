@@ -166,9 +166,12 @@ extension DashboardRootViewController {
                 fromDashboard: true
             )
             
-            podcastFeedVC.modalPresentationStyle = .automatic
+            let navController = UINavigationController()
             
-            navigationController?.present(podcastFeedVC, animated: true)
+            navController.viewControllers = [podcastFeedVC]
+            navController.modalPresentationStyle = .automatic
+            navController.isNavigationBarHidden = true
+            navigationController?.present(navController, animated: true)
         }
     }
     

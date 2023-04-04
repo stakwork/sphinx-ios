@@ -150,7 +150,7 @@ extension NewPodcastPlayerViewController : PodcastEpisodesDSDelegate {
     func didTapForDescriptionAt(episode: PodcastEpisode) {
         if let feed = episode.feed{
             let vc = ItemDescriptionViewController.instantiate(podcast: feed, episode: episode)
-            self.present(vc, animated: true)
+            self.navigationController?.pushViewController(vc, animated: true)
         }
     }
     

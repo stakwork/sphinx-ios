@@ -515,12 +515,13 @@ class FeedsManager : NSObject {
                             valid_episode.currentTime = Int(currentTime)
                         }
                         valid_feed.currentEpisodeId = valid_episode.itemID
-
-                        drvc.navigationController?.present(
-                            podcastFeedVC,
-                            animated: true,
-                            completion: nil
-                        )
+                        
+                        let navController = UINavigationController()
+                        
+                        navController.viewControllers = [podcastFeedVC]
+                        navController.modalPresentationStyle = .automatic
+                        navController.isNavigationBarHidden = true
+                        drvc.navigationController?.present(navController, animated: true)
                     }
                     else if let _ = feed as? VideoFeed,
                     let video = item as? Video,

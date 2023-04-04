@@ -105,8 +105,24 @@ extension PodcastFeed {
         return episodesArray.first
     }
     
+    func getNextEpisode() -> PodcastEpisode? {
+        if let currentEpisodeIndex = currentEpisodeIndex, currentEpisodeIndex > 0 {
+            if episodesArray.count > currentEpisodeIndex - 1 {
+                return episodesArray[currentEpisodeIndex - 1]
+            }
+        }
+        return nil
+    }
+    
     func getLastEpisode() -> PodcastEpisode? {
         return episodesArray.first
+    }
+    
+    func getEpisodesToCache() -> [PodcastEpisode] {
+        if let currentEpisodeIndex = currentEpisodeIndex {
+            return Array(episodesArray[0...currentEpisodeIndex])
+        }
+        return Array(episodesArray[0...2])
     }
     
     var currentEpisodeIndex: Int? {

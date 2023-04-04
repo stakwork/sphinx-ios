@@ -267,7 +267,12 @@ open class CachingPlayerItem: AVPlayerItem {
     // MARK: -
     
     override init(asset: AVAsset, automaticallyLoadedAssetKeys: [String]?) {
-        fatalError("not implemented")
+        self.url = URL(fileURLWithPath: "")
+        self.initialScheme = nil
+        super.init(asset: asset, automaticallyLoadedAssetKeys: automaticallyLoadedAssetKeys)
+        
+        addObserver(self, forKeyPath: "status", options: NSKeyValueObservingOptions.new, context: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(playbackStalledHandler), name:NSNotification.Name.AVPlayerItemPlaybackStalled, object: self)
     }
     
     deinit {

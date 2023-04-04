@@ -63,18 +63,6 @@ class NewPodcastPlayerViewController: UIViewController {
         
         NotificationCenter.default.removeObserver(self, name: .refreshFeedUI, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(showPodcastInfo), name: .refreshFeedUI, object: nil)
-            
-        preloadPodcast()
-    }
-    
-    func preloadPodcast() {
-        guard let podcastData = podcast.getPodcastData() else {
-            return
-        }
-        
-        podcastPlayerController.submitAction(
-            UserAction.Preload(podcastData)
-        )
     }
     
     override func viewWillAppear(_ animated: Bool) {

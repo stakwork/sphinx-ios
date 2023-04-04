@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="MaterialIcons-Regular.ttf">
+            <string>MaterialIcons-Regular</string>
+        </array>
+        <array key="Roboto-Bold.ttf">
+            <string>Roboto-Bold</string>
+        </array>
+        <array key="Roboto-Medium.ttf">
+            <string>Roboto-Medium</string>
+        </array>
+        <array key="Roboto-Regular.ttf">
+            <string>Roboto-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ItemDescriptionTableViewHeaderCell" rowHeight="337" id="KGk-i7-Jjw" customClass="ItemDescriptionTableViewHeaderCell" customModule="sphinx" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="341" height="337"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="341" height="337"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dzd-Id-2Vj">
+                        <rect key="frame" x="0.0" y="0.0" width="341" height="270"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pocast Name Goes Here" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6qc-aa-rj6">
+                                <rect key="frame" x="16" y="140" width="247" height="15"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="15" id="cST-79-fdf"/>
+                                    <constraint firstAttribute="width" constant="247" id="tCi-gv-dD7"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="14"/>
+                                <color key="textColor" name="PrimaryText"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="play_arrow" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yts-b5-ClK">
+                                <rect key="frame" x="293" y="218" width="32" height="32"/>
+                                <color key="backgroundColor" name="BodyInverted"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="32" id="4oN-w7-HmO"/>
+                                    <constraint firstAttribute="height" constant="32" id="zfl-yf-x04"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="25"/>
+                                <color key="textColor" name="Body"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" name="Body"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="yts-b5-ClK" secondAttribute="trailing" constant="16" id="DZ1-MD-AXX"/>
+                            <constraint firstAttribute="height" constant="270" id="Irl-mF-cVT"/>
+                            <constraint firstItem="6qc-aa-rj6" firstAttribute="leading" secondItem="dzd-Id-2Vj" secondAttribute="leading" constant="16" id="bok-Qz-fhc"/>
+                            <constraint firstAttribute="bottom" secondItem="yts-b5-ClK" secondAttribute="bottom" constant="20" id="izh-8S-LSB"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DeFi &amp; Smart Contracts On The Bitcoin Network Gabriel Kurman" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zib-ft-Udd">
+                        <rect key="frame" x="16" y="12" width="309" height="110"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="110" id="mFA-Qa-QP5"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="28"/>
+                        <color key="textColor" name="PrimaryText"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="podcastTypeIcon" translatesAutoresizingMaskIntoConstraints="NO" id="B8W-Ie-hrX">
+                        <rect key="frame" x="16" y="168" width="16" height="16"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="16" id="FNG-eG-stn"/>
+                            <constraint firstAttribute="width" constant="16" id="zZ9-vO-rsP"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" horizontalCompressionResistancePriority="253" text="3 Apr 2022" textAlignment="natural" lineBreakMode="middleTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ueu-c7-ouX">
+                        <rect key="frame" x="39" y="168" width="59" height="16"/>
+                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="12"/>
+                        <color key="textColor" name="SecondaryText"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jMI-If-dqe">
+                        <rect key="frame" x="106" y="174" width="4" height="4"/>
+                        <color key="backgroundColor" name="SecondaryText"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="4" id="FdX-dA-rcM"/>
+                            <constraint firstAttribute="height" constant="4" id="H1v-FO-7I7"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" horizontalCompressionResistancePriority="253" text="Played" textAlignment="natural" lineBreakMode="middleTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QP1-Ja-uGO">
+                        <rect key="frame" x="118.00000000000001" y="168" width="36.666666666666671" height="16"/>
+                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="12"/>
+                        <color key="textColor" name="SecondaryText"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleAspectFit" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tet-to-dIA">
+                        <rect key="frame" x="64" y="218" width="32" height="32"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="32" id="0cE-Mx-iXh"/>
+                            <constraint firstAttribute="width" secondItem="Tet-to-dIA" secondAttribute="height" id="4xo-BF-k3f"/>
+                        </constraints>
+                        <color key="tintColor" name="SecondaryText"/>
+                        <state key="normal" image="newShareIcon">
+                            <color key="titleColor" name="SecondaryText"/>
+                        </state>
+                        <buttonConfiguration key="configuration" style="plain" image="playerListShare"/>
+                    </button>
+                    <button opaque="NO" contentMode="scaleAspectFit" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JKe-d3-aqc">
+                        <rect key="frame" x="4" y="214" width="40" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="40" id="OYh-MQ-HY5"/>
+                            <constraint firstAttribute="width" secondItem="JKe-d3-aqc" secondAttribute="height" id="l29-wq-dT7"/>
+                        </constraints>
+                        <color key="tintColor" name="SecondaryText"/>
+                        <state key="normal" image="newDownloadIcon">
+                            <color key="titleColor" name="SecondaryText"/>
+                        </state>
+                        <buttonConfiguration key="configuration" style="plain"/>
+                    </button>
+                    <button opaque="NO" contentMode="scaleAspectFit" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l3a-IT-wam">
+                        <rect key="frame" x="120" y="218" width="32" height="32"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="l3a-IT-wam" secondAttribute="height" multiplier="1:1" id="OHV-hf-q7w"/>
+                            <constraint firstAttribute="width" constant="32" id="lW7-g2-zdd"/>
+                        </constraints>
+                        <color key="tintColor" name="SecondaryText"/>
+                        <state key="normal" image="playerListOptions">
+                            <color key="titleColor" name="SecondaryText"/>
+                        </state>
+                    </button>
+                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="playerListDownload" translatesAutoresizingMaskIntoConstraints="NO" id="T45-LC-WdO">
+                        <rect key="frame" x="4" y="214" width="40" height="40"/>
+                        <color key="tintColor" name="SecondaryText"/>
+                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="default"/>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="ueu-c7-ouX" firstAttribute="top" secondItem="B8W-Ie-hrX" secondAttribute="top" id="16D-r7-ZjM"/>
+                    <constraint firstItem="6qc-aa-rj6" firstAttribute="top" secondItem="zib-ft-Udd" secondAttribute="bottom" constant="18" id="5K4-PW-v8s"/>
+                    <constraint firstItem="T45-LC-WdO" firstAttribute="trailing" secondItem="JKe-d3-aqc" secondAttribute="trailing" id="60P-VY-Qdi"/>
+                    <constraint firstItem="l3a-IT-wam" firstAttribute="width" secondItem="l3a-IT-wam" secondAttribute="height" multiplier="1:1" id="6L8-3h-WeB"/>
+                    <constraint firstItem="Tet-to-dIA" firstAttribute="width" secondItem="Tet-to-dIA" secondAttribute="height" id="6fB-FV-lu8"/>
+                    <constraint firstItem="T45-LC-WdO" firstAttribute="leading" secondItem="JKe-d3-aqc" secondAttribute="leading" id="94A-Dd-I0M"/>
+                    <constraint firstItem="QP1-Ja-uGO" firstAttribute="leading" secondItem="jMI-If-dqe" secondAttribute="trailing" constant="8" id="A1O-6T-ldb"/>
+                    <constraint firstItem="dzd-Id-2Vj" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="E3a-nu-70C"/>
+                    <constraint firstItem="Tet-to-dIA" firstAttribute="leading" secondItem="JKe-d3-aqc" secondAttribute="trailing" constant="20" id="EQ2-FC-iYq"/>
+                    <constraint firstItem="T45-LC-WdO" firstAttribute="bottom" secondItem="JKe-d3-aqc" secondAttribute="bottom" id="FhL-1X-xzL"/>
+                    <constraint firstItem="T45-LC-WdO" firstAttribute="centerY" secondItem="yts-b5-ClK" secondAttribute="centerY" id="G4E-WD-bIY"/>
+                    <constraint firstItem="T45-LC-WdO" firstAttribute="top" secondItem="JKe-d3-aqc" secondAttribute="top" id="Kih-bV-H8g"/>
+                    <constraint firstItem="ueu-c7-ouX" firstAttribute="bottom" secondItem="B8W-Ie-hrX" secondAttribute="bottom" id="MmB-gF-ytK"/>
+                    <constraint firstItem="B8W-Ie-hrX" firstAttribute="top" secondItem="6qc-aa-rj6" secondAttribute="bottom" constant="13" id="SLD-SY-W57"/>
+                    <constraint firstAttribute="bottom" secondItem="dzd-Id-2Vj" secondAttribute="bottom" id="Tn1-qv-DJ6"/>
+                    <constraint firstItem="JKe-d3-aqc" firstAttribute="width" secondItem="JKe-d3-aqc" secondAttribute="height" id="UTO-4G-LJw"/>
+                    <constraint firstItem="Tet-to-dIA" firstAttribute="centerY" secondItem="JKe-d3-aqc" secondAttribute="centerY" id="ZMe-is-PLl"/>
+                    <constraint firstItem="l3a-IT-wam" firstAttribute="leading" secondItem="Tet-to-dIA" secondAttribute="trailing" constant="24" id="Znj-f6-lTP"/>
+                    <constraint firstItem="zib-ft-Udd" firstAttribute="top" secondItem="dzd-Id-2Vj" secondAttribute="top" constant="12" id="amE-mG-Eyu"/>
+                    <constraint firstAttribute="trailing" secondItem="dzd-Id-2Vj" secondAttribute="trailing" id="cCZ-FI-qh8"/>
+                    <constraint firstItem="QP1-Ja-uGO" firstAttribute="bottom" secondItem="ueu-c7-ouX" secondAttribute="bottom" id="e0k-ND-afc"/>
+                    <constraint firstItem="zib-ft-Udd" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="fDQ-hs-Xko"/>
+                    <constraint firstItem="jMI-If-dqe" firstAttribute="centerY" secondItem="ueu-c7-ouX" secondAttribute="centerY" id="g9f-qv-Iff"/>
+                    <constraint firstItem="B8W-Ie-hrX" firstAttribute="leading" secondItem="6qc-aa-rj6" secondAttribute="leading" id="hQ4-sq-dvS"/>
+                    <constraint firstItem="jMI-If-dqe" firstAttribute="leading" secondItem="ueu-c7-ouX" secondAttribute="trailing" constant="8" id="hUi-3A-xKi"/>
+                    <constraint firstItem="dzd-Id-2Vj" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="iXv-XD-DjJ"/>
+                    <constraint firstItem="QP1-Ja-uGO" firstAttribute="top" secondItem="ueu-c7-ouX" secondAttribute="top" id="l0P-rv-wEQ"/>
+                    <constraint firstItem="T45-LC-WdO" firstAttribute="leading" secondItem="B8W-Ie-hrX" secondAttribute="leading" constant="-12" id="lF4-xL-CEU"/>
+                    <constraint firstItem="zib-ft-Udd" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="oH0-Ay-nrK"/>
+                    <constraint firstItem="ueu-c7-ouX" firstAttribute="leading" secondItem="B8W-Ie-hrX" secondAttribute="trailing" constant="7" id="qEY-Qu-F4Z"/>
+                    <constraint firstItem="l3a-IT-wam" firstAttribute="centerY" secondItem="Tet-to-dIA" secondAttribute="centerY" id="xQv-42-Tgf"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="dateLabel" destination="ueu-c7-ouX" id="XH7-Lq-CDn"/>
+                <outlet property="dotView" destination="jMI-If-dqe" id="4aD-nL-4Uc"/>
+                <outlet property="episodeTitleLabel" destination="zib-ft-Udd" id="lJS-6C-B6L"/>
+                <outlet property="mediaTypeIcon" destination="B8W-Ie-hrX" id="DKZ-ja-zaq"/>
+                <outlet property="playButton" destination="yts-b5-ClK" id="QXl-tk-lIh"/>
+                <outlet property="podcastTitleLabel" destination="6qc-aa-rj6" id="zvJ-IV-7sn"/>
+                <outlet property="timeRemaining" destination="QP1-Ja-uGO" id="QaX-NO-582"/>
+            </connections>
+            <point key="canvasLocation" x="-5.343511450381679" y="122.88732394366198"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="newDownloadIcon" width="16" height="16"/>
+        <image name="newShareIcon" width="24" height="24"/>
+        <image name="playerListDownload" width="32" height="32"/>
+        <image name="playerListOptions" width="32" height="32"/>
+        <image name="playerListShare" width="32" height="32"/>
+        <image name="podcastTypeIcon" width="32" height="32"/>
+        <namedColor name="Body">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="BodyInverted">
+            <color red="0.082352941176470587" green="0.11764705882352941" blue="0.15294117647058825" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="PrimaryText">
+            <color red="0.16078431372549021" green="0.17254901960784313" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="SecondaryText">
+            <color red="0.55686274509803924" green="0.58823529411764708" blue="0.61176470588235299" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

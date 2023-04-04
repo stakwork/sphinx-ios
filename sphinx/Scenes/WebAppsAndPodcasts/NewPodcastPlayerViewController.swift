@@ -148,9 +148,10 @@ class NewPodcastPlayerViewController: UIViewController {
 
 extension NewPodcastPlayerViewController : PodcastEpisodesDSDelegate {
     func didTapForDescriptionAt(episode: PodcastEpisode) {
-        let vc = ItemDescriptionViewController.instantiate()
-        self.present(vc, animated: true)
-        //self.navigationController?.pushViewController(vc, animated: true)
+        if let feed = episode.feed{
+            let vc = ItemDescriptionViewController.instantiate(podcast: feed, episode: episode)
+            self.present(vc, animated: true)
+        }
     }
     
     func deleteTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {

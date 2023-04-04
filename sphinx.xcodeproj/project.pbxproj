@@ -664,6 +664,8 @@
 		CEE433B229AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE433B029AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.swift */; };
 		CEE433B329AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEE433B129AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.xib */; };
 		CEEBBB3F29DC47930093923D /* ItemDescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEBBB3E29DC47930093923D /* ItemDescriptionViewController.swift */; };
+		CEEBBB4229DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEBBB4029DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.swift */; };
+		CEEBBB4329DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEEBBB4129DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.xib */; };
 		CEF821D62963B68600CBB28F /* DiscoverTribesWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF821D52963B68600CBB28F /* DiscoverTribesWebViewController.swift */; };
 		CEF88DCA29B64E5100DC1C40 /* UnifiedEpisodeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEF88DC929B64E5000DC1C40 /* UnifiedEpisodeView.xib */; };
 		CEF88DCC29B64F4F00DC1C40 /* UnifiedEpisodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF88DCB29B64F4F00DC1C40 /* UnifiedEpisodeView.swift */; };
@@ -1601,6 +1603,8 @@
 		CEE433B029AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnifiedEpisodeTableViewCell.swift; sourceTree = "<group>"; };
 		CEE433B129AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UnifiedEpisodeTableViewCell.xib; sourceTree = "<group>"; };
 		CEEBBB3E29DC47930093923D /* ItemDescriptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDescriptionViewController.swift; sourceTree = "<group>"; };
+		CEEBBB4029DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDescriptionTableViewHeaderCell.swift; sourceTree = "<group>"; };
+		CEEBBB4129DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ItemDescriptionTableViewHeaderCell.xib; sourceTree = "<group>"; };
 		CEF821D52963B68600CBB28F /* DiscoverTribesWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTribesWebViewController.swift; sourceTree = "<group>"; };
 		CEF88DC929B64E5000DC1C40 /* UnifiedEpisodeView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UnifiedEpisodeView.xib; sourceTree = "<group>"; };
 		CEF88DCB29B64F4F00DC1C40 /* UnifiedEpisodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnifiedEpisodeView.swift; sourceTree = "<group>"; };
@@ -3215,6 +3219,8 @@
 				CE3D8CA029B0FF7100EDB637 /* FeedItemDetailVC.swift */,
 				47183CAF254893B100E6FD19 /* NewPodcastPlayerViewController.swift */,
 				CEEBBB3E29DC47930093923D /* ItemDescriptionViewController.swift */,
+				CEEBBB4029DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.swift */,
+				CEEBBB4129DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.xib */,
 				47AF0D34254C957200C98398 /* PodcastAnimationViewController.swift */,
 				473E5DE22575696C00697EEA /* PickerViewController.swift */,
 				473BC88C25F287340070E519 /* PodcastNewEpisodeViewController.swift */,
@@ -4245,6 +4251,7 @@
 				4780783423916D4900187906 /* PictureReceivedTableViewCell.xib in Resources */,
 				47F258C12539DA1600122A5A /* PodcastCommentReceivedTableViewCell.xib in Resources */,
 				475BDD44232AD00D00C5BBD6 /* Montserrat-Black.otf in Resources */,
+				CEEBBB4329DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.xib in Resources */,
 				475BDD45232AD00D00C5BBD6 /* Montserrat-Bold.otf in Resources */,
 				47FDDB1C2562D77200BBF15F /* boost_animation.json in Resources */,
 				4703CF8E25190072007B685C /* FileBubbleView.xib in Resources */,
@@ -4678,6 +4685,7 @@
 				47357A172729A16100A49EEE /* NewsletterItem+Properties.swift in Sources */,
 				F3DC6B00273C88F200458E09 /* ContentFeedItem+CoreDataClass.swift in Sources */,
 				F313024826BA994B00A1396E /* ChatsContainerViewController.swift in Sources */,
+				CEEBBB4229DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.swift in Sources */,
 				475BDCFB232AC24600C5BBD6 /* PaidInvoiceReceivedTableViewCell.swift in Sources */,
 				4789E26E24F406F3003991BE /* RelayURLUpdateHelper.swift in Sources */,
 				475BDD5C232AE26E00C5BBD6 /* TransactionMessage+CoreDataClass.swift in Sources */,

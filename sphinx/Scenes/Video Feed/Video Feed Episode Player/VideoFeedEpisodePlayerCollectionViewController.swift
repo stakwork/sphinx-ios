@@ -8,6 +8,10 @@
 import UIKit
 import CoreData
 
+//.youtubeVideoPlayerViewController.startPlay()
+protocol VideoFeedEpisodePlayerCollectionViewControllerDelegate{
+    func requestPlay()
+}
 
 class VideoFeedEpisodePlayerCollectionViewController: UICollectionViewController {
     
@@ -22,6 +26,7 @@ class VideoFeedEpisodePlayerCollectionViewController: UICollectionViewController
     private var dataSource: DataSource!
     
     weak var boostDelegate: CustomBoostDelegate?
+    var delegate:VideoFeedEpisodePlayerCollectionViewControllerDelegate? = nil
 }
 
 
@@ -507,6 +512,7 @@ extension VideoFeedEpisodePlayerCollectionViewController:ItemDescriptionViewCont
     
     func shouldDismissAndPlayVideo(video: Video) {
         self.onVideoEpisodeCellSelected(video.objectID)
+        self.delegate?.requestPlay()
     }
     
     func shouldDismissAndPlayVideo(episodeAsVideo: PodcastEpisode) {}

@@ -268,14 +268,15 @@ extension ItemDescriptionViewController : UITableViewDelegate,UITableViewDataSou
             configurePausePlay()
         }
         else if let video = video{
-            //todo: call to delegate to make this dismiss and play video
-            self.dismiss(animated: true,completion: {
+            self.navigationController?.popViewController(animated: true)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
                 self.delegate?.shouldDismissAndPlayVideo(video: video)
             })
         }
         else if let episode = episode,
                 episode.isYoutubeVideo && episode.feed?.feedID == "Recommendations-Feed"{
-            self.dismiss(animated: true,completion: {
+            self.navigationController?.popViewController(animated: true)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
                 self.delegate?.shouldDismissAndPlayVideo(episodeAsVideo: episode)
             })
         }

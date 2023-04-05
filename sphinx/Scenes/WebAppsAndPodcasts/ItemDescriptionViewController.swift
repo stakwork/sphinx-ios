@@ -12,6 +12,9 @@ import UIKit
 class ItemDescriptionViewController : UIViewController{
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var navbarPodcastTitle: UILabel!
+    @IBOutlet weak var navBarPlayButton: UILabel!
+    
     var podcast : PodcastFeed!
     var episode: PodcastEpisode!
     
@@ -55,16 +58,25 @@ class ItemDescriptionViewController : UIViewController{
     }
     
     func setupTableView(){
+        navbarPodcastTitle.isHidden = true
+        navbarPodcastTitle.isUserInteractionEnabled = false
+        navbarPodcastTitle.text = episode.title
+        navBarPlayButton.isHidden = true
+        navBarPlayButton.makeCircular()
+        
+        self.view.backgroundColor = UIColor.Sphinx.Body
+        self.tableView.backgroundColor = UIColor.Sphinx.Body
         tableView.register(UINib(nibName: "ItemDescriptionTableViewHeaderCell", bundle: nil), forCellReuseIdentifier: ItemDescriptionTableViewHeaderCell.reuseID)
         tableView.register(UINib(nibName: "ItemDescriptionTableViewCell", bundle: nil), forCellReuseIdentifier: ItemDescriptionTableViewCell.reuseID)
         tableView.register(UINib(nibName: "ItemDescriptionImageTableViewCell", bundle: nil), forCellReuseIdentifier: ItemDescriptionImageTableViewCell.reuseID)
         
         tableView.delegate = self
         tableView.dataSource = self
+        
     }
 }
 
-extension ItemDescriptionViewController : UITableViewDelegate,UITableViewDataSource,ItemDescriptionTableViewCellDelegate{
+extension ItemDescriptionViewController : UITableViewDelegate,UITableViewDataSource,ItemDescriptionTableViewCellDelegate,UIScrollViewDelegate{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0{
             let cell = tableView.dequeueReusableCell(
@@ -149,6 +161,41 @@ extension ItemDescriptionViewController : UITableViewDelegate,UITableViewDataSou
         tableView.reloadData()
     }
     
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView == tableView {
+            // write logic for tableview disble scrolling
+            print("scrolling")
+            if(tableView.isCellVisible(section: 0, row: 0)){
+                if(navbarPodcastTitle.isHidden == false){
+                    self.navbarPodcastTitle.alpha = 1.0
+                    self.navBarPlayButton.alpha = 1.0
+                    UIView.animate(withDuration: 0.25, delay: 0.0, animations: {
+                        self.navbarPodcastTitle.alpha = 0.0
+                        self.navBarPlayButton.alpha = 0.0
+                    },completion: {_ in
+                        self.navbarPodcastTitle.isHidden = true
+                        self.navBarPlayButton.isHidden = true
+                    })
+                }
+            }
+            else{
+                if(navbarPodcastTitle.isHidden == true){
+                    self.navbarPodcastTitle.alpha = 0.0
+                    self.navBarPlayButton.alpha = 0.0
+                    self.navbarPodcastTitle.isHidden = false
+                    self.navBarPlayButton.isHidden = false
+                    UIView.animate(withDuration: 0.25, delay: 0.0, animations: {
+                        self.navbarPodcastTitle.alpha = 1.0
+                        self.navBarPlayButton.alpha = 1.0
+                    },
+                    completion: {_ in
+                        
+                    })
+                }
+            }
+        }
+    }
+    
     
     func calculateStringHeight(string:String,constraintedWidth width: CGFloat, font: UIFont) -> CGFloat {
         let label =  UILabel(frame: CGRect(x: 0, y: 0, width: width, height: .greatestFiniteMagnitude))
@@ -159,4 +206,28 @@ extension ItemDescriptionViewController : UITableViewDelegate,UITableViewDataSou
 
         return label.frame.height
      }
+    
+    @IBAction func navBarTapped(){
+        self.tableView.scrollToRow(index: 0,animated: true)
+    }
+    
+    @IBAction func tappedPlay(){
+        print("play")
+    }
+}
+
+
+extension UITableView {
+
+    /// Check if cell at the specific section and row is visible
+    /// - Parameters:
+    /// - section: an Int reprenseting a UITableView section
+    /// - row: and Int representing a UITableView row
+    /// - Returns: True if cell at section and row is visible, False otherwise
+    func isCellVisible(section:Int, row: Int) -> Bool {
+        guard let indexes = self.indexPathsForVisibleRows else {
+            return false
+        }
+        return indexes.contains {$0.section == section && $0.row == row }
+    }
 }

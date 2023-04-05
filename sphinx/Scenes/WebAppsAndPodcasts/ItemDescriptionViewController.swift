@@ -9,6 +9,10 @@
 import Foundation
 import UIKit
 
+protocol ItemDescriptionViewControllerDelegate{
+    func shouldDismissAndPlayVideo(video:Video)
+}
+
 class ItemDescriptionViewController : UIViewController{
     
     @IBOutlet weak var tableView: UITableView!
@@ -23,6 +27,7 @@ class ItemDescriptionViewController : UIViewController{
     var video:Video!
     
     var isExpanded : Bool = false
+    var delegate : ItemDescriptionViewControllerDelegate? = nil
     
     override func viewDidLoad() {
         //self.view.backgroundColor = .purple
@@ -55,7 +60,12 @@ class ItemDescriptionViewController : UIViewController{
     
     
     @IBAction func backButtonTapped(_ sender: Any) {
-        self.navigationController?.popViewController(animated: true)
+        if let _ = video{
+            self.dismiss(animated: true)
+        }
+        else{
+            self.navigationController?.popViewController(animated: true)
+        }
     }
     
     func setupTableView(){
@@ -112,7 +122,12 @@ extension ItemDescriptionViewController : UITableViewDelegate,UITableViewDataSou
             if episode != nil,
                let description = episode.episodeDescription{
                 cell.configureView(descriptionText: description.nonHtmlRawString, isExpanded: self.isExpanded)
-            }else{
+            }
+            else if video != nil,
+                    let description = video.videoDescription{
+                cell.configureView(descriptionText: description.nonHtmlRawString, isExpanded: self.isExpanded)
+            }
+            else{
                 cell.configureView(descriptionText: "No description for this episode", isExpanded: false)
             }
             cell.delegate = self
@@ -127,6 +142,10 @@ extension ItemDescriptionViewController : UITableViewDelegate,UITableViewDataSou
                let image = episode.imageToShow,
                let url = URL(string: image){
                 cell.configureView(imageURL: url)
+            }
+            else if video != nil,
+                let imageURL = video.thumbnailURL{
+                cell.configureView(imageURL: imageURL)
             }
             
             return cell
@@ -156,6 +175,12 @@ extension ItemDescriptionViewController : UITableViewDelegate,UITableViewDataSou
               let font = UIFont(name: "Roboto", size: 14.0){
                 return calculateStringHeight(string: description, constraintedWidth: tableView.frame.width, font: font)
             }
+            else if(isExpanded),
+               video != nil,
+                let description = video.videoDescription,
+                let font = UIFont(name: "Roboto", size: 14.0){
+                 return calculateStringHeight(string: description, constraintedWidth: tableView.frame.width, font: font)
+             }
             else{
                 return 150.0
             }
@@ -242,8 +267,15 @@ extension ItemDescriptionViewController : UITableViewDelegate,UITableViewDataSou
             else{
                 podcastPlayerController.submitAction(.Play(data))
             }
+            configurePausePlay()
         }
-        configurePausePlay()
+        else if let video = video{
+            //todo: call to delegate to make this dismiss and play video
+            self.dismiss(animated: true,completion: {
+                self.delegate?.shouldDismissAndPlayVideo(video: video)
+            })
+        }
+        
     }
 }
 
@@ -302,7 +334,7 @@ extension ItemDescriptionViewController:PodcastEpisodesDSDelegate{
     }
     
     func downloadTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {
-        
+        print("downloadTapped")
     }
     
     func deleteTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {

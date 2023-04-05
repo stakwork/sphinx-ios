@@ -375,6 +375,7 @@ extension VideoFeedEpisodePlayerCollectionViewController: FeedItemRowDelegate, P
     func shouldShowDescription(video: Video) {
         if let feed = video.videoFeed{
             let vc = ItemDescriptionViewController.instantiate(videoFeed: feed, video: video)
+            vc.delegate = self
             self.present(vc,animated: true)
             //self.navigationController?.pushViewController(vc, animated: true)
         }
@@ -485,7 +486,7 @@ extension VideoFeedEpisodePlayerCollectionViewController {
 
 
 // MARK: - `UICollectionViewDelegate` Methods
-extension VideoFeedEpisodePlayerCollectionViewController {
+extension VideoFeedEpisodePlayerCollectionViewController:ItemDescriptionViewControllerDelegate {
 
     override func collectionView(
         _ collectionView: UICollectionView,
@@ -503,5 +504,9 @@ extension VideoFeedEpisodePlayerCollectionViewController {
         case .videoFeedEpisode(let episode):
             self.onVideoEpisodeCellSelected(episode.objectID)
         }
+    }
+    
+    func shouldDismissAndPlayVideo(video: Video) {
+        self.onVideoEpisodeCellSelected(video.objectID)
     }
 }

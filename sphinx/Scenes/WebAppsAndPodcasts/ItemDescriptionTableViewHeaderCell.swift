@@ -70,11 +70,14 @@ class ItemDescriptionTableViewHeaderCell: UITableViewCell {
         downloadButton.alpha = 0.25
         podcastTitleLabel.text = videoFeed.title
         episodeTitleLabel.text = video.title
+        dotView.isHidden = true
+        dateLabel.text = video.publishDateText
+        playCheckmark.isHidden = true
         playButton.makeCircular()
         dotView.makeCircular()
         mediaTypeIcon.layer.cornerRadius = 3.0
         mediaTypeIcon.image = #imageLiteral(resourceName: "youtubeVideoTypeIcon")
-        //dateLabel.text = video.dateString
+        
         
         timeRemaining.isHidden = true
     }

@@ -15,6 +15,9 @@ class ItemDescriptionViewController : UIViewController{
     var podcast : PodcastFeed!
     var episode: PodcastEpisode!
     
+    var videoFeed:VideoFeed!
+    var video:Video!
+    
     var isExpanded : Bool = false
     
     override func viewDidLoad() {
@@ -34,9 +37,21 @@ class ItemDescriptionViewController : UIViewController{
         return viewController
     }
     
+    static func instantiate(
+        videoFeed:VideoFeed,
+        video:Video
+    )->ItemDescriptionViewController{
+        let viewController = StoryboardScene.WebApps.itemDescriptionViewController.instantiate()
+        
+        viewController.video = video
+        viewController.videoFeed = videoFeed
+    
+        return viewController
+    }
+    
     
     @IBAction func backButtonTapped(_ sender: Any) {
-        self.dismiss(animated: true)
+        self.navigationController?.popViewController(animated: true)
     }
     
     func setupTableView(){
@@ -56,7 +71,16 @@ extension ItemDescriptionViewController : UITableViewDelegate,UITableViewDataSou
                 withIdentifier: ItemDescriptionTableViewHeaderCell.reuseID,
                 for: indexPath
             ) as! ItemDescriptionTableViewHeaderCell
-            cell.configureView(podcast: podcast, episode: episode)
+            if podcast != nil && episode != nil{
+                cell.configureView(podcast: podcast, episode: episode)
+            }
+            else if video != nil && videoFeed != nil{
+                cell.configureView(videoFeed: videoFeed, video: video)
+            }
+            else{
+                return UITableViewCell()
+            }
+            
             return cell
         }
         else if indexPath.row == 1{
@@ -64,7 +88,8 @@ extension ItemDescriptionViewController : UITableViewDelegate,UITableViewDataSou
                 withIdentifier: ItemDescriptionTableViewCell.reuseID,
                 for: indexPath
             ) as! ItemDescriptionTableViewCell
-            if let description = episode.episodeDescription{
+            if episode != nil,
+               let description = episode.episodeDescription{
                 cell.configureView(descriptionText: description.nonHtmlRawString, isExpanded: self.isExpanded)
             }else{
                 cell.configureView(descriptionText: "No description for this episode", isExpanded: false)
@@ -77,7 +102,8 @@ extension ItemDescriptionViewController : UITableViewDelegate,UITableViewDataSou
                 withIdentifier: ItemDescriptionImageTableViewCell.reuseID,
                 for: indexPath
             ) as! ItemDescriptionImageTableViewCell
-            if let image = episode.imageToShow,
+            if episode != nil,
+               let image = episode.imageToShow,
                let url = URL(string: image){
                 cell.configureView(imageURL: url)
             }
@@ -104,6 +130,7 @@ extension ItemDescriptionViewController : UITableViewDelegate,UITableViewDataSou
         }
         else if(indexPath.row == 1){
             if(isExpanded),
+              episode != nil,
               let description = episode.episodeDescription,
               let font = UIFont(name: "Roboto", size: 14.0){
                 return calculateStringHeight(string: description, constraintedWidth: tableView.frame.width, font: font)

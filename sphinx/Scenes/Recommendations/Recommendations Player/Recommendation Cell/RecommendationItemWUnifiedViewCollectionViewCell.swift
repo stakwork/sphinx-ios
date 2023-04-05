@@ -73,7 +73,7 @@ extension RecommendationItemWUnifiedViewCollectionViewCell : PodcastEpisodeRowDe
 
 extension RecommendationItemWUnifiedViewCollectionViewCell : VideoRowDelegate {
     func shouldShowDescription(video: Video) {
-        
+        delegate?.shouldShowDescription(video: video)
     }
     
     func shouldShowMore(video: Video) {

@@ -50,7 +50,15 @@ class ItemDescriptionTableViewHeaderCell: UITableViewCell {
     }
     
     func configureView(videoFeed:VideoFeed,video:Video){
+        podcastTitleLabel.text = videoFeed.title
+        episodeTitleLabel.text = video.title
+        playButton.makeCircular()
+        dotView.makeCircular()
+        mediaTypeIcon.layer.cornerRadius = 3.0
+        mediaTypeIcon.image = #imageLiteral(resourceName: "youtubeVideoTypeIcon")
+        //dateLabel.text = video.dateString
         
+        timeRemaining.isHidden = true
     }
     
 }

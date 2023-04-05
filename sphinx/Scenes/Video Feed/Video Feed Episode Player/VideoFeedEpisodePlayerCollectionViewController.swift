@@ -376,8 +376,7 @@ extension VideoFeedEpisodePlayerCollectionViewController: FeedItemRowDelegate, P
         if let feed = video.videoFeed{
             let vc = ItemDescriptionViewController.instantiate(videoFeed: feed, video: video)
             vc.delegate = self
-            self.present(vc,animated: true)
-            //self.navigationController?.pushViewController(vc, animated: true)
+            self.navigationController?.pushViewController(vc, animated: true)
         }
     }
     

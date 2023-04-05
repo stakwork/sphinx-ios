@@ -61,12 +61,7 @@ class ItemDescriptionViewController : UIViewController{
     
     
     @IBAction func backButtonTapped(_ sender: Any) {
-        if let _ = video{
-            self.dismiss(animated: true)
-        }
-        else{
-            self.navigationController?.popViewController(animated: true)
-        }
+        self.navigationController?.popViewController(animated: true)
     }
     
     func setupTableView(){

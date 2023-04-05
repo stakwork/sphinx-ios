@@ -338,8 +338,7 @@ extension RecommendationFeedItemsCollectionViewController : FeedItemRowDelegate 
         if let feed = episode.feed{
             let vc = ItemDescriptionViewController.instantiate(podcast: feed, episode: episode)
             vc.delegate = self
-            self.present(vc, animated: true)
-            //self.navigationController?.pushViewController(vc, animated: true)
+            self.navigationController?.pushViewController(vc, animated: true)
         }
     }
     

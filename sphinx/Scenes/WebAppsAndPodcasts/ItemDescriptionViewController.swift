@@ -60,7 +60,13 @@ class ItemDescriptionViewController : UIViewController{
     func setupTableView(){
         navbarPodcastTitle.isHidden = true
         navbarPodcastTitle.isUserInteractionEnabled = false
-        navbarPodcastTitle.text = episode.title
+        if let episode = episode{
+            navbarPodcastTitle.text = episode.title
+        }
+        else if let video = video{
+            navbarPodcastTitle.text = video.title
+        }
+        
         navBarPlayButton.isHidden = true
         navBarPlayButton.makeCircular()
         
@@ -92,6 +98,7 @@ extension ItemDescriptionViewController : UITableViewDelegate,UITableViewDataSou
             else{
                 return UITableViewCell()
             }
+            cell.delegate = self
             
             return cell
         }
@@ -229,5 +236,15 @@ extension UITableView {
             return false
         }
         return indexes.contains {$0.section == section && $0.row == row }
+    }
+}
+
+extension ItemDescriptionViewController : ItemDescriptionTableViewHeaderCellDelegate{
+    func itemShareTapped(video: Video) {
+        self.shareTapped(video: video)
+    }
+    
+    func itemShareTapped(episode: PodcastEpisode) {
+        self.askForShareType(episode: episode)
     }
 }

@@ -112,6 +112,9 @@
                             <color key="titleColor" name="SecondaryText"/>
                         </state>
                         <buttonConfiguration key="configuration" style="plain" image="playerListShare"/>
+                        <connections>
+                            <action selector="shareButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="ZlB-Ye-2nG"/>
+                        </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleAspectFit" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JKe-d3-aqc">
                         <rect key="frame" x="4" y="214" width="40" height="40"/>

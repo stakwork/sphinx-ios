@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol ItemDescriptionTableViewHeaderCellDelegate{
+    func itemShareTapped(episode:PodcastEpisode)
+    func itemShareTapped(video:Video)
+}
+
 class ItemDescriptionTableViewHeaderCell: UITableViewCell {
     static let reuseID = "ItemDescriptionTableViewHeaderCell"
     
@@ -19,7 +24,9 @@ class ItemDescriptionTableViewHeaderCell: UITableViewCell {
     @IBOutlet weak var dotView: UIView!
     @IBOutlet weak var timeRemaining: UILabel!
     
-    
+    weak var episode:PodcastEpisode?=nil
+    weak var video:Video? = nil
+    var delegate:ItemDescriptionTableViewHeaderCellDelegate? = nil
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -33,6 +40,7 @@ class ItemDescriptionTableViewHeaderCell: UITableViewCell {
     }
     
     func configureView(podcast:PodcastFeed,episode:PodcastEpisode){
+        self.episode = episode
         podcastTitleLabel.text = podcast.title
         episodeTitleLabel.text = episode.title
         playButton.makeCircular()
@@ -50,6 +58,7 @@ class ItemDescriptionTableViewHeaderCell: UITableViewCell {
     }
     
     func configureView(videoFeed:VideoFeed,video:Video){
+        self.video = video
         podcastTitleLabel.text = videoFeed.title
         episodeTitleLabel.text = video.title
         playButton.makeCircular()
@@ -59,6 +68,14 @@ class ItemDescriptionTableViewHeaderCell: UITableViewCell {
         //dateLabel.text = video.dateString
         
         timeRemaining.isHidden = true
+    }
+    @IBAction func shareButton(_ sender: Any) {
+        if let episode = self.episode{
+            delegate?.itemShareTapped(episode: episode)
+        }
+        else if let video = self.video{
+            delegate?.itemShareTapped(video: video)
+        }
     }
     
 }

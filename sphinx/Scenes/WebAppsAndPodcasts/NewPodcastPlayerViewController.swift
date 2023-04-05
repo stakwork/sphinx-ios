@@ -147,6 +147,8 @@ class NewPodcastPlayerViewController: UIViewController {
 }
 
 extension NewPodcastPlayerViewController : PodcastEpisodesDSDelegate {
+    func didDismiss() {}
+    
     func didTapForDescriptionAt(episode: PodcastEpisode) {
         if let feed = episode.feed{
             let vc = ItemDescriptionViewController.instantiate(podcast: feed, episode: episode)

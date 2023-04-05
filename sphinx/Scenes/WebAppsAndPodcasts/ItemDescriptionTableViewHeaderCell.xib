@@ -56,13 +56,32 @@
                                 <color key="textColor" name="Body"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="didPlayIndicator" translatesAutoresizingMaskIntoConstraints="NO" id="vTj-Zk-N2s">
+                                <rect key="frame" x="164" y="170" width="12" height="12"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="12" id="Ahy-KK-cvB"/>
+                                    <constraint firstAttribute="width" constant="12" id="WZh-vo-RaD"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EkV-Wc-XNf">
+                                <rect key="frame" x="293" y="218" width="32" height="32"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title=" "/>
+                                <connections>
+                                    <action selector="pausePlayTap" destination="KGk-i7-Jjw" eventType="touchUpInside" id="WDL-K5-HRX"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" name="Body"/>
                         <constraints>
+                            <constraint firstItem="yts-b5-ClK" firstAttribute="top" secondItem="EkV-Wc-XNf" secondAttribute="top" id="C5R-3C-UOf"/>
                             <constraint firstAttribute="trailing" secondItem="yts-b5-ClK" secondAttribute="trailing" constant="16" id="DZ1-MD-AXX"/>
+                            <constraint firstItem="yts-b5-ClK" firstAttribute="trailing" secondItem="EkV-Wc-XNf" secondAttribute="trailing" id="Ick-jh-hhD"/>
                             <constraint firstAttribute="height" constant="270" id="Irl-mF-cVT"/>
                             <constraint firstItem="6qc-aa-rj6" firstAttribute="leading" secondItem="dzd-Id-2Vj" secondAttribute="leading" constant="16" id="bok-Qz-fhc"/>
+                            <constraint firstItem="yts-b5-ClK" firstAttribute="bottom" secondItem="EkV-Wc-XNf" secondAttribute="bottom" id="gLK-Z1-fQV"/>
                             <constraint firstAttribute="bottom" secondItem="yts-b5-ClK" secondAttribute="bottom" constant="20" id="izh-8S-LSB"/>
+                            <constraint firstItem="yts-b5-ClK" firstAttribute="leading" secondItem="EkV-Wc-XNf" secondAttribute="leading" id="lN1-E4-PFa"/>
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DeFi &amp; Smart Contracts On The Bitcoin Network Gabriel Kurman" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zib-ft-Udd">
@@ -127,6 +146,9 @@
                             <color key="titleColor" name="SecondaryText"/>
                         </state>
                         <buttonConfiguration key="configuration" style="plain"/>
+                        <connections>
+                            <action selector="downloadButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="NpA-eF-gb9"/>
+                        </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleAspectFit" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l3a-IT-wam">
                         <rect key="frame" x="120" y="218" width="32" height="32"/>
@@ -138,8 +160,11 @@
                         <state key="normal" image="playerListOptions">
                             <color key="titleColor" name="SecondaryText"/>
                         </state>
+                        <connections>
+                            <action selector="showMoreTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Esu-UL-BGm"/>
+                        </connections>
                     </button>
-                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="playerListDownload" translatesAutoresizingMaskIntoConstraints="NO" id="T45-LC-WdO">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="playerListDownload" translatesAutoresizingMaskIntoConstraints="NO" id="T45-LC-WdO">
                         <rect key="frame" x="4" y="214" width="40" height="40"/>
                         <color key="tintColor" name="SecondaryText"/>
                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="default"/>
@@ -157,9 +182,11 @@
                     <constraint firstItem="Tet-to-dIA" firstAttribute="leading" secondItem="JKe-d3-aqc" secondAttribute="trailing" constant="20" id="EQ2-FC-iYq"/>
                     <constraint firstItem="T45-LC-WdO" firstAttribute="bottom" secondItem="JKe-d3-aqc" secondAttribute="bottom" id="FhL-1X-xzL"/>
                     <constraint firstItem="T45-LC-WdO" firstAttribute="centerY" secondItem="yts-b5-ClK" secondAttribute="centerY" id="G4E-WD-bIY"/>
+                    <constraint firstItem="vTj-Zk-N2s" firstAttribute="leading" secondItem="QP1-Ja-uGO" secondAttribute="trailing" constant="9.3333333333333144" id="Hf3-Kk-gQg"/>
                     <constraint firstItem="T45-LC-WdO" firstAttribute="top" secondItem="JKe-d3-aqc" secondAttribute="top" id="Kih-bV-H8g"/>
                     <constraint firstItem="ueu-c7-ouX" firstAttribute="bottom" secondItem="B8W-Ie-hrX" secondAttribute="bottom" id="MmB-gF-ytK"/>
                     <constraint firstItem="B8W-Ie-hrX" firstAttribute="top" secondItem="6qc-aa-rj6" secondAttribute="bottom" constant="13" id="SLD-SY-W57"/>
+                    <constraint firstItem="vTj-Zk-N2s" firstAttribute="centerY" secondItem="QP1-Ja-uGO" secondAttribute="centerY" id="TOb-PL-RyB"/>
                     <constraint firstAttribute="bottom" secondItem="dzd-Id-2Vj" secondAttribute="bottom" id="Tn1-qv-DJ6"/>
                     <constraint firstItem="JKe-d3-aqc" firstAttribute="width" secondItem="JKe-d3-aqc" secondAttribute="height" id="UTO-4G-LJw"/>
                     <constraint firstItem="Tet-to-dIA" firstAttribute="centerY" secondItem="JKe-d3-aqc" secondAttribute="centerY" id="ZMe-is-PLl"/>
@@ -183,9 +210,11 @@
             <connections>
                 <outlet property="dateLabel" destination="ueu-c7-ouX" id="XH7-Lq-CDn"/>
                 <outlet property="dotView" destination="jMI-If-dqe" id="4aD-nL-4Uc"/>
+                <outlet property="downloadButton" destination="T45-LC-WdO" id="1Hj-eR-8XO"/>
                 <outlet property="episodeTitleLabel" destination="zib-ft-Udd" id="lJS-6C-B6L"/>
                 <outlet property="mediaTypeIcon" destination="B8W-Ie-hrX" id="DKZ-ja-zaq"/>
                 <outlet property="playButton" destination="yts-b5-ClK" id="QXl-tk-lIh"/>
+                <outlet property="playCheckmark" destination="vTj-Zk-N2s" id="ccP-xF-1qQ"/>
                 <outlet property="podcastTitleLabel" destination="6qc-aa-rj6" id="zvJ-IV-7sn"/>
                 <outlet property="timeRemaining" destination="QP1-Ja-uGO" id="QaX-NO-582"/>
             </connections>
@@ -193,6 +222,7 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="didPlayIndicator" width="16" height="16"/>
         <image name="newDownloadIcon" width="16" height="16"/>
         <image name="newShareIcon" width="24" height="24"/>
         <image name="playerListDownload" width="32" height="32"/>

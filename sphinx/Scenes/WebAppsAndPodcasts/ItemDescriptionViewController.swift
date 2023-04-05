@@ -14,6 +14,7 @@ class ItemDescriptionViewController : UIViewController{
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var navbarPodcastTitle: UILabel!
     @IBOutlet weak var navBarPlayButton: UILabel!
+    var podcastPlayerController = PodcastPlayerController.sharedInstance
     
     var podcast : PodcastFeed!
     var episode: PodcastEpisode!
@@ -60,6 +61,7 @@ class ItemDescriptionViewController : UIViewController{
     func setupTableView(){
         navbarPodcastTitle.isHidden = true
         navbarPodcastTitle.isUserInteractionEnabled = false
+        configurePausePlay()
         if let episode = episode{
             navbarPodcastTitle.text = episode.title
         }
@@ -214,12 +216,34 @@ extension ItemDescriptionViewController : UITableViewDelegate,UITableViewDataSou
         return label.frame.height
      }
     
+    func configurePausePlay(){
+        if let episode = episode{
+            navBarPlayButton.text = podcastPlayerController.isPlaying(episodeId: episode.itemID) ? "pause" : "play_arrow"
+            tableView.reloadData()
+        }
+    }
+    
     @IBAction func navBarTapped(){
         self.tableView.scrollToRow(index: 0,animated: true)
     }
     
     @IBAction func tappedPlay(){
         print("play")
+        handlePlayerToggle()
+    }
+    
+    func handlePlayerToggle(){
+        if let episode = episode,
+        let podcast = podcast,
+        let data = podcast.getPodcastData(episodeId: episode.itemID){
+            if podcastPlayerController.isPlaying(episodeId: episode.itemID){
+                podcastPlayerController.submitAction(.Pause(data))
+            }
+            else{
+                podcastPlayerController.submitAction(.Play(data))
+            }
+        }
+        configurePausePlay()
     }
 }
 
@@ -247,4 +271,51 @@ extension ItemDescriptionViewController : ItemDescriptionTableViewHeaderCellDele
     func itemShareTapped(episode: PodcastEpisode) {
         self.askForShareType(episode: episode)
     }
+    
+    func itemMoreTapped(episode: PodcastEpisode) {
+        let vc = FeedItemDetailVC.instantiate(episode: episode, delegate: self, indexPath: IndexPath(item: 0, section: 0))
+        self.present(vc, animated: true)
+    }
+    
+    func itemMoreTapped(video: Video) {
+        let vc = FeedItemDetailVC.instantiate(video: video, delegate: self, indexPath: IndexPath(item: 0, section: 0))
+        self.present(vc, animated: true)
+    }
+    
+    func didTogglePausePlay() {
+        self.handlePlayerToggle()
+    }
+    
+}
+
+extension ItemDescriptionViewController:PodcastEpisodesDSDelegate{
+    func didDismiss() {
+        self.tableView.reloadData()
+    }
+    
+    func didTapForDescriptionAt(episode: PodcastEpisode) {
+        
+    }
+    
+    func didTapEpisodeAt(index: Int) {
+        
+    }
+    
+    func downloadTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {
+        
+    }
+    
+    func deleteTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {
+        
+    }
+    
+    func shouldToggleTopView(show: Bool) {
+        
+    }
+    
+    func showEpisodeDetails(episode: PodcastEpisode, indexPath: IndexPath) {
+        
+    }
+    
+    
 }

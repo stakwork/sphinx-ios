@@ -368,6 +368,8 @@ extension VideoFeedEpisodePlayerCollectionViewController {
 
 //MARK: Unified View Delegate
 extension VideoFeedEpisodePlayerCollectionViewController: FeedItemRowDelegate, PodcastEpisodesDSDelegate {
+    func didDismiss() {}
+    
     func shouldShowDescription(episode: PodcastEpisode) {}
     
     func shouldShowDescription(video: Video) {

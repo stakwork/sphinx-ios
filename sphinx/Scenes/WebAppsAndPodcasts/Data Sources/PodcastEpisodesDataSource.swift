@@ -16,6 +16,7 @@ protocol PodcastEpisodesDSDelegate : class {
     func shouldToggleTopView(show: Bool)
     func shareTapped(episode:PodcastEpisode)
     func showEpisodeDetails(episode:PodcastEpisode,indexPath:IndexPath)
+    func didDismiss()
 }
 
 class PodcastEpisodesDataSource : NSObject {

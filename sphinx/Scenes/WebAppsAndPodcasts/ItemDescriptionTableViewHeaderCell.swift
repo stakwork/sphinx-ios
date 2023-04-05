@@ -9,8 +9,11 @@
 import UIKit
 
 protocol ItemDescriptionTableViewHeaderCellDelegate{
+    func didTogglePausePlay()
     func itemShareTapped(episode:PodcastEpisode)
     func itemShareTapped(video:Video)
+    func itemMoreTapped(episode:PodcastEpisode)
+    func itemMoreTapped(video:Video)
 }
 
 class ItemDescriptionTableViewHeaderCell: UITableViewCell {
@@ -23,6 +26,9 @@ class ItemDescriptionTableViewHeaderCell: UITableViewCell {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var dotView: UIView!
     @IBOutlet weak var timeRemaining: UILabel!
+    @IBOutlet weak var playCheckmark: UIImageView!
+    @IBOutlet weak var downloadButton: UIImageView!
+    
     
     weak var episode:PodcastEpisode?=nil
     weak var video:Video? = nil
@@ -41,6 +47,7 @@ class ItemDescriptionTableViewHeaderCell: UITableViewCell {
     
     func configureView(podcast:PodcastFeed,episode:PodcastEpisode){
         self.episode = episode
+        playButton.text = PodcastPlayerController.sharedInstance.isPlaying(episodeId: episode.itemID) ? "pause" : "play_arrow"
         podcastTitleLabel.text = podcast.title
         episodeTitleLabel.text = episode.title
         playButton.makeCircular()
@@ -48,6 +55,7 @@ class ItemDescriptionTableViewHeaderCell: UITableViewCell {
         mediaTypeIcon.layer.cornerRadius = 3.0
         dateLabel.text = episode.dateString
         
+        playCheckmark.isHidden = (self.episode?.wasPlayed ?? false) ?  false : true
         let duration = episode.duration ?? 0
         let currentTime = episode.currentTime ?? 0
         
@@ -59,6 +67,7 @@ class ItemDescriptionTableViewHeaderCell: UITableViewCell {
     
     func configureView(videoFeed:VideoFeed,video:Video){
         self.video = video
+        downloadButton.alpha = 0.25
         podcastTitleLabel.text = videoFeed.title
         episodeTitleLabel.text = video.title
         playButton.makeCircular()
@@ -77,5 +86,22 @@ class ItemDescriptionTableViewHeaderCell: UITableViewCell {
             delegate?.itemShareTapped(video: video)
         }
     }
+    @IBAction func showMoreTapped(_ sender: Any) {
+        if let episode = self.episode{
+            delegate?.itemMoreTapped(episode: episode)
+        }
+        else if let video = self.video{
+            delegate?.itemMoreTapped(video: video)
+        }
+    }
+    
+    @IBAction func pausePlayTap(){
+        self.delegate?.didTogglePausePlay()
+    }
+    
+    @IBAction func downloadButtonTapped(_ sender: Any) {
+        print("download tapped")
+    }
+    
     
 }

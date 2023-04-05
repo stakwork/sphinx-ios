@@ -30,6 +30,14 @@ class ItemDescriptionTableViewHeaderCell: UITableViewCell {
     @IBOutlet weak var downloadButton: UIImageView!
     
     
+    func isRecommendationVideo() -> Bool {
+        if let episode = episode,
+           episode.isYoutubeVideo && episode.feed?.feedID == "Recommendations-Feed"{
+            return true
+        }
+        return false
+    }
+    
     weak var episode:PodcastEpisode?=nil
     weak var video:Video? = nil
     var delegate:ItemDescriptionTableViewHeaderCellDelegate? = nil
@@ -54,8 +62,17 @@ class ItemDescriptionTableViewHeaderCell: UITableViewCell {
         dotView.makeCircular()
         mediaTypeIcon.layer.cornerRadius = 3.0
         dateLabel.text = episode.dateString
-        
         playCheckmark.isHidden = (self.episode?.wasPlayed ?? false) ?  false : true
+        
+        if self.isRecommendationVideo(){
+            playCheckmark.isHidden = true
+            mediaTypeIcon.image = #imageLiteral(resourceName: "youtubeVideoTypeIcon")
+            dotView.isHidden = true
+            timeRemaining.isHidden = true
+            downloadButton.alpha = 0.25
+            downloadButton.isUserInteractionEnabled = false
+        }
+        
         let duration = episode.duration ?? 0
         let currentTime = episode.currentTime ?? 0
         

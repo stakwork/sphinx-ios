@@ -335,7 +335,12 @@ extension RecommendationFeedItemsCollectionViewController {
 
 extension RecommendationFeedItemsCollectionViewController : FeedItemRowDelegate {
     func shouldShowDescription(episode: PodcastEpisode) {
-        
+        if let feed = episode.feed{
+            let vc = ItemDescriptionViewController.instantiate(podcast: feed, episode: episode)
+            vc.delegate = self
+            self.present(vc, animated: true)
+            //self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
     func shouldShowDescription(video: Video) {
@@ -380,4 +385,17 @@ extension RecommendationFeedItemsCollectionViewController : PodcastEpisodesDSDel
     func deleteTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {}
     func shouldToggleTopView(show: Bool) {}
     func showEpisodeDetails(episode: PodcastEpisode,indexPath:IndexPath) {}
+}
+
+
+extension RecommendationFeedItemsCollectionViewController : ItemDescriptionViewControllerDelegate{
+    func shouldDismissAndPlayVideo(video: Video) {
+        
+    }
+    
+    func shouldDismissAndPlayVideo(episodeAsVideo: PodcastEpisode) {
+        self.onRecommendationCellSelected(episodeAsVideo.itemID)
+        self.updateSnapshot()
+    }
+    
 }

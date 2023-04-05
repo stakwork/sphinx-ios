@@ -32,6 +32,7 @@ class ItemDescriptionTableViewCell: UITableViewCell {
     
     func configureView(descriptionText:String,isExpanded:Bool){
         if(isExpanded){
+            podcastDescriptionLabel.text = descriptionText
             podcastDescriptionLabel.numberOfLines = 0
             showMoreButton.isHidden = true
         }

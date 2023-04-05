@@ -230,6 +230,13 @@ class UnifiedEpisodeView : UIView {
         
         episodeImageView.isUserInteractionEnabled = true
         descriptionLabel.isUserInteractionEnabled = true
+        
+        if(episode.feed?.feedID == "Recommendations-Feed"){
+            timeRemainingLabel.isHidden = episode.isYoutubeVideo
+            didPlayImageView.isHidden = (didPlayImageView.isHidden || episode.isYoutubeVideo)
+            dotView.isHidden = true
+            downloadButtonImage.alpha = 0.25
+        }
     }
     
     func configurePlayingAnimation(

@@ -509,4 +509,6 @@ extension VideoFeedEpisodePlayerCollectionViewController:ItemDescriptionViewCont
     func shouldDismissAndPlayVideo(video: Video) {
         self.onVideoEpisodeCellSelected(video.objectID)
     }
+    
+    func shouldDismissAndPlayVideo(episodeAsVideo: PodcastEpisode) {}
 }

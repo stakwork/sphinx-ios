@@ -52,7 +52,7 @@ class RecommendationItemWUnifiedViewCollectionViewCell: UICollectionViewCell {
 
 extension RecommendationItemWUnifiedViewCollectionViewCell : PodcastEpisodeRowDelegate {
     func shouldShowDescription(episode: PodcastEpisode) {
-        
+        delegate?.shouldShowDescription(episode: episode)
     }
     func shouldStartDownloading(episode: PodcastEpisode) {
         delegate?.shouldStartDownloading(episode: episode, cell: self)

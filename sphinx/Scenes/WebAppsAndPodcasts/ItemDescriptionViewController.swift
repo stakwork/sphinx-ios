@@ -11,6 +11,7 @@ import UIKit
 
 protocol ItemDescriptionViewControllerDelegate{
     func shouldDismissAndPlayVideo(video:Video)
+    func shouldDismissAndPlayVideo(episodeAsVideo:PodcastEpisode)
 }
 
 class ItemDescriptionViewController : UIViewController{
@@ -173,7 +174,8 @@ extension ItemDescriptionViewController : UITableViewDelegate,UITableViewDataSou
               episode != nil,
               let description = episode.episodeDescription,
               let font = UIFont(name: "Roboto", size: 14.0){
-                return calculateStringHeight(string: description, constraintedWidth: tableView.frame.width, font: font)
+                let height = calculateStringHeight(string: description, constraintedWidth: tableView.frame.width, font: font)
+                return height
             }
             else if(isExpanded),
                video != nil,
@@ -238,7 +240,7 @@ extension ItemDescriptionViewController : UITableViewDelegate,UITableViewDataSou
         label.font = font
         label.sizeToFit()
 
-        return label.frame.height
+        return max(label.frame.height,150.0)
      }
     
     func configurePausePlay(){
@@ -260,6 +262,7 @@ extension ItemDescriptionViewController : UITableViewDelegate,UITableViewDataSou
     func handlePlayerToggle(){
         if let episode = episode,
         let podcast = podcast,
+           episode.isPodcast == true,
         let data = podcast.getPodcastData(episodeId: episode.itemID){
             if podcastPlayerController.isPlaying(episodeId: episode.itemID){
                 podcastPlayerController.submitAction(.Pause(data))
@@ -273,6 +276,12 @@ extension ItemDescriptionViewController : UITableViewDelegate,UITableViewDataSou
             //todo: call to delegate to make this dismiss and play video
             self.dismiss(animated: true,completion: {
                 self.delegate?.shouldDismissAndPlayVideo(video: video)
+            })
+        }
+        else if let episode = episode,
+                episode.isYoutubeVideo && episode.feed?.feedID == "Recommendations-Feed"{
+            self.dismiss(animated: true,completion: {
+                self.delegate?.shouldDismissAndPlayVideo(episodeAsVideo: episode)
             })
         }
         

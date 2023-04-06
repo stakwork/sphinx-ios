@@ -1,9 +1,8 @@
 
-/* Class = "UIButton"; normalTitle = "help_outline"; ObjectID = "Nsg-8K-ysV"; */
-"Nsg-8K-ysV.normalTitle" = "help_outline";
 
-/* Class = "UILabel"; text = "Standard PIN / Privacy PIN"; ObjectID = "RSH-gY-dua"; */
-"RSH-gY-dua.text" = "Standard PIN / Privacy PIN";
 
-/* Class = "UILabel"; text = "Privacy Setting"; ObjectID = "nHw-HO-PXI"; */
-"nHw-HO-PXI.text" = "Privacy Setting";
+/* Class = "UILabel"; text = "Group PIN"; ObjectID = "nHw-HO-PXI"; */
+"nHw-HO-PXI.text" = "Setting ng Privacy";
+
+
+"RSH-gY-dua.text" = "Karaniwang PIN / PribadongPIN";

@@ -1,39 +1,29 @@
 
+
+
 /* Class = "UIButton"; normalTitle = "CONFIRM"; ObjectID = "4kd-55-TFX"; */
-"4kd-55-TFX.normalTitle" = "CONFIRM";
+"4kd-55-TFX.normalTitle" = "KUMPIRMAHIN";
 
-/* Class = "UILabel"; text = "2 500"; ObjectID = "7Wx-kS-wfR"; */
-"7Wx-kS-wfR.text" = "2 500";
-
-/* Class = "UILabel"; text = ""; ObjectID = "8EH-Ni-zOd"; */
-"8EH-Ni-zOd.text" = "";
 
 /* Class = "UILabel"; text = "Generate Invoice"; ObjectID = "Eej-fz-fO1"; */
-"Eej-fz-fO1.text" = "Generate Invoice";
+"Eej-fz-fO1.text" = "Bumuo ng Invoice";
+
 
 /* Class = "UIButton"; normalTitle = "Share"; ObjectID = "R9A-Rd-gNX"; */
-"R9A-Rd-gNX.normalTitle" = "Share";
+"R9A-Rd-gNX.normalTitle" = "Ibahagi";
 
-/* Class = "UILabel"; text = "Podcast Name"; ObjectID = "UpK-HK-cg1"; */
-"UpK-HK-cg1.text" = "Podcast Name";
 
 /* Class = "UILabel"; text = "Amount: "; ObjectID = "VB7-rS-zTG"; */
-"VB7-rS-zTG.text" = "Amount: ";
+"VB7-rS-zTG.text" = "Halaga: ";
 
-/* Class = "UILabel"; text = "-"; ObjectID = "X9u-If-zQO"; */
-"X9u-If-zQO.text" = "-";
-
-/* Class = "UIButton"; normalTitle = ""; ObjectID = "YhG-xU-zFb"; */
-"YhG-xU-zFb.normalTitle" = "";
 
 /* Class = "UILabel"; text = "PAID"; ObjectID = "daJ-Bf-qdS"; */
-"daJ-Bf-qdS.text" = "PAID";
+"daJ-Bf-qdS.text" = "BINAYARAN";
+
 
 /* Class = "UIButton"; normalTitle = "Copy"; ObjectID = "t6Q-AH-Dpt"; */
-"t6Q-AH-Dpt.normalTitle" = "Copy";
+"t6Q-AH-Dpt.normalTitle" = "Kopya";
 
-/* Class = "UILabel"; text = "sat"; ObjectID = "xWP-IG-RZE"; */
-"xWP-IG-RZE.text" = "sat";
 
 /* Class = "UILabel"; text = "PUBLIC KEY"; ObjectID = "xtc-ef-mNL"; */
-"xtc-ef-mNL.text" = "PUBLIC KEY";
+"xtc-ef-mNL.text" = "PAMPUBLIKONG SUSI";

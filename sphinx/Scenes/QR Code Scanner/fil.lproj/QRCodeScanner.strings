@@ -1,42 +1,39 @@
 
-/* Class = "UIButton"; normalTitle = ""; ObjectID = "1xu-Cr-pbr"; */
-"1xu-Cr-pbr.normalTitle" = "";
+
+
+
 
 /* Class = "UILabel"; text = "OR ENTER MANUALLY"; ObjectID = "2Jt-PW-cnd"; */
-"2Jt-PW-cnd.text" = "OR ENTER MANUALLY";
+"2Jt-PW-cnd.text" = "O MANUAL NA IPASOK";
 
-/* Class = "UILabel"; text = "1000 sat"; ObjectID = "DcV-Uo-cfm"; */
-"DcV-Uo-cfm.text" = "1000 sat";
-
-/* Class = "UIButton"; normalTitle = ""; ObjectID = "Fo0-9k-RWi"; */
-"Fo0-9k-RWi.normalTitle" = "";
 
 /* Class = "UIButton"; normalTitle = "PAY"; ObjectID = "GWX-p0-Vj0"; */
-"GWX-p0-Vj0.normalTitle" = "PAY";
+"GWX-p0-Vj0.normalTitle" = "MAGBAYAD";
+
+
+/* Class = "UILabel"; text = "To"; ObjectID = "IJc-Gb-Lrv"; */
+"IJc-Gb-Lrv.text" = "Para sa/kay";
+
 
 /* Class = "UILabel"; text = "Expiration Date: "; ObjectID = "Npg-6J-BTg"; */
-"Npg-6J-BTg.text" = "Expiration Date: ";
+"Npg-6J-BTg.text" = "Petsa ng pagkawalang bisa: ";
 
-/* Class = "UILabel"; text = "This is the memo"; ObjectID = "OVG-0s-veT"; */
-"OVG-0s-veT.text" = "This is the memo";
-
-/* Class = "UIButton"; normalTitle = ""; ObjectID = "TBJ-1i-VwJ"; */
-"TBJ-1i-VwJ.normalTitle" = "";
 
 /* Class = "UITextField"; placeholder = "Enter Address"; ObjectID = "Y8I-bB-gmm"; */
-"Y8I-bB-gmm.placeholder" = "Enter Address";
+"Y8I-bB-gmm.placeholder" = "Ilagay ang Address";
+
 
 /* Class = "UILabel"; text = "Memo: "; ObjectID = "dnH-AU-ysf"; */
 "dnH-AU-ysf.text" = "Memo: ";
 
-/* Class = "UILabel"; text = "Mon 27th Jan, 23:00:00"; ObjectID = "mdU-Xg-tF0"; */
-"mdU-Xg-tF0.text" = "Mon 27th Jan, 23:00:00";
 
-/* Class = "UIButton"; normalTitle = "VERIFY"; ObjectID = "ui2-4D-gqX"; */
-"ui2-4D-gqX.normalTitle" = "VERIFY";
+/* Class = "UIButton"; normalTitle = "CONFIRM"; ObjectID = "ui2-4D-gqX"; */
+"ui2-4D-gqX.normalTitle" = "KOMPIRMAHIN";
+
 
 /* Class = "UILabel"; text = "Invoice amount: "; ObjectID = "vAY-Bq-YBg"; */
-"vAY-Bq-YBg.text" = "Invoice amount: ";
+"vAY-Bq-YBg.text" = "Halaga ng Invoice: ";
+
 
 /* Class = "UILabel"; text = "INVOICE DETAILS"; ObjectID = "vuM-l5-Wfj"; */
-"vuM-l5-Wfj.text" = "INVOICE DETAILS";
+"vuM-l5-Wfj.text" = "MGA DETALYE NG INVOICE";

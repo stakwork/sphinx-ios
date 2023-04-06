@@ -1,24 +1,23 @@
 
-/* Class = "UILabel"; text = ""; ObjectID = "5ad-Z7-OnV"; */
-"5ad-Z7-OnV.text" = "";
+
+
+
 
 /* Class = "UIButton"; normalTitle = "CANCEL"; ObjectID = "GbQ-xN-c4F"; */
-"GbQ-xN-c4F.normalTitle" = "CANCEL";
+"GbQ-xN-c4F.normalTitle" = "KANSELAHIN";
 
-/* Class = "UILabel"; text = ""; ObjectID = "KAM-OO-hTq"; */
-"KAM-OO-hTq.text" = "";
 
 /* Class = "UILabel"; text = "Pay until"; ObjectID = "MtN-hi-VeI"; */
-"MtN-hi-VeI.text" = "Pay until";
+"MtN-hi-VeI.text" = "Magbayad hanggang";
 
-/* Class = "UILabel"; text = ""; ObjectID = "No4-nx-rcm"; */
-"No4-nx-rcm.text" = "";
 
 /* Class = "UILabel"; text = "Payments"; ObjectID = "XDq-qi-RaU"; */
-"XDq-qi-RaU.text" = "Payments";
+"XDq-qi-RaU.text" = "Mga Pagbabayad";
+
 
 /* Class = "UIButton"; normalTitle = "DONE"; ObjectID = "Zh5-LL-F2J"; */
-"Zh5-LL-F2J.normalTitle" = "DONE";
+"Zh5-LL-F2J.normalTitle" = "TAPOS";
+
 
 /* Class = "UILabel"; text = "Make"; ObjectID = "dIl-Hs-vmD"; */
-"dIl-Hs-vmD.text" = "Make";
+"dIl-Hs-vmD.text" = "Gawin";

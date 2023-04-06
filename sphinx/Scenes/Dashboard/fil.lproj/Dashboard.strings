@@ -1,30 +1,12 @@
 
-/* Class = "UILabel"; text = "on the Podcast Index"; ObjectID = "0eu-Sz-ryQ"; */
-"0eu-Sz-ryQ.text" = "on the Podcast Index";
 
-/* Class = "UILabel"; text = "add"; ObjectID = "3p2-Mz-7oz"; */
-"3p2-Mz-7oz.text" = "add";
-
-/* Class = "UILabel"; text = ""; ObjectID = "Lwz-zX-pkx"; */
-"Lwz-zX-pkx.text" = "";
-
-/* Class = "UILabel"; text = "Search over"; ObjectID = "Ndg-SW-RNS"; */
-"Ndg-SW-RNS.text" = "Search over";
-
-/* Class = "UIButton"; configuration.title = "CLOSE"; ObjectID = "Re9-Eb-2Gh"; */
-"Re9-Eb-2Gh.configuration.title" = "CLOSE";
-
-/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "Re9-Eb-2Gh"; */
-"Re9-Eb-2Gh.normalTitle" = "Button";
 
 /* Class = "UITextField"; placeholder = "Search"; ObjectID = "ef7-It-4Rs"; */
-"ef7-It-4Rs.placeholder" = "Search";
+"ef7-It-4Rs.placeholder" = "Maghanap";
 
-/* Class = "UILabel"; text = "4 000 000 podcasts"; ObjectID = "l4t-u1-si6"; */
-"l4t-u1-si6.text" = "4 000 000 podcasts";
 
-/* Class = "UILabel"; text = "No Content Found"; ObjectID = "oTA-xG-eJf"; */
-"oTA-xG-eJf.text" = "No Content Found";
+/* Class = "UIButton"; configuration.title = "Add Tribe"; ObjectID = "vfi-ch-n2c"; */
+"vfi-ch-n2c.configuration.title" = "Mag-dagdag ng Tribo";
 
-/* Class = "UIButton"; normalTitle = "Add Tribe"; ObjectID = "vfi-ch-n2c"; */
-"vfi-ch-n2c.normalTitle" = "Add Tribe";
+
+"Re9-Eb-2Gh.title" = "ISARA"

@@ -1,15 +1,5 @@
 
-/* Class = "UIButton"; normalTitle = ""; ObjectID = "8tb-Je-WbQ"; */
-"8tb-Je-WbQ.normalTitle" = "";
 
-/* Class = "UILabel"; text = "verified_user"; ObjectID = "8wz-Zq-I2O"; */
-"8wz-Zq-I2O.text" = "verified_user";
 
 /* Class = "UIButton"; normalTitle = "SAVE"; ObjectID = "Za3-GB-giv"; */
-"Za3-GB-giv.normalTitle" = "SAVE";
-
-/* Class = "UILabel"; text = "..."; ObjectID = "w6l-AT-cZg"; */
-"w6l-AT-cZg.text" = "...";
-
-/* Class = "UILabel"; text = "Save Profile"; ObjectID = "z1Y-Hd-wEF"; */
-"z1Y-Hd-wEF.text" = "Save Profile";
+"Za3-GB-giv.normalTitle" = "I-SAVE";

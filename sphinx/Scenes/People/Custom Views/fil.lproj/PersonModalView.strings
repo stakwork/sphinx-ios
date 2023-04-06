@@ -1,18 +1,5 @@
 
-/* Class = "UIButton"; normalTitle = ""; ObjectID = "ATv-oP-c1C"; */
-"ATv-oP-c1C.normalTitle" = "";
 
-/* Class = "UITextField"; placeholder = "Initial message to Unknown"; ObjectID = "EJo-KZ-Itc"; */
-"EJo-KZ-Itc.placeholder" = "Initial message to Unknown";
 
 /* Class = "UIButton"; normalTitle = "CONNECT"; ObjectID = "TMb-DK-P6W"; */
-"TMb-DK-P6W.normalTitle" = "CONNECT";
-
-/* Class = "UILabel"; text = "Price to meet: 0 sat"; ObjectID = "YuH-1V-xCc"; */
-"YuH-1V-xCc.text" = "Price to meet: 0 sat";
-
-/* Class = "UILabel"; text = "Unknown"; ObjectID = "dbN-n6-D7o"; */
-"dbN-n6-D7o.text" = "Unknown";
-
-/* Class = "UILabel"; text = "No Description"; ObjectID = "zjE-cO-1a5"; */
-"zjE-cO-1a5.text" = "No Description";
+"TMb-DK-P6W.normalTitle" = "KONEKTA";

@@ -1,12 +1,8 @@
 
-/* Class = "UIButton"; normalTitle = "DONE"; ObjectID = "F61-2C-JK9"; */
-"F61-2C-JK9.normalTitle" = "DONE";
 
-/* Class = "UILabel"; text = "Test title with a long title"; ObjectID = "IJX-bI-CMY"; */
-"IJX-bI-CMY.text" = "Test title with a long title";
 
-/* Class = "UILabel"; text = "NEW EPISODE"; ObjectID = "bmE-a4-L39"; */
-"bmE-a4-L39.text" = "NEW EPISODE";
+/* Class = "UILabel"; text = "SATS EARNED"; ObjectID = "L59-9f-2z9"; */
+"L59-9f-2z9.text" = "SATS NA NAIPON";
 
-/* Class = "UIButton"; normalTitle = "CANCEL"; ObjectID = "tdi-0T-sPh"; */
-"tdi-0T-sPh.normalTitle" = "CANCEL";
+
+"bmE-a4-L39.text" = "BAGONG EPISODE";

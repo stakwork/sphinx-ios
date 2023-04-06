@@ -1,108 +1,101 @@
 
-/* Class = "UILabel"; text = "asdjhsad6jhaskjsad78asd7dsjhasjhsd78asdsdh"; ObjectID = "14m-K2-MT0"; */
-"14m-K2-MT0.text" = "asdjhsad6jhaskjsad78asd7dsjhasjhsd78asdsdh";
+
 
 /* Class = "UITextField"; placeholder = "Set Your Name"; ObjectID = "1ma-e3-9jK"; */
-"1ma-e3-9jK.placeholder" = "Set Your Name";
+"1ma-e3-9jK.placeholder" = "Itakda ang Iyong Pangalan";
+
 
 /* Class = "UILabel"; text = "Select Image"; ObjectID = "2P2-S1-noc"; */
-"2P2-S1-noc.text" = "Select Image";
+"2P2-S1-noc.text" = "Pumili ng Imahe";
 
-/* Class = "UILabel"; text = "Tomi"; ObjectID = "3gm-OB-nXu"; */
-"3gm-OB-nXu.text" = "Tomi";
 
 /* Class = "UIButton"; normalTitle = "New to Sphinx"; ObjectID = "3rN-VK-zKy"; */
-"3rN-VK-zKy.normalTitle" = "New to Sphinx";
+"3rN-VK-zKy.normalTitle" = "Bago sa Sphinx";
+
 
 /* Class = "UILabel"; text = "ADD FRIEND"; ObjectID = "4Mg-Nw-7iA"; */
-"4Mg-Nw-7iA.text" = "ADD FRIEND";
+"4Mg-Nw-7iA.text" = "MAG-DAGDAG NG KAIBIGAN";
 
-/* Class = "UILabel"; text = ""; ObjectID = "9um-Qd-G1B"; */
-"9um-Qd-G1B.text" = "";
 
 /* Class = "UILabel"; text = "INCLUDE A MESSAGE..."; ObjectID = "DsE-7M-zzl"; */
-"DsE-7M-zzl.text" = "INCLUDE A MESSAGE...";
+"DsE-7M-zzl.text" = "MAGSAMA NG MENSAHE...";
 
-/* Class = "UILabel"; text = "Uploaded: 0%"; ObjectID = "FYW-sZ-2rd"; */
-"FYW-sZ-2rd.text" = "Uploaded: 0%";
-
-/* Class = "UILabel"; text = ""; ObjectID = "FfO-6n-Zdd"; */
-"FfO-6n-Zdd.text" = "";
-
-/* Class = "UILabel"; text = ""; ObjectID = "KJJ-BA-YCD"; */
-"KJJ-BA-YCD.text" = "";
 
 /* Class = "UIButton"; normalTitle = "Already on Sphinx"; ObjectID = "Mi0-in-ems"; */
-"Mi0-in-ems.normalTitle" = "Already on Sphinx";
+"Mi0-in-ems.normalTitle" = "Nasa Sphinx na";
+
 
 /* Class = "UILabel"; text = "FINISH"; ObjectID = "Oe8-KJ-BtX"; */
-"Oe8-KJ-BtX.text" = "FINISH";
+"Oe8-KJ-BtX.text" = "TAPOS NA";
+
+
+/* Class = "UITextField"; placeholder = "Enter code..."; ObjectID = "QEu-hq-fQQ"; */
+"QEu-hq-fQQ.placeholder" = "Ipasok ang code...";
+
+
+/* Class = "UILabel"; text = "Restore from Keychain"; ObjectID = "RQP-ey-bcd"; */
+"RQP-ey-bcd.text" = "I-restore mula sa Keychain";
+
 
 /* Class = "UILabel"; text = "SHARE"; ObjectID = "UO4-zg-C4j"; */
-"UO4-zg-C4j.text" = "SHARE";
+"UO4-zg-C4j.text" = "IBAHAGI";
+
 
 /* Class = "UIButton"; normalTitle = "NEXT"; ObjectID = "URL-hB-8Yz"; */
-"URL-hB-8Yz.normalTitle" = "NEXT";
+"URL-hB-8Yz.normalTitle" = "SUSUNOD";
 
-/* Class = "UILabel"; text = ""; ObjectID = "UX6-zd-Lml"; */
-"UX6-zd-Lml.text" = "";
 
-/* Class = "UILabel"; text = ""; ObjectID = "a2B-zo-IOc"; */
-"a2B-zo-IOc.text" = "";
+/* Class = "UILabel"; text = "Welcome"; ObjectID = "VS5-RC-luB"; */
+"VS5-RC-luB.text" = "Maligayang pagdating";
+
 
 /* Class = "UILabel"; text = "You're ready\nto use Sphinx!"; ObjectID = "c8r-pr-tER"; */
-"c8r-pr-tER.text" = "You're ready\nto use Sphinx!";
+"c8r-pr-tER.text" = "Handa ka ng gamitin ang Sphinx!";
 
-/* Class = "UIButton"; normalTitle = ""; ObjectID = "evI-fT-tP6"; */
-"evI-fT-tP6.normalTitle" = "";
 
 /* Class = "UIButton"; normalTitle = "NEXT"; ObjectID = "fJ5-mk-nZs"; */
-"fJ5-mk-nZs.normalTitle" = "NEXT";
+"fJ5-mk-nZs.normalTitle" = "SUSUNOD";
 
-/* Class = "UILabel"; text = "sat"; ObjectID = "fjv-u1-qRo"; */
-"fjv-u1-qRo.text" = "sat";
 
 /* Class = "UITextView"; text = "Welcome to Sphinx!"; ObjectID = "iUT-7o-yHP"; */
-"iUT-7o-yHP.text" = "Welcome to Sphinx!";
+"iUT-7o-yHP.text" = "Maligayang pagdating sa Sphinx!";
 
-/* Class = "UILabel"; text = ""; ObjectID = "iub-5J-uVa"; */
-"iub-5J-uVa.text" = "";
 
 /* Class = "UIButton"; normalTitle = "Create Invitation"; ObjectID = "k95-oK-Zox"; */
-"k95-oK-Zox.normalTitle" = "Create Invitation";
+"k95-oK-Zox.normalTitle" = "Gumawa ng Imbitasyon";
+
 
 /* Class = "UILabel"; text = "ESTIMATED COST"; ObjectID = "kW7-Wb-3DM"; */
-"kW7-Wb-3DM.text" = "ESTIMATED COST";
+"kW7-Wb-3DM.text" = "TINATAYANG HALAGA";
+
 
 /* Class = "UILabel"; text = "Your Name"; ObjectID = "klr-jZ-Odd"; */
-"klr-jZ-Odd.text" = "Your Name";
+"klr-jZ-Odd.text" = "Ang pangalan mo";
 
-/* Class = "UILabel"; text = ""; ObjectID = "luo-XS-Wk8"; */
-"luo-XS-Wk8.text" = "";
 
 /* Class = "UILabel"; text = "TAP TO COPY"; ObjectID = "pgo-lA-YWw"; */
-"pgo-lA-YWw.text" = "TAP TO COPY";
+"pgo-lA-YWw.text" = "I-TAP UPANG MAKOPYA";
+
 
 /* Class = "UILabel"; text = "ADD FRIEND"; ObjectID = "rLb-IH-R1w"; */
-"rLb-IH-R1w.text" = "ADD FRIEND";
+"rLb-IH-R1w.text" = "MAGDAGDAG NG KAIBIGAN";
 
-/* Class = "UILabel"; text = "Susan Johnson"; ObjectID = "szP-L5-Xsf"; */
-"szP-L5-Xsf.text" = "Susan Johnson";
 
 /* Class = "UILabel"; text = "SHARE INVITATION CODE"; ObjectID = "vd2-aU-H2Y"; */
-"vd2-aU-H2Y.text" = "SHARE INVITATION CODE";
+"vd2-aU-H2Y.text" = "IBAHAGI ANG INVITATION CODE";
+
 
 /* Class = "UILabel"; text = "\"Welcome to Sphinx!\""; ObjectID = "vl8-eB-4he"; */
 "vl8-eB-4he.text" = "\"Welcome to Sphinx!\"";
 
-/* Class = "UILabel"; text = "10 000"; ObjectID = "wR6-en-45W"; */
-"wR6-en-45W.text" = "10 000";
 
 /* Class = "UILabel"; text = "You've been invited\nto join Sphinx!"; ObjectID = "xrd-8B-iyR"; */
-"xrd-8B-iyR.text" = "You've been invited\nto join Sphinx!";
+"xrd-8B-iyR.text" = "Inimbitahan ka upang sumali sa Sphinx!";
+
 
 /* Class = "UILabel"; text = "NICKNAME"; ObjectID = "xrn-Sz-iM3"; */
-"xrn-Sz-iM3.text" = "NICKNAME";
+"xrn-Sz-iM3.text" = "PALAYAW";
+
 
 /* Class = "UILabel"; text = "Get Started"; ObjectID = "zc0-Xh-U1c"; */
-"zc0-Xh-U1c.text" = "Get Started";
+"zc0-Xh-U1c.text" = "Magsimula";

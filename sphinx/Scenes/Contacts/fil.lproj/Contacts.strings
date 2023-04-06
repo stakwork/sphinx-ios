@@ -1,39 +1,38 @@
 
+
+
+
+
 /* Class = "UILabel"; text = "ADDRESS BOOK"; ObjectID = "0QV-li-AOO"; */
 "0QV-li-AOO.text" = "ADDRESS BOOK";
 
-/* Class = "UIButton"; normalTitle = ""; ObjectID = "1Zs-b5-JFg"; */
-"1Zs-b5-JFg.normalTitle" = "";
 
 /* Class = "UILabel"; text = "Address *"; ObjectID = "39P-Xw-u5x"; */
 "39P-Xw-u5x.text" = "Address *";
 
-/* Class = "UILabel"; text = "Uploaded: 0%"; ObjectID = "3Kx-UJ-unJ"; */
-"3Kx-UJ-unJ.text" = "Uploaded: 0%";
+
+"vHf-rK-nEW.text" = "Hint ng Ruta";
+
 
 /* Class = "UILabel"; text = "Nickname *"; ObjectID = "7eV-VN-bp2"; */
-"7eV-VN-bp2.text" = "Nickname *";
+"7eV-VN-bp2.text" = "Palayaw *";
 
-/* Class = "UIButton"; normalTitle = ""; ObjectID = "8aN-xI-0L5"; */
-"8aN-xI-0L5.normalTitle" = "";
 
 /* Class = "UIButton"; normalTitle = "SUBSCRIBE"; ObjectID = "OiJ-fJ-jK3"; */
-"OiJ-fJ-jK3.normalTitle" = "SUBSCRIBE";
+"OiJ-fJ-jK3.normalTitle" = "MAG-SUBSCRIBE";
 
-/* Class = "UIButton"; normalTitle = ""; ObjectID = "SHK-N8-yrn"; */
-"SHK-N8-yrn.normalTitle" = "";
+
+/* Class = "UILabel"; text = "Email *"; ObjectID = "WXR-op-lDc"; */
+"WXR-op-lDc.text" = "PIN ng Grupo *";
+
 
 /* Class = "UILabel"; text = "NEW CONTACT"; ObjectID = "fLm-O4-dUI"; */
-"fLm-O4-dUI.text" = "NEW CONTACT";
+"fLm-O4-dUI.text" = "BAGONG CONTACT";
+
 
 /* Class = "UITextField"; placeholder = "Search"; ObjectID = "hvF-Lr-QK6"; */
-"hvF-Lr-QK6.placeholder" = "Search";
+"hvF-Lr-QK6.placeholder" = "Maghanap";
+
 
 /* Class = "UILabel"; text = "SAVE TO CONTACTS"; ObjectID = "o1h-CK-PTE"; */
-"o1h-CK-PTE.text" = "SAVE TO CONTACTS";
-
-/* Class = "UILabel"; text = "Route Hint"; ObjectID = "vHf-rK-nEW"; */
-"vHf-rK-nEW.text" = "Route Hint";
-
-/* Class = "UIButton"; normalTitle = ""; ObjectID = "vyc-UR-AWq"; */
-"vyc-UR-AWq.normalTitle" = "";
+"o1h-CK-PTE.text" = "I-SAVE SA MGA CONTACT";

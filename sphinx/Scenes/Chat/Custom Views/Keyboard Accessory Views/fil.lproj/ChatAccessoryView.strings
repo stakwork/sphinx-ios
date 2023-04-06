@@ -1,30 +1,7 @@
 
-/* Class = "UILabel"; text = "0:00"; ObjectID = "149-Tz-oeD"; */
-"149-Tz-oeD.text" = "0:00";
 
-/* Class = "UILabel"; text = ""; ObjectID = "K5s-lF-TdI"; */
-"K5s-lF-TdI.text" = "";
 
-/* Class = "UIButton"; normalTitle = ""; ObjectID = "Kip-7Q-PnU"; */
-"Kip-7Q-PnU.normalTitle" = "";
 
-/* Class = "UIButton"; normalTitle = ""; ObjectID = "Mzc-8L-8ix"; */
-"Mzc-8L-8ix.normalTitle" = "";
-
-/* Class = "UILabel"; text = "mic"; ObjectID = "gLV-Ai-BJ5"; */
-"gLV-Ai-BJ5.text" = "mic";
 
 /* Class = "UILabel"; text = "Slide to cancel"; ObjectID = "iLc-z6-RUC"; */
-"iLc-z6-RUC.text" = "Slide to cancel";
-
-/* Class = "UIButton"; highlightedTitle = "mic"; ObjectID = "m3x-IF-uwz"; */
-"m3x-IF-uwz.highlightedTitle" = "mic";
-
-/* Class = "UIButton"; normalTitle = "mic"; ObjectID = "m3x-IF-uwz"; */
-"m3x-IF-uwz.normalTitle" = "mic";
-
-/* Class = "UIButton"; selectedTitle = "mic"; ObjectID = "m3x-IF-uwz"; */
-"m3x-IF-uwz.selectedTitle" = "mic";
-
-/* Class = "UILabel"; text = ""; ObjectID = "s1Z-eI-Byg"; */
-"s1Z-eI-Byg.text" = "";
+"iLc-z6-RUC.text" = "I-slide para kanselahin";

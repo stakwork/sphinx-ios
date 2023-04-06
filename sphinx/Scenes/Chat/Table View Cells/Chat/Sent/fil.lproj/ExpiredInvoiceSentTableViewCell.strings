@@ -1,12 +1,5 @@
 
-/* Class = "UILabel"; text = "sat"; ObjectID = "0bS-zH-3Sr"; */
-"0bS-zH-3Sr.text" = "sat";
+
 
 /* Class = "UILabel"; text = "REQUEST EXPIRED"; ObjectID = "gji-Ko-PF6"; */
-"gji-Ko-PF6.text" = "REQUEST EXPIRED";
-
-/* Class = "UILabel"; text = "6:05 AM"; ObjectID = "v2k-mT-gjp"; */
-"v2k-mT-gjp.text" = "6:05 AM";
-
-/* Class = "UILabel"; text = "2500"; ObjectID = "xVv-a1-rfQ"; */
-"xVv-a1-rfQ.text" = "2500";
+"gji-Ko-PF6.text" = "EXPIRED NA ANG KAHILINGAN";

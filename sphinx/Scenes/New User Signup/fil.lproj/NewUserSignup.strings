@@ -1,51 +1,5 @@
 
-/* Class = "UIButton"; normalTitle = "Continue"; ObjectID = "19F-UZ-Q9m"; */
-"19F-UZ-Q9m.normalTitle" = "Continue";
 
-/* Class = "UITextField"; placeholder = "Paste your invitation code..."; ObjectID = "6Ax-pV-KVk"; */
-"6Ax-pV-KVk.placeholder" = "Paste your invitation code...";
 
-/* Class = "UIButton"; normalTitle = "Get It Now"; ObjectID = "7RD-ar-XuI"; */
-"7RD-ar-XuI.normalTitle" = "Get It Now";
 
-/* Class = "UIButton"; normalTitle = "I Have a Connection Code"; ObjectID = "7aQ-xQ-TUr"; */
-"7aQ-xQ-TUr.normalTitle" = "I Have a Connection Code";
 
-/* Class = "UIButton"; normalTitle = ""; ObjectID = "LIl-wz-9W7"; */
-"LIl-wz-9W7.normalTitle" = "";
-
-/* Class = "UILabel"; text = "You are now on the\nLightning Network!"; ObjectID = "PIg-9J-IGR"; */
-"PIg-9J-IGR.text" = "You are now on the\nLightning Network!";
-
-/* Class = "UILabel"; text = "Don't you have Sphinx for desktop?"; ObjectID = "Rek-m7-civ"; */
-"Rek-m7-civ.text" = "Don't you have Sphinx for desktop?";
-
-/* Class = "UIButton"; normalTitle = "Skip"; ObjectID = "UaQ-EW-Eyg"; */
-"UaQ-EW-Eyg.normalTitle" = "Skip";
-
-/* Class = "UIButton"; normalTitle = "Buy A Lite Node ($2.99)"; ObjectID = "bJQ-St-2xn"; */
-"bJQ-St-2xn.normalTitle" = "Buy A Lite Node ($2.99)";
-
-/* Class = "UIButton"; normalTitle = ""; ObjectID = "hGk-nq-mPF"; */
-"hGk-nq-mPF.normalTitle" = "";
-
-/* Class = "UILabel"; text = "NEW USER"; ObjectID = "m0C-Kj-OMc"; */
-"m0C-Kj-OMc.text" = "NEW USER";
-
-/* Class = "UIButton"; normalTitle = "Submit"; ObjectID = "n1x-Nd-XT6"; */
-"n1x-Nd-XT6.normalTitle" = "Submit";
-
-/* Class = "UILabel"; text = ""; ObjectID = "ngQ-ql-U0M"; */
-"ngQ-ql-U0M.text" = "";
-
-/* Class = "UIButton"; normalTitle = "Continue"; ObjectID = "s2U-0k-42i"; */
-"s2U-0k-42i.normalTitle" = "Continue";
-
-/* Class = "UILabel"; text = "NEW USER"; ObjectID = "sxp-4g-tGX"; */
-"sxp-4g-tGX.text" = "NEW USER";
-
-/* Class = "UILabel"; text = ""; ObjectID = "tcI-kF-ZRP"; */
-"tcI-kF-ZRP.text" = "";
-
-/* Class = "UILabel"; text = "Copy your keys from your\\n desktop app and paste it here."; ObjectID = "x2o-nL-GW8"; */
-"x2o-nL-GW8.text" = "Copy your keys from your\\n desktop app and paste it here.";

@@ -1,216 +1,181 @@
 
+
+
+
+
 /* Class = "UILabel"; text = "NEW PUBLIC GROUP"; ObjectID = "09K-rw-bxW"; */
-"09K-rw-bxW.text" = "NEW PUBLIC GROUP";
+"09K-rw-bxW.text" = "BAGONG TRIBO";
+
+
+/* Class = "UIButton"; normalTitle = "Private Group"; ObjectID = "0jO-Oq-zlh"; */
+"0jO-Oq-zlh.normalTitle" = "Pribadong Grupo";
+
 
 /* Class = "UILabel"; text = "Price per Message"; ObjectID = "1AU-Kq-NxC"; */
-"1AU-Kq-NxC.text" = "Price per Message";
+"1AU-Kq-NxC.text" = "Presyo bawat Mensahe";
 
-/* Class = "UILabel"; text = "Alias *"; ObjectID = "1aq-Kg-Gvl"; */
-"1aq-Kg-Gvl.text" = "Alias *";
-
-/* Class = "UILabel"; text = "Uploading Image..."; ObjectID = "2R1-bw-8cr"; */
-"2R1-bw-8cr.text" = "Uploading Image...";
 
 /* Class = "UIButton"; normalTitle = "NEXT"; ObjectID = "2pl-oP-RXu"; */
-"2pl-oP-RXu.normalTitle" = "NEXT";
+"2pl-oP-RXu.normalTitle" = "SUSUNOD";
+
 
 /* Class = "UILabel"; text = "Uploaded: 0%"; ObjectID = "2zj-we-RkJ"; */
-"2zj-we-RkJ.text" = "Uploaded: 0%";
+"2zj-we-RkJ.text" = "Na-upload: 0%";
+
 
 /* Class = "UILabel"; text = "Description *"; ObjectID = "3RB-pb-8A5"; */
-"3RB-pb-8A5.text" = "Description *";
+"3RB-pb-8A5.text" = "Paglalarawan*";
+
 
 /* Class = "UITextField"; placeholder = "Search Group Members"; ObjectID = "3Rf-Vh-ZtY"; */
-"3Rf-Vh-ZtY.placeholder" = "Search Group Members";
+"3Rf-Vh-ZtY.placeholder" = "Maghanap ng mga Miyembro ng Grupo";
 
-/* Class = "UIButton"; normalTitle = ""; ObjectID = "4Ve-V8-ify"; */
-"4Ve-V8-ify.normalTitle" = "";
-
-/* Class = "UILabel"; text = "Public Key *"; ObjectID = "6Ml-t1-tHR"; */
-"6Ml-t1-tHR.text" = "Public Key *";
 
 /* Class = "UILabel"; text = "Pay Group Members"; ObjectID = "7HA-dj-Isx"; */
-"7HA-dj-Isx.text" = "Pay Group Members";
+"7HA-dj-Isx.text" = "Bayarang ang mga Miyembro ng Grupo";
 
-/* Class = "UILabel"; text = "Uploading Image..."; ObjectID = "9fa-JQ-04V"; */
-"9fa-JQ-04V.text" = "Uploading Image...";
-
-/* Class = "UILabel"; text = "Approve each membership request?"; ObjectID = "9fz-nc-HRb"; */
-"9fz-nc-HRb.text" = "Approve each membership request?";
-
-/* Class = "UILabel"; text = "0"; ObjectID = "AOo-Ae-kkt"; */
-"AOo-Ae-kkt.text" = "0";
 
 /* Class = "UIButton"; normalTitle = "DONE"; ObjectID = "COk-lR-gi7"; */
-"COk-lR-gi7.normalTitle" = "DONE";
+"COk-lR-gi7.normalTitle" = "TAPOS";
+
 
 /* Class = "UILabel"; text = "JOIN PUBLIC GROUP"; ObjectID = "FSe-ea-ym5"; */
-"FSe-ea-ym5.text" = "JOIN PUBLIC GROUP";
+"FSe-ea-ym5.text" = "SUMALI SA TRIBO";
 
-/* Class = "UIButton"; normalTitle = ""; ObjectID = "Gcw-JU-Mwp"; */
-"Gcw-JU-Mwp.normalTitle" = "";
-
-/* Class = "UILabel"; text = "Contact Key *"; ObjectID = "Hzg-6R-zf4"; */
-"Hzg-6R-zf4.text" = "Contact Key *";
-
-/* Class = "UILabel"; text = "Route Hint"; ObjectID = "IOB-X9-wYC"; */
-"IOB-X9-wYC.text" = "Route Hint";
-
-/* Class = "UILabel"; text = "List on tribes.sphinx.chat?"; ObjectID = "IjR-gq-j9u"; */
-"IjR-gq-j9u.text" = "List on tribes.sphinx.chat?";
 
 /* Class = "UIButton"; normalTitle = "CANCEL"; ObjectID = "JYV-Fj-Rzu"; */
-"JYV-Fj-Rzu.normalTitle" = "CANCEL";
+"JYV-Fj-Rzu.normalTitle" = "KANSELAHIN";
 
-/* Class = "UILabel"; text = "-"; ObjectID = "JZG-I8-q8o"; */
-"JZG-I8-q8o.text" = "-";
 
 /* Class = "UITextField"; placeholder = "Search People"; ObjectID = "K3Z-8Q-JIa"; */
-"K3Z-8Q-JIa.placeholder" = "Search People";
+"K3Z-8Q-JIa.placeholder" = "Maghanap ng mga Tao";
 
-/* Class = "UIButton"; normalTitle = "ADD MEMBER"; ObjectID = "Kjs-er-Gfs"; */
-"Kjs-er-Gfs.normalTitle" = "ADD MEMBER";
 
-/* Class = "UIButton"; normalTitle = ""; ObjectID = "Mdc-Wc-fQE"; */
-"Mdc-Wc-fQE.normalTitle" = "";
+/* Class = "UILabel"; text = "NEW GROUP"; ObjectID = "NhF-8s-bSd"; */
+"NhF-8s-bSd.text" = "BAGONG GRUPO";
 
-/* Class = "UIButton"; normalTitle = "DONE"; ObjectID = "NEs-mW-lIQ"; */
-"NEs-mW-lIQ.normalTitle" = "DONE";
 
 /* Class = "UILabel"; text = "Group Details"; ObjectID = "O1K-P2-cv9"; */
-"O1K-P2-cv9.text" = "Group Details";
+"O1K-P2-cv9.text" = "Mga Detalye ng Grupo";
 
-/* Class = "UIButton"; normalTitle = ""; ObjectID = "OeY-De-ANd"; */
-"OeY-De-ANd.normalTitle" = "";
 
 /* Class = "UILabel"; text = "Uploading Image..."; ObjectID = "Qmc-Nz-Qwz"; */
-"Qmc-Nz-Qwz.text" = "Uploading Image...";
+"Qmc-Nz-Qwz.text" = "Nag-a-upload ng Imahe...";
 
-/* Class = "UIButton"; normalTitle = ""; ObjectID = "S0h-6D-MDk"; */
-"S0h-6D-MDk.normalTitle" = "";
 
-/* Class = "UIButton"; normalTitle = "DONE"; ObjectID = "T8c-hd-6kG"; */
-"T8c-hd-6kG.normalTitle" = "DONE";
+/* Class = "UIButton"; normalTitle = "Public Group"; ObjectID = "Uer-jc-pey"; */
+"Uer-jc-pey.normalTitle" = "Pampublikong Grupo";
 
-/* Class = "UILabel"; text = "ADD TRIBE MEMBER"; ObjectID = "TWz-rt-SOH"; */
-"TWz-rt-SOH.text" = "ADD TRIBE MEMBER";
-
-/* Class = "UILabel"; text = "0"; ObjectID = "Vq1-Ez-GpQ"; */
-"Vq1-Ez-GpQ.text" = "0";
-
-/* Class = "UILabel"; text = "-"; ObjectID = "WZs-nd-J8z"; */
-"WZs-nd-J8z.text" = "-";
-
-/* Class = "UILabel"; text = "Profile Picture"; ObjectID = "WbN-e3-yid"; */
-"WbN-e3-yid.text" = "Profile Picture";
-
-/* Class = "UILabel"; text = "Feed Url"; ObjectID = "XEl-j5-cm2"; */
-"XEl-j5-cm2.text" = "Feed Url";
-
-/* Class = "UIButton"; normalTitle = "CANCEL"; ObjectID = "XaG-Wd-hfc"; */
-"XaG-Wd-hfc.normalTitle" = "CANCEL";
-
-/* Class = "UILabel"; text = "Uploading Image..."; ObjectID = "Yka-L7-MTK"; */
-"Yka-L7-MTK.text" = "Uploading Image...";
-
-/* Class = "UILabel"; text = "Group Name"; ObjectID = "afD-uT-OIg"; */
-"afD-uT-OIg.text" = "Group Name";
-
-/* Class = "UILabel"; text = "0"; ObjectID = "b3t-EH-ObZ"; */
-"b3t-EH-ObZ.text" = "0";
 
 /* Class = "UIButton"; normalTitle = "NEXT"; ObjectID = "b5K-e6-WAd"; */
-"b5K-e6-WAd.normalTitle" = "NEXT";
+"b5K-e6-WAd.normalTitle" = "SUSUNOD";
+
 
 /* Class = "UITextField"; placeholder = "Group Name"; ObjectID = "blf-J3-yxP"; */
-"blf-J3-yxP.placeholder" = "Group Name";
+"blf-J3-yxP.placeholder" = "Pangalan ng Grupo";
+
 
 /* Class = "UILabel"; text = "Time to Stake: (hours)"; ObjectID = "bwz-DD-5Qu"; */
-"bwz-DD-5Qu.text" = "Time to Stake: (hours)";
+"bwz-DD-5Qu.text" = "Oras para sa Stake: (oras)";
+
 
 /* Class = "UILabel"; text = "Loading Group info..."; ObjectID = "c99-Vi-65m"; */
-"c99-Vi-65m.text" = "Loading Group info...";
+"c99-Vi-65m.text" = "Nilo-load ang impormasyon ng Tribo...";
 
-/* Class = "UIButton"; normalTitle = "CANCEL"; ObjectID = "cZb-n2-Yx5"; */
-"cZb-n2-Yx5.normalTitle" = "CANCEL";
 
 /* Class = "UIButton"; normalTitle = "CREATE GROUP"; ObjectID = "cf2-1k-Ril"; */
-"cf2-1k-Ril.normalTitle" = "CREATE GROUP";
+"cf2-1k-Ril.normalTitle" = "GUMAWA NG TRIBO";
+
 
 /* Class = "UILabel"; text = "Select Contacts"; ObjectID = "cgj-ca-WOq"; */
-"cgj-ca-WOq.text" = "Select Contacts";
+"cgj-ca-WOq.text" = "Piliin ang Mga Contact";
+
 
 /* Class = "UILabel"; text = "Tags"; ObjectID = "dbS-d6-I3s"; */
 "dbS-d6-I3s.text" = "Tags";
 
-/* Class = "UIButton"; normalTitle = ""; ObjectID = "dd5-pA-wNn"; */
-"dd5-pA-wNn.normalTitle" = "";
-
-/* Class = "UILabel"; text = "0"; ObjectID = "f1A-c4-RTC"; */
-"f1A-c4-RTC.text" = "0";
 
 /* Class = "UILabel"; text = "Amount to Stake:"; ObjectID = "gVi-4b-hTN"; */
-"gVi-4b-hTN.text" = "Amount to Stake:";
+"gVi-4b-hTN.text" = "Halaga sa Stake:";
+
 
 /* Class = "UIButton"; normalTitle = "JOIN GROUP"; ObjectID = "jpH-eJ-Dbz"; */
-"jpH-eJ-Dbz.normalTitle" = "JOIN GROUP";
+"jpH-eJ-Dbz.normalTitle" = "SUMALI SA TRIBO";
 
-/* Class = "UIButton"; normalTitle = "close"; ObjectID = "kfJ-LJ-fNx"; */
-"kfJ-LJ-fNx.normalTitle" = "close";
-
-/* Class = "UIButton"; normalTitle = ""; ObjectID = "lhO-Qb-nu4"; */
-"lhO-Qb-nu4.normalTitle" = "";
 
 /* Class = "UIButton"; normalTitle = "DONE"; ObjectID = "m8D-yB-Qoq"; */
-"m8D-yB-Qoq.normalTitle" = "DONE";
+"m8D-yB-Qoq.normalTitle" = "TAPOS";
 
-/* Class = "UILabel"; text = "Tribe Badges"; ObjectID = "mpu-h1-TPp"; */
-"mpu-h1-TPp.text" = "Tribe Badges";
 
 /* Class = "UILabel"; text = "Price per Message:"; ObjectID = "osg-OM-VAr"; */
 "osg-OM-VAr.text" = "Price per Message:";
 
-/* Class = "UILabel"; text = "Price to Join:"; ObjectID = "qvX-dy-6Gx"; */
-"qvX-dy-6Gx.text" = "Price to Join:";
 
-/* Class = "UIButton"; normalTitle = "DONE"; ObjectID = "rBx-GJ-bFQ"; */
-"rBx-GJ-bFQ.normalTitle" = "DONE";
+/* Class = "UILabel"; text = "Price to Join:"; ObjectID = "qvX-dy-6Gx"; */
+"qvX-dy-6Gx.text" = "Presyo sa Pagsali:";
+
 
 /* Class = "UILabel"; text = "Price to Join"; ObjectID = "rC4-MQ-7tj"; */
-"rC4-MQ-7tj.text" = "Price to Join";
+"rC4-MQ-7tj.text" = "Presyo sa Pagsali";
+
 
 /* Class = "UILabel"; text = "Group Image"; ObjectID = "rTn-ps-L7c"; */
-"rTn-ps-L7c.text" = "Group Image";
+"rTn-ps-L7c.text" = "Imahe";
 
-/* Class = "UILabel"; text = ""; ObjectID = "swz-sl-eCR"; */
-"swz-sl-eCR.text" = "";
 
 /* Class = "UILabel"; text = "Amount to Stake"; ObjectID = "tF7-eB-zYG"; */
-"tF7-eB-zYG.text" = "Amount to Stake";
+"tF7-eB-zYG.text" = "Halaga para sa Stake";
+
 
 /* Class = "UILabel"; text = "Name *"; ObjectID = "tKb-aq-70S"; */
-"tKb-aq-70S.text" = "Name *";
+"tKb-aq-70S.text" = "Pangalan *";
+
 
 /* Class = "UILabel"; text = "Time to Stake (hours)"; ObjectID = "tvJ-jS-VqC"; */
-"tvJ-jS-VqC.text" = "Time to Stake (hours)";
+"tvJ-jS-VqC.text" = "Oras para sa Stake (oras)";
 
-/* Class = "UILabel"; text = "New Group Chat"; ObjectID = "uMU-CU-DoL"; */
-"uMU-CU-DoL.text" = "New Group Chat";
 
-/* Class = "UILabel"; text = "Created on Thu Jan 16 18:30"; ObjectID = "wDs-O6-DGd"; */
-"wDs-O6-DGd.text" = "Created on Thu Jan 16 18:30";
-
-/* Class = "UIButton"; normalTitle = "CANCEL"; ObjectID = "xDF-CD-5DB"; */
-"xDF-CD-5DB.normalTitle" = "CANCEL";
-
-/* Class = "UILabel"; text = "Feed Content Type"; ObjectID = "xEP-Yp-HDB"; */
-"xEP-Yp-HDB.text" = "Feed Content Type";
-
-/* Class = "UILabel"; text = "App Url"; ObjectID = "xZk-s2-JIf"; */
 "xZk-s2-JIf.text" = "App Url";
 
-/* Class = "UIButton"; normalTitle = "more_vert"; ObjectID = "zQI-hv-hYn"; */
-"zQI-hv-hYn.normalTitle" = "more_vert";
 
-/* Class = "UIButton"; normalTitle = ""; ObjectID = "zlL-dk-zMu"; */
-"zlL-dk-zMu.normalTitle" = "";
+"XEl-j5-cm2.text" = "Feed Url";
+
+
+"xEP-Yp-HDB.text" = "Uri ng Nilalaman ng Feed";
+
+
+/* Class = "UILabel"; text = "New Group Chat"; ObjectID = "uMU-CU-DoL"; */
+"uMU-CU-DoL.text" = "Bagong Pang-grupong Chat";
+
+
+"IjR-gq-j9u.text" = "Listahan sa tribes.sphinx.chat?";
+
+
+"9fz-nc-HRb.text" = "Aprubahan ang bawat kahilingan para sa membership?";
+
+
+"9fa-JQ-04V.text" = "Nag-a-upload ng larawan...";
+
+
+"TWz-rt-SOH.text" = "MAGDAGDAG NG MIYEMBRO SA GRUPO";
+
+
+"1aq-Kg-Gvl.text" = "Alyas *";
+
+
+"WbN-e3-yid.text" = "Larawan ng Miyembro ng Tribo";
+
+
+"6Ml-t1-tHR.text" = "Pampublikong Susi*";
+
+
+"IOB-X9-wYC.text" = "Hint ng Ruta";
+
+
+"Hzg-6R-zf4.text" = "Susing Pang-contact *";
+
+
+"Kjs-er-Gfs.normalTitle" = "Magdagdag ng Miyembro";
+
+
+"2R1-bw-8cr.text" = "Nag-a-upload ng Imahe...X";

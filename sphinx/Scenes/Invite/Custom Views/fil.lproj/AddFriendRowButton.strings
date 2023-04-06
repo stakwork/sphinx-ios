@@ -1,12 +1,11 @@
 
+
+
+
+
 /* Class = "UILabel"; text = "Add Friend"; ObjectID = "29C-Oy-Bxb"; */
-"29C-Oy-Bxb.text" = "Add Friend";
+"29C-Oy-Bxb.text" = "Magdagdag ng Kaibigan";
 
-/* Class = "UILabel"; text = ""; ObjectID = "AkY-fh-YTF"; */
-"AkY-fh-YTF.text" = "";
 
-/* Class = "UILabel"; text = ""; ObjectID = "FZZ-LQ-tfv"; */
-"FZZ-LQ-tfv.text" = "";
-
-/* Class = "UILabel"; text = "Create Tribe"; ObjectID = "LZc-5P-LQX"; */
-"LZc-5P-LQX.text" = "Create Tribe";
+/* Class = "UILabel"; text = "Create Group"; ObjectID = "LZc-5P-LQX"; */
+"LZc-5P-LQX.text" = "Gumawa ng Grupo";

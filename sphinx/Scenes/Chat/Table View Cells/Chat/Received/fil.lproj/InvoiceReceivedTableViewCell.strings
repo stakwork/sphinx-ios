@@ -1,30 +1,5 @@
 
-/* Class = "UILabel"; text = "2 500"; ObjectID = "1lS-ez-1vF"; */
-"1lS-ez-1vF.text" = "2 500";
 
-/* Class = "UILabel"; text = "lock"; ObjectID = "BGc-in-E3a"; */
-"BGc-in-E3a.text" = "lock";
-
-/* Class = "UILabel"; text = "6:05 AM"; ObjectID = "JRw-hY-uRC"; */
-"JRw-hY-uRC.text" = "6:05 AM";
-
-/* Class = "UILabel"; text = "sat"; ObjectID = "WBO-hy-SML"; */
-"WBO-hy-SML.text" = "sat";
-
-/* Class = "UILabel"; text = "2 500"; ObjectID = "Yog-Si-uBo"; */
-"Yog-Si-uBo.text" = "2 500";
-
-/* Class = "UILabel"; text = "What if the label has more text"; ObjectID = "c1D-gV-mNI"; */
-"c1D-gV-mNI.text" = "What if the label has more text";
-
-/* Class = "UILabel"; text = "Expire in 39 minutes"; ObjectID = "gIK-Ok-irq"; */
-"gIK-Ok-irq.text" = "Expire in 39 minutes";
-
-/* Class = "UILabel"; text = "sat"; ObjectID = "ilI-qf-vxK"; */
-"ilI-qf-vxK.text" = "sat";
 
 /* Class = "UILabel"; text = "PAY"; ObjectID = "wUm-4G-XfL"; */
-"wUm-4G-XfL.text" = "PAY";
-
-/* Class = "UILabel"; text = "What if the label has more text"; ObjectID = "yC0-0x-apz"; */
-"yC0-0x-apz.text" = "What if the label has more text";
+"wUm-4G-XfL.text" = "MAGBAYAD";

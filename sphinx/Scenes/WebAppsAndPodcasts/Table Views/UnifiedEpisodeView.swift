@@ -19,7 +19,7 @@ protocol FeedItemRowDelegate : class {
     func shouldStartDownloading(episode: PodcastEpisode, cell: UICollectionViewCell)
     func shouldDeleteFile(episode: PodcastEpisode, cell: UICollectionViewCell)
     func shouldShowMore(episode: PodcastEpisode,cell: UICollectionViewCell)
-    func shouldShowDescription(episode: PodcastEpisode)
+    func shouldShowDescription(episode: PodcastEpisode,cell:UITableViewCell)
     
     func shouldShowMore(video:Video,cell: UICollectionViewCell)
     func shouldShare(video:Video)

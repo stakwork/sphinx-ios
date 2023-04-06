@@ -14,6 +14,7 @@ protocol ItemDescriptionTableViewHeaderCellDelegate{
     func itemShareTapped(video:Video)
     func itemMoreTapped(episode:PodcastEpisode)
     func itemMoreTapped(video:Video)
+    func itemDownloadTapped(episode:PodcastEpisode)
 }
 
 class ItemDescriptionTableViewHeaderCell: UITableViewCell {
@@ -27,8 +28,9 @@ class ItemDescriptionTableViewHeaderCell: UITableViewCell {
     @IBOutlet weak var dotView: UIView!
     @IBOutlet weak var timeRemaining: UILabel!
     @IBOutlet weak var playCheckmark: UIImageView!
-    @IBOutlet weak var downloadButton: UIImageView!
-    
+    @IBOutlet weak var downloadButtonImage: UIImageView!
+    @IBOutlet weak var downloadButton: UIButton!
+    @IBOutlet weak var downloadProgressBar: CircularProgressView!
     
     func isRecommendationVideo() -> Bool {
         if let episode = episode,
@@ -53,7 +55,7 @@ class ItemDescriptionTableViewHeaderCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func configureView(podcast:PodcastFeed,episode:PodcastEpisode){
+    func configureView(podcast:PodcastFeed,episode:PodcastEpisode,download:Download?){
         self.episode = episode
         playButton.text = PodcastPlayerController.sharedInstance.isPlaying(episodeId: episode.itemID) ? "pause" : "play_arrow"
         podcastTitleLabel.text = podcast.title
@@ -69,8 +71,15 @@ class ItemDescriptionTableViewHeaderCell: UITableViewCell {
             mediaTypeIcon.image = #imageLiteral(resourceName: "youtubeVideoTypeIcon")
             dotView.isHidden = true
             timeRemaining.isHidden = true
-            downloadButton.alpha = 0.25
+            downloadButton.alpha = 0.5
             downloadButton.isUserInteractionEnabled = false
+        }
+        else if podcast.isRecommendationsPodcast == true {
+            downloadButton.isEnabled = false
+            downloadButton.alpha = 0.5
+        } else {
+            downloadButton.isEnabled = true
+            downloadButton.alpha = 1.0
         }
         
         let duration = episode.duration ?? 0
@@ -80,6 +89,9 @@ class ItemDescriptionTableViewHeaderCell: UITableViewCell {
             isOnProgress: currentTime > 0
         )
         timeRemaining.text = timeString
+        
+        
+        configureDownload(episode: episode, download: download)
     }
     
     func configureView(videoFeed:VideoFeed,video:Video){
@@ -98,6 +110,33 @@ class ItemDescriptionTableViewHeaderCell: UITableViewCell {
         
         timeRemaining.isHidden = true
     }
+    
+    //Networking:
+    func configureDownload(episode: PodcastEpisode, download: Download?) {
+        downloadButtonImage.isHidden = true
+        downloadProgressBar.isHidden = true
+        
+        if episode.isDownloaded {
+            downloadButtonImage.isHidden = false
+            downloadButtonImage.image = UIImage(named: "playerListDownloaded")
+            downloadButtonImage.tintColor = UIColor.Sphinx.ReceivedIcon
+        } else if let download = download {
+            downloadProgressBar.isHidden = false
+            updateDownloadState(download)
+        } else {
+            downloadButtonImage.isHidden = false
+            downloadButtonImage.image = UIImage(named: "playerListDownload")
+            downloadButtonImage.tintColor = UIColor.Sphinx.Text.withAlphaComponent(0.5)
+        }
+        
+        downloadButton.tintColorDidChange()
+    }
+    
+    func updateDownloadState(_ download: Download) {
+        let progress = CGFloat(download.progress) / CGFloat(100)
+        downloadProgressBar.progressAnimation(to: progress, active: download.isDownloading)
+    }
+    
     @IBAction func shareButton(_ sender: Any) {
         if let episode = self.episode{
             delegate?.itemShareTapped(episode: episode)
@@ -121,6 +160,11 @@ class ItemDescriptionTableViewHeaderCell: UITableViewCell {
     
     @IBAction func downloadButtonTapped(_ sender: Any) {
         print("download tapped")
+        if let episode = episode,
+           !episode.isDownloaded{
+            downloadProgressBar.progressAnimation(to: 0, active: true)
+            delegate?.itemDownloadTapped(episode: episode)
+        }
     }
     
     

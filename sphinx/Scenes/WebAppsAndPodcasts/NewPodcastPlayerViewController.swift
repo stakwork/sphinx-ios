@@ -149,9 +149,10 @@ class NewPodcastPlayerViewController: UIViewController {
 extension NewPodcastPlayerViewController : PodcastEpisodesDSDelegate {
     func didDismiss() {}
     
-    func didTapForDescriptionAt(episode: PodcastEpisode) {
-        if let feed = episode.feed{
-            let vc = ItemDescriptionViewController.instantiate(podcast: feed, episode: episode)
+    func didTapForDescriptionAt(episode: PodcastEpisode,cell:UITableViewCell) {
+        if let feed = episode.feed,
+           let index = tableView.indexPath(for: cell)?.row{
+            let vc = ItemDescriptionViewController.instantiate(podcast: feed, episode: episode,index:index)
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
@@ -449,5 +450,14 @@ extension UIViewController {
         DispatchQueue.main.async {
             self.present(activityViewController, animated: true, completion: nil)
         }
+    }
+}
+
+extension NewPodcastPlayerViewController : ItemDescriptionViewControllerDelegate{
+    func shouldDismissAndPlayVideo(video:Video){}
+    func shouldDismissAndPlayVideo(episodeAsVideo:PodcastEpisode){}
+    
+    func didDismissDescriptionView(index:Int){
+        self.reload(index)
     }
 }

@@ -334,9 +334,9 @@ extension RecommendationFeedItemsCollectionViewController {
 
 
 extension RecommendationFeedItemsCollectionViewController : FeedItemRowDelegate {
-    func shouldShowDescription(episode: PodcastEpisode) {
+    func shouldShowDescription(episode: PodcastEpisode,cell:UITableViewCell) {
         if let feed = episode.feed{
-            let vc = ItemDescriptionViewController.instantiate(podcast: feed, episode: episode)
+            let vc = ItemDescriptionViewController.instantiate(podcast: feed, episode: episode, index: 0)
             vc.delegate = self
             self.navigationController?.pushViewController(vc, animated: true)
         }
@@ -377,7 +377,7 @@ extension RecommendationFeedItemsCollectionViewController : FeedItemRowDelegate 
 
 extension RecommendationFeedItemsCollectionViewController : PodcastEpisodesDSDelegate {
     func didDismiss() {}
-    func didTapForDescriptionAt(episode: PodcastEpisode) {}
+    func didTapForDescriptionAt(episode: PodcastEpisode,cell:UITableViewCell) {}
     func didTapForDescriptionAt(index: Int) {}
     func didTapEpisodeAt(index: Int) {}
     func downloadTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {}
@@ -397,4 +397,7 @@ extension RecommendationFeedItemsCollectionViewController : ItemDescriptionViewC
         self.updateSnapshot()
     }
     
+    func didDismissDescriptionView(index:Int) {
+        
+    }
 }

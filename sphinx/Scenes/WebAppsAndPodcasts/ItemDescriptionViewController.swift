@@ -12,6 +12,7 @@ import UIKit
 protocol ItemDescriptionViewControllerDelegate{
     func shouldDismissAndPlayVideo(video:Video)
     func shouldDismissAndPlayVideo(episodeAsVideo:PodcastEpisode)
+    func didDismissDescriptionView(index:Int)
 }
 
 class ItemDescriptionViewController : UIViewController{
@@ -20,6 +21,9 @@ class ItemDescriptionViewController : UIViewController{
     @IBOutlet weak var navbarPodcastTitle: UILabel!
     @IBOutlet weak var navBarPlayButton: UILabel!
     var podcastPlayerController = PodcastPlayerController.sharedInstance
+    let downloadService = DownloadService.sharedInstance
+    
+    var index : Int?=nil
     
     var podcast : PodcastFeed!
     var episode: PodcastEpisode!
@@ -32,29 +36,45 @@ class ItemDescriptionViewController : UIViewController{
     
     override func viewDidLoad() {
         //self.view.backgroundColor = .purple
+        downloadService.setDelegate(
+            delegate: self,
+            forKey: DownloadServiceDelegateKeys.PodcastPlayerDelegate
+        )
+        
         setupTableView()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if let index = index{
+            self.delegate?.didDismissDescriptionView(index: index)
+        }
     }
     
     static func instantiate(
         podcast: PodcastFeed,
-        episode: PodcastEpisode
+        episode: PodcastEpisode,
+        index:Int
     ) -> ItemDescriptionViewController {
         let viewController = StoryboardScene.WebApps.itemDescriptionViewController.instantiate()
         
         viewController.podcast = podcast
         viewController.episode = episode
+        viewController.index = index
     
         return viewController
     }
     
     static func instantiate(
         videoFeed:VideoFeed,
-        video:Video
+        video:Video,
+        index:Int
     )->ItemDescriptionViewController{
         let viewController = StoryboardScene.WebApps.itemDescriptionViewController.instantiate()
         
         viewController.video = video
         viewController.videoFeed = videoFeed
+        viewController.index = index
     
         return viewController
     }
@@ -98,7 +118,8 @@ extension ItemDescriptionViewController : UITableViewDelegate,UITableViewDataSou
                 for: indexPath
             ) as! ItemDescriptionTableViewHeaderCell
             if podcast != nil && episode != nil{
-                cell.configureView(podcast: podcast, episode: episode)
+                let download = downloadService.activeDownloads[episode.getRemoteAudioUrl()?.absoluteString ?? ""]
+                cell.configureView(podcast: podcast, episode: episode, download: download)
             }
             else if video != nil && videoFeed != nil{
                 cell.configureView(videoFeed: videoFeed, video: video)
@@ -319,6 +340,11 @@ extension ItemDescriptionViewController : ItemDescriptionTableViewHeaderCellDele
         self.present(vc, animated: true)
     }
     
+    func itemDownloadTapped(episode: PodcastEpisode) {
+        downloadService.startDownload(episode)
+        tableView.reloadRows(at: [IndexPath(item: 0, section: 0)], with: .none)
+    }
+    
     func didTogglePausePlay() {
         self.handlePlayerToggle()
     }
@@ -330,7 +356,7 @@ extension ItemDescriptionViewController:PodcastEpisodesDSDelegate{
         self.tableView.reloadData()
     }
     
-    func didTapForDescriptionAt(episode: PodcastEpisode) {
+    func didTapForDescriptionAt(episode: PodcastEpisode,cell:UITableViewCell) {
         
     }
     
@@ -355,4 +381,15 @@ extension ItemDescriptionViewController:PodcastEpisodesDSDelegate{
     }
     
     
+}
+
+
+extension ItemDescriptionViewController:DownloadServiceDelegate {
+    func shouldReloadRowFor(download: Download) {
+        if let episode = episode {
+            if episode.getRemoteAudioUrl()?.absoluteString == download.originalUrl {
+                tableView?.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
+            }
+        }
+    }
 }

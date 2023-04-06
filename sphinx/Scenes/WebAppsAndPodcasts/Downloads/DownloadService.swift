@@ -15,6 +15,7 @@ protocol DownloadServiceDelegate : class {
 enum DownloadServiceDelegateKeys: String {
     case PodcastPlayerDelegate = "PodcastPlayerDelegate"
     case FeedItemDetailsDelegate = "FeedItemDetailsDelegate"
+    case ItemDescriptionDelegate = "ItemDescriptionDelegate"
 }
 
 class DownloadService : NSObject {

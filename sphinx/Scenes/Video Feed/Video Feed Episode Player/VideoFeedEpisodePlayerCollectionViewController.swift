@@ -375,17 +375,17 @@ extension VideoFeedEpisodePlayerCollectionViewController {
 extension VideoFeedEpisodePlayerCollectionViewController: FeedItemRowDelegate, PodcastEpisodesDSDelegate {
     func didDismiss() {}
     
-    func shouldShowDescription(episode: PodcastEpisode) {}
+    func shouldShowDescription(episode: PodcastEpisode,cell:UITableViewCell) {}
     
     func shouldShowDescription(video: Video) {
         if let feed = video.videoFeed{
-            let vc = ItemDescriptionViewController.instantiate(videoFeed: feed, video: video)
+            let vc = ItemDescriptionViewController.instantiate(videoFeed: feed, video: video, index: 0)
             vc.delegate = self
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
     
-    func didTapForDescriptionAt(episode: PodcastEpisode) {}
+    func didTapForDescriptionAt(episode: PodcastEpisode,cell:UITableViewCell) {}
     
     
     func shouldStartDownloading(episode: PodcastEpisode, cell: UITableViewCell)  {}
@@ -516,4 +516,8 @@ extension VideoFeedEpisodePlayerCollectionViewController:ItemDescriptionViewCont
     }
     
     func shouldDismissAndPlayVideo(episodeAsVideo: PodcastEpisode) {}
+    
+    func didDismissDescriptionView(index:Int) {
+        
+    }
 }

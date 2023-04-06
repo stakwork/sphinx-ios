@@ -164,6 +164,19 @@
                             <action selector="showMoreTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Esu-UL-BGm"/>
                         </connections>
                     </button>
+                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2hX-DX-fql" customClass="CircularProgressView" customModule="sphinx" customModuleProvider="target">
+                        <rect key="frame" x="13" y="223" width="22" height="22"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="22" id="35a-lG-GJe"/>
+                            <constraint firstAttribute="height" constant="22" id="E0q-ki-pPf"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="playPauseFontSize">
+                                <real key="value" value="14"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="playerListDownload" translatesAutoresizingMaskIntoConstraints="NO" id="T45-LC-WdO">
                         <rect key="frame" x="4" y="214" width="40" height="40"/>
                         <color key="tintColor" name="SecondaryText"/>
@@ -184,12 +197,14 @@
                     <constraint firstItem="T45-LC-WdO" firstAttribute="centerY" secondItem="yts-b5-ClK" secondAttribute="centerY" id="G4E-WD-bIY"/>
                     <constraint firstItem="vTj-Zk-N2s" firstAttribute="leading" secondItem="QP1-Ja-uGO" secondAttribute="trailing" constant="9.3333333333333144" id="Hf3-Kk-gQg"/>
                     <constraint firstItem="T45-LC-WdO" firstAttribute="top" secondItem="JKe-d3-aqc" secondAttribute="top" id="Kih-bV-H8g"/>
+                    <constraint firstItem="2hX-DX-fql" firstAttribute="centerY" secondItem="JKe-d3-aqc" secondAttribute="centerY" id="Mjo-gL-CuH"/>
                     <constraint firstItem="ueu-c7-ouX" firstAttribute="bottom" secondItem="B8W-Ie-hrX" secondAttribute="bottom" id="MmB-gF-ytK"/>
                     <constraint firstItem="B8W-Ie-hrX" firstAttribute="top" secondItem="6qc-aa-rj6" secondAttribute="bottom" constant="13" id="SLD-SY-W57"/>
                     <constraint firstItem="vTj-Zk-N2s" firstAttribute="centerY" secondItem="QP1-Ja-uGO" secondAttribute="centerY" id="TOb-PL-RyB"/>
                     <constraint firstAttribute="bottom" secondItem="dzd-Id-2Vj" secondAttribute="bottom" id="Tn1-qv-DJ6"/>
                     <constraint firstItem="JKe-d3-aqc" firstAttribute="width" secondItem="JKe-d3-aqc" secondAttribute="height" id="UTO-4G-LJw"/>
                     <constraint firstItem="Tet-to-dIA" firstAttribute="centerY" secondItem="JKe-d3-aqc" secondAttribute="centerY" id="ZMe-is-PLl"/>
+                    <constraint firstItem="2hX-DX-fql" firstAttribute="centerX" secondItem="JKe-d3-aqc" secondAttribute="centerX" id="ZYO-UL-oZb"/>
                     <constraint firstItem="l3a-IT-wam" firstAttribute="leading" secondItem="Tet-to-dIA" secondAttribute="trailing" constant="24" id="Znj-f6-lTP"/>
                     <constraint firstItem="zib-ft-Udd" firstAttribute="top" secondItem="dzd-Id-2Vj" secondAttribute="top" constant="12" id="amE-mG-Eyu"/>
                     <constraint firstAttribute="trailing" secondItem="dzd-Id-2Vj" secondAttribute="trailing" id="cCZ-FI-qh8"/>
@@ -210,7 +225,9 @@
             <connections>
                 <outlet property="dateLabel" destination="ueu-c7-ouX" id="XH7-Lq-CDn"/>
                 <outlet property="dotView" destination="jMI-If-dqe" id="4aD-nL-4Uc"/>
-                <outlet property="downloadButton" destination="T45-LC-WdO" id="1Hj-eR-8XO"/>
+                <outlet property="downloadButton" destination="JKe-d3-aqc" id="nkC-DX-LI1"/>
+                <outlet property="downloadButtonImage" destination="T45-LC-WdO" id="Gcd-rQ-AAj"/>
+                <outlet property="downloadProgressBar" destination="2hX-DX-fql" id="y5M-Bn-3Xt"/>
                 <outlet property="episodeTitleLabel" destination="zib-ft-Udd" id="lJS-6C-B6L"/>
                 <outlet property="mediaTypeIcon" destination="B8W-Ie-hrX" id="DKZ-ja-zaq"/>
                 <outlet property="playButton" destination="yts-b5-ClK" id="QXl-tk-lIh"/>

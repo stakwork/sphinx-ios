@@ -44,7 +44,7 @@ class UnifiedEpisodeTableViewCell: UITableViewCell {
 
 extension UnifiedEpisodeTableViewCell : PodcastEpisodeRowDelegate {
     func shouldShowDescription(episode:PodcastEpisode){
-        delegate?.shouldShowDescription(episode: episode)
+        delegate?.shouldShowDescription(episode: episode,cell: self)
     }
     
     func shouldShowDescription(video:Video){

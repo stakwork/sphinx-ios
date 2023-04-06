@@ -9,7 +9,7 @@
 import UIKit
 
 protocol PodcastEpisodesDSDelegate : class {
-    func didTapForDescriptionAt(episode:PodcastEpisode)
+    func didTapForDescriptionAt(episode:PodcastEpisode,cell:UITableViewCell)
     func didTapEpisodeAt(index: Int)
     func downloadTapped(_ indexPath: IndexPath, episode: PodcastEpisode)
     func deleteTapped(_ indexPath: IndexPath, episode: PodcastEpisode)
@@ -133,8 +133,8 @@ extension PodcastEpisodesDataSource : UIScrollViewDelegate {
 }
 
 extension PodcastEpisodesDataSource : FeedItemRowDelegate {
-    func shouldShowDescription(episode: PodcastEpisode) {
-        delegate?.didTapForDescriptionAt(episode:episode)
+    func shouldShowDescription(episode: PodcastEpisode,cell:UITableViewCell) {
+        delegate?.didTapForDescriptionAt(episode:episode,cell:cell)
     }
     
     func shouldShowDescription(video: Video) {}

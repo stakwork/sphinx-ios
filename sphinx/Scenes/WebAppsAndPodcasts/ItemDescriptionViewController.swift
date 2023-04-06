@@ -365,11 +365,13 @@ extension ItemDescriptionViewController:PodcastEpisodesDSDelegate{
     }
     
     func downloadTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {
-        print("downloadTapped")
+        itemDownloadTapped(episode: episode)
     }
     
     func deleteTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {
-        
+        episode.shouldDeleteFile {
+            self.tableView.reloadData()
+        }
     }
     
     func shouldToggleTopView(show: Bool) {

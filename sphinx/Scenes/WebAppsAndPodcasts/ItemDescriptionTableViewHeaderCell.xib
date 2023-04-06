@@ -57,7 +57,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="didPlayIndicator" translatesAutoresizingMaskIntoConstraints="NO" id="vTj-Zk-N2s">
-                                <rect key="frame" x="164" y="170" width="12" height="12"/>
+                                <rect key="frame" x="163.33333333333334" y="170" width="12" height="12"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="12" id="Ahy-KK-cvB"/>
                                     <constraint firstAttribute="width" constant="12" id="WZh-vo-RaD"/>
@@ -101,13 +101,13 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" horizontalCompressionResistancePriority="253" text="3 Apr 2022" textAlignment="natural" lineBreakMode="middleTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ueu-c7-ouX">
-                        <rect key="frame" x="39" y="168" width="59" height="16"/>
+                        <rect key="frame" x="39" y="168" width="58.666666666666657" height="16"/>
                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="12"/>
                         <color key="textColor" name="SecondaryText"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jMI-If-dqe">
-                        <rect key="frame" x="106" y="174" width="4" height="4"/>
+                        <rect key="frame" x="105.66666666666667" y="174" width="4" height="4"/>
                         <color key="backgroundColor" name="SecondaryText"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="4" id="FdX-dA-rcM"/>
@@ -115,7 +115,7 @@
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" horizontalCompressionResistancePriority="253" text="Played" textAlignment="natural" lineBreakMode="middleTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QP1-Ja-uGO">
-                        <rect key="frame" x="118.00000000000001" y="168" width="36.666666666666671" height="16"/>
+                        <rect key="frame" x="117.66666666666667" y="168" width="36.333333333333329" height="16"/>
                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="12"/>
                         <color key="textColor" name="SecondaryText"/>
                         <nil key="highlightedColor"/>
@@ -133,21 +133,6 @@
                         <buttonConfiguration key="configuration" style="plain" image="playerListShare"/>
                         <connections>
                             <action selector="shareButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="ZlB-Ye-2nG"/>
-                        </connections>
-                    </button>
-                    <button opaque="NO" contentMode="scaleAspectFit" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JKe-d3-aqc">
-                        <rect key="frame" x="4" y="214" width="40" height="40"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="40" id="OYh-MQ-HY5"/>
-                            <constraint firstAttribute="width" secondItem="JKe-d3-aqc" secondAttribute="height" id="l29-wq-dT7"/>
-                        </constraints>
-                        <color key="tintColor" name="SecondaryText"/>
-                        <state key="normal" image="newDownloadIcon">
-                            <color key="titleColor" name="SecondaryText"/>
-                        </state>
-                        <buttonConfiguration key="configuration" style="plain"/>
-                        <connections>
-                            <action selector="downloadButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="NpA-eF-gb9"/>
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleAspectFit" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l3a-IT-wam">
@@ -182,6 +167,21 @@
                         <color key="tintColor" name="SecondaryText"/>
                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="default"/>
                     </imageView>
+                    <button opaque="NO" contentMode="scaleAspectFit" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JKe-d3-aqc">
+                        <rect key="frame" x="4" y="214" width="40" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="40" id="OYh-MQ-HY5"/>
+                            <constraint firstAttribute="width" secondItem="JKe-d3-aqc" secondAttribute="height" id="l29-wq-dT7"/>
+                        </constraints>
+                        <color key="tintColor" name="SecondaryText"/>
+                        <state key="normal" image="newDownloadIcon">
+                            <color key="titleColor" name="SecondaryText"/>
+                        </state>
+                        <buttonConfiguration key="configuration" style="plain"/>
+                        <connections>
+                            <action selector="downloadButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="NpA-eF-gb9"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="ueu-c7-ouX" firstAttribute="top" secondItem="B8W-Ie-hrX" secondAttribute="top" id="16D-r7-ZjM"/>

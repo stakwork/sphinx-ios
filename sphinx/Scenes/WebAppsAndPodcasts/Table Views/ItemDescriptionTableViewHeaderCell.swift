@@ -42,31 +42,34 @@ class ItemDescriptionTableViewHeaderCell: UITableViewCell {
     
     weak var episode:PodcastEpisode?=nil
     weak var video:Video? = nil
+    
     var delegate:ItemDescriptionTableViewHeaderCellDelegate? = nil
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+        playButton.makeCircular()
+        dotView.makeCircular()
+        mediaTypeIcon.layer.cornerRadius = 3.0
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
-        // Configure the view for the selected state
     }
     
-    func configureView(podcast:PodcastFeed,episode:PodcastEpisode,download:Download?){
+    func configureView(
+        podcast: PodcastFeed,
+        episode: PodcastEpisode,
+        download: Download?
+    ){
         self.episode = episode
+        
         playButton.text = PodcastPlayerController.sharedInstance.isPlaying(episodeId: episode.itemID) ? "pause" : "play_arrow"
         podcastTitleLabel.text = podcast.title
         episodeTitleLabel.text = episode.title
-        playButton.makeCircular()
-        dotView.makeCircular()
-        mediaTypeIcon.layer.cornerRadius = 3.0
         dateLabel.text = episode.dateString
-        playCheckmark.isHidden = (self.episode?.wasPlayed ?? false) ?  false : true
         
-        if self.isRecommendationVideo(){
+        if self.isRecommendationVideo() {
             playCheckmark.isHidden = true
             mediaTypeIcon.image = #imageLiteral(resourceName: "youtubeVideoTypeIcon")
             dotView.isHidden = true
@@ -74,7 +77,7 @@ class ItemDescriptionTableViewHeaderCell: UITableViewCell {
             downloadButtonImage.alpha = 0.25
             downloadButton.isUserInteractionEnabled = false
         }
-        else if podcast.isRecommendationsPodcast == true {
+        else if podcast.isRecommendationsPodcast {
             downloadButton.isEnabled = false
             downloadButtonImage.alpha = 0.25
         } else {
@@ -88,31 +91,35 @@ class ItemDescriptionTableViewHeaderCell: UITableViewCell {
         let timeString = (duration - currentTime).getEpisodeTimeString(
             isOnProgress: currentTime > 0
         )
-        timeRemaining.text = timeString
         
+        let isPlayed = (self.episode?.wasPlayed ?? false)
+        playCheckmark.isHidden = !isPlayed
+        timeRemaining.text = isPlayed ? "played".localized : timeString
         
         configureDownload(episode: episode, download: download)
     }
     
-    func configureView(videoFeed:VideoFeed,video:Video){
+    func configureView(
+        videoFeed: VideoFeed,
+        video: Video
+    ){
         self.video = video
+        
         downloadButtonImage.alpha = 0.25
         podcastTitleLabel.text = videoFeed.title
         episodeTitleLabel.text = video.title
         dotView.isHidden = true
         dateLabel.text = video.publishDateText
         playCheckmark.isHidden = true
-        playButton.makeCircular()
-        dotView.makeCircular()
-        mediaTypeIcon.layer.cornerRadius = 3.0
         mediaTypeIcon.image = #imageLiteral(resourceName: "youtubeVideoTypeIcon")
-        
-        
         timeRemaining.isHidden = true
     }
     
     //Networking:
-    func configureDownload(episode: PodcastEpisode, download: Download?) {
+    func configureDownload(
+        episode: PodcastEpisode,
+        download: Download?
+    ) {
         downloadButtonImage.isHidden = true
         downloadProgressBar.isHidden = true
         

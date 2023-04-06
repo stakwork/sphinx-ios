@@ -334,7 +334,7 @@ extension RecommendationFeedItemsCollectionViewController {
 
 
 extension RecommendationFeedItemsCollectionViewController : FeedItemRowDelegate {
-    func shouldShowDescription(episode: PodcastEpisode,cell:UITableViewCell) {
+    func shouldShowDescription(episode: PodcastEpisode, cell:UITableViewCell) {
         if let feed = episode.feed{
             let vc = ItemDescriptionViewController.instantiate(podcast: feed, episode: episode, index: 0)
             vc.delegate = self

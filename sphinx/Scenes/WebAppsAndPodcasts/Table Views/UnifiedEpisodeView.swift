@@ -323,14 +323,10 @@ class UnifiedEpisodeView : UIView {
     }
     
     @IBAction func shouldShowDescription(){
-        //ItemDescriptionViewController
-        print("showing description")
         if let delegate = podcastDelegate,
-        let episode = episode{
+        let episode = episode {
             delegate.shouldShowDescription(episode: episode)
-        }
-        else if let delegate = videoDelegate,
-        let video = videoEpisode{
+        } else if let delegate = videoDelegate, let video = videoEpisode{
             delegate.shouldShowDescription(video: video)
         }
     }

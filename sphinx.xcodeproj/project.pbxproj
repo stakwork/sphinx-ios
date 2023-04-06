@@ -1808,6 +1808,12 @@
 		470396D52535D10E007F9C23 /* Table Views */ = {
 			isa = PBXGroup;
 			children = (
+				CE07B83829DC9CA700A02652 /* ItemDescriptionImageTableViewCell.swift */,
+				CE07B83929DC9CA700A02652 /* ItemDescriptionImageTableViewCell.xib */,
+				CEEBBB4029DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.swift */,
+				CEEBBB4129DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.xib */,
+				CE07B83429DC92F900A02652 /* ItemDescriptionTableViewCell.swift */,
+				CE07B83529DC92F900A02652 /* ItemDescriptionTableViewCell.xib */,
 				CEE433B029AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.swift */,
 				CEF88DCB29B64F4F00DC1C40 /* UnifiedEpisodeView.swift */,
 				CEF88DC929B64E5000DC1C40 /* UnifiedEpisodeView.xib */,
@@ -3227,12 +3233,6 @@
 				CE3D8CA029B0FF7100EDB637 /* FeedItemDetailVC.swift */,
 				47183CAF254893B100E6FD19 /* NewPodcastPlayerViewController.swift */,
 				CEEBBB3E29DC47930093923D /* ItemDescriptionViewController.swift */,
-				CE07B83829DC9CA700A02652 /* ItemDescriptionImageTableViewCell.swift */,
-				CE07B83929DC9CA700A02652 /* ItemDescriptionImageTableViewCell.xib */,
-				CEEBBB4029DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.swift */,
-				CE07B83429DC92F900A02652 /* ItemDescriptionTableViewCell.swift */,
-				CE07B83529DC92F900A02652 /* ItemDescriptionTableViewCell.xib */,
-				CEEBBB4129DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.xib */,
 				47AF0D34254C957200C98398 /* PodcastAnimationViewController.swift */,
 				473E5DE22575696C00697EEA /* PickerViewController.swift */,
 				473BC88C25F287340070E519 /* PodcastNewEpisodeViewController.swift */,

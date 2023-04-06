@@ -18,8 +18,11 @@ protocol ItemDescriptionViewControllerDelegate{
 class ItemDescriptionViewController : UIViewController{
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var headerContainerView: UIView!
     @IBOutlet weak var navbarPodcastTitle: UILabel!
     @IBOutlet weak var navBarPlayButton: UILabel!
+    @IBOutlet weak var backButton: UIButton!
+    
     var podcastPlayerController = PodcastPlayerController.sharedInstance
     let downloadService = DownloadService.sharedInstance
     
@@ -34,8 +37,11 @@ class ItemDescriptionViewController : UIViewController{
     var isExpanded : Bool = false
     var delegate : ItemDescriptionViewControllerDelegate? = nil
     
+    let kHeaderCellHeight: CGFloat = 276.0
+    let kDescriptionCellCollapsedHeight: CGFloat = 150.0
+    let kHorizontalMargins: CGFloat = 32.0
+    
     override func viewDidLoad() {
-        //self.view.backgroundColor = .purple
         downloadService.setDelegate(
             delegate: self,
             forKey: DownloadServiceDelegateKeys.PodcastPlayerDelegate
@@ -86,88 +92,93 @@ class ItemDescriptionViewController : UIViewController{
     
     func setupTableView(){
         navbarPodcastTitle.isHidden = true
-        navbarPodcastTitle.isUserInteractionEnabled = false
-        configurePausePlay()
-        if let episode = episode{
-            navbarPodcastTitle.text = episode.title
-        }
-        else if let video = video{
-            navbarPodcastTitle.text = video.title
-        }
-        
         navBarPlayButton.isHidden = true
         navBarPlayButton.makeCircular()
         
+        configurePausePlay()
+        
+        if let episode = episode {
+            navbarPodcastTitle.text = episode.title
+        } else if let video = video {
+            navbarPodcastTitle.text = video.title
+        }
+
         self.view.backgroundColor = UIColor.Sphinx.Body
-        self.tableView.backgroundColor = UIColor.Sphinx.Body
+        
         tableView.register(UINib(nibName: "ItemDescriptionTableViewHeaderCell", bundle: nil), forCellReuseIdentifier: ItemDescriptionTableViewHeaderCell.reuseID)
         tableView.register(UINib(nibName: "ItemDescriptionTableViewCell", bundle: nil), forCellReuseIdentifier: ItemDescriptionTableViewCell.reuseID)
         tableView.register(UINib(nibName: "ItemDescriptionImageTableViewCell", bundle: nil), forCellReuseIdentifier: ItemDescriptionImageTableViewCell.reuseID)
         
+        tableView.contentInset.top = 60.0
         tableView.delegate = self
         tableView.dataSource = self
         
     }
 }
 
-extension ItemDescriptionViewController : UITableViewDelegate,UITableViewDataSource,ItemDescriptionTableViewCellDelegate,UIScrollViewDelegate{
+extension ItemDescriptionViewController : UITableViewDelegate, UITableViewDataSource, ItemDescriptionTableViewCellDelegate, UIScrollViewDelegate {
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 0{
-            let cell = tableView.dequeueReusableCell(
+        if indexPath.row == 0 {
+            return tableView.dequeueReusableCell(
                 withIdentifier: ItemDescriptionTableViewHeaderCell.reuseID,
                 for: indexPath
             ) as! ItemDescriptionTableViewHeaderCell
-            if podcast != nil && episode != nil{
-                let download = downloadService.activeDownloads[episode.getRemoteAudioUrl()?.absoluteString ?? ""]
-                cell.configureView(podcast: podcast, episode: episode, download: download)
-            }
-            else if video != nil && videoFeed != nil{
-                cell.configureView(videoFeed: videoFeed, video: video)
-            }
-            else{
-                return UITableViewCell()
-            }
-            cell.delegate = self
-            
-            return cell
-        }
-        else if indexPath.row == 1{
-            let cell = tableView.dequeueReusableCell(
+        } else if indexPath.row == 1 {
+            return tableView.dequeueReusableCell(
                 withIdentifier: ItemDescriptionTableViewCell.reuseID,
                 for: indexPath
             ) as! ItemDescriptionTableViewCell
-            if episode != nil,
-               let description = episode.episodeDescription{
-                cell.configureView(descriptionText: description.nonHtmlRawString, isExpanded: self.isExpanded)
-            }
-            else if video != nil,
-                    let description = video.videoDescription{
-                cell.configureView(descriptionText: description.nonHtmlRawString, isExpanded: self.isExpanded)
-            }
-            else{
-                cell.configureView(descriptionText: "No description for this episode", isExpanded: false)
-            }
-            cell.delegate = self
-            return cell
-        }
-        else{
-            let cell = tableView.dequeueReusableCell(
+        } else {
+            return tableView.dequeueReusableCell(
                 withIdentifier: ItemDescriptionImageTableViewCell.reuseID,
                 for: indexPath
             ) as! ItemDescriptionImageTableViewCell
-            if episode != nil,
-               let image = episode.imageToShow,
-               let url = URL(string: image){
-                cell.configureView(imageURL: url)
-            }
-            else if video != nil,
-                let imageURL = video.thumbnailURL{
-                cell.configureView(imageURL: imageURL)
-            }
-            
-            return cell
         }
         
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let cell = cell as? ItemDescriptionTableViewHeaderCell {
+            if let podcast = podcast, let episode = episode {
+                let download = downloadService.activeDownloads[episode.getRemoteAudioUrl()?.absoluteString ?? ""]
+                cell.configureView(
+                    podcast: podcast,
+                    episode: episode,
+                    download: download
+                )
+            } else if let video = video, let videoFeed = videoFeed {
+                cell.configureView(
+                    videoFeed: videoFeed,
+                    video: video
+                )
+            }
+            cell.delegate = self
+        } else if let cell = cell as? ItemDescriptionTableViewCell {
+            if let episode = episode {
+                cell.configureView(
+                    descriptionText: (episode.episodeDescription ?? "No description for this episode").nonHtmlRawString,
+                    isExpanded: self.isExpanded
+                )
+            } else if let video = video {
+                cell.configureView(
+                    descriptionText: (video.videoDescription ?? "No description for this episode").nonHtmlRawString,
+                    isExpanded: self.isExpanded
+                )
+            }
+        } else if let cell = cell as? ItemDescriptionImageTableViewCell {
+            if let episode = episode {
+                cell.configureView(
+                    imageURL: episode.imageToShow,
+                    placeHolderImage: "podcastPlaceholder"
+                )
+            } else if let video = video {
+                cell.configureView(
+                    imageURL: video.thumbnailURL?.absoluteString,
+                    placeHolderImage: "videoPlaceholder"
+                )
+            }
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -175,36 +186,32 @@ extension ItemDescriptionViewController : UITableViewDelegate,UITableViewDataSou
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row == 1 && isExpanded{
-            self.isExpanded = false
+        if indexPath.row == 1 {
+            self.isExpanded = !self.isExpanded
             tableView.reloadData()
         }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if(indexPath.row == 0){
-            return 270.0
-        }
-        else if(indexPath.row == 1){
-            if(isExpanded),
-              episode != nil,
-              let description = episode.episodeDescription,
-              let font = UIFont(name: "Roboto", size: 14.0){
-                let height = calculateStringHeight(string: description, constraintedWidth: tableView.frame.width, font: font)
-                return height
+        if (indexPath.row == 0) {
+            return kHeaderCellHeight
+        } else if(indexPath.row == 1){
+            let description = episode?.episodeDescription ?? video?.videoDescription ?? ""
+            
+            if isExpanded {
+                let font = UIFont(name: "Roboto-Regular", size: 14.0)!
+                
+                return UILabel.getLabelSize(
+                    width: UIScreen.main.bounds.width - kHorizontalMargins,
+                    text: description.nonHtmlRawString,
+                    font: font
+                ).height + kHorizontalMargins
+                
+            } else {
+                return kDescriptionCellCollapsedHeight
             }
-            else if(isExpanded),
-               video != nil,
-                let description = video.videoDescription,
-                let font = UIFont(name: "Roboto", size: 14.0){
-                 return calculateStringHeight(string: description, constraintedWidth: tableView.frame.width, font: font)
-             }
-            else{
-                return 150.0
-            }
-        }
-        else{
-            return 342.0
+        } else {
+            return UIScreen.main.bounds.width - 32.0
         }
     }
     
@@ -214,50 +221,45 @@ extension ItemDescriptionViewController : UITableViewDelegate,UITableViewDataSou
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView == tableView {
-            // write logic for tableview disble scrolling
-            print("scrolling")
-            if(tableView.isCellVisible(section: 0, row: 0)){
-                if(navbarPodcastTitle.isHidden == false){
-                    self.navbarPodcastTitle.alpha = 1.0
-                    self.navBarPlayButton.alpha = 1.0
-                    UIView.animate(withDuration: 0.25, delay: 0.0, animations: {
-                        self.navbarPodcastTitle.alpha = 0.0
-                        self.navBarPlayButton.alpha = 0.0
-                    },completion: {_ in
-                        self.navbarPodcastTitle.isHidden = true
-                        self.navBarPlayButton.isHidden = true
-                    })
-                }
-            }
-            else{
-                if(navbarPodcastTitle.isHidden == true){
+        let kPlayButtonYPosition: CGFloat = 172
+        
+        if(scrollView.contentOffset.y < kPlayButtonYPosition){
+            if !navbarPodcastTitle.isHidden {
+                
+                self.navbarPodcastTitle.alpha = 1.0
+                self.navBarPlayButton.alpha = 1.0
+                self.navBarPlayButton.alpha = 0.0
+                
+                self.headerContainerView.backgroundColor = UIColor.clear
+                self.view.bringSubviewToFront(self.tableView)
+                self.view.bringSubviewToFront(self.backButton)
+                
+                UIView.animate(withDuration: 0.25, delay: 0.0, animations: {
                     self.navbarPodcastTitle.alpha = 0.0
-                    self.navBarPlayButton.alpha = 0.0
-                    self.navbarPodcastTitle.isHidden = false
-                    self.navBarPlayButton.isHidden = false
-                    UIView.animate(withDuration: 0.25, delay: 0.0, animations: {
-                        self.navbarPodcastTitle.alpha = 1.0
-                        self.navBarPlayButton.alpha = 1.0
-                    },
-                    completion: {_ in
-                        
-                    })
-                }
+                },completion: {_ in
+                    self.navbarPodcastTitle.isHidden = true
+                    self.navBarPlayButton.isHidden = true
+                })
+            }
+        } else {
+            if navbarPodcastTitle.isHidden {
+                
+                self.navbarPodcastTitle.alpha = 0.0
+                self.navBarPlayButton.alpha = 0.0
+                self.navBarPlayButton.alpha = 1.0
+                self.navbarPodcastTitle.isHidden = false
+                self.navBarPlayButton.isHidden = false
+                
+                self.headerContainerView.backgroundColor = UIColor.Sphinx.Body
+                self.view.bringSubviewToFront(self.headerContainerView)
+                self.view.bringSubviewToFront(self.backButton)
+                
+                UIView.animate(withDuration: 0.25, delay: 0.0, animations: {
+                    self.navbarPodcastTitle.alpha = 1.0
+                }, completion: {_ in })
             }
         }
     }
-    
-    
-    func calculateStringHeight(string:String,constraintedWidth width: CGFloat, font: UIFont) -> CGFloat {
-        let label =  UILabel(frame: CGRect(x: 0, y: 0, width: width, height: .greatestFiniteMagnitude))
-        label.numberOfLines = 0
-        label.text = string
-        label.font = font
-        label.sizeToFit()
-
-        return max(label.frame.height,150.0)
-     }
     
     func configurePausePlay(){
         if let episode = episode{
@@ -271,53 +273,32 @@ extension ItemDescriptionViewController : UITableViewDelegate,UITableViewDataSou
     }
     
     @IBAction func tappedPlay(){
-        print("play")
         handlePlayerToggle()
     }
     
     func handlePlayerToggle(){
-        if let episode = episode,
-        let podcast = podcast,
-           episode.isPodcast == true,
-        let data = podcast.getPodcastData(episodeId: episode.itemID){
+        if let episode = episode, let podcast = podcast, episode.isPodcast, let data = podcast.getPodcastData(episodeId: episode.itemID) {
+            
             if podcastPlayerController.isPlaying(episodeId: episode.itemID){
                 podcastPlayerController.submitAction(.Pause(data))
-            }
-            else{
+            } else{
                 podcastPlayerController.submitAction(.Play(data))
             }
             configurePausePlay()
-        }
-        else if let video = video{
+        } else if let video = video {
             self.navigationController?.popViewController(animated: true)
+            
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
                 self.delegate?.shouldDismissAndPlayVideo(video: video)
             })
-        }
-        else if let episode = episode,
-                episode.isYoutubeVideo && episode.feed?.feedID == "Recommendations-Feed"{
+        } else if let episode = episode, episode.isYoutubeVideo && episode.feed?.feedID == "Recommendations-Feed" {
             self.navigationController?.popViewController(animated: true)
+            
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
                 self.delegate?.shouldDismissAndPlayVideo(episodeAsVideo: episode)
             })
         }
         
-    }
-}
-
-
-extension UITableView {
-
-    /// Check if cell at the specific section and row is visible
-    /// - Parameters:
-    /// - section: an Int reprenseting a UITableView section
-    /// - row: and Int representing a UITableView row
-    /// - Returns: True if cell at section and row is visible, False otherwise
-    func isCellVisible(section:Int, row: Int) -> Bool {
-        guard let indexes = self.indexPathsForVisibleRows else {
-            return false
-        }
-        return indexes.contains {$0.section == section && $0.row == row }
     }
 }
 
@@ -356,13 +337,9 @@ extension ItemDescriptionViewController:PodcastEpisodesDSDelegate{
         self.tableView.reloadData()
     }
     
-    func didTapForDescriptionAt(episode: PodcastEpisode,cell:UITableViewCell) {
-        
-    }
+    func didTapForDescriptionAt(episode: PodcastEpisode,cell:UITableViewCell) {}
     
-    func didTapEpisodeAt(index: Int) {
-        
-    }
+    func didTapEpisodeAt(index: Int) {}
     
     func downloadTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {
         itemDownloadTapped(episode: episode)
@@ -374,15 +351,9 @@ extension ItemDescriptionViewController:PodcastEpisodesDSDelegate{
         }
     }
     
-    func shouldToggleTopView(show: Bool) {
-        
-    }
+    func shouldToggleTopView(show: Bool) {}
     
-    func showEpisodeDetails(episode: PodcastEpisode, indexPath: IndexPath) {
-        
-    }
-    
-    
+    func showEpisodeDetails(episode: PodcastEpisode, indexPath: IndexPath) {}
 }
 
 

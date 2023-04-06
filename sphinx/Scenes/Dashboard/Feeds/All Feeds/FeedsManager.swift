@@ -262,6 +262,7 @@ class FeedsManager : NSObject {
         let feedUrl = contentFeedStatus.feedURL
         
         var chat : Chat? = nil
+        
         if let validChatId = contentFeedStatus.chatID {
             chat = Chat.getChatWith(id: validChatId, managedContext: context)
         }
@@ -321,7 +322,10 @@ class FeedsManager : NSObject {
         chat: Chat?
     ) {
         localFeed.isSubscribedToFromSearch = remoteContentStatus.subscriptionStatus
-        localFeed.chat = chat
+        
+        if let chat = chat {
+            localFeed.chat = chat
+        }
         
         if !localFeed.isPodcast {
             return

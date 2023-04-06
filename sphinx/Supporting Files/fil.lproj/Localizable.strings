@@ -148,6 +148,7 @@
 //INVOICE DETAILS
 "x.copied.clipboard" = "%@ kopyahin sa clipboard";
 "payment.request" = "Kahilingan sa Pagbabayad";
+"paste.invoice.invoice.or.pubkey" = "I-paste ang Invoice o Public Key";
 //ADDRESS BOOK
 "edit.contact.upper" = "EDIT CONTACT";
 "subscribed.upper" = "SUBSCRIBED";
@@ -482,6 +483,8 @@
 "mark.as.unplayed" = "Markahan bilang hindi na-play";
 "erase.from.device" = "Burahin sa aparato";
 "share" = "Ibahagi";
+"share.from.beginning" = "Ibahagi sa simula";
+"share.from.current.time" = "Ibahagi mula sa kasalukuyang panahon";
 "played" = "Na-play";
 // VIDEOS
 "video" = "video";
@@ -493,6 +496,7 @@
 // FEED
 "feed.recommendations" = "Mga rekomendasyon";
 "feed.following" = "Sumusunod";
+"recently.played" = "Kamakailang Nilalaro";
 "feed.listen-now" = "Makinig na Ngayon";
 "feed.watch-now" = "Manood na Ngayon";
 "feed.read-now" = "Basahin na Ngayon";

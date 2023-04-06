@@ -520,6 +520,8 @@
 "mark.as.unplayed" = "Mark as Unplayed";
 "erase.from.device" = "Erase from device";
 "share" = "Share";
+"share.from.beginning" = "Share from beginning";
+"share.from.current.time" = "Share from current time";
 "played" = "Played";
 
 // VIDEOS

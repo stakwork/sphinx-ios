@@ -298,7 +298,7 @@ extension UIViewController {
         AlertHelper.showOptionsPopup(
             title: "Share from Current Timestamp?",
             message: "You can share from the beginning or from current timestamp to make it easy for the recipient.",
-            options: ["Share from beginning","Share from current time"],
+            options: ["share.from.beginning".localized,"share.from.current.time".localized],
             callbacks: [noTimestampCallback, timestampCallback],
             sourceView: self.view,
             vc: self

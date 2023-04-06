@@ -71,15 +71,15 @@ class ItemDescriptionTableViewHeaderCell: UITableViewCell {
             mediaTypeIcon.image = #imageLiteral(resourceName: "youtubeVideoTypeIcon")
             dotView.isHidden = true
             timeRemaining.isHidden = true
-            downloadButton.alpha = 0.5
+            downloadButtonImage.alpha = 0.25
             downloadButton.isUserInteractionEnabled = false
         }
         else if podcast.isRecommendationsPodcast == true {
             downloadButton.isEnabled = false
-            downloadButton.alpha = 0.5
+            downloadButtonImage.alpha = 0.25
         } else {
             downloadButton.isEnabled = true
-            downloadButton.alpha = 1.0
+            downloadButtonImage.alpha = 1.0
         }
         
         let duration = episode.duration ?? 0
@@ -96,7 +96,7 @@ class ItemDescriptionTableViewHeaderCell: UITableViewCell {
     
     func configureView(videoFeed:VideoFeed,video:Video){
         self.video = video
-        downloadButton.alpha = 0.25
+        downloadButtonImage.alpha = 0.25
         podcastTitleLabel.text = videoFeed.title
         episodeTitleLabel.text = video.title
         dotView.isHidden = true

@@ -99,14 +99,8 @@ extension PodcastPlayerController {
         }
     }
     
-    func getPreloadedItem(url: String) -> (CachingPlayerItem?, Bool) {
-        let item = podcastItems[url] ?? allItems[url]
-
-        guard let item = item else {
-            return (nil, false)
-        }
-
-        return (item, true)
+    func getPreloadedItem(url: String) -> CachingPlayerItem? {
+        return podcastItems[url] ?? allItems[url]
     }
 
     func play(
@@ -162,10 +156,10 @@ extension PodcastPlayerController {
             ///UI lock when start playing
             loadEpisodeImage()
             
-            let (item, preloaded) = getPreloadedItem(url: podcastData.episodeUrl.absoluteString)
+            let item = getPreloadedItem(url: podcastData.episodeUrl.absoluteString)
             
             DispatchQueue.global(qos: .userInitiated).async {
-                if let item = item, preloaded || podcastData.downloaded{
+                if let item = item {
                     DispatchQueue.main.async {
                         playAssetAfterLoad(item)
                     }
@@ -189,7 +183,6 @@ extension PodcastPlayerController {
         }
         
         func playAssetAfterLoad(_ playerItem: CachingPlayerItem) {
-            
             if self.player == nil {
                 self.player = AVPlayer(playerItem: playerItem)
             } else {

@@ -506,8 +506,8 @@ extension AllTribeFeedsCollectionViewController {
         }
         
         let recentlyPlayedFeed = followedFeeds.sorted { (first, second) in
-            let firstDate = first.itemsArray.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
-            let secondDate = second.itemsArray.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
+            let firstDate = first.dateLastConsumed ?? Date.init(timeIntervalSince1970: 0)
+            let secondDate = second.dateLastConsumed ?? Date.init(timeIntervalSince1970: 0)
             
             if (firstDate == secondDate) {
                 let firstDate = first.itemsArray.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)

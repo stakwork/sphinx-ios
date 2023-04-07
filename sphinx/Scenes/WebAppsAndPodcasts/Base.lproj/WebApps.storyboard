@@ -419,7 +419,7 @@
                                         </constraints>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" name="Body"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="fMN-Kl-HJP" secondAttribute="trailing" id="DhK-rh-Hxk"/>
                                     <constraint firstAttribute="bottom" secondItem="fMN-Kl-HJP" secondAttribute="bottom" id="SHh-c9-3we"/>

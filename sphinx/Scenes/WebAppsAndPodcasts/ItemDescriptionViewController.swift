@@ -23,6 +23,8 @@ class ItemDescriptionViewController : UIViewController{
     @IBOutlet weak var navBarPlayButton: UILabel!
     @IBOutlet weak var backButton: UIButton!
     
+    var headerEffectView: UIVisualEffectView? = nil
+    
     var podcastPlayerController = PodcastPlayerController.sharedInstance
     let downloadService = DownloadService.sharedInstance
     
@@ -103,7 +105,7 @@ class ItemDescriptionViewController : UIViewController{
             navbarPodcastTitle.text = video.title
         }
 
-        self.view.backgroundColor = UIColor.Sphinx.Body
+        addBlur()
         
         tableView.register(UINib(nibName: "ItemDescriptionTableViewHeaderCell", bundle: nil), forCellReuseIdentifier: ItemDescriptionTableViewHeaderCell.reuseID)
         tableView.register(UINib(nibName: "ItemDescriptionTableViewCell", bundle: nil), forCellReuseIdentifier: ItemDescriptionTableViewCell.reuseID)
@@ -113,6 +115,26 @@ class ItemDescriptionViewController : UIViewController{
         tableView.delegate = self
         tableView.dataSource = self
         
+    }
+    
+    func addBlur() {
+        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.prominent)
+        let effectView = UIVisualEffectView(effect: blurEffect)
+        effectView.frame = self.view.bounds
+        effectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        self.view.addSubview(effectView)
+        self.view.sendSubviewToBack(effectView)
+        
+        let headerBlurEffect = UIBlurEffect(style: UIBlurEffect.Style.prominent)
+        headerEffectView = UIVisualEffectView(effect: headerBlurEffect)
+        headerEffectView?.frame = self.headerContainerView.bounds
+        headerEffectView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        headerEffectView?.isHidden = true
+        
+        if let headerEffectView = headerEffectView {
+            self.headerContainerView.addSubview(headerEffectView)
+            self.headerContainerView.sendSubviewToBack(headerEffectView)
+        }
     }
 }
 
@@ -229,8 +251,8 @@ extension ItemDescriptionViewController : UITableViewDelegate, UITableViewDataSo
                 self.navbarPodcastTitle.alpha = 1.0
                 self.navBarPlayButton.alpha = 1.0
                 self.navBarPlayButton.alpha = 0.0
+                self.headerEffectView?.isHidden = true
                 
-                self.headerContainerView.backgroundColor = UIColor.clear
                 self.view.bringSubviewToFront(self.tableView)
                 self.view.bringSubviewToFront(self.backButton)
                 
@@ -249,8 +271,8 @@ extension ItemDescriptionViewController : UITableViewDelegate, UITableViewDataSo
                 self.navBarPlayButton.alpha = 1.0
                 self.navbarPodcastTitle.isHidden = false
                 self.navBarPlayButton.isHidden = false
+                self.headerEffectView?.isHidden = false
                 
-                self.headerContainerView.backgroundColor = UIColor.Sphinx.Body
                 self.view.bringSubviewToFront(self.headerContainerView)
                 self.view.bringSubviewToFront(self.backButton)
                 

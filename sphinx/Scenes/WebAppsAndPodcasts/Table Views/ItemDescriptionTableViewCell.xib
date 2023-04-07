@@ -43,7 +43,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" name="Body"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="uou-Mz-QxR" firstAttribute="centerX" secondItem="sdP-1h-Dln" secondAttribute="centerX" id="7iE-0J-CIx"/>
                             <constraint firstItem="uou-Mz-QxR" firstAttribute="top" secondItem="sdP-1h-Dln" secondAttribute="top" constant="16" id="GVU-Xa-fep"/>
@@ -53,6 +53,7 @@
                         </constraints>
                     </view>
                 </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="sdP-1h-Dln" secondAttribute="trailing" id="Iww-bD-fHq"/>
                     <constraint firstAttribute="bottom" secondItem="sdP-1h-Dln" secondAttribute="bottom" id="Tvq-dx-o0C"/>
@@ -61,6 +62,7 @@
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
                 <outlet property="podcastDescriptionLabel" destination="uou-Mz-QxR" id="qx4-dM-Rdb"/>
                 <outlet property="showMoreLabel" destination="vLe-Dv-mjC" id="op1-XY-0MW"/>
@@ -69,9 +71,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <namedColor name="Body">
-            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="PrimaryText">
             <color red="0.16078431372549021" green="0.17254901960784313" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

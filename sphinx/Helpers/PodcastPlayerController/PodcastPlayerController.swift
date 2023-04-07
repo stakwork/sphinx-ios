@@ -18,7 +18,6 @@ protocol PlayerDelegate : class {
 }
 
 enum UserAction {
-    case Preload(PodcastData)
     case Play(PodcastData)
     case Pause(PodcastData)
     case Seek(PodcastData)
@@ -56,8 +55,8 @@ class PodcastPlayerController {
     
     var player: AVPlayer?
     
-    var allItems: [String: AVPlayerItem] = [:]
-    var podcastItems: [String: AVPlayerItem] = [:]
+    var allItems: [String: CachingPlayerItem] = [:]
+    var podcastItems: [String: CachingPlayerItem] = [:]
     
     var playingTimer : Timer? = nil
     var paymentsTimer : Timer? = nil
@@ -89,10 +88,12 @@ class PodcastPlayerController {
         return Static.instance
     }
     
+    let dispatchSemaphore = DispatchSemaphore(value: 1)
+    
     init() {
         setupNowPlayingInfoCenter()
         
-        let dispatchQueue = DispatchQueue(label: "podcast-preload-all", qos: .default)
+        let dispatchQueue = DispatchQueue.global(qos: .background)
         dispatchQueue.async {
             self.preloadAll()
         }

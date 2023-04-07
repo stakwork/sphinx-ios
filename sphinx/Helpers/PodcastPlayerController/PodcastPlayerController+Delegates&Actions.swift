@@ -23,8 +23,6 @@ extension PodcastPlayerController {
     
     func submitAction(_ action: UserAction) {
         switch(action) {
-        case .Preload(let podcastData):
-            preloadPodcastEpisodes(podcastData)
         case .Play(let podcastData):
             play(podcastData)
         case .Pause(let podcastData):
@@ -47,107 +45,68 @@ extension PodcastPlayerController {
     
     func preloadAll() {
         
-        let dispatchSemaphore = DispatchSemaphore(value: 1)
+        let sortedPodcasts = PodcastFeed.getAll().sorted { (first, second) in
+            let firstDate = first.dateLastConsumed ?? Date.init(timeIntervalSince1970: 0)
+            let secondDate = second.dateLastConsumed ?? Date.init(timeIntervalSince1970: 0)
+            
+            if (firstDate == secondDate) {
+                let firstDate = first.itemsArray.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
+                let secondDate = second.itemsArray.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
+
+                return firstDate > secondDate
+            }
+
+            return firstDate > secondDate
+        }
         
-        for feed in ContentFeed.getAll() {
+        for feed in sortedPodcasts {
             let podcast = PodcastFeed.convertFrom(contentFeed: feed)
+            let episodes = podcast.getEpisodesToCache()
             
-            if let lastEpisode = podcast.getLastEpisode() {
-                preloadEpisode(lastEpisode)
-            }
-            
-            if let currentEpisode = podcast.getCurrentEpisode() {
-                preloadEpisode(currentEpisode)
-            }
-        }
-        
-        func preloadEpisode(_ episode: PodcastEpisode) {
-            guard let url = episode.getAudioUrl() else {
-                return
-            }
-            
-            let urlPath = url.absoluteString
-            
-            if episode.isDownloaded {
-                return
-            }
-            
-            if allItems[urlPath] != nil {
-                return
-            }
-            
-            dispatchSemaphore.wait()
-            
-            let asset = AVURLAsset(url: url)
-            
-            asset.loadValuesAsynchronously(forKeys: ["playable"]) {
-                self.allItems[urlPath] = AVPlayerItem(asset: asset)
-                dispatchSemaphore.signal()
+            for episode in episodes {
+                preloadEpisode(episode)
             }
         }
     }
     
-    func preloadPodcastEpisodes(
-        _ podcastData: PodcastData
-    ) {
-        let dispatchQueue = DispatchQueue(label: "podcast-preload", qos: .default)
-        dispatchQueue.async {
-            self.preload(podcastData)
-        }
-    }
-    
-    func preload(
-        _ podcastData: PodcastData
-    ) {
-        if !isPlaying {
-            ///If not playing then release old podcast preloaded assets
-            podcastItems = [:]
-        }
-        
-        guard let podcast = getPodcastFrom(podcastData: podcastData) else {
+    func preloadEpisode(_ episode: PodcastEpisode) {
+        if !ConnectivityHelper.isConnectedToInternet {
             return
         }
         
-        let dispatchSemaphore = DispatchSemaphore(value: 1)
-        
-        for episode in podcast.episodesArray {
-            guard let url = episode.getAudioUrl() else {
-                continue
-            }
-            
-            let urlPath = url.absoluteString
-            
-            if episode.isDownloaded {
-                continue
-            }
-            
-            if podcastItems[urlPath] != nil {
-                continue
-            }
-            
-            dispatchSemaphore.wait()
-            
-            let asset = AVURLAsset(url: url)
-            
-            asset.loadValuesAsynchronously(forKeys: ["playable"]) {
-                self.podcastItems[urlPath] = AVPlayerItem(asset: asset)
-                dispatchSemaphore.signal()
-            }
+        guard let url = episode.getAudioUrl() else {
+            return
+        }
+
+        let urlPath = url.absoluteString
+
+        if episode.isDownloaded {
+            return
+        }
+
+        if allItems[urlPath] != nil {
+            return
+        }
+
+        dispatchSemaphore.wait()
+
+        let asset = AVURLAsset(url: url)
+
+        asset.loadValuesAsynchronously(forKeys: ["playable"]) {
+            let item = CachingPlayerItem(asset: asset, automaticallyLoadedAssetKeys: nil)
+            self.allItems[urlPath] = item
+            self.dispatchSemaphore.signal()
         }
     }
     
-    func getPreloadedItem(url: String) -> (AVPlayerItem?, Bool) {
+    func getPreloadedItem(url: String) -> (CachingPlayerItem?, Bool) {
         let item = podcastItems[url] ?? allItems[url]
-        
+
         guard let item = item else {
-            if let url = URL(string: url) {
-                let asset = AVURLAsset(url: url)
-                return (AVPlayerItem(asset: asset), false)
-            }
             return (nil, false)
         }
-        
-        return (item, item.asset.statusOfValue(forKey: "playable", error: nil) == .loaded)
+
+        return (item, true)
     }
 
     func play(
@@ -205,39 +164,49 @@ extension PodcastPlayerController {
             
             let (item, preloaded) = getPreloadedItem(url: podcastData.episodeUrl.absoluteString)
             
-            if let item = item {
-                if preloaded || podcastData.downloaded {
+            DispatchQueue.global(qos: .userInitiated).async {
+                if let item = item, preloaded || podcastData.downloaded{
+                    DispatchQueue.main.async {
+                        playAssetAfterLoad(item)
+                    }
+                    return
+                }
+                
+                if !ConnectivityHelper.isConnectedToInternet {
+                    self.runErrorStateUpdate()
+                    return
+                }
+                
+                let asset = AVURLAsset(url: podcastData.episodeUrl)
+                let item = CachingPlayerItem(asset: asset, automaticallyLoadedAssetKeys: nil)
+                
+                self.podcastItems[podcastData.episodeUrl.absoluteString] = item
+                
+                DispatchQueue.main.async {
                     playAssetAfterLoad(item)
-                } else {
-                    item.asset.loadValuesAsynchronously(forKeys: ["playable"], completionHandler: {
-                        self.podcastItems[podcastData.episodeUrl.absoluteString] = item
-                        
-                        DispatchQueue.main.async {
-                            playAssetAfterLoad(item)
-                        }
-                    })
                 }
             }
         }
         
-        func playAssetAfterLoad(_ playerItem: AVPlayerItem) {
+        func playAssetAfterLoad(_ playerItem: CachingPlayerItem) {
+            
             if self.player == nil {
                 self.player = AVPlayer(playerItem: playerItem)
-                self.player?.rate = podcastData.speed
             } else {
                 self.player?.replaceCurrentItem(with: playerItem)
             }
             
+            self.player?.rate = podcastData.speed
             self.player?.pause()
             self.player?.automaticallyWaitsToMinimizeStalling = false
             
             if let currentTime = podcastData.currentTime, currentTime > 0 {
                 self.player?.seek(to: CMTime(seconds: Double(currentTime), preferredTimescale: 1)) { _ in
-                    self.player?.playImmediately(atRate: podcastData.speed)
+                    self.player?.play()
                     self.didStartPlaying(playerItem)
                 }
             } else {
-                self.player?.playImmediately(atRate: podcastData.speed)
+                self.player?.play()
                 self.didStartPlaying(playerItem)
             }
         }
@@ -263,11 +232,21 @@ extension PodcastPlayerController {
             runPlayingStateUpdate()
             configureTimer()
             
+            preloadNextEpisode()
             trackItemStarted()
         } else {
             player?.pause()
 
             runErrorStateUpdate()
+        }
+    }
+    
+    func preloadNextEpisode() {
+        if let nextEpisode = podcast?.getNextEpisode() {
+            let dispatchQueue = DispatchQueue.global(qos: .background)
+            dispatchQueue.async {
+                self.preloadEpisode(nextEpisode)
+            }
         }
     }
     

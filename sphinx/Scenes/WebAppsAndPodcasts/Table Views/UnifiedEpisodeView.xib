@@ -50,24 +50,6 @@
             <rect key="frame" x="0.0" y="0.0" width="325" height="198"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bsm-ci-kIw">
-                    <rect key="frame" x="16" y="197" width="293" height="1"/>
-                    <color key="backgroundColor" name="ReceivedMsgBG"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="1" id="PnB-Om-nc4"/>
-                    </constraints>
-                </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="play_arrow" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qkA-t9-0Kl">
-                    <rect key="frame" x="277" y="158" width="32" height="32"/>
-                    <color key="backgroundColor" name="TextMessages"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="32" id="nCK-Sr-a5X"/>
-                        <constraint firstAttribute="height" constant="32" id="vdA-oW-i1c"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="25"/>
-                    <color key="textColor" name="Body"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="appPinIcon" translatesAutoresizingMaskIntoConstraints="NO" id="RXD-Tz-NED">
                     <rect key="frame" x="16" y="16" width="48" height="48"/>
                     <constraints>
@@ -97,14 +79,6 @@
                     <color key="textColor" name="Text"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SRf-Md-VOy">
-                    <rect key="frame" x="16" y="16" width="293" height="94"/>
-                    <state key="normal" title="Button"/>
-                    <buttonConfiguration key="configuration" style="plain" title=" "/>
-                    <connections>
-                        <action selector="shouldShowDescription" destination="-1" eventType="touchUpInside" id="wWu-JI-PQ0"/>
-                    </connections>
-                </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" horizontalCompressionResistancePriority="253" text="Sed ut perspiciatis unde omnis iste natus error sit vol uptatem accusantium dolormque laud" textAlignment="natural" lineBreakMode="middleTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9E9-4e-TCW">
                     <rect key="frame" x="16" y="66" width="294" height="44"/>
                     <constraints>
@@ -114,6 +88,14 @@
                     <color key="textColor" name="MainBottomIcons"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SRf-Md-VOy">
+                    <rect key="frame" x="16" y="16" width="293" height="94"/>
+                    <state key="normal" title="Button"/>
+                    <buttonConfiguration key="configuration" style="plain" title=" "/>
+                    <connections>
+                        <action selector="shouldShowDescription" destination="-1" eventType="touchUpInside" id="wWu-JI-PQ0"/>
+                    </connections>
+                </button>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="podcastTypeIcon" translatesAutoresizingMaskIntoConstraints="NO" id="odk-59-H2e">
                     <rect key="frame" x="16" y="118" width="16" height="16"/>
                     <constraints>
@@ -225,6 +207,24 @@
                         <action selector="moreButtonTouched" destination="-1" eventType="touchUpInside" id="GSf-05-tVM"/>
                     </connections>
                 </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="play_arrow" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qkA-t9-0Kl">
+                    <rect key="frame" x="277" y="158" width="32" height="32"/>
+                    <color key="backgroundColor" name="TextMessages"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="32" id="nCK-Sr-a5X"/>
+                        <constraint firstAttribute="height" constant="32" id="vdA-oW-i1c"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="25"/>
+                    <color key="textColor" name="Body"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bsm-ci-kIw">
+                    <rect key="frame" x="16" y="197" width="293" height="1"/>
+                    <color key="backgroundColor" name="ReceivedMsgBG"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="PnB-Om-nc4"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" name="Body"/>
             <constraints>

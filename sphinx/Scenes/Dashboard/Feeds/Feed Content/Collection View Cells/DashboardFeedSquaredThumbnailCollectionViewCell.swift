@@ -162,7 +162,7 @@ extension DashboardFeedSquaredThumbnailCollectionViewCell {
 extension ContentFeed: DashboardFeedSquaredThumbnailCollectionViewItem {
     
     var imageToShow: String? {
-        imageURL?.absoluteString ?? chat?.photoUrl
+        return imageURL?.absoluteString ?? chat?.photoUrl ?? itemsArray.first?.imageURL?.absoluteString
     }
     
     var placeholderImageName: String? {
@@ -192,7 +192,7 @@ extension ContentFeed: DashboardFeedSquaredThumbnailCollectionViewItem {
 extension VideoFeed: DashboardFeedSquaredThumbnailCollectionViewItem {
     
     var imageToShow: String? {
-        imageURL?.absoluteString ?? chat?.photoUrl
+        return imageURL?.absoluteString ?? chat?.photoUrl ?? videosArray.first?.thumbnailURL?.absoluteString
     }
     
     var placeholderImageName: String? {

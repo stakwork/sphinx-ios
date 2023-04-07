@@ -9,11 +9,14 @@ import Foundation
 import CoreData
 
 extension PodcastFeed {
-    public static func getAll() -> [ContentFeed] {
+    public static func getAll(
+        context: NSManagedObjectContext? = nil
+    ) -> [ContentFeed] {
         let feeds: [ContentFeed] = CoreDataManager.sharedManager.getObjectsOfTypeWith(
             predicate: Predicates.podcastFeeds,
             sortDescriptors: [NSSortDescriptor(key: "feedID", ascending: true)],
-            entityName: "ContentFeed"
+            entityName: "ContentFeed",
+            context: context
         )
         return feeds
     }

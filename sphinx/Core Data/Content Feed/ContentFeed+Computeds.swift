@@ -47,6 +47,17 @@ extension ContentFeed {
         return Array(destinations)
     }
     
+    
+    func setYTWorkaroundDestination(address:String){
+        if let managedObjectContext = self.managedObjectContext {
+            var ytDestination = ContentFeedPaymentDestination(context: managedObjectContext)
+            print(self.feedDescription)
+            ytDestination.address = address
+            ytDestination.feed = self
+            self.paymentDestinations = [ytDestination]
+        }
+    }
+    
     var itemsArray: [ContentFeedItem] {
         guard let items = items else {
             return []

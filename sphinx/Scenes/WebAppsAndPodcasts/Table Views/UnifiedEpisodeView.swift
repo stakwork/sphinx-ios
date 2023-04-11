@@ -186,14 +186,18 @@ class UnifiedEpisodeView : UIView {
             playingSound: playingSound
         )
         
-        episodeLabel.textColor = !playing ? UIColor.Sphinx.Text : UIColor.Sphinx.BlueTextAccent
-        progressView.backgroundColor = !playing ? UIColor.Sphinx.Text : UIColor.Sphinx.BlueTextAccent
+        episodeLabel.textColor = !playing ? UIColor.Sphinx.Text : UIColor.Sphinx.ReceivedIcon
+        progressView.backgroundColor = !playing ? UIColor.Sphinx.Text : UIColor.Sphinx.ReceivedIcon
+        
         progressView.alpha = !playing ? 0.3 : 1.0
         playArrow.text = !playing ? "play_arrow" : "pause"
         playArrow.isHidden = false
         
         episodeLabel.text = episode.title ?? "No title"
-        descriptionLabel.text = episode.episodeDescription?.nonHtmlRawString ?? "No description"
+        
+        descriptionLabel.text = episode.episodeDescription?.nonHtmlRawString
+        descriptionLabel.isHidden = (episode.episodeDescription?.nonHtmlRawString ?? "").isEmpty
+        
         divider.isHidden = isLastRow
         
         if let typeIconImage = episode.typeIconImage {
@@ -216,11 +220,10 @@ class UnifiedEpisodeView : UIView {
             let duration = episode.duration ?? 0
             let currentTime = episode.currentTime ?? 0
             
-            let timeString = (duration - currentTime).getEpisodeTimeString(
-                isOnProgress: currentTime > 0
-            )
+            let timeString = (duration - currentTime).getEpisodeTimeString(isOnProgress: currentTime > 0)
             
             timeRemainingLabel.text = timeString
+            dotView.isHidden = timeString.isEmpty
             didPlayImageView.isHidden = true
         }
 
@@ -231,7 +234,7 @@ class UnifiedEpisodeView : UIView {
         episodeImageView.isUserInteractionEnabled = true
         descriptionLabel.isUserInteractionEnabled = true
         
-        if(episode.feed?.feedID == "Recommendations-Feed"){
+        if (episode.feed?.feedID == "Recommendations-Feed"){
             timeRemainingLabel.isHidden = episode.isYoutubeVideo
             didPlayImageView.isHidden = (didPlayImageView.isHidden || episode.isYoutubeVideo)
             dotView.isHidden = true
@@ -287,7 +290,7 @@ class UnifiedEpisodeView : UIView {
         progressView.isHidden = true
         
         if let valid_duration = episode.duration, let valid_time = episode.currentTime, valid_time > 0 {
-            let percentage = Float(valid_time) / Float(valid_duration)
+            let percentage = max(Float(valid_time) / Float(valid_duration), Float(0.075))
             let newProgressWidth = (percentage * Float(fullWidth))
             progressWidthConstraint.constant = CGFloat(newProgressWidth)
             

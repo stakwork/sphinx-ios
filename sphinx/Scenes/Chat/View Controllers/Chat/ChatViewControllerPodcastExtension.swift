@@ -72,10 +72,13 @@ extension ChatViewController : PodcastPlayerVCDelegate {
             boostDelegate: self,
             fromDashboard: false
         )
-
-        podcastFeedVC.modalPresentationStyle = .automatic
-
-        present(podcastFeedVC, animated: true, completion: nil)
+        
+        let navController = UINavigationController()
+        
+        navController.viewControllers = [podcastFeedVC]
+        navController.modalPresentationStyle = .automatic
+        navController.isNavigationBarHidden = true
+        navigationController?.present(navController, animated: true)
     }
     
     func didFailPlayingPodcast() {

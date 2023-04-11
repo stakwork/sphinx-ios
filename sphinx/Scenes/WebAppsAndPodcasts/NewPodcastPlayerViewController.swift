@@ -31,8 +31,6 @@ class NewPodcastPlayerViewController: UIViewController {
     var tableHeaderView: PodcastPlayerView?
     
     var podcast: PodcastFeed! = nil
-    var deeplinkedEpisode:PodcastEpisode? = nil
-    var deeplinkTimestamp:Int? = nil
     
     var chat: Chat? {
         get {
@@ -65,25 +63,10 @@ class NewPodcastPlayerViewController: UIViewController {
         
         NotificationCenter.default.removeObserver(self, name: .refreshFeedUI, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(showPodcastInfo), name: .refreshFeedUI, object: nil)
-            
-        preloadPodcast()
-    }
-    
-    func preloadPodcast() {
-        guard let podcastData = podcast.getPodcastData() else {
-            return
-        }
-        
-        podcastPlayerController.submitAction(
-            UserAction.Preload(podcastData)
-        )
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if let episode = deeplinkedEpisode{
-            self.tableHeaderView?.playEpisode(episode: episode)
-        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -152,10 +135,24 @@ class NewPodcastPlayerViewController: UIViewController {
 }
 
 extension NewPodcastPlayerViewController : PodcastEpisodesDSDelegate {
+    func didDismiss() {}
+    
+    func didTapForDescriptionAt(episode: PodcastEpisode,cell:UITableViewCell) {
+        if let feed = episode.feed,
+           let index = tableView.indexPath(for: cell)?.row{
+            let vc = ItemDescriptionViewController.instantiate(podcast: feed, episode: episode,index:index)
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
     func deleteTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {
         episode.shouldDeleteFile {
             self.reload(indexPath.row)
         }
+    }
+    
+    func didTapForDescriptionAt(index: Int) {
+        
     }
     
     func didTapEpisodeAt(index: Int) {
@@ -441,5 +438,14 @@ extension UIViewController {
         DispatchQueue.main.async {
             self.present(activityViewController, animated: true, completion: nil)
         }
+    }
+}
+
+extension NewPodcastPlayerViewController : ItemDescriptionViewControllerDelegate{
+    func shouldDismissAndPlayVideo(video:Video){}
+    func shouldDismissAndPlayVideo(episodeAsVideo:PodcastEpisode){}
+    
+    func didDismissDescriptionView(index:Int){
+        self.reload(index)
     }
 }

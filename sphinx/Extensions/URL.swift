@@ -47,7 +47,8 @@ extension String {
             if component.contains("action") {
                 let elements = component.components(separatedBy: "=")
                 if elements.count > 1 {
-                    return elements[1]
+                    let key = elements[0]
+                    return component.replacingOccurrences(of: "\(key)=", with: "")
                 }
             }
         }

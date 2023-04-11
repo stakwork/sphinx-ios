@@ -81,6 +81,7 @@ class FeedItemDetailVC : UIViewController{
     }
     
     @IBAction func closeTapped(_ sender: Any) {
+        self.vm.delegate?.didDismiss()
         self.dismiss(animated: true)
     }
     

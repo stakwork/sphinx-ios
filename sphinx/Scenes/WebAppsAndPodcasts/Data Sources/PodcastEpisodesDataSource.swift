@@ -9,12 +9,14 @@
 import UIKit
 
 protocol PodcastEpisodesDSDelegate : class {
+    func didTapForDescriptionAt(episode:PodcastEpisode,cell:UITableViewCell)
     func didTapEpisodeAt(index: Int)
     func downloadTapped(_ indexPath: IndexPath, episode: PodcastEpisode)
     func deleteTapped(_ indexPath: IndexPath, episode: PodcastEpisode)
     func shouldToggleTopView(show: Bool)
     func shareTapped(episode:PodcastEpisode)
     func showEpisodeDetails(episode:PodcastEpisode,indexPath:IndexPath)
+    func didDismiss()
 }
 
 class PodcastEpisodesDataSource : NSObject {
@@ -131,6 +133,12 @@ extension PodcastEpisodesDataSource : UIScrollViewDelegate {
 }
 
 extension PodcastEpisodesDataSource : FeedItemRowDelegate {
+    func shouldShowDescription(episode: PodcastEpisode,cell:UITableViewCell) {
+        delegate?.didTapForDescriptionAt(episode:episode,cell:cell)
+    }
+    
+    func shouldShowDescription(video: Video) {}
+    
     func shouldShowMore(video: Video, cell: UICollectionViewCell) {}
     
     func shouldShare(video: Video) {}

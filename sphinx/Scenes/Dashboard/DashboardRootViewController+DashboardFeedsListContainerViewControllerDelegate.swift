@@ -166,9 +166,12 @@ extension DashboardRootViewController {
                 fromDashboard: true
             )
             
-            podcastFeedVC.modalPresentationStyle = .automatic
+            let navController = UINavigationController()
             
-            navigationController?.present(podcastFeedVC, animated: true)
+            navController.viewControllers = [podcastFeedVC]
+            navController.modalPresentationStyle = .automatic
+            navController.isNavigationBarHidden = true
+            navigationController?.present(navController, animated: true)
         }
     }
     
@@ -183,11 +186,12 @@ extension DashboardRootViewController {
                 delegate: self,
                 boostDelegate: self
             )
-        
-        viewController.modalPresentationStyle = .automatic
-        
-        navigationController?
-            .present(viewController, animated: true)
+
+        let navController = UINavigationController()
+        navController.viewControllers = [viewController]
+        navController.modalPresentationStyle = .automatic
+        navController.isNavigationBarHidden = true
+        navigationController?.present(navController, animated: true)
     }
     
     func presentItemWebView(
@@ -268,7 +272,11 @@ extension DashboardRootViewController {
         
         viewController.modalPresentationStyle = .automatic
         
-        navigationController?
-            .present(viewController, animated: true)
+        let navController = UINavigationController()
+        
+        navController.viewControllers = [viewController]
+        navController.modalPresentationStyle = .automatic
+        navController.isNavigationBarHidden = true
+        navigationController?.present(navController, animated: true)
     }
 }

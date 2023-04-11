@@ -139,7 +139,7 @@ class FeedsManager : NSObject {
     func restoreContentFeedStatusInBackgroundFor(
         feedId: String
     ) {
-        let dispatchQueue = DispatchQueue.global(qos: .userInitiated)
+        let dispatchQueue = DispatchQueue(label: "feed-status", qos: .default)
         dispatchQueue.async {
             self.restoreContentFeedStatusFor(feedId: feedId)
         }
@@ -167,7 +167,7 @@ class FeedsManager : NSObject {
     }
     
     func restoreContentFeedStatusInBackground() {
-        let dispatchQueue = DispatchQueue.global(qos: .userInitiated)
+        let dispatchQueue = DispatchQueue.global(qos: .background)
         dispatchQueue.async {
             self.restoreContentFeedStatus()
         }
@@ -262,6 +262,7 @@ class FeedsManager : NSObject {
         let feedUrl = contentFeedStatus.feedURL
         
         var chat : Chat? = nil
+        
         if let validChatId = contentFeedStatus.chatID {
             chat = Chat.getChatWith(id: validChatId, managedContext: context)
         }
@@ -321,7 +322,10 @@ class FeedsManager : NSObject {
         chat: Chat?
     ) {
         localFeed.isSubscribedToFromSearch = remoteContentStatus.subscriptionStatus
-        localFeed.chat = chat
+        
+        if let chat = chat {
+            localFeed.chat = chat
+        }
         
         if !localFeed.isPodcast {
             return
@@ -478,7 +482,8 @@ class FeedsManager : NSObject {
         if let feedComponent = components.first(where: {$0.contains(forKey)}) {
             let elements = feedComponent.components(separatedBy: "=")
             if elements.count > 1 {
-                return elements[1]
+                let key = elements[0]
+                return feedComponent.replacingOccurrences(of: "\(key)=", with: "")
             }
         }
         return nil
@@ -498,8 +503,7 @@ class FeedsManager : NSObject {
             if let feedID = extractContentDeepLinkMetaData(forKey: "feedID",components: components),
                let itemID = extractContentDeepLinkMetaData(forKey: "itemID", components: components),
                let feedURL = extractContentDeepLinkMetaData(forKey: "feedURL", components: components){
-                print(feedID)
-                print(itemID)
+                
                 //2. Feed it forward to instantiate the correct VC
                 lookupContentFeedAndItem(feedID: feedID, itemID: itemID, feedURL: feedURL, completion: { feed,item in
                     if let valid_feed = feed as? PodcastFeed,
@@ -511,14 +515,17 @@ class FeedsManager : NSObject {
                             boostDelegate: drvc,
                             fromDashboard: true
                         )
-                        let timestamp = Int(self.extractContentDeepLinkMetaData(forKey: "atTime", components: components) ?? "-1")
-                        podcastFeedVC.deeplinkedEpisode = valid_episode
-                        podcastFeedVC.deeplinkTimestamp = timestamp == -1 ? nil : timestamp
-                        drvc.navigationController?.present(
-                            podcastFeedVC,
-                            animated: true,
-                            completion: nil
-                        )
+                        if let currentTime = self.extractContentDeepLinkMetaData(forKey: "atTime", components: components) {
+                            valid_episode.currentTime = Int(currentTime)
+                        }
+                        valid_feed.currentEpisodeId = valid_episode.itemID
+                        
+                        let navController = UINavigationController()
+                        
+                        navController.viewControllers = [podcastFeedVC]
+                        navController.modalPresentationStyle = .automatic
+                        navController.isNavigationBarHidden = true
+                        drvc.navigationController?.present(navController, animated: true)
                     }
                     else if let _ = feed as? VideoFeed,
                     let video = item as? Video,

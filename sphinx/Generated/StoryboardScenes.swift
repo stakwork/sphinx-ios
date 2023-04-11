@@ -299,6 +299,8 @@ internal enum StoryboardScene {
         
         internal static let newPodcastPlayerViewController = SceneType<NewPodcastPlayerViewController>(storyboard: WebApps.self, identifier: "NewPodcastPlayerViewController")
         
+        internal static let itemDescriptionViewController = SceneType<ItemDescriptionViewController>(storyboard: WebApps.self, identifier: "ItemDescriptionViewController")
+        
         internal static let podcastAnimationViewController = SceneType<PodcastAnimationViewController>(storyboard: WebApps.self, identifier: "PodcastAnimationViewController")
         
         internal static let pickerViewController = SceneType<PickerViewController>(storyboard: WebApps.self, identifier: "PickerViewController")

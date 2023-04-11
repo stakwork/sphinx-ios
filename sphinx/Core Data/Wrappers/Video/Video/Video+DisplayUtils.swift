@@ -28,8 +28,6 @@ extension Video {
                 .minute,
                 .second,
             ],
-//            from: datePublished,
-//            to: Date()
             from: Date(),
             to: datePublished
         )

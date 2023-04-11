@@ -19,9 +19,11 @@ protocol FeedItemRowDelegate : class {
     func shouldStartDownloading(episode: PodcastEpisode, cell: UICollectionViewCell)
     func shouldDeleteFile(episode: PodcastEpisode, cell: UICollectionViewCell)
     func shouldShowMore(episode: PodcastEpisode,cell: UICollectionViewCell)
+    func shouldShowDescription(episode: PodcastEpisode,cell:UITableViewCell)
     
     func shouldShowMore(video:Video,cell: UICollectionViewCell)
     func shouldShare(video:Video)
+    func shouldShowDescription(video: Video)
 }
 
 protocol PodcastEpisodeRowDelegate : class {
@@ -29,11 +31,13 @@ protocol PodcastEpisodeRowDelegate : class {
     func shouldDeleteFile(episode: PodcastEpisode)
     func shouldShowMore(episode: PodcastEpisode)
     func shouldShare(episode: PodcastEpisode)
+    func shouldShowDescription(episode:PodcastEpisode)
 }
 
 protocol VideoRowDelegate : class {
     func shouldShowMore(video: Video)
     func shouldShare(video: Video)
+    func shouldShowDescription(video:Video)
 }
 
 class UnifiedEpisodeView : UIView {
@@ -61,6 +65,7 @@ class UnifiedEpisodeView : UIView {
     @IBOutlet weak var downloadProgressBar: CircularProgressView!
     @IBOutlet weak var animationContainer: UIView!
     @IBOutlet weak var animationView: AnimationView!
+    
     
     var episode: PodcastEpisode! = nil
     var videoEpisode: Video! = nil
@@ -158,6 +163,7 @@ class UnifiedEpisodeView : UIView {
             episodeImageView.image = UIImage(named: "videoPlaceholder")
         }
 
+        
         descriptionLabel.text = videoEpisode.videoDescription
         episodeLabel.text = videoEpisode.titleForDisplay
         dateLabel.text = videoEpisode.publishDateText
@@ -180,14 +186,18 @@ class UnifiedEpisodeView : UIView {
             playingSound: playingSound
         )
         
-        episodeLabel.textColor = !playing ? UIColor.Sphinx.Text : UIColor.Sphinx.BlueTextAccent
-        progressView.backgroundColor = !playing ? UIColor.Sphinx.Text : UIColor.Sphinx.BlueTextAccent
+        episodeLabel.textColor = !playing ? UIColor.Sphinx.Text : UIColor.Sphinx.ReceivedIcon
+        progressView.backgroundColor = !playing ? UIColor.Sphinx.Text : UIColor.Sphinx.ReceivedIcon
+        
         progressView.alpha = !playing ? 0.3 : 1.0
         playArrow.text = !playing ? "play_arrow" : "pause"
         playArrow.isHidden = false
         
         episodeLabel.text = episode.title ?? "No title"
-        descriptionLabel.text = episode.episodeDescription?.nonHtmlRawString ?? "No description"
+        
+        descriptionLabel.text = episode.episodeDescription?.nonHtmlRawString
+        descriptionLabel.isHidden = (episode.episodeDescription?.nonHtmlRawString ?? "").isEmpty
+        
         divider.isHidden = isLastRow
         
         if let typeIconImage = episode.typeIconImage {
@@ -210,17 +220,26 @@ class UnifiedEpisodeView : UIView {
             let duration = episode.duration ?? 0
             let currentTime = episode.currentTime ?? 0
             
-            let timeString = (duration - currentTime).getEpisodeTimeString(
-                isOnProgress: currentTime > 0
-            )
+            let timeString = (duration - currentTime).getEpisodeTimeString(isOnProgress: currentTime > 0)
             
             timeRemainingLabel.text = timeString
+            dotView.isHidden = timeString.isEmpty
             didPlayImageView.isHidden = true
         }
 
         setProgress()
         configureDownload(episode: episode, download: download)
         setImage(podcast: podcast, and: episode)
+        
+        episodeImageView.isUserInteractionEnabled = true
+        descriptionLabel.isUserInteractionEnabled = true
+        
+        if (episode.feed?.feedID == "Recommendations-Feed"){
+            timeRemainingLabel.isHidden = episode.isYoutubeVideo
+            didPlayImageView.isHidden = (didPlayImageView.isHidden || episode.isYoutubeVideo)
+            dotView.isHidden = true
+            downloadButtonImage.alpha = 0.25
+        }
     }
     
     func configurePlayingAnimation(
@@ -271,7 +290,7 @@ class UnifiedEpisodeView : UIView {
         progressView.isHidden = true
         
         if let valid_duration = episode.duration, let valid_time = episode.currentTime, valid_time > 0 {
-            let percentage = Float(valid_time) / Float(valid_duration)
+            let percentage = max(Float(valid_time) / Float(valid_duration), Float(0.075))
             let newProgressWidth = (percentage * Float(fullWidth))
             progressWidthConstraint.constant = CGFloat(newProgressWidth)
             
@@ -304,6 +323,15 @@ class UnifiedEpisodeView : UIView {
     func updateDownloadState(_ download: Download) {
         let progress = CGFloat(download.progress) / CGFloat(100)
         downloadProgressBar.progressAnimation(to: progress, active: download.isDownloading)
+    }
+    
+    @IBAction func shouldShowDescription(){
+        if let delegate = podcastDelegate,
+        let episode = episode {
+            delegate.shouldShowDescription(episode: episode)
+        } else if let delegate = videoDelegate, let video = videoEpisode{
+            delegate.shouldShowDescription(video: video)
+        }
     }
     
     @IBAction func downloadButtonTouched() {

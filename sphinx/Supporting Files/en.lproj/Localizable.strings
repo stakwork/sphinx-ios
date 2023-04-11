@@ -333,6 +333,9 @@
 "expired" = "Expired: ";
 "invoice" = "Invoice";
 "confirm.pay.invoice" = "Are you sure you want to pay this invoice?";
+"pub.key.options" = "Public Key Options";
+"pub.key.options-add.contact" = "Add Contact";
+"pub.key.options-send.payment" = "Send Payment";
 
 // CHAT
 "payment.failed.upper" = "PAYMENT FAILED";

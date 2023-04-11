@@ -81,12 +81,14 @@ class VideoFeedEpisodePlayerContainerViewController: UIViewController {
     
     
     internal lazy var collectionViewController: VideoFeedEpisodePlayerCollectionViewController = {
-        VideoFeedEpisodePlayerCollectionViewController.instantiate(
+        let vc = VideoFeedEpisodePlayerCollectionViewController.instantiate(
             videoPlayerEpisode: videoPlayerEpisode,
             videoFeedEpisodes: videoFeedEpisodes,
             boostDelegate: boostDelegate,
             onVideoEpisodeCellSelected: handleVideoEpisodeCellSelection(_:)
         )
+        vc.delegate = self
+        return vc
     }()
     
 }
@@ -220,5 +222,13 @@ extension VideoFeedEpisodePlayerContainerViewController {
             
             FeedsManager.sharedInstance.fetchItemsFor(feedUrl: feedUrl, objectID: videoFeed.objectID)
         }
+    }
+}
+
+extension VideoFeedEpisodePlayerContainerViewController:VideoFeedEpisodePlayerCollectionViewControllerDelegate{
+    func requestPlay() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.25, execute: {
+            self.youtubeVideoPlayerViewController.startPlay()
+        })
     }
 }

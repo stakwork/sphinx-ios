@@ -617,6 +617,10 @@
 		47FDDB1C2562D77200BBF15F /* boost_animation.json in Resources */ = {isa = PBXBuildFile; fileRef = 47FDDB1B2562D77100BBF15F /* boost_animation.json */; };
 		47FE9A3C23BF751C0090913F /* ChatViewControllerAttachmentDelegateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FE9A3B23BF751C0090913F /* ChatViewControllerAttachmentDelegateExtension.swift */; };
 		47FE9A3E23C381A20090913F /* UITapGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FE9A3D23C381A20090913F /* UITapGestureRecognizer.swift */; };
+		CE07B83629DC92F900A02652 /* ItemDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE07B83429DC92F900A02652 /* ItemDescriptionTableViewCell.swift */; };
+		CE07B83729DC92F900A02652 /* ItemDescriptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE07B83529DC92F900A02652 /* ItemDescriptionTableViewCell.xib */; };
+		CE07B83A29DC9CA700A02652 /* ItemDescriptionImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE07B83829DC9CA700A02652 /* ItemDescriptionImageTableViewCell.swift */; };
+		CE07B83B29DC9CA700A02652 /* ItemDescriptionImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE07B83929DC9CA700A02652 /* ItemDescriptionImageTableViewCell.xib */; };
 		CE0C4676296DC5E200E82353 /* ContentFeedStatus+SupportingModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0C4675296DC5E200E82353 /* ContentFeedStatus+SupportingModels.swift */; };
 		CE1F033F2994458B002E1079 /* ChatLeaderboardEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1F033E2994458B002E1079 /* ChatLeaderboardEntry.swift */; };
 		CE2585E929A3FE7300130641 /* JitsiIncomingCallManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2585E829A3FE7200130641 /* JitsiIncomingCallManager.swift */; };
@@ -663,6 +667,9 @@
 		CED14D78293CF683004B8B25 /* ChatMentionAutocompleteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED14D77293CF683004B8B25 /* ChatMentionAutocompleteDataSource.swift */; };
 		CEE433B229AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE433B029AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.swift */; };
 		CEE433B329AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEE433B129AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.xib */; };
+		CEEBBB3F29DC47930093923D /* ItemDescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEBBB3E29DC47930093923D /* ItemDescriptionViewController.swift */; };
+		CEEBBB4229DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEBBB4029DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.swift */; };
+		CEEBBB4329DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEEBBB4129DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.xib */; };
 		CEF821D62963B68600CBB28F /* DiscoverTribesWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF821D52963B68600CBB28F /* DiscoverTribesWebViewController.swift */; };
 		CEF88DCA29B64E5100DC1C40 /* UnifiedEpisodeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEF88DC929B64E5000DC1C40 /* UnifiedEpisodeView.xib */; };
 		CEF88DCC29B64F4F00DC1C40 /* UnifiedEpisodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF88DCB29B64F4F00DC1C40 /* UnifiedEpisodeView.swift */; };
@@ -1552,6 +1559,10 @@
 		47FE9A3B23BF751C0090913F /* ChatViewControllerAttachmentDelegateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewControllerAttachmentDelegateExtension.swift; sourceTree = "<group>"; };
 		47FE9A3D23C381A20090913F /* UITapGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITapGestureRecognizer.swift; sourceTree = "<group>"; };
 		487E10CEB3D07B0840A84681 /* Pods_sphinx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_sphinx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE07B83429DC92F900A02652 /* ItemDescriptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDescriptionTableViewCell.swift; sourceTree = "<group>"; };
+		CE07B83529DC92F900A02652 /* ItemDescriptionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ItemDescriptionTableViewCell.xib; sourceTree = "<group>"; };
+		CE07B83829DC9CA700A02652 /* ItemDescriptionImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDescriptionImageTableViewCell.swift; sourceTree = "<group>"; };
+		CE07B83929DC9CA700A02652 /* ItemDescriptionImageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ItemDescriptionImageTableViewCell.xib; sourceTree = "<group>"; };
 		CE0C4675296DC5E200E82353 /* ContentFeedStatus+SupportingModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentFeedStatus+SupportingModels.swift"; sourceTree = "<group>"; };
 		CE1F033E2994458B002E1079 /* ChatLeaderboardEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLeaderboardEntry.swift; sourceTree = "<group>"; };
 		CE2585E829A3FE7200130641 /* JitsiIncomingCallManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JitsiIncomingCallManager.swift; sourceTree = "<group>"; };
@@ -1650,6 +1661,9 @@
 		CED14D77293CF683004B8B25 /* ChatMentionAutocompleteDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatMentionAutocompleteDataSource.swift; sourceTree = "<group>"; };
 		CEE433B029AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnifiedEpisodeTableViewCell.swift; sourceTree = "<group>"; };
 		CEE433B129AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UnifiedEpisodeTableViewCell.xib; sourceTree = "<group>"; };
+		CEEBBB3E29DC47930093923D /* ItemDescriptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDescriptionViewController.swift; sourceTree = "<group>"; };
+		CEEBBB4029DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDescriptionTableViewHeaderCell.swift; sourceTree = "<group>"; };
+		CEEBBB4129DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ItemDescriptionTableViewHeaderCell.xib; sourceTree = "<group>"; };
 		CEF821D52963B68600CBB28F /* DiscoverTribesWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTribesWebViewController.swift; sourceTree = "<group>"; };
 		CEF88DC929B64E5000DC1C40 /* UnifiedEpisodeView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UnifiedEpisodeView.xib; sourceTree = "<group>"; };
 		CEF88DCB29B64F4F00DC1C40 /* UnifiedEpisodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnifiedEpisodeView.swift; sourceTree = "<group>"; };
@@ -1845,6 +1859,12 @@
 		470396D52535D10E007F9C23 /* Table Views */ = {
 			isa = PBXGroup;
 			children = (
+				CE07B83829DC9CA700A02652 /* ItemDescriptionImageTableViewCell.swift */,
+				CE07B83929DC9CA700A02652 /* ItemDescriptionImageTableViewCell.xib */,
+				CEEBBB4029DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.swift */,
+				CEEBBB4129DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.xib */,
+				CE07B83429DC92F900A02652 /* ItemDescriptionTableViewCell.swift */,
+				CE07B83529DC92F900A02652 /* ItemDescriptionTableViewCell.xib */,
 				CEE433B029AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.swift */,
 				CEF88DCB29B64F4F00DC1C40 /* UnifiedEpisodeView.swift */,
 				CEF88DC929B64E5000DC1C40 /* UnifiedEpisodeView.xib */,
@@ -3263,6 +3283,7 @@
 				4789E24924EDB73B003991BE /* WebAppViewController.swift */,
 				CE3D8CA029B0FF7100EDB637 /* FeedItemDetailVC.swift */,
 				47183CAF254893B100E6FD19 /* NewPodcastPlayerViewController.swift */,
+				CEEBBB3E29DC47930093923D /* ItemDescriptionViewController.swift */,
 				47AF0D34254C957200C98398 /* PodcastAnimationViewController.swift */,
 				473E5DE22575696C00697EEA /* PickerViewController.swift */,
 				473BC88C25F287340070E519 /* PodcastNewEpisodeViewController.swift */,
@@ -4294,6 +4315,7 @@
 				4780783423916D4900187906 /* PictureReceivedTableViewCell.xib in Resources */,
 				47F258C12539DA1600122A5A /* PodcastCommentReceivedTableViewCell.xib in Resources */,
 				475BDD44232AD00D00C5BBD6 /* Montserrat-Black.otf in Resources */,
+				CEEBBB4329DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.xib in Resources */,
 				475BDD45232AD00D00C5BBD6 /* Montserrat-Bold.otf in Resources */,
 				47FDDB1C2562D77200BBF15F /* boost_animation.json in Resources */,
 				4703CF8E25190072007B685C /* FileBubbleView.xib in Resources */,
@@ -4308,6 +4330,7 @@
 				475BDD48232AD00D00C5BBD6 /* Montserrat-Regular.otf in Resources */,
 				472F9D3F2416BA0200EFC30A /* AudioRecordingTooltip.xib in Resources */,
 				4746807F293E566D00F51457 /* PodcastPlayerPlaybackSliderView.xib in Resources */,
+				CE07B83B29DC9CA700A02652 /* ItemDescriptionImageTableViewCell.xib in Resources */,
 				CECFBF022965C85B00BAD935 /* DiscoverTribesTableViewCell.xib in Resources */,
 				4754FA94272ADB02006295A5 /* DashboardNewsletterItemCollectionViewCell.xib in Resources */,
 				47F258D0253F6B1500122A5A /* PodcastSmallPlayer.xib in Resources */,
@@ -4411,6 +4434,7 @@
 				47A79D402444EEFF005CD72F /* MessageOptionView.xib in Resources */,
 				F3CE638126AFF93F006E37A0 /* FeedFilterChipCollectionViewCell.xib in Resources */,
 				47F258CC253DD43400122A5A /* PinTimeSlider.xib in Resources */,
+				CE07B83729DC92F900A02652 /* ItemDescriptionTableViewCell.xib in Resources */,
 				472161B6293915E20088B87B /* NoRecommendationsCollectionViewCell.xib in Resources */,
 				47183CBC2549DF0200E6FD19 /* PodcastBoostReceivedTableViewCell.xib in Resources */,
 				475BDCFE232AC24600C5BBD6 /* DirectPaymentReceivedTableViewCell.xib in Resources */,
@@ -4597,11 +4621,14 @@
 				F3DFB78A26B87C0C00E76FBD /* DashboardFeedsContainerViewController+ContentFilterOption.swift in Sources */,
 				47935FBE24A1070800B39ADB /* StakworkAuthorizeViewController.swift in Sources */,
 				471161D9291563BB008EAFF2 /* ActionTrack+CoreDataProperties.swift in Sources */,
+				CEEBBB3F29DC47930093923D /* ItemDescriptionViewController.swift in Sources */,
 				CE3D8CAC29B1124E00EDB637 /* FeedItemDetailHeaderCell.swift in Sources */,
 				4705D39D2799B3B0009C0729 /* FeedBoostHelper.swift in Sources */,
 				4787F86D247410C500CCE8B9 /* JoinGroupDetailsViewController.swift in Sources */,
 				47A79D3824424D19005CD72F /* UITableViewCell.swift in Sources */,
 				47468FCE233131B40072124A /* NSManagedObjectContext.swift in Sources */,
+				CE07B83629DC92F900A02652 /* ItemDescriptionTableViewCell.swift in Sources */,
+				CE07B83A29DC9CA700A02652 /* ItemDescriptionImageTableViewCell.swift in Sources */,
 				47BB1D6A239934210049802B /* EncryptionManager.swift in Sources */,
 				475BDD1C232AC47C00C5BBD6 /* KeyboardHandlerViewController.swift in Sources */,
 				475154A62423B3B000477384 /* URL.swift in Sources */,
@@ -4726,6 +4753,7 @@
 				47357A172729A16100A49EEE /* NewsletterItem+Properties.swift in Sources */,
 				F3DC6B00273C88F200458E09 /* ContentFeedItem+CoreDataClass.swift in Sources */,
 				F313024826BA994B00A1396E /* ChatsContainerViewController.swift in Sources */,
+				CEEBBB4229DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.swift in Sources */,
 				475BDCFB232AC24600C5BBD6 /* PaidInvoiceReceivedTableViewCell.swift in Sources */,
 				4789E26E24F406F3003991BE /* RelayURLUpdateHelper.swift in Sources */,
 				475BDD5C232AE26E00C5BBD6 /* TransactionMessage+CoreDataClass.swift in Sources */,
@@ -5839,7 +5867,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = sphinx/sphinx.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 325;
+				CURRENT_PROJECT_VERSION = 331;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 8297M44YTW;
 				ENABLE_BITCODE = NO;
@@ -5933,7 +5961,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = sphinx/sphinx.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 325;
+				CURRENT_PROJECT_VERSION = 331;
 				DEVELOPMENT_TEAM = 8297M44YTW;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";

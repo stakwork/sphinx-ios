@@ -95,8 +95,14 @@ extension PodcastPlayerView {
         playing: Bool? = nil
     ) {
         let isPlaying = playing ?? podcastPlayerController.isPlaying(podcastId: podcast.feedID)
-        playPauseButton.setTitle(isPlaying ? "pause" : "play_arrow", for: .normal)
-        speedButton.setTitle(podcast.playerSpeed.speedDescription + "x", for: .normal)
+        
+        UIView.performWithoutAnimation {
+            self.playPauseButton.setTitle(isPlaying ? "pause" : "play_arrow", for: .normal)
+            self.speedButton.setTitle(self.podcast.playerSpeed.speedDescription + "x", for: .normal)
+            
+            self.playPauseButton.layoutIfNeeded()
+            self.speedButton.layoutIfNeeded()
+        }
     }
     
     func setProgress(

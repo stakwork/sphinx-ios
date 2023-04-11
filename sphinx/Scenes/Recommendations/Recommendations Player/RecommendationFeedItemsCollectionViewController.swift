@@ -334,6 +334,18 @@ extension RecommendationFeedItemsCollectionViewController {
 
 
 extension RecommendationFeedItemsCollectionViewController : FeedItemRowDelegate {
+    func shouldShowDescription(episode: PodcastEpisode, cell:UITableViewCell) {
+        if let feed = episode.feed{
+            let vc = ItemDescriptionViewController.instantiate(podcast: feed, episode: episode, index: 0)
+            vc.delegate = self
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    func shouldShowDescription(video: Video) {
+        
+    }
+    
     func shouldShare(video: Video) {
         shareTapped(video: video)
     }
@@ -364,9 +376,28 @@ extension RecommendationFeedItemsCollectionViewController : FeedItemRowDelegate 
 }
 
 extension RecommendationFeedItemsCollectionViewController : PodcastEpisodesDSDelegate {
+    func didDismiss() {}
+    func didTapForDescriptionAt(episode: PodcastEpisode,cell:UITableViewCell) {}
+    func didTapForDescriptionAt(index: Int) {}
     func didTapEpisodeAt(index: Int) {}
     func downloadTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {}
     func deleteTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {}
     func shouldToggleTopView(show: Bool) {}
     func showEpisodeDetails(episode: PodcastEpisode,indexPath:IndexPath) {}
+}
+
+
+extension RecommendationFeedItemsCollectionViewController : ItemDescriptionViewControllerDelegate{
+    func shouldDismissAndPlayVideo(video: Video) {
+        
+    }
+    
+    func shouldDismissAndPlayVideo(episodeAsVideo: PodcastEpisode) {
+        self.onRecommendationCellSelected(episodeAsVideo.itemID)
+        self.updateSnapshot()
+    }
+    
+    func didDismissDescriptionView(index:Int) {
+        
+    }
 }

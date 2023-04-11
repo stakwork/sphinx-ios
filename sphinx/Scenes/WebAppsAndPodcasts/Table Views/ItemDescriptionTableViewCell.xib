@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Roboto-Medium.ttf">
+            <string>Roboto-Medium</string>
+        </array>
+        <array key="Roboto-Regular.ttf">
+            <string>Roboto-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="166" id="KGk-i7-Jjw" customClass="ItemDescriptionTableViewCell" customModule="sphinx" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="327" height="166"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="327" height="166"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sdP-1h-Dln">
+                        <rect key="frame" x="0.0" y="0.0" width="327" height="166"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.75" contentMode="left" horizontalHuggingPriority="251" text="This is a test" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="none" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uou-Mz-QxR">
+                                <rect key="frame" x="16" y="16" width="295" height="16.666666666666671"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
+                                <color key="textColor" name="PrimaryText"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SHOW MORE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vLe-Dv-mjC">
+                                <rect key="frame" x="252" y="138" width="59" height="12"/>
+                                <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="10"/>
+                                <color key="textColor" name="PrimaryText"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="uou-Mz-QxR" firstAttribute="centerX" secondItem="sdP-1h-Dln" secondAttribute="centerX" id="7iE-0J-CIx"/>
+                            <constraint firstItem="uou-Mz-QxR" firstAttribute="top" secondItem="sdP-1h-Dln" secondAttribute="top" constant="16" id="GVU-Xa-fep"/>
+                            <constraint firstItem="uou-Mz-QxR" firstAttribute="leading" secondItem="sdP-1h-Dln" secondAttribute="leading" constant="16" id="KTA-E7-yMI"/>
+                            <constraint firstAttribute="trailing" secondItem="vLe-Dv-mjC" secondAttribute="trailing" constant="16" id="bjA-0C-D4L"/>
+                            <constraint firstAttribute="bottom" secondItem="vLe-Dv-mjC" secondAttribute="bottom" constant="16" id="ntF-VD-lvM"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="sdP-1h-Dln" secondAttribute="trailing" id="Iww-bD-fHq"/>
+                    <constraint firstAttribute="bottom" secondItem="sdP-1h-Dln" secondAttribute="bottom" id="Tvq-dx-o0C"/>
+                    <constraint firstItem="sdP-1h-Dln" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="VQQ-o1-fQO"/>
+                    <constraint firstItem="sdP-1h-Dln" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="vak-3Y-gIz"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <connections>
+                <outlet property="podcastDescriptionLabel" destination="uou-Mz-QxR" id="qx4-dM-Rdb"/>
+                <outlet property="showMoreLabel" destination="vLe-Dv-mjC" id="op1-XY-0MW"/>
+            </connections>
+            <point key="canvasLocation" x="-84.732824427480907" y="62.676056338028175"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <namedColor name="PrimaryText">
+            <color red="0.16078431372549021" green="0.17254901960784313" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

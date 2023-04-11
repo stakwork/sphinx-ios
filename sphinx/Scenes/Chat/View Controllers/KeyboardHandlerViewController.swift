@@ -29,12 +29,13 @@ class KeyboardHandlerViewController: OrientationHandlerViewController {
     }
          
     override var canBecomeFirstResponder: Bool { return true }
-      
-    override var canResignFirstResponder: Bool { return true }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.becomeFirstResponder()
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        let bottomBarHeight = accessoryView.viewContentSize().height + ChatAccessoryView.kTableBottomPadding + windowInsets.bottom
+        adjustScrollDownView(height: bottomBarHeight, animated: false)
+        setTableInset(bottomBarHeight: bottomBarHeight)
     }
     
     func keyboardWillShowHandler(_ notification: Notification, tableView: UITableView) {
@@ -70,7 +71,12 @@ class KeyboardHandlerViewController: OrientationHandlerViewController {
             }
             
             KeyboardHandlerViewController.keyboardVisible = showing
-        
+            
+            if chatTableView.contentInset.bottom == keyboardHeight {
+                if distanceFromBottom < 50 { self.chatTableView.contentOffset = self.bottomOffset() }
+                return
+            }
+            
             UIView.animate(withDuration: animationDuration, delay: 0, options: UIView.AnimationOptions(rawValue: UIView.AnimationOptions.RawValue(animationCurve)), animations: {
         
                 self.adjustScrollDownView(height: keyboardHeight, animated: showing)
@@ -117,7 +123,12 @@ class KeyboardHandlerViewController: OrientationHandlerViewController {
     func scrollChatToBottom(animated: Bool = true) {
         let headerHeight = windowInsets.top + kHeaderHeight
         chatTableView?.contentInset = UIEdgeInsets.init(top: headerHeight, left: 0, bottom: bottomContentInset, right: 0)
-        chatTableView?.scrollToBottom(animated: animated)
+        
+        if animated {
+            chatTableView?.scrollToBottom(animated: animated)
+        } else {
+            chatTableView?.contentOffset.y = CGFloat.greatestFiniteMagnitude
+        }
     }
      
     func bottomOffset() -> CGPoint {

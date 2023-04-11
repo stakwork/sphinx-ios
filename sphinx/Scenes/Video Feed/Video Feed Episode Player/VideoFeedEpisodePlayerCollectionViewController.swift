@@ -8,6 +8,10 @@
 import UIKit
 import CoreData
 
+//.youtubeVideoPlayerViewController.startPlay()
+protocol VideoFeedEpisodePlayerCollectionViewControllerDelegate{
+    func requestPlay()
+}
 
 class VideoFeedEpisodePlayerCollectionViewController: UICollectionViewController {
     
@@ -22,6 +26,7 @@ class VideoFeedEpisodePlayerCollectionViewController: UICollectionViewController
     private var dataSource: DataSource!
     
     weak var boostDelegate: CustomBoostDelegate?
+    var delegate:VideoFeedEpisodePlayerCollectionViewControllerDelegate? = nil
 }
 
 
@@ -368,6 +373,20 @@ extension VideoFeedEpisodePlayerCollectionViewController {
 
 //MARK: Unified View Delegate
 extension VideoFeedEpisodePlayerCollectionViewController: FeedItemRowDelegate, PodcastEpisodesDSDelegate {
+    func didDismiss() {}
+    
+    func shouldShowDescription(episode: PodcastEpisode,cell:UITableViewCell) {}
+    
+    func shouldShowDescription(video: Video) {
+        if let feed = video.videoFeed{
+            let vc = ItemDescriptionViewController.instantiate(videoFeed: feed, video: video, index: 0)
+            vc.delegate = self
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    func didTapForDescriptionAt(episode: PodcastEpisode,cell:UITableViewCell) {}
+    
     
     func shouldStartDownloading(episode: PodcastEpisode, cell: UITableViewCell)  {}
     func shouldDeleteFile(episode: PodcastEpisode, cell: UITableViewCell)  {}
@@ -394,6 +413,10 @@ extension VideoFeedEpisodePlayerCollectionViewController: FeedItemRowDelegate, P
             let vc = FeedItemDetailVC.instantiate(video: video, delegate: self, indexPath: indexPath)
             self.present(vc, animated: true)
         }
+    }
+    
+    func didTapForDescriptionAt(index: Int) {
+        
     }
     
     func didTapEpisodeAt(index: Int) {}
@@ -467,7 +490,7 @@ extension VideoFeedEpisodePlayerCollectionViewController {
 
 
 // MARK: - `UICollectionViewDelegate` Methods
-extension VideoFeedEpisodePlayerCollectionViewController {
+extension VideoFeedEpisodePlayerCollectionViewController:ItemDescriptionViewControllerDelegate {
 
     override func collectionView(
         _ collectionView: UICollectionView,
@@ -485,5 +508,16 @@ extension VideoFeedEpisodePlayerCollectionViewController {
         case .videoFeedEpisode(let episode):
             self.onVideoEpisodeCellSelected(episode.objectID)
         }
+    }
+    
+    func shouldDismissAndPlayVideo(video: Video) {
+        self.onVideoEpisodeCellSelected(video.objectID)
+        self.delegate?.requestPlay()
+    }
+    
+    func shouldDismissAndPlayVideo(episodeAsVideo: PodcastEpisode) {}
+    
+    func didDismissDescriptionView(index:Int) {
+        
     }
 }

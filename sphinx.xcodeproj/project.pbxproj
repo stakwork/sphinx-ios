@@ -415,6 +415,7 @@
 		4789E26224F04752003991BE /* SettingsTabsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4789E26424F04752003991BE /* SettingsTabsView.xib */; };
 		4789E26C24F05481003991BE /* ProfileViewControllerRelayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4789E26B24F05481003991BE /* ProfileViewControllerRelayExtension.swift */; };
 		4789E26E24F406F3003991BE /* RelayURLUpdateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4789E26D24F406F3003991BE /* RelayURLUpdateHelper.swift */; };
+		4789E86C29E752BB0032B8F9 /* ContentFeedPaymentDestination+FetchUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4789E86B29E752BB0032B8F9 /* ContentFeedPaymentDestination+FetchUtils.swift */; };
 		478B05C4297832FC00A1B254 /* PodcastPlayerController+Payments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478B05C3297832FC00A1B254 /* PodcastPlayerController+Payments.swift */; };
 		478B05C629786E1F00A1B254 /* PodcastPlayerController+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478B05C529786E1F00A1B254 /* PodcastPlayerController+Utils.swift */; };
 		478B05C829786F8900A1B254 /* PodcastPlayerController+ActionsTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478B05C729786F8900A1B254 /* PodcastPlayerController+ActionsTracking.swift */; };
@@ -1282,6 +1283,7 @@
 		4789E26824F04758003991BE /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/SettingsTabsView.strings; sourceTree = "<group>"; };
 		4789E26B24F05481003991BE /* ProfileViewControllerRelayExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewControllerRelayExtension.swift; sourceTree = "<group>"; };
 		4789E26D24F406F3003991BE /* RelayURLUpdateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelayURLUpdateHelper.swift; sourceTree = "<group>"; };
+		4789E86B29E752BB0032B8F9 /* ContentFeedPaymentDestination+FetchUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentFeedPaymentDestination+FetchUtils.swift"; sourceTree = "<group>"; };
 		478B05C3297832FC00A1B254 /* PodcastPlayerController+Payments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PodcastPlayerController+Payments.swift"; sourceTree = "<group>"; };
 		478B05C529786E1F00A1B254 /* PodcastPlayerController+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PodcastPlayerController+Utils.swift"; sourceTree = "<group>"; };
 		478B05C729786F8900A1B254 /* PodcastPlayerController+ActionsTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PodcastPlayerController+ActionsTracking.swift"; sourceTree = "<group>"; };
@@ -4132,6 +4134,7 @@
 			children = (
 				F3DC6B1F273F60FF00458E09 /* ContentFeedPaymentDestination+CoreDataClass.swift */,
 				F3DC6B20273F60FF00458E09 /* ContentFeedPaymentDestination+CoreDataProperties.swift */,
+				4789E86B29E752BB0032B8F9 /* ContentFeedPaymentDestination+FetchUtils.swift */,
 			);
 			path = "Content Feed Payment Destination";
 			sourceTree = "<group>";
@@ -4940,6 +4943,7 @@
 				47F7273825791D8600A794B9 /* ContactLinkPreviewView.swift in Sources */,
 				476A10BE23AA8C8E00817892 /* SubscriptionDetailsViewController.swift in Sources */,
 				476A10BB23A91FCE00817892 /* API+ChatsExtension.swift in Sources */,
+				4789E86C29E752BB0032B8F9 /* ContentFeedPaymentDestination+FetchUtils.swift in Sources */,
 				4703CFA125278C40007B685C /* API+RedeemSatsExtension.swift in Sources */,
 				CECFBF012965C85B00BAD935 /* DiscoverTribesTableViewCell.swift in Sources */,
 				47018F9B27D65B8D00797E0B /* CustomDismissibleView.swift in Sources */,

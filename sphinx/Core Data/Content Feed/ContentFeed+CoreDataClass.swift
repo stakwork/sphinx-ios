@@ -78,6 +78,8 @@ public class ContentFeed: NSManagedObject {
             }
             
             if let destinations = value[CodingKeys.Value.paymentDestinations.rawValue]?.array {
+                ContentFeedPaymentDestination.deleteDestinationForFeedWith(id: feedId)
+                
                 for destination in destinations {
                     let d = ContentFeedPaymentDestination.createObjectFrom(json: destination, context: context)
                     d?.feed = contentFeed

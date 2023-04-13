@@ -76,6 +76,8 @@ class PodcastPlayerController {
                 return
             }
             self.podcast = getPodcastFrom(podcastData: podcastData)
+            
+            self.resetPlayedSeconds()
         }
     }
     

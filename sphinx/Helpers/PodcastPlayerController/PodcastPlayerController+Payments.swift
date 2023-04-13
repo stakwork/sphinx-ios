@@ -9,6 +9,10 @@
 import Foundation
 
 extension PodcastPlayerController {
+    func resetPlayedSeconds() {
+        self.playedSeconds = 0
+    }
+    
     @objc func updatePlayedTime() {
         playedSeconds = playedSeconds + 1
         

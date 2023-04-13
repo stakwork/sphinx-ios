@@ -56,7 +56,7 @@
 "left-menu.contacts" = "Mga contact";
 "left-menu.profile" = "Profile";
 "left-menu.discover" = "Diskubrehin ang mga Tribo";
-"left-menu.buy-karma-button" = "Bumili ng 1000 na Karma";
+"left-menu.buy-karma-button" = "Bumili ng 1k na karma";
 "support.describe.problem" = "Ilarawan ang iyong problema dito...";
 "support.logs.copied" = "Nakopya ang mga log sa clipboard";
 "message.sent" = "Ang iyong mensahe ay naipadala na";
@@ -522,12 +522,12 @@
 "time.yesterday" = "kahapon";
 "time.days-ago" = "%d araw na nakaraan";
 //BADGES
-"badges.earn-badges" = "Kumita ng Badges";
+"badges.earn-badges" = "Kumita";
 "badges.earnings" = "Mga kinita";
-"badges.contributions" = "Mga Kontribusyon";
+"badges.contributions" = "Contributions";
 "badges.badges" = "Mga Badge";
 "badges.reputation" = "Reputasyon";
-"badges.send-sats" = "Magpadala ng Sats";
+"badges.send-sats" = "Magpadala";
 "badges.tribe-badges" = "Mga Badge ng Tribo";
 "badges.create-new-badge" = "Gumawa ng Bagong Badge";
 "badges.quantity" = "Bilang";

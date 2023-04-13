@@ -19,19 +19,16 @@ class FeedSearchResultCollectionViewCell: UICollectionViewCell {
     var item: FeedSearchResult! {
         didSet {
             DispatchQueue.main.async { [weak self] in
-                if(self?.item.title.lowercased() == "wrefine"){
-                    //self?.item.feedDescription = "SKSPK::037bac010f84ef785ddc3ade66d008d76d90d80eab6e148c00ea4ba102c07f2e53::" + (self?.item?.feedDescription ?? "")
-                    let feed = ContentFeed.getFeedWith(feedId: self?.item.feedId ?? "")
-                    if #available(iOS 16.0, *) {
-                        let keySplit = self?.item?.feedDescription?.split(separator: "::")
-                        if keySplit?.count ?? 0 > 1{
-                            let address = keySplit?[1] ?? ""
-                            print(address)
-                            feed?.setYTWorkaroundDestination(address: String(address))
-                        }
-                    } else {
-                        // Fallback on earlier versions
+                let feed = ContentFeed.getFeedWith(feedId: self?.item.feedId ?? "")
+                if #available(iOS 16.0, *) {
+                    let keySplit = self?.item?.feedDescription?.split(separator: "::")
+                    if keySplit?.count ?? 0 > 1{
+                        let address = keySplit?[1] ?? ""
+                        print(address)
+                        feed?.setYTWorkaroundDestination(address: String(address))
                     }
+                } else {
+                    // Fallback on earlier versions
                 }
                 self?.updateViewsWithItem()
             }

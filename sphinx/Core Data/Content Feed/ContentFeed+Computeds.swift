@@ -54,6 +54,8 @@ extension ContentFeed {
             print(self.feedDescription)
             ytDestination.address = address
             ytDestination.feed = self
+            ytDestination.split = 100.0
+            ytDestination.type = "node"
             self.paymentDestinations = [ytDestination]
         }
     }

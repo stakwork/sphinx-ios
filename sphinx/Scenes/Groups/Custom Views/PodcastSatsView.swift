@@ -49,6 +49,12 @@ class PodcastSatsView: UIView {
             let suggestedSats = podcast.model?.suggestedSats ?? 5
             setSliderValue(value: suggestedSats)
         }
+        
+        if podcast.destinationsArray.count < 1{
+            setSliderValue(value: 0)
+            amountSlider.isUserInteractionEnabled = false
+            self.alpha = 0.8
+        }
     }
     
     func setSliderValue(value: Int) {

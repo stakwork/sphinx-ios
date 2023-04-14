@@ -54,6 +54,8 @@ class PodcastSatsView: UIView {
             setSliderValue(value: 0)
             amountSlider.isUserInteractionEnabled = false
             self.alpha = 0.8
+            titleLabel.text = "sats.stream.disabled".localized
+            titleLabel.textColor = UIColor.Sphinx.SemitransparentText
         }
     }
     

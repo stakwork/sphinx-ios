@@ -33,6 +33,15 @@ public class VideoFeed: NSObject {
         self.feedID = feedID
         self.isSubscribedToFromSearch = isSubscribedToFromSearch
     }
+    
+    var satsPerMinute: Int? {
+        get {
+            return (UserDefaults.standard.value(forKey: "videoFeed-sats-\(feedID)") as? Int)
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "videoFeed-sats-\(feedID)")
+        }
+    }
 }
 
 

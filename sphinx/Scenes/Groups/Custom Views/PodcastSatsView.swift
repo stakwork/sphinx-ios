@@ -19,6 +19,7 @@ class PodcastSatsView: UIView {
     let sliderValues = [0,3,3,5,5,8,8,10,10,20,20,40,40,80,80,100]
     
     var podcast: PodcastFeed! = nil
+    var videoFeed:VideoFeed? = nil
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -44,6 +45,17 @@ class PodcastSatsView: UIView {
         self.podcast = podcast
         
         if let storedAmount = podcast.satsPerMinute {
+            setSliderValue(value: storedAmount)
+        } else {
+            let suggestedSats = podcast.model?.suggestedSats ?? 5
+            setSliderValue(value: suggestedSats)
+        }
+    }
+    
+    func configureWith(videoFeed: VideoFeed) {
+        self.videoFeed = videoFeed
+        
+        if let storedAmount = videoFeed.satsPerMinute {
             setSliderValue(value: storedAmount)
         } else {
             let suggestedSats = podcast.model?.suggestedSats ?? 5

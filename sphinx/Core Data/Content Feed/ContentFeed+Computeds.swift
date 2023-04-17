@@ -51,7 +51,8 @@ extension ContentFeed {
     func setYTWorkaroundDestination(address:String){
         if let managedObjectContext = self.managedObjectContext {
             var ytDestination = ContentFeedPaymentDestination(context: managedObjectContext)
-            print(self.feedDescription)
+            let fd = self.feedDescription
+            print(fd)
             ytDestination.address = address
             ytDestination.feed = self
             ytDestination.split = 100.0

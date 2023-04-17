@@ -19,6 +19,8 @@ class YouTubeVideoFeedEpisodePlayerViewController: UIViewController, VideoFeedEp
     
     let actionsManager = ActionsManager.sharedInstance
     let podcastPlayerController = PodcastPlayerController.sharedInstance
+    var paymentsTimer : Timer? = nil
+    var playedSeconds : Int = 0
     
     var videoPlayerEpisode: Video! {
         didSet {
@@ -39,6 +41,7 @@ class YouTubeVideoFeedEpisodePlayerViewController: UIViewController, VideoFeedEp
     
     var dismissButtonStyle: ModalDismissButtonStyle = .downArrow
     var onDismiss: (() -> Void)?
+    var feedBoostHelper : FeedBoostHelper = FeedBoostHelper()
     
     public func seekTo(time:Int){
         videoPlayerView.seek(toSeconds: Float(time), allowSeekAhead: true)
@@ -50,6 +53,52 @@ class YouTubeVideoFeedEpisodePlayerViewController: UIViewController, VideoFeedEp
     
     public func startPlay(){
         videoPlayerView.playVideo()
+    }
+    
+    public func getPlayState(completion: @escaping(Bool)->Void){
+        videoPlayerView.playerState({state, _ in
+            if(state == .playing){
+                completion(true)
+            }
+            else{
+                completion(false)
+            }
+        })
+    }
+    
+    func configureTimer() {
+        paymentsTimer?.invalidate()
+        paymentsTimer = Timer.scheduledTimer(
+            timeInterval: 1,
+            target: self,
+            selector: #selector(updatePlayedTime),
+            userInfo: nil,
+            repeats: true
+        )
+        
+        setupFeedBoostHelper()
+    }
+    
+    func setupFeedBoostHelper() {
+        if let contentFeed = videoPlayerEpisode.videoFeed {
+            feedBoostHelper.configure(with: contentFeed.objectID, and: contentFeed.chat)
+        }
+    }
+    
+    @objc func updatePlayedTime() {
+        getPlayState(completion: {isPlaying in
+            self.playedSeconds = self.playedSeconds + ((isPlaying) ? 1 : 0)
+            
+            if self.playedSeconds > 0 && self.playedSeconds % 60 == 0 {
+                DispatchQueue.global().async {
+                    self.processPayment()
+                }
+            }
+        })
+    }
+    
+    func processPayment(){
+        feedBoostHelper.processPayment(itemID: videoPlayerEpisode.id, amount: 5)
     }
 }
 
@@ -125,6 +174,8 @@ extension YouTubeVideoFeedEpisodePlayerViewController {
         episodePublishDateLabel.text = videoPlayerEpisode.publishDateText
         
         setupDismissButton()
+        
+        configureTimer()
     }
     
     

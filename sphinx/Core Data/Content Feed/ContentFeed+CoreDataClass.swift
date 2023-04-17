@@ -148,6 +148,9 @@ public class ContentFeed: NSManagedObject {
                     context: managedObjectContext
                 ) {
                     chat?.contentFeed = contentFeed
+                    if((contentFeed.title ?? "" ).lowercased().contains("wrefine")){
+                        print(contentFeed)
+                    }
                     
                     completionHandler?(.success(contentFeed))
                 } else {

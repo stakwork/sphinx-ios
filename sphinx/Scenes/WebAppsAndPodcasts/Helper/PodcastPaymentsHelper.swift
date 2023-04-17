@@ -53,15 +53,14 @@ class PodcastPaymentsHelper {
         
         if
             let podcastFeed = podcastFeed,
-            let chatId = podcastFeed.chat?.id,
-            destinations.isEmpty == false
+            !destinations.isEmpty
         {
             streamSats(
                 podcastId: podcastFeed.feedID,
                 podcastDestinations: destinations,
                 updateMeta: false,
                 amount: satsAmt,
-                chatId: chatId,
+                chatId: podcastFeed.chat?.id ?? -1,
                 itemId: itemId,
                 currentTime: currentTime,
                 uuid: uuid
@@ -95,11 +94,21 @@ class PodcastPaymentsHelper {
         var destinations = [[String: AnyObject]]()
         
         for d in podcastDestinations {
-            let destinationParams: [String: AnyObject] = ["address": (d.address ?? "") as AnyObject, "split": (d.split) as AnyObject, "type": (d.type ?? "") as AnyObject]
+            let destinationParams: [String: AnyObject] = [
+                "address": (d.address ?? "") as AnyObject,
+                "split": (d.split) as AnyObject,
+                "type": (d.type ?? "") as AnyObject
+            ]
+            
             destinations.append(destinationParams)
         }
         
-        var params: [String: AnyObject] = ["destinations": destinations as AnyObject, "amount": amount as AnyObject, "chat_id": chatId as AnyObject]
+        var params: [String: AnyObject] = [
+            "destinations": destinations as AnyObject,
+            "amount": amount as AnyObject,
+            "chat_id": chatId as AnyObject
+        ]
+        
         params["update_meta"] = updateMeta as AnyObject
         
         if let uuid = uuid, !uuid.isEmpty {

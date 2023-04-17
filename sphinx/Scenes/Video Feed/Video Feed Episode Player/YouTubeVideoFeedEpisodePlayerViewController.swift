@@ -42,7 +42,7 @@ class YouTubeVideoFeedEpisodePlayerViewController: UIViewController, VideoFeedEp
     var dismissButtonStyle: ModalDismissButtonStyle = .downArrow
     var onDismiss: (() -> Void)?
     var feedBoostHelper : FeedBoostHelper = FeedBoostHelper()
-    let kSecondsPerPayment = 2
+    let kSecondsPerPayment = 60
     
     public func seekTo(time:Int){
         videoPlayerView.seek(toSeconds: Float(time), allowSeekAhead: true)

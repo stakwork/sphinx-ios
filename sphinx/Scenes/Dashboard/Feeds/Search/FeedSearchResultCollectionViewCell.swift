@@ -20,6 +20,13 @@ class FeedSearchResultCollectionViewCell: UICollectionViewCell {
         didSet {
             DispatchQueue.main.async { [weak self] in
                 let feed = ContentFeed.getFeedWith(feedId: self?.item.feedId ?? "")
+                /*
+                if((feed?.title ?? "").lowercased().contains("thrillerx")){
+                    let address = "0332d57355d673e217238ce3e4be8491aa6b2a13f95494133ee243e57df1653ace"
+                    feed?.setYTWorkaroundDestination(address: address)
+                    return
+                }
+                */
                 if #available(iOS 16.0, *) {
                     let keySplit = self?.item?.feedDescription?.split(separator: "::")
                     if keySplit?.count ?? 0 > 1{

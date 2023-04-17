@@ -12,6 +12,8 @@ class VideoFeedEpisodePlayerCollectionViewDetailsCell: UICollectionViewCell {
     @IBOutlet private weak var episodeDescriptionLabel: UILabel!
     @IBOutlet private weak var subscriptionToggleButton: UIButton!
     @IBOutlet weak var customBoostView: CustomBoostView!
+    @IBOutlet weak var streamSatsView: PodcastSatsView!
+    
     
     weak var boostDelegate: CustomBoostDelegate?
     
@@ -26,6 +28,7 @@ class VideoFeedEpisodePlayerCollectionViewDetailsCell: UICollectionViewCell {
     var contentFeed: ContentFeed? = nil
     
     let feedBoostHelper = FeedBoostHelper()
+    
 }
 
 
@@ -128,7 +131,9 @@ extension VideoFeedEpisodePlayerCollectionViewDetailsCell {
     
     private func updateViewsWithVideoEpisode() {
         episodeDescriptionLabel.text = videoEpisode.videoDescription
-        
+        if let vf = videoEpisode.videoFeed{
+            streamSatsView.configureWith(videoFeed: vf)
+        }
         subscriptionToggleButton.setTitle(
             subscriptionToggleButtonTitle,
             for: .normal

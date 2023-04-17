@@ -53,6 +53,11 @@ class FeedBoostHelper : NSObject {
         )
     }
     
+    func getDestinationsCount()->Int{
+        let destinations = contentFeed?.destinationsArray ?? []
+        return destinations.count
+    }
+    
     func processPaymentsFor(
         itemID: String,
         amount: Int,

@@ -42,6 +42,7 @@ class YouTubeVideoFeedEpisodePlayerViewController: UIViewController, VideoFeedEp
     var dismissButtonStyle: ModalDismissButtonStyle = .downArrow
     var onDismiss: (() -> Void)?
     var feedBoostHelper : FeedBoostHelper = FeedBoostHelper()
+    let kSecondsPerPayment = 2
     
     public func seekTo(time:Int){
         videoPlayerView.seek(toSeconds: Float(time), allowSeekAhead: true)
@@ -88,8 +89,7 @@ class YouTubeVideoFeedEpisodePlayerViewController: UIViewController, VideoFeedEp
     @objc func updatePlayedTime() {
         getPlayState(completion: {isPlaying in
             self.playedSeconds = self.playedSeconds + ((isPlaying) ? 1 : 0)
-            
-            if self.playedSeconds > 0 && self.playedSeconds % 60 == 0 {
+            if self.playedSeconds > 0 && self.playedSeconds % self.kSecondsPerPayment == 0 {
                 DispatchQueue.global().async {
                     self.processPayment()
                 }
@@ -98,7 +98,7 @@ class YouTubeVideoFeedEpisodePlayerViewController: UIViewController, VideoFeedEp
     }
     
     func processPayment(){
-        feedBoostHelper.processPayment(itemID: videoPlayerEpisode.id, amount: 5)
+        feedBoostHelper.processPayment(itemID: videoPlayerEpisode.id, amount: videoPlayerEpisode.videoFeed?.satsPerMinute ?? 0)
     }
 }
 

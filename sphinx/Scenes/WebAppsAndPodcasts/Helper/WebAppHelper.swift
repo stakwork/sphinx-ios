@@ -165,7 +165,7 @@ extension WebAppHelper : WKScriptMessageHandler {
             let params = getParams(pubKey: dest, amount: amt)
             API.sharedInstance.sendDirectPayment(params: params, callback: { payment in
                 self.sendKeySendResponse(dict: dict, success: true)
-            }, errorCallback: {
+            }, errorCallback: { _ in
                 self.sendKeySendResponse(dict: dict, success: false)
             })
         }

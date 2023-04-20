@@ -89,7 +89,7 @@ final class ChatViewModel: NSObject {
                 }
             }
             callback(nil)
-        }, errorCallback: {
+        }, errorCallback: { _ in
             errorCallback()
         })
     }

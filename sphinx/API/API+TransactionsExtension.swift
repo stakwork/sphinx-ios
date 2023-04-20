@@ -15,7 +15,7 @@ extension API {
         let offset = (page - 1) * itemsPerPage
         let limit = itemsPerPage
         
-        guard let request = getURLRequest(route: "/payments?offset=\(offset)&limit=\(limit)", method: "GET") else {
+        guard let request = getURLRequest(route: "/payments?offset=\(offset)&limit=\(limit)&include_failures=true", method: "GET") else {
             errorCallback()
             return
         }

@@ -320,9 +320,12 @@ class CreateInvoiceViewController: CommonPaymentViewController {
                     self.shouldDismissView()
                 })
             }
-        }, errorCallback: {
-            AlertHelper.showAlert(title: "generic.error.title".localized, message: "generic.error.message".localized, completion: {
-                self.shouldDismissView()
+        }, errorCallback: { error in
+            AlertHelper.showAlert(
+                title: "Payment error",
+                message: "\(error.capitalized)",
+                completion: {
+                    self.shouldDismissView()
             })
         })
     }

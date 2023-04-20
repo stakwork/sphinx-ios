@@ -43,19 +43,21 @@ class PodcastSatsView: UIView {
     func configureWith(podcast: PodcastFeed) {
         self.podcast = podcast
         
+        if podcast.destinationsArray.isEmpty {
+            alpha = 0.5
+            
+            setSliderValue(value: 0)
+            amountSlider.isUserInteractionEnabled = false
+            titleLabel.text = "sats.stream.disabled".localized
+            
+            return
+        }
+        
         if let storedAmount = podcast.satsPerMinute {
             setSliderValue(value: storedAmount)
         } else {
             let suggestedSats = podcast.model?.suggestedSats ?? 5
             setSliderValue(value: suggestedSats)
-        }
-        
-        if podcast.destinationsArray.count < 1{
-            setSliderValue(value: 0)
-            amountSlider.isUserInteractionEnabled = false
-            self.alpha = 0.8
-            titleLabel.text = "sats.stream.disabled".localized
-            titleLabel.textColor = UIColor.Sphinx.SemitransparentText
         }
     }
     

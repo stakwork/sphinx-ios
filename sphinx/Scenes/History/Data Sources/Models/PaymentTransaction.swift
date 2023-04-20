@@ -20,6 +20,7 @@ class PaymentTransaction {
     var originalMessageUUID : String?
     var paymentRequest : String?
     var paymentHash : String?
+    var errorMessage : String?
     
     public enum TransactionDirection: Int {
         case Incoming
@@ -27,15 +28,16 @@ class PaymentTransaction {
     }
     
     init(json: JSON) {
-        let type = json["type"].int ?? nil
-        let amount = json["amount"].int ?? nil
-        let senderId = json["sender"].int ?? nil
-        let receiverId = json["receiver"].int ?? nil
-        let chatId = json["chat_id"].int ?? nil
+        let type = json["type"].int
+        let amount = json["amount"].int
+        let senderId = json["sender"].int
+        let receiverId = json["receiver"].int
+        let chatId = json["chat_id"].int
         let date = Date.getDateFromString(dateString: json["date"].stringValue) ?? Date()
-        let paymentHash = json["payment_hash"].string ?? nil
-        let paymentRequest = json["payment_request"].string ?? nil
-        let originalMUUID = json["reply_uuid"].string ?? nil
+        let paymentHash = json["payment_hash"].string
+        let paymentRequest = json["payment_request"].string
+        let originalMUUID = json["reply_uuid"].string
+        let errorMessage = json["error_message"].string
         
         self.type = type
         self.amount = amount
@@ -46,6 +48,7 @@ class PaymentTransaction {
         self.paymentRequest = paymentRequest
         self.paymentHash = paymentHash
         self.originalMessageUUID = originalMUUID
+        self.errorMessage = errorMessage
     }
     
     func getDirection() -> TransactionDirection {
@@ -60,6 +63,10 @@ class PaymentTransaction {
     
     func isIncoming() -> Bool {
         return getDirection() == TransactionDirection.Incoming
+    }
+    
+    func isFailed() -> Bool {
+        return !((errorMessage ?? "").isEmpty)
     }
     
     func getDate() -> Date {

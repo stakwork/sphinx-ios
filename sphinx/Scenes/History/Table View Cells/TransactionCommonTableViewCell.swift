@@ -28,8 +28,13 @@ class TransactionCommonTableViewCell : UITableViewCell {
         guard let transaction = transaction else {
             return
         }
-        
         self.transaction = transaction
+        
+        if transaction.isFailed() {
+            contentView.backgroundColor = UIColor.Sphinx.BadgeRed
+        } else {
+            contentView.backgroundColor = transaction.isIncoming() ? UIColor.Sphinx.TransactionBG : UIColor.Sphinx.Body
+        }
         
         if let users = transaction.getUsers() {
             addressLabel.text = users

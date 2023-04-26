@@ -10,6 +10,7 @@ import CoreData
 
 class AllTribeFeedsCollectionViewController: UICollectionViewController {
     var followedFeeds: [ContentFeed] = []
+    var allFeeds : [ContentFeed] = []
     
     var recommendedFeeds: [RecommendationResult] = []
     
@@ -201,6 +202,11 @@ extension AllTribeFeedsCollectionViewController {
         
         fetchItems()
         loadRecommendations()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.allFeeds = FeedsManager().fetchFeeds()
     }
     
     func addTableBottomInset(for collectionView: UICollectionView) {
@@ -505,7 +511,7 @@ extension AllTribeFeedsCollectionViewController {
             return nil
         }
         
-        let recentlyPlayedFeed = followedFeeds.sorted { (first, second) in
+        let recentlyPlayedFeed = allFeeds.sorted { (first, second) in
             let firstDate = first.dateLastConsumed ?? Date.init(timeIntervalSince1970: 0)
             let secondDate = second.dateLastConsumed ?? Date.init(timeIntervalSince1970: 0)
             

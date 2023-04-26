@@ -176,6 +176,22 @@ extension YouTubeVideoFeedEpisodePlayerViewController {
         setupDismissButton()
         
         configureTimer()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 8.0, execute: {
+            self.videoPlayerView.webView!.evaluateJavaScript("var fullScreenButton = document.getElementsByClassName('ytp-fullscreen-button')[0]; if (fullScreenButton) { fullScreenButton.click(); }") { (result, error) in
+                if let error = error {
+                  print(error.localizedDescription)
+                }
+              }
+            
+            self.videoPlayerView.webView!.evaluateJavaScript("var iframe = document.getElementById('player'); var innerDoc = iframe.contentDocument || iframe.contentWindow.document; console.log(innerDoc.getElementsByTagName('*'));") { (result, error) in
+                if let html = result as? String {
+                  print(html)
+                } else if let error = error {
+                  print(error.localizedDescription)
+                }
+              }
+        })
     }
     
     
@@ -205,8 +221,8 @@ extension YouTubeVideoFeedEpisodePlayerViewController {
                 shouldSaveAction: true
             )
         }
-        
-        videoPlayerView.load(withVideoId: videoPlayerEpisode.youtubeVideoID)
+        let playvarsDic = ["controls": 1, "playsinline": 0, "autohide": 1, "showinfo": 1, "autoplay": 1, "modestbranding": 1]
+        videoPlayerView.load(withVideoId: videoPlayerEpisode.youtubeVideoID,playerVars: playvarsDic)
         
         episodeTitleLabel.text = videoPlayerEpisode.titleForDisplay
         episodeViewCountLabel.text = "\(Int.random(in: 100...999)) Views"

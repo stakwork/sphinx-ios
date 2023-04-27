@@ -71,15 +71,15 @@ extension PodcastFeedCollectionViewController {
         case latestPodcastEpisodes
 
         /// Podcasts that the user is subscribed to
-        case subscribedPodcastFeeds
+        case recentlyPlayedPods
 
 
         var titleForDisplay: String {
             switch self {
             case .latestPodcastEpisodes:
-                return "feed.listen-now".localized
-            case .subscribedPodcastFeeds:
-                return "feed.following".localized
+                return "feed.recently-released".localized
+            case .recentlyPlayedPods:
+                return "recently.played".localized
             }
         }
     }
@@ -239,7 +239,7 @@ extension PodcastFeedCollectionViewController {
             switch section {
             case .latestPodcastEpisodes:
                 return self.makeFeedContentSectionLayout(itemHeight: 285.0)
-            case .subscribedPodcastFeeds:
+            case .recentlyPlayedPods:
                 return self.makeFeedContentSectionLayout(itemHeight: 255.0)
             }
         }
@@ -329,14 +329,29 @@ extension PodcastFeedCollectionViewController {
         snapshot.appendSections(CollectionViewSection.allCases)
 
         snapshot.appendItems(
-            followedPodcastFeeds.map {
+            followedPodcastFeeds
+                .sorted(by: {(first, second) in
+                let firstDate = first.dateLastConsumed ?? Date.init(timeIntervalSince1970: 0)
+                let secondDate = second.dateLastConsumed ?? Date.init(timeIntervalSince1970: 0)
+                
+                if (firstDate == secondDate) {
+                    let firstDate = first.episodes?.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
+                    let secondDate = second.episodes?.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
+
+                    return firstDate > secondDate
+                }
+
+                return firstDate > secondDate
+            
+        }).map {
                 DataSourceItem.subscribedPodcastFeed($0)
             },
-            toSection: .subscribedPodcastFeeds
+            toSection: .recentlyPlayedPods
         )
 
         snapshot.appendItems(
-            followedPodcastEpisode.map { episode in
+            followedPodcastEpisode
+                .map { episode in
                 DataSourceItem.listenNowEpisode(episode, episode.currentTime ?? 0)
             },
             toSection: .latestPodcastEpisodes

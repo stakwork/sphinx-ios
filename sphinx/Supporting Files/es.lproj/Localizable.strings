@@ -537,8 +537,11 @@
 "feed.following" = "Siguiendo";
 "recently.played" = "Recientemente Leído";
 "feed.listen-now" = "Escuchar Ahora";
+"feed.recently-released" = "Lanzado Recientemente";
 "feed.watch-now" = "Mirar Ahora";
 "feed.read-now" = "Leer Ahora";
+"feed.recently-published" = "Publicado Recientemente";
+"feed.recently-read" = "Leiod Recientemente";
 "feed.play-now" = "Jugar Ahora";
 "feed.no-feed-found" = "No se encontraron\nresultados en el Feed";
 "feed.no-listen-found" = "No se encontraron\nresultados para \"Escuchar\"";

@@ -9,7 +9,11 @@ import CoreData
 
 
 class DashboardVideoFeedCollectionViewController: UICollectionViewController {
-    var videoFeeds: [VideoFeed]!
+    var videoFeeds: [VideoFeed]!{
+        didSet{
+            print(videoFeeds)
+        }
+    }
     var videoEpisodes: [Video]!
     
     var interSectionSpacing: CGFloat = 20.0
@@ -79,9 +83,9 @@ extension DashboardVideoFeedCollectionViewController {
         var titleForDisplay: String {
             switch self {
             case .videoEpisodes:
-                return "feed.watch-now".localized
+                return "feed.recently-released".localized
             case .videoFeeds:
-                return "feed.following".localized
+                return "recently.played".localized
             }
         }
     }
@@ -411,17 +415,26 @@ extension DashboardVideoFeedCollectionViewController {
         snapshot.appendSections(CollectionViewSection.allCases)
         
         snapshot.appendItems(
-            videoFeeds.sorted { (first, second) in
-                let firstDate = first.videosArray.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
-                let secondDate = second.videosArray.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
+            videoFeeds.sorted(by: {(first, second) in
+                let firstDate = first.dateLastConsumed ?? Date.init(timeIntervalSince1970: 0)
+                let secondDate = second.dateLastConsumed ?? Date.init(timeIntervalSince1970: 0)
                 
+                if (firstDate == secondDate) {
+                    let firstDate = first.videosArray.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
+                    let secondDate = second.videosArray.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
+
+                    return firstDate > secondDate
+                }
+
                 return firstDate > secondDate
-            }.map { DataSourceItem.videoFeed($0) },
+            
+        }).map { DataSourceItem.videoFeed($0) },
             toSection: .videoFeeds
         )
         
         snapshot.appendItems(
-            videoEpisodes.sorted { (first, second) in
+            videoEpisodes.filter({$0.videoFeed?.isSubscribedToFromSearch == true})
+                .sorted { (first, second) in
                 let firstDate = first.datePublished ?? Date.init(timeIntervalSince1970: 0)
                 let secondDate = second.datePublished ?? Date.init(timeIntervalSince1970: 0)
                 
@@ -535,11 +548,12 @@ extension DashboardVideoFeedCollectionViewController: NSFetchedResultsController
     ) {
         guard
             let resultController = controller as? NSFetchedResultsController<NSManagedObject>,
-            let firstSection = resultController.sections?.first,
-            let foundFeeds = firstSection.objects as? [ContentFeed]
+            let firstSection = resultController.sections?.first
         else {
             return
         }
+        
+        let foundFeeds = FeedsManager().fetchFeeds().filter({$0.isVideo})
         
         let videoFeeds = foundFeeds.map {
             VideoFeed.convertFrom(contentFeed: $0)

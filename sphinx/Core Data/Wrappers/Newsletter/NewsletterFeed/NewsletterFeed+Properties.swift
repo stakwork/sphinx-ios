@@ -22,6 +22,7 @@ public class NewsletterFeed: NSObject {
     public var dateUpdated: Date?
     public var datePublished: Date?
     public var chat: Chat?
+    public var dateLastConsumed: Date?
     internal var newsletterItems: Array<NewsletterItem>?
     
     init(_ objectID: NSManagedObjectID, _ feedID: String) {
@@ -63,6 +64,7 @@ extension NewsletterFeed {
         newsletterFeed.imageURL = contentFeed.imageURL
         newsletterFeed.generator = contentFeed.generator
         newsletterFeed.chat = contentFeed.chat
+        newsletterFeed.dateLastConsumed = contentFeed.dateLastConsumed
         
         newsletterFeed.newsletterItems = contentFeed
                 .items?

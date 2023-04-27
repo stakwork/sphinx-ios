@@ -22,6 +22,7 @@ public class PodcastFeed: NSObject {
     public var feedURLPath: String?
     public var isSubscribedToFromSearch: Bool
     public var chat: Chat?
+    public var dateLastConsumed:Date?
     public var model: PodcastModel?
     public var episodes: Array<PodcastEpisode>?
     public var destinations: Array<PodcastDestination>?
@@ -60,6 +61,7 @@ extension PodcastFeed {
         podcastFeed.imageURLPath = contentFeed.imageURL?.absoluteString
         podcastFeed.generator = contentFeed.generator
         podcastFeed.chat = contentFeed.chat
+        podcastFeed.dateLastConsumed = contentFeed.dateLastConsumed
         
         podcastFeed.episodes = contentFeed
                 .items?

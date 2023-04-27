@@ -81,9 +81,9 @@ extension DashboardNewsletterFeedCollectionViewController {
         var titleForDisplay: String {
             switch self {
             case .newsletterItems:
-                return "feed.read-now".localized
+                return "feed.recently-published".localized
             case .newsletterFeeds:
-                return "feed.following".localized
+                return "feed.recently-read".localized
             }
         }
     }
@@ -415,12 +415,20 @@ extension DashboardNewsletterFeedCollectionViewController {
         snapshot.appendSections(CollectionViewSection.allCases)
         
         snapshot.appendItems(
-            newsletterFeeds.sorted { (first, second) in
-                let firstDate = first.itemsArray.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
-                let secondDate = second.itemsArray.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
+            newsletterFeeds.sorted(by: {(first, second) in
+                let firstDate = first.dateLastConsumed ?? Date.init(timeIntervalSince1970: 0)
+                let secondDate = second.dateLastConsumed ?? Date.init(timeIntervalSince1970: 0)
                 
+                if (firstDate == secondDate) {
+                    let firstDate = first.newsletterItems?.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
+                    let secondDate = second.newsletterItems?.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
+
+                    return firstDate > secondDate
+                }
+
                 return firstDate > secondDate
-            }.map { DataSourceItem.newsletterFeed($0) },
+            
+        }).map { DataSourceItem.newsletterFeed($0) },
             toSection: .newsletterFeeds
         )
         

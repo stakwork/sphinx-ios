@@ -12,7 +12,7 @@ import CoreData
 
 class DashboardNewsletterFeedCollectionViewController: UICollectionViewController {
     
-    var newsletterFeeds: [NewsletterFeed]!
+    var newsletterFeeds: [NewsletterFeed] = []
     
     var interSectionSpacing: CGFloat = 20.0
 
@@ -40,8 +40,6 @@ extension DashboardNewsletterFeedCollectionViewController {
 
     static func instantiate(
         managedObjectContext: NSManagedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext,
-        newsletterFeeds: [NewsletterFeed] = [],
-        newsletterItems: [NewsletterItem] = [],
         interSectionSpacing: CGFloat = 20.0,
         onNewsletterItemCellSelected: ((NSManagedObjectID) -> Void)!,
         onNewsletterFeedCellSelected: ((NSManagedObjectID) -> Void)!,
@@ -56,7 +54,6 @@ extension DashboardNewsletterFeedCollectionViewController {
 
         viewController.managedObjectContext = managedObjectContext
 
-        viewController.newsletterFeeds = newsletterFeeds
         viewController.interSectionSpacing = interSectionSpacing
         viewController.onNewsletterItemCellSelected = onNewsletterItemCellSelected
         viewController.onNewsletterFeedCellSelected = onNewsletterFeedCellSelected
@@ -75,14 +72,14 @@ extension DashboardNewsletterFeedCollectionViewController {
 extension DashboardNewsletterFeedCollectionViewController {
     
     enum CollectionViewSection: Int, CaseIterable {
-        case newsletterItems
-        case newsletterFeeds
+        case recentlyPublishedFeeds
+        case recentlyReadFeeds
         
         var titleForDisplay: String {
             switch self {
-            case .newsletterItems:
+            case .recentlyPublishedFeeds:
                 return "feed.recently-published".localized
-            case .newsletterFeeds:
+            case .recentlyReadFeeds:
                 return "feed.recently-read".localized
             }
         }
@@ -101,7 +98,10 @@ extension DashboardNewsletterFeedCollectionViewController {
                     lhsContentFeed.feedID == rhsContentFeed.feedID &&
                     lhsContentFeed.title == rhsContentFeed.title &&
                     lhsContentFeed.feedURL?.absoluteString == rhsContentFeed.feedURL?.absoluteString &&
-                    lhsContentFeed.itemsArray.count == rhsContentFeed.itemsArray.count
+                    lhsContentFeed.dateLastConsumed == rhsContentFeed.dateLastConsumed &&
+                    lhsContentFeed.itemsArray.count == rhsContentFeed.itemsArray.count &&
+                    lhsContentFeed.itemsArray.first?.id == rhsContentFeed.itemsArray.first?.id &&
+                    lhsContentFeed.itemsArray.first?.datePublished == rhsContentFeed.itemsArray.first?.datePublished
             }
             
             if let lhsEpisode = lhs.articleEntity,
@@ -234,9 +234,9 @@ extension DashboardNewsletterFeedCollectionViewController {
     func makeSectionProvider() -> UICollectionViewCompositionalLayoutSectionProvider {
         { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
             switch CollectionViewSection(rawValue: sectionIndex)! {
-            case .newsletterItems:
+            case .recentlyPublishedFeeds:
                 return self.makeNewsletterItemSectionLayout()
-            case .newsletterFeeds:
+            case .recentlyReadFeeds:
                 return self.makeNewsletterFeedSectionLayout()
             }
         }
@@ -341,7 +341,7 @@ extension DashboardNewsletterFeedCollectionViewController {
             }
             
             switch section {
-            case .newsletterItems:
+            case .recentlyPublishedFeeds:
                 guard
                     let itemCell = collectionView.dequeueReusableCell(
                         withReuseIdentifier: DashboardNewsletterItemCollectionViewCell.reuseID,
@@ -356,7 +356,7 @@ extension DashboardNewsletterFeedCollectionViewController {
                 itemCell.delegate = self
                 return itemCell
                 
-            case .newsletterFeeds:
+            case .recentlyReadFeeds:
                 guard
                     let feedCell = collectionView.dequeueReusableCell(
                         withReuseIdentifier: DashboardFeedSquaredThumbnailCollectionViewCell.reuseID,
@@ -415,6 +415,19 @@ extension DashboardNewsletterFeedCollectionViewController {
         snapshot.appendSections(CollectionViewSection.allCases)
         
         snapshot.appendItems(
+            newsletterFeeds
+                .sorted { (first, second) in
+                    let firstDate = first.newsletterItems?.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
+                    let secondDate = second.newsletterItems?.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
+                    
+                    return firstDate > secondDate
+                }
+                .compactMap { $0.lastArticle }
+                .map { DataSourceItem.newsletterItem( $0 ) },
+            toSection: .recentlyPublishedFeeds
+        )
+        
+        snapshot.appendItems(
             newsletterFeeds.sorted(by: {(first, second) in
                 let firstDate = first.dateLastConsumed ?? Date.init(timeIntervalSince1970: 0)
                 let secondDate = second.dateLastConsumed ?? Date.init(timeIntervalSince1970: 0)
@@ -429,21 +442,7 @@ extension DashboardNewsletterFeedCollectionViewController {
                 return firstDate > secondDate
             
         }).map { DataSourceItem.newsletterFeed($0) },
-            toSection: .newsletterFeeds
-        )
-        
-        let feedsWithArticles = newsletterFeeds.filter {
-            return $0.itemsArray.count > 0
-        }
-        
-        snapshot.appendItems(
-            feedsWithArticles.sorted { (first, second) in
-                let firstDate = first.datePublished ?? Date.init(timeIntervalSince1970: 0)
-                let secondDate = second.datePublished ?? Date.init(timeIntervalSince1970: 0)
-                
-                return firstDate > secondDate
-            }.map { DataSourceItem.newsletterItem($0.nextArticle) },
-            toSection: .newsletterItems
+            toSection: .recentlyReadFeeds
         )
 
         return snapshot
@@ -525,16 +524,7 @@ extension DashboardNewsletterFeedCollectionViewController {
         }
 
         switch section {
-        case .newsletterFeeds:
-            guard
-                case let .newsletterFeed(newsletterFeed) = dataSourceItem
-            else {
-                preconditionFailure()
-            }
-            
-            onNewsletterFeedCellSelected?(newsletterFeed.objectID)
-            
-        case .newsletterItems:
+        case .recentlyPublishedFeeds:
             guard
                 case let .newsletterItem(newsletterItem) = dataSourceItem
             else {
@@ -542,6 +532,14 @@ extension DashboardNewsletterFeedCollectionViewController {
             }
             
             onNewsletterItemCellSelected?(newsletterItem.objectID)
+        case .recentlyReadFeeds:
+            guard
+                case let .newsletterFeed(newsletterFeed) = dataSourceItem
+            else {
+                preconditionFailure()
+            }
+            
+            onNewsletterFeedCellSelected?(newsletterFeed.objectID)
         }
     }
 }

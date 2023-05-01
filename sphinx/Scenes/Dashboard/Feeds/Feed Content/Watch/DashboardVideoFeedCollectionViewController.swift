@@ -9,12 +9,9 @@ import CoreData
 
 
 class DashboardVideoFeedCollectionViewController: UICollectionViewController {
-    var videoFeeds: [VideoFeed]!{
-        didSet{
-            print(videoFeeds)
-        }
-    }
-    var videoEpisodes: [Video]!
+    
+    var allVideoFeeds: [VideoFeed] = []
+    var followedVideoFeeds: [VideoFeed] = []
     
     var interSectionSpacing: CGFloat = 20.0
 
@@ -42,8 +39,6 @@ extension DashboardVideoFeedCollectionViewController {
 
     static func instantiate(
         managedObjectContext: NSManagedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext,
-        videoFeeds: [VideoFeed] = [],
-        videoEpisodes: [Video] = [],
         interSectionSpacing: CGFloat = 20.0,
         onVideoEpisodeCellSelected: ((NSManagedObjectID) -> Void)!,
         onVideoFeedCellSelected: ((NSManagedObjectID) -> Void)!,
@@ -56,9 +51,6 @@ extension DashboardVideoFeedCollectionViewController {
             .instantiate()
 
         viewController.managedObjectContext = managedObjectContext
-
-        viewController.videoFeeds = videoFeeds
-        viewController.videoEpisodes = videoEpisodes
         viewController.interSectionSpacing = interSectionSpacing
         viewController.onVideoEpisodeCellSelected = onVideoEpisodeCellSelected
         viewController.onVideoFeedCellSelected = onVideoFeedCellSelected
@@ -77,14 +69,14 @@ extension DashboardVideoFeedCollectionViewController {
 extension DashboardVideoFeedCollectionViewController {
     
     enum CollectionViewSection: Int, CaseIterable {
-        case videoEpisodes
-        case videoFeeds
+        case recentlyReleaseVideos
+        case recentlyPlayedVideos
         
         var titleForDisplay: String {
             switch self {
-            case .videoEpisodes:
+            case .recentlyReleaseVideos:
                 return "feed.recently-released".localized
-            case .videoFeeds:
+            case .recentlyPlayedVideos:
                 return "recently.played".localized
             }
         }
@@ -103,7 +95,10 @@ extension DashboardVideoFeedCollectionViewController {
                     lhsContentFeed.feedID == rhsContentFeed.feedID &&
                     lhsContentFeed.title == rhsContentFeed.title &&
                     lhsContentFeed.feedURL?.absoluteString == rhsContentFeed.feedURL?.absoluteString &&
-                    lhsContentFeed.videosArray.count == rhsContentFeed.videosArray.count
+                    lhsContentFeed.dateLastConsumed == rhsContentFeed.dateLastConsumed &&
+                    lhsContentFeed.videosArray.count == rhsContentFeed.videosArray.count &&
+                    lhsContentFeed.videosArray.first?.id == rhsContentFeed.videosArray.first?.id &&
+                    lhsContentFeed.videosArray.first?.datePublished == rhsContentFeed.videosArray.first?.datePublished
             }
             
             if let lhsEpisode = lhs.episodeEntity,
@@ -236,9 +231,9 @@ extension DashboardVideoFeedCollectionViewController {
     func makeSectionProvider() -> UICollectionViewCompositionalLayoutSectionProvider {
         { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
             switch CollectionViewSection(rawValue: sectionIndex)! {
-            case .videoEpisodes:
+            case .recentlyReleaseVideos:
                 return self.makeVideoEpisodeSectionLayout()
-            case .videoFeeds:
+            case .recentlyPlayedVideos:
                 return self.makeVideoFeedSectionLayout()
             }
         }
@@ -342,7 +337,7 @@ extension DashboardVideoFeedCollectionViewController {
             }
             
             switch section {
-            case .videoEpisodes:
+            case .recentlyReleaseVideos:
                 guard
                     let episodeCell = collectionView.dequeueReusableCell(
                         withReuseIdentifier: DashboardVideoEpisodeCollectionViewCell.reuseID,
@@ -356,7 +351,7 @@ extension DashboardVideoFeedCollectionViewController {
                 episodeCell.configure(withVideoEpisode: videoEpisode)
                 
                 return episodeCell
-            case .videoFeeds:
+            case .recentlyPlayedVideos:
                 guard
                     let feedCell = collectionView.dequeueReusableCell(
                         withReuseIdentifier: DashboardFeedSquaredThumbnailCollectionViewCell.reuseID,
@@ -408,14 +403,28 @@ extension DashboardVideoFeedCollectionViewController {
     func makeSnapshotForCurrentState() -> DataSourceSnapshot {
         var snapshot = DataSourceSnapshot()
         
-        if (videoFeeds.isEmpty) {
+        if (allVideoFeeds.isEmpty) {
             return snapshot
         }
 
         snapshot.appendSections(CollectionViewSection.allCases)
         
         snapshot.appendItems(
-            videoFeeds.sorted(by: {(first, second) in
+            followedVideoFeeds
+                .sorted(by: {(first, second) in
+                    let firstDate = first.videosArray.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
+                    let secondDate = second.videosArray.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
+
+                    return firstDate > secondDate
+                
+                })
+                .compactMap { $0.videosArray.first }
+                .map { DataSourceItem.videoEpisode( $0 ) },
+            toSection: .recentlyReleaseVideos
+        )
+        
+        snapshot.appendItems(
+            allVideoFeeds.sorted(by: {(first, second) in
                 let firstDate = first.dateLastConsumed ?? Date.init(timeIntervalSince1970: 0)
                 let secondDate = second.dateLastConsumed ?? Date.init(timeIntervalSince1970: 0)
                 
@@ -429,18 +438,7 @@ extension DashboardVideoFeedCollectionViewController {
                 return firstDate > secondDate
             
         }).map { DataSourceItem.videoFeed($0) },
-            toSection: .videoFeeds
-        )
-        
-        snapshot.appendItems(
-            videoEpisodes.filter({$0.videoFeed?.isSubscribedToFromSearch == true})
-                .sorted { (first, second) in
-                let firstDate = first.datePublished ?? Date.init(timeIntervalSince1970: 0)
-                let secondDate = second.datePublished ?? Date.init(timeIntervalSince1970: 0)
-                
-                return firstDate > secondDate
-            }.map { DataSourceItem.videoEpisode($0) },
-            toSection: .videoEpisodes
+            toSection: .recentlyPlayedVideos
         )
 
         return snapshot
@@ -458,9 +456,29 @@ extension DashboardVideoFeedCollectionViewController {
         videoFeeds: [VideoFeed],
         shouldAnimate: Bool = true
     ) {
-        self.videoFeeds = videoFeeds
-        videoEpisodes = videoFeeds.compactMap(\.videosArray.first)
+        
+        
+        self.followedVideoFeeds = videoFeeds.filter { $0.isSubscribedToFromSearch || $0.chat != nil }.sorted { (first, second) in
+            let firstDate = first.videosArray.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
+            let secondDate = second.videosArray.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
+            
+            return firstDate > secondDate
+        }
+        
+        self.allVideoFeeds = videoFeeds.sorted { (first, second) in
+            let firstDate = first.dateLastConsumed ?? Date.init(timeIntervalSince1970: 0)
+            let secondDate = second.dateLastConsumed ?? Date.init(timeIntervalSince1970: 0)
+            
+            if (firstDate == secondDate) {
+                let firstDate = first.videosArray.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
+                let secondDate = second.videosArray.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
 
+                return firstDate > secondDate
+            }
+
+            return firstDate > secondDate
+        }
+        
         if let dataSource = dataSource {
             dataSource.apply(
                 makeSnapshotForCurrentState(),
@@ -477,7 +495,7 @@ extension DashboardVideoFeedCollectionViewController {
     static func makeFetchedResultsController(
         using managedObjectContext: NSManagedObjectContext
     ) -> NSFetchedResultsController<ContentFeed> {
-        let fetchRequest = VideoFeed.FetchRequests.followedFeeds()
+        let fetchRequest = VideoFeed.FetchRequests.allFeeds()
         
         return NSFetchedResultsController(
             fetchRequest: fetchRequest,
@@ -514,17 +532,9 @@ extension DashboardVideoFeedCollectionViewController {
         else {
             return
         }
-
+        
         switch section {
-        case .videoFeeds:
-            guard
-                case let .videoFeed(videoFeed) = dataSourceItem
-            else {
-                preconditionFailure()
-            }
-            
-            onVideoFeedCellSelected?(videoFeed.objectID)
-        case .videoEpisodes:
+        case .recentlyReleaseVideos:
             guard
                 case let .videoEpisode(videoEpisode) = dataSourceItem
             else {
@@ -532,7 +542,15 @@ extension DashboardVideoFeedCollectionViewController {
             }
             
             onVideoEpisodeCellSelected?(videoEpisode.objectID)
-        }
+        case .recentlyPlayedVideos:
+            guard
+                case let .videoFeed(videoFeed) = dataSourceItem
+            else {
+                preconditionFailure()
+            }
+            
+            onVideoFeedCellSelected?(videoFeed.objectID)
+    }
     }
 }
 
@@ -548,13 +566,12 @@ extension DashboardVideoFeedCollectionViewController: NSFetchedResultsController
     ) {
         guard
             let resultController = controller as? NSFetchedResultsController<NSManagedObject>,
-            let firstSection = resultController.sections?.first
+            let firstSection = resultController.sections?.first,
+            let foundFeeds = firstSection.objects as? [ContentFeed]
         else {
             return
         }
-        
-        let foundFeeds = FeedsManager().fetchFeeds().filter({$0.isVideo})
-        
+
         let videoFeeds = foundFeeds.map {
             VideoFeed.convertFrom(contentFeed: $0)
         }

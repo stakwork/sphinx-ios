@@ -9,8 +9,9 @@ import CoreData
 
 
 class AllTribeFeedsCollectionViewController: UICollectionViewController {
-    var followedFeeds: [ContentFeed] = []
+    
     var allFeeds : [ContentFeed] = []
+    var followedFeeds : [ContentFeed] = []
     
     var recommendedFeeds: [RecommendationResult] = []
     
@@ -78,6 +79,7 @@ extension AllTribeFeedsCollectionViewController {
         onNewResultsFetched: @escaping ((Int) -> Void) = { _ in },
         onContentScrolled: ((UIScrollView) -> Void)? = nil
     ) -> AllTribeFeedsCollectionViewController {
+        
         let viewController = StoryboardScene
             .Dashboard
             .allTribeFeedsCollectionViewController
@@ -140,6 +142,7 @@ extension AllTribeFeedsCollectionViewController {
                     lhsContentFeed.feedID == rhsContentFeed.feedID &&
                     lhsContentFeed.title == rhsContentFeed.title &&
                     lhsContentFeed.feedURL?.absoluteString == rhsContentFeed.feedURL?.absoluteString &&
+                    lhsContentFeed.dateLastConsumed == rhsContentFeed.dateLastConsumed &&
                     lhsContentFeed.items?.count ?? 0 == rhsContentFeed.items?.count ?? 0 &&
                     lhsContentFeed.itemsArray.first?.id == rhsContentFeed.itemsArray.first?.id &&
                     lhsContentFeed.itemsArray.first?.datePublished == rhsContentFeed.itemsArray.first?.datePublished
@@ -202,11 +205,6 @@ extension AllTribeFeedsCollectionViewController {
         
         fetchItems()
         loadRecommendations()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.allFeeds = FeedsManager().fetchFeeds()
     }
     
     func addTableBottomInset(for collectionView: UICollectionView) {
@@ -561,14 +559,16 @@ extension AllTribeFeedsCollectionViewController {
     }
     
     func updateWithNew(
-        feeds followedFeeds: [ContentFeed]
+        feeds allFeeds: [ContentFeed]
     ) {
-        self.followedFeeds = followedFeeds
+        self.allFeeds = allFeeds
+        self.followedFeeds = allFeeds.filter { $0.isSubscribedToFromSearch || $0.chat != nil }
         
         let firstDataSourceItem = self.dataSource.itemIdentifier(for: IndexPath(row: 0, section: 0))
         let isLoadingRecommendations = firstDataSourceItem?.isLoading == true
 
         if let dataSource = dataSource {
+            
             let snapshot = makeSnapshotForCurrentState(
                 loadingRecommendations: isLoadingRecommendations
             )
@@ -644,7 +644,8 @@ extension AllTribeFeedsCollectionViewController {
     static func makeFetchedResultsController(
         using managedObjectContext: NSManagedObjectContext
     ) -> NSFetchedResultsController<ContentFeed> {
-        let fetchRequest = ContentFeed.FetchRequests.followedFeeds()
+        
+        let fetchRequest = ContentFeed.FetchRequests.default()
         
         return NSFetchedResultsController(
             fetchRequest: fetchRequest,
@@ -724,6 +725,7 @@ extension AllTribeFeedsCollectionViewController: NSFetchedResultsControllerDeleg
         }
         
         DispatchQueue.main.async { [weak self] in
+            
             self?.updateWithNew(
                 feeds: foundFeeds
             )

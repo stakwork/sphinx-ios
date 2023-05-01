@@ -510,6 +510,7 @@
 "contributed.sats" = "Contributed: %d sats";
 "earned.sats" = "Earned: %d sats";
 "sats.per.minute" = "Sats per minute";
+"sats.stream.disabled" = "Sats per minute (No destinations set by Creator)";
 "suggested.out.range" = "Suggested amount (%d sats) is above the maximum";
 "delete.episode.title" = "Delete Episode";
 "delete.episode.message" = "Delete Episode from device memory?";

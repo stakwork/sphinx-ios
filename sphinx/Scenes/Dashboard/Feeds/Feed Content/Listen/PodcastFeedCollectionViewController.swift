@@ -3,8 +3,9 @@ import CoreData
 
 
 class PodcastFeedCollectionViewController: UICollectionViewController {
-    var followedPodcastFeeds: [PodcastFeed]!
-    var followedPodcastEpisode: [PodcastEpisode]!
+    
+    var allPodcastFeeds: [PodcastFeed] = []
+    var followedPodcastFeeds: [PodcastFeed] = []
     
     var interSectionSpacing: CGFloat!
 
@@ -31,7 +32,6 @@ class PodcastFeedCollectionViewController: UICollectionViewController {
 extension PodcastFeedCollectionViewController {
 
     static func instantiate(
-        followedPodcastFeeds: [PodcastFeed] = [],
         managedObjectContext: NSManagedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext,
         interSectionSpacing: CGFloat = 10.0,
         onPodcastEpisodeCellSelected: @escaping ((NSManagedObjectID) -> Void) = { _ in },
@@ -40,11 +40,6 @@ extension PodcastFeedCollectionViewController {
         onContentScrolled: ((UIScrollView) -> Void)? = nil
     ) -> PodcastFeedCollectionViewController {
         let viewController = StoryboardScene.Dashboard.podcastFeedCollectionViewController.instantiate()
-
-        viewController.followedPodcastFeeds = followedPodcastFeeds
-        viewController.followedPodcastEpisode = followedPodcastFeeds.compactMap { feed in
-            feed.episodesArray.first
-        }
 
         viewController.managedObjectContext = managedObjectContext
         viewController.interSectionSpacing = interSectionSpacing
@@ -68,18 +63,18 @@ extension PodcastFeedCollectionViewController {
     enum CollectionViewSection: Int, CaseIterable {
 
         /// New episodes
-        case latestPodcastEpisodes
+        case recentlyReleasePods
 
         /// Podcasts that the user is subscribed to
-        case subscribedPodcastFeeds
+        case recentlyPlayedPods
 
 
         var titleForDisplay: String {
             switch self {
-            case .latestPodcastEpisodes:
-                return "feed.listen-now".localized
-            case .subscribedPodcastFeeds:
-                return "feed.following".localized
+            case .recentlyReleasePods:
+                return "feed.recently-released".localized
+            case .recentlyPlayedPods:
+                return "recently.played".localized
             }
         }
     }
@@ -97,6 +92,7 @@ extension PodcastFeedCollectionViewController {
                     lhsContentFeed.feedID == rhsContentFeed.feedID &&
                     lhsContentFeed.title == rhsContentFeed.title &&
                     lhsContentFeed.feedURLPath == rhsContentFeed.feedURLPath &&
+                    lhsContentFeed.dateLastConsumed == rhsContentFeed.dateLastConsumed &&
                     lhsContentFeed.episodesArray.count == rhsContentFeed.episodesArray.count &&
                     lhsContentFeed.getLastEpisode()?.id == rhsContentFeed.getLastEpisode()?.id &&
                     lhsContentFeed.getLastEpisode()?.datePublished == rhsContentFeed.getLastEpisode()?.datePublished
@@ -172,9 +168,9 @@ extension PodcastFeedCollectionViewController {
     
     @objc func forceItemsRefresh(){
         DispatchQueue.main.async { [weak self] in
-            if let feeds = self?.followedPodcastFeeds {
+            if let feeds = self?.allPodcastFeeds {
                 self?.updateWithNew(
-                    followedPodcastFeeds: feeds
+                    podcastFeeds: feeds
                 )
                 
                 self?.onNewResultsFetched(feeds.count)
@@ -237,9 +233,9 @@ extension PodcastFeedCollectionViewController {
             }
             
             switch section {
-            case .latestPodcastEpisodes:
+            case .recentlyReleasePods:
                 return self.makeFeedContentSectionLayout(itemHeight: 285.0)
-            case .subscribedPodcastFeeds:
+            case .recentlyPlayedPods:
                 return self.makeFeedContentSectionLayout(itemHeight: 255.0)
             }
         }
@@ -329,17 +325,40 @@ extension PodcastFeedCollectionViewController {
         snapshot.appendSections(CollectionViewSection.allCases)
 
         snapshot.appendItems(
-            followedPodcastFeeds.map {
-                DataSourceItem.subscribedPodcastFeed($0)
-            },
-            toSection: .subscribedPodcastFeeds
-        )
+            self.followedPodcastFeeds
+                .sorted(by: {(first, second) in
+                    let firstDate = first.episodes?.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
+                    let secondDate = second.episodes?.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
 
+                    return firstDate > secondDate
+                
+                })
+                .compactMap { $0.episodesArray.first }
+                .map { episode in
+                    DataSourceItem.listenNowEpisode(episode, episode.currentTime ?? 0)
+                },
+            toSection: .recentlyReleasePods
+       )
+        
         snapshot.appendItems(
-            followedPodcastEpisode.map { episode in
-                DataSourceItem.listenNowEpisode(episode, episode.currentTime ?? 0)
-            },
-            toSection: .latestPodcastEpisodes
+            allPodcastFeeds
+                .sorted(by: {(first, second) in
+                    let firstDate = first.dateLastConsumed ?? Date.init(timeIntervalSince1970: 0)
+                    let secondDate = second.dateLastConsumed ?? Date.init(timeIntervalSince1970: 0)
+                    
+                    if (firstDate == secondDate) {
+                        let firstDate = first.episodes?.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
+                        let secondDate = second.episodes?.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
+
+                        return firstDate > secondDate
+                    }
+
+                    return firstDate > secondDate
+                
+                }).map {
+                    DataSourceItem.subscribedPodcastFeed($0)
+                },
+            toSection: .recentlyPlayedPods
         )
 
         return snapshot
@@ -347,18 +366,28 @@ extension PodcastFeedCollectionViewController {
 
 
     func updateWithNew(
-        followedPodcastFeeds: [PodcastFeed],
+        podcastFeeds: [PodcastFeed],
         shouldAnimate: Bool = true
     ) {
-        self.followedPodcastFeeds = followedPodcastFeeds.sorted { (first, second) in
+        self.followedPodcastFeeds = podcastFeeds.filter { $0.isSubscribedToFromSearch || $0.chat != nil }.sorted { (first, second) in
             let firstDate = first.getLastEpisode()?.datePublished ?? Date.init(timeIntervalSince1970: 0)
             let secondDate = second.getLastEpisode()?.datePublished ?? Date.init(timeIntervalSince1970: 0)
             
             return firstDate > secondDate
         }
         
-        self.followedPodcastEpisode = self.followedPodcastFeeds.compactMap { feed in
-            feed.episodesArray.first
+        self.allPodcastFeeds = podcastFeeds.sorted { (first, second) in
+            let firstDate = first.dateLastConsumed ?? Date.init(timeIntervalSince1970: 0)
+            let secondDate = second.dateLastConsumed ?? Date.init(timeIntervalSince1970: 0)
+            
+            if (firstDate == secondDate) {
+                let firstDate = first.episodesArray.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
+                let secondDate = second.episodesArray.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
+
+                return firstDate > secondDate
+            }
+
+            return firstDate > secondDate
         }
 
         let snapshot = makeSnapshotForCurrentState()
@@ -446,7 +475,7 @@ extension PodcastFeedCollectionViewController {
     static func makeFetchedResultsController(
         using managedObjectContext: NSManagedObjectContext
     ) -> NSFetchedResultsController<ContentFeed> {
-        let fetchRequest = PodcastFeed.FetchRequests.followedFeeds()
+        let fetchRequest = PodcastFeed.FetchRequests.allFeeds()
 
         return NSFetchedResultsController(
             fetchRequest: fetchRequest,
@@ -507,7 +536,7 @@ extension PodcastFeedCollectionViewController: NSFetchedResultsControllerDelegat
 
         DispatchQueue.main.async { [weak self] in
             self?.updateWithNew(
-                followedPodcastFeeds: podcastFeeds
+                podcastFeeds: podcastFeeds
             )
             
             self?.onNewResultsFetched(podcastFeeds.count)

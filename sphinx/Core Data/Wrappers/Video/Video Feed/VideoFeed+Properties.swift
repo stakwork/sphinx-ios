@@ -24,6 +24,7 @@ public class VideoFeed: NSObject {
     public var dateUpdated: Date?
     public var generator: String?
     public var isSubscribedToFromSearch: Bool
+    public var dateLastConsumed: Date?
     
     public var chat: Chat?
     public var videos: Array<Video>?
@@ -72,6 +73,7 @@ extension VideoFeed {
         videoFeed.imageURL = contentFeed.imageURL
         videoFeed.generator = contentFeed.generator
         videoFeed.chat = contentFeed.chat
+        videoFeed.dateLastConsumed = contentFeed.dateLastConsumed
         
         videoFeed.videos = contentFeed
             .items?

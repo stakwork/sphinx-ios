@@ -78,6 +78,15 @@ extension VideoFeed {
             return request
         }
         
+        public static func allFeeds() -> NSFetchRequest<ContentFeed> {
+            let request: NSFetchRequest<ContentFeed> = baseFetchRequest()
+            
+            request.predicate = Predicates.videoFeeds
+            request.sortDescriptors = []
+
+            return request
+        }
+        
         
         public static func followedFeeds() -> NSFetchRequest<ContentFeed> {
             let request: NSFetchRequest<ContentFeed> = baseFetchRequest()

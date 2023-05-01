@@ -44,13 +44,8 @@ extension NewsletterFeed {
         }
     }
     
-    var nextArticle: NewsletterItem {
-        let nextArticle = currentArticleIndex - 1
-        
-        if itemsArray.count > nextArticle && nextArticle >= 0 {
-            return itemsArray[nextArticle]
-        }
-        return itemsArray.first!
+    var lastArticle: NewsletterItem? {
+        return itemsArray.first
     }
     
     var currentArticleIndex: Int {

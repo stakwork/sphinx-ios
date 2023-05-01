@@ -539,8 +539,11 @@
 "feed.following" = "Following";
 "recently.played" = "Recently Played";
 "feed.listen-now" = "Listen Now";
+"feed.recently-released" = "Recently Released";
 "feed.watch-now" = "Watch Now";
 "feed.read-now" = "Read Now";
+"feed.recently-published" = "Recently Published";
+"feed.recently-read" = "Recently Read";
 "feed.play-now" = "Play Now";
 "feed.no-feed-found" = "No Feed Results Found";
 "feed.no-listen-found" = "No \"Listen\" Results Found";

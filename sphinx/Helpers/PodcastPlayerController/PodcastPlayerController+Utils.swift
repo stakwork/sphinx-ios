@@ -39,6 +39,7 @@ extension PodcastPlayerController {
             podcast.playerSpeed = playerSpeed
         }
         
+        configurePlayingInfoCenter()
     }
     
     func getPodcastWith(podcastId: String) -> PodcastFeed? {
@@ -133,7 +134,6 @@ extension PodcastPlayerController {
         )
 
         runPlayingStateUpdate()
-        configurePlayingInfoCenter()
 
         if roundedCurrentTime >= duration {
             didEndEpisode()

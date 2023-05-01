@@ -137,6 +137,11 @@ extension PodcastPlayerController {
             playerSpeed: podcastData.speed
         )
         
+        if !ConnectivityHelper.isConnectedToInternet && !podcastData.downloaded {
+            self.runErrorStateUpdate()
+            return
+        }
+        
         if let episode = podcast?.getCurrentEpisode(), !episode.isMusicClip {
             ///If playing video on recommendations player
             resetPlayingInfoCenter()
@@ -167,11 +172,6 @@ extension PodcastPlayerController {
                     DispatchQueue.main.async {
                         playAssetAfterLoad(item)
                     }
-                    return
-                }
-                
-                if !ConnectivityHelper.isConnectedToInternet && podcastData.downloaded == false {
-                    self.runErrorStateUpdate()
                     return
                 }
                 

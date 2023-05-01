@@ -22,7 +22,6 @@ class PodcastPlayerView: UIView {
     
     weak var delegate: PodcastPlayerViewDelegate?
     weak var boostDelegate: CustomBoostDelegate?
-    weak var parentVC : UIViewController?
     
     @IBOutlet var contentView: UIView!
     
@@ -81,15 +80,13 @@ class PodcastPlayerView: UIView {
         podcast: PodcastFeed,
         delegate: PodcastPlayerViewDelegate,
         boostDelegate: CustomBoostDelegate,
-        fromDashboard: Bool,
-        parentVC:UIViewController? = nil
+        fromDashboard: Bool
     ) {
         let windowWidth = WindowsManager.getWindowWidth()
         let frame = CGRect(x: 0, y: 0, width: windowWidth, height: windowWidth + PodcastPlayerView.kPlayerHeight)
         
         self.init(frame: frame)
         
-        self.parentVC = parentVC
         self.delegate = delegate
         self.boostDelegate = boostDelegate
         self.podcast = podcast
@@ -229,12 +226,6 @@ class PodcastPlayerView: UIView {
                 UserAction.Pause(podcastData)
             )
         } else {
-            if isConnectedToInternet() == false && podcastData.downloaded == false {
-                if let vc = parentVC{
-                    AlertHelper.showAlert(title: "Network Error", message: "Can't connect to the network to retrieve this content. Please check your internet connection & try again.", on: vc)
-                }
-                return
-            }
             podcastPlayerController.submitAction(
                 UserAction.Play(podcastData)
             )

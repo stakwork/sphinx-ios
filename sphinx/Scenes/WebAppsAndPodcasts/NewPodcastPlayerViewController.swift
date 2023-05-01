@@ -111,8 +111,7 @@ class NewPodcastPlayerViewController: UIViewController {
             podcast: podcast,
             delegate: self,
             boostDelegate: self,
-            fromDashboard: fromDashboard,
-            parentVC: self
+            fromDashboard: fromDashboard
         )
         
         tableView.tableHeaderView = tableHeaderView

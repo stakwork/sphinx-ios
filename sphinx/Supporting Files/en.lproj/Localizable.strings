@@ -510,6 +510,7 @@
 "contributed.sats" = "Contributed: %d sats";
 "earned.sats" = "Earned: %d sats";
 "sats.per.minute" = "Sats per minute";
+"sats.stream.disabled" = "Sats per minute (No destinations set by Creator)";
 "suggested.out.range" = "Suggested amount (%d sats) is above the maximum";
 "delete.episode.title" = "Delete Episode";
 "delete.episode.message" = "Delete Episode from device memory?";
@@ -538,8 +539,11 @@
 "feed.following" = "Following";
 "recently.played" = "Recently Played";
 "feed.listen-now" = "Listen Now";
+"feed.recently-released" = "Recently Released";
 "feed.watch-now" = "Watch Now";
 "feed.read-now" = "Read Now";
+"feed.recently-published" = "Recently Published";
+"feed.recently-read" = "Recently Read";
 "feed.play-now" = "Play Now";
 "feed.no-feed-found" = "No Feed Results Found";
 "feed.no-listen-found" = "No \"Listen\" Results Found";

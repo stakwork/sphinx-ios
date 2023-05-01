@@ -40,11 +40,39 @@ extension PodcastPlayerController {
 
         let size = playingEpisodeImage?.size ?? CGSize.zero
         let artwork = MPMediaItemArtwork.init(boundsSize: size, requestHandler: { (size) -> UIImage in
-            return self.playingEpisodeImage ?? UIImage()
+            print(self.playingEpisodeImage)
+            if let image = self.playingEpisodeImage{
+                return image
+            }
+            else if let url = URL(string: episode.feed?.imageURLPath ?? "") {
+                let session = URLSession.shared
+                let task = session.dataTask(with: url) { (data, response, error) in
+                    if let error = error {
+                        print("Error downloading image: \(error)")
+                        return
+                    }
+                    
+                    if let data = data,
+                        let image = UIImage(data: data) {
+                        // Do something with the image, such as displaying it in an image view
+                        // Note: This closure is executed on a background thread, so you need to dispatch UI updates to the main thread
+                        DispatchQueue.main.async {
+                            self.playingEpisodeImage = image
+                            self.configurePlayingInfoCenter()
+                        }
+                    }
+                }
+                task.resume()
+            }
+            return #imageLiteral(resourceName: "appPinIcon")
         })
         
         MPNowPlayingInfoCenter.default().playbackState = isPlaying ? MPNowPlayingPlaybackState.playing : MPNowPlayingPlaybackState.paused
-
+        /*
+        if episode.urlPath == "https://megaphone.imgix.net/podcasts/e4c412e6-e1f0-11e8-9bde-83f9d376f059/image/Podcast_Tile_6000x6000px.png?ixlib=rails-4.3.1&max-w=3000&max-h=3000&fit=crop&auto=format,compress"{
+            episode.urlPath = "https://megaphone.imgix.net/podcasts/e4c412e6-e1f0-11e8-9bde-83f9d376f059/image/Podcast_Tile_6000x6000px.png"
+        }
+        */
         MPNowPlayingInfoCenter.default().nowPlayingInfo = [
             MPMediaItemPropertyMediaType: "\(MPMediaType.podcast)",
             MPMediaItemPropertyPodcastTitle: podcast.title ?? "",

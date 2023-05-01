@@ -16,6 +16,11 @@ extension DashboardRootViewController: PodcastPlayerVCDelegate {
     }
     
     func didFailPlayingPodcast() {
+        let presentedVC = (presentedViewController as? UINavigationController)?.viewControllers.first ?? presentedViewController
+        
+        if let _ = presentedVC as? NewPodcastPlayerViewController {
+            return
+        }
         AlertHelper.showAlert(title: "generic.error.title".localized, message: "error.playing".localized)
     }
 }

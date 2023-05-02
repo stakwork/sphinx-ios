@@ -421,7 +421,7 @@ public class TransactionMessage: NSManagedObject {
         }
         
         if let chat = chat {
-            message.chat = chat
+            message.chat = Chat.getChatWith(id: chat.id, managedContext: managedContext)
         }
         
         return message

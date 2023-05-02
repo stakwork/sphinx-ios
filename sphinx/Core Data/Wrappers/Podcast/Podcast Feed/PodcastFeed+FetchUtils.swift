@@ -13,7 +13,7 @@ extension PodcastFeed {
         context: NSManagedObjectContext? = nil
     ) -> [ContentFeed] {
         let feeds: [ContentFeed] = CoreDataManager.sharedManager.getObjectsOfTypeWith(
-            predicate: Predicates.podcastFeeds,
+            predicate: Predicates.podcastAllFeeds,
             sortDescriptors: [NSSortDescriptor(key: "feedID", ascending: true)],
             entityName: "ContentFeed",
             context: context
@@ -63,8 +63,15 @@ extension PodcastFeed {
             )
         }
         
+        public static let podcastAllFeeds: NSPredicate = {
+            NSPredicate(
+                format: "feedKindValue == %d",
+                FeedType.Podcast.rawValue
+            )
+        }()
         
-        public static let podcastFeeds: NSPredicate = {
+        
+        public static let podcastFollowedFeeds: NSPredicate = {
             NSPredicate(
                 format: "(isSubscribedToFromSearch == true OR chat != nil) AND feedKindValue == %d",
                 FeedType.Podcast.rawValue
@@ -149,7 +156,16 @@ extension PodcastFeed {
         public static func followedFeeds() -> NSFetchRequest<ContentFeed> {
             let request: NSFetchRequest<ContentFeed> = baseFetchRequest()
             
-            request.predicate = Predicates.podcastFeeds
+            request.predicate = Predicates.podcastFollowedFeeds
+            request.sortDescriptors = []
+
+            return request
+        }
+        
+        public static func allFeeds() -> NSFetchRequest<ContentFeed> {
+            let request: NSFetchRequest<ContentFeed> = baseFetchRequest()
+            
+            request.predicate = Predicates.podcastAllFeeds
             request.sortDescriptors = []
 
             return request

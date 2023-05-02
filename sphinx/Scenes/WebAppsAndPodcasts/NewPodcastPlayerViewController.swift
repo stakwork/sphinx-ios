@@ -285,6 +285,11 @@ extension UIViewController {
     func askForShareType(
         episode: PodcastEpisode
     ) {
+        if episode.feed?.isRecommendationsPodcast == true {
+            self.executeShare(episode: episode,useCurrentTime: false)
+            return
+        }
+        
         let timestampCallback: (() -> ()) = {
             self.executeShare(episode: episode,useCurrentTime: true)
         }

@@ -56,10 +56,14 @@ extension PodcastPlayerView : PlayerDelegate {
             return
         }
         audioLoading = false
-        configureControls(playing: false)
         
-        delegate?.shouldReloadEpisodesTable()
-        delegate?.didFailPlayingPodcast()
+        DispatchQueue.main.async {
+            self.configureControls(playing: false)
+            
+            self.delegate?.shouldReloadEpisodesTable()
+            self.delegate?.didFailPlayingPodcast()
+        }
+        
     }
 }
 

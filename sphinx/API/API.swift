@@ -300,9 +300,8 @@ class API {
             case self.successStatusCode:
                 self.connectionStatus = .Connected
             case self.unauthorizedStatusCode:
-//                if self.getHMACKeyAndRetry(urlRequest, completionHandler: completionHandler) {
-//                    return
-//                }
+                UserData.sharedInstance.fetchAndSaveTransportKey(completion: { _ in })
+                
                 self.connectionStatus = .Unauthorize
             default:
                 if response.response == nil ||

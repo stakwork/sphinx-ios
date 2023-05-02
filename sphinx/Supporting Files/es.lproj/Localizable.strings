@@ -509,6 +509,7 @@
 "contributed.sats" = "Contribuídos: %d sats";
 "earned.sats" = "Recibidos: %d sats";
 "sats.per.minute" = "Sats por minuto";
+"sats.stream.disabled" = "Sats por minuto (El creador no ha definido destinatarios)";
 "suggested.out.range" = "Monto sugerido (%d sats) por encima del máximo";
 "delete.episode.title" = "Borrar Episodio";
 "delete.episode.message" = "¿Borrar Episodio de la memoria del dispositivo?";
@@ -539,8 +540,11 @@
 "feed.following" = "Siguiendo";
 "recently.played" = "Recientemente Leído";
 "feed.listen-now" = "Escuchar Ahora";
+"feed.recently-released" = "Lanzado Recientemente";
 "feed.watch-now" = "Mirar Ahora";
 "feed.read-now" = "Leer Ahora";
+"feed.recently-published" = "Publicado Recientemente";
+"feed.recently-read" = "Leiod Recientemente";
 "feed.play-now" = "Jugar Ahora";
 "feed.no-feed-found" = "No se encontraron\nresultados en el Feed";
 "feed.no-listen-found" = "No se encontraron\nresultados para \"Escuchar\"";

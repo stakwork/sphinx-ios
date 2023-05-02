@@ -18,6 +18,18 @@ extension ContentFeed {
         return feeds
     }
     
+    public static func getFollowedFeeds() -> [ContentFeed] {
+        let sortDescriptors = [NSSortDescriptor(key: "feedID", ascending: true)]
+        
+        let followedFeeds: [ContentFeed] = CoreDataManager.sharedManager.getObjectsOfTypeWith(
+            predicate: Predicates.followedFeeds,
+            sortDescriptors: sortDescriptors,
+            entityName: "ContentFeed"
+        )
+        
+        return followedFeeds
+    }
+    
     public static func getFeedWith(feedId: String, managedContext: NSManagedObjectContext? = nil) -> ContentFeed? {
         let predicate = Predicates.matching(feedID: feedId)
         let feed: ContentFeed? = CoreDataManager.sharedManager.getObjectOfTypeWith(predicate: predicate, sortDescriptors: [], entityName: "ContentFeed", managedContext: managedContext)
@@ -164,6 +176,14 @@ extension ContentFeed {
             let request: NSFetchRequest<ContentFeed> = baseFetchRequest()
             
             request.predicate = Predicates.matching(feedID: feedID)
+            request.sortDescriptors = []
+
+            return request
+        }
+        
+        public static func allFeeds() -> NSFetchRequest<ContentFeed> {
+            let request: NSFetchRequest<ContentFeed> = baseFetchRequest()
+            
             request.sortDescriptors = []
 
             return request

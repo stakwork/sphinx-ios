@@ -11,6 +11,7 @@ import Alamofire
 struct ConnectivityHelper {
   static let sharedInstance = NetworkReachabilityManager()!
   static var isConnectedToInternet: Bool {
-      return self.sharedInstance.isReachable
+      let connectedState = self.sharedInstance.isReachable
+      return connectedState
     }
 }

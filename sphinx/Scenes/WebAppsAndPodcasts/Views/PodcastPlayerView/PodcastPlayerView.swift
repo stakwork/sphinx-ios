@@ -229,7 +229,7 @@ class PodcastPlayerView: UIView {
                 UserAction.Pause(podcastData)
             )
         } else {
-            if isConnectedToInternet() == false && podcastData.downloaded == false {
+            if isConnectedToInternet2() == false && podcastData.downloaded == false {
                 if let vc = parentVC{
                     AlertHelper.showAlert(title: "Network Error", message: "Can't connect to the network to retrieve this content. Please check your internet connection & try again.", on: vc)
                 }

@@ -170,7 +170,7 @@ extension PodcastPlayerController {
                     return
                 }
                 
-                if !ConnectivityHelper.isConnectedToInternet && podcastData.downloaded == false {
+                if isConnectedToInternet2() && podcastData.downloaded == false {
                     self.runErrorStateUpdate()
                     return
                 }

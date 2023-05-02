@@ -24,6 +24,7 @@ class LoadingMoreTableViewCell: UITableViewCell {
     }
     
     func configureCell(text: String) {
+        loadingMoreLabel.text = text
         loadingWheel.color = UIColor.Sphinx.Text
         loadingWheel.startAnimating()
     }

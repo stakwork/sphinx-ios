@@ -48,9 +48,12 @@ class HistoryViewController: UIViewController {
     
     func configureTableView() {
         historyTableView.backgroundColor = UIColor.Sphinx.Body
-        historyTableView.registerCell(TransactionPaymentSentTableViewCell.self)
-        historyTableView.registerCell(TransactionPaymentReceivedTableViewCell.self)
+        
+        historyTableView.rowHeight = UITableView.automaticDimension
+        historyTableView.estimatedRowHeight = 150
+        
         historyTableView.registerCell(LoadingMoreTableViewCell.self)
+        historyTableView.registerCell(TransactionTableViewCell.self)
         
         historyDataSource = HistoryDataSource(tableView: historyTableView, delegate: self)
         historyTableView.delegate = historyDataSource

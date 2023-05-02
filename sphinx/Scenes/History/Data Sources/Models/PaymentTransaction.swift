@@ -22,6 +22,8 @@ class PaymentTransaction {
     var paymentHash : String?
     var errorMessage : String?
     
+    var expanded: Bool = false
+    
     public enum TransactionDirection: Int {
         case Incoming
         case Outgoing

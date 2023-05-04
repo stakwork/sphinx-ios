@@ -170,7 +170,7 @@ class PaymentTemplateViewController: CommonPaymentViewController {
                     self.shouldDismissView()
                 })
             }
-        }, errorCallback: {
+        }, errorCallback: { _ in
             AlertHelper.showAlert(title: "generic.error.title".localized, message: "generic.error.message".localized, completion: {
                 self.shouldDismissView()
             })

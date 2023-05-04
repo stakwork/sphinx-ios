@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (5.0.5)
+  - Alamofire (5.6.4)
   - CryptoSwift (1.0.0)
   - FLAnimatedImage (1.0.16)
   - Giphy (2.1.1):
@@ -53,7 +53,7 @@ PODS:
   - youtube-ios-player-helper (1.0.3)
 
 DEPENDENCIES:
-  - Alamofire (~> 5.0.0-rc.3)
+  - Alamofire (~> 5.6.4)
   - Giphy (= 2.1.1)
   - HDWalletKit
   - JitsiMeetSDK (~> 3.6.0)
@@ -115,7 +115,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/yahoojapan/SwiftyXMLParser.git
 
 SPEC CHECKSUMS:
-  Alamofire: df2f8f826963b08b9a870791ad48e07a10090b2e
+  Alamofire: 4e95d97098eacb88856099c4fc79b526a299e48c
   CryptoSwift: d81eeaa59dc5a8d03720fe919a6fd07b51f7439f
   FLAnimatedImage: 8f3e854ebf9680b71f0b6e700939687fc4d82b4b
   Giphy: 4a3ca076645091bba1a2e5579066b4c851e53d45
@@ -143,6 +143,6 @@ SPEC CHECKSUMS:
   Tor: fad2cec0e7ef5f889fecdaf69e5edd6df0438326
   youtube-ios-player-helper: 0185c57db23c80d63d6ca11251d110abb8a4ca61
 
-PODFILE CHECKSUM: a34a0704f170740e5232155f85151bf053690f95
+PODFILE CHECKSUM: 4328a3316c572920a61f8d9919dbfa953be9fc32
 
 COCOAPODS: 1.11.3

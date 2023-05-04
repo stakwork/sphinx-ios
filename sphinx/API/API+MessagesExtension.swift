@@ -128,7 +128,7 @@ extension API {
     func sendDirectPayment(
         params: [String: AnyObject],
         callback: @escaping DirectPaymentResultsCallback,
-        errorCallback: @escaping EmptyCallback
+        errorCallback: @escaping ErrorCallback
     ) {
         
         guard let request = getURLRequest(route: "/payment", params: params as NSDictionary?, method: "POST") else {
@@ -151,9 +151,11 @@ extension API {
                         }
                     }
                 }
-                errorCallback()
+                errorCallback(
+                    ((data as? NSDictionary)?["error"] as? String) ?? "Unknown reason"
+                )
             case .failure(_):
-                errorCallback()
+                errorCallback("Unknown reason")
             }
         }
     }

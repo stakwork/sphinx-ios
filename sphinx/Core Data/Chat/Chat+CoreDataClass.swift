@@ -521,9 +521,11 @@ public class Chat: NSManagedObject {
                             }
                             completion()
                         }
+                        return
                     } else if let existingFeed = self.contentFeed {
                         ContentFeed.deleteFeedWith(feedId: existingFeed.feedID)
                     }
+                    completion()
                 },
                 errorCallback: {
                     completion()

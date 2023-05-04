@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -24,17 +24,17 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yze-UR-r0M">
-                        <rect key="frame" x="114.5" y="5" width="185.5" height="40"/>
+                        <rect key="frame" x="114.5" y="0.0" width="185.5" height="50"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mrd-OM-bCc" customClass="UIActivityIndicatorView">
-                                <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+                                <rect key="frame" x="0.0" y="0.0" width="40" height="50"/>
                                 <color key="backgroundColor" name="Body"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="40" id="pen-98-y1a"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading more messages..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MkL-m8-DI3">
-                                <rect key="frame" x="40" y="13.5" width="130.5" height="13"/>
+                                <rect key="frame" x="40" y="18.5" width="130.5" height="13"/>
                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="11"/>
                                 <color key="textColor" name="SecondaryText"/>
                                 <nil key="highlightedColor"/>
@@ -42,7 +42,7 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="40" id="8Ua-M9-kz9"/>
+                            <constraint firstAttribute="height" constant="50" id="8Ua-M9-kz9"/>
                             <constraint firstItem="MkL-m8-DI3" firstAttribute="leading" secondItem="mrd-OM-bCc" secondAttribute="trailing" id="9Up-UW-au9"/>
                             <constraint firstItem="MkL-m8-DI3" firstAttribute="centerY" secondItem="yze-UR-r0M" secondAttribute="centerY" id="BSC-x8-hvO"/>
                             <constraint firstAttribute="bottom" secondItem="mrd-OM-bCc" secondAttribute="bottom" id="Pfy-Ja-4Wy"/>
@@ -55,11 +55,12 @@
                 <color key="backgroundColor" name="Body"/>
                 <constraints>
                     <constraint firstItem="yze-UR-r0M" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="BwE-p5-tTc"/>
-                    <constraint firstAttribute="bottom" secondItem="yze-UR-r0M" secondAttribute="bottom" constant="5" id="Zta-Oy-Oyn"/>
+                    <constraint firstItem="yze-UR-r0M" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="O5q-g2-jsa"/>
+                    <constraint firstAttribute="bottom" secondItem="yze-UR-r0M" secondAttribute="bottom" id="Zta-Oy-Oyn"/>
                 </constraints>
             </tableViewCellContentView>
-            <color key="backgroundColor" name="Body"/>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <color key="backgroundColor" name="Body"/>
             <connections>
                 <outlet property="loadingMoreLabel" destination="MkL-m8-DI3" id="f56-bS-zlD"/>
                 <outlet property="loadingWheel" destination="mrd-OM-bCc" id="zTl-hZ-WdL"/>

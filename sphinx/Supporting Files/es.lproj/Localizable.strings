@@ -316,6 +316,7 @@
 //HISTORY
 "error.loading.transactions" = "Ocurrió un problema cargando la lista de transacciones. Por favor vuelva a intentarlo más tarde.";
 "loading.more.transactions" = "Cargando más transacciones...";
+"transactions.failure-reason" = "Causa de la falla:";
 
 //QR CODE SCANNER
 "scan.qr.code.upper" = "ESCANEA UN CÓDIGO QR";

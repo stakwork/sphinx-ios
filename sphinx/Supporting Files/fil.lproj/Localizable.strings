@@ -37,6 +37,7 @@
 "error.karma.receipt.validation.failed" = "Nabigo ang Balidasyon ng Resibo ng Karma. Maling mensahe:";
 "error.app-store-purchase-receipt-not-found" = "Hindi mahanap ang isang resibo sa pagbili ng AppStore.";
 "error.app-store-receipt-validation-failed" = "Nabigo ang pagpapatunay ng resibo ng AppStore.";
+
 // DASHBOARD
 "dashboard.tabs.feed" = "Feed";
 "dashboard.tabs.friends" = "Kaibigan";
@@ -49,8 +50,10 @@
 "dashboard.feeds.section-headings.following" = "Mga Sumusunod";
 "dashboard.feeds.section-headings.directory" = "Direktoryo";
 "dashboard.feeds.content.empty-state-message" = "Walang Podcasts na Natagpuan";
+
 // DASHBOARD FEED SEARCH
 "dashboard.feeds.search.error-alert-title" = "May naganap na pagkakamali habang naghahanap ng mga Feed ng Podcast";
+
 // LEFT MENU
 "left-menu.dashboard" = "Dashboard";
 "left-menu.contacts" = "Mga contact";
@@ -64,6 +67,7 @@
 "copied" = "NA KOPYA";
 "left-menu.karma-purchase-failed" = "Nabigo ang pagbili ng Karma";
 "left-menu.node-address-invalid" = "Hindi wasto ang Impormasyon ng Node Address";
+
 //GROUPS
 "unselect.all.upper" = "I-UNSELECT LAHAT";
 "select.all.upper" = "PILIIN LAHAT";
@@ -127,6 +131,7 @@
 "waiting.admin.approval" = "Naghihintay ng pag-apruba ng admin";
 "picker-title.tribe-form.feed-type" = "Uri ng Feed";
 "alias.allowed-characters" = "Mga titik, numero at underscore lamang ang pinapayagan sa mga alias ng tribo";
+
 //SUBSCRIPTIONS
 "leave.lose.unsaved.changed" = "Sigurado ka bang gusto mong umalis at mawala ang anumang hindi na-save na mga pagbabago?";
 "paused.upper" = "NAKA-PAUSE";
@@ -145,10 +150,12 @@
 "value.cannot.empty" = "Hindi maaaring walang laman ang value";
 "subscribe.upper" = "MAG-SUBSCRIBE";
 "unsubscribe.upper" = "UNSUBSCRIBE";
+
 //INVOICE DETAILS
 "x.copied.clipboard" = "%@ kopyahin sa clipboard";
 "payment.request" = "Kahilingan sa Pagbabayad";
 "paste.invoice.invoice.or.pubkey" = "I-paste ang Invoice o Public Key";
+
 //ADDRESS BOOK
 "edit.contact.upper" = "EDIT CONTACT";
 "subscribed.upper" = "SUBSCRIBED";
@@ -162,12 +169,14 @@
 "address-boox.contact-block.alert-message" = "Sigurado ka bang gusto mong i-block ang kontak na ito?";
 "address-boox.contact-unblock.alert-title" = "I-unblock ang Kontak";
 "address-boox.contact-unblock.alert-message" = "Sigurado ka bang gusto mong i-unblock ang Kontak na ito?";
+
 //WELCOME
 "welcome.initial.title" = "Maligayang Pagdating";
 "welcome.final.title" = "Maligayang Pagdating!";
 "welcome.final.subtitle" = "Nakakonekta na ngayon ang iyong app.";
 "welcome.final.continue" = "Magpatuloy";
 "welcome.connecting" = "Kumokonekta...";
+
 //RESTORE EXISTING USER
 "restore.keychain" = "Ibalik mula sa keychain";
 "restore.description.continue" = "Magpatuloy";
@@ -180,6 +189,7 @@
 "restoring-progress" = "Ibinabalik:";
 "restoring-content" = "Pagpapanumbalik ng nilalaman:";
 "restoring-messages" = "Pagpapanumbalik ng mga mensahe:";
+
 //SIGNUP NEW USER
 "signup.signup-options.connection-code-button" = "Mayroon akong Connection Code";
 "signup.signup-options.lite-node-button" = "Bumili ng Lite Node ($2.99)";
@@ -201,6 +211,7 @@
 "signup.purchase-eligibility-failed" = "Nabigo ang Pagiging Kwalipikado sa Pagbili";
 "signup.lite-node-purchase-failed" = "Nabigo ang Pagbili ng Lite Node";
 "signup.products-fetch-failed" = "Hindi available ang mga produkto ng In App Purchases";
+
 //INVITE
 "add.people" = "Magdagdag ng mga Tao";
 "create.group" = "Gumawa ng Grupo";
@@ -230,6 +241,7 @@
 "invalid.code.invoice" = "Mukhang isang invoice ito, upang mag-sign up kakailanganin mo ng isang code ng koneksyon mula sa https://sphinx.chat";
 "invalid.code" = "Hindi namin nakikilala ang code na ito. Upang mag-sign up, kakailanganin mo ng isang code ng koneksyon mula sa https://sphinx.chat";
 "wrong.restore.string" = "Hindi ma-decrypt ang binalik na code na ito. Tiyaking pumili ng anumang bantas sa dulo ng string.";
+
 //PROFILE
 "address.copied.clipboard" = "Nakopya ang address sa clipboard";
 "route.hint.copied.clipboard" = "Na kopya sa clipboard ang Pahiwatig na Ruta";
@@ -269,6 +281,7 @@
 "profile.mnemonic-copied" = "Ang mga Mnemonic na salita  ay nakopya na sa clipboard";
 "profile.bitcoin-network" = "Bitcoin Network";
 "profile.select-bitcoin-network" = "Piliin ang Bitcoin Network";
+
 //PIN
 "choose.pin.upper" = "PUMILI NG PIN";
 "confirm.pin.upper" = "KUMPIRMAHIN ANG PIN";
@@ -286,9 +299,12 @@
 "pin.change" = "Baguhin ang PIN";
 "confirm.pin.change" = "Sigurado ka bang gusto mong palitan ang iyong PIN?";
 "confirm.privacy.pin.change" = "Sigurado ka bang gusto mong baguhin ang iyong Privacy PIN?";
+
 //HISTORY
 "error.loading.transactions" = "Nagkaroon ng pagkakamali sa paglo-load ng listahan ng mga transaksyon. Subukang muli sa ibang pagkakataon.";
 "loading.more.transactions" = "Naglo-load ng higit pang mga transaksyon...";
+"transactions.failure-reason" = "Failure reason:";
+
 //QR CODE SCANNER
 "scan.qr.code.upper" = "MAG-SCAN NG QR CODE";
 "paste.invoice.subscription" = "I-paste ang Invoice o Subscription code";
@@ -303,6 +319,7 @@
 "expired" = "Nag-expire na: ";
 "invoice" = "Invoice";
 "confirm.pay.invoice" = "Sigurado ka bang gusto mong bayaran ang invoice na ito?";
+
 // CHAT
 "payment.failed.upper" = "NABIGO ANG PAGBAYAD";
 "microphone.permission.denied" = "Tinanggihan mo ang mga pahintulot sa mikropono. Pumunta sa Mga Setting -> Sphinx at paganahin silang mag-record ng mga mensaheng audio.";
@@ -404,6 +421,7 @@
 "see-all" = "Ipakita lahat";
 "only-mentions" = "Mga Pagbanggit lamang";
 "mute-chat" = "I-Mute ang Chat";
+
 //OTHER
 "create.call" = "Lumikha ng Tawag";
 "select.call.mode" = "Pumili ng call mode";
@@ -441,11 +459,13 @@
 "people.claim-on-liquid" = "Kunin ang Badge Token mula sa:";
 "people.claim-on-liquid-succeed" = "Matagumpay na nakuha ang Badge Token";
 "people.claim-on-liquid-failed" = "Hindi makuha ang Badge Token";
+
 //TRANSACTION MESSAGE
 "purchase.succeeded" = "Nagtagumpay ang Pagbili";
 "purchase.denied" = "Tinanggihan ang pagbili";
 "processing" = "Pinoproseso";
 "pending" = "Nakabinbin";
+
 //INVITES
 "invite.looking.available.node" = "Naghahanap ng available na node para sa %@...";
 "invite.payment.sent" = "Ipinadala ang bayad, naghihintay ng kumpirmasyon";
@@ -464,6 +484,7 @@
 "invite.in.progress.message" = "Nagsa-sign on si %@.";
 "invite.pmt.in.progress.title" = "Kasalukuyang isinasagawa ang pagbabayad";
 "invite.pmt.in.progress.message" = "Pinoproseso ang iyong bayad.";
+
 //PODCAST
 "episodes" = "mga episode";
 "price.per.minute" = "Presyo bawat minuto: %d sats";
@@ -486,6 +507,7 @@
 "share.from.beginning" = "Ibahagi sa simula";
 "share.from.current.time" = "Ibahagi mula sa kasalukuyang panahon";
 "played" = "Na-play";
+
 // VIDEOS
 "video" = "video";
 "videos" = "mga video";
@@ -493,6 +515,7 @@
 "video-player.episode-details.button.show-less" = "magpakita ng mas kaunti";
 "video-player.button.subscribe" = "Mag-subscribe";
 "video-player.button.unsubscribe" = "Wag mag-subscribe";
+
 // FEED
 "feed.recommendations" = "Mga rekomendasyon";
 "feed.following" = "Sumusunod";
@@ -512,6 +535,7 @@
 "feed.search-video-quantity" = "libu-libong mga video";
 "feed.search-video-source" = "sa Youtube";
 "feed.search-other-source" = "ang iyong mga naka-subscribe na feed";
+
 //TIME
 "time.in-the-future" = "sa hinaharap";
 "time.moments-ago" = "sandaling nakaraan";
@@ -521,6 +545,7 @@
 "time.hours-ago" = "%d na oras na nakaraan";
 "time.yesterday" = "kahapon";
 "time.days-ago" = "%d araw na nakaraan";
+
 //BADGES
 "badges.earn-badges" = "Kumita";
 "badges.earnings" = "Mga kinita";

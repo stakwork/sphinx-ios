@@ -317,10 +317,6 @@
 		475BDD7F232C01FE00C5BBD6 /* QRCodeScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475BDD7B232C01FE00C5BBD6 /* QRCodeScannerView.swift */; };
 		475BDD81232C01FE00C5BBD6 /* NewQRScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475BDD7D232C01FE00C5BBD6 /* NewQRScannerViewController.swift */; };
 		475BDD89232C086C00C5BBD6 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475BDD86232C086C00C5BBD6 /* HistoryViewController.swift */; };
-		475BDD8E232C087A00C5BBD6 /* TransactionPaymentSentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 475BDD8A232C087A00C5BBD6 /* TransactionPaymentSentTableViewCell.xib */; };
-		475BDD8F232C087A00C5BBD6 /* TransactionPaymentReceivedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475BDD8B232C087A00C5BBD6 /* TransactionPaymentReceivedTableViewCell.swift */; };
-		475BDD90232C087A00C5BBD6 /* TransactionPaymentSentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475BDD8C232C087A00C5BBD6 /* TransactionPaymentSentTableViewCell.swift */; };
-		475BDD91232C087A00C5BBD6 /* TransactionPaymentReceivedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 475BDD8D232C087A00C5BBD6 /* TransactionPaymentReceivedTableViewCell.xib */; };
 		475BDD95232C2F9100C5BBD6 /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475BDD94232C2F9100C5BBD6 /* UILabel.swift */; };
 		475CD5AC287E1198003FF171 /* CrypterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475CD5AB287E1198003FF171 /* CrypterManager.swift */; };
 		475E41612382E28800928931 /* UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475E41602382E28800928931 /* UIButton.swift */; };
@@ -354,6 +350,9 @@
 		4779F17A232AA0F300D35E81 /* sphinxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4779F179232AA0F300D35E81 /* sphinxTests.swift */; };
 		4779F185232AA0F300D35E81 /* sphinxUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4779F184232AA0F300D35E81 /* sphinxUITests.swift */; };
 		477B319223B10FC30081413E /* NewMessageBubbleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477B319123B10FC30081413E /* NewMessageBubbleHelper.swift */; };
+		477BCF322A0031060080ED65 /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477BCF302A0031060080ED65 /* TransactionTableViewCell.swift */; };
+		477BCF3B2A0144C00080ED65 /* CircularDotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477BCF3A2A0144C00080ED65 /* CircularDotView.swift */; };
+		477BCF3C2A014CC20080ED65 /* TransactionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 477BCF3E2A014CC20080ED65 /* TransactionTableViewCell.xib */; };
 		477C525028C6307100C24117 /* NotificationsLevelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477C524F28C6307100C24117 /* NotificationsLevelViewController.swift */; };
 		477C525228C6358200C24117 /* NotificationLevelTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477C525128C6358200C24117 /* NotificationLevelTableViewCell.swift */; };
 		477C57E5234545D700BB4E04 /* SetPinCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477C57E4234545D700BB4E04 /* SetPinCodeViewController.swift */; };
@@ -546,7 +545,6 @@
 		47CC7CE223E3611600730E6F /* API+TransactionsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CC7CE123E3611600730E6F /* API+TransactionsExtension.swift */; };
 		47CC7CE523E361B800730E6F /* PaymentTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CC7CE423E361B800730E6F /* PaymentTransaction.swift */; };
 		47CC7CE923E4718600730E6F /* ImageFullScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CC7CE823E4718600730E6F /* ImageFullScreenViewController.swift */; };
-		47CC7CEB23E4AA2100730E6F /* TransactionCommonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CC7CEA23E4AA2100730E6F /* TransactionCommonTableViewCell.swift */; };
 		47CD9508265EC2A4009B06A4 /* CommonModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CD9507265EC2A4009B06A4 /* CommonModalView.swift */; };
 		47CD9510265EC70E009B06A4 /* API+PeopleExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CD950F265EC70E009B06A4 /* API+PeopleExtension.swift */; };
 		47D0046125E7F3EC00E74063 /* Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D0046025E7F3EC00E74063 /* Download.swift */; };
@@ -1161,10 +1159,6 @@
 		475BDD7B232C01FE00C5BBD6 /* QRCodeScannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeScannerView.swift; sourceTree = "<group>"; };
 		475BDD7D232C01FE00C5BBD6 /* NewQRScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewQRScannerViewController.swift; sourceTree = "<group>"; };
 		475BDD86232C086C00C5BBD6 /* HistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
-		475BDD8A232C087A00C5BBD6 /* TransactionPaymentSentTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TransactionPaymentSentTableViewCell.xib; sourceTree = "<group>"; };
-		475BDD8B232C087A00C5BBD6 /* TransactionPaymentReceivedTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionPaymentReceivedTableViewCell.swift; sourceTree = "<group>"; };
-		475BDD8C232C087A00C5BBD6 /* TransactionPaymentSentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionPaymentSentTableViewCell.swift; sourceTree = "<group>"; };
-		475BDD8D232C087A00C5BBD6 /* TransactionPaymentReceivedTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TransactionPaymentReceivedTableViewCell.xib; sourceTree = "<group>"; };
 		475BDD94232C2F9100C5BBD6 /* UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
 		475CD5AB287E1198003FF171 /* CrypterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrypterManager.swift; sourceTree = "<group>"; };
 		475E41602382E28800928931 /* UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButton.swift; sourceTree = "<group>"; };
@@ -1211,6 +1205,11 @@
 		4779F186232AA0F300D35E81 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		477B319023ABE0540081413E /* sphinx 7.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 7.xcdatamodel"; sourceTree = "<group>"; };
 		477B319123B10FC30081413E /* NewMessageBubbleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageBubbleHelper.swift; sourceTree = "<group>"; };
+		477BCF302A0031060080ED65 /* TransactionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionTableViewCell.swift; sourceTree = "<group>"; };
+		477BCF3A2A0144C00080ED65 /* CircularDotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularDotView.swift; sourceTree = "<group>"; };
+		477BCF3D2A014CC20080ED65 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/TransactionTableViewCell.xib; sourceTree = "<group>"; };
+		477BCF402A014CC70080ED65 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/TransactionTableViewCell.strings; sourceTree = "<group>"; };
+		477BCF422A014CC80080ED65 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/TransactionTableViewCell.strings; sourceTree = "<group>"; };
 		477C524F28C6307100C24117 /* NotificationsLevelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsLevelViewController.swift; sourceTree = "<group>"; };
 		477C525128C6358200C24117 /* NotificationLevelTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationLevelTableViewCell.swift; sourceTree = "<group>"; };
 		477C57E4234545D700BB4E04 /* SetPinCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetPinCodeViewController.swift; sourceTree = "<group>"; };
@@ -1482,7 +1481,6 @@
 		47CC7CE123E3611600730E6F /* API+TransactionsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+TransactionsExtension.swift"; sourceTree = "<group>"; };
 		47CC7CE423E361B800730E6F /* PaymentTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentTransaction.swift; sourceTree = "<group>"; };
 		47CC7CE823E4718600730E6F /* ImageFullScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFullScreenViewController.swift; sourceTree = "<group>"; };
-		47CC7CEA23E4AA2100730E6F /* TransactionCommonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCommonTableViewCell.swift; sourceTree = "<group>"; };
 		47CD9507265EC2A4009B06A4 /* CommonModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonModalView.swift; sourceTree = "<group>"; };
 		47CD950F265EC70E009B06A4 /* API+PeopleExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+PeopleExtension.swift"; sourceTree = "<group>"; };
 		47D0045C25E690B700E74063 /* sphinx 27.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 27.xcdatamodel"; sourceTree = "<group>"; };
@@ -2958,11 +2956,8 @@
 		475BDD83232C085F00C5BBD6 /* Table View Cells */ = {
 			isa = PBXGroup;
 			children = (
-				47CC7CEA23E4AA2100730E6F /* TransactionCommonTableViewCell.swift */,
-				475BDD8B232C087A00C5BBD6 /* TransactionPaymentReceivedTableViewCell.swift */,
-				475BDD8D232C087A00C5BBD6 /* TransactionPaymentReceivedTableViewCell.xib */,
-				475BDD8C232C087A00C5BBD6 /* TransactionPaymentSentTableViewCell.swift */,
-				475BDD8A232C087A00C5BBD6 /* TransactionPaymentSentTableViewCell.xib */,
+				477BCF302A0031060080ED65 /* TransactionTableViewCell.swift */,
+				477BCF3E2A014CC20080ED65 /* TransactionTableViewCell.xib */,
 			);
 			path = "Table View Cells";
 			sourceTree = "<group>";
@@ -3023,6 +3018,7 @@
 				4703CF96251D23E5007B685C /* LinkPreviewUIImage.swift */,
 				473633E925559945007405F2 /* LogarithmicSlider.swift */,
 				47341E8328C79A8B00426055 /* CustomAlertController.swift */,
+				477BCF3A2A0144C00080ED65 /* CircularDotView.swift */,
 			);
 			path = "Custom Classes";
 			sourceTree = "<group>";
@@ -4400,7 +4396,6 @@
 				47904C0C24BF352300710E7A /* aurora.caf in Resources */,
 				47D46A2D237B1D140005A548 /* SubscriptionFormButtonTableViewCell.xib in Resources */,
 				472161DE293A6FC20088B87B /* RecommendationsHeaderCollectionReusableView.xib in Resources */,
-				475BDD91232C087A00C5BBD6 /* TransactionPaymentReceivedTableViewCell.xib in Resources */,
 				F3188B942719DA1600890DDD /* DashboardVideoEpisodeCollectionViewCell.xib in Resources */,
 				4712994829228ED20049CBE3 /* TribeMemberProfileView.xib in Resources */,
 				47BE854B246492FD00BE4AE8 /* KeychainRestoreTableViewCell.xib in Resources */,
@@ -4412,6 +4407,7 @@
 				F3C92B272671FB6C005F0A42 /* README.md in Resources */,
 				47904C0E24BF352300710E7A /* popcorn.caf in Resources */,
 				470F4C49257E708400288A9B /* TribeMemberInfoView.xib in Resources */,
+				477BCF3C2A014CC20080ED65 /* TransactionTableViewCell.xib in Resources */,
 				4797E77224B8E51E00D13270 /* Chat.storyboard in Resources */,
 				4797E7A524B8F06A00D13270 /* PaidAttachmentView.xib in Resources */,
 				4703CF8A2518FFB1007B685C /* FileReceivedTableViewCell.xib in Resources */,
@@ -4482,7 +4478,6 @@
 				475BDCDF232AC23B00C5BBD6 /* PaidInvoiceSentTableViewCell.xib in Resources */,
 				CE3133B22977747E00E91E3A /* BadgeAdminListTableViewCell.xib in Resources */,
 				47893A8C24095A30002F675B /* AudioSentTableViewCell.xib in Resources */,
-				475BDD8E232C087A00C5BBD6 /* TransactionPaymentSentTableViewCell.xib in Resources */,
 				475BDCB8232AC1E800C5BBD6 /* PaymentInvoiceView.xib in Resources */,
 				4797E79E24B8EF3600D13270 /* ExpiredInvoiceReceivedTableViewCell.xib in Resources */,
 				F3D86DC226B157D400EB9711 /* DashboardFeedCollectionViewSectionHeader.xib in Resources */,
@@ -4831,6 +4826,7 @@
 				CEBF0D07297603B0006C1F21 /* TribeTagSelectionCollectionViewCell.swift in Sources */,
 				47669F4F23D63D5000C17A77 /* GroupActionMessageTableViewCell.swift in Sources */,
 				475BDD0D232AC25100C5BBD6 /* DayHeaderTableViewCell.swift in Sources */,
+				477BCF3B2A0144C00080ED65 /* CircularDotView.swift in Sources */,
 				475BDD1D232AC47C00C5BBD6 /* ChatViewControllerDelegates.swift in Sources */,
 				478B05C4297832FC00A1B254 /* PodcastPlayerController+Payments.swift in Sources */,
 				47651C3523DB4A4F00CBC605 /* TouchUpGestureRecognizer.swift in Sources */,
@@ -4894,6 +4890,7 @@
 				4787F8982478112F00CCE8B9 /* ChatAvatarView.swift in Sources */,
 				47308E0E24FEE6E700FFAC6F /* SocketIOClientConfiguration.swift in Sources */,
 				CE842DF12992D0F400620AD3 /* BadgeTemplate.swift in Sources */,
+				477BCF322A0031060080ED65 /* TransactionTableViewCell.swift in Sources */,
 				47308E1124FEE6E700FFAC6F /* SocketIOClientOption.swift in Sources */,
 				47FB189B23A299000097695B /* SignupHelper.swift in Sources */,
 				47669F3F23CF7CB300C17A77 /* ChatListCommonObject.swift in Sources */,
@@ -4925,7 +4922,6 @@
 				CE3133B12977747E00E91E3A /* BadgeAdminDetailVC.swift in Sources */,
 				F32A696326CFEF600004B8B3 /* PodcastDestination+Properties.swift in Sources */,
 				470F5CA5243E1DA6007E054F /* ChatViewControllerVideoCallExtension.swift in Sources */,
-				47CC7CEB23E4AA2100730E6F /* TransactionCommonTableViewCell.swift in Sources */,
 				47308E1324FEE6E700FFAC6F /* SocketRawView.swift in Sources */,
 				4789E25B24EF07E2003991BE /* KeyboardEventsViewController.swift in Sources */,
 				F358212D2695D11500A314F1 /* ConnectionCodeSignupHandling.swift in Sources */,
@@ -5075,7 +5071,6 @@
 				47D46A32237C83900005A548 /* UserContact+CoreDataProperties.swift in Sources */,
 				CE91E59A29885175008BA6EA /* MemberBadgeDetailVC.swift in Sources */,
 				F3188B8A2719C7D900890DDD /* DashboardVideoFeedCollectionViewController.swift in Sources */,
-				475BDD90232C087A00C5BBD6 /* TransactionPaymentSentTableViewCell.swift in Sources */,
 				474FE32623F588C000C06FC8 /* VideoSentTableViewCell.swift in Sources */,
 				47CD9510265EC70E009B06A4 /* API+PeopleExtension.swift in Sources */,
 				470F5CB2243FA2D0007E054F /* VideoCallManager.swift in Sources */,
@@ -5092,7 +5087,6 @@
 				F3188BB6271CF35200890DDD /* VideoFeedEpisodeCollectionViewCell.swift in Sources */,
 				47308E0724FEE6E600FFAC6F /* SocketManager.swift in Sources */,
 				473842F32391719500AA640F /* PictureBubbleView.swift in Sources */,
-				475BDD8F232C087A00C5BBD6 /* TransactionPaymentReceivedTableViewCell.swift in Sources */,
 				47129951292297CB0049CBE3 /* TribeMemberProfile.swift in Sources */,
 				F3DC6B26273F60FF00458E09 /* ContentFeedPaymentModel+CoreDataProperties.swift in Sources */,
 				475BDD30232ACB3900C5BBD6 /* UITableView.swift in Sources */,
@@ -5322,6 +5316,16 @@
 				CE9985B629D70CCF007CDE01 /* fil */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		477BCF3E2A014CC20080ED65 /* TransactionTableViewCell.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				477BCF3D2A014CC20080ED65 /* Base */,
+				477BCF402A014CC70080ED65 /* en */,
+				477BCF422A014CC80080ED65 /* es */,
+			);
+			name = TransactionTableViewCell.xib;
 			sourceTree = "<group>";
 		};
 		4785C10924D4A6A0004E2D6C /* AppSizeView.xib */ = {

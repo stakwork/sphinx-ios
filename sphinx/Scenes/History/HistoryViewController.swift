@@ -50,7 +50,7 @@ class HistoryViewController: UIViewController {
         historyTableView.backgroundColor = UIColor.Sphinx.Body
         
         historyTableView.rowHeight = UITableView.automaticDimension
-        historyTableView.estimatedRowHeight = 150
+        historyTableView.estimatedRowHeight = 80
         
         historyTableView.registerCell(LoadingMoreTableViewCell.self)
         historyTableView.registerCell(TransactionTableViewCell.self)

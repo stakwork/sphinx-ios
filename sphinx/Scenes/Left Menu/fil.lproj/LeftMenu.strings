@@ -1,0 +1,49 @@
+
+
+
+
+
+/* Class = "UIButton"; normalTitle = "DONE"; ObjectID = "8Et-S7-VDq"; */
+"8Et-S7-VDq.normalTitle" = "TAPOS";
+
+
+/* Class = "UIButton"; normalTitle = "Send Message"; ObjectID = "VUd-ZZ-tSV"; */
+"VUd-ZZ-tSV.normalTitle" = "Magpadala ng Mensahe";
+
+
+/* Class = "UITextView"; text = "Describe your problem here..."; ObjectID = "bKo-Co-okt"; */
+"bKo-Co-okt.text" = "Ipaliwanag ang iyong problema dito...";
+
+
+/* Class = "UILabel"; text = "SUPPORT"; ObjectID = "gKM-ns-Slb"; */
+"gKM-ns-Slb.text" = "SUPORTA";
+
+
+/* Class = "UIButton"; normalTitle = "CANCEL"; ObjectID = "mmQ-nD-ZJe"; */
+"mmQ-nD-ZJe.normalTitle" = "KANSELAHIN";
+
+
+/* Class = "UIButton"; normalTitle = "Support"; ObjectID = "qb1-rZ-TSG"; */
+"qb1-rZ-TSG.normalTitle" = "Suporta";
+
+
+/* Class = "UIButton"; normalTitle = "Copy Logs"; ObjectID = "rQP-gW-ald"; */
+"rQP-gW-ald.normalTitle" = "Kopyahin ang Logs";
+
+
+"oxd-6a-boA.text" = "MAGDAGDAG NG  SATS";
+
+
+"naX-fJ-3cb.text" = "Para sa/kay";
+
+
+"4Q5-5T-a5h.normalTitle" = "KOPYA";
+
+
+"it3-mD-nqd.text" = "Mangyaring magpadala sa pagitan ng 0.0005 at 0.005 Bitcoin. Pagkatapos makumpirma ang transaksyon, idadagdag ito sa iyong account.";
+
+
+"rHy-Kt-UHY.text" = "BUKSAN";
+
+
+"mhE-Dp-blS.text" = "Nag-gegenerate ng address...";

@@ -1,0 +1,25 @@
+
+
+
+/* Class = "UILabel"; text = "Twitter:"; ObjectID = "EmP-GM-zJF"; */
+"EmP-GM-zJF.text" = "Twitter:";
+
+
+/* Class = "UILabel"; text = "Send Sats"; ObjectID = "Gx0-Ka-gEI"; */
+"Gx0-Ka-gEI.text" = "Magpadala";
+
+
+/* Class = "UILabel"; text = "Coding Languages:"; ObjectID = "UC6-pY-l3d"; */
+"UC6-pY-l3d.text" = "Mga Lenguahe sa Coding:";
+
+
+/* Class = "UILabel"; text = "Github:"; ObjectID = "ocu-Vn-YXc"; */
+"ocu-Vn-YXc.text" = "Github:";
+
+
+/* Class = "UILabel"; text = "Posts:"; ObjectID = "osi-cQ-o2N"; */
+"osi-cQ-o2N.text" = "Mga Post:";
+
+
+/* Class = "UILabel"; text = "Price to meet:"; ObjectID = "yPE-dF-xP1"; */
+"yPE-dF-xP1.text" = "Presyo dapat matugunan:";

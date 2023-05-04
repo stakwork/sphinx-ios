@@ -1,0 +1,90 @@
+
+
+
+/* Class = "UILabel"; text = "PROFILE"; ObjectID = "41O-R2-bE7"; */
+"41O-R2-bE7.text" = "PROFILE";
+
+
+/* Class = "UILabel"; text = "Meeting Server"; ObjectID = "8d4-ou-aLA"; */
+"8d4-ou-aLA.text" = "Meeting Server";
+
+
+/* Class = "UILabel"; text = "Invite Server"; ObjectID = "9WV-Bo-DnX"; */
+"9WV-Bo-DnX.text" = "Mag-imbita ng Server";
+
+
+/* Class = "UILabel"; text = "User Name"; ObjectID = "ETI-Y9-dAa"; */
+"ETI-Y9-dAa.text" = "User Name";
+
+
+/* Class = "UILabel"; text = "Share my profile photo with contacts"; ObjectID = "Esr-uH-D1R"; */
+"Esr-uH-D1R.text" = "Ibahagi ang aking larawan sa profile sa mga contact";
+
+
+/* Class = "UIButton"; normalTitle = "DONE"; ObjectID = "FfL-nl-BnP"; */
+"FfL-nl-BnP.normalTitle" = "TAPOS";
+
+
+/* Class = "UIButton"; normalTitle = "CANCEL"; ObjectID = "Gwy-FV-c0D"; */
+"Gwy-FV-c0D.normalTitle" = "KANSELAHIN";
+
+
+/* Class = "UILabel"; text = "File Server"; ObjectID = "MsM-st-6dn"; */
+"MsM-st-6dn.text" = "File Server";
+
+
+"aS3-Fj-p1j.text" = "Mag-sync ng higit pang mga aparato";
+
+
+"sX0-os-LQi.normalTitle" = "I-backup ang Key";
+
+
+/* Class = "UILabel"; text = "Address"; ObjectID = "faG-bF-oVt"; */
+"faG-bF-oVt.text" = "Address";
+
+
+"0Wh-WY-PvB.text" = "Hint ng Ruta";
+
+
+/* Class = "UILabel"; text = "Default tip amount"; ObjectID = "jJs-A6-b1l"; */
+"jJs-A6-b1l.text" = "Mag-default na halaga ng tip";
+
+
+/* Class = "UILabel"; text = "Appearance"; ObjectID = "p1B-4h-bVu"; */
+"p1B-4h-bVu.text" = "Hitsura";
+
+
+"jxx-Fl-kXP.text" = "Notipikasyon para sa Tunog";
+
+
+"X8L-GC-hmH.text" = "Notipikasyon para sa Tunog";
+
+
+"gAs-58-jhi.normalTitle" = "KUMPIRMAHIN";
+
+
+"gjh-2S-Wpi.text" = "Sukat";
+
+
+"WVe-8j-tgh.text" = "Server URL";
+
+
+"2YG-L7-D9J.text" = "Palitan ang PIN";
+
+
+"rlD-nH-ZkP.text" = "PIN Timeout";
+
+
+"YQw-Cm-DzX.text" = "Magtakda ng Pribadong PIN";
+
+
+"IQP-Z6-eAF.text" = "Magtakda ng Github Personal Access Token";
+
+
+"z8e-Oe-Tdt.text" = "Mag-setup ng Signing Device";
+
+
+"Uah-nc-EPN.text" = "Mga Rekomendasyon para sa Feed";
+
+
+"mU1-dY-IRh.text" = "Awtomatikong na-download na mga episode ng podcast";

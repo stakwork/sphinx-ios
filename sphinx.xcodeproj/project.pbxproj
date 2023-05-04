@@ -1600,6 +1600,57 @@
 		CE842DED298D61CF00620AD3 /* BadgeAdminListHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BadgeAdminListHeaderCell.xib; sourceTree = "<group>"; };
 		CE842DF02992D0F400620AD3 /* BadgeTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeTemplate.swift; sourceTree = "<group>"; };
 		CE91E59929885175008BA6EA /* MemberBadgeDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberBadgeDetailVC.swift; sourceTree = "<group>"; };
+		CE9985B629D70CCF007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		CE9985B729D70CCF007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/RecommendationsHeaderCollectionReusableView.strings; sourceTree = "<group>"; };
+		CE9985B829D70CCF007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/Chat.strings; sourceTree = "<group>"; };
+		CE9985B929D70CCF007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/TribeMemberPopupView.strings; sourceTree = "<group>"; };
+		CE9985BA29D70CCF007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/TribeMemberProfileView.strings; sourceTree = "<group>"; };
+		CE9985BB29D70CCF007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/PaidAttachmentView.strings; sourceTree = "<group>"; };
+		CE9985BC29D70CCF007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/ChatAccessoryView.strings; sourceTree = "<group>"; };
+		CE9985BD29D70CCF007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/TribeLinkPreviewView.strings; sourceTree = "<group>"; };
+		CE9985BE29D70CD0007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/ContactLinkPreviewView.strings; sourceTree = "<group>"; };
+		CE9985BF29D70CD0007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/JoinVideoCallView.strings; sourceTree = "<group>"; };
+		CE9985C029D70CD0007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/GroupActionMessageTableViewCell.strings; sourceTree = "<group>"; };
+		CE9985C129D70CD0007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/GroupRemovedTableViewCell.strings; sourceTree = "<group>"; };
+		CE9985C229D70CD0007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/LoadingMoreTableViewCell.strings; sourceTree = "<group>"; };
+		CE9985C329D70CD0007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/ExpiredInvoiceSentTableViewCell.strings; sourceTree = "<group>"; };
+		CE9985C429D70CD0007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/DeletedMessageSentTableViewCell.strings; sourceTree = "<group>"; };
+		CE9985C529D70CD0007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/ExpiredInvoiceReceivedTableViewCell.strings; sourceTree = "<group>"; };
+		CE9985C629D70CD0007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/InvoiceReceivedTableViewCell.strings; sourceTree = "<group>"; };
+		CE9985C729D70CD0007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/DeletedMessageReceivedTableViewCell.strings; sourceTree = "<group>"; };
+		CE9985C829D70CD0007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/GroupPinView.strings; sourceTree = "<group>"; };
+		CE9985C929D70CD0007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/Contacts.strings; sourceTree = "<group>"; };
+		CE9985CA29D70CD1007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/Dashboard.strings; sourceTree = "<group>"; };
+		CE9985CB29D70CD1007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/RestoreProgressView.strings; sourceTree = "<group>"; };
+		CE9985CC29D70CD1007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/LoadingRecommendationsCollectionViewCell.strings; sourceTree = "<group>"; };
+		CE9985CD29D70CD1007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/NoRecommendationsCollectionViewCell.strings; sourceTree = "<group>"; };
+		CE9985CE29D70CD1007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/Groups.strings; sourceTree = "<group>"; };
+		CE9985CF29D70CD1007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/TribeMemberInfoView.strings; sourceTree = "<group>"; };
+		CE9985D029D70CD1007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/History.strings; sourceTree = "<group>"; };
+		CE9985D129D70CD1007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/AddFriendRowButton.strings; sourceTree = "<group>"; };
+		CE9985D229D70CD1007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/Invite.strings; sourceTree = "<group>"; };
+		CE9985D329D70CD1007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/LeftMenu.strings; sourceTree = "<group>"; };
+		CE9985D429D70CD1007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/NewUserSignup.strings; sourceTree = "<group>"; };
+		CE9985D529D70CD1007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/AuthExternalView.strings; sourceTree = "<group>"; };
+		CE9985D629D70CD1007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/PersonModalView.strings; sourceTree = "<group>"; };
+		CE9985D729D70CD2007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/PeopleTorActionsView.strings; sourceTree = "<group>"; };
+		CE9985D829D70CD2007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/Pin.strings; sourceTree = "<group>"; };
+		CE9985D929D70CD2007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/AppAppearenceView.strings; sourceTree = "<group>"; };
+		CE9985DA29D70CD2007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/AppSizeView.strings; sourceTree = "<group>"; };
+		CE9985DB29D70CD2007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/SettingsTabsView.strings; sourceTree = "<group>"; };
+		CE9985DC29D70CD2007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/Profile.strings; sourceTree = "<group>"; };
+		CE9985DD29D70CD2007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/QRCodeDetail.strings; sourceTree = "<group>"; };
+		CE9985DE29D70CD2007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/QRCodeScanner.strings; sourceTree = "<group>"; };
+		CE9985DF29D70CD2007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/Stakwork.strings; sourceTree = "<group>"; };
+		CE9985E029D70CD2007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/Subscription.strings; sourceTree = "<group>"; };
+		CE9985E129D70CD2007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/SubscriptionAmountView.strings; sourceTree = "<group>"; };
+		CE9985E229D70CD2007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/SubscriptionTimeIntervalView.strings; sourceTree = "<group>"; };
+		CE9985E329D70CD2007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/SubscriptionEndRuleView.strings; sourceTree = "<group>"; };
+		CE9985E429D70CD3007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/NewsletterFeed.strings; sourceTree = "<group>"; };
+		CE9985E529D70CD3007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/WebApps.strings; sourceTree = "<group>"; };
+		CE9985E629D70CD3007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/AuthorizeAppView.strings; sourceTree = "<group>"; };
+		CE9985E729D70CD3007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/Welcome.strings; sourceTree = "<group>"; };
+		CE9985E829D70CD3007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CEBF0D022975B20B006C1F21 /* DiscoverTribesTagSelectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTribesTagSelectionVC.swift; sourceTree = "<group>"; };
 		CEBF0D042975C367006C1F21 /* DiscoverTribesTagSelectionVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTribesTagSelectionVM.swift; sourceTree = "<group>"; };
 		CEBF0D06297603B0006C1F21 /* TribeTagSelectionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TribeTagSelectionCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -4226,6 +4277,7 @@
 				en,
 				Base,
 				es,
+				fil,
 			);
 			mainGroup = 4779F155232AA0F200D35E81;
 			packageReferences = (
@@ -5130,6 +5182,7 @@
 				470F4C38257A949A00288A9B /* Base */,
 				470F4C3B257A94A000288A9B /* en */,
 				470F4C3D257A94A400288A9B /* es */,
+				CE9985BD29D70CCF007CDE01 /* fil */,
 			);
 			name = TribeLinkPreviewView.xib;
 			sourceTree = "<group>";
@@ -5140,6 +5193,7 @@
 				470F4C3F257A984800288A9B /* Base */,
 				470F4C42257A984D00288A9B /* en */,
 				470F4C44257A984E00288A9B /* es */,
+				CE9985BE29D70CD0007CDE01 /* fil */,
 			);
 			name = ContactLinkPreviewView.xib;
 			sourceTree = "<group>";
@@ -5150,6 +5204,7 @@
 				470F4C4A257E708400288A9B /* Base */,
 				470F4C4D257E708900288A9B /* en */,
 				470F4C4F257E708A00288A9B /* es */,
+				CE9985CF29D70CD1007CDE01 /* fil */,
 			);
 			name = TribeMemberInfoView.xib;
 			sourceTree = "<group>";
@@ -5160,6 +5215,7 @@
 				4712994929228ED20049CBE3 /* Base */,
 				4712994C29228ED40049CBE3 /* en */,
 				4712994E29228ED50049CBE3 /* es */,
+				CE9985BA29D70CCF007CDE01 /* fil */,
 			);
 			name = TribeMemberProfileView.xib;
 			sourceTree = "<group>";
@@ -5170,6 +5226,7 @@
 				47158D78273083E200601F00 /* Base */,
 				47158D7B273083E500601F00 /* en */,
 				47158D7D2730841600601F00 /* es */,
+				CE9985E429D70CD3007CDE01 /* fil */,
 			);
 			name = NewsletterFeed.storyboard;
 			sourceTree = "<group>";
@@ -5180,6 +5237,7 @@
 				472161B7293915E20088B87B /* Base */,
 				472161BA293915E30088B87B /* en */,
 				472161BC293915E40088B87B /* es */,
+				CE9985CD29D70CD1007CDE01 /* fil */,
 			);
 			name = NoRecommendationsCollectionViewCell.xib;
 			sourceTree = "<group>";
@@ -5190,6 +5248,7 @@
 				472161BE293916250088B87B /* Base */,
 				472161C1293916290088B87B /* en */,
 				472161C32939162A0088B87B /* es */,
+				CE9985CC29D70CD1007CDE01 /* fil */,
 			);
 			name = LoadingRecommendationsCollectionViewCell.xib;
 			sourceTree = "<group>";
@@ -5200,6 +5259,7 @@
 				472161DF293A6FC20088B87B /* Base */,
 				472161E2293A6FC30088B87B /* en */,
 				472161E4293A6FC40088B87B /* es */,
+				CE9985B729D70CCF007CDE01 /* fil */,
 			);
 			name = RecommendationsHeaderCollectionReusableView.xib;
 			sourceTree = "<group>";
@@ -5210,6 +5270,7 @@
 				4724BC1425474B440012BD76 /* Base */,
 				4724BC1725474B4A0012BD76 /* en */,
 				4724BC1925474B4B0012BD76 /* es */,
+				CE9985E529D70CD3007CDE01 /* fil */,
 			);
 			name = WebApps.storyboard;
 			sourceTree = "<group>";
@@ -5220,6 +5281,7 @@
 				473C315427986EBB007735CD /* Base */,
 				473C315727986EC2007735CD /* en */,
 				473C315927986EC3007735CD /* es */,
+				CE9985CB29D70CD1007CDE01 /* fil */,
 			);
 			name = RestoreProgressView.xib;
 			sourceTree = "<group>";
@@ -5230,6 +5292,7 @@
 				4746466D2988331A00FAF58B /* Base */,
 				474646702988331C00FAF58B /* en */,
 				474646722988334B00FAF58B /* es */,
+				CE9985CA29D70CD1007CDE01 /* fil */,
 			);
 			name = Dashboard.storyboard;
 			sourceTree = "<group>";
@@ -5240,6 +5303,7 @@
 				47771C74259B9B9400990467 /* Base */,
 				47771C77259B9B9900990467 /* en */,
 				47771C79259B9B9B00990467 /* es */,
+				CE9985C829D70CD0007CDE01 /* fil */,
 			);
 			name = GroupPinView.xib;
 			sourceTree = "<group>";
@@ -5249,6 +5313,7 @@
 			children = (
 				4779F16E232AA0F300D35E81 /* Base */,
 				4797E75D24B8DDBD00D13270 /* es */,
+				CE9985B629D70CCF007CDE01 /* fil */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -5269,6 +5334,7 @@
 				4785C10824D4A6A0004E2D6C /* Base */,
 				4785C10B24D4A6A5004E2D6C /* en */,
 				4785C10D24D4A6A6004E2D6C /* es */,
+				CE9985DA29D70CD2007CDE01 /* fil */,
 			);
 			name = AppSizeView.xib;
 			sourceTree = "<group>";
@@ -5279,6 +5345,7 @@
 				4789E25424EEB8D8003991BE /* Base */,
 				4789E25724EEB8DE003991BE /* en */,
 				4789E25924EEB8DF003991BE /* es */,
+				CE9985E629D70CD3007CDE01 /* fil */,
 			);
 			name = AuthorizeAppView.xib;
 			sourceTree = "<group>";
@@ -5289,6 +5356,7 @@
 				4789E26324F04752003991BE /* Base */,
 				4789E26624F04757003991BE /* en */,
 				4789E26824F04758003991BE /* es */,
+				CE9985DB29D70CD2007CDE01 /* fil */,
 			);
 			name = SettingsTabsView.xib;
 			sourceTree = "<group>";
@@ -5299,6 +5367,7 @@
 				478BD8BD282AA6C600C733FD /* Base */,
 				478BD8C0282AA6C900C733FD /* en */,
 				478BD8C2282AA6CB00C733FD /* es */,
+				CE9985B929D70CCF007CDE01 /* fil */,
 			);
 			name = TribeMemberPopupView.xib;
 			sourceTree = "<group>";
@@ -5309,6 +5378,7 @@
 				4797E75F24B8DDE400D13270 /* Base */,
 				4797E76224B8DDEB00D13270 /* en */,
 				4797E76424B8DDEC00D13270 /* es */,
+				CE9985D329D70CD1007CDE01 /* fil */,
 			);
 			name = LeftMenu.storyboard;
 			sourceTree = "<group>";
@@ -5318,6 +5388,7 @@
 			children = (
 				4797E76824B8E12E00D13270 /* es */,
 				4797E76A24B8E13300D13270 /* en */,
+				CE9985E829D70CD3007CDE01 /* fil */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -5328,6 +5399,7 @@
 				4797E76C24B8E4C900D13270 /* Base */,
 				4797E76F24B8E4CC00D13270 /* en */,
 				4797E77124B8E4D000D13270 /* es */,
+				CE9985D129D70CD1007CDE01 /* fil */,
 			);
 			name = AddFriendRowButton.xib;
 			sourceTree = "<group>";
@@ -5338,6 +5410,7 @@
 				4797E77324B8E51E00D13270 /* Base */,
 				4797E77624B8E52400D13270 /* en */,
 				4797E77824B8E52600D13270 /* es */,
+				CE9985B829D70CCF007CDE01 /* fil */,
 			);
 			name = Chat.storyboard;
 			sourceTree = "<group>";
@@ -5346,6 +5419,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				4797E77A24B8EB9C00D13270 /* Base */,
+				CE9985C029D70CD0007CDE01 /* fil */,
 			);
 			name = GroupActionMessageTableViewCell.xib;
 			sourceTree = "<group>";
@@ -5356,6 +5430,7 @@
 				4797E78124B8EC1800D13270 /* Base */,
 				4797E78424B8EC1F00D13270 /* en */,
 				4797E78624B8EC2100D13270 /* es */,
+				CE9985C129D70CD0007CDE01 /* fil */,
 			);
 			name = GroupRemovedTableViewCell.xib;
 			sourceTree = "<group>";
@@ -5366,6 +5441,7 @@
 				4797E78824B8ED7700D13270 /* Base */,
 				4797E78B24B8ED7C00D13270 /* en */,
 				4797E78D24B8ED7D00D13270 /* es */,
+				CE9985C229D70CD0007CDE01 /* fil */,
 			);
 			name = LoadingMoreTableViewCell.xib;
 			sourceTree = "<group>";
@@ -5376,6 +5452,7 @@
 				4797E78F24B8EDB100D13270 /* Base */,
 				4797E79224B8EDB400D13270 /* en */,
 				4797E79424B8EDB500D13270 /* es */,
+				CE9985C329D70CD0007CDE01 /* fil */,
 			);
 			name = ExpiredInvoiceSentTableViewCell.xib;
 			sourceTree = "<group>";
@@ -5386,6 +5463,7 @@
 				4797E79F24B8EF3600D13270 /* Base */,
 				4797E7A224B8EF3A00D13270 /* en */,
 				4797E7A424B8EF3C00D13270 /* es */,
+				CE9985C529D70CD0007CDE01 /* fil */,
 			);
 			name = ExpiredInvoiceReceivedTableViewCell.xib;
 			sourceTree = "<group>";
@@ -5396,6 +5474,7 @@
 				4797E7A624B8F06A00D13270 /* Base */,
 				4797E7A924B8F06E00D13270 /* en */,
 				4797E7AB24B8F06F00D13270 /* es */,
+				CE9985BB29D70CCF007CDE01 /* fil */,
 			);
 			name = PaidAttachmentView.xib;
 			sourceTree = "<group>";
@@ -5406,6 +5485,7 @@
 				4797E7AD24B8F13800D13270 /* Base */,
 				4797E7B024B8F13D00D13270 /* en */,
 				4797E7B224B8F13E00D13270 /* es */,
+				CE9985BF29D70CD0007CDE01 /* fil */,
 			);
 			name = JoinVideoCallView.xib;
 			sourceTree = "<group>";
@@ -5416,6 +5496,7 @@
 				4797E7B424B8F2EF00D13270 /* Base */,
 				4797E7B724B8F2F400D13270 /* en */,
 				4797E7B924B8F2F700D13270 /* es */,
+				CE9985DE29D70CD2007CDE01 /* fil */,
 			);
 			name = QRCodeScanner.storyboard;
 			sourceTree = "<group>";
@@ -5426,6 +5507,7 @@
 				4797E7BB24B8F3B600D13270 /* Base */,
 				4797E7BE24B8F3BA00D13270 /* en */,
 				4797E7C024B8F3BB00D13270 /* es */,
+				CE9985D029D70CD1007CDE01 /* fil */,
 			);
 			name = History.storyboard;
 			sourceTree = "<group>";
@@ -5436,6 +5518,7 @@
 				4797E7C224B8F3FA00D13270 /* Base */,
 				4797E7C524B8F3FF00D13270 /* en */,
 				4797E7C724B8F40000D13270 /* es */,
+				CE9985D829D70CD2007CDE01 /* fil */,
 			);
 			name = Pin.storyboard;
 			sourceTree = "<group>";
@@ -5446,6 +5529,7 @@
 				4797E7C924B8F47200D13270 /* Base */,
 				47904C1724BF37A700710E7A /* en */,
 				47904C1924BF37A800710E7A /* es */,
+				CE9985DC29D70CD2007CDE01 /* fil */,
 			);
 			name = Profile.storyboard;
 			sourceTree = "<group>";
@@ -5456,6 +5540,7 @@
 				4797E7D024B8F4DC00D13270 /* Base */,
 				4797E7D324B8F4E000D13270 /* en */,
 				4797E7D524B8F4E100D13270 /* es */,
+				CE9985D929D70CD2007CDE01 /* fil */,
 			);
 			name = AppAppearenceView.xib;
 			sourceTree = "<group>";
@@ -5466,6 +5551,7 @@
 				4797E7D724B8F53000D13270 /* Base */,
 				4797E7DA24B8F53500D13270 /* en */,
 				4797E7DC24B8F53700D13270 /* es */,
+				CE9985D229D70CD1007CDE01 /* fil */,
 			);
 			name = Invite.storyboard;
 			sourceTree = "<group>";
@@ -5476,6 +5562,7 @@
 				4797E7DE24B8F73200D13270 /* Base */,
 				4797E7E124B8F73600D13270 /* en */,
 				4797E7E324B8F73800D13270 /* es */,
+				CE9985C929D70CD0007CDE01 /* fil */,
 			);
 			name = Contacts.storyboard;
 			sourceTree = "<group>";
@@ -5486,6 +5573,7 @@
 				4797E7E524B8F7E100D13270 /* Base */,
 				4797E7E824B8F7E500D13270 /* en */,
 				4797E7EA24B8F7E700D13270 /* es */,
+				CE9985DD29D70CD2007CDE01 /* fil */,
 			);
 			name = QRCodeDetail.storyboard;
 			sourceTree = "<group>";
@@ -5496,6 +5584,7 @@
 				4797E7EC24B8F84D00D13270 /* Base */,
 				4797E7EF24B8F85200D13270 /* en */,
 				4797E7F124B8F85300D13270 /* es */,
+				CE9985E029D70CD2007CDE01 /* fil */,
 			);
 			name = Subscription.storyboard;
 			sourceTree = "<group>";
@@ -5506,6 +5595,7 @@
 				4797E7F324B8F99800D13270 /* Base */,
 				4797E7F624B8F99C00D13270 /* en */,
 				4797E7F824B8F99E00D13270 /* es */,
+				CE9985E129D70CD2007CDE01 /* fil */,
 			);
 			name = SubscriptionAmountView.xib;
 			sourceTree = "<group>";
@@ -5516,6 +5606,7 @@
 				4797E7FA24B8F9C300D13270 /* Base */,
 				4797E7FD24B8F9C700D13270 /* en */,
 				4797E7FF24B8F9C800D13270 /* es */,
+				CE9985E229D70CD2007CDE01 /* fil */,
 			);
 			name = SubscriptionTimeIntervalView.xib;
 			sourceTree = "<group>";
@@ -5526,6 +5617,7 @@
 				4797E80124B8F9E000D13270 /* Base */,
 				4797E80424B8F9E400D13270 /* en */,
 				4797E80624B8F9E500D13270 /* es */,
+				CE9985E329D70CD2007CDE01 /* fil */,
 			);
 			name = SubscriptionEndRuleView.xib;
 			sourceTree = "<group>";
@@ -5536,6 +5628,7 @@
 				4797E80824B8FA6700D13270 /* Base */,
 				4797E80B24B8FA6B00D13270 /* en */,
 				4785C0FC24D1BC27004E2D6C /* es */,
+				CE9985CE29D70CD1007CDE01 /* fil */,
 			);
 			name = Groups.storyboard;
 			sourceTree = "<group>";
@@ -5546,6 +5639,7 @@
 				4797E80F24B8FBC200D13270 /* Base */,
 				4797E81224B8FBC800D13270 /* en */,
 				4797E81424B8FBC900D13270 /* es */,
+				CE9985DF29D70CD2007CDE01 /* fil */,
 			);
 			name = Stakwork.storyboard;
 			sourceTree = "<group>";
@@ -5556,6 +5650,7 @@
 				4797E81624BBA54300D13270 /* Base */,
 				4797E81924BBA54A00D13270 /* en */,
 				4797E81B24BBA54B00D13270 /* es */,
+				CE9985BC29D70CCF007CDE01 /* fil */,
 			);
 			name = ChatAccessoryView.xib;
 			sourceTree = "<group>";
@@ -5566,6 +5661,7 @@
 				4797E88D24BCFC7600D13270 /* Base */,
 				4797E89024BCFC7B00D13270 /* en */,
 				4797E89224BCFC7C00D13270 /* es */,
+				CE9985C429D70CD0007CDE01 /* fil */,
 			);
 			name = DeletedMessageSentTableViewCell.xib;
 			sourceTree = "<group>";
@@ -5576,6 +5672,7 @@
 				4797E89424BCFCA200D13270 /* Base */,
 				4797E89724BCFCA600D13270 /* en */,
 				4797E89924BCFCA700D13270 /* es */,
+				CE9985C729D70CD0007CDE01 /* fil */,
 			);
 			name = DeletedMessageReceivedTableViewCell.xib;
 			sourceTree = "<group>";
@@ -5586,6 +5683,7 @@
 				4797E8A924BDF7E900D13270 /* Base */,
 				4797E8AC24BDF7EF00D13270 /* en */,
 				4797E8AE24BDF7F000D13270 /* es */,
+				CE9985C629D70CD0007CDE01 /* fil */,
 			);
 			name = InvoiceReceivedTableViewCell.xib;
 			sourceTree = "<group>";
@@ -5596,6 +5694,7 @@
 				47ACBC2F265EA35D00D2FE47 /* Base */,
 				47ACBC38265EA35F00D2FE47 /* en */,
 				47ACBC3A265EA36100D2FE47 /* es */,
+				CE9985D529D70CD1007CDE01 /* fil */,
 			);
 			name = AuthExternalView.xib;
 			sourceTree = "<group>";
@@ -5606,6 +5705,7 @@
 				47ACBC3F265EA69200D2FE47 /* Base */,
 				47ACBC45265EA69600D2FE47 /* en */,
 				47ACBC47265EA69600D2FE47 /* es */,
+				CE9985D629D70CD1007CDE01 /* fil */,
 			);
 			name = PersonModalView.xib;
 			sourceTree = "<group>";
@@ -5616,6 +5716,7 @@
 				47C7D705278749CF006D2809 /* Base */,
 				47C7D70B278749D5006D2809 /* en */,
 				47C7D70D278749D9006D2809 /* es */,
+				CE9985D729D70CD2007CDE01 /* fil */,
 			);
 			name = PeopleTorActionsView.xib;
 			sourceTree = "<group>";
@@ -5626,6 +5727,7 @@
 				F33846E8267B0FA00041F1EA /* Base */,
 				F33846EB267B0FBA0041F1EA /* en */,
 				F33846ED267B0FBB0041F1EA /* es */,
+				CE9985E729D70CD3007CDE01 /* fil */,
 			);
 			name = Welcome.storyboard;
 			sourceTree = "<group>";
@@ -5636,6 +5738,7 @@
 				F394ECA22682064100529038 /* Base */,
 				F394ECA52682064400529038 /* en */,
 				F394ECA72682064800529038 /* es */,
+				CE9985D429D70CD1007CDE01 /* fil */,
 			);
 			name = NewUserSignup.storyboard;
 			sourceTree = "<group>";

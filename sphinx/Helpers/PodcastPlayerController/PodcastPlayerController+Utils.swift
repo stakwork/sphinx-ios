@@ -114,7 +114,16 @@ extension PodcastPlayerController {
             return
         }
         
-        let duration = Int(Double(item.asset.duration.value) / Double(item.asset.duration.timescale))
+        var duration : Int
+        
+        if podcastData?.duration == nil {
+            duration = Int(Double(item.asset.duration.value) / Double(item.asset.duration.timescale))
+            
+            self.podcastData?.duration = duration
+        }
+        else{
+            duration = podcastData!.duration!
+        }
         let currentTime = Double(player.currentTime().value) / Double(player.currentTime().timescale)
         let roundedCurrentTime = Int(round(currentTime))
 

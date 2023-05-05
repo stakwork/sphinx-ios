@@ -53,7 +53,7 @@ extension ContentFeed {
         }
         
         if !sortedItemsArray.isEmpty {
-            return sortedItemsArray
+               return sortedItemsArray
         }
         
         sortedItemsArray = items.sorted { (first, second) in

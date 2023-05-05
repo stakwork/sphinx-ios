@@ -214,27 +214,33 @@ extension PodcastPlayerController {
             return
         }
         
-        let duration = Int(Double(playerItem.asset.duration.value) / Double(playerItem.asset.duration.timescale))
+        var duration: Int = 0
         
-        self.podcastData?.duration = duration
-        
-        updatePodcastObject(
-            podcastId: podcastData.podcastId,
-            duration: duration
-        )
-        
-        if (duration > 0) {
-            shouldSyncPodcast()
+        DispatchQueue.global(qos: .userInitiated).async {
+            duration = Int(Double(playerItem.asset.duration.value) / Double(playerItem.asset.duration.timescale))
             
-            runPlayingStateUpdate()
-            configureTimer()
+            self.podcastData?.duration = duration
             
-            preloadNextEpisode()
-            trackItemStarted()
-        } else {
-            player?.pause()
-
-            runErrorStateUpdate()
+            self.updatePodcastObject(
+                podcastId: podcastData.podcastId,
+                duration: duration
+            )
+            
+            DispatchQueue.main.async {
+                if (duration > 0) {
+                    self.shouldSyncPodcast()
+                    
+                    self.runPlayingStateUpdate()
+                    self.configureTimer()
+                    
+                    self.preloadNextEpisode()
+                    self.trackItemStarted()
+                } else {
+                    self.player?.pause()
+                    
+                    self.runErrorStateUpdate()
+                }
+            }
         }
     }
     

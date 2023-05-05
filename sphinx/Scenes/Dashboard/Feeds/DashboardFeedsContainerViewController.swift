@@ -246,13 +246,14 @@ extension DashboardFeedsContainerViewController {
     }
     
     private func synActionsAndRefreshRecommendations() {
-        actionsManager.syncActions() {
-            
-            if (PodcastPlayerController.sharedInstance.isPlayingRecommendations()) {
-                return
+        actionsManager.syncActionsInBackground() {
+            DispatchQueue.main.async {
+                if (PodcastPlayerController.sharedInstance.isPlayingRecommendations()) {
+                    return
+                }
+                
+                self.allTribeFeedsCollectionViewController.loadRecommendations()
             }
-
-            self.allTribeFeedsCollectionViewController.loadRecommendations()
         }
     }
     

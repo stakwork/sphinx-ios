@@ -53,6 +53,7 @@ extension ContentFeed {
         }
         
         return items.sorted { (first, second) in
+            return true//@Tom this is the critical code
             if first.datePublished == nil {
                 return false
             } else if second.datePublished == nil {

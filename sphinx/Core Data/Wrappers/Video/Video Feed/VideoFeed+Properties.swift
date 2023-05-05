@@ -34,6 +34,8 @@ public class VideoFeed: NSObject {
         self.feedID = feedID
         self.isSubscribedToFromSearch = isSubscribedToFromSearch
     }
+    
+    var sortedVideosArray: [Video] = []
 }
 
 

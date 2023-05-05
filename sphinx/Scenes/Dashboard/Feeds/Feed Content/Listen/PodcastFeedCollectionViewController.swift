@@ -369,6 +369,10 @@ extension PodcastFeedCollectionViewController {
         podcastFeeds: [PodcastFeed],
         shouldAnimate: Bool = true
     ) {
+        for feed in podcastFeeds {
+            let _ = feed.episodesArray
+        }
+        
         self.followedPodcastFeeds = podcastFeeds.filter { $0.isSubscribedToFromSearch || $0.chat != nil }.sorted { (first, second) in
             let firstDate = first.getLastEpisode()?.datePublished ?? Date.init(timeIntervalSince1970: 0)
             let secondDate = second.getLastEpisode()?.datePublished ?? Date.init(timeIntervalSince1970: 0)

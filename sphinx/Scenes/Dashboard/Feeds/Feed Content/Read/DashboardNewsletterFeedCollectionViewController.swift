@@ -460,6 +460,11 @@ extension DashboardNewsletterFeedCollectionViewController {
         newsletterFeeds: [NewsletterFeed],
         shouldAnimate: Bool = true
     ) {
+        
+        for feed in newsletterFeeds {
+            let _ = feed.itemsArray
+        }
+        
         self.newsletterFeeds = newsletterFeeds
 
         if let dataSource = dataSource {

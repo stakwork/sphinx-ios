@@ -33,7 +33,11 @@ extension NewsletterFeed {
             return []
         }
         
-        return newsletterItems.sorted { (first, second) in
+        if !sortedItemsArray.isEmpty {
+            return sortedItemsArray
+        }
+        
+        sortedItemsArray = newsletterItems.sorted { (first, second) in
             if first.datePublished == nil {
                 return false
             } else if second.datePublished == nil {
@@ -42,6 +46,8 @@ extension NewsletterFeed {
             
             return first.datePublished! > second.datePublished!
         }
+        
+        return sortedItemsArray
     }
     
     var lastArticle: NewsletterItem? {

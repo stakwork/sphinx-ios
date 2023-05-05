@@ -561,6 +561,10 @@ extension AllTribeFeedsCollectionViewController {
     func updateWithNew(
         feeds allFeeds: [ContentFeed]
     ) {
+        for feed in self.allFeeds {
+            let _ = feed.itemsArray
+        }
+        
         self.allFeeds = allFeeds
         self.followedFeeds = allFeeds.filter { $0.isSubscribedToFromSearch || $0.chat != nil }
         

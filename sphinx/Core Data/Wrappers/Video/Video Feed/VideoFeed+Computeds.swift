@@ -13,7 +13,11 @@ extension VideoFeed {
             return []
         }
         
-        return videos.sorted { (first, second) in
+        if !sortedVideosArray.isEmpty {
+            return sortedVideosArray
+        }
+        
+        sortedVideosArray = videos.sorted { (first, second) in
             if first.datePublished == nil {
                 return false
             } else if second.datePublished == nil {
@@ -22,6 +26,8 @@ extension VideoFeed {
             
             return first.datePublished! > second.datePublished!
         }
+        
+        return sortedVideosArray
     }
     
     

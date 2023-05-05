@@ -457,6 +457,9 @@ extension DashboardVideoFeedCollectionViewController {
         shouldAnimate: Bool = true
     ) {
         
+        for feed in videoFeeds {
+            let _ = feed.videosArray
+        }
         
         self.followedVideoFeeds = videoFeeds.filter { $0.isSubscribedToFromSearch || $0.chat != nil }.sorted { (first, second) in
             let firstDate = first.videosArray.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)

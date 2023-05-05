@@ -208,6 +208,8 @@ public class ContentFeed: NSManagedObject {
             }
         )
     }
+    
+    var sortedItemsArray: [ContentFeedItem] = []
 }
 
 extension String {

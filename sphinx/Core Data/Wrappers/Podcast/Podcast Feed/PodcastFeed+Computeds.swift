@@ -9,7 +9,11 @@ extension PodcastFeed {
             return []
         }
         
-        return episodes.sorted { (first, second) in
+        if !sortedEpisodesArray.isEmpty {
+            return sortedEpisodesArray
+        }
+        
+        sortedEpisodesArray = episodes.sorted { (first, second) in
             if first.datePublished == nil {
                 return false
             } else if second.datePublished == nil {
@@ -18,6 +22,8 @@ extension PodcastFeed {
             
             return first.datePublished! > second.datePublished!
         }
+        
+        return sortedEpisodesArray
     }
     
     

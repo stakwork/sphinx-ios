@@ -37,6 +37,8 @@ public class PodcastFeed: NSObject {
         self.feedID = feedID
         self.isSubscribedToFromSearch = isSubscribedToFromSearch
     }
+    
+    var sortedEpisodesArray: [PodcastEpisode] = []
 }
 
 // MARK: -  Public Methods

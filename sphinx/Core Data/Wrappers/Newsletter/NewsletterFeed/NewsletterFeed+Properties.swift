@@ -30,6 +30,7 @@ public class NewsletterFeed: NSObject {
         self.feedID = feedID
     }
 
+    var sortedItemsArray : [NewsletterItem] = []
 }
 
 extension NewsletterFeed: Identifiable {

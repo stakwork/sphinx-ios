@@ -52,8 +52,11 @@ extension ContentFeed {
             return []
         }
         
-        return items.sorted { (first, second) in
-            return true//@Tom this is the critical code
+        if !sortedItemsArray.isEmpty {
+            return sortedItemsArray
+        }
+        
+        sortedItemsArray = items.sorted { (first, second) in
             if first.datePublished == nil {
                 return false
             } else if second.datePublished == nil {
@@ -62,5 +65,7 @@ extension ContentFeed {
             
             return first.datePublished! > second.datePublished!
         }
+        
+        return sortedItemsArray
     }
 }

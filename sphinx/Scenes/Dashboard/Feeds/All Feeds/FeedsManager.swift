@@ -396,19 +396,21 @@ class FeedsManager : NSObject {
         feedUrl: String,
         objectID: NSManagedObjectID
     ) {
-        let bgContext = CoreDataManager.sharedManager.getBackgroundContext()
-        
-        bgContext.perform {
-            ContentFeed.fetchFeedItems(
-                feedUrl: feedUrl,
-                contentFeedObjectID: objectID,
-                context: bgContext,
-                completion: { result in
-                    if case .success(_) = result {
-                        bgContext.saveContext()
+        DispatchQueue.global(qos: .userInitiated).async {
+            let bgContext = CoreDataManager.sharedManager.getBackgroundContext()
+            
+            bgContext.perform {
+                ContentFeed.fetchFeedItems(
+                    feedUrl: feedUrl,
+                    contentFeedObjectID: objectID,
+                    context: bgContext,
+                    completion: { result in
+                        if case .success(_) = result {
+                            bgContext.saveContext()
+                        }
                     }
-                }
-            )
+                )
+            }
         }
     }
     

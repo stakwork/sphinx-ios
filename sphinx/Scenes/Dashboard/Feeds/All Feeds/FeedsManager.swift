@@ -347,7 +347,7 @@ class FeedsManager : NSObject {
         }
         
         downloadLastEpisodeFor(feed: localFeed)
-        loadEpisodesDurationFor(feed: localFeed)
+//        loadEpisodesDurationFor(feed: localFeed)
     }
     
     func restoreEpisodeStatus(

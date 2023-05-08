@@ -50,5 +50,7 @@ extension PodcastSmallPlayer : PlayerDelegate {
             return
         }
         delegate?.didFailPlayingPodcast()
+        configureControls(playing: false)
+        audioLoading = false
     }
 }

@@ -120,7 +120,6 @@ extension API {
                        let mapped_content_status = Mapper<ContentFeedStatus>().mapArray(JSONObject: json["response"]) {
                         
                         callback(mapped_content_status)
-                        print(json)
                         return
                     }
                 }
@@ -172,9 +171,6 @@ extension API {
             return
         }
         
-        let json = JSON(requestParams)
-        print(json)
-        
         sphinxRequest(request) { response in
             switch response.result {
             case .success(let data):
@@ -204,9 +200,6 @@ extension API {
             errorCallback()
             return
         }
-        
-        let json = JSON(requestParams)
-        print(json)
         
         sphinxRequest(request) { response in
             switch response.result {

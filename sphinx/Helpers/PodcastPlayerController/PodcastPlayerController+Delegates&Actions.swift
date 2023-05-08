@@ -214,14 +214,8 @@ extension PodcastPlayerController {
             return
         }
         
-        var duration : Int
-        
-        if let d = podcastData.duration, d > 0 {
-            duration = d
-        } else {
-            duration = Int(Double(playerItem.asset.duration.value) / Double(playerItem.asset.duration.timescale))
-            self.podcastData?.duration = duration
-        }
+        let duration = getDuration(playerItem: playerItem)
+        self.podcastData?.duration = duration
         
         updatePodcastObject(
             podcastId: podcastData.podcastId,

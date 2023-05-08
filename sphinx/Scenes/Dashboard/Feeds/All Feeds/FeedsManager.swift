@@ -415,15 +415,17 @@ class FeedsManager : NSObject {
     }
     
     func loadEpisodesDurationFor(feed: ContentFeed) {
-        for item in feed.items ?? [] {
-            let episode = PodcastEpisode.convertFrom(contentFeedItem: item)
-            
-            if let url = episode.getAudioUrl(), episode.duration == nil {
-                let asset = AVAsset(url: url)
-                asset.loadValuesAsynchronously(forKeys: ["duration"], completionHandler: {
-                    let duration = Int(Double(asset.duration.value) / Double(asset.duration.timescale))
-                    episode.duration = duration
-                })
+        DispatchQueue.global(qos: .utility).async {
+            for item in feed.items ?? [] {
+                let episode = PodcastEpisode.convertFrom(contentFeedItem: item)
+                
+                if let url = episode.getAudioUrl(), episode.duration == nil {
+                    let asset = AVAsset(url: url)
+                    asset.loadValuesAsynchronously(forKeys: ["duration"], completionHandler: {
+                        let duration = Int(Double(asset.duration.value) / Double(asset.duration.timescale))
+                        episode.duration = duration
+                    })
+                }
             }
         }
     }

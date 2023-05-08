@@ -40,7 +40,6 @@ extension PodcastPlayerController {
 
         let size = playingEpisodeImage?.size ?? CGSize.zero
         let artwork = MPMediaItemArtwork.init(boundsSize: size, requestHandler: { (size) -> UIImage in
-            print(self.playingEpisodeImage)
             if let image = self.playingEpisodeImage{
                 return image
             }

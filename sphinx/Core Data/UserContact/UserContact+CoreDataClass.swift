@@ -317,6 +317,8 @@ public class UserContact: NSManagedObject {
     }
     
     public func isPending() -> Bool {
+        print(self.status)
+        print(UserContact.Status.Pending.rawValue)
         return self.status == UserContact.Status.Pending.rawValue
     }
     

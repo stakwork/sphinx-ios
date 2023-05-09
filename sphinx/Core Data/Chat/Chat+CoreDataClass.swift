@@ -474,8 +474,17 @@ public class Chat: NSManagedObject {
     
     func getContacts(includeOwner: Bool = true, ownerAtEnd: Bool = false) -> [UserContact] {
         let ids:[Int] = self.getContactIdsArray()
-        let contacts: [UserContact] = UserContact.getContactsWith(ids: ids, includeOwner: includeOwner, ownerAtEnd: ownerAtEnd)
+        var contacts: [UserContact] = UserContact.getContactsWith(ids: ids, includeOwner: includeOwner, ownerAtEnd: ownerAtEnd)
+        contacts.append(getStaticContacts()[0])
+
         return contacts
+    }
+    
+    func getStaticContacts()->[UserContact]{
+        let gpt = UserContact.createObject(id: 69420, publicKey: "69420", nodeAlias: "ChatGPT", nickname: "ChatGPT", avatarUrl: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FChatGPT&psig=AOvVaw11TXcAV_w5flRME3Ton2aB&ust=1683738657324000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCIjBorbd6P4CFQAAAAAdAAAAABAE", isOwner: false, fromGroup: false, blocked: false, status: 0, contactKey: "69420", notificationSound: nil, privatePhoto: false, tipAmount: 0, routeHint: nil, inviteString: "", welcomeMessage: "Ask ChatGPT a Question!", inviteStatus: UserInvite.Status.Complete.rawValue, invitePrice: 0, date: Date())
+        gpt?.status = UserContact.Status.Confirmed.rawValue
+        
+        return [gpt!]
     }
     
     func getPendingContacts() -> [UserContact] {

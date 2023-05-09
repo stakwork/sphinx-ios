@@ -680,7 +680,8 @@ extension DashboardRootViewController {
     }
     
     private func handleInvite(for contact: UserContact?) -> Bool {
-        if let invite = contact?.invite, (contact?.isPending() ?? false) {
+        if let invite = contact?.invite,
+           (contact?.isPending() ?? false) {
             
             if invite.isPendingPayment() && !invite.isPaymentProcessed() {
                 

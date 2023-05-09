@@ -309,6 +309,9 @@ extension ChatsCollectionViewController {
         var snapshot = DataSourceSnapshot()
 
         snapshot.appendSections(CollectionViewSection.allCases)
+        
+//        let gpt = Chat.createObject(id: 69420, name: "ChatGPT", photoUrl: nil, uuid: nil, type: 0, status: 0, muted: false, seen: true, unlisted: false, privateTribe: false, host: nil, groupKey: nil, ownerPubkey: nil, pricePerMessage: 0, escrowAmount: 0, myAlias: "user", myPhotoUrl: nil, notify: 0, contactIds: [], pendingContactIds: [], date: Date())!
+//        chatListObjects.append(gpt)
 
         let items = chatListObjects.map {
             

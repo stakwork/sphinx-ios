@@ -46,7 +46,7 @@ extension API {
 
     public func askChatGPT(question: String,completion: @escaping (String?)->()) {
         let url = URL(string: "https://api.openai.com/v1/engines/text-davinci-001/completions")!
-        let apiKey = "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"
+        let apiKey = ""
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.addValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")

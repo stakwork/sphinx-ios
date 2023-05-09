@@ -230,6 +230,22 @@ extension ChatViewController : ChatAccessoryViewDelegate {
     func sendMessage(provisionalMessage: TransactionMessage?, text: String, botAmount: Int = 0, completion: @escaping (Bool) -> ()) {
         let messageType = TransactionMessage.TransactionMessageType(fromRawValue: provisionalMessage?.type ?? 0)
         guard let params = TransactionMessage.getMessageParams(contact: contact, chat: chat, type: messageType, text: text, botAmount: botAmount, replyingMessage: accessoryView.getReplyingMessage()) else {
+            if(provisionalMessage?.chat?.id == 69420){
+                API.sharedInstance.askChatGPT(question: provisionalMessage?.messageContent ?? "", completion: { result in
+                    print(result)
+                    let message = TransactionMessage(context: CoreDataManager.sharedManager.persistentContainer.viewContext)
+                    message.messageContent = result ?? "unknown result"
+                    message.id = 69420
+                    message.senderAlias = "ChatGPT"
+                    CoreDataManager.sharedManager.persistentContainer.viewContext.saveContext()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+                        self.reloadMessages()
+                    })
+                    
+                })
+                print("teehee")
+                return
+            }
             DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: {
                 self.didFailSendingMessage(provisionalMessage: provisionalMessage)
             })

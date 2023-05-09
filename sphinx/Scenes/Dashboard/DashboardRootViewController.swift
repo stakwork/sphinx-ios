@@ -227,14 +227,8 @@ extension DashboardRootViewController {
         
         loadLastPlayedPod()
         
-        test()
     }
     
-    func test(){
-        API.sharedInstance.askChatGPT(question: "What is the capital of Guam?",completion: { result in
-            print(result)
-        })
-    }
     
     func loadLastPlayedPod() {
         if podcastPlayerController.isPlaying {

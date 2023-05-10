@@ -5,7 +5,7 @@ import CoreData
 extension DashboardRootViewController: DashboardFeedsListContainerViewControllerDelegate, NewsletterFeedContainerViewControllerDelegate {
     
     func viewController(_ viewController: UIViewController, didSelectFeedSearchResult feedId: String) {
-        if let contentFeed = ContentFeed.getFeedWith(feedId: feedId) {
+        if let contentFeed = ContentFeed.getFeedById(feedId: feedId) {
             if contentFeed.isPodcast {
                 let podcastFeed = PodcastFeed.convertFrom(contentFeed: contentFeed)
                 self.viewController(self, didSelectPodcastFeed: podcastFeed)

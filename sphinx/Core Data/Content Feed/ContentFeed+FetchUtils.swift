@@ -30,7 +30,7 @@ extension ContentFeed {
         return followedFeeds
     }
     
-    public static func getFeedWith(feedId: String, managedContext: NSManagedObjectContext? = nil) -> ContentFeed? {
+    public static func getFeedById(feedId: String, managedContext: NSManagedObjectContext? = nil) -> ContentFeed? {
         let predicate = Predicates.matching(feedID: feedId)
         let feed: ContentFeed? = CoreDataManager.sharedManager.getObjectOfTypeWith(predicate: predicate, sortDescriptors: [], entityName: "ContentFeed", managedContext: managedContext)
         return feed

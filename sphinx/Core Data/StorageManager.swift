@@ -8,17 +8,60 @@
 
 import Foundation
 
+public enum StorageManagerMediaType{
+    case audio
+    case video
+    case photo
+}
+
+struct StorageManagerItem{
+    var type : StorageManagerMediaType
+    var sizeMB : Double
+    var label : String
+}
+
 class StorageManager {
-    
-    static let sharedManager = StorageManager()
     
     private init() {}
     
-    func getDownloadedItemsList(){
-        let pairs = extractFeedItemIdPairs()
-        for key in pairs.keys{
-            
+    static let sharedManager = StorageManager()
+    
+    func getDownloadedPodcastsTotalSize()->Double{
+        let dlPods = getDownloadedPodcastEpisodeList()
+        let totalSize = dlPods.reduce(0) { (accumulator, item) in
+            return accumulator + item.sizeMB
         }
+
+        return totalSize
+    }
+    
+    func getDownloadedPodcastEpisodeList()->[StorageManagerItem]{
+        let pairs = extractFeedItemIdPairs()
+        var storageItems = [StorageManagerItem]()
+        for feedID in pairs.keys{
+            //1. Recover the item as ContentFeedItem
+            if let downloadedItemIDs = pairs[feedID]?.compactMap({
+                let numericPart = $0.components(separatedBy: CharacterSet.decimalDigits.inverted)[0]
+                let numericValue = String(numericPart)
+                print(numericValue) // Output: 14685752600.0
+                return numericValue
+            }),
+            let feed = ContentFeed.getFeedById(feedId: feedID)
+               {
+                let pf = PodcastFeed.convertFrom(contentFeed: feed)
+                let downloadedItems = pf.episodesArray.filter({
+                    downloadedItemIDs.contains($0.itemID)
+                })
+                //2. Extract the size value in MB
+                for item in downloadedItems{
+                    if let size = item.getFileSizeMB(){
+                        let newItem = StorageManagerItem(type: .audio, sizeMB: size, label: "\(item.feed?.title ?? "Unknown Feed")- \(item.title ?? "Unknown Episode Title")")
+                        storageItems.append(newItem)
+                    }
+                }
+            }
+        }
+        return storageItems
     }
     
     func extractFeedItemIdPairs()->[String:[String]]{

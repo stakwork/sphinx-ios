@@ -189,7 +189,7 @@ class JoinGroupDetailsViewController: KeyboardEventsViewController {
                         ContentFeed.fetchChatFeedContentInBackground(feedUrl: feedUrl, chatObjectID: chat.objectID, completion: { feedId in
                             
                             if let feedId = feedId {
-                                chat.contentFeed = ContentFeed.getFeedWith(feedId: feedId)
+                                chat.contentFeed = ContentFeed.getFeedById(feedId: feedId)
                                 chat.saveChat()
                             }
                             

@@ -590,6 +590,7 @@
 		47F6CA0E287C6524005EBCB6 /* API+CrypterExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F6CA0D287C6524005EBCB6 /* API+CrypterExtension.swift */; };
 		47F6CA10287C695B005EBCB6 /* Nonce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F6CA0F287C695B005EBCB6 /* Nonce.swift */; };
 		47F7273825791D8600A794B9 /* ContactLinkPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F7273725791D8600A794B9 /* ContactLinkPreviewView.swift */; };
+		47F8266A2A0C150B002E81F0 /* NewChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F826692A0C150B002E81F0 /* NewChatViewController.swift */; };
 		47FA18BE242534CD00469C8F /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FA18BD242534CD00469C8F /* UIViewController.swift */; };
 		47FA18C02425381500469C8F /* CreateInvoiceDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FA18BF2425381500469C8F /* CreateInvoiceDetailsViewController.swift */; };
 		47FA18C224253BDD00469C8F /* InvoiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FA18C124253BDD00469C8F /* InvoiceManager.swift */; };
@@ -1531,6 +1532,7 @@
 		47F6CA0D287C6524005EBCB6 /* API+CrypterExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+CrypterExtension.swift"; sourceTree = "<group>"; };
 		47F6CA0F287C695B005EBCB6 /* Nonce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Nonce.swift; sourceTree = "<group>"; };
 		47F7273725791D8600A794B9 /* ContactLinkPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactLinkPreviewView.swift; sourceTree = "<group>"; };
+		47F826692A0C150B002E81F0 /* NewChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewChatViewController.swift; sourceTree = "<group>"; };
 		47FA18BD242534CD00469C8F /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		47FA18BF2425381500469C8F /* CreateInvoiceDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateInvoiceDetailsViewController.swift; sourceTree = "<group>"; };
 		47FA18C124253BDD00469C8F /* InvoiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceManager.swift; sourceTree = "<group>"; };
@@ -2585,6 +2587,7 @@
 				478BD8B52829B67300C733FD /* TribeMemberPopupViewController.swift */,
 				477C524F28C6307100C24117 /* NotificationsLevelViewController.swift */,
 				4712994229227B450049CBE3 /* TribeMemberProfileViewController.swift */,
+				47F826692A0C150B002E81F0 /* NewChatViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -5126,6 +5129,7 @@
 				47FA43FB2374885B005D8C63 /* SubscriptionFormViewController.swift in Sources */,
 				47BE85462464928800BE4AE8 /* KeychainRestoreViewController.swift in Sources */,
 				47F258CE253F6B0100122A5A /* PodcastSmallPlayer.swift in Sources */,
+				47F8266A2A0C150B002E81F0 /* NewChatViewController.swift in Sources */,
 				476EB47023C50640009745E2 /* GroupAddedContactsDataSource.swift in Sources */,
 				F3E9C02026FB76A100718942 /* DashboardFeedsEmptyStateViewController.swift in Sources */,
 				47BA7A9124118F6B0001773F /* CustomSwiftLinkPreview.swift in Sources */,

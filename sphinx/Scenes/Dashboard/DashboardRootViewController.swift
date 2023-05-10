@@ -645,26 +645,28 @@ extension DashboardRootViewController {
         shouldAnimate: Bool = true,
         didRetry:Bool = false
     ) {
-        let contact = contact ?? chat?.getContact()
+//        let contact = contact ?? chat?.getContact()
+//
+//        if handleInvite(for: contact) {
+//            return
+//        }
+//
+//        if let topVC = topMostViewController() as? NewPodcastPlayerViewController, didRetry == false {
+//            topVC.dismiss(animated: false)
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+//                self.presentChatDetailsVC(for: chat,didRetry: true)///retry
+//            })
+//            return
+//        }
         
-        if handleInvite(for: contact) {
-            return
-        }
+//        let chatVC = ChatViewController.instantiate(
+//            contact: contact,
+//            chat: chat,
+//            contactsService: contactsService,
+//            rootViewController: rootViewController
+//        )
         
-        if let topVC = topMostViewController() as? NewPodcastPlayerViewController, didRetry == false {
-            topVC.dismiss(animated: false)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
-                self.presentChatDetailsVC(for: chat,didRetry: true)///retry
-            })
-            return
-        }
-        
-        let chatVC = ChatViewController.instantiate(
-            contact: contact,
-            chat: chat,
-            contactsService: contactsService,
-            rootViewController: rootViewController
-        )
+        let chatVC = NewChatViewController.instantiate()
         
         navigationController?.pushViewController(chatVC, animated: shouldAnimate)
         

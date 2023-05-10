@@ -207,6 +207,10 @@ extension AllTribeFeedsCollectionViewController {
         loadRecommendations()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        StorageManager.sharedManager.extractFeedItemIdPairs()
+    }
+    
     func addTableBottomInset(for collectionView: UICollectionView) {
         let windowInsets = getWindowInsets()
         let bottomBarHeight:CGFloat = 64

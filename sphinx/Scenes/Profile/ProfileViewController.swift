@@ -50,6 +50,7 @@ class ProfileViewController: KeyboardEventsViewController {
     @IBOutlet weak var privacyPinGroupContainer: UIView!
     @IBOutlet weak var signingDeviceLabel: UILabel!
     
+    
     @IBOutlet var tabContainers: [UIScrollView]!
     
     @IBOutlet var keyboardAccessoryView: UIView!
@@ -102,7 +103,7 @@ class ProfileViewController: KeyboardEventsViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        advanceScrollView.isScrollEnabled = true
         SphinxSocketManager.sharedInstance.setDelegate(delegate: nil)
         
         rootViewController.setStatusBarColor(light: false)
@@ -246,6 +247,13 @@ class ProfileViewController: KeyboardEventsViewController {
     @IBAction func routeHintButtonTouched() {
         copyAddress()
     }
+    
+    @IBAction func manageStorageButtonTapped(_ sender: Any) {
+        let vc = ProfileManageStorageViewController.instantiate()
+        let navController = UINavigationController(rootViewController: vc)
+        self.present(navController, animated: true, completion: nil)
+    }
+    
     
     func getAddress() -> String? {
         if let address = addressTextField.text, !address.isEmpty {

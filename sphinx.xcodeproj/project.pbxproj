@@ -623,6 +623,10 @@
 		CE0C4676296DC5E200E82353 /* ContentFeedStatus+SupportingModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0C4675296DC5E200E82353 /* ContentFeedStatus+SupportingModels.swift */; };
 		CE1F033F2994458B002E1079 /* ChatLeaderboardEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1F033E2994458B002E1079 /* ChatLeaderboardEntry.swift */; };
 		CE2585E929A3FE7300130641 /* JitsiIncomingCallManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2585E829A3FE7200130641 /* JitsiIncomingCallManager.swift */; };
+		CE30D9572A0BE93500C83555 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE30D9562A0BE93500C83555 /* StorageManager.swift */; };
+		CE30D9592A0BFFAA00C83555 /* ProfileManageStorageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE30D9582A0BFFAA00C83555 /* ProfileManageStorageViewController.swift */; };
+		CE30D95B2A0C09DE00C83555 /* MaxMemorySlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE30D95A2A0C09DE00C83555 /* MaxMemorySlider.swift */; };
+		CE30D95D2A0C09EB00C83555 /* MaxMemorySlider.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE30D95C2A0C09EB00C83555 /* MaxMemorySlider.xib */; };
 		CE3133AD2977747E00E91E3A /* BadgeAdminManagementListDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3133A42977747E00E91E3A /* BadgeAdminManagementListDataSource.swift */; };
 		CE3133AE2977747E00E91E3A /* Badge.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3133A62977747E00E91E3A /* Badge.swift */; };
 		CE3133AF2977747E00E91E3A /* BadgeAdminListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3133A82977747E00E91E3A /* BadgeAdminListTableViewCell.swift */; };
@@ -1566,6 +1570,10 @@
 		CE0C4675296DC5E200E82353 /* ContentFeedStatus+SupportingModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentFeedStatus+SupportingModels.swift"; sourceTree = "<group>"; };
 		CE1F033E2994458B002E1079 /* ChatLeaderboardEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLeaderboardEntry.swift; sourceTree = "<group>"; };
 		CE2585E829A3FE7200130641 /* JitsiIncomingCallManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JitsiIncomingCallManager.swift; sourceTree = "<group>"; };
+		CE30D9562A0BE93500C83555 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
+		CE30D9582A0BFFAA00C83555 /* ProfileManageStorageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileManageStorageViewController.swift; sourceTree = "<group>"; };
+		CE30D95A2A0C09DE00C83555 /* MaxMemorySlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaxMemorySlider.swift; sourceTree = "<group>"; };
+		CE30D95C2A0C09EB00C83555 /* MaxMemorySlider.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MaxMemorySlider.xib; sourceTree = "<group>"; };
 		CE3133A42977747E00E91E3A /* BadgeAdminManagementListDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeAdminManagementListDataSource.swift; sourceTree = "<group>"; };
 		CE3133A62977747E00E91E3A /* Badge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Badge.swift; sourceTree = "<group>"; };
 		CE3133A82977747E00E91E3A /* BadgeAdminListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeAdminListTableViewCell.swift; sourceTree = "<group>"; };
@@ -2316,6 +2324,7 @@
 				47B690DB24A2CF4800F07B73 /* Custom Views */,
 				4797E7CA24B8F47200D13270 /* Profile.storyboard */,
 				47468FDB233554680072124A /* ProfileViewController.swift */,
+				CE30D9582A0BFFAA00C83555 /* ProfileManageStorageViewController.swift */,
 				475103CE243B6E550043C748 /* ProfileViewControllerExtensions.swift */,
 				4789E26B24F05481003991BE /* ProfileViewControllerRelayExtension.swift */,
 				47904C1A24BF3C7A00710E7A /* NotificationSoundViewController.swift */,
@@ -2862,6 +2871,7 @@
 				474CCFAC291562CE0037E1D4 /* Actions */,
 				4780FA2A275A6F400099CE75 /* Wrappers */,
 				475BDD60232AE46B00C5BBD6 /* CoreDataManager.swift */,
+				CE30D9562A0BE93500C83555 /* StorageManager.swift */,
 				47468FCD233131B40072124A /* NSManagedObjectContext.swift */,
 				47AF0D4B2551883400C98398 /* PodcastModels.swift */,
 				475E416A23858D4800928931 /* Subscription+CoreDataClass.swift */,
@@ -3498,6 +3508,8 @@
 				4789E26024F03CF4003991BE /* CommonTabsView.swift */,
 				47F258C9253DD42500122A5A /* PinTimeSlider.swift */,
 				47F258CB253DD43400122A5A /* PinTimeSlider.xib */,
+				CE30D95A2A0C09DE00C83555 /* MaxMemorySlider.swift */,
+				CE30D95C2A0C09EB00C83555 /* MaxMemorySlider.xib */,
 			);
 			path = "Custom Views";
 			sourceTree = "<group>";
@@ -4444,6 +4456,7 @@
 				F3D86DC026B14E5E00EB9711 /* DashboardFeedSquaredThumbnailCollectionViewCell.xib in Resources */,
 				475154B82423F09900477384 /* VideoCallBubbleView.xib in Resources */,
 				47771C73259B9B9400990467 /* GroupPinView.xib in Resources */,
+				CE30D95D2A0C09EB00C83555 /* MaxMemorySlider.xib in Resources */,
 				47904C2024BF403400710E7A /* NotificationSoundTableViewCell.xib in Resources */,
 				478BD8BC282AA6C600C733FD /* TribeMemberPopupView.xib in Resources */,
 				475BDD0E232AC25100C5BBD6 /* DayHeaderTableViewCell.xib in Resources */,
@@ -4574,6 +4587,7 @@
 				CE2585E929A3FE7300130641 /* JitsiIncomingCallManager.swift in Sources */,
 				CE842DE8298C67A500620AD3 /* KnownBadgeCell.swift in Sources */,
 				475BDD77232BF91A00C5BBD6 /* ContactsService.swift in Sources */,
+				CE30D95B2A0C09DE00C83555 /* MaxMemorySlider.swift in Sources */,
 				F3B2518D26D8DD1800C96D42 /* PodcastFeed+FetchUtils.swift in Sources */,
 				4735D5C22411416000BEE3D4 /* LinkPreviewView.swift in Sources */,
 				47F258C72539F57E00122A5A /* PodcastRowAudioPlayer.swift in Sources */,
@@ -4616,6 +4630,7 @@
 				475043D72976F96F00830E9E /* PodcastSmallPlayer+Delegates.swift in Sources */,
 				475723A5247EB5D1001ADC7E /* AudioRecorderHelper.swift in Sources */,
 				47822C6D2449EEEE0011D832 /* PaidMessageReceivedTableViewCell.swift in Sources */,
+				CE30D9592A0BFFAA00C83555 /* ProfileManageStorageViewController.swift in Sources */,
 				F3DFB78A26B87C0C00E76FBD /* DashboardFeedsContainerViewController+ContentFilterOption.swift in Sources */,
 				47935FBE24A1070800B39ADB /* StakworkAuthorizeViewController.swift in Sources */,
 				471161D9291563BB008EAFF2 /* ActionTrack+CoreDataProperties.swift in Sources */,
@@ -4819,6 +4834,7 @@
 				477C525228C6358200C24117 /* NotificationLevelTableViewCell.swift in Sources */,
 				F3138C3C27434D2F00F014BF /* ContentFeedMediaKind.swift in Sources */,
 				4756DE0F232ABF90001BAFD6 /* MainCoordinator.swift in Sources */,
+				CE30D9572A0BE93500C83555 /* StorageManager.swift in Sources */,
 				47FA44152374B6EA005D8C63 /* SubscriptionTimeIntervalView.swift in Sources */,
 				47ACBC22265E9D0800D2FE47 /* PersonModalView.swift in Sources */,
 				47FA18CC2434C66C00469C8F /* TransactionMessageMediaExtension.swift in Sources */,

@@ -57,6 +57,8 @@ extension UserDefaults {
         public static let pinHours = DefaultKey<Int>("pinHours")
         public static let privacyPinHours = DefaultKey<Int>("privacyPinHours")
         
+        public static let maxMemory = DefaultKey<Int>("maxMemory")
+        
         public static let inviteServerURL = DefaultKey<String>("inviteServerURL")
         public static let fileServerURL = DefaultKey<String>("fileServerURL")
         public static let meetingServerURL = DefaultKey<String>("meetingServerURL")

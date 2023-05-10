@@ -216,5 +216,14 @@ extension ContentFeed {
 
             return request
         }
+        
+        public static func downloadedPods() -> NSFetchRequest<ContentFeed>{
+            let request: NSFetchRequest<ContentFeed> = baseFetchRequest()
+            
+            request.predicate = Predicates.videoFeeds
+            request.sortDescriptors = []
+
+            return request
+        }
     }
 }

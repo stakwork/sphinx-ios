@@ -161,6 +161,8 @@ internal enum StoryboardScene {
         
         internal static let profileViewController = SceneType<ProfileViewController>(storyboard: Profile.self, identifier: "ProfileViewController")
         
+        internal static let profileManageStorageViewController = SceneType<ProfileManageStorageViewController>(storyboard: Profile.self, identifier: "ProfileManageStorageViewController")
+        
         internal static let notificationSoundViewController = SceneType<NotificationSoundViewController>(storyboard: Profile.self, identifier: "NotificationSoundViewController")
     }
     

@@ -349,12 +349,11 @@ public class TransactionMessage: NSManagedObject {
         }
         
         if let chat = chat {
-            if(message.chat == nil){
+            if let chat = message.chat {
+                chat.setLastMessage(message)
+            } else {
                 message.chat = chat
                 chat.setLastMessage(message)
-            }
-            else{
-                message.chat?.setLastMessage(message)
             }
         }
         

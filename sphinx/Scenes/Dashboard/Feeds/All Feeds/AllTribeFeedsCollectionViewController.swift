@@ -208,9 +208,12 @@ extension AllTribeFeedsCollectionViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        StorageManager.sharedManager.getDownloadedPodcastEpisodeList()
-        let size = StorageManager.sharedManager.getDownloadedPodcastsTotalSize()
-        print(size)
+//        StorageManager.sharedManager.getDownloadedPodcastEpisodeList()
+//        let size = StorageManager.sharedManager.getDownloadedPodcastsTotalSize()
+//        print(size)
+//        let overflow = StorageManager.sharedManager.checkForMemoryOverflow()
+//        print(overflow)
+        StorageManager.sharedManager.cleanupGarbage()
     }
     
     func addTableBottomInset(for collectionView: UICollectionView) {

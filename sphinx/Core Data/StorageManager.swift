@@ -18,6 +18,8 @@ struct StorageManagerItem{
     var type : StorageManagerMediaType
     var sizeMB : Double
     var label : String
+    var date : Date
+    var sourceFilePath:URL?
 }
 
 class StorageManager {
@@ -33,6 +35,23 @@ class StorageManager {
         }
 
         return totalSize
+    }
+    
+    func cleanupGarbage(){
+        if(checkForMemoryOverflow()){
+            let downloadedPods = getDownloadedPodcastEpisodeList().sorted(by: {$0.date < $1.date})
+            print(downloadedPods)
+        }
+    }
+    
+    func checkForMemoryOverflow()->Bool{
+        let podcastMemorySize = getDownloadedPodcastsTotalSize()
+        let totalMemory = podcastMemorySize //TODO: add other media
+        
+        let maxMemoryGB = UserData.sharedInstance.getMaxMemory()
+        let usedMemoryGB = Int(totalMemory/10)//totalMemory/1000
+        return maxMemoryGB < usedMemoryGB
+        //return Int(totalMemory/1000) > UserData.sharedInstance.getMaxMemory()
     }
     
     func getDownloadedPodcastEpisodeList()->[StorageManagerItem]{
@@ -55,7 +74,7 @@ class StorageManager {
                 //2. Extract the size value in MB
                 for item in downloadedItems{
                     if let size = item.getFileSizeMB(){
-                        let newItem = StorageManagerItem(type: .audio, sizeMB: size, label: "\(item.feed?.title ?? "Unknown Feed")- \(item.title ?? "Unknown Episode Title")")
+                        let newItem = StorageManagerItem(type: .audio, sizeMB: size, label: "\(item.feed?.title ?? "Unknown Feed")- \(item.title ?? "Unknown Episode Title")",date: item.datePublished ?? (Date()),sourceFilePath: item.getAudioUrl())
                         storageItems.append(newItem)
                     }
                 }

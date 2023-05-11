@@ -1,0 +1,58 @@
+//
+//  ChatMessageTextFieldView+Actions.swift
+//  sphinx
+//
+//  Created by Tomas Timinskas on 11/05/2023.
+//  Copyright © 2023 sphinx. All rights reserved.
+//
+
+import UIKit
+
+extension ChatMessageTextFieldView {
+    @IBAction func attachmentButtonTouched() {
+//        if textView.isFirstResponder {
+//            textView.resignFirstResponder()
+//
+//            DelayPerformedHelper.performAfterDelay(seconds: 0.3) {
+//                self.delegate?.didTapAttachmentsButton?()
+//            }
+//        } else {
+//            delegate?.didTapAttachmentsButton?()
+//        }
+    }
+    
+    @IBAction func sendButtonTouched() {
+//        sendButton.isUserInteractionEnabled = false
+//
+//        let currentString = (textView.text ?? "").trim()
+//
+//        if currentString == "" || currentString == kFieldPlaceHolder {
+//            if let didTapSendButton = delegate?.didTapSendBlueButton {
+//                didTapSendButton()
+//            } else {
+//                sendButton.isUserInteractionEnabled = true
+//            }
+//            return
+//        }
+//
+//        createNewMessage(text: currentString as String)
+    }
+    
+    @IBAction func audioButtonTouchDown(_ sender: Any) {
+        //Will be removed
+        toggleAudioRecording(show: true)
+        
+//        delegate?.shouldStartRecording?()
+    }
+    
+    @IBAction func audioButtonTouchUpInside() {
+        toggleAudioRecording(show: false)
+//        delegate?.shouldStopAndSendAudio?()
+    }
+    
+    @IBAction func audioButtonDragOutside() {
+        NewMessageBubbleHelper().showGenericMessageView(text: "audio.message.cancelled".localized)
+        toggleAudioRecording(show: false)
+//        delegate?.shouldCancelRecording?()
+    }
+}

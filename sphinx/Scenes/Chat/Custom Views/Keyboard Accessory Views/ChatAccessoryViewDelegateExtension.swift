@@ -58,7 +58,6 @@ extension ChatAccessoryView : UITextViewDelegate {
     }
     
     func textViewDidChange(_ textView: UITextView) {
-        //print("Text change to:\(textView.text)")
         processMention(text: textView.text)
         animateView(commentString: textView.text)
         rebuildSize()

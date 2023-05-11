@@ -356,6 +356,7 @@ class MediaLoader {
     class func clearImageCacheFor(url: String) {
         SDImageCache.shared.removeImage(forKey: url, withCompletion: nil)
         cache.removeValue(forKey: url)
+        
     }
     
     class func storeImageInCache(img: UIImage, url: String) {

@@ -42,8 +42,14 @@ class StorageManager {
     
     func cleanupGarbage(){
         if(checkForMemoryOverflow()){
-            let downloadedPods = getDownloadedPodcastEpisodeList().sorted(by: {$0.date < $1.date})
-            print(downloadedPods)
+            //deleteOldestPod()
+        }
+    }
+    
+    func deleteOldestPod(){
+        if let oldestPod = getDownloadedPodcastEpisodeList().sorted(by: {$0.date < $1.date}).first
+        {
+            //WIP
         }
     }
     
@@ -71,78 +77,61 @@ class StorageManager {
         return totalSize
     }
     
-    func test(){
-        let caches = SDImageCachesManager().caches
-        print(caches)
-    }
     
-    func getWebImageCacheItems()->[StorageManagerItem]{
-        var items = [StorageManagerItem]()
-        
+    func getImageCacheSize()->UInt64 {
         let fileManager = FileManager.default
-            guard let appDataPath = getSDWebImageCachePath(),
-                  fileManager.fileExists(atPath: appDataPath) else {
-                return []
-            }
-
-            var totalSize: UInt64 = 0
-
-            do {
-                let contents = try fileManager.contentsOfDirectory(atPath: appDataPath)
-
-                for item in contents {
-                    let itemPath = (appDataPath as NSString).appendingPathComponent(item)
-                    let attributes = try fileManager.attributesOfItem(atPath: itemPath)
-                    print(attributes)
-                    if let fileSize = attributes[FileAttributeKey.size] as? UInt64,
-                       let creationDate = attributes[FileAttributeKey.creationDate] as? Date,
-                    let type = attributes[FileAttributeKey.type] as? String{
-                        totalSize += fileSize
-                        //StorageManagerItem(type: .photo, sizeMB: Double(fileSize)/1e6, label: "test", date: creationDate)
-                    }
-                }
-            } catch {
-                print("Error calculating app data size: \(error)")
-            }
-        
-        
-        return items
-    }
-    
-    func getWebImageCacheSizeMB() -> UInt64 {
-        let fileManager = FileManager.default
-            guard let appDataPath = getSDWebImageCachePath(),
-                  fileManager.fileExists(atPath: appDataPath) else {
-                return 0
-            }
-
-            var totalSize: UInt64 = 0
-
-            do {
-                let contents = try fileManager.contentsOfDirectory(atPath: appDataPath)
-
-                for item in contents {
-                    let itemPath = (appDataPath as NSString).appendingPathComponent(item)
-                    let attributes = try fileManager.attributesOfItem(atPath: itemPath)
-                    print(attributes)
-                    if let fileSize = attributes[FileAttributeKey.size] as? UInt64 {
-                        totalSize += fileSize
-                    }
-                }
-            } catch {
-                print("Error calculating app data size: \(error)")
-            }
-
-            return totalSize/1000000
-    }
-    
-    func getSDWebImageCachePath() -> String? {
-        let cacheDirectories = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true)
-        if let cacheDirectory = cacheDirectories.first {
-            let sdWebImageCachePath = (cacheDirectory as NSString)//.appendingPathComponent("default/com.hackemist.SDWebImageCache.default")
-            return sdWebImageCachePath as String
+        let imageCache = SDImageCache.shared
+        let diskCachePath = imageCache.diskCachePath
+        var totalSize: UInt64 = 0
+        guard let cacheFiles = FileManager.default.enumerator(atPath: diskCachePath) else {
+            print("Unable to retrieve cache files")
+            return 0
         }
-        return nil
+        
+        for file in cacheFiles {
+            guard let filePath = file as? String else {
+                continue
+            }
+            do{
+                let imagePath = (diskCachePath as NSString).appendingPathComponent(filePath)
+                let attributes = try fileManager.attributesOfItem(atPath: imagePath)
+                print(attributes)
+                if let fileSize = attributes[FileAttributeKey.size] as? NSNumber {
+                    totalSize += fileSize.uint64Value
+                }
+            }
+            catch{
+                print("error retrieving size of image")
+            }
+        }
+        
+        return totalSize
+    }
+    
+    func getImageCacheItems()->[UIImage] {
+        let imageCache = SDImageCache.shared
+        let diskCachePath = imageCache.diskCachePath
+        
+        guard let cacheFiles = FileManager.default.enumerator(atPath: diskCachePath) else {
+            print("Unable to retrieve cache files")
+            return []
+        }
+        var images = [UIImage]()
+        for file in cacheFiles {
+            guard let filePath = file as? String else {
+                continue
+            }
+            
+            let imagePath = (diskCachePath as NSString).appendingPathComponent(filePath)
+            guard let image = UIImage(contentsOfFile: imagePath) else {
+                continue
+            }
+            images.append(image)
+            // Display or process the image as needed
+            print("Image path: \(imagePath)")
+            // Example: UIImageView(image: image)
+        }
+        return images
     }
 
     

@@ -145,7 +145,7 @@ extension SetProfileImageViewController : AttachmentsManagerDelegate {
     
     func didSuccessUploadingImage(url: String) {
         if let image = profileImageView.image?.fixedOrientation() {
-            MediaLoader.storeImageInCache(img: image, url: url)
+            MediaLoader.storeImageInCache(img: image, url: url, chat: nil)
         }
         updateProfile(photoUrl: url)
     }

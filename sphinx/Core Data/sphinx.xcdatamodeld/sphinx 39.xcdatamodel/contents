@@ -6,9 +6,9 @@
         <attribute name="uploaded" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
     </entity>
     <entity name="CachedMedia" representedClassName="CachedMedia" syncable="YES">
-        <attribute name="chatId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="fileExtension" optional="YES" attributeType="String"/>
         <attribute name="filePath" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="key" optional="YES" attributeType="String"/>
         <relationship name="relationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Chat"/>
     </entity>

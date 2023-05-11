@@ -102,7 +102,7 @@ class TribeLinkPreviewView: LinkPreviewBubbleView {
             return
         }
         MediaLoader.asyncLoadImage(imageView: tribeImageView, nsUrl: imageUrl, placeHolderImage: UIImage(named: "tribePlaceholder"), completion: { image in
-            MediaLoader.storeImageInCache(img: image, url: imageUrlString)
+            MediaLoader.storeImageInCache(img: image, url: imageUrlString, chat: nil)
             self.tribeImageView.image = image
             self.tribeImageView.layer.borderWidth = 0
             self.tribeImageView.contentMode = .scaleAspectFill

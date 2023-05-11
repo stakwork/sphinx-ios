@@ -119,7 +119,7 @@ class MediaLoader {
         }
         
         if let decryptedImage = decryptedImage {
-            storeImageInCache(img: decryptedImage, url: url.absoluteString)
+            storeImageInCache(img: decryptedImage, url: url.absoluteString,chat: message.chat)
             
             DispatchQueue.main.async {
                 completion(messageId, decryptedImage)
@@ -281,7 +281,7 @@ class MediaLoader {
             } else {
                 loadDataFrom(URL: url, includeToken: true, completion: { (data, _) in
                     if let image = UIImage(data: data) {
-                        self.storeImageInCache(img: image, url: url.absoluteString)
+                        self.storeImageInCache(img: image, url: url.absoluteString, chat: nil)
                         
                         DispatchQueue.main.async {
                             completion(row, muid, image)
@@ -330,7 +330,7 @@ class MediaLoader {
                     let cgThumbImage = try avAssetImageGenerator.copyCGImage(at: thumnailTime, actualTime: nil)
                     let thumbImage = UIImage(cgImage: cgThumbImage)
                     deleteItemAt(url: url)
-                    storeImageInCache(img: thumbImage, url: videoUrl)
+                    storeImageInCache(img: thumbImage, url: videoUrl,chat:nil)
                     DispatchQueue.main.async {
                         completion(thumbImage)
                     }
@@ -359,8 +359,17 @@ class MediaLoader {
         
     }
     
-    class func storeImageInCache(img: UIImage, url: String) {
+    class func storeImageInCache(img: UIImage, url: String,chat:Chat?) {
         SDImageCache.shared.store(img, forKey: url, completion: nil)
+        if let chat = chat,
+           let path = getDiskImagePath(forKey: url){
+            let randomInt = Int.random(in: 0...Int(10e6))
+            let _ = CachedMedia.createObject(id: randomInt, chat: chat, filePath: path, fileExtension: nil, key: url)
+        }
+    }
+    
+    class func getDiskImagePath(forKey key: String)->String? {
+        return SDImageCache.shared.cachePath(forKey: key)
     }
     
     class func getImageFromCachedUrl(url: String) -> UIImage? {

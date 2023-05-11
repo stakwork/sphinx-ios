@@ -242,7 +242,7 @@ class LinkPreviewView: UIView {
         
         if let nsUrl = URL(string: imageURL), imageURL != "" {
             MediaLoader.asyncLoadImage(imageView: imageView, nsUrl: nsUrl, placeHolderImage: nil, completion: { image in
-                MediaLoader.storeImageInCache(img: image, url: imageURL)
+                MediaLoader.storeImageInCache(img: image, url: imageURL, chat: nil)
                 self.showImage(image: image, imageView: imageView)
             }, errorCompletion: { error in
                 self.loadPreviewImage(imagesArray: imagesArray, imageView: imageView, index: index + 1)

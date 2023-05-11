@@ -649,6 +649,8 @@
 		CE6784602968B0E000342905 /* FeedsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE67845F2968B0E000342905 /* FeedsManager.swift */; };
 		CE6C83FC29B918BD00E9FE7C /* TopMostVCsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6C83FB29B918BD00E9FE7C /* TopMostVCsHelper.swift */; };
 		CE7E4F8029AD2D1100F000FF /* VoIPRequestMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7E4F7F29AD2D1100F000FF /* VoIPRequestMessage.swift */; };
+		CE80EF672A0D8140007ED3A3 /* CachedMedia+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE80EF662A0D8140007ED3A3 /* CachedMedia+CoreDataProperties.swift */; };
+		CE80EF692A0D814B007ED3A3 /* CachedMedia+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE80EF682A0D814B007ED3A3 /* CachedMedia+CoreDataClass.swift */; };
 		CE842DE0298ADECF00620AD3 /* MemberBadgeHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE842DDE298ADECF00620AD3 /* MemberBadgeHeaderCell.swift */; };
 		CE842DE1298ADECF00620AD3 /* MemberBadgeHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE842DDF298ADECF00620AD3 /* MemberBadgeHeaderCell.xib */; };
 		CE842DE3298B289D00620AD3 /* ShimmerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE842DE2298B289D00620AD3 /* ShimmerView.swift */; };
@@ -1597,6 +1599,9 @@
 		CE6C83FB29B918BD00E9FE7C /* TopMostVCsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopMostVCsHelper.swift; sourceTree = "<group>"; };
 		CE7E4F7F29AD2D1100F000FF /* VoIPRequestMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoIPRequestMessage.swift; sourceTree = "<group>"; };
 		CE7F06EC29CE004E0076C8BC /* sphinx 38.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 38.xcdatamodel"; sourceTree = "<group>"; };
+		CE80EF632A0D7FF2007ED3A3 /* sphinx 39.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 39.xcdatamodel"; sourceTree = "<group>"; };
+		CE80EF662A0D8140007ED3A3 /* CachedMedia+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CachedMedia+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		CE80EF682A0D814B007ED3A3 /* CachedMedia+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CachedMedia+CoreDataClass.swift"; sourceTree = "<group>"; };
 		CE842DDE298ADECF00620AD3 /* MemberBadgeHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberBadgeHeaderCell.swift; sourceTree = "<group>"; };
 		CE842DDF298ADECF00620AD3 /* MemberBadgeHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MemberBadgeHeaderCell.xib; sourceTree = "<group>"; };
 		CE842DE2298B289D00620AD3 /* ShimmerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerView.swift; sourceTree = "<group>"; };
@@ -2868,6 +2873,7 @@
 		475BDD4F232AE1C400C5BBD6 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
+				CE80EF652A0D8131007ED3A3 /* CachedMedia */,
 				474CCFAC291562CE0037E1D4 /* Actions */,
 				4780FA2A275A6F400099CE75 /* Wrappers */,
 				475BDD60232AE46B00C5BBD6 /* CoreDataManager.swift */,
@@ -3773,6 +3779,15 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		CE80EF652A0D8131007ED3A3 /* CachedMedia */ = {
+			isa = PBXGroup;
+			children = (
+				CE80EF662A0D8140007ED3A3 /* CachedMedia+CoreDataProperties.swift */,
+				CE80EF682A0D814B007ED3A3 /* CachedMedia+CoreDataClass.swift */,
+			);
+			path = CachedMedia;
+			sourceTree = "<group>";
+		};
 		CE91E59629885097008BA6EA /* Admin */ = {
 			isa = PBXGroup;
 			children = (
@@ -4592,6 +4607,7 @@
 				4735D5C22411416000BEE3D4 /* LinkPreviewView.swift in Sources */,
 				47F258C72539F57E00122A5A /* PodcastRowAudioPlayer.swift in Sources */,
 				F394ECB12683CF5E00529038 /* NewUserGreetingViewController.swift in Sources */,
+				CE80EF672A0D8140007ED3A3 /* CachedMedia+CoreDataProperties.swift in Sources */,
 				CE3133AF2977747E00E91E3A /* BadgeAdminListTableViewCell.swift in Sources */,
 				F37D799F271E753E00CAB15F /* VideoFeedEpisodesSectionHeaderView.swift in Sources */,
 				478F07D624E3229B00EE32A3 /* GiphyHelper.swift in Sources */,
@@ -4904,6 +4920,7 @@
 				475BDCBA232AC1E800C5BBD6 /* ChatAccessoryView.swift in Sources */,
 				F30884A92699181200CADDEB /* API+KarmaPurchaseUtils.swift in Sources */,
 				4787F8982478112F00CCE8B9 /* ChatAvatarView.swift in Sources */,
+				CE80EF692A0D814B007ED3A3 /* CachedMedia+CoreDataClass.swift in Sources */,
 				47308E0E24FEE6E700FFAC6F /* SocketIOClientConfiguration.swift in Sources */,
 				CE842DF12992D0F400620AD3 /* BadgeTemplate.swift in Sources */,
 				477BCF322A0031060080ED65 /* TransactionTableViewCell.swift in Sources */,
@@ -6198,6 +6215,7 @@
 		47F35D4A2373156A0042A58F /* sphinx.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				CE80EF632A0D7FF2007ED3A3 /* sphinx 39.xcdatamodel */,
 				CE7F06EC29CE004E0076C8BC /* sphinx 38.xcdatamodel */,
 				47129941292278570049CBE3 /* sphinx 37.xcdatamodel */,
 				474CCFA8291560DA0037E1D4 /* sphinx 36.xcdatamodel */,
@@ -6237,7 +6255,7 @@
 				475E4162238588A200928931 /* sphinx 2.xcdatamodel */,
 				47F35D4B2373156A0042A58F /* sphinx.xcdatamodel */,
 			);
-			currentVersion = CE7F06EC29CE004E0076C8BC /* sphinx 38.xcdatamodel */;
+			currentVersion = CE80EF632A0D7FF2007ED3A3 /* sphinx 39.xcdatamodel */;
 			path = sphinx.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

@@ -23,6 +23,7 @@ import UIKit
     @objc optional func didCloseReplyView()
 }
 
+
 class ChatAccessoryView: UIView {
     
     public static let kTableBottomPadding:CGFloat = 5

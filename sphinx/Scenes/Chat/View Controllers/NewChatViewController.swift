@@ -12,6 +12,9 @@ class NewChatViewController: UIViewController {
     
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     
+    @IBOutlet weak var bottomView: NewChatAccessoryView!
+    @IBOutlet weak var headerView: ChatHeaderView!
+    
     let windowInsets = getWindowInsets()
     
     static func instantiate() -> NewChatViewController {
@@ -22,7 +25,14 @@ class NewChatViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        setupLayouts()
+    }
+    
+    func setupLayouts() {
+        headerView.superview?.bringSubviewToFront(headerView)
+        
+        bottomView.addShadow(location: .top, color: UIColor.black, opacity: 0.1)
+        headerView.addShadow(location: .bottom, color: UIColor.black, opacity: 0.1)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -42,11 +52,20 @@ class NewChatViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(NewChatViewController.keyboardWillShowHandler(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(NewChatViewController.keyboardWillHideHandler(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(NewChatViewController.keyboardDidChangeFrame(_:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
     
     func removeKeyboardObservers() {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidChangeFrameNotification, object: nil)
+    }
+    
+    @objc func keyboardDidChangeFrame(_ notification: Notification) {
+        if var keyboardHeight = getKeyboardActualHeight(notification: notification) {
+            print("KEYBOARD HEIGHT: \(keyboardHeight)")
+        }
     }
     
     @objc func keyboardWillShowHandler(_ notification: Notification) {

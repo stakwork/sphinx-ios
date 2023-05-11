@@ -66,7 +66,7 @@ class MessageReplyView: UIView {
         
         toggleMediaContainer(show: false, width: 0)
         
-        isHidden = true
+//        isHidden = true
     }
     
     func resetView() {

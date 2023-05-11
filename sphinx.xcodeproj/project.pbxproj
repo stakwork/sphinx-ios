@@ -591,6 +591,10 @@
 		47F6CA10287C695B005EBCB6 /* Nonce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F6CA0F287C695B005EBCB6 /* Nonce.swift */; };
 		47F7273825791D8600A794B9 /* ContactLinkPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F7273725791D8600A794B9 /* ContactLinkPreviewView.swift */; };
 		47F8266A2A0C150B002E81F0 /* NewChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F826692A0C150B002E81F0 /* NewChatViewController.swift */; };
+		47F8266C2A0D2A0B002E81F0 /* NewChatAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F8266B2A0D2A0B002E81F0 /* NewChatAccessoryView.swift */; };
+		47F8266E2A0D2B66002E81F0 /* NewChatAccessoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47F8266D2A0D2B66002E81F0 /* NewChatAccessoryView.xib */; };
+		47F826702A0D2E3A002E81F0 /* ChatMessageTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F8266F2A0D2E3A002E81F0 /* ChatMessageTextFieldView.swift */; };
+		47F826722A0D2E46002E81F0 /* ChatMessageTextFieldView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47F826712A0D2E46002E81F0 /* ChatMessageTextFieldView.xib */; };
 		47FA18BE242534CD00469C8F /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FA18BD242534CD00469C8F /* UIViewController.swift */; };
 		47FA18C02425381500469C8F /* CreateInvoiceDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FA18BF2425381500469C8F /* CreateInvoiceDetailsViewController.swift */; };
 		47FA18C224253BDD00469C8F /* InvoiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FA18C124253BDD00469C8F /* InvoiceManager.swift */; };
@@ -1533,6 +1537,10 @@
 		47F6CA0F287C695B005EBCB6 /* Nonce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Nonce.swift; sourceTree = "<group>"; };
 		47F7273725791D8600A794B9 /* ContactLinkPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactLinkPreviewView.swift; sourceTree = "<group>"; };
 		47F826692A0C150B002E81F0 /* NewChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewChatViewController.swift; sourceTree = "<group>"; };
+		47F8266B2A0D2A0B002E81F0 /* NewChatAccessoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewChatAccessoryView.swift; sourceTree = "<group>"; };
+		47F8266D2A0D2B66002E81F0 /* NewChatAccessoryView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewChatAccessoryView.xib; sourceTree = "<group>"; };
+		47F8266F2A0D2E3A002E81F0 /* ChatMessageTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageTextFieldView.swift; sourceTree = "<group>"; };
+		47F826712A0D2E46002E81F0 /* ChatMessageTextFieldView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatMessageTextFieldView.xib; sourceTree = "<group>"; };
 		47FA18BD242534CD00469C8F /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		47FA18BF2425381500469C8F /* CreateInvoiceDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateInvoiceDetailsViewController.swift; sourceTree = "<group>"; };
 		47FA18C124253BDD00469C8F /* InvoiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceManager.swift; sourceTree = "<group>"; };
@@ -1949,6 +1957,10 @@
 				475BDCB1232AC1E800C5BBD6 /* ChatAccessoryView.swift */,
 				4711B2BC24522C4E0056ED25 /* ChatAccessoryViewDelegateExtension.swift */,
 				4797E81724BBA54300D13270 /* ChatAccessoryView.xib */,
+				47F8266B2A0D2A0B002E81F0 /* NewChatAccessoryView.swift */,
+				47F8266D2A0D2B66002E81F0 /* NewChatAccessoryView.xib */,
+				47F8266F2A0D2E3A002E81F0 /* ChatMessageTextFieldView.swift */,
+				47F826712A0D2E46002E81F0 /* ChatMessageTextFieldView.xib */,
 			);
 			path = "Keyboard Accessory Views";
 			sourceTree = "<group>";
@@ -4331,6 +4343,7 @@
 				477D9692244DFCDA00830406 /* GifOverlayView.xib in Resources */,
 				475BDD48232AD00D00C5BBD6 /* Montserrat-Regular.otf in Resources */,
 				472F9D3F2416BA0200EFC30A /* AudioRecordingTooltip.xib in Resources */,
+				47F8266E2A0D2B66002E81F0 /* NewChatAccessoryView.xib in Resources */,
 				4746807F293E566D00F51457 /* PodcastPlayerPlaybackSliderView.xib in Resources */,
 				CE07B83B29DC9CA700A02652 /* ItemDescriptionImageTableViewCell.xib in Resources */,
 				CECFBF022965C85B00BAD935 /* DiscoverTribesTableViewCell.xib in Resources */,
@@ -4415,6 +4428,7 @@
 				4797E7A524B8F06A00D13270 /* PaidAttachmentView.xib in Resources */,
 				4703CF8A2518FFB1007B685C /* FileReceivedTableViewCell.xib in Resources */,
 				4787F89A2478113E00CCE8B9 /* ChatAvatarView.xib in Resources */,
+				47F826722A0D2E46002E81F0 /* ChatMessageTextFieldView.xib in Resources */,
 				473842F12391715D00AA640F /* PictureBubbleView.xib in Resources */,
 				47AF0D3C254C9F1000C98398 /* fireworks.json in Resources */,
 				475BDCB6232AC1E800C5BBD6 /* MessageBubbleView.xib in Resources */,
@@ -4928,6 +4942,7 @@
 				47308E1324FEE6E700FFAC6F /* SocketRawView.swift in Sources */,
 				4789E25B24EF07E2003991BE /* KeyboardEventsViewController.swift in Sources */,
 				F358212D2695D11500A314F1 /* ConnectionCodeSignupHandling.swift in Sources */,
+				47F8266C2A0D2A0B002E81F0 /* NewChatAccessoryView.swift in Sources */,
 				4703CF97251D23E5007B685C /* LinkPreviewUIImage.swift in Sources */,
 				474CCFAA291562180037E1D4 /* API+ActionsExtension.swift in Sources */,
 				F3188B932719DA1600890DDD /* DashboardVideoEpisodeCollectionViewCell.swift in Sources */,
@@ -4959,6 +4974,7 @@
 				473BC89A260238DC0070E519 /* JSON.swift in Sources */,
 				F3E357A8271E19EF00B91C54 /* VideoFeedEpisodePlayerContainerViewController.swift in Sources */,
 				F39F2C8526E2840500D357F6 /* FeedSearchResultsCollectionViewSectionHeader.swift in Sources */,
+				47F826702A0D2E3A002E81F0 /* ChatMessageTextFieldView.swift in Sources */,
 				4733C7E523C4DF4C006A2C51 /* GroupContactsViewController.swift in Sources */,
 				4787F87224743D7C00CCE8B9 /* NewPublicGroupViewControllerExtension.swift in Sources */,
 				F3EF52C726B28DBE00F06668 /* PodcastFeedCollectionViewController.swift in Sources */,

@@ -214,6 +214,10 @@ extension AllTribeFeedsCollectionViewController {
 //        let overflow = StorageManager.sharedManager.checkForMemoryOverflow()
 //        print(overflow)
         StorageManager.sharedManager.cleanupGarbage()
+        let cacheSize = StorageManager.sharedManager.getWebImageCacheSizeMB()
+        let cacheItems = StorageManager.sharedManager.getWebImageCacheItems()
+        print(cacheSize)
+        StorageManager.sharedManager.test()
     }
     
     func addTableBottomInset(for collectionView: UICollectionView) {

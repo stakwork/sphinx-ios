@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SDWebImage
 
 public enum StorageManagerMediaType{
     case audio
@@ -28,6 +29,8 @@ class StorageManager {
     
     static let sharedManager = StorageManager()
     
+    
+    
     func getDownloadedPodcastsTotalSize()->Double{
         let dlPods = getDownloadedPodcastEpisodeList()
         let totalSize = dlPods.reduce(0) { (accumulator, item) in
@@ -43,6 +46,105 @@ class StorageManager {
             print(downloadedPods)
         }
     }
+    
+    func getAppDataSize() -> UInt64 {
+        let fileManager = FileManager.default
+        let appDataPath = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true).first!
+        
+        var totalSize: UInt64 = 0
+        
+        do {
+            let contents = try fileManager.contentsOfDirectory(atPath: appDataPath)
+            
+            for item in contents {
+                let itemPath = (appDataPath as NSString).appendingPathComponent(item)
+                let attributes = try fileManager.attributesOfItem(atPath: itemPath)
+                print(attributes)
+                if let fileSize = attributes[FileAttributeKey.size] as? NSNumber {
+                    totalSize += fileSize.uint64Value
+                }
+            }
+        } catch {
+            print("Error calculating app data size: \(error)")
+        }
+        
+        return totalSize
+    }
+    
+    func test(){
+        let caches = SDImageCachesManager().caches
+        print(caches)
+    }
+    
+    func getWebImageCacheItems()->[StorageManagerItem]{
+        var items = [StorageManagerItem]()
+        
+        let fileManager = FileManager.default
+            guard let appDataPath = getSDWebImageCachePath(),
+                  fileManager.fileExists(atPath: appDataPath) else {
+                return []
+            }
+
+            var totalSize: UInt64 = 0
+
+            do {
+                let contents = try fileManager.contentsOfDirectory(atPath: appDataPath)
+
+                for item in contents {
+                    let itemPath = (appDataPath as NSString).appendingPathComponent(item)
+                    let attributes = try fileManager.attributesOfItem(atPath: itemPath)
+                    print(attributes)
+                    if let fileSize = attributes[FileAttributeKey.size] as? UInt64,
+                       let creationDate = attributes[FileAttributeKey.creationDate] as? Date,
+                    let type = attributes[FileAttributeKey.type] as? String{
+                        totalSize += fileSize
+                        //StorageManagerItem(type: .photo, sizeMB: Double(fileSize)/1e6, label: "test", date: creationDate)
+                    }
+                }
+            } catch {
+                print("Error calculating app data size: \(error)")
+            }
+        
+        
+        return items
+    }
+    
+    func getWebImageCacheSizeMB() -> UInt64 {
+        let fileManager = FileManager.default
+            guard let appDataPath = getSDWebImageCachePath(),
+                  fileManager.fileExists(atPath: appDataPath) else {
+                return 0
+            }
+
+            var totalSize: UInt64 = 0
+
+            do {
+                let contents = try fileManager.contentsOfDirectory(atPath: appDataPath)
+
+                for item in contents {
+                    let itemPath = (appDataPath as NSString).appendingPathComponent(item)
+                    let attributes = try fileManager.attributesOfItem(atPath: itemPath)
+                    print(attributes)
+                    if let fileSize = attributes[FileAttributeKey.size] as? UInt64 {
+                        totalSize += fileSize
+                    }
+                }
+            } catch {
+                print("Error calculating app data size: \(error)")
+            }
+
+            return totalSize/1000000
+    }
+    
+    func getSDWebImageCachePath() -> String? {
+        let cacheDirectories = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true)
+        if let cacheDirectory = cacheDirectories.first {
+            let sdWebImageCachePath = (cacheDirectory as NSString)//.appendingPathComponent("default/com.hackemist.SDWebImageCache.default")
+            return sdWebImageCachePath as String
+        }
+        return nil
+    }
+
     
     func checkForMemoryOverflow()->Bool{
         let podcastMemorySize = getDownloadedPodcastsTotalSize()
@@ -117,6 +219,10 @@ class StorageManager {
             }
         }
         return []
+    }
+    
+    func scanMessageMedia(){
+        
     }
     
 }

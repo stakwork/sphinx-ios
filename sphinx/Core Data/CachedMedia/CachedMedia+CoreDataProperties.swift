@@ -17,10 +17,9 @@ extension CachedMedia {
     }
 
     @NSManaged public var id: Int
-    @NSManaged
-    public var chat: Chat?
+    @NSManaged public var chat: Chat?
     @NSManaged public var fileExtension: String?
     @NSManaged public var filePath: String?
     @NSManaged public var key: String?
-
+    public var image : UIImage?
 }

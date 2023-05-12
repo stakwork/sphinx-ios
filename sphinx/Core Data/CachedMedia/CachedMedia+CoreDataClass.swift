@@ -29,6 +29,15 @@ public class CachedMedia: NSManagedObject {
         return cachedMedia
     }
     
+    public static func getTruncatedFilePath(filePath:String?)->String?{
+        let delimiter = "/Caches/"
+        if let path = filePath,
+           path.components(separatedBy: delimiter).count > 1{
+            return String(path.components(separatedBy: delimiter)[1])
+        }
+        return nil
+    }
+    
     public static func createObject(id: Int, chat: Chat?,filePath:String?,fileExtension:String?,key:String? ) -> CachedMedia? {
         let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
         
@@ -38,7 +47,9 @@ public class CachedMedia: NSManagedObject {
         if let chat = chat{
             cachedMedia.chat = chat
         }
-        cachedMedia.filePath = filePath
+        if let truncatedPath = CachedMedia.getTruncatedFilePath(filePath: filePath){
+            cachedMedia.filePath = truncatedPath
+        }
         cachedMedia.fileExtension = fileExtension
         cachedMedia.key = key
         
@@ -49,8 +60,8 @@ public class CachedMedia: NSManagedObject {
     
     func removeCachedMediaAndDeleteObject() {
         let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
-        if let path = self.filePath{
-            MediaLoader.clearImageCacheFor(url: path)
+        if let key = self.key{
+            MediaLoader.clearImageCacheFor(url: key)
             managedContext.delete(self)
             managedContext.saveContext()
         }
@@ -69,13 +80,18 @@ public class CachedMedia: NSManagedObject {
     }
     
     public static func getCachedMediaByFilePath(filePath: String, managedContext: NSManagedObjectContext? = nil) -> CachedMedia? {
+        
+        guard let truncatedPath = CachedMedia.getTruncatedFilePath(filePath: filePath) else{
+            return nil
+        }
+        
 //        let predicate = MediaPredicates.matching(filePath: filePath)
 //        let cm: CachedMedia? = CoreDataManager.sharedManager.getObjectOfTypeWith(predicate: predicate, sortDescriptors: [], entityName: "CachedMedia", managedContext: managedContext)
 //        return cm
         let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
             
         let fetchRequest: NSFetchRequest<CachedMedia> = CachedMedia.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "filePath == %@", filePath.trimmingCharacters(in: .whitespacesAndNewlines))
+        fetchRequest.predicate = NSPredicate(format: "filePath == %@", truncatedPath)
         
         do {
             let results = try managedContext.fetch(fetchRequest)

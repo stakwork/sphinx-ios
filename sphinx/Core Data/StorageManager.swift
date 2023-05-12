@@ -124,12 +124,10 @@ class StorageManager {
             guard let image = UIImage(contentsOfFile: imagePath) else {
                 continue
             }
-            if imagePath.contains("78ca1ccafa8b9d3788f5bac3ad") == true,
-               let cm = (CachedMedia.getCachedMediaByFilePath(filePath: imagePath)){
+            
+            if let cm = (CachedMedia.getCachedMediaByFilePath(filePath: imagePath)){
+                cm.image = image
                 images.append(cm)
-            }
-            else if(imagePath.contains("78ca1ccafa8b9d3788f5bac3ad")){
-                print(imagePath)
             }
             
             // Display or process the image as needed

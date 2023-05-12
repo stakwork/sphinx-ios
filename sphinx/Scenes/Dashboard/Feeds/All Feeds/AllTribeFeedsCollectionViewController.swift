@@ -217,8 +217,10 @@ extension AllTribeFeedsCollectionViewController {
         
         let cacheSize = StorageManager.sharedManager.getImageCacheSize()
         let images = StorageManager.sharedManager.getImageCacheItems()
+        let cm = CachedMedia.getAll()
+        print(cm[0].filePath)
         print(images)
-        print(cacheSize)
+        StorageManager.sharedManager.deleteCacheItems(cms: images)
         //StorageManager.sharedManager.test()
     }
     

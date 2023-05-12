@@ -35,7 +35,9 @@ public class CachedMedia: NSManagedObject {
         let cachedMedia = getCachedMediaInstance(id: id, managedContext: managedContext)
 
         cachedMedia.id = id
-        cachedMedia.chat = chat
+        if let chat = chat{
+            cachedMedia.chat = chat
+        }
         cachedMedia.filePath = filePath
         cachedMedia.fileExtension = fileExtension
         cachedMedia.key = key
@@ -45,11 +47,70 @@ public class CachedMedia: NSManagedObject {
         return cachedMedia
     }
     
+    func removeCachedMediaAndDeleteObject() {
+        let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
+        if let path = self.filePath{
+            MediaLoader.clearImageCacheFor(url: path)
+            managedContext.delete(self)
+            managedContext.saveContext()
+        }
+    }
+    
     public static func getAll() -> [CachedMedia] {
         let sortDescriptors = [NSSortDescriptor(key: "id", ascending: true)]
         let cachedMedia: [CachedMedia] = CoreDataManager.sharedManager.getAllOfType(entityName: "CachedMedia", sortDescriptors: sortDescriptors)
         return cachedMedia
     }
     
+    public static func getCachedMediaByKey(key: String, managedContext: NSManagedObjectContext? = nil) -> CachedMedia? {
+        let predicate = MediaPredicates.matching(key: key)
+        let cm: CachedMedia? = CoreDataManager.sharedManager.getObjectOfTypeWith(predicate: predicate, sortDescriptors: [], entityName: "CachedMedia", managedContext: managedContext)
+        return cm
+    }
+    
+    public static func getCachedMediaByFilePath(filePath: String, managedContext: NSManagedObjectContext? = nil) -> CachedMedia? {
+//        let predicate = MediaPredicates.matching(filePath: filePath)
+//        let cm: CachedMedia? = CoreDataManager.sharedManager.getObjectOfTypeWith(predicate: predicate, sortDescriptors: [], entityName: "CachedMedia", managedContext: managedContext)
+//        return cm
+        let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
+            
+        let fetchRequest: NSFetchRequest<CachedMedia> = CachedMedia.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "filePath == %@", filePath.trimmingCharacters(in: .whitespacesAndNewlines))
+        
+        do {
+            let results = try managedContext.fetch(fetchRequest)
+            return results.first
+        } catch {
+            print("Error fetching cached media: \(error)")
+            return nil
+        }
+    }
+    
+}
+
+
+public enum MediaPredicates {
+    
+    public static func matching(key: String) -> NSPredicate {
+        let keyword = "=="
+        let formatSpecifier = "%@"
+
+        return NSPredicate(
+            format: "%K \(keyword) \(formatSpecifier)",
+            "key",
+            key
+        )
+    }
+    
+    public static func matching(filePath: String) -> NSPredicate {
+        let keyword = "=="
+        let formatSpecifier = "%@"
+
+        return NSPredicate(
+            format: "%K \(keyword) \(formatSpecifier)",
+            "filePath",
+            filePath
+        )
+    }
     
 }

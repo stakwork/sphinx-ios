@@ -29,8 +29,6 @@ class StorageManager {
     
     static let sharedManager = StorageManager()
     
-    
-    
     func getDownloadedPodcastsTotalSize()->Double{
         let dlPods = getDownloadedPodcastEpisodeList()
         let totalSize = dlPods.reduce(0) { (accumulator, item) in
@@ -108,7 +106,7 @@ class StorageManager {
         return totalSize
     }
     
-    func getImageCacheItems()->[UIImage] {
+    func getImageCacheItems()->[CachedMedia] {
         let imageCache = SDImageCache.shared
         let diskCachePath = imageCache.diskCachePath
         
@@ -116,7 +114,7 @@ class StorageManager {
             print("Unable to retrieve cache files")
             return []
         }
-        var images = [UIImage]()
+        var images = [CachedMedia]()
         for file in cacheFiles {
             guard let filePath = file as? String else {
                 continue
@@ -126,15 +124,28 @@ class StorageManager {
             guard let image = UIImage(contentsOfFile: imagePath) else {
                 continue
             }
-            images.append(image)
+            if imagePath.contains("78ca1ccafa8b9d3788f5bac3ad") == true,
+               let cm = (CachedMedia.getCachedMediaByFilePath(filePath: imagePath)){
+                images.append(cm)
+            }
+            else if(imagePath.contains("78ca1ccafa8b9d3788f5bac3ad")){
+                print(imagePath)
+            }
+            
             // Display or process the image as needed
             print("Image path: \(imagePath)")
             // Example: UIImageView(image: image)
         }
         return images
     }
-
     
+    func deleteCacheItems(cms:[CachedMedia]){
+        for cm in cms{
+            cm.removeCachedMediaAndDeleteObject()
+        }
+    }
+
+    //returns a boolean that determines whether memory needs to be culled
     func checkForMemoryOverflow()->Bool{
         let podcastMemorySize = getDownloadedPodcastsTotalSize()
         let totalMemory = podcastMemorySize //TODO: add other media
@@ -145,6 +156,7 @@ class StorageManager {
         //return Int(totalMemory/1000) > UserData.sharedInstance.getMaxMemory()
     }
     
+    //returns an array of structs describing each downloaded podcast episode
     func getDownloadedPodcastEpisodeList()->[StorageManagerItem]{
         let pairs = extractFeedItemIdPairs()
         var storageItems = [StorageManagerItem]()
@@ -174,6 +186,7 @@ class StorageManager {
         return storageItems
     }
     
+    //returns a dictionary of feedIDs as keys and downloaded itemID arrays as the values
     func extractFeedItemIdPairs()->[String:[String]]{
         let files = scanDownloads()
         var results = [String: [String]]()

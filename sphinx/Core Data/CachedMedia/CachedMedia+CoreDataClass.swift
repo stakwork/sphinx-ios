@@ -9,10 +9,11 @@
 import Foundation
 import CoreData
 import SwiftyJSON
+import UIKit
 
 @objc(CachedMedia)
 public class CachedMedia: NSManagedObject {
-    
+    public var image : UIImage?
     
     public static func getCachedMediaInstance(id: Int, managedContext: NSManagedObjectContext) -> CachedMedia {
         if let cm = CachedMedia.getCachedMediaWith(id: id) {

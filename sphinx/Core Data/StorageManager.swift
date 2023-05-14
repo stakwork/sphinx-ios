@@ -13,6 +13,19 @@ public enum StorageManagerMediaType{
     case audio
     case video
     case photo
+    
+    static var allCases: [StorageManagerMediaType] {
+            return [.audio, .video, .photo]
+        }
+}
+
+public enum StorageMediaManagerSource{
+    case episodes
+    case chats
+    
+    static var allCases: [StorageMediaManagerSource]{
+        return [.chats,.episodes]
+    }
 }
 
 struct StorageManagerItem{
@@ -21,6 +34,7 @@ struct StorageManagerItem{
     var label : String
     var date : Date
     var sourceFilePath:URL?
+    var cachedMedia:CachedMedia?
 }
 
 class StorageManager {
@@ -29,9 +43,44 @@ class StorageManager {
     
     static let sharedManager = StorageManager()
     
-    func getDownloadedPodcastsTotalSize()->Double{
-        let dlPods = getDownloadedPodcastEpisodeList()
-        let totalSize = dlPods.reduce(0) { (accumulator, item) in
+    var downloadedPods = [StorageManagerItem]()//media intentionally stored by user when they dl podcasts
+    var cachedMedia = [StorageManagerItem]() //media stored automatically from chat images by SDImage library
+    //var downloadedVideos = [StorageManagerItem]()//this iteration does not yet support but will be for downloaded video content
+    
+    lazy var allItems : [StorageManagerItem] = {
+        return downloadedPods + cachedMedia
+    }()
+    
+    func getStoredItemsByType()->[StorageManagerMediaType:[StorageManagerItem]]{
+        var dict = [StorageManagerMediaType:[StorageManagerItem]]()
+        for type in StorageManagerMediaType.allCases{
+            dict[type] = allItems.filter({$0.type == type})
+        }
+        return dict
+    }
+    
+    func getStoredItemsBySource()->[StorageMediaManagerSource:[StorageManagerItem]]{
+        var dict = [StorageMediaManagerSource:[StorageManagerItem]]()
+        dict[.episodes] = downloadedPods
+        dict[.chats] = cachedMedia
+        return dict
+    }
+    
+    func refreshAllStoredData(){
+        downloadedPods = getDownloadedPodcastEpisodeList()
+        cachedMedia = getImageCacheItems()
+    }
+    
+    func getDownloadedPodcastsTotalSizeMB()->Double{
+        return getItemGroupTotalSize(items: downloadedPods)
+    }
+    
+    func getCachedMediaTotalSizeMB()->Double{
+        return getItemGroupTotalSize(items: cachedMedia)/1e6
+    }
+    
+    func getItemGroupTotalSize(items:[StorageManagerItem])->Double{
+        let totalSize = items.reduce(0) { (accumulator, item) in
             return accumulator + item.sizeMB
         }
 
@@ -44,77 +93,16 @@ class StorageManager {
         }
     }
     
-    func deleteOldestPod(){
-        if let oldestPod = getDownloadedPodcastEpisodeList().sorted(by: {$0.date < $1.date}).first
-        {
-            //WIP
-        }
-    }
-    
-    func getAppDataSize() -> UInt64 {
-        let fileManager = FileManager.default
-        let appDataPath = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true).first!
-        
-        var totalSize: UInt64 = 0
-        
-        do {
-            let contents = try fileManager.contentsOfDirectory(atPath: appDataPath)
-            
-            for item in contents {
-                let itemPath = (appDataPath as NSString).appendingPathComponent(item)
-                let attributes = try fileManager.attributesOfItem(atPath: itemPath)
-                print(attributes)
-                if let fileSize = attributes[FileAttributeKey.size] as? NSNumber {
-                    totalSize += fileSize.uint64Value
-                }
-            }
-        } catch {
-            print("Error calculating app data size: \(error)")
-        }
-        
-        return totalSize
-    }
-    
-    
-    func getImageCacheSize()->UInt64 {
-        let fileManager = FileManager.default
+    func getImageCacheItems()->[StorageManagerItem] {
         let imageCache = SDImageCache.shared
         let diskCachePath = imageCache.diskCachePath
-        var totalSize: UInt64 = 0
-        guard let cacheFiles = FileManager.default.enumerator(atPath: diskCachePath) else {
-            print("Unable to retrieve cache files")
-            return 0
-        }
+        let fileManager = FileManager.default
         
-        for file in cacheFiles {
-            guard let filePath = file as? String else {
-                continue
-            }
-            do{
-                let imagePath = (diskCachePath as NSString).appendingPathComponent(filePath)
-                let attributes = try fileManager.attributesOfItem(atPath: imagePath)
-                print(attributes)
-                if let fileSize = attributes[FileAttributeKey.size] as? NSNumber {
-                    totalSize += fileSize.uint64Value
-                }
-            }
-            catch{
-                print("error retrieving size of image")
-            }
-        }
-        
-        return totalSize
-    }
-    
-    func getImageCacheItems()->[CachedMedia] {
-        let imageCache = SDImageCache.shared
-        let diskCachePath = imageCache.diskCachePath
-        
-        guard let cacheFiles = FileManager.default.enumerator(atPath: diskCachePath) else {
+        guard let cacheFiles = fileManager.enumerator(atPath: diskCachePath) else {
             print("Unable to retrieve cache files")
             return []
         }
-        var images = [CachedMedia]()
+        var items = [StorageManagerItem]()
         for file in cacheFiles {
             guard let filePath = file as? String else {
                 continue
@@ -125,16 +113,30 @@ class StorageManager {
                 continue
             }
             
+            var size : UInt64? = nil
+            do{
+                let imagePath = (diskCachePath as NSString).appendingPathComponent(filePath)
+                let attributes = try fileManager.attributesOfItem(atPath: imagePath)
+                print(attributes)
+                if let fileSize = attributes[FileAttributeKey.size] as? NSNumber {
+                    size = fileSize.uint64Value
+                }
+            }
+            catch{
+                print("error retrieving size of image")
+            }
+            
             if let cm = (CachedMedia.getCachedMediaByFilePath(filePath: imagePath)){
                 cm.image = image
-                images.append(cm)
+                let newItem = StorageManagerItem(type: .photo, sizeMB: Double(size ?? 0), label: "", date:cm.creationDate ?? Date()  ,cachedMedia: cm)
+                items.append(newItem)
             }
             
             // Display or process the image as needed
             print("Image path: \(imagePath)")
             // Example: UIImageView(image: image)
         }
-        return images
+        return items
     }
     
     func deleteCacheItems(cms:[CachedMedia]){
@@ -145,7 +147,7 @@ class StorageManager {
 
     //returns a boolean that determines whether memory needs to be culled
     func checkForMemoryOverflow()->Bool{
-        let podcastMemorySize = getDownloadedPodcastsTotalSize()
+        let podcastMemorySize = getDownloadedPodcastsTotalSizeMB()
         let totalMemory = podcastMemorySize //TODO: add other media
         
         let maxMemoryGB = UserData.sharedInstance.getMaxMemory()
@@ -219,10 +221,6 @@ class StorageManager {
             }
         }
         return []
-    }
-    
-    func scanMessageMedia(){
-        
     }
     
 }

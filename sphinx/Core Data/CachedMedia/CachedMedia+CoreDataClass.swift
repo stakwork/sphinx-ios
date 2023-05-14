@@ -10,6 +10,7 @@ import Foundation
 import CoreData
 import SwiftyJSON
 import UIKit
+import SDWebImage
 
 @objc(CachedMedia)
 public class CachedMedia: NSManagedObject {
@@ -102,6 +103,7 @@ public class CachedMedia: NSManagedObject {
             return nil
         }
     }
+    
     
 }
 

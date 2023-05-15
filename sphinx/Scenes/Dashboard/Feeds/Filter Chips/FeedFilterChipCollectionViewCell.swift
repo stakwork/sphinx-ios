@@ -25,6 +25,11 @@ class FeedFilterChipCollectionViewCell: UICollectionViewCell {
         contentView.layer.masksToBounds = true
         contentView.clipsToBounds = true
         contentView.layer.cornerCurve = .continuous
+        
+        setCornerRadius()
+        filterLabel.text = ""
+        contentView.backgroundColor = .Sphinx.DashboardFilterChipBackground
+        filterLabel.textColor = .Sphinx.Text
     }
     
 

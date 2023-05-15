@@ -92,7 +92,8 @@ class ChatViewController: KeyboardHandlerViewController {
         configureVideoCallManager()
         addShadows()
         
-        chatHeaderView.configure(chat: chat, contact: contact, contactsService: contactsService, delegate: self)
+//        chatHeaderView.configureWith(chat: chat, contact: contact, contactsService: contactsService, delegate: self)
+        chatHeaderView.configureWith(chat: chat, contact: contact, delegate: self)
         
         accessoryView.delegate = self
         updateChatInfo()

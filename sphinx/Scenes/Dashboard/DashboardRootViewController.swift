@@ -645,7 +645,7 @@ extension DashboardRootViewController {
         shouldAnimate: Bool = true,
         didRetry:Bool = false
     ) {
-//        let contact = contact ?? chat?.getContact()
+        let contact = contact ?? chat?.getContact()
 //
 //        if handleInvite(for: contact) {
 //            return
@@ -666,7 +666,10 @@ extension DashboardRootViewController {
 //            rootViewController: rootViewController
 //        )
         
-        let chatVC = NewChatViewController.instantiate()
+        let chatVC = NewChatViewController.instantiate(
+            contactObjectId: contact?.objectID,
+            chatObjectId: chat?.objectID
+        )
         
         navigationController?.pushViewController(chatVC, animated: shouldAnimate)
         

@@ -46,7 +46,7 @@ class ChatHeaderView: UIView {
     
     var chat: Chat? = nil
     var contact: UserContact? = nil
-    var contactsService: ContactsService! = nil
+//    var contactsService: ContactsService! = nil
     
     public enum RightButtons: Int {
         case WebApp
@@ -81,11 +81,17 @@ class ChatHeaderView: UIView {
         }
     }
     
-    func configure(chat: Chat?, contact: UserContact?, contactsService: ContactsService, delegate: ChatHeaderViewDelegate) {
+    func configureWith(
+        chat: Chat?,
+        contact: UserContact?,
+        delegate: ChatHeaderViewDelegate
+    ) {
         self.chat = chat
         self.contact = contact
-        self.contactsService = contactsService
+//        self.contactsService = contactsService
         self.delegate = delegate
+        
+        setChatInfo()
     }
     
     func setChatInfo() {
@@ -99,9 +105,9 @@ class ChatHeaderView: UIView {
         setVolumeState(muted: chat?.isMuted() ?? false)
         configureImageOrInitials()
         
-        if let contact = contact, !contact.hasEncryptionKey() {
-            forceKeysExchange(contactId: contact.id)
-        }
+//        if let contact = contact, !contact.hasEncryptionKey() {
+//            forceKeysExchange(contactId: contact.id)
+//        }
     }
     
     func getHeaderName() -> String {
@@ -141,15 +147,26 @@ class ChatHeaderView: UIView {
         showInitialsFor(contact: contact, and: chat)
         
         if let imageUrl = getImageUrl()?.trim(), let nsUrl = URL(string: imageUrl) {
-            MediaLoader.asyncLoadImage(imageView: profileImageView, nsUrl: nsUrl, placeHolderImage: UIImage(named: "profile_avatar"), completion: { image in
-                self.initialsLabel.isHidden = true
-                self.profileImageView.isHidden = false
-                self.profileImageView.image = image
-            }, errorCompletion: { _ in })
+            profileImageView.sd_setImage(
+                with: nsUrl,
+                placeholderImage: UIImage(named: "profile_avatar"),
+                options: [.scaleDownLargeImages, .decodeFirstFrameOnly, .lowPriority],
+                progress: nil,
+                completed: { (image, error, _, _) in
+                    if (error == nil) {
+                        self.initialsLabel.isHidden = true
+                        self.profileImageView.isHidden = false
+                        self.profileImageView.image = image
+                    }
+                }
+            )
         }
     }
     
-    func showInitialsFor(contact: UserContact?, and chat: Chat?) {
+    func showInitialsFor(
+        contact: UserContact?,
+        and chat: Chat?
+    ) {
         let name = getHeaderName()
         let color = getInitialsColor()
         
@@ -181,16 +198,20 @@ class ChatHeaderView: UIView {
         volumeButton.setImage(UIImage(named: muted ? "muteOnIcon" : "muteOffIcon"), for: .normal)
     }
     
-    func forceKeysExchange(contactId: Int) {
-        contactsService.exchangeKeys(id: contactId)
-    }
+//    func forceKeysExchange(contactId: Int) {
+//        contactsService.exchangeKeys(id: contactId)
+//    }
     
     func checkRoute() {
-        API.sharedInstance.checkRoute(chat: self.chat, contact: self.contact, callback: { success in
-            DispatchQueue.main.async {
-                self.boltSign.textColor = success ? ChatListHeader.kConnectedColor : ChatListHeader.kNotConnectedColor
+        API.sharedInstance.checkRoute(
+            chat: self.chat,
+            contact: self.contact,
+            callback: { success in
+                DispatchQueue.main.async {
+                    self.boltSign.textColor = success ? ChatListHeader.kConnectedColor : ChatListHeader.kNotConnectedColor
+                }
             }
-        })
+        )
     }
     
     func toggleWebAppIcon(showChatIcon: Bool) {

@@ -7,25 +7,58 @@
 //
 
 import UIKit
+import CoreData
 
-class NewChatViewController: UIViewController {
-    
-    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
+class NewChatViewController: NewKeyboardHandlerViewController {
     
     @IBOutlet weak var bottomView: NewChatAccessoryView!
     @IBOutlet weak var headerView: ChatHeaderView!
     
-    let windowInsets = getWindowInsets()
+    var contact: UserContact?
+    var chat: Chat?
     
-    static func instantiate() -> NewChatViewController {
+    var contactsService: ContactsService!
+    
+    static func instantiate(
+        contactObjectId: NSManagedObjectID? = nil,
+        chatObjectId: NSManagedObjectID? = nil
+    ) -> NewChatViewController {
         let viewController = StoryboardScene.Chat.newChatViewController.instantiate()
+        
+        if let chatObjectId = chatObjectId {
+            viewController.chat = CoreDataManager.sharedManager.getObjectWith(objectId: chatObjectId)
+        }
+        
+        if let contactObjectId = contactObjectId {
+            viewController.contact = CoreDataManager.sharedManager.getObjectWith(objectId: contactObjectId)
+        }
+        
+        viewController.contactsService = ContactsService()
+        viewController.popOnSwipeEnabled = true
+        
         return viewController
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         setupLayouts()
+        
+        headerView.configureWith(
+            chat: self.chat,
+            contact: self.contact,
+            delegate: self
+        )
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        headerView.checkRoute()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
     }
     
     func setupLayouts() {
@@ -33,80 +66,6 @@ class NewChatViewController: UIViewController {
         
         bottomView.addShadow(location: .top, color: UIColor.black, opacity: 0.1)
         headerView.addShadow(location: .bottom, color: UIColor.black, opacity: 0.1)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        addKeyboardObservers()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        removeKeyboardObservers()
-    }
-    
-    func addKeyboardObservers() {
-        removeKeyboardObservers()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(NewChatViewController.keyboardWillShowHandler(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(NewChatViewController.keyboardWillHideHandler(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(NewChatViewController.keyboardDidChangeFrame(_:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
-    }
-    
-    func removeKeyboardObservers() {
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidChangeFrameNotification, object: nil)
-    }
-    
-    @objc func keyboardDidChangeFrame(_ notification: Notification) {
-        if var keyboardHeight = getKeyboardActualHeight(notification: notification) {
-            print("KEYBOARD HEIGHT: \(keyboardHeight)")
-        }
-    }
-    
-    @objc func keyboardWillShowHandler(_ notification: Notification) {
-        adjustContentForKeyboard(shown: true, notification: notification)
-    }
-    
-    @objc func keyboardWillHideHandler(_ notification: Notification) {
-        adjustContentForKeyboard(shown: false, notification: notification)
-    }
-    
-    func adjustContentForKeyboard(shown: Bool, notification: Notification) {
-        if var keyboardHeight = getKeyboardActualHeight(notification: notification) {
-            
-            let animationDuration:Double = KeyboardHelper.getKeyboardAnimationDuration(notification: notification)
-            let animationCurve:Int = KeyboardHelper.getKeyboardAnimationCurve(notification: notification)
-            
-            print("KEYBOARD TOGGLE \(shown)")
-            print("KEYBOARD HEIGHT \(keyboardHeight)")
-            print("KEYBOARD TOGGLE \(shown)")
-            
-            self.bottomConstraint.constant = shown ? (keyboardHeight - windowInsets.bottom) : 0
-            
-            UIView.animate(
-                withDuration: animationDuration,
-                delay: 0,
-                options: UIView.AnimationOptions(rawValue: UIView.AnimationOptions.RawValue(animationCurve)),
-                animations: {
-                    self.view.layoutIfNeeded()
-                },
-                completion: { _ in
-
-                }
-            )
-        }
-    }
-    
-    func getKeyboardActualHeight(notification: Notification) -> CGFloat? {
-        if let keyboardEndSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            return keyboardEndSize.height
-        }
-        return nil
     }
 
     @IBAction func dismissButtonTouched(_ sender: Any) {

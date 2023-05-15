@@ -21,22 +21,22 @@
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="qJG-pA-fnp">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="250"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9yx-ly-PmR" customClass="PodcastSmallPlayer" customModule="sphinx" customModuleProvider="target">
+                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9yx-ly-PmR" customClass="PodcastSmallPlayer" customModule="sphinx" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
                             <color key="backgroundColor" name="HeaderBG"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="64" id="eQw-bL-eAA"/>
                             </constraints>
                         </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="25U-yU-kV3" customClass="MessageReplyView" customModule="sphinx" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="64" width="375" height="50"/>
+                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="25U-yU-kV3" customClass="MessageReplyView" customModule="sphinx" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                             <color key="backgroundColor" name="HeaderBG"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="TZQ-tz-DDq"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yPr-Da-BCU" customClass="ChatMessageTextFieldView" customModule="sphinx" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="114" width="375" height="136"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="250"/>
                             <color key="backgroundColor" name="HeaderBG"/>
                         </view>
                     </subviews>

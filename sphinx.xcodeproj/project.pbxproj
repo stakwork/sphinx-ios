@@ -322,6 +322,9 @@
 		475DD3042A0D6A9D00F92173 /* ChatMessageTextFieldView+UITextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475DD3032A0D6A9D00F92173 /* ChatMessageTextFieldView+UITextViewDelegate.swift */; };
 		475DD3062A0D6F6600F92173 /* ChatMessageTextFieldView+RecordingAudioExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475DD3052A0D6F6600F92173 /* ChatMessageTextFieldView+RecordingAudioExtension.swift */; };
 		475DD3082A0D729B00F92173 /* ChatMessageTextFieldView+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475DD3072A0D729B00F92173 /* ChatMessageTextFieldView+Actions.swift */; };
+		475DD30A2A1287B400F92173 /* NewKeyboardHandlerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475DD3092A1287B400F92173 /* NewKeyboardHandlerViewController.swift */; };
+		475DD30C2A1291F900F92173 /* NewChatViewController+ChatHeaderDelegateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475DD30B2A1291F900F92173 /* NewChatViewController+ChatHeaderDelegateExtension.swift */; };
+		475DD30E2A1297C100F92173 /* PopHandlerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475DD30D2A1297C100F92173 /* PopHandlerViewController.swift */; };
 		475E41612382E28800928931 /* UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475E41602382E28800928931 /* UIButton.swift */; };
 		475E416B23858D4900928931 /* Subscription+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475E416923858D4800928931 /* Subscription+CoreDataProperties.swift */; };
 		475E416C23858D4900928931 /* Subscription+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475E416A23858D4800928931 /* Subscription+CoreDataClass.swift */; };
@@ -1172,6 +1175,9 @@
 		475DD3032A0D6A9D00F92173 /* ChatMessageTextFieldView+UITextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatMessageTextFieldView+UITextViewDelegate.swift"; sourceTree = "<group>"; };
 		475DD3052A0D6F6600F92173 /* ChatMessageTextFieldView+RecordingAudioExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatMessageTextFieldView+RecordingAudioExtension.swift"; sourceTree = "<group>"; };
 		475DD3072A0D729B00F92173 /* ChatMessageTextFieldView+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatMessageTextFieldView+Actions.swift"; sourceTree = "<group>"; };
+		475DD3092A1287B400F92173 /* NewKeyboardHandlerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewKeyboardHandlerViewController.swift; sourceTree = "<group>"; };
+		475DD30B2A1291F900F92173 /* NewChatViewController+ChatHeaderDelegateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewChatViewController+ChatHeaderDelegateExtension.swift"; sourceTree = "<group>"; };
+		475DD30D2A1297C100F92173 /* PopHandlerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopHandlerViewController.swift; sourceTree = "<group>"; };
 		475E41602382E28800928931 /* UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButton.swift; sourceTree = "<group>"; };
 		475E4162238588A200928931 /* sphinx 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 2.xcdatamodel"; sourceTree = "<group>"; };
 		475E416923858D4800928931 /* Subscription+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Subscription+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -2609,6 +2615,9 @@
 				477C524F28C6307100C24117 /* NotificationsLevelViewController.swift */,
 				4712994229227B450049CBE3 /* TribeMemberProfileViewController.swift */,
 				47F826692A0C150B002E81F0 /* NewChatViewController.swift */,
+				475DD3092A1287B400F92173 /* NewKeyboardHandlerViewController.swift */,
+				475DD30B2A1291F900F92173 /* NewChatViewController+ChatHeaderDelegateExtension.swift */,
+				475DD30D2A1297C100F92173 /* PopHandlerViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -4836,6 +4845,7 @@
 				4787F8812474623F00CCE8B9 /* GroupTagCollectionViewCell.swift in Sources */,
 				475BDCA2232AC1CF00C5BBD6 /* ChatViewModel.swift in Sources */,
 				47308E0A24FEE6E600FFAC6F /* SocketEnginePollable.swift in Sources */,
+				475DD30E2A1297C100F92173 /* PopHandlerViewController.swift in Sources */,
 				47183CC22549E2F100E6FD19 /* CommonPodcastBoostTableViewCell.swift in Sources */,
 				475043D42975C2ED00830E9E /* PodcastPlayerView+Delegates.swift in Sources */,
 				47669F4623D1FBA500C17A77 /* GroupMembersDataSource.swift in Sources */,
@@ -4918,6 +4928,7 @@
 				4787F8982478112F00CCE8B9 /* ChatAvatarView.swift in Sources */,
 				47308E0E24FEE6E700FFAC6F /* SocketIOClientConfiguration.swift in Sources */,
 				CE842DF12992D0F400620AD3 /* BadgeTemplate.swift in Sources */,
+				475DD30C2A1291F900F92173 /* NewChatViewController+ChatHeaderDelegateExtension.swift in Sources */,
 				477BCF322A0031060080ED65 /* TransactionTableViewCell.swift in Sources */,
 				47308E1124FEE6E700FFAC6F /* SocketIOClientOption.swift in Sources */,
 				47FB189B23A299000097695B /* SignupHelper.swift in Sources */,
@@ -5157,6 +5168,7 @@
 				47FA43FB2374885B005D8C63 /* SubscriptionFormViewController.swift in Sources */,
 				47BE85462464928800BE4AE8 /* KeychainRestoreViewController.swift in Sources */,
 				47F258CE253F6B0100122A5A /* PodcastSmallPlayer.swift in Sources */,
+				475DD30A2A1287B400F92173 /* NewKeyboardHandlerViewController.swift in Sources */,
 				47F8266A2A0C150B002E81F0 /* NewChatViewController.swift in Sources */,
 				476EB47023C50640009745E2 /* GroupAddedContactsDataSource.swift in Sources */,
 				F3E9C02026FB76A100718942 /* DashboardFeedsEmptyStateViewController.swift in Sources */,

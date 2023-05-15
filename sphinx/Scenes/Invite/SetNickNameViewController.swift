@@ -32,7 +32,7 @@ class SetNickNameViewController: SetDataViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        rootViewController.setStatusBarColor(light: false)
+        setStatusBarColor()
 
         nextButton.isHidden = true
         

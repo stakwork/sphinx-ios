@@ -20,13 +20,13 @@ class RootViewController: UIViewController, ContainerViewController {
         return barStyle
     }
     
-    func setStatusBarColor(light: Bool) {
+    func setStatusBar() {
         let darkMode =  traitCollection.userInterfaceStyle == .dark
-
+        
         if #available(iOS 13.0, *) {
-            barStyle = (light || darkMode) ? .lightContent : .darkContent
+            barStyle = darkMode || isVCPresented() ? .lightContent : .darkContent
         } else {
-            barStyle = light ? .lightContent : .default
+            barStyle = darkMode || isVCPresented() ? .lightContent : .default
         }
         setNeedsStatusBarAppearanceUpdate()
     }

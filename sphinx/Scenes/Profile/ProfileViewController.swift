@@ -100,7 +100,7 @@ class ProfileViewController: NewKeyboardHandlerViewController {
         
         SphinxSocketManager.sharedInstance.setDelegate(delegate: nil)
         
-//        rootViewController.setStatusBarColor(light: false)
+        setStatusBarColor()
         viewTitle.addTextSpacing(value: 2)
         appearanceView.delegate = self
         settingsTabView.delegate = self
@@ -131,7 +131,7 @@ class ProfileViewController: NewKeyboardHandlerViewController {
         changePINContainerView.addShadow(location: VerticalLocation.center, color: UIColor.black, opacity: 0.2, radius: 2.0)
         privacyPinGroupContainer.addShadow(location: VerticalLocation.center, color: UIColor.black, opacity: 0.2, radius: 2.0)
         
-//        rootViewController.setStatusBarColor(light: false)
+        setStatusBarColor()
     }
     
     override func viewWillAppear(_ animated: Bool) {

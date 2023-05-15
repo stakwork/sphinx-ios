@@ -38,7 +38,7 @@ class InviteWelcomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        rootViewController.setStatusBarColor(light: false)
+        setStatusBarColor()
         
         nextButtonContainer.layer.cornerRadius = nextButtonContainer.frame.size.height / 2
         nextButtonContainer.clipsToBounds = true

@@ -85,7 +85,7 @@ class ChatViewController: KeyboardHandlerViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        rootViewController.setStatusBarColor(light: false)
+        setStatusBarColor()
         configureVideoCallManager()
         addShadows()
         

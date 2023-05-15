@@ -37,7 +37,7 @@ class CreateInvoiceDetailsViewController: CommonPaymentViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        rootViewController.setStatusBarColor(light: false)
+        setStatusBarColor()
         
         confirmButton.setBackgroundColor(color: UIColor.Sphinx.PrimaryBlueBorder, forUIControlState: .highlighted)
         confirmButton.setBackgroundColor(color: UIColor.Sphinx.PrimaryBlueBorder, forUIControlState: .selected)

@@ -39,7 +39,7 @@ class SetProfileImageViewController: SetDataViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        rootViewController.setStatusBarColor(light: false)
+        setStatusBarColor()
         
         profileImageView.layer.cornerRadius = profileImageView.frame.size.height / 2
         profileImageView.clipsToBounds = true

@@ -95,7 +95,7 @@ class CreateInvoiceViewController: CommonPaymentViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        rootViewController.setStatusBarColor(light: false)
+        setStatusBarColor()
         
         setupContact()
         setupKeyPad()

@@ -29,7 +29,7 @@ class AddressBookViewController: PopHandlerViewController {
         
         SphinxSocketManager.sharedInstance.setDelegate(delegate: nil)
         
-//        rootViewController.setStatusBarColor(light: false)
+        setStatusBarColor()
         viewTitle.addTextSpacing(value: 2)
         
         addFriendView.configureForAddFriend()

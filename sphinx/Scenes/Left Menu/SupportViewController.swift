@@ -43,7 +43,7 @@ class SupportViewController: UIViewController {
         
         SphinxSocketManager.sharedInstance.setDelegate(delegate: nil)
         
-//        rootViewController.setStatusBarColor(light: false)
+        setStatusBarColor()
         viewTitle.addTextSpacing(value: 2)
         textViewContainer.layer.borderWidth = 1
         textViewContainer.layer.borderColor = UIColor.Sphinx.LightDivider.resolvedCGColor(with: self.view)

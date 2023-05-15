@@ -277,7 +277,7 @@ extension DashboardRootViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-//        rootViewController.setStatusBarColor(light: true)
+        setStatusBarColor()
         
         socketManager.setDelegate(delegate: self)
         headerView.delegate = self

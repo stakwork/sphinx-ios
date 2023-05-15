@@ -32,4 +32,14 @@ extension UIViewController {
             child.view.removeFromSuperview()
         }
     }
+    
+    func setStatusBarColor() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        guard let rootVC = appDelegate.getRootViewController() else {
+            return
+        }
+        rootVC.setStatusBar()
+    }
 }

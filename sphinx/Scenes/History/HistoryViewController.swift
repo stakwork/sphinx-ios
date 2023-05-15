@@ -35,7 +35,7 @@ class HistoryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        rootViewController.setStatusBarColor(light: false)
+        setStatusBarColor()
         
         viewTitle.addTextSpacing(value: 2)
         headerView.addShadow(location: VerticalLocation.bottom, opacity: 0.2, radius: 2.0)
@@ -79,7 +79,7 @@ class HistoryViewController: UIViewController {
     }
     
     @IBAction func closeButtonTouched() {
-//        rootViewController.setStatusBarColor(light: true)
+        setStatusBarColor()
         dismiss(animated: true, completion: nil)
     }
 }

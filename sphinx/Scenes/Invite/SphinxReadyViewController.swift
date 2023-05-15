@@ -34,7 +34,7 @@ class SphinxReadyViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        rootViewController.setStatusBarColor(light: true)
+        setStatusBarColor()
         
         nextButtonContainer.layer.cornerRadius = nextButtonContainer.frame.size.height / 2
         nextButtonContainer.clipsToBounds = true

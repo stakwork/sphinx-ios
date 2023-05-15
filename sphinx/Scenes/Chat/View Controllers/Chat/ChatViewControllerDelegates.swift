@@ -51,11 +51,11 @@ extension ChatViewController : ChatHeaderViewDelegate {
         accessoryView.shouldDismissKeyboard()
 
         if let contact = contact {
-            let newContactVC = NewContactViewController.instantiate(rootViewController: rootViewController, contact: contact)
+            let newContactVC = NewContactViewController.instantiate(contact: contact)
             newContactVC.delegate = self
             self.navigationController?.pushViewController(newContactVC, animated: true)
         } else if let chat = chat, chat.isGroup() {
-            let groupDetailsVC = GroupDetailsViewController.instantiate(rootViewController: rootViewController, chat: chat, delegate: self)
+            let groupDetailsVC = GroupDetailsViewController.instantiate(chat: chat, delegate: self)
             self.navigationController?.pushViewController(groupDetailsVC, animated: true)
         }
     }
@@ -473,7 +473,7 @@ extension ChatViewController : MessageCellDelegate {
         } else {
             accessoryView.hide()
             
-            let newContactVC = NewContactViewController.instantiate(rootViewController: rootViewController, pubkey: pubkey)
+            let newContactVC = NewContactViewController.instantiate(pubkey: pubkey)
             newContactVC.delegate = self
             present(newContactVC, animated: true, completion: nil)
         }
@@ -523,8 +523,7 @@ extension ChatViewController : TribeMemberViewDelegate {
             messageUUID: message.uuid,
             viewModel: chatViewModel,
             delegate: self,
-            paymentMode: .send,
-            rootViewController: rootViewController
+            paymentMode: .send
         )
 
         presentNavigationControllerWith(vc: viewController)

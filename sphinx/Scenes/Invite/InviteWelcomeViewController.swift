@@ -17,7 +17,6 @@ class InviteWelcomeViewController: UIViewController {
     @IBOutlet weak var nextButtonContainer: UIView!
     @IBOutlet weak var loadingWheel: UIActivityIndicatorView!
     
-    private var rootViewController : RootViewController!
     private var contactsService : ContactsService!
     
     var loading = false {
@@ -28,10 +27,9 @@ class InviteWelcomeViewController: UIViewController {
     
     var currentInviter : SignupHelper.Inviter?
     
-    static func instantiate(rootViewController : RootViewController, inviter: SignupHelper.Inviter) -> InviteWelcomeViewController {
+    static func instantiate(inviter: SignupHelper.Inviter) -> InviteWelcomeViewController {
         let viewController = StoryboardScene.Invite.inviteWelcomeViewController.instantiate()
-        viewController.rootViewController = rootViewController
-        viewController.contactsService = rootViewController.contactsService
+        viewController.contactsService = ContactsService()
         viewController.currentInviter = inviter
         
         return viewController
@@ -40,7 +38,7 @@ class InviteWelcomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        rootViewController.setStatusBarColor(light: false)
+//        rootViewController.setStatusBarColor(light: false)
         
         nextButtonContainer.layer.cornerRadius = nextButtonContainer.frame.size.height / 2
         nextButtonContainer.clipsToBounds = true
@@ -87,7 +85,7 @@ class InviteWelcomeViewController: UIViewController {
     func continueToPinView() {
         SignupHelper.step = SignupHelper.SignupStep.InviterContactCreated.rawValue
         
-        let setPinVC = SetPinCodeViewController.instantiate(rootViewController: self.rootViewController)
+        let setPinVC = SetPinCodeViewController.instantiate()
         self.navigationController?.pushViewController(setPinVC, animated: true)
     }
     

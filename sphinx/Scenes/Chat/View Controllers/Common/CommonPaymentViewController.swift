@@ -19,7 +19,6 @@ import SwiftyJSON
 
 class CommonPaymentViewController : UIViewController {
     
-    var rootViewController: RootViewController!
     var contacts : [UserContact]?
     var chat: Chat?
     var message: TransactionMessage?

@@ -13,8 +13,6 @@ protocol GroupDetailsDelegate: class {
 }
 
 class GroupDetailsViewController: UIViewController {
-    var rootViewController : RootViewController!
-    
     weak var delegate: GroupDetailsDelegate?
 
     @IBOutlet weak var membersTableView: UITableView!
@@ -62,9 +60,8 @@ class GroupDetailsViewController: UIViewController {
         }
     }
     
-    static func instantiate(rootViewController : RootViewController, chat: Chat, delegate: GroupDetailsDelegate? = nil) -> GroupDetailsViewController {
+    static func instantiate(chat: Chat, delegate: GroupDetailsDelegate? = nil) -> GroupDetailsViewController {
         let viewController = StoryboardScene.Groups.groupDetailsViewController.instantiate()
-        viewController.rootViewController = rootViewController
         viewController.chat = chat
         viewController.delegate = delegate
         
@@ -148,7 +145,7 @@ class GroupDetailsViewController: UIViewController {
     }
     
     @objc func didTapBadgeManagementView(){
-        let badgeManagementVC = BadgeAdminManagementListVC.instantiate(rootViewController: rootViewController,chatID: chat.id)
+        let badgeManagementVC = BadgeAdminManagementListVC.instantiate(chatID: chat.id)
         self.navigationController?.pushViewController(badgeManagementVC, animated: true)
     }
     
@@ -219,7 +216,7 @@ class GroupDetailsViewController: UIViewController {
     }
     
     func goToEditGroup() {
-        let createGroupVC = NewPublicGroupViewController.instantiate(rootViewController: rootViewController, delegate: self, chat: chat)
+        let createGroupVC = NewPublicGroupViewController.instantiate(delegate: self, chat: chat)
         self.navigationController?.pushViewController(createGroupVC, animated: true)
     }
     
@@ -291,8 +288,9 @@ class GroupDetailsViewController: UIViewController {
     }
     
     func groupDeleted() {
-        let mainCoordinator = MainCoordinator(rootViewController: rootViewController)
-        mainCoordinator.presentInitialDrawer()
+        navigationController?.popToRootViewController(animated: true)
+//        let mainCoordinator = MainCoordinator(rootViewController: rootViewController)
+//        mainCoordinator.presentInitialDrawer()
     }
     
     @IBAction func groupPictureButtonTouched() {
@@ -348,7 +346,7 @@ extension GroupDetailsViewController : AddTribeMemberDelegate {
 
 extension GroupDetailsViewController : AddFriendRowButtonDelegate {
     func didTouchAddFriend() {
-        let groupContactVC = GroupContactsViewController.instantiate(rootViewController: rootViewController, delegate: self, chat: chat)
+        let groupContactVC = GroupContactsViewController.instantiate(delegate: self, chat: chat)
         self.present(groupContactVC, animated: true, completion: nil)
     }
 }

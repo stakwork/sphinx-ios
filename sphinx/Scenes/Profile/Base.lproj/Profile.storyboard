@@ -904,18 +904,17 @@
                                 <rect key="frame" x="0.0" y="48" width="414" height="225"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="15d-YH-IQK">
-                                        <rect key="frame" x="0.0" y="0.0" width="60" height="50"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="70F-O9-LMx"/>
-                                            <constraint firstAttribute="width" constant="60" id="Ita-iO-RZ1"/>
+                                            <constraint firstAttribute="width" constant="50" id="Ita-iO-RZ1"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="21"/>
-                                        <inset key="titleEdgeInsets" minX="0.0" minY="-5" maxX="15" maxY="0.0"/>
-                                        <state key="normal" title="">
+                                        <state key="normal" title="">
                                             <color key="titleColor" name="WashedOutReceivedText"/>
                                         </state>
                                         <connections>
-                                            <action selector="menuButtonTouched" destination="54b-ve-hAY" eventType="touchUpInside" id="LWM-MW-N3u"/>
+                                            <action selector="backbuttonTouched" destination="54b-ve-hAY" eventType="touchUpInside" id="wJH-QI-Xgn"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PROFILE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="41O-R2-bE7">

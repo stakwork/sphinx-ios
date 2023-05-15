@@ -18,9 +18,8 @@ class GroupPaymentViewController: CommonGroupContactsViewController {
     weak var paymentViewdelegate: PaymentInvoiceDelegate?
     var viewModel: ChatViewModel!
      
-    static func instantiate(rootViewController : RootViewController, baseVC: UIViewController, viewModel: ChatViewModel, chat: Chat) -> GroupPaymentViewController {
+    static func instantiate(baseVC: UIViewController, viewModel: ChatViewModel, chat: Chat) -> GroupPaymentViewController {
         let viewController = StoryboardScene.Groups.groupPaymentViewController.instantiate()
-        viewController.rootViewController = rootViewController
         viewController.viewModel = viewModel
         viewController.chat = chat
         
@@ -50,7 +49,13 @@ class GroupPaymentViewController: CommonGroupContactsViewController {
         groupsManager.setContactIds(contactIds: selectedContactIds)
         let contacts = groupsManager.getSelectedContacts(contacts: getContactsToShow())
         
-        let viewController = CreateInvoiceViewController.instantiate(contacts: contacts, chat: chat, viewModel: ChatViewModel(), delegate: paymentViewdelegate, paymentMode: CreateInvoiceViewController.paymentMode.send, rootViewController: rootViewController)
+        let viewController = CreateInvoiceViewController.instantiate(
+            contacts: contacts,
+            chat: chat,
+            viewModel: ChatViewModel(),
+            delegate: paymentViewdelegate,
+            paymentMode: CreateInvoiceViewController.paymentMode.send
+        )
         
         self.navigationController?.pushViewController(viewController, animated: true)
     }

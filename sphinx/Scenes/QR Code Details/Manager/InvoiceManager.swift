@@ -83,14 +83,18 @@ class InvoiceManager {
         return (isInvoiceDetailsValid(), invoiceDetails)
     }
     
-    func goToCreateInvoiceDetails(vc: UIViewController, rootViewController: RootViewController, delegate: PaymentInvoiceDelegate? = nil) -> Bool {
+    func goToCreateInvoiceDetails(
+        vc: UIViewController,
+        delegate: PaymentInvoiceDelegate? = nil
+    ) -> Bool {
+        
         if let invoiceQuery = UserDefaults.Keys.invoiceQuery.get(defaultValue: ""), invoiceQuery != "" {
             UserDefaults.Keys.invoiceQuery.removeValue()
             resetValues()
             
             let (valid, invoiceDetails) = setValueFrom(invoiceDetailsString: invoiceQuery)
             if valid {
-                let createInvoiceDetailsVC = CreateInvoiceDetailsViewController.instantiate(invoiceDetails: invoiceDetails, rootViewController: rootViewController, delegate: delegate)
+                let createInvoiceDetailsVC = CreateInvoiceDetailsViewController.instantiate(invoiceDetails: invoiceDetails, delegate: delegate)
                 vc.presentNavigationControllerWith(vc: createInvoiceDetailsVC)
                 return true
             }

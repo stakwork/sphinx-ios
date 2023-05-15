@@ -18,8 +18,6 @@ import AVFoundation
 
 class NewQRScannerViewController: KeyboardEventsViewController {
     
-    var rootViewController : RootViewController!
-    
     weak var delegate: QRCodeScannerDelegate?
 
     @IBOutlet weak var codeScannerView: QRCodeScannerView! {
@@ -75,10 +73,7 @@ class NewQRScannerViewController: KeyboardEventsViewController {
         }
     }
     
-    static func instantiate(
-        rootViewController : RootViewController? = nil,
-        currentMode: Mode
-    ) -> NewQRScannerViewController {
+    static func instantiate(currentMode: Mode) -> NewQRScannerViewController {
         let viewController = StoryboardScene.QRCodeScanner.newQrCodeScannerViewController.instantiate()
         viewController.currentMode = currentMode
         return viewController

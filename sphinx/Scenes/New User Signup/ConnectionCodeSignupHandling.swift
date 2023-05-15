@@ -13,7 +13,6 @@ protocol ConnectionCodeSignupHandling: UIViewController, SphinxOnionConnectorDel
     var userData: UserData { get }
     var onionConnector: SphinxOnionConnector { get }
     var generateTokenRetries: Int { get set }
-    var rootViewController: RootViewController! { get set }
     
     func signup(withConnectionCode connectionCode: String)
     
@@ -179,9 +178,7 @@ extension ConnectionCodeSignupHandling {
     
     
     func presentConnectingLoadingScreenVC() {
-        let connectingVC = RestoreUserConnectingViewController.instantiate(
-            rootViewController: rootViewController
-        )
+        let connectingVC = RestoreUserConnectingViewController.instantiate()
         
         navigationController?.pushViewController(
             connectingVC,
@@ -233,7 +230,6 @@ extension ConnectionCodeSignupHandling {
             guard let self = self else { return }
 
             let inviteWelcomeVC = InviteWelcomeViewController.instantiate(
-                rootViewController: self.rootViewController,
                 inviter: inviter
             )
 

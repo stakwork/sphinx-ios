@@ -14,16 +14,8 @@ class NewUserGreetingViewController: UIViewController {
     @IBOutlet weak var continueButtonContainer: UIView!
     @IBOutlet weak var pulsingCircleView: UIView!
     
-    private var rootViewController: RootViewController!
-
-    
-    static func instantiate(
-        rootViewController: RootViewController
-    ) -> NewUserGreetingViewController {
+    static func instantiate() -> NewUserGreetingViewController {
         let viewController = StoryboardScene.NewUserSignup.newUserGreetingViewController.instantiate()
-        
-        viewController.rootViewController = rootViewController
-        
         return viewController
     }
 
@@ -39,10 +31,7 @@ class NewUserGreetingViewController: UIViewController {
     
     
     @IBAction func continueButtonTapped(_ sender: UIButton) {
-        let setNickNameVC = SetNickNameViewController.instantiate(
-            rootViewController: rootViewController
-        )
-        
+        let setNickNameVC = SetNickNameViewController.instantiate()
         self.navigationController?.pushViewController(setNickNameVC, animated: true)
     }
 }

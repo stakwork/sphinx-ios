@@ -117,11 +117,8 @@ class BadgeAdminDetailVC : UIViewController{
         }
     }
     
-    static func instantiate(
-        rootViewController: RootViewController
-    ) -> UIViewController {
+    static func instantiate() -> UIViewController {
         let viewController = StoryboardScene.BadgeManagement.badgeDetailViewController.instantiate()
-        
         return viewController
     }
 

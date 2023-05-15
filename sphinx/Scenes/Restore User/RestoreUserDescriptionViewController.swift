@@ -11,17 +11,9 @@ class RestoreUserDescriptionViewController: UIViewController {
     @IBOutlet weak var imageSubtitle: UILabel!
     @IBOutlet weak var continueButtonContainer: UIView!
     @IBOutlet weak var continueButton: UIButton!
-
-    private var rootViewController: RootViewController!
-
     
-    static func instantiate(
-        rootViewController: RootViewController
-    ) -> RestoreUserDescriptionViewController {
+    static func instantiate() -> RestoreUserDescriptionViewController {
         let viewController = StoryboardScene.RestoreUser.restoreUserDescriptionViewController.instantiate()
-        
-        viewController.rootViewController = rootViewController
-        
         return viewController
     }
 
@@ -35,10 +27,7 @@ class RestoreUserDescriptionViewController: UIViewController {
     
     
     @IBAction func continueButtonTapped(_ sender: UIButton) {
-        let restoreExistingFormVC = RestoreUserFormViewController.instantiate(
-            rootViewController: rootViewController
-        )
-        
+        let restoreExistingFormVC = RestoreUserFormViewController.instantiate()
         self.navigationController?.pushViewController(restoreExistingFormVC, animated: true)
     }
 }

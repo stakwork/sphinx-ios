@@ -494,7 +494,7 @@ class FeedsManager : NSObject {
     }
     
     //Navigate methods
-    func goToContentFeed(vc: UIViewController, rootViewController: RootViewController) -> Bool {
+    func goToContentFeed(vc: UIViewController) -> Bool {
         if let shareContentQuery = UserDefaults.Keys.shareContentQuery.get(defaultValue: ""), shareContentQuery != "" {
             UserDefaults.Keys.shareContentQuery.removeValue()
             

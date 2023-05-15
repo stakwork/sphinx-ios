@@ -8,9 +8,7 @@
 
 import UIKit
 
-class AddressBookViewController: UIViewController {
-    
-    private var rootViewController : RootViewController!
+class AddressBookViewController: PopHandlerViewController {
     
     @IBOutlet weak var viewTitle: UILabel!
     @IBOutlet weak var searchFieldContainer: UIView!
@@ -20,9 +18,9 @@ class AddressBookViewController: UIViewController {
     
     var tableDataSource : AddressBookDataSource!
     
-    static func instantiate(rootViewController : RootViewController) -> AddressBookViewController {
+    static func instantiate() -> AddressBookViewController {
         let viewController = StoryboardScene.Contacts.addressBookViewController.instantiate()
-        viewController.rootViewController = rootViewController
+        viewController.popOnSwipeEnabled = true
         return viewController
     }
 
@@ -31,7 +29,7 @@ class AddressBookViewController: UIViewController {
         
         SphinxSocketManager.sharedInstance.setDelegate(delegate: nil)
         
-        rootViewController.setStatusBarColor(light: false)
+//        rootViewController.setStatusBarColor(light: false)
         viewTitle.addTextSpacing(value: 2)
         
         addFriendView.configureForAddFriend()
@@ -56,26 +54,15 @@ class AddressBookViewController: UIViewController {
     }
     
     @IBAction func backButtonTouched() {
-        if
-            let drawer = rootViewController?.getDrawer(),
-            let leftVC = drawer.drawerViewController as? LeftMenuViewController
-        {
-            let chatList = DashboardRootViewController.instantiate(
-                rootViewController: rootViewController,
-                leftMenuDelegate: leftVC
-            )
-            
-            rootViewController.setCenterViewController(vc: chatList)
-        }
+        self.navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func searchButtonTouched() {
-    }
+    @IBAction func searchButtonTouched() {}
 }
 
 extension AddressBookViewController : AddressBookDataSourceDelegate {
     func didTapOnContact(contact: UserContact) {
-        let newContactVC = NewContactViewController.instantiate(rootViewController: rootViewController, contact: contact)
+        let newContactVC = NewContactViewController.instantiate(contact: contact)
         newContactVC.delegate = self
         self.navigationController?.pushViewController(newContactVC, animated: true)
     }
@@ -131,7 +118,7 @@ extension AddressBookViewController : NewContactVCDelegate {
 
 extension AddressBookViewController : AddFriendRowButtonDelegate {
     func didTouchAddFriend() {
-        let addfriendVC = AddFriendViewController.instantiate(rootViewController: rootViewController)
+        let addfriendVC = AddFriendViewController.instantiate()
         addfriendVC.delegate = self
         presentNavConWith(vc: addfriendVC)
     }

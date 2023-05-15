@@ -28,7 +28,7 @@ extension ChatViewController : PodcastPlayerVCDelegate {
         
         FeedLoaderHelper.loadPodcastFeedFor(chat: chat, callback: { podcast in
             self.addSmallPlayerFor(podcast, completion: {
-                PodcastNewEpisodeViewController.checkForNewEpisode(chat: chat, rootViewController: self.rootViewController)
+                PodcastNewEpisodeViewController.checkForNewEpisode(chat: chat)
             })
             self.chatHeaderView.updateSatsEarned()
         })

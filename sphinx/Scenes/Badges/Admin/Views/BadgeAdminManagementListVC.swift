@@ -20,15 +20,12 @@ class BadgeAdminManagementListVC: UIViewController{
     
     var chatID:Int? = nil
     
-    private var rootViewController: RootViewController!
     var badgeManagementListDataSource : BadgeAdminManagementListDataSource?
     
     static func instantiate(
-        rootViewController: RootViewController,
         chatID:Int?
     ) -> UIViewController {
         let viewController = StoryboardScene.BadgeManagement.badgeManagementListViewController.instantiate() as! BadgeAdminManagementListVC
-        viewController.rootViewController = rootViewController
         viewController.chatID = chatID
         
         return viewController
@@ -61,7 +58,7 @@ class BadgeAdminManagementListVC: UIViewController{
         badge: Badge,
         presentationContext: BadgeDetailPresentationContext
     ){
-        let badgeDetailVC = BadgeAdminDetailVC.instantiate(rootViewController: rootViewController)
+        let badgeDetailVC = BadgeAdminDetailVC.instantiate()
         if let valid_detailVC = badgeDetailVC as? BadgeAdminDetailVC{
             valid_detailVC.associatedBadge = badge
             valid_detailVC.presentationContext = presentationContext

@@ -16,10 +16,9 @@ class SetNickNameViewController: SetDataViewController {
     @IBOutlet weak var nickNameField: UITextField!
     @IBOutlet weak var loadingWheel: UIActivityIndicatorView!
     
-    static func instantiate(rootViewController : RootViewController) -> SetNickNameViewController {
+    static func instantiate() -> SetNickNameViewController {
         let viewController = StoryboardScene.Invite.setNickNameViewController.instantiate()
-        viewController.rootViewController = rootViewController
-        viewController.contactsService = rootViewController.contactsService
+        viewController.contactsService = ContactsService()
         
         return viewController
     }
@@ -33,7 +32,7 @@ class SetNickNameViewController: SetDataViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        rootViewController.setStatusBarColor(light: false)
+//        rootViewController.setStatusBarColor(light: false)
 
         nextButton.isHidden = true
         
@@ -78,7 +77,7 @@ class SetNickNameViewController: SetDataViewController {
     }
     
     func goToProfilePicture() {
-        let profilePictureVC = SetProfileImageViewController.instantiate(rootViewController: rootViewController, nickname: nickNameField.text ?? nil)
+        let profilePictureVC = SetProfileImageViewController.instantiate(nickname: nickNameField.text ?? nil)
         self.navigationController?.pushViewController(profilePictureVC, animated: true)
     }
 }

@@ -22,10 +22,9 @@ class SetProfileImageViewController: SetDataViewController {
     
     var imagePickerManager = ImagePickerManager.sharedInstance
     
-    static func instantiate(rootViewController : RootViewController, nickname: String?) -> SetProfileImageViewController {
+    static func instantiate(nickname: String?) -> SetProfileImageViewController {
         let viewController = StoryboardScene.Invite.setProfileImageViewController.instantiate()
-        viewController.rootViewController = rootViewController
-        viewController.contactsService = rootViewController.contactsService
+        viewController.contactsService = ContactsService()
         viewController.nickname = nickname
         
         return viewController
@@ -40,7 +39,7 @@ class SetProfileImageViewController: SetDataViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        rootViewController.setStatusBarColor(light: false)
+//        rootViewController.setStatusBarColor(light: false)
         
         profileImageView.layer.cornerRadius = profileImageView.frame.size.height / 2
         profileImageView.clipsToBounds = true
@@ -112,7 +111,7 @@ class SetProfileImageViewController: SetDataViewController {
     func goToSphinxDesktopAd() {
         SignupHelper.step = SignupHelper.SignupStep.PersonalInfoSet.rawValue
         
-        let sphinxDesktopAdVC = SphinxDesktopAdViewController.instantiate(rootViewController: rootViewController)
+        let sphinxDesktopAdVC = SphinxDesktopAdViewController.instantiate()
         self.navigationController?.pushViewController(sphinxDesktopAdVC, animated: true)
     }
 }

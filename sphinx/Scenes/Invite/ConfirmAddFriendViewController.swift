@@ -32,7 +32,6 @@ class ConfirmAddFriendViewController: UIViewController {
     let kPlaceHolderColor = UIColor.Sphinx.PlaceholderText
     let kTextViewColor = UIColor.Sphinx.Text
     
-    private var rootViewController : RootViewController!
     private var contactsService : ContactsService!
     
     private var lowestPrice : Int?
@@ -45,10 +44,9 @@ class ConfirmAddFriendViewController: UIViewController {
     
     let walletBalanceService = WalletBalanceService()
     
-    static func instantiate(rootViewController: RootViewController) -> ConfirmAddFriendViewController {
+    static func instantiate() -> ConfirmAddFriendViewController {
         let viewController = StoryboardScene.Invite.confirmAddFriendViewController.instantiate()
-        viewController.rootViewController = rootViewController
-        viewController.contactsService = rootViewController.contactsService
+        viewController.contactsService = ContactsService()
         return viewController
     }
 

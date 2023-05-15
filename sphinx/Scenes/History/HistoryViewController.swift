@@ -9,8 +9,6 @@ import UIKit
 
 class HistoryViewController: UIViewController {
     
-    private var rootViewController : RootViewController!
-
     @IBOutlet weak var viewTitle: UILabel!
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var historyTableView: UITableView!
@@ -29,17 +27,15 @@ class HistoryViewController: UIViewController {
     var didReachLimit = false
     let itemsPerPage = 50
     
-    static func instantiate(rootViewController: RootViewController) -> HistoryViewController {
+    static func instantiate() -> HistoryViewController {
         let viewController = StoryboardScene.History.historyViewController.instantiate()
-        viewController.rootViewController = rootViewController
-        
         return viewController
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        rootViewController.setStatusBarColor(light: false)
+//        rootViewController.setStatusBarColor(light: false)
         
         viewTitle.addTextSpacing(value: 2)
         headerView.addShadow(location: VerticalLocation.bottom, opacity: 0.2, radius: 2.0)
@@ -83,7 +79,7 @@ class HistoryViewController: UIViewController {
     }
     
     @IBAction func closeButtonTouched() {
-        rootViewController.setStatusBarColor(light: true)
+//        rootViewController.setStatusBarColor(light: true)
         dismiss(animated: true, completion: nil)
     }
 }

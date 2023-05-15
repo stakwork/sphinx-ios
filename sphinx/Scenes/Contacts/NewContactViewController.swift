@@ -38,7 +38,6 @@ class NewContactViewController: KeyboardEventsViewController {
     @IBOutlet weak var nameFieldRightConstraint: NSLayoutConstraint!
     @IBOutlet weak var groupPinContainer: GroupPinView!
     
-    var rootViewController : RootViewController!
     var contactsService : ContactsService!
     var contact : UserContact? = nil
     var pubkey : String? = nil
@@ -69,12 +68,10 @@ class NewContactViewController: KeyboardEventsViewController {
         }
     }
     
-    static func instantiate(rootViewController: RootViewController, contact: UserContact? = nil, pubkey: String? = nil) -> NewContactViewController {
+    static func instantiate(contact: UserContact? = nil, pubkey: String? = nil) -> NewContactViewController {
         let viewController = StoryboardScene.Contacts.newContactViewController.instantiate()
-        viewController.rootViewController = rootViewController
         viewController.contact = contact
         viewController.pubkey = pubkey
-        viewController.contactsService = rootViewController.contactsService
         return viewController
     }
     
@@ -230,7 +227,7 @@ class NewContactViewController: KeyboardEventsViewController {
         SubscriptionManager.sharedInstance.resetValues()
         SubscriptionManager.sharedInstance.contact = contact
         
-        let viewController = SubscriptionFormViewController.instantiate(rootViewController: rootViewController)
+        let viewController = SubscriptionFormViewController.instantiate()
         viewController.delegate = self
         navigationController?.pushViewController(viewController, animated: true)
     }

@@ -11,7 +11,7 @@ import Photos
 
 extension ProfileViewController {
     func shouldChangePIN() {
-        let pinCodeVC = SetPinCodeViewController.instantiate(rootViewController: rootViewController, mode: SetPinCodeViewController.SetPinMode.Change)
+        let pinCodeVC = SetPinCodeViewController.instantiate(mode: SetPinCodeViewController.SetPinMode.Change)
         pinCodeVC.doneCompletion = { pin in
             pinCodeVC.dismiss(animated: true, completion: {
                 if pin == UserData.sharedInstance.getPrivacyPin() {
@@ -36,7 +36,7 @@ extension ProfileViewController {
     func shouldChangePrivacyPIN() {
         let isPrivacyPinSet = GroupsPinManager.sharedInstance.isPrivacyPinSet()
         let mode: SetPinCodeViewController.SetPinMode = isPrivacyPinSet ? .Change : .Set
-        let pinCodeVC = SetPinCodeViewController.instantiate(rootViewController: rootViewController, mode: mode, pinMode: .Privacy, subtitle: "")
+        let pinCodeVC = SetPinCodeViewController.instantiate(mode: mode, pinMode: .Privacy, subtitle: "")
         pinCodeVC.doneCompletion = { pin in
             pinCodeVC.dismiss(animated: true, completion: {
                 if pin == UserData.sharedInstance.getAppPin() {

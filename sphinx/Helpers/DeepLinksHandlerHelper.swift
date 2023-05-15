@@ -12,25 +12,21 @@ class DeepLinksHandlerHelper {
     
     static func didHandleLinkQuery(
         vc: UIViewController,
-        rootViewController: RootViewController,
         delegate: PaymentInvoiceDelegate? = nil
     ) -> Bool {
-        if SubscriptionManager.sharedInstance.goToSubscriptionDetails(vc: vc, rootViewController: rootViewController) {
+        if SubscriptionManager.sharedInstance.goToSubscriptionDetails(vc: vc) {
             return true
         }
         
-        if InvoiceManager.sharedInstance.goToCreateInvoiceDetails(vc: vc, rootViewController: rootViewController, delegate: delegate) {
+        if InvoiceManager.sharedInstance.goToCreateInvoiceDetails(vc: vc, delegate: delegate) {
             return true
         }
         
-        if GroupsManager.sharedInstance.goToGroupDetails(
-            vc: vc,
-            rootViewController: rootViewController
-        ) {
+        if GroupsManager.sharedInstance.goToGroupDetails(vc: vc) {
             return true
         }
         
-        if FeedsManager.sharedInstance.goToContentFeed(vc: vc, rootViewController: rootViewController){
+        if FeedsManager.sharedInstance.goToContentFeed(vc: vc){
             return true
         }
         

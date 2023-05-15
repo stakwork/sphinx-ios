@@ -47,7 +47,6 @@ class DashboardRootViewController: RootViewController {
     }
     
     
-    internal var rootViewController: RootViewController!
     internal weak var leftMenuDelegate: LeftMenuDelegate?
     
     internal var managedObjectContext: NSManagedObjectContext!
@@ -191,13 +190,11 @@ class DashboardRootViewController: RootViewController {
 extension DashboardRootViewController {
     
     static func instantiate(
-        rootViewController: RootViewController,
         leftMenuDelegate: LeftMenuDelegate,
         managedObjectContext: NSManagedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext
     ) -> DashboardRootViewController {
         let viewController = StoryboardScene.Dashboard.dashboardRootViewController.instantiate()
         
-        viewController.rootViewController = rootViewController
         viewController.leftMenuDelegate = leftMenuDelegate
         viewController.managedObjectContext = managedObjectContext
         
@@ -280,7 +277,8 @@ extension DashboardRootViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        rootViewController.setStatusBarColor(light: true)
+//        rootViewController.setStatusBarColor(light: true)
+        
         socketManager.setDelegate(delegate: self)
         headerView.delegate = self
         
@@ -375,10 +373,7 @@ extension DashboardRootViewController {
     func scanQRCodeButtonTouched(
         mode: NewQRScannerViewController.Mode
     ) {
-        let viewController = NewQRScannerViewController.instantiate(
-            rootViewController: rootViewController,
-            currentMode: mode
-        )
+        let viewController = NewQRScannerViewController.instantiate(currentMode: mode)
         
         viewController.delegate = self
         
@@ -391,15 +386,13 @@ extension DashboardRootViewController {
     }
     
     func transactionsHistoryButtonTouched() {
-        let viewController = HistoryViewController.instantiate(
-            rootViewController: rootViewController
-        )
+        let viewController = HistoryViewController.instantiate()
         
         presentNavigationControllerWith(vc: viewController)
     }
     
     func presentNewContactVC(pubkey:String){
-        let newContactVC = NewContactViewController.instantiate(rootViewController: self.rootViewController,pubkey:pubkey)
+        let newContactVC = NewContactViewController.instantiate(pubkey:pubkey)
         newContactVC.delegate = self
         self.present(newContactVC, animated: true)
     }
@@ -410,8 +403,7 @@ extension DashboardRootViewController {
             viewModel: ChatViewModel(),
             delegate: self,
             paymentMode: CreateInvoiceViewController.paymentMode.send,
-            preloadedPubkey: pubkey,
-            rootViewController: rootViewController
+            preloadedPubkey: pubkey
         )
         
         presentNavigationControllerWith(vc: viewController)
@@ -421,8 +413,7 @@ extension DashboardRootViewController {
     func requestSatsButtonTouched() {
         let viewController = CreateInvoiceViewController.instantiate(
             viewModel: ChatViewModel(),
-            delegate: self,
-            rootViewController: rootViewController
+            delegate: self
         )
         
         presentNavigationControllerWith(vc: viewController)
@@ -488,7 +479,6 @@ extension DashboardRootViewController {
     internal func handleLinkQueries() {
         if DeepLinksHandlerHelper.didHandleLinkQuery(
             vc: self,
-            rootViewController: rootViewController,
             delegate: self
         ) {
             isLoading = false

@@ -62,15 +62,13 @@ class CreateInvoiceViewController: CommonPaymentViewController {
         viewModel: ChatViewModel,
         delegate: PaymentInvoiceDelegate? = nil,
         paymentMode: paymentMode = paymentMode.receive,
-        preloadedPubkey:String?=nil,
-        rootViewController: RootViewController
+        preloadedPubkey:String?=nil
     ) -> CreateInvoiceViewController {
         let viewController = StoryboardScene.Chat.createInvoiceViewController.instantiate()
         viewController.mode = paymentMode
         viewController.contacts = contacts
         viewController.chat = chat
         viewController.delegate = delegate
-        viewController.rootViewController = rootViewController
         viewController.preloadedPubkey = preloadedPubkey
         
         if let messageUUID = messageUUID {
@@ -97,7 +95,7 @@ class CreateInvoiceViewController: CommonPaymentViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        rootViewController.setStatusBarColor(light: false)
+//        rootViewController.setStatusBarColor(light: false)
         
         setupContact()
         setupKeyPad()
@@ -305,7 +303,13 @@ class CreateInvoiceViewController: CommonPaymentViewController {
         }
         loading = false
         
-        let viewController = PaymentTemplateViewController.instantiate(contacts: contacts, chat: chat, chatViewModel: chatViewModel, delegate: delegate, rootViewController: rootViewController)
+        let viewController = PaymentTemplateViewController.instantiate(
+            contacts: contacts,
+            chat: chat,
+            chatViewModel: chatViewModel,
+            delegate: delegate
+        )
+        
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     

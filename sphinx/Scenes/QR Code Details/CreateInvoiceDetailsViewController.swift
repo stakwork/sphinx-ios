@@ -24,10 +24,12 @@ class CreateInvoiceDetailsViewController: CommonPaymentViewController {
     
     var invoiceDetails: InvoiceManager.InvoiceDetails!
     
-    static func instantiate(invoiceDetails: InvoiceManager.InvoiceDetails, rootViewController: RootViewController, delegate: PaymentInvoiceDelegate? = nil) -> CreateInvoiceDetailsViewController {
+    static func instantiate(
+        invoiceDetails: InvoiceManager.InvoiceDetails,
+        delegate: PaymentInvoiceDelegate? = nil
+    ) -> CreateInvoiceDetailsViewController {
         let viewController = StoryboardScene.QRCodeDetail.createInvoiceDetailsViewController.instantiate()
         viewController.invoiceDetails = invoiceDetails
-        viewController.rootViewController = rootViewController
         viewController.delegate = delegate
         return viewController
     }
@@ -35,7 +37,7 @@ class CreateInvoiceDetailsViewController: CommonPaymentViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        rootViewController.setStatusBarColor(light: false)
+//        rootViewController.setStatusBarColor(light: false)
         
         confirmButton.setBackgroundColor(color: UIColor.Sphinx.PrimaryBlueBorder, forUIControlState: .highlighted)
         confirmButton.setBackgroundColor(color: UIColor.Sphinx.PrimaryBlueBorder, forUIControlState: .selected)

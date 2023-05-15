@@ -346,7 +346,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         launchingVC = false
     }
+    
+    func getRootViewController() -> RootViewController? {
+        if let window = window, let rootVC = window.rootViewController as? RootViewController {
+            return rootVC
+        }
+        return nil
+    }
 
+    
     func shouldStayInView(
         launchingApp: Bool
     ) -> Bool {

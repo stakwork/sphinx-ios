@@ -40,9 +40,13 @@ class PaymentTemplateViewController: CommonPaymentViewController {
     
     var collectionDataSource : PaymentTemplatesDataSource!
     
-    static func instantiate(contacts : [UserContact], chat: Chat? = nil, chatViewModel: ChatViewModel, delegate: PaymentInvoiceDelegate?, rootViewController: RootViewController) -> PaymentTemplateViewController {
+    static func instantiate(
+        contacts : [UserContact],
+        chat: Chat? = nil,
+        chatViewModel: ChatViewModel,
+        delegate: PaymentInvoiceDelegate?
+    ) -> PaymentTemplateViewController {
         let viewController = StoryboardScene.Chat.paymentTemplateViewController.instantiate()
-        viewController.rootViewController = rootViewController
         viewController.contacts = contacts
         viewController.chatViewModel = chatViewModel
         viewController.delegate = delegate

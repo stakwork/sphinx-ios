@@ -14,17 +14,8 @@ class RestoreUserConnectingViewController: UIViewController {
     @IBOutlet weak var contentContainer: UIView!
     @IBOutlet weak var connectingLabel: UILabel!
     
-    
-    private var rootViewController: RootViewController!
-
-    
-    static func instantiate(
-        rootViewController: RootViewController
-    ) -> RestoreUserConnectingViewController {
+    static func instantiate() -> RestoreUserConnectingViewController {
         let viewController = StoryboardScene.RestoreUser.restoreUserConnectingViewController.instantiate()
-        
-        viewController.rootViewController = rootViewController
-        
         return viewController
     }
 

@@ -99,7 +99,7 @@ class GroupsManager {
     }
     
     //tribes
-    func goToGroupDetails(vc: UIViewController, rootViewController: RootViewController) -> Bool {
+    func goToGroupDetails(vc: UIViewController) -> Bool {
         if
             let joinTribeQuery = UserDefaults.Keys.tribeQuery.get(defaultValue: ""),
                 joinTribeQuery != ""

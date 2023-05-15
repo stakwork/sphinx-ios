@@ -27,14 +27,15 @@ class SubscriptionDetailsViewController: UIViewController {
         }
     }
     
-    var rootViewController : RootViewController!
     var subscription : SubscriptionManager.SubscriptionQR!
     
     let subscriptionManager = SubscriptionManager.sharedInstance
     
-    static func instantiate(rootViewController : RootViewController? = nil, subscriptionQR: SubscriptionManager.SubscriptionQR, delegate: QRCodeScannerDelegate? = nil) -> SubscriptionDetailsViewController {
+    static func instantiate(
+        subscriptionQR: SubscriptionManager.SubscriptionQR,
+        delegate: QRCodeScannerDelegate? = nil
+    ) -> SubscriptionDetailsViewController {
         let viewController = StoryboardScene.Subscription.subscriptionDeatilsViewController.instantiate()
-        viewController.rootViewController = rootViewController
         viewController.subscription = subscriptionQR
         viewController.delegate = delegate
         return viewController
@@ -43,7 +44,7 @@ class SubscriptionDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        rootViewController.setStatusBarColor(light: false)
+//        rootViewController.setStatusBarColor(light: false)
         
         subscribeButton.setBackgroundColor(color: UIColor.Sphinx.PrimaryBlueBorder, forUIControlState: .highlighted)
         subscribeButton.setBackgroundColor(color: UIColor.Sphinx.PrimaryBlueBorder, forUIControlState: .selected)

@@ -17,21 +17,14 @@ class NewUserSignupFormViewController: UIViewController, ConnectionCodeSignupHan
     @IBOutlet weak var submitButtonContainer: UIView!
     @IBOutlet weak var submitButtonArrow: UILabel!
 
-    var rootViewController: RootViewController!
-    
     let authenticationHelper = BiometricAuthenticationHelper()
     let newMessageBubbleHelper = NewMessageBubbleHelper()
     
     var generateTokenRetries = 0
 
     
-    static func instantiate(
-        rootViewController: RootViewController
-    ) -> NewUserSignupFormViewController {
+    static func instantiate() -> NewUserSignupFormViewController {
         let viewController = StoryboardScene.NewUserSignup.newUserSignupFormViewController.instantiate()
-        
-        viewController.rootViewController = rootViewController
-        
         return viewController
     }
     

@@ -25,11 +25,13 @@ class PodcastNewEpisodeViewController: UIViewController {
         return viewController
     }
     
-    static func checkForNewEpisode(chat: Chat, rootViewController: RootViewController) {
+    static func checkForNewEpisode(
+        chat: Chat
+    ) {
+        
         if let podcast = chat.podcast {
+            
             if (chat.podcast?.episodes ?? []).count == 0 { return }
-            guard let chatId = rootViewController.getChatVCId() else { return }
-            if chatId != chat.id { return }
 
             let lastStoredEpisodeId = podcast.lastEpisodeId ?? podcast.currentEpisodeId
 

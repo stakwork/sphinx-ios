@@ -10,7 +10,6 @@ import UIKit
 
 class SetDataViewController : UIViewController {
     
-    var rootViewController : RootViewController!
     var contactsService : ContactsService!
     
     @IBOutlet weak var nextButton: UIButton!

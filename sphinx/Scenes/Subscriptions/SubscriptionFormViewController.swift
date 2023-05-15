@@ -17,12 +17,8 @@ class SubscriptionFormViewController: KeyboardEventsViewController {
     
     weak var delegate: SubscriptionFormDelegate?
     
-    private var rootViewController : RootViewController!
-    
-    static func instantiate(rootViewController : RootViewController) -> SubscriptionFormViewController {
+    static func instantiate() -> SubscriptionFormViewController {
         let viewController = StoryboardScene.Subscription.subscriptionFormViewController.instantiate()
-        viewController.rootViewController = rootViewController
-        
         return viewController
     }
     

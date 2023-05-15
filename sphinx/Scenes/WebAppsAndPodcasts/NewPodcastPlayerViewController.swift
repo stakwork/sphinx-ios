@@ -75,8 +75,7 @@ class NewPodcastPlayerViewController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: .onConnectionStatusChanged, object: nil)
         NotificationCenter.default.removeObserver(self, name: .refreshFeedUI, object: nil)
         
-        if let navController = self.navigationController,
-           navController.isBeingDismissed {
+        if let navController = self.navigationController, navController.isBeingDismissed {
             delegate?.willDismissPlayer()
             NotificationCenter.default.post(name: .refreshFeedUI, object: nil)
         }

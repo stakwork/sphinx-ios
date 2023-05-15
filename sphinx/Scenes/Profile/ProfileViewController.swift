@@ -49,6 +49,11 @@ class ProfileViewController: KeyboardEventsViewController {
     @IBOutlet weak var privacyPinLabel: UILabel!
     @IBOutlet weak var privacyPinGroupContainer: UIView!
     @IBOutlet weak var signingDeviceLabel: UILabel!
+    @IBOutlet weak var manageStorageChevronImageView: UIImageView!
+    @IBOutlet weak var manageStorageView: UIView!
+    @IBOutlet weak var storageSumaryLabel: UILabel!
+    @IBOutlet weak var storageSummaryBarView: StorageSummaryView!
+    
     
     
     @IBOutlet var tabContainers: [UIScrollView]!
@@ -157,6 +162,7 @@ class ProfileViewController: KeyboardEventsViewController {
         advanceScrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
     
+    
     func configureFields() {
         inviteServerTextField.delegate = self
         memesServerTextField.delegate = self
@@ -211,6 +217,15 @@ class ProfileViewController: KeyboardEventsViewController {
                 routeHintTextField.text = routeHint
                 routeHintTextField.isUserInteractionEnabled = false
             }
+            
+            if let image = manageStorageChevronImageView.image{
+                manageStorageChevronImageView.image = changeSVGColor(svgImage: image, color: UIColor.Sphinx.PrimaryGreen)
+            }
+            manageStorageView.isUserInteractionEnabled = true
+            manageStorageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showManageStorageVC)))
+            updateStorageSummaryLabel()
+            storageSummaryBarView.adjustBarWidths(dict: StorageManager.sharedManager.getStorageItemSummaryByType())
+            
         }
         
         relayUrlTextField.text = userData.getNodeIP()
@@ -221,6 +236,31 @@ class ProfileViewController: KeyboardEventsViewController {
         memesServerTextField.text = API.kAttachmentsServerUrl
         meetingServerTextField.text = API.kVideoCallServer
         meetingAmountTextField.text = "\(UserContact.kTipAmount)"
+    }
+    
+    func changeSVGColor(svgImage: UIImage, color: UIColor) -> UIImage? {
+        // Create a new image renderer with the same size as the SVG image
+        let renderer = UIGraphicsImageRenderer(size: svgImage.size)
+
+        // Render the SVG image with the new color
+        let newImage = renderer.image { context in
+            // Set the fill color
+            color.setFill()
+
+            // Draw the SVG image with the new color
+            svgImage.draw(in: CGRect(origin: .zero, size: svgImage.size))
+        }
+
+        return newImage
+    }
+    
+    func updateStorageSummaryLabel(){
+        let max = UserData.sharedInstance.getMaxMemory()
+        StorageManager.sharedManager.refreshAllStoredData()
+        let usage = StorageManager.sharedManager.getItemGroupTotalSize(items: StorageManager.sharedManager.allItems)
+        
+        
+        storageSumaryLabel.text = "\(Int(usage/1e9)) GB of \(Int(max)) GB"
     }
     
     //IBActions
@@ -249,6 +289,10 @@ class ProfileViewController: KeyboardEventsViewController {
     }
     
     @IBAction func manageStorageButtonTapped(_ sender: Any) {
+        showManageStorageVC()
+    }
+    
+    @objc func showManageStorageVC(){
         let vc = ProfileManageStorageViewController.instantiate()
         let navController = UINavigationController(rootViewController: vc)
         self.present(navController, animated: true, completion: nil)

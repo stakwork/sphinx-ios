@@ -662,6 +662,8 @@
 		CE842DEF298D61CF00620AD3 /* BadgeAdminListHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE842DED298D61CF00620AD3 /* BadgeAdminListHeaderCell.xib */; };
 		CE842DF12992D0F400620AD3 /* BadgeTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE842DF02992D0F400620AD3 /* BadgeTemplate.swift */; };
 		CE91E59A29885175008BA6EA /* MemberBadgeDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE91E59929885175008BA6EA /* MemberBadgeDetailVC.swift */; };
+		CEA2ED152A12D6D000DAC671 /* StorageSummaryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEA2ED142A12D6D000DAC671 /* StorageSummaryView.xib */; };
+		CEA2ED172A12D6F700DAC671 /* StorageSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA2ED162A12D6F700DAC671 /* StorageSummaryView.swift */; };
 		CEBF0D032975B20B006C1F21 /* DiscoverTribesTagSelectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBF0D022975B20B006C1F21 /* DiscoverTribesTagSelectionVC.swift */; };
 		CEBF0D052975C367006C1F21 /* DiscoverTribesTagSelectionVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBF0D042975C367006C1F21 /* DiscoverTribesTagSelectionVM.swift */; };
 		CEBF0D07297603B0006C1F21 /* TribeTagSelectionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBF0D06297603B0006C1F21 /* TribeTagSelectionCollectionViewCell.swift */; };
@@ -1664,6 +1666,8 @@
 		CE9985E629D70CD3007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/AuthorizeAppView.strings; sourceTree = "<group>"; };
 		CE9985E729D70CD3007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/Welcome.strings; sourceTree = "<group>"; };
 		CE9985E829D70CD3007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CEA2ED142A12D6D000DAC671 /* StorageSummaryView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StorageSummaryView.xib; sourceTree = "<group>"; };
+		CEA2ED162A12D6F700DAC671 /* StorageSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageSummaryView.swift; sourceTree = "<group>"; };
 		CEBF0D022975B20B006C1F21 /* DiscoverTribesTagSelectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTribesTagSelectionVC.swift; sourceTree = "<group>"; };
 		CEBF0D042975C367006C1F21 /* DiscoverTribesTagSelectionVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTribesTagSelectionVM.swift; sourceTree = "<group>"; };
 		CEBF0D06297603B0006C1F21 /* TribeTagSelectionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TribeTagSelectionCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -3516,6 +3520,8 @@
 				47F258CB253DD43400122A5A /* PinTimeSlider.xib */,
 				CE30D95A2A0C09DE00C83555 /* MaxMemorySlider.swift */,
 				CE30D95C2A0C09EB00C83555 /* MaxMemorySlider.xib */,
+				CEA2ED162A12D6F700DAC671 /* StorageSummaryView.swift */,
+				CEA2ED142A12D6D000DAC671 /* StorageSummaryView.xib */,
 			);
 			path = "Custom Views";
 			sourceTree = "<group>";
@@ -4419,6 +4425,7 @@
 				475BDD04232AC24600C5BBD6 /* MessageReceivedTableViewCell.xib in Resources */,
 				475BDCB2232AC1E800C5BBD6 /* NewKeyPadView.xib in Resources */,
 				47AF0D39254C98DE00C98398 /* BoostFireworksAnimationView.xib in Resources */,
+				CEA2ED152A12D6D000DAC671 /* StorageSummaryView.xib in Resources */,
 				47D03DF62510EDAA0077A968 /* FileInfoView.xib in Resources */,
 				47904C0C24BF352300710E7A /* aurora.caf in Resources */,
 				47D46A2D237B1D140005A548 /* SubscriptionFormButtonTableViewCell.xib in Resources */,
@@ -4644,6 +4651,7 @@
 				47308E0424FEE6E600FFAC6F /* SocketParsable.swift in Sources */,
 				47C7C1782938E84D00264BF6 /* RecommendationResult.swift in Sources */,
 				475043D72976F96F00830E9E /* PodcastSmallPlayer+Delegates.swift in Sources */,
+				CEA2ED172A12D6F700DAC671 /* StorageSummaryView.swift in Sources */,
 				475723A5247EB5D1001ADC7E /* AudioRecorderHelper.swift in Sources */,
 				47822C6D2449EEEE0011D832 /* PaidMessageReceivedTableViewCell.swift in Sources */,
 				CE30D9592A0BFFAA00C83555 /* ProfileManageStorageViewController.swift in Sources */,

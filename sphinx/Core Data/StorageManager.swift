@@ -51,6 +51,18 @@ class StorageManager {
         return downloadedPods + cachedMedia
     }()
     
+    func getStorageItemSummaryByType()->[StorageManagerMediaType:Double]{
+        var dict = [StorageManagerMediaType:Double]()
+        let storedItemsByType = getStoredItemsByType()
+        for type in StorageManagerMediaType.allCases{
+            if let typeSpecificItems = storedItemsByType[type]{
+                let total = getItemGroupTotalSize(items: typeSpecificItems)
+                dict[type] = total
+            }
+        }
+        return dict
+    }
+    
     func getStoredItemsByType()->[StorageManagerMediaType:[StorageManagerItem]]{
         var dict = [StorageManagerMediaType:[StorageManagerItem]]()
         for type in StorageManagerMediaType.allCases{
@@ -76,7 +88,7 @@ class StorageManager {
     }
     
     func getCachedMediaTotalSizeMB()->Double{
-        return getItemGroupTotalSize(items: cachedMedia)/1e6
+        return getItemGroupTotalSize(items: cachedMedia)
     }
     
     func getItemGroupTotalSize(items:[StorageManagerItem])->Double{
@@ -128,7 +140,7 @@ class StorageManager {
             
             if let cm = (CachedMedia.getCachedMediaByFilePath(filePath: imagePath)){
                 cm.image = image
-                let newItem = StorageManagerItem(type: .photo, sizeMB: Double(size ?? 0), label: "", date:cm.creationDate ?? Date()  ,cachedMedia: cm)
+                let newItem = StorageManagerItem(type: .photo, sizeMB: Double(size ?? 0)/1e6, label: "", date:cm.creationDate ?? Date()  ,cachedMedia: cm)
                 items.append(newItem)
             }
             

@@ -136,6 +136,7 @@ class ProfileViewController: NewKeyboardHandlerViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         walletBalanceService.updateBalance(labels: [balanceLabel])
     }
     

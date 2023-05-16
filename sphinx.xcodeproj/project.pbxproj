@@ -327,6 +327,7 @@
 		475DD30E2A1297C100F92173 /* PopHandlerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475DD30D2A1297C100F92173 /* PopHandlerViewController.swift */; };
 		475DD3102A13E21A00F92173 /* UserContact+FetchUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475DD30F2A13E21A00F92173 /* UserContact+FetchUtils.swift */; };
 		475DD3122A13FBAB00F92173 /* NewChatViewController+FetchControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475DD3112A13FBAB00F92173 /* NewChatViewController+FetchControllerExtension.swift */; };
+		475DD3142A14151E00F92173 /* NewChatViewController+BottomViewDelegateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475DD3132A14151E00F92173 /* NewChatViewController+BottomViewDelegateExtension.swift */; };
 		475E41612382E28800928931 /* UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475E41602382E28800928931 /* UIButton.swift */; };
 		475E416B23858D4900928931 /* Subscription+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475E416923858D4800928931 /* Subscription+CoreDataProperties.swift */; };
 		475E416C23858D4900928931 /* Subscription+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475E416A23858D4800928931 /* Subscription+CoreDataClass.swift */; };
@@ -1182,6 +1183,7 @@
 		475DD30D2A1297C100F92173 /* PopHandlerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopHandlerViewController.swift; sourceTree = "<group>"; };
 		475DD30F2A13E21A00F92173 /* UserContact+FetchUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserContact+FetchUtils.swift"; sourceTree = "<group>"; };
 		475DD3112A13FBAB00F92173 /* NewChatViewController+FetchControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewChatViewController+FetchControllerExtension.swift"; sourceTree = "<group>"; };
+		475DD3132A14151E00F92173 /* NewChatViewController+BottomViewDelegateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewChatViewController+BottomViewDelegateExtension.swift"; sourceTree = "<group>"; };
 		475E41602382E28800928931 /* UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButton.swift; sourceTree = "<group>"; };
 		475E4162238588A200928931 /* sphinx 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 2.xcdatamodel"; sourceTree = "<group>"; };
 		475E416923858D4800928931 /* Subscription+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Subscription+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -2619,11 +2621,7 @@
 				478BD8B52829B67300C733FD /* TribeMemberPopupViewController.swift */,
 				477C524F28C6307100C24117 /* NotificationsLevelViewController.swift */,
 				4712994229227B450049CBE3 /* TribeMemberProfileViewController.swift */,
-				47F826692A0C150B002E81F0 /* NewChatViewController.swift */,
-				475DD3092A1287B400F92173 /* NewKeyboardHandlerViewController.swift */,
-				475DD30B2A1291F900F92173 /* NewChatViewController+ChatHeaderDelegateExtension.swift */,
-				475DD30D2A1297C100F92173 /* PopHandlerViewController.swift */,
-				475DD3112A13FBAB00F92173 /* NewChatViewController+FetchControllerExtension.swift */,
+				475DD3152A14156300F92173 /* New Chat View Controller */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -3030,6 +3028,19 @@
 				475043C929719E3B00830E9E /* PodcastPlayerController */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		475DD3152A14156300F92173 /* New Chat View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				47F826692A0C150B002E81F0 /* NewChatViewController.swift */,
+				475DD3092A1287B400F92173 /* NewKeyboardHandlerViewController.swift */,
+				475DD30B2A1291F900F92173 /* NewChatViewController+ChatHeaderDelegateExtension.swift */,
+				475DD30D2A1297C100F92173 /* PopHandlerViewController.swift */,
+				475DD3112A13FBAB00F92173 /* NewChatViewController+FetchControllerExtension.swift */,
+				475DD3132A14151E00F92173 /* NewChatViewController+BottomViewDelegateExtension.swift */,
+			);
+			path = "New Chat View Controller";
 			sourceTree = "<group>";
 		};
 		4764B2A82375DF43009508BA /* Manager */ = {
@@ -5028,6 +5039,7 @@
 				4789E26C24F05481003991BE /* ProfileViewControllerRelayExtension.swift in Sources */,
 				473633E625558EFE007405F2 /* PodcastSatsView.swift in Sources */,
 				479A39DA244F237F00A37899 /* PaidMessagePreviewViewController.swift in Sources */,
+				475DD3142A14151E00F92173 /* NewChatViewController+BottomViewDelegateExtension.swift in Sources */,
 				47308E0D24FEE6E700FFAC6F /* SocketEngine.swift in Sources */,
 				475BDD95232C2F9100C5BBD6 /* UILabel.swift in Sources */,
 				F3188B7B271792C400890DDD /* Video+Properties.swift in Sources */,

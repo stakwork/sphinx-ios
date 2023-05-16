@@ -8,7 +8,22 @@
 
 import UIKit
 
+protocol ChatMessageTextFieldViewDelegate {
+    func shouldSendMessage(text: String, type: Int, completion: @escaping (Bool) -> ())
+    
+    func didTapAttachmentsButton(text: String?)
+    func didTapSendBlueButton()
+    
+    func shouldStartRecording()
+    func shouldStopAndSendAudio()
+    func shouldCancelRecording()
+    
+    func didDetectPossibleMention(mentionText:String)
+}
+
 class ChatMessageTextFieldView: UIView {
+    
+    var delegate: ChatMessageTextFieldViewDelegate?
 
     @IBOutlet var contentView: UIView!
     

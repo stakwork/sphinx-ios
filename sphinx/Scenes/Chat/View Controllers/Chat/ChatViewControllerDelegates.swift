@@ -325,7 +325,13 @@ extension ChatViewController : ChatAccessoryViewDelegate {
         
         accessoryView.hide()
         
-        let viewController = ChatAttachmentViewController.instantiate(delegate: self, chat: chat, text: accessoryView.getMessage(), replyingMessage: accessoryView.getReplyingMessage())
+        let viewController = ChatAttachmentViewController.instantiate(
+            delegate: self,
+            chatObjectId: chat?.objectID,
+            text: accessoryView.getMessage(),
+            replyingMessageObjectId: accessoryView.getReplyingMessage()?.objectID
+        )
+        
         viewController.modalPresentationStyle = .overCurrentContext
         self.present(viewController, animated: false)
     }

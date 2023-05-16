@@ -11,6 +11,9 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NewChatAccessoryView" customModule="sphinx" customModuleProvider="target">
             <connections>
                 <outlet property="contentView" destination="iN0-l3-epB" id="mka-sh-oYS"/>
+                <outlet property="messageFieldView" destination="yPr-Da-BCU" id="bSB-rF-Tgp"/>
+                <outlet property="messageReplyView" destination="25U-yU-kV3" id="SkT-B8-AkP"/>
+                <outlet property="podcastPlayerView" destination="9yx-ly-PmR" id="r1W-38-tP5"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

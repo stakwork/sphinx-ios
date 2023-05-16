@@ -51,6 +51,7 @@ class NewChatViewController: NewKeyboardHandlerViewController {
         super.viewDidLoad()
         
         setupLayouts()
+        setDelegates()
         setupData()
         configureFetchResultsController()
     }
@@ -78,6 +79,10 @@ class NewChatViewController: NewKeyboardHandlerViewController {
             contact: self.contact,
             delegate: self
         )
+    }
+    
+    func setDelegates() {
+        bottomView.setDelegates(messageFieldDelegate: self)
     }
 
     @IBAction func dismissButtonTouched(_ sender: Any) {

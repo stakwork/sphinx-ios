@@ -153,7 +153,7 @@ class BadgeAdminDetailVC : UIViewController{
             return
         }
         
-        let viewController = ChatAttachmentViewController.instantiate(delegate: self, chat: nil)
+        let viewController = ChatAttachmentViewController.instantiate(delegate: self)
         viewController.presentationContext = .fromBadgeCreateUpdate
         viewController.modalPresentationStyle = .overCurrentContext
         self.present(viewController, animated: false)

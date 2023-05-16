@@ -11,6 +11,7 @@ import AVKit
 import GiphyUISDK
 import SDWebImageFLPlugin
 import MobileCoreServices
+import CoreData
 
 protocol BackCameraVC {}
 
@@ -98,12 +99,25 @@ class ChatAttachmentViewController: UIViewController, BackCameraVC {
         }
     }
     
-    static func instantiate(delegate: AttachmentsDelegate, chat: Chat?, text: String? = nil, replyingMessage: TransactionMessage? = nil) -> ChatAttachmentViewController {
+    static func instantiate(
+        delegate: AttachmentsDelegate,
+        chatObjectId: NSManagedObjectID? = nil,
+        text: String? = nil,
+        replyingMessageObjectId: NSManagedObjectID? = nil
+    ) -> ChatAttachmentViewController {
+        
         let viewController = StoryboardScene.Chat.chatAttachmentViewController.instantiate()
-        viewController.replyingMessage = replyingMessage
+        
+        if let replyingMessageObjectId = replyingMessageObjectId {
+            viewController.replyingMessage = CoreDataManager.sharedManager.getObjectWith(objectId: replyingMessageObjectId)
+        }
+        
         viewController.text = text
         viewController.delegate = delegate
-        viewController.chat = chat
+        
+        if let chatObjectId = chatObjectId {
+            viewController.chat = CoreDataManager.sharedManager.getObjectWith(objectId: chatObjectId)
+        }
         
         return viewController
     }
@@ -129,14 +143,14 @@ class ChatAttachmentViewController: UIViewController, BackCameraVC {
         
         imagePickerManager.configurePicker(vc: self)
         
-        if(presentationContext == .fromBadgeCreateUpdate){
+        if (presentationContext == .fromBadgeCreateUpdate) {
             setupForBadges()
         }
+        
+        animateView()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
+    func animateView() {
         UIView.animate(withDuration: 0.2, animations: {
             self.view.alpha = 1.0
         }, completion: { _ in

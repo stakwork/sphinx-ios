@@ -38,14 +38,14 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xFX-Pj-wP8">
-                            <rect key="frame" x="80" y="0.0" width="40" height="16"/>
+                            <rect key="frame" x="82" y="0.0" width="40" height="16"/>
                             <color key="backgroundColor" red="0.65490196078431373" green="0.42352941176470588" blue="0.95294117647058818" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="40" id="rcV-U6-fU9"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6dI-dX-Lyl">
-                            <rect key="frame" x="120" y="0.0" width="40" height="16"/>
+                            <rect key="frame" x="124" y="0.0" width="40" height="16"/>
                             <color key="backgroundColor" red="0.98039215686274506" green="0.90196078431372551" blue="0.46274509803921571" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="40" id="dWz-zP-06H"/>
@@ -54,8 +54,8 @@
                     </subviews>
                     <color key="backgroundColor" name="ReceivedMsgBG"/>
                     <constraints>
-                        <constraint firstItem="6dI-dX-Lyl" firstAttribute="leading" secondItem="xFX-Pj-wP8" secondAttribute="trailing" id="4df-r3-Pcc"/>
-                        <constraint firstItem="xFX-Pj-wP8" firstAttribute="leading" secondItem="UUc-NP-3O4" secondAttribute="trailing" id="8jG-Rm-5Rk"/>
+                        <constraint firstItem="6dI-dX-Lyl" firstAttribute="leading" secondItem="xFX-Pj-wP8" secondAttribute="trailing" constant="2" id="4df-r3-Pcc"/>
+                        <constraint firstItem="xFX-Pj-wP8" firstAttribute="leading" secondItem="UUc-NP-3O4" secondAttribute="trailing" constant="2" id="8jG-Rm-5Rk"/>
                         <constraint firstItem="xFX-Pj-wP8" firstAttribute="bottom" secondItem="UUc-NP-3O4" secondAttribute="bottom" id="Etq-eF-5ou"/>
                         <constraint firstItem="xFX-Pj-wP8" firstAttribute="top" secondItem="UUc-NP-3O4" secondAttribute="top" id="Fmz-wZ-W8a"/>
                         <constraint firstItem="UUc-NP-3O4" firstAttribute="leading" secondItem="pA3-QN-pPT" secondAttribute="leading" id="K63-wM-hjs"/>

@@ -258,8 +258,6 @@ class ProfileViewController: KeyboardEventsViewController {
         let max = UserData.sharedInstance.getMaxMemory()
         StorageManager.sharedManager.refreshAllStoredData(completion: {
             let usage = StorageManager.sharedManager.getItemGroupTotalSize(items: StorageManager.sharedManager.allItems)
-            
-            
             self.storageSumaryLabel.text = "\(Int(usage/1e9)) GB of \(Int(max)) GB"
         })
         
@@ -295,9 +293,9 @@ class ProfileViewController: KeyboardEventsViewController {
     }
     
     @objc func showManageStorageVC(){
-        let vc = ProfileManageStorageViewController.instantiate()
-        let navController = UINavigationController(rootViewController: vc)
-        self.present(navController, animated: true, completion: nil)
+        let vc = ProfileManageStorageViewController.instantiate(storageStats: StorageManager.sharedManager.getStorageItemSummaryByType())
+        self.navigationController?.pushViewController(vc, animated: true)
+
     }
     
     

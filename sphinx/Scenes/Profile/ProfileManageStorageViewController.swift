@@ -11,12 +11,27 @@ import UIKit
 
 class ProfileManageStorageViewController : UIViewController{
     
-    static func instantiate() -> ProfileManageStorageViewController {
+    @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var storageSummaryView: StorageSummaryView!
+    var stats = [StorageManagerMediaType:Double]()
+    
+    static func instantiate(storageStats:[StorageManagerMediaType:Double]) -> ProfileManageStorageViewController {
         let viewController = StoryboardScene.Profile.profileManageStorageViewController.instantiate()
 //        viewController.rootViewController = rootViewController
 //        viewController.contactsService = rootViewController.contactsService
 //        viewController.delegate = delegate
+        viewController.stats = storageStats
         
         return viewController
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        storageSummaryView.adjustBarWidths(dict: stats)
+    }
+    
+    
+    @IBAction func backButtonTap(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
     }
 }

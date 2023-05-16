@@ -78,9 +78,12 @@ class StorageManager {
         return dict
     }
     
-    func refreshAllStoredData(){
+    func refreshAllStoredData(completion:@escaping ()->()){
         downloadedPods = getDownloadedPodcastEpisodeList()
-        cachedMedia = getImageCacheItems()
+        getImageCacheItems(completion: { results in
+            self.cachedMedia = results
+            completion()
+        })
     }
     
     func getDownloadedPodcastsTotalSizeMB()->Double{
@@ -105,14 +108,15 @@ class StorageManager {
         }
     }
     
-    func getImageCacheItems()->[StorageManagerItem] {
+    func getImageCacheItems(completion: @escaping ([StorageManagerItem])->()) {
         let imageCache = SDImageCache.shared
         let diskCachePath = imageCache.diskCachePath
         let fileManager = FileManager.default
         
         guard let cacheFiles = fileManager.enumerator(atPath: diskCachePath) else {
             print("Unable to retrieve cache files")
-            return []
+            completion([])
+            return
         }
         var items = [StorageManagerItem]()
         for file in cacheFiles {
@@ -148,7 +152,7 @@ class StorageManager {
             print("Image path: \(imagePath)")
             // Example: UIImageView(image: image)
         }
-        return items
+        completion(items)
     }
     
     func deleteCacheItems(cms:[CachedMedia]){

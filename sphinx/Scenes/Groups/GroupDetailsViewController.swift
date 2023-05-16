@@ -233,7 +233,7 @@ class GroupDetailsViewController: UIViewController {
     }
     
     func goToNotificationsLevel() {
-        let notificationsVC = NotificationsLevelViewController.instantiate(chat: chat, delegate: nil)
+        let notificationsVC = NotificationsLevelViewController.instantiate(chatObjectId: chat.objectID, delegate: nil)
         self.present(notificationsVC, animated: true, completion: nil)
     }
     

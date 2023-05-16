@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 public protocol PresentedViewControllerDelegate: class {
     func viewWillDismiss()
@@ -39,11 +40,11 @@ class NotificationsLevelViewController: UIViewController {
     }
     
     static func instantiate(
-        chat: Chat,
-        delegate: PresentedViewControllerDelegate?
+        chatObjectId: NSManagedObjectID,
+        delegate: PresentedViewControllerDelegate? = nil
     ) -> NotificationsLevelViewController {
         let viewController = StoryboardScene.Chat.notificationsLevelViewController.instantiate()
-        viewController.chat = chat
+        viewController.chat = CoreDataManager.sharedManager.getObjectWith(objectId: chatObjectId)
         viewController.delegate = delegate
         return viewController
     }

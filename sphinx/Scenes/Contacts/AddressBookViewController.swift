@@ -62,7 +62,7 @@ class AddressBookViewController: PopHandlerViewController {
 
 extension AddressBookViewController : AddressBookDataSourceDelegate {
     func didTapOnContact(contact: UserContact) {
-        let newContactVC = NewContactViewController.instantiate(contact: contact)
+        let newContactVC = NewContactViewController.instantiate(contactObjectId: contact.objectID)
         newContactVC.delegate = self
         self.navigationController?.pushViewController(newContactVC, animated: true)
     }

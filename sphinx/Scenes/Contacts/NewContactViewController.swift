@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 @objc protocol NewContactVCDelegate: class {
     @objc optional func shouldReloadContacts(reload: Bool)
@@ -68,10 +69,19 @@ class NewContactViewController: KeyboardEventsViewController {
         }
     }
     
-    static func instantiate(contact: UserContact? = nil, pubkey: String? = nil) -> NewContactViewController {
+    static func instantiate(
+        contactObjectId: NSManagedObjectID? = nil,
+        pubkey: String? = nil
+    ) -> NewContactViewController {
         let viewController = StoryboardScene.Contacts.newContactViewController.instantiate()
-        viewController.contact = contact
+        
+        if let contactObjectId = contactObjectId {
+            viewController.contact = CoreDataManager.sharedManager.getObjectWith(objectId: contactObjectId)
+        }
+        
+        viewController.contactsService = ContactsService()
         viewController.pubkey = pubkey
+        
         return viewController
     }
     

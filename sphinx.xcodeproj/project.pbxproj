@@ -325,6 +325,8 @@
 		475DD30A2A1287B400F92173 /* NewKeyboardHandlerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475DD3092A1287B400F92173 /* NewKeyboardHandlerViewController.swift */; };
 		475DD30C2A1291F900F92173 /* NewChatViewController+ChatHeaderDelegateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475DD30B2A1291F900F92173 /* NewChatViewController+ChatHeaderDelegateExtension.swift */; };
 		475DD30E2A1297C100F92173 /* PopHandlerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475DD30D2A1297C100F92173 /* PopHandlerViewController.swift */; };
+		475DD3102A13E21A00F92173 /* UserContact+FetchUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475DD30F2A13E21A00F92173 /* UserContact+FetchUtils.swift */; };
+		475DD3122A13FBAB00F92173 /* NewChatViewController+FetchControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475DD3112A13FBAB00F92173 /* NewChatViewController+FetchControllerExtension.swift */; };
 		475E41612382E28800928931 /* UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475E41602382E28800928931 /* UIButton.swift */; };
 		475E416B23858D4900928931 /* Subscription+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475E416923858D4800928931 /* Subscription+CoreDataProperties.swift */; };
 		475E416C23858D4900928931 /* Subscription+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475E416A23858D4800928931 /* Subscription+CoreDataClass.swift */; };
@@ -1178,6 +1180,8 @@
 		475DD3092A1287B400F92173 /* NewKeyboardHandlerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewKeyboardHandlerViewController.swift; sourceTree = "<group>"; };
 		475DD30B2A1291F900F92173 /* NewChatViewController+ChatHeaderDelegateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewChatViewController+ChatHeaderDelegateExtension.swift"; sourceTree = "<group>"; };
 		475DD30D2A1297C100F92173 /* PopHandlerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopHandlerViewController.swift; sourceTree = "<group>"; };
+		475DD30F2A13E21A00F92173 /* UserContact+FetchUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserContact+FetchUtils.swift"; sourceTree = "<group>"; };
+		475DD3112A13FBAB00F92173 /* NewChatViewController+FetchControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewChatViewController+FetchControllerExtension.swift"; sourceTree = "<group>"; };
 		475E41602382E28800928931 /* UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButton.swift; sourceTree = "<group>"; };
 		475E4162238588A200928931 /* sphinx 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 2.xcdatamodel"; sourceTree = "<group>"; };
 		475E416923858D4800928931 /* Subscription+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Subscription+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -1926,6 +1930,7 @@
 				475BDD5B232AE26D00C5BBD6 /* UserContact+CoreDataClass.swift */,
 				47D46A2E237C838F0005A548 /* UserContact+CoreDataProperties.swift */,
 				4707089324AE45D400A98DCA /* UserContactChatListExtension.swift */,
+				475DD30F2A13E21A00F92173 /* UserContact+FetchUtils.swift */,
 			);
 			path = UserContact;
 			sourceTree = "<group>";
@@ -2618,6 +2623,7 @@
 				475DD3092A1287B400F92173 /* NewKeyboardHandlerViewController.swift */,
 				475DD30B2A1291F900F92173 /* NewChatViewController+ChatHeaderDelegateExtension.swift */,
 				475DD30D2A1297C100F92173 /* PopHandlerViewController.swift */,
+				475DD3112A13FBAB00F92173 /* NewChatViewController+FetchControllerExtension.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -4986,6 +4992,7 @@
 				47FE9A3E23C381A20090913F /* UITapGestureRecognizer.swift in Sources */,
 				477B319223B10FC30081413E /* NewMessageBubbleHelper.swift in Sources */,
 				47893A8F24095A43002F675B /* AudioReceivedTableViewCell.swift in Sources */,
+				475DD3102A13E21A00F92173 /* UserContact+FetchUtils.swift in Sources */,
 				47341E8428C79A8B00426055 /* CustomAlertController.swift in Sources */,
 				477D9696244E0B5500830406 /* ChatAttachmentViewControllerExtension.swift in Sources */,
 				475043CB29719E5F00830E9E /* PodcastPlayerController+InfoCenter.swift in Sources */,
@@ -5177,6 +5184,7 @@
 				47484B972512690D00F82AAC /* BotWebView.swift in Sources */,
 				4787F86F24741EB900CCE8B9 /* NewPublicGroupViewController.swift in Sources */,
 				47FA18DC24362F1D00469C8F /* AttachmentPriceView.swift in Sources */,
+				475DD3122A13FBAB00F92173 /* NewChatViewController+FetchControllerExtension.swift in Sources */,
 				47CD9508265EC2A4009B06A4 /* CommonModalView.swift in Sources */,
 				472161CF293A67C80088B87B /* PodcastRecommendationFeedPlayerViewController.swift in Sources */,
 				475BDD28232AC97500C5BBD6 /* API.swift in Sources */,

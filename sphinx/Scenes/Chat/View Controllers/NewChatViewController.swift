@@ -17,7 +17,13 @@ class NewChatViewController: NewKeyboardHandlerViewController {
     var contact: UserContact?
     var chat: Chat?
     
+    var contactResultsController: NSFetchedResultsController<UserContact>!
+    var chatResultsController: NSFetchedResultsController<Chat>!
+    
     var contactsService: ContactsService!
+    var chatViewModel: ChatViewModel!
+    
+    let messageBubbleHelper = NewMessageBubbleHelper()
     
     static func instantiate(
         contactObjectId: NSManagedObjectID? = nil,
@@ -34,6 +40,8 @@ class NewChatViewController: NewKeyboardHandlerViewController {
         }
         
         viewController.contactsService = ContactsService()
+        viewController.chatViewModel = ChatViewModel()
+        
         viewController.popOnSwipeEnabled = true
         
         return viewController
@@ -43,12 +51,8 @@ class NewChatViewController: NewKeyboardHandlerViewController {
         super.viewDidLoad()
         
         setupLayouts()
-        
-        headerView.configureWith(
-            chat: self.chat,
-            contact: self.contact,
-            delegate: self
-        )
+        setupData()
+        configureFetchResultsController()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -67,8 +71,19 @@ class NewChatViewController: NewKeyboardHandlerViewController {
         bottomView.addShadow(location: .top, color: UIColor.black, opacity: 0.1)
         headerView.addShadow(location: .bottom, color: UIColor.black, opacity: 0.1)
     }
+    
+    func setupData() {
+        headerView.configureWith(
+            chat: self.chat,
+            contact: self.contact,
+            delegate: self
+        )
+    }
 
     @IBAction func dismissButtonTouched(_ sender: Any) {
+        contact?.nickname = "Tom Sim"
+        contact?.managedObjectContext?.saveContext()
+        
         self.view.endEditing(true)
     }
 }

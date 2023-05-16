@@ -61,10 +61,10 @@ class ChatListHeader: UIView {
     }
     
     func shouldCheckAppVersions() {
-        API.sharedInstance.getAppVersions(callback: { v in
+        API.sharedInstance.getAppVersions(callback: { [weak self] v in
             let version = Int(v) ?? 0
             let appVersion = Int(Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "0") ?? 0
-            self.upgradeAppButton.isHidden = version <= appVersion
+            self?.upgradeAppButton.isHidden = version <= appVersion
         })
     }
     

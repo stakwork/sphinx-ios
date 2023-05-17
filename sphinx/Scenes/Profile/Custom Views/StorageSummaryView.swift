@@ -141,9 +141,6 @@ class StorageSummaryView: UIView {
             UIView.animate(withDuration: 0.1, delay: 0.0, animations: {
                 self.deletionFootprintWidth.constant = length
                 self.deletionFootprintView.superview?.layoutIfNeeded()
-                if(self.deletionFootprintView.frame.minX < self.totalMemoryFootprintView.frame.maxX){
-                    print("exceeded original")
-                }
             })
         }
         else{

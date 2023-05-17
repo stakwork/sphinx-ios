@@ -18,6 +18,8 @@ class ProfileManageStorageViewController : UIViewController{
     @IBOutlet weak var changeStorageButton: UIButton!
     @IBOutlet weak var changeStorageLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var warningView: UIView!
+    @IBOutlet weak var warningLabel: UILabel!
     
     
     @IBOutlet weak var saveButton: UIButton!
@@ -29,8 +31,8 @@ class ProfileManageStorageViewController : UIViewController{
     var sliderShowingYConstraint: CGFloat = 34.0
     
     var stats = [StorageManagerMediaType:Double]()
-    var usage : Double = 0.0
-    var max: Int = 0
+    var usageKB : Double = 0.0
+    var maxGB: Int = 0
     var isEditingMaxMemory : Bool = false {
         didSet{
             storageSummaryView.isEditingMaxMemory = isEditingMaxMemory
@@ -84,7 +86,7 @@ class ProfileManageStorageViewController : UIViewController{
     
     
     func freeMemory()-> Int {
-        return (max * Int(1e9) - Int(usage * 1e6))
+        return (maxGB * Int(1e9) - Int(usageKB * 1e6))
     }
     
     static func instantiate(
@@ -95,8 +97,8 @@ class ProfileManageStorageViewController : UIViewController{
 //        viewController.contactsService = rootViewController.contactsService
 //        viewController.delegate = delegate
         viewController.stats = storageStats
-        viewController.usage = StorageManager.sharedManager.getItemGroupTotalSize(items: StorageManager.sharedManager.allItems)
-        viewController.max = UserData.sharedInstance.getMaxMemoryGB()
+        viewController.usageKB = StorageManager.sharedManager.getItemGroupTotalSize(items: StorageManager.sharedManager.allItems)
+        viewController.maxGB = UserData.sharedInstance.getMaxMemoryGB()
         
         return viewController
     }
@@ -159,7 +161,19 @@ class ProfileManageStorageViewController : UIViewController{
         isEditingMaxMemory = false
     }
     
-    
+    func checkForImmediateDeletion(newMaxGB:Int){
+        let maxInBytes = Int(Double(newMaxGB) * 1e9)
+        let usageInBytes = Int(usageKB * 1e6)
+        if(maxInBytes < usageInBytes){
+            let differential = formatBytes(usageInBytes - maxInBytes)
+            self.view.bringSubviewToFront(warningView)
+            self.warningLabel.text = "Saving this limit will delete \(differential) of your oldest data"
+            self.warningView.isHidden = false
+        }
+        else{
+            self.warningView.isHidden = true
+        }
+    }
     
 }
 
@@ -184,6 +198,7 @@ func formatBytes(_ bytes: Int) -> String {
 
 extension ProfileManageStorageViewController: MaxMemorySliderDelegate{
     func sliderValueChanged(value:Int){
+        checkForImmediateDeletion(newMaxGB: value)
         self.storageSummaryView.memorySliderUpdated(value: value)
     }
 }

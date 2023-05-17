@@ -18,6 +18,8 @@
                 <outlet property="imageFootprintWidth" destination="nuU-nu-fo5" id="btR-Mp-EWX"/>
                 <outlet property="imagesMemoryFootprintView" destination="UUc-NP-3O4" id="gGj-YS-kAp"/>
                 <outlet property="maxMemoryFootprintBackgroundView" destination="pA3-QN-pPT" id="mNk-wW-yAS"/>
+                <outlet property="totalMemoryFootprintView" destination="Wuu-OO-lkF" id="WCt-0h-1Sm"/>
+                <outlet property="totalMemoryFootprintWidth" destination="C2T-RH-KII" id="Vof-zz-4ft"/>
                 <outlet property="videoFootprintWidth" destination="rcV-U6-fU9" id="Qbd-3q-xQQ"/>
                 <outlet property="videosMemoryFootprintView" destination="xFX-Pj-wP8" id="fUK-7k-fBo"/>
             </connections>
@@ -30,6 +32,13 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pA3-QN-pPT">
                     <rect key="frame" x="0.0" y="59" width="359" height="16"/>
                     <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wuu-OO-lkF">
+                            <rect key="frame" x="0.0" y="0.0" width="80" height="16"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="80" id="C2T-RH-KII"/>
+                            </constraints>
+                        </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UUc-NP-3O4">
                             <rect key="frame" x="0.0" y="0.0" width="80" height="16"/>
                             <color key="backgroundColor" name="PrimaryBlue"/>
@@ -56,11 +65,14 @@
                     <constraints>
                         <constraint firstItem="6dI-dX-Lyl" firstAttribute="leading" secondItem="xFX-Pj-wP8" secondAttribute="trailing" constant="2" id="4df-r3-Pcc"/>
                         <constraint firstItem="xFX-Pj-wP8" firstAttribute="leading" secondItem="UUc-NP-3O4" secondAttribute="trailing" constant="2" id="8jG-Rm-5Rk"/>
+                        <constraint firstItem="Wuu-OO-lkF" firstAttribute="top" secondItem="pA3-QN-pPT" secondAttribute="top" id="DYm-xR-8a8"/>
                         <constraint firstItem="xFX-Pj-wP8" firstAttribute="bottom" secondItem="UUc-NP-3O4" secondAttribute="bottom" id="Etq-eF-5ou"/>
                         <constraint firstItem="xFX-Pj-wP8" firstAttribute="top" secondItem="UUc-NP-3O4" secondAttribute="top" id="Fmz-wZ-W8a"/>
                         <constraint firstItem="UUc-NP-3O4" firstAttribute="leading" secondItem="pA3-QN-pPT" secondAttribute="leading" id="K63-wM-hjs"/>
                         <constraint firstItem="6dI-dX-Lyl" firstAttribute="top" secondItem="xFX-Pj-wP8" secondAttribute="top" id="Kj0-KT-Ukd"/>
+                        <constraint firstAttribute="bottom" secondItem="Wuu-OO-lkF" secondAttribute="bottom" id="Kjs-NK-gHw"/>
                         <constraint firstAttribute="height" constant="16" id="MiT-Vq-zxd"/>
+                        <constraint firstItem="Wuu-OO-lkF" firstAttribute="leading" secondItem="pA3-QN-pPT" secondAttribute="leading" id="ZNq-JV-YJG"/>
                         <constraint firstItem="6dI-dX-Lyl" firstAttribute="bottom" secondItem="xFX-Pj-wP8" secondAttribute="bottom" id="eWh-0F-g0l"/>
                         <constraint firstAttribute="bottom" secondItem="UUc-NP-3O4" secondAttribute="bottom" id="oPc-YR-Mkg"/>
                         <constraint firstItem="UUc-NP-3O4" firstAttribute="top" secondItem="pA3-QN-pPT" secondAttribute="top" id="uf8-PS-cyV"/>

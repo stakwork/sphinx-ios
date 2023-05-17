@@ -19,6 +19,10 @@ class ProfileManageStorageViewController : UIViewController{
     @IBOutlet weak var changeStorageLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
     
+    
+    @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var cancelButton: UIButton!
+    
     @IBOutlet weak var sliderVerticalSpacing: NSLayoutConstraint!
     @IBOutlet weak var maxSliderView: MaxMemorySlider!
     var sliderHiddenYConstraint : CGFloat = -8.0
@@ -29,26 +33,51 @@ class ProfileManageStorageViewController : UIViewController{
     var max: Int = 0
     var isEditingMaxMemory : Bool = false {
         didSet{
+            storageSummaryView.isEditingMaxMemory = isEditingMaxMemory
             if(oldValue == false && isEditingMaxMemory == true){
+                
+                self.maxSliderView.isHidden = false
+                self.cancelButton.isHidden = false
+                self.saveButton.isHidden = false
+                
                 UIView.animate(withDuration: 0.25, delay: 0.0, animations: {
-                    self.changeStorageButton.isHidden = true
-                    self.changeStorageLabel.isHidden = true
-                    self.maxSliderView.isHidden = false
                     self.backButton.setTitle("close", for: .normal)
                     self.titleLabel.text = "Change Storage Limit"
                     
                     self.sliderVerticalSpacing.constant = self.sliderShowingYConstraint
                     self.maxSliderView.superview?.layoutIfNeeded()
+                    
+                    self.changeStorageButton.alpha = 0.0
+                    self.changeStorageLabel.alpha = 0.0
+                    self.maxSliderView.alpha = 1.0
+                    self.cancelButton.alpha = 1.0
+                    self.saveButton.alpha = 1.0
+                },completion: {_ in
+                    self.changeStorageButton.isHidden = true
+                    self.changeStorageLabel.isHidden = true
+                    
                 })
             }
             else if(oldValue == true && isEditingMaxMemory == false){
-                self.sliderVerticalSpacing.constant = self.sliderHiddenYConstraint
-                self.maxSliderView.superview?.layoutIfNeeded()
-                self.changeStorageButton.isHidden = false
-                self.changeStorageLabel.isHidden = false
-                self.maxSliderView.isHidden = true
-                self.backButton.setTitle("", for: .normal)
-                self.titleLabel.text = "Manage Storage"
+                UIView.animate(withDuration: 0.25, delay: 0, animations: {
+                    self.sliderVerticalSpacing.constant = self.sliderHiddenYConstraint
+                    self.maxSliderView.superview?.layoutIfNeeded()
+                    self.backButton.setTitle("", for: .normal)
+                    self.titleLabel.text = "Manage Storage"
+                    
+                    self.changeStorageButton.alpha = 1.0
+                    self.changeStorageLabel.alpha = 1.0
+                    self.maxSliderView.alpha = 0.0
+                    self.cancelButton.alpha = 0.0
+                    self.saveButton.alpha = 0.0
+                },completion: {_ in
+                    self.changeStorageButton.isHidden = false
+                    self.changeStorageLabel.isHidden = false
+                    self.maxSliderView.isHidden = true
+                    
+                    self.saveButton.isHidden = true
+                    self.cancelButton.isHidden = true
+                })
             }
         }
     }
@@ -83,6 +112,7 @@ class ProfileManageStorageViewController : UIViewController{
         usedStorageLabel.text = "\(formatBytes(Int(usage*1e6)))"
         freeStorageLabel.text = "\(formatBytes(freeMemory())) Free"
         self.sliderVerticalSpacing.constant = self.sliderHiddenYConstraint
+        
         self.maxSliderView.superview?.layoutIfNeeded()
     }
     
@@ -92,6 +122,13 @@ class ProfileManageStorageViewController : UIViewController{
         self.changeStorageButton.layer.borderColor = UIColor(red: 0.278, green: 0.318, blue: 0.369, alpha: 1).cgColor
         self.changeStorageButton.layer.borderWidth = 1.0
         self.changeStorageButton.layer.cornerRadius = self.changeStorageButton.frame.height/2.0
+        
+        self.cancelButton.layer.masksToBounds = false
+        self.cancelButton.layer.borderColor = UIColor(red: 0.278, green: 0.318, blue: 0.369, alpha: 1).cgColor
+        self.cancelButton.layer.borderWidth = 1.0
+        self.cancelButton.layer.cornerRadius = self.cancelButton.frame.height/2.0
+        
+        self.saveButton.layer.cornerRadius = self.saveButton.frame.height/2.0
         self.view.bringSubviewToFront(self.changeStorageButton)
     }
     
@@ -109,6 +146,16 @@ class ProfileManageStorageViewController : UIViewController{
         print("changeButtonTap")
         isEditingMaxMemory = true
     }
+    
+    
+    @IBAction func saveTapped(_ sender: Any) {
+        print("saveTapped")
+    }
+    
+    @IBAction func cancelTapped(_ sender: Any) {
+        isEditingMaxMemory = false
+    }
+    
     
     
 }

@@ -15,11 +15,38 @@ class StorageSummaryView: UIView {
     @IBOutlet weak var imagesMemoryFootprintView: UIView!
     @IBOutlet weak var videosMemoryFootprintView: UIView!
     @IBOutlet weak var audioMemoryFootprintView: UIView!
+    @IBOutlet weak var totalMemoryFootprintView: UIView!
+    
+    
+    @IBOutlet weak var totalMemoryFootprintWidth: NSLayoutConstraint!
     @IBOutlet weak var imageFootprintWidth: NSLayoutConstraint!
     @IBOutlet weak var videoFootprintWidth: NSLayoutConstraint!
     @IBOutlet weak var audioFootprintWidth: NSLayoutConstraint!
     
     let userData = UserData.sharedInstance
+    
+    var isEditingMaxMemory : Bool = false{
+        didSet{
+            if(isEditingMaxMemory){
+                totalMemoryFootprintWidth.constant = audioFootprintWidth.constant + videoFootprintWidth.constant + imageFootprintWidth.constant
+                totalMemoryFootprintView.isHidden = false
+                imagesMemoryFootprintView.isHidden = true
+                videosMemoryFootprintView.isHidden = true
+                audioMemoryFootprintView.isHidden = true
+                self.bringSubviewToFront(totalMemoryFootprintView)
+                totalMemoryFootprintView.superview?.layoutIfNeeded()
+            }
+            else{
+                totalMemoryFootprintWidth.constant = 0
+                totalMemoryFootprintView.isHidden = true
+                imagesMemoryFootprintView.isHidden = false
+                videosMemoryFootprintView.isHidden = false
+                audioMemoryFootprintView.isHidden = false
+                self.sendSubviewToBack(totalMemoryFootprintView)
+                totalMemoryFootprintView.superview?.layoutIfNeeded()
+            }
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -36,6 +63,7 @@ class StorageSummaryView: UIView {
         addSubview(contentView)
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        totalMemoryFootprintView.isHidden = true
     }
     
     func adjustBarWidths(dict:[StorageManagerMediaType:Double]){

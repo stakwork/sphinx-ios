@@ -1428,6 +1428,36 @@
                                 <color key="textColor" name="MainBottomIcons"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aZn-Kj-YV3">
+                                <rect key="frame" x="298" y="600.5" width="100" height="40"/>
+                                <color key="backgroundColor" name="PrimaryBlue"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="t5k-zl-Szu"/>
+                                    <constraint firstAttribute="width" constant="100" id="ySo-LC-4wD"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="14"/>
+                                <state key="normal" title="Save">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="saveTapped:" destination="SmN-PS-kRh" eventType="touchUpInside" id="nRe-9E-Cxe"/>
+                                </connections>
+                            </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DzR-Mi-Rn7">
+                                <rect key="frame" x="16" y="600.5" width="100" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="I7X-xD-8b3"/>
+                                    <constraint firstAttribute="height" constant="40" id="yWq-B2-bLW"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="14"/>
+                                <state key="normal" title="Cancel">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="cancelTapped:" destination="SmN-PS-kRh" eventType="touchUpInside" id="JNP-HT-w4K"/>
+                                    <action selector="saveTapped:" destination="SmN-PS-kRh" eventType="touchUpInside" id="3Us-WQ-rjf"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="R4S-en-fKP"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -1437,9 +1467,12 @@
                             <constraint firstItem="MBC-sr-yDr" firstAttribute="leading" secondItem="R4S-en-fKP" secondAttribute="leading" constant="15" id="4gV-OB-cq9"/>
                             <constraint firstItem="Na3-Le-Hwn" firstAttribute="centerY" secondItem="ojg-wh-9EL" secondAttribute="centerY" id="8C0-hL-NGp"/>
                             <constraint firstItem="n7u-9a-5PX" firstAttribute="leading" secondItem="4T3-f8-3JX" secondAttribute="leading" id="8wY-uY-sld"/>
+                            <constraint firstItem="DzR-Mi-Rn7" firstAttribute="centerY" secondItem="aZn-Kj-YV3" secondAttribute="centerY" id="G9r-PS-Hjh"/>
+                            <constraint firstItem="aZn-Kj-YV3" firstAttribute="top" secondItem="Fvo-5a-xTT" secondAttribute="bottom" constant="2" id="OAZ-yi-8km"/>
                             <constraint firstItem="h59-t6-zfg" firstAttribute="top" secondItem="MBC-sr-yDr" secondAttribute="bottom" constant="20" id="QhP-dQ-dvm"/>
                             <constraint firstItem="Fvo-5a-xTT" firstAttribute="leading" secondItem="1Ap-Ee-cOT" secondAttribute="leading" id="TOb-Yo-dQI"/>
                             <constraint firstItem="4T3-f8-3JX" firstAttribute="top" secondItem="ojg-wh-9EL" secondAttribute="bottom" constant="30" id="UiE-5G-YR2"/>
+                            <constraint firstItem="DzR-Mi-Rn7" firstAttribute="leading" secondItem="R4S-en-fKP" secondAttribute="leading" constant="16" id="Yrx-x5-su7"/>
                             <constraint firstItem="Fvo-5a-xTT" firstAttribute="top" secondItem="MBC-sr-yDr" secondAttribute="bottom" constant="275" id="ask-JB-c7C"/>
                             <constraint firstItem="Na3-Le-Hwn" firstAttribute="leading" secondItem="ojg-wh-9EL" secondAttribute="trailing" constant="26" id="gud-uG-L8A"/>
                             <constraint firstItem="myU-eK-pqV" firstAttribute="trailing" secondItem="n7u-9a-5PX" secondAttribute="trailing" id="iaO-g8-xg6"/>
@@ -1454,14 +1487,17 @@
                             <constraint firstItem="myU-eK-pqV" firstAttribute="bottom" secondItem="n7u-9a-5PX" secondAttribute="bottom" id="srI-pg-X1T"/>
                             <constraint firstItem="MBC-sr-yDr" firstAttribute="top" secondItem="n7u-9a-5PX" secondAttribute="bottom" constant="13" id="t6a-5B-yvO"/>
                             <constraint firstItem="bTv-6h-5tO" firstAttribute="centerY" secondItem="h59-t6-zfg" secondAttribute="centerY" id="wTT-M8-88f"/>
+                            <constraint firstItem="R4S-en-fKP" firstAttribute="trailing" secondItem="aZn-Kj-YV3" secondAttribute="trailing" constant="16" id="yUo-bX-dSL"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="backButton" destination="ojg-wh-9EL" id="Amp-kx-2vQ"/>
+                        <outlet property="cancelButton" destination="DzR-Mi-Rn7" id="6Qg-g7-dkL"/>
                         <outlet property="changeStorageButton" destination="h59-t6-zfg" id="Ncp-2S-l41"/>
                         <outlet property="changeStorageLabel" destination="bTv-6h-5tO" id="nbr-ub-565"/>
                         <outlet property="freeStorageLabel" destination="myU-eK-pqV" id="BIS-qn-qXu"/>
                         <outlet property="maxSliderView" destination="Fvo-5a-xTT" id="Pw9-YR-TRh"/>
+                        <outlet property="saveButton" destination="aZn-Kj-YV3" id="Uzk-Oy-chb"/>
                         <outlet property="sliderVerticalSpacing" destination="ask-JB-c7C" id="95t-fd-6rF"/>
                         <outlet property="storageSummaryView" destination="MBC-sr-yDr" id="ZFa-Id-9jh"/>
                         <outlet property="titleLabel" destination="Na3-Le-Hwn" id="fWm-uB-cGo"/>

@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol MaxMemorySliderDelegate:NSObject{
+    func sliderValueChanged(value:Int)
+}
+
 class MaxMemorySlider: UIView {
 
     @IBOutlet var contentView: UIView!
@@ -15,6 +19,7 @@ class MaxMemorySlider: UIView {
     @IBOutlet weak var maxMemoryLabel: UILabel!
     
     let userData = UserData.sharedInstance
+    var delegate: MaxMemorySliderDelegate? = nil
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -34,6 +39,10 @@ class MaxMemorySlider: UIView {
         
         sliderControl.maximumValue = Float(UserData.kMaximumMemoryFootprintGB)
         
+        setSlider()
+    }
+    
+    public func setSlider(){
         let gb = userData.getMaxMemoryGB()
         sliderControl.value = Float(gb)
         maxMemoryLabel.text = getMaxGBLabel(gb)
@@ -48,6 +57,7 @@ class MaxMemorySlider: UIView {
         
         let intValue = Int(sender.value)
         maxMemoryLabel.text = getMaxGBLabel(intValue)
-        userData.setMaxMemory(GB: intValue)
+        delegate?.sliderValueChanged(value: intValue)
+        //userData.setMaxMemory(GB: intValue)
     }
 }

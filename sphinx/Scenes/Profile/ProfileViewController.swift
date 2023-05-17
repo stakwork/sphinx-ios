@@ -224,7 +224,7 @@ class ProfileViewController: KeyboardEventsViewController {
             manageStorageView.isUserInteractionEnabled = true
             manageStorageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showManageStorageVC)))
             updateStorageSummaryLabel()
-            storageSummaryBarView.adjustBarWidths(dict: StorageManager.sharedManager.getStorageItemSummaryByType())
+            storageSummaryBarView.summaryDict = StorageManager.sharedManager.getStorageItemSummaryByType()
             
         }
         

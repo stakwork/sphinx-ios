@@ -103,7 +103,8 @@ class ProfileManageStorageViewController : UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        storageSummaryView.adjustBarWidths(dict: stats)
+        maxSliderView.delegate = self
+        storageSummaryView.summaryDict = stats
         updateUsageLabels()
     }
     
@@ -145,11 +146,13 @@ class ProfileManageStorageViewController : UIViewController{
     @IBAction func changeButtonTap(_ sender: Any) {
         print("changeButtonTap")
         isEditingMaxMemory = true
+        maxSliderView.setSlider()
     }
     
     
     @IBAction func saveTapped(_ sender: Any) {
         print("saveTapped")
+        
     }
     
     @IBAction func cancelTapped(_ sender: Any) {
@@ -177,3 +180,10 @@ func formatBytes(_ bytes: Int) -> String {
     }
 }
 
+
+
+extension ProfileManageStorageViewController: MaxMemorySliderDelegate{
+    func sliderValueChanged(value:Int){
+        self.storageSummaryView.memorySliderUpdated(value: value)
+    }
+}

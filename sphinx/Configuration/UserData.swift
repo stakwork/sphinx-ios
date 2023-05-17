@@ -20,7 +20,7 @@ class UserData {
     let onionConnector = SphinxOnionConnector.sharedInstance
     
     public static let kMaximumPINHoursValue: Int = 25
-    public static let kMaximumMemoryFootprint : Int = 100
+    public static let kMaximumMemoryFootprintGB : Int = 100
     public static let kMinimumMemoryFootprint : Int = 1
     
     func isUserLogged() -> Bool {
@@ -297,8 +297,8 @@ class UserData {
         }
     }
     
-    func getMaxMemory() -> Int {
-        return UserDefaults.Keys.maxMemory.get(defaultValue: UserData.kMaximumMemoryFootprint)
+    func getMaxMemoryGB() -> Int {
+        return UserDefaults.Keys.maxMemory.get(defaultValue: UserData.kMaximumMemoryFootprintGB)
     }
     
     func setMaxMemory(GB: Int) {

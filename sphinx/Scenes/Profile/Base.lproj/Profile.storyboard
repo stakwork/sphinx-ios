@@ -1344,23 +1344,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fvo-5a-xTT" customClass="MaxMemorySlider" customModule="sphinx" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="298.5" width="414" height="100"/>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fvo-5a-xTT" customClass="MaxMemorySlider" customModule="sphinx" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="498.5" width="414" height="100"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="S3p-7J-gc6"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Max Storage Capacity" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="adW-KE-ogr">
-                                <rect key="frame" x="44" y="323.5" width="119" height="15"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="119" id="OF9-5t-yIc"/>
-                                    <constraint firstAttribute="height" constant="15" id="SKZ-Zb-Bdr"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="12"/>
-                                <color key="textColor" name="SecondaryText"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ojg-wh-9EL">
                                 <rect key="frame" x="15" y="54" width="27" height="55"/>
                                 <constraints>
@@ -1377,9 +1367,8 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Manage Storage" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Na3-Le-Hwn">
-                                <rect key="frame" x="68" y="64.5" width="158" height="34"/>
+                                <rect key="frame" x="68" y="64.5" width="300" height="34"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="158" id="KtU-wU-OdW"/>
                                     <constraint firstAttribute="height" constant="34" id="jlg-OI-YOX"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="17"/>
@@ -1409,8 +1398,29 @@
                                     <constraint firstAttribute="height" constant="16" id="iaj-qM-0uT"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="77.88 GB Free" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="myU-eK-pqV">
-                                <rect key="frame" x="227" y="178" width="165" height="17"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h59-t6-zfg">
+                                <rect key="frame" x="119" y="243.5" width="176" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="176" id="3ue-aP-kPD"/>
+                                    <constraint firstAttribute="height" constant="40" id="ted-om-NIO"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title=""/>
+                                <connections>
+                                    <action selector="changeButtonTap:" destination="SmN-PS-kRh" eventType="touchUpInside" id="Wxx-wf-XrQ"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Change Storage Limit" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bTv-6h-5tO">
+                                <rect key="frame" x="132" y="255.5" width="150" height="16.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="7TZ-Mx-fAA"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
+                                <color key="textColor" name="PrimaryText"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="77.88 GB Free" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="myU-eK-pqV">
+                                <rect key="frame" x="304" y="177.5" width="88" height="17"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="17" id="qZg-sn-L9T"/>
                                 </constraints>
@@ -1424,28 +1434,38 @@
                         <constraints>
                             <constraint firstItem="n7u-9a-5PX" firstAttribute="top" secondItem="4T3-f8-3JX" secondAttribute="bottom" constant="8" id="0Pi-A1-bSO"/>
                             <constraint firstItem="R4S-en-fKP" firstAttribute="trailing" secondItem="myU-eK-pqV" secondAttribute="trailing" constant="22" id="1fA-9c-Zzr"/>
-                            <constraint firstItem="Fvo-5a-xTT" firstAttribute="top" secondItem="adW-KE-ogr" secondAttribute="bottom" constant="-40" id="3dt-Lc-pc0"/>
                             <constraint firstItem="MBC-sr-yDr" firstAttribute="leading" secondItem="R4S-en-fKP" secondAttribute="leading" constant="15" id="4gV-OB-cq9"/>
                             <constraint firstItem="Na3-Le-Hwn" firstAttribute="centerY" secondItem="ojg-wh-9EL" secondAttribute="centerY" id="8C0-hL-NGp"/>
                             <constraint firstItem="n7u-9a-5PX" firstAttribute="leading" secondItem="4T3-f8-3JX" secondAttribute="leading" id="8wY-uY-sld"/>
+                            <constraint firstItem="h59-t6-zfg" firstAttribute="top" secondItem="MBC-sr-yDr" secondAttribute="bottom" constant="20" id="QhP-dQ-dvm"/>
                             <constraint firstItem="Fvo-5a-xTT" firstAttribute="leading" secondItem="1Ap-Ee-cOT" secondAttribute="leading" id="TOb-Yo-dQI"/>
                             <constraint firstItem="4T3-f8-3JX" firstAttribute="top" secondItem="ojg-wh-9EL" secondAttribute="bottom" constant="30" id="UiE-5G-YR2"/>
-                            <constraint firstItem="Fvo-5a-xTT" firstAttribute="leading" secondItem="adW-KE-ogr" secondAttribute="trailing" constant="-163" id="af9-h6-bj8"/>
-                            <constraint firstItem="Fvo-5a-xTT" firstAttribute="top" secondItem="Na3-Le-Hwn" secondAttribute="bottom" constant="200" id="dOP-oE-jgC"/>
+                            <constraint firstItem="Fvo-5a-xTT" firstAttribute="top" secondItem="MBC-sr-yDr" secondAttribute="bottom" constant="275" id="ask-JB-c7C"/>
                             <constraint firstItem="Na3-Le-Hwn" firstAttribute="leading" secondItem="ojg-wh-9EL" secondAttribute="trailing" constant="26" id="gud-uG-L8A"/>
                             <constraint firstItem="myU-eK-pqV" firstAttribute="trailing" secondItem="n7u-9a-5PX" secondAttribute="trailing" id="iaO-g8-xg6"/>
                             <constraint firstItem="ojg-wh-9EL" firstAttribute="leading" secondItem="R4S-en-fKP" secondAttribute="leading" constant="15" id="kM9-AT-bTY"/>
                             <constraint firstItem="4T3-f8-3JX" firstAttribute="leading" secondItem="ojg-wh-9EL" secondAttribute="leading" id="ln0-yW-60p"/>
+                            <constraint firstItem="h59-t6-zfg" firstAttribute="centerX" secondItem="R4S-en-fKP" secondAttribute="centerX" id="pBg-fM-zta"/>
                             <constraint firstItem="ojg-wh-9EL" firstAttribute="top" secondItem="R4S-en-fKP" secondAttribute="top" constant="6" id="pI0-B7-pq4"/>
+                            <constraint firstItem="bTv-6h-5tO" firstAttribute="centerX" secondItem="h59-t6-zfg" secondAttribute="centerX" id="pVB-v8-WYo"/>
                             <constraint firstAttribute="trailing" secondItem="Fvo-5a-xTT" secondAttribute="trailing" id="psx-8D-oGp"/>
+                            <constraint firstItem="R4S-en-fKP" firstAttribute="trailing" secondItem="Na3-Le-Hwn" secondAttribute="trailing" constant="46" id="qhg-h8-UXL"/>
                             <constraint firstItem="myU-eK-pqV" firstAttribute="trailing" secondItem="MBC-sr-yDr" secondAttribute="trailing" id="rPB-SJ-lc9"/>
                             <constraint firstItem="myU-eK-pqV" firstAttribute="bottom" secondItem="n7u-9a-5PX" secondAttribute="bottom" id="srI-pg-X1T"/>
                             <constraint firstItem="MBC-sr-yDr" firstAttribute="top" secondItem="n7u-9a-5PX" secondAttribute="bottom" constant="13" id="t6a-5B-yvO"/>
+                            <constraint firstItem="bTv-6h-5tO" firstAttribute="centerY" secondItem="h59-t6-zfg" secondAttribute="centerY" id="wTT-M8-88f"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="backButton" destination="ojg-wh-9EL" id="Amp-kx-2vQ"/>
+                        <outlet property="changeStorageButton" destination="h59-t6-zfg" id="Ncp-2S-l41"/>
+                        <outlet property="changeStorageLabel" destination="bTv-6h-5tO" id="nbr-ub-565"/>
+                        <outlet property="freeStorageLabel" destination="myU-eK-pqV" id="BIS-qn-qXu"/>
+                        <outlet property="maxSliderView" destination="Fvo-5a-xTT" id="Pw9-YR-TRh"/>
+                        <outlet property="sliderVerticalSpacing" destination="ask-JB-c7C" id="95t-fd-6rF"/>
                         <outlet property="storageSummaryView" destination="MBC-sr-yDr" id="ZFa-Id-9jh"/>
+                        <outlet property="titleLabel" destination="Na3-Le-Hwn" id="fWm-uB-cGo"/>
+                        <outlet property="usedStorageLabel" destination="n7u-9a-5PX" id="cbN-DD-pgZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nId-cz-9jc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1473,6 +1493,9 @@
         </namedColor>
         <namedColor name="PrimaryBlue">
             <color red="0.38039215686274508" green="0.54117647058823526" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="PrimaryText">
+            <color red="0.16078431372549021" green="0.17254901960784313" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="ProfileBG">
             <color red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

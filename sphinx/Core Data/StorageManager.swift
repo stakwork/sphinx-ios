@@ -166,7 +166,7 @@ class StorageManager {
         let podcastMemorySize = getDownloadedPodcastsTotalSizeMB()
         let totalMemory = podcastMemorySize //TODO: add other media
         
-        let maxMemoryGB = UserData.sharedInstance.getMaxMemory()
+        let maxMemoryGB = UserData.sharedInstance.getMaxMemoryGB()
         let usedMemoryGB = Int(totalMemory/10)//totalMemory/1000
         return maxMemoryGB < usedMemoryGB
         //return Int(totalMemory/1000) > UserData.sharedInstance.getMaxMemory()

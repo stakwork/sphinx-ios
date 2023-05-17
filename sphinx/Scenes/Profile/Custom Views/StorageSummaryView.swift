@@ -39,7 +39,7 @@ class StorageSummaryView: UIView {
     }
     
     func adjustBarWidths(dict:[StorageManagerMediaType:Double]){
-        let max = Double(UserData.sharedInstance.getMaxMemory()) * 1e3
+        let max = Double(UserData.sharedInstance.getMaxMemoryGB()) * 1e3
         if let size = dict[.photo]{
             imageFootprintWidth.constant = size/Double(max) * maxMemoryFootprintBackgroundView.frame.width
         }

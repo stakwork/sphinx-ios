@@ -32,9 +32,9 @@ class MaxMemorySlider: UIView {
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         
-        sliderControl.maximumValue = Float(UserData.kMaximumMemoryFootprint)
+        sliderControl.maximumValue = Float(UserData.kMaximumMemoryFootprintGB)
         
-        let gb = userData.getMaxMemory()
+        let gb = userData.getMaxMemoryGB()
         sliderControl.value = Float(gb)
         maxMemoryLabel.text = getMaxGBLabel(gb)
     }

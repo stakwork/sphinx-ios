@@ -255,7 +255,7 @@ class ProfileViewController: KeyboardEventsViewController {
     }
     
     func updateStorageSummaryLabel(){
-        let max = UserData.sharedInstance.getMaxMemory()
+        let max = UserData.sharedInstance.getMaxMemoryGB()
         StorageManager.sharedManager.refreshAllStoredData(completion: {
             let usage = StorageManager.sharedManager.getItemGroupTotalSize(items: StorageManager.sharedManager.allItems)
             self.storageSumaryLabel.text = "\(Int(usage/1e9)) GB of \(Int(max)) GB"

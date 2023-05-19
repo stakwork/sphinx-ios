@@ -346,15 +346,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return nil
     }
 
-    func isOnSameChatAsPush() -> Bool {
-        let chatId = UserDefaults.Keys.chatId.get(defaultValue: -1)
-
-        if let currentVC = getCurrentVC() as? ChatViewController, let currentVCChatId = currentVC.chat?.id, currentVCChatId == chatId {
-            return true
-        }
-        return false
-    }
-
     func isOnChatList() -> Bool {
         getCurrentVC() is DashboardRootViewController
     }
@@ -387,21 +378,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func reloadMessagesData() {
         if let currentVC = getCurrentVC() {
             if let currentVC = currentVC as? ChatViewController {
-                UserDefaults.Keys.chatId.removeValue()
                 currentVC.fetchNewData()
             } else if let dashboardRootVC = currentVC as? DashboardRootViewController {
                 
-                let shouldDeepLinkIntoChatDetails =
-                    UserDefaults.Keys.chatId.get(defaultValue: -1) >= 0 ||
-                    UserDefaults.Keys.contactId.get(defaultValue: -1) >= 0
-
-                if shouldDeepLinkIntoChatDetails {
-                    dashboardRootVC.handleDeepLinksAndPush()
-                } else {
-                    dashboardRootVC.loadContactsAndSyncMessages(
-                        shouldShowHeaderLoadingWheel: true
-                    )
-                }
+                dashboardRootVC.loadContactsAndSyncMessages(
+                    shouldShowHeaderLoadingWheel: true
+                )
             }
         }
     }

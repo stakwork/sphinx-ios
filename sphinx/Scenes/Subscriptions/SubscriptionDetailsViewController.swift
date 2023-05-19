@@ -117,7 +117,7 @@ class SubscriptionDetailsViewController: UIViewController {
         subscriptionManager.createOrEditSubscription(completion: { subscription, message in
             if let _ = subscription {
                 DelayPerformedHelper.performAfterDelay(seconds: 1.0) {
-                    self.goToChat()
+                    self.dismissView()
                 }
             } else if message != "" {
                 self.showErrorAlert(message: message)
@@ -125,17 +125,9 @@ class SubscriptionDetailsViewController: UIViewController {
         })
     }
     
-    func goToChat() {
-       if let contact = subscriptionManager.contact {
-            if let chat = contact.getChat() {
-                UserDefaults.Keys.chatId.set(chat.id)
-            }
-            
-            delegate?.willDismissPresentedView?(paymentCreated: false)
-            self.dismiss(animated: true, completion: {
-                self.delegate?.shouldGoToChat?()
-            })
-        }
+    func dismissView() {
+        delegate?.willDismissPresentedView?(paymentCreated: false)
+        self.dismiss(animated: true)
     }
     
     @IBAction func subscribeButtonTouched() {

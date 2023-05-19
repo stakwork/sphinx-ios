@@ -94,7 +94,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func configureSVGRendering(){
-        // register coder, on AppDelegate
         let SVGCoder = SDImageSVGCoder.shared
         SDImageCodersManager.shared.addCoder(SVGCoder)
         
@@ -274,7 +273,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         if let notification = notificationUserInfo {
             handlePush(notification: notification)
-            setInitialVC(launchingApp: false)
         }
     }
 
@@ -300,12 +298,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         launchingVC = true
 
         let isUserLogged = UserData.sharedInstance.isUserLogged()
-
-        if shouldStayInView(launchingApp: launchingApp) && !deepLink {
-            reloadMessagesData()
-            launchingVC = false
-            return
-        }
         
         if isUserLogged {
             syncDeviceId()
@@ -352,31 +344,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return rootVC
         }
         return nil
-    }
-
-    
-    func shouldStayInView(
-        launchingApp: Bool
-    ) -> Bool {
-        let isUserLogged = UserData.sharedInstance.isUserLogged()
-        let shouldTakeToChat = UserDefaults.Keys.chatId.get(defaultValue: -1) >= 0
-        let shouldTakeToSubscription = UserDefaults.Keys.subscriptionQuery.get(defaultValue: "") != ""
-
-        if isUserLogged && !launchingApp && !shouldTakeToChat && !shouldTakeToSubscription {
-            UserDefaults.Keys.chatId.removeValue()
-            return true
-        }
-
-        if shouldTakeToChat && isOnSameChatAsPush() {
-            UserDefaults.Keys.chatId.removeValue()
-            return true
-        }
-
-        if (shouldTakeToChat || shouldTakeToSubscription) && isOnChatList() {
-            return true
-        }
-
-        return false
     }
 
     func isOnSameChatAsPush() -> Bool {
@@ -518,13 +485,33 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     func handlePush(
         notification: [String: AnyObject]
     ) {
-        if let aps = notification["aps"] as? [String: AnyObject],
-            let customData = aps["custom_data"] as? [String: AnyObject] {
+        if
+            let aps = notification["aps"] as? [String: AnyObject],
+            let customData = aps["custom_data"] as? [String: AnyObject]
+        {
             if let chatId = customData["chat_id"] as? Int {
-                UserDefaults.Keys.chatId.set(chatId)
+                goToChat(chatId: chatId)
             }
         }
+        
         notificationUserInfo = nil
+    }
+    
+    func goToChat(chatId: Int) {
+        if let chat = Chat.getChatWith(id: chatId) {
+            
+            let chatVC = NewChatViewController.instantiate(
+                contactObjectId: chat.conversationContact?.objectID,
+                chatObjectId: chat.objectID
+            )
+            
+            if
+                let rootVC = getRootViewController(),
+                let navCenterController = rootVC.getCenterNavigationController()
+            {
+                navCenterController.pushViewController(chatVC, animated: true)
+            }
+        }
     }
 }
 

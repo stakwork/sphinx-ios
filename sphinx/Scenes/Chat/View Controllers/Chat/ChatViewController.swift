@@ -122,7 +122,6 @@ class ChatViewController: KeyboardHandlerViewController {
            return
         }
         
-        UserDefaults.Keys.chatId.removeValue()
         socketManager.setDelegate(delegate: self)
         loadData()
     }

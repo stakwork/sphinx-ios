@@ -61,7 +61,6 @@ extension ChatViewController : ChatHeaderViewDelegate {
     }
     
     func didTapBackButton() {
-        UserDefaults.Keys.chatId.removeValue()
         accessoryView.shouldDismissKeyboard()
         accessoryView.hide()
         webAppVC?.stopWebView()
@@ -466,23 +465,7 @@ extension ChatViewController : MessageCellDelegate {
     }
     
     func didTapOnPubKey(pubkey: String) {
-        if pubkey == UserData.sharedInstance.getUserPubKey() { return }
-        let (pk, _) = pubkey.pubkeyComponents
-        let (existing, user) = pk.isExistingContactPubkey()
-        if let user = user, existing {
-            if let chat = user.getChat() {
-                UserDefaults.Keys.chatId.set(chat.id)
-            } else {
-                UserDefaults.Keys.contactId.set(user.id)
-            }
-            navigationController?.popViewController(animated: true)
-        } else {
-            accessoryView.hide()
-            
-            let newContactVC = NewContactViewController.instantiate(pubkey: pubkey)
-            newContactVC.delegate = self
-            present(newContactVC, animated: true, completion: nil)
-        }
+        //Handle pukkey tap
     }
     
     func fileDownloadButtonTouched(message: TransactionMessage, data: Data, button: UIButton) {

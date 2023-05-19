@@ -343,13 +343,11 @@ class UserData {
         if !previousIP.isEmpty {
             UserDefaults.Keys.previousIP.set(previousIP)
         }
-        onionConnector.nodeIp = ip
         saveValueFor(value: ip, for: KeychainManager.KeychainKeys.ip, userDefaultKey: UserDefaults.Keys.currentIP)
     }
     
     func revertIP() {
         if let previuosIP: String = UserDefaults.Keys.previousIP.get() {
-            onionConnector.nodeIp = previuosIP
             saveValueFor(value: previuosIP, for: KeychainManager.KeychainKeys.ip, userDefaultKey: UserDefaults.Keys.currentIP)
         }
     }
@@ -401,7 +399,6 @@ class UserData {
     
     func getNodeIP() -> String {
         let nodeIp = getValueFor(keychainKey: KeychainManager.KeychainKeys.ip, userDefaultKey: UserDefaults.Keys.currentIP)
-        onionConnector.nodeIp = nodeIp
         return nodeIp
     }
     

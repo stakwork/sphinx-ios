@@ -324,26 +324,7 @@ extension DashboardRootViewController {
 extension DashboardRootViewController {
     
     public func handleDeepLinksAndPush() {
-        deepLinkIntoChatDetails()
         handleLinkQueries()
-    }
-
-    
-    public func deepLinkIntoChatDetails() {
-        if
-            let chatId = UserDefaults.Keys.chatId.get(defaultValue: -1),
-            let chat = Chat.getChatWith(id: chatId)
-        {
-            presentChatDetailsVC(for: chat)
-        } else if
-            let contactId = UserDefaults.Keys.contactId.get(defaultValue: -1),
-            let contact = UserContact.getContactWith(id: contactId)
-        {
-            presentChatDetailsVC(for: nil, contact: contact)
-        }
-
-        UserDefaults.Keys.contactId.removeValue()
-        UserDefaults.Keys.chatId.removeValue()
     }
 }
 
@@ -605,8 +586,6 @@ extension DashboardRootViewController {
     
     
     internal func finishLoading() {
-        defer { didFinishInitialLoading = true }
-        
         updateCurrentViewControllerData()
         
         newBubbleHelper.hideLoadingWheel()
@@ -616,6 +595,8 @@ extension DashboardRootViewController {
         shouldShowHeaderLoadingWheel = false
         
         updateNewMessageBadges()
+        
+        didFinishInitialLoading = true
         
     }
     

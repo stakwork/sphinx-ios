@@ -27,12 +27,7 @@ class SphinxOnionConnector : NSObject {
     var torSessionConfiguration: URLSessionConfiguration?
     var torSession : Alamofire.Session?
 
-    var nodeIp: String? = nil
-
     func usingTor() -> Bool {
-        if let nodeIp = nodeIp {
-            return nodeIp.contains(".onion")
-        }
         return UserData.sharedInstance.getNodeIP().contains(".onion")
     }
 

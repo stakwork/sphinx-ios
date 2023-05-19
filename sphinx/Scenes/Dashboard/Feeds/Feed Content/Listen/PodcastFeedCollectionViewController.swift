@@ -326,13 +326,6 @@ extension PodcastFeedCollectionViewController {
 
         snapshot.appendItems(
             self.followedPodcastFeeds
-                .sorted(by: {(first, second) in
-                    let firstDate = first.episodes?.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
-                    let secondDate = second.episodes?.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
-
-                    return firstDate > secondDate
-                
-                })
                 .compactMap { $0.episodesArray.first }
                 .map { episode in
                     DataSourceItem.listenNowEpisode(episode, episode.currentTime ?? 0)
@@ -342,20 +335,7 @@ extension PodcastFeedCollectionViewController {
         
         snapshot.appendItems(
             allPodcastFeeds
-                .sorted(by: {(first, second) in
-                    let firstDate = first.dateLastConsumed ?? Date.init(timeIntervalSince1970: 0)
-                    let secondDate = second.dateLastConsumed ?? Date.init(timeIntervalSince1970: 0)
-                    
-                    if (firstDate == secondDate) {
-                        let firstDate = first.episodes?.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
-                        let secondDate = second.episodes?.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
-
-                        return firstDate > secondDate
-                    }
-
-                    return firstDate > secondDate
-                
-                }).map {
+                .map {
                     DataSourceItem.subscribedPodcastFeed($0)
                 },
             toSection: .recentlyPlayedPods

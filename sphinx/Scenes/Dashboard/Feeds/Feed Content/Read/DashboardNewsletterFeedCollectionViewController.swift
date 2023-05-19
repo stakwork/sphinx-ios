@@ -12,7 +12,8 @@ import CoreData
 
 class DashboardNewsletterFeedCollectionViewController: UICollectionViewController {
     
-    var newsletterFeeds: [NewsletterFeed] = []
+    var recentlyReleasedNewsletterFeeds: [NewsletterFeed] = []
+    var recentlyPlayedNewsletterFeeds: [NewsletterFeed] = []
     
     var interSectionSpacing: CGFloat = 20.0
 
@@ -408,40 +409,22 @@ extension DashboardNewsletterFeedCollectionViewController {
     func makeSnapshotForCurrentState() -> DataSourceSnapshot {
         var snapshot = DataSourceSnapshot()
         
-        if (newsletterFeeds.isEmpty) {
+        if (recentlyReleasedNewsletterFeeds.isEmpty && recentlyPlayedNewsletterFeeds.isEmpty) {
             return snapshot
         }
 
         snapshot.appendSections(CollectionViewSection.allCases)
         
         snapshot.appendItems(
-            newsletterFeeds
-                .sorted { (first, second) in
-                    let firstDate = first.newsletterItems?.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
-                    let secondDate = second.newsletterItems?.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
-                    
-                    return firstDate > secondDate
-                }
+            recentlyReleasedNewsletterFeeds
                 .compactMap { $0.lastArticle }
                 .map { DataSourceItem.newsletterItem( $0 ) },
             toSection: .recentlyPublishedFeeds
         )
         
         snapshot.appendItems(
-            newsletterFeeds.sorted(by: {(first, second) in
-                let firstDate = first.dateLastConsumed ?? Date.init(timeIntervalSince1970: 0)
-                let secondDate = second.dateLastConsumed ?? Date.init(timeIntervalSince1970: 0)
-                
-                if (firstDate == secondDate) {
-                    let firstDate = first.newsletterItems?.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
-                    let secondDate = second.newsletterItems?.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
-
-                    return firstDate > secondDate
-                }
-
-                return firstDate > secondDate
-            
-        }).map { DataSourceItem.newsletterFeed($0) },
+            recentlyPlayedNewsletterFeeds
+                .map { DataSourceItem.newsletterFeed($0) },
             toSection: .recentlyReadFeeds
         )
 
@@ -465,7 +448,27 @@ extension DashboardNewsletterFeedCollectionViewController {
             let _ = feed.itemsArray
         }
         
-        self.newsletterFeeds = newsletterFeeds
+        self.recentlyReleasedNewsletterFeeds = newsletterFeeds.sorted { (first, second) in
+            let firstDate = first.newsletterItems?.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
+            let secondDate = second.newsletterItems?.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
+            
+            return firstDate > secondDate
+        }
+        
+        self.recentlyPlayedNewsletterFeeds = newsletterFeeds.sorted(by: {(first, second) in
+            let firstDate = first.dateLastConsumed ?? Date.init(timeIntervalSince1970: 0)
+            let secondDate = second.dateLastConsumed ?? Date.init(timeIntervalSince1970: 0)
+            
+            if (firstDate == secondDate) {
+                let firstDate = first.newsletterItems?.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
+                let secondDate = second.newsletterItems?.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
+
+                return firstDate > secondDate
+            }
+
+            return firstDate > secondDate
+        
+        })
 
         if let dataSource = dataSource {
             dataSource.apply(
@@ -602,7 +605,7 @@ extension NewsletterFeed: DashboardFeedSquaredThumbnailCollectionViewItem {
     }
     
     var publishDate: Date? {
-        return nil
+        return itemsArray.first?.datePublished
     }
 }
 
@@ -627,7 +630,7 @@ extension NewsletterItem: DashboardFeedSquaredThumbnailCollectionViewItem {
     }
     
     var publishDate: Date? {
-        return nil
+        return datePublished
     }
 }
 

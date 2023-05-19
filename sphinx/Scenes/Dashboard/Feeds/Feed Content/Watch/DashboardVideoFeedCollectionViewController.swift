@@ -411,33 +411,14 @@ extension DashboardVideoFeedCollectionViewController {
         
         snapshot.appendItems(
             followedVideoFeeds
-                .sorted(by: {(first, second) in
-                    let firstDate = first.videosArray.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
-                    let secondDate = second.videosArray.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
-
-                    return firstDate > secondDate
-                
-                })
                 .compactMap { $0.videosArray.first }
                 .map { DataSourceItem.videoEpisode( $0 ) },
             toSection: .recentlyReleaseVideos
         )
         
         snapshot.appendItems(
-            allVideoFeeds.sorted(by: {(first, second) in
-                let firstDate = first.dateLastConsumed ?? Date.init(timeIntervalSince1970: 0)
-                let secondDate = second.dateLastConsumed ?? Date.init(timeIntervalSince1970: 0)
-                
-                if (firstDate == secondDate) {
-                    let firstDate = first.videosArray.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
-                    let secondDate = second.videosArray.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
-
-                    return firstDate > secondDate
-                }
-
-                return firstDate > secondDate
-            
-        }).map { DataSourceItem.videoFeed($0) },
+            allVideoFeeds
+                .map { DataSourceItem.videoFeed($0) },
             toSection: .recentlyPlayedVideos
         )
 
@@ -456,7 +437,6 @@ extension DashboardVideoFeedCollectionViewController {
         videoFeeds: [VideoFeed],
         shouldAnimate: Bool = true
     ) {
-        
         for feed in videoFeeds {
             let _ = feed.videosArray
         }

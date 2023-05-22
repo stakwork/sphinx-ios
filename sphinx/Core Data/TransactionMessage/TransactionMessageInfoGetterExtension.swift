@@ -29,6 +29,8 @@ extension TransactionMessage {
         case Boost
         case Resend
         case Flag
+        case Pin
+        case Unpin
     }
     
     
@@ -556,6 +558,17 @@ extension TransactionMessage {
             )
         }
         
+        if isPinActionAllowed {
+            options.append(
+                .init(
+                    tag: MessageActionsItem.Pin,
+                    materialIconName: "push_pin",
+                    iconImage: nil,
+                    label:  "pin.message".localized
+                )
+            )
+        }
+        
         if isFlagActionAllowed {
             options.append(
                 .init(
@@ -654,6 +667,18 @@ extension TransactionMessage {
     var isDeleteActionAllowed: Bool {
         get {
             return (!isInvoice() || (isInvoice() && !isPaid())) && canBeDeleted()
+        }
+    }
+    
+    var isPinActionAllowed: Bool {
+        get {
+            return (self.chat?.isMyPublicGroup() ?? false)
+        }
+    }
+    
+    var isUnpinActionAllowed: Bool {
+        get {
+            return (self.chat?.isMyPublicGroup() ?? false)
         }
     }
     

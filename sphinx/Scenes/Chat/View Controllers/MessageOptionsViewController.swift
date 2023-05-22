@@ -14,6 +14,7 @@ import UIKit
     func shouldBoostMessage(message: TransactionMessage)
     func shouldResendMessage(message: TransactionMessage)
     func shouldFlagMessage(message: TransactionMessage)
+    func shouldTogglePinState(message: TransactionMessage, pin: Bool)
     func shouldRemoveWindow()
 }
 
@@ -180,6 +181,12 @@ extension MessageOptionsViewController : MessageOptionsDelegate {
     func shouldFlagMessage() {
         if let message = message {
             delegate?.shouldFlagMessage(message: message)
+        }
+    }
+    
+    func shouldTogglePinState(pin: Bool) {
+        if let message = message {
+            delegate?.shouldTogglePinState(message: message, pin: pin)
         }
     }
     

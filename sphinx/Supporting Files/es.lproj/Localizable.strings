@@ -380,6 +380,8 @@
 "save.file" = "Descargar";
 "flag.item" = "Reportar";
 "delete.message" = "Eliminar Mensaje";
+"pin.message" = "Fijar Mensaje";
+"unpin.message" = "Remover Fijado";
 "received" = "recibida/o";
 "sent" = "enviada/o";
 "message.x.deleted" = "Mensaje eliminado";

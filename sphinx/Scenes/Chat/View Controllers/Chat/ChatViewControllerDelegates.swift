@@ -819,6 +819,14 @@ extension ChatViewController : MessageOptionsVCDelegate {
         chatDataSource?.updateRowForMessage(message)
         SoundsPlayer.playHaptic()
     }
+    
+    func shouldTogglePinState(message: TransactionMessage, pin: Bool) {
+        accessoryView.hide()
+        
+        let viewController = PinMessageViewController.instantiate(messageObjectId: message.objectID, delegate: self, mode: .PinnedMessageInfo)
+        viewController.modalPresentationStyle = .overCurrentContext
+        self.present(viewController, animated: false)
+    }
 }
 
 extension ChatViewController : GroupDetailsDelegate {

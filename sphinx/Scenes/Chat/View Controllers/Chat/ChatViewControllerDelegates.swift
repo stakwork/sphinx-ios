@@ -821,11 +821,18 @@ extension ChatViewController : MessageOptionsVCDelegate {
     }
     
     func shouldTogglePinState(message: TransactionMessage, pin: Bool) {
-        accessoryView.hide()
+        accessoryView.show(animated: false)
         
-        let viewController = PinMessageViewController.instantiate(messageObjectId: message.objectID, delegate: self, mode: .PinnedMessageInfo)
-        viewController.modalPresentationStyle = .overCurrentContext
-        self.present(viewController, animated: false)
+        let vc = PinMessageViewController.instantiate(messageObjectId: message.objectID, delegate: self, mode: .MessageUnpinned)
+        WindowsManager.sharedInstance.showConveringWindowWith(rootVC: vc)
+    }
+    
+    func showMessagePinnedInfo() {
+//        accessoryView.hide()
+//        
+//        let viewController = PinMessageViewController.instantiate(messageObjectId: message.objectID, delegate: self, mode: .PinnedMessageInfo)
+//        viewController.modalPresentationStyle = .overCurrentContext
+//        self.present(viewController, animated: false)
     }
 }
 

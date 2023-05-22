@@ -20,6 +20,8 @@ class PinMessageViewController: UIViewController {
     @IBOutlet weak var bottomView: UIStackView!
     @IBOutlet weak var avatarView: ChatAvatarView!
     @IBOutlet weak var usernameLabel: UILabel!
+    @IBOutlet weak var messageBubbleView: UIView!
+    @IBOutlet weak var messageBubbleArrowView: UIView!
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var unpinButtonView: UIView!
     @IBOutlet weak var unpinButtonContainer: UIStackView!
@@ -63,9 +65,12 @@ class PinMessageViewController: UIViewController {
         animateView()
         setupDismiss()
     }
-    
+}
+
+//Setup logic
+extension PinMessageViewController {
     func setupLayout() {
-//        bottomView.roundCorners(corners: [.topLeft, .topRight], radius: 10.0)
+        drawArrow()
         
         unpinButtonContainer.layer.borderWidth = 1
         unpinButtonContainer.layer.borderColor = UIColor.Sphinx.SecondaryText.cgColor
@@ -73,9 +78,33 @@ class PinMessageViewController: UIViewController {
         
         popupView.layer.cornerRadius = 20.0
         
+        messageBubbleView.layer.cornerRadius = 5.0
+        
         pinIconView.makeCircular()
         
         setupMode()
+    }
+    
+    func drawArrow() {
+        let arrowBezierPath = UIBezierPath()
+        
+        arrowBezierPath.move(to: CGPoint(x: 0, y: 0))
+        arrowBezierPath.addLine(to: CGPoint(x: messageBubbleArrowView.frame.width, y: 0))
+        arrowBezierPath.addLine(to: CGPoint(x: messageBubbleArrowView.frame.width, y: messageBubbleArrowView.frame.height))
+        arrowBezierPath.addLine(to: CGPoint(x: 4, y: messageBubbleArrowView.frame.height))
+        arrowBezierPath.addLine(to: CGPoint(x: 0, y: 0))
+        arrowBezierPath.close()
+        
+        let outgoingMessageLayer = CAShapeLayer()
+        outgoingMessageLayer.path = arrowBezierPath.cgPath
+        
+        outgoingMessageLayer.frame = CGRect(
+            x: 0, y: 0, width: messageBubbleArrowView.frame.width, height: messageBubbleArrowView.frame.height
+        )
+
+        outgoingMessageLayer.fillColor = UIColor.Sphinx.SentMsgBG.cgColor
+        
+        messageBubbleArrowView.layer.addSublayer(outgoingMessageLayer)
     }
     
     func setupMode() {
@@ -106,15 +135,33 @@ class PinMessageViewController: UIViewController {
     }
     
     func setupMessageData() {
-        avatarView.configureForSenderWith(message: message)
+        if message.chat?.isMyPublicGroup() == true {
+            if let owner = UserContact.getOwner() {
+                avatarView.configureForUserWith(
+                    color: owner.getColor(),
+                    alias: owner.nickname,
+                    picture: owner.avatarUrl
+                )
+                
+                usernameLabel.text = owner.nickname
+            }
+        } else {
+            avatarView.configureForSenderWith(message: message)
+            
+            usernameLabel.text = message.senderAlias ?? "Unknown"
+        }
         
-        usernameLabel.text = message.senderAlias ?? "Unknown"
         messageLabel.text = message.messageContent
-        
         unpinButtonView.isHidden = message.chat?.isMyPublicGroup() == false
     }
-    
+}
+
+//View animations
+extension PinMessageViewController {
     func animateView() {
+        bottomViewBottomConstraint.constant = -(bottomView.frame.height + 100)
+        bottomView.superview?.layoutSubviews()
+        
         view.alpha = 0.0
         
         UIView.animate(withDuration: 0.2, animations: {
@@ -151,7 +198,7 @@ class PinMessageViewController: UIViewController {
     func dismissBottomView() {
         self.delegate?.willDismissPresentedVC()
         
-        self.animateBottomViewTo(constant: -300, completion: {
+        self.animateBottomViewTo(constant: -(bottomView.frame.height + 100), completion: {
             self.animateAlphaAndDismiss()
         })
     }
@@ -160,12 +207,26 @@ class PinMessageViewController: UIViewController {
         UIView.animate(withDuration: 0.3, animations: {
             self.view.alpha = 0.0
         }, completion: { _ in
-            self.dismiss(animated: true)
+            if self.mode == .PinnedMessageInfo {
+                self.dismiss(animated: true)
+            } else {
+                WindowsManager.sharedInstance.removeCoveringWindow()
+            }
         })
     }
-    
+}
+
+
+//Actions handling
+extension PinMessageViewController {
     @IBAction func unpinButtonTapped() {
         //Handle Unpin
         dismissBottomView()
+    }
+    
+    @IBAction func dismissButtonTapped() {
+        if mode == .PinnedMessageInfo {
+            dismissBottomView()
+        }
     }
 }

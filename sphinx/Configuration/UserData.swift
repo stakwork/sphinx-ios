@@ -298,7 +298,8 @@ class UserData {
     }
     
     func getMaxMemoryGB() -> Int {
-        return UserDefaults.Keys.maxMemory.get(defaultValue: UserData.kMaximumMemoryFootprintGB)
+        let result = UserDefaults.Keys.maxMemory.get(defaultValue: UserData.kMaximumMemoryFootprintGB)
+        return result
     }
     
     func setMaxMemory(GB: Int) {

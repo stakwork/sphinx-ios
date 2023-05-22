@@ -1487,7 +1487,6 @@
                                 </state>
                                 <connections>
                                     <action selector="cancelTapped:" destination="SmN-PS-kRh" eventType="touchUpInside" id="JNP-HT-w4K"/>
-                                    <action selector="saveTapped:" destination="SmN-PS-kRh" eventType="touchUpInside" id="3Us-WQ-rjf"/>
                                 </connections>
                             </button>
                         </subviews>

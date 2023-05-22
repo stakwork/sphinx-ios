@@ -35,6 +35,7 @@ class ProfileManageStorageViewController : UIViewController{
     var maxGB: Int = 0
     var isEditingMaxMemory : Bool = false {
         didSet{
+            storageSummaryView.memorySliderUpdated(value: UserData.sharedInstance.getMaxMemoryGB())
             storageSummaryView.isEditingMaxMemory = isEditingMaxMemory
             if(oldValue == false && isEditingMaxMemory == true){
                 
@@ -157,10 +158,14 @@ class ProfileManageStorageViewController : UIViewController{
         print("saveTapped")
         UserData.sharedInstance.setMaxMemory(GB: Int(maxSliderView.sliderControl.value))
         isEditingMaxMemory = false
+        maxGB = Int(maxSliderView.sliderControl.value)
+        updateUsageLabels()
+        storageSummaryView.summaryDict = stats
     }
     
     @IBAction func cancelTapped(_ sender: Any) {
         isEditingMaxMemory = false
+        
     }
     
     func checkForImmediateDeletion(newMaxGB:Int){

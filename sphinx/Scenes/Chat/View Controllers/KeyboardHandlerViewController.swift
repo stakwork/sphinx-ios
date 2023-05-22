@@ -13,11 +13,13 @@ class KeyboardHandlerViewController: OrientationHandlerViewController {
     @IBOutlet weak var scrollDownContainer: UIView!
     @IBOutlet weak var scrollDownViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var mentionAutoCompleteTableView: UITableView!
+    @IBOutlet weak var pinnedMessageView: PinnedMessageView!
 
     let windowInsets = getWindowInsets()
     let kSmallHeaderHeight: CGFloat = 55
     var kLargeHeaderHeight: CGFloat = 145
     let kHeaderHeight: CGFloat = 65
+    let kHeaderPinHeight: CGFloat = 50
     var bottomContentInset : CGFloat = ChatAccessoryView.kTableBottomPadding
 
     let accessoryView = ChatAccessoryView(frame: CGRect(x: 0, y: 0, width: WindowsManager.getWindowWidth(), height: ChatAccessoryView.kAccessoryViewDefaultHeight))
@@ -105,7 +107,8 @@ class KeyboardHandlerViewController: OrientationHandlerViewController {
     }
     
     func setTopInset() {
-        let headerHeight = windowInsets.top + kHeaderHeight
+        let addPinMessageHeight = !pinnedMessageView.isHidden
+        let headerHeight = windowInsets.top + kHeaderHeight + (addPinMessageHeight ? kHeaderPinHeight : 0)
         chatTableView.contentInset.top = headerHeight
         chatTableView.verticalScrollIndicatorInsets.top = headerHeight
     }

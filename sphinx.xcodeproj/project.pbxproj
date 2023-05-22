@@ -1209,6 +1209,7 @@
 		477ADCC42A1BAC65004E74CE /* PinMessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinMessageViewController.swift; sourceTree = "<group>"; };
 		477ADCC62A1BE2B1004E74CE /* PinnedMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinnedMessageView.swift; sourceTree = "<group>"; };
 		477ADCC82A1BE2BB004E74CE /* PinnedMessageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PinnedMessageView.xib; sourceTree = "<group>"; };
+		477ADCCA2A1BEED8004E74CE /* sphinx 39.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 39.xcdatamodel"; sourceTree = "<group>"; };
 		477B319023ABE0540081413E /* sphinx 7.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 7.xcdatamodel"; sourceTree = "<group>"; };
 		477B319123B10FC30081413E /* NewMessageBubbleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageBubbleHelper.swift; sourceTree = "<group>"; };
 		477BCF302A0031060080ED65 /* TransactionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionTableViewCell.swift; sourceTree = "<group>"; };
@@ -6194,6 +6195,7 @@
 		47F35D4A2373156A0042A58F /* sphinx.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				477ADCCA2A1BEED8004E74CE /* sphinx 39.xcdatamodel */,
 				CE7F06EC29CE004E0076C8BC /* sphinx 38.xcdatamodel */,
 				47129941292278570049CBE3 /* sphinx 37.xcdatamodel */,
 				474CCFA8291560DA0037E1D4 /* sphinx 36.xcdatamodel */,
@@ -6233,7 +6235,7 @@
 				475E4162238588A200928931 /* sphinx 2.xcdatamodel */,
 				47F35D4B2373156A0042A58F /* sphinx.xcdatamodel */,
 			);
-			currentVersion = CE7F06EC29CE004E0076C8BC /* sphinx 38.xcdatamodel */;
+			currentVersion = 477ADCCA2A1BEED8004E74CE /* sphinx 39.xcdatamodel */;
 			path = sphinx.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

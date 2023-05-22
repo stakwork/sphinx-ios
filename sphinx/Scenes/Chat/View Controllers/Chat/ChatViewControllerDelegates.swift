@@ -9,6 +9,7 @@ import UIKit
 import Starscream
 import SwiftyJSON
 import GiphyUISDK
+import CoreData
 
 extension ChatViewController {
     func askForNotificationPermissions() {
@@ -820,25 +821,57 @@ extension ChatViewController : MessageOptionsVCDelegate {
         SoundsPlayer.playHaptic()
     }
     
-    func shouldTogglePinState(message: TransactionMessage, pin: Bool) {
-        accessoryView.show(animated: false)
-        
-        let vc = PinMessageViewController.instantiate(messageObjectId: message.objectID, delegate: self, mode: .MessageUnpinned)
-        WindowsManager.sharedInstance.showConveringWindowWith(rootVC: vc)
+    func didTapUnpinButton(message: TransactionMessage) {
+        shouldTogglePinState(message: message, pin: false)
     }
     
-    func showMessagePinnedInfo() {
-//        accessoryView.hide()
-//        
-//        let viewController = PinMessageViewController.instantiate(messageObjectId: message.objectID, delegate: self, mode: .PinnedMessageInfo)
-//        viewController.modalPresentationStyle = .overCurrentContext
-//        self.present(viewController, animated: false)
+    func shouldTogglePinState(message: TransactionMessage, pin: Bool) {
+        guard let chat = self.chat else {
+            return
+        }
+        
+        API.sharedInstance.pinChatMessage(
+            messageUUID: (pin ? message.uuid : ""),
+            chatId: chat.id,
+            callback: { pinnedMessageUUID in
+                self.chat?.pinnedMessageUUID = pinnedMessageUUID
+                self.chat?.saveChat()
+                
+                self.configurePinnedMessageView()
+                
+                self.accessoryView.show(animated: false)
+                let vc = PinMessageViewController.instantiate(messageObjectId: message.objectID, delegate: self, mode: pin ? .MessagePinned : .MessageUnpinned)
+                WindowsManager.sharedInstance.showConveringWindowWith(rootVC: vc)
+            },
+            errorCallback: {
+                AlertHelper.showAlert(title: "generic.error.title".localized, message: "generic.error.message".localized)
+            }
+        )
+    }
+    
+    func showMessagePinnedInfo(messageObjectId: NSManagedObjectID) {
+        accessoryView.hide()
+        
+        let viewController = PinMessageViewController.instantiate(
+            messageObjectId: messageObjectId,
+            delegate: self,
+            mode: .PinnedMessageInfo
+        )
+        
+        viewController.modalPresentationStyle = .overCurrentContext
+        self.present(viewController, animated: false)
     }
 }
 
 extension ChatViewController : GroupDetailsDelegate {
     func shouldReloadMessage(message: TransactionMessage) {
         chatDataSource?.addMessageAndReload(message: message)
+    }
+}
+
+extension ChatViewController : PinnedMessageViewDelegate {
+    func didTapButtonFor(messageObjectId: NSManagedObjectID) {
+        showMessagePinnedInfo(messageObjectId: messageObjectId)
     }
 }
 

@@ -569,6 +569,17 @@ extension TransactionMessage {
             )
         }
         
+        if isUnpinActionAllowed {
+            options.append(
+                .init(
+                    tag: MessageActionsItem.Unpin,
+                    materialIconName: "push_pin",
+                    iconImage: nil,
+                    label:  "unpin.message".localized
+                )
+            )
+        }
+        
         if isFlagActionAllowed {
             options.append(
                 .init(
@@ -672,7 +683,7 @@ extension TransactionMessage {
     
     var isPinActionAllowed: Bool {
         get {
-            return (self.chat?.isMyPublicGroup() ?? false) && !isMessagePinned
+            return (self.chat?.isMyPublicGroup() ?? false) && !isMessagePinned && messageContainText()
         }
     }
     
@@ -684,7 +695,7 @@ extension TransactionMessage {
     
     var isMessagePinned: Bool {
         get {
-            return self.uuid == self.chat?.pin
+            return self.uuid == self.chat?.pinnedMessageUUID
         }
     }
     

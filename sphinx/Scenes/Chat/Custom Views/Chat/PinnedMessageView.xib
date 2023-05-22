@@ -34,29 +34,40 @@
                         <constraint firstAttribute="height" constant="1" id="9AS-m3-wt6"/>
                     </constraints>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="push_pin" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5v8-Ic-qxf">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="push_pin" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5v8-Ic-qxf">
                     <rect key="frame" x="12" y="14.666666666666664" width="21" height="21"/>
                     <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="21"/>
                     <color key="textColor" name="SecondaryText"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="This is the message content of the pinned message in the chat" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XgI-fz-Stb">
-                    <rect key="frame" x="45" y="17.666666666666668" width="314" height="15.000000000000004"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Testing" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XgI-fz-Stb">
+                    <rect key="frame" x="45" y="18" width="314" height="14"/>
                     <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="12"/>
                     <color key="textColor" name="Text"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yrZ-ac-ZUo">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <connections>
+                        <action selector="pinnedMessageButtonTapped" destination="-1" eventType="touchUpInside" id="4EY-0b-LEy"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" name="HeaderBG"/>
             <constraints>
+                <constraint firstItem="yrZ-ac-ZUo" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="0oE-oZ-4Pj"/>
                 <constraint firstAttribute="trailing" secondItem="XgI-fz-Stb" secondAttribute="trailing" constant="16" id="7cn-eO-aeo"/>
                 <constraint firstItem="XgI-fz-Stb" firstAttribute="leading" secondItem="5v8-Ic-qxf" secondAttribute="trailing" constant="12" id="8rX-NS-iDN"/>
+                <constraint firstAttribute="trailing" secondItem="yrZ-ac-ZUo" secondAttribute="trailing" id="HmI-H8-Wc0"/>
                 <constraint firstItem="5v8-Ic-qxf" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Udo-0E-Uwy"/>
                 <constraint firstItem="Be2-Fb-oSQ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="WMB-M8-K63"/>
                 <constraint firstItem="Be2-Fb-oSQ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Xkp-hp-tuh"/>
+                <constraint firstItem="yrZ-ac-ZUo" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Y56-4O-24F"/>
                 <constraint firstAttribute="trailing" secondItem="Be2-Fb-oSQ" secondAttribute="trailing" id="fEm-Ia-4Tu"/>
                 <constraint firstItem="XgI-fz-Stb" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="iLe-lH-kxD"/>
                 <constraint firstItem="5v8-Ic-qxf" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="12" id="qs4-JD-kwT"/>
+                <constraint firstAttribute="bottom" secondItem="yrZ-ac-ZUo" secondAttribute="bottom" id="vwG-ka-2U1"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="-118.32061068702289" y="19.718309859154932"/>

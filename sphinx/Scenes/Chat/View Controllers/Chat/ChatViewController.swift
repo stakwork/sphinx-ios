@@ -26,7 +26,6 @@ class ChatViewController: KeyboardHandlerViewController {
     
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var chatHeaderView: ChatHeaderView!
-    @IBOutlet weak var pinnedMessageView: PinnedMessageView!
     @IBOutlet weak var loadingWheel: UIActivityIndicatorView!
     @IBOutlet weak var scrollDownLabel: UILabel!
     @IBOutlet weak var webAppContainerView: UIView!
@@ -166,12 +165,13 @@ class ChatViewController: KeyboardHandlerViewController {
     }
     
     func updateChatInfo() {
+        configurePinnedMessageView()
         accessoryView.updateFromChat(chat)
         
         chat?.updateTribeInfo() {
             self.chatHeaderView.setChatInfo()
-            self.pinnedMessageView.configureWith(chatObjectId: self.chat?.objectID)
             self.loadPodcastFeed()
+            self.configurePinnedMessageView()
         }
         
         if chat?.isStatusPending() ?? false {
@@ -179,6 +179,13 @@ class ChatViewController: KeyboardHandlerViewController {
         }
     }
     
+    func configurePinnedMessageView() {
+        pinnedMessageView.configureWith(
+            chatObjectId: chat?.objectID,
+            and: self
+        )
+        setTopInset()
+    }
     
     func loadData(showLoadingWheel: Bool = true) {
         chatHeaderView.setChatInfo()
@@ -279,11 +286,9 @@ class ChatViewController: KeyboardHandlerViewController {
 }
 
 
-extension ChatViewController:ChatMentionAutocompleteDelegate{
+extension ChatViewController : ChatMentionAutocompleteDelegate {
     func processAutocomplete(text: String) {
         print(text)
         NotificationCenter.default.post(name: NSNotification.Name.autocompleteMention, object: text)
     }
-    
-    
 }

@@ -10,6 +10,7 @@ import UIKit
 import CoreData
 
 protocol PinMessageDelegate: class {
+    func didTapUnpinButton(message: TransactionMessage)
     func willDismissPresentedVC()
 }
 
@@ -135,7 +136,7 @@ extension PinMessageViewController {
     }
     
     func setupMessageData() {
-        if message.chat?.isMyPublicGroup() == true {
+        if message.isOutgoing() {
             if let owner = UserContact.getOwner() {
                 avatarView.configureForUserWith(
                     color: owner.getColor(),
@@ -220,7 +221,7 @@ extension PinMessageViewController {
 //Actions handling
 extension PinMessageViewController {
     @IBAction func unpinButtonTapped() {
-        //Handle Unpin
+        delegate?.didTapUnpinButton(message: message)
         dismissBottomView()
     }
     

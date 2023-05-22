@@ -8,11 +8,19 @@
 
 import UIKit
 
+protocol MediaStorageTypeSummaryTableViewCellDelegate : NSObject{
+    func didTapDelete(type:StorageManagerMediaType)
+}
+
 class MediaStorageTypeSummaryTableViewCell: UITableViewCell {
     
     @IBOutlet weak var dotView: UIView!
     @IBOutlet weak var storageAmountLabel: UILabel!
     @IBOutlet weak var mediaTypeLabel: UILabel!
+    
+    
+    var delegate : MediaStorageTypeSummaryTableViewCellDelegate? = nil
+    var type: StorageManagerMediaType? = nil
     
     static let reuseID = "MediaStorageTypeSummaryTableViewCell"
     
@@ -29,10 +37,12 @@ class MediaStorageTypeSummaryTableViewCell: UITableViewCell {
     
     func finishSetup(){
         dotView.makeCircular()
+        self.selectionStyle = .none
         bringSubviewToFront(self.mediaTypeLabel)
     }
     
     func setupAsMediaType(type:StorageManagerMediaType){
+        self.type = type
         switch(type){
         case .audio:
             dotView.backgroundColor = UIColor(hex: "#FAE676")
@@ -47,6 +57,19 @@ class MediaStorageTypeSummaryTableViewCell: UITableViewCell {
             dotView.backgroundColor = UIColor.Sphinx.PrimaryBlue
             mediaTypeLabel.text = "Images"
             break
+        }
+    }
+    
+    
+    @IBAction func deleteButtonTap(_ sender: Any) {
+        handleDelete()
+    }
+    
+    
+    @objc func handleDelete(){
+        if let type = type,
+           let delegate = delegate{
+            delegate.didTapDelete(type: type)
         }
     }
     

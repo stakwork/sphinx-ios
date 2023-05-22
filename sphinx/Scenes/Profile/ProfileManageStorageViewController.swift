@@ -32,7 +32,7 @@ class ProfileManageStorageViewController : UIViewController{
     var sliderHiddenYConstraint : CGFloat = -8.0
     var sliderShowingYConstraint: CGFloat = 34.0
     
-    var stats = [StorageManagerMediaType:Double]()
+    var tempStats : [StorageManagerMediaType:Double]? = nil
     var usageKB : Double = 0.0
     var maxGB: Int = 0
     var isEditingMaxMemory : Bool = false {
@@ -103,10 +103,7 @@ class ProfileManageStorageViewController : UIViewController{
         storageStats:[StorageManagerMediaType:Double]
     ) -> ProfileManageStorageViewController {
         let viewController = StoryboardScene.Profile.profileManageStorageViewController.instantiate()
-//        viewController.rootViewController = rootViewController
-//        viewController.contactsService = rootViewController.contactsService
-//        viewController.delegate = delegate
-        viewController.stats = storageStats
+        viewController.tempStats = storageStats
         viewController.usageKB = StorageManager.sharedManager.getItemGroupTotalSize(items: StorageManager.sharedManager.allItems)
         viewController.maxGB = UserData.sharedInstance.getMaxMemoryGB()
         
@@ -116,7 +113,9 @@ class ProfileManageStorageViewController : UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         maxSliderView.delegate = self
-        storageSummaryView.summaryDict = stats
+        vm.stats = tempStats ?? [StorageManagerMediaType:Double]()
+        tempStats = nil
+        storageSummaryView.summaryDict = vm.stats
         updateUsageLabels()
         vm.finishSetup()
     }
@@ -169,7 +168,7 @@ class ProfileManageStorageViewController : UIViewController{
         isEditingMaxMemory = false
         maxGB = Int(maxSliderView.sliderControl.value)
         updateUsageLabels()
-        storageSummaryView.summaryDict = stats
+        storageSummaryView.summaryDict = vm.stats
     }
     
     @IBAction func cancelTapped(_ sender: Any) {

@@ -55,6 +55,7 @@ typealias HardwarePublicKeyCallback = ((String) -> ())
 typealias HardwareSeedCallback = ((Bool) -> ())
 typealias SyncActionsCallback = ((Bool) -> ())
 typealias RecommendationsCallback = (([RecommendationResult]) -> ())
+typealias PinMessageCallback = ((String) -> ())
 typealias ErrorCallback = ((String) -> ())
 
 // HUB calls

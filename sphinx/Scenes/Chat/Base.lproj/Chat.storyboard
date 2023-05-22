@@ -935,7 +935,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g6d-Z8-xrV">
-                                        <rect key="frame" x="31" y="9.5" width="16" height="16"/>
+                                        <rect key="frame" x="31" y="9.5" width="16" height="16.5"/>
                                         <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="14"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -979,19 +979,36 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Th-x2-Khv">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="65"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z7i-o3-ZlM" customClass="ChatHeaderView" customModule="sphinx" customModuleProvider="target">
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="H2X-gR-eU7">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="65"/>
-                                        <color key="backgroundColor" name="HeaderBG"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z7i-o3-ZlM" customClass="ChatHeaderView" customModule="sphinx" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="65"/>
+                                                <color key="backgroundColor" name="HeaderBG"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="65" id="0uG-dt-f0e"/>
+                                                </constraints>
+                                            </view>
+                                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qvf-KT-Veo" customClass="PinnedMessageView" customModule="sphinx" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="65" width="375" height="50"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="KGc-og-FT0"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="65" id="0uG-dt-f0e"/>
+                                            <constraint firstItem="Qvf-KT-Veo" firstAttribute="top" secondItem="Z7i-o3-ZlM" secondAttribute="bottom" id="Skd-h6-dhv"/>
+                                            <constraint firstAttribute="trailing" secondItem="Qvf-KT-Veo" secondAttribute="trailing" id="jc8-tt-ds9"/>
+                                            <constraint firstItem="Qvf-KT-Veo" firstAttribute="leading" secondItem="H2X-gR-eU7" secondAttribute="leading" id="o4e-S3-dFA"/>
                                         </constraints>
-                                    </view>
+                                    </stackView>
                                 </subviews>
                                 <color key="backgroundColor" name="HeaderBG"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="Z7i-o3-ZlM" secondAttribute="bottom" id="7mZ-S9-vby"/>
-                                    <constraint firstAttribute="trailing" secondItem="Z7i-o3-ZlM" secondAttribute="trailing" id="gKU-Zk-GHX"/>
-                                    <constraint firstItem="Z7i-o3-ZlM" firstAttribute="leading" secondItem="5Th-x2-Khv" secondAttribute="leading" id="mqP-G3-PNw"/>
+                                    <constraint firstAttribute="bottom" secondItem="H2X-gR-eU7" secondAttribute="bottom" id="8Tg-BX-CKc"/>
+                                    <constraint firstAttribute="trailing" secondItem="H2X-gR-eU7" secondAttribute="trailing" id="abA-K3-Cj1"/>
+                                    <constraint firstItem="H2X-gR-eU7" firstAttribute="leading" secondItem="5Th-x2-Khv" secondAttribute="leading" id="ljb-St-5oW"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -1017,8 +1034,8 @@
                             <constraint firstItem="VmL-9e-Jha" firstAttribute="bottom" secondItem="7SB-f8-Drm" secondAttribute="bottom" id="dkz-hJ-ttr"/>
                             <constraint firstItem="5Th-x2-Khv" firstAttribute="trailing" secondItem="7SB-f8-Drm" secondAttribute="trailing" id="doZ-fo-gZs"/>
                             <constraint firstItem="zjV-dK-x6s" firstAttribute="top" secondItem="5Th-x2-Khv" secondAttribute="bottom" id="ed5-ZN-uYb"/>
+                            <constraint firstItem="H2X-gR-eU7" firstAttribute="top" secondItem="7SB-f8-Drm" secondAttribute="top" id="f9i-jN-I6X"/>
                             <constraint firstItem="5Th-x2-Khv" firstAttribute="top" secondItem="brL-Ct-zEB" secondAttribute="top" id="fhk-7e-55P"/>
-                            <constraint firstItem="Z7i-o3-ZlM" firstAttribute="top" secondItem="7SB-f8-Drm" secondAttribute="top" id="h4k-Ue-EmJ"/>
                             <constraint firstItem="zjV-dK-x6s" firstAttribute="leading" secondItem="3Kz-Z8-810" secondAttribute="leading" id="whA-KV-4V0"/>
                         </constraints>
                     </view>
@@ -1028,6 +1045,7 @@
                         <outlet property="headerView" destination="5Th-x2-Khv" id="odp-1E-wON"/>
                         <outlet property="loadingWheel" destination="VmL-9e-Jha" id="bI5-iP-IN7"/>
                         <outlet property="mentionAutoCompleteTableView" destination="zjV-dK-x6s" id="9Iq-BF-blG"/>
+                        <outlet property="pinnedMessageView" destination="Qvf-KT-Veo" id="shG-WF-NKo"/>
                         <outlet property="scrollDownContainer" destination="Spb-Cp-V9e" id="HRB-Yi-yVS"/>
                         <outlet property="scrollDownLabel" destination="g6d-Z8-xrV" id="I6H-8H-fUc"/>
                         <outlet property="scrollDownViewBottomConstraint" destination="0Un-Wj-DFb" id="KdN-RL-YuE"/>

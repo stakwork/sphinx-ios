@@ -16,6 +16,7 @@ extension GroupsManager {
         var groupKey : String? = nil
         var ownerPubkey : String? = nil
         var ownerAlias : String? = nil
+        var pin : String? = nil
         var host : String! = nil
         var uuid : String! = nil
         var tags : [Tag] = []

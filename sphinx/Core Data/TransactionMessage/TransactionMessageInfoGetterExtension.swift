@@ -672,13 +672,19 @@ extension TransactionMessage {
     
     var isPinActionAllowed: Bool {
         get {
-            return (self.chat?.isMyPublicGroup() ?? false)
+            return (self.chat?.isMyPublicGroup() ?? false) && !isMessagePinned
         }
     }
     
     var isUnpinActionAllowed: Bool {
         get {
-            return (self.chat?.isMyPublicGroup() ?? false)
+            return (self.chat?.isMyPublicGroup() ?? false) && isMessagePinned
+        }
+    }
+    
+    var isMessagePinned: Bool {
+        get {
+            return self.uuid == self.chat?.pin
         }
     }
     

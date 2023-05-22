@@ -26,6 +26,7 @@ class ChatViewController: KeyboardHandlerViewController {
     
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var chatHeaderView: ChatHeaderView!
+    @IBOutlet weak var pinnedMessageView: PinnedMessageView!
     @IBOutlet weak var loadingWheel: UIActivityIndicatorView!
     @IBOutlet weak var scrollDownLabel: UILabel!
     @IBOutlet weak var webAppContainerView: UIView!
@@ -169,6 +170,7 @@ class ChatViewController: KeyboardHandlerViewController {
         
         chat?.updateTribeInfo() {
             self.chatHeaderView.setChatInfo()
+            self.pinnedMessageView.configureWith(chatObjectId: self.chat?.objectID)
             self.loadPodcastFeed()
         }
         

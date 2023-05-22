@@ -27,9 +27,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="322" height="60"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Images" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f6R-hX-GXa">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Images" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f6R-hX-GXa">
                         <rect key="frame" x="40" y="0.0" width="110" height="60"/>
-                        <color key="backgroundColor" red="0.65490196079999996" green="0.42352941179999998" blue="0.95294117649999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="110" id="VAa-0d-f7I"/>
                         </constraints>
@@ -37,9 +36,8 @@
                         <color key="textColor" name="Text"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="15.1 GB" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8G9-NW-Z1g">
-                        <rect key="frame" x="170" y="0.0" width="108" height="60"/>
-                        <color key="backgroundColor" red="0.65490196079999996" green="0.42352941179999998" blue="0.95294117649999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="15.1 GB" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8G9-NW-Z1g">
+                        <rect key="frame" x="170" y="0.0" width="95" height="60"/>
                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="15"/>
                         <color key="textColor" name="Text"/>
                         <nil key="highlightedColor"/>
@@ -53,13 +51,13 @@
                         </constraints>
                     </view>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E0B-vZ-Iwu">
-                        <rect key="frame" x="302" y="24" width="12" height="12"/>
+                        <rect key="frame" x="289" y="17.666666666666668" width="25" height="25.000000000000004"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="12" id="ceo-g9-ByU"/>
-                            <constraint firstAttribute="height" constant="12" id="oOP-UQ-MFp"/>
+                            <constraint firstAttribute="width" constant="25" id="ceo-g9-ByU"/>
+                            <constraint firstAttribute="height" constant="25" id="oOP-UQ-MFp"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="14"/>
-                        <color key="tintColor" name="SecondaryText"/>
+                        <color key="tintColor" name="Text"/>
                         <state key="normal" image="deleteIcon">
                             <color key="titleColor" name="WashedOutReceivedText"/>
                         </state>
@@ -90,9 +88,6 @@
     </objects>
     <resources>
         <image name="deleteIcon" width="38" height="38"/>
-        <namedColor name="SecondaryText">
-            <color red="0.55686274509803924" green="0.58823529411764708" blue="0.61176470588235299" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="Text">
             <color red="0.23529411764705882" green="0.24705882352941178" blue="0.25490196078431371" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

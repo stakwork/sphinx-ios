@@ -12,6 +12,7 @@ import UIKit
 class ProfileManageStorageViewModel : NSObject{
     var vc : ProfileManageStorageViewController
     var tableView:UITableView
+    var mediaTypes = StorageManagerMediaType.allCases
     
     init(
         vc:ProfileManageStorageViewController,
@@ -38,11 +39,12 @@ extension ProfileManageStorageViewModel : UITableViewDelegate,UITableViewDataSou
             for: indexPath
         ) as! MediaStorageTypeSummaryTableViewCell
         cell.finishSetup()
+        cell.setupAsMediaType(type: mediaTypes[indexPath.row])
         return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return StorageManagerMediaType.allCases.count
+        return mediaTypes.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

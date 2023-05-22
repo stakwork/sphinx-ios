@@ -29,10 +29,25 @@ class MediaStorageTypeSummaryTableViewCell: UITableViewCell {
     
     func finishSetup(){
         dotView.makeCircular()
-        mediaTypeLabel.text = "Blah"
-        storageAmountLabel.text = "blah"
-        storageAmountLabel.backgroundColor = .purple
         bringSubviewToFront(self.mediaTypeLabel)
+    }
+    
+    func setupAsMediaType(type:StorageManagerMediaType){
+        switch(type){
+        case .audio:
+            dotView.backgroundColor = UIColor(hex: "#FAE676")
+            mediaTypeLabel.text = "Audio"
+            break
+            
+        case .video:
+            dotView.backgroundColor = UIColor(hex: "#A76CF3")
+            mediaTypeLabel.text = "Videos"
+            break
+        case .photo:
+            dotView.backgroundColor = UIColor.Sphinx.PrimaryBlue
+            mediaTypeLabel.text = "Images"
+            break
+        }
     }
     
 }

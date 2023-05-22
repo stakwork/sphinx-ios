@@ -15,7 +15,7 @@ public enum StorageManagerMediaType{
     case photo
     
     static var allCases: [StorageManagerMediaType] {
-            return [.audio, .video, .photo]
+        return [.photo,.video,.audio]
         }
 }
 

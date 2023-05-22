@@ -80,7 +80,7 @@ class StorageSummaryView: UIView {
         deletionFootprintView.isHidden = true
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
-            self.summaryDict = self.getDebugValues()
+           // self.summaryDict = self.getDebugValues()
         })
     }
     

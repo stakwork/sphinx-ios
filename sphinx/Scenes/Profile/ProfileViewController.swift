@@ -221,14 +221,22 @@ class ProfileViewController: KeyboardEventsViewController {
             if let image = manageStorageChevronImageView.image{
                 manageStorageChevronImageView.image = changeSVGColor(svgImage: image, color: UIColor.Sphinx.PrimaryGreen)
             }
-            manageStorageView.isUserInteractionEnabled = true
-            manageStorageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showManageStorageVC)))
-            updateStorageSummaryLabel()
-            storageSummaryBarView.summaryDict = StorageManager.sharedManager.getStorageItemSummaryByType()
             
         }
         
         relayUrlTextField.text = userData.getNodeIP()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setupMemoryManagement()
+    }
+    
+    func setupMemoryManagement(){
+        manageStorageView.isUserInteractionEnabled = true
+        manageStorageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showManageStorageVC)))
+        updateStorageSummaryLabel()
+        storageSummaryBarView.summaryDict = StorageManager.sharedManager.getStorageItemSummaryByType()
     }
     
     func configureServers() {
@@ -256,9 +264,12 @@ class ProfileViewController: KeyboardEventsViewController {
     
     func updateStorageSummaryLabel(){
         let max = UserData.sharedInstance.getMaxMemoryGB()
+        self.storageSumaryLabel.text = "Loading..."
+        self.storageSumaryLabel.textColor = UIColor.Sphinx.SecondaryText
         StorageManager.sharedManager.refreshAllStoredData(completion: {
             let usage = StorageManager.sharedManager.getItemGroupTotalSize(items: StorageManager.sharedManager.allItems)
-            self.storageSumaryLabel.text = "\(Int(usage/1e9)) GB of \(Int(max)) GB"
+            self.storageSumaryLabel.text = "\(formatBytes(Int(usage * 1e6))) of \(formatBytes(Int(Double(max) * 1e9)))"
+            self.storageSumaryLabel.textColor = UIColor.Sphinx.Text
         })
         
     }

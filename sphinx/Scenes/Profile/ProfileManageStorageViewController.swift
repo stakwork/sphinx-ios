@@ -62,6 +62,7 @@ class ProfileManageStorageViewController : UIViewController{
             }
             else if(oldValue == true && isEditingMaxMemory == false){
                 UIView.animate(withDuration: 0.25, delay: 0, animations: {
+                    self.warningView.isHidden = true
                     self.sliderVerticalSpacing.constant = self.sliderHiddenYConstraint
                     self.maxSliderView.superview?.layoutIfNeeded()
                     self.backButton.setTitle("", for: .normal)
@@ -154,7 +155,8 @@ class ProfileManageStorageViewController : UIViewController{
     
     @IBAction func saveTapped(_ sender: Any) {
         print("saveTapped")
-        
+        UserData.sharedInstance.setMaxMemory(GB: Int(maxSliderView.sliderControl.value))
+        isEditingMaxMemory = false
     }
     
     @IBAction func cancelTapped(_ sender: Any) {
@@ -181,7 +183,7 @@ func formatBytes(_ bytes: Int) -> String {
     let formatter = NumberFormatter()
     formatter.numberStyle = .decimal
     formatter.minimumFractionDigits = 0
-    formatter.maximumFractionDigits = 2
+    formatter.maximumFractionDigits = 1
     
     let byteCount = Double(bytes)
     

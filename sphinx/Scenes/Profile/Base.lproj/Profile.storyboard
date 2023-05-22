@@ -253,16 +253,16 @@
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="50 of 64 GB" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KkR-Gv-Dju">
-                                                                <rect key="frame" x="173" y="27" width="126" height="20"/>
+                                                                <rect key="frame" x="173" y="28" width="126" height="18"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="126" id="01f-fA-MoD"/>
                                                                 </constraints>
-                                                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
+                                                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="15"/>
                                                                 <color key="textColor" name="Text"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WzV-kW-Ivq" customClass="StorageSummaryView" customModule="sphinx" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="63" width="354" height="16"/>
+                                                                <rect key="frame" x="0.0" y="62" width="354" height="16"/>
                                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="16" id="fjh-6A-Hox"/>
@@ -1347,9 +1347,9 @@
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fkk-rM-43k">
                                 <rect key="frame" x="0.0" y="48" width="414" height="96"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Saving this limit will delete XX GB of your oldest content" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UlI-4J-0AF">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Saving this limit will delete XX GB of your oldest content" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UlI-4J-0AF">
                                         <rect key="frame" x="56" y="24" width="336" height="51"/>
-                                        <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="13"/>
+                                        <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="14"/>
                                         <color key="textColor" name="TextMessages"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -1377,7 +1377,7 @@
                                 </constraints>
                             </view>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fvo-5a-xTT" customClass="MaxMemorySlider" customModule="sphinx" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="498.5" width="414" height="100"/>
+                                <rect key="frame" x="0.0" y="508.5" width="414" height="100"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="S3p-7J-gc6"/>
@@ -1408,7 +1408,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Used" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4T3-f8-3JX">
-                                <rect key="frame" x="15" y="139" width="106" height="17"/>
+                                <rect key="frame" x="15" y="149" width="106" height="17"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="106" id="GrA-9b-Tj2"/>
                                     <constraint firstAttribute="height" constant="17" id="HXl-T3-QPc"/>
@@ -1418,20 +1418,20 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="50.12 GB" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n7u-9a-5PX">
-                                <rect key="frame" x="15" y="164" width="377" height="30.5"/>
+                                <rect key="frame" x="15" y="174" width="377" height="30.5"/>
                                 <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="26"/>
                                 <color key="textColor" name="Text"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MBC-sr-yDr" customClass="StorageSummaryView" customModule="sphinx" customModuleProvider="target">
-                                <rect key="frame" x="15" y="207.5" width="377" height="16"/>
+                                <rect key="frame" x="15" y="217.5" width="377" height="16"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="16" id="iaj-qM-0uT"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h59-t6-zfg">
-                                <rect key="frame" x="119" y="243.5" width="176" height="40"/>
+                                <rect key="frame" x="119" y="253.5" width="176" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="176" id="3ue-aP-kPD"/>
                                     <constraint firstAttribute="height" constant="40" id="ted-om-NIO"/>
@@ -1443,7 +1443,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Change Storage Limit" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bTv-6h-5tO">
-                                <rect key="frame" x="132" y="255.5" width="150" height="16.5"/>
+                                <rect key="frame" x="132" y="265.5" width="150" height="16.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="7TZ-Mx-fAA"/>
                                 </constraints>
@@ -1452,7 +1452,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="77.88 GB Free" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="myU-eK-pqV">
-                                <rect key="frame" x="301" y="177.5" width="91" height="17"/>
+                                <rect key="frame" x="304" y="187.5" width="88" height="17"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="17" id="qZg-sn-L9T"/>
                                 </constraints>
@@ -1461,7 +1461,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aZn-Kj-YV3">
-                                <rect key="frame" x="298" y="600.5" width="100" height="40"/>
+                                <rect key="frame" x="298" y="610.5" width="100" height="40"/>
                                 <color key="backgroundColor" name="PrimaryBlue"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="t5k-zl-Szu"/>
@@ -1476,7 +1476,7 @@
                                 </connections>
                             </button>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DzR-Mi-Rn7">
-                                <rect key="frame" x="16" y="600.5" width="100" height="40"/>
+                                <rect key="frame" x="16" y="610.5" width="100" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="I7X-xD-8b3"/>
                                     <constraint firstAttribute="height" constant="40" id="yWq-B2-bLW"/>
@@ -1505,7 +1505,7 @@
                             <constraint firstItem="aZn-Kj-YV3" firstAttribute="top" secondItem="Fvo-5a-xTT" secondAttribute="bottom" constant="2" id="OAZ-yi-8km"/>
                             <constraint firstItem="h59-t6-zfg" firstAttribute="top" secondItem="MBC-sr-yDr" secondAttribute="bottom" constant="20" id="QhP-dQ-dvm"/>
                             <constraint firstItem="Fvo-5a-xTT" firstAttribute="leading" secondItem="1Ap-Ee-cOT" secondAttribute="leading" id="TOb-Yo-dQI"/>
-                            <constraint firstItem="4T3-f8-3JX" firstAttribute="top" secondItem="ojg-wh-9EL" secondAttribute="bottom" constant="30" id="UiE-5G-YR2"/>
+                            <constraint firstItem="4T3-f8-3JX" firstAttribute="top" secondItem="ojg-wh-9EL" secondAttribute="bottom" constant="40" id="UiE-5G-YR2"/>
                             <constraint firstItem="R4S-en-fKP" firstAttribute="trailing" secondItem="fkk-rM-43k" secondAttribute="trailing" id="Wxx-UT-CbO"/>
                             <constraint firstItem="DzR-Mi-Rn7" firstAttribute="leading" secondItem="R4S-en-fKP" secondAttribute="leading" constant="16" id="Yrx-x5-su7"/>
                             <constraint firstItem="Fvo-5a-xTT" firstAttribute="top" secondItem="MBC-sr-yDr" secondAttribute="bottom" constant="275" id="ask-JB-c7C"/>

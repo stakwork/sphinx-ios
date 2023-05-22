@@ -674,6 +674,9 @@
 		CED14D78293CF683004B8B25 /* ChatMentionAutocompleteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED14D77293CF683004B8B25 /* ChatMentionAutocompleteDataSource.swift */; };
 		CEE433B229AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE433B029AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.swift */; };
 		CEE433B329AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEE433B129AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.xib */; };
+		CEE49BF02A1BB88F009E0EC4 /* ProfileManageStorageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE49BEF2A1BB88F009E0EC4 /* ProfileManageStorageViewModel.swift */; };
+		CEE49BF32A1BBC70009E0EC4 /* MediaStorageTypeSummaryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE49BF12A1BBC70009E0EC4 /* MediaStorageTypeSummaryTableViewCell.swift */; };
+		CEE49BF42A1BBC70009E0EC4 /* MediaStorageTypeSummaryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEE49BF22A1BBC70009E0EC4 /* MediaStorageTypeSummaryTableViewCell.xib */; };
 		CEEBBB3F29DC47930093923D /* ItemDescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEBBB3E29DC47930093923D /* ItemDescriptionViewController.swift */; };
 		CEEBBB4229DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEBBB4029DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.swift */; };
 		CEEBBB4329DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEEBBB4129DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.xib */; };
@@ -1678,6 +1681,9 @@
 		CED14D77293CF683004B8B25 /* ChatMentionAutocompleteDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatMentionAutocompleteDataSource.swift; sourceTree = "<group>"; };
 		CEE433B029AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnifiedEpisodeTableViewCell.swift; sourceTree = "<group>"; };
 		CEE433B129AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UnifiedEpisodeTableViewCell.xib; sourceTree = "<group>"; };
+		CEE49BEF2A1BB88F009E0EC4 /* ProfileManageStorageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileManageStorageViewModel.swift; sourceTree = "<group>"; };
+		CEE49BF12A1BBC70009E0EC4 /* MediaStorageTypeSummaryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaStorageTypeSummaryTableViewCell.swift; sourceTree = "<group>"; };
+		CEE49BF22A1BBC70009E0EC4 /* MediaStorageTypeSummaryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MediaStorageTypeSummaryTableViewCell.xib; sourceTree = "<group>"; };
 		CEEBBB3E29DC47930093923D /* ItemDescriptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDescriptionViewController.swift; sourceTree = "<group>"; };
 		CEEBBB4029DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDescriptionTableViewHeaderCell.swift; sourceTree = "<group>"; };
 		CEEBBB4129DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ItemDescriptionTableViewHeaderCell.xib; sourceTree = "<group>"; };
@@ -2334,6 +2340,7 @@
 				4797E7CA24B8F47200D13270 /* Profile.storyboard */,
 				47468FDB233554680072124A /* ProfileViewController.swift */,
 				CE30D9582A0BFFAA00C83555 /* ProfileManageStorageViewController.swift */,
+				CEE49BEF2A1BB88F009E0EC4 /* ProfileManageStorageViewModel.swift */,
 				475103CE243B6E550043C748 /* ProfileViewControllerExtensions.swift */,
 				4789E26B24F05481003991BE /* ProfileViewControllerRelayExtension.swift */,
 				47904C1A24BF3C7A00710E7A /* NotificationSoundViewController.swift */,
@@ -3364,6 +3371,8 @@
 			children = (
 				47904C1D24BF403400710E7A /* NotificationSoundTableViewCell.swift */,
 				47904C1E24BF403400710E7A /* NotificationSoundTableViewCell.xib */,
+				CEE49BF12A1BBC70009E0EC4 /* MediaStorageTypeSummaryTableViewCell.swift */,
+				CEE49BF22A1BBC70009E0EC4 /* MediaStorageTypeSummaryTableViewCell.xib */,
 			);
 			path = "Table View Cells";
 			sourceTree = "<group>";
@@ -4484,6 +4493,7 @@
 				475BDD0E232AC25100C5BBD6 /* DayHeaderTableViewCell.xib in Resources */,
 				47904C0D24BF352300710E7A /* bells.caf in Resources */,
 				475BDD23232AC71000C5BBD6 /* Colors.xcassets in Resources */,
+				CEE49BF42A1BBC70009E0EC4 /* MediaStorageTypeSummaryTableViewCell.xib in Resources */,
 				4705D39B2799AAC0009C0729 /* CustomBoostView.xib in Resources */,
 				47183CB42548AA5100E6FD19 /* PodcastPlayerView.xib in Resources */,
 				F3446B9426BABAB400855516 /* ChatListCollectionViewCell.xib in Resources */,
@@ -4683,6 +4693,7 @@
 				475BDCB3232AC1E800C5BBD6 /* NewKeyPadView.swift in Sources */,
 				47ACBC15265E9CE600D2FE47 /* AuthExternalView.swift in Sources */,
 				47F2289E23672A5E001429A4 /* ImagePickerManager.swift in Sources */,
+				CEE49BF32A1BBC70009E0EC4 /* MediaStorageTypeSummaryTableViewCell.swift in Sources */,
 				F32A696526CFEF600004B8B3 /* PodcastFeed+Properties.swift in Sources */,
 				475043C82971956D00830E9E /* PodcastPlayerController.swift in Sources */,
 				F38744E1271FD7CB00E28C84 /* Video+DisplayUtils.swift in Sources */,
@@ -4969,6 +4980,7 @@
 				4703CF97251D23E5007B685C /* LinkPreviewUIImage.swift in Sources */,
 				474CCFAA291562180037E1D4 /* API+ActionsExtension.swift in Sources */,
 				F3188B932719DA1600890DDD /* DashboardVideoEpisodeCollectionViewCell.swift in Sources */,
+				CEE49BF02A1BB88F009E0EC4 /* ProfileManageStorageViewModel.swift in Sources */,
 				47AF0D31254B236C00C98398 /* BoostButtonView.swift in Sources */,
 				47822C70244A02010011D832 /* CommonPaidMessageTableViewCell.swift in Sources */,
 				47D46A33237C83900005A548 /* Chat+CoreDataClass.swift in Sources */,

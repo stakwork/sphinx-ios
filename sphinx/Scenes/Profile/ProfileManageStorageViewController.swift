@@ -20,6 +20,8 @@ class ProfileManageStorageViewController : UIViewController{
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var warningView: UIView!
     @IBOutlet weak var warningLabel: UILabel!
+    @IBOutlet weak var mediaTypeTableView: UITableView!
+    
     
     
     @IBOutlet weak var saveButton: UIButton!
@@ -55,6 +57,7 @@ class ProfileManageStorageViewController : UIViewController{
                     self.maxSliderView.alpha = 1.0
                     self.cancelButton.alpha = 1.0
                     self.saveButton.alpha = 1.0
+                    self.mediaTypeTableView.isHidden = true
                 },completion: {_ in
                     self.changeStorageButton.isHidden = true
                     self.changeStorageLabel.isHidden = true
@@ -69,6 +72,7 @@ class ProfileManageStorageViewController : UIViewController{
                     self.backButton.setTitle("", for: .normal)
                     self.titleLabel.text = "Manage Storage"
                     
+                    self.mediaTypeTableView.isHidden = false
                     self.changeStorageButton.alpha = 1.0
                     self.changeStorageLabel.alpha = 1.0
                     self.maxSliderView.alpha = 0.0
@@ -85,6 +89,10 @@ class ProfileManageStorageViewController : UIViewController{
             }
         }
     }
+    
+    lazy var vm : ProfileManageStorageViewModel = {
+        return ProfileManageStorageViewModel(vc: self, tableView: mediaTypeTableView)
+    }()
     
     
     func freeMemory()-> Int {
@@ -110,6 +118,7 @@ class ProfileManageStorageViewController : UIViewController{
         maxSliderView.delegate = self
         storageSummaryView.summaryDict = stats
         updateUsageLabels()
+        vm.finishSetup()
     }
     
     func updateUsageLabels(){

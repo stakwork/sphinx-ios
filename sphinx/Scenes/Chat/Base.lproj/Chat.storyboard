@@ -671,6 +671,7 @@
                                 <rect key="frame" x="0.0" y="667" width="375" height="0.0"/>
                                 <color key="backgroundColor" name="HeaderBG"/>
                             </view>
+                            
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Qjl-UA-qWr">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
@@ -697,7 +698,7 @@
                                                 </buttonConfiguration>
                                                 <connections>
                                                     <action selector="dismissButtonTouched:" destination="wLv-qn-zrt" eventType="touchUpInside" id="xes-vF-Ta4"/>
-						</connections>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1532,8 +1533,12 @@
                                     <action selector="dismissButtonTapped" destination="hoH-z1-CCs" eventType="touchUpInside" id="LC8-7c-VtM"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Snk-Pp-tL0">
+                                <rect key="frame" x="0.0" y="717" width="376" height="600"/>
+                                <color key="backgroundColor" name="LightBG"/>
+                            </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="5IX-pt-Gly">
-                                <rect key="frame" x="0.0" y="747" width="375" height="270"/>
+                                <rect key="frame" x="0.0" y="717" width="375" height="300"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4I5-lJ-tJe">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="16"/>
@@ -1572,7 +1577,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vx5-CP-5td">
-                                        <rect key="frame" x="0.0" y="66" width="375" height="128"/>
+                                        <rect key="frame" x="0.0" y="66" width="375" height="158"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vZl-Ma-ZHW" customClass="ChatAvatarView" customModule="sphinx" customModuleProvider="target">
                                                 <rect key="frame" x="16" y="12" width="32" height="32"/>
@@ -1589,10 +1594,10 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OTr-LX-DY0">
-                                                <rect key="frame" x="60" y="36" width="153.5" height="80"/>
+                                                <rect key="frame" x="60" y="36" width="153.5" height="110"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is a message" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q4s-Ic-OqZ">
-                                                        <rect key="frame" x="16" y="16" width="121.5" height="48"/>
+                                                        <rect key="frame" x="16" y="16" width="121.5" height="78"/>
                                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="15"/>
                                                         <color key="textColor" name="Text"/>
                                                         <nil key="highlightedColor"/>
@@ -1631,7 +1636,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TJV-ht-ezi">
-                                        <rect key="frame" x="0.0" y="194" width="375" height="60"/>
+                                        <rect key="frame" x="0.0" y="224" width="375" height="60"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="Apj-if-JNl">
                                                 <rect key="frame" x="120.5" y="12.5" width="134.5" height="35"/>
@@ -1679,27 +1684,19 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mMc-o5-NDa">
-                                        <rect key="frame" x="0.0" y="254" width="375" height="16"/>
+                                        <rect key="frame" x="0.0" y="284" width="375" height="16"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="16" id="uEV-9C-9C0"/>
                                         </constraints>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" name="LightBG"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="4I5-lJ-tJe" firstAttribute="leading" secondItem="5IX-pt-Gly" secondAttribute="leading" id="fi8-dM-5J0"/>
                                     <constraint firstAttribute="trailing" secondItem="4I5-lJ-tJe" secondAttribute="trailing" id="rA0-ST-P35"/>
                                 </constraints>
                             </stackView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Snk-Pp-tL0">
-                                <rect key="frame" x="0.0" y="1017" width="376" height="200"/>
-                                <color key="backgroundColor" name="LightBG"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="200" id="3Kl-xq-Lx7"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="200" id="w0y-4n-e46"/>
-                                </constraints>
-                            </view>
                             <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ie6-74-ESg">
                                 <rect key="frame" x="65" y="202" width="245" height="263"/>
                                 <subviews>
@@ -1750,14 +1747,16 @@
                             <constraint firstItem="ie6-74-ESg" firstAttribute="centerY" secondItem="FsM-Hg-C3p" secondAttribute="centerY" id="KbZ-5t-NRz"/>
                             <constraint firstAttribute="trailing" secondItem="Snk-Pp-tL0" secondAttribute="trailing" constant="-1" id="SX2-R5-VfZ"/>
                             <constraint firstItem="FsM-Hg-C3p" firstAttribute="trailing" secondItem="lQs-ci-Hgm" secondAttribute="trailing" id="b0j-Ye-wke"/>
-                            <constraint firstItem="Snk-Pp-tL0" firstAttribute="top" secondItem="5IX-pt-Gly" secondAttribute="bottom" id="fBt-ZA-L6v"/>
+                            <constraint firstItem="Snk-Pp-tL0" firstAttribute="top" secondItem="5IX-pt-Gly" secondAttribute="top" id="fBt-ZA-L6v"/>
                             <constraint firstItem="lQs-ci-Hgm" firstAttribute="leading" secondItem="FsM-Hg-C3p" secondAttribute="leading" id="iPj-uB-el1"/>
+                            <constraint firstItem="Snk-Pp-tL0" firstAttribute="bottom" secondItem="5IX-pt-Gly" secondAttribute="bottom" constant="300" id="lNh-1G-oQW"/>
                             <constraint firstItem="5IX-pt-Gly" firstAttribute="leading" secondItem="FsM-Hg-C3p" secondAttribute="leading" id="yyp-j7-sfd"/>
                             <constraint firstItem="lQs-ci-Hgm" firstAttribute="top" secondItem="FsM-Hg-C3p" secondAttribute="top" id="zgp-ae-gDd"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="avatarView" destination="vZl-Ma-ZHW" id="WPk-8d-dxi"/>
+                        <outlet property="bottomBackgroundView" destination="Snk-Pp-tL0" id="GTV-Wo-iYl"/>
                         <outlet property="bottomView" destination="5IX-pt-Gly" id="pSA-tU-Id7"/>
                         <outlet property="bottomViewBottomConstraint" destination="Bzz-NM-GoK" id="wMO-sn-mU4"/>
                         <outlet property="messageBubbleArrowView" destination="y4q-9X-igs" id="GnR-Vx-lRs"/>

@@ -18,6 +18,7 @@ class PinMessageViewController: UIViewController {
     @IBOutlet weak var bottomViewBottomConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var bottomView: UIStackView!
+    @IBOutlet weak var bottomBackgroundView: UIView!
     @IBOutlet weak var avatarView: ChatAvatarView!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var messageBubbleView: UIView!
@@ -77,6 +78,8 @@ extension PinMessageViewController {
         unpinButtonContainer.layer.cornerRadius = unpinButtonContainer.frame.height / 2
         
         popupView.layer.cornerRadius = 20.0
+        
+        bottomBackgroundView.layer.cornerRadius = 15.0
         
         messageBubbleView.layer.cornerRadius = 5.0
         
@@ -153,7 +156,7 @@ extension PinMessageViewController {
             usernameLabel.textColor = ChatHelper.getSenderColorFor(message: message)
         }
         
-        messageLabel.text = message.messageContent
+        messageLabel.text = message.getMessageContent()
         unpinButtonView.isHidden = message.chat?.isMyPublicGroup() == false
     }
 }

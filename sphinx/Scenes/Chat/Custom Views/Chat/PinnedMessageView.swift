@@ -88,7 +88,7 @@ class PinnedMessageView: UIView {
         self.delegate = delegate
         self.messageId = message.id
         
-        pinnedMessageLabel.text = message.messageContent
+        pinnedMessageLabel.text = message.getMessageContent()
         
         self.isHidden = false
         

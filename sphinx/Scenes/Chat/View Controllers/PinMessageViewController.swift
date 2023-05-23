@@ -116,12 +116,12 @@ extension PinMessageViewController {
         case .MessagePinned:
             popupView.isHidden = false
             bottomView.isHidden = true
-            popupLabel.text = "Message Pinned"
+            popupLabel.text = "message.pinned".localized
             break
         case .MessageUnpinned:
             popupView.isHidden = false
             bottomView.isHidden = true
-            popupLabel.text = "Message Unpinned"
+            popupLabel.text = "message.unpinned".localized
             break
         }
     }

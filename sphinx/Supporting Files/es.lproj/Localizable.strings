@@ -382,6 +382,8 @@
 "delete.message" = "Eliminar Mensaje";
 "pin.message" = "Fijar Mensaje";
 "unpin.message" = "Remover Fijado";
+"message.pinned" = "Mensaje Fijado";
+"message.unpinned" = "Mensaje Removido";
 "received" = "recibida/o";
 "sent" = "enviada/o";
 "message.x.deleted" = "Mensaje eliminado";

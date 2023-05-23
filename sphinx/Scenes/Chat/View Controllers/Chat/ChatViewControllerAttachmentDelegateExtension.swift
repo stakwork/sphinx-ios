@@ -8,10 +8,10 @@
 
 import UIKit
 
-extension ChatViewController : AttachmentsDelegate {
+extension ChatViewController : AttachmentsDelegate, PinMessageDelegate {
     func willDismissPresentedVC() {
         accessoryView.addKeyboardObservers()
-        accessoryView.show()
+        accessoryView.show(animated: false)
     }
     
     func shouldStartUploading(attachmentObject: AttachmentObject) {

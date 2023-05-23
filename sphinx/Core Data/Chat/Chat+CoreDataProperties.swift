@@ -36,6 +36,7 @@ extension Chat {
     @NSManaged public var myPhotoUrl: String?
     @NSManaged public var webAppLastDate: Date?
     @NSManaged public var pin: String?
+    @NSManaged public var pinnedMessageUUID: String?
     @NSManaged public var notify: Int
     @NSManaged public var contentFeed: ContentFeed?
     @NSManaged public var contactIds: [NSNumber]

@@ -55,6 +55,7 @@ typealias HardwarePublicKeyCallback = ((String) -> ())
 typealias HardwareSeedCallback = ((Bool) -> ())
 typealias SyncActionsCallback = ((Bool) -> ())
 typealias RecommendationsCallback = (([RecommendationResult]) -> ())
+typealias PinMessageCallback = ((String) -> ())
 typealias ErrorCallback = ((String) -> ())
 
 // HUB calls
@@ -197,7 +198,8 @@ class API {
         route: String,
         params: NSDictionary? = nil,
         method: String,
-        additionalHeaders: [String: String] = [:]) -> URLRequest? {
+        additionalHeaders: [String: String] = [:]
+    ) -> URLRequest? {
         
         let ip = UserData.sharedInstance.getNodeIP()
 

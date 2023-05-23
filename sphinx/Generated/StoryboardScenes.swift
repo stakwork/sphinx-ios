@@ -54,6 +54,8 @@ internal enum StoryboardScene {
         internal static let tribeMemberProfileViewController = SceneType<TribeMemberProfileViewController>(storyboard: Chat.self, identifier: "TribeMemberProfileViewController")
         
         internal static let newChatViewController = SceneType<NewChatViewController>(storyboard: Chat.self, identifier: "NewChatViewController")
+
+        internal static let pinMessageViewController = SceneType<PinMessageViewController>(storyboard: Chat.self, identifier: "PinMessageViewController")
     }
     
     internal enum Dashboard: StoryboardType {

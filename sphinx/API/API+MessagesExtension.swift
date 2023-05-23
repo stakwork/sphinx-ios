@@ -243,4 +243,31 @@ extension API {
             }
         }
     }
+    
+    func getMessageBy(
+        messageUUID: String,
+        callback: @escaping MessageObjectCallback,
+        errorCallback: @escaping EmptyCallback
+    ) {
+        
+        guard let request = getURLRequest(route: "/message/\(messageUUID)", params: nil, method: "GET") else {
+            errorCallback()
+            return
+        }
+
+        sphinxRequest(request) { response in
+            switch response.result {
+            case .success(let data):
+                if let json = data as? NSDictionary {
+                    if let success = json["success"] as? Bool, let response = json["response"] as? NSDictionary, success {
+                        callback(JSON(response["message"]))
+                    } else {
+                        errorCallback()
+                    }
+                }
+            case .failure(_):
+                errorCallback()
+            }
+        }
+    }
 }

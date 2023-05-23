@@ -180,11 +180,14 @@ class ChatViewController: KeyboardHandlerViewController {
     }
     
     func configurePinnedMessageView() {
-        pinnedMessageView.configureWith(
-            chatObjectId: chat?.objectID,
-            and: self
-        )
-        setTopInset()
+        if let chatId = chat?.id {
+            pinnedMessageView.configureWith(
+                chatId: chatId,
+                and: self
+            ) {
+                self.setTopInset()
+            }
+        }
     }
     
     func loadData(showLoadingWheel: Bool = true) {

@@ -838,9 +838,13 @@ extension ChatViewController : MessageOptionsVCDelegate {
                 self.chat?.saveChat()
                 
                 self.configurePinnedMessageView()
-                
                 self.accessoryView.show(animated: false)
-                let vc = PinMessageViewController.instantiate(messageObjectId: message.objectID, delegate: self, mode: pin ? .MessagePinned : .MessageUnpinned)
+                
+                let vc = PinMessageViewController.instantiate(
+                    messageId: message.id,
+                    delegate: self,
+                    mode: pin ? .MessagePinned : .MessageUnpinned
+                )
                 WindowsManager.sharedInstance.showConveringWindowWith(rootVC: vc)
             },
             errorCallback: {
@@ -849,11 +853,11 @@ extension ChatViewController : MessageOptionsVCDelegate {
         )
     }
     
-    func showMessagePinnedInfo(messageObjectId: NSManagedObjectID) {
+    func showMessagePinnedInfo(messageId: Int) {
         accessoryView.hide()
         
         let viewController = PinMessageViewController.instantiate(
-            messageObjectId: messageObjectId,
+            messageId: messageId,
             delegate: self,
             mode: .PinnedMessageInfo
         )
@@ -870,8 +874,8 @@ extension ChatViewController : GroupDetailsDelegate {
 }
 
 extension ChatViewController : PinnedMessageViewDelegate {
-    func didTapButtonFor(messageObjectId: NSManagedObjectID) {
-        showMessagePinnedInfo(messageObjectId: messageObjectId)
+    func didTapUnpinButtonFor(messageId: Int) {
+        showMessagePinnedInfo(messageId: messageId)
     }
 }
 

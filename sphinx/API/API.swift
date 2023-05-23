@@ -198,7 +198,8 @@ class API {
         route: String,
         params: NSDictionary? = nil,
         method: String,
-        additionalHeaders: [String: String] = [:]) -> URLRequest? {
+        additionalHeaders: [String: String] = [:]
+    ) -> URLRequest? {
         
         let ip = UserData.sharedInstance.getNodeIP()
 

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import CoreData
 
 protocol PinMessageDelegate: class {
     func didTapUnpinButton(message: TransactionMessage)
@@ -44,13 +43,13 @@ class PinMessageViewController: UIViewController {
     }
     
     static func instantiate(
-        messageObjectId: NSManagedObjectID,
+        messageId: Int,
         delegate: PinMessageDelegate,
         mode: ViewMode
     ) -> PinMessageViewController {
         let viewController = StoryboardScene.Chat.pinMessageViewController.instantiate()
         
-        viewController.message = CoreDataManager.sharedManager.getObjectWith(objectId: messageObjectId)
+        viewController.message = TransactionMessage.getMessageWith(id: messageId)
         viewController.delegate = delegate
         viewController.mode = mode
         
@@ -145,11 +144,13 @@ extension PinMessageViewController {
                 )
                 
                 usernameLabel.text = owner.nickname
+                usernameLabel.textColor = owner.getColor()
             }
         } else {
             avatarView.configureForSenderWith(message: message)
             
             usernameLabel.text = message.senderAlias ?? "Unknown"
+            usernameLabel.textColor = ChatHelper.getSenderColorFor(message: message)
         }
         
         messageLabel.text = message.messageContent

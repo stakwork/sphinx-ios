@@ -7,10 +7,9 @@
 //
 
 import UIKit
-import CoreData
 
 protocol PinnedMessageViewDelegate: class {
-    func didTapButtonFor(messageObjectId: NSManagedObjectID)
+    func didTapUnpinButtonFor(messageId: Int)
 }
 
 class PinnedMessageView: UIView {
@@ -20,7 +19,8 @@ class PinnedMessageView: UIView {
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var pinnedMessageLabel: UILabel!
     
-    var messageObjectId: NSManagedObjectID? = nil
+    var messageId: Int? = nil
+    var completion: (() -> ())? = nil
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -37,38 +37,71 @@ class PinnedMessageView: UIView {
         addSubview(contentView)
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        
+        self.isHidden = true
     }
     
     func configureWith(
-        chatObjectId: NSManagedObjectID?,
-        and delegate: PinnedMessageViewDelegate
+        chatId: Int,
+        and delegate: PinnedMessageViewDelegate,
+        completion: (() ->())? = nil
     ) {
-        if let chatObjectId = chatObjectId {
-            
-            if let chat: Chat? = CoreDataManager.sharedManager.getObjectWith(
-                objectId: chatObjectId
-            ) {
-                if let pinnedMessageUUID = chat?.pinnedMessageUUID, !pinnedMessageUUID.isEmpty {
-                    
-                    if let message = TransactionMessage.getMessageWith(
-                        uuid: pinnedMessageUUID
-                    ) {
-                        self.delegate = delegate
-                        self.messageObjectId = message.objectID
-                        
-                        pinnedMessageLabel.text = message.messageContent
-                        self.isHidden = false
-                    }
+        self.completion = completion
+        
+        if let chat = Chat.getChatWith(id: chatId) {
+            if let pinnedMessageUUID = chat.pinnedMessageUUID, !pinnedMessageUUID.isEmpty {
+                if let message = TransactionMessage.getMessageWith(
+                    uuid: pinnedMessageUUID
+                ) {
+                    setMessageAndShowView(message: message, delegate: delegate)
                 } else {
-                    self.isHidden = true
+                    fetchMessage(pinnedMessageUUID: pinnedMessageUUID, delegate: delegate)
                 }
+            } else {
+                hideView()
             }
         }
     }
     
+    func fetchMessage(
+        pinnedMessageUUID: String,
+        delegate: PinnedMessageViewDelegate
+    ) {
+        API.sharedInstance.getMessageBy(
+            messageUUID: pinnedMessageUUID,
+            callback: { messageJSON in
+                if let message = TransactionMessage.insertMessage(m: messageJSON).0 {
+                    self.setMessageAndShowView(message: message, delegate: delegate)
+                } else {
+                    self.hideView()
+                }
+            } , errorCallback: {
+                self.hideView()
+            }
+        )
+    }
+    
+    func setMessageAndShowView(
+        message: TransactionMessage,
+        delegate: PinnedMessageViewDelegate
+    ) {
+        self.delegate = delegate
+        self.messageId = message.id
+        
+        pinnedMessageLabel.text = message.messageContent
+        
+        self.isHidden = false
+        
+        completion?()
+    }
+    
+    func hideView() {
+        self.isHidden = true
+    }
+    
     @IBAction func pinnedMessageButtonTapped() {
-        if let messageObjectId = self.messageObjectId {
-            self.delegate?.didTapButtonFor(messageObjectId: messageObjectId)
+        if let messageId = self.messageId {
+            self.delegate?.didTapUnpinButtonFor(messageId: messageId)
         }
     }
 }

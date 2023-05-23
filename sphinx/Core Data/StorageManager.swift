@@ -152,19 +152,18 @@ class StorageManager {
                 let fileExtension = URL(fileURLWithPath: imagePath).pathExtension.lowercased()
                 let photoExtensions = ["jpg", "jpeg", "png","svg"] // Add more video extensions if needed
                 
-                if photoExtensions.contains(fileExtension) == false {
-                    isVideo = true
+                isVideo = (photoExtensions.contains(fileExtension) == false) ? true : false
+                
+                if let cm = (CachedMedia.getCachedMediaByFilePath(filePath: imagePath, isVideo: isVideo)){
+                    cm.image = image
+                    let newItem = StorageManagerItem(type: .photo, sizeMB: Double(size ?? 0)/1e6, label: "", date:cm.creationDate ?? Date()  ,cachedMedia: cm)
+                    items.append(newItem)
                 }
+                
             } catch {
                 print("error retrieving size of image")
             }
             
-            if let cm = (CachedMedia.getCachedMediaByFilePath(filePath: imagePath)){
-                cm.image = image
-                let type : StorageManagerMediaType = (isVideo == false) ? .photo : .video
-                let newItem = StorageManagerItem(type: type, sizeMB: Double(size ?? 0)/1e6, label: "", date:cm.creationDate ?? Date()  ,cachedMedia: cm)
-                items.append(newItem)
-            }
             
             // Display or process the image as needed
             print("Image path: \(imagePath)")
@@ -173,10 +172,21 @@ class StorageManager {
         completion(items)
     }
     
-    func deleteCacheItems(cms:[CachedMedia]){
+    func deleteCacheItems(cms:[CachedMedia],completion: @escaping ()->()){
+        var cmCounter = cms.count
         for cm in cms{
-            cm.removeCachedMediaAndDeleteObject()
+            cm.removeCachedMediaAndDeleteObject(completion: {
+                cmCounter -= 1
+                cmCounter > 0 ? () : (completion())
+            })
         }
+    }
+    
+    func deleteAllImages(completion:@escaping ()->()){
+        let allImages = allItems.filter({$0.type == .photo}).compactMap({$0.cachedMedia})
+        deleteCacheItems(cms: allImages,completion: {
+            completion()
+        })
     }
     
     func deleteAllAudioFiles(completion: @escaping ()->()){

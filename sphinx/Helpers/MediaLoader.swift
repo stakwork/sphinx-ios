@@ -190,7 +190,7 @@ class MediaLoader {
             loadDataFrom(URL: url, completion: { (data, fileName) in
                 message.saveFileName(fileName)
                 
-                self.loadMediaFromData(data: data, url: url, message: message, completion: { data in
+                self.loadMediaFromData(data: data, url: url, message: message, isVideo: true, completion: { data in
                     self.getThumbnailImageFromVideoData(data: data, videoUrl: url.absoluteString, completion: { image in
                         DispatchQueue.main.async {
                             completion(messageId, data, image)
@@ -254,11 +254,11 @@ class MediaLoader {
         }
     }
     
-    class func loadMediaFromData(data: Data, url: URL, message: TransactionMessage, completion: @escaping (Data) -> (), errorCompletion: @escaping (Int) -> ()) {
+    class func loadMediaFromData(data: Data, url: URL, message: TransactionMessage, isVideo:Bool=false,completion: @escaping (Data) -> (), errorCompletion: @escaping (Int) -> ()) {
         if let mediaKey = message.getMediaKey(), mediaKey != "" {
             if let decryptedData = SymmetricEncryptionManager.sharedInstance.decryptData(data: data, key: mediaKey) {
                 message.saveFileSize(decryptedData.count)
-                storeMediaDataInCache(data: decryptedData, url: url.absoluteString)
+                storeMediaDataInCache(data: decryptedData, url: url.absoluteString,isVideo:isVideo)
                 DispatchQueue.main.async {
                     completion(decryptedData)
                 }
@@ -363,8 +363,8 @@ class MediaLoader {
         SDImageCache.shared.store(img, forKey: url, completion: nil)
         if let chat = chat,
            let path = getDiskImagePath(forKey: url){
-            let randomInt = Int.random(in: 0...Int(10e6))
-            let _ = CachedMedia.createObject(id: randomInt, chat: chat, filePath: path, fileExtension: nil, key: url)
+            let randomInt = Int.random(in: 0...Int(1e9))
+            let _ = CachedMedia.createObject(id: randomInt, chat: chat, filePath: path, fileExtension: "png", key: url)
         }
     }
     
@@ -376,7 +376,7 @@ class MediaLoader {
         return SDImageCache.shared.imageFromCache(forKey: url)
     }
     
-    class func storeMediaDataInCache(data: Data, url: String) {
+    class func storeMediaDataInCache(data: Data, url: String,isVideo:Bool=false) {
         cache[url] = data
     }
     

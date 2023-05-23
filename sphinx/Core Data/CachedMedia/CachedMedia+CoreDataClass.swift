@@ -15,6 +15,7 @@ import SDWebImage
 @objc(CachedMedia)
 public class CachedMedia: NSManagedObject {
     public var image : UIImage?
+    public var isVideo : Bool?
     
     public static func getCachedMediaInstance(id: Int, managedContext: NSManagedObjectContext) -> CachedMedia {
         if let cm = CachedMedia.getCachedMediaWith(id: id) {
@@ -60,12 +61,13 @@ public class CachedMedia: NSManagedObject {
         return cachedMedia
     }
     
-    func removeCachedMediaAndDeleteObject() {
+    func removeCachedMediaAndDeleteObject(completion: @escaping ()->()) {
         let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
         if let key = self.key{
             MediaLoader.clearImageCacheFor(url: key)
             managedContext.delete(self)
             managedContext.saveContext()
+            completion()
         }
     }
     
@@ -81,15 +83,12 @@ public class CachedMedia: NSManagedObject {
         return cm
     }
     
-    public static func getCachedMediaByFilePath(filePath: String, managedContext: NSManagedObjectContext? = nil) -> CachedMedia? {
+    public static func getCachedMediaByFilePath(filePath: String, managedContext: NSManagedObjectContext? = nil,isVideo:Bool) -> CachedMedia? {
         
         guard let truncatedPath = CachedMedia.getTruncatedFilePath(filePath: filePath) else{
             return nil
         }
         
-//        let predicate = MediaPredicates.matching(filePath: filePath)
-//        let cm: CachedMedia? = CoreDataManager.sharedManager.getObjectOfTypeWith(predicate: predicate, sortDescriptors: [], entityName: "CachedMedia", managedContext: managedContext)
-//        return cm
         let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
             
         let fetchRequest: NSFetchRequest<CachedMedia> = CachedMedia.fetchRequest()
@@ -97,6 +96,8 @@ public class CachedMedia: NSManagedObject {
         
         do {
             let results = try managedContext.fetch(fetchRequest)
+            let result = results.first
+            result?.isVideo = isVideo
             return results.first
         } catch {
             print("Error fetching cached media: \(error)")

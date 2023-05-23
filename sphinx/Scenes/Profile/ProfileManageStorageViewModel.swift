@@ -93,7 +93,11 @@ extension ProfileManageStorageViewModel : UITableViewDelegate,UITableViewDataSou
                     
                     break
                 case .photo:
-                    
+                    StorageManager.sharedManager.deleteAllImages(completion: {
+                        StorageManager.sharedManager.refreshAllStoredData(completion: {
+                            self.refreshData()
+                        })
+                    })
                     break
                 }
             print("delete all of \(type)")
@@ -101,11 +105,12 @@ extension ProfileManageStorageViewModel : UITableViewDelegate,UITableViewDataSou
     }
     
     func refreshData(){
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+        //DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
             self.stats = StorageManager.sharedManager.getStorageItemSummaryByType()
             self.vc.updateUsageLabels()
+            self.vc.storageSummaryView.summaryDict = self.stats
             self.tableView.reloadData()
-        })
+        //})
         
     }
 }

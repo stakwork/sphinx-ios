@@ -103,6 +103,7 @@ class KeyboardHandlerViewController: OrientationHandlerViewController {
         chatTableView.contentInset.bottom = bottomContentInset
         chatTableView.verticalScrollIndicatorInsets.bottom = bottomContentInset
         mentionAutoCompleteTableView.contentInset.top = bottomContentInset - ChatAccessoryView.kTableBottomPadding
+        
         setTopInset()
     }
     

@@ -854,8 +854,6 @@ extension ChatViewController : MessageOptionsVCDelegate {
     }
     
     func showMessagePinnedInfo(messageId: Int) {
-        accessoryView.hide()
-        
         let viewController = PinMessageViewController.instantiate(
             messageId: messageId,
             delegate: self,

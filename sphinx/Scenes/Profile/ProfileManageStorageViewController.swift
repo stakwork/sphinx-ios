@@ -21,7 +21,9 @@ class ProfileManageStorageViewController : UIViewController{
     @IBOutlet weak var warningView: UIView!
     @IBOutlet weak var warningLabel: UILabel!
     @IBOutlet weak var mediaTypeTableView: UITableView!
-    
+    @IBOutlet weak var loadingSpinnerContainerView: UIView!
+    @IBOutlet weak var loadingLabel: UILabel!
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
     
     
     @IBOutlet weak var saveButton: UIButton!
@@ -90,6 +92,23 @@ class ProfileManageStorageViewController : UIViewController{
         }
     }
     
+    public var isLoading : Bool = false {
+        didSet{
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.01, execute: {
+                self.isLoading == true ? (self.showSpinner()) : (self.hideSpinner())
+                self.mediaTypeTableView.reloadData()
+            })
+        }
+    }
+    
+    func setIsLoading(){
+        self.isLoading = true
+    }
+    
+    func resetIsLoading(){
+        self.isLoading = false
+    }
+    
     lazy var vm : ProfileManageStorageViewModel = {
         return ProfileManageStorageViewModel(vc: self, tableView: mediaTypeTableView)
     }()
@@ -119,6 +138,29 @@ class ProfileManageStorageViewController : UIViewController{
         updateUsageLabels()
         vm.finishSetup()
     }
+    
+    func showSpinner() {
+        spinner.color = UIColor.white
+        spinner.frame = loadingSpinnerContainerView.frame
+
+        spinner.sizeToFit()
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        loadingSpinnerContainerView.addSubview(spinner)
+        
+        spinner.startAnimating()
+        changeStorageButton.isHidden = true
+        changeStorageLabel.isHidden = true
+        loadingSpinnerContainerView.isHidden = false
+        loadingLabel.isHidden = false
+    }
+    
+    func hideSpinner(){
+        self.changeStorageButton.isHidden = false
+        self.changeStorageLabel.isHidden = false
+        self.loadingSpinnerContainerView.isHidden = true
+        self.loadingLabel.isHidden = true
+    }
+    
     
     func updateUsageLabels(){
         let usage = StorageManager.sharedManager.getItemGroupTotalSize(items: StorageManager.sharedManager.allItems)

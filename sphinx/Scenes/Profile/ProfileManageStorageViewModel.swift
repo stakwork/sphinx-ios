@@ -43,6 +43,7 @@ extension ProfileManageStorageViewModel : UITableViewDelegate,UITableViewDataSou
         cell.finishSetup()
         cell.setupAsMediaType(type: mediaTypes[indexPath.row])
         cell.storageAmountLabel.text = formatBytes(Int(loadMediaSize(forType: mediaTypes[indexPath.row]) ?? 0))
+        vc.isLoading == true ? (cell.showLoading()) : (cell.hideLoading())
         return cell
     }
     
@@ -81,27 +82,34 @@ extension ProfileManageStorageViewModel : UITableViewDelegate,UITableViewDataSou
             confirmButtonTitle: "Yes",
             cancelButtonTitle: "Cancel",
             confirm: {
-                switch(type){
-                case .audio:
-                    StorageManager.sharedManager.deleteAllAudioFiles(completion: {
-                        StorageManager.sharedManager.refreshAllStoredData(completion: {
-                            self.refreshData()
-                        })
-                    })
-                    break
-                case .video:
-                    
-                    break
-                case .photo:
-                    StorageManager.sharedManager.deleteAllImages(completion: {
-                        StorageManager.sharedManager.refreshAllStoredData(completion: {
-                            self.refreshData()
-                        })
-                    })
-                    break
-                }
-            print("delete all of \(type)")
+                self.handleDeletion(type: type)
         }) //StorageManager TODO
+    }
+    
+    func handleDeletion(type:StorageManagerMediaType){
+        vc.setIsLoading()
+        switch(type){
+        case .audio:
+            StorageManager.sharedManager.deleteAllAudioFiles(completion: {
+                StorageManager.sharedManager.refreshAllStoredData(completion: {
+                    self.refreshData()
+                    self.vc.resetIsLoading()
+                })
+            })
+            break
+        case .video:
+            
+            break
+        case .photo:
+            StorageManager.sharedManager.deleteAllImages(completion: {
+                StorageManager.sharedManager.refreshAllStoredData(completion: {
+                    self.refreshData()
+                    self.vc.resetIsLoading()
+                })
+            })
+            break
+        }
+        print("delete all of \(type)")
     }
     
     func refreshData(){

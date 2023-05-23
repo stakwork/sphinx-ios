@@ -17,7 +17,8 @@ class MediaStorageTypeSummaryTableViewCell: UITableViewCell {
     @IBOutlet weak var dotView: UIView!
     @IBOutlet weak var storageAmountLabel: UILabel!
     @IBOutlet weak var mediaTypeLabel: UILabel!
-    
+    @IBOutlet weak var deleteButton: UIButton!
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
     
     var delegate : MediaStorageTypeSummaryTableViewCellDelegate? = nil
     var type: StorageManagerMediaType? = nil
@@ -45,6 +46,22 @@ class MediaStorageTypeSummaryTableViewCell: UITableViewCell {
         dotView.makeCircular()
         self.selectionStyle = .none
         bringSubviewToFront(self.mediaTypeLabel)
+    }
+    
+    func showLoading(){
+        self.storageAmountLabel.isHidden = true
+        self.deleteButton.isHidden = true
+        spinner?.color = UIColor.white
+
+        spinner?.sizeToFit()
+        spinner?.translatesAutoresizingMaskIntoConstraints = false
+        spinner?.startAnimating()
+    }
+    
+    func hideLoading(){
+        self.storageAmountLabel.isHidden = false
+        self.deleteButton.isHidden = false
+        spinner?.isHidden = true
     }
     
     func setupAsMediaType(type:StorageManagerMediaType){

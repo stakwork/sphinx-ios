@@ -174,6 +174,7 @@ class StorageManager {
     
     func deleteCacheItems(cms:[CachedMedia],completion: @escaping ()->()){
         var cmCounter = cms.count
+        cmCounter == 0 ? (completion()) : ()
         for cm in cms{
             cm.removeCachedMediaAndDeleteObject(completion: {
                 cmCounter -= 1
@@ -191,6 +192,7 @@ class StorageManager {
     
     func deleteAllAudioFiles(completion: @escaping ()->()){
         var podsCounter = downloadedPods.count
+        podsCounter == 0 ? (completion()) : ()
         for pod in downloadedPods{
             if let sourcePath = pod.sourceFilePath{
                 deletePodsWithID(

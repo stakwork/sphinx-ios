@@ -65,14 +65,21 @@
                             <action selector="deleteButtonTap:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="h16-rg-FFN"/>
                         </connections>
                     </button>
+                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="aRM-NJ-3MT">
+                        <rect key="frame" x="289" y="17.666666666666668" width="25" height="25.000000000000004"/>
+                    </activityIndicatorView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="sxS-6Y-7Ll" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="0Kt-6W-mem"/>
                     <constraint firstItem="8G9-NW-Z1g" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="48T-0B-yik"/>
                     <constraint firstItem="E0B-vZ-Iwu" firstAttribute="leading" secondItem="8G9-NW-Z1g" secondAttribute="trailing" constant="24" id="BvF-KI-E7L"/>
                     <constraint firstAttribute="bottom" secondItem="f6R-hX-GXa" secondAttribute="bottom" id="G0T-lJ-PW1"/>
+                    <constraint firstItem="aRM-NJ-3MT" firstAttribute="leading" secondItem="E0B-vZ-Iwu" secondAttribute="leading" id="Hzh-Sw-lsa"/>
+                    <constraint firstItem="aRM-NJ-3MT" firstAttribute="top" secondItem="E0B-vZ-Iwu" secondAttribute="top" id="Jp4-ed-WfX"/>
                     <constraint firstItem="8G9-NW-Z1g" firstAttribute="leading" secondItem="f6R-hX-GXa" secondAttribute="trailing" constant="20" id="M6Z-cR-G4N"/>
                     <constraint firstItem="sxS-6Y-7Ll" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="WRY-8w-eWd"/>
+                    <constraint firstItem="aRM-NJ-3MT" firstAttribute="bottom" secondItem="E0B-vZ-Iwu" secondAttribute="bottom" id="axg-2A-mB0"/>
+                    <constraint firstItem="aRM-NJ-3MT" firstAttribute="trailing" secondItem="E0B-vZ-Iwu" secondAttribute="trailing" id="bWE-X2-JYw"/>
                     <constraint firstItem="f6R-hX-GXa" firstAttribute="leading" secondItem="sxS-6Y-7Ll" secondAttribute="trailing" constant="16" id="fjp-Dh-nnx"/>
                     <constraint firstAttribute="bottom" secondItem="8G9-NW-Z1g" secondAttribute="bottom" id="maJ-cm-equ"/>
                     <constraint firstAttribute="trailing" secondItem="E0B-vZ-Iwu" secondAttribute="trailing" constant="8" id="nlC-9t-ks7"/>
@@ -82,8 +89,10 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="deleteButton" destination="E0B-vZ-Iwu" id="Mqg-ee-xn2"/>
                 <outlet property="dotView" destination="sxS-6Y-7Ll" id="ezr-oh-1sk"/>
                 <outlet property="mediaTypeLabel" destination="f6R-hX-GXa" id="kC2-tF-7yJ"/>
+                <outlet property="spinner" destination="aRM-NJ-3MT" id="xJc-Pi-9QP"/>
                 <outlet property="storageAmountLabel" destination="8G9-NW-Z1g" id="04l-cK-oUD"/>
             </connections>
             <point key="canvasLocation" x="30.534351145038165" y="-5.6338028169014089"/>

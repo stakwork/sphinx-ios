@@ -18,11 +18,13 @@
                 <outlet property="deletionFootprintView" destination="kFG-HU-PMi" id="DfM-kE-gyB"/>
                 <outlet property="deletionFootprintWidth" destination="VBe-Mk-rx2" id="0Fs-LG-qVT"/>
                 <outlet property="imageFootprintWidth" destination="nuU-nu-fo5" id="btR-Mp-EWX"/>
+                <outlet property="imageToVideoHorizontalSpacing" destination="8jG-Rm-5Rk" id="XXc-fv-tf4"/>
                 <outlet property="imagesMemoryFootprintView" destination="UUc-NP-3O4" id="gGj-YS-kAp"/>
                 <outlet property="maxMemoryFootprintBackgroundView" destination="pA3-QN-pPT" id="mNk-wW-yAS"/>
                 <outlet property="totalMemoryFootprintView" destination="Wuu-OO-lkF" id="WCt-0h-1Sm"/>
                 <outlet property="totalMemoryFootprintWidth" destination="C2T-RH-KII" id="Vof-zz-4ft"/>
                 <outlet property="videoFootprintWidth" destination="rcV-U6-fU9" id="Qbd-3q-xQQ"/>
+                <outlet property="videoToAudioHorizontalSpacing" destination="4df-r3-Pcc" id="8p3-ek-RlR"/>
                 <outlet property="videosMemoryFootprintView" destination="xFX-Pj-wP8" id="fUK-7k-fBo"/>
             </connections>
         </placeholder>

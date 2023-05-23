@@ -53,7 +53,8 @@ class ProfileViewController: KeyboardEventsViewController {
     @IBOutlet weak var manageStorageView: UIView!
     @IBOutlet weak var storageSumaryLabel: UILabel!
     @IBOutlet weak var storageSummaryBarView: StorageSummaryView!
-    
+    @IBOutlet weak var loadingSpinnerContainerView: UIView!
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
     
     
     @IBOutlet var tabContainers: [UIScrollView]!
@@ -61,6 +62,7 @@ class ProfileViewController: KeyboardEventsViewController {
     @IBOutlet var keyboardAccessoryView: UIView!
     var currentField : UITextField?
     var previousFieldValue : String?
+    
     
     var uploading = false {
         didSet {
@@ -229,14 +231,44 @@ class ProfileViewController: KeyboardEventsViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        setupMemoryManagement()
+        
+        self.loadingSpinnerContainerView.isHidden = false
+        self.storageSumaryLabel.text = "Loading..."
+        self.storageSumaryLabel.textColor = UIColor.Sphinx.SecondaryText
+        showSpinner()
+        self.setupMemoryManagement(completion: {
+            DispatchQueue.main.sync {
+                self.hideSpinner()
+                self.storageSumaryLabel.textColor = UIColor.Sphinx.Text
+            }
+        })
+        
     }
     
-    func setupMemoryManagement(){
+    func showSpinner() {
+        spinner.frame = loadingSpinnerContainerView.frame
+        spinner.isHidden = false
+        spinner.color = UIColor.white
+
+        spinner.sizeToFit()
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        loadingSpinnerContainerView.addSubview(spinner)
+        
+        spinner.startAnimating()
+    }
+    
+    func hideSpinner(){
+        spinner.stopAnimating()
+        spinner.isHidden = true
+        loadingSpinnerContainerView.isHidden = true
+    }
+    
+    func setupMemoryManagement(completion: @escaping ()->()){
         manageStorageView.isUserInteractionEnabled = true
         manageStorageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showManageStorageVC)))
-        updateStorageSummaryLabel()
-        storageSummaryBarView.summaryDict = StorageManager.sharedManager.getStorageItemSummaryByType()
+        updateStorageSummaryLabel(completion: {
+            self.storageSummaryBarView.summaryDict = StorageManager.sharedManager.getStorageItemSummaryByType()
+        })
     }
     
     func configureServers() {
@@ -262,7 +294,7 @@ class ProfileViewController: KeyboardEventsViewController {
         return newImage
     }
     
-    func updateStorageSummaryLabel(){
+    func updateStorageSummaryLabel(completion:@escaping ()->()){
         let max = UserData.sharedInstance.getMaxMemoryGB()
         self.storageSumaryLabel.text = "Loading..."
         self.storageSumaryLabel.textColor = UIColor.Sphinx.SecondaryText
@@ -270,6 +302,7 @@ class ProfileViewController: KeyboardEventsViewController {
             let usage = StorageManager.sharedManager.getItemGroupTotalSize(items: StorageManager.sharedManager.allItems)
             self.storageSumaryLabel.text = "\(formatBytes(Int(usage * 1e6))) of \(formatBytes(Int(Double(max) * 1e9)))"
             self.storageSumaryLabel.textColor = UIColor.Sphinx.Text
+            completion()
         })
         
     }

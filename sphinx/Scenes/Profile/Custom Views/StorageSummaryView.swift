@@ -20,6 +20,8 @@ class StorageSummaryView: UIView {
     
     @IBOutlet weak var totalMemoryFootprintWidth: NSLayoutConstraint!
     @IBOutlet weak var imageFootprintWidth: NSLayoutConstraint!
+    @IBOutlet weak var imageToVideoHorizontalSpacing: NSLayoutConstraint!
+    @IBOutlet weak var videoToAudioHorizontalSpacing: NSLayoutConstraint!
     @IBOutlet weak var videoFootprintWidth: NSLayoutConstraint!
     @IBOutlet weak var audioFootprintWidth: NSLayoutConstraint!
     @IBOutlet weak var deletionFootprintWidth: NSLayoutConstraint!
@@ -114,6 +116,9 @@ class StorageSummaryView: UIView {
         else{
             audioFootprintWidth.constant = 0
         }
+        
+        imageToVideoHorizontalSpacing.constant = imageFootprintWidth.constant == 0 ? (0.01) : (2)
+        videoToAudioHorizontalSpacing.constant = videoFootprintWidth.constant == 0 ? (0.01) : (2)
         
         UIView.animate(withDuration: 0.25, delay: 0.0, animations: {
             self.superview?.layoutSubviews()

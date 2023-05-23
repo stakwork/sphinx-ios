@@ -246,7 +246,7 @@ class ProfileViewController: KeyboardEventsViewController {
     }
     
     func showSpinner() {
-        spinner.frame = loadingSpinnerContainerView.frame
+        spinner.alpha = 1.0
         spinner.isHidden = false
         spinner.color = UIColor.white
 
@@ -258,6 +258,7 @@ class ProfileViewController: KeyboardEventsViewController {
     }
     
     func hideSpinner(){
+        spinner.alpha = 0.0
         spinner.stopAnimating()
         spinner.isHidden = true
         loadingSpinnerContainerView.isHidden = true

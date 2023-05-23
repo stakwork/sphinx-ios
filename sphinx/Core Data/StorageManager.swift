@@ -24,13 +24,13 @@ public enum StorageManagerMediaType{
 }
 
 public enum StorageMediaManagerSource{
-    case episodes
+    case podcasts
     case chats
     
     static var allCases: [StorageMediaManagerSource]{
         return [
             .chats,
-            .episodes
+            .podcasts
         ]
     }
 }
@@ -81,7 +81,7 @@ class StorageManager {
     
     func getStoredItemsBySource()->[StorageMediaManagerSource:[StorageManagerItem]]{
         var dict = [StorageMediaManagerSource:[StorageManagerItem]]()
-        dict[.episodes] = downloadedPods
+        dict[.podcasts] = downloadedPods
         dict[.chats] = cachedMedia
         return dict
     }

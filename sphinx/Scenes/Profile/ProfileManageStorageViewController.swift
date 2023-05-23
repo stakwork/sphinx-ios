@@ -24,6 +24,7 @@ class ProfileManageStorageViewController : UIViewController{
     @IBOutlet weak var loadingSpinnerContainerView: UIView!
     @IBOutlet weak var loadingLabel: UILabel!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
+    @IBOutlet weak var mediaSourceTableView: UITableView!
     
     
     @IBOutlet weak var saveButton: UIButton!
@@ -110,7 +111,10 @@ class ProfileManageStorageViewController : UIViewController{
     }
     
     lazy var vm : ProfileManageStorageViewModel = {
-        return ProfileManageStorageViewModel(vc: self, tableView: mediaTypeTableView)
+        return ProfileManageStorageViewModel(vc: self,
+                                             mediaTypeTableView: mediaTypeTableView,
+                                             mediaSourceTableView: mediaSourceTableView
+        )
     }()
     
     

@@ -11,23 +11,31 @@ import UIKit
 
 class ProfileManageStorageViewModel : NSObject{
     var vc : ProfileManageStorageViewController
-    var tableView:UITableView
+    var mediaTypeTableView:UITableView
+    var mediaSourceTableView:UITableView
     var mediaTypes = StorageManagerMediaType.allCases
+    var sourceTypes = StorageMediaManagerSource.allCases
     var stats = [StorageManagerMediaType:Double]()
     
     init(
         vc:ProfileManageStorageViewController,
-        tableView:UITableView
+        mediaTypeTableView:UITableView,
+        mediaSourceTableView:UITableView
     ){
         self.vc = vc
-        self.tableView = tableView
+        self.mediaTypeTableView = mediaTypeTableView
+        self.mediaSourceTableView = mediaSourceTableView
     }
     
     func finishSetup(){
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
+        self.mediaTypeTableView.delegate = self
+        self.mediaTypeTableView.dataSource = self
         
-        tableView.register(UINib(nibName: "MediaStorageTypeSummaryTableViewCell", bundle: nil), forCellReuseIdentifier: MediaStorageTypeSummaryTableViewCell.reuseID)
+        self.mediaSourceTableView.delegate = self
+        self.mediaSourceTableView.dataSource = self
+        
+        mediaTypeTableView.register(UINib(nibName: "MediaStorageTypeSummaryTableViewCell", bundle: nil), forCellReuseIdentifier: MediaStorageTypeSummaryTableViewCell.reuseID)
+        mediaSourceTableView.register(UINib(nibName: "MediaStorageSourceTableViewCell", bundle: nil), forCellReuseIdentifier: MediaStorageSourceTableViewCell.reuseID)
     }
     
     
@@ -35,20 +43,36 @@ class ProfileManageStorageViewModel : NSObject{
 
 extension ProfileManageStorageViewModel : UITableViewDelegate,UITableViewDataSource, MediaStorageTypeSummaryTableViewCellDelegate{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(
-            withIdentifier: MediaStorageTypeSummaryTableViewCell.reuseID,
-            for: indexPath
-        ) as! MediaStorageTypeSummaryTableViewCell
-        cell.delegate = self
-        cell.finishSetup()
-        cell.setupAsMediaType(type: mediaTypes[indexPath.row])
-        cell.storageAmountLabel.text = formatBytes(Int(loadMediaSize(forType: mediaTypes[indexPath.row]) ?? 0))
-        vc.isLoading == true ? (cell.showLoading()) : (cell.hideLoading())
-        return cell
+        if(tableView == mediaTypeTableView){
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: MediaStorageTypeSummaryTableViewCell.reuseID,
+                for: indexPath
+            ) as! MediaStorageTypeSummaryTableViewCell
+            cell.delegate = self
+            cell.finishSetup()
+            cell.setupAsMediaType(type: mediaTypes[indexPath.row])
+            cell.storageAmountLabel.text = formatBytes(Int(loadMediaSize(forType: mediaTypes[indexPath.row]) ?? 0))
+            vc.isLoading == true ? (cell.showLoading()) : (cell.hideLoading())
+            return cell
+        }
+        else{
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: MediaStorageSourceTableViewCell.reuseID,
+                for: indexPath
+            ) as! MediaStorageSourceTableViewCell
+            cell.configure(forSource: sourceTypes[indexPath.row])
+            return cell
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return mediaTypes.count
+        if(tableView == mediaTypeTableView){
+            return mediaTypes.count
+        }
+        else{
+            return sourceTypes.count
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -117,7 +141,7 @@ extension ProfileManageStorageViewModel : UITableViewDelegate,UITableViewDataSou
             self.stats = StorageManager.sharedManager.getStorageItemSummaryByType()
             self.vc.updateUsageLabels()
             self.vc.storageSummaryView.summaryDict = self.stats
-            self.tableView.reloadData()
+            self.mediaTypeTableView.reloadData()
         //})
         
     }

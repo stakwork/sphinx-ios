@@ -81,7 +81,31 @@ extension ProfileManageStorageViewModel : UITableViewDelegate,UITableViewDataSou
             confirmButtonTitle: "Yes",
             cancelButtonTitle: "Cancel",
             confirm: {
+                switch(type){
+                case .audio:
+                    StorageManager.sharedManager.deleteAllAudioFiles(completion: {
+                        StorageManager.sharedManager.refreshAllStoredData(completion: {
+                            self.refreshData()
+                        })
+                    })
+                    break
+                case .video:
+                    
+                    break
+                case .photo:
+                    
+                    break
+                }
             print("delete all of \(type)")
         }) //StorageManager TODO
+    }
+    
+    func refreshData(){
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+            self.stats = StorageManager.sharedManager.getStorageItemSummaryByType()
+            self.vc.updateUsageLabels()
+            self.tableView.reloadData()
+        })
+        
     }
 }

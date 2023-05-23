@@ -15,8 +15,12 @@ public enum StorageManagerMediaType{
     case photo
     
     static var allCases: [StorageManagerMediaType] {
-        return [.photo,.video,.audio]
-        }
+        return [
+            .photo,
+            .video,
+            .audio
+        ]
+    }
 }
 
 public enum StorageMediaManagerSource{
@@ -24,7 +28,10 @@ public enum StorageMediaManagerSource{
     case chats
     
     static var allCases: [StorageMediaManagerSource]{
-        return [.chats,.episodes]
+        return [
+            .chats,
+            .episodes
+        ]
     }
 }
 
@@ -33,8 +40,9 @@ struct StorageManagerItem{
     var sizeMB : Double
     var label : String
     var date : Date
-    var sourceFilePath:URL?
+    var sourceFilePath:String?
     var cachedMedia:CachedMedia?
+    var uid:String?=nil
 }
 
 class StorageManager {
@@ -47,9 +55,9 @@ class StorageManager {
     var cachedMedia = [StorageManagerItem]() //media stored automatically from chat images by SDImage library
     //var downloadedVideos = [StorageManagerItem]()//this iteration does not yet support but will be for downloaded video content
     
-    lazy var allItems : [StorageManagerItem] = {
+    var allItems : [StorageManagerItem]  {
         return downloadedPods + cachedMedia
-    }()
+    }
     
     func getStorageItemSummaryByType()->[StorageManagerMediaType:Double]{
         var dict = [StorageManagerMediaType:Double]()
@@ -79,6 +87,7 @@ class StorageManager {
     }
     
     func refreshAllStoredData(completion:@escaping ()->()){
+        
         downloadedPods = getDownloadedPodcastEpisodeList()
         getImageCacheItems(completion: { results in
             self.cachedMedia = results
@@ -109,6 +118,7 @@ class StorageManager {
     }
     
     func getImageCacheItems(completion: @escaping ([StorageManagerItem])->()) {
+        cachedMedia = []
         let imageCache = SDImageCache.shared
         let diskCachePath = imageCache.diskCachePath
         let fileManager = FileManager.default
@@ -129,22 +139,30 @@ class StorageManager {
                 continue
             }
             
-            var size : UInt64? = nil
-            do{
+            var size: UInt64? = nil
+            var isVideo: Bool = false
+            do {
                 let imagePath = (diskCachePath as NSString).appendingPathComponent(filePath)
                 let attributes = try fileManager.attributesOfItem(atPath: imagePath)
                 print(attributes)
                 if let fileSize = attributes[FileAttributeKey.size] as? NSNumber {
                     size = fileSize.uint64Value
                 }
-            }
-            catch{
+                
+                let fileExtension = URL(fileURLWithPath: imagePath).pathExtension.lowercased()
+                let photoExtensions = ["jpg", "jpeg", "png","svg"] // Add more video extensions if needed
+                
+                if photoExtensions.contains(fileExtension) == false {
+                    isVideo = true
+                }
+            } catch {
                 print("error retrieving size of image")
             }
             
             if let cm = (CachedMedia.getCachedMediaByFilePath(filePath: imagePath)){
                 cm.image = image
-                let newItem = StorageManagerItem(type: .photo, sizeMB: Double(size ?? 0)/1e6, label: "", date:cm.creationDate ?? Date()  ,cachedMedia: cm)
+                let type : StorageManagerMediaType = (isVideo == false) ? .photo : .video
+                let newItem = StorageManagerItem(type: type, sizeMB: Double(size ?? 0)/1e6, label: "", date:cm.creationDate ?? Date()  ,cachedMedia: cm)
                 items.append(newItem)
             }
             
@@ -158,6 +176,46 @@ class StorageManager {
     func deleteCacheItems(cms:[CachedMedia]){
         for cm in cms{
             cm.removeCachedMediaAndDeleteObject()
+        }
+    }
+    
+    func deleteAllAudioFiles(completion: @escaping ()->()){
+        var podsCounter = downloadedPods.count
+        for pod in downloadedPods{
+            if let sourcePath = pod.sourceFilePath{
+                deletePodsWithID(
+                    fileName: sourcePath,
+                    successCompletion: {
+                    print("deleted pod with id:\(pod.uid)")
+                        podsCounter-=1
+                        podsCounter > 0 ? () : completion()
+                    },
+                    failureCompletion: {
+                        print("failed to delete pod with id:\(pod.uid)")
+                        podsCounter-=1
+                        podsCounter > 0 ? () : completion()
+                    })
+            }
+        }
+    }
+    
+    func deletePodsWithID(fileName:String,successCompletion: @escaping ()->(),failureCompletion: @escaping ()->()){
+        if let path = FileManager
+            .default
+            .urls(for: .documentDirectory, in: .userDomainMask)
+            .first?
+            .appendingPathComponent(fileName) {
+            
+            if FileManager.default.fileExists(atPath: path.path) {
+                try? FileManager.default.removeItem(at: path)
+                successCompletion()
+            }
+            else{
+                failureCompletion()
+            }
+        }
+        else{
+            failureCompletion()
         }
     }
 
@@ -174,6 +232,7 @@ class StorageManager {
     
     //returns an array of structs describing each downloaded podcast episode
     func getDownloadedPodcastEpisodeList()->[StorageManagerItem]{
+        downloadedPods = []
         let pairs = extractFeedItemIdPairs()
         var storageItems = [StorageManagerItem]()
         for feedID in pairs.keys{
@@ -193,7 +252,7 @@ class StorageManager {
                 //2. Extract the size value in MB
                 for item in downloadedItems{
                     if let size = item.getFileSizeMB(){
-                        let newItem = StorageManagerItem(type: .audio, sizeMB: size, label: "\(item.feed?.title ?? "Unknown Feed")- \(item.title ?? "Unknown Episode Title")",date: item.datePublished ?? (Date()),sourceFilePath: item.getAudioUrl())
+                        let newItem = StorageManagerItem(type: .audio, sizeMB: size, label: "\(item.feed?.title ?? "Unknown Feed")- \(item.title ?? "Unknown Episode Title")",date: item.datePublished ?? (Date()),sourceFilePath: item.getLocalFileName(),uid: item.itemID)
                         storageItems.append(newItem)
                     }
                 }

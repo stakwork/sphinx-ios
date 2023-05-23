@@ -28,6 +28,12 @@ class MediaStorageTypeSummaryTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.storageAmountLabel.text = "0 MB"
+        self.mediaTypeLabel.text = ""
+    }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)

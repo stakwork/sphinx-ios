@@ -66,6 +66,14 @@ extension ProfileManageStorageViewModel : UITableViewDelegate,UITableViewDataSou
         
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if(tableView == mediaSourceTableView){
+            let sourceType = sourceTypes[indexPath.row]
+            vc.showSourceDetailsVC(source: sourceType)
+            tableView.deselectRow(at: indexPath, animated: true)
+        }
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if(tableView == mediaTypeTableView){
             return mediaTypes.count

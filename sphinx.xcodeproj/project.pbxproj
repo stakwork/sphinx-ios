@@ -664,6 +664,8 @@
 		CE91E59A29885175008BA6EA /* MemberBadgeDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE91E59929885175008BA6EA /* MemberBadgeDetailVC.swift */; };
 		CE9A18572A1D6AC900F176DE /* MediaStorageSourceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9A18552A1D6AC900F176DE /* MediaStorageSourceTableViewCell.swift */; };
 		CE9A18582A1D6AC900F176DE /* MediaStorageSourceTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE9A18562A1D6AC900F176DE /* MediaStorageSourceTableViewCell.xib */; };
+		CE9A185A2A1D736700F176DE /* ProfileManageStorageSourceDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9A18592A1D736700F176DE /* ProfileManageStorageSourceDetailsVC.swift */; };
+		CE9A185C2A1D7AF900F176DE /* ProfileManageStorageSourceDetailsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9A185B2A1D7AF900F176DE /* ProfileManageStorageSourceDetailsVM.swift */; };
 		CEA2ED152A12D6D000DAC671 /* StorageSummaryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEA2ED142A12D6D000DAC671 /* StorageSummaryView.xib */; };
 		CEA2ED172A12D6F700DAC671 /* StorageSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA2ED162A12D6F700DAC671 /* StorageSummaryView.swift */; };
 		CEBF0D032975B20B006C1F21 /* DiscoverTribesTagSelectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBF0D022975B20B006C1F21 /* DiscoverTribesTagSelectionVC.swift */; };
@@ -1673,6 +1675,8 @@
 		CE9985E829D70CD3007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CE9A18552A1D6AC900F176DE /* MediaStorageSourceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaStorageSourceTableViewCell.swift; sourceTree = "<group>"; };
 		CE9A18562A1D6AC900F176DE /* MediaStorageSourceTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MediaStorageSourceTableViewCell.xib; sourceTree = "<group>"; };
+		CE9A18592A1D736700F176DE /* ProfileManageStorageSourceDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileManageStorageSourceDetailsVC.swift; sourceTree = "<group>"; };
+		CE9A185B2A1D7AF900F176DE /* ProfileManageStorageSourceDetailsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileManageStorageSourceDetailsVM.swift; sourceTree = "<group>"; };
 		CEA2ED142A12D6D000DAC671 /* StorageSummaryView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StorageSummaryView.xib; sourceTree = "<group>"; };
 		CEA2ED162A12D6F700DAC671 /* StorageSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageSummaryView.swift; sourceTree = "<group>"; };
 		CEBF0D022975B20B006C1F21 /* DiscoverTribesTagSelectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTribesTagSelectionVC.swift; sourceTree = "<group>"; };
@@ -2345,6 +2349,8 @@
 				47468FDB233554680072124A /* ProfileViewController.swift */,
 				CE30D9582A0BFFAA00C83555 /* ProfileManageStorageViewController.swift */,
 				CEE49BEF2A1BB88F009E0EC4 /* ProfileManageStorageViewModel.swift */,
+				CE9A18592A1D736700F176DE /* ProfileManageStorageSourceDetailsVC.swift */,
+				CE9A185B2A1D7AF900F176DE /* ProfileManageStorageSourceDetailsVM.swift */,
 				475103CE243B6E550043C748 /* ProfileViewControllerExtensions.swift */,
 				4789E26B24F05481003991BE /* ProfileViewControllerRelayExtension.swift */,
 				47904C1A24BF3C7A00710E7A /* NotificationSoundViewController.swift */,
@@ -4702,6 +4708,7 @@
 				47ACBC15265E9CE600D2FE47 /* AuthExternalView.swift in Sources */,
 				47F2289E23672A5E001429A4 /* ImagePickerManager.swift in Sources */,
 				CEE49BF32A1BBC70009E0EC4 /* MediaStorageTypeSummaryTableViewCell.swift in Sources */,
+				CE9A185A2A1D736700F176DE /* ProfileManageStorageSourceDetailsVC.swift in Sources */,
 				F32A696526CFEF600004B8B3 /* PodcastFeed+Properties.swift in Sources */,
 				475043C82971956D00830E9E /* PodcastPlayerController.swift in Sources */,
 				F38744E1271FD7CB00E28C84 /* Video+DisplayUtils.swift in Sources */,
@@ -5141,6 +5148,7 @@
 				F3CE637726AFC44D006E37A0 /* DashboardRootViewController+MiscDelegateUtils.swift in Sources */,
 				4787F8742474490200CCE8B9 /* GroupTagsViewController.swift in Sources */,
 				475BDCE0232AC23B00C5BBD6 /* PaidInvoiceSentTableViewCell.swift in Sources */,
+				CE9A185C2A1D7AF900F176DE /* ProfileManageStorageSourceDetailsVM.swift in Sources */,
 				47AF0D37254C98D100C98398 /* BoostFireworksAnimationView.swift in Sources */,
 				47B9A645233BB54B00D2B022 /* AddressBookDataSource.swift in Sources */,
 				475BDD81232C01FE00C5BBD6 /* NewQRScannerViewController.swift in Sources */,

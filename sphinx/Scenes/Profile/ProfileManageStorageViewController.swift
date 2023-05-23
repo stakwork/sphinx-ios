@@ -165,6 +165,22 @@ class ProfileManageStorageViewController : UIViewController{
         self.loadingLabel.isHidden = true
     }
     
+    func showSourceDetailsVC(source:StorageMediaManagerSource){
+        var items : [StorageManagerItem]? = nil
+        switch(source){
+        case .chats:
+            items = StorageManager.sharedManager.cachedMedia
+            break
+        case .podcasts:
+            items = StorageManager.sharedManager.downloadedPods
+            break
+        }
+        if let valid_items = items{
+            let vc = ProfileManageStorageSourceDetailsVC.instantiate(items: valid_items, source: source)
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
     
     func updateUsageLabels(){
         let usage = StorageManager.sharedManager.getItemGroupTotalSize(items: StorageManager.sharedManager.allItems)

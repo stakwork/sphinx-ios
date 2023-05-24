@@ -47,6 +47,7 @@ class ProfileManageStorageSourceDetailsVC : UIViewController{
         if(isFirstLoad == false){
             setupView()
             vm.finishSetup()
+            mediaSourceDetailsTableView.reloadData()
         }
         isFirstLoad = false
     }
@@ -102,7 +103,15 @@ class ProfileManageStorageSourceDetailsVC : UIViewController{
     
     func showItemSpecificDetails(podcastFeed:PodcastFeed?,chat:Chat?,sourceType:StorageManagerMediaSource,items:[StorageManagerItem]){
         let vc = ProfileManageStorageSpecificChatOrContentFeedItemVC.instantiate(podcastFeed: podcastFeed, chat: chat, sourceType: sourceType,items: items)
+        vc.delegate = self
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
+}
+
+
+extension ProfileManageStorageSourceDetailsVC : ProfileManageStorageSpecificChatOrContentFeedItemVCDelegate{
+    func finishedDeleteAll() {
+        self.navigationController?.popViewController(animated: true)
+    }
 }

@@ -9,6 +9,10 @@
 import Foundation
 import UIKit
 
+protocol ProfileManageStorageSpecificChatOrContentFeedItemVCDelegate : NSObject{
+    func finishedDeleteAll()
+}
+
 class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
     
     @IBOutlet weak var headerTitleLabel: UILabel!
@@ -19,6 +23,8 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
     var chat : Chat? = nil
     var podcastFeed: PodcastFeed? = nil
     var items : [StorageManagerItem] = []
+    var delegate : ProfileManageStorageSpecificChatOrContentFeedItemVCDelegate? = nil
+    var isFirstLoad:Bool = true
     
     lazy var vm : ProfileManageStorageSpecificChatOrContentFeedItemVM = {
         ProfileManageStorageSpecificChatOrContentFeedItemVM(vc: self, tableView: self.tableView)
@@ -45,6 +51,13 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
     }
     
     func setupViewAndModels(){
+        
+        if(isFirstLoad){
+            vm.finishSetup(items: items)
+            items = []
+            isFirstLoad = false
+        }
+        
         if sourceType == .chats,
            let chat = chat{
             headerTitleLabel.text = chat.name
@@ -54,9 +67,8 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
             headerTitleLabel.text = podcastFeed.title
         }
         
-        totalSizeLabel.text = formatBytes(Int(StorageManager.sharedManager.getItemGroupTotalSize(items: items) * 1e6))
-        vm.finishSetup(items: items)
-        items = []
+        totalSizeLabel.text = formatBytes(Int(StorageManager.sharedManager.getItemGroupTotalSize(items: vm.items) * 1e6))
+        
     }
     
     @IBAction func backButtonTapped(_ sender: Any) {
@@ -69,6 +81,7 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
         AlertHelper.showTwoOptionsAlert(title: "Are you sure?", message: "Confirming will delete all of your \(itemDescription). This cannot be undone.",confirm: {
             self.processDelete {
                 //TODO update loading label here
+                self.delegate?.finishedDeleteAll()
                 self.navigationController?.popViewController(animated: true)
             }
         })

@@ -568,6 +568,8 @@ public class Chat: NSManagedObject {
     
     func updateChatFromTribesInfo() {
         if isMyPublicGroup() {
+            pinnedMessageUUID = tribeInfo?.pin ?? nil
+            saveChat()
             return
         }
         

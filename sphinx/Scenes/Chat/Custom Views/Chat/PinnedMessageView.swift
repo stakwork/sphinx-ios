@@ -9,7 +9,7 @@
 import UIKit
 
 protocol PinnedMessageViewDelegate: class {
-    func didTapUnpinButtonFor(messageId: Int)
+    func didTapPinnedMessageButtonFor(messageId: Int)
 }
 
 class PinnedMessageView: UIView {
@@ -101,7 +101,7 @@ class PinnedMessageView: UIView {
     
     @IBAction func pinnedMessageButtonTapped() {
         if let messageId = self.messageId {
-            self.delegate?.didTapUnpinButtonFor(messageId: messageId)
+            self.delegate?.didTapPinnedMessageButtonFor(messageId: messageId)
         }
     }
 }

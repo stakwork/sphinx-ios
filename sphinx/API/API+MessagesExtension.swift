@@ -260,7 +260,11 @@ extension API {
             case .success(let data):
                 if let json = data as? NSDictionary {
                     if let success = json["success"] as? Bool, let response = json["response"] as? NSDictionary, success {
-                        callback(JSON(response["message"]))
+                        if let message = response["message"] {
+                            callback(JSON(message))
+                        } else {
+                            errorCallback()
+                        }
                     } else {
                         errorCallback()
                     }

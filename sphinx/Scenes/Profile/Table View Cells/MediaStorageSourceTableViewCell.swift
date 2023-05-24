@@ -14,6 +14,7 @@ class MediaStorageSourceTableViewCell: UITableViewCell {
     @IBOutlet weak var mediaSourceSizeLabel: UILabel!
     
     
+    
     static let reuseID = "MediaStorageSourceTableViewCell"
 
     override func awakeFromNib() {
@@ -27,7 +28,7 @@ class MediaStorageSourceTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func configure(forSource:StorageMediaManagerSource){
+    func configure(forSource:StorageManagerMediaSource){
         switch(forSource){
         case .chats:
             mediaSourceLabel.text = "Chats"

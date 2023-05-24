@@ -22,6 +22,8 @@ class ProfileManageStorageSourceDetailsVM : NSObject{
     func finishSetup(){
         tableView.delegate = self
         tableView.dataSource = self
+        
+        tableView.register(UINib(nibName: "MediaStorageSourceTableViewCell", bundle: nil), forCellReuseIdentifier: MediaStorageSourceTableViewCell.reuseID)
     }
     
 }
@@ -32,9 +34,15 @@ extension ProfileManageStorageSourceDetailsVM : UITableViewDelegate,UITableViewD
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        cell.backgroundColor = .green
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: MediaStorageSourceTableViewCell.reuseID,
+            for: indexPath
+        ) as! MediaStorageSourceTableViewCell
         return cell
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        // Specify the desired height for your cells
+        return 64.0 // Adjust this value according to your requirements
+    }
 }

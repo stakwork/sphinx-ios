@@ -23,11 +23,11 @@ public enum StorageManagerMediaType{
     }
 }
 
-public enum StorageMediaManagerSource{
+public enum StorageManagerMediaSource{
     case podcasts
     case chats
     
-    static var allCases: [StorageMediaManagerSource]{
+    static var allCases: [StorageManagerMediaSource]{
         return [
             .chats,
             .podcasts
@@ -79,8 +79,20 @@ class StorageManager {
         return dict
     }
     
-    func getStoredItemsBySource()->[StorageMediaManagerSource:[StorageManagerItem]]{
-        var dict = [StorageMediaManagerSource:[StorageManagerItem]]()
+    func getStorageItemSummaryBySource()->[StorageManagerMediaSource:Double]{
+        var dict = [StorageManagerMediaSource:Double]()
+        let storedItemsByType = getStoredItemsBySource()
+        for source in StorageManagerMediaSource.allCases{
+            if let typeSpecificItems = storedItemsByType[source]{
+                let total = getItemGroupTotalSize(items: typeSpecificItems)
+                dict[source] = total
+            }
+        }
+        return dict
+    }
+    
+    func getStoredItemsBySource()->[StorageManagerMediaSource:[StorageManagerItem]]{
+        var dict = [StorageManagerMediaSource:[StorageManagerItem]]()
         dict[.podcasts] = downloadedPods
         dict[.chats] = cachedMedia
         return dict

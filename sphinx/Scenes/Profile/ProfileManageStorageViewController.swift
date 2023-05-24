@@ -35,7 +35,9 @@ class ProfileManageStorageViewController : UIViewController{
     var sliderHiddenYConstraint : CGFloat = -8.0
     var sliderShowingYConstraint: CGFloat = 34.0
     
-    var tempStats : [StorageManagerMediaType:Double]? = nil
+    var tempTypeStats : [StorageManagerMediaType:Double]? = nil
+    var tempSourceStats : [StorageManagerMediaSource:Double]? = nil
+    
     var usageKB : Double = 0.0
     var maxGB: Int = 0
     var isEditingMaxMemory : Bool = false {
@@ -61,6 +63,7 @@ class ProfileManageStorageViewController : UIViewController{
                     self.cancelButton.alpha = 1.0
                     self.saveButton.alpha = 1.0
                     self.mediaTypeTableView.isHidden = true
+                    self.mediaSourceTableView.isHidden = true
                 },completion: {_ in
                     self.changeStorageButton.isHidden = true
                     self.changeStorageLabel.isHidden = true
@@ -76,6 +79,7 @@ class ProfileManageStorageViewController : UIViewController{
                     self.titleLabel.text = "Manage Storage"
                     
                     self.mediaTypeTableView.isHidden = false
+                    self.mediaSourceTableView.isHidden = false
                     self.changeStorageButton.alpha = 1.0
                     self.changeStorageLabel.alpha = 1.0
                     self.maxSliderView.alpha = 0.0
@@ -126,7 +130,7 @@ class ProfileManageStorageViewController : UIViewController{
         storageStats:[StorageManagerMediaType:Double]
     ) -> ProfileManageStorageViewController {
         let viewController = StoryboardScene.Profile.profileManageStorageViewController.instantiate()
-        viewController.tempStats = storageStats
+        viewController.tempTypeStats = storageStats
         viewController.usageKB = StorageManager.sharedManager.getItemGroupTotalSize(items: StorageManager.sharedManager.allItems)
         viewController.maxGB = UserData.sharedInstance.getMaxMemoryGB()
         
@@ -136,9 +140,9 @@ class ProfileManageStorageViewController : UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         maxSliderView.delegate = self
-        vm.stats = tempStats ?? [StorageManagerMediaType:Double]()
-        tempStats = nil
-        storageSummaryView.summaryDict = vm.stats
+        vm.typeStats = tempTypeStats ?? [StorageManagerMediaType:Double]()
+        tempTypeStats = nil
+        storageSummaryView.summaryDict = vm.typeStats
         updateUsageLabels()
         vm.finishSetup()
     }
@@ -165,7 +169,7 @@ class ProfileManageStorageViewController : UIViewController{
         self.loadingLabel.isHidden = true
     }
     
-    func showSourceDetailsVC(source:StorageMediaManagerSource){
+    func showSourceDetailsVC(source:StorageManagerMediaSource){
         var items : [StorageManagerItem]? = nil
         switch(source){
         case .chats:
@@ -230,7 +234,7 @@ class ProfileManageStorageViewController : UIViewController{
         isEditingMaxMemory = false
         maxGB = Int(maxSliderView.sliderControl.value)
         updateUsageLabels()
-        storageSummaryView.summaryDict = vm.stats
+        storageSummaryView.summaryDict = vm.typeStats
     }
     
     @IBAction func cancelTapped(_ sender: Any) {

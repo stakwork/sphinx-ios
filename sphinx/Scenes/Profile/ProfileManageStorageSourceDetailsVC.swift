@@ -13,14 +13,16 @@ class ProfileManageStorageSourceDetailsVC : UIViewController{
     
     @IBOutlet weak var headerLabel: UILabel!
     @IBOutlet weak var mediaSourceDetailsTableView: UITableView!
+    @IBOutlet weak var mediaSourceTotalSizeLabel: UILabel!
     
-    var source : StorageMediaManagerSource = .chats
+    
+    var source : StorageManagerMediaSource = .chats
     
     lazy var vm : ProfileManageStorageSourceDetailsVM = {
         return ProfileManageStorageSourceDetailsVM(vc: self, tableView: mediaSourceDetailsTableView)
     }()
     
-    static func instantiate(items:[StorageManagerItem],source:StorageMediaManagerSource)->ProfileManageStorageSourceDetailsVC{
+    static func instantiate(items:[StorageManagerItem],source:StorageManagerMediaSource)->ProfileManageStorageSourceDetailsVC{
         let viewController = StoryboardScene.Profile.profileManageStorageSourceDetailsVC.instantiate()
         viewController.source = source
         return viewController
@@ -46,6 +48,11 @@ class ProfileManageStorageSourceDetailsVC : UIViewController{
     
     @IBAction func backTapped(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    
+    @IBAction func deleteAllTapped(_ sender: Any) {
+        print("deleteAllTapped")
     }
     
 }

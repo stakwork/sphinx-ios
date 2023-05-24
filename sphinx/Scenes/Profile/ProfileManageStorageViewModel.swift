@@ -14,8 +14,9 @@ class ProfileManageStorageViewModel : NSObject{
     var mediaTypeTableView:UITableView
     var mediaSourceTableView:UITableView
     var mediaTypes = StorageManagerMediaType.allCases
-    var sourceTypes = StorageMediaManagerSource.allCases
-    var stats = [StorageManagerMediaType:Double]()
+    var sourceTypes = StorageManagerMediaSource.allCases
+    var typeStats = [StorageManagerMediaType:Double]()
+    var sourceStats = [StorageManagerMediaSource:Double]()
     
     init(
         vc:ProfileManageStorageViewController,
@@ -28,6 +29,8 @@ class ProfileManageStorageViewModel : NSObject{
     }
     
     func finishSetup(){
+        sourceStats = StorageManager.sharedManager.getStorageItemSummaryBySource()
+        
         self.mediaTypeTableView.delegate = self
         self.mediaTypeTableView.dataSource = self
         
@@ -36,6 +39,7 @@ class ProfileManageStorageViewModel : NSObject{
         
         mediaTypeTableView.register(UINib(nibName: "MediaStorageTypeSummaryTableViewCell", bundle: nil), forCellReuseIdentifier: MediaStorageTypeSummaryTableViewCell.reuseID)
         mediaSourceTableView.register(UINib(nibName: "MediaStorageSourceTableViewCell", bundle: nil), forCellReuseIdentifier: MediaStorageSourceTableViewCell.reuseID)
+        
     }
     
     
@@ -61,6 +65,7 @@ extension ProfileManageStorageViewModel : UITableViewDelegate,UITableViewDataSou
                 for: indexPath
             ) as! MediaStorageSourceTableViewCell
             cell.configure(forSource: sourceTypes[indexPath.row])
+            cell.mediaSourceSizeLabel.text = formatBytes(Int(loadMediaSize(forSource: sourceTypes[indexPath.row]) ?? 0))
             return cell
         }
         
@@ -90,7 +95,13 @@ extension ProfileManageStorageViewModel : UITableViewDelegate,UITableViewDataSou
     
     func loadMediaSize(forType:StorageManagerMediaType)->Double?{
         var result : Double? = nil
-        result = (stats[forType] ?? 0) * 1e6
+        result = (typeStats[forType] ?? 0) * 1e6
+        return result
+    }
+    
+    func loadMediaSize(forSource:StorageManagerMediaSource)->Double?{
+        var result : Double? = nil
+        result = (sourceStats[forSource] ?? 0) * 1e6
         return result
     }
     
@@ -146,9 +157,9 @@ extension ProfileManageStorageViewModel : UITableViewDelegate,UITableViewDataSou
     
     func refreshData(){
         //DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
-            self.stats = StorageManager.sharedManager.getStorageItemSummaryByType()
+            self.typeStats = StorageManager.sharedManager.getStorageItemSummaryByType()
             self.vc.updateUsageLabels()
-            self.vc.storageSummaryView.summaryDict = self.stats
+            self.vc.storageSummaryView.summaryDict = self.typeStats
             self.mediaTypeTableView.reloadData()
         //})
         

@@ -17,14 +17,18 @@ class ProfileManageStorageSourceDetailsVC : UIViewController{
     
     
     var source : StorageManagerMediaSource = .chats
+    var totalSize : Double = 0.0
     
     lazy var vm : ProfileManageStorageSourceDetailsVM = {
-        return ProfileManageStorageSourceDetailsVM(vc: self, tableView: mediaSourceDetailsTableView)
+        return ProfileManageStorageSourceDetailsVM(vc: self, tableView: mediaSourceDetailsTableView, source: self.source)
     }()
     
-    static func instantiate(items:[StorageManagerItem],source:StorageManagerMediaSource)->ProfileManageStorageSourceDetailsVC{
+    static func instantiate(items:[StorageManagerItem],
+                            source:StorageManagerMediaSource,
+                            sourceTotalSize:Double)->ProfileManageStorageSourceDetailsVC{
         let viewController = StoryboardScene.Profile.profileManageStorageSourceDetailsVC.instantiate()
         viewController.source = source
+        viewController.totalSize = sourceTotalSize
         return viewController
     }
     
@@ -44,7 +48,9 @@ class ProfileManageStorageSourceDetailsVC : UIViewController{
             headerLabel.text = "Podcasts"
             break
         }
+        mediaSourceTotalSizeLabel.text = formatBytes(Int(totalSize*1e6))
     }
+    
     
     @IBAction func backTapped(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)

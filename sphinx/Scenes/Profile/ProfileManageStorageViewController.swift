@@ -179,8 +179,9 @@ class ProfileManageStorageViewController : UIViewController{
             items = StorageManager.sharedManager.downloadedPods
             break
         }
-        if let valid_items = items{
-            let vc = ProfileManageStorageSourceDetailsVC.instantiate(items: valid_items, source: source)
+        if let valid_items = items,
+        let size = vm.sourceStats[source]{
+            let vc = ProfileManageStorageSourceDetailsVC.instantiate(items: valid_items, source: source,sourceTotalSize: size)
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }

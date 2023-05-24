@@ -606,9 +606,34 @@ class FeedsManager : NSObject {
     
     func getPodcastAndEpisodeFromGenericFeed(contentFeed:ContentFeed,itemID:String)->(PodcastFeed?,PodcastEpisode?){
         let pf = PodcastFeed.convertFrom(contentFeed: contentFeed)
+        return getPodcastAndEpisodeFromPodcastFeed(pf: pf, itemID: itemID)
+    }
+    
+    func getPodcastAndEpisodeFromPodcastFeed(pf:PodcastFeed,itemID:String)->(PodcastFeed?,PodcastEpisode?){
         if let episode = pf.episodes?.first(where: {$0.itemID == itemID}){
             return(pf,episode)
         }
         return(pf,nil)
     }
+    
+    func fetchPodcastEpisode(itemID: String) -> ContentFeedItem? {
+        let fetchRequest: NSFetchRequest<ContentFeedItem> = PodcastEpisode.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "itemID == %@", itemID)
+        
+        do {
+            let podcastFeedItems = try CoreDataManager.sharedManager.persistentContainer.viewContext.fetch(fetchRequest)
+            if let podcastFeedItem = podcastFeedItems.first{
+                return podcastFeedItem
+                //let convertedEpisode = PodcastEpisode.convertFrom(contentFeedItem: podcastFeedItem)
+                //return convertedEpisode
+            }
+            else{
+                return nil
+            }
+        } catch {
+            print("Error fetching podcast episode: \(error)")
+            return nil
+        }
+    }
+    
 }

@@ -98,6 +98,48 @@ class StorageManager {
         return dict
     }
     
+    func getItemDetailsByChat()->[Chat:[StorageManagerItem]]{
+        let bySource = getStoredItemsBySource()
+        var chatsToItemDict = [Chat:[StorageManagerItem]]()
+        if let chatsOnly = bySource[.chats]{
+            for item in chatsOnly{
+                print(item.cachedMedia)
+                if let cm = item.cachedMedia,
+                   let itemsChat = cm.chat{
+                    if chatsToItemDict[itemsChat] != nil{
+                        chatsToItemDict[itemsChat]!.append(item)
+                    }
+                    else{
+                        chatsToItemDict[itemsChat] = [item]
+                    }
+                }
+            }
+        }
+        return chatsToItemDict
+    }
+    
+    func getItemDetailsByPodcastFeed()->[PodcastFeed:[StorageManagerItem]]{
+        let bySource = getStoredItemsBySource()
+        var podcastsToItemDict = [PodcastFeed:[StorageManagerItem]]()
+        if let podcastsOnly = bySource[.podcasts]{
+            for item in podcastsOnly{
+                if let itemID = item.uid,
+                   let episode = FeedsManager.sharedInstance.fetchPodcastEpisode(itemID: itemID),
+                   let cf = episode.contentFeed{
+                    var feed = PodcastFeed.convertFrom(contentFeed: cf)
+                    feed = podcastsToItemDict.keys.filter({$0.feedID == feed.feedID}).first ?? feed
+                    if podcastsToItemDict[feed] != nil{
+                        podcastsToItemDict[feed]!.append(item)
+                    }
+                    else{
+                        podcastsToItemDict[feed] = [item]
+                    }
+                }
+            }
+        }
+        return podcastsToItemDict
+    }
+    
     func refreshAllStoredData(completion:@escaping ()->()){
         
         downloadedPods = getDownloadedPodcastEpisodeList()

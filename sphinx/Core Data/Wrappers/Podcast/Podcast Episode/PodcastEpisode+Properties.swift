@@ -104,6 +104,7 @@ extension PodcastEpisode {
     @nonobjc public class func fetchRequest() -> NSFetchRequest<ContentFeedItem> {
         return NSFetchRequest<ContentFeedItem>(entityName: "ContentFeedItem")
     }
+    
 }
 
 extension PodcastEpisode: Identifiable {}

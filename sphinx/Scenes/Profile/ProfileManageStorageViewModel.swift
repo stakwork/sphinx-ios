@@ -160,7 +160,9 @@ extension ProfileManageStorageViewModel : UITableViewDelegate,UITableViewDataSou
             self.typeStats = StorageManager.sharedManager.getStorageItemSummaryByType()
             self.vc.updateUsageLabels()
             self.vc.storageSummaryView.summaryDict = self.typeStats
+            self.sourceStats = StorageManager.sharedManager.getStorageItemSummaryBySource()
             self.mediaTypeTableView.reloadData()
+            self.mediaSourceTableView.reloadData()
         //})
         
     }

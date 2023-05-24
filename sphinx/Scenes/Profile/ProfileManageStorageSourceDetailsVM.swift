@@ -13,24 +13,69 @@ class ProfileManageStorageSourceDetailsVM : NSObject{
     
     var vc : ProfileManageStorageSourceDetailsVC
     var tableView: UITableView
+    var source:StorageManagerMediaSource
     
-    init(vc:ProfileManageStorageSourceDetailsVC,tableView:UITableView){
+    var chatDict : [Chat : [StorageManagerItem]]? = nil
+    var chatsArray = [Chat]()
+    
+    var podsDict : [PodcastFeed:[StorageManagerItem]]? = nil
+    var podsArray = [PodcastFeed]()
+    
+    func getChatsArray()->[Chat]{
+        if let chatDict = chatDict{
+            return chatDict.keys.sorted(by: {$0.name ?? "" > $1.name ?? ""})
+        }
+        return []
+    }
+    func getPodsArray()->[PodcastFeed]{
+        if let podsDict = podsDict{
+            return podsDict.keys.sorted(by: {$0.title ?? "" > $1.title ?? ""})
+        }
+        return []
+    }
+    
+    init(vc:ProfileManageStorageSourceDetailsVC,tableView:UITableView,source:StorageManagerMediaSource){
         self.vc = vc
         self.tableView = tableView
+        self.source = source
     }
     
     func finishSetup(){
+        getDataSource()
         tableView.delegate = self
         tableView.dataSource = self
         
         tableView.register(UINib(nibName: "MediaStorageSourceTableViewCell", bundle: nil), forCellReuseIdentifier: MediaStorageSourceTableViewCell.reuseID)
     }
     
+    func getDataSource(){
+        switch(source){
+        case .podcasts:
+            podsDict = StorageManager.sharedManager.getItemDetailsByPodcastFeed()
+            podsArray = getPodsArray()
+            break
+        case .chats:
+            chatDict = StorageManager.sharedManager.getItemDetailsByChat()
+            chatsArray = getChatsArray()
+            break
+        }
+    }
+    
 }
 
 extension ProfileManageStorageSourceDetailsVM : UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 50
+        
+        if source == .chats,
+           let chatData = chatDict{
+            return chatsArray.count
+        }
+        else if source == .podcasts,
+            let podsData = podsDict{
+            return podsArray.count
+        }
+        
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -38,6 +83,16 @@ extension ProfileManageStorageSourceDetailsVM : UITableViewDelegate,UITableViewD
             withIdentifier: MediaStorageSourceTableViewCell.reuseID,
             for: indexPath
         ) as! MediaStorageSourceTableViewCell
+        if source == .chats{
+            let chosenChat = chatsArray[indexPath.row]
+            let items = chatDict?[chosenChat] ?? []
+            cell.configure(forChat: chosenChat, items: items)
+        }
+        else if source == .podcasts{
+            let chosenFeed = podsArray[indexPath.row]
+            let items = podsDict?[chosenFeed] ?? []
+            cell.configure(podcastFeed: chosenFeed, items: items)
+        }
         return cell
     }
     

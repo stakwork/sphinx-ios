@@ -12,7 +12,7 @@ class MediaStorageSourceTableViewCell: UITableViewCell {
     
     @IBOutlet weak var mediaSourceLabel: UILabel!
     @IBOutlet weak var mediaSourceSizeLabel: UILabel!
-    
+    @IBOutlet weak var squareImageView: UIImageView!
     
     
     static let reuseID = "MediaStorageSourceTableViewCell"
@@ -35,8 +35,24 @@ class MediaStorageSourceTableViewCell: UITableViewCell {
             break
         case .podcasts:
             mediaSourceLabel.text = "Podcasts"
+            squareImageView.image = #imageLiteral(resourceName: "podcastTypeIcon")
+            squareImageView.layer.cornerRadius = 6
             break
         }
+    }
+    
+    func configure(forChat:Chat,items:[StorageManagerItem]){
+        mediaSourceLabel.text = forChat.name
+        mediaSourceSizeLabel.text = formatBytes(Int(StorageManager.sharedManager.getItemGroupTotalSize(items: items)))
+    }
+    
+    func configure(podcastFeed:PodcastFeed,items:[StorageManagerItem]){
+        mediaSourceLabel.text = podcastFeed.title
+        if let imageURL = URL(string: podcastFeed.imageToShow ?? ""){
+            squareImageView.sd_setImage(with: imageURL)
+        }
+        squareImageView.layer.cornerRadius = 6
+        mediaSourceSizeLabel.text = formatBytes(Int(StorageManager.sharedManager.getItemGroupTotalSize(items: items)*1e6))
     }
     
 }

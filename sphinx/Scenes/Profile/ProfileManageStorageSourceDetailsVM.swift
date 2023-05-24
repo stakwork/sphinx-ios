@@ -23,13 +23,13 @@ class ProfileManageStorageSourceDetailsVM : NSObject{
     
     func getChatsArray()->[Chat]{
         if let chatDict = chatDict{
-            return chatDict.keys.sorted(by: {$0.name ?? "" > $1.name ?? ""})
+            return chatDict.keys.sorted(by: {$0.name ?? "" < $1.name ?? ""})
         }
         return []
     }
     func getPodsArray()->[PodcastFeed]{
         if let podsDict = podsDict{
-            return podsDict.keys.sorted(by: {$0.title ?? "" > $1.title ?? ""})
+            return podsDict.keys.sorted(by: {$0.title ?? "" < $1.title ?? ""})
         }
         return []
     }
@@ -59,6 +59,25 @@ class ProfileManageStorageSourceDetailsVM : NSObject{
             chatsArray = getChatsArray()
             break
         }
+    }
+    
+    func getSourceItems()->[StorageManagerItem]{
+        switch(source){
+        case .podcasts:
+            if let podsDict = podsDict,
+               let items = podsDict.values.flatMap({ $0 }) as? [StorageManagerItem]{
+                return items
+            }
+            
+            break
+        case .chats:
+            if let chatDict = chatDict,
+               let items = chatDict.values.flatMap({ $0 }) as? [StorageManagerItem]{
+                return items
+            }
+            break
+        }
+        return []
     }
     
 }

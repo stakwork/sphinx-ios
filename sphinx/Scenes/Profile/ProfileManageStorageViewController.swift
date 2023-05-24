@@ -37,6 +37,7 @@ class ProfileManageStorageViewController : UIViewController{
     
     var tempTypeStats : [StorageManagerMediaType:Double]? = nil
     var tempSourceStats : [StorageManagerMediaSource:Double]? = nil
+    var isFirstLoad : Bool = true
     
     var usageKB : Double = 0.0
     var maxGB: Int = 0
@@ -139,12 +140,34 @@ class ProfileManageStorageViewController : UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if(isFirstLoad){
+            setupViewsAndModels()
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if(isFirstLoad == false){
+            setupViewsAndModels()
+        }
+        
+        isFirstLoad = false
+    }
+    
+    func setupViewsAndModels(){
         maxSliderView.delegate = self
         vm.typeStats = tempTypeStats ?? [StorageManagerMediaType:Double]()
         tempTypeStats = nil
         storageSummaryView.summaryDict = vm.typeStats
         updateUsageLabels()
         vm.finishSetup()
+        
+        if(isFirstLoad == false){
+            StorageManager.sharedManager.refreshAllStoredData(completion: {
+                
+                self.vm.refreshData()
+            })
+        }
     }
     
     func showSpinner() {

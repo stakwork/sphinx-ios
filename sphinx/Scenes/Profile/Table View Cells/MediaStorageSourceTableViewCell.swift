@@ -44,7 +44,15 @@ class MediaStorageSourceTableViewCell: UITableViewCell {
     func configure(forChat:Chat,items:[StorageManagerItem]){
         mediaSourceLabel.text = forChat.name
         mediaSourceSizeLabel.text = formatBytes(Int(StorageManager.sharedManager.getItemGroupTotalSize(items: items)))
+        if let imageURL = URL(string: forChat.photoUrl ?? ""){
+            squareImageView.sd_setImage(with: imageURL)
+        }
+        else{
+            //TODO: show initials
+        }
+        squareImageView.layer.cornerRadius = 6
     }
+    
     
     func configure(podcastFeed:PodcastFeed,items:[StorageManagerItem]){
         mediaSourceLabel.text = podcastFeed.title

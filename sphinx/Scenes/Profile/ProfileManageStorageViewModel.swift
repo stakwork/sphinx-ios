@@ -158,9 +158,12 @@ extension ProfileManageStorageViewModel : UITableViewDelegate,UITableViewDataSou
     func refreshData(){
         //DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
             self.typeStats = StorageManager.sharedManager.getStorageItemSummaryByType()
-            self.vc.updateUsageLabels()
             self.vc.storageSummaryView.summaryDict = self.typeStats
             self.sourceStats = StorageManager.sharedManager.getStorageItemSummaryBySource()
+            self.vc.usageKB = StorageManager.sharedManager.getItemGroupTotalSize(items: StorageManager.sharedManager.allItems)
+            
+            self.vc.updateUsageLabels()
+            
             self.mediaTypeTableView.reloadData()
             self.mediaSourceTableView.reloadData()
         //})

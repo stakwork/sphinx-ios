@@ -59,6 +59,33 @@ class ProfileManageStorageSourceDetailsVC : UIViewController{
     
     @IBAction func deleteAllTapped(_ sender: Any) {
         print("deleteAllTapped")
+        let itemDescription = (source == .chats) ? "chat media" : "podcasts"
+        AlertHelper.showTwoOptionsAlert(
+            title: "Are you sure?",
+            message: "Proceeding will delete all of your \(itemDescription) from this device. This cannot be undone.",
+            confirm: {
+                switch(self.source){
+                case .chats:
+                    StorageManager.sharedManager.deleteAllImages(completion: {
+                        self.handleReset()
+                    })
+                    break
+                case .podcasts:
+                    StorageManager.sharedManager.deleteAllAudioFiles(completion: {
+                        self.handleReset()
+                    })
+                    break
+                }
+        })
+    }
+    
+    func handleReset(){
+        StorageManager.sharedManager.refreshAllStoredData {
+            self.vm.finishSetup()
+            self.totalSize = StorageManager.sharedManager.getItemGroupTotalSize(items: self.vm.getSourceItems())
+            self.setupView()
+            self.vm.tableView.reloadData()
+        }
     }
     
 }

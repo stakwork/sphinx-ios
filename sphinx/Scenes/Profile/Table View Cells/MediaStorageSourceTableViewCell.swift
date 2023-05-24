@@ -63,4 +63,13 @@ class MediaStorageSourceTableViewCell: UITableViewCell {
         mediaSourceSizeLabel.text = formatBytes(Int(StorageManager.sharedManager.getItemGroupTotalSize(items: items)*1e6))
     }
     
+    func configure(podcastEpisode:PodcastEpisode,item:StorageManagerItem){
+        mediaSourceLabel.text = podcastEpisode.title
+        if let imageURL = URL(string: podcastEpisode.imageToShow ?? ""){
+            squareImageView.sd_setImage(with: imageURL)
+        }
+        squareImageView.layer.cornerRadius = 6
+        mediaSourceSizeLabel.text = formatBytes(Int(StorageManager.sharedManager.getItemGroupTotalSize(items: [item])*1e6))
+    }
+    
 }

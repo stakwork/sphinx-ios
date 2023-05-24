@@ -18,6 +18,7 @@ class ProfileManageStorageSourceDetailsVC : UIViewController{
     
     var source : StorageManagerMediaSource = .chats
     var totalSize : Double = 0.0
+    var isFirstLoad : Bool = true
     
     lazy var vm : ProfileManageStorageSourceDetailsVM = {
         return ProfileManageStorageSourceDetailsVM(vc: self, tableView: mediaSourceDetailsTableView, source: self.source)
@@ -35,8 +36,19 @@ class ProfileManageStorageSourceDetailsVC : UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         //view.backgroundColor = .magenta
-        setupView()
-        vm.finishSetup()
+        if(isFirstLoad == true){
+            setupView()
+            vm.finishSetup()
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if(isFirstLoad == false){
+            setupView()
+            vm.finishSetup()
+        }
+        isFirstLoad = false
     }
     
     func setupView(){
@@ -86,6 +98,11 @@ class ProfileManageStorageSourceDetailsVC : UIViewController{
             self.setupView()
             self.vm.tableView.reloadData()
         }
+    }
+    
+    func showItemSpecificDetails(podcastFeed:PodcastFeed?,chat:Chat?,sourceType:StorageManagerMediaSource,items:[StorageManagerItem]){
+        let vc = ProfileManageStorageSpecificChatOrContentFeedItemVC.instantiate(podcastFeed: podcastFeed, chat: chat, sourceType: sourceType,items: items)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
 }

@@ -684,6 +684,8 @@
 		CEEBBB3F29DC47930093923D /* ItemDescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEBBB3E29DC47930093923D /* ItemDescriptionViewController.swift */; };
 		CEEBBB4229DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEBBB4029DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.swift */; };
 		CEEBBB4329DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEEBBB4129DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.xib */; };
+		CEEDEA162A1E8273004DC536 /* ProfileManageStorageSpecificChatOrContentFeedItemVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEDEA152A1E8273004DC536 /* ProfileManageStorageSpecificChatOrContentFeedItemVC.swift */; };
+		CEEDEA182A1E84F7004DC536 /* ProfileManageStorageSpecificChatOrContentFeedItemVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEDEA172A1E84F7004DC536 /* ProfileManageStorageSpecificChatOrContentFeedItemVM.swift */; };
 		CEF821D62963B68600CBB28F /* DiscoverTribesWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF821D52963B68600CBB28F /* DiscoverTribesWebViewController.swift */; };
 		CEF88DCA29B64E5100DC1C40 /* UnifiedEpisodeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEF88DC929B64E5000DC1C40 /* UnifiedEpisodeView.xib */; };
 		CEF88DCC29B64F4F00DC1C40 /* UnifiedEpisodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF88DCB29B64F4F00DC1C40 /* UnifiedEpisodeView.swift */; };
@@ -1695,6 +1697,8 @@
 		CEEBBB3E29DC47930093923D /* ItemDescriptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDescriptionViewController.swift; sourceTree = "<group>"; };
 		CEEBBB4029DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDescriptionTableViewHeaderCell.swift; sourceTree = "<group>"; };
 		CEEBBB4129DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ItemDescriptionTableViewHeaderCell.xib; sourceTree = "<group>"; };
+		CEEDEA152A1E8273004DC536 /* ProfileManageStorageSpecificChatOrContentFeedItemVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileManageStorageSpecificChatOrContentFeedItemVC.swift; sourceTree = "<group>"; };
+		CEEDEA172A1E84F7004DC536 /* ProfileManageStorageSpecificChatOrContentFeedItemVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileManageStorageSpecificChatOrContentFeedItemVM.swift; sourceTree = "<group>"; };
 		CEF821D52963B68600CBB28F /* DiscoverTribesWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTribesWebViewController.swift; sourceTree = "<group>"; };
 		CEF88DC929B64E5000DC1C40 /* UnifiedEpisodeView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UnifiedEpisodeView.xib; sourceTree = "<group>"; };
 		CEF88DCB29B64F4F00DC1C40 /* UnifiedEpisodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnifiedEpisodeView.swift; sourceTree = "<group>"; };
@@ -2351,6 +2355,8 @@
 				CEE49BEF2A1BB88F009E0EC4 /* ProfileManageStorageViewModel.swift */,
 				CE9A18592A1D736700F176DE /* ProfileManageStorageSourceDetailsVC.swift */,
 				CE9A185B2A1D7AF900F176DE /* ProfileManageStorageSourceDetailsVM.swift */,
+				CEEDEA152A1E8273004DC536 /* ProfileManageStorageSpecificChatOrContentFeedItemVC.swift */,
+				CEEDEA172A1E84F7004DC536 /* ProfileManageStorageSpecificChatOrContentFeedItemVM.swift */,
 				475103CE243B6E550043C748 /* ProfileViewControllerExtensions.swift */,
 				4789E26B24F05481003991BE /* ProfileViewControllerRelayExtension.swift */,
 				47904C1A24BF3C7A00710E7A /* NotificationSoundViewController.swift */,
@@ -4991,6 +4997,7 @@
 				470F5CA5243E1DA6007E054F /* ChatViewControllerVideoCallExtension.swift in Sources */,
 				47308E1324FEE6E700FFAC6F /* SocketRawView.swift in Sources */,
 				4789E25B24EF07E2003991BE /* KeyboardEventsViewController.swift in Sources */,
+				CEEDEA162A1E8273004DC536 /* ProfileManageStorageSpecificChatOrContentFeedItemVC.swift in Sources */,
 				F358212D2695D11500A314F1 /* ConnectionCodeSignupHandling.swift in Sources */,
 				4703CF97251D23E5007B685C /* LinkPreviewUIImage.swift in Sources */,
 				474CCFAA291562180037E1D4 /* API+ActionsExtension.swift in Sources */,
@@ -5146,6 +5153,7 @@
 				47308E0F24FEE6E700FFAC6F /* SocketAnyEvent.swift in Sources */,
 				4794CA77252F5D66007C5022 /* API+PodcastExtension.swift in Sources */,
 				F3CE637726AFC44D006E37A0 /* DashboardRootViewController+MiscDelegateUtils.swift in Sources */,
+				CEEDEA182A1E84F7004DC536 /* ProfileManageStorageSpecificChatOrContentFeedItemVM.swift in Sources */,
 				4787F8742474490200CCE8B9 /* GroupTagsViewController.swift in Sources */,
 				475BDCE0232AC23B00C5BBD6 /* PaidInvoiceSentTableViewCell.swift in Sources */,
 				CE9A185C2A1D7AF900F176DE /* ProfileManageStorageSourceDetailsVM.swift in Sources */,

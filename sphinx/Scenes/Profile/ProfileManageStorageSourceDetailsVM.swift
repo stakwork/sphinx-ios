@@ -115,6 +115,26 @@ extension ProfileManageStorageSourceDetailsVM : UITableViewDelegate,UITableViewD
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch(source){
+        case .chats:
+            let chat = chatsArray[indexPath.row]
+            if let chatDict = chatDict,
+               let items = chatDict[chat]{
+                vc.showItemSpecificDetails(podcastFeed: nil, chat: chat, sourceType: .chats,items: items)
+            }
+            break
+        case .podcasts:
+            let pod = podsArray[indexPath.row]
+            if let podsDict = podsDict,
+               let items = podsDict[pod]{
+                vc.showItemSpecificDetails(podcastFeed: pod, chat: nil, sourceType: .podcasts, items: items)
+            }
+            break
+        }
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         // Specify the desired height for your cells
         return 64.0 // Adjust this value according to your requirements

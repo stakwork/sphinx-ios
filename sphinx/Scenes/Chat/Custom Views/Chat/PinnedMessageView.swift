@@ -49,7 +49,7 @@ class PinnedMessageView: UIView {
         self.completion = completion
         
         if let chat = Chat.getChatWith(id: chatId) {
-            if let pinnedMessageUUID = chat.pinnedMessageUUID, !pinnedMessageUUID.isEmpty {
+            if let pinnedMessageUUID = chat.pinnedMessageUUID, !pinnedMessageUUID.isEmptyPinnedMessage {
                 if let message = TransactionMessage.getMessageWith(
                     uuid: pinnedMessageUUID
                 ) {

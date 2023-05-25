@@ -825,13 +825,16 @@ extension ChatViewController : MessageOptionsVCDelegate {
         shouldTogglePinState(message: message, pin: false)
     }
     
-    func shouldTogglePinState(message: TransactionMessage, pin: Bool) {
+    func shouldTogglePinState(
+        message: TransactionMessage,
+        pin: Bool
+    ) {
         guard let chat = self.chat else {
             return
         }
         
         API.sharedInstance.pinChatMessage(
-            messageUUID: (pin ? message.uuid : ""),
+            messageUUID: (pin ? message.uuid : "_"),
             chatId: chat.id,
             callback: { pinnedMessageUUID in
                 self.chat?.pinnedMessageUUID = pinnedMessageUUID

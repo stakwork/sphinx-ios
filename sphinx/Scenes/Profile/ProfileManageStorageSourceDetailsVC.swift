@@ -45,7 +45,6 @@ class ProfileManageStorageSourceDetailsVC : UIViewController{
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if(isFirstLoad == false){
-            setupView()
             vm.finishSetup()
             mediaSourceDetailsTableView.reloadData()
         }

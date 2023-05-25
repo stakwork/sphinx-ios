@@ -19,7 +19,12 @@ class ProfileManageStorageSourceDetailsVM : NSObject{
     var chatsArray = [Chat]()
     
     var podsDict : [PodcastFeed:[StorageManagerItem]]? = nil
-    var podsArray = [PodcastFeed]()
+    var podsArray = [PodcastFeed](){
+        didSet{
+            vc.totalSize = StorageManager.sharedManager.getItemGroupTotalSize(items: getSourceItems())
+            vc.setupView()
+        }
+    }
     
     func getChatsArray()->[Chat]{
         if let chatDict = chatDict{

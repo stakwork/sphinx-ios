@@ -43,6 +43,15 @@ struct StorageManagerItem{
     var sourceFilePath:String?
     var cachedMedia:CachedMedia?
     var uid:String?=nil
+    
+    func isCachedMedia()->Bool{
+        return cachedMedia != nil
+    }
+    
+    func isPodcast()->Bool{
+        return uid != nil//for now this is how we can do it
+    }
+    
 }
 
 class StorageManager {
@@ -165,9 +174,50 @@ class StorageManager {
         return totalSize
     }
     
-    func cleanupGarbage(){
-        if(checkForMemoryOverflow()){
-            //deleteOldestPod()
+    func cleanupGarbage(completion:@escaping ()->()){
+        var wdt_flag = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 300.0, execute: {
+            wdt_flag = false
+        })
+        let choppingBlockSnapshot = allItems.sorted(by: {$0.date < $1.date})//static snapshot that never changes
+        var changingChoppingBlock = choppingBlockSnapshot//changes so we can compare against limit
+        var i = 0
+        var semaphore = false
+        while(checkForMemoryOverflow(items: changingChoppingBlock) && wdt_flag){
+            if(semaphore == false){//only allow deletion if semaphore isn't active
+                semaphore = true
+                deleteItem(item: choppingBlockSnapshot[i], completion: {
+                    semaphore = false//allow next deletion
+                    changingChoppingBlock[i].sizeMB = 0.0
+                    i += 1
+                })
+            }
+            wdt_flag = (i >= choppingBlockSnapshot.count - 1) ? false : wdt_flag
+        }
+        wdt_flag = false
+        completion()
+    }
+    
+    func deleteItem(item:StorageManagerItem,completion: @escaping ()->()){
+        if(item.isCachedMedia()){
+            deleteCacheItems(cms: [item.cachedMedia!], completion: {
+                completion()
+            })
+        }
+        else if(item.isPodcast()),
+               let sourcePath = item.sourceFilePath{
+            deletePodsWithID(
+                fileName: sourcePath,
+                successCompletion: {
+                    completion()
+                },
+                failureCompletion: {
+                    completion()
+                }
+            )
+        }
+        else{
+            completion()
         }
     }
     
@@ -286,14 +336,12 @@ class StorageManager {
     }
 
     //returns a boolean that determines whether memory needs to be culled
-    func checkForMemoryOverflow()->Bool{
-        let podcastMemorySize = getDownloadedPodcastsTotalSizeMB()
-        let totalMemory = podcastMemorySize //TODO: add other media
+    func checkForMemoryOverflow(items:[StorageManagerItem])->Bool{
+        let totalMemory = getItemGroupTotalSize(items: items) //TODO: add other media
         
-        let maxMemoryGB = UserData.sharedInstance.getMaxMemoryGB()
-        let usedMemoryGB = Int(totalMemory/10)//totalMemory/1000
+        let maxMemoryGB = UserData.sharedInstance.getMaxMemoryGB() * 1000//convert to MB
+        let usedMemoryGB = Int(totalMemory)//MB
         return maxMemoryGB < usedMemoryGB
-        //return Int(totalMemory/1000) > UserData.sharedInstance.getMaxMemory()
     }
     
     //returns an array of structs describing each downloaded podcast episode

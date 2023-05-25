@@ -141,20 +141,20 @@ class ProfileManageStorageViewController : UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         if(isFirstLoad){
-            setupViewsAndModels()
+            setupStorageViewsAndModels()
         }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if(isFirstLoad == false){
-            setupViewsAndModels()
+            setupStorageViewsAndModels()
         }
         
         isFirstLoad = false
     }
     
-    func setupViewsAndModels(){
+    func setupStorageViewsAndModels(){
         maxSliderView.delegate = self
         vm.typeStats = tempTypeStats ?? [StorageManagerMediaType:Double]()
         tempTypeStats = nil
@@ -259,6 +259,13 @@ class ProfileManageStorageViewController : UIViewController{
         maxGB = Int(maxSliderView.sliderControl.value)
         updateUsageLabels()
         storageSummaryView.summaryDict = vm.typeStats
+        StorageManager.sharedManager.cleanupGarbage {
+            //stop loading
+            print("done cleaning up garbage")
+            StorageManager.sharedManager.refreshAllStoredData(completion: {
+                self.setupStorageViewsAndModels()
+            })
+        }
     }
     
     @IBAction func cancelTapped(_ sender: Any) {

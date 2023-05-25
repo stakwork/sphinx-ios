@@ -96,6 +96,9 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVM : MediaStorageSour
                         self.finishSetup(items: self.items)
                         self.vc.setupViewAndModels()
                         self.tableView.reloadData()
+                        
+                        StorageManager.sharedManager.refreshAllStoredData(completion: {
+                        })
                     },
                     failureCompletion: {
                         AlertHelper.showAlert(title: "Error", message: "Could not delete the content. Please try again later.")

@@ -102,6 +102,7 @@ class ProfileManageStorageViewController : UIViewController{
                     self.cancelButton.isHidden = true
                 })
             }
+            
             editingModeUsedStorageLabel.text = usedStorageLabel.text
             editingModeMaximumLabel.isHidden = !freeStorageLabel.isHidden
             editingModeUsedStorageLabel.isHidden = !usedStorageLabel.isHidden
@@ -260,6 +261,8 @@ class ProfileManageStorageViewController : UIViewController{
         print("changeButtonTap")
         isEditingMaxMemory = true
         maxSliderView.setSlider()
+        editingModeMaximumLabel.text = formatBytes(Int(Double(maxSliderView.sliderControl.value) * 1e9))
+        self.editingModeMaximumLabel.textColor = UIColor.Sphinx.Text
     }
     
     

@@ -279,7 +279,8 @@ class ProfileManageStorageViewController : UIViewController{
         if(maxInBytes < usageInBytes){
             let differential = formatBytes(usageInBytes - maxInBytes)
             self.view.bringSubviewToFront(warningView)
-            self.warningLabel.text = "Saving this limit will delete \(differential) of your oldest data"
+            let warningMessage = String(format: NSLocalizedString("saving.limit.warning", comment: ""), differential)
+            self.warningLabel.text = warningMessage
             self.warningView.isHidden = false
         }
         else{

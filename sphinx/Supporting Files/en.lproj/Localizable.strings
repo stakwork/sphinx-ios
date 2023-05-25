@@ -599,3 +599,12 @@
 "badges.deactivation-success" = "Badges successfully deactivated";
 "member-profile.moderator" = "MODERATOR";
 "member-profile.tribe-member" = "TRIBE MEMBER";
+
+//STORAGE MANAGEMENT
+"saving.limit.warning" = "Saving this limit will delete at least %@ of your oldest data";
+"are.you.sure.deletion.warning" = "Continuing will delete all of your %@.";
+"storage.management.audio.files" = "audio files";
+"storage.management.video" = "video";
+"storage.management.images" = "images";
+"are.you.sure" = "¿Estás seguro?";
+"chat.media" = "chat media";

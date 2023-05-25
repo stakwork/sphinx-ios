@@ -77,8 +77,8 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
     
     @IBAction func deleteAllTapped(_ sender: Any) {
         print("deleteAllTapped")
-        let itemDescription = (sourceType == .chats) ? "chat media" : "podcasts"
-        AlertHelper.showTwoOptionsAlert(title: "Are you sure?", message: "Confirming will delete all of your \(itemDescription). This cannot be undone.",confirm: {
+        let itemDescription = (sourceType == .chats) ? "chat.media".localized : "podcasts"
+        AlertHelper.showTwoOptionsAlert(title: "are.you.sure".localized, message: "Confirming will delete all of your \(itemDescription). This cannot be undone.",confirm: {
             self.processDelete {
                 //TODO update loading label here
                 self.delegate?.finishedDeleteAll()

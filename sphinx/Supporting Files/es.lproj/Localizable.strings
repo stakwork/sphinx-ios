@@ -599,3 +599,12 @@
 "badges.deactivation-success" = "Insignias fueron desactivado exitosamente.";
 "member-profile.moderator" = "MODERADOR";
 "member-profile.tribe-member" = "MIEMBRO DE LA TRIBU";
+
+//STORAGE MANAGEMENT
+"saving.limit.warning" = "Guardar este límite eliminará al menos %@ de tus datos más antiguos.";
+"are.you.sure.deletion.warning" = "Continuar eliminará todos tus %@.";
+"storage.management.audio.files" = "archivos de audio";
+"storage.management.video" = "video";
+"storage.management.images" = "imágenes";
+"are.you.sure" = "Are you sure?";
+"chat.media" = "medios de chat";

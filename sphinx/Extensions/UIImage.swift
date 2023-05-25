@@ -24,6 +24,14 @@ extension UIImage {
         return nil
     }
     
+    func resizeImage(newSize: CGSize) -> UIImage? {
+        let renderer = UIGraphicsImageRenderer(size: newSize)
+        let resizedImage = renderer.image { context in
+            self.draw(in: CGRect(origin: .zero, size: newSize))
+        }
+        return resizedImage
+    }
+    
     func fixedOrientation() -> UIImage {
         if imageOrientation == .up {
             return self

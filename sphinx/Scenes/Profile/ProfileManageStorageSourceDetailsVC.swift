@@ -71,7 +71,7 @@ class ProfileManageStorageSourceDetailsVC : UIViewController{
     
     @IBAction func deleteAllTapped(_ sender: Any) {
         print("deleteAllTapped")
-        let itemDescription = (source == .chats) ? "chat media" : "podcasts"
+        let itemDescription = (source == .chats) ? "chat.media".localized : "podcasts"
         AlertHelper.showTwoOptionsAlert(
             title: "Are you sure?",
             message: "Proceeding will delete all of your \(itemDescription) from this device. This cannot be undone.",

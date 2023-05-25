@@ -39,6 +39,11 @@ class MaxMemorySlider: UIView {
         
         sliderControl.maximumValue = Float(UserData.kMaximumMemoryFootprintGB)
         
+        let image : UIImage? = #imageLiteral(resourceName: "pentagonSlider")
+        if let thumbImage = image?.resizeImage(newSize: CGSize(width: 24.0, height: 32.0)) {
+            sliderControl.setThumbImage(thumbImage, for: .normal)
+        }
+        
         setSlider()
     }
     

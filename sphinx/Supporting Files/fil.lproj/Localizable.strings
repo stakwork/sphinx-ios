@@ -363,6 +363,10 @@
 "save.file" = "I-Save ang File";
 "flag.item" = "Flag";
 "delete.message" = "Tanggalin ang Mensahe";
+"pin.message" = "Pin Message";
+"unpin.message" = "Unpin Message";
+"message.pinned" = "Message Pinned";
+"message.unpinned" = "Message Unpinned";
 "received" = "natanggap";
 "sent" = "naipadala";
 "message.x.deleted" = "Binurang mensahe";

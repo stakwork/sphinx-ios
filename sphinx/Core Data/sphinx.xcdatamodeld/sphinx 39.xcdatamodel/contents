@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21513" systemVersion="21G83" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="ActionTrack" representedClassName="ActionTrack" syncable="YES">
+        <attribute name="metaData" attributeType="String" defaultValueString=""/>
+        <attribute name="type" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="uploaded" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="Chat" representedClassName="Chat" syncable="YES">
+        <attribute name="contactIds" optional="YES" attributeType="Transformable"/>
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="escrowAmount" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="groupKey" optional="YES" attributeType="String"/>
+        <attribute name="host" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="muted" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="myAlias" optional="YES" attributeType="String"/>
+        <attribute name="myPhotoUrl" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="notify" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="ownerPubkey" optional="YES" attributeType="String"/>
+        <attribute name="pendingContactIds" optional="YES" attributeType="Transformable"/>
+        <attribute name="photoUrl" optional="YES" attributeType="String"/>
+        <attribute name="pin" optional="YES" attributeType="String"/>
+        <attribute name="pinnedMessageUUID" optional="YES" attributeType="String"/>
+        <attribute name="pricePerMessage" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="priceToJoin" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="privateTribe" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="seen" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="status" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="type" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="unlisted" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="uuid" optional="YES" attributeType="String"/>
+        <attribute name="webAppLastDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="contentFeed" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="ContentFeed" inverseName="chat" inverseEntity="ContentFeed"/>
+        <relationship name="messages" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TransactionMessage" inverseName="chat" inverseEntity="TransactionMessage"/>
+        <relationship name="subscription" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Subscription" inverseName="chat" inverseEntity="Subscription"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="ContentFeed" representedClassName="ContentFeed" syncable="YES">
+        <attribute name="authorName" optional="YES" attributeType="String"/>
+        <attribute name="dateLastConsumed" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="datePublished" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="dateUpdated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="feedDescription" optional="YES" attributeType="String"/>
+        <attribute name="feedID" attributeType="String"/>
+        <attribute name="feedKindValue" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="feedURL" optional="YES" attributeType="URI"/>
+        <attribute name="generator" optional="YES" attributeType="String"/>
+        <attribute name="imageURL" optional="YES" attributeType="URI"/>
+        <attribute name="isSubscribedToFromSearch" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="language" optional="YES" attributeType="String"/>
+        <attribute name="linkURL" optional="YES" attributeType="URI"/>
+        <attribute name="mediaKindValue" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="ownerURL" optional="YES" attributeType="URI"/>
+        <attribute name="title" attributeType="String"/>
+        <relationship name="chat" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Chat" inverseName="contentFeed" inverseEntity="Chat"/>
+        <relationship name="items" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ContentFeedItem" inverseName="contentFeed" inverseEntity="ContentFeedItem"/>
+        <relationship name="paymentDestinations" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ContentFeedPaymentDestination" inverseName="feed" inverseEntity="ContentFeedPaymentDestination"/>
+        <relationship name="paymentModel" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="ContentFeedPaymentModel" inverseName="feed" inverseEntity="ContentFeedPaymentModel"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="feedID"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="ContentFeedItem" representedClassName="ContentFeedItem" syncable="YES">
+        <attribute name="authorName" optional="YES" attributeType="String"/>
+        <attribute name="datePublished" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="dateUpdated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="enclosureKind" optional="YES" attributeType="String"/>
+        <attribute name="enclosureURL" optional="YES" attributeType="URI"/>
+        <attribute name="feedKindValue" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="imageURL" optional="YES" attributeType="URI"/>
+        <attribute name="itemDescription" optional="YES" attributeType="String"/>
+        <attribute name="itemID" attributeType="String"/>
+        <attribute name="linkURL" optional="YES" attributeType="URI"/>
+        <attribute name="mediaKindValue" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="title" attributeType="String"/>
+        <relationship name="contentFeed" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ContentFeed" inverseName="items" inverseEntity="ContentFeed"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="itemID"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="ContentFeedPaymentDestination" representedClassName="ContentFeedPaymentDestination" syncable="YES">
+        <attribute name="address" optional="YES" attributeType="String"/>
+        <attribute name="customKey" optional="YES" attributeType="String"/>
+        <attribute name="customValue" optional="YES" attributeType="String"/>
+        <attribute name="split" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
+        <relationship name="feed" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ContentFeed" inverseName="paymentDestinations" inverseEntity="ContentFeed"/>
+    </entity>
+    <entity name="ContentFeedPaymentModel" representedClassName="ContentFeedPaymentModel" syncable="YES">
+        <attribute name="suggestedBTC" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
+        <relationship name="feed" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ContentFeed" inverseName="paymentModel" inverseEntity="ContentFeed"/>
+    </entity>
+    <entity name="Subscription" representedClassName="Subscription" syncable="YES">
+        <attribute name="amount" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="count" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="cron" optional="YES" attributeType="String"/>
+        <attribute name="endDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="ended" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="endNumber" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="paused" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="chat" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Chat" inverseName="subscription" inverseEntity="Chat"/>
+        <relationship name="contact" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UserContact" inverseName="subscriptions" inverseEntity="UserContact"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="TransactionMessage" representedClassName="TransactionMessage" syncable="YES">
+        <attribute name="amount" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="amountMsat" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="encrypted" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="expirationDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="invoice" optional="YES" attributeType="String"/>
+        <attribute name="mediaFileName" optional="YES" attributeType="String"/>
+        <attribute name="mediaFileSize" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="mediaKey" optional="YES" attributeType="String"/>
+        <attribute name="mediaToken" optional="YES" attributeType="String"/>
+        <attribute name="mediaType" optional="YES" attributeType="String"/>
+        <attribute name="messageContent" optional="YES" attributeType="String"/>
+        <attribute name="muid" optional="YES" attributeType="String"/>
+        <attribute name="originalMuid" optional="YES" attributeType="String"/>
+        <attribute name="paymentHash" optional="YES" attributeType="String"/>
+        <attribute name="person" optional="YES" attributeType="String"/>
+        <attribute name="push" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="receiverId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="recipientAlias" optional="YES" attributeType="String"/>
+        <attribute name="recipientPic" optional="YES" attributeType="String"/>
+        <attribute name="replyUUID" optional="YES" attributeType="String"/>
+        <attribute name="seen" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="senderAlias" optional="YES" attributeType="String"/>
+        <attribute name="senderId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="senderPic" optional="YES" attributeType="String"/>
+        <attribute name="status" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="type" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="uuid" optional="YES" attributeType="String"/>
+        <relationship name="chat" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Chat" inverseName="messages" inverseEntity="Chat"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="UserContact" representedClassName="UserContact" syncable="YES">
+        <attribute name="avatarUrl" optional="YES" attributeType="String"/>
+        <attribute name="blocked" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="contactKey" optional="YES" attributeType="String"/>
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="email" optional="YES" attributeType="String"/>
+        <attribute name="fromGroup" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="isOwner" optional="YES" attributeType="Boolean" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="newMessages" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="nickname" optional="YES" attributeType="String"/>
+        <attribute name="nodeAlias" optional="YES" attributeType="String"/>
+        <attribute name="notificationSound" optional="YES" attributeType="String"/>
+        <attribute name="phoneNumber" optional="YES" attributeType="String"/>
+        <attribute name="pin" optional="YES" attributeType="String"/>
+        <attribute name="privatePhoto" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="publicKey" optional="YES" attributeType="String"/>
+        <attribute name="routeHint" optional="YES" attributeType="String"/>
+        <attribute name="status" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO"/>
+        <attribute name="timeZone" optional="YES" attributeType="String"/>
+        <attribute name="tipAmount" attributeType="Integer 64" defaultValueString="-1" usesScalarValueType="YES"/>
+        <relationship name="invite" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="UserInvite" inverseName="contact" inverseEntity="UserInvite"/>
+        <relationship name="subscriptions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Subscription" inverseName="contact" inverseEntity="Subscription"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="UserInvite" representedClassName="UserInvite" syncable="YES">
+        <attribute name="inviteString" optional="YES" attributeType="String"/>
+        <attribute name="price" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="status" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="welcomeMessage" optional="YES" attributeType="String"/>
+        <relationship name="contact" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UserContact" inverseName="invite" inverseEntity="UserContact"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="inviteString"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+</model>

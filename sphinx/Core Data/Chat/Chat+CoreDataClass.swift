@@ -179,7 +179,6 @@ public class Chat: NSManagedObject {
         chat.myAlias = myAlias
         chat.myPhotoUrl = myPhotoUrl
         chat.notify = notify
-        chat.pinnedMessageUUID = pinnedMessageUUID
         chat.contactIds = contactIds
         chat.pendingContactIds = pendingContactIds
         chat.subscription = chat.getContact()?.getCurrentSubscription()
@@ -187,6 +186,7 @@ public class Chat: NSManagedObject {
         if chat.isMyPublicGroup() {
             chat.pricePerMessage = NSDecimalNumber(integerLiteral: pricePerMessage)
             chat.escrowAmount = NSDecimalNumber(integerLiteral: escrowAmount)
+            chat.pinnedMessageUUID = pinnedMessageUUID
         }
         
         return chat

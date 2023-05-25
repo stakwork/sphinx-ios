@@ -35,6 +35,15 @@ class StorageSummaryView: UIView {
         }
     }
     
+    func getTotalMemory()->Double{
+        var result = 0.0
+        for type in StorageManagerMediaType.allCases{
+            result += summaryDict[type] ?? 0.0
+        }
+        
+        return result
+    }
+    
     var isEditingMaxMemory : Bool = false{
         didSet{
             if(isEditingMaxMemory){
@@ -151,6 +160,8 @@ class StorageSummaryView: UIView {
         else{
             UIView.animate(withDuration: 0.1, delay: 0.0, animations: {
                 self.deletionFootprintWidth.constant = 0.0
+                let ratio = (self.getTotalMemory() * 1e6)/(Double(value) * 1e9)
+                self.totalMemoryFootprintWidth.constant = ratio * self.maxMemoryFootprintBackgroundView.frame.width
                 self.deletionFootprintView.superview?.layoutIfNeeded()
             })
         }

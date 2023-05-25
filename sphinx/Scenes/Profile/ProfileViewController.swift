@@ -301,8 +301,20 @@ class ProfileViewController: KeyboardEventsViewController {
         self.storageSumaryLabel.textColor = UIColor.Sphinx.SecondaryText
         StorageManager.sharedManager.refreshAllStoredData(completion: {
             let usage = StorageManager.sharedManager.getItemGroupTotalSize(items: StorageManager.sharedManager.allItems)
-            self.storageSumaryLabel.text = "\(formatBytes(Int(usage * 1e6))) of \(formatBytes(Int(Double(max) * 1e9)))"
-            self.storageSumaryLabel.textColor = UIColor.Sphinx.Text
+            let maxInBytes = Int(Double(max) * 1e9)
+
+            let usageText = formatBytes(Int(usage * 1e6))
+            let remainingText = formatBytes(maxInBytes)
+
+            let fullText = "\(usageText) of \(remainingText)"
+
+            let attributedText = NSMutableAttributedString(string: fullText)
+            let usageRange = (fullText as NSString).range(of: usageText)
+
+            attributedText.addAttribute(.foregroundColor, value: UIColor.Sphinx.Text, range: usageRange)
+            attributedText.addAttribute(.foregroundColor, value: UIColor.Sphinx.SecondaryText, range: NSRange(location: usageRange.length, length: fullText.count - usageRange.length))
+
+            self.storageSumaryLabel.attributedText = attributedText
             completion()
         })
         

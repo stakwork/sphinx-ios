@@ -26,6 +26,9 @@ class ProfileManageStorageViewController : UIViewController{
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     @IBOutlet weak var mediaSourceTableView: UITableView!
     
+    @IBOutlet weak var editingModeMaximumLabel: UILabel!
+    @IBOutlet weak var editingModeUsedStorageLabel: UILabel!
+    
     
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
@@ -65,6 +68,8 @@ class ProfileManageStorageViewController : UIViewController{
                     self.saveButton.alpha = 1.0
                     self.mediaTypeTableView.isHidden = true
                     self.mediaSourceTableView.isHidden = true
+                    self.usedStorageLabel.isHidden = true
+                    self.freeStorageLabel.isHidden = true
                 },completion: {_ in
                     self.changeStorageButton.isHidden = true
                     self.changeStorageLabel.isHidden = true
@@ -86,6 +91,8 @@ class ProfileManageStorageViewController : UIViewController{
                     self.maxSliderView.alpha = 0.0
                     self.cancelButton.alpha = 0.0
                     self.saveButton.alpha = 0.0
+                    self.usedStorageLabel.isHidden = false
+                    self.freeStorageLabel.isHidden = false
                 },completion: {_ in
                     self.changeStorageButton.isHidden = false
                     self.changeStorageLabel.isHidden = false
@@ -95,6 +102,9 @@ class ProfileManageStorageViewController : UIViewController{
                     self.cancelButton.isHidden = true
                 })
             }
+            editingModeUsedStorageLabel.text = usedStorageLabel.text
+            editingModeMaximumLabel.isHidden = !freeStorageLabel.isHidden
+            editingModeUsedStorageLabel.isHidden = !usedStorageLabel.isHidden
         }
     }
     
@@ -215,6 +225,7 @@ class ProfileManageStorageViewController : UIViewController{
         usedStorageLabel.text = "\(formatBytes(Int(usage*1e6)))"
         freeStorageLabel.text = "\(formatBytes(freeMemory())) Free"
         self.sliderVerticalSpacing.constant = self.sliderHiddenYConstraint
+        editingModeMaximumLabel.text = formatBytes(Int(Double(UserData.sharedInstance.getMaxMemoryGB()) * 1e9))
         
         self.maxSliderView.superview?.layoutIfNeeded()
     }
@@ -282,9 +293,15 @@ class ProfileManageStorageViewController : UIViewController{
             let warningMessage = String(format: NSLocalizedString("saving.limit.warning", comment: ""), differential)
             self.warningLabel.text = warningMessage
             self.warningView.isHidden = false
+            self.editingModeMaximumLabel.textColor = UIColor.Sphinx.PrimaryRed
+        }
+        else if(newMaxGB > UserData.sharedInstance.getMaxMemoryGB()){
+            self.warningView.isHidden = true
+            self.editingModeMaximumLabel.textColor = UIColor.Sphinx.MainBottomIcons
         }
         else{
             self.warningView.isHidden = true
+            self.editingModeMaximumLabel.textColor = UIColor.Sphinx.Text
         }
     }
     
@@ -312,6 +329,7 @@ func formatBytes(_ bytes: Int) -> String {
 extension ProfileManageStorageViewController: MaxMemorySliderDelegate{
     func sliderValueChanged(value:Int){
         checkForImmediateDeletion(newMaxGB: value)
+        self.editingModeMaximumLabel.text = formatBytes(Int(Double(value) * 1e9))
         self.storageSummaryView.memorySliderUpdated(value: value)
     }
 }

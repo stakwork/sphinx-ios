@@ -54,14 +54,14 @@ class MaxMemorySlider: UIView {
     }
     
     func getMaxGBLabel(_ gb: Int) -> String {
-        return "\(gb) GB"
+        return "\(Int(sliderControl.maximumValue)) GB"
     }
 
     @IBAction func sliderValueChanged(_ sender: UISlider) {
         sender.value = roundf(sender.value)
         
         let intValue = Int(sender.value)
-        maxMemoryLabel.text = getMaxGBLabel(intValue)
+        //maxMemoryLabel.text = getMaxGBLabel(intValue)
         delegate?.sliderValueChanged(value: intValue)
         //userData.setMaxMemory(GB: intValue)
     }

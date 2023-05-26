@@ -119,7 +119,8 @@ class MediaLoader {
         }
         
         if let decryptedImage = decryptedImage {
-            storeImageInCache(img: decryptedImage, url: url.absoluteString,chat: message.chat)
+            print(message.chat?.getChat())
+            storeImageInCache(img: decryptedImage, url: url.absoluteString,chat: message.chat?.getChat())
             
             DispatchQueue.main.async {
                 completion(messageId, decryptedImage)
@@ -365,6 +366,8 @@ class MediaLoader {
            let path = getDiskImagePath(forKey: url){
             let randomInt = Int.random(in: 0...Int(1e9))
             let _ = CachedMedia.createObject(id: randomInt, chat: chat, filePath: path, fileExtension: "png", key: url)
+            print(chat.id)
+            print()
         }
     }
     

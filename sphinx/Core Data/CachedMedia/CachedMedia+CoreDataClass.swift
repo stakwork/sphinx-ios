@@ -56,7 +56,9 @@ public class CachedMedia: NSManagedObject {
         cachedMedia.fileExtension = fileExtension
         cachedMedia.key = key
         
+        print("before:\(cachedMedia.chat)")
         managedContext.saveContext()
+        print("after:\(cachedMedia.chat)")
         
         return cachedMedia
     }
@@ -93,6 +95,8 @@ public class CachedMedia: NSManagedObject {
             
         let fetchRequest: NSFetchRequest<CachedMedia> = CachedMedia.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "filePath == %@", truncatedPath)
+        fetchRequest.fetchLimit = 1
+        fetchRequest.relationshipKeyPathsForPrefetching = ["chat"]
         
         do {
             let results = try managedContext.fetch(fetchRequest)

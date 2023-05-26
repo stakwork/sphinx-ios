@@ -1848,8 +1848,18 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wpz-rA-jKP">
                                         <rect key="frame" x="293" y="39" width="105" height="40"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="77W-uN-kVr">
-                                                <rect key="frame" x="81" y="-7" width="12" height="55"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delete" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XIv-i1-1Kr">
+                                                <rect key="frame" x="9" y="14" width="86" height="12"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="86" id="DY9-yW-8gc"/>
+                                                    <constraint firstAttribute="height" constant="12" id="aAF-kK-xzB"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
+                                                <color key="textColor" name="PrimaryBlue"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="77W-uN-kVr">
+                                                <rect key="frame" x="81" y="14" width="12" height="12"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="12" id="3cv-lo-1oI"/>
                                                     <constraint firstAttribute="height" constant="12" id="6qJ-6U-3og"/>
@@ -1867,19 +1877,12 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="1zI-L0-5zW"/>
                                             <constraint firstAttribute="width" constant="105" id="Jnf-Ge-pmR"/>
+                                            <constraint firstItem="77W-uN-kVr" firstAttribute="centerY" secondItem="XIv-i1-1Kr" secondAttribute="centerY" id="Rcq-9b-6AN"/>
+                                            <constraint firstItem="XIv-i1-1Kr" firstAttribute="leading" secondItem="wpz-rA-jKP" secondAttribute="leading" constant="9" id="St4-N2-USJ"/>
+                                            <constraint firstItem="XIv-i1-1Kr" firstAttribute="top" secondItem="wpz-rA-jKP" secondAttribute="top" constant="14" id="lb0-G1-b6M"/>
                                             <constraint firstAttribute="trailing" secondItem="77W-uN-kVr" secondAttribute="trailing" constant="12" id="wPR-bb-yr3"/>
                                         </constraints>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delete" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XIv-i1-1Kr">
-                                        <rect key="frame" x="293" y="53" width="86" height="12"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="86" id="DY9-yW-8gc"/>
-                                            <constraint firstAttribute="height" constant="12" id="aAF-kK-xzB"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
-                                        <color key="textColor" name="PrimaryBlue"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10.8 MB" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hge-sK-3ik">
                                         <rect key="frame" x="200" y="53" width="80" height="12"/>
                                         <constraints>
@@ -1895,12 +1898,10 @@
                                 <constraints>
                                     <constraint firstItem="wpz-rA-jKP" firstAttribute="leading" secondItem="hge-sK-3ik" secondAttribute="trailing" constant="13" id="4eZ-XE-rgK"/>
                                     <constraint firstItem="wpz-rA-jKP" firstAttribute="centerY" secondItem="RKJ-a1-az2" secondAttribute="centerY" id="Jbd-tY-ekS"/>
-                                    <constraint firstItem="XIv-i1-1Kr" firstAttribute="centerY" secondItem="wpz-rA-jKP" secondAttribute="centerY" id="KC9-wf-8cC"/>
                                     <constraint firstAttribute="height" constant="93" id="NAY-OG-uaA"/>
                                     <constraint firstItem="RKJ-a1-az2" firstAttribute="top" secondItem="Sas-1e-Npj" secondAttribute="top" constant="53" id="Vsx-kB-tFj"/>
                                     <constraint firstItem="gFX-xe-WBV" firstAttribute="top" secondItem="Sas-1e-Npj" secondAttribute="top" constant="31" id="j1R-1a-zrY"/>
                                     <constraint firstAttribute="trailing" secondItem="wpz-rA-jKP" secondAttribute="trailing" constant="16" id="jH4-tf-hkt"/>
-                                    <constraint firstItem="XIv-i1-1Kr" firstAttribute="leading" secondItem="wpz-rA-jKP" secondAttribute="leading" id="jzL-PM-RAQ"/>
                                     <constraint firstItem="hge-sK-3ik" firstAttribute="centerY" secondItem="wpz-rA-jKP" secondAttribute="centerY" id="ksq-8S-TI5"/>
                                     <constraint firstItem="gFX-xe-WBV" firstAttribute="leading" secondItem="Sas-1e-Npj" secondAttribute="leading" constant="15" id="lhB-mD-AZ0"/>
                                     <constraint firstItem="RKJ-a1-az2" firstAttribute="leading" secondItem="gFX-xe-WBV" secondAttribute="trailing" constant="11" id="v1e-7R-i0V"/>

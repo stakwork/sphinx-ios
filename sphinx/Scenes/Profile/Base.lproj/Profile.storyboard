@@ -1819,6 +1819,93 @@
                                     <constraint firstItem="c0S-LH-rcE" firstAttribute="centerY" secondItem="aM6-lr-PWK" secondAttribute="centerY" id="ywe-oP-FJ9"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sas-1e-Npj">
+                                <rect key="frame" x="0.0" y="48" width="414" height="93"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gFX-xe-WBV">
+                                        <rect key="frame" x="15" y="31" width="27" height="55"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="27" id="rev-Qk-7er"/>
+                                            <constraint firstAttribute="height" constant="55" id="u1a-Z8-fnb"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="21"/>
+                                        <state key="normal" title="close">
+                                            <color key="titleColor" name="WashedOutReceivedText"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="deletionSummaryCloseTap:" destination="qnq-FW-gcV" eventType="touchUpInside" id="RpG-xk-zGT"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RKJ-a1-az2">
+                                        <rect key="frame" x="53" y="53" width="9.5" height="12"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="12" id="DQx-2p-Rt8"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
+                                        <color key="textColor" name="TextMessages"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wpz-rA-jKP">
+                                        <rect key="frame" x="293" y="39" width="105" height="40"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="77W-uN-kVr">
+                                                <rect key="frame" x="81" y="-7" width="12" height="55"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="12" id="3cv-lo-1oI"/>
+                                                    <constraint firstAttribute="height" constant="12" id="6qJ-6U-3og"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="13"/>
+                                                <state key="normal" title="delete">
+                                                    <color key="titleColor" name="PrimaryBlue"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="backTapped:" destination="Ys0-ya-pRq" eventType="touchUpInside" id="DDv-P1-x7X"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="1zI-L0-5zW"/>
+                                            <constraint firstAttribute="width" constant="105" id="Jnf-Ge-pmR"/>
+                                            <constraint firstAttribute="trailing" secondItem="77W-uN-kVr" secondAttribute="trailing" constant="12" id="wPR-bb-yr3"/>
+                                        </constraints>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delete" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XIv-i1-1Kr">
+                                        <rect key="frame" x="293" y="53" width="86" height="12"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="86" id="DY9-yW-8gc"/>
+                                            <constraint firstAttribute="height" constant="12" id="aAF-kK-xzB"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
+                                        <color key="textColor" name="PrimaryBlue"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10.8 MB" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hge-sK-3ik">
+                                        <rect key="frame" x="200" y="53" width="80" height="12"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="12" id="7Eh-jf-ayY"/>
+                                            <constraint firstAttribute="width" constant="80" id="bdi-kj-tx1"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
+                                        <color key="textColor" name="TextMessages"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" name="PrimaryBlue"/>
+                                <constraints>
+                                    <constraint firstItem="wpz-rA-jKP" firstAttribute="leading" secondItem="hge-sK-3ik" secondAttribute="trailing" constant="13" id="4eZ-XE-rgK"/>
+                                    <constraint firstItem="wpz-rA-jKP" firstAttribute="centerY" secondItem="RKJ-a1-az2" secondAttribute="centerY" id="Jbd-tY-ekS"/>
+                                    <constraint firstItem="XIv-i1-1Kr" firstAttribute="centerY" secondItem="wpz-rA-jKP" secondAttribute="centerY" id="KC9-wf-8cC"/>
+                                    <constraint firstAttribute="height" constant="93" id="NAY-OG-uaA"/>
+                                    <constraint firstItem="RKJ-a1-az2" firstAttribute="top" secondItem="Sas-1e-Npj" secondAttribute="top" constant="53" id="Vsx-kB-tFj"/>
+                                    <constraint firstItem="gFX-xe-WBV" firstAttribute="top" secondItem="Sas-1e-Npj" secondAttribute="top" constant="31" id="j1R-1a-zrY"/>
+                                    <constraint firstAttribute="trailing" secondItem="wpz-rA-jKP" secondAttribute="trailing" constant="16" id="jH4-tf-hkt"/>
+                                    <constraint firstItem="XIv-i1-1Kr" firstAttribute="leading" secondItem="wpz-rA-jKP" secondAttribute="leading" id="jzL-PM-RAQ"/>
+                                    <constraint firstItem="hge-sK-3ik" firstAttribute="centerY" secondItem="wpz-rA-jKP" secondAttribute="centerY" id="ksq-8S-TI5"/>
+                                    <constraint firstItem="gFX-xe-WBV" firstAttribute="leading" secondItem="Sas-1e-Npj" secondAttribute="leading" constant="15" id="lhB-mD-AZ0"/>
+                                    <constraint firstItem="RKJ-a1-az2" firstAttribute="leading" secondItem="gFX-xe-WBV" secondAttribute="trailing" constant="11" id="v1e-7R-i0V"/>
+                                </constraints>
+                            </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="zTe-fP-Pcs">
                                 <rect key="frame" x="0.0" y="141" width="414" height="721"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -1850,10 +1937,14 @@
                             <constraint firstItem="zTe-fP-Pcs" firstAttribute="leading" secondItem="lYg-nt-rdO" secondAttribute="leading" id="0R4-zv-bAc"/>
                             <constraint firstItem="zTe-fP-Pcs" firstAttribute="top" secondItem="lYg-nt-rdO" secondAttribute="top" id="4Ga-yw-0g4"/>
                             <constraint firstItem="o81-Av-GsP" firstAttribute="leading" secondItem="X0s-oe-X7g" secondAttribute="leading" id="CZ8-cw-Aga"/>
+                            <constraint firstItem="Sas-1e-Npj" firstAttribute="trailing" secondItem="o81-Av-GsP" secondAttribute="trailing" id="Chg-qs-WmU"/>
                             <constraint firstItem="zTe-fP-Pcs" firstAttribute="trailing" secondItem="lYg-nt-rdO" secondAttribute="trailing" id="DC1-Q8-T3E"/>
                             <constraint firstItem="lYg-nt-rdO" firstAttribute="leading" secondItem="X0s-oe-X7g" secondAttribute="leading" id="KfX-dJ-VZU"/>
+                            <constraint firstItem="Sas-1e-Npj" firstAttribute="leading" secondItem="o81-Av-GsP" secondAttribute="leading" id="NuZ-2l-BdH"/>
+                            <constraint firstItem="Sas-1e-Npj" firstAttribute="top" secondItem="o81-Av-GsP" secondAttribute="top" id="OYl-GY-y5C"/>
                             <constraint firstItem="lYg-nt-rdO" firstAttribute="top" secondItem="o81-Av-GsP" secondAttribute="bottom" id="PWD-XE-LC0"/>
                             <constraint firstAttribute="trailing" secondItem="o81-Av-GsP" secondAttribute="trailing" id="U0x-fS-Pu3"/>
+                            <constraint firstItem="Sas-1e-Npj" firstAttribute="bottom" secondItem="o81-Av-GsP" secondAttribute="bottom" id="WXN-Hs-UJa"/>
                             <constraint firstItem="p11-et-PUn" firstAttribute="top" secondItem="o81-Av-GsP" secondAttribute="top" id="l4V-yy-Dn3"/>
                             <constraint firstAttribute="trailing" secondItem="lYg-nt-rdO" secondAttribute="trailing" id="nLZ-Gs-2eO"/>
                             <constraint firstItem="zTe-fP-Pcs" firstAttribute="bottom" secondItem="lYg-nt-rdO" secondAttribute="bottom" id="olM-D8-y8X"/>
@@ -1861,6 +1952,10 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="deletionSummaryButton" destination="wpz-rA-jKP" id="6RO-yt-DGm"/>
+                        <outlet property="deletionSummaryCountLabel" destination="RKJ-a1-az2" id="AdM-hT-FVC"/>
+                        <outlet property="deletionSummarySizeLabel" destination="hge-sK-3ik" id="j0u-1V-EAe"/>
+                        <outlet property="deletionSummaryView" destination="Sas-1e-Npj" id="Ma8-YU-gFi"/>
                         <outlet property="headerTitleLabel" destination="aM6-lr-PWK" id="QhL-hY-05f"/>
                         <outlet property="imageCollectionView" destination="zTe-fP-Pcs" id="H6F-Zs-28k"/>
                         <outlet property="tableView" destination="lYg-nt-rdO" id="nOy-97-czN"/>
@@ -1869,7 +1964,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="94p-s7-ZFz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3541" y="228"/>
+            <point key="canvasLocation" x="3540.579710144928" y="227.67857142857142"/>
         </scene>
     </scenes>
     <resources>

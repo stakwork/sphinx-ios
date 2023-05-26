@@ -3389,9 +3389,9 @@
 		47904C1C24BF401400710E7A /* Table View Cells */ = {
 			isa = PBXGroup;
 			children = (
-				47904C1D24BF403400710E7A /* NotificationSoundTableViewCell.swift */,
 				CEE8CFFB2A211DDE00DF7112 /* ChatImageCollectionViewCell.swift */,
 				CEE8CFFC2A211DDE00DF7112 /* ChatImageCollectionViewCell.xib */,
+				47904C1D24BF403400710E7A /* NotificationSoundTableViewCell.swift */,
 				47904C1E24BF403400710E7A /* NotificationSoundTableViewCell.xib */,
 				CEE49BF12A1BBC70009E0EC4 /* MediaStorageTypeSummaryTableViewCell.swift */,
 				CEE49BF22A1BBC70009E0EC4 /* MediaStorageTypeSummaryTableViewCell.xib */,

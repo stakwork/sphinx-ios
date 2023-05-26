@@ -21,9 +21,26 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVM : NSObject{
     }
     var selectedStatus : [Bool] = []{
         didSet{
+            vc.deletionSummaryView.isHidden = (getIsSelectingImages()) ? false : true
+            vc.view.bringSubviewToFront(vc.deletionSummaryView)
+            vc.updateDeletionSummaryLabel()
             imageCollectionView.reloadData()
         }
     }
+    
+    func getIsSelectingImages()->Bool{
+        let isSelectingImages = selectedStatus.filter({$0 == true}).count > 0
+        return isSelectingImages
+    }
+    
+    func getSelectionSize()->Double{
+        var result : Double = 0.0
+        for i in 0..<selectedStatus.count{
+            result += (selectedStatus[i]) ? items[i].sizeMB : 0
+        }
+        return (result)
+    }
+    
     var sourceType : StorageManagerMediaSource
     
     init(vc:ProfileManageStorageSpecificChatOrContentFeedItemVC,tableView:UITableView,imageCollectionView:UICollectionView,source:StorageManagerMediaSource) {
@@ -108,10 +125,16 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVM : UICollectionView
             withReuseIdentifier: ChatImageCollectionViewCell.reuseID,
             for: indexPath
         ) as! ChatImageCollectionViewCell
-        if let cm = items[indexPath.row].cachedMedia{
-            cell.configure(cachedMedia: cm, size: getSize(),selectionStatus: selectedStatus[indexPath.row])
-        }
+        
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        
+        if let cell = cell as? ChatImageCollectionViewCell,
+           let cm = items[indexPath.row].cachedMedia{
+            cell.configure(cachedMedia: cm, size: getSize(),selectionStatus: selectedStatus[indexPath.row], memorySizeMB: items[indexPath.row].sizeMB)
+        }
     }
     
     func getSize()->CGSize{

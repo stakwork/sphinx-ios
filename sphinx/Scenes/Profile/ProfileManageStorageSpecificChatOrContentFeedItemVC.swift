@@ -18,7 +18,12 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
     @IBOutlet weak var headerTitleLabel: UILabel!
     @IBOutlet weak var totalSizeLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var deletionSummaryView: UIView!
     @IBOutlet weak var imageCollectionView: UICollectionView!
+    @IBOutlet weak var deletionSummaryCountLabel: UILabel!
+    @IBOutlet weak var deletionSummarySizeLabel: UILabel!
+    @IBOutlet weak var deletionSummaryButton: UIView!
+    
     
     var sourceType : StorageManagerMediaSource = .chats
     var chat : Chat? = nil
@@ -87,6 +92,19 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
             }
         })
     }
+    
+    @IBAction func deletionSummaryCloseTap(_ sender: Any) {
+        vm.selectedStatus = vm.items.map({_ in return false})
+    }
+    
+    func updateDeletionSummaryLabel(){
+        deletionSummaryButton.layer.cornerRadius = deletionSummaryButton.frame.height/2.0
+        let count = vm.selectedStatus.filter({$0 == true}).count
+        deletionSummaryCountLabel.text = "\(String(describing: count))"
+        
+        deletionSummarySizeLabel.text = formatBytes(Int(1e6 * vm.getSelectionSize()))
+    }
+    
     
     func processDelete(completion: @escaping ()->()){
         switch(self.sourceType){

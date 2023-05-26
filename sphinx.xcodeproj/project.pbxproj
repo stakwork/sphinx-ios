@@ -681,6 +681,8 @@
 		CEE49BF02A1BB88F009E0EC4 /* ProfileManageStorageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE49BEF2A1BB88F009E0EC4 /* ProfileManageStorageViewModel.swift */; };
 		CEE49BF32A1BBC70009E0EC4 /* MediaStorageTypeSummaryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE49BF12A1BBC70009E0EC4 /* MediaStorageTypeSummaryTableViewCell.swift */; };
 		CEE49BF42A1BBC70009E0EC4 /* MediaStorageTypeSummaryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEE49BF22A1BBC70009E0EC4 /* MediaStorageTypeSummaryTableViewCell.xib */; };
+		CEE8CFFD2A211DDE00DF7112 /* ChatImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE8CFFB2A211DDE00DF7112 /* ChatImageCollectionViewCell.swift */; };
+		CEE8CFFE2A211DDE00DF7112 /* ChatImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEE8CFFC2A211DDE00DF7112 /* ChatImageCollectionViewCell.xib */; };
 		CEEBBB3F29DC47930093923D /* ItemDescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEBBB3E29DC47930093923D /* ItemDescriptionViewController.swift */; };
 		CEEBBB4229DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEBBB4029DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.swift */; };
 		CEEBBB4329DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEEBBB4129DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.xib */; };
@@ -1694,6 +1696,8 @@
 		CEE49BEF2A1BB88F009E0EC4 /* ProfileManageStorageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileManageStorageViewModel.swift; sourceTree = "<group>"; };
 		CEE49BF12A1BBC70009E0EC4 /* MediaStorageTypeSummaryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaStorageTypeSummaryTableViewCell.swift; sourceTree = "<group>"; };
 		CEE49BF22A1BBC70009E0EC4 /* MediaStorageTypeSummaryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MediaStorageTypeSummaryTableViewCell.xib; sourceTree = "<group>"; };
+		CEE8CFFB2A211DDE00DF7112 /* ChatImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		CEE8CFFC2A211DDE00DF7112 /* ChatImageCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatImageCollectionViewCell.xib; sourceTree = "<group>"; };
 		CEEBBB3E29DC47930093923D /* ItemDescriptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDescriptionViewController.swift; sourceTree = "<group>"; };
 		CEEBBB4029DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDescriptionTableViewHeaderCell.swift; sourceTree = "<group>"; };
 		CEEBBB4129DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ItemDescriptionTableViewHeaderCell.xib; sourceTree = "<group>"; };
@@ -3386,6 +3390,8 @@
 			isa = PBXGroup;
 			children = (
 				47904C1D24BF403400710E7A /* NotificationSoundTableViewCell.swift */,
+				CEE8CFFB2A211DDE00DF7112 /* ChatImageCollectionViewCell.swift */,
+				CEE8CFFC2A211DDE00DF7112 /* ChatImageCollectionViewCell.xib */,
 				47904C1E24BF403400710E7A /* NotificationSoundTableViewCell.xib */,
 				CEE49BF12A1BBC70009E0EC4 /* MediaStorageTypeSummaryTableViewCell.swift */,
 				CEE49BF22A1BBC70009E0EC4 /* MediaStorageTypeSummaryTableViewCell.xib */,
@@ -4544,6 +4550,7 @@
 				47893A8C24095A30002F675B /* AudioSentTableViewCell.xib in Resources */,
 				475BDCB8232AC1E800C5BBD6 /* PaymentInvoiceView.xib in Resources */,
 				4797E79E24B8EF3600D13270 /* ExpiredInvoiceReceivedTableViewCell.xib in Resources */,
+				CEE8CFFE2A211DDE00DF7112 /* ChatImageCollectionViewCell.xib in Resources */,
 				F3D86DC226B157D400EB9711 /* DashboardFeedCollectionViewSectionHeader.xib in Resources */,
 				475BDCFD232AC24600C5BBD6 /* PaymentReceivedTableViewCell.xib in Resources */,
 				4703CF862518FA3F007B685C /* FileSentTableViewCell.xib in Resources */,
@@ -4957,6 +4964,7 @@
 				47183CB0254893B100E6FD19 /* NewPodcastPlayerViewController.swift in Sources */,
 				47E300DF234B81F800DB56DB /* LeftMenuAddFriendTableViewCell.swift in Sources */,
 				471940B1233951BB00F1BF5B /* QRCodeDetailViewModel.swift in Sources */,
+				CEE8CFFD2A211DDE00DF7112 /* ChatImageCollectionViewCell.swift in Sources */,
 				475BDCBA232AC1E800C5BBD6 /* ChatAccessoryView.swift in Sources */,
 				F30884A92699181200CADDEB /* API+KarmaPurchaseUtils.swift in Sources */,
 				4787F8982478112F00CCE8B9 /* ChatAvatarView.swift in Sources */,

@@ -13,19 +13,40 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVM : NSObject{
     
     var vc : ProfileManageStorageSpecificChatOrContentFeedItemVC
     var tableView : UITableView
-    var items : [StorageManagerItem] = []
+    var imageCollectionView : UICollectionView
+    var items : [StorageManagerItem] = []{
+        didSet{
+            selectedStatus = items.map({_ in return false})
+        }
+    }
+    var selectedStatus : [Bool] = []{
+        didSet{
+            imageCollectionView.reloadData()
+        }
+    }
+    var sourceType : StorageManagerMediaSource
     
-     init(vc:ProfileManageStorageSpecificChatOrContentFeedItemVC,tableView:UITableView) {
+    init(vc:ProfileManageStorageSpecificChatOrContentFeedItemVC,tableView:UITableView,imageCollectionView:UICollectionView,source:StorageManagerMediaSource) {
         self.vc = vc
         self.tableView = tableView
+        self.imageCollectionView = imageCollectionView
+        self.sourceType = source
     }
     
     func finishSetup(items : [StorageManagerItem]){
         self.items = items
-        tableView.delegate = self
-        tableView.dataSource = self
-        
-        tableView.register(UINib(nibName: "MediaStorageSourceTableViewCell", bundle: nil), forCellReuseIdentifier: MediaStorageSourceTableViewCell.reuseID)
+        if(sourceType == .podcasts){
+            tableView.delegate = self
+            tableView.dataSource = self
+            
+            tableView.register(UINib(nibName: "MediaStorageSourceTableViewCell", bundle: nil), forCellReuseIdentifier: MediaStorageSourceTableViewCell.reuseID)
+        }
+        else if(sourceType == .chats){
+            imageCollectionView.registerCell(ChatImageCollectionViewCell.self)
+            imageCollectionView.delegate = self
+            imageCollectionView.dataSource = self
+            tableView.isHidden = true
+        }
     }
     
     func getEpisodeForItem(item:StorageManagerItem)->PodcastEpisode?{
@@ -74,6 +95,43 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVM : UITableViewDataS
         // Specify the desired height for your cells
         return 64.0 // Adjust this value according to your requirements
     }
+    
+}
+
+extension ProfileManageStorageSpecificChatOrContentFeedItemVM : UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return items.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: ChatImageCollectionViewCell.reuseID,
+            for: indexPath
+        ) as! ChatImageCollectionViewCell
+        if let cm = items[indexPath.row].cachedMedia{
+            cell.configure(cachedMedia: cm, size: getSize(),selectionStatus: selectedStatus[indexPath.row])
+        }
+        return cell
+    }
+    
+    func getSize()->CGSize{
+        let collectionViewWidth = self.imageCollectionView.bounds.width
+        let spacingBetweenCells: CGFloat = 2
+        let totalSpacing = (spacingBetweenCells * 2) // Spacing on both sides of the cell
+        let cellWidth = (collectionViewWidth - totalSpacing) / 3.25
+        let cellHeight = cellWidth // Assuming you want square cells
+        
+        return CGSize(width: cellWidth, height: cellHeight)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return getSize()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        selectedStatus[indexPath.row] = !selectedStatus[indexPath.row]
+    }
+    
     
 }
 

@@ -18,6 +18,7 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
     @IBOutlet weak var headerTitleLabel: UILabel!
     @IBOutlet weak var totalSizeLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var imageCollectionView: UICollectionView!
     
     var sourceType : StorageManagerMediaSource = .chats
     var chat : Chat? = nil
@@ -27,7 +28,7 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
     var isFirstLoad:Bool = true
     
     lazy var vm : ProfileManageStorageSpecificChatOrContentFeedItemVM = {
-        ProfileManageStorageSpecificChatOrContentFeedItemVM(vc: self, tableView: self.tableView)
+        ProfileManageStorageSpecificChatOrContentFeedItemVM(vc: self, tableView: self.tableView,imageCollectionView: self.imageCollectionView, source: self.sourceType)
     }()
     
     static func instantiate(

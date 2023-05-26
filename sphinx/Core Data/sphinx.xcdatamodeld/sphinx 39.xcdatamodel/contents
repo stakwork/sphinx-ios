@@ -38,7 +38,7 @@
         <attribute name="unlisted" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="uuid" optional="YES" attributeType="String"/>
         <attribute name="webAppLastDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <relationship name="cachedMedia" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CachedMedia" inverseName="chat" inverseEntity="CachedMedia"/>
+        <relationship name="cachedMedia" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CachedMedia" inverseName="chat" inverseEntity="CachedMedia"/>
         <relationship name="contentFeed" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="ContentFeed" inverseName="chat" inverseEntity="ContentFeed"/>
         <relationship name="messages" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TransactionMessage" inverseName="chat" inverseEntity="TransactionMessage"/>
         <relationship name="subscription" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Subscription" inverseName="chat" inverseEntity="Subscription"/>

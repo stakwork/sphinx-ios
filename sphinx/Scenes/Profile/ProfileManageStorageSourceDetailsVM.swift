@@ -16,7 +16,12 @@ class ProfileManageStorageSourceDetailsVM : NSObject{
     var source:StorageManagerMediaSource
     
     var chatDict : [Chat : [StorageManagerItem]]? = nil
-    var chatsArray = [Chat]()
+    var chatsArray = [Chat](){
+        didSet{
+            vc.totalSize = StorageManager.sharedManager.getItemGroupTotalSize(items: getSourceItems())
+            vc.setupView()
+        }
+    }
     
     var podsDict : [PodcastFeed:[StorageManagerItem]]? = nil
     var podsArray = [PodcastFeed](){

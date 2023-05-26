@@ -58,7 +58,8 @@ class MediaStorageSourceTableViewCell: UITableViewCell {
         else{
             //TODO: show initials
         }
-        squareImageView.layer.cornerRadius = 6
+        squareImageView.makeCircular()
+        mediaSourceSizeLabel.text = formatBytes(Int(StorageManager.sharedManager.getItemGroupTotalSize(items: items)*1e6))
     }
     
     

@@ -18,7 +18,7 @@ class AllTribeFeedsCollectionViewController: UICollectionViewController {
     var interSectionSpacing: CGFloat = 10.0
     var interCellSpacing: CGFloat = 6.0
 
-    var onCellSelected: ((NSManagedObjectID) -> Void)!
+    var onCellSelected: ((String) -> Void)!
     var onRecommendationSelected: (([RecommendationResult], String) -> Void)!
     var onContentScrolled: ((UIScrollView) -> Void)?
     var onNewResultsFetched: ((Int) -> Void)!
@@ -74,7 +74,7 @@ extension AllTribeFeedsCollectionViewController {
     static func instantiate(
         managedObjectContext: NSManagedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext,
         interSectionSpacing: CGFloat = 10.0,
-        onCellSelected: ((NSManagedObjectID) -> Void)!,
+        onCellSelected: ((String) -> Void)!,
         onRecommendationSelected: (([RecommendationResult], String) -> Void)!,
         onNewResultsFetched: @escaping ((Int) -> Void) = { _ in },
         onContentScrolled: ((UIScrollView) -> Void)? = nil
@@ -702,8 +702,8 @@ extension AllTribeFeedsCollectionViewController {
             return
         }
 
-        if let feedEntity = dataSourceItem.feedEntity {
-            onCellSelected?(feedEntity.objectID)
+        if let feedEntity = dataSourceItem.feedEntity as? ContentFeed {
+            onCellSelected?(feedEntity.id)
             scrollBackMostRecentFeed()
         } else if let recommendation = dataSourceItem.resultEntity {
             onRecommendationSelected?(recommendedFeeds, recommendation.id)

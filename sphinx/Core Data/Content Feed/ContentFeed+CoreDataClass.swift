@@ -97,13 +97,13 @@ public class ContentFeed: NSManagedObject {
     
     public static func fetchChatFeedContentInBackground(
         feedUrl: String,
-        chatObjectID: NSManagedObjectID,
+        chatId: Int,
         completion: @escaping (String?) -> ()
     ) {
         let backgroundContext = CoreDataManager.sharedManager.getBackgroundContext()
         
         backgroundContext.perform {
-            let backgroundChat: Chat? = backgroundContext.object(with: chatObjectID) as? Chat
+            let backgroundChat: Chat? = Chat.getChatWith(id: chatId, managedContext: backgroundContext)
             
             fetchContentFeed(
                 at: feedUrl,
@@ -162,11 +162,11 @@ public class ContentFeed: NSManagedObject {
     
     public static func fetchFeedItems(
         feedUrl: String,
-        contentFeedObjectID: NSManagedObjectID,
+        contentFeedId: String,
         context: NSManagedObjectContext,
         completion: @escaping (Result<ContentFeed, Error>) -> ()
     ) {
-        let backgroundContentFeed: ContentFeed? = context.object(with: contentFeedObjectID) as? ContentFeed
+        let backgroundContentFeed: ContentFeed? = ContentFeed.getFeedWith(feedId: contentFeedId, managedContext: context)
         
         fetchContentFeedItems(
             at: feedUrl,

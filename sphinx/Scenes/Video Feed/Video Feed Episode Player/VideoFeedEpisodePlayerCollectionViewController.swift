@@ -6,9 +6,7 @@
     
 
 import UIKit
-import CoreData
 
-//.youtubeVideoPlayerViewController.startPlay()
 protocol VideoFeedEpisodePlayerCollectionViewControllerDelegate{
     func requestPlay()
 }
@@ -18,7 +16,7 @@ class VideoFeedEpisodePlayerCollectionViewController: UICollectionViewController
     var videoPlayerEpisode: Video!
     var videoFeedEpisodes: [Video]!
 
-    var onVideoEpisodeCellSelected: ((NSManagedObjectID) -> Void)!
+    var onVideoEpisodeCellSelected: ((String) -> Void)!
     var onFeedSubscriptionSelected: (() -> Void)!
     var onFeedSubscriptionCancellationSelected: (() -> Void)!
     
@@ -37,7 +35,7 @@ extension VideoFeedEpisodePlayerCollectionViewController {
         videoPlayerEpisode: Video,
         videoFeedEpisodes: [Video],
         boostDelegate: CustomBoostDelegate?,
-        onVideoEpisodeCellSelected: @escaping ((NSManagedObjectID) -> Void) = { _ in },
+        onVideoEpisodeCellSelected: @escaping ((String) -> Void) = { _ in },
         onFeedSubscriptionSelected: @escaping (() -> Void) = {},
         onFeedSubscriptionCancellationSelected: @escaping (() -> Void) = {}
     ) -> VideoFeedEpisodePlayerCollectionViewController {
@@ -506,12 +504,12 @@ extension VideoFeedEpisodePlayerCollectionViewController:ItemDescriptionViewCont
         case .videoPlayerEpisodeDetails:
             break
         case .videoFeedEpisode(let episode):
-            self.onVideoEpisodeCellSelected(episode.objectID)
+            self.onVideoEpisodeCellSelected(episode.id)
         }
     }
     
     func shouldDismissAndPlayVideo(video: Video) {
-        self.onVideoEpisodeCellSelected(video.objectID)
+        self.onVideoEpisodeCellSelected(video.id)
         self.delegate?.requestPlay()
     }
     

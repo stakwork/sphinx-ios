@@ -67,8 +67,8 @@ extension VideoFeedEpisodePlayerCollectionViewDetailsCell {
         self.videoEpisode = videoEpisode
         self.boostDelegate = boostDelegate
         
-        if let objectID = videoEpisode.videoFeed?.objectID {
-            self.contentFeed = CoreDataManager.sharedManager.getObjectWith(objectId: objectID)
+        if let feedId = videoEpisode.videoFeed?.feedID {
+            self.contentFeed = ContentFeed.getFeedWith(feedId: feedId)
         }
         
         setupActions()
@@ -77,7 +77,7 @@ extension VideoFeedEpisodePlayerCollectionViewDetailsCell {
     
     func setupFeedBoostHelper() {
         if let contentFeed = contentFeed {
-            feedBoostHelper.configure(with: contentFeed.objectID, and: contentFeed.chat)
+            feedBoostHelper.configure(with: contentFeed.id, and: contentFeed.chat)
         }
     }
     
@@ -106,7 +106,7 @@ extension VideoFeedEpisodePlayerCollectionViewDetailsCell {
             
             videoFeed.isSubscribedToFromSearch.toggle()
             
-            let contentFeed: ContentFeed? = CoreDataManager.sharedManager.getObjectWith(objectId: videoFeed.objectID)
+            let contentFeed: ContentFeed? = ContentFeed.getFeedWith(feedId: videoFeed.feedID)
             contentFeed?.isSubscribedToFromSearch.toggle()
             contentFeed?.managedObjectContext?.saveContext()
         }
@@ -154,12 +154,12 @@ extension VideoFeedEpisodePlayerCollectionViewDetailsCell : CustomBoostViewDeleg
             
             feedBoostHelper.sendBoostMessage(
                 message: boostMessage,
-                itemObjectID: videoEpisode.objectID,
+                itemId: videoEpisode.videoID,
                 amount: amount,
                 completion: { (message, success) in
                     self.boostDelegate?.didSendBoostMessage(success: success, message: message)
                 }
-            )
+            )            
         }
     }
 }

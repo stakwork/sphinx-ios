@@ -283,7 +283,14 @@ public class Chat: NSManagedObject {
     static func getChatWith(id: Int, managedContext: NSManagedObjectContext? = nil) -> Chat? {
         let predicate = NSPredicate(format: "id == %d", id)
         let sortDescriptors = [NSSortDescriptor(key: "id", ascending: false)]
-        let chat:Chat? = CoreDataManager.sharedManager.getObjectOfTypeWith(predicate: predicate, sortDescriptors: sortDescriptors, entityName: "Chat", managedContext: managedContext)
+        
+        let chat: Chat? = CoreDataManager.sharedManager.getObjectOfTypeWith(
+            predicate: predicate,
+            sortDescriptors: sortDescriptors,
+            entityName: "Chat",
+            managedContext: managedContext
+        )
+        
         return chat
     }
     
@@ -518,7 +525,7 @@ public class Chat: NSManagedObject {
                     self.updateChatFromTribesInfo()
                     
                     if let feedUrl = self.tribeInfo?.feedUrl, !feedUrl.isEmpty {
-                        ContentFeed.fetchChatFeedContentInBackground(feedUrl: feedUrl, chatObjectID: self.objectID) { feedId in
+                        ContentFeed.fetchChatFeedContentInBackground(feedUrl: feedUrl, chatId: self.id) { feedId in
                             if let feedId = feedId {
                                 self.contentFeed = ContentFeed.getFeedWith(feedId: feedId)
                                 self.saveChat()

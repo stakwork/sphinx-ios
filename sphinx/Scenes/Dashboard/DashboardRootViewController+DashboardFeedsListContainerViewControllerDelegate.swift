@@ -10,9 +10,9 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
                 let podcastFeed = PodcastFeed.convertFrom(contentFeed: contentFeed)
                 self.viewController(self, didSelectPodcastFeed: podcastFeed)
             } else if contentFeed.isVideo {
-                self.viewController(self, didSelectVideoFeedWithID: contentFeed.objectID)
+                self.viewController(self, didSelectVideoFeedWithID: contentFeed.id)
             } else if contentFeed.isNewsletter {
-                self.viewController(self, didSelectNewsletterFeedWithID: contentFeed.objectID)
+                self.viewController(self, didSelectNewsletterFeedWithID: contentFeed.id)
             }
         }
         
@@ -21,10 +21,10 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
     
     func viewController(
         _ viewController: UIViewController,
-        didSelectPodcastEpisodeWithID podcastEpisodeID: NSManagedObjectID
+        didSelectPodcastEpisodeWithID podcastEpisodeId: String
     ) {
         guard
-            let contentFeedItem = managedObjectContext.object(with: podcastEpisodeID) as? ContentFeedItem,
+            let contentFeedItem = ContentFeedItem.getItemWith(itemID: podcastEpisodeId),
             contentFeedItem.contentFeed?.isPodcast == true
         else {
             return
@@ -65,10 +65,10 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
     
     func viewController(
         _ viewController: UIViewController,
-        didSelectVideoFeedWithID videoFeedID: NSManagedObjectID
+        didSelectVideoFeedWithID videoFeedId: String
     ) {
         guard
-            let contentFeed = managedObjectContext.object(with: videoFeedID) as? ContentFeed,
+            let contentFeed = ContentFeed.getFeedWith(feedId: videoFeedId),
             contentFeed.isVideo
         else {
             preconditionFailure()
@@ -86,10 +86,10 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
     
     func viewController(
         _ viewController: UIViewController,
-        didSelectVideoEpisodeWithID videoEpisodeID: NSManagedObjectID
+        didSelectVideoEpisodeWithID videoEpisodeID: String
     ) {
         guard
-            let contentFeedItem = managedObjectContext.object(with: videoEpisodeID) as? ContentFeedItem,
+            let contentFeedItem = ContentFeedItem.getItemWith(itemID: videoEpisodeID),
             contentFeedItem.contentFeed?.isVideo == true
         else {
             preconditionFailure()
@@ -106,10 +106,10 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
     
     func viewController(
         _ viewController: UIViewController,
-        didSelectNewsletterFeedWithID newsletterFeedID: NSManagedObjectID
+        didSelectNewsletterFeedWithID newsletterFeedID: String
     ) {
         guard
-            let contentFeed = managedObjectContext.object(with: newsletterFeedID) as? ContentFeed,
+            let contentFeed = ContentFeed.getFeedWith(feedId: newsletterFeedID),
             contentFeed.isNewsletter
         else {
             preconditionFailure()
@@ -121,10 +121,10 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
     
     func viewController(
         _ viewController: UIViewController,
-        didSelectNewsletterItemWithID newsletterItemID: NSManagedObjectID
+        didSelectNewsletterItemWithID newsletterItemId: String
     ) {
         guard
-            let contentFeedItem = managedObjectContext.object(with: newsletterItemID) as? ContentFeedItem,
+            let contentFeedItem = ContentFeedItem.getItemWith(itemID: newsletterItemId),
             let contentFeed = contentFeedItem.contentFeed,
             contentFeed.isNewsletter
         else {
@@ -182,7 +182,7 @@ extension DashboardRootViewController {
         let viewController = VideoFeedEpisodePlayerContainerViewController
             .instantiate(
                 videoPlayerEpisode: videoEpisode,
-                dismissButtonStyle: .backArrow,
+                dismissButtonStyle: ModalDismissButtonStyle.backArrow,
                 delegate: self,
                 boostDelegate: self
             )

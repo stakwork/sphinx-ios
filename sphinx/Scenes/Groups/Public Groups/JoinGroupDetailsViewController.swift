@@ -186,7 +186,7 @@ class JoinGroupDetailsViewController: KeyboardEventsViewController {
                     
                     
                     if let feedUrl = tribeInfo.feedUrl {
-                        ContentFeed.fetchChatFeedContentInBackground(feedUrl: feedUrl, chatObjectID: chat.objectID, completion: { feedId in
+                        ContentFeed.fetchChatFeedContentInBackground(feedUrl: feedUrl, chatId: chat.id, completion: { feedId in
                             
                             if let feedId = feedId {
                                 chat.contentFeed = ContentFeed.getFeedWith(feedId: feedId)

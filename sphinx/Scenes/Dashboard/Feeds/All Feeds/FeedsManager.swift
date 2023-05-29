@@ -376,7 +376,7 @@ class FeedsManager : NSObject {
                     
                     ContentFeed.fetchFeedItems(
                         feedUrl: url.absoluteString,
-                        contentFeedObjectID: feed.objectID,
+                        contentFeedId: feed.id,
                         context: context,
                         completion: { _ in
                             dispatchSemaphore.signal()
@@ -394,7 +394,7 @@ class FeedsManager : NSObject {
     
     func fetchItemsFor(
         feedUrl: String,
-        objectID: NSManagedObjectID
+        feedId: String
     ) {
         DispatchQueue.global(qos: .userInitiated).async {
             let bgContext = CoreDataManager.sharedManager.getBackgroundContext()
@@ -402,7 +402,7 @@ class FeedsManager : NSObject {
             bgContext.perform {
                 ContentFeed.fetchFeedItems(
                     feedUrl: feedUrl,
-                    contentFeedObjectID: objectID,
+                    contentFeedId: feedId,
                     context: bgContext,
                     completion: { result in
                         if case .success(_) = result {

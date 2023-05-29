@@ -16,28 +16,28 @@ protocol DashboardFeedsListContainerViewControllerDelegate: AnyObject {
     
     func viewController(
         _ viewController: UIViewController,
-        didSelectPodcastEpisodeWithID podcastEpisodeID: NSManagedObjectID
+        didSelectPodcastEpisodeWithID podcastEpisodeID: String
     )
     
     
     func viewController(
         _ viewController: UIViewController,
-        didSelectVideoFeedWithID videoFeedID: NSManagedObjectID
+        didSelectVideoFeedWithID videoFeedID: String
     )
     
     func viewController(
         _ viewController: UIViewController,
-        didSelectVideoEpisodeWithID videoEpisodeID: NSManagedObjectID
+        didSelectVideoEpisodeWithID videoEpisodeID: String
     )
     
     func viewController(
         _ viewController: UIViewController,
-        didSelectNewsletterFeedWithID newsletterFeedID: NSManagedObjectID
+        didSelectNewsletterFeedWithID newsletterFeedID: String
     )
     
     func viewController(
         _ viewController: UIViewController,
-        didSelectNewsletterItemWithID newsletterItemID: NSManagedObjectID
+        didSelectNewsletterItemWithID newsletterItemID: String
     )
     
     func viewController(
@@ -300,20 +300,18 @@ extension DashboardFeedsContainerViewController {
     
     
     private func handleAllFeedsCellSelection(
-        _ managedObjectID: NSManagedObjectID
+        _ feedId: String
     ) {
-        let entity = managedObjectContext.object(with: managedObjectID)
-        
-        if let contentFeed = entity as? ContentFeed {
+        if let contentFeed = ContentFeed.getFeedWith(feedId: feedId) {
             if contentFeed.isNewsletter {
                 feedsListContainerDelegate?.viewController(
                     self,
-                    didSelectNewsletterFeedWithID: managedObjectID
+                    didSelectNewsletterFeedWithID: feedId
                 )
             } else if contentFeed.isVideo {
                 feedsListContainerDelegate?.viewController(
                     self,
-                    didSelectVideoFeedWithID: managedObjectID
+                    didSelectVideoFeedWithID: feedId
                 )
             } else if contentFeed.isPodcast {
                 feedsListContainerDelegate?.viewController(
@@ -344,10 +342,10 @@ extension DashboardFeedsContainerViewController {
 // MARK: -  Audio Podcast Selection
 extension DashboardFeedsContainerViewController {
     
-    private func handlePodcastEpisodeCellSelection(_ managedObjectID: NSManagedObjectID) {
+    private func handlePodcastEpisodeCellSelection(_ feedItemId: String) {
         feedsListContainerDelegate?.viewController(
             self,
-            didSelectPodcastEpisodeWithID: managedObjectID
+            didSelectPodcastEpisodeWithID: feedItemId
         )
     }
     
@@ -363,18 +361,18 @@ extension DashboardFeedsContainerViewController {
 // MARK: - Video Selection
 extension DashboardFeedsContainerViewController {
     
-    private func handleVideoEpisodeCellSelection(_ managedObjectID: NSManagedObjectID) {
+    private func handleVideoEpisodeCellSelection(_ feedItemId: String) {
         feedsListContainerDelegate?.viewController(
             self,
-            didSelectVideoEpisodeWithID: managedObjectID
+            didSelectVideoEpisodeWithID: feedItemId
         )
     }
     
     
-    private func handleVideoFeedCellSelection(_ managedObjectID: NSManagedObjectID) {
+    private func handleVideoFeedCellSelection(_ feedId: String) {
         feedsListContainerDelegate?.viewController(
             self,
-            didSelectVideoFeedWithID: managedObjectID
+            didSelectVideoFeedWithID: feedId
         )
     }
 }
@@ -382,18 +380,18 @@ extension DashboardFeedsContainerViewController {
 // MARK: - Newsletter Selection
 extension DashboardFeedsContainerViewController {
     
-    private func handleNewsletterItemCellSelection(_ managedObjectID: NSManagedObjectID) {
+    private func handleNewsletterItemCellSelection(_ feeditemId: String) {
         feedsListContainerDelegate?.viewController(
             self,
-            didSelectNewsletterItemWithID: managedObjectID
+            didSelectNewsletterItemWithID: feeditemId
         )
     }
     
     
-    private func handleNewsletterFeedCellSelection(_ managedObjectID: NSManagedObjectID) {
+    private func handleNewsletterFeedCellSelection(_ feedId: String) {
         feedsListContainerDelegate?.viewController(
             self,
-            didSelectNewsletterFeedWithID: managedObjectID
+            didSelectNewsletterFeedWithID: feedId
         )
     }
 }

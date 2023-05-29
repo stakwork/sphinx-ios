@@ -91,9 +91,7 @@ class PodcastPlayerView: UIView {
         self.boostDelegate = boostDelegate
         self.podcast = podcast
         
-        if let objectID = podcast.objectID {
-            feedBoostHelper.configure(with: objectID, and: chat)
-        }
+        feedBoostHelper.configure(with: podcast.feedID, and: chat)
         
         setupView()
         setupActions(fromDashboard)

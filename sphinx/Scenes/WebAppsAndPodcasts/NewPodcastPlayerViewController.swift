@@ -126,10 +126,9 @@ class NewPodcastPlayerViewController: UIViewController {
     }
     
     private func updateFeed() {
-        if let feedUrl = podcast.feedURLPath, let objectID = podcast.objectID {
-            
+        if let feedUrl = podcast.feedURLPath {
             let feedsManager = FeedsManager.sharedInstance
-            feedsManager.fetchItemsFor(feedUrl: feedUrl, objectID: objectID)
+            feedsManager.fetchItemsFor(feedUrl: feedUrl, feedId: podcast.feedID)
         }
     }
 }
@@ -191,13 +190,11 @@ extension NewPodcastPlayerViewController : PodcastEpisodesDSDelegate {
 extension NewPodcastPlayerViewController : PodcastPlayerViewDelegate {
     
     func didTapSubscriptionToggleButton() {
-        if let objectID = podcast.objectID {
-            podcast.isSubscribedToFromSearch.toggle()
-            
-            let contentFeed: ContentFeed? = CoreDataManager.sharedManager.getObjectWith(objectId: objectID)
-            contentFeed?.isSubscribedToFromSearch.toggle()
-            contentFeed?.managedObjectContext?.saveContext()
-        }
+        podcast.isSubscribedToFromSearch.toggle()
+        
+        let contentFeed: ContentFeed? = ContentFeed.getFeedWith(feedId: podcast.feedID)
+        contentFeed?.isSubscribedToFromSearch.toggle()
+        contentFeed?.managedObjectContext?.saveContext()
     }
     
     func didFailPlayingPodcast() {

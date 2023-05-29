@@ -79,8 +79,8 @@ extension NewsletterItemDetailViewController {
         viewController.newsletterItem = newsletterItem
         viewController.boostDelegate = boostDelegate
         
-        if let feedID = newsletterItem.newsletterFeed?.objectID {
-            viewController.contentFeed = CoreDataManager.sharedManager.getObjectWith(objectId: feedID)
+        if let feedId = newsletterItem.newsletterFeed?.feedID {
+            viewController.contentFeed = ContentFeed.getFeedWith(feedId: feedId)
         }
         
         return viewController
@@ -104,7 +104,7 @@ extension NewsletterItemDetailViewController {
     
     func setupFeedBoostHelper() {
         if let contentFeed = contentFeed {
-            feedBoostHelper.configure(with: contentFeed.objectID, and: contentFeed.chat)
+            feedBoostHelper.configure(with: contentFeed.feedID, and: contentFeed.chat)
         }
     }
     
@@ -149,7 +149,7 @@ extension NewsletterItemDetailViewController: CustomBoostViewDelegate {
             
             feedBoostHelper.sendBoostMessage(
                 message: boostMessage,
-                itemObjectID: newsletterItem.objectID,
+                itemId: itemID,
                 amount: amount,
                 completion: { (message, success) in
                     self.boostDelegate?.didSendBoostMessage(success: success, message: message)

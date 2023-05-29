@@ -91,9 +91,10 @@ extension PodcastPlayerView: CustomBoostViewDelegate {
         self.boostDelegate?.didStartEditingBoostAmount?()
     }
     
-    func didTouchBoostButton(withAmount amount: Int) {
-        if let episode = podcast.getCurrentEpisode(),
-           let objectID = episode.objectID {
+    func didTouchBoostButton(
+        withAmount amount: Int
+    ) {
+        if let episode = podcast.getCurrentEpisode() {
             
             let itemID = episode.itemID
             let currentTime = podcast.getCurrentEpisode()?.currentTime ?? 0
@@ -108,7 +109,7 @@ extension PodcastPlayerView: CustomBoostViewDelegate {
                 
                 feedBoostHelper.sendBoostMessage(
                     message: boostMessage,
-                    itemObjectID: objectID,
+                    itemId: episode.itemID,
                     amount: amount,
                     completion: { (message, success) in
                         self.boostDelegate?.didSendBoostMessage(success: success, message: message)

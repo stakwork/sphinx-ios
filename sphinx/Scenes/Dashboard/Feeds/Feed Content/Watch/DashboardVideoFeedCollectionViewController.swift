@@ -7,7 +7,6 @@
 import UIKit
 import CoreData
 
-
 class DashboardVideoFeedCollectionViewController: UICollectionViewController {
     
     var allVideoFeeds: [VideoFeed] = []
@@ -15,8 +14,8 @@ class DashboardVideoFeedCollectionViewController: UICollectionViewController {
     
     var interSectionSpacing: CGFloat = 20.0
 
-    var onVideoEpisodeCellSelected: ((NSManagedObjectID) -> Void)!
-    var onVideoFeedCellSelected: ((NSManagedObjectID) -> Void)!
+    var onVideoEpisodeCellSelected: ((String) -> Void)!
+    var onVideoFeedCellSelected: ((String) -> Void)!
     var onNewResultsFetched: ((Int) -> Void)!
     var onContentScrolled: ((UIScrollView) -> Void)?
 
@@ -40,8 +39,8 @@ extension DashboardVideoFeedCollectionViewController {
     static func instantiate(
         managedObjectContext: NSManagedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext,
         interSectionSpacing: CGFloat = 20.0,
-        onVideoEpisodeCellSelected: ((NSManagedObjectID) -> Void)!,
-        onVideoFeedCellSelected: ((NSManagedObjectID) -> Void)!,
+        onVideoEpisodeCellSelected: ((String) -> Void)!,
+        onVideoFeedCellSelected: ((String) -> Void)!,
         onNewResultsFetched: @escaping ((Int) -> Void) = { _ in },
         onContentScrolled: ((UIScrollView) -> Void)? = nil
     ) -> DashboardVideoFeedCollectionViewController {
@@ -524,7 +523,7 @@ extension DashboardVideoFeedCollectionViewController {
                 preconditionFailure()
             }
             
-            onVideoEpisodeCellSelected?(videoEpisode.objectID)
+            onVideoEpisodeCellSelected?(videoEpisode.id)
         case .recentlyPlayedVideos:
             guard
                 case let .videoFeed(videoFeed) = dataSourceItem
@@ -532,7 +531,7 @@ extension DashboardVideoFeedCollectionViewController {
                 preconditionFailure()
             }
             
-            onVideoFeedCellSelected?(videoFeed.objectID)
+            onVideoFeedCellSelected?(videoFeed.id)
     }
     }
 }

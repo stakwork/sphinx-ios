@@ -9,7 +9,6 @@
 import UIKit
 import CoreData
 
-
 class DashboardNewsletterFeedCollectionViewController: UICollectionViewController {
     
     var recentlyReleasedNewsletterFeeds: [NewsletterFeed] = []
@@ -17,8 +16,8 @@ class DashboardNewsletterFeedCollectionViewController: UICollectionViewControlle
     
     var interSectionSpacing: CGFloat = 20.0
 
-    var onNewsletterItemCellSelected: ((NSManagedObjectID) -> Void)!
-    var onNewsletterFeedCellSelected: ((NSManagedObjectID) -> Void)!
+    var onNewsletterItemCellSelected: ((String) -> Void)!
+    var onNewsletterFeedCellSelected: ((String) -> Void)!
     var onNewResultsFetched: ((Int) -> Void)!
     var onContentScrolled: ((UIScrollView) -> Void)?
 
@@ -42,8 +41,8 @@ extension DashboardNewsletterFeedCollectionViewController {
     static func instantiate(
         managedObjectContext: NSManagedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext,
         interSectionSpacing: CGFloat = 20.0,
-        onNewsletterItemCellSelected: ((NSManagedObjectID) -> Void)!,
-        onNewsletterFeedCellSelected: ((NSManagedObjectID) -> Void)!,
+        onNewsletterItemCellSelected: ((String) -> Void)!,
+        onNewsletterFeedCellSelected: ((String) -> Void)!,
         onNewResultsFetched: @escaping ((Int) -> Void) = { _ in },
         onContentScrolled: ((UIScrollView) -> Void)? = nil
     ) -> DashboardNewsletterFeedCollectionViewController {
@@ -539,7 +538,7 @@ extension DashboardNewsletterFeedCollectionViewController {
                 preconditionFailure()
             }
             
-            onNewsletterItemCellSelected?(newsletterItem.objectID)
+            onNewsletterItemCellSelected?(newsletterItem.id)
         case .recentlyReadFeeds:
             guard
                 case let .newsletterFeed(newsletterFeed) = dataSourceItem
@@ -547,7 +546,7 @@ extension DashboardNewsletterFeedCollectionViewController {
                 preconditionFailure()
             }
             
-            onNewsletterFeedCellSelected?(newsletterFeed.objectID)
+            onNewsletterFeedCellSelected?(newsletterFeed.id)
         }
     }
 }

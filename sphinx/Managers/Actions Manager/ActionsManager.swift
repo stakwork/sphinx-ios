@@ -137,10 +137,11 @@ class ActionsManager {
         if (!isTrackingEnabled()) { return }
         
         globalThread.sync {
-            guard let feedItemObjectId = podcastComment.feedItemObjectId,
-                  let feedItem: ContentFeedItem = CoreDataManager.sharedManager.getObjectWith(objectId: feedItemObjectId),
-                  let timestamp = podcastComment.timestamp else {
-                
+            guard
+                let itemId = podcastComment.itemId,
+                let feedItem: ContentFeedItem = ContentFeedItem.getItemWith(itemID: itemId),
+                let timestamp = podcastComment.timestamp else
+            {
                 return
             }
             
@@ -356,11 +357,13 @@ class ActionsManager {
         }
     }
     
-    func trackNewsletterConsumed(newsletterItem: NewsletterItem) {
+    func trackNewsletterConsumed(
+        newsletterItem: NewsletterItem
+    ) {
         if (!isTrackingEnabled()) { return }
         
         globalThread.sync {
-            guard let feedItem: ContentFeedItem = CoreDataManager.sharedManager.getObjectWith(objectId: newsletterItem.objectID) else {
+            guard let feedItem: ContentFeedItem = ContentFeedItem.getItemWith(itemID: newsletterItem.itemID) else {
                 return
             }
             

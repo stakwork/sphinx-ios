@@ -40,7 +40,7 @@ class PodcastPaymentsHelper {
             let clipSenderPubKey = clipSenderPubKey,
             clipSenderPubKey != myPubKey
         {
-            clipSenderDestination = PodcastDestination(NSManagedObjectID.init())
+            clipSenderDestination = PodcastDestination()
             
             if let clipSenderDestination = clipSenderDestination {
                 clipSenderDestination.address = clipSenderPubKey

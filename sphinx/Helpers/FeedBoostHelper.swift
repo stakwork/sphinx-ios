@@ -15,10 +15,10 @@ class FeedBoostHelper : NSObject {
     var chat: Chat? = nil
     
     func configure(
-        with objectID: NSManagedObjectID,
+        with feedId: String,
         and chat: Chat?
     ) {
-        self.contentFeed = CoreDataManager.sharedManager.getObjectWith(objectId: objectID)
+        self.contentFeed = ContentFeed.getFeedWith(feedId: feedId)
         self.chat = chat
     }
     
@@ -140,7 +140,7 @@ class FeedBoostHelper : NSObject {
     
     func sendBoostMessage(
         message: String,
-        itemObjectID: NSManagedObjectID,
+        itemId: String,
         amount: Int,
         completion: @escaping ((TransactionMessage?, Bool) -> ())
     ) {
@@ -159,7 +159,7 @@ class FeedBoostHelper : NSObject {
                     message.setPaymentInvoiceAsPaid()
                     
                     completion(message, true)
-                    self.trackBoostAction(itemObjectID: itemObjectID, amount: amount)
+                    self.trackBoostAction(itemId: itemId, amount: amount)
                     
                 }
             }, errorCallback: {
@@ -173,10 +173,10 @@ class FeedBoostHelper : NSObject {
     }
     
     func trackBoostAction(
-        itemObjectID: NSManagedObjectID,
+        itemId: String,
         amount: Int
     ) {
-        if let contentFeedItem: ContentFeedItem = CoreDataManager.sharedManager.getObjectWith(objectId: itemObjectID) {
+        if let contentFeedItem: ContentFeedItem = ContentFeedItem.getItemWith(itemID: itemId) {
             ActionsManager.sharedInstance.trackContentBoost(amount: amount, feedItem: contentFeedItem)
         }
     }

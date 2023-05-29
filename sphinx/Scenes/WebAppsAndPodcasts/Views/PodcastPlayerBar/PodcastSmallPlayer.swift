@@ -53,7 +53,7 @@ class PodcastSmallPlayer: UIView {
         let gesture = UITapGestureRecognizer(target: self, action: #selector(PodcastSmallPlayer.playPauseButtonTouched))
         pauseAnimationView.addGestureRecognizer(gesture)
         
-//        isHidden = true
+        isHidden = true
     }
     
     override init(frame: CGRect) {

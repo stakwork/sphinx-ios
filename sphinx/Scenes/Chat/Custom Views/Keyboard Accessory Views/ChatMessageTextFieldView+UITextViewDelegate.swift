@@ -20,8 +20,6 @@ extension ChatMessageTextFieldView : UITextViewDelegate {
     }
     
     func togglePlaceHolder(editing: Bool) {
-        let isTextPlaceHolder = textView.text == kFieldPlaceHolder
-        
         if editing && textView.text == kFieldPlaceHolder {
             textView.text = ""
             textView.textColor = UIColor.Sphinx.TextMessages

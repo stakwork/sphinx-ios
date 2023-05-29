@@ -12,7 +12,7 @@ import CoreData
 class NewChatViewController: NewKeyboardHandlerViewController {
     
     @IBOutlet weak var bottomView: NewChatAccessoryView!
-    @IBOutlet weak var headerView: ChatHeaderView!
+    @IBOutlet weak var headerView: NewChatHeaderView!
     
     var contact: UserContact?
     var chat: Chat?
@@ -74,11 +74,13 @@ class NewChatViewController: NewKeyboardHandlerViewController {
     }
     
     func setupData() {
-        headerView.configureWith(
+        headerView.configureHeaderWith(
             chat: self.chat,
             contact: self.contact,
-            delegate: self
+            andDelegate: self
         )
+        
+        updateChatInfo()
     }
     
     func setDelegates() {

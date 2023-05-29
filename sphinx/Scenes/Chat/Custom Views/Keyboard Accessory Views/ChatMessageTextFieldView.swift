@@ -128,4 +128,15 @@ class ChatMessageTextFieldView: UIView {
         textView.text = ""
         textViewDidChange(textView)
     }
+    
+    func updateFieldStateFrom(_ chat: Chat?) {
+        setOngoingMessage(text: chat?.ongoingMessage ?? "")
+        
+        let pending = chat?.isStatusPending() ?? false
+        let rejected = chat?.isStatusRejected() ?? false
+        let active = !pending && !rejected
+        
+        self.isUserInteractionEnabled = active
+        self.alpha = active ? 1.0 : 0.8
+    }
 }

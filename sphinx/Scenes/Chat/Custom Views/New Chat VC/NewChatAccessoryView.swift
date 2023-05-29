@@ -34,12 +34,28 @@ class NewChatAccessoryView: UIView {
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         
-        self.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        autoresizingMask = [.flexibleHeight, .flexibleWidth]
     }
     
     func setDelegates(
         messageFieldDelegate: ChatMessageTextFieldViewDelegate
     ) {
         messageFieldView.delegate = messageFieldDelegate
+    }
+    
+    func configurePlayerWith(
+        podcastId: String,
+        delegate: PodcastPlayerVCDelegate,
+        andKey playerDelegateKey: String
+    ) {
+        podcastPlayerView.configureWith(
+            podcastId: podcastId,
+            delegate: delegate,
+            andKey: playerDelegateKey
+        )
+    }
+    
+    func updateFieldStateFrom(_ chat: Chat?) {
+        messageFieldView.updateFieldStateFrom(chat)
     }
 }

@@ -671,15 +671,14 @@
                                 <rect key="frame" x="0.0" y="667" width="375" height="0.0"/>
                                 <color key="backgroundColor" name="HeaderBG"/>
                             </view>
-                            
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Qjl-UA-qWr">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hMb-Ac-dRv" customClass="ChatHeaderView" customModule="sphinx" customModuleProvider="target">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hMb-Ac-dRv" customClass="NewChatHeaderView" customModule="sphinx" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="65"/>
                                         <color key="backgroundColor" name="HeaderBG"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="65" id="RJD-IB-RJo"/>
+                                            <constraint firstAttribute="height" priority="750" constant="65" id="RJD-IB-RJo"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oJ3-im-1f2">
@@ -747,7 +746,7 @@
                     <connections>
                         <outlet property="bottomConstraint" destination="Ht8-VT-KjU" id="TvB-Xq-ofN"/>
                         <outlet property="bottomView" destination="adm-hA-lEF" id="hez-Vx-Rs8"/>
-                        <outlet property="headerView" destination="hMb-Ac-dRv" id="XDo-Cl-2Lr"/>
+                        <outlet property="headerView" destination="hMb-Ac-dRv" id="ANb-B8-g1N"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YPF-pg-gtG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -776,7 +775,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g6d-Z8-xrV">
-                                        <rect key="frame" x="31" y="9.5" width="16" height="16"/>
+                                        <rect key="frame" x="31" y="9.5" width="16" height="16.5"/>
                                         <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="14"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -1518,7 +1517,7 @@
             </objects>
             <point key="canvasLocation" x="797.60000000000002" y="160.56971514242881"/>
         </scene>
-	<!--Pin Message View Controller-->
+        <!--Pin Message View Controller-->
         <scene sceneID="nvf-bJ-dbJ">
             <objects>
                 <viewController storyboardIdentifier="PinMessageViewController" id="hoH-z1-CCs" customClass="PinMessageViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
@@ -1773,7 +1772,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Roz-Ir-Nly" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-607.20000000000005" y="161.46926536731635"/>
-	</scene>
+        </scene>
         <!--Message Options View Controller-->
         <scene sceneID="eqq-Vb-hzU">
             <objects>

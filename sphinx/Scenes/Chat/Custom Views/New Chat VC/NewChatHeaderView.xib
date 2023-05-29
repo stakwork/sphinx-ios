@@ -4,7 +4,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -41,7 +40,7 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </stackView>
             </subviews>
-            <color key="backgroundColor" name="HeaderBG"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="FI6-aK-lAW" secondAttribute="trailing" id="2Gi-sZ-czg"/>
                 <constraint firstItem="FI6-aK-lAW" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="6VI-CX-eGI"/>
@@ -52,9 +51,4 @@
             <point key="canvasLocation" x="-33" y="20"/>
         </view>
     </objects>
-    <resources>
-        <namedColor name="HeaderBG">
-            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-    </resources>
 </document>

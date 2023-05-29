@@ -76,8 +76,51 @@ extension NewChatViewController : PodcastPlayerVCDelegate {
     }
 }
 
-extension NewChatViewController : PinnedMessageViewDelegate {
-    func didTapUnpinButtonFor(messageId: Int) {
+extension NewChatViewController : PinnedMessageViewDelegate, PinMessageDelegate {
+    func didTapPinMessage(messageId: Int) {
+        showMessagePinnedInfo(messageId: messageId)
+    }
+    
+    func didTapUnpinButton(message: TransactionMessage) {
+        shouldTogglePinState(message: message, pin: false)
+    }
+    
+    func shouldTogglePinState(message: TransactionMessage, pin: Bool) {
+        guard let chat = self.chat else {
+            return
+        }
         
+        API.sharedInstance.pinChatMessage(
+            messageUUID: (pin ? message.uuid : ""),
+            chatId: chat.id,
+            callback: { pinnedMessageUUID in
+                self.chat?.pinnedMessageUUID = pinnedMessageUUID
+                self.chat?.saveChat()
+                
+                self.configurePinnedMessageView()
+                
+                let vc = PinMessageViewController.instantiate(
+                    messageId: message.id,
+                    delegate: self,
+                    mode: pin ? .MessagePinned : .MessageUnpinned
+                )
+                vc.modalPresentationStyle = .overCurrentContext
+                self.present(vc, animated: false)
+            },
+            errorCallback: {
+                AlertHelper.showAlert(title: "generic.error.title".localized, message: "generic.error.message".localized)
+            }
+        )
+    }
+    
+    func showMessagePinnedInfo(messageId: Int) {
+        let vc = PinMessageViewController.instantiate(
+            messageId: messageId,
+            delegate: self,
+            mode: .PinnedMessageInfo
+        )
+        
+        vc.modalPresentationStyle = .overCurrentContext
+        self.present(vc, animated: false)
     }
 }

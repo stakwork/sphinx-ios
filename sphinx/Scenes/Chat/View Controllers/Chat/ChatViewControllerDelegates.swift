@@ -860,7 +860,7 @@ extension ChatViewController : GroupDetailsDelegate {
 }
 
 extension ChatViewController : PinnedMessageViewDelegate {
-    func didTapUnpinButtonFor(messageId: Int) {
+    func didTapPinMessage(messageId: Int) {
         showMessagePinnedInfo(messageId: messageId)
     }
 }

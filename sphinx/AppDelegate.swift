@@ -483,8 +483,8 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         if let chat = Chat.getChatWith(id: chatId) {
             
             let chatVC = NewChatViewController.instantiate(
-                contactObjectId: chat.conversationContact?.objectID,
-                chatObjectId: chat.objectID
+                contactId: chat.conversationContact?.id,
+                chatId: chat.id
             )
             
             if

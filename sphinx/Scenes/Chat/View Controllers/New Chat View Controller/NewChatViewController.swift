@@ -64,6 +64,8 @@ class NewChatViewController: NewKeyboardHandlerViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        fetchTribeData()
     }
     
     func setupLayouts() {
@@ -75,12 +77,14 @@ class NewChatViewController: NewKeyboardHandlerViewController {
     
     func setupData() {
         headerView.configureHeaderWith(
-            chat: self.chat,
-            contact: self.contact,
+            chat: chat,
+            contact: contact,
             andDelegate: self
         )
         
-        updateChatInfo()
+        configurePinnedMessageView()
+        bottomView.updateFieldStateFrom(chat)
+        showPendingApprovalMessage()
     }
     
     func setDelegates() {

@@ -9,17 +9,12 @@
 import UIKit
 
 extension NewChatViewController {
-    func updateChatInfo() {
-        configurePinnedMessageView()
-        bottomView.updateFieldStateFrom(chat)
-        
+    func fetchTribeData() {
         chat?.updateTribeInfo() {
             self.headerView.setChatInfoOnHeader()
             self.loadPodcastFeed()
             self.configurePinnedMessageView()
         }
-        
-        showPendingApprovalMessage()
     }
     
     func showPendingApprovalMessage() {

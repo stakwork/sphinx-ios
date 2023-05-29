@@ -96,7 +96,7 @@ class PodcastSmallPlayer: UIView {
     }
     
     func runAnimation() {
-        let darkMode = UIWindow.getSavedStyle() == .dark
+        let darkMode = traitCollection.userInterfaceStyle == .dark
         let pauseAnimation = Animation.named(darkMode ? "pause_animation" : "pause_animation_light")
         pauseAnimationView.animation = pauseAnimation
         pauseAnimationView.loopMode = .autoReverse

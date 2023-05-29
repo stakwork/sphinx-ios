@@ -93,6 +93,7 @@
 		471FACDA23E9BE48007DE1C8 /* SupportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471FACD923E9BE48007DE1C8 /* SupportViewController.swift */; };
 		472092B92A24FF6100468796 /* NewChatHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472092B82A24FF6100468796 /* NewChatHeaderView.swift */; };
 		472092BB2A24FF6E00468796 /* NewChatHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 472092BA2A24FF6E00468796 /* NewChatHeaderView.xib */; };
+		472092BD2A2536F800468796 /* NewChatViewController+PodcastExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472092BC2A2536F800468796 /* NewChatViewController+PodcastExtension.swift */; };
 		472161B1293913230088B87B /* LoadingRecommendationsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472161AF293913230088B87B /* LoadingRecommendationsCollectionViewCell.swift */; };
 		472161B42939158B0088B87B /* NoRecommendationsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472161B22939158B0088B87B /* NoRecommendationsCollectionViewCell.swift */; };
 		472161B6293915E20088B87B /* NoRecommendationsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 472161B8293915E20088B87B /* NoRecommendationsCollectionViewCell.xib */; };
@@ -927,6 +928,7 @@
 		471FACD923E9BE48007DE1C8 /* SupportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportViewController.swift; sourceTree = "<group>"; };
 		472092B82A24FF6100468796 /* NewChatHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewChatHeaderView.swift; sourceTree = "<group>"; };
 		472092BA2A24FF6E00468796 /* NewChatHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewChatHeaderView.xib; sourceTree = "<group>"; };
+		472092BC2A2536F800468796 /* NewChatViewController+PodcastExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewChatViewController+PodcastExtension.swift"; sourceTree = "<group>"; };
 		472161AF293913230088B87B /* LoadingRecommendationsCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingRecommendationsCollectionViewCell.swift; sourceTree = "<group>"; };
 		472161B22939158B0088B87B /* NoRecommendationsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoRecommendationsCollectionViewCell.swift; sourceTree = "<group>"; };
 		472161B7293915E20088B87B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/NoRecommendationsCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -3055,6 +3057,7 @@
 				475DD3112A13FBAB00F92173 /* NewChatViewController+FetchControllerExtension.swift */,
 				475DD3132A14151E00F92173 /* NewChatViewController+BottomViewDelegateExtension.swift */,
 				476AAAA12A24F9F80092AC87 /* NewChatViewController+TribeExtension.swift */,
+				472092BC2A2536F800468796 /* NewChatViewController+PodcastExtension.swift */,
 			);
 			path = "New Chat View Controller";
 			sourceTree = "<group>";
@@ -5193,6 +5196,7 @@
 				474C7A5528D3A7A2007A3E17 /* sphinxrs.swift in Sources */,
 				475154AD2423E75F00477384 /* VideoCallReceivedTableViewCell.swift in Sources */,
 				F38744E3271FDA9200E28C84 /* VideoFeed+DisplayUtils.swift in Sources */,
+				472092BD2A2536F800468796 /* NewChatViewController+PodcastExtension.swift in Sources */,
 				F360123326E96B31009B8DC0 /* API+FeedSearchUtils.swift in Sources */,
 				47468FD5233162D40072124A /* AlertHelper.swift in Sources */,
 				47893A9624095DF6002F675B /* CommonAudioTableViewCell.swift in Sources */,

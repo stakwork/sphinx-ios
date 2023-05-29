@@ -23,30 +23,6 @@ extension NewChatViewController {
         }
     }
     
-    ///Podcast
-    func loadPodcastFeed() {
-        guard let chat = chat else {
-            return
-        }
-        
-        FeedLoaderHelper.loadPodcastFeedFor(chat: chat, callback: { podcast in
-            self.addSmallPlayerFor(podcast)
-        })
-    }
-    
-    func addSmallPlayerFor(
-        _ podcast: PodcastFeed
-    ) {
-        bottomView.configurePlayerWith(
-            podcastId: podcast.feedID,
-            delegate: self,
-            andKey: PodcastDelegateKeys.ChatSmallPlayerBar.rawValue
-        )
-        
-        PodcastNewEpisodeViewController.checkForNewEpisode(chatId: chat?.id)
-        headerView.updateSatsEarnedOnHeader()
-    }
-    
     ///Pinned Message
     func configurePinnedMessageView() {
         if let chatId = chat?.id {
@@ -55,24 +31,6 @@ extension NewChatViewController {
                 andDelegate: self
             )
         }
-    }
-}
-
-extension NewChatViewController : PodcastPlayerVCDelegate {
-    func willDismissPlayer() {
-        
-    }
-    
-    func shouldShareClip(comment: PodcastComment) {
-        
-    }
-    
-    func shouldGoToPlayer(podcast: PodcastFeed) {
-        
-    }
-    
-    func didFailPlayingPodcast() {
-        
     }
 }
 

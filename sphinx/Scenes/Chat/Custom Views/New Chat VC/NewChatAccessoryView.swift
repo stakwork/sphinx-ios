@@ -36,13 +36,23 @@ class NewChatAccessoryView: UIView {
         
         autoresizingMask = [.flexibleHeight, .flexibleWidth]
     }
+}
+
+//Field View
+extension NewChatAccessoryView {
+    func updateFieldStateFrom(_ chat: Chat?) {
+        messageFieldView.updateFieldStateFrom(chat)
+    }
     
     func setDelegates(
         messageFieldDelegate: ChatMessageTextFieldViewDelegate
     ) {
         messageFieldView.delegate = messageFieldDelegate
     }
-    
+}
+
+//Podcast Player
+extension NewChatAccessoryView {
     func configurePlayerWith(
         podcastId: String,
         delegate: PodcastPlayerVCDelegate,
@@ -54,8 +64,25 @@ class NewChatAccessoryView: UIView {
             andKey: playerDelegateKey
         )
     }
-    
-    func updateFieldStateFrom(_ chat: Chat?) {
-        messageFieldView.updateFieldStateFrom(chat)
+}
+
+//Message Reply View
+extension NewChatAccessoryView {
+    func configureReplyViewFor(
+        message: TransactionMessage? = nil,
+        podcastComment: PodcastComment? = nil,
+        withDelegate delegate: MessageReplyViewDelegate
+    ) {
+        if let message = message {
+            messageReplyView.configureForKeyboard(
+                with: message,
+                delegate: delegate
+            )
+        } else if let podcastComment = podcastComment {
+            messageReplyView.configureForKeyboard(
+                with: podcastComment,
+                and: delegate
+            )
+        }
     }
 }

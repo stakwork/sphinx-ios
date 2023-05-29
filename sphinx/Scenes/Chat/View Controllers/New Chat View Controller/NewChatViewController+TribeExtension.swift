@@ -91,7 +91,7 @@ extension NewChatViewController : PinnedMessageViewDelegate, PinMessageDelegate 
         }
         
         API.sharedInstance.pinChatMessage(
-            messageUUID: (pin ? message.uuid : ""),
+            messageUUID: (pin ? message.uuid : "_"),
             chatId: chat.id,
             callback: { pinnedMessageUUID in
                 self.chat?.pinnedMessageUUID = pinnedMessageUUID

@@ -169,7 +169,7 @@ extension PinMessageViewController {
         
         view.alpha = 0.0
         
-        UIView.animate(withDuration: 0.2, animations: {
+        UIView.animate(withDuration: 0.1, animations: {
             self.view.alpha = 1.0
             self.animatePopup()
         }, completion: { _ in
@@ -200,23 +200,25 @@ extension PinMessageViewController {
         })
     }
     
-    func dismissBottomView() {
+    func dismissBottomView(
+        completion: (() -> ())? = nil
+    ) {
         self.delegate?.willDismissPresentedVC()
         
         self.animateBottomViewTo(constant: -(bottomView.frame.height + 100), completion: {
-            self.animateAlphaAndDismiss()
+            self.animateAlphaAndDismiss(completion: completion)
         })
     }
     
-    func animateAlphaAndDismiss() {
-        UIView.animate(withDuration: 0.3, animations: {
+    func animateAlphaAndDismiss(
+        completion: (() -> ())? = nil
+    ) {
+        UIView.animate(withDuration: 0.1, animations: {
             self.view.alpha = 0.0
         }, completion: { _ in
-            if self.mode == .PinnedMessageInfo {
-                self.dismiss(animated: true)
-            } else {
-                WindowsManager.sharedInstance.removeCoveringWindow()
-            }
+            self.dismiss(animated: true)
+            WindowsManager.sharedInstance.removeCoveringWindow()
+            completion?()
         })
     }
 }
@@ -225,8 +227,9 @@ extension PinMessageViewController {
 //Actions handling
 extension PinMessageViewController {
     @IBAction func unpinButtonTapped() {
-        delegate?.didTapUnpinButton(message: message)
-        dismissBottomView()
+        dismissBottomView() {
+            self.delegate?.didTapUnpinButton(message: self.message)
+        }
     }
     
     @IBAction func dismissButtonTapped() {

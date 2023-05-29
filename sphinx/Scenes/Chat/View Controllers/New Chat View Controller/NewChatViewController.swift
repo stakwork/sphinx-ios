@@ -26,17 +26,17 @@ class NewChatViewController: NewKeyboardHandlerViewController {
     let messageBubbleHelper = NewMessageBubbleHelper()
     
     static func instantiate(
-        contactObjectId: NSManagedObjectID? = nil,
-        chatObjectId: NSManagedObjectID? = nil
+        contactId: Int? = nil,
+        chatId: Int? = nil
     ) -> NewChatViewController {
         let viewController = StoryboardScene.Chat.newChatViewController.instantiate()
         
-        if let chatObjectId = chatObjectId {
-            viewController.chat = CoreDataManager.sharedManager.getObjectWith(objectId: chatObjectId)
+        if let chatId = chatId {
+            viewController.chat = Chat.getChatWith(id: chatId)
         }
         
-        if let contactObjectId = contactObjectId {
-            viewController.contact = CoreDataManager.sharedManager.getObjectWith(objectId: contactObjectId)
+        if let contactId = contactId {
+            viewController.contact = UserContact.getContactWith(id: contactId)
         }
         
         viewController.contactsService = ContactsService()

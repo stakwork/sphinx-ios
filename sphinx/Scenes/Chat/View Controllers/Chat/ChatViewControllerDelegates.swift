@@ -52,7 +52,7 @@ extension ChatViewController : ChatHeaderViewDelegate {
         accessoryView.shouldDismissKeyboard()
 
         if let contact = contact {
-            let newContactVC = NewContactViewController.instantiate(contactObjectId: contact.objectID)
+            let newContactVC = NewContactViewController.instantiate(contactId: contact.id)
             newContactVC.delegate = self
             self.navigationController?.pushViewController(newContactVC, animated: true)
         } else if let chat = chat, chat.isGroup() {
@@ -96,7 +96,7 @@ extension ChatViewController : ChatHeaderViewDelegate {
     func goToNotificationsLevel() {
         if let chat =  chat {
             accessoryView.hide()
-            let notificationsVC = NotificationsLevelViewController.instantiate(chatObjectId: chat.objectID, delegate: self)
+            let notificationsVC = NotificationsLevelViewController.instantiate(chatId: chat.id, delegate: self)
             self.present(notificationsVC, animated: true, completion: nil)
         }
     }
@@ -327,9 +327,9 @@ extension ChatViewController : ChatAccessoryViewDelegate {
         
         let viewController = ChatAttachmentViewController.instantiate(
             delegate: self,
-            chatObjectId: chat?.objectID,
+            chatId: chat?.id,
             text: accessoryView.getMessage(),
-            replyingMessageObjectId: accessoryView.getReplyingMessage()?.objectID
+            replyingMessageId: accessoryView.getReplyingMessage()?.id
         )
         
         viewController.modalPresentationStyle = .overCurrentContext

@@ -20,9 +20,9 @@ extension NewChatViewController : ChatMessageTextFieldViewDelegate {
         
         let viewController = ChatAttachmentViewController.instantiate(
             delegate: self,
-            chatObjectId: self.chat?.objectID,
+            chatId: self.chat?.id,
             text: text,
-            replyingMessageObjectId: nil
+            replyingMessageId: nil
         )
         
         viewController.modalPresentationStyle = .overCurrentContext

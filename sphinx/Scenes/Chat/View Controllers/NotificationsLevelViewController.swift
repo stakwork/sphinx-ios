@@ -40,11 +40,11 @@ class NotificationsLevelViewController: UIViewController {
     }
     
     static func instantiate(
-        chatObjectId: NSManagedObjectID,
+        chatId: Int,
         delegate: PresentedViewControllerDelegate? = nil
     ) -> NotificationsLevelViewController {
         let viewController = StoryboardScene.Chat.notificationsLevelViewController.instantiate()
-        viewController.chat = CoreDataManager.sharedManager.getObjectWith(objectId: chatObjectId)
+        viewController.chat = Chat.getChatWith(id: chatId)
         viewController.delegate = delegate
         return viewController
     }

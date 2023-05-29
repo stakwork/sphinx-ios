@@ -101,22 +101,22 @@ class ChatAttachmentViewController: UIViewController, BackCameraVC {
     
     static func instantiate(
         delegate: AttachmentsDelegate,
-        chatObjectId: NSManagedObjectID? = nil,
+        chatId: Int? = nil,
         text: String? = nil,
-        replyingMessageObjectId: NSManagedObjectID? = nil
+        replyingMessageId: Int? = nil
     ) -> ChatAttachmentViewController {
         
         let viewController = StoryboardScene.Chat.chatAttachmentViewController.instantiate()
         
-        if let replyingMessageObjectId = replyingMessageObjectId {
-            viewController.replyingMessage = CoreDataManager.sharedManager.getObjectWith(objectId: replyingMessageObjectId)
+        if let replyingMessageId = replyingMessageId {
+            viewController.replyingMessage = TransactionMessage.getMessageWith(id: replyingMessageId)
         }
         
         viewController.text = text
         viewController.delegate = delegate
         
-        if let chatObjectId = chatObjectId {
-            viewController.chat = CoreDataManager.sharedManager.getObjectWith(objectId: chatObjectId)
+        if let chatId = chatId {
+            viewController.chat = Chat.getChatWith(id: chatId)
         }
         
         return viewController

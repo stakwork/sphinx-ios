@@ -70,13 +70,13 @@ class NewContactViewController: KeyboardEventsViewController {
     }
     
     static func instantiate(
-        contactObjectId: NSManagedObjectID? = nil,
+        contactId: Int? = nil,
         pubkey: String? = nil
     ) -> NewContactViewController {
         let viewController = StoryboardScene.Contacts.newContactViewController.instantiate()
         
-        if let contactObjectId = contactObjectId {
-            viewController.contact = CoreDataManager.sharedManager.getObjectWith(objectId: contactObjectId)
+        if let contactId = contactId {
+            viewController.contact = UserContact.getContactWith(id: contactId)
         }
         
         viewController.contactsService = ContactsService()

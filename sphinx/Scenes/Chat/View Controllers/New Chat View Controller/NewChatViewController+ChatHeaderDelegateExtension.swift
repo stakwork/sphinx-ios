@@ -13,7 +13,7 @@ extension NewChatViewController : ChatHeaderViewDelegate {
         var vc: UIViewController? = nil
         
         if let contact = contact {
-            vc = NewContactViewController.instantiate(contactObjectId: contact.objectID)
+            vc = NewContactViewController.instantiate(contactId: contact.id)
         } else if let chat = chat, chat.isGroup() {
             vc = GroupDetailsViewController.instantiate(chat: chat)
         }
@@ -108,7 +108,7 @@ extension NewChatViewController : ChatHeaderViewDelegate {
         if let chat =  chat {
             
             let notificationsVC = NotificationsLevelViewController.instantiate(
-                chatObjectId: chat.objectID
+                chatId: chat.id
             )
             
             self.present(notificationsVC, animated: true)

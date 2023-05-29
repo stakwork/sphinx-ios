@@ -77,7 +77,7 @@ extension NewChatViewController : PodcastPlayerVCDelegate {
 }
 
 extension NewChatViewController : PinnedMessageViewDelegate, PinMessageDelegate {
-    func didTapPinMessage(messageId: Int) {
+    func didTapPinnedMessageButtonFor(messageId: Int) {
         showMessagePinnedInfo(messageId: messageId)
     }
     

@@ -9,7 +9,7 @@
 import UIKit
 
 protocol PinnedMessageViewDelegate: class {
-    func didTapPinMessage(messageId: Int)
+    func didTapPinnedMessageButtonFor(messageId: Int)
 }
 
 class PinnedMessageView: UIView {
@@ -49,7 +49,7 @@ class PinnedMessageView: UIView {
         self.completion = completion
         
         if let chat = Chat.getChatWith(id: chatId) {
-            if let pinnedMessageUUID = chat.pinnedMessageUUID, !pinnedMessageUUID.isEmpty {
+            if let pinnedMessageUUID = chat.pinnedMessageUUID, !pinnedMessageUUID.isEmptyPinnedMessage {
                 if let message = TransactionMessage.getMessageWith(
                     uuid: pinnedMessageUUID
                 ) {
@@ -101,7 +101,7 @@ class PinnedMessageView: UIView {
     
     @IBAction func pinnedMessageButtonTapped() {
         if let messageId = self.messageId {
-            self.delegate?.didTapPinMessage(messageId: messageId)
+            self.delegate?.didTapPinnedMessageButtonFor(messageId: messageId)
         }
     }
 }

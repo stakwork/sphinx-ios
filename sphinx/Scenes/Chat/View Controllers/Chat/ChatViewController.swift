@@ -182,9 +182,7 @@ class ChatViewController: KeyboardHandlerViewController {
                 chatId: chatId,
                 and: self
             ) {
-                DelayPerformedHelper.performAfterDelay(seconds: 1.0, completion: {
-                    self.setTopInset()
-                })
+                self.setTopInset()
             }
         }
     }

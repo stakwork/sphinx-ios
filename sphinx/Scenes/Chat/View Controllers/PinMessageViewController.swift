@@ -98,16 +98,16 @@ extension PinMessageViewController {
         arrowBezierPath.addLine(to: CGPoint(x: 0, y: 0))
         arrowBezierPath.close()
         
-        let outgoingMessageLayer = CAShapeLayer()
-        outgoingMessageLayer.path = arrowBezierPath.cgPath
+        let messageArrowLayer = CAShapeLayer()
+        messageArrowLayer.path = arrowBezierPath.cgPath
         
-        outgoingMessageLayer.frame = CGRect(
+        messageArrowLayer.frame = CGRect(
             x: 0, y: 0, width: messageBubbleArrowView.frame.width, height: messageBubbleArrowView.frame.height
         )
 
-        outgoingMessageLayer.fillColor = UIColor.Sphinx.SentMsgBG.cgColor
+        messageArrowLayer.fillColor = UIColor.Sphinx.SentMsgBG.cgColor
         
-        messageBubbleArrowView.layer.addSublayer(outgoingMessageLayer)
+        messageBubbleArrowView.layer.addSublayer(messageArrowLayer)
     }
     
     func setupMode() {

@@ -11,6 +11,7 @@ import UIKit
 class StorageSummaryView: UIView {
 
     @IBOutlet var contentView: UIView!
+    
     @IBOutlet weak var maxMemoryFootprintBackgroundView: UIView!
     @IBOutlet weak var imagesMemoryFootprintView: UIView!
     @IBOutlet weak var videosMemoryFootprintView: UIView!
@@ -25,8 +26,6 @@ class StorageSummaryView: UIView {
     @IBOutlet weak var videoFootprintWidth: NSLayoutConstraint!
     @IBOutlet weak var audioFootprintWidth: NSLayoutConstraint!
     @IBOutlet weak var deletionFootprintWidth: NSLayoutConstraint!
-    
-    
     
     let userData = UserData.sharedInstance
     public var summaryDict : [StorageManagerMediaType:Double] = [StorageManagerMediaType:Double](){
@@ -130,7 +129,7 @@ class StorageSummaryView: UIView {
         videoToAudioHorizontalSpacing.constant = videoFootprintWidth.constant == 0 ? (0.01) : (2)
         
         UIView.animate(withDuration: 0.25, delay: 0.0, animations: {
-            self.superview?.layoutSubviews()
+            self.contentView.layoutIfNeeded()
         })
     }
     
@@ -154,7 +153,7 @@ class StorageSummaryView: UIView {
             deletionFootprintView.isHidden = false
             UIView.animate(withDuration: 0.1, delay: 0.0, animations: {
                 self.deletionFootprintWidth.constant = length
-                self.deletionFootprintView.superview?.layoutIfNeeded()
+                self.deletionFootprintView.layoutIfNeeded()
             })
         }
         else{
@@ -162,7 +161,7 @@ class StorageSummaryView: UIView {
                 self.deletionFootprintWidth.constant = 0.0
                 let ratio = (self.getTotalMemory() * 1e6)/(Double(value) * 1e9)
                 self.totalMemoryFootprintWidth.constant = ratio * self.maxMemoryFootprintBackgroundView.frame.width
-                self.deletionFootprintView.superview?.layoutIfNeeded()
+                self.deletionFootprintView.layoutIfNeeded()
             })
         }
     }

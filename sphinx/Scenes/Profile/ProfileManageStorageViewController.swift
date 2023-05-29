@@ -21,7 +21,6 @@ class ProfileManageStorageViewController : UIViewController{
     @IBOutlet weak var warningView: UIView!
     @IBOutlet weak var warningLabel: UILabel!
     @IBOutlet weak var mediaTypeTableView: UITableView!
-    @IBOutlet weak var loadingSpinnerContainerView: UIView!
     @IBOutlet weak var loadingLabel: UILabel!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     @IBOutlet weak var mediaSourceTableView: UITableView!
@@ -127,9 +126,10 @@ class ProfileManageStorageViewController : UIViewController{
     }
     
     lazy var vm : ProfileManageStorageViewModel = {
-        return ProfileManageStorageViewModel(vc: self,
-                                             mediaTypeTableView: mediaTypeTableView,
-                                             mediaSourceTableView: mediaSourceTableView
+        return ProfileManageStorageViewModel(
+            vc: self,
+            mediaTypeTableView: mediaTypeTableView,
+            mediaSourceTableView: mediaSourceTableView
         )
     }()
     
@@ -166,6 +166,8 @@ class ProfileManageStorageViewController : UIViewController{
     }
     
     func setupStorageViewsAndModels(){
+        hideSpinner()
+        
         maxSliderView.delegate = self
         vm.typeStats = tempTypeStats ?? [StorageManagerMediaType:Double]()
         tempTypeStats = nil
@@ -183,24 +185,19 @@ class ProfileManageStorageViewController : UIViewController{
     
     func showSpinner() {
         spinner.color = UIColor.white
-        spinner.frame = loadingSpinnerContainerView.frame
-
-        spinner.sizeToFit()
-        spinner.translatesAutoresizingMaskIntoConstraints = false
-        loadingSpinnerContainerView.addSubview(spinner)
-        
         spinner.startAnimating()
+        
         changeStorageButton.isHidden = true
         changeStorageLabel.isHidden = true
-        loadingSpinnerContainerView.isHidden = false
         loadingLabel.isHidden = false
+        spinner.isHidden = false
     }
     
     func hideSpinner(){
-        self.changeStorageButton.isHidden = false
-        self.changeStorageLabel.isHidden = false
-        self.loadingSpinnerContainerView.isHidden = true
-        self.loadingLabel.isHidden = true
+        changeStorageButton.isHidden = false
+        changeStorageLabel.isHidden = false
+        loadingLabel.isHidden = true
+        spinner.isHidden = true
     }
     
     func showSourceDetailsVC(source:StorageManagerMediaSource){

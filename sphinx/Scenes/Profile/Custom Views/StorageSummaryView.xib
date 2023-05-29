@@ -3,9 +3,8 @@
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21507"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -30,45 +29,45 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="359" height="84"/>
+            <rect key="frame" x="0.0" y="0.0" width="359" height="16"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pA3-QN-pPT">
-                    <rect key="frame" x="0.0" y="59" width="359" height="16"/>
+                    <rect key="frame" x="0.0" y="0.0" width="359" height="16"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wuu-OO-lkF">
-                            <rect key="frame" x="0.0" y="0.0" width="80" height="16"/>
+                            <rect key="frame" x="0.0" y="0.0" width="0.0" height="16"/>
                             <color key="backgroundColor" name="PrimaryText"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="80" id="C2T-RH-KII"/>
+                                <constraint firstAttribute="width" id="C2T-RH-KII"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kFG-HU-PMi">
-                            <rect key="frame" x="354" y="0.0" width="5" height="16"/>
+                            <rect key="frame" x="359" y="0.0" width="0.0" height="16"/>
                             <color key="backgroundColor" name="PrimaryRed"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="5" id="VBe-Mk-rx2"/>
+                                <constraint firstAttribute="width" id="VBe-Mk-rx2"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UUc-NP-3O4">
-                            <rect key="frame" x="0.0" y="0.0" width="80" height="16"/>
+                            <rect key="frame" x="0.0" y="0.0" width="0.0" height="16"/>
                             <color key="backgroundColor" name="PrimaryBlue"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="80" id="nuU-nu-fo5"/>
+                                <constraint firstAttribute="width" id="nuU-nu-fo5"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xFX-Pj-wP8">
-                            <rect key="frame" x="82" y="0.0" width="40" height="16"/>
+                            <rect key="frame" x="2" y="0.0" width="0.0" height="16"/>
                             <color key="backgroundColor" red="0.65490196078431373" green="0.42352941176470588" blue="0.95294117647058818" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="40" id="rcV-U6-fU9"/>
+                                <constraint firstAttribute="width" id="rcV-U6-fU9"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6dI-dX-Lyl">
-                            <rect key="frame" x="124" y="0.0" width="40" height="16"/>
+                            <rect key="frame" x="4" y="0.0" width="0.0" height="16"/>
                             <color key="backgroundColor" red="0.98039215686274506" green="0.90196078431372551" blue="0.46274509803921571" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="40" id="dWz-zP-06H"/>
+                                <constraint firstAttribute="width" id="dWz-zP-06H"/>
                             </constraints>
                         </view>
                     </subviews>
@@ -93,12 +92,12 @@
                     </constraints>
                 </view>
             </subviews>
-            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="pA3-QN-pPT" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="cqZ-cx-hoj"/>
-                <constraint firstItem="pA3-QN-pPT" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="iUn-s1-rAd"/>
-                <constraint firstItem="pA3-QN-pPT" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="wBb-0k-izL"/>
+                <constraint firstAttribute="trailing" secondItem="pA3-QN-pPT" secondAttribute="trailing" id="HJp-ve-bYs"/>
+                <constraint firstAttribute="bottom" secondItem="pA3-QN-pPT" secondAttribute="bottom" id="dtD-OL-MSk"/>
+                <constraint firstItem="pA3-QN-pPT" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="iUn-s1-rAd"/>
+                <constraint firstItem="pA3-QN-pPT" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="wBb-0k-izL"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="6.8702290076335872" y="-283.0985915492958"/>

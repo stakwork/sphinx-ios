@@ -49,11 +49,10 @@ class ProfileViewController: KeyboardEventsViewController {
     @IBOutlet weak var privacyPinLabel: UILabel!
     @IBOutlet weak var privacyPinGroupContainer: UIView!
     @IBOutlet weak var signingDeviceLabel: UILabel!
-    @IBOutlet weak var manageStorageChevronImageView: UIImageView!
+    @IBOutlet weak var manageStorageChevronLabel: UILabel!
     @IBOutlet weak var manageStorageView: UIView!
     @IBOutlet weak var storageSumaryLabel: UILabel!
     @IBOutlet weak var storageSummaryBarView: StorageSummaryView!
-    @IBOutlet weak var loadingSpinnerContainerView: UIView!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     
     
@@ -132,6 +131,7 @@ class ProfileViewController: KeyboardEventsViewController {
         configureProfile()
         configureServers()
         configureSigningDeviceButton()
+        setupMemoryManagement()
     }
     
     func setShadows() {
@@ -219,86 +219,40 @@ class ProfileViewController: KeyboardEventsViewController {
                 routeHintTextField.text = routeHint
                 routeHintTextField.isUserInteractionEnabled = false
             }
-            
-            if let image = manageStorageChevronImageView.image{
-                manageStorageChevronImageView.image = changeSVGColor(svgImage: image, color: UIColor.Sphinx.PrimaryGreen)
-            }
-            
         }
         
         relayUrlTextField.text = userData.getNodeIP()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        self.loadingSpinnerContainerView.isHidden = false
-        self.storageSumaryLabel.text = "Loading..."
-        self.storageSumaryLabel.textColor = UIColor.Sphinx.SecondaryText
-        showSpinner()
-        self.setupMemoryManagement(completion: {
-            DispatchQueue.main.sync {
-                self.hideSpinner()
-                self.storageSumaryLabel.textColor = UIColor.Sphinx.Text
-            }
-        })
-        
-    }
-    
-    func showSpinner() {
-        spinner.alpha = 1.0
+    func showStorageSpinner() {
         spinner.isHidden = false
-        spinner.color = UIColor.white
-
-        spinner.sizeToFit()
-        spinner.translatesAutoresizingMaskIntoConstraints = false
-        loadingSpinnerContainerView.addSubview(spinner)
-        
+        spinner.tintColor = UIColor.white
         spinner.startAnimating()
     }
     
-    func hideSpinner(){
-        spinner.alpha = 0.0
-        spinner.stopAnimating()
+    func hideStorageSpinner(){
         spinner.isHidden = true
-        loadingSpinnerContainerView.isHidden = true
+        spinner.stopAnimating()
     }
     
-    func setupMemoryManagement(completion: @escaping ()->()){
+    func setupMemoryManagement(){
+        storageSumaryLabel.text = "Loading..."
+        storageSumaryLabel.textColor = UIColor.Sphinx.SecondaryText
+        
+        showStorageSpinner()
+        
         manageStorageView.isUserInteractionEnabled = true
         manageStorageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showManageStorageVC)))
+        
         updateStorageSummaryLabel(completion: {
             self.storageSummaryBarView.summaryDict = StorageManager.sharedManager.getStorageItemSummaryByType()
+            self.hideStorageSpinner()
         })
-    }
-    
-    func configureServers() {
-        inviteServerTextField.text = API.kHUBServerUrl
-        memesServerTextField.text = API.kAttachmentsServerUrl
-        meetingServerTextField.text = API.kVideoCallServer
-        meetingAmountTextField.text = "\(UserContact.kTipAmount)"
-    }
-    
-    func changeSVGColor(svgImage: UIImage, color: UIColor) -> UIImage? {
-        // Create a new image renderer with the same size as the SVG image
-        let renderer = UIGraphicsImageRenderer(size: svgImage.size)
-
-        // Render the SVG image with the new color
-        let newImage = renderer.image { context in
-            // Set the fill color
-            color.setFill()
-
-            // Draw the SVG image with the new color
-            svgImage.draw(in: CGRect(origin: .zero, size: svgImage.size))
-        }
-
-        return newImage
     }
     
     func updateStorageSummaryLabel(completion:@escaping ()->()){
         let max = UserData.sharedInstance.getMaxMemoryGB()
-        self.storageSumaryLabel.text = "Loading..."
-        self.storageSumaryLabel.textColor = UIColor.Sphinx.SecondaryText
+
         StorageManager.sharedManager.refreshAllStoredData(completion: {
             let usage = StorageManager.sharedManager.getItemGroupTotalSize(items: StorageManager.sharedManager.allItems)
             let maxInBytes = Int(Double(max) * 1e9)
@@ -315,9 +269,17 @@ class ProfileViewController: KeyboardEventsViewController {
             attributedText.addAttribute(.foregroundColor, value: UIColor.Sphinx.SecondaryText, range: NSRange(location: usageRange.length, length: fullText.count - usageRange.length))
 
             self.storageSumaryLabel.attributedText = attributedText
+            
             completion()
         })
         
+    }
+    
+    func configureServers() {
+        inviteServerTextField.text = API.kHUBServerUrl
+        memesServerTextField.text = API.kAttachmentsServerUrl
+        meetingServerTextField.text = API.kVideoCallServer
+        meetingAmountTextField.text = "\(UserContact.kTipAmount)"
     }
     
     //IBActions

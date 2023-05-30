@@ -143,7 +143,12 @@ extension ProfileManageStorageViewModel : UITableViewDelegate,UITableViewDataSou
             })
             break
         case .video:
-            
+            StorageManager.sharedManager.deleteAllVideos(completion: {
+                StorageManager.sharedManager.refreshAllStoredData(completion: {
+                    self.refreshData()
+                    self.vc.resetIsLoading()
+                })
+            })
             break
         case .photo:
             StorageManager.sharedManager.deleteAllImages(completion: {

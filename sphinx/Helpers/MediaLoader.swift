@@ -262,7 +262,7 @@ class MediaLoader {
                 storeMediaDataInCache(data: decryptedData, url: url.absoluteString,isVideo:isVideo)
                 if let chat = message.chat{
                     let randomInt = Int.random(in: 0...Int(1e9))
-                    let _ = CachedMedia.createObject(id: randomInt, chat: chat, filePath: nil, fileExtension: "mp4", key: mediaKey)
+                    let _ = CachedMedia.createObject(id: randomInt, chat: chat, filePath: nil, fileExtension: "mp4", key: url.absoluteString)
                     print(chat.id)
                     print()
                 }

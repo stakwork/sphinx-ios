@@ -224,18 +224,47 @@ class StorageManager {
         }
     }
     
-    func getSphinxCacheVideos(completion: @escaping ([StorageManagerItem])->()){
+    func getSphinxCacheVideos(completion: @escaping ([StorageManagerItem]) -> ()) {
         let blah = CachedMedia.getAll()
-        let videoCMs = blah.filter({cm in cm.fileExtension != "png"})
-        print(videoCMs)
+        let videoCMs = blah.filter({ cm in cm.fileExtension != "png" })
+        let fileManager = FileManager.default
+        
         var items = [StorageManagerItem]()
-        for cm in videoCMs{
-            let newItem = StorageManagerItem(type: .video, sizeMB: 6.9, label: "", date:cm.creationDate ?? Date()  ,cachedMedia: cm)
-            items.append(newItem)
+        let sc = SphinxCache()
+        for cm in videoCMs {
+            var size: UInt64? = nil
+            do {
+                if let key = cm.key,
+                   let fileData = sc.value(forKey: key) {
+                    size = UInt64(fileData.count)
+                    
+                    let newItem = StorageManagerItem(type: .video, sizeMB: Double(size ?? 0) / 1e6, label: "", date: cm.creationDate ?? Date(), cachedMedia: cm)
+                    items.append(newItem)
+                }
+            } catch {
+                print("Error retrieving size of the file")
+            }
         }
+        
         print(items)
+        populateVideoImages(smis: items)
         completion(items)
     }
+    
+    func populateVideoImages(smis:[StorageManagerItem]){
+        let sc = SphinxCache()
+        for smi in smis{
+            if let cm = smi.cachedMedia,
+               let key = cm.key,
+               let data = sc.value(forKey: key){
+                MediaLoader.getThumbnailImageFromVideoData(data: data, videoUrl: key, completion: { image in
+                    print(image)
+                    smi.cachedMedia?.image = image
+                })
+            }
+        }
+    }
+
     
     func getImageCacheItems(completion: @escaping ([StorageManagerItem])->()) {
         cachedMedia = []
@@ -297,11 +326,26 @@ class StorageManager {
         var cmCounter = cms.count
         cmCounter == 0 ? (completion()) : ()
         for cm in cms{
-            cm.removeCachedMediaAndDeleteObject(completion: {
-                cmCounter -= 1
-                cmCounter > 0 ? () : (completion())
-            })
+            if cm.fileExtension == "png"{
+                cm.removeCachedMediaAndDeleteObject(completion: {
+                    cmCounter -= 1
+                    cmCounter > 0 ? () : (completion())
+                })
+            }
+            else if cm.fileExtension == "mp4"{
+                cm.removeObjectFromDB(completion: {
+                    cmCounter -= 1
+                    cmCounter > 0 ? () : (completion())
+                })
+            }
         }
+    }
+    
+    func deleteAllVideos(completion:@escaping ()->()){
+        let allVids = allItems.filter({$0.type == .video}).compactMap({$0.cachedMedia})
+        deleteCacheItems(cms: allVids, completion: {
+            completion()
+        })
     }
     
     func deleteAllImages(completion:@escaping ()->()){

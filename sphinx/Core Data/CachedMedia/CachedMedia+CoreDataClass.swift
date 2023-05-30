@@ -63,6 +63,13 @@ public class CachedMedia: NSManagedObject {
         return cachedMedia
     }
     
+    func removeObjectFromDB(completion:@escaping ()->()){
+        let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
+        managedContext.delete(self)
+        managedContext.saveContext()
+        completion()
+    }
+    
     func removeCachedMediaAndDeleteObject(completion: @escaping ()->()) {
         let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
         if let key = self.key{

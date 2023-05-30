@@ -79,7 +79,11 @@ class ProfileManageStorageSourceDetailsVC : UIViewController{
                 switch(self.source){
                 case .chats:
                     StorageManager.sharedManager.deleteAllImages(completion: {
-                        self.handleReset()
+                        StorageManager.sharedManager.deleteAllVideos(completion: {
+                            StorageManager.sharedManager.refreshAllStoredData(completion: {
+                                self.handleReset()
+                            })
+                        })
                     })
                     break
                 case .podcasts:

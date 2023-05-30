@@ -27,7 +27,6 @@ class ChatHeaderView: UIView {
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var initialsLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var headerNameY: NSLayoutConstraint!
     @IBOutlet weak var contributedSatsLabel: UILabel!
     @IBOutlet weak var contributedSatsIcon: UILabel!
     @IBOutlet weak var lockSign: UILabel!
@@ -35,8 +34,7 @@ class ChatHeaderView: UIView {
     @IBOutlet weak var keyLoadingWheel: UIActivityIndicatorView!
     @IBOutlet weak var volumeButton: UIButton!
     @IBOutlet weak var webAppButton: UIButton!
-    @IBOutlet weak var webAppButtonTrailing: NSLayoutConstraint!
-    @IBOutlet weak var videoCallButton: UIButton!
+    @IBOutlet weak var contributionsContainer: UIStackView!
     
     var keysLoading = false {
         didSet {
@@ -181,15 +179,13 @@ class ChatHeaderView: UIView {
             let isMyTribe = (chat?.isMyPublicGroup() ?? false)
             let label = isMyTribe ? "earned.sats".localized : "contributed.sats".localized
             let sats = PodcastPaymentsHelper.getSatsEarnedFor(feedID)
-            headerNameY.constant = -8
-            contributedSatsIcon.isHidden = false
             contributedSatsLabel.text = String(format: label, sats)
+            contributionsContainer.isHidden = false
         }
     }
     
     func configureWebAppButton() {
         let hasWebAppUrl = chat?.getAppUrl() != nil
-        webAppButtonTrailing.constant = hasWebAppUrl ? 0 : -30
         webAppButton.isHidden = !hasWebAppUrl
         webAppButton.setTitle("apps", for: .normal)
     }

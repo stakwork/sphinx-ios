@@ -28,7 +28,7 @@ extension NewChatViewController : ChatHeaderViewDelegate {
     }
     
     func didTapWebAppButton() {
-        
+        toggleWebAppContainer()
     }
     
     func didTapMuteButton() {

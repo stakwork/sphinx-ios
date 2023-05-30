@@ -47,6 +47,10 @@ class NewChatHeaderView: UIView {
         chatHeaderView.updateSatsEarned()
     }
     
+    func toggleWebAppIcon(showChatIcon: Bool) {
+        chatHeaderView.toggleWebAppIcon(showChatIcon: showChatIcon)
+    }
+    
     func configureHeaderWith(
         chat: Chat?,
         contact: UserContact?,

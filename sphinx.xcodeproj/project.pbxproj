@@ -95,6 +95,7 @@
 		472092BB2A24FF6E00468796 /* NewChatHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 472092BA2A24FF6E00468796 /* NewChatHeaderView.xib */; };
 		472092BD2A2536F800468796 /* NewChatViewController+PodcastExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472092BC2A2536F800468796 /* NewChatViewController+PodcastExtension.swift */; };
 		472092BF2A26378900468796 /* NewChatViewController+MentionsAutocomplete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472092BE2A26378900468796 /* NewChatViewController+MentionsAutocomplete.swift */; };
+		472092C12A26516A00468796 /* NewChatViewController+WebAppExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472092C02A26516A00468796 /* NewChatViewController+WebAppExtension.swift */; };
 		472161B1293913230088B87B /* LoadingRecommendationsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472161AF293913230088B87B /* LoadingRecommendationsCollectionViewCell.swift */; };
 		472161B42939158B0088B87B /* NoRecommendationsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472161B22939158B0088B87B /* NoRecommendationsCollectionViewCell.swift */; };
 		472161B6293915E20088B87B /* NoRecommendationsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 472161B8293915E20088B87B /* NoRecommendationsCollectionViewCell.xib */; };
@@ -931,6 +932,7 @@
 		472092BA2A24FF6E00468796 /* NewChatHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewChatHeaderView.xib; sourceTree = "<group>"; };
 		472092BC2A2536F800468796 /* NewChatViewController+PodcastExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewChatViewController+PodcastExtension.swift"; sourceTree = "<group>"; };
 		472092BE2A26378900468796 /* NewChatViewController+MentionsAutocomplete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewChatViewController+MentionsAutocomplete.swift"; sourceTree = "<group>"; };
+		472092C02A26516A00468796 /* NewChatViewController+WebAppExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewChatViewController+WebAppExtension.swift"; sourceTree = "<group>"; };
 		472161AF293913230088B87B /* LoadingRecommendationsCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingRecommendationsCollectionViewCell.swift; sourceTree = "<group>"; };
 		472161B22939158B0088B87B /* NoRecommendationsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoRecommendationsCollectionViewCell.swift; sourceTree = "<group>"; };
 		472161B7293915E20088B87B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/NoRecommendationsCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -3052,15 +3054,16 @@
 		475DD3152A14156300F92173 /* New Chat View Controller */ = {
 			isa = PBXGroup;
 			children = (
-				47F826692A0C150B002E81F0 /* NewChatViewController.swift */,
-				475DD3092A1287B400F92173 /* NewKeyboardHandlerViewController.swift */,
-				475DD30B2A1291F900F92173 /* NewChatViewController+ChatHeaderDelegateExtension.swift */,
 				475DD30D2A1297C100F92173 /* PopHandlerViewController.swift */,
+				475DD3092A1287B400F92173 /* NewKeyboardHandlerViewController.swift */,
+				47F826692A0C150B002E81F0 /* NewChatViewController.swift */,
+				475DD30B2A1291F900F92173 /* NewChatViewController+ChatHeaderDelegateExtension.swift */,
 				475DD3112A13FBAB00F92173 /* NewChatViewController+FetchControllerExtension.swift */,
 				475DD3132A14151E00F92173 /* NewChatViewController+BottomViewDelegateExtension.swift */,
 				476AAAA12A24F9F80092AC87 /* NewChatViewController+TribeExtension.swift */,
 				472092BC2A2536F800468796 /* NewChatViewController+PodcastExtension.swift */,
 				472092BE2A26378900468796 /* NewChatViewController+MentionsAutocomplete.swift */,
+				472092C02A26516A00468796 /* NewChatViewController+WebAppExtension.swift */,
 			);
 			path = "New Chat View Controller";
 			sourceTree = "<group>";
@@ -4968,6 +4971,7 @@
 				475154B32423E7FE00477384 /* VideoCallSentTableViewCell.swift in Sources */,
 				47AA08C3234B8CF2002C69E2 /* AddFriendViewController.swift in Sources */,
 				479608F4256EAEB400A68FC1 /* MessageBoostView.swift in Sources */,
+				472092C12A26516A00468796 /* NewChatViewController+WebAppExtension.swift in Sources */,
 				475154B62423F08A00477384 /* VideoCallBubbleView.swift in Sources */,
 				472782122729A547007D5F1F /* NewsletterFeed+FetchUtils.swift in Sources */,
 				F3446B9326BABAB400855516 /* ChatListCollectionViewCell.swift in Sources */,

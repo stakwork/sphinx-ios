@@ -18,18 +18,19 @@ extension NewChatViewController: ChatMentionAutocompleteDelegate {
     func didDetectPossibleMention(
         mentionText: String
     ) {
-        //Test this logic and chat aliases
-        let possibleMentions = self.chat?.aliases.filter({
-            if (mentionText.count > $0.count) {
-                return false
-            }
-            let substring = $0.substring(range: NSRange(location: 0, length: mentionText.count))
-            return (substring.lowercased() == mentionText && mentionText != "")
-        }).sorted()
+        var possibleMentions = [String]()
         
-        if let datasource = chatMentionAutocompleteDataSource, let mentions = possibleMentions {
-            datasource.updateMentionSuggestions(suggestions: mentions)
+        if mentionText.count > 0 {
+            possibleMentions = self.chat?.aliases.filter({
+                if (mentionText.count > $0.count) {
+                    return false
+                }
+                let substring = $0.substring(range: NSRange(location: 0, length: mentionText.count))
+                return (substring.lowercased() == mentionText && mentionText != "")
+            }).sorted() ?? []
         }
+        
+        chatMentionAutocompleteDataSource.updateMentionSuggestions(suggestions: possibleMentions)
     }
     
     func configureMentionAutocompleteTableView() {
@@ -46,6 +47,5 @@ extension NewChatViewController: ChatMentionAutocompleteDelegate {
     
     func processAutocomplete(text: String) {
         bottomView.populateMentionAutocomplete(mention: text)
-//        NotificationCenter.default.post(name: NSNotification.Name.autocompleteMention, object: text)
     }
 }

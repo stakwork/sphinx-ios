@@ -79,7 +79,7 @@
                             <rect key="frame" x="60" y="10" width="273" height="38"/>
                             <subviews>
                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" keyboardDismissMode="interactive" text="This is a text" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="BOv-rM-lHM">
-                                    <rect key="frame" x="18" y="1.6666666666666643" width="237" height="35"/>
+                                    <rect key="frame" x="12" y="1.6666666666666643" width="249" height="35"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <color key="textColor" name="PlaceholderText"/>
                                     <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
@@ -88,9 +88,9 @@
                             </subviews>
                             <color key="backgroundColor" name="ReceivedMsgBG"/>
                             <constraints>
-                                <constraint firstAttribute="trailing" secondItem="BOv-rM-lHM" secondAttribute="trailing" constant="18" id="68o-ff-7Dc"/>
+                                <constraint firstAttribute="trailing" secondItem="BOv-rM-lHM" secondAttribute="trailing" constant="12" id="68o-ff-7Dc"/>
                                 <constraint firstAttribute="bottom" secondItem="BOv-rM-lHM" secondAttribute="bottom" constant="1.5" id="JPt-RK-6Wm"/>
-                                <constraint firstItem="BOv-rM-lHM" firstAttribute="leading" secondItem="3ET-Uu-S7L" secondAttribute="leading" constant="18" id="RhS-7F-Fh5"/>
+                                <constraint firstItem="BOv-rM-lHM" firstAttribute="leading" secondItem="3ET-Uu-S7L" secondAttribute="leading" constant="12" id="RhS-7F-Fh5"/>
                                 <constraint firstItem="BOv-rM-lHM" firstAttribute="top" secondItem="3ET-Uu-S7L" secondAttribute="top" constant="1.5" id="U4g-2C-afS"/>
                             </constraints>
                         </view>

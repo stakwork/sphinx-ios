@@ -58,6 +58,10 @@ extension ChatMessageTextFieldView {
         text: String
     ) -> String? {
         
+        if text.trim().isEmpty {
+            return nil
+        }
+        
         let cursorPosition = textView.selectedRange.location
         
         let relevantText = text[0..<cursorPosition]
@@ -67,7 +71,7 @@ extension ChatMessageTextFieldView {
         }
         
         if let lastWord = relevantText.split(separator: " ").last {
-            if let firstLetter = lastWord.first, firstLetter == "@" {
+            if let firstLetter = lastWord.first, firstLetter == "@" && lastWord != "@" {
                 return String(lastWord)
             }
         }
@@ -97,8 +101,6 @@ extension ChatMessageTextFieldView {
                 let position = initialPosition + (("@\(mention) ".count - typedMentionText.count))
                 textView.selectedRange = NSRange(location: position, length: 0)
                 
-//                NotificationCenter.default.removeObserver(self, name: NSNotification.Name.autocompleteMention, object: nil)
-                
                 textViewDidChange(textView)
             }
         }
@@ -110,19 +112,8 @@ extension ChatMessageTextFieldView {
         if let mention = getAtMention(text: text) {
             let mentionValue = String(mention).replacingOccurrences(of: "@", with: "").lowercased()
             self.delegate?.didDetectPossibleMention(mentionText: mentionValue)
-            
-//            NotificationCenter.default.addObserver(
-//                self,
-//                selector: #selector(populateMentionAutocomplete),
-//                name: NSNotification.Name.autocompleteMention,
-//                object: nil
-//            )
         } else {
-//            NotificationCenter.default.removeObserver(
-//                self,
-//                name: NSNotification.Name.autocompleteMention,
-//                object: nil
-//            )
+            self.delegate?.didDetectPossibleMention(mentionText: "")
         }
     }
 }

@@ -75,17 +75,31 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
         
         totalSizeLabel.text = formatBytes(Int(StorageManager.sharedManager.getItemGroupTotalSize(items: vm.items) * 1e6))
         
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(handleDeleteSelected))
+        deletionSummaryButton.addGestureRecognizer(gesture)
+        
     }
     
     @IBAction func backButtonTapped(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
     
+    
+    @objc func handleDeleteSelected(){
+        AlertHelper.showTwoOptionsAlert(title: "are.you.sure".localized, message: "Confirming will delete the selected chat images from cache. This cannot be undone.",confirm: {
+            self.processDeleteSelected {
+                //TODO update loading label here
+                
+            }
+        })
+    }
+    
+    
     @IBAction func deleteAllTapped(_ sender: Any) {
         print("deleteAllTapped")
         let itemDescription = (sourceType == .chats) ? "chat.media".localized : "podcasts"
         AlertHelper.showTwoOptionsAlert(title: "are.you.sure".localized, message: "Confirming will delete all of your \(itemDescription). This cannot be undone.",confirm: {
-            self.processDelete {
+            self.processDeleteAll {
                 //TODO update loading label here
                 self.delegate?.finishedDeleteAll()
                 self.navigationController?.popViewController(animated: true)
@@ -105,11 +119,31 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
         deletionSummarySizeLabel.text = formatBytes(Int(1e6 * vm.getSelectionSize()))
     }
     
+    func processDeleteSelected(completion: @escaping ()->()){
+        let cms = self.vm.getSelectedCachedMedia()
+        StorageManager.sharedManager.deleteCacheItems(cms: cms, completion: {
+            completion()
+            self.vm.removeSelectedItems()
+            if (self.vm.items.count == 0){
+                self.navigationController?.popViewController(animated: true)
+            }
+        })
+    }
     
-    func processDelete(completion: @escaping ()->()){
+    
+    
+    
+    func processDeleteAll(completion: @escaping ()->()){
         switch(self.sourceType){
         case .chats:
-            
+            let dict = StorageManager.sharedManager.getItemDetailsByChat()
+            if let chat = chat,
+               let chatItems = dict[chat]{
+                let cms = chatItems.compactMap({$0.cachedMedia})
+                StorageManager.sharedManager.deleteCacheItems(cms: cms, completion: {
+                    completion()
+                })
+            }
             break
         case .podcasts:
             if let pf = self.podcastFeed{

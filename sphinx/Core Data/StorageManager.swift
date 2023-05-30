@@ -276,6 +276,7 @@ class StorageManager {
         completion(items)
     }
     
+    
     func deleteCacheItems(cms:[CachedMedia],completion: @escaping ()->()){
         var cmCounter = cms.count
         cmCounter == 0 ? (completion()) : ()

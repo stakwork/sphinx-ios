@@ -28,6 +28,48 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVM : NSObject{
         }
     }
     
+    func removeSelectedItems() {
+        var indicesToRemove: [Int] = []
+        
+        for (index, isSelected) in selectedStatus.enumerated() {
+            if isSelected {
+                indicesToRemove.append(index)
+            }
+        }
+        
+        // Sort the indices in descending order
+        indicesToRemove.sort(by: >)
+        
+        // Remove the selected items from the items array
+        for index in indicesToRemove {
+            items.remove(at: index)
+        }
+        
+        // Reset the selected status
+        selectedStatus = items.map({ _ in return false })
+        
+        // Reload the collection view or table view if needed
+        imageCollectionView.reloadData()
+        tableView.reloadData()
+    }
+    
+    func getSelectedCachedMedia()->[CachedMedia]{
+        return getSelectedItems().compactMap({$0.cachedMedia})
+    }
+    
+    func getSelectedItems() -> [StorageManagerItem] {
+        var selectedItems: [StorageManagerItem] = []
+        
+        for (index, isSelected) in selectedStatus.enumerated() {
+            if isSelected {
+                selectedItems.append(items[index])
+            }
+        }
+        
+        return selectedItems
+    }
+
+    
     func getIsSelectingImages()->Bool{
         let isSelectingImages = selectedStatus.filter({$0 == true}).count > 0
         return isSelectingImages

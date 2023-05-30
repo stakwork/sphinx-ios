@@ -66,7 +66,7 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
         
         if sourceType == .chats,
            let chat = chat{
-            headerTitleLabel.text = chat.name
+            headerTitleLabel.text = chat.getName()
         }
         else if sourceType == .podcasts,
                 let podcastFeed = podcastFeed{

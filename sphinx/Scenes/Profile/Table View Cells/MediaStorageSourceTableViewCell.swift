@@ -36,6 +36,12 @@ class MediaStorageSourceTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    override func prepareForReuse() {
+        self.mediaSourceLabel.text = ""
+        self.mediaSourceSizeLabel.text = ""
+        self.squareImageView.image = nil
+    }
+    
     func configure(forSource:StorageManagerMediaSource){
         switch(forSource){
         case .chats:
@@ -50,9 +56,15 @@ class MediaStorageSourceTableViewCell: UITableViewCell {
     }
     
     func configure(forChat:Chat,items:[StorageManagerItem]){
-        mediaSourceLabel.text = forChat.name
+
+        mediaSourceLabel.text = forChat.getName()
+        
+        
         mediaSourceSizeLabel.text = formatBytes(Int(StorageManager.sharedManager.getItemGroupTotalSize(items: items)))
-        if let imageURL = URL(string: forChat.photoUrl ?? ""){
+//        if let image = forChat.getImage(){
+//            squareImageView.image = image
+//        }
+        if let imageURL = URL(string: forChat.getPhotoUrl() ?? ""){
             squareImageView.sd_setImage(with: imageURL)
         }
         else{

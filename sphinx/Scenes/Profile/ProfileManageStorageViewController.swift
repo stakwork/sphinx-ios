@@ -159,7 +159,9 @@ class ProfileManageStorageViewController : UIViewController{
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if(isFirstLoad == false){
-            setupStorageViewsAndModels()
+            DispatchQueue.main.async{
+                self.setupStorageViewsAndModels()
+            }
         }
         
         isFirstLoad = false

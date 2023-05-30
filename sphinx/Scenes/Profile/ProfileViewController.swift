@@ -131,6 +131,10 @@ class ProfileViewController: KeyboardEventsViewController {
         configureProfile()
         configureServers()
         configureSigningDeviceButton()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         setupMemoryManagement()
     }
     

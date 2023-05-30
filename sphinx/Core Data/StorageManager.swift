@@ -258,8 +258,12 @@ class StorageManager {
                let key = cm.key,
                let data = sc.value(forKey: key){
                 MediaLoader.getThumbnailImageFromVideoData(data: data, videoUrl: key, completion: { image in
-                    print(image)
-                    smi.cachedMedia?.image = image
+                    if let newImage = image{
+                        smi.cachedMedia?.image = newImage
+                    }
+                    else{
+                        smi.cachedMedia?.image = #imageLiteral(resourceName: "videoPlaceholder")
+                    }
                 })
             }
         }
@@ -327,13 +331,13 @@ class StorageManager {
         cmCounter == 0 ? (completion()) : ()
         for cm in cms{
             if cm.fileExtension == "png"{
-                cm.removeCachedMediaAndDeleteObject(completion: {
+                cm.removePhotoObject(completion: {
                     cmCounter -= 1
                     cmCounter > 0 ? () : (completion())
                 })
             }
             else if cm.fileExtension == "mp4"{
-                cm.removeObjectFromDB(completion: {
+                cm.removeVideoObject(completion: {
                     cmCounter -= 1
                     cmCounter > 0 ? () : (completion())
                 })

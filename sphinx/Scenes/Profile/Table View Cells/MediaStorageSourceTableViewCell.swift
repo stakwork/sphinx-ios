@@ -46,6 +46,8 @@ class MediaStorageSourceTableViewCell: UITableViewCell {
         switch(forSource){
         case .chats:
             mediaSourceLabel.text = "Chats"
+            squareImageView.image = #imageLiteral(resourceName: "appPinIcon")
+            squareImageView.makeCircular()
             break
         case .podcasts:
             mediaSourceLabel.text = "Podcasts"
@@ -69,6 +71,8 @@ class MediaStorageSourceTableViewCell: UITableViewCell {
         }
         else{
             //TODO: show initials
+            squareImageView.image = #imageLiteral(resourceName: "appPinIcon")
+            squareImageView.makeCircular()
         }
         squareImageView.makeCircular()
         let mediaSizeText = formatBytes(Int(StorageManager.sharedManager.getItemGroupTotalSize(items: items)*1e6))

@@ -93,7 +93,7 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVM : NSObject{
     }
     
     func finishSetup(items : [StorageManagerItem]){
-        self.items = items
+        self.items = items.sorted(by: {$0.date > $1.date})
         if(sourceType == .podcasts){
             tableView.delegate = self
             tableView.dataSource = self

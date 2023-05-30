@@ -181,10 +181,10 @@
                             <rect key="frame" x="333" y="0.0" width="60" height="58"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PDF-iA-BMU">
-                                    <rect key="frame" x="11" y="0.0" width="38" height="58"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="60" height="58"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yLv-Gf-Psf">
-                                            <rect key="frame" x="4" y="9.6666666666666643" width="30" height="39"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="60" height="58"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="27"/>
                                             <state key="normal" title="mic">
@@ -205,9 +205,11 @@
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="38" id="5cI-CB-wcQ"/>
-                                        <constraint firstItem="yLv-Gf-Psf" firstAttribute="centerX" secondItem="PDF-iA-BMU" secondAttribute="centerX" id="WSg-gU-CTk"/>
-                                        <constraint firstItem="yLv-Gf-Psf" firstAttribute="centerY" secondItem="PDF-iA-BMU" secondAttribute="centerY" id="wJb-gN-gFB"/>
+                                        <constraint firstAttribute="width" constant="60" id="5cI-CB-wcQ"/>
+                                        <constraint firstItem="yLv-Gf-Psf" firstAttribute="top" secondItem="PDF-iA-BMU" secondAttribute="top" id="BdO-w1-wyV"/>
+                                        <constraint firstAttribute="bottom" secondItem="yLv-Gf-Psf" secondAttribute="bottom" id="fEk-lP-zsd"/>
+                                        <constraint firstItem="yLv-Gf-Psf" firstAttribute="leading" secondItem="PDF-iA-BMU" secondAttribute="leading" id="guj-2y-7pZ"/>
+                                        <constraint firstAttribute="trailing" secondItem="yLv-Gf-Psf" secondAttribute="trailing" id="j5w-l4-Cec"/>
                                     </constraints>
                                 </view>
                             </subviews>

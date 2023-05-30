@@ -666,6 +666,12 @@ public class Chat: NSManagedObject {
         return "sphinx.chat://?action=tribe&uuid=\(self.uuid ?? "")&host=\(self.host ?? "")"
     }
     
+    func processAliases() {
+        if let messages = self.messages?.allObjects as? [TransactionMessage] {
+            aliases = Array(Set(messages.compactMap({$0.senderAlias})))
+        }
+    }
+    
     func saveChat() {
         CoreDataManager.sharedManager.saveContext()
     }

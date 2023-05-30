@@ -49,6 +49,12 @@ extension NewChatAccessoryView {
     ) {
         messageFieldView.delegate = messageFieldDelegate
     }
+    
+    func populateMentionAutocomplete(
+        mention: String
+    ) {
+        messageFieldView.populateMentionAutocomplete(mention: mention)
+    }
 }
 
 //Podcast Player

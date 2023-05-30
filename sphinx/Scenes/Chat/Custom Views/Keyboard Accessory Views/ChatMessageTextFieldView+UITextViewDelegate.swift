@@ -36,49 +36,8 @@ extension ChatMessageTextFieldView : UITextViewDelegate {
     }
     
     func textViewDidChange(_ textView: UITextView) {
-//        processMention(text: textView.text)
         animateElements(sendButtonVisible: !textView.text.isEmpty)
-    }
-    
-    func getAtMention(text:String)->String?{
-        if let lastWord = text.split(separator: " ").last, let firstLetter = lastWord.first, firstLetter == "@" {
-            return String(lastWord)
-        }
-        return nil
-    }
-    
-    @objc func populateMentionAutocomplete(notification:NSNotification){
-        if let text = notification.object as? String,
-           let typedMentionText = self.getAtMention(text: textView.text){
-            self.textView.text = self.textView.text.replacingOccurrences(of: typedMentionText, with: "@\(text) ")
-            
-            NotificationCenter.default.removeObserver(
-                self,
-                name: NSNotification.Name.autocompleteMention,
-                object: nil
-            )
-        }
-    }
-    
-    func processMention(text:String){
-        if let mention = getAtMention(text: text) {
-            
-            let mentionValue = String(mention).replacingOccurrences(of: "@", with: "").lowercased()
-//            self.delegate?.didDetectPossibleMention(mentionText: mentionValue)
-            
-            NotificationCenter.default.addObserver(
-                self,
-                selector: #selector(populateMentionAutocomplete),
-                name: NSNotification.Name.autocompleteMention,
-                object: nil
-            )
-        } else {
-            NotificationCenter.default.removeObserver(
-                self,
-                name: NSNotification.Name.autocompleteMention,
-                object: nil
-            )
-        }
+        processMention(text: textView.text)
     }
     
     func animateElements(
@@ -89,5 +48,81 @@ extension ChatMessageTextFieldView : UITextViewDelegate {
         
         sendButtonContainer.alpha = sendButtonVisible ? 1.0 : 0.0
         audioButtonContainer.alpha = sendButtonVisible ? 0.0 : 1.0
+    }
+}
+
+///Mentions
+extension ChatMessageTextFieldView {
+    
+    func getAtMention(
+        text: String
+    ) -> String? {
+        
+        let cursorPosition = textView.selectedRange.location
+        
+        let relevantText = text[0..<cursorPosition]
+        
+        if let lastLetter = relevantText.last, lastLetter == " " {
+            return nil
+        }
+        
+        if let lastWord = relevantText.split(separator: " ").last {
+            if let firstLetter = lastWord.first, firstLetter == "@" {
+                return String(lastWord)
+            }
+        }
+        
+        return nil
+    }
+    
+    func populateMentionAutocomplete(
+        mention: String
+    ) {
+        if let text = textView.text {
+            let initialPosition = textView.selectedRange.location
+            
+            if let typedMentionText = getAtMention(text: text) {
+                
+                let startIndex = text.index(text.startIndex, offsetBy: initialPosition - typedMentionText.count)
+                let endIndex = text.index(text.startIndex, offsetBy: initialPosition)
+                
+                textView.text = textView.text.replacingOccurrences(
+                    of: typedMentionText,
+                    with: "@\(mention) ",
+                    options: [],
+                    range: startIndex..<endIndex
+                )
+                
+
+                let position = initialPosition + (("@\(mention) ".count - typedMentionText.count))
+                textView.selectedRange = NSRange(location: position, length: 0)
+                
+//                NotificationCenter.default.removeObserver(self, name: NSNotification.Name.autocompleteMention, object: nil)
+                
+                textViewDidChange(textView)
+            }
+        }
+    }
+    
+    func processMention(
+        text: String
+    ) {
+        if let mention = getAtMention(text: text) {
+            let mentionValue = String(mention).replacingOccurrences(of: "@", with: "").lowercased()
+            self.delegate?.didDetectPossibleMention(mentionText: mentionValue)
+            
+//            NotificationCenter.default.addObserver(
+//                self,
+//                selector: #selector(populateMentionAutocomplete),
+//                name: NSNotification.Name.autocompleteMention,
+//                object: nil
+//            )
+        } else {
+//            NotificationCenter.default.removeObserver(
+//                self,
+//                name: NSNotification.Name.autocompleteMention,
+//                object: nil
+//            )
+        }
     }
 }

@@ -94,6 +94,7 @@
 		472092B92A24FF6100468796 /* NewChatHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472092B82A24FF6100468796 /* NewChatHeaderView.swift */; };
 		472092BB2A24FF6E00468796 /* NewChatHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 472092BA2A24FF6E00468796 /* NewChatHeaderView.xib */; };
 		472092BD2A2536F800468796 /* NewChatViewController+PodcastExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472092BC2A2536F800468796 /* NewChatViewController+PodcastExtension.swift */; };
+		472092BF2A26378900468796 /* NewChatViewController+MentionsAutocomplete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472092BE2A26378900468796 /* NewChatViewController+MentionsAutocomplete.swift */; };
 		472161B1293913230088B87B /* LoadingRecommendationsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472161AF293913230088B87B /* LoadingRecommendationsCollectionViewCell.swift */; };
 		472161B42939158B0088B87B /* NoRecommendationsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472161B22939158B0088B87B /* NoRecommendationsCollectionViewCell.swift */; };
 		472161B6293915E20088B87B /* NoRecommendationsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 472161B8293915E20088B87B /* NoRecommendationsCollectionViewCell.xib */; };
@@ -929,6 +930,7 @@
 		472092B82A24FF6100468796 /* NewChatHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewChatHeaderView.swift; sourceTree = "<group>"; };
 		472092BA2A24FF6E00468796 /* NewChatHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewChatHeaderView.xib; sourceTree = "<group>"; };
 		472092BC2A2536F800468796 /* NewChatViewController+PodcastExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewChatViewController+PodcastExtension.swift"; sourceTree = "<group>"; };
+		472092BE2A26378900468796 /* NewChatViewController+MentionsAutocomplete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewChatViewController+MentionsAutocomplete.swift"; sourceTree = "<group>"; };
 		472161AF293913230088B87B /* LoadingRecommendationsCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingRecommendationsCollectionViewCell.swift; sourceTree = "<group>"; };
 		472161B22939158B0088B87B /* NoRecommendationsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoRecommendationsCollectionViewCell.swift; sourceTree = "<group>"; };
 		472161B7293915E20088B87B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/NoRecommendationsCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -3058,6 +3060,7 @@
 				475DD3132A14151E00F92173 /* NewChatViewController+BottomViewDelegateExtension.swift */,
 				476AAAA12A24F9F80092AC87 /* NewChatViewController+TribeExtension.swift */,
 				472092BC2A2536F800468796 /* NewChatViewController+PodcastExtension.swift */,
+				472092BE2A26378900468796 /* NewChatViewController+MentionsAutocomplete.swift */,
 			);
 			path = "New Chat View Controller";
 			sourceTree = "<group>";
@@ -4841,6 +4844,7 @@
 				F313024826BA994B00A1396E /* ChatsContainerViewController.swift in Sources */,
 				CEEBBB4229DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.swift in Sources */,
 				475BDCFB232AC24600C5BBD6 /* PaidInvoiceReceivedTableViewCell.swift in Sources */,
+				472092BF2A26378900468796 /* NewChatViewController+MentionsAutocomplete.swift in Sources */,
 				4789E26E24F406F3003991BE /* RelayURLUpdateHelper.swift in Sources */,
 				475BDD5C232AE26E00C5BBD6 /* TransactionMessage+CoreDataClass.swift in Sources */,
 				478BD8B92829B70700C733FD /* TribeMemberPopupView.swift in Sources */,

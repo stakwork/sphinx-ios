@@ -10,12 +10,18 @@ import UIKit
 
 extension NewChatViewController {
     func fetchTribeData() {
+        if chat?.isPublicGroup() == false {
+            return
+        }
+        
+        configureMentions()
+        
         chat?.updateTribeInfo() {
             self.headerView.setChatInfoOnHeader()
             self.loadPodcastFeed()
             self.configurePinnedMessageView()
         }
-    }
+    }    
     
     func showPendingApprovalMessage() {
         if chat?.isStatusPending() ?? false {

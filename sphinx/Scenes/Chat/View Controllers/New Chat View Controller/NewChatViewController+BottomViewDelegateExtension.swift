@@ -48,10 +48,6 @@ extension NewChatViewController : ChatMessageTextFieldViewDelegate {
     func shouldCancelRecording() {
         
     }
-    
-    func didDetectPossibleMention(mentionText:String) {
-        
-    }
 }
 
 extension NewChatViewController : AttachmentsDelegate {

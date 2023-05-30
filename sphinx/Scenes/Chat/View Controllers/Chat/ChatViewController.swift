@@ -288,7 +288,6 @@ class ChatViewController: KeyboardHandlerViewController {
 
 extension ChatViewController : ChatMentionAutocompleteDelegate {
     func processAutocomplete(text: String) {
-        print(text)
         NotificationCenter.default.post(name: NSNotification.Name.autocompleteMention, object: text)
     }
 }

@@ -13,6 +13,7 @@ class NewChatViewController: NewKeyboardHandlerViewController {
     
     @IBOutlet weak var bottomView: NewChatAccessoryView!
     @IBOutlet weak var headerView: NewChatHeaderView!
+    @IBOutlet weak var mentionsAutocompleteTableView: UITableView!
     
     var contact: UserContact?
     var chat: Chat?
@@ -23,6 +24,7 @@ class NewChatViewController: NewKeyboardHandlerViewController {
     var contactsService: ContactsService!
     var chatViewModel: ChatViewModel!
     
+    var chatMentionAutocompleteDataSource : ChatMentionAutocompleteDataSource! = nil
     let messageBubbleHelper = NewMessageBubbleHelper()
     
     static func instantiate(

@@ -32,13 +32,15 @@ class ChatMentionAutocompleteDataSource : NSObject {
     }
     
     func updateMentionSuggestions(suggestions:[String]){
-        self.tableView.isHidden = (suggestions.isEmpty == true)
-        self.mentionSuggestions = suggestions
+        tableView.isHidden = (suggestions.isEmpty == true)
+        mentionSuggestions = suggestions
         tableView.reloadData()
-        if(suggestions.isEmpty == false){
+        
+        if (suggestions.isEmpty == false) {
             let bottom = IndexPath(
                 row: 0,
-                section: 0)
+                section: 0
+            )
             tableView.scrollToRow(at: bottom, at: .bottom, animated: true)
         }
         
@@ -71,10 +73,12 @@ extension ChatMentionAutocompleteDataSource : UITableViewDataSource{
 }
 
 extension ChatMentionAutocompleteDataSource : UITableViewDelegate{
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.delegate?.processAutocomplete(text: mentionSuggestions[indexPath.row])
         self.tableView.isHidden = true
     }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return mentionCellHeight
     }

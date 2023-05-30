@@ -41,7 +41,8 @@ class ChatImageCollectionViewCell: UICollectionViewCell {
             overlay.backgroundColor = .clear
             overlay.isHidden =  true
             checkmarkView.isHidden = false
-            sizeLabel.text = formatBytes(Int(1e6 * memorySizeMB))
+            let mediaSizeText = formatBytes(Int(memorySizeMB * 1e6))
+            sizeLabel.text = (mediaSizeText == "0 MB") ? "<1MB" : mediaSizeText
             sizeLabel.isHidden = false
         }
     }

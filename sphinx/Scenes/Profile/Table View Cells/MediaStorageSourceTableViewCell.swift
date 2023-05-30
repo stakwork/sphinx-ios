@@ -71,7 +71,8 @@ class MediaStorageSourceTableViewCell: UITableViewCell {
             //TODO: show initials
         }
         squareImageView.makeCircular()
-        mediaSourceSizeLabel.text = formatBytes(Int(StorageManager.sharedManager.getItemGroupTotalSize(items: items)*1e6))
+        let mediaSizeText = formatBytes(Int(StorageManager.sharedManager.getItemGroupTotalSize(items: items)*1e6))
+        mediaSourceSizeLabel.text = (mediaSizeText == "0 MB") ? "<1MB" : mediaSizeText
     }
     
     
@@ -81,7 +82,8 @@ class MediaStorageSourceTableViewCell: UITableViewCell {
             squareImageView.sd_setImage(with: imageURL)
         }
         squareImageView.layer.cornerRadius = 6
-        mediaSourceSizeLabel.text = formatBytes(Int(StorageManager.sharedManager.getItemGroupTotalSize(items: items)*1e6))
+        let mediaSizeText = formatBytes(Int(StorageManager.sharedManager.getItemGroupTotalSize(items: items)*1e6))
+        mediaSourceSizeLabel.text = (mediaSizeText == "0 MB") ? "<1MB" : mediaSizeText
     }
     
     func configure(podcastEpisode:PodcastEpisode,item:StorageManagerItem,index:Int){

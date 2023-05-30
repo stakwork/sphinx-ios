@@ -63,6 +63,12 @@
                         <color key="textColor" name="SecondaryText"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V1O-o7-wgg">
+                        <rect key="frame" x="16" y="16" width="32" height="32"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Mep-cZ-dPt">
                         <rect key="frame" x="16" y="16" width="32" height="32"/>
                         <constraints>
@@ -79,19 +85,24 @@
                     <constraint firstItem="fSL-0q-N4u" firstAttribute="centerY" secondItem="c9l-Av-kpX" secondAttribute="centerY" id="92I-7e-lKY"/>
                     <constraint firstItem="c9l-Av-kpX" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="IgY-zb-hHL"/>
                     <constraint firstItem="Mep-cZ-dPt" firstAttribute="centerY" secondItem="onY-YZ-XsQ" secondAttribute="centerY" id="Iz9-gX-Af5"/>
+                    <constraint firstItem="V1O-o7-wgg" firstAttribute="trailing" secondItem="Mep-cZ-dPt" secondAttribute="trailing" id="N0H-7f-QcE"/>
                     <constraint firstAttribute="trailing" secondItem="Pue-7T-xlg" secondAttribute="trailing" constant="46" id="N5z-YC-O9a"/>
+                    <constraint firstItem="V1O-o7-wgg" firstAttribute="leading" secondItem="Mep-cZ-dPt" secondAttribute="leading" id="Ylk-XA-qii"/>
                     <constraint firstItem="Pue-7T-xlg" firstAttribute="leading" secondItem="onY-YZ-XsQ" secondAttribute="trailing" constant="8" id="hxH-Da-D3T"/>
                     <constraint firstItem="fSL-0q-N4u" firstAttribute="centerX" secondItem="c9l-Av-kpX" secondAttribute="centerX" id="jRS-Rb-VSd"/>
+                    <constraint firstItem="V1O-o7-wgg" firstAttribute="top" secondItem="Mep-cZ-dPt" secondAttribute="top" id="mLW-Xu-aHG"/>
                     <constraint firstItem="c9l-Av-kpX" firstAttribute="width" secondItem="c9l-Av-kpX" secondAttribute="height" multiplier="1:1" id="mWM-Lt-xJq"/>
                     <constraint firstItem="onY-YZ-XsQ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="pEZ-cK-Lxr"/>
                     <constraint firstItem="Pue-7T-xlg" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="r1S-nw-KRh"/>
                     <constraint firstAttribute="bottom" secondItem="Pue-7T-xlg" secondAttribute="bottom" id="rcf-cG-uyc"/>
+                    <constraint firstItem="V1O-o7-wgg" firstAttribute="bottom" secondItem="Mep-cZ-dPt" secondAttribute="bottom" id="rqr-Wg-7cX"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="deleteButton" destination="fSL-0q-N4u" id="Umj-D2-W7l"/>
                 <outlet property="disclosureImageView" destination="c9l-Av-kpX" id="vXd-Dk-cBY"/>
+                <outlet property="initialsLabel" destination="V1O-o7-wgg" id="E3s-Bc-YUI"/>
                 <outlet property="mediaSourceLabel" destination="onY-YZ-XsQ" id="mYs-Uq-3AI"/>
                 <outlet property="mediaSourceSizeLabel" destination="Pue-7T-xlg" id="DfW-hk-yZG"/>
                 <outlet property="squareImageView" destination="Mep-cZ-dPt" id="e9k-d5-Xd7"/>

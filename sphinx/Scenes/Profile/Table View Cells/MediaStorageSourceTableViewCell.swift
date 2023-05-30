@@ -16,6 +16,7 @@ class MediaStorageSourceTableViewCell: UITableViewCell {
     
     @IBOutlet weak var mediaSourceLabel: UILabel!
     @IBOutlet weak var mediaSourceSizeLabel: UILabel!
+    @IBOutlet weak var initialsLabel: UILabel!
     @IBOutlet weak var squareImageView: UIImageView!
     @IBOutlet weak var disclosureImageView: UIImageView!
     @IBOutlet weak var deleteButton: UIButton!
@@ -58,21 +59,29 @@ class MediaStorageSourceTableViewCell: UITableViewCell {
     }
     
     func configure(forChat:Chat,items:[StorageManagerItem]){
-
-        mediaSourceLabel.text = forChat.getName()
+        
+        let name = forChat.getName()
+        mediaSourceLabel.text = name
         
         
         mediaSourceSizeLabel.text = formatBytes(Int(StorageManager.sharedManager.getItemGroupTotalSize(items: items)))
-//        if let image = forChat.getImage(){
-//            squareImageView.image = image
-//        }
-        if let imageURL = URL(string: forChat.getPhotoUrl() ?? ""){
+
+        if let stringURL = forChat.getPhotoUrl(),
+           let imageURL = URL(string:  stringURL){
+            print(name)
             squareImageView.sd_setImage(with: imageURL)
+            initialsLabel.isHidden = true
         }
         else{
-            //TODO: show initials
-            squareImageView.image = #imageLiteral(resourceName: "appPinIcon")
-            squareImageView.makeCircular()
+            let name = name
+            let color = UIColor.getColorFor(key: name)
+            initialsLabel.textAlignment = .center
+            initialsLabel.makeCircular()
+            squareImageView.isHidden = true
+            initialsLabel.isHidden = false
+            initialsLabel.backgroundColor = color
+            initialsLabel.textColor = UIColor.white
+            initialsLabel.text = name.getInitialsFromName()
         }
         squareImageView.makeCircular()
         let mediaSizeText = formatBytes(Int(StorageManager.sharedManager.getItemGroupTotalSize(items: items)*1e6))

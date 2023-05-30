@@ -154,7 +154,10 @@ class StorageManager {
         downloadedPods = getDownloadedPodcastEpisodeList()
         getImageCacheItems(completion: { results in
             self.cachedMedia = results
-            completion()
+            self.getSphinxCacheVideos(completion: {videoResults in
+                self.cachedMedia += videoResults
+                completion()
+            })
         })
     }
     
@@ -219,6 +222,19 @@ class StorageManager {
         else{
             completion()
         }
+    }
+    
+    func getSphinxCacheVideos(completion: @escaping ([StorageManagerItem])->()){
+        let blah = CachedMedia.getAll()
+        let videoCMs = blah.filter({cm in cm.fileExtension != "png"})
+        print(videoCMs)
+        var items = [StorageManagerItem]()
+        for cm in videoCMs{
+            let newItem = StorageManagerItem(type: .video, sizeMB: 6.9, label: "", date:cm.creationDate ?? Date()  ,cachedMedia: cm)
+            items.append(newItem)
+        }
+        print(items)
+        completion(items)
     }
     
     func getImageCacheItems(completion: @escaping ([StorageManagerItem])->()) {

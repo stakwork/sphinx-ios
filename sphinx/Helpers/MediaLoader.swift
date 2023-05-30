@@ -260,6 +260,12 @@ class MediaLoader {
             if let decryptedData = SymmetricEncryptionManager.sharedInstance.decryptData(data: data, key: mediaKey) {
                 message.saveFileSize(decryptedData.count)
                 storeMediaDataInCache(data: decryptedData, url: url.absoluteString,isVideo:isVideo)
+                if let chat = message.chat{
+                    let randomInt = Int.random(in: 0...Int(1e9))
+                    let _ = CachedMedia.createObject(id: randomInt, chat: chat, filePath: nil, fileExtension: "mp4", key: mediaKey)
+                    print(chat.id)
+                    print()
+                }
                 DispatchQueue.main.async {
                     completion(decryptedData)
                 }

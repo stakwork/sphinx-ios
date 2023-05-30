@@ -10,6 +10,12 @@ import UIKit
 
 extension ChatMessageTextFieldView : UITextViewDelegate {
     
+    var placeHolderText : String {
+        get {
+            return (mode == .Chat) ? kFieldPlaceHolder : kAttchmentFieldPlaceHolder
+        }
+    }
+    
     func textViewDidBeginEditing(_ textView: UITextView) {
         togglePlaceHolder(editing: true)
         textViewDidChange(textView)
@@ -20,11 +26,11 @@ extension ChatMessageTextFieldView : UITextViewDelegate {
     }
     
     func togglePlaceHolder(editing: Bool) {
-        if editing && textView.text == kFieldPlaceHolder {
+        if editing && (textView.text == placeHolderText) {
             textView.text = ""
             textView.textColor = UIColor.Sphinx.TextMessages
         } else if !editing && textView.text.isEmpty {
-            textView.text = kFieldPlaceHolder
+            textView.text = placeHolderText
             textView.textColor = kFieldPlaceHolderColor
         }
     }
@@ -43,11 +49,12 @@ extension ChatMessageTextFieldView : UITextViewDelegate {
     func animateElements(
         sendButtonVisible: Bool
     ) {
-        attachmentButton.backgroundColor = sendButtonVisible ? UIColor.Sphinx.ReceivedMsgBG : UIColor.Sphinx.PrimaryBlue
-        attachmentButton.setTitleColor(sendButtonVisible ? UIColor.Sphinx.MainBottomIcons : UIColor.white, for: .normal)
+        let forceSendButtonVisible = sendButtonVisible || (mode == .Attachment)
+        attachmentButton.backgroundColor = forceSendButtonVisible ? UIColor.Sphinx.ReceivedMsgBG : UIColor.Sphinx.PrimaryBlue
+        attachmentButton.setTitleColor(forceSendButtonVisible ? UIColor.Sphinx.MainBottomIcons : UIColor.white, for: .normal)
         
-        sendButtonContainer.alpha = sendButtonVisible ? 1.0 : 0.0
-        audioButtonContainer.alpha = sendButtonVisible ? 0.0 : 1.0
+        sendButtonContainer.alpha = forceSendButtonVisible ? 1.0 : 0.0
+        audioButtonContainer.alpha = forceSendButtonVisible ? 0.0 : 1.0
     }
 }
 

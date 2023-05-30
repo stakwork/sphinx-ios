@@ -161,13 +161,7 @@ class ChatAccessoryView: UIView {
     }
     
     @objc func keyboardWillShow(_ notification: Notification) {
-        if let delegate = delegate as? ChatAttachmentViewController {
-            if textView.isFirstResponder {
-                delegate.keyboardWillShow(notification)
-            }
-        } else {
-            delegate?.keyboardWillShow(notification)
-        }
+        delegate?.keyboardWillShow(notification)
     }
     
     @objc func keyboardWillHide(_ notification: Notification) {

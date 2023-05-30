@@ -55,6 +55,18 @@ extension NewChatAccessoryView {
     ) {
         messageFieldView.populateMentionAutocomplete(mention: mention)
     }
+    
+    func setupForAttachments(
+        with text: String?,
+        andDelegate messageFieldDelegate: ChatMessageTextFieldViewDelegate
+    ) {
+        messageFieldView.delegate = messageFieldDelegate
+        messageFieldView.setupForAttachments(with: text)
+    }
+    
+    func getMessage() -> String {
+        messageFieldView.getMessage()
+    }
 }
 
 //Podcast Player

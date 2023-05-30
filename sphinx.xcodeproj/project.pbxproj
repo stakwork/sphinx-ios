@@ -96,6 +96,8 @@
 		472092BD2A2536F800468796 /* NewChatViewController+PodcastExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472092BC2A2536F800468796 /* NewChatViewController+PodcastExtension.swift */; };
 		472092BF2A26378900468796 /* NewChatViewController+MentionsAutocomplete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472092BE2A26378900468796 /* NewChatViewController+MentionsAutocomplete.swift */; };
 		472092C12A26516A00468796 /* NewChatViewController+WebAppExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472092C02A26516A00468796 /* NewChatViewController+WebAppExtension.swift */; };
+		472092C32A2676C000468796 /* ChatMessageTextFieldView+AttachmentExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472092C22A2676C000468796 /* ChatMessageTextFieldView+AttachmentExtension.swift */; };
+		472092C52A268A1500468796 /* ChatAttachmentViewController+AnimatinsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472092C42A268A1500468796 /* ChatAttachmentViewController+AnimatinsExtension.swift */; };
 		472161B1293913230088B87B /* LoadingRecommendationsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472161AF293913230088B87B /* LoadingRecommendationsCollectionViewCell.swift */; };
 		472161B42939158B0088B87B /* NoRecommendationsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472161B22939158B0088B87B /* NoRecommendationsCollectionViewCell.swift */; };
 		472161B6293915E20088B87B /* NoRecommendationsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 472161B8293915E20088B87B /* NoRecommendationsCollectionViewCell.xib */; };
@@ -933,6 +935,8 @@
 		472092BC2A2536F800468796 /* NewChatViewController+PodcastExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewChatViewController+PodcastExtension.swift"; sourceTree = "<group>"; };
 		472092BE2A26378900468796 /* NewChatViewController+MentionsAutocomplete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewChatViewController+MentionsAutocomplete.swift"; sourceTree = "<group>"; };
 		472092C02A26516A00468796 /* NewChatViewController+WebAppExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewChatViewController+WebAppExtension.swift"; sourceTree = "<group>"; };
+		472092C22A2676C000468796 /* ChatMessageTextFieldView+AttachmentExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatMessageTextFieldView+AttachmentExtension.swift"; sourceTree = "<group>"; };
+		472092C42A268A1500468796 /* ChatAttachmentViewController+AnimatinsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatAttachmentViewController+AnimatinsExtension.swift"; sourceTree = "<group>"; };
 		472161AF293913230088B87B /* LoadingRecommendationsCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingRecommendationsCollectionViewCell.swift; sourceTree = "<group>"; };
 		472161B22939158B0088B87B /* NoRecommendationsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoRecommendationsCollectionViewCell.swift; sourceTree = "<group>"; };
 		472161B7293915E20088B87B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/NoRecommendationsCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -2000,6 +2004,7 @@
 				475DD3032A0D6A9D00F92173 /* ChatMessageTextFieldView+UITextViewDelegate.swift */,
 				475DD3052A0D6F6600F92173 /* ChatMessageTextFieldView+RecordingAudioExtension.swift */,
 				475DD3072A0D729B00F92173 /* ChatMessageTextFieldView+Actions.swift */,
+				472092C22A2676C000468796 /* ChatMessageTextFieldView+AttachmentExtension.swift */,
 			);
 			path = "Keyboard Accessory Views";
 			sourceTree = "<group>";
@@ -3256,6 +3261,7 @@
 				479A39D9244F237F00A37899 /* PaidMessagePreviewViewController.swift */,
 				47CC7CE823E4718600730E6F /* ImageFullScreenViewController.swift */,
 				474FE33223F5A22A00C06FC8 /* AVViewController.swift */,
+				472092C42A268A1500468796 /* ChatAttachmentViewController+AnimatinsExtension.swift */,
 			);
 			path = "Chat Attachment";
 			sourceTree = "<group>";
@@ -4774,6 +4780,7 @@
 				F3CE637C26AFE823006E37A0 /* FeedFilterChipCollectionViewCell.swift in Sources */,
 				471161E229156511008EAFF2 /* Rake.swift in Sources */,
 				4787F8942476B8E600CCE8B9 /* CGFloat.swift in Sources */,
+				472092C32A2676C000468796 /* ChatMessageTextFieldView+AttachmentExtension.swift in Sources */,
 				47484B94251255CF00F82AAC /* MessageWebViewTableViewCell.swift in Sources */,
 				478B05C829786F8900A1B254 /* PodcastPlayerController+ActionsTracking.swift in Sources */,
 				F32A696126CFEF600004B8B3 /* PodcastEpisode+Properties.swift in Sources */,
@@ -5127,6 +5134,7 @@
 				47A06CA624A3AC9A00BE468C /* DeepLinksHandlerHelper.swift in Sources */,
 				CE1F033F2994458B002E1079 /* ChatLeaderboardEntry.swift in Sources */,
 				478DCF9E2343D7AC009A03D6 /* SetDataViewController.swift in Sources */,
+				472092C52A268A1500468796 /* ChatAttachmentViewController+AnimatinsExtension.swift in Sources */,
 				47357A112729A13600A49EEE /* NewsletterFeed+DisplayUtils.swift in Sources */,
 				4705D3992799AAB5009C0729 /* CustomBoostView.swift in Sources */,
 				F39767C826C5A85F00DDFC0A /* LeftMenuDelegate.swift in Sources */,

@@ -26,7 +26,7 @@ class NewChatViewController: NewKeyboardHandlerViewController {
     var contactsService: ContactsService!
     var chatViewModel: ChatViewModel!
     
-    var chatMentionAutocompleteDataSource : ChatMentionAutocompleteDataSource! = nil
+    var chatMentionAutocompleteDataSource : ChatMentionAutocompleteDataSource? = nil
     let messageBubbleHelper = NewMessageBubbleHelper()
     
     var webAppVC : WebAppViewController? = nil

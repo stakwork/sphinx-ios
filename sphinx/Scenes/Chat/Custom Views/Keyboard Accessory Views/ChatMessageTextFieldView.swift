@@ -8,17 +8,20 @@
 
 import UIKit
 
-protocol ChatMessageTextFieldViewDelegate {
+@objc protocol ChatMessageTextFieldViewDelegate {
+    func didTapSendBlueButton()
+    func didDetectPossibleMention(mentionText:String)
     func shouldSendMessage(text: String, type: Int, completion: @escaping (Bool) -> ())
     
-    func didTapAttachmentsButton(text: String?)
-    func didTapSendBlueButton()
-    
-    func shouldStartRecording()
-    func shouldStopAndSendAudio()
-    func shouldCancelRecording()
-    
-    func didDetectPossibleMention(mentionText:String)
+    @objc optional func didTapAttachmentsButton(text: String?)
+    @objc optional func shouldStartRecording()
+    @objc optional func shouldStopAndSendAudio()
+    @objc optional func shouldCancelRecording()
+}
+
+enum MessagesFieldMode: Int {
+    case Chat
+    case Attachment
 }
 
 class ChatMessageTextFieldView: UIView {
@@ -30,6 +33,7 @@ class ChatMessageTextFieldView: UIView {
     @IBOutlet weak var textViewContainer: UIView!
     @IBOutlet weak var textView: UITextView!
     
+    @IBOutlet weak var attachmentButtonContainer: UIView!
     @IBOutlet weak var attachmentButton: UIButton!
     
     @IBOutlet weak var sendButtonContainer: UIView!
@@ -43,11 +47,14 @@ class ChatMessageTextFieldView: UIView {
     @IBOutlet weak var recordingBlueCircle: UIView!
     @IBOutlet weak var animatedMicLabelView: IntermitentAlphaAnimatedView!
     
-    let kCharacterLimit = 500
+    let kCharacterLimit = 1000
     let kFieldPlaceHolder = "message.placeholder".localized
+    let kAttchmentFieldPlaceHolder = ChatAttachmentViewController.kFieldPlaceHolder
     
     let kFieldPlaceHolderColor = UIColor.Sphinx.PlaceholderText
     let kFieldFont = UIFont(name: "Roboto-Regular", size: UIDevice.current.isIpad ? 20.0 : 16.0)!
+    
+    var mode = MessagesFieldMode.Chat
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -78,7 +85,7 @@ class ChatMessageTextFieldView: UIView {
         sendButton.layer.cornerRadius = sendButton.frame.size.height / 2
         sendButton.clipsToBounds = true
         
-        textView.text = kFieldPlaceHolder
+        textView.text = placeHolderText
         textView.font = kFieldFont
         textView.delegate = self
         
@@ -109,7 +116,7 @@ class ChatMessageTextFieldView: UIView {
     }
     
     func getMessage() -> String {
-        if textView.text == kFieldPlaceHolder {
+        if textView.text == placeHolderText {
             return ""
         }
         return textView.text

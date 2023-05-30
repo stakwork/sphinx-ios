@@ -11,7 +11,7 @@ import UIKit
 extension ChatMessageTextFieldView {
     @IBAction func attachmentButtonTouched() {
         self.endEditing(true)
-        delegate?.didTapAttachmentsButton(text: self.textView.text)
+        delegate?.didTapAttachmentsButton?(text: self.textView.text)
     }
     
     @IBAction func sendButtonTouched() {
@@ -19,7 +19,7 @@ extension ChatMessageTextFieldView {
 //
 //        let currentString = (textView.text ?? "").trim()
 //
-//        if currentString == "" || currentString == kFieldPlaceHolder {
+//        if currentString == "" || currentString == placeHolderText {
 //            if let didTapSendButton = delegate?.didTapSendBlueButton {
 //                didTapSendButton()
 //            } else {
@@ -33,17 +33,17 @@ extension ChatMessageTextFieldView {
     
     @IBAction func audioButtonTouchDown(_ sender: Any) {
         toggleAudioRecording(show: true)
-        delegate?.shouldStartRecording()
+        delegate?.shouldStartRecording?()
     }
     
     @IBAction func audioButtonTouchUpInside() {
         toggleAudioRecording(show: false)
-        delegate?.shouldStopAndSendAudio()
+        delegate?.shouldStopAndSendAudio?()
     }
     
     @IBAction func audioButtonDragOutside() {
         NewMessageBubbleHelper().showGenericMessageView(text: "audio.message.cancelled".localized)
         toggleAudioRecording(show: false)
-        delegate?.shouldCancelRecording()
+        delegate?.shouldCancelRecording?()
     }
 }

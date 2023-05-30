@@ -18,6 +18,10 @@ extension NewChatViewController: ChatMentionAutocompleteDelegate {
     func didDetectPossibleMention(
         mentionText: String
     ) {
+        guard let mentionsDataSource = chatMentionAutocompleteDataSource else {
+            return
+        }
+        
         var possibleMentions = [String]()
         
         if mentionText.count > 0 {
@@ -30,7 +34,7 @@ extension NewChatViewController: ChatMentionAutocompleteDelegate {
             }).sorted() ?? []
         }
         
-        chatMentionAutocompleteDataSource.updateMentionSuggestions(suggestions: possibleMentions)
+        mentionsDataSource.updateMentionSuggestions(suggestions: possibleMentions)
     }
     
     func configureMentionAutocompleteTableView() {

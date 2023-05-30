@@ -131,6 +131,7 @@ class ProfileViewController: KeyboardEventsViewController {
         configureProfile()
         configureServers()
         configureSigningDeviceButton()
+        showStorageSpinner()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -229,8 +230,11 @@ class ProfileViewController: KeyboardEventsViewController {
     }
     
     func showStorageSpinner() {
+        storageSumaryLabel.text = "Loading..."
+        storageSumaryLabel.textColor = UIColor.Sphinx.SecondaryText
+        
         spinner.isHidden = false
-        spinner.tintColor = UIColor.white
+        spinner.tintColor = UIColor.Sphinx.Text
         spinner.startAnimating()
     }
     
@@ -240,11 +244,6 @@ class ProfileViewController: KeyboardEventsViewController {
     }
     
     func setupMemoryManagement(){
-        storageSumaryLabel.text = "Loading..."
-        storageSumaryLabel.textColor = UIColor.Sphinx.SecondaryText
-        
-        showStorageSpinner()
-        
         manageStorageView.isUserInteractionEnabled = true
         manageStorageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showManageStorageVC)))
         

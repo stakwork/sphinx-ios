@@ -60,6 +60,7 @@ class StorageManager {
     
     static let sharedManager = StorageManager()
     
+    var garbageCleanIsInProgress : Bool = false
     var downloadedPods = [StorageManagerItem]()//media intentionally stored by user when they dl podcasts
     var cachedMedia = [StorageManagerItem]() //media stored automatically from chat images by SDImage library
     //var downloadedVideos = [StorageManagerItem]()//this iteration does not yet support but will be for downloaded video content
@@ -178,6 +179,7 @@ class StorageManager {
     }
     
     func cleanupGarbage(completion:@escaping ()->()){
+        garbageCleanIsInProgress = true
         var wdt_flag = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 300.0, execute: {
             wdt_flag = false
@@ -198,6 +200,7 @@ class StorageManager {
             wdt_flag = (i >= choppingBlockSnapshot.count - 1) ? false : wdt_flag
         }
         wdt_flag = false
+        garbageCleanIsInProgress = false
         completion()
     }
     

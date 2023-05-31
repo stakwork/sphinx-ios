@@ -198,6 +198,15 @@ extension DownloadService : URLSessionDownloadDelegate {
 
         let newProgress = Int(Float(totalBytesWritten) / Float(totalBytesExpectedToWrite) * 100)
         
+        let sm = StorageManager.sharedManager
+        if(newProgress >= 99 && sm.garbageCleanIsInProgress == false){ //detect transition from downloading to download complete
+            sm.refreshAllStoredData {
+                sm.cleanupGarbage(completion: {
+                    sm.refreshAllStoredData {}
+                })
+            }
+        }
+        
         if (download.progress == newProgress) {
             return
         }

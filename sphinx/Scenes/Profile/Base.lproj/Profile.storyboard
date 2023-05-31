@@ -213,10 +213,10 @@
                                                         <rect key="frame" x="30" y="225" width="354" height="107"/>
                                                         <subviews>
                                                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="4ej-0y-h2B">
-                                                                <rect key="frame" x="113" y="32" width="20" height="20"/>
+                                                                <rect key="frame" x="222.5" y="32" width="20" height="20"/>
                                                             </activityIndicatorView>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="chevron_right" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UO6-iY-Vsy">
-                                                                <rect key="frame" x="226" y="30" width="128" height="24.5"/>
+                                                                <rect key="frame" x="333" y="31.5" width="21" height="21"/>
                                                                 <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="21"/>
                                                                 <color key="textColor" name="PlaceholderText"/>
                                                                 <nil key="highlightedColor"/>
@@ -228,7 +228,7 @@
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="50 of 64 GB" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KkR-Gv-Dju">
-                                                                <rect key="frame" x="141" y="33" width="81" height="18"/>
+                                                                <rect key="frame" x="250.5" y="33" width="78.5" height="18"/>
                                                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="15"/>
                                                                 <color key="textColor" name="Text"/>
                                                                 <nil key="highlightedColor"/>
@@ -371,7 +371,7 @@
                                                         <rect key="frame" x="30" y="0.0" width="354" height="75"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notification Sound" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jxx-Fl-kXP">
-                                                                <rect key="frame" x="0.0" y="25" width="108" height="16"/>
+                                                                <rect key="frame" x="0.0" y="25" width="109" height="16"/>
                                                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="13"/>
                                                                 <color key="textColor" name="SecondaryText"/>
                                                                 <nil key="highlightedColor"/>
@@ -487,7 +487,7 @@
                                                         <rect key="frame" x="30" y="0.0" width="354" height="75"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Default tip amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jJs-A6-b1l">
-                                                                <rect key="frame" x="0.0" y="25" width="99" height="14"/>
+                                                                <rect key="frame" x="0.0" y="25" width="100.5" height="14"/>
                                                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="12"/>
                                                                 <color key="textColor" name="SecondaryText"/>
                                                                 <nil key="highlightedColor"/>
@@ -657,7 +657,7 @@
                                                 <rect key="frame" x="0.0" y="1017" width="414" height="160"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sync more devices" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aS3-Fj-p1j">
-                                                        <rect key="frame" x="134.5" y="30" width="145" height="20"/>
+                                                        <rect key="frame" x="135.5" y="30" width="143.5" height="20"/>
                                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
                                                         <color key="textColor" name="Text"/>
                                                         <nil key="highlightedColor"/>
@@ -678,7 +678,7 @@
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D93-b2-sLK">
-                                                        <rect key="frame" x="327" y="81" width="25.5" height="26"/>
+                                                        <rect key="frame" x="330.5" y="83" width="22" height="22"/>
                                                         <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="22"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
@@ -740,7 +740,7 @@
                                                         <rect key="frame" x="30" y="0.0" width="354" height="75"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Server URL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WVe-8j-tgh">
-                                                                <rect key="frame" x="0.0" y="25" width="62" height="14"/>
+                                                                <rect key="frame" x="0.0" y="25" width="60" height="14"/>
                                                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="12"/>
                                                                 <color key="textColor" name="SecondaryText"/>
                                                                 <nil key="highlightedColor"/>
@@ -873,7 +873,7 @@
                                                 <rect key="frame" x="0.0" y="410" width="414" height="80"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Change App PIN" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2YG-L7-D9J">
-                                                        <rect key="frame" x="162" y="33" width="90.5" height="14"/>
+                                                        <rect key="frame" x="163.5" y="33" width="87.5" height="14"/>
                                                         <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="12"/>
                                                         <color key="textColor" name="PrimaryBlue"/>
                                                         <nil key="highlightedColor"/>
@@ -1009,7 +1009,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PROFILE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="41O-R2-bE7">
-                                        <rect key="frame" x="178.5" y="14.5" width="57.5" height="17"/>
+                                        <rect key="frame" x="176.5" y="14.5" width="61" height="17"/>
                                         <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="14"/>
                                         <color key="textColor" name="Text"/>
                                         <nil key="highlightedColor"/>
@@ -1032,7 +1032,7 @@
                                         </connections>
                                     </button>
                                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eZu-9D-OrY">
-                                        <rect key="frame" x="65" y="160" width="17.5" height="13"/>
+                                        <rect key="frame" x="66.5" y="160" width="14.5" height="13"/>
                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="11"/>
                                         <color key="textColor" name="SecondaryText"/>
                                         <nil key="highlightedColor"/>
@@ -1049,13 +1049,13 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B43-2h-mk8">
-                                        <rect key="frame" x="143" y="133" width="7" height="14"/>
+                                        <rect key="frame" x="143" y="132" width="7" height="15"/>
                                         <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="12"/>
                                         <color key="textColor" name="Text"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="sat" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yd3-kM-y9v">
-                                        <rect key="frame" x="155" y="133" width="16.5" height="14"/>
+                                        <rect key="frame" x="155" y="132" width="18" height="15"/>
                                         <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="12"/>
                                         <color key="textColor" name="SecondaryText"/>
                                         <nil key="highlightedColor"/>
@@ -1637,17 +1637,17 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chats" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d8X-1o-dBj">
-                                        <rect key="frame" x="53" y="53" width="161" height="12"/>
+                                        <rect key="frame" x="53" y="48" width="161" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="161" id="TSZ-uv-HVB"/>
-                                            <constraint firstAttribute="height" constant="12" id="dyh-Ht-XwY"/>
+                                            <constraint firstAttribute="height" constant="20" id="dyh-Ht-XwY"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="17"/>
                                         <color key="textColor" name="TextMessages"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C8k-zY-74P">
-                                        <rect key="frame" x="376" y="46.5" width="25" height="25"/>
+                                        <rect key="frame" x="376" y="45.5" width="25" height="25"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="25" id="HOm-Xn-h0z"/>
                                             <constraint firstAttribute="height" constant="25" id="WnL-Wa-Fi7"/>
@@ -1662,7 +1662,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="15.1 GB" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k45-3g-3jv">
-                                        <rect key="frame" x="268" y="52" width="95" height="14"/>
+                                        <rect key="frame" x="268" y="51" width="95" height="14"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="95" id="arS-sR-bsg"/>
                                             <constraint firstAttribute="height" constant="14" id="lvD-vU-bVB"/>
@@ -1678,7 +1678,7 @@
                                     <constraint firstItem="k45-3g-3jv" firstAttribute="centerY" secondItem="C8k-zY-74P" secondAttribute="centerY" id="2vW-0x-v8c"/>
                                     <constraint firstItem="d8X-1o-dBj" firstAttribute="leading" secondItem="9Ps-AU-MrU" secondAttribute="trailing" constant="11" id="43M-gr-rSy"/>
                                     <constraint firstItem="C8k-zY-74P" firstAttribute="centerY" secondItem="d8X-1o-dBj" secondAttribute="centerY" id="F4s-WH-lPG"/>
-                                    <constraint firstItem="d8X-1o-dBj" firstAttribute="top" secondItem="djr-xM-hzO" secondAttribute="top" constant="53" id="H0Q-05-eZf"/>
+                                    <constraint firstItem="d8X-1o-dBj" firstAttribute="top" secondItem="djr-xM-hzO" secondAttribute="top" constant="48" id="H0Q-05-eZf"/>
                                     <constraint firstItem="9Ps-AU-MrU" firstAttribute="leading" secondItem="djr-xM-hzO" secondAttribute="leading" constant="15" id="PtS-qt-Wlk"/>
                                     <constraint firstItem="C8k-zY-74P" firstAttribute="leading" secondItem="k45-3g-3jv" secondAttribute="trailing" constant="13" id="S3X-2Y-Y2G"/>
                                     <constraint firstItem="9Ps-AU-MrU" firstAttribute="top" secondItem="djr-xM-hzO" secondAttribute="top" constant="31" id="etr-jF-PWb"/>
@@ -1720,72 +1720,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o81-Av-GsP">
-                                <rect key="frame" x="0.0" y="48" width="414" height="93"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qn5-Bs-371">
-                                        <rect key="frame" x="15" y="31" width="27" height="55"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="55" id="HLD-i6-3Ve"/>
-                                            <constraint firstAttribute="width" constant="27" id="dye-81-IE9"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="21"/>
-                                        <state key="normal" title="">
-                                            <color key="titleColor" name="WashedOutReceivedText"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="backButtonTapped:" destination="qnq-FW-gcV" eventType="touchUpInside" id="a0h-wN-HX8"/>
-                                        </connections>
-                                    </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Podcast or Chat Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aM6-lr-PWK">
-                                        <rect key="frame" x="53" y="53" width="222" height="12"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="12" id="crY-Lf-71R"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="17"/>
-                                        <color key="textColor" name="TextMessages"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c0S-LH-rcE">
-                                        <rect key="frame" x="376" y="46.5" width="25" height="25"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="25" id="ihC-7y-Zll"/>
-                                            <constraint firstAttribute="height" constant="25" id="rz6-0A-wKt"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="14"/>
-                                        <color key="tintColor" name="SecondaryText"/>
-                                        <state key="normal" image="deleteIcon">
-                                            <color key="titleColor" name="WashedOutReceivedText"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="deleteAllTapped:" destination="qnq-FW-gcV" eventType="touchUpInside" id="ZFd-tp-BjG"/>
-                                        </connections>
-                                    </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="15.1 GB" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sQx-Yb-g7e">
-                                        <rect key="frame" x="283" y="52" width="80" height="14"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="14" id="RDW-Uu-ZhX"/>
-                                            <constraint firstAttribute="width" constant="80" id="yIU-NZ-31i"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
-                                        <color key="textColor" name="SecondaryText"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" name="HeaderBG"/>
-                                <constraints>
-                                    <constraint firstItem="sQx-Yb-g7e" firstAttribute="centerY" secondItem="c0S-LH-rcE" secondAttribute="centerY" id="20R-S8-Ava"/>
-                                    <constraint firstAttribute="height" constant="93" id="49s-3s-u80"/>
-                                    <constraint firstItem="c0S-LH-rcE" firstAttribute="leading" secondItem="sQx-Yb-g7e" secondAttribute="trailing" constant="13" id="4yO-4q-WgZ"/>
-                                    <constraint firstItem="Qn5-Bs-371" firstAttribute="leading" secondItem="o81-Av-GsP" secondAttribute="leading" constant="15" id="JfL-Aa-fTQ"/>
-                                    <constraint firstItem="Qn5-Bs-371" firstAttribute="top" secondItem="o81-Av-GsP" secondAttribute="top" constant="31" id="SH8-7p-cLx"/>
-                                    <constraint firstItem="aM6-lr-PWK" firstAttribute="leading" secondItem="Qn5-Bs-371" secondAttribute="trailing" constant="11" id="VsD-lI-uPT"/>
-                                    <constraint firstItem="aM6-lr-PWK" firstAttribute="top" secondItem="o81-Av-GsP" secondAttribute="top" constant="53" id="Y4X-DN-P2I"/>
-                                    <constraint firstItem="sQx-Yb-g7e" firstAttribute="leading" secondItem="aM6-lr-PWK" secondAttribute="trailing" constant="8" id="esi-0d-eFR"/>
-                                    <constraint firstAttribute="trailing" secondItem="c0S-LH-rcE" secondAttribute="trailing" constant="13" id="pQd-zJ-JJT"/>
-                                    <constraint firstItem="c0S-LH-rcE" firstAttribute="centerY" secondItem="aM6-lr-PWK" secondAttribute="centerY" id="ywe-oP-FJ9"/>
-                                </constraints>
-                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sas-1e-Npj">
                                 <rect key="frame" x="0.0" y="48" width="414" height="93"/>
                                 <subviews>
@@ -1872,6 +1806,72 @@
                                     <constraint firstItem="hge-sK-3ik" firstAttribute="centerY" secondItem="wpz-rA-jKP" secondAttribute="centerY" id="ksq-8S-TI5"/>
                                     <constraint firstItem="gFX-xe-WBV" firstAttribute="leading" secondItem="Sas-1e-Npj" secondAttribute="leading" constant="15" id="lhB-mD-AZ0"/>
                                     <constraint firstItem="RKJ-a1-az2" firstAttribute="leading" secondItem="gFX-xe-WBV" secondAttribute="trailing" constant="11" id="v1e-7R-i0V"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o81-Av-GsP">
+                                <rect key="frame" x="0.0" y="48" width="414" height="93"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qn5-Bs-371">
+                                        <rect key="frame" x="15" y="31" width="27" height="55"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="55" id="HLD-i6-3Ve"/>
+                                            <constraint firstAttribute="width" constant="27" id="dye-81-IE9"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="21"/>
+                                        <state key="normal" title="">
+                                            <color key="titleColor" name="WashedOutReceivedText"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="backButtonTapped:" destination="qnq-FW-gcV" eventType="touchUpInside" id="a0h-wN-HX8"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Podcast or Chat Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aM6-lr-PWK">
+                                        <rect key="frame" x="53" y="48" width="222" height="20"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="crY-Lf-71R"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="17"/>
+                                        <color key="textColor" name="TextMessages"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c0S-LH-rcE">
+                                        <rect key="frame" x="376" y="45.5" width="25" height="25"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="25" id="ihC-7y-Zll"/>
+                                            <constraint firstAttribute="height" constant="25" id="rz6-0A-wKt"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="14"/>
+                                        <color key="tintColor" name="SecondaryText"/>
+                                        <state key="normal" image="deleteIcon">
+                                            <color key="titleColor" name="WashedOutReceivedText"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="deleteAllTapped:" destination="qnq-FW-gcV" eventType="touchUpInside" id="ZFd-tp-BjG"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="15.1 GB" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sQx-Yb-g7e">
+                                        <rect key="frame" x="283" y="51" width="80" height="14"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="14" id="RDW-Uu-ZhX"/>
+                                            <constraint firstAttribute="width" constant="80" id="yIU-NZ-31i"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
+                                        <color key="textColor" name="SecondaryText"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" name="HeaderBG"/>
+                                <constraints>
+                                    <constraint firstItem="sQx-Yb-g7e" firstAttribute="centerY" secondItem="c0S-LH-rcE" secondAttribute="centerY" id="20R-S8-Ava"/>
+                                    <constraint firstAttribute="height" constant="93" id="49s-3s-u80"/>
+                                    <constraint firstItem="c0S-LH-rcE" firstAttribute="leading" secondItem="sQx-Yb-g7e" secondAttribute="trailing" constant="13" id="4yO-4q-WgZ"/>
+                                    <constraint firstItem="Qn5-Bs-371" firstAttribute="leading" secondItem="o81-Av-GsP" secondAttribute="leading" constant="15" id="JfL-Aa-fTQ"/>
+                                    <constraint firstItem="Qn5-Bs-371" firstAttribute="top" secondItem="o81-Av-GsP" secondAttribute="top" constant="31" id="SH8-7p-cLx"/>
+                                    <constraint firstItem="aM6-lr-PWK" firstAttribute="leading" secondItem="Qn5-Bs-371" secondAttribute="trailing" constant="11" id="VsD-lI-uPT"/>
+                                    <constraint firstItem="aM6-lr-PWK" firstAttribute="top" secondItem="o81-Av-GsP" secondAttribute="top" constant="48" id="Y4X-DN-P2I"/>
+                                    <constraint firstItem="sQx-Yb-g7e" firstAttribute="leading" secondItem="aM6-lr-PWK" secondAttribute="trailing" constant="8" id="esi-0d-eFR"/>
+                                    <constraint firstAttribute="trailing" secondItem="c0S-LH-rcE" secondAttribute="trailing" constant="13" id="pQd-zJ-JJT"/>
+                                    <constraint firstItem="c0S-LH-rcE" firstAttribute="centerY" secondItem="aM6-lr-PWK" secondAttribute="centerY" id="ywe-oP-FJ9"/>
                                 </constraints>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="zTe-fP-Pcs">

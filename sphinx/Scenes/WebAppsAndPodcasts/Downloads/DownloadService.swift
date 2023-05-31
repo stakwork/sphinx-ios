@@ -199,12 +199,15 @@ extension DownloadService : URLSessionDownloadDelegate {
         let newProgress = Int(Float(totalBytesWritten) / Float(totalBytesExpectedToWrite) * 100)
         
         let sm = StorageManager.sharedManager
-        if(newProgress >= 99 && sm.garbageCleanIsInProgress == false){ //detect transition from downloading to download complete
-            sm.refreshAllStoredData {
-                sm.cleanupGarbage(completion: {
-                    sm.refreshAllStoredData {}
-                })
-            }
+        if(newProgress >= 100 && sm.garbageCleanIsInProgress == false){ //detect transition from downloading to download complete
+            DispatchQueue.global().asyncAfter(deadline: .now() + 2.0, execute: {
+                sm.refreshAllStoredData {
+                    sm.cleanupGarbage(completion: {
+                        sm.refreshAllStoredData {}
+                    })
+                }
+            })
+            
         }
         
         if (download.progress == newProgress) {

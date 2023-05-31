@@ -26,8 +26,9 @@ class ChatImageCollectionViewCell: UICollectionViewCell {
     func configure(cachedMedia:CachedMedia,size:CGSize,selectionStatus:Bool,memorySizeMB:Double){
         if let image = cachedMedia.image{
             let resizedImage = image.resizeImage(newSize: size)
-            imageView.image = resizedImage
             imageView.contentMode = .center
+            imageView.clipsToBounds = true
+            imageView.image = resizedImage
         }
         if(selectionStatus){
             overlay.backgroundColor = UIColor.Sphinx.Body

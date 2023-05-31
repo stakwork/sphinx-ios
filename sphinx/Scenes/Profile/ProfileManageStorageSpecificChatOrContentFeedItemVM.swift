@@ -183,15 +183,31 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVM : UICollectionView
         let collectionViewWidth = self.imageCollectionView.bounds.width
         let spacingBetweenCells: CGFloat = 2
         let totalSpacing = (spacingBetweenCells * 2) // Spacing on both sides of the cell
-        let cellWidth = (collectionViewWidth - totalSpacing) / 3.375
-        let cellHeight = cellWidth // Assuming you want square cells
         
+        // Adjust cellWidth for 1 or 2 items
+        let cellWidth: CGFloat
+        if items.count <= 2 {
+            cellWidth = collectionViewWidth - totalSpacing
+        } else {
+            cellWidth = (collectionViewWidth - totalSpacing) / 3.375
+        }
+
+        let cellHeight = cellWidth // Assuming you want square cells
         return CGSize(width: cellWidth, height: cellHeight)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return getSize()
+        // For 1 or 2 items, set the size to the collectionView's width minus the totalSpacing
+        if items.count <= 2 {
+            let totalSpacing: CGFloat = 2 // Adjust as needed
+            let cellWidth = collectionView.bounds.width - totalSpacing
+            return CGSize(width: cellWidth, height: cellWidth) // Assuming you want square cells
+        } else {
+            // For 3 or more items, continue with the existing calculation
+            return getSize()
+        }
     }
+
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         selectedStatus[indexPath.row] = !selectedStatus[indexPath.row]

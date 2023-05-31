@@ -183,7 +183,7 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVM : UICollectionView
         let collectionViewWidth = self.imageCollectionView.bounds.width
         let spacingBetweenCells: CGFloat = 2
         let totalSpacing = (spacingBetweenCells * 2) // Spacing on both sides of the cell
-        let cellWidth = (collectionViewWidth - totalSpacing) / 3.25
+        let cellWidth = (collectionViewWidth - totalSpacing) / 3.375
         let cellHeight = cellWidth // Assuming you want square cells
         
         return CGSize(width: cellWidth, height: cellHeight)

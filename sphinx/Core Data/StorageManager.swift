@@ -178,6 +178,18 @@ class StorageManager {
         return totalSize
     }
     
+    func processGarbageCleanup(){
+        if(garbageCleanIsInProgress == false){
+            DispatchQueue.global().asyncAfter(deadline: .now() + 2.0, execute: {
+                self.refreshAllStoredData {
+                    self.cleanupGarbage(completion: {
+                        self.refreshAllStoredData {}
+                    })
+                }
+            })
+        }
+    }
+    
     func cleanupGarbage(completion:@escaping ()->()){
         garbageCleanIsInProgress = true
         var wdt_flag = true

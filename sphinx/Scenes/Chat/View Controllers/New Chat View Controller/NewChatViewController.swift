@@ -13,6 +13,7 @@ class NewChatViewController: NewKeyboardHandlerViewController {
     
     @IBOutlet weak var bottomView: NewChatAccessoryView!
     @IBOutlet weak var headerView: NewChatHeaderView!
+    @IBOutlet weak var chatTableView: UITableView!
     
     @IBOutlet weak var mentionsAutocompleteTableView: UITableView!
     @IBOutlet weak var webAppContainerView: UIView!
@@ -95,12 +96,5 @@ class NewChatViewController: NewKeyboardHandlerViewController {
     
     func setDelegates() {
         bottomView.setDelegates(messageFieldDelegate: self)
-    }
-
-    @IBAction func dismissButtonTouched(_ sender: Any) {
-        contact?.nickname = "Tom Sim"
-        contact?.managedObjectContext?.saveContext()
-        
-        self.view.endEditing(true)
     }
 }

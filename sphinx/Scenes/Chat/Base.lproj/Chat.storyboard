@@ -694,16 +694,6 @@
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </tableView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nMh-55-Qla">
-                                                <rect key="frame" x="96.5" y="255" width="182" height="34.5"/>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="plain" title="DISMISS KEYBOARD">
-                                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </buttonConfiguration>
-                                                <connections>
-                                                    <action selector="dismissButtonTouched:" destination="wLv-qn-zrt" eventType="touchUpInside" id="xes-vF-Ta4"/>
-                                                </connections>
-                                            </button>
                                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2KA-H5-xSv">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="544"/>
                                                 <color key="backgroundColor" name="Body"/>
@@ -711,7 +701,6 @@
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstItem="nMh-55-Qla" firstAttribute="centerY" secondItem="oJ3-im-1f2" secondAttribute="centerY" id="2T2-Kz-ufm"/>
                                             <constraint firstAttribute="bottom" secondItem="7O1-jH-hsI" secondAttribute="bottom" id="4n5-mE-9yz"/>
                                             <constraint firstAttribute="bottom" secondItem="vlc-qx-DGF" secondAttribute="bottom" id="Fiu-E4-Z6c"/>
                                             <constraint firstAttribute="bottom" secondItem="2KA-H5-xSv" secondAttribute="bottom" id="Fkp-D7-VYl"/>
@@ -720,7 +709,6 @@
                                             <constraint firstItem="7O1-jH-hsI" firstAttribute="top" secondItem="oJ3-im-1f2" secondAttribute="top" id="VFG-sn-Gft"/>
                                             <constraint firstItem="vlc-qx-DGF" firstAttribute="leading" secondItem="oJ3-im-1f2" secondAttribute="leading" id="YgL-On-hAi"/>
                                             <constraint firstItem="vlc-qx-DGF" firstAttribute="top" secondItem="oJ3-im-1f2" secondAttribute="top" id="Ygw-EN-M5q"/>
-                                            <constraint firstItem="nMh-55-Qla" firstAttribute="centerX" secondItem="oJ3-im-1f2" secondAttribute="centerX" id="dcN-4J-vCU"/>
                                             <constraint firstItem="2KA-H5-xSv" firstAttribute="leading" secondItem="oJ3-im-1f2" secondAttribute="leading" id="diB-NK-Jyp"/>
                                             <constraint firstAttribute="trailing" secondItem="vlc-qx-DGF" secondAttribute="trailing" id="eF5-XQ-ct0"/>
                                             <constraint firstItem="2KA-H5-xSv" firstAttribute="top" secondItem="oJ3-im-1f2" secondAttribute="top" id="kIg-BJ-KNs"/>
@@ -763,6 +751,7 @@
                     <connections>
                         <outlet property="bottomConstraint" destination="Ht8-VT-KjU" id="TvB-Xq-ofN"/>
                         <outlet property="bottomView" destination="adm-hA-lEF" id="hez-Vx-Rs8"/>
+                        <outlet property="chatTableView" destination="7O1-jH-hsI" id="lkW-uB-74U"/>
                         <outlet property="headerView" destination="hMb-Ac-dRv" id="ANb-B8-g1N"/>
                         <outlet property="mentionsAutocompleteTableView" destination="vlc-qx-DGF" id="osS-rX-MO5"/>
                         <outlet property="webAppContainerView" destination="2KA-H5-xSv" id="uFC-DY-4Gs"/>

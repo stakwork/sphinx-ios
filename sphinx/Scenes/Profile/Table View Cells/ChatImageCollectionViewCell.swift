@@ -14,6 +14,8 @@ class ChatImageCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var overlay: UIView!
     @IBOutlet weak var checkmarkView: UIView!
     @IBOutlet weak var sizeLabel: UILabel!
+    @IBOutlet weak var labelContainerView: UIView!
+    
     
     
     static let reuseID = "ChatImageCollectionViewCell"
@@ -24,6 +26,8 @@ class ChatImageCollectionViewCell: UICollectionViewCell {
     }
 
     func configure(cachedMedia:CachedMedia,size:CGSize,selectionStatus:Bool,memorySizeMB:Double){
+        labelContainerView.layer.cornerRadius = labelContainerView.frame.height/2.0
+        labelContainerView.alpha = 0.75
         if let image = cachedMedia.image{
             let resizedImage = image.resizeImage(newSize: size)
             imageView.contentMode = .center
@@ -36,7 +40,7 @@ class ChatImageCollectionViewCell: UICollectionViewCell {
             overlay.isHidden = false
             checkmarkView.isHidden = false
             checkmarkView.makeCircular()
-            sizeLabel.isHidden = true
+            labelContainerView.isHidden = true
         }
         else{
             overlay.backgroundColor = .clear
@@ -44,7 +48,7 @@ class ChatImageCollectionViewCell: UICollectionViewCell {
             checkmarkView.isHidden = false
             let mediaSizeText = formatBytes(Int(memorySizeMB * 1e6))
             sizeLabel.text = (mediaSizeText == "0 MB") ? "<1MB" : mediaSizeText
-            sizeLabel.isHidden = false
+            labelContainerView.isHidden = false
         }
     }
     

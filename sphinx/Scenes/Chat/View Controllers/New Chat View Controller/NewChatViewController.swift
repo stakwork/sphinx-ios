@@ -27,6 +27,7 @@ class NewChatViewController: NewKeyboardHandlerViewController {
     var contactsService: ContactsService!
     var chatViewModel: ChatViewModel!
     
+    var chatTableDataSource: NewChatTableDataSource? = nil
     var chatMentionAutocompleteDataSource : ChatMentionAutocompleteDataSource? = nil
     let messageBubbleHelper = NewMessageBubbleHelper()
     
@@ -73,6 +74,7 @@ class NewChatViewController: NewKeyboardHandlerViewController {
         super.viewDidAppear(animated)
         
         fetchTribeData()
+        testTableViewCell()
     }
     
     func setupLayouts() {

@@ -1,0 +1,84 @@
+//
+//  NewMessageTableViewCell.swift
+//  sphinx
+//
+//  Created by Tomas Timinskas on 31/05/2023.
+//  Copyright © 2023 sphinx. All rights reserved.
+//
+
+import UIKit
+import Foundation
+
+extension NewMessageTableViewCell {
+    public enum MessageDirection {
+        case Incoming
+        case Outgoing
+    }
+}
+
+class NewMessageTableViewCell: UITableViewCell {
+    
+    @IBOutlet weak var bubbleOnlyText: UIView!
+    @IBOutlet weak var bubbleAllView: UIView!
+    @IBOutlet weak var receivedArrow: UIView!
+    @IBOutlet weak var sentArrow: UIView!
+    
+    @IBOutlet weak var chatAvatarContainerView: UIView!
+    @IBOutlet weak var sentMessageMargingView: UIView!
+    @IBOutlet weak var receivedMessageMarginView: UIView!
+    @IBOutlet weak var statusHeaderView: UIView!
+    @IBOutlet weak var mediaContentView: UIView!
+    
+    @IBOutlet weak var messageLabel: UILabel!
+    @IBOutlet weak var messageLabelLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet weak var messageLabelTrailingConstraint: NSLayoutConstraint!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        bubbleOnlyText.layer.cornerRadius = 8.0
+        bubbleAllView.layer.cornerRadius = 8.0
+        
+        receivedArrow.drawReceivedBubbleArrow(color: UIColor.Sphinx.ReceivedMsgBG)
+        sentArrow.drawSentBubbleArrow(color: UIColor.Sphinx.SentMsgBG)
+    }
+
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+    }
+    
+    func configureFor(
+        direction: MessageDirection
+    ) {
+        let outgoing = direction == .Outgoing
+        
+        chatAvatarContainerView.isHidden = outgoing
+        sentMessageMargingView.isHidden = !outgoing
+        receivedMessageMarginView.isHidden = outgoing
+        
+        receivedArrow.isHidden = outgoing
+        sentArrow.isHidden = !outgoing
+        
+        messageLabelLeadingConstraint.priority = UILayoutPriority(outgoing ? 1 : 1000)
+        messageLabelTrailingConstraint.priority = UILayoutPriority(outgoing ? 1000 : 1)
+        
+        let bubbleColor = outgoing ? UIColor.Sphinx.SentMsgBG : UIColor.Sphinx.ReceivedMsgBG
+        bubbleOnlyText.backgroundColor = bubbleColor
+        bubbleAllView.backgroundColor = bubbleColor
+    }
+    
+    func configureWith(
+        index: Int,
+        message: String
+    ) {
+        configureFor(direction: (index % 2 == 0) ? .Outgoing : .Incoming)
+        
+        let media = (index % 3 == 0)
+
+        mediaContentView.isHidden = !media
+        messageLabel.text = message
+        
+        bubbleAllView.isHidden = !media
+    }
+    
+}

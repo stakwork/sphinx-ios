@@ -245,4 +245,50 @@ extension UIView {
             frame.size.height
         ) / 2
     }
+    
+    func drawReceivedBubbleArrow(
+        color: UIColor,
+        arrowWidth: CGFloat = 4
+    ) {
+        let arrowBezierPath = UIBezierPath()
+        
+        arrowBezierPath.move(to: CGPoint(x: 0, y: 0))
+        arrowBezierPath.addLine(to: CGPoint(x: self.frame.width, y: 0))
+        arrowBezierPath.addLine(to: CGPoint(x: self.frame.width, y: self.frame.height))
+        arrowBezierPath.addLine(to: CGPoint(x: arrowWidth, y: self.frame.height))
+        arrowBezierPath.addLine(to: CGPoint(x: 0, y: 0))
+        arrowBezierPath.close()
+        
+        let messageArrowLayer = CAShapeLayer()
+        messageArrowLayer.path = arrowBezierPath.cgPath
+        
+        messageArrowLayer.frame = self.bounds
+        messageArrowLayer.fillColor = color.cgColor
+        messageArrowLayer.name = "arrow"
+        
+        self.layer.addSublayer(messageArrowLayer)
+    }
+    
+    func drawSentBubbleArrow(
+        color: UIColor,
+        arrowWidth: CGFloat = 7
+    ) {
+        let arrowBezierPath = UIBezierPath()
+        
+        arrowBezierPath.move(to: CGPoint(x: 0, y: 0))
+        arrowBezierPath.addLine(to: CGPoint(x: self.frame.width, y: 0))
+        arrowBezierPath.addLine(to: CGPoint(x: self.frame.width - arrowWidth, y: self.frame.height))
+        arrowBezierPath.addLine(to: CGPoint(x: 0, y: self.frame.height))
+        arrowBezierPath.addLine(to: CGPoint(x: 0, y: 0))
+        arrowBezierPath.close()
+        
+        let messageArrowLayer = CAShapeLayer()
+        messageArrowLayer.path = arrowBezierPath.cgPath
+        
+        messageArrowLayer.frame = self.bounds
+        messageArrowLayer.fillColor = color.cgColor
+        messageArrowLayer.name = "arrow"
+        
+        self.layer.addSublayer(messageArrowLayer)
+    }
 }

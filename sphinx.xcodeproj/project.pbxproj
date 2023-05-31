@@ -98,6 +98,10 @@
 		472092C12A26516A00468796 /* NewChatViewController+WebAppExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472092C02A26516A00468796 /* NewChatViewController+WebAppExtension.swift */; };
 		472092C32A2676C000468796 /* ChatMessageTextFieldView+AttachmentExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472092C22A2676C000468796 /* ChatMessageTextFieldView+AttachmentExtension.swift */; };
 		472092C52A268A1500468796 /* ChatAttachmentViewController+AnimatinsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472092C42A268A1500468796 /* ChatAttachmentViewController+AnimatinsExtension.swift */; };
+		472092C92A278B0400468796 /* NewMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472092C72A278B0400468796 /* NewMessageTableViewCell.swift */; };
+		472092CA2A278B0400468796 /* NewMessageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 472092C82A278B0400468796 /* NewMessageTableViewCell.xib */; };
+		472092CC2A27985800468796 /* NewChatViewController+TableViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472092CB2A27985800468796 /* NewChatViewController+TableViewExtension.swift */; };
+		472092CE2A27987A00468796 /* NewChatTableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472092CD2A27987A00468796 /* NewChatTableDataSource.swift */; };
 		472161B1293913230088B87B /* LoadingRecommendationsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472161AF293913230088B87B /* LoadingRecommendationsCollectionViewCell.swift */; };
 		472161B42939158B0088B87B /* NoRecommendationsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472161B22939158B0088B87B /* NoRecommendationsCollectionViewCell.swift */; };
 		472161B6293915E20088B87B /* NoRecommendationsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 472161B8293915E20088B87B /* NoRecommendationsCollectionViewCell.xib */; };
@@ -937,6 +941,10 @@
 		472092C02A26516A00468796 /* NewChatViewController+WebAppExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewChatViewController+WebAppExtension.swift"; sourceTree = "<group>"; };
 		472092C22A2676C000468796 /* ChatMessageTextFieldView+AttachmentExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatMessageTextFieldView+AttachmentExtension.swift"; sourceTree = "<group>"; };
 		472092C42A268A1500468796 /* ChatAttachmentViewController+AnimatinsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatAttachmentViewController+AnimatinsExtension.swift"; sourceTree = "<group>"; };
+		472092C72A278B0400468796 /* NewMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageTableViewCell.swift; sourceTree = "<group>"; };
+		472092C82A278B0400468796 /* NewMessageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewMessageTableViewCell.xib; sourceTree = "<group>"; };
+		472092CB2A27985800468796 /* NewChatViewController+TableViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewChatViewController+TableViewExtension.swift"; sourceTree = "<group>"; };
+		472092CD2A27987A00468796 /* NewChatTableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewChatTableDataSource.swift; sourceTree = "<group>"; };
 		472161AF293913230088B87B /* LoadingRecommendationsCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingRecommendationsCollectionViewCell.swift; sourceTree = "<group>"; };
 		472161B22939158B0088B87B /* NoRecommendationsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoRecommendationsCollectionViewCell.swift; sourceTree = "<group>"; };
 		472161B7293915E20088B87B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/NoRecommendationsCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -2109,6 +2117,15 @@
 			path = Managers;
 			sourceTree = "<group>";
 		};
+		472092C62A278AE400468796 /* NewMessageTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				472092C72A278B0400468796 /* NewMessageTableViewCell.swift */,
+				472092C82A278B0400468796 /* NewMessageTableViewCell.xib */,
+			);
+			path = NewMessageTableViewCell;
+			sourceTree = "<group>";
+		};
 		472161AD293913180088B87B /* Recommendations */ = {
 			isa = PBXGroup;
 			children = (
@@ -2725,6 +2742,7 @@
 		475BDCBF232AC1FD00C5BBD6 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				472092C62A278AE400468796 /* NewMessageTableViewCell */,
 				47669F4C23D63CCE00C17A77 /* Groups */,
 				479EAB6423E311B0001013AB /* Common */,
 				475BDCCC232AC22700C5BBD6 /* Sent */,
@@ -3069,6 +3087,8 @@
 				472092BC2A2536F800468796 /* NewChatViewController+PodcastExtension.swift */,
 				472092BE2A26378900468796 /* NewChatViewController+MentionsAutocomplete.swift */,
 				472092C02A26516A00468796 /* NewChatViewController+WebAppExtension.swift */,
+				472092CB2A27985800468796 /* NewChatViewController+TableViewExtension.swift */,
+				472092CD2A27987A00468796 /* NewChatTableDataSource.swift */,
 			);
 			path = "New Chat View Controller";
 			sourceTree = "<group>";
@@ -4404,6 +4424,7 @@
 				475BDD43232AD00D00C5BBD6 /* MaterialIcons-Regular.ttf in Resources */,
 				47904C0A24BF352300710E7A /* horn.caf in Resources */,
 				4780783423916D4900187906 /* PictureReceivedTableViewCell.xib in Resources */,
+				472092CA2A278B0400468796 /* NewMessageTableViewCell.xib in Resources */,
 				47F258C12539DA1600122A5A /* PodcastCommentReceivedTableViewCell.xib in Resources */,
 				475BDD44232AD00D00C5BBD6 /* Montserrat-Black.otf in Resources */,
 				CEEBBB4329DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.xib in Resources */,
@@ -4877,6 +4898,7 @@
 				47352E4C2440FEB800E5CC7F /* WindowsManager.swift in Sources */,
 				47183CB22548AA4400E6FD19 /* PodcastPlayerView.swift in Sources */,
 				F34BFED7267B350D003F6D55 /* RestoreUserDescriptionViewController.swift in Sources */,
+				472092C92A278B0400468796 /* NewMessageTableViewCell.swift in Sources */,
 				472092B92A24FF6100468796 /* NewChatHeaderView.swift in Sources */,
 				4712994529227C460049CBE3 /* TribeMemberProfileView.swift in Sources */,
 				47FA440923749D0B005D8C63 /* SubscriptionFormTableHeaderView.swift in Sources */,
@@ -4950,6 +4972,7 @@
 				F3197C112680F50300330F79 /* RestoreUserFormViewController+FormSubmissionUtils.swift in Sources */,
 				F3DC6B24273F60FF00458E09 /* ContentFeedPaymentDestination+CoreDataProperties.swift in Sources */,
 				F3188BA0271CD81D00890DDD /* ModalDismissButtonStyle.swift in Sources */,
+				472092CE2A27987A00468796 /* NewChatTableDataSource.swift in Sources */,
 				47893AA0240D8ED0002F675B /* IntermitentAlphaAnimatedView.swift in Sources */,
 				475BDD70232BF09E00C5BBD6 /* StoryboardScenes.swift in Sources */,
 				4734D3C7241A828B00D6957E /* CommonDirectPaymentTableViewCell.swift in Sources */,
@@ -5126,6 +5149,7 @@
 				470396DC2535D2EB007F9C23 /* PodcastEpisodesDataSource.swift in Sources */,
 				F32A697B26D565E50004B8B3 /* PodcastModel+Computeds.swift in Sources */,
 				471161D7291563A2008EAFF2 /* ActionTrack+CoreDataClass.swift in Sources */,
+				472092CC2A27985800468796 /* NewChatViewController+TableViewExtension.swift in Sources */,
 				472161CB293A66EE0088B87B /* RecommendationFeedPlayerContainerViewController.swift in Sources */,
 				475BDCE1232AC23B00C5BBD6 /* ExpiredInvoiceSentTableViewCell.swift in Sources */,
 				47D0046125E7F3EC00E74063 /* Download.swift in Sources */,

@@ -372,8 +372,14 @@ class MediaLoader {
            let path = getDiskImagePath(forKey: url){
             let randomInt = Int.random(in: 0...Int(1e9))
             let _ = CachedMedia.createObject(id: randomInt, chat: chat, filePath: path, fileExtension: "png", key: url)
-            print(chat.id)
-            print()
+            let sm = StorageManager.sharedManager
+            if(sm.garbageCleanIsInProgress == false){ //detect transition from downloading to download complete
+                sm.refreshAllStoredData {
+                    sm.cleanupGarbage(completion: {
+                        sm.refreshAllStoredData {}
+                    })
+                }
+            }
         }
     }
     
@@ -387,6 +393,14 @@ class MediaLoader {
     
     class func storeMediaDataInCache(data: Data, url: String,isVideo:Bool=false) {
         cache[url] = data
+        let sm = StorageManager.sharedManager
+        if(sm.garbageCleanIsInProgress == false){ //detect transition from downloading to download complete
+            sm.refreshAllStoredData {
+                sm.cleanupGarbage(completion: {
+                    sm.refreshAllStoredData {}
+                })
+            }
+        }
     }
     
     class func getMediaDataFromCachedUrl(url: String) -> Data? {

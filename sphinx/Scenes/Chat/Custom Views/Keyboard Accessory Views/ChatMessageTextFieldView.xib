@@ -75,7 +75,6 @@
                                     <constraints>
                                         <constraint firstItem="hZU-2U-GrF" firstAttribute="centerY" secondItem="In5-6A-XTW" secondAttribute="centerY" id="7E0-FA-PEd"/>
                                         <constraint firstAttribute="width" constant="45" id="FYD-qW-dSa"/>
-                                        <constraint firstAttribute="height" constant="58" id="ecb-R9-ylr"/>
                                         <constraint firstItem="hZU-2U-GrF" firstAttribute="leading" secondItem="In5-6A-XTW" secondAttribute="leading" constant="15" id="qkK-Cb-8qP"/>
                                     </constraints>
                                 </view>
@@ -165,7 +164,6 @@
                                 <constraint firstItem="bRr-89-mn9" firstAttribute="centerY" secondItem="1Oy-zi-yG4" secondAttribute="centerY" id="0Oy-xo-4Au"/>
                                 <constraint firstItem="bRr-89-mn9" firstAttribute="leading" secondItem="1Oy-zi-yG4" secondAttribute="trailing" constant="-12" id="3as-d2-6Nt"/>
                                 <constraint firstAttribute="bottom" secondItem="l4v-3x-MSX" secondAttribute="bottom" id="Cyl-M1-dYn"/>
-                                <constraint firstAttribute="height" constant="57" id="LLv-Ap-yrp"/>
                                 <constraint firstItem="bax-cO-uwT" firstAttribute="centerY" secondItem="l4v-3x-MSX" secondAttribute="centerY" id="MiS-bC-Xii"/>
                                 <constraint firstItem="l4v-3x-MSX" firstAttribute="leading" secondItem="Aqs-pb-zCH" secondAttribute="leading" id="N2m-6Y-S4W"/>
                                 <constraint firstItem="1Oy-zi-yG4" firstAttribute="centerY" secondItem="bax-cO-uwT" secondAttribute="centerY" id="TAU-Lg-kMZ"/>
@@ -216,7 +214,6 @@
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="bottom" secondItem="PDF-iA-BMU" secondAttribute="bottom" id="H8T-sK-Oqh"/>
-                                <constraint firstAttribute="height" constant="58" id="Z3H-zd-shB"/>
                                 <constraint firstAttribute="width" constant="60" id="cFI-IC-Rby"/>
                                 <constraint firstItem="PDF-iA-BMU" firstAttribute="centerX" secondItem="VO2-BQ-HTF" secondAttribute="centerX" id="frE-L1-zYM"/>
                                 <constraint firstItem="PDF-iA-BMU" firstAttribute="top" secondItem="VO2-BQ-HTF" secondAttribute="top" id="njh-CV-osP"/>

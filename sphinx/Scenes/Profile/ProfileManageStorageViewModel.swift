@@ -121,14 +121,15 @@ extension ProfileManageStorageViewModel : UITableViewDelegate,UITableViewDataSou
         
         let warningMessage = String(format: NSLocalizedString("are.you.sure.deletion.warning", comment: ""), (typeString ?? "media files"))
         
-        AlertHelper.showTwoOptionsAlert(
-            title: "are.you.sure".localized,
-            message: warningMessage,
-            confirmButtonTitle: "yes".localized,
-            cancelButtonTitle: "cancel".localized,
-            confirm: {
-                self.handleDeletion(type: type)
-        }) //StorageManager TODO
+        self.vc.showDeletionWarningAlert(type: type)
+//        AlertHelper.showTwoOptionsAlert(
+//            title: "are.you.sure".localized,
+//            message: warningMessage,
+//            confirmButtonTitle: "yes".localized,
+//            cancelButtonTitle: "cancel".localized,
+//            confirm: {
+//                self.handleDeletion(type: type)
+//        }) //StorageManager TODO
     }
     
     func handleDeletion(type:StorageManagerMediaType){

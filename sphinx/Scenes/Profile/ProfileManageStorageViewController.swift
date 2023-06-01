@@ -13,6 +13,7 @@ class ProfileManageStorageViewController : UIViewController{
     
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var storageSummaryView: StorageSummaryView!
+    @IBOutlet weak var mediaDeletionConfirmationView: MediaDeletionConfirmationView!
     @IBOutlet weak var usedStorageLabel: UILabel!
     @IBOutlet weak var freeStorageLabel: UILabel!
     @IBOutlet weak var changeStorageButton: UIButton!
@@ -40,6 +41,7 @@ class ProfileManageStorageViewController : UIViewController{
     var tempTypeStats : [StorageManagerMediaType:Double]? = nil
     var tempSourceStats : [StorageManagerMediaSource:Double]? = nil
     var isFirstLoad : Bool = true
+    var overlayView : UIView? = nil
     
     var usageKB : Double = 0.0
     var maxGB: Int = 0
@@ -117,6 +119,33 @@ class ProfileManageStorageViewController : UIViewController{
         }
     }
     
+    func showDeletionWarningAlert(type:StorageManagerMediaType){
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15, execute: {
+            self.overlayView = UIView(frame: self.view.frame)
+            if let overlayView = self.overlayView{
+                overlayView.backgroundColor = .black
+                overlayView.isUserInteractionEnabled = false
+                overlayView.alpha = 0.8
+                self.view.addSubview(overlayView)
+                self.view.bringSubviewToFront(overlayView)
+            }
+            self.view.bringSubviewToFront(self.mediaDeletionConfirmationView)
+            self.mediaDeletionConfirmationView.layer.zPosition = 1000
+            self.mediaDeletionConfirmationView.delegate = self
+            self.mediaDeletionConfirmationView.type = type
+            self.mediaDeletionConfirmationView.isHidden = false
+            //self.mediaDeletionConfirmationView.contentView.backgroundColor = .black
+        })
+    }
+    
+    func hideDeletionWarningAlert(){
+        self.overlayView?.removeFromSuperview()
+        self.overlayView = nil
+        
+        self.mediaDeletionConfirmationView.isHidden = true
+    }
+    
     func setIsLoading(){
         self.isLoading = true
     }
@@ -154,6 +183,7 @@ class ProfileManageStorageViewController : UIViewController{
         if(isFirstLoad){
             setupStorageViewsAndModels()
         }
+        hideDeletionWarningAlert()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -333,5 +363,18 @@ extension ProfileManageStorageViewController: MaxMemorySliderDelegate{
         checkForImmediateDeletion(newMaxGB: value)
         self.editingModeMaximumLabel.text = formatBytes(Int(Double(value) * 1e9))
         self.storageSummaryView.memorySliderUpdated(value: value)
+    }
+}
+
+extension ProfileManageStorageViewController : MediaDeletionConfirmationViewDelegate{
+    func deleteTapped() {
+        if let type = mediaDeletionConfirmationView.type{
+            vm.handleDeletion(type: type)
+        }
+        self.hideDeletionWarningAlert()
+    }
+    
+    func cancelTapped() {
+        self.hideDeletionWarningAlert()
     }
 }

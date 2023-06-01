@@ -1530,6 +1530,13 @@
                                     <constraint firstAttribute="height" constant="128" id="doI-Yy-OAe"/>
                                 </constraints>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AJI-on-VIe" customClass="MediaDeletionConfirmationView" customModule="sphinx" customModuleProvider="target">
+                                <rect key="frame" x="31" y="271" width="352" height="368"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="368" id="ONo-b6-1yQ"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="R4S-en-fKP"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -1551,6 +1558,7 @@
                             <constraint firstItem="Ngf-yd-OIl" firstAttribute="top" secondItem="n7u-9a-5PX" secondAttribute="top" id="CwP-dZ-mD3"/>
                             <constraint firstItem="DzR-Mi-Rn7" firstAttribute="centerY" secondItem="aZn-Kj-YV3" secondAttribute="centerY" id="G9r-PS-Hjh"/>
                             <constraint firstItem="Ngf-yd-OIl" firstAttribute="trailing" secondItem="n7u-9a-5PX" secondAttribute="trailing" id="Gve-mY-5rW"/>
+                            <constraint firstItem="AJI-on-VIe" firstAttribute="leading" secondItem="R4S-en-fKP" secondAttribute="leading" constant="31" id="Jv4-nn-3sZ"/>
                             <constraint firstItem="aZn-Kj-YV3" firstAttribute="top" secondItem="Fvo-5a-xTT" secondAttribute="bottom" constant="2" id="OAZ-yi-8km"/>
                             <constraint firstItem="m9b-2o-0MK" firstAttribute="top" secondItem="tn4-X7-Dcd" secondAttribute="bottom" id="QCX-fV-3db"/>
                             <constraint firstItem="h59-t6-zfg" firstAttribute="top" secondItem="MBC-sr-yDr" secondAttribute="bottom" constant="20" id="QhP-dQ-dvm"/>
@@ -1562,8 +1570,10 @@
                             <constraint firstItem="InT-v9-FcK" firstAttribute="centerY" secondItem="myU-eK-pqV" secondAttribute="centerY" id="WS7-cl-Mjg"/>
                             <constraint firstItem="R4S-en-fKP" firstAttribute="trailing" secondItem="fkk-rM-43k" secondAttribute="trailing" id="Wxx-UT-CbO"/>
                             <constraint firstItem="bTv-6h-5tO" firstAttribute="top" secondItem="MBC-sr-yDr" secondAttribute="bottom" constant="32" id="X8g-W5-Uoa"/>
+                            <constraint firstItem="AJI-on-VIe" firstAttribute="centerY" secondItem="R4S-en-fKP" secondAttribute="centerY" id="Xe8-xW-2CQ"/>
                             <constraint firstItem="DzR-Mi-Rn7" firstAttribute="leading" secondItem="R4S-en-fKP" secondAttribute="leading" constant="16" id="Yrx-x5-su7"/>
                             <constraint firstItem="Fvo-5a-xTT" firstAttribute="top" secondItem="MBC-sr-yDr" secondAttribute="bottom" constant="-400" id="ask-JB-c7C"/>
+                            <constraint firstItem="AJI-on-VIe" firstAttribute="centerX" secondItem="R4S-en-fKP" secondAttribute="centerX" id="eCc-tZ-hVs"/>
                             <constraint firstItem="InT-v9-FcK" firstAttribute="leading" secondItem="n7u-9a-5PX" secondAttribute="leading" id="gnS-hV-99X"/>
                             <constraint firstItem="Na3-Le-Hwn" firstAttribute="leading" secondItem="ojg-wh-9EL" secondAttribute="trailing" constant="26" id="gud-uG-L8A"/>
                             <constraint firstItem="myU-eK-pqV" firstAttribute="trailing" secondItem="n7u-9a-5PX" secondAttribute="trailing" id="iaO-g8-xg6"/>
@@ -1595,6 +1605,7 @@
                         <outlet property="freeStorageLabel" destination="myU-eK-pqV" id="BIS-qn-qXu"/>
                         <outlet property="loadingLabel" destination="7C5-MF-uCe" id="6ml-cv-gxd"/>
                         <outlet property="maxSliderView" destination="Fvo-5a-xTT" id="Pw9-YR-TRh"/>
+                        <outlet property="mediaDeletionConfirmationView" destination="AJI-on-VIe" id="LKB-A2-93H"/>
                         <outlet property="mediaSourceTableView" destination="m9b-2o-0MK" id="EOt-wP-pnG"/>
                         <outlet property="mediaTypeTableView" destination="tn4-X7-Dcd" id="Ko3-aR-13E"/>
                         <outlet property="saveButton" destination="aZn-Kj-YV3" id="Uzk-Oy-chb"/>

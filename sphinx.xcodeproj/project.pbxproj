@@ -623,6 +623,8 @@
 		CE0C4676296DC5E200E82353 /* ContentFeedStatus+SupportingModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0C4675296DC5E200E82353 /* ContentFeedStatus+SupportingModels.swift */; };
 		CE1F033F2994458B002E1079 /* ChatLeaderboardEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1F033E2994458B002E1079 /* ChatLeaderboardEntry.swift */; };
 		CE2585E929A3FE7300130641 /* JitsiIncomingCallManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2585E829A3FE7200130641 /* JitsiIncomingCallManager.swift */; };
+		CE2743B62A29318A007A0FDC /* MediaDeletionConfirmationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE2743B52A29318A007A0FDC /* MediaDeletionConfirmationView.xib */; };
+		CE2743B82A2931BF007A0FDC /* MediaDeletionConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2743B72A2931BF007A0FDC /* MediaDeletionConfirmationView.swift */; };
 		CE30D9572A0BE93500C83555 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE30D9562A0BE93500C83555 /* StorageManager.swift */; };
 		CE30D9592A0BFFAA00C83555 /* ProfileManageStorageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE30D9582A0BFFAA00C83555 /* ProfileManageStorageViewController.swift */; };
 		CE30D95B2A0C09DE00C83555 /* MaxMemorySlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE30D95A2A0C09DE00C83555 /* MaxMemorySlider.swift */; };
@@ -1585,6 +1587,8 @@
 		CE0C4675296DC5E200E82353 /* ContentFeedStatus+SupportingModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentFeedStatus+SupportingModels.swift"; sourceTree = "<group>"; };
 		CE1F033E2994458B002E1079 /* ChatLeaderboardEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLeaderboardEntry.swift; sourceTree = "<group>"; };
 		CE2585E829A3FE7200130641 /* JitsiIncomingCallManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JitsiIncomingCallManager.swift; sourceTree = "<group>"; };
+		CE2743B52A29318A007A0FDC /* MediaDeletionConfirmationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MediaDeletionConfirmationView.xib; sourceTree = "<group>"; };
+		CE2743B72A2931BF007A0FDC /* MediaDeletionConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDeletionConfirmationView.swift; sourceTree = "<group>"; };
 		CE30D9562A0BE93500C83555 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		CE30D9582A0BFFAA00C83555 /* ProfileManageStorageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileManageStorageViewController.swift; sourceTree = "<group>"; };
 		CE30D95A2A0C09DE00C83555 /* MaxMemorySlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaxMemorySlider.swift; sourceTree = "<group>"; };
@@ -3546,6 +3550,8 @@
 				4797E7D124B8F4DC00D13270 /* AppAppearenceView.xib */,
 				4785C10324D4A633004E2D6C /* AppSizeView.swift */,
 				4785C10924D4A6A0004E2D6C /* AppSizeView.xib */,
+				CE2743B52A29318A007A0FDC /* MediaDeletionConfirmationView.xib */,
+				CE2743B72A2931BF007A0FDC /* MediaDeletionConfirmationView.swift */,
 				4789E25E24F033B8003991BE /* SettingsTabsView.swift */,
 				4789E26424F04752003991BE /* SettingsTabsView.xib */,
 				4789E26024F03CF4003991BE /* CommonTabsView.swift */,
@@ -4526,6 +4532,7 @@
 				F3197C0D267FA2C800330F79 /* ellipse.gif in Resources */,
 				F33119A0268E9C1B005082EB /* XcodeStoreKitConfiguration.storekit in Resources */,
 				4754FAA2272B2040006295A5 /* NewsletterItemCollectionViewCell.xib in Resources */,
+				CE2743B62A29318A007A0FDC /* MediaDeletionConfirmationView.xib in Resources */,
 				473C315327986EBB007735CD /* RestoreProgressView.xib in Resources */,
 				4789E26224F04752003991BE /* SettingsTabsView.xib in Resources */,
 				4797E81524BBA54300D13270 /* ChatAccessoryView.xib in Resources */,
@@ -4817,6 +4824,7 @@
 				47BF7D4B25A8A59100593489 /* API+VersionsExtension.swift in Sources */,
 				475E41612382E28800928931 /* UIButton.swift in Sources */,
 				47308E0124FEE6E600FFAC6F /* SocketExtensions.swift in Sources */,
+				CE2743B82A2931BF007A0FDC /* MediaDeletionConfirmationView.swift in Sources */,
 				475E416C23858D4900928931 /* Subscription+CoreDataClass.swift in Sources */,
 				473633EA25559945007405F2 /* LogarithmicSlider.swift in Sources */,
 				475BDCA5232AC1D600C5BBD6 /* TransactionMessageRow.swift in Sources */,

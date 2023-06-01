@@ -375,6 +375,8 @@
 		4779248C2A28F54600CD3CF1 /* DirectPaymentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4779248B2A28F54600CD3CF1 /* DirectPaymentView.xib */; };
 		4779248E2A290A9700CD3CF1 /* MediaMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4779248D2A290A9700CD3CF1 /* MediaMessageView.swift */; };
 		477924902A290AA600CD3CF1 /* MediaMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4779248F2A290AA600CD3CF1 /* MediaMessageView.xib */; };
+		477924942A29149E00CD3CF1 /* FileDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477924932A29149E00CD3CF1 /* FileDetailsView.swift */; };
+		477924962A2914A600CD3CF1 /* FileDetailsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 477924952A2914A600CD3CF1 /* FileDetailsView.xib */; };
 		4779F162232AA0F200D35E81 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4779F161232AA0F200D35E81 /* AppDelegate.swift */; };
 		4779F16C232AA0F300D35E81 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4779F16B232AA0F300D35E81 /* Assets.xcassets */; };
 		4779F16F232AA0F300D35E81 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4779F16D232AA0F300D35E81 /* LaunchScreen.storyboard */; };
@@ -1262,6 +1264,8 @@
 		4779248B2A28F54600CD3CF1 /* DirectPaymentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DirectPaymentView.xib; sourceTree = "<group>"; };
 		4779248D2A290A9700CD3CF1 /* MediaMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaMessageView.swift; sourceTree = "<group>"; };
 		4779248F2A290AA600CD3CF1 /* MediaMessageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MediaMessageView.xib; sourceTree = "<group>"; };
+		477924932A29149E00CD3CF1 /* FileDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileDetailsView.swift; sourceTree = "<group>"; };
+		477924952A2914A600CD3CF1 /* FileDetailsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FileDetailsView.xib; sourceTree = "<group>"; };
 		4779F15E232AA0F200D35E81 /* sphinx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sphinx.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4779F161232AA0F200D35E81 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4779F16B232AA0F300D35E81 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -3217,6 +3221,8 @@
 				4779248B2A28F54600CD3CF1 /* DirectPaymentView.xib */,
 				4779248D2A290A9700CD3CF1 /* MediaMessageView.swift */,
 				4779248F2A290AA600CD3CF1 /* MediaMessageView.xib */,
+				477924932A29149E00CD3CF1 /* FileDetailsView.swift */,
+				477924952A2914A600CD3CF1 /* FileDetailsView.xib */,
 			);
 			path = "Custom Views";
 			sourceTree = "<group>";
@@ -4463,6 +4469,7 @@
 				47904C0A24BF352300710E7A /* horn.caf in Resources */,
 				4780783423916D4900187906 /* PictureReceivedTableViewCell.xib in Resources */,
 				472092CA2A278B0400468796 /* NewMessageTableViewCell.xib in Resources */,
+				477924962A2914A600CD3CF1 /* FileDetailsView.xib in Resources */,
 				47F258C12539DA1600122A5A /* PodcastCommentReceivedTableViewCell.xib in Resources */,
 				475BDD44232AD00D00C5BBD6 /* Montserrat-Black.otf in Resources */,
 				CEEBBB4329DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.xib in Resources */,
@@ -5116,6 +5123,7 @@
 				475BDD2A232AC9E200C5BBD6 /* Date.swift in Sources */,
 				475723A7247EB5DA001ADC7E /* AudioPlayerHelper.swift in Sources */,
 				F3DC6B28273FABDB00458E09 /* ContentFeedPaymentModel+Computeds.swift in Sources */,
+				477924942A29149E00CD3CF1 /* FileDetailsView.swift in Sources */,
 				471161EA2915937A008EAFF2 /* Array.swift in Sources */,
 				475BDD07232AC24600C5BBD6 /* DirectPaymentReceivedTableViewCell.swift in Sources */,
 				475BDD02232AC24600C5BBD6 /* PaymentReceivedTableViewCell.swift in Sources */,

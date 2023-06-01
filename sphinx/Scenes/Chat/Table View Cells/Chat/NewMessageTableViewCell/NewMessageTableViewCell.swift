@@ -14,6 +14,13 @@ extension NewMessageTableViewCell {
         case Incoming
         case Outgoing
     }
+    
+    public enum GroupingState {
+        case Isolated
+        case First
+        case Middle
+        case Last
+    }
 }
 
 class NewMessageTableViewCell: UITableViewCell {
@@ -26,7 +33,9 @@ class NewMessageTableViewCell: UITableViewCell {
     @IBOutlet weak var chatAvatarContainerView: UIView!
     @IBOutlet weak var sentMessageMargingView: UIView!
     @IBOutlet weak var receivedMessageMarginView: UIView!
-    @IBOutlet weak var statusHeaderView: UIView!
+    @IBOutlet weak var statusHeaderView: StatusHeaderView!
+    
+    @IBOutlet weak var messageReplyView: NewMessageReplyView!
     @IBOutlet weak var mediaContentView: UIView!
     
     @IBOutlet weak var messageLabel: UILabel!
@@ -65,6 +74,21 @@ class NewMessageTableViewCell: UITableViewCell {
         let bubbleColor = outgoing ? UIColor.Sphinx.SentMsgBG : UIColor.Sphinx.ReceivedMsgBG
         bubbleOnlyText.backgroundColor = bubbleColor
         bubbleAllView.backgroundColor = bubbleColor
+        
+        statusHeaderView.configureFor(direction: direction)
+    }
+    
+    func configureFor(groupingState: GroupingState) {
+        switch (groupingState) {
+        case .Isolated:
+            break
+        case .First:
+            break
+        case .Middle:
+            break
+        case .Last:
+            break
+        }
     }
     
     func configureWith(
@@ -73,12 +97,17 @@ class NewMessageTableViewCell: UITableViewCell {
     ) {
         configureFor(direction: (index % 2 == 0) ? .Outgoing : .Incoming)
         
-        let media = (index % 3 == 0)
+//        let array: [GroupingState] = [.Isolated, .First, .Middle, .Last]
+//        configureFor(groupingState: array[index % 4])
+        
+        let moreThanText = (index % 3 == 0)
 
-        mediaContentView.isHidden = !media
+        mediaContentView.isHidden = !moreThanText
+        messageReplyView.isHidden = !moreThanText
+        
         messageLabel.text = message
         
-        bubbleAllView.isHidden = !media
+        bubbleAllView.isHidden = !moreThanText
     }
     
 }

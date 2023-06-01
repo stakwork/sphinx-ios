@@ -365,6 +365,10 @@
 		47771C6E259B848300990467 /* GroupPinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47771C6D259B848300990467 /* GroupPinView.swift */; };
 		47771C72259B8D9300990467 /* GroupsPinManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47771C71259B8D9300990467 /* GroupsPinManager.swift */; };
 		47771C73259B9B9400990467 /* GroupPinView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47771C75259B9B9400990467 /* GroupPinView.xib */; };
+		4779247E2A28D1D200CD3CF1 /* StatusHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4779247D2A28D1D200CD3CF1 /* StatusHeaderView.swift */; };
+		477924802A28D1DC00CD3CF1 /* StatusHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4779247F2A28D1DC00CD3CF1 /* StatusHeaderView.xib */; };
+		477924822A28DF6700CD3CF1 /* NewMessageReplyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477924812A28DF6700CD3CF1 /* NewMessageReplyView.swift */; };
+		477924842A28DF7000CD3CF1 /* NewMessageReplyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 477924832A28DF7000CD3CF1 /* NewMessageReplyView.xib */; };
 		4779F162232AA0F200D35E81 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4779F161232AA0F200D35E81 /* AppDelegate.swift */; };
 		4779F16C232AA0F300D35E81 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4779F16B232AA0F300D35E81 /* Assets.xcassets */; };
 		4779F16F232AA0F300D35E81 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4779F16D232AA0F300D35E81 /* LaunchScreen.storyboard */; };
@@ -1242,6 +1246,10 @@
 		47771C74259B9B9400990467 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/GroupPinView.xib; sourceTree = "<group>"; };
 		47771C77259B9B9900990467 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/GroupPinView.strings; sourceTree = "<group>"; };
 		47771C79259B9B9B00990467 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/GroupPinView.strings; sourceTree = "<group>"; };
+		4779247D2A28D1D200CD3CF1 /* StatusHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusHeaderView.swift; sourceTree = "<group>"; };
+		4779247F2A28D1DC00CD3CF1 /* StatusHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StatusHeaderView.xib; sourceTree = "<group>"; };
+		477924812A28DF6700CD3CF1 /* NewMessageReplyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageReplyView.swift; sourceTree = "<group>"; };
+		477924832A28DF7000CD3CF1 /* NewMessageReplyView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewMessageReplyView.xib; sourceTree = "<group>"; };
 		4779F15E232AA0F200D35E81 /* sphinx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sphinx.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4779F161232AA0F200D35E81 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4779F16B232AA0F300D35E81 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -2120,6 +2128,7 @@
 		472092C62A278AE400468796 /* NewMessageTableViewCell */ = {
 			isa = PBXGroup;
 			children = (
+				4779247C2A28D19F00CD3CF1 /* Custom Views */,
 				472092C72A278B0400468796 /* NewMessageTableViewCell.swift */,
 				472092C82A278B0400468796 /* NewMessageTableViewCell.xib */,
 			);
@@ -3181,6 +3190,17 @@
 				47669F4523D1FBA500C17A77 /* GroupMembersDataSource.swift */,
 			);
 			path = "Data Sources";
+			sourceTree = "<group>";
+		};
+		4779247C2A28D19F00CD3CF1 /* Custom Views */ = {
+			isa = PBXGroup;
+			children = (
+				4779247D2A28D1D200CD3CF1 /* StatusHeaderView.swift */,
+				4779247F2A28D1DC00CD3CF1 /* StatusHeaderView.xib */,
+				477924812A28DF6700CD3CF1 /* NewMessageReplyView.swift */,
+				477924832A28DF7000CD3CF1 /* NewMessageReplyView.xib */,
+			);
+			path = "Custom Views";
 			sourceTree = "<group>";
 		};
 		4779F155232AA0F200D35E81 = {
@@ -4436,6 +4456,7 @@
 				47FA440723749D02005D8C63 /* SubscriptionFormTableHeaderView.xib in Resources */,
 				4797E7AC24B8F13800D13270 /* JoinVideoCallView.xib in Resources */,
 				4797E7BA24B8F3B600D13270 /* History.storyboard in Resources */,
+				477924842A28DF7000CD3CF1 /* NewMessageReplyView.xib in Resources */,
 				F3188BB5271CF34E00890DDD /* VideoFeedEpisodeCollectionViewCell.xib in Resources */,
 				CEF88DCA29B64E5100DC1C40 /* UnifiedEpisodeView.xib in Resources */,
 				477D9692244DFCDA00830406 /* GifOverlayView.xib in Resources */,
@@ -4581,6 +4602,7 @@
 				4797E8A824BDF7E900D13270 /* InvoiceReceivedTableViewCell.xib in Resources */,
 				4797E7EB24B8F84D00D13270 /* Subscription.storyboard in Resources */,
 				4785C10024D1EE1F004E2D6C /* GroupRequestTableViewCell.xib in Resources */,
+				477924802A28D1DC00CD3CF1 /* StatusHeaderView.xib in Resources */,
 				479608F6256EAEBD00A68FC1 /* MessageBoostView.xib in Resources */,
 				47822C6E2449EEEE0011D832 /* PaidMessageReceivedTableViewCell.xib in Resources */,
 				473633E825558F0B007405F2 /* PodcastSatsView.xib in Resources */,
@@ -4862,6 +4884,7 @@
 				475E41612382E28800928931 /* UIButton.swift in Sources */,
 				47308E0124FEE6E600FFAC6F /* SocketExtensions.swift in Sources */,
 				475E416C23858D4900928931 /* Subscription+CoreDataClass.swift in Sources */,
+				477924822A28DF6700CD3CF1 /* NewMessageReplyView.swift in Sources */,
 				473633EA25559945007405F2 /* LogarithmicSlider.swift in Sources */,
 				475BDCA5232AC1D600C5BBD6 /* TransactionMessageRow.swift in Sources */,
 				47AA08C7234BB8E0002C69E2 /* ShareInviteCodeViewController.swift in Sources */,
@@ -5176,6 +5199,7 @@
 				47DAABCE2491410900EF38B0 /* MessageReplyView.swift in Sources */,
 				474064932745581C00FB7F93 /* PeopleTorActionsView.swift in Sources */,
 				47468FD723353C880072124A /* LeftMenuOptionTableViewCell.swift in Sources */,
+				4779247E2A28D1D200CD3CF1 /* StatusHeaderView.swift in Sources */,
 				47FA44172374B6F7005D8C63 /* SubscriptionEndRuleView.swift in Sources */,
 				478DCFA02344E5EF009A03D6 /* CameraHelper.swift in Sources */,
 				F39F2C8126E2805D00D357F6 /* FeedSearchResultCollectionViewCell.swift in Sources */,

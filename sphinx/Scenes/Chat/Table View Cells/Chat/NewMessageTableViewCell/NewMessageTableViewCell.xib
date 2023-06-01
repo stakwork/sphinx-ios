@@ -23,7 +23,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kPT-TB-gta">
-                        <rect key="frame" x="55.999999999999986" y="268.66666666666669" width="247.66666666666663" height="243.33333333333331"/>
+                        <rect key="frame" x="55.999999999999986" y="318.66666666666669" width="247.66666666666663" height="193.33333333333331"/>
                         <color key="backgroundColor" name="SentMsgBG"/>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iIC-G3-A9L">
@@ -97,7 +97,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="mD1-rC-VsJ">
                                 <rect key="frame" x="40.999999999999986" y="0.0" width="247.66666666666663" height="508"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Idp-LW-sQE">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Idp-LW-sQE" customClass="StatusHeaderView" customModule="sphinx" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="247.66666666666666" height="17"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
@@ -107,18 +107,25 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="j6X-QF-M6e">
                                         <rect key="frame" x="0.0" y="17" width="247.66666666666666" height="491"/>
                                         <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xkZ-Ex-rUP" customClass="NewMessageReplyView" customModule="sphinx" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="247.66666666666666" height="50"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="Mxk-ff-zYN"/>
+                                                </constraints>
+                                            </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9An-1l-E7B">
-                                                <rect key="frame" x="0.0" y="0.0" width="247.66666666666666" height="247.66666666666666"/>
+                                                <rect key="frame" x="0.0" y="49.999999999999986" width="247.66666666666666" height="247.66666666666663"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="9An-1l-E7B" secondAttribute="height" multiplier="1:1" id="WM2-Tr-lMc"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="roq-OQ-TDc">
-                                                <rect key="frame" x="0.0" y="247.66666666666669" width="247.66666666666666" height="243.33333333333331"/>
+                                                <rect key="frame" x="0.0" y="297.66666666666669" width="247.66666666666666" height="193.33333333333331"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="This is a large text to see how it works" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pPY-Rf-UkB">
-                                                        <rect key="frame" x="16" y="16" width="215.66666666666666" height="211.33333333333334"/>
+                                                        <rect key="frame" x="16" y="16" width="215.66666666666666" height="161.33333333333334"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                                                         <nil key="textColor"/>
@@ -139,6 +146,8 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="roq-OQ-TDc" firstAttribute="leading" secondItem="j6X-QF-M6e" secondAttribute="leading" id="60a-nx-mZn"/>
+                                            <constraint firstAttribute="trailing" secondItem="xkZ-Ex-rUP" secondAttribute="trailing" id="Jgo-EF-lVv"/>
+                                            <constraint firstItem="xkZ-Ex-rUP" firstAttribute="leading" secondItem="j6X-QF-M6e" secondAttribute="leading" id="SgC-Fr-L8O"/>
                                         </constraints>
                                     </stackView>
                                 </subviews>
@@ -219,11 +228,12 @@
                 <outlet property="messageLabel" destination="pPY-Rf-UkB" id="pSb-ZX-kkP"/>
                 <outlet property="messageLabelLeadingConstraint" destination="jzs-Sy-7bK" id="mSD-ud-rV6"/>
                 <outlet property="messageLabelTrailingConstraint" destination="gXc-7R-bl4" id="63i-H5-aXg"/>
+                <outlet property="messageReplyView" destination="xkZ-Ex-rUP" id="uhA-he-a9R"/>
                 <outlet property="receivedArrow" destination="fdj-WN-CtK" id="pk6-NC-v9c"/>
                 <outlet property="receivedMessageMarginView" destination="uDp-ul-Cgt" id="z2j-5v-jTB"/>
                 <outlet property="sentArrow" destination="5b0-1L-71y" id="Zv3-kX-LJn"/>
                 <outlet property="sentMessageMargingView" destination="dkB-Yo-aJa" id="uUG-wh-2vX"/>
-                <outlet property="statusHeaderView" destination="Idp-LW-sQE" id="GvG-YM-DGH"/>
+                <outlet property="statusHeaderView" destination="Idp-LW-sQE" id="q6n-iO-6SS"/>
             </connections>
             <point key="canvasLocation" x="71.755725190839698" y="19.718309859154932"/>
         </tableViewCell>

@@ -46,6 +46,7 @@ class NewMessageTableViewCell: UITableViewCell {
     @IBOutlet weak var fileDetailsView: FileDetailsView!
     @IBOutlet weak var audioMessageView: AudioMessageView!
     @IBOutlet weak var podcastAudioView: PodcastAudioView!
+    @IBOutlet weak var callLinkView: JoinVideoCallView!
     
     @IBOutlet weak var textMessageView: UIView!
     @IBOutlet weak var messageLabel: UILabel!
@@ -115,6 +116,7 @@ class NewMessageTableViewCell: UITableViewCell {
         mediaContentView.isHidden = !moreThanText
         messageReplyView.isHidden = !moreThanText
         podcastAudioView.isHidden = !moreThanText
+        callLinkView.isHidden = !moreThanText
         
         directPaymentView.isHidden = true
         fileDetailsView.isHidden = true

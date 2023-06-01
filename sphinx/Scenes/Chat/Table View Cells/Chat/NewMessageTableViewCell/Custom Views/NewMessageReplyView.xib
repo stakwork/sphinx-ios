@@ -140,12 +140,11 @@
                     </subviews>
                 </stackView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eY5-2b-fTs">
-                    <rect key="frame" x="0.0" y="49" width="375" height="1"/>
+                    <rect key="frame" x="0.0" y="49.666666666666664" width="375" height="0.3333333333333357"/>
                     <viewLayoutGuide key="safeArea" id="ddO-cv-7mf"/>
                     <color key="backgroundColor" name="ReplyDividerSent"/>
                     <constraints>
-                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="1" id="eAh-6N-LdT"/>
-                        <constraint firstAttribute="height" constant="1" id="ote-7w-9JZ"/>
+                        <constraint firstAttribute="height" constant="0.5" id="ote-7w-9JZ"/>
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2vP-dO-YnU">

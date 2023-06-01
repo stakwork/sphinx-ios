@@ -82,6 +82,7 @@ class MediaStorageSourceTableViewCell: UITableViewCell {
             }
             
             //squareImageView.image = StorageManager.sharedManager.getTop3ChatImages()// #imageLiteral(resourceName: "appPinIcon")
+            initialsLabel.isHidden = true
             squareImageView.makeCircular()
             break
         case .podcasts:
@@ -135,9 +136,14 @@ class MediaStorageSourceTableViewCell: UITableViewCell {
     
     func configure(podcastEpisode:PodcastEpisode,item:StorageManagerItem,index:Int){
         mediaSourceLabel.text = podcastEpisode.title
-        if let imageURL = URL(string: podcastEpisode.imageToShow ?? ""){
+        initialsLabel.isHidden = true
+        if let imageURL = URL(string: podcastEpisode.imageToShow ?? podcastEpisode.feed?.imageToShow ?? ""){
             squareImageView.sd_setImage(with: imageURL)
         }
+        else{
+            squareImageView.image = #imageLiteral(resourceName: "podcastTypeIcon")
+        }
+        
         squareImageView.layer.cornerRadius = 6
         mediaSourceSizeLabel.text = formatBytes(Int(StorageManager.sharedManager.getItemGroupTotalSize(items: [item])*1e6))
         

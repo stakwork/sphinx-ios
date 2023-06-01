@@ -127,7 +127,7 @@
                                                                     <constraint firstAttribute="height" constant="56" id="uuv-DQ-e0a"/>
                                                                 </constraints>
                                                             </view>
-                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9An-1l-E7B">
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9An-1l-E7B" customClass="MediaMessageView" customModule="sphinx" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="55.999999999999986" width="247.66666666666666" height="247.66666666666663"/>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
@@ -274,7 +274,7 @@
                 <outlet property="bubbleOnlyText" destination="kPT-TB-gta" id="KIr-WV-sVS"/>
                 <outlet property="chatAvatarContainerView" destination="ezO-Vc-nm0" id="Xg0-QA-FMS"/>
                 <outlet property="directPaymentView" destination="RmC-3X-VVX" id="YoI-5x-0iM"/>
-                <outlet property="mediaContentView" destination="9An-1l-E7B" id="KBq-K5-bHW"/>
+                <outlet property="mediaContentView" destination="9An-1l-E7B" id="GZX-9A-KCU"/>
                 <outlet property="messageLabel" destination="pPY-Rf-UkB" id="pSb-ZX-kkP"/>
                 <outlet property="messageLabelLeadingConstraint" destination="jzs-Sy-7bK" id="mSD-ud-rV6"/>
                 <outlet property="messageLabelTrailingConstraint" destination="gXc-7R-bl4" id="63i-H5-aXg"/>

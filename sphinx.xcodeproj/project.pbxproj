@@ -373,6 +373,8 @@
 		477924882A28EF6E00CD3CF1 /* SentPaidDetails.xib in Resources */ = {isa = PBXBuildFile; fileRef = 477924872A28EF6E00CD3CF1 /* SentPaidDetails.xib */; };
 		4779248A2A28F53E00CD3CF1 /* DirectPaymentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477924892A28F53E00CD3CF1 /* DirectPaymentView.swift */; };
 		4779248C2A28F54600CD3CF1 /* DirectPaymentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4779248B2A28F54600CD3CF1 /* DirectPaymentView.xib */; };
+		4779248E2A290A9700CD3CF1 /* MediaMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4779248D2A290A9700CD3CF1 /* MediaMessageView.swift */; };
+		477924902A290AA600CD3CF1 /* MediaMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4779248F2A290AA600CD3CF1 /* MediaMessageView.xib */; };
 		4779F162232AA0F200D35E81 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4779F161232AA0F200D35E81 /* AppDelegate.swift */; };
 		4779F16C232AA0F300D35E81 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4779F16B232AA0F300D35E81 /* Assets.xcassets */; };
 		4779F16F232AA0F300D35E81 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4779F16D232AA0F300D35E81 /* LaunchScreen.storyboard */; };
@@ -1258,6 +1260,8 @@
 		477924872A28EF6E00CD3CF1 /* SentPaidDetails.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SentPaidDetails.xib; sourceTree = "<group>"; };
 		477924892A28F53E00CD3CF1 /* DirectPaymentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectPaymentView.swift; sourceTree = "<group>"; };
 		4779248B2A28F54600CD3CF1 /* DirectPaymentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DirectPaymentView.xib; sourceTree = "<group>"; };
+		4779248D2A290A9700CD3CF1 /* MediaMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaMessageView.swift; sourceTree = "<group>"; };
+		4779248F2A290AA600CD3CF1 /* MediaMessageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MediaMessageView.xib; sourceTree = "<group>"; };
 		4779F15E232AA0F200D35E81 /* sphinx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sphinx.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4779F161232AA0F200D35E81 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4779F16B232AA0F300D35E81 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -3211,6 +3215,8 @@
 				477924872A28EF6E00CD3CF1 /* SentPaidDetails.xib */,
 				477924892A28F53E00CD3CF1 /* DirectPaymentView.swift */,
 				4779248B2A28F54600CD3CF1 /* DirectPaymentView.xib */,
+				4779248D2A290A9700CD3CF1 /* MediaMessageView.swift */,
+				4779248F2A290AA600CD3CF1 /* MediaMessageView.xib */,
 			);
 			path = "Custom Views";
 			sourceTree = "<group>";
@@ -4649,6 +4655,7 @@
 				47904C1324BF352300710E7A /* tweet.caf in Resources */,
 				47183CC02549E1BE00E6FD19 /* PodcastBoostSentTableViewCell.xib in Resources */,
 				4787F879247449DC00CCE8B9 /* GroupTagTableViewCell.xib in Resources */,
+				477924902A290AA600CD3CF1 /* MediaMessageView.xib in Resources */,
 				4797E7F224B8F99800D13270 /* SubscriptionAmountView.xib in Resources */,
 				4797E88C24BCFC7600D13270 /* DeletedMessageSentTableViewCell.xib in Resources */,
 				4797E7E424B8F7E100D13270 /* QRCodeDetail.storyboard in Resources */,
@@ -5264,6 +5271,7 @@
 				F3188BB6271CF35200890DDD /* VideoFeedEpisodeCollectionViewCell.swift in Sources */,
 				47308E0724FEE6E600FFAC6F /* SocketManager.swift in Sources */,
 				473842F32391719500AA640F /* PictureBubbleView.swift in Sources */,
+				4779248E2A290A9700CD3CF1 /* MediaMessageView.swift in Sources */,
 				47129951292297CB0049CBE3 /* TribeMemberProfile.swift in Sources */,
 				F3DC6B26273F60FF00458E09 /* ContentFeedPaymentModel+CoreDataProperties.swift in Sources */,
 				475BDD30232ACB3900C5BBD6 /* UITableView.swift in Sources */,

@@ -42,7 +42,7 @@ class NewMessageTableViewCell: UITableViewCell {
     @IBOutlet weak var sentPaidDetailsView: SentPaidDetails!
     @IBOutlet weak var paidTextMessageView: UIView!
     @IBOutlet weak var directPaymentView: DirectPaymentView!
-    @IBOutlet weak var mediaContentView: UIView!
+    @IBOutlet weak var mediaContentView: MediaMessageView!
     
     @IBOutlet weak var textMessageView: UIView!
     @IBOutlet weak var messageLabel: UILabel!
@@ -109,13 +109,17 @@ class NewMessageTableViewCell: UITableViewCell {
         
         let moreThanText = (index % 3 == 0)
 
-        mediaContentView.isHidden = true
+        mediaContentView.isHidden = !moreThanText
+//        messageReplyView.isHidden = !moreThanText
+        
         messageReplyView.isHidden = true
         sentPaidDetailsView.isHidden = true
         paidTextMessageView.isHidden = true
+        directPaymentView.isHidden = true
         
-        textMessageView.isHidden = moreThanText
-        directPaymentView.isHidden = !moreThanText
+//        textMessageView.isHidden = moreThanText
+        
+//        directPaymentView.isHidden = !moreThanText
         
         messageLabel.text = message
         

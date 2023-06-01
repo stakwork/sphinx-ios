@@ -1531,10 +1531,11 @@
                                 </constraints>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AJI-on-VIe" customClass="MediaDeletionConfirmationView" customModule="sphinx" customModuleProvider="target">
-                                <rect key="frame" x="31" y="271" width="352" height="368"/>
+                                <rect key="frame" x="51" y="271" width="312" height="368"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="368" id="ONo-b6-1yQ"/>
+                                    <constraint firstAttribute="width" constant="312" id="mDi-X9-BHO"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -1558,7 +1559,6 @@
                             <constraint firstItem="Ngf-yd-OIl" firstAttribute="top" secondItem="n7u-9a-5PX" secondAttribute="top" id="CwP-dZ-mD3"/>
                             <constraint firstItem="DzR-Mi-Rn7" firstAttribute="centerY" secondItem="aZn-Kj-YV3" secondAttribute="centerY" id="G9r-PS-Hjh"/>
                             <constraint firstItem="Ngf-yd-OIl" firstAttribute="trailing" secondItem="n7u-9a-5PX" secondAttribute="trailing" id="Gve-mY-5rW"/>
-                            <constraint firstItem="AJI-on-VIe" firstAttribute="leading" secondItem="R4S-en-fKP" secondAttribute="leading" constant="31" id="Jv4-nn-3sZ"/>
                             <constraint firstItem="aZn-Kj-YV3" firstAttribute="top" secondItem="Fvo-5a-xTT" secondAttribute="bottom" constant="2" id="OAZ-yi-8km"/>
                             <constraint firstItem="m9b-2o-0MK" firstAttribute="top" secondItem="tn4-X7-Dcd" secondAttribute="bottom" id="QCX-fV-3db"/>
                             <constraint firstItem="h59-t6-zfg" firstAttribute="top" secondItem="MBC-sr-yDr" secondAttribute="bottom" constant="20" id="QhP-dQ-dvm"/>

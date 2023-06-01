@@ -106,31 +106,9 @@ extension ProfileManageStorageViewModel : UITableViewDelegate,UITableViewDataSou
     }
     
     func didTapDelete(type: StorageManagerMediaType) {
-        var typeString : String? = nil
-        switch type {
-            case .audio:
-                typeString = NSLocalizedString("storage.management.audio.files", comment: "")
-            break
-            case .video:
-                typeString = NSLocalizedString("storage.management.video", comment: "")
-            break
-            case .photo:
-                typeString = NSLocalizedString("storage.management.images", comment: "")
-            break
-        }
-        
-        let warningMessage = String(format: NSLocalizedString("are.you.sure.deletion.warning", comment: ""), (typeString ?? "media files"))
-        
         self.vc.showDeletionWarningAlert(type: type)
-//        AlertHelper.showTwoOptionsAlert(
-//            title: "are.you.sure".localized,
-//            message: warningMessage,
-//            confirmButtonTitle: "yes".localized,
-//            cancelButtonTitle: "cancel".localized,
-//            confirm: {
-//                self.handleDeletion(type: type)
-//        }) //StorageManager TODO
     }
+
     
     func handleDeletion(type:StorageManagerMediaType){
         vc.setIsLoading()

@@ -21,9 +21,32 @@ class MediaDeletionConfirmationView: UIView {
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var deletionButton: UIButton!
     @IBOutlet var contentView: UIView!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var subtitleLabel: UILabel!
     
     var delegate : MediaDeletionConfirmationViewDelegate? = nil
-    var type: StorageManagerMediaType? = nil
+    var type: StorageManagerMediaType? = nil {
+        didSet{
+            if let type = type{
+                var typeString : String? = nil
+                switch type {
+                    case .audio:
+                        typeString = NSLocalizedString("storage.management.audio.files", comment: "")
+                    break
+                    case .video:
+                        typeString = NSLocalizedString("storage.management.video", comment: "")
+                    break
+                    case .photo:
+                        typeString = NSLocalizedString("storage.management.images", comment: "")
+                    break
+                }
+                
+                let warningMessage = String(format: NSLocalizedString("deletion.warning.title", comment: ""), (typeString ?? "media files"))
+                titleLabel.text = warningMessage
+                
+            }
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)

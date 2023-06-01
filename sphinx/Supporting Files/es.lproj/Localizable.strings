@@ -603,6 +603,7 @@
 //STORAGE MANAGEMENT
 "saving.limit.warning" = "Guardar este límite eliminará al menos %@ de tus datos más antiguos.";
 "are.you.sure.deletion.warning" = "Continuar eliminará todos tus %@.";
+"deletion.warning.title" = "Has escogido eliminar todos tus %@";
 "storage.management.audio.files" = "archivos de audio";
 "storage.management.video" = "video";
 "storage.management.images" = "imágenes";

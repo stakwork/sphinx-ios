@@ -602,9 +602,10 @@
 
 //STORAGE MANAGEMENT
 "saving.limit.warning" = "Saving this limit will delete at least %@ of your oldest data";
+"deletion.warning.title" = "You've chosen to delete all %@";
 "are.you.sure.deletion.warning" = "Continuing will delete all of your %@.";
-"storage.management.audio.files" = "audio files";
+"storage.management.audio.files" = "podcast episodes";
 "storage.management.video" = "video";
 "storage.management.images" = "images";
-"are.you.sure" = "¿Estás seguro?";
+"are.you.sure" = "Are you sure?";
 "chat.media" = "chat media";

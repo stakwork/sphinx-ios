@@ -118,16 +118,16 @@ class StorageManager {
         return dict
     }
     
-    func getTop3ChatImages()->[UIImage]{
+    func getTop3ChatImages()->[String]{
         let chats = getItemDetailsByChat().keys.map({$0})
-        let images = chats.compactMap({$0.getContact()?.image})
-        var results : [UIImage] = []
+        let urls = chats.compactMap({$0.getPhotoUrl()})
+        var results : [String] = []
         for i in 0..<3{
-            var newImage =  (#imageLiteral(resourceName: "appPinIcon"))
-            if(images.count < i){
-                newImage = images[i]
+            var newURL =  ""
+            if(urls.count - 1 > i){
+                newURL = urls[i]
             }
-            results.append(newImage)
+            results.append(newURL)
         }
         return results
     }

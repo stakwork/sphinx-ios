@@ -21,6 +21,10 @@ class MediaStorageSourceTableViewCell: UITableViewCell {
     @IBOutlet weak var disclosureImageView: UIImageView!
     @IBOutlet weak var deleteButton: UIButton!
     
+    @IBOutlet weak var chatAvatarImageView1: UIImageView!
+    @IBOutlet weak var chatAvatarImageView2: UIImageView!
+    @IBOutlet weak var chatAvatarImageView3: UIImageView!
+    
     var index : Int? = nil
     var delegate: MediaStorageSourceTableViewCellDelegate? = nil
     
@@ -47,7 +51,37 @@ class MediaStorageSourceTableViewCell: UITableViewCell {
         switch(forSource){
         case .chats:
             mediaSourceLabel.text = "Chats"
-            squareImageView.image = #imageLiteral(resourceName: "appPinIcon")//StorageManager.sharedManager.getTop3ChatImages()[0]// #imageLiteral(resourceName: "appPinIcon")
+            squareImageView.isHidden = true
+            
+            chatAvatarImageView1.image = #imageLiteral(resourceName: "appPinIcon")
+            chatAvatarImageView2.image = #imageLiteral(resourceName: "appPinIcon")
+            chatAvatarImageView3.image = #imageLiteral(resourceName: "appPinIcon")
+            
+            let urls = StorageManager.sharedManager.getTop3ChatImages()
+            if let url = URL(string: urls[0]){
+                chatAvatarImageView1.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "appPinIcon"), context: nil)
+                chatAvatarImageView1.layer.borderWidth = 2.0
+                chatAvatarImageView1.layer.borderColor = UIColor.Sphinx.Body.cgColor
+                chatAvatarImageView1.makeCircular()
+                chatAvatarImageView1.isHidden = false
+            }
+            
+            if let url2 = URL(string: urls[1]){
+                chatAvatarImageView2.sd_setImage(with: url2, placeholderImage: #imageLiteral(resourceName: "appPinIcon"), context: nil)
+                chatAvatarImageView2.layer.borderWidth = 2.0
+                chatAvatarImageView2.layer.borderColor = UIColor.Sphinx.Body.cgColor
+                chatAvatarImageView2.makeCircular()
+                chatAvatarImageView2.isHidden = false
+            }
+            if let url3 = URL(string: urls[2]){
+                chatAvatarImageView3.sd_setImage(with: url3, placeholderImage: #imageLiteral(resourceName: "appPinIcon"), context: nil)
+                chatAvatarImageView3.layer.borderWidth = 2.0
+                chatAvatarImageView3.layer.borderColor = UIColor.Sphinx.Body.cgColor
+                chatAvatarImageView3.makeCircular()
+                chatAvatarImageView3.isHidden = false
+            }
+            
+            //squareImageView.image = StorageManager.sharedManager.getTop3ChatImages()// #imageLiteral(resourceName: "appPinIcon")
             squareImageView.makeCircular()
             break
         case .podcasts:

@@ -76,30 +76,60 @@
                             <constraint firstAttribute="height" constant="32" id="afp-wC-JPE"/>
                         </constraints>
                     </imageView>
+                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="kPt-Dx-tgU">
+                        <rect key="frame" x="32" y="20.666666666666671" width="23" height="23"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="23" id="Cq0-U6-7h0"/>
+                            <constraint firstAttribute="height" constant="23" id="LH4-1T-eRd"/>
+                        </constraints>
+                    </imageView>
+                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="M3f-CF-0aM">
+                        <rect key="frame" x="24" y="20.666666666666671" width="23" height="23"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="23" id="WDE-Fb-Eps"/>
+                            <constraint firstAttribute="width" constant="23" id="oKj-ne-LBp"/>
+                        </constraints>
+                    </imageView>
+                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fSM-pR-XZX">
+                        <rect key="frame" x="16" y="20.666666666666671" width="23" height="23"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="23" id="dG4-V2-3a9"/>
+                            <constraint firstAttribute="height" constant="23" id="dg2-cr-H4v"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="onY-YZ-XsQ" secondAttribute="bottom" id="2Kc-3P-CLn"/>
                     <constraint firstItem="onY-YZ-XsQ" firstAttribute="leading" secondItem="Mep-cZ-dPt" secondAttribute="trailing" constant="16" id="4jp-pF-PQc"/>
                     <constraint firstItem="Mep-cZ-dPt" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="5DS-f8-Kbm"/>
+                    <constraint firstItem="kPt-Dx-tgU" firstAttribute="leading" secondItem="M3f-CF-0aM" secondAttribute="trailing" constant="-15" id="7GV-6U-BVy"/>
                     <constraint firstAttribute="trailing" secondItem="c9l-Av-kpX" secondAttribute="trailing" id="8Pz-xC-De4"/>
                     <constraint firstItem="fSL-0q-N4u" firstAttribute="centerY" secondItem="c9l-Av-kpX" secondAttribute="centerY" id="92I-7e-lKY"/>
+                    <constraint firstItem="kPt-Dx-tgU" firstAttribute="centerY" secondItem="M3f-CF-0aM" secondAttribute="centerY" id="9eZ-Mj-YiK"/>
+                    <constraint firstItem="M3f-CF-0aM" firstAttribute="leading" secondItem="fSM-pR-XZX" secondAttribute="trailing" constant="-15" id="BeZ-vg-qf3"/>
                     <constraint firstItem="c9l-Av-kpX" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="IgY-zb-hHL"/>
                     <constraint firstItem="Mep-cZ-dPt" firstAttribute="centerY" secondItem="onY-YZ-XsQ" secondAttribute="centerY" id="Iz9-gX-Af5"/>
                     <constraint firstItem="V1O-o7-wgg" firstAttribute="trailing" secondItem="Mep-cZ-dPt" secondAttribute="trailing" id="N0H-7f-QcE"/>
                     <constraint firstAttribute="trailing" secondItem="Pue-7T-xlg" secondAttribute="trailing" constant="46" id="N5z-YC-O9a"/>
                     <constraint firstItem="V1O-o7-wgg" firstAttribute="leading" secondItem="Mep-cZ-dPt" secondAttribute="leading" id="Ylk-XA-qii"/>
                     <constraint firstItem="Pue-7T-xlg" firstAttribute="leading" secondItem="onY-YZ-XsQ" secondAttribute="trailing" constant="8" id="hxH-Da-D3T"/>
+                    <constraint firstItem="fSM-pR-XZX" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="i99-Xd-owJ"/>
                     <constraint firstItem="fSL-0q-N4u" firstAttribute="centerX" secondItem="c9l-Av-kpX" secondAttribute="centerX" id="jRS-Rb-VSd"/>
+                    <constraint firstItem="fSM-pR-XZX" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="lMq-XD-lZR"/>
                     <constraint firstItem="V1O-o7-wgg" firstAttribute="top" secondItem="Mep-cZ-dPt" secondAttribute="top" id="mLW-Xu-aHG"/>
                     <constraint firstItem="c9l-Av-kpX" firstAttribute="width" secondItem="c9l-Av-kpX" secondAttribute="height" multiplier="1:1" id="mWM-Lt-xJq"/>
                     <constraint firstItem="onY-YZ-XsQ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="pEZ-cK-Lxr"/>
                     <constraint firstItem="Pue-7T-xlg" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="r1S-nw-KRh"/>
                     <constraint firstAttribute="bottom" secondItem="Pue-7T-xlg" secondAttribute="bottom" id="rcf-cG-uyc"/>
                     <constraint firstItem="V1O-o7-wgg" firstAttribute="bottom" secondItem="Mep-cZ-dPt" secondAttribute="bottom" id="rqr-Wg-7cX"/>
+                    <constraint firstItem="M3f-CF-0aM" firstAttribute="centerY" secondItem="fSM-pR-XZX" secondAttribute="centerY" id="sqd-E3-emf"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="chatAvatarImageView1" destination="fSM-pR-XZX" id="Apc-wy-hsS"/>
+                <outlet property="chatAvatarImageView2" destination="M3f-CF-0aM" id="wkn-Bh-dkA"/>
+                <outlet property="chatAvatarImageView3" destination="kPt-Dx-tgU" id="d8C-ep-02f"/>
                 <outlet property="deleteButton" destination="fSL-0q-N4u" id="Umj-D2-W7l"/>
                 <outlet property="disclosureImageView" destination="c9l-Av-kpX" id="vXd-Dk-cBY"/>
                 <outlet property="initialsLabel" destination="V1O-o7-wgg" id="E3s-Bc-YUI"/>

@@ -369,6 +369,8 @@
 		477924802A28D1DC00CD3CF1 /* StatusHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4779247F2A28D1DC00CD3CF1 /* StatusHeaderView.xib */; };
 		477924822A28DF6700CD3CF1 /* NewMessageReplyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477924812A28DF6700CD3CF1 /* NewMessageReplyView.swift */; };
 		477924842A28DF7000CD3CF1 /* NewMessageReplyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 477924832A28DF7000CD3CF1 /* NewMessageReplyView.xib */; };
+		477924862A28EF6300CD3CF1 /* SentPaidDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477924852A28EF6300CD3CF1 /* SentPaidDetails.swift */; };
+		477924882A28EF6E00CD3CF1 /* SentPaidDetails.xib in Resources */ = {isa = PBXBuildFile; fileRef = 477924872A28EF6E00CD3CF1 /* SentPaidDetails.xib */; };
 		4779F162232AA0F200D35E81 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4779F161232AA0F200D35E81 /* AppDelegate.swift */; };
 		4779F16C232AA0F300D35E81 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4779F16B232AA0F300D35E81 /* Assets.xcassets */; };
 		4779F16F232AA0F300D35E81 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4779F16D232AA0F300D35E81 /* LaunchScreen.storyboard */; };
@@ -1250,6 +1252,8 @@
 		4779247F2A28D1DC00CD3CF1 /* StatusHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StatusHeaderView.xib; sourceTree = "<group>"; };
 		477924812A28DF6700CD3CF1 /* NewMessageReplyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageReplyView.swift; sourceTree = "<group>"; };
 		477924832A28DF7000CD3CF1 /* NewMessageReplyView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewMessageReplyView.xib; sourceTree = "<group>"; };
+		477924852A28EF6300CD3CF1 /* SentPaidDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentPaidDetails.swift; sourceTree = "<group>"; };
+		477924872A28EF6E00CD3CF1 /* SentPaidDetails.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SentPaidDetails.xib; sourceTree = "<group>"; };
 		4779F15E232AA0F200D35E81 /* sphinx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sphinx.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4779F161232AA0F200D35E81 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4779F16B232AA0F300D35E81 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -3199,6 +3203,8 @@
 				4779247F2A28D1DC00CD3CF1 /* StatusHeaderView.xib */,
 				477924812A28DF6700CD3CF1 /* NewMessageReplyView.swift */,
 				477924832A28DF7000CD3CF1 /* NewMessageReplyView.xib */,
+				477924852A28EF6300CD3CF1 /* SentPaidDetails.swift */,
+				477924872A28EF6E00CD3CF1 /* SentPaidDetails.xib */,
 			);
 			path = "Custom Views";
 			sourceTree = "<group>";
@@ -4525,6 +4531,7 @@
 				F33846E7267B0FA00041F1EA /* Welcome.storyboard in Resources */,
 				47AF0D33254B238B00C98398 /* BoostButtonView.xib in Resources */,
 				475BDD04232AC24600C5BBD6 /* MessageReceivedTableViewCell.xib in Resources */,
+				477924882A28EF6E00CD3CF1 /* SentPaidDetails.xib in Resources */,
 				477ADCC92A1BE2BB004E74CE /* PinnedMessageView.xib in Resources */,
 				475BDCB2232AC1E800C5BBD6 /* NewKeyPadView.xib in Resources */,
 				472092BB2A24FF6E00468796 /* NewChatHeaderView.xib in Resources */,
@@ -4837,6 +4844,7 @@
 				47822C692449EED60011D832 /* PaidMessageSentTableViewCell.swift in Sources */,
 				47FA18D62434E31D00469C8F /* PaidAttachmentView.swift in Sources */,
 				CEF88DD129B66B9200DC1C40 /* RecommendationItemWUnifiedViewCollectionViewCell.swift in Sources */,
+				477924862A28EF6300CD3CF1 /* SentPaidDetails.swift in Sources */,
 				CE49E13229ACEFAA006D3CCE /* VoIPPushMessage.swift in Sources */,
 				F373BF0326A9CEDD0093C886 /* DashboardFeedsContainerViewController.swift in Sources */,
 				47468FDC233554680072124A /* ProfileViewController.swift in Sources */,

@@ -81,6 +81,14 @@ class MediaStorageSourceTableViewCell: UITableViewCell {
                 chatAvatarImageView3.isHidden = false
             }
             
+            if(chatAvatarImageView1.isHidden == true &&
+               chatAvatarImageView2.isHidden == true &&
+               chatAvatarImageView3.isHidden == true
+            ){
+                squareImageView.image = #imageLiteral(resourceName: "appPinIcon")
+                squareImageView.isHidden = false
+            }
+            
             //squareImageView.image = StorageManager.sharedManager.getTop3ChatImages()// #imageLiteral(resourceName: "appPinIcon")
             initialsLabel.isHidden = true
             squareImageView.makeCircular()

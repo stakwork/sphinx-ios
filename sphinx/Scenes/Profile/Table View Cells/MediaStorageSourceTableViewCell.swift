@@ -47,7 +47,7 @@ class MediaStorageSourceTableViewCell: UITableViewCell {
         switch(forSource){
         case .chats:
             mediaSourceLabel.text = "Chats"
-            squareImageView.image = #imageLiteral(resourceName: "appPinIcon")
+            squareImageView.image = #imageLiteral(resourceName: "appPinIcon")//StorageManager.sharedManager.getTop3ChatImages()[0]// #imageLiteral(resourceName: "appPinIcon")
             squareImageView.makeCircular()
             break
         case .podcasts:

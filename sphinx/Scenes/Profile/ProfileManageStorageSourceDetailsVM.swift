@@ -33,7 +33,7 @@ class ProfileManageStorageSourceDetailsVM : NSObject{
     
     func getChatsArray()->[Chat]{
         if let chatDict = chatDict{
-            return chatDict.keys.sorted(by: {$0.name ?? "" < $1.name ?? ""})
+            return chatDict.keys.sorted(by: {$0.getName().lowercased() ?? "" < $1.getName().lowercased() ?? ""})
         }
         return []
     }

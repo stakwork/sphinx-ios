@@ -104,6 +104,7 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVM : NSObject{
             imageCollectionView.registerCell(ChatImageCollectionViewCell.self)
             imageCollectionView.delegate = self
             imageCollectionView.dataSource = self
+            imageCollectionView.collectionViewLayout = AlignedCollectionViewFlowLayout(horizontalAlignment: .left)
             tableView.isHidden = true
         }
     }
@@ -186,26 +187,14 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVM : UICollectionView
         
         // Adjust cellWidth for 1 or 2 items
         let cellWidth: CGFloat
-        if items.count <= 2 {
-            cellWidth = collectionViewWidth - totalSpacing
-        } else {
-            cellWidth = (collectionViewWidth - totalSpacing) / 3.375
-        }
+        cellWidth = (collectionViewWidth - totalSpacing) / 3.15
 
         let cellHeight = cellWidth // Assuming you want square cells
         return CGSize(width: cellWidth, height: cellHeight)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        // For 1 or 2 items, set the size to the collectionView's width minus the totalSpacing
-        if items.count <= 2 {
-            let totalSpacing: CGFloat = 2 // Adjust as needed
-            let cellWidth = collectionView.bounds.width - totalSpacing
-            return CGSize(width: cellWidth, height: cellWidth) // Assuming you want square cells
-        } else {
-            // For 3 or more items, continue with the existing calculation
-            return getSize()
-        }
+        return getSize()
     }
 
     

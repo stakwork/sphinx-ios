@@ -35,7 +35,7 @@ public enum StorageManagerMediaSource{
     }
 }
 
-struct StorageManagerItem{
+class StorageManagerItem{
     var type : StorageManagerMediaType
     var sizeMB : Double
     var label : String
@@ -43,6 +43,16 @@ struct StorageManagerItem{
     var sourceFilePath:String?
     var cachedMedia:CachedMedia?
     var uid:String?=nil
+    
+    init(type:StorageManagerMediaType,sizeMB:Double,label:String,date:Date,sourceFilePath:String?=nil,cachedMedia:CachedMedia?=nil,uid:String?=nil) {
+        self.type = type
+        self.sizeMB = sizeMB
+        self.label = label
+        self.date = date
+        self.sourceFilePath = sourceFilePath
+        self.cachedMedia = cachedMedia
+        self.uid = uid
+    }
     
     func isCachedMedia()->Bool{
         return cachedMedia != nil
@@ -108,6 +118,20 @@ class StorageManager {
         return dict
     }
     
+    func getTop3ChatImages()->[UIImage]{
+        let chats = getItemDetailsByChat().keys.map({$0})
+        let images = chats.compactMap({$0.getContact()?.image})
+        var results : [UIImage] = []
+        for i in 0..<3{
+            var newImage =  (#imageLiteral(resourceName: "appPinIcon"))
+            if(images.count < i){
+                newImage = images[i]
+            }
+            results.append(newImage)
+        }
+        return results
+    }
+    
     func getItemDetailsByChat()->[Chat:[StorageManagerItem]]{
         let bySource = getStoredItemsBySource()
         var chatsToItemDict = [Chat:[StorageManagerItem]]()
@@ -157,6 +181,7 @@ class StorageManager {
             self.cachedMedia = results
             self.getSphinxCacheVideos(completion: {videoResults in
                 self.cachedMedia += videoResults
+                self.populateVideoImages()
                 completion()
             })
         })
@@ -262,19 +287,20 @@ class StorageManager {
         }
         
         print(items)
-        populateVideoImages(smis: items)
         completion(items)
     }
     
-    func populateVideoImages(smis:[StorageManagerItem]){
+    func populateVideoImages(){
+        let smis = allItems.filter({$0.type == .video})
         let sc = SphinxCache()
-        for smi in smis{
+        for i in 0..<smis.count{
+            let smi = smis[i]
             if let cm = smi.cachedMedia,
                let key = cm.key,
                let data = sc.value(forKey: key){
                 MediaLoader.getThumbnailImageFromVideoData(data: data, videoUrl: key, completion: { image in
                     if let newImage = image{
-                        smi.cachedMedia?.image = newImage
+                        smis[i].cachedMedia?.image = image
                     }
                     else{
                         smi.cachedMedia?.image = #imageLiteral(resourceName: "videoPlaceholder")
@@ -282,6 +308,41 @@ class StorageManager {
                 })
             }
         }
+    }
+//    func populateVideoImages(){ //sequential implementation
+//        let smis = allItems.filter({$0.type == .video})
+//        let sc = SphinxCache()
+//        var i = 0
+//        var passFlag = false
+//        while i < smis.count{
+//            let smi = smis[i]
+//            if let cm = smi.cachedMedia,
+//               let key = cm.key,
+//               let data = sc.value(forKey: key),passFlag{
+//                passFlag = false
+//                performPopulateVideoJob(data: data, key: key, smi: smi, completion: {
+//                    passFlag = true
+//                    i += 1
+//                })
+//            }
+//            else{
+//                passFlag = true
+//                i += 1
+//            }
+//        }
+//    }
+    
+    func performPopulateVideoJob(data:Data,key:String,smi:StorageManagerItem,completion: @escaping ()->()){
+        MediaLoader.getThumbnailImageFromVideoData(data: data, videoUrl: key, completion: { image in
+            if let newImage = image{
+                smi.cachedMedia?.image = newImage
+            }
+            else{
+                smi.cachedMedia?.image = #imageLiteral(resourceName: "videoPlaceholder")
+            }
+            
+            completion()
+        })
     }
 
     

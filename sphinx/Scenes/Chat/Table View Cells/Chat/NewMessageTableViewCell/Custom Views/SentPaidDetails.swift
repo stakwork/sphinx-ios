@@ -40,5 +40,4 @@ class SentPaidDetails: UIView {
         priceView.layer.cornerRadius = 3
         statusView.layer.cornerRadius = 3
     }
-
 }

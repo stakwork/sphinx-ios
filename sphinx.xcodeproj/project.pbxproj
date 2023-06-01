@@ -371,6 +371,8 @@
 		477924842A28DF7000CD3CF1 /* NewMessageReplyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 477924832A28DF7000CD3CF1 /* NewMessageReplyView.xib */; };
 		477924862A28EF6300CD3CF1 /* SentPaidDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477924852A28EF6300CD3CF1 /* SentPaidDetails.swift */; };
 		477924882A28EF6E00CD3CF1 /* SentPaidDetails.xib in Resources */ = {isa = PBXBuildFile; fileRef = 477924872A28EF6E00CD3CF1 /* SentPaidDetails.xib */; };
+		4779248A2A28F53E00CD3CF1 /* DirectPaymentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477924892A28F53E00CD3CF1 /* DirectPaymentView.swift */; };
+		4779248C2A28F54600CD3CF1 /* DirectPaymentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4779248B2A28F54600CD3CF1 /* DirectPaymentView.xib */; };
 		4779F162232AA0F200D35E81 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4779F161232AA0F200D35E81 /* AppDelegate.swift */; };
 		4779F16C232AA0F300D35E81 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4779F16B232AA0F300D35E81 /* Assets.xcassets */; };
 		4779F16F232AA0F300D35E81 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4779F16D232AA0F300D35E81 /* LaunchScreen.storyboard */; };
@@ -1254,6 +1256,8 @@
 		477924832A28DF7000CD3CF1 /* NewMessageReplyView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewMessageReplyView.xib; sourceTree = "<group>"; };
 		477924852A28EF6300CD3CF1 /* SentPaidDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentPaidDetails.swift; sourceTree = "<group>"; };
 		477924872A28EF6E00CD3CF1 /* SentPaidDetails.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SentPaidDetails.xib; sourceTree = "<group>"; };
+		477924892A28F53E00CD3CF1 /* DirectPaymentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectPaymentView.swift; sourceTree = "<group>"; };
+		4779248B2A28F54600CD3CF1 /* DirectPaymentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DirectPaymentView.xib; sourceTree = "<group>"; };
 		4779F15E232AA0F200D35E81 /* sphinx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sphinx.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4779F161232AA0F200D35E81 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4779F16B232AA0F300D35E81 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -3205,6 +3209,8 @@
 				477924832A28DF7000CD3CF1 /* NewMessageReplyView.xib */,
 				477924852A28EF6300CD3CF1 /* SentPaidDetails.swift */,
 				477924872A28EF6E00CD3CF1 /* SentPaidDetails.xib */,
+				477924892A28F53E00CD3CF1 /* DirectPaymentView.swift */,
+				4779248B2A28F54600CD3CF1 /* DirectPaymentView.xib */,
 			);
 			path = "Custom Views";
 			sourceTree = "<group>";
@@ -4614,6 +4620,7 @@
 				47822C6E2449EEEE0011D832 /* PaidMessageReceivedTableViewCell.xib in Resources */,
 				473633E825558F0B007405F2 /* PodcastSatsView.xib in Resources */,
 				476EB47623C50662009745E2 /* GroupContactTableViewCell.xib in Resources */,
+				4779248C2A28F54600CD3CF1 /* DirectPaymentView.xib in Resources */,
 				4726A40F24C09C4C005A66B4 /* ChatListHeader.xib in Resources */,
 				47B9A64A233BB6BA00D2B022 /* AddressBookHeaderView.xib in Resources */,
 				474FE32B23F588D400C06FC8 /* VideoReceivedTableViewCell.xib in Resources */,
@@ -4741,6 +4748,7 @@
 				47F6CA10287C695B005EBCB6 /* Nonce.swift in Sources */,
 				CEE433B229AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.swift in Sources */,
 				4712994329227B450049CBE3 /* TribeMemberProfileViewController.swift in Sources */,
+				4779248A2A28F53E00CD3CF1 /* DirectPaymentView.swift in Sources */,
 				F39F2C7E26E2367B00D357F6 /* FeedSearchEmptyStateViewController.swift in Sources */,
 				475BDCD0232AC23100C5BBD6 /* ExpiredInvoiceCommonTableViewCell.swift in Sources */,
 				47308E1024FEE6E700FFAC6F /* SocketIOClient.swift in Sources */,

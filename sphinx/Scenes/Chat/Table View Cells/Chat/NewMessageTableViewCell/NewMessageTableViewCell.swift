@@ -41,8 +41,10 @@ class NewMessageTableViewCell: UITableViewCell {
     ///Second Container
     @IBOutlet weak var sentPaidDetailsView: SentPaidDetails!
     @IBOutlet weak var paidTextMessageView: UIView!
+    @IBOutlet weak var directPaymentView: DirectPaymentView!
     @IBOutlet weak var mediaContentView: UIView!
     
+    @IBOutlet weak var textMessageView: UIView!
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var messageLabelLeadingConstraint: NSLayoutConstraint!
     @IBOutlet weak var messageLabelTrailingConstraint: NSLayoutConstraint!
@@ -109,12 +111,15 @@ class NewMessageTableViewCell: UITableViewCell {
 
         mediaContentView.isHidden = true
         messageReplyView.isHidden = true
+        sentPaidDetailsView.isHidden = true
+        paidTextMessageView.isHidden = true
         
-        sentPaidDetailsView.isHidden = !moreThanText
-        paidTextMessageView.isHidden = !moreThanText
+        textMessageView.isHidden = moreThanText
+        directPaymentView.isHidden = !moreThanText
         
         messageLabel.text = message
         
+        bubbleOnlyText.isHidden = moreThanText
         bubbleAllView.isHidden = !moreThanText
     }
     

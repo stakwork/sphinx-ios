@@ -201,6 +201,8 @@
 		47484B94251255CF00F82AAC /* MessageWebViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47484B92251255CF00F82AAC /* MessageWebViewTableViewCell.swift */; };
 		47484B95251255CF00F82AAC /* MessageWebViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47484B93251255CF00F82AAC /* MessageWebViewTableViewCell.xib */; };
 		47484B972512690D00F82AAC /* BotWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47484B962512690D00F82AAC /* BotWebView.swift */; };
+		474935642A2919CE00AB5FFA /* AudioMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474935632A2919CE00AB5FFA /* AudioMessageView.swift */; };
+		474935662A2919D600AB5FFA /* AudioMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 474935652A2919D600AB5FFA /* AudioMessageView.xib */; };
 		474A136324E5807C007C7528 /* SphinxOnionConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474A136224E5807C007C7528 /* SphinxOnionConnector.swift */; };
 		474A667D24929D45002C2D10 /* CommonReplyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474A667C24929D45002C2D10 /* CommonReplyTableViewCell.swift */; };
 		474C7A5128D3A765007A3E17 /* universal-sphinxrs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 474C7A5028D3A75D007A3E17 /* universal-sphinxrs.a */; };
@@ -1075,6 +1077,8 @@
 		47484B92251255CF00F82AAC /* MessageWebViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageWebViewTableViewCell.swift; sourceTree = "<group>"; };
 		47484B93251255CF00F82AAC /* MessageWebViewTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageWebViewTableViewCell.xib; sourceTree = "<group>"; };
 		47484B962512690D00F82AAC /* BotWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BotWebView.swift; sourceTree = "<group>"; };
+		474935632A2919CE00AB5FFA /* AudioMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMessageView.swift; sourceTree = "<group>"; };
+		474935652A2919D600AB5FFA /* AudioMessageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AudioMessageView.xib; sourceTree = "<group>"; };
 		474A136224E5807C007C7528 /* SphinxOnionConnector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SphinxOnionConnector.swift; sourceTree = "<group>"; };
 		474A667C24929D45002C2D10 /* CommonReplyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonReplyTableViewCell.swift; sourceTree = "<group>"; };
 		474A667E2493AFAB002C2D10 /* sphinx 16.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 16.xcdatamodel"; sourceTree = "<group>"; };
@@ -3223,6 +3227,8 @@
 				4779248F2A290AA600CD3CF1 /* MediaMessageView.xib */,
 				477924932A29149E00CD3CF1 /* FileDetailsView.swift */,
 				477924952A2914A600CD3CF1 /* FileDetailsView.xib */,
+				474935632A2919CE00AB5FFA /* AudioMessageView.swift */,
+				474935652A2919D600AB5FFA /* AudioMessageView.xib */,
 			);
 			path = "Custom Views";
 			sourceTree = "<group>";
@@ -4497,6 +4503,7 @@
 				47904C1124BF352300710E7A /* tri-tone.caf in Resources */,
 				475BDD49232AD00D00C5BBD6 /* Montserrat-SemiBold.otf in Resources */,
 				4746807B293E565800F51457 /* PodcastPlayerControlsView.xib in Resources */,
+				474935662A2919D600AB5FFA /* AudioMessageView.xib in Resources */,
 				F33119A5268FA097005082EB /* XcodeStoreKitTestCertificate.cer in Resources */,
 				4780783023916CA800187906 /* PictureSentTableViewCell.xib in Resources */,
 				F3188BA3271CDA4200890DDD /* VideoFeed.storyboard in Resources */,
@@ -4849,6 +4856,7 @@
 				472161B42939158B0088B87B /* NoRecommendationsCollectionViewCell.swift in Sources */,
 				CEBF0D032975B20B006C1F21 /* DiscoverTribesTagSelectionVC.swift in Sources */,
 				475BDD6D232BF04E00C5BBD6 /* ContainerViewController.swift in Sources */,
+				474935642A2919CE00AB5FFA /* AudioMessageView.swift in Sources */,
 				F3CE637C26AFE823006E37A0 /* FeedFilterChipCollectionViewCell.swift in Sources */,
 				471161E229156511008EAFF2 /* Rake.swift in Sources */,
 				4787F8942476B8E600CCE8B9 /* CGFloat.swift in Sources */,

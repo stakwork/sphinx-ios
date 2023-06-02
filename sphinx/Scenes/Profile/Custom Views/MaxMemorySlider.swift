@@ -37,6 +37,7 @@ class MaxMemorySlider: UIView {
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         
+        sliderControl.minimumValue = Float(UserData.kMinimumMemoryFootprintGB)
         sliderControl.maximumValue = Float(UserData.kMaximumMemoryFootprintGB)
         
         let image : UIImage? = #imageLiteral(resourceName: "pentagonSlider")

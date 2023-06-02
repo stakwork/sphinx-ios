@@ -181,7 +181,6 @@ class StorageManager {
             self.cachedMedia = results
             self.getSphinxCacheVideos(completion: {videoResults in
                 self.cachedMedia += videoResults
-                self.populateVideoImages()
                 completion()
             })
         })
@@ -265,12 +264,13 @@ class StorageManager {
     }
     
     func getSphinxCacheVideos(completion: @escaping ([StorageManagerItem]) -> ()) {
-        let blah = CachedMedia.getAll()
-        let videoCMs = blah.filter({ cm in cm.fileExtension != "png" })
+        let allCMs = CachedMedia.getAll()
+        let videoCMs = allCMs.filter({ cm in cm.fileExtension != "png" })
         let fileManager = FileManager.default
         
         var items = [StorageManagerItem]()
         let sc = SphinxCache()
+        let vidsCount = videoCMs.count
         for cm in videoCMs {
             var size: UInt64? = nil
             do {
@@ -279,7 +279,9 @@ class StorageManager {
                     size = UInt64(fileData.count)
                     
                     let newItem = StorageManagerItem(type: .video, sizeMB: Double(size ?? 0) / 1e6, label: "", date: cm.creationDate ?? Date(), cachedMedia: cm)
-                    items.append(newItem)
+                    saveThumbnailForVideo(smi: newItem, completion: {newNewItem in
+                        items.append(newNewItem)
+                    })
                 }
             } catch {
                 print("Error retrieving size of the file")
@@ -290,47 +292,25 @@ class StorageManager {
         completion(items)
     }
     
-    func populateVideoImages(){
-        let smis = allItems.filter({$0.type == .video})
+    func saveThumbnailForVideo(smi:StorageManagerItem, completion:@escaping (StorageManagerItem)->()){
+        if(smi.type != .video){return}
         let sc = SphinxCache()
-        for i in 0..<smis.count{
-            let smi = smis[i]
-            if let cm = smi.cachedMedia,
-               let key = cm.key,
-               let data = sc.value(forKey: key){
-                MediaLoader.getThumbnailImageFromVideoData(data: data, videoUrl: key, completion: { image in
-                    if let newImage = image{
-                        smis[i].cachedMedia?.image = image
-                    }
-                    else{
-                        smi.cachedMedia?.image = #imageLiteral(resourceName: "videoPlaceholder")
-                    }
-                })
-            }
+        if let cm = smi.cachedMedia,
+           let key = cm.key,
+           let data = sc.value(forKey: key){
+            MediaLoader.getThumbnailImageFromVideoData(data: data, videoUrl: key, completion: { image in
+                if let newImage = image{
+                    smi.cachedMedia?.image = image
+                }
+                else{
+                    smi.cachedMedia?.image = #imageLiteral(resourceName: "videoPlaceholder")
+                }
+                smi.cachedMedia?.saveObject()
+                completion(smi)
+            })
         }
+        
     }
-//    func populateVideoImages(){ //sequential implementation
-//        let smis = allItems.filter({$0.type == .video})
-//        let sc = SphinxCache()
-//        var i = 0
-//        var passFlag = false
-//        while i < smis.count{
-//            let smi = smis[i]
-//            if let cm = smi.cachedMedia,
-//               let key = cm.key,
-//               let data = sc.value(forKey: key),passFlag{
-//                passFlag = false
-//                performPopulateVideoJob(data: data, key: key, smi: smi, completion: {
-//                    passFlag = true
-//                    i += 1
-//                })
-//            }
-//            else{
-//                passFlag = true
-//                i += 1
-//            }
-//        }
-//    }
     
     func performPopulateVideoJob(data:Data,key:String,smi:StorageManagerItem,completion: @escaping ()->()){
         MediaLoader.getThumbnailImageFromVideoData(data: data, videoUrl: key, completion: { image in

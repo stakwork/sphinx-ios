@@ -132,7 +132,7 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVM : NSObject{
 }
 
 
-extension ProfileManageStorageSpecificChatOrContentFeedItemVM : UITableViewDataSource, UITableViewDelegate{
+extension ProfileManageStorageSpecificChatOrContentFeedItemVM : UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(
             withIdentifier: MediaStorageSourceTableViewCell.reuseID,
@@ -161,7 +161,7 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVM : UITableViewDataS
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return getSize().height
+        return 64.0
     }
     
 }

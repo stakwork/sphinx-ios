@@ -28,16 +28,13 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Images" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f6R-hX-GXa">
-                        <rect key="frame" x="40" y="0.0" width="110" height="60"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="110" id="VAa-0d-f7I"/>
-                        </constraints>
+                        <rect key="frame" x="40" y="0.0" width="50" height="60"/>
                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="15"/>
                         <color key="textColor" name="Text"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="15.1 GB" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8G9-NW-Z1g">
-                        <rect key="frame" x="170" y="0.0" width="95" height="60"/>
+                        <rect key="frame" x="212" y="0.0" width="53" height="60"/>
                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="15"/>
                         <color key="textColor" name="SecondaryText"/>
                         <nil key="highlightedColor"/>
@@ -77,7 +74,7 @@
                     <constraint firstAttribute="bottom" secondItem="f6R-hX-GXa" secondAttribute="bottom" id="G0T-lJ-PW1"/>
                     <constraint firstItem="aRM-NJ-3MT" firstAttribute="leading" secondItem="E0B-vZ-Iwu" secondAttribute="leading" id="Hzh-Sw-lsa"/>
                     <constraint firstItem="aRM-NJ-3MT" firstAttribute="top" secondItem="E0B-vZ-Iwu" secondAttribute="top" id="Jp4-ed-WfX"/>
-                    <constraint firstItem="8G9-NW-Z1g" firstAttribute="leading" secondItem="f6R-hX-GXa" secondAttribute="trailing" constant="20" id="M6Z-cR-G4N"/>
+                    <constraint firstItem="8G9-NW-Z1g" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="f6R-hX-GXa" secondAttribute="trailing" constant="8" id="Kf8-a4-aoS"/>
                     <constraint firstItem="sxS-6Y-7Ll" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="WRY-8w-eWd"/>
                     <constraint firstItem="aRM-NJ-3MT" firstAttribute="bottom" secondItem="E0B-vZ-Iwu" secondAttribute="bottom" id="axg-2A-mB0"/>
                     <constraint firstItem="aRM-NJ-3MT" firstAttribute="trailing" secondItem="E0B-vZ-Iwu" secondAttribute="trailing" id="bWE-X2-JYw"/>

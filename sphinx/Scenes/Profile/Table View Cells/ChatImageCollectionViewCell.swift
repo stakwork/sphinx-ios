@@ -16,16 +16,18 @@ class ChatImageCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var sizeLabel: UILabel!
     @IBOutlet weak var labelContainerView: UIView!
     
-    
-    
     static let reuseID = "ChatImageCollectionViewCell"
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
-    func configure(cachedMedia:CachedMedia,size:CGSize,selectionStatus:Bool,memorySizeMB:Double){
+    func configure(
+        cachedMedia: CachedMedia,
+        size: CGSize,
+        selectionStatus: Bool,
+        memorySizeMB: Double
+    ){
         labelContainerView.layer.cornerRadius = labelContainerView.frame.height/2.0
         labelContainerView.alpha = 0.75
         if let image = cachedMedia.image{

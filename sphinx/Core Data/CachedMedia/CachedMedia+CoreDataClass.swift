@@ -56,9 +56,7 @@ public class CachedMedia: NSManagedObject {
         cachedMedia.fileExtension = fileExtension
         cachedMedia.key = key
         
-        print("before:\(cachedMedia.chat)")
         managedContext.saveContext()
-        print("after:\(cachedMedia.chat)")
         
         return cachedMedia
     }

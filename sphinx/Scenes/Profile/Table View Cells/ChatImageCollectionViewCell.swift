@@ -30,11 +30,10 @@ class ChatImageCollectionViewCell: UICollectionViewCell {
     ){
         labelContainerView.layer.cornerRadius = labelContainerView.frame.height/2.0
         labelContainerView.alpha = 0.75
-        if let image = cachedMedia.image{
-            let resizedImage = image.resizeImage(newSize: size)
-            imageView.contentMode = .center
+        if let image = cachedMedia.image {
+            imageView.contentMode = .scaleAspectFill
             imageView.clipsToBounds = true
-            imageView.image = resizedImage
+            imageView.image = image
         }
         if(selectionStatus){
             overlay.backgroundColor = UIColor.Sphinx.Body

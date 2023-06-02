@@ -297,52 +297,34 @@ class StorageManager {
             let smi = smis[i]
             if let cm = smi.cachedMedia,
                let key = cm.key,
-               let data = sc.value(forKey: key){
-                MediaLoader.getThumbnailImageFromVideoData(data: data, videoUrl: key, completion: { image in
-                    if let newImage = image{
-                        smis[i].cachedMedia?.image = image
-                    }
-                    else{
-                        smi.cachedMedia?.image = #imageLiteral(resourceName: "videoPlaceholder")
-                    }
-                })
+               let data = sc.value(forKey: key) {
+                if let image = MediaLoader.getImageFromCachedUrl(url: key) {
+                    smi.cachedMedia?.image = image
+                } else {
+                    MediaLoader.getThumbnailImageFromVideoData(data: data, videoUrl: key, completion: { image in
+                        if let newImage = image {
+                            smi.cachedMedia?.image = newImage
+                        } else {
+                            smi.cachedMedia?.image = #imageLiteral(resourceName: "videoPlaceholder")
+                        }
+                    })
+                }
             }
         }
     }
-//    func populateVideoImages(){ //sequential implementation
-//        let smis = allItems.filter({$0.type == .video})
-//        let sc = SphinxCache()
-//        var i = 0
-//        var passFlag = false
-//        while i < smis.count{
-//            let smi = smis[i]
-//            if let cm = smi.cachedMedia,
-//               let key = cm.key,
-//               let data = sc.value(forKey: key),passFlag{
-//                passFlag = false
-//                performPopulateVideoJob(data: data, key: key, smi: smi, completion: {
-//                    passFlag = true
-//                    i += 1
-//                })
-//            }
-//            else{
-//                passFlag = true
-//                i += 1
-//            }
-//        }
-//    }
     
-    func performPopulateVideoJob(data:Data,key:String,smi:StorageManagerItem,completion: @escaping ()->()){
-        MediaLoader.getThumbnailImageFromVideoData(data: data, videoUrl: key, completion: { image in
-            if let newImage = image{
-                smi.cachedMedia?.image = newImage
-            }
-            else{
-                smi.cachedMedia?.image = #imageLiteral(resourceName: "videoPlaceholder")
-            }
-            
+    func performPopulateVideoJob(
+        data: Data,
+        key: String,
+        smi: StorageManagerItem,
+        completion: @escaping () -> ()
+    ){
+        if let image = MediaLoader.getImageFromCachedUrl(url: key) {
+            smi.cachedMedia?.image = image
             completion()
-        })
+        } else {
+            completion()
+        }
     }
 
     

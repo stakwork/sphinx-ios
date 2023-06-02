@@ -5,6 +5,14 @@
         <attribute name="type" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="uploaded" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
     </entity>
+    <entity name="CachedMedia" representedClassName="CachedMedia" syncable="YES">
+        <attribute name="creationDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="fileExtension" optional="YES" attributeType="String"/>
+        <attribute name="filePath" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="key" optional="YES" attributeType="String"/>
+        <relationship name="chat" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Chat" inverseName="cachedMediaSet" inverseEntity="Chat"/>
+    </entity>
     <entity name="Chat" representedClassName="Chat" syncable="YES">
         <attribute name="contactIds" optional="YES" attributeType="Transformable"/>
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -31,6 +39,7 @@
         <attribute name="unlisted" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="uuid" optional="YES" attributeType="String"/>
         <attribute name="webAppLastDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="cachedMediaSet" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CachedMedia" inverseName="chat" inverseEntity="CachedMedia"/>
         <relationship name="contentFeed" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="ContentFeed" inverseName="chat" inverseEntity="ContentFeed"/>
         <relationship name="messages" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TransactionMessage" inverseName="chat" inverseEntity="TransactionMessage"/>
         <relationship name="subscription" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Subscription" inverseName="chat" inverseEntity="Subscription"/>

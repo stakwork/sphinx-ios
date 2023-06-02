@@ -37,11 +37,13 @@ extension Chat {
     @NSManaged public var webAppLastDate: Date?
     @NSManaged public var pin: String?
     @NSManaged public var notify: Int
+    @NSManaged public var pinnedMessageUUI: String?
     @NSManaged public var contentFeed: ContentFeed?
     @NSManaged public var contactIds: [NSNumber]
     @NSManaged public var pendingContactIds: [NSNumber]
 
     @NSManaged public var messages: NSSet?
+    @NSManaged public var cachedMediaSet: NSSet?
     @NSManaged public var subscription: Subscription?
 }
 
@@ -60,6 +62,18 @@ extension Chat {
 
     @objc(removeMessages:)
     @NSManaged public func removeFromMessages(_ values: NSSet)
+    
+    @objc(addCachedMediaSetObject:)
+    @NSManaged public func addToCachedMediaSet(_ value: CachedMedia)
+
+    @objc(removeCachedMediaSetObject:)
+    @NSManaged public func removeFromCachedMediaSet(_ value: CachedMedia)
+
+    @objc(addCachedMediaSet:)
+    @NSManaged public func addToCachedMediaSet(_ values: NSSet)
+
+    @objc(removeCachedMediaSet:)
+    @NSManaged public func removeFromCachedMediaSet(_ values: NSSet)
 
 }
 

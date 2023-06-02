@@ -337,7 +337,7 @@ extension API {
         params = badge.toJSON()
         params["amount"] = amount//10
         
-        guard let request = getURLRequest(route: "/create_badge", params: params as? NSDictionary, method: "POST") else {
+        guard let request = getURLRequest(route: "/create_badge", params: params as NSDictionary, method: "POST") else {
             errorCallback()
             return
         }
@@ -380,7 +380,7 @@ extension API {
         }
         
         let route = (badge.activationState == true) ? "/add_badge" : "/remove_badge"
-        guard let request = getURLRequest(route: route, params: params as? NSDictionary, method: "POST") else {
+        guard let request = getURLRequest(route: route, params: params as NSDictionary, method: "POST") else {
             errorCallback()
             return
         }
@@ -395,10 +395,8 @@ extension API {
                         return
                     }
                 }
-                //print(response.response?.statusCode)
                 errorCallback()
             case .failure(_):
-                //print(response.response?.statusCode)
                 errorCallback()
             }
         }
@@ -426,7 +424,6 @@ extension API {
                 }
                 errorCallback()
             case .failure(_):
-                //print(response.response?.statusCode)
                 errorCallback()
             }
         }
@@ -438,7 +435,6 @@ extension API {
         errorCallback: @escaping EmptyCallback
     ){
         let urlString = (chatID == nil) ? "/badges?limit=100&offset=0" : "/badge_per_tribe/\(chatID!)?limit=100&offset=0"
-        //let params : [String:Any]? = (tribeID == nil) ? nil : ["chat_id" : tribeID!]
         guard let request = getURLRequest(route: urlString, params: nil, method: "GET") else {
             errorCallback()
             return
@@ -451,15 +447,54 @@ extension API {
                     if let success = json["success"] as? Bool,
                         let response = json["response"] as? [NSDictionary],
                         success {
-                        //callback([])
                         callback((response))
                         return
                     }
                 }
-                //print(response.response?.statusCode)
                 errorCallback()
             case .failure(_):
-                //print(response.response?.statusCode)
+                errorCallback()
+            }
+        }
+    }
+    
+    func pinChatMessage(
+        messageUUID: String?,
+        chatId: Int,
+        callback: @escaping PinMessageCallback,
+        errorCallback: @escaping EmptyCallback
+    ){
+        let params: [String: AnyObject] = [
+            "pin" : (messageUUID ?? "") as AnyObject
+        ]
+        
+        guard let request = getURLRequest(
+            route: "/chat_pin/\(chatId)",
+            params: params as NSDictionary,
+            method: "PUT"
+        ) else {
+            errorCallback()
+            return
+        }
+
+        sphinxRequest(request) { response in
+            switch response.result {
+            case .success(let data):
+                if let json = data as? NSDictionary {
+                    if let success = json["success"] as? Bool,
+                        let response = json["response"] as? NSDictionary,
+                        success {
+                        
+                        if let pin = response["pin"] as? String {
+                            callback(pin)
+                        } else {
+                            errorCallback()
+                        }
+                        return
+                    }
+                }
+                errorCallback()
+            case .failure(_):
                 errorCallback()
             }
         }

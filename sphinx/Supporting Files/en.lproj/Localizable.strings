@@ -381,6 +381,10 @@
 "save.file" = "Save File";
 "flag.item" = "Flag";
 "delete.message" = "Delete Message";
+"pin.message" = "Pin Message";
+"unpin.message" = "Unpin Message";
+"message.pinned" = "Message Pinned";
+"message.unpinned" = "Message Unpinned";
 "received" = "received";
 "sent" = "sent";
 "message.x.deleted" = "Message deleted";

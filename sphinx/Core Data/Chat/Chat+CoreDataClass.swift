@@ -87,6 +87,7 @@ public class Chat: NSManagedObject {
             let escrowAmount = chat["escrow_amount"].intValue
             let myAlias = chat["my_alias"].string
             let myPhotoUrl = chat["my_photo_url"].string
+            let pinnedMessageUUID = chat["pin"].string
             let notify = chat["notify"].intValue
             let date = Date.getDateFromString(dateString: chat["created_at"].stringValue) ?? Date()
             
@@ -112,6 +113,7 @@ public class Chat: NSManagedObject {
                 myAlias: myAlias,
                 myPhotoUrl: myPhotoUrl,
                 notify: notify,
+                pinnedMessageUUID: pinnedMessageUUID,
                 contactIds: contactIds,
                 pendingContactIds: pendingContactIds,
                 date: date
@@ -151,6 +153,7 @@ public class Chat: NSManagedObject {
         myAlias: String?,
         myPhotoUrl: String?,
         notify: Int,
+        pinnedMessageUUID: String?,
         contactIds: [NSNumber],
         pendingContactIds: [NSNumber],
         date: Date
@@ -183,6 +186,7 @@ public class Chat: NSManagedObject {
         if chat.isMyPublicGroup() {
             chat.pricePerMessage = NSDecimalNumber(integerLiteral: pricePerMessage)
             chat.escrowAmount = NSDecimalNumber(integerLiteral: escrowAmount)
+            chat.pinnedMessageUUID = pinnedMessageUUID
         }
         
         return chat
@@ -564,11 +568,14 @@ public class Chat: NSManagedObject {
     
     func updateChatFromTribesInfo() {
         if isMyPublicGroup() {
+            pinnedMessageUUID = tribeInfo?.pin ?? nil
+            saveChat()
             return
         }
         
         escrowAmount = NSDecimalNumber(integerLiteral: tribeInfo?.amountToStake ?? (escrowAmount?.intValue ?? 0))
         pricePerMessage = NSDecimalNumber(integerLiteral: tribeInfo?.pricePerMessage ?? (pricePerMessage?.intValue ?? 0))
+        pinnedMessageUUID = tribeInfo?.pin ?? nil
         name = (tribeInfo?.name?.isEmpty ?? true) ? name : tribeInfo!.name
         
         let tribeImage = tribeInfo?.img ?? photoUrl

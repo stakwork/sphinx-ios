@@ -349,6 +349,9 @@
 		4779F16F232AA0F300D35E81 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4779F16D232AA0F300D35E81 /* LaunchScreen.storyboard */; };
 		4779F17A232AA0F300D35E81 /* sphinxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4779F179232AA0F300D35E81 /* sphinxTests.swift */; };
 		4779F185232AA0F300D35E81 /* sphinxUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4779F184232AA0F300D35E81 /* sphinxUITests.swift */; };
+		477ADCC52A1BAC65004E74CE /* PinMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477ADCC42A1BAC65004E74CE /* PinMessageViewController.swift */; };
+		477ADCC72A1BE2B1004E74CE /* PinnedMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477ADCC62A1BE2B1004E74CE /* PinnedMessageView.swift */; };
+		477ADCC92A1BE2BB004E74CE /* PinnedMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 477ADCC82A1BE2BB004E74CE /* PinnedMessageView.xib */; };
 		477B319223B10FC30081413E /* NewMessageBubbleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477B319123B10FC30081413E /* NewMessageBubbleHelper.swift */; };
 		477BCF322A0031060080ED65 /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477BCF302A0031060080ED65 /* TransactionTableViewCell.swift */; };
 		477BCF3B2A0144C00080ED65 /* CircularDotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477BCF3A2A0144C00080ED65 /* CircularDotView.swift */; };
@@ -1224,6 +1227,10 @@
 		4779F180232AA0F300D35E81 /* sphinxUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = sphinxUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4779F184232AA0F300D35E81 /* sphinxUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sphinxUITests.swift; sourceTree = "<group>"; };
 		4779F186232AA0F300D35E81 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		477ADCC42A1BAC65004E74CE /* PinMessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinMessageViewController.swift; sourceTree = "<group>"; };
+		477ADCC62A1BE2B1004E74CE /* PinnedMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinnedMessageView.swift; sourceTree = "<group>"; };
+		477ADCC82A1BE2BB004E74CE /* PinnedMessageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PinnedMessageView.xib; sourceTree = "<group>"; };
+		477ADCCA2A1BEED8004E74CE /* sphinx 39.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 39.xcdatamodel"; sourceTree = "<group>"; };
 		477B319023ABE0540081413E /* sphinx 7.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 7.xcdatamodel"; sourceTree = "<group>"; };
 		477B319123B10FC30081413E /* NewMessageBubbleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageBubbleHelper.swift; sourceTree = "<group>"; };
 		477BCF302A0031060080ED65 /* TransactionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionTableViewCell.swift; sourceTree = "<group>"; };
@@ -2160,6 +2167,8 @@
 				4726A40E24C09C4C005A66B4 /* ChatListHeader.xib */,
 				47B46F65254AFE1C007F61CD /* ChatHeaderView.swift */,
 				47AF0D2E254AFE4900C98398 /* ChatHeaderView.xib */,
+				477ADCC62A1BE2B1004E74CE /* PinnedMessageView.swift */,
+				477ADCC82A1BE2BB004E74CE /* PinnedMessageView.xib */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -2635,6 +2644,7 @@
 				478BD8B52829B67300C733FD /* TribeMemberPopupViewController.swift */,
 				477C524F28C6307100C24117 /* NotificationsLevelViewController.swift */,
 				4712994229227B450049CBE3 /* TribeMemberProfileViewController.swift */,
+				477ADCC42A1BAC65004E74CE /* PinMessageViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -4464,6 +4474,7 @@
 				F33846E7267B0FA00041F1EA /* Welcome.storyboard in Resources */,
 				47AF0D33254B238B00C98398 /* BoostButtonView.xib in Resources */,
 				475BDD04232AC24600C5BBD6 /* MessageReceivedTableViewCell.xib in Resources */,
+				477ADCC92A1BE2BB004E74CE /* PinnedMessageView.xib in Resources */,
 				475BDCB2232AC1E800C5BBD6 /* NewKeyPadView.xib in Resources */,
 				47AF0D39254C98DE00C98398 /* BoostFireworksAnimationView.xib in Resources */,
 				CEA2ED152A12D6D000DAC671 /* StorageSummaryView.xib in Resources */,
@@ -4803,6 +4814,7 @@
 				47FA18D22434D3B000469C8F /* TransactionMessageParamsExtension.swift in Sources */,
 				475103CF243B6E550043C748 /* ProfileViewControllerExtensions.swift in Sources */,
 				476A10B823A7E9E500817892 /* ContactTableViewCell.swift in Sources */,
+				477ADCC52A1BAC65004E74CE /* PinMessageViewController.swift in Sources */,
 				4740538C244CFE0000826533 /* CustomImageScrollView.swift in Sources */,
 				4711B2BD24522C4E0056ED25 /* ChatAccessoryViewDelegateExtension.swift in Sources */,
 				4787F88724746A5400CCE8B9 /* AlignedCollectionViewFlowLayout.swift in Sources */,
@@ -5154,6 +5166,7 @@
 				47E300E4234B83EC00DB56DB /* AddFriendRowButton.swift in Sources */,
 				4712BB4923D89A5100DDCC3B /* ClipboardHelper.swift in Sources */,
 				F3B2519C26E118E700C96D42 /* DashboardRootViewController+UITextFieldDelegate.swift in Sources */,
+				477ADCC72A1BE2B1004E74CE /* PinnedMessageView.swift in Sources */,
 				475BDCD1232AC23100C5BBD6 /* InvoiceCommonChatTableViewCell.swift in Sources */,
 				F3D86DBE26B109FD00EB9711 /* DashboardFeedSquaredThumbnailCollectionViewCell.swift in Sources */,
 				47468FD923353E460072124A /* MediaLoader.swift in Sources */,
@@ -5969,7 +5982,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = sphinx/sphinx.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 337;
+				CURRENT_PROJECT_VERSION = 342;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 8297M44YTW;
 				ENABLE_BITCODE = NO;
@@ -6063,7 +6076,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = sphinx/sphinx.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 337;
+				CURRENT_PROJECT_VERSION = 342;
 				DEVELOPMENT_TEAM = 8297M44YTW;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";

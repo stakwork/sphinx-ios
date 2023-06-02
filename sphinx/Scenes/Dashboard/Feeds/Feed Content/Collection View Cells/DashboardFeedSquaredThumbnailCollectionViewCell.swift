@@ -109,7 +109,7 @@ extension DashboardFeedSquaredThumbnailCollectionViewCell {
             typeIconImageView.isHidden = true
         }
         
-        dateLabel.text = item.publishDate?.timeIntervalSince1970.getDayDiffString() ?? "Date unavailable"
+        dateLabel.text = item.publishDate?.publishDateString ?? "Date unavailable"
         
         configureTimeView()
     }

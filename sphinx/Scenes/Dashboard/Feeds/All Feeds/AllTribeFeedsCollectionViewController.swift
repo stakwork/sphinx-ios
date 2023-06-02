@@ -502,12 +502,7 @@ extension AllTribeFeedsCollectionViewController {
             }
         }
           
-        let followedSourceItems = followedFeeds.sorted { (first, second) in
-            let firstDate = first.itemsArray.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
-            let secondDate = second.itemsArray.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
-
-            return firstDate > secondDate
-        }.compactMap { contentFeed -> DataSourceItem? in
+        let followedSourceItems = followedFeeds.compactMap { contentFeed -> DataSourceItem? in
             if contentFeed.isPodcast {
                 return DataSourceItem.tribePodcastFeed(contentFeed, CollectionViewSection.followedFeeds.rawValue)
             } else if contentFeed.isVideo {
@@ -518,19 +513,7 @@ extension AllTribeFeedsCollectionViewController {
             return nil
         }
         
-        let recentlyPlayedFeed = allFeeds.sorted { (first, second) in
-            let firstDate = first.dateLastConsumed ?? Date.init(timeIntervalSince1970: 0)
-            let secondDate = second.dateLastConsumed ?? Date.init(timeIntervalSince1970: 0)
-            
-            if (firstDate == secondDate) {
-                let firstDate = first.itemsArray.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
-                let secondDate = second.itemsArray.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
-
-                return firstDate > secondDate
-            }
-
-            return firstDate > secondDate
-        }.compactMap { contentFeed -> DataSourceItem? in
+        let recentlyPlayedFeed = allFeeds.compactMap { contentFeed -> DataSourceItem? in
             if contentFeed.isPodcast {
                 return DataSourceItem.tribePodcastFeed(contentFeed, CollectionViewSection.recentlyPlayed.rawValue)
             } else if contentFeed.isVideo {
@@ -574,8 +557,26 @@ extension AllTribeFeedsCollectionViewController {
             let _ = feed.itemsArray
         }
         
-        self.allFeeds = allFeeds
-        self.followedFeeds = allFeeds.filter { $0.isSubscribedToFromSearch || $0.chat != nil }
+        self.allFeeds = allFeeds.sorted { (first, second) in
+            let firstDate = first.dateLastConsumed ?? Date.init(timeIntervalSince1970: 0)
+            let secondDate = second.dateLastConsumed ?? Date.init(timeIntervalSince1970: 0)
+            
+            if (firstDate == secondDate) {
+                let firstDate = first.itemsArray.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
+                let secondDate = second.itemsArray.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
+
+                return firstDate > secondDate
+            }
+
+            return firstDate > secondDate
+        }
+        
+        self.followedFeeds = allFeeds.filter { $0.isSubscribedToFromSearch || $0.chat != nil }.sorted { (first, second) in
+            let firstDate = first.itemsArray.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
+            let secondDate = second.itemsArray.first?.datePublished ?? Date.init(timeIntervalSince1970: 0)
+
+            return firstDate > secondDate
+        }
         
         let firstDataSourceItem = self.dataSource.itemIdentifier(for: IndexPath(row: 0, section: 0))
         let isLoadingRecommendations = firstDataSourceItem?.isLoading == true

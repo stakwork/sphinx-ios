@@ -16,6 +16,7 @@ import UIKit
     func shouldBoostMessage()
     func shouldResendMessage()
     func shouldFlagMessage()
+    func shouldTogglePinState(pin: Bool)
 }
 
 class MessageOptionsView : UIView {
@@ -256,6 +257,10 @@ extension MessageOptionsView : MessageOptionViewDelegate {
             delegate?.shouldResendMessage()
         case .Flag:
             delegate?.shouldFlagMessage()
+        case .Pin:
+            delegate?.shouldTogglePinState(pin: true)
+        case .Unpin:
+            delegate?.shouldTogglePinState(pin: false)
         default:
             break
         }

@@ -85,7 +85,12 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVM : NSObject{
     
     var sourceType : StorageManagerMediaSource
     
-    init(vc:ProfileManageStorageSpecificChatOrContentFeedItemVC,tableView:UITableView,imageCollectionView:UICollectionView,source:StorageManagerMediaSource) {
+    init(
+        vc: ProfileManageStorageSpecificChatOrContentFeedItemVC,
+        tableView: UITableView,
+        imageCollectionView: UICollectionView,
+        source: StorageManagerMediaSource
+    ) {
         self.vc = vc
         self.tableView = tableView
         self.imageCollectionView = imageCollectionView
@@ -94,17 +99,21 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVM : NSObject{
     
     func finishSetup(items : [StorageManagerItem]){
         self.items = items.sorted(by: {$0.date > $1.date})
-        if(sourceType == .podcasts){
+        
+        if (sourceType == .podcasts) {
             tableView.delegate = self
             tableView.dataSource = self
             
             tableView.register(UINib(nibName: "MediaStorageSourceTableViewCell", bundle: nil), forCellReuseIdentifier: MediaStorageSourceTableViewCell.reuseID)
-        }
-        else if(sourceType == .chats){
+        } else if (sourceType == .chats) {
+            let flow = AlignedCollectionViewFlowLayout(horizontalAlignment: .left)
+            flow.minimumLineSpacing = 0
+            flow.minimumInteritemSpacing = 0
+            
             imageCollectionView.registerCell(ChatImageCollectionViewCell.self)
             imageCollectionView.delegate = self
             imageCollectionView.dataSource = self
-            imageCollectionView.collectionViewLayout = AlignedCollectionViewFlowLayout(horizontalAlignment: .left)
+            imageCollectionView.collectionViewLayout = flow
             tableView.isHidden = true
         }
     }
@@ -152,8 +161,7 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVM : UITableViewDataS
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        // Specify the desired height for your cells
-        return 64.0 // Adjust this value according to your requirements
+        return getSize().height
     }
     
 }
@@ -180,16 +188,11 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVM : UICollectionView
         }
     }
     
-    func getSize()->CGSize{
+    func getSize() -> CGSize {
         let collectionViewWidth = self.imageCollectionView.bounds.width
-        let spacingBetweenCells: CGFloat = 2
-        let totalSpacing = (spacingBetweenCells * 2) // Spacing on both sides of the cell
-        
-        // Adjust cellWidth for 1 or 2 items
-        let cellWidth: CGFloat
-        cellWidth = (collectionViewWidth - totalSpacing) / 3.15
+        let cellWidth: CGFloat = (collectionViewWidth / 3)
 
-        let cellHeight = cellWidth // Assuming you want square cells
+        let cellHeight = cellWidth
         return CGSize(width: cellWidth, height: cellHeight)
     }
     
@@ -201,8 +204,6 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVM : UICollectionView
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         selectedStatus[indexPath.row] = !selectedStatus[indexPath.row]
     }
-    
-    
 }
 
 

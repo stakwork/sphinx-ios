@@ -23,7 +23,7 @@ extension NewMessageTableViewCell {
     }
 }
 
-class NewMessageTableViewCell: UITableViewCell {
+class NewMessageTableViewCell: SwipableReplyCell {
     
     ///General views
     @IBOutlet weak var bubbleOnlyText: UIView!

@@ -26,10 +26,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oiu-OJ-GKT">
-                    <rect key="frame" x="105.66666666666667" y="10.666666666666664" width="163.66666666666663" height="19"/>
+                    <rect key="frame" x="105.66666666666667" y="10" width="163.66666666666663" height="20"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tomas just left the group" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tyx-Uj-8Mz">
-                            <rect key="frame" x="20.000000000000007" y="3" width="123.66666666666669" height="13"/>
+                            <rect key="frame" x="20.000000000000007" y="3.6666666666666661" width="123.66666666666669" height="12.999999999999998"/>
                             <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="11"/>
                             <color key="textColor" name="Text"/>
                             <nil key="highlightedColor"/>
@@ -38,11 +38,10 @@
                     <color key="backgroundColor" name="ReceivedMsgBG"/>
                     <constraints>
                         <constraint firstItem="tyx-Uj-8Mz" firstAttribute="leading" secondItem="Oiu-OJ-GKT" secondAttribute="leading" constant="20" id="8KH-sZ-Ons"/>
-                        <constraint firstAttribute="bottom" secondItem="tyx-Uj-8Mz" secondAttribute="bottom" constant="3" id="A3p-DZ-PLk"/>
                         <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="tyx-Uj-8Mz" secondAttribute="trailing" constant="20" id="Mfw-rP-dHn"/>
                         <constraint firstItem="tyx-Uj-8Mz" firstAttribute="centerY" secondItem="Oiu-OJ-GKT" secondAttribute="centerY" id="b01-IC-usR"/>
-                        <constraint firstItem="tyx-Uj-8Mz" firstAttribute="top" secondItem="Oiu-OJ-GKT" secondAttribute="top" constant="3" id="d9w-Eh-xKV"/>
                         <constraint firstItem="tyx-Uj-8Mz" firstAttribute="centerX" secondItem="Oiu-OJ-GKT" secondAttribute="centerX" id="iiN-b8-Eee"/>
+                        <constraint firstAttribute="height" constant="20" id="rUR-D8-XAN"/>
                     </constraints>
                 </view>
             </subviews>

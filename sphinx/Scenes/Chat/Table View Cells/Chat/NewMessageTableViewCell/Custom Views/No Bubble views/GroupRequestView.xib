@@ -27,14 +27,14 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="393" height="50"/>
+            <rect key="frame" x="0.0" y="0.0" width="393" height="65"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DhJ-Rf-rpo">
-                    <rect key="frame" x="94.333333333333329" y="7" width="204.66666666666669" height="36"/>
+                    <rect key="frame" x="94.333333333333329" y="10" width="204.66666666666669" height="45"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U3Q-yS-Rb5">
-                            <rect key="frame" x="12" y="5" width="88.666666666666671" height="26"/>
+                            <rect key="frame" x="12" y="9.6666666666666679" width="88.666666666666671" height="26.000000000000004"/>
                             <string key="text">Tomas T wants to
 join the group</string>
                             <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="11"/>
@@ -42,7 +42,7 @@ join the group</string>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tjt-Tu-P4O">
-                            <rect key="frame" x="120.66666666666669" y="4.6666666666666643" width="27" height="27"/>
+                            <rect key="frame" x="120.66666666666669" y="9" width="27" height="27"/>
                             <color key="backgroundColor" name="GreenBorder"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="27" id="knq-QT-LS4"/>
@@ -57,7 +57,7 @@ join the group</string>
                             </connections>
                         </button>
                         <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5x8-nU-AlW">
-                            <rect key="frame" x="157.66666666666669" y="4.6666666666666643" width="27" height="27"/>
+                            <rect key="frame" x="157.66666666666669" y="9" width="27" height="27"/>
                             <color key="backgroundColor" name="BadgeRed"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="27" id="lt3-nA-GKs"/>
@@ -86,9 +86,9 @@ join the group</string>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="DhJ-Rf-rpo" secondAttribute="bottom" constant="7" id="CcC-8j-QSd"/>
+                <constraint firstAttribute="bottom" secondItem="DhJ-Rf-rpo" secondAttribute="bottom" constant="10" id="CcC-8j-QSd"/>
                 <constraint firstItem="DhJ-Rf-rpo" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="eyA-u6-chB"/>
-                <constraint firstItem="DhJ-Rf-rpo" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="7" id="lKZ-Eb-2Fp"/>
+                <constraint firstItem="DhJ-Rf-rpo" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="lKZ-Eb-2Fp"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="-21" y="-1"/>

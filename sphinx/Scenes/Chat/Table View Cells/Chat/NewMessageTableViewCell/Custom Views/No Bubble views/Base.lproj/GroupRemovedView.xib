@@ -30,10 +30,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2mP-Nm-eVW">
-                    <rect key="frame" x="73.000000000000014" y="7" width="247.33333333333337" height="51"/>
+                    <rect key="frame" x="73.000000000000014" y="10" width="247.33333333333337" height="45"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CyX-yB-yyl">
-                            <rect key="frame" x="11.999999999999993" y="12.666666666666668" width="121.33333333333331" height="26.000000000000004"/>
+                            <rect key="frame" x="11.999999999999993" y="9.6666666666666679" width="121.33333333333331" height="26.000000000000004"/>
                             <string key="text">The admin has removed 
 you from this group</string>
                             <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="11"/>
@@ -41,7 +41,7 @@ you from this group</string>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2PJ-LV-kfi">
-                            <rect key="frame" x="145.33333333333334" y="12" width="90" height="27"/>
+                            <rect key="frame" x="145.33333333333334" y="9" width="90" height="27"/>
                             <color key="backgroundColor" name="BadgeRed"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="27" id="3pw-bS-KAc"/>
@@ -68,8 +68,8 @@ you from this group</string>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="2mP-Nm-eVW" secondAttribute="bottom" constant="7" id="NYU-qw-euF"/>
-                <constraint firstItem="2mP-Nm-eVW" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="7" id="gbH-4K-fGU"/>
+                <constraint firstAttribute="bottom" secondItem="2mP-Nm-eVW" secondAttribute="bottom" constant="10" id="NYU-qw-euF"/>
+                <constraint firstItem="2mP-Nm-eVW" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="gbH-4K-fGU"/>
                 <constraint firstItem="2mP-Nm-eVW" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="pwF-xO-4BF"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

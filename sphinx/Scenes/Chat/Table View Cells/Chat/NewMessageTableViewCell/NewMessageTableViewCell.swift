@@ -62,6 +62,7 @@ class NewMessageTableViewCell: UITableViewCell {
     
     ///Forth Container
     @IBOutlet weak var messageBoostView: NewMessageBoostView!
+    @IBOutlet weak var paidAttachmentView: PaidAttachmentView!
     
     
     override func awakeFromNib() {
@@ -130,6 +131,7 @@ class NewMessageTableViewCell: UITableViewCell {
         callLinkView.isHidden = !moreThanText
         podcastBoostView.isHidden = !moreThanText
         messageBoostView.isHidden = !moreThanText
+        paidAttachmentView.isHidden = !moreThanText
         
         tribeLinkPreviewView.isHidden = true
         contactLinkPreviewView.isHidden = true

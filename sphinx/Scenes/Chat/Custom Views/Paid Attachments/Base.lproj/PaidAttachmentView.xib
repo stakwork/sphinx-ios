@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19142.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19129"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -39,7 +39,7 @@
             <rect key="frame" x="0.0" y="0.0" width="220" height="50"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hwp-R1-WZq" userLabel="Payments Not Supported View">
+                <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hwp-R1-WZq" userLabel="Payments Not Supported View">
                     <rect key="frame" x="0.0" y="0.0" width="220" height="50"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Paid items not supported" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5BU-tN-VN4">
@@ -60,7 +60,7 @@
                         <constraint firstItem="5BU-tN-VN4" firstAttribute="centerX" secondItem="Hwp-R1-WZq" secondAttribute="centerX" id="xG8-p1-Z6q"/>
                     </constraints>
                 </view>
-                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y6u-lX-cJr">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y6u-lX-cJr">
                     <rect key="frame" x="0.0" y="0.0" width="220" height="50"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="invoice-pay-button" translatesAutoresizingMaskIntoConstraints="NO" id="MRb-fK-SsD">
@@ -78,7 +78,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10 SAT" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nPC-E3-FdQ">
-                            <rect key="frame" x="170" y="18.5" width="35" height="13"/>
+                            <rect key="frame" x="169" y="18.5" width="35" height="13"/>
                             <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="11"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
@@ -97,7 +97,7 @@
                         <constraint firstItem="l1j-i5-mZA" firstAttribute="leading" secondItem="MRb-fK-SsD" secondAttribute="trailing" id="B2e-Ee-DCy"/>
                         <constraint firstAttribute="bottom" secondItem="MRb-fK-SsD" secondAttribute="bottom" id="Lxf-6r-pzc"/>
                         <constraint firstItem="vBX-kT-b5F" firstAttribute="leading" secondItem="Y6u-lX-cJr" secondAttribute="leading" id="MaR-1n-RA6"/>
-                        <constraint firstAttribute="trailing" secondItem="nPC-E3-FdQ" secondAttribute="trailing" constant="15" id="SOa-1b-RJe"/>
+                        <constraint firstAttribute="trailing" secondItem="nPC-E3-FdQ" secondAttribute="trailing" constant="16" id="SOa-1b-RJe"/>
                         <constraint firstItem="MRb-fK-SsD" firstAttribute="top" secondItem="Y6u-lX-cJr" secondAttribute="top" id="aFe-3r-tHS"/>
                         <constraint firstAttribute="bottom" secondItem="vBX-kT-b5F" secondAttribute="bottom" id="csx-19-CIV"/>
                         <constraint firstItem="nPC-E3-FdQ" firstAttribute="centerY" secondItem="Y6u-lX-cJr" secondAttribute="centerY" id="kxh-5r-vJV"/>
@@ -222,14 +222,6 @@
                 <constraint firstAttribute="bottom" secondItem="z7b-dn-eJY" secondAttribute="bottom" id="yaF-lH-5iY"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <variation key="default">
-                <mask key="subviews">
-                    <exclude reference="Y6u-lX-cJr"/>
-                    <exclude reference="z7b-dn-eJY"/>
-                    <exclude reference="j2D-Mu-TcT"/>
-                    <exclude reference="qU4-Ae-kcn"/>
-                </mask>
-            </variation>
             <point key="canvasLocation" x="139" y="153"/>
         </view>
     </objects>

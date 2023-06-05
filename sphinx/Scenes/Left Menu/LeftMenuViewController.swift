@@ -164,6 +164,11 @@ class LeftMenuViewController: UIViewController {
         supportButtonTouched()
     }
     
+    func reloadDashboard() {
+        let dashboardRootVC = DashboardRootViewController.instantiate(leftMenuDelegate: self)
+        goTo(vc: dashboardRootVC)
+    }
+    
     public func goTo(vc: UIViewController) {
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate, let rootVC = appDelegate.getRootViewController() {
             rootVC.setCenterViewController(vc: vc)

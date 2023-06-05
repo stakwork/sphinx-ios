@@ -23,15 +23,15 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kPT-TB-gta">
-                        <rect key="frame" x="55.999999999999986" y="714.66666666666663" width="247.66666666666663" height="156.33333333333337"/>
+                        <rect key="frame" x="55.999999999999986" y="720.66666666666663" width="247.66666666666663" height="156.33333333333337"/>
                         <color key="backgroundColor" name="SentMsgBG"/>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iIC-G3-A9L">
-                        <rect key="frame" x="55.999999999999986" y="21" width="247.66666666666663" height="1371"/>
+                        <rect key="frame" x="55.999999999999986" y="27" width="247.66666666666663" height="1371"/>
                         <color key="backgroundColor" name="SentMsgBG"/>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fdj-WN-CtK">
-                        <rect key="frame" x="52" y="21" width="12" height="8"/>
+                        <rect key="frame" x="52" y="27" width="12" height="8"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="12" id="ESh-Oo-5DJ"/>
@@ -39,7 +39,7 @@
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5b0-1L-71y">
-                        <rect key="frame" x="295.66666666666669" y="21" width="15" height="8"/>
+                        <rect key="frame" x="295.66666666666669" y="27" width="15" height="8"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="15" id="a0G-f9-0r7"/>
@@ -47,10 +47,10 @@
                         </constraints>
                     </view>
                     <stackView opaque="NO" contentMode="scaleToFill" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="mpu-Ww-LGT">
-                        <rect key="frame" x="15" y="4" width="354" height="1388"/>
+                        <rect key="frame" x="15" y="2" width="354" height="1396"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ezO-Vc-nm0">
-                                <rect key="frame" x="0.0" y="0.0" width="37" height="37"/>
+                                <rect key="frame" x="0.0" y="8" width="37" height="37"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CuQ-lC-8QR" customClass="ChatAvatarView" customModule="sphinx" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="4" width="33" height="33"/>
@@ -70,17 +70,17 @@
                                 </constraints>
                             </view>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dkB-Yo-aJa">
-                                <rect key="frame" x="37" y="0.0" width="0.0" height="37"/>
+                                <rect key="frame" x="37" y="8" width="0.0" height="37"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="37" id="A7f-MH-0Mp"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="sqg-oz-09Q">
-                                <rect key="frame" x="37" y="0.0" width="4" height="1388"/>
+                                <rect key="frame" x="37" y="0.0" width="4" height="1396"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KVb-uY-P1s">
-                                        <rect key="frame" x="0.0" y="17" width="4" height="10"/>
+                                        <rect key="frame" x="0.0" y="25" width="4" height="10"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="10" id="MIB-2e-Xcg"/>
@@ -95,17 +95,29 @@
                                 </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="mD1-rC-VsJ">
-                                <rect key="frame" x="40.999999999999986" y="0.0" width="247.66666666666663" height="1388"/>
+                                <rect key="frame" x="40.999999999999986" y="0.0" width="247.66666666666663" height="1396"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Idp-LW-sQE" customClass="StatusHeaderView" customModule="sphinx" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="247.66666666666666" height="17"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Idp-LW-sQE">
+                                        <rect key="frame" x="0.0" y="0.0" width="247.66666666666666" height="25"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EHB-La-doK" customClass="StatusHeaderView" customModule="sphinx" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="8" width="247.66666666666666" height="17"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="17" id="GsK-JD-UWg"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="17" id="bO2-ks-aAa"/>
+                                            <constraint firstAttribute="height" constant="25" id="bO2-ks-aAa"/>
+                                            <constraint firstItem="EHB-La-doK" firstAttribute="leading" secondItem="Idp-LW-sQE" secondAttribute="leading" id="cuN-MQ-MD5"/>
+                                            <constraint firstAttribute="bottom" secondItem="EHB-La-doK" secondAttribute="bottom" id="g7C-5f-UGK"/>
+                                            <constraint firstAttribute="trailing" secondItem="EHB-La-doK" secondAttribute="trailing" id="wRV-ZK-ZBx"/>
                                         </constraints>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="j6X-QF-M6e">
-                                        <rect key="frame" x="0.0" y="17" width="247.66666666666666" height="1371"/>
+                                        <rect key="frame" x="0.0" y="25" width="247.66666666666666" height="1371"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xkZ-Ex-rUP" customClass="NewMessageReplyView" customModule="sphinx" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="247.66666666666666" height="50"/>
@@ -344,10 +356,10 @@
                                 </constraints>
                             </stackView>
                             <view contentMode="scaleToFill" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="31v-lQ-g2m">
-                                <rect key="frame" x="288.66666666666669" y="0.0" width="7" height="1388"/>
+                                <rect key="frame" x="288.66666666666669" y="2" width="7" height="1394"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HSy-2h-42y">
-                                        <rect key="frame" x="0.0" y="17" width="7" height="10"/>
+                                        <rect key="frame" x="0.0" y="23" width="7" height="10"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="10" id="Kxh-Mv-loV"/>
@@ -362,7 +374,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uDp-ul-Cgt">
-                                <rect key="frame" x="295.66666666666669" y="0.0" width="58.333333333333314" height="37"/>
+                                <rect key="frame" x="295.66666666666669" y="8" width="58.333333333333314" height="37"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="37" id="0gp-uF-T2t"/>
@@ -380,7 +392,7 @@
                             <constraint firstAttribute="bottom" secondItem="sqg-oz-09Q" secondAttribute="bottom" id="lLD-73-RMc"/>
                             <constraint firstItem="mD1-rC-VsJ" firstAttribute="width" secondItem="mpu-Ww-LGT" secondAttribute="width" multiplier="0.7" id="o8z-eZ-1vd"/>
                             <constraint firstItem="31v-lQ-g2m" firstAttribute="top" secondItem="mpu-Ww-LGT" secondAttribute="top" id="p1N-l0-Y98"/>
-                            <constraint firstItem="ezO-Vc-nm0" firstAttribute="top" secondItem="mpu-Ww-LGT" secondAttribute="top" id="zLi-tt-2MG"/>
+                            <constraint firstItem="ezO-Vc-nm0" firstAttribute="top" secondItem="mpu-Ww-LGT" secondAttribute="top" constant="8" id="zLi-tt-2MG"/>
                         </constraints>
                     </stackView>
                 </subviews>
@@ -389,8 +401,8 @@
                     <constraint firstItem="fdj-WN-CtK" firstAttribute="top" secondItem="iIC-G3-A9L" secondAttribute="top" id="44M-rI-cNl"/>
                     <constraint firstItem="kPT-TB-gta" firstAttribute="top" secondItem="pPY-Rf-UkB" secondAttribute="top" constant="-16" id="5dA-L5-5ps"/>
                     <constraint firstItem="iIC-G3-A9L" firstAttribute="leading" secondItem="mD1-rC-VsJ" secondAttribute="leading" id="Dzu-QR-gBP"/>
-                    <constraint firstAttribute="bottom" secondItem="mpu-Ww-LGT" secondAttribute="bottom" priority="750" constant="8" id="FJv-y8-nX1"/>
-                    <constraint firstItem="mpu-Ww-LGT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="4" id="Ik4-pB-7Mw"/>
+                    <constraint firstAttribute="bottom" secondItem="mpu-Ww-LGT" secondAttribute="bottom" priority="750" constant="2" id="FJv-y8-nX1"/>
+                    <constraint firstItem="mpu-Ww-LGT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="2" id="Ik4-pB-7Mw"/>
                     <constraint firstItem="kPT-TB-gta" firstAttribute="trailing" secondItem="pPY-Rf-UkB" secondAttribute="trailing" constant="16" id="MK8-mK-x8b"/>
                     <constraint firstItem="iIC-G3-A9L" firstAttribute="trailing" secondItem="mD1-rC-VsJ" secondAttribute="trailing" id="Mdh-i7-gJZ"/>
                     <constraint firstAttribute="trailing" secondItem="mpu-Ww-LGT" secondAttribute="trailing" constant="9" id="O7g-RX-IOt"/>
@@ -409,6 +421,7 @@
                 <outlet property="botResponseView" destination="8uW-aX-5nz" id="PbF-AM-0Ca"/>
                 <outlet property="bubbleAllView" destination="iIC-G3-A9L" id="NAB-O5-GMf"/>
                 <outlet property="bubbleOnlyText" destination="kPT-TB-gta" id="KIr-WV-sVS"/>
+                <outlet property="bubbleWidthConstraint" destination="o8z-eZ-1vd" id="M6u-ME-HoX"/>
                 <outlet property="callLinkView" destination="L6b-x8-zDV" id="CWV-JJ-puw"/>
                 <outlet property="chatAvatarContainerView" destination="ezO-Vc-nm0" id="Xg0-QA-FMS"/>
                 <outlet property="contactLinkPreviewView" destination="n1d-L6-630" id="OuR-4C-mSS"/>
@@ -430,7 +443,8 @@
                 <outlet property="sentArrow" destination="5b0-1L-71y" id="Zv3-kX-LJn"/>
                 <outlet property="sentMessageMargingView" destination="dkB-Yo-aJa" id="uUG-wh-2vX"/>
                 <outlet property="sentPaidDetailsView" destination="jRt-9n-FU8" id="xCb-3Q-erl"/>
-                <outlet property="statusHeaderView" destination="Idp-LW-sQE" id="q6n-iO-6SS"/>
+                <outlet property="statusHeaderView" destination="EHB-La-doK" id="N4l-eh-gcN"/>
+                <outlet property="statusHeaderViewContainer" destination="Idp-LW-sQE" id="psW-CC-N4n"/>
                 <outlet property="textMessageView" destination="roq-OQ-TDc" id="11K-1o-uSQ"/>
                 <outlet property="tribeLinkPreviewView" destination="uwa-Fd-gxY" id="dRP-bP-ryz"/>
             </connections>

@@ -25,6 +25,7 @@ extension NewMessageTableViewCell {
 
 class NewMessageTableViewCell: UITableViewCell {
     
+    ///General views
     @IBOutlet weak var bubbleOnlyText: UIView!
     @IBOutlet weak var bubbleAllView: UIView!
     @IBOutlet weak var receivedArrow: UIView!
@@ -33,7 +34,11 @@ class NewMessageTableViewCell: UITableViewCell {
     @IBOutlet weak var chatAvatarContainerView: UIView!
     @IBOutlet weak var sentMessageMargingView: UIView!
     @IBOutlet weak var receivedMessageMarginView: UIView!
+    @IBOutlet weak var statusHeaderViewContainer: UIView!
     @IBOutlet weak var statusHeaderView: StatusHeaderView!
+    
+    ///Constraints
+    @IBOutlet weak var bubbleWidthConstraint: NSLayoutConstraint!
     
     ///First Container
     @IBOutlet weak var messageReplyView: NewMessageReplyView!
@@ -68,60 +73,22 @@ class NewMessageTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        bubbleOnlyText.layer.cornerRadius = 8.0
-        bubbleAllView.layer.cornerRadius = 8.0
-        
-        receivedArrow.drawReceivedBubbleArrow(color: UIColor.Sphinx.ReceivedMsgBG)
-        sentArrow.drawSentBubbleArrow(color: UIColor.Sphinx.SentMsgBG)
+        setupViews()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
     
-    func configureFor(
-        direction: MessageDirection
-    ) {
-        let outgoing = direction == .Outgoing
-        
-        chatAvatarContainerView.isHidden = outgoing
-        sentMessageMargingView.isHidden = !outgoing
-        receivedMessageMarginView.isHidden = outgoing
-        
-        receivedArrow.isHidden = outgoing
-        sentArrow.isHidden = !outgoing
-        
-        messageLabelLeadingConstraint.priority = UILayoutPriority(outgoing ? 1 : 1000)
-        messageLabelTrailingConstraint.priority = UILayoutPriority(outgoing ? 1000 : 1)
-        
-        let bubbleColor = outgoing ? UIColor.Sphinx.SentMsgBG : UIColor.Sphinx.ReceivedMsgBG
-        bubbleOnlyText.backgroundColor = bubbleColor
-        bubbleAllView.backgroundColor = bubbleColor
-        
-        statusHeaderView.configureFor(direction: direction)
-    }
-    
-    func configureFor(groupingState: GroupingState) {
-        switch (groupingState) {
-        case .Isolated:
-            break
-        case .First:
-            break
-        case .Middle:
-            break
-        case .Last:
-            break
-        }
-    }
-    
     func configureWith(
         index: Int,
         message: String
     ) {
-        configureFor(direction: (index % 2 == 0) ? .Outgoing : .Incoming)
+//        configureFor(direction: (index % 2 == 0) ? .Outgoing : .Incoming)
         
-//        let array: [GroupingState] = [.Isolated, .First, .Middle, .Last]
-//        configureFor(groupingState: array[index % 4])
+        
+        configureFor(direction: .Outgoing)
+        configureFor(groupingState: .Middle)
         
         let moreThanText = (index % 3 == 0)
 

@@ -63,10 +63,12 @@ class NewChatTableDataSource : NSObject {
         
         registerCells()
         
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
         self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 300
+        self.tableView.contentInset = UIEdgeInsets(top: Constants.kMargin, left: 0, bottom: Constants.kMargin, right: 0)
+        
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
         self.tableView.reloadData()
     }
     

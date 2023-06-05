@@ -663,20 +663,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vcO-XX-v5B">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="0.0"/>
-                                <color key="backgroundColor" name="HeaderBG"/>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JH0-65-MH3">
-                                <rect key="frame" x="0.0" y="667" width="375" height="0.0"/>
-                                <color key="backgroundColor" name="HeaderBG"/>
-                            </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Qjl-UA-qWr">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hMb-Ac-dRv" customClass="NewChatHeaderView" customModule="sphinx" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="65"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" name="HeaderBG"/>
                                         <constraints>
                                             <constraint firstAttribute="height" priority="250" constant="115" id="RJD-IB-RJo"/>
                                         </constraints>
@@ -730,6 +722,14 @@
                                     <constraint firstItem="hMb-Ac-dRv" firstAttribute="leading" secondItem="Qjl-UA-qWr" secondAttribute="leading" id="z5k-ws-9Sl"/>
                                 </constraints>
                             </stackView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vcO-XX-v5B">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="0.0"/>
+                                <color key="backgroundColor" name="HeaderBG"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JH0-65-MH3">
+                                <rect key="frame" x="0.0" y="667" width="375" height="0.0"/>
+                                <color key="backgroundColor" name="HeaderBG"/>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="IFK-j2-YwY"/>
                         <color key="backgroundColor" name="Body"/>

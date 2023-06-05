@@ -618,6 +618,7 @@
 		47E6A4BA2A2E407100A9509E /* NewMessageBoostView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47E6A4B92A2E407100A9509E /* NewMessageBoostView.xib */; };
 		47E6A4BC2A2E425D00A9509E /* MessageBoostImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E6A4BB2A2E425D00A9509E /* MessageBoostImageView.swift */; };
 		47E6A4BE2A2E426300A9509E /* MessageBoostImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47E6A4BD2A2E426300A9509E /* MessageBoostImageView.xib */; };
+		47E6A4C02A2E591900A9509E /* NewMessageTableViewCell+GeneralSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E6A4BF2A2E591900A9509E /* NewMessageTableViewCell+GeneralSetup.swift */; };
 		47EB025B29BA343E0032CFB5 /* CircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EB025A29BA343E0032CFB5 /* CircularProgressView.swift */; };
 		47EB025D29BA37D50032CFB5 /* CircularProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47EB025C29BA37D50032CFB5 /* CircularProgressView.xib */; };
 		47F2289E23672A5E001429A4 /* ImagePickerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F2289D23672A5E001429A4 /* ImagePickerManager.swift */; };
@@ -1615,6 +1616,7 @@
 		47E6A4B92A2E407100A9509E /* NewMessageBoostView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewMessageBoostView.xib; sourceTree = "<group>"; };
 		47E6A4BB2A2E425D00A9509E /* MessageBoostImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBoostImageView.swift; sourceTree = "<group>"; };
 		47E6A4BD2A2E426300A9509E /* MessageBoostImageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageBoostImageView.xib; sourceTree = "<group>"; };
+		47E6A4BF2A2E591900A9509E /* NewMessageTableViewCell+GeneralSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewMessageTableViewCell+GeneralSetup.swift"; sourceTree = "<group>"; };
 		47EB025A29BA343E0032CFB5 /* CircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressView.swift; sourceTree = "<group>"; };
 		47EB025C29BA37D50032CFB5 /* CircularProgressView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CircularProgressView.xib; sourceTree = "<group>"; };
 		47F2289D23672A5E001429A4 /* ImagePickerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerManager.swift; sourceTree = "<group>"; };
@@ -2175,6 +2177,7 @@
 				4779247C2A28D19F00CD3CF1 /* Custom Views */,
 				472092C72A278B0400468796 /* NewMessageTableViewCell.swift */,
 				472092C82A278B0400468796 /* NewMessageTableViewCell.xib */,
+				47E6A4BF2A2E591900A9509E /* NewMessageTableViewCell+GeneralSetup.swift */,
 			);
 			path = NewMessageTableViewCell;
 			sourceTree = "<group>";
@@ -5020,6 +5023,7 @@
 				47357A192729A16C00A49EEE /* NewsletterItem+DisplayUtils.swift in Sources */,
 				F39F2C7C26E2363100D357F6 /* FeedSearchResultsCollectionViewController.swift in Sources */,
 				475154BB2423FA4100477384 /* JoinVideoCallView.swift in Sources */,
+				47E6A4C02A2E591900A9509E /* NewMessageTableViewCell+GeneralSetup.swift in Sources */,
 				475BDD19232AC47C00C5BBD6 /* ChatViewController.swift in Sources */,
 				47018F9727D1079800797E0B /* FeedLoaderHelper.swift in Sources */,
 				4780782F23916CA800187906 /* PictureSentTableViewCell.swift in Sources */,

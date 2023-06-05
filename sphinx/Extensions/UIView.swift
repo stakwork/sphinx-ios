@@ -58,8 +58,13 @@ extension UIView {
         return shapeLayer
     }
     
-    func roundCorners(corners: UIRectCorner, radius: CGFloat, borderColor: UIColor? = nil) {
-        let path = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+    func roundCorners(
+        corners: UIRectCorner,
+        radius: CGFloat,
+        borderColor: UIColor? = nil,
+        viewBounds: CGRect? = nil
+    ) {
+        let path = UIBezierPath(roundedRect: viewBounds ?? bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
         
         let mask = CAShapeLayer()
         mask.path = path.cgPath
@@ -68,7 +73,7 @@ extension UIView {
             removeBorderLayer()
             
             let shapeLayer = CAShapeLayer()
-            shapeLayer.frame = bounds
+            shapeLayer.frame = viewBounds ?? bounds
             shapeLayer.path = path.cgPath
             shapeLayer.strokeColor = borderColor.resolvedCGColor(with: self)
             shapeLayer.fillColor = UIColor.clear.resolvedCGColor(with: self)

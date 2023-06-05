@@ -612,6 +612,8 @@
 		47E6A4AE2A2E237F00A9509E /* PodcastBoostView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47E6A4AD2A2E237F00A9509E /* PodcastBoostView.xib */; };
 		47E6A4B02A2E275C00A9509E /* BotResponseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E6A4AF2A2E275C00A9509E /* BotResponseView.swift */; };
 		47E6A4B22A2E276500A9509E /* BotResponseView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47E6A4B12A2E276500A9509E /* BotResponseView.xib */; };
+		47E6A4B42A2E39BF00A9509E /* NewLinkPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E6A4B32A2E39BF00A9509E /* NewLinkPreviewView.swift */; };
+		47E6A4B62A2E39C800A9509E /* NewLinkPreviewView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47E6A4B52A2E39C800A9509E /* NewLinkPreviewView.xib */; };
 		47EB025B29BA343E0032CFB5 /* CircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EB025A29BA343E0032CFB5 /* CircularProgressView.swift */; };
 		47EB025D29BA37D50032CFB5 /* CircularProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47EB025C29BA37D50032CFB5 /* CircularProgressView.xib */; };
 		47F2289E23672A5E001429A4 /* ImagePickerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F2289D23672A5E001429A4 /* ImagePickerManager.swift */; };
@@ -1603,6 +1605,8 @@
 		47E6A4AD2A2E237F00A9509E /* PodcastBoostView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PodcastBoostView.xib; sourceTree = "<group>"; };
 		47E6A4AF2A2E275C00A9509E /* BotResponseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BotResponseView.swift; sourceTree = "<group>"; };
 		47E6A4B12A2E276500A9509E /* BotResponseView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BotResponseView.xib; sourceTree = "<group>"; };
+		47E6A4B32A2E39BF00A9509E /* NewLinkPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewLinkPreviewView.swift; sourceTree = "<group>"; };
+		47E6A4B52A2E39C800A9509E /* NewLinkPreviewView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewLinkPreviewView.xib; sourceTree = "<group>"; };
 		47EB025A29BA343E0032CFB5 /* CircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressView.swift; sourceTree = "<group>"; };
 		47EB025C29BA37D50032CFB5 /* CircularProgressView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CircularProgressView.xib; sourceTree = "<group>"; };
 		47F2289D23672A5E001429A4 /* ImagePickerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerManager.swift; sourceTree = "<group>"; };
@@ -3247,6 +3251,8 @@
 				47E6A4AD2A2E237F00A9509E /* PodcastBoostView.xib */,
 				47E6A4AF2A2E275C00A9509E /* BotResponseView.swift */,
 				47E6A4B12A2E276500A9509E /* BotResponseView.xib */,
+				47E6A4B32A2E39BF00A9509E /* NewLinkPreviewView.swift */,
+				47E6A4B52A2E39C800A9509E /* NewLinkPreviewView.xib */,
 			);
 			path = "Custom Views";
 			sourceTree = "<group>";
@@ -4518,6 +4524,7 @@
 				4754FA94272ADB02006295A5 /* DashboardNewsletterItemCollectionViewCell.xib in Resources */,
 				47F258D0253F6B1500122A5A /* PodcastSmallPlayer.xib in Resources */,
 				4789E25324EEB8D8003991BE /* AuthorizeAppView.xib in Resources */,
+				47E6A4B62A2E39C800A9509E /* NewLinkPreviewView.xib in Resources */,
 				47904C1124BF352300710E7A /* tri-tone.caf in Resources */,
 				475BDD49232AD00D00C5BBD6 /* Montserrat-SemiBold.otf in Resources */,
 				4746807B293E565800F51457 /* PodcastPlayerControlsView.xib in Resources */,
@@ -4951,6 +4958,7 @@
 				F3DC6B2A273FB3A400458E09 /* ContentFeedItem+Computeds.swift in Sources */,
 				F39F2C7A26E22FC800D357F6 /* FeedSearchContainerViewController.swift in Sources */,
 				F31CF2662691489800AAB621 /* StoreKitService.swift in Sources */,
+				47E6A4B42A2E39BF00A9509E /* NewLinkPreviewView.swift in Sources */,
 				472161B1293913230088B87B /* LoadingRecommendationsCollectionViewCell.swift in Sources */,
 				47357A0B2729A11300A49EEE /* NewsletterFeed+Computeds.swift in Sources */,
 				47357A172729A16100A49EEE /* NewsletterItem+Properties.swift in Sources */,

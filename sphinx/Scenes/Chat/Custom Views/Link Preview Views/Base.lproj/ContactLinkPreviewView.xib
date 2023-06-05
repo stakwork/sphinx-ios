@@ -136,14 +136,14 @@
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="4RN-Gs-Z8Q" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="1uc-F2-gYZ"/>
+                <constraint firstItem="4RN-Gs-Z8Q" firstAttribute="bottom" secondItem="BKe-s6-6kd" secondAttribute="bottom" id="2kl-Tr-sWt"/>
+                <constraint firstItem="4RN-Gs-Z8Q" firstAttribute="leading" secondItem="BKe-s6-6kd" secondAttribute="leading" id="6ki-Cn-g3n"/>
                 <constraint firstAttribute="bottom" secondItem="BKe-s6-6kd" secondAttribute="bottom" priority="750" id="9sN-a7-oOA"/>
-                <constraint firstAttribute="bottom" secondItem="4RN-Gs-Z8Q" secondAttribute="bottom" id="Aq5-Uf-pZn"/>
+                <constraint firstItem="4RN-Gs-Z8Q" firstAttribute="top" secondItem="BKe-s6-6kd" secondAttribute="top" id="B0U-Zi-NE2"/>
                 <constraint firstItem="BKe-s6-6kd" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="VEG-ao-uBF"/>
                 <constraint firstAttribute="trailing" secondItem="BKe-s6-6kd" secondAttribute="trailing" id="fhm-r7-4iW"/>
                 <constraint firstItem="BKe-s6-6kd" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="jmm-xB-8Co"/>
-                <constraint firstItem="4RN-Gs-Z8Q" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="ojL-47-y5B"/>
-                <constraint firstAttribute="trailing" secondItem="4RN-Gs-Z8Q" secondAttribute="trailing" id="ukg-hQ-QbX"/>
+                <constraint firstItem="4RN-Gs-Z8Q" firstAttribute="trailing" secondItem="BKe-s6-6kd" secondAttribute="trailing" id="wJO-QO-VPG"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="137.68115942028987" y="152.67857142857142"/>

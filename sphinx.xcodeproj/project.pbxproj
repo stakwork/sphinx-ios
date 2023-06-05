@@ -614,6 +614,10 @@
 		47E6A4B22A2E276500A9509E /* BotResponseView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47E6A4B12A2E276500A9509E /* BotResponseView.xib */; };
 		47E6A4B42A2E39BF00A9509E /* NewLinkPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E6A4B32A2E39BF00A9509E /* NewLinkPreviewView.swift */; };
 		47E6A4B62A2E39C800A9509E /* NewLinkPreviewView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47E6A4B52A2E39C800A9509E /* NewLinkPreviewView.xib */; };
+		47E6A4B82A2E406600A9509E /* NewMessageBoostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E6A4B72A2E406600A9509E /* NewMessageBoostView.swift */; };
+		47E6A4BA2A2E407100A9509E /* NewMessageBoostView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47E6A4B92A2E407100A9509E /* NewMessageBoostView.xib */; };
+		47E6A4BC2A2E425D00A9509E /* MessageBoostImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E6A4BB2A2E425D00A9509E /* MessageBoostImageView.swift */; };
+		47E6A4BE2A2E426300A9509E /* MessageBoostImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47E6A4BD2A2E426300A9509E /* MessageBoostImageView.xib */; };
 		47EB025B29BA343E0032CFB5 /* CircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EB025A29BA343E0032CFB5 /* CircularProgressView.swift */; };
 		47EB025D29BA37D50032CFB5 /* CircularProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47EB025C29BA37D50032CFB5 /* CircularProgressView.xib */; };
 		47F2289E23672A5E001429A4 /* ImagePickerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F2289D23672A5E001429A4 /* ImagePickerManager.swift */; };
@@ -1607,6 +1611,10 @@
 		47E6A4B12A2E276500A9509E /* BotResponseView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BotResponseView.xib; sourceTree = "<group>"; };
 		47E6A4B32A2E39BF00A9509E /* NewLinkPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewLinkPreviewView.swift; sourceTree = "<group>"; };
 		47E6A4B52A2E39C800A9509E /* NewLinkPreviewView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewLinkPreviewView.xib; sourceTree = "<group>"; };
+		47E6A4B72A2E406600A9509E /* NewMessageBoostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageBoostView.swift; sourceTree = "<group>"; };
+		47E6A4B92A2E407100A9509E /* NewMessageBoostView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewMessageBoostView.xib; sourceTree = "<group>"; };
+		47E6A4BB2A2E425D00A9509E /* MessageBoostImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBoostImageView.swift; sourceTree = "<group>"; };
+		47E6A4BD2A2E426300A9509E /* MessageBoostImageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageBoostImageView.xib; sourceTree = "<group>"; };
 		47EB025A29BA343E0032CFB5 /* CircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressView.swift; sourceTree = "<group>"; };
 		47EB025C29BA37D50032CFB5 /* CircularProgressView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CircularProgressView.xib; sourceTree = "<group>"; };
 		47F2289D23672A5E001429A4 /* ImagePickerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerManager.swift; sourceTree = "<group>"; };
@@ -3253,6 +3261,10 @@
 				47E6A4B12A2E276500A9509E /* BotResponseView.xib */,
 				47E6A4B32A2E39BF00A9509E /* NewLinkPreviewView.swift */,
 				47E6A4B52A2E39C800A9509E /* NewLinkPreviewView.xib */,
+				47E6A4B72A2E406600A9509E /* NewMessageBoostView.swift */,
+				47E6A4B92A2E407100A9509E /* NewMessageBoostView.xib */,
+				47E6A4BB2A2E425D00A9509E /* MessageBoostImageView.swift */,
+				47E6A4BD2A2E426300A9509E /* MessageBoostImageView.xib */,
 			);
 			path = "Custom Views";
 			sourceTree = "<group>";
@@ -4660,6 +4672,7 @@
 				473842F52391970B00AA640F /* FullScreenImageView.xib in Resources */,
 				47ACBC2E265EA35D00D2FE47 /* AuthExternalView.xib in Resources */,
 				4797E8A824BDF7E900D13270 /* InvoiceReceivedTableViewCell.xib in Resources */,
+				47E6A4BE2A2E426300A9509E /* MessageBoostImageView.xib in Resources */,
 				4797E7EB24B8F84D00D13270 /* Subscription.storyboard in Resources */,
 				4785C10024D1EE1F004E2D6C /* GroupRequestTableViewCell.xib in Resources */,
 				477924802A28D1DC00CD3CF1 /* StatusHeaderView.xib in Resources */,
@@ -4673,6 +4686,7 @@
 				474FE32B23F588D400C06FC8 /* VideoReceivedTableViewCell.xib in Resources */,
 				476EB46923C4F1AE009745E2 /* GroupContactCollectionViewCell.xib in Resources */,
 				47FA18DA24362EE800469C8F /* AttachmentPriceView.xib in Resources */,
+				47E6A4BA2A2E407100A9509E /* NewMessageBoostView.xib in Resources */,
 				475BDCE8232AC23B00C5BBD6 /* MessageSentTableViewCell.xib in Resources */,
 				CE3133B02977747E00E91E3A /* BadgeManagement.storyboard in Resources */,
 				475BDCDF232AC23B00C5BBD6 /* PaidInvoiceSentTableViewCell.xib in Resources */,
@@ -5088,6 +5102,7 @@
 				473E5DE32575696C00697EEA /* PickerViewController.swift in Sources */,
 				4789E24A24EDB73B003991BE /* WebAppViewController.swift in Sources */,
 				F3D04027268BABFF00D54A94 /* InviteActionsHelper.swift in Sources */,
+				47E6A4B82A2E406600A9509E /* NewMessageBoostView.swift in Sources */,
 				F3531C3D26BD505F00E9586C /* DashboardChatsListDelegate.swift in Sources */,
 				F3188B822717942000890DDD /* VideoFeed+Computeds.swift in Sources */,
 				F3D04020268BAB7500D54A94 /* InviteWelcomeViewController.swift in Sources */,
@@ -5161,6 +5176,7 @@
 				475BDCE7232AC23B00C5BBD6 /* MessageSentTableViewCell.swift in Sources */,
 				F373BF0126A9CE1B0093C886 /* DashboardRootViewController.swift in Sources */,
 				475BDD2A232AC9E200C5BBD6 /* Date.swift in Sources */,
+				47E6A4BC2A2E425D00A9509E /* MessageBoostImageView.swift in Sources */,
 				475723A7247EB5DA001ADC7E /* AudioPlayerHelper.swift in Sources */,
 				F3DC6B28273FABDB00458E09 /* ContentFeedPaymentModel+Computeds.swift in Sources */,
 				477924942A29149E00CD3CF1 /* FileDetailsView.swift in Sources */,

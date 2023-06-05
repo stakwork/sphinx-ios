@@ -23,6 +23,7 @@ class TribeLinkPreviewView: LinkPreviewBubbleView {
     @IBOutlet weak var tribeDescriptionTextView: UITextView!
     @IBOutlet weak var containerButton: UIButton!
     @IBOutlet weak var tribeButtonContainer: UIView!
+    @IBOutlet weak var tribeButtonView: UIView!
     
     var messageId: Int = -1
     
@@ -47,7 +48,7 @@ class TribeLinkPreviewView: LinkPreviewBubbleView {
         tribeDescriptionTextView.contentInset = .zero
         tribeDescriptionTextView.clipsToBounds = true
         
-        tribeButtonContainer.layer.cornerRadius = 3
+        tribeButtonView.layer.cornerRadius = 3
         
         tribeImageView.layer.cornerRadius = 3
         tribeImageView.clipsToBounds = true
@@ -91,7 +92,7 @@ class TribeLinkPreviewView: LinkPreviewBubbleView {
         tribeImageView.layer.borderColor = color.resolvedCGColor(with: self)
         
         let buttonColor = incoming ? UIColor.Sphinx.LinkReceivedButtonColor : UIColor.Sphinx.LinkSentButtonColor
-        tribeButtonContainer.backgroundColor = buttonColor
+        tribeButtonView.backgroundColor = buttonColor
     }
     
     func loadImage(tribeInfo: GroupsManager.TribeInfo?) {

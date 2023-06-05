@@ -50,10 +50,14 @@ class NewMessageTableViewCell: UITableViewCell {
     @IBOutlet weak var podcastBoostView: PodcastBoostView!
     @IBOutlet weak var botResponseView: BotResponseView!
     
+    ///Thirs Container
     @IBOutlet weak var textMessageView: UIView!
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var messageLabelLeadingConstraint: NSLayoutConstraint!
     @IBOutlet weak var messageLabelTrailingConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var tribeLinkPreviewView: TribeLinkPreviewView!
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -120,6 +124,7 @@ class NewMessageTableViewCell: UITableViewCell {
         podcastAudioView.isHidden = !moreThanText
         callLinkView.isHidden = !moreThanText
         podcastBoostView.isHidden = !moreThanText
+        tribeLinkPreviewView.isHidden = !moreThanText
         
         directPaymentView.isHidden = true
         fileDetailsView.isHidden = true

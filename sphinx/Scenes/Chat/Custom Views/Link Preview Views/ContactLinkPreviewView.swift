@@ -18,6 +18,7 @@ class ContactLinkPreviewView: LinkPreviewBubbleView {
     @IBOutlet weak var contactPubKey: UILabel!
     @IBOutlet weak var contactPubkeyIcon: UIImageView!
     @IBOutlet weak var addContactButtonContainer: UIView!
+    @IBOutlet weak var addContactButtonView: UIView!
     @IBOutlet weak var containerButton: UIButton!
     
     override init(frame: CGRect) {
@@ -36,7 +37,7 @@ class ContactLinkPreviewView: LinkPreviewBubbleView {
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         
-        addContactButtonContainer.layer.cornerRadius = 3
+        addContactButtonView.layer.cornerRadius = 3
         
         contactImageView.layer.cornerRadius = contactImageView.frame.height / 2
         contactImageView.clipsToBounds = true
@@ -66,7 +67,7 @@ class ContactLinkPreviewView: LinkPreviewBubbleView {
         contactImageView.tintColorDidChange()
 
         let buttonColor = incoming ? UIColor.Sphinx.LinkReceivedButtonColor : UIColor.Sphinx.LinkSentButtonColor
-        addContactButtonContainer.backgroundColor = buttonColor
+        addContactButtonView.backgroundColor = buttonColor
     }
     
     func loadImage(contact: UserContact?) {

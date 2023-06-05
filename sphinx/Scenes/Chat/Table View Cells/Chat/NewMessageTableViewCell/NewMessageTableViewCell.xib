@@ -23,7 +23,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kPT-TB-gta">
-                        <rect key="frame" x="55.999999999999986" y="714.66666666666663" width="247.66666666666663" height="377.33333333333337"/>
+                        <rect key="frame" x="55.999999999999986" y="714.66666666666663" width="247.66666666666663" height="277.33333333333337"/>
                         <color key="backgroundColor" name="SentMsgBG"/>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iIC-G3-A9L">
@@ -223,10 +223,10 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="roq-OQ-TDc">
-                                                <rect key="frame" x="0.0" y="693.66666666666663" width="247.66666666666666" height="377.33333333333337"/>
+                                                <rect key="frame" x="0.0" y="693.66666666666663" width="247.66666666666666" height="277.33333333333337"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="This is a large text to see how it works" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pPY-Rf-UkB">
-                                                        <rect key="frame" x="16" y="16" width="215.66666666666666" height="345.33333333333331"/>
+                                                        <rect key="frame" x="16" y="16.000000000000014" width="215.66666666666666" height="245.33333333333337"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                                                         <nil key="textColor"/>
@@ -244,10 +244,10 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KdK-Vt-n6p">
-                                                <rect key="frame" x="0.0" y="1071" width="247.66666666666666" height="100"/>
+                                                <rect key="frame" x="0.0" y="971" width="247.66666666666666" height="200"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="bK1-jn-cVw">
-                                                        <rect key="frame" x="0.0" y="0.0" width="247.66666666666666" height="100"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="247.66666666666666" height="200"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uwa-Fd-gxY" customClass="TribeLinkPreviewView" customModule="sphinx" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="0.0" width="247.66666666666666" height="100"/>
@@ -256,9 +256,18 @@
                                                                     <constraint firstAttribute="height" priority="750" constant="168" id="pKk-fe-88u"/>
                                                                 </constraints>
                                                             </view>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n1d-L6-630" customClass="ContactLinkPreviewView" customModule="sphinx" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="100" width="247.66666666666666" height="100"/>
+                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" priority="750" constant="168" id="U4J-zK-vxf"/>
+                                                                </constraints>
+                                                            </view>
                                                         </subviews>
                                                         <constraints>
                                                             <constraint firstItem="uwa-Fd-gxY" firstAttribute="leading" secondItem="bK1-jn-cVw" secondAttribute="leading" id="2gM-NQ-znn"/>
+                                                            <constraint firstAttribute="trailing" secondItem="n1d-L6-630" secondAttribute="trailing" id="80B-Pb-uSQ"/>
+                                                            <constraint firstItem="n1d-L6-630" firstAttribute="leading" secondItem="bK1-jn-cVw" secondAttribute="leading" id="Hn1-m8-M2f"/>
                                                             <constraint firstAttribute="trailing" secondItem="uwa-Fd-gxY" secondAttribute="trailing" id="pfk-0N-wNe"/>
                                                         </constraints>
                                                     </stackView>
@@ -358,6 +367,7 @@
                 <outlet property="bubbleOnlyText" destination="kPT-TB-gta" id="KIr-WV-sVS"/>
                 <outlet property="callLinkView" destination="L6b-x8-zDV" id="CWV-JJ-puw"/>
                 <outlet property="chatAvatarContainerView" destination="ezO-Vc-nm0" id="Xg0-QA-FMS"/>
+                <outlet property="contactLinkPreviewView" destination="n1d-L6-630" id="OuR-4C-mSS"/>
                 <outlet property="directPaymentView" destination="RmC-3X-VVX" id="YoI-5x-0iM"/>
                 <outlet property="fileDetailsView" destination="OFY-Bx-2Yr" id="d47-N4-NqV"/>
                 <outlet property="mediaContentView" destination="9An-1l-E7B" id="GZX-9A-KCU"/>

@@ -39,7 +39,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="EGd-JJ-7Wc">
-                    <rect key="frame" x="0.0" y="0.0" width="280" height="128"/>
+                    <rect key="frame" x="0.0" y="0.0" width="280" height="168"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dgh-lw-OCU">
                             <rect key="frame" x="0.0" y="0.0" width="280" height="112"/>
@@ -81,8 +81,8 @@
                                 <constraint firstItem="BRQ-Fh-ufF" firstAttribute="top" secondItem="SuN-Ri-oeL" secondAttribute="bottom" constant="5" id="r6D-3s-1up"/>
                             </constraints>
                         </view>
-                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J2x-aR-Loz">
-                            <rect key="frame" x="0.0" y="112" width="280" height="40"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J2x-aR-Loz">
+                            <rect key="frame" x="0.0" y="112" width="280" height="56"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kka-1h-DKX">
                                     <rect key="frame" x="16" y="0.0" width="248" height="40"/>
@@ -114,30 +114,21 @@
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstItem="Kka-1h-DKX" firstAttribute="top" secondItem="J2x-aR-Loz" secondAttribute="top" id="IVn-Ef-R7Z"/>
-                                <constraint firstAttribute="height" constant="40" id="VFU-GC-yhm"/>
+                                <constraint firstAttribute="height" constant="56" id="VFU-GC-yhm"/>
                                 <constraint firstAttribute="trailing" secondItem="Kka-1h-DKX" secondAttribute="trailing" constant="16" id="v92-GW-mly"/>
                                 <constraint firstItem="Kka-1h-DKX" firstAttribute="leading" secondItem="J2x-aR-Loz" secondAttribute="leading" constant="16" id="xYO-xF-9Bp"/>
-                                <constraint firstAttribute="bottom" secondItem="Kka-1h-DKX" secondAttribute="bottom" id="z2r-in-F9M"/>
-                            </constraints>
-                        </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FcL-Oh-yuD">
-                            <rect key="frame" x="0.0" y="112" width="280" height="16"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="16" id="Gj1-s4-jia"/>
+                                <constraint firstAttribute="bottom" secondItem="Kka-1h-DKX" secondAttribute="bottom" constant="16" id="z2r-in-F9M"/>
                             </constraints>
                         </view>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstItem="FcL-Oh-yuD" firstAttribute="leading" secondItem="EGd-JJ-7Wc" secondAttribute="leading" id="4pu-eY-9DI"/>
                         <constraint firstAttribute="trailing" secondItem="J2x-aR-Loz" secondAttribute="trailing" id="4yV-aY-QLD"/>
-                        <constraint firstAttribute="trailing" secondItem="FcL-Oh-yuD" secondAttribute="trailing" id="foQ-Sf-98t"/>
                         <constraint firstItem="J2x-aR-Loz" firstAttribute="leading" secondItem="EGd-JJ-7Wc" secondAttribute="leading" id="kvc-IK-Nij"/>
                     </constraints>
                 </stackView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kjg-u1-Dmy">
-                    <rect key="frame" x="0.0" y="0.0" width="280" height="128"/>
+                    <rect key="frame" x="0.0" y="0.0" width="280" height="168"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <connections>
                         <action selector="seeTribeButtonTouched" destination="-1" eventType="touchUpInside" id="hLE-Ss-dfg"/>

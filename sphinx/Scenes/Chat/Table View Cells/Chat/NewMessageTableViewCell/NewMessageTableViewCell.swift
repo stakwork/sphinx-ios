@@ -57,6 +57,7 @@ class NewMessageTableViewCell: UITableViewCell {
     @IBOutlet weak var messageLabelTrailingConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var tribeLinkPreviewView: TribeLinkPreviewView!
+    @IBOutlet weak var contactLinkPreviewView: ContactLinkPreviewView!
     
     
     override func awakeFromNib() {
@@ -125,6 +126,7 @@ class NewMessageTableViewCell: UITableViewCell {
         callLinkView.isHidden = !moreThanText
         podcastBoostView.isHidden = !moreThanText
         tribeLinkPreviewView.isHidden = !moreThanText
+        contactLinkPreviewView.isHidden = !moreThanText
         
         directPaymentView.isHidden = true
         fileDetailsView.isHidden = true

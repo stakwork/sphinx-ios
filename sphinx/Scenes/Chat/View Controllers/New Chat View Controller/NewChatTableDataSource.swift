@@ -74,6 +74,7 @@ class NewChatTableDataSource : NSObject {
     
     func registerCells() {
         tableView.registerCell(NewMessageTableViewCell.self)
+        tableView.registerCell(MessageNoBubbleTableViewCell.self)
     }
 }
 
@@ -115,8 +116,15 @@ extension NewChatTableDataSource : UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "NewMessageTableViewCell", for: indexPath) as! NewMessageTableViewCell
-        cell.configureWith(index: indexPath.row, message: messages[indexPath.row])
-        return cell
+        let dateSeparator = (indexPath.row % 7 == 0)
+        
+        if dateSeparator {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "MessageNoBubbleTableViewCell", for: indexPath) as! MessageNoBubbleTableViewCell
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "NewMessageTableViewCell", for: indexPath) as! NewMessageTableViewCell
+            cell.configureWith(index: indexPath.row, message: messages[indexPath.row])
+            return cell
+        }
     }
 }

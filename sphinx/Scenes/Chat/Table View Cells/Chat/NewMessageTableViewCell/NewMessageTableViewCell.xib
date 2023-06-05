@@ -356,10 +356,10 @@
                                 </constraints>
                             </stackView>
                             <view contentMode="scaleToFill" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="31v-lQ-g2m">
-                                <rect key="frame" x="288.66666666666669" y="2" width="7" height="1394"/>
+                                <rect key="frame" x="288.66666666666669" y="0.0" width="7" height="1396"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HSy-2h-42y">
-                                        <rect key="frame" x="0.0" y="23" width="7" height="10"/>
+                                        <rect key="frame" x="0.0" y="25" width="7" height="10"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="10" id="Kxh-Mv-loV"/>

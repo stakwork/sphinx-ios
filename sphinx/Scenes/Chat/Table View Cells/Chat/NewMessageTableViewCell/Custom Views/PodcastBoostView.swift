@@ -1,17 +1,20 @@
 //
-//  CallLinkView.swift
+//  PodcastBoostView.swift
 //  sphinx
 //
-//  Created by Tomas Timinskas on 01/06/2023.
+//  Created by Tomas Timinskas on 05/06/2023.
 //  Copyright © 2023 sphinx. All rights reserved.
 //
 
 import UIKit
 
-class CallLinkView: UIView {
-    
-    @IBOutlet private var contentView: UIView!
+class PodcastBoostView: UIView {
 
+    @IBOutlet private var contentView: UIView!
+    
+    @IBOutlet weak var amountLabel: UILabel!
+    @IBOutlet weak var boostIconView: UIView!
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
@@ -23,9 +26,11 @@ class CallLinkView: UIView {
     }
 
     private func setup() {
-        Bundle.main.loadNibNamed("CallLinkView", owner: self, options: nil)
+        Bundle.main.loadNibNamed("PodcastBoostView", owner: self, options: nil)
         addSubview(contentView)
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        
+        boostIconView.layer.cornerRadius = boostIconView.bounds.height / 2
     }
 }

@@ -23,7 +23,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kPT-TB-gta">
-                        <rect key="frame" x="55.999999999999986" y="830.66666666666663" width="247.66666666666663" height="361.33333333333337"/>
+                        <rect key="frame" x="55.999999999999986" y="870.66666666666663" width="247.66666666666663" height="321.33333333333337"/>
                         <color key="backgroundColor" name="SentMsgBG"/>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iIC-G3-A9L">
@@ -115,10 +115,10 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AwX-c7-kjq">
-                                                <rect key="frame" x="0.0" y="50" width="247.66666666666666" height="759.66666666666663"/>
+                                                <rect key="frame" x="0.0" y="50" width="247.66666666666666" height="799.66666666666663"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Nu8-Rz-zye">
-                                                        <rect key="frame" x="0.0" y="0.0" width="247.66666666666666" height="759.66666666666663"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="247.66666666666666" height="799.66666666666663"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RmC-3X-VVX" customClass="DirectPaymentView" customModule="sphinx" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="0.0" width="247.66666666666666" height="56"/>
@@ -162,8 +162,15 @@
                                                                     <constraint firstAttribute="height" priority="750" constant="226" id="bhp-9d-29m"/>
                                                                 </constraints>
                                                             </view>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u3B-p7-wwo" customClass="PodcastBoostView" customModule="sphinx" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="729.66666666666663" width="247.66666666666666" height="40"/>
+                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="40" id="IPz-rO-Waf"/>
+                                                                </constraints>
+                                                            </view>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jJ6-bu-xAX">
-                                                                <rect key="frame" x="0.0" y="729.66666666666663" width="247.66666666666666" height="30"/>
+                                                                <rect key="frame" x="0.0" y="769.66666666666663" width="247.66666666666666" height="30"/>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="30" id="EoY-8X-w9H"/>
@@ -171,6 +178,7 @@
                                                             </view>
                                                         </subviews>
                                                         <constraints>
+                                                            <constraint firstAttribute="trailing" secondItem="u3B-p7-wwo" secondAttribute="trailing" id="0RX-SY-6fN"/>
                                                             <constraint firstAttribute="trailing" secondItem="L6b-x8-zDV" secondAttribute="trailing" id="99W-Q6-1TP"/>
                                                             <constraint firstAttribute="trailing" secondItem="OFY-Bx-2Yr" secondAttribute="trailing" id="9ku-FT-HWA"/>
                                                             <constraint firstItem="RmC-3X-VVX" firstAttribute="leading" secondItem="Nu8-Rz-zye" secondAttribute="leading" id="CIi-UG-JPK"/>
@@ -182,6 +190,7 @@
                                                             <constraint firstItem="SmW-PZ-3BF" firstAttribute="leading" secondItem="Nu8-Rz-zye" secondAttribute="leading" id="ghB-cB-wLo"/>
                                                             <constraint firstAttribute="trailing" secondItem="SmW-PZ-3BF" secondAttribute="trailing" id="j8Q-gb-DwG"/>
                                                             <constraint firstItem="L6b-x8-zDV" firstAttribute="leading" secondItem="Nu8-Rz-zye" secondAttribute="leading" id="lXY-FP-7su"/>
+                                                            <constraint firstItem="u3B-p7-wwo" firstAttribute="leading" secondItem="Nu8-Rz-zye" secondAttribute="leading" id="uAC-UA-9oG"/>
                                                             <constraint firstItem="OFY-Bx-2Yr" firstAttribute="leading" secondItem="Nu8-Rz-zye" secondAttribute="leading" id="xsq-2Y-gvY"/>
                                                         </constraints>
                                                     </stackView>
@@ -205,10 +214,10 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="roq-OQ-TDc">
-                                                <rect key="frame" x="0.0" y="809.66666666666663" width="247.66666666666666" height="361.33333333333337"/>
+                                                <rect key="frame" x="0.0" y="849.66666666666663" width="247.66666666666666" height="321.33333333333337"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="This is a large text to see how it works" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pPY-Rf-UkB">
-                                                        <rect key="frame" x="16" y="16" width="215.66666666666666" height="329.33333333333331"/>
+                                                        <rect key="frame" x="16" y="16" width="215.66666666666666" height="289.33333333333331"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                                                         <nil key="textColor"/>
@@ -320,6 +329,7 @@
                 <outlet property="messageReplyView" destination="xkZ-Ex-rUP" id="U44-pD-okL"/>
                 <outlet property="paidTextMessageView" destination="jJ6-bu-xAX" id="9WC-EU-OWc"/>
                 <outlet property="podcastAudioView" destination="P8Z-Ei-Ouo" id="mJz-hO-XFF"/>
+                <outlet property="podcastBoostView" destination="u3B-p7-wwo" id="rXz-eA-qsu"/>
                 <outlet property="receivedArrow" destination="fdj-WN-CtK" id="pk6-NC-v9c"/>
                 <outlet property="receivedMessageMarginView" destination="uDp-ul-Cgt" id="z2j-5v-jTB"/>
                 <outlet property="sentArrow" destination="5b0-1L-71y" id="Zv3-kX-LJn"/>

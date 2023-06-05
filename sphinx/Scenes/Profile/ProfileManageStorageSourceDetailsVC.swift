@@ -14,7 +14,8 @@ class ProfileManageStorageSourceDetailsVC : UIViewController{
     @IBOutlet weak var headerLabel: UILabel!
     @IBOutlet weak var mediaSourceDetailsTableView: UITableView!
     @IBOutlet weak var mediaSourceTotalSizeLabel: UILabel!
-    
+    @IBOutlet weak var mediaDeletionConfirmationView: MediaDeletionConfirmationView!
+    var overlayView : UIView? = nil
     
     var source : StorageManagerMediaSource = .chats
     var totalSize : Double = 0.0
@@ -61,6 +62,34 @@ class ProfileManageStorageSourceDetailsVC : UIViewController{
             break
         }
         mediaSourceTotalSizeLabel.text = formatBytes(Int(totalSize*1e6))
+        hideDeletionWarningAlert()
+    }
+    
+    func showDeletionWarningAlert(type:StorageManagerMediaType){
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15, execute: {
+            self.overlayView = UIView(frame: self.view.frame)
+            if let overlayView = self.overlayView{
+                overlayView.backgroundColor = .black
+                overlayView.isUserInteractionEnabled = false
+                overlayView.alpha = 0.8
+                self.view.addSubview(overlayView)
+                self.view.bringSubviewToFront(overlayView)
+            }
+            self.view.bringSubviewToFront(self.mediaDeletionConfirmationView)
+            self.mediaDeletionConfirmationView.layer.zPosition = 1000
+            self.mediaDeletionConfirmationView.delegate = self
+            self.mediaDeletionConfirmationView.type = type
+            self.mediaDeletionConfirmationView.isHidden = false
+            //self.mediaDeletionConfirmationView.contentView.backgroundColor = .black
+        })
+    }
+    
+    func hideDeletionWarningAlert(){
+        self.overlayView?.removeFromSuperview()
+        self.overlayView = nil
+        
+        self.mediaDeletionConfirmationView.isHidden = true
     }
     
     
@@ -72,27 +101,26 @@ class ProfileManageStorageSourceDetailsVC : UIViewController{
     @IBAction func deleteAllTapped(_ sender: Any) {
         print("deleteAllTapped")
         let itemDescription = (source == .chats) ? "chat.media".localized : "podcasts"
-        AlertHelper.showTwoOptionsAlert(
-            title: "Are you sure?",
-            message: "Proceeding will delete all of your \(itemDescription) from this device. This cannot be undone.",
-            confirm: {
-                switch(self.source){
-                case .chats:
-                    StorageManager.sharedManager.deleteAllImages(completion: {
-                        StorageManager.sharedManager.deleteAllVideos(completion: {
-                            StorageManager.sharedManager.refreshAllStoredData(completion: {
-                                self.handleReset()
+        switch(self.source){
+            case .chats:
+                AlertHelper.showTwoOptionsAlert(
+                    title: "Are you sure?",
+                    message: "Proceeding will delete all of your \(itemDescription) from this device. This cannot be undone.",
+                    confirm: {
+                        StorageManager.sharedManager.deleteAllImages(completion: {
+                            StorageManager.sharedManager.deleteAllVideos(completion: {
+                                StorageManager.sharedManager.refreshAllStoredData(completion: {
+                                    self.handleReset()
+                                })
                             })
                         })
-                    })
-                    break
-                case .podcasts:
-                    StorageManager.sharedManager.deleteAllAudioFiles(completion: {
-                        self.handleReset()
-                    })
-                    break
-                }
-        })
+                })
+                break
+                
+            case .podcasts:
+                self.showDeletionWarningAlert(type: .audio)
+                break
+        }
     }
     
     func handleReset(){
@@ -117,4 +145,22 @@ extension ProfileManageStorageSourceDetailsVC : ProfileManageStorageSpecificChat
     func finishedDeleteAll() {
         self.navigationController?.popViewController(animated: true)
     }
+}
+
+extension ProfileManageStorageSourceDetailsVC : MediaDeletionConfirmationViewDelegate{
+    func cancelTapped() {
+        self.hideDeletionWarningAlert()
+    }
+    
+    func deleteTapped() {
+        mediaDeletionConfirmationView.isLoading = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0, execute: {
+            self.mediaDeletionConfirmationView.isLoading = false
+        })
+//        StorageManager.sharedManager.deleteAllAudioFiles(completion: {
+//            self.handleReset()
+//        })
+    }
+    
+    
 }

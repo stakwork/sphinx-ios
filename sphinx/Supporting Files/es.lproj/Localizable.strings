@@ -605,6 +605,8 @@
 "member-profile.tribe-member" = "MIEMBRO DE LA TRIBU";
 
 //STORAGE MANAGEMENT
+"storage.management.loading.deletion" = "Borrando";
+"storage.management.loading.deletion.subtitle" = "Puede tomar hasta un minuto";
 "saving.limit.warning" = "Guardar este límite eliminará al menos %@ de tus datos más antiguos.";
 "are.you.sure.deletion.warning" = "Continuar eliminará todos tus %@.";
 "deletion.warning.title" = "Has escogido eliminar todos tus %@";

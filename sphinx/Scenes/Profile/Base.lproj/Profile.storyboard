@@ -1711,6 +1711,14 @@
                                 <rect key="frame" x="0.0" y="139" width="414" height="723"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9K1-Rh-x4n" customClass="MediaDeletionConfirmationView" customModule="sphinx" customModuleProvider="target">
+                                <rect key="frame" x="51" y="316.5" width="312" height="368"/>
+                                <color key="backgroundColor" name="HeaderBG"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="312" id="JdJ-ke-25O"/>
+                                    <constraint firstAttribute="height" constant="368" id="zo6-nt-i9D"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="yEH-ce-5p3"/>
                         <color key="backgroundColor" name="Body"/>
@@ -1723,10 +1731,13 @@
                             <constraint firstItem="adb-4g-dst" firstAttribute="top" secondItem="iwI-6f-Ciu" secondAttribute="bottom" id="c5e-Kf-Ihy"/>
                             <constraint firstItem="yEH-ce-5p3" firstAttribute="trailing" secondItem="iwI-6f-Ciu" secondAttribute="trailing" id="jaG-bx-pQ2"/>
                             <constraint firstAttribute="trailing" secondItem="adb-4g-dst" secondAttribute="trailing" id="vPF-w0-cBD"/>
+                            <constraint firstItem="9K1-Rh-x4n" firstAttribute="centerY" secondItem="adb-4g-dst" secondAttribute="centerY" id="y6w-JY-U9P"/>
+                            <constraint firstItem="9K1-Rh-x4n" firstAttribute="centerX" secondItem="adb-4g-dst" secondAttribute="centerX" id="yKx-9z-tLW"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="headerLabel" destination="d8X-1o-dBj" id="tjG-zK-axR"/>
+                        <outlet property="mediaDeletionConfirmationView" destination="9K1-Rh-x4n" id="V1J-4R-bpK"/>
                         <outlet property="mediaSourceDetailsTableView" destination="adb-4g-dst" id="Lsn-eS-3Pm"/>
                         <outlet property="mediaSourceTotalSizeLabel" destination="k45-3g-3jv" id="LBd-MD-lOA"/>
                     </connections>

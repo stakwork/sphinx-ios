@@ -26,6 +26,7 @@ class ProfileManageStorageViewController : UIViewController{
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     @IBOutlet weak var mediaSourceTableView: UITableView!
     
+    
     @IBOutlet weak var editingModeMaximumLabel: UILabel!
     @IBOutlet weak var editingModeUsedStorageLabel: UILabel!
     

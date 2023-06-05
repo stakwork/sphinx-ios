@@ -1,10 +1,5 @@
-
-
-
-
-
 /* Class = "UILabel"; text = "The admin has removed \nyou from this group"; ObjectID = "bMf-V2-wL4"; */
-"bMf-V2-wL4.text" = "Inalis ka ng admin sa tribong ito";
+"bMf-V2-wL4.text" = "Inalis ka ng admin\nsa tribong ito";
 
 
 /* Class = "UIButton"; normalTitle = "Delete group"; ObjectID = "o85-do-HbP"; */

@@ -160,4 +160,54 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
         }
     }
     
+    func presentPodcastPlayerFor(
+        _ podcast: PodcastFeed,
+        itemID:String?=nil
+    ) {
+        let podcastFeedVC = NewPodcastPlayerViewController.instantiate(
+            podcast: podcast,
+            delegate: self,
+            boostDelegate: self,
+            fromDashboard: true
+        )
+        
+        let navController = UINavigationController()
+        
+        navController.viewControllers = [podcastFeedVC]
+        navController.modalPresentationStyle = .automatic
+        navController.isNavigationBarHidden = true
+        navigationController?.present(navController, animated: true)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.75, execute: {
+            if let itemID = itemID{
+                podcastFeedVC.loadEpisode(withID: itemID)
+            }
+        })
+        
+    }
+    
+}
+
+extension ProfileManageStorageSpecificChatOrContentFeedItemVC : PodcastPlayerVCDelegate, CustomBoostDelegate{
+    func willDismissPlayer() {
+        
+    }
+    
+    func shouldShareClip(comment: PodcastComment) {
+        
+    }
+    
+    func shouldGoToPlayer(podcast: PodcastFeed) {
+        
+    }
+    
+    func didFailPlayingPodcast() {
+        
+    }
+    
+    func didSendBoostMessage(success: Bool, message: TransactionMessage?) {
+        
+    }
+    
+    
 }

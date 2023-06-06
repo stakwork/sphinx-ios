@@ -164,6 +164,24 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVM : UITableViewDataS
         return 64.0
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if(sourceType == .podcasts){
+            print(items[indexPath.row])
+            if let sourcePath = items[indexPath.row].sourceFilePath{
+                if let pair = StorageManager.sharedManager.getFeedItemPairForString(string: sourcePath),
+                pair.count > 1{
+                    let feedID = pair[0]
+                    let itemID = pair[1].replacingOccurrences(of: ".mp3", with: "")
+                    if let feed = FeedsManager.sharedInstance.fetchFeeds().filter({$0.feedID == feedID}).first{
+                        let pf = PodcastFeed.convertFrom(contentFeed: feed)
+                        self.vc.presentPodcastPlayerFor(pf,itemID: itemID)
+                    }
+                }
+            }
+        }
+    }
+    
+    
 }
 
 extension ProfileManageStorageSpecificChatOrContentFeedItemVM : UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{

@@ -40,7 +40,7 @@ class MediaDeletionConfirmationView: UIView {
     @IBOutlet weak var imageViewWidth: NSLayoutConstraint!
     @IBOutlet weak var subtitleLeading: NSLayoutConstraint!
     
-    
+    var source : StorageManagerMediaSource? = nil
     var state : MediaDeletionConfirmationViewState = .awaitingApproval{
         didSet{
             switch(state){
@@ -59,13 +59,19 @@ class MediaDeletionConfirmationView: UIView {
     var delegate : MediaDeletionConfirmationViewDelegate? = nil
     var type: StorageManagerMediaType? = nil {
         didSet{
-            if let typeString = getContentTypeString(),
+            if let source = source,
+               source == .chats{
+                let warningMessage = String(format: NSLocalizedString("deletion.warning.title", comment: ""), ("chat media"))
+                titleLabel.text = warningMessage
+            }
+            else if let typeString = getContentTypeString(),
                state == .awaitingApproval{
                 let warningMessage = String(format: NSLocalizedString("deletion.warning.title", comment: ""), (typeString))
                 titleLabel.text = warningMessage
-                let message = "deletion.warning.subtitle".localized
-                subtitleLabel.text = message
             }
+            
+            let message = "deletion.warning.subtitle".localized
+            subtitleLabel.text = message
         }
     }
     
@@ -152,13 +158,19 @@ class MediaDeletionConfirmationView: UIView {
         gotItButton.layer.borderColor = gotItButton.layer.borderColor
         gotItButton.layer.cornerRadius = gotItButton.frame.height/2.0
         layoutIfNeeded()
-        if let typeString = getContentTypeString(){
+        if let source = source,
+           source == .chats{
+            let message = String(format: NSLocalizedString("storage.management.deletion.complete.title", comment: ""), "chat media")
+            titleLabel.text = message
+        }
+        else if let typeString = getContentTypeString(){
             let message = String(format: NSLocalizedString("storage.management.deletion.complete.title", comment: ""), typeString)
             titleLabel.text = message
-            let subtitle = String(format: NSLocalizedString("storage.management.deletion.complete.subtitle", comment: ""), spaceFreedString)
-            subtitleLabel.text = subtitle
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+        let subtitle = String(format: NSLocalizedString("storage.management.deletion.complete.subtitle", comment: ""), spaceFreedString)
+        subtitleLabel.text = subtitle
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: {
             self.loadingCircularProgressView.isHidden = true
         })
         

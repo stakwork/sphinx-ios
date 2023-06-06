@@ -9,7 +9,14 @@
 import UIKit
 
 extension NewChatViewController {
-    func testTableViewCell() {
-        chatTableDataSource = NewChatTableDataSource(tableView: chatTableView)
+    func configureTableView() {
+        guard let chat = chat else {
+            return
+        }
+        
+        chatTableDataSource = NewChatTableDataSource(
+            chat: chat,
+            tableView: chatTableView
+        )
     }
 }

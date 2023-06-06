@@ -234,12 +234,16 @@ extension TransactionMessage {
         }
     }
     
-    func isIncoming() -> Bool {
-        return getDirection(id: UserData.sharedInstance.getUserId()) == TransactionMessageDirection.incoming
+    func isIncoming(
+        ownerId: Int? = nil
+    ) -> Bool {
+        return getDirection(id: ownerId ?? UserData.sharedInstance.getUserId()) == TransactionMessageDirection.incoming
     }
     
-    func isOutgoing() -> Bool {
-        return getDirection(id: UserData.sharedInstance.getUserId()) == TransactionMessageDirection.outgoing
+    func isOutgoing(
+        ownerId: Int? = nil
+    ) -> Bool {
+        return getDirection(id: ownerId ?? UserData.sharedInstance.getUserId()) == TransactionMessageDirection.outgoing
     }
     
     //Statues
@@ -248,6 +252,14 @@ extension TransactionMessage {
         let expired = self.isMediaExpired()
         
         return failed || expired
+    }
+    
+    func isProvisional() -> Bool {
+        return id < 0
+    }
+    
+    func pending() -> Bool {
+        return status == TransactionMessageStatus.pending.rawValue
     }
     
     func received() -> Bool {
@@ -696,6 +708,53 @@ extension TransactionMessage {
     var isMessagePinned: Bool {
         get {
             return self.uuid == self.chat?.pinnedMessageUUID
+        }
+    }
+    
+    var bubbleMessageContentString: String? {
+        get {
+            if isGiphy(), let message = GiphyHelper.getMessageFrom(message: self.messageContent ?? "") {
+                return message
+            }
+            
+            if isPodcastComment() {
+                self.processPodcastComment()
+                
+                if let text = self.podcastComment?.text, !text.isEmpty {
+                    return text
+                }
+            }
+            
+            if let messageC = self.messageContent {
+                if messageC.isEncryptedString() {
+                    return "encryption.error".localized
+                }
+            }
+            
+            if self.isPaidMessage() {
+                return getPaidMessageContent()
+            }
+            
+            return self.messageContent
+        }
+    }
+    
+    var bubbleMessageContentFont: UIFont {
+        get {
+            let regularFont = UIFont.getMessageFont()
+            let errorFont = UIFont.getEncryptionErrorFont()
+            
+            if let messageC = self.messageContent {
+                if messageC.isEncryptedString() {
+                    return errorFont
+                }
+            }
+            
+            if self.isPaidMessage() {
+                return errorFont
+            }
+            
+            return regularFont
         }
     }
     

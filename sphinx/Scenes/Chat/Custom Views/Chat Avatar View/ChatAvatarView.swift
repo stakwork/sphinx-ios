@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 protocol ChatAvatarViewDelegate: class {
     func didTapAvatarView()
@@ -43,6 +44,13 @@ class ChatAvatarView: UIView {
         
         profileInitialContainer.layer.cornerRadius = self.bounds.height/2
         profileInitialContainer.clipsToBounds = true
+    }
+    
+    func resetView() {
+        profileImageView.isHidden = false
+        profileImageView.image = UIImage(named: "profile_avatar")
+        
+        profileInitialContainer.isHidden = true
     }
     
     func setInitialLabelSize(size: Double) {
@@ -125,10 +133,16 @@ class ChatAvatarView: UIView {
     func showImageWith(
         url: URL
     ) {
+        let transformer = SDImageResizingTransformer(
+            size: profileImageView.bounds.size,
+            scaleMode: .aspectFill
+        )
+        
         profileImageView.sd_setImage(
             with: url,
             placeholderImage: UIImage(named: "profile_avatar"),
             options: [.scaleDownLargeImages, .decodeFirstFrameOnly, .lowPriority],
+            context: [.imageTransformer: transformer],
             progress: nil,
             completed: { (image, error, _, _) in
                 if (error == nil) {

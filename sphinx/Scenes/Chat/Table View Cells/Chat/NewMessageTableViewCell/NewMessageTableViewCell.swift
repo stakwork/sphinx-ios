@@ -32,6 +32,7 @@ class NewMessageTableViewCell: SwipableReplyCell {
     @IBOutlet weak var sentArrow: UIView!
     
     @IBOutlet weak var chatAvatarContainerView: UIView!
+    @IBOutlet weak var chatAvatarView: ChatAvatarView!
     @IBOutlet weak var sentMessageMargingView: UIView!
     @IBOutlet weak var receivedMessageMarginView: UIView!
     @IBOutlet weak var statusHeaderViewContainer: UIView!
@@ -81,42 +82,26 @@ class NewMessageTableViewCell: SwipableReplyCell {
     }
     
     func configureWith(
-        index: Int,
-        message: String
+        messageCellState: MessageTableCellState
     ) {
-//        configureFor(direction: (index % 2 == 0) ? .Outgoing : .Incoming)
+        hideAllSubviews()
         
+        var mutableMessageCellState = messageCellState
         
-        configureFor(direction: .Outgoing)
-        configureFor(groupingState: .Middle)
+        guard let bubble = mutableMessageCellState.bubble else {
+            return
+        }
         
-        let moreThanText = (index % 3 == 0)
-
-        mediaContentView.isHidden = !moreThanText
-        messageReplyView.isHidden = !moreThanText
-        podcastAudioView.isHidden = !moreThanText
-        callLinkView.isHidden = !moreThanText
-        podcastBoostView.isHidden = !moreThanText
-        messageBoostView.isHidden = !moreThanText
-        paidAttachmentView.isHidden = !moreThanText
+        configureWith(avatarImage: mutableMessageCellState.avatarImage)
+        configureWith(bubble: bubble)
         
-        tribeLinkPreviewView.isHidden = true
-        contactLinkPreviewView.isHidden = true
-        linkPreviewView.isHidden = true
+        if let statusHeader = mutableMessageCellState.statusHeader {
+            configureWith(statusHeader: statusHeader)
+        }
         
-        directPaymentView.isHidden = true
-        fileDetailsView.isHidden = true
-        audioMessageView.isHidden = true
-        sentPaidDetailsView.isHidden = true
-        paidTextMessageView.isHidden = true
-        botResponseView.isHidden = true
+        configureWith(messageContent: mutableMessageCellState.messageContent)
         
-//        textMessageView.isHidden = moreThanText
-        
-        messageLabel.text = message
-        
-        bubbleOnlyText.isHidden = moreThanText
-        bubbleAllView.isHidden = !moreThanText
+        ///Other message types
     }
     
 }

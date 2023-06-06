@@ -9,6 +9,7 @@
 import UIKit
 
 extension NewMessageTableViewCell {
+    
     func setupViews() {
         bubbleOnlyText.layer.cornerRadius = 8.0
         bubbleAllView.layer.cornerRadius = 8.0
@@ -31,59 +32,26 @@ extension NewMessageTableViewCell {
         messageLabel.font = Constants.kMessageFont
     }
     
-    func configureFor(
-        direction: MessageDirection
-    ) {
-        let outgoing = direction == .Outgoing
+    func hideAllSubviews() {
+        bubbleAllView.isHidden = true
+        bubbleOnlyText.isHidden = true
         
-        chatAvatarContainerView.alpha = outgoing ? 0.0 : 1.0
-        
-        sentMessageMargingView.isHidden = !outgoing
-        receivedMessageMarginView.isHidden = outgoing
-        
-        receivedArrow.isHidden = outgoing
-        sentArrow.isHidden = !outgoing
-        
-        messageLabelLeadingConstraint.priority = UILayoutPriority(outgoing ? 1 : 1000)
-        messageLabelTrailingConstraint.priority = UILayoutPriority(outgoing ? 1000 : 1)
-        
-        let bubbleColor = outgoing ? UIColor.Sphinx.SentMsgBG : UIColor.Sphinx.ReceivedMsgBG
-        bubbleOnlyText.backgroundColor = bubbleColor
-        bubbleAllView.backgroundColor = bubbleColor
-        
-        statusHeaderView.configureFor(direction: direction)
-    }
-    
-    func configureFor(groupingState: GroupingState) {
-        switch (groupingState) {
-        case .Isolated:
-            chatAvatarContainerView.isHidden = false
-            statusHeaderViewContainer.isHidden = false
-            
-            receivedArrow.alpha = 1.0
-            sentArrow.alpha = 1.0
-            break
-        case .First:
-            chatAvatarContainerView.isHidden = false
-            statusHeaderViewContainer.isHidden = false
-            
-            receivedArrow.alpha = 1.0
-            sentArrow.alpha = 1.0
-            break
-        case .Middle:
-            chatAvatarContainerView.isHidden = true
-            statusHeaderViewContainer.isHidden = true
-            
-            receivedArrow.alpha = 0.0
-            sentArrow.alpha = 0.0
-            break
-        case .Last:
-            chatAvatarContainerView.isHidden = true
-            statusHeaderViewContainer.isHidden = true
-            
-            receivedArrow.alpha = 0.0
-            sentArrow.alpha = 0.0
-            break
-        }
+        messageReplyView.isHidden = true
+        sentPaidDetailsView.isHidden = true
+        paidTextMessageView.isHidden = true
+        directPaymentView.isHidden = true
+        mediaContentView.isHidden = true
+        fileDetailsView.isHidden = true
+        audioMessageView.isHidden = true
+        podcastAudioView.isHidden = true
+        callLinkView.isHidden = true
+        podcastBoostView.isHidden = true
+        botResponseView.isHidden = true
+        textMessageView.isHidden = true
+        tribeLinkPreviewView.isHidden = true
+        contactLinkPreviewView.isHidden = true
+        linkPreviewView.isHidden = true
+        messageBoostView.isHidden = true
+        paidAttachmentView.isHidden = true
     }
 }

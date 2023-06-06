@@ -454,6 +454,7 @@
                 <outlet property="button1" destination="gmq-0D-Jtd" id="TD3-C1-KTs"/>
                 <outlet property="callLinkView" destination="L6b-x8-zDV" id="CWV-JJ-puw"/>
                 <outlet property="chatAvatarContainerView" destination="ezO-Vc-nm0" id="Xg0-QA-FMS"/>
+                <outlet property="chatAvatarView" destination="CuQ-lC-8QR" id="Ber-Nh-mXi"/>
                 <outlet property="contactLinkPreviewView" destination="n1d-L6-630" id="OuR-4C-mSS"/>
                 <outlet property="directPaymentView" destination="RmC-3X-VVX" id="YoI-5x-0iM"/>
                 <outlet property="fileDetailsView" destination="OFY-Bx-2Yr" id="d47-N4-NqV"/>

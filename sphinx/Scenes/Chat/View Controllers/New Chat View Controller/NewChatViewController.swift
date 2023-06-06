@@ -67,6 +67,7 @@ class NewChatViewController: NewKeyboardHandlerViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        configureTableView()
         headerView.checkRoute()
     }
     
@@ -74,7 +75,6 @@ class NewChatViewController: NewKeyboardHandlerViewController {
         super.viewDidAppear(animated)
         
         fetchTribeData()
-        testTableViewCell()
     }
     
     func setupLayouts() {
@@ -82,6 +82,11 @@ class NewChatViewController: NewKeyboardHandlerViewController {
         
         bottomView.addShadow(location: .top, color: UIColor.black, opacity: 0.1)
         headerView.addShadow(location: .bottom, color: UIColor.black, opacity: 0.1)
+        
+        chatTableView.rowHeight = UITableView.automaticDimension
+        chatTableView.estimatedRowHeight = 200.0
+        chatTableView.contentInset = UIEdgeInsets(top: Constants.kMargin, left: 0, bottom: Constants.kMargin, right: 0)
+        chatTableView.transform = CGAffineTransform(scaleX: 1, y: -1)
     }
     
     func setupData() {

@@ -43,13 +43,32 @@ class StatusHeaderView: UIView {
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
     }
     
-    func configureFor(
-        direction:  NewMessageTableViewCell.MessageDirection
+    func configureWith(
+        direction:  MessageTableCellState.MessageDirection
     ) {
         let outgoing = direction == .Outgoing
         
         receivedStatusHeader.isHidden = outgoing
         sentStatusHeader.isHidden = !outgoing
         sentFailureHeader.isHidden = true
+    }
+    
+    func configureWith(
+        statusHeader: BubbleMessageLayoutState.StatusHeader
+    ) {
+//        var showSendingIcon: Bool
+        
+        receivedSenderLabel.text = statusHeader.senderName
+        receivedSenderLabel.textColor = statusHeader.color
+        
+        sentLightningIcon.isHidden = !statusHeader.showBoltIcon
+        
+        sentLockIcon.isHidden = !statusHeader.showLockIcon
+        receivedLockIcon.isHidden = !statusHeader.showLockIcon
+        
+        sentFailureHeader.isHidden = !statusHeader.showFailedContainer
+        
+        receivedDateLabel.text = statusHeader.timestamp
+        sentDateLabel.text = statusHeader.timestamp
     }
 }

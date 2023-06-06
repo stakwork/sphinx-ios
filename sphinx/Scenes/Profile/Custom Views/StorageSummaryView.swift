@@ -18,6 +18,7 @@ class StorageSummaryView: UIView {
     @IBOutlet weak var audioMemoryFootprintView: UIView!
     @IBOutlet weak var totalMemoryFootprintView: UIView!
     @IBOutlet weak var deletionFootprintView: UIView!
+    @IBOutlet weak var additionFootprintView: UIView!
     
     @IBOutlet weak var totalMemoryFootprintWidth: NSLayoutConstraint!
     @IBOutlet weak var imageFootprintWidth: NSLayoutConstraint!
@@ -26,6 +27,12 @@ class StorageSummaryView: UIView {
     @IBOutlet weak var videoFootprintWidth: NSLayoutConstraint!
     @IBOutlet weak var audioFootprintWidth: NSLayoutConstraint!
     @IBOutlet weak var deletionFootprintWidth: NSLayoutConstraint!
+    @IBOutlet weak var deletionTrailingEdge: NSLayoutConstraint!
+    @IBOutlet weak var additionFootprintWidth: NSLayoutConstraint!
+    @IBOutlet weak var additionLeadingEdge: NSLayoutConstraint!
+    
+    let minimumBarPixels = 2.0
+    let maxAllowableMemoryMB : Double = 100 * 1e3 //<B TODO: make this variable
     
     let userData = UserData.sharedInstance
     public var summaryDict : [StorageManagerMediaType:Double] = [StorageManagerMediaType:Double](){
@@ -46,9 +53,10 @@ class StorageSummaryView: UIView {
     var isEditingMaxMemory : Bool = false{
         didSet{
             if(isEditingMaxMemory){
-                totalMemoryFootprintWidth.constant = audioFootprintWidth.constant + videoFootprintWidth.constant + imageFootprintWidth.constant
+                //totalMemoryFootprintWidth.constant = audioFootprintWidth.constant + videoFootprintWidth.constant + imageFootprintWidth.constant
                 totalMemoryFootprintView.isHidden = false
                 deletionFootprintView.isHidden = false
+                additionFootprintView.isHidden = false
                 imagesMemoryFootprintView.isHidden = true
                 videosMemoryFootprintView.isHidden = true
                 audioMemoryFootprintView.isHidden = true
@@ -62,6 +70,7 @@ class StorageSummaryView: UIView {
                 totalMemoryFootprintWidth.constant = 0
                 totalMemoryFootprintView.isHidden = true
                 deletionFootprintView.isHidden = true
+                additionFootprintView.isHidden = true
                 imagesMemoryFootprintView.isHidden = false
                 videosMemoryFootprintView.isHidden = false
                 audioMemoryFootprintView.isHidden = false
@@ -109,24 +118,28 @@ class StorageSummaryView: UIView {
             imageFootprintWidth.constant = size/Double(max) * maxMemoryFootprintBackgroundView.frame.width
         }
         else{
-            imageFootprintWidth.constant = 0
+            imageFootprintWidth.constant = 2
         }
         if let size = dict[.video]{
             videoFootprintWidth.constant = size/Double(max) * maxMemoryFootprintBackgroundView.frame.width
         }
         else{
-            videoFootprintWidth.constant = 0
+            videoFootprintWidth.constant = 2
         }
         
         if let size = dict[.audio]{
             audioFootprintWidth.constant = size/Double(max) * maxMemoryFootprintBackgroundView.frame.width
         }
         else{
-            audioFootprintWidth.constant = 0
+            audioFootprintWidth.constant = 2
         }
         
         imageToVideoHorizontalSpacing.constant = imageFootprintWidth.constant == 0 ? (0.01) : (2)
         videoToAudioHorizontalSpacing.constant = videoFootprintWidth.constant == 0 ? (0.01) : (2)
+        
+        audioFootprintWidth.constant = (audioFootprintWidth.constant < minimumBarPixels) ? minimumBarPixels : audioFootprintWidth.constant
+        videoFootprintWidth.constant = (videoFootprintWidth.constant < minimumBarPixels) ? minimumBarPixels : videoFootprintWidth.constant
+        imageFootprintWidth.constant = (imageFootprintWidth.constant < minimumBarPixels) ? minimumBarPixels : imageFootprintWidth.constant
         
         UIView.animate(withDuration: 0.25, delay: 0.0, animations: {
             self.contentView.layoutIfNeeded()
@@ -148,22 +161,46 @@ class StorageSummaryView: UIView {
     
     public func memorySliderUpdated(value:Int){
         let max = userData.getMaxMemoryGB()
-        if(value < max){
-            let length = CGFloat(max - value)/CGFloat(max) * maxMemoryFootprintBackgroundView.frame.width
-            deletionFootprintView.isHidden = false
-            UIView.animate(withDuration: 0.1, delay: 0.0, animations: {
-                self.deletionFootprintWidth.constant = length
-                self.deletionFootprintView.layoutIfNeeded()
-            })
+        let usedMemory = getTotalMemory()
+        let differentialMB = Double(value) * 1e3 - usedMemory
+        let additionSubLength = CGFloat(abs(differentialMB))/CGFloat(maxAllowableMemoryMB) * maxMemoryFootprintBackgroundView.frame.width
+        let usedLength = CGFloat(abs(usedMemory))/CGFloat(maxAllowableMemoryMB) * maxMemoryFootprintBackgroundView.frame.width
+        totalMemoryFootprintWidth.constant = usedLength
+        
+        if(differentialMB < 0){//decreasing footprint
+            deletionTrailingEdge.constant = maxMemoryFootprintBackgroundView.frame.width - usedLength
+            deletionFootprintWidth.constant = additionSubLength
+            additionFootprintWidth.constant = 0
+            totalMemoryFootprintView.backgroundColor = UIColor.Sphinx.PrimaryText
         }
         else{
-            UIView.animate(withDuration: 0.1, delay: 0.0, animations: {
-                self.deletionFootprintWidth.constant = 0.0
-                let ratio = (self.getTotalMemory() * 1e6)/(Double(value) * 1e9)
-                self.totalMemoryFootprintWidth.constant = ratio * self.maxMemoryFootprintBackgroundView.frame.width
-                self.deletionFootprintView.layoutIfNeeded()
-            })
+            additionLeadingEdge.constant = usedLength
+            additionFootprintWidth.constant = additionSubLength
+            self.bringSubviewToFront(additionFootprintView)
+            deletionFootprintWidth.constant = 0
+            additionFootprintView.backgroundColor = UIColor.Sphinx.PrimaryText
+            totalMemoryFootprintView.backgroundColor = UIColor.Sphinx.MainBottomIcons
         }
+        
+        self.layoutIfNeeded()
+        
+//        if(value < max){
+//            let length = CGFloat(max - value)/CGFloat(max) * maxMemoryFootprintBackgroundView.frame.width
+//            deletionFootprintView.isHidden = false
+//            UIView.animate(withDuration: 0.1, delay: 0.0, animations: {
+//                self.deletionTrailingEdge.constant = self.maxMemoryFootprintBackgroundView.frame.width - self.totalMemoryFootprintView.frame.maxX
+//                self.deletionFootprintWidth.constant = length
+//                self.deletionFootprintView.layoutIfNeeded()
+//            })
+//        }
+//        else{
+//            UIView.animate(withDuration: 0.1, delay: 0.0, animations: {
+//                self.deletionFootprintWidth.constant = 0.0
+//                let ratio = (self.getTotalMemory() * 1e6)/(Double(value) * 1e9)
+//                self.totalMemoryFootprintWidth.constant = ratio * self.maxMemoryFootprintBackgroundView.frame.width
+//                self.deletionFootprintView.layoutIfNeeded()
+//            })
+//        }
     }
 }
 

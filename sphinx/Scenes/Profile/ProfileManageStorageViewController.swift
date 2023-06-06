@@ -336,10 +336,6 @@ class ProfileManageStorageViewController : UIViewController{
             self.warningView.isHidden = false
             self.editingModeMaximumLabel.textColor = UIColor.Sphinx.PrimaryRed
         }
-        else if(newMaxGB > UserData.sharedInstance.getMaxMemoryGB()){
-            self.warningView.isHidden = true
-            self.editingModeMaximumLabel.textColor = UIColor.Sphinx.MainBottomIcons
-        }
         else{
             self.warningView.isHidden = true
             self.editingModeMaximumLabel.textColor = UIColor.Sphinx.Text

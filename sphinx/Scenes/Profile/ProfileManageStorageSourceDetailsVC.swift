@@ -81,6 +81,8 @@ class ProfileManageStorageSourceDetailsVC : UIViewController{
             self.mediaDeletionConfirmationView.delegate = self
             self.mediaDeletionConfirmationView.type = type
             self.mediaDeletionConfirmationView.isHidden = false
+            let size = StorageManager.sharedManager.getItemGroupTotalSize(items: self.vm.getSourceItems().filter({$0.type == type}))
+            self.mediaDeletionConfirmationView.spaceFreedString = formatBytes(Int(1e6 * size))
             //self.mediaDeletionConfirmationView.contentView.backgroundColor = .black
         })
     }
@@ -158,6 +160,7 @@ extension ProfileManageStorageSourceDetailsVC : MediaDeletionConfirmationViewDel
         print("CANCEL TAPPED")
         self.hideDeletionWarningAlert()
         if(mediaDeletionConfirmationView.state == .finished){
+            handleReset()
             mediaDeletionConfirmationView.state = .awaitingApproval
         }
     }

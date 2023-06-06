@@ -137,6 +137,11 @@ class ProfileManageStorageViewController : UIViewController{
             self.mediaDeletionConfirmationView.isHidden = false
             //self.mediaDeletionConfirmationView.contentView.backgroundColor = .black
             self.mediaDeletionConfirmationView.type = type
+            
+            if let typeStat = self.vm.typeStats[type] {
+                self.mediaDeletionConfirmationView.spaceFreedString = formatBytes(Int(1e6 * typeStat))
+            }
+            
         })
     }
     

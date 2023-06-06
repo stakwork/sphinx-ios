@@ -59,7 +59,8 @@ class MediaDeletionConfirmationView: UIView {
     var delegate : MediaDeletionConfirmationViewDelegate? = nil
     var type: StorageManagerMediaType? = nil {
         didSet{
-            if let typeString = getContentTypeString(){
+            if let typeString = getContentTypeString(),
+               state == .awaitingApproval{
                 let warningMessage = String(format: NSLocalizedString("deletion.warning.title", comment: ""), (typeString))
                 titleLabel.text = warningMessage
                 let message = "deletion.warning.subtitle".localized
@@ -157,7 +158,7 @@ class MediaDeletionConfirmationView: UIView {
             let subtitle = String(format: NSLocalizedString("storage.management.deletion.complete.subtitle", comment: ""), spaceFreedString)
             subtitleLabel.text = subtitle
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.025, execute: {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
             self.loadingCircularProgressView.isHidden = true
         })
         

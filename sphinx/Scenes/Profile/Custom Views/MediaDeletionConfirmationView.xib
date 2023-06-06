@@ -25,8 +25,11 @@
                 <outlet property="deletionButton" destination="UV7-Sn-o04" id="TxJ-d3-x7x"/>
                 <outlet property="deletionSymbol" destination="Pi1-1y-AOq" id="fmj-hg-FT6"/>
                 <outlet property="deletionSymbolContainerView" destination="DZn-KP-lIp" id="LJD-v1-10D"/>
+                <outlet property="gotItButton" destination="CFt-qt-eRJ" id="qkK-DG-uZJ"/>
+                <outlet property="imageViewWidth" destination="9MT-Xg-Khk" id="kYS-H6-GcJ"/>
                 <outlet property="loadingCircularProgressView" destination="lZx-QU-UXM" id="8Hz-VP-jPX"/>
                 <outlet property="subtitleLabel" destination="ENB-rd-Pi8" id="5kM-gJ-j5D"/>
+                <outlet property="subtitleLeading" destination="2N7-A5-cnp" id="q5q-Qy-g5C"/>
                 <outlet property="subtitleToTitleConstraintSpacing" destination="aeD-iJ-I5n" id="Vby-9L-Ixz"/>
                 <outlet property="titleLabel" destination="sjf-i6-kfF" id="mXg-Wb-EDR"/>
                 <outlet property="viewBottomConstraint" destination="sgk-6o-XKz" id="YvN-nr-P6Y"/>
@@ -103,6 +106,20 @@
                         <action selector="deleteTapped:" destination="-1" eventType="touchUpInside" id="ZAJ-0I-pFa"/>
                     </connections>
                 </button>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CFt-qt-eRJ">
+                    <rect key="frame" x="82" y="288" width="152" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="8ef-ja-OOJ"/>
+                        <constraint firstAttribute="width" constant="152" id="uam-mb-tFG"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="14"/>
+                    <state key="normal" title="Got it">
+                        <color key="titleColor" name="Text"/>
+                    </state>
+                    <connections>
+                        <action selector="cancelTapped:" destination="-1" eventType="touchUpInside" id="rY9-0k-bdN"/>
+                    </connections>
+                </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" name="HeaderBG"/>
@@ -110,6 +127,7 @@
                 <constraint firstItem="sjf-i6-kfF" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="0HB-wt-DvJ"/>
                 <constraint firstItem="ENB-rd-Pi8" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="2N7-A5-cnp"/>
                 <constraint firstItem="sjf-i6-kfF" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="32" id="4iq-fo-Ub3"/>
+                <constraint firstItem="CFt-qt-eRJ" firstAttribute="centerY" secondItem="MHs-aA-yoh" secondAttribute="centerY" id="5vG-yV-s2w"/>
                 <constraint firstItem="UV7-Sn-o04" firstAttribute="top" secondItem="ENB-rd-Pi8" secondAttribute="bottom" constant="31" id="8rQ-Xk-qdb"/>
                 <constraint firstItem="MHs-aA-yoh" firstAttribute="centerY" secondItem="UV7-Sn-o04" secondAttribute="centerY" id="DFX-cC-FhN"/>
                 <constraint firstItem="Pi1-1y-AOq" firstAttribute="centerY" secondItem="DZn-KP-lIp" secondAttribute="centerY" id="FYb-O2-pmF"/>
@@ -118,6 +136,7 @@
                 <constraint firstItem="lZx-QU-UXM" firstAttribute="leading" secondItem="DZn-KP-lIp" secondAttribute="leading" id="PpO-DK-eiH"/>
                 <constraint firstItem="lZx-QU-UXM" firstAttribute="top" secondItem="DZn-KP-lIp" secondAttribute="top" id="UDd-lz-v3t"/>
                 <constraint firstItem="ENB-rd-Pi8" firstAttribute="top" secondItem="sjf-i6-kfF" secondAttribute="bottom" constant="14" id="aeD-iJ-I5n"/>
+                <constraint firstItem="CFt-qt-eRJ" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="fHW-fh-dYa"/>
                 <constraint firstItem="MHs-aA-yoh" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="32" id="nF4-Qs-Kfh"/>
                 <constraint firstItem="Pi1-1y-AOq" firstAttribute="centerX" secondItem="DZn-KP-lIp" secondAttribute="centerX" id="p2E-k0-cs4"/>
                 <constraint firstItem="ENB-rd-Pi8" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="r55-AL-GtI"/>

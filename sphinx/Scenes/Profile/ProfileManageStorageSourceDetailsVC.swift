@@ -123,13 +123,19 @@ class ProfileManageStorageSourceDetailsVC : UIViewController{
         }
     }
     
-    func handleReset(){
+    func handleReset(showFinishedView:Bool=false){
+        let predeletionTotal = totalSize
         StorageManager.sharedManager.refreshAllStoredData {
             self.vm.finishSetup()
             self.totalSize = StorageManager.sharedManager.getItemGroupTotalSize(items: self.vm.getSourceItems())
             self.setupView()
             self.vm.tableView.reloadData()
         }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25, execute: {
+            self.showDeletionWarningAlert(type: .audio)
+            self.mediaDeletionConfirmationView.spaceFreedString = formatBytes(Int(predeletionTotal * 1e6))
+            self.mediaDeletionConfirmationView.state = .finished
+        })
     }
     
     func showItemSpecificDetails(podcastFeed:PodcastFeed?,chat:Chat?,sourceType:StorageManagerMediaSource,items:[StorageManagerItem]){
@@ -149,17 +155,18 @@ extension ProfileManageStorageSourceDetailsVC : ProfileManageStorageSpecificChat
 
 extension ProfileManageStorageSourceDetailsVC : MediaDeletionConfirmationViewDelegate{
     func cancelTapped() {
+        print("CANCEL TAPPED")
         self.hideDeletionWarningAlert()
+        if(mediaDeletionConfirmationView.state == .finished){
+            mediaDeletionConfirmationView.state = .awaitingApproval
+        }
     }
     
     func deleteTapped() {
-        mediaDeletionConfirmationView.isLoading = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0, execute: {
-            self.mediaDeletionConfirmationView.isLoading = false
+        mediaDeletionConfirmationView.state = .loading
+        StorageManager.sharedManager.deleteAllAudioFiles(completion: {
+            self.handleReset()
         })
-//        StorageManager.sharedManager.deleteAllAudioFiles(completion: {
-//            self.handleReset()
-//        })
     }
     
     

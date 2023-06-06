@@ -134,9 +134,9 @@ class ProfileManageStorageViewController : UIViewController{
             self.view.bringSubviewToFront(self.mediaDeletionConfirmationView)
             self.mediaDeletionConfirmationView.layer.zPosition = 1000
             self.mediaDeletionConfirmationView.delegate = self
-            self.mediaDeletionConfirmationView.type = type
             self.mediaDeletionConfirmationView.isHidden = false
             //self.mediaDeletionConfirmationView.contentView.backgroundColor = .black
+            self.mediaDeletionConfirmationView.type = type
         })
     }
     
@@ -148,11 +148,14 @@ class ProfileManageStorageViewController : UIViewController{
     }
     
     func setIsLoading(){
-        self.isLoading = true
+        //self.isLoading = true
+        mediaDeletionConfirmationView.state = .loading
     }
     
-    func resetIsLoading(){
-        self.isLoading = false
+    func resetIsLoading(type:StorageManagerMediaType){
+        //self.isLoading = false
+        mediaDeletionConfirmationView.state = .finished
+        showDeletionWarningAlert(type: type)
     }
     
     lazy var vm : ProfileManageStorageViewModel = {
@@ -323,7 +326,7 @@ class ProfileManageStorageViewController : UIViewController{
         if(maxInBytes < usageInBytes){
             let differential = formatBytes(usageInBytes - maxInBytes)
             self.view.bringSubviewToFront(warningView)
-            let warningMessage = String(format: NSLocalizedString("saving.limit.warning", comment: ""), differential)
+            let warningMessage = String(format: NSLocalizedString("saving.limit.warning", comment: ""), differential)            
             self.warningLabel.text = warningMessage
             self.warningView.isHidden = false
             self.editingModeMaximumLabel.textColor = UIColor.Sphinx.PrimaryRed
@@ -377,5 +380,8 @@ extension ProfileManageStorageViewController : MediaDeletionConfirmationViewDele
     
     func cancelTapped() {
         self.hideDeletionWarningAlert()
+        if(mediaDeletionConfirmationView.state == .finished){
+            mediaDeletionConfirmationView.state = .awaitingApproval
+        }
     }
 }

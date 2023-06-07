@@ -9,7 +9,6 @@
 import UIKit
 import CoreData
 
-// MARK: - Layout & Data Structure
 extension NewChatTableDataSource {
     
     enum CollectionViewSection: Int, CaseIterable {
@@ -55,10 +54,24 @@ extension NewChatTableDataSource {
     func updateSnapshot() {
         let snapshot = makeSnapshotForCurrentState()
 
-        dataSource.apply(snapshot, animatingDifferences: false)
+        DispatchQueue.main.async {
+            self.dataSource.apply(snapshot, animatingDifferences: false)
+            
+            self.tableView.scrollToRow(
+                at: IndexPath(
+                    item: self.messageTableCellStateArray.count - 1,
+                    section: 0
+                ),
+                at: .bottom,
+                animated: false
+            )
+            self.tableView.alpha = 1.0
+        }
     }
     
-    func makeCellProvider(for tableView: UITableView) -> DataSource.CellProvider {
+    func makeCellProvider(
+        for tableView: UITableView
+    ) -> DataSource.CellProvider {
         { (tableView, indexPath, dataSourceItem) -> UITableViewCell in
             
             var mutableDataSourceItem = dataSourceItem
@@ -66,11 +79,9 @@ extension NewChatTableDataSource {
             if let _ = mutableDataSourceItem.bubble {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "NewMessageTableViewCell", for: indexPath) as! NewMessageTableViewCell
                 cell.configureWith(messageCellState: dataSourceItem)
-                cell.contentView.transform = CGAffineTransform(scaleX: 1, y: -1)
                 return cell
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "MessageNoBubbleTableViewCell", for: indexPath) as! MessageNoBubbleTableViewCell
-                cell.contentView.transform = CGAffineTransform(scaleX: 1, y: -1)
                 return cell
             }
         }
@@ -126,9 +137,7 @@ extension NewChatTableDataSource {
         
         messageTableCellStateArray = array
         
-        DispatchQueue.main.async {
-            self.updateSnapshot()
-        }
+        updateSnapshot()
     }
 }
 

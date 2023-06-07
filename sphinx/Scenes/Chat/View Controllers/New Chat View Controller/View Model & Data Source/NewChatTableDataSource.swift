@@ -30,12 +30,16 @@ class NewChatTableDataSource : NSObject {
         self.chat = chat
         self.tableView = tableView
         
-        registerCells()
+        configureTableView()
         configureDataSource()
         configureResultsController()
-    }
+    }    
     
-    func registerCells() {
+    func configureTableView() {
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 200.0
+        tableView.contentInset = UIEdgeInsets(top: Constants.kMargin, left: 0, bottom: Constants.kMargin, right: 0)
+        
         tableView.registerCell(NewMessageTableViewCell.self)
         tableView.registerCell(MessageNoBubbleTableViewCell.self)
     }

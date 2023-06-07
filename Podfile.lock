@@ -50,6 +50,7 @@ PODS:
   - SwiftyRSA/ObjC (1.6.0)
   - SwiftyXMLParser (5.5.0)
   - Tor (405.8.1)
+  - UIView-Shimmer (1.0.4)
   - youtube-ios-player-helper (1.0.3)
 
 DEPENDENCIES:
@@ -73,6 +74,7 @@ DEPENDENCIES:
   - SwiftyRSA
   - SwiftyXMLParser (from `https://github.com/yahoojapan/SwiftyXMLParser.git`)
   - Tor (from `https://raw.githubusercontent.com/iCepa/Tor.framework/v405.8.1/Tor.podspec`)
+  - UIView-Shimmer (~> 1.0)
   - youtube-ios-player-helper (~> 1.0.3)
 
 SPEC REPOS:
@@ -101,6 +103,7 @@ SPEC REPOS:
     - SwiftLinkPreview
     - SwiftyJSON
     - SwiftyRSA
+    - UIView-Shimmer
     - youtube-ios-player-helper
 
 EXTERNAL SOURCES:
@@ -141,8 +144,9 @@ SPEC CHECKSUMS:
   SwiftyRSA: 3b9c9179744217951facc6a3e9ae8d8c97061ffa
   SwiftyXMLParser: 027d9e6fb54a38d95dccec025bcea9693f699c47
   Tor: fad2cec0e7ef5f889fecdaf69e5edd6df0438326
+  UIView-Shimmer: ff0a32c73d67c7dbdea3d9e530538b10d18aea56
   youtube-ios-player-helper: 0185c57db23c80d63d6ca11251d110abb8a4ca61
 
-PODFILE CHECKSUM: 4328a3316c572920a61f8d9919dbfa953be9fc32
+PODFILE CHECKSUM: 0e8b6e45f906fdddb3a9f588671e76044f7736df
 
 COCOAPODS: 1.11.3

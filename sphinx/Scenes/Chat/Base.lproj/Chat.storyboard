@@ -676,9 +676,13 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oJ3-im-1f2">
                                         <rect key="frame" x="0.0" y="65" width="375" height="544"/>
                                         <subviews>
-                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="7O1-jH-hsI">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mmA-5V-kTx" customClass="ShimmeringTableView" customModule="sphinx" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="544"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </view>
+                                            <tableView clipsSubviews="YES" alpha="0.0" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="7O1-jH-hsI">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="544"/>
+                                                <color key="backgroundColor" name="Body"/>
                                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </tableView>
                                             <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="vlc-qx-DGF">
@@ -693,6 +697,7 @@
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="mmA-5V-kTx" secondAttribute="bottom" id="37i-oJ-9Os"/>
                                             <constraint firstAttribute="bottom" secondItem="7O1-jH-hsI" secondAttribute="bottom" id="4n5-mE-9yz"/>
                                             <constraint firstAttribute="bottom" secondItem="vlc-qx-DGF" secondAttribute="bottom" id="Fiu-E4-Z6c"/>
                                             <constraint firstAttribute="bottom" secondItem="2KA-H5-xSv" secondAttribute="bottom" id="Fkp-D7-VYl"/>
@@ -701,10 +706,13 @@
                                             <constraint firstItem="7O1-jH-hsI" firstAttribute="top" secondItem="oJ3-im-1f2" secondAttribute="top" id="VFG-sn-Gft"/>
                                             <constraint firstItem="vlc-qx-DGF" firstAttribute="leading" secondItem="oJ3-im-1f2" secondAttribute="leading" id="YgL-On-hAi"/>
                                             <constraint firstItem="vlc-qx-DGF" firstAttribute="top" secondItem="oJ3-im-1f2" secondAttribute="top" id="Ygw-EN-M5q"/>
+                                            <constraint firstAttribute="trailing" secondItem="mmA-5V-kTx" secondAttribute="trailing" id="cSv-vO-qL4"/>
                                             <constraint firstItem="2KA-H5-xSv" firstAttribute="leading" secondItem="oJ3-im-1f2" secondAttribute="leading" id="diB-NK-Jyp"/>
                                             <constraint firstAttribute="trailing" secondItem="vlc-qx-DGF" secondAttribute="trailing" id="eF5-XQ-ct0"/>
+                                            <constraint firstItem="mmA-5V-kTx" firstAttribute="top" secondItem="oJ3-im-1f2" secondAttribute="top" id="gjm-HF-g06"/>
                                             <constraint firstItem="2KA-H5-xSv" firstAttribute="top" secondItem="oJ3-im-1f2" secondAttribute="top" id="kIg-BJ-KNs"/>
                                             <constraint firstAttribute="trailing" secondItem="7O1-jH-hsI" secondAttribute="trailing" id="y8k-Wu-Zcq"/>
+                                            <constraint firstItem="mmA-5V-kTx" firstAttribute="leading" secondItem="oJ3-im-1f2" secondAttribute="leading" id="z1O-9f-14i"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="adm-hA-lEF" customClass="NewChatAccessoryView" customModule="sphinx" customModuleProvider="target">

@@ -14,6 +14,10 @@ extension NewChatViewController {
             return
         }
         
+        if let _ = chatTableDataSource {
+            return
+        }
+        
         chatTableDataSource = NewChatTableDataSource(
             chat: chat,
             tableView: chatTableView

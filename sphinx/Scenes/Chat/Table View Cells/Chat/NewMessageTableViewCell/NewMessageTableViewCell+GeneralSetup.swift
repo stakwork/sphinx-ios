@@ -13,7 +13,7 @@ extension NewMessageTableViewCell {
     func setupViews() {
         bubbleOnlyText.layer.cornerRadius = 8.0
         bubbleAllView.layer.cornerRadius = 8.0
-        
+
         paidAttachmentView.roundCorners(
             corners: [.bottomLeft, .bottomRight],
             radius: 8.0,
@@ -25,11 +25,9 @@ extension NewMessageTableViewCell {
                 )
             )
         )
-        
+
         receivedArrow.drawReceivedBubbleArrow(color: UIColor.Sphinx.ReceivedMsgBG)
         sentArrow.drawSentBubbleArrow(color: UIColor.Sphinx.SentMsgBG)
-        
-        messageLabel.font = Constants.kMessageFont
     }
     
     func hideAllSubviews() {

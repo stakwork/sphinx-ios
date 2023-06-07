@@ -32,7 +32,7 @@ class StorageSummaryView: UIView {
     @IBOutlet weak var additionLeadingEdge: NSLayoutConstraint!
     
     let minimumBarPixels = 2.0
-    let maxAllowableMemoryMB : Double = 100 * 1e3 //<B TODO: make this variable
+    let maxAllowableMemoryMB : Double = Double(UserData.kMaximumMemoryFootprintGB) * 1e3
     
     let userData = UserData.sharedInstance
     public var summaryDict : [StorageManagerMediaType:Double] = [StorageManagerMediaType:Double](){

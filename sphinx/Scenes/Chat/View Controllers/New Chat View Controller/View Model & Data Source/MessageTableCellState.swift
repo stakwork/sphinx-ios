@@ -55,7 +55,7 @@ struct MessageTableCellState {
             return nil
         }
         
-        var isSent = message.isOutgoing(ownerId: owner.id)
+        let isSent = message.isOutgoing(ownerId: owner.id)
         
         return BubbleMessageLayoutState.Bubble(
             direction: isSent ? .Outgoing : .Incoming,

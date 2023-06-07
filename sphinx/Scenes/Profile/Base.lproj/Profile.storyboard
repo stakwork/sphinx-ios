@@ -1694,6 +1694,7 @@
                                             <constraint firstItem="d8X-1o-dBj" firstAttribute="top" secondItem="djr-xM-hzO" secondAttribute="top" constant="48" id="H0Q-05-eZf"/>
                                             <constraint firstItem="9Ps-AU-MrU" firstAttribute="leading" secondItem="djr-xM-hzO" secondAttribute="leading" constant="15" id="PtS-qt-Wlk"/>
                                             <constraint firstItem="C8k-zY-74P" firstAttribute="leading" secondItem="k45-3g-3jv" secondAttribute="trailing" constant="13" id="S3X-2Y-Y2G"/>
+                                            <constraint firstAttribute="height" constant="91" id="Z42-iB-moY"/>
                                             <constraint firstItem="9Ps-AU-MrU" firstAttribute="top" secondItem="djr-xM-hzO" secondAttribute="top" constant="31" id="etr-jF-PWb"/>
                                             <constraint firstAttribute="trailing" secondItem="C8k-zY-74P" secondAttribute="trailing" constant="13" id="iHT-FD-iDr"/>
                                         </constraints>
@@ -1736,10 +1737,13 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="headerHeight" destination="Z42-iB-moY" id="7jn-v4-444"/>
                         <outlet property="headerLabel" destination="d8X-1o-dBj" id="tjG-zK-axR"/>
+                        <outlet property="headerView" destination="djr-xM-hzO" id="Adx-Sb-EmN"/>
                         <outlet property="mediaDeletionConfirmationView" destination="9K1-Rh-x4n" id="V1J-4R-bpK"/>
                         <outlet property="mediaSourceDetailsTableView" destination="adb-4g-dst" id="Lsn-eS-3Pm"/>
                         <outlet property="mediaSourceTotalSizeLabel" destination="k45-3g-3jv" id="LBd-MD-lOA"/>
+                        <outlet property="tableYOffset" destination="Mey-qb-Db7" id="oPQ-Va-4Zp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gn2-j5-pII" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

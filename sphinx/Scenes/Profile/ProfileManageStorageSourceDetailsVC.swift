@@ -9,8 +9,17 @@
 import Foundation
 import UIKit
 
+public enum PMSSDVCPresentationContext{
+    case memoryManagement
+    case downloadedPodcastList
+}
+
 class ProfileManageStorageSourceDetailsVC : UIViewController{
     
+    
+    @IBOutlet weak var tableYOffset: NSLayoutConstraint!
+    @IBOutlet weak var headerHeight: NSLayoutConstraint!
+    @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var headerLabel: UILabel!
     @IBOutlet weak var mediaSourceDetailsTableView: UITableView!
     @IBOutlet weak var mediaSourceTotalSizeLabel: UILabel!
@@ -20,6 +29,7 @@ class ProfileManageStorageSourceDetailsVC : UIViewController{
     var source : StorageManagerMediaSource = .chats
     var totalSize : Double = 0.0
     var isFirstLoad : Bool = true
+    var presentationContext : PMSSDVCPresentationContext = .memoryManagement
     
     lazy var vm : ProfileManageStorageSourceDetailsVM = {
         return ProfileManageStorageSourceDetailsVM(vc: self, tableView: mediaSourceDetailsTableView, source: self.source)
@@ -63,8 +73,17 @@ class ProfileManageStorageSourceDetailsVC : UIViewController{
         }
         mediaSourceTotalSizeLabel.text = formatBytes(Int(totalSize*1e6))
         hideDeletionWarningAlert()
+        if(presentationContext == .downloadedPodcastList){
+            adjustViewForDownloadedContext()
+        }
     }
     
+    func adjustViewForDownloadedContext(){
+        self.tableYOffset.constant = 0
+        self.headerView.isHidden = true
+        headerHeight.constant = 0
+        self.view.layoutIfNeeded()
+    }
     
     func showDeletionWarningAlert(source:StorageManagerMediaSource){
         switch(source){

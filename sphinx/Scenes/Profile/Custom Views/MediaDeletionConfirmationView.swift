@@ -101,7 +101,7 @@ class MediaDeletionConfirmationView: UIView {
     }
     
     func moveToAwaitingApproval(){
-        loadingCircularProgressView.stopRotation()
+        
         gotItButton.isHidden = true
         cancelButton.isHidden = false
         deletionButton.isHidden = false
@@ -110,11 +110,14 @@ class MediaDeletionConfirmationView: UIView {
         subtitleToTitleConstraintSpacing.constant = 14
         subtitleLeading.constant = 16
         viewBottomConstraint.constant = 40
+        
+        
+        loadingCircularProgressView.stopRotation()
+        self.loadingCircularProgressView.isHidden = true
         loadingCircularProgressView.setProgressStrokeColor(color: .clear)
         
         layoutIfNeeded()
         
-        self.loadingCircularProgressView.isHidden = true
         self.deletionSymbolContainerView.isHidden = false
         self.deletionSymbolContainerView.backgroundColor = UIColor.Sphinx.PrimaryRed
         let typeSnapshot = type
@@ -138,7 +141,7 @@ class MediaDeletionConfirmationView: UIView {
         },
         completion: { _ in
             self.startRotation()
-            self.loadingCircularProgressView.isHidden = false
+            self.loadingCircularProgressView.isHidden = true
             self.loadingCircularProgressView.setProgressStrokeColor(color: UIColor.Sphinx.PrimaryRed)
             self.loadingCircularProgressView.progressAnimation(to: 0.9, active: true)
             self.loadingCircularProgressView.playPauseLabel.isHidden = true
@@ -146,8 +149,10 @@ class MediaDeletionConfirmationView: UIView {
     }
     
     func moveToFinishedUI(){
-        loadingCircularProgressView.setProgressStrokeColor(color: .clear)
         loadingCircularProgressView.stopRotation()
+        self.loadingCircularProgressView.isHidden = true
+        loadingCircularProgressView.setProgressStrokeColor(color: .clear)
+        
         self.deletionSymbol.image = #imageLiteral(resourceName: "deletion_success")
         viewBottomConstraint.constant = 40
         subtitleToTitleConstraintSpacing.constant += 18

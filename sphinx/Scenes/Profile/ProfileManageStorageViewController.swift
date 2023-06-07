@@ -122,7 +122,7 @@ class ProfileManageStorageViewController : UIViewController{
     
     func showDeletionWarningAlert(type:StorageManagerMediaType){
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15, execute: {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05, execute: {
             self.overlayView = UIView(frame: self.view.frame)
             if let overlayView = self.overlayView{
                 overlayView.backgroundColor = .black
@@ -162,7 +162,7 @@ class ProfileManageStorageViewController : UIViewController{
     func resetIsLoading(type:StorageManagerMediaType){
         //self.isLoading = false
         mediaDeletionConfirmationView.state = .finished
-        showDeletionWarningAlert(type: type)
+        //showDeletionWarningAlert(type: type)
     }
     
     lazy var vm : ProfileManageStorageViewModel = {
@@ -378,13 +378,15 @@ extension ProfileManageStorageViewController : MediaDeletionConfirmationViewDele
         if let type = mediaDeletionConfirmationView.type{
             vm.handleDeletion(type: type)
         }
-        self.hideDeletionWarningAlert()
+        //
     }
     
     func cancelTapped() {
-        self.hideDeletionWarningAlert()
         if(mediaDeletionConfirmationView.state == .finished){
             mediaDeletionConfirmationView.state = .awaitingApproval
         }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.0501, execute: {
+            self.hideDeletionWarningAlert()
+        })
     }
 }

@@ -137,7 +137,8 @@ extension NewChatTableDataSource {
                         contact: contact,
                         tribeAdmin: admin,
                         separatorDate: nil,
-                        bubbleState: MessageTableCellState.BubbleState.Isolated
+                        bubbleState: MessageTableCellState.BubbleState.Isolated,
+                        contactImage: headerImage
                     )
                 )
             }

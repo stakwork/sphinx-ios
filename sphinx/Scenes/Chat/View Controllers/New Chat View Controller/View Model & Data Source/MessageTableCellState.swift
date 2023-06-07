@@ -6,7 +6,7 @@
 //  Copyright © 2023 sphinx. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 struct MessageTableCellState {
     
@@ -17,6 +17,7 @@ struct MessageTableCellState {
     var contact: UserContact? = nil
     var tribeAdmin: UserContact? = nil
     var bubbleState: MessageTableCellState.BubbleState? = nil
+    var contactImage: UIImage? = nil
     
     //Generic rows Data
     var separatorDate: Date? = nil
@@ -28,7 +29,8 @@ struct MessageTableCellState {
         contact: UserContact?,
         tribeAdmin: UserContact?,
         separatorDate: Date?,
-        bubbleState: MessageTableCellState.BubbleState?
+        bubbleState: MessageTableCellState.BubbleState?,
+        contactImage: UIImage?
     ) {
         self.message = message
         self.chat = chat
@@ -37,6 +39,7 @@ struct MessageTableCellState {
         self.tribeAdmin = tribeAdmin
         self.separatorDate = separatorDate
         self.bubbleState = bubbleState
+        self.contactImage = contactImage
     }
     
     lazy var bubble: BubbleMessageLayoutState.Bubble? = {
@@ -73,7 +76,8 @@ struct MessageTableCellState {
             return BubbleMessageLayoutState.AvatarImage(
                 imageUrl: contact.avatarUrl,
                 color: contact.getColor(),
-                alias: contact.nickname ?? "Unknown"
+                alias: contact.nickname ?? "Unknown",
+                image: contactImage
             )
         }
         

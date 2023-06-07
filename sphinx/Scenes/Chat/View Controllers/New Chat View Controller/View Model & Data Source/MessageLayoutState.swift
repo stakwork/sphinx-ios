@@ -31,15 +31,18 @@ struct BubbleMessageLayoutState: CommonLayoutState {
         var imageUrl: String?
         var color: UIColor
         var alias: String
+        var image: UIImage?
         
         init(
             imageUrl: String?,
             color: UIColor,
-            alias: String
+            alias: String,
+            image: UIImage? = nil
         ) {
             self.imageUrl = imageUrl
             self.color = color
             self.alias = alias
+            self.image = image
         }
     }
     

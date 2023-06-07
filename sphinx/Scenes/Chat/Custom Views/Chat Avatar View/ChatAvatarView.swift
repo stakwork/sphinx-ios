@@ -80,7 +80,8 @@ class ChatAvatarView: UIView {
     func configureForUserWith(
         color: UIColor,
         alias: String?,
-        picture: String?
+        picture: String?,
+        image: UIImage? = nil
     ) {
         profileImageView.sd_cancelCurrentImageLoad()
         
@@ -93,7 +94,11 @@ class ChatAvatarView: UIView {
             color: color
         )
         
-        if let picture = picture, let url = URL(string: picture) {
+        if let image = image {
+            profileInitialContainer.isHidden = true
+            profileImageView.isHidden = false
+            profileImageView.image = image
+        } else if let picture = picture, let url = URL(string: picture) {
             showImageWith(url: url)
         }
     }

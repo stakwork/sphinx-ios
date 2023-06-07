@@ -12,6 +12,7 @@ import CoreData
 class NewChatTableDataSource : NSObject {
     
     var tableView : UITableView!
+    var headerImage: UIImage?
     
     var chat: Chat!
     
@@ -22,14 +23,18 @@ class NewChatTableDataSource : NSObject {
     var messageTableCellStateArray: [MessageTableCellState] = []
     var preloaderHelper = MessagesPreloaderHelper.sharedInstance
     
+    var cachedImages: [String: UIImage] = [:]
+    
     init(
         chat: Chat,
-        tableView: UITableView
+        tableView: UITableView,
+        headerImageView: UIImageView?
     ) {
         super.init()
         
         self.chat = chat
         self.tableView = tableView
+        self.headerImage = headerImageView?.image
         
         configureTableView()
         configureDataSource()

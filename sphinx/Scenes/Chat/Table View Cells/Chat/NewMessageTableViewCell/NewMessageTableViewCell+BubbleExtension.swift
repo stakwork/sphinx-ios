@@ -17,7 +17,8 @@ extension NewMessageTableViewCell {
             chatAvatarView.configureForUserWith(
                 color: avatarImage.color,
                 alias: avatarImage.alias,
-                picture: avatarImage.imageUrl
+                picture: avatarImage.imageUrl,
+                image: avatarImage.image
             )
         } else {
             chatAvatarView.resetView()

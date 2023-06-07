@@ -20,7 +20,18 @@ extension NewChatViewController {
         
         chatTableDataSource = NewChatTableDataSource(
             chat: chat,
-            tableView: chatTableView
+            tableView: chatTableView,
+            headerImageView: getContactImageView()
         )
+    }
+    
+    func getContactImageView() -> UIImageView? {
+        let imageView = headerView.chatHeaderView.profileImageView
+        
+        if imageView?.isHidden == true {
+            return nil
+        }
+        
+        return imageView
     }
 }

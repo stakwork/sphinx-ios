@@ -14,4 +14,8 @@ extension Array {
             Array(self[$0 ..< Swift.min($0 + size, count)])
         }
     }
+    
+    func subarray(size: Int) -> [Element] {
+        return Array(self[0 ..< Swift.min(size, count)])
+    }
 }

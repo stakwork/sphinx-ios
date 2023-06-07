@@ -41,36 +41,17 @@ extension TransactionMessage {
         firstMessage: TransactionMessage? = nil
     ) -> [TransactionMessage] {
         
-        var predicate : NSPredicate!
+        let fetchRequest = getChatMessagesFetchRequest(for: chat, with: limit, lastMessage: lastMessage, firstMessage: firstMessage)
+        var messages: [TransactionMessage] = []
+        let context = CoreDataManager.sharedManager.persistentContainer.viewContext
         
-        if let f = firstMessage {
-            predicate = NSPredicate(
-                format: "chat == %@ AND (date >= %@) AND NOT (type IN %@)",
-                chat,
-                f.messageDate as NSDate,
-                typesToExcludeFromChat
-            )
-        } else if let m = lastMessage {
-            predicate = NSPredicate(
-                format: "chat == %@ AND (date <= %@) AND NOT (type IN %@)",
-                chat,
-                m.messageDate as NSDate,
-                typesToExcludeFromChat
-            )
-        } else {
-            predicate = NSPredicate(
-                format: "chat == %@ AND NOT (type IN %@)",
-                chat,
-                typesToExcludeFromChat
-            )
+        do {
+            try messages = context.fetch(fetchRequest)
+        } catch let error as NSError {
+            print("Error: " + error.localizedDescription)
         }
         
-        let sortDescriptors = [NSSortDescriptor(key: "date", ascending: false), NSSortDescriptor(key: "id", ascending: false)]
-        let fetchLimit = (firstMessage == nil) ? limit : nil
-        
-        let messages: [TransactionMessage] = CoreDataManager.sharedManager.getObjectsOfTypeWith(predicate: predicate, sortDescriptors: sortDescriptors, entityName: "TransactionMessage", fetchLimit: fetchLimit)
-        
-        return messages.reversed()
+        return messages
     }
     
     static func getChatMessagesFetchRequest(

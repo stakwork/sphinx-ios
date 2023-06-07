@@ -47,7 +47,9 @@ extension UITableView {
             
             let indexPath = IndexPath(
                 row: self.numberOfRows(inSection:  self.numberOfSections - 1) - 1,
-                section: self.numberOfSections - 1)
+                section: self.numberOfSections - 1
+            )
+            
             self.scrollToRow(at: indexPath, at: .bottom, animated: animated)
         }
     }

@@ -20,6 +20,7 @@ class NewChatTableDataSource : NSObject {
     var dataSource: DataSource!
     
     var messageTableCellStateArray: [MessageTableCellState] = []
+    var preloaderHelper = MessagesPreloaderHelper.sharedInstance
     
     init(
         chat: Chat,
@@ -39,6 +40,7 @@ class NewChatTableDataSource : NSObject {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 200.0
         tableView.contentInset = UIEdgeInsets(top: Constants.kMargin, left: 0, bottom: Constants.kMargin, right: 0)
+        tableView.transform = CGAffineTransform(scaleX: 1, y: -1)
         
         tableView.registerCell(NewMessageTableViewCell.self)
         tableView.registerCell(MessageNoBubbleTableViewCell.self)

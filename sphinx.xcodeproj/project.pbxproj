@@ -690,6 +690,7 @@
 		47FA44152374B6EA005D8C63 /* SubscriptionTimeIntervalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FA44142374B6EA005D8C63 /* SubscriptionTimeIntervalView.swift */; };
 		47FA44172374B6F7005D8C63 /* SubscriptionEndRuleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FA44162374B6F7005D8C63 /* SubscriptionEndRuleView.swift */; };
 		47FA44192375A682005D8C63 /* SubscriptionCommonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FA44182375A682005D8C63 /* SubscriptionCommonView.swift */; };
+		47FA72792A30E19300FB4535 /* MessagesPreloaderHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FA72782A30E19300FB4535 /* MessagesPreloaderHelper.swift */; };
 		47FB189B23A299000097695B /* SignupHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FB189A23A299000097695B /* SignupHelper.swift */; };
 		47FDDB1C2562D77200BBF15F /* boost_animation.json in Resources */ = {isa = PBXBuildFile; fileRef = 47FDDB1B2562D77100BBF15F /* boost_animation.json */; };
 		47FE9A3C23BF751C0090913F /* ChatViewControllerAttachmentDelegateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FE9A3B23BF751C0090913F /* ChatViewControllerAttachmentDelegateExtension.swift */; };
@@ -1717,6 +1718,7 @@
 		47FA44142374B6EA005D8C63 /* SubscriptionTimeIntervalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionTimeIntervalView.swift; sourceTree = "<group>"; };
 		47FA44162374B6F7005D8C63 /* SubscriptionEndRuleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionEndRuleView.swift; sourceTree = "<group>"; };
 		47FA44182375A682005D8C63 /* SubscriptionCommonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionCommonView.swift; sourceTree = "<group>"; };
+		47FA72782A30E19300FB4535 /* MessagesPreloaderHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesPreloaderHelper.swift; sourceTree = "<group>"; };
 		47FB189A23A299000097695B /* SignupHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupHelper.swift; sourceTree = "<group>"; };
 		47FDDB1B2562D77100BBF15F /* boost_animation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = boost_animation.json; sourceTree = "<group>"; };
 		47FE9A3B23BF751C0090913F /* ChatViewControllerAttachmentDelegateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewControllerAttachmentDelegateExtension.swift; sourceTree = "<group>"; };
@@ -3914,9 +3916,10 @@
 			isa = PBXGroup;
 			children = (
 				472092CD2A27987A00468796 /* NewChatTableDataSource.swift */,
+				47E6A4F62A2F788300A9509E /* NewChatTableDataSource+ResultsControllerExtension.swift */,
 				47E6A4F22A2F642800A9509E /* MessageTableCellState.swift */,
 				47E6A4F42A2F66BD00A9509E /* MessageLayoutState.swift */,
-				47E6A4F62A2F788300A9509E /* NewChatTableDataSource+ResultsControllerExtension.swift */,
+				47FA72782A30E19300FB4535 /* MessagesPreloaderHelper.swift */,
 			);
 			path = "View Model & Data Source";
 			sourceTree = "<group>";
@@ -4941,6 +4944,7 @@
 				4703CF8C25190032007B685C /* FileBubbleView.swift in Sources */,
 				47F258C02539DA1600122A5A /* PodcastCommentReceivedTableViewCell.swift in Sources */,
 				47468FEB233905AD0072124A /* NewContactViewController.swift in Sources */,
+				47FA72792A30E19300FB4535 /* MessagesPreloaderHelper.swift in Sources */,
 				4707089624AE466D00A98DCA /* ChatChatListExtension.swift in Sources */,
 				477C57E5234545D700BB4E04 /* SetPinCodeViewController.swift in Sources */,
 				F31EFCB42746968D00C05FF4 /* ContentFeed+FetchUtils.swift in Sources */,

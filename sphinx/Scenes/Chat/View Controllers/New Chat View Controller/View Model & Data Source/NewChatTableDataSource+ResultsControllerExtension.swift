@@ -33,9 +33,12 @@ extension NewChatTableDataSource {
     func configureDataSource() {
         dataSource = makeDataSource()
 
-        let snapshot = makeSnapshotForCurrentState()
-
-        dataSource.apply(snapshot, animatingDifferences: false)
+        if let messagesStateArray = preloaderHelper.getMessageStateArray(for: chat.id) {
+            messageTableCellStateArray = messagesStateArray
+            updateSnapshot()
+        } else {
+            configureResultsController(items: 50)
+        }
     }
     
     func makeSnapshotForCurrentState() -> DataSourceSnapshot {
@@ -56,16 +59,13 @@ extension NewChatTableDataSource {
 
         DispatchQueue.main.async {
             self.dataSource.apply(snapshot, animatingDifferences: false)
-            
-            self.tableView.scrollToRow(
-                at: IndexPath(
-                    item: self.messageTableCellStateArray.count - 1,
-                    section: 0
-                ),
-                at: .bottom,
-                animated: false
-            )
             self.tableView.alpha = 1.0
+            
+//            self.tableView.scrollToBottom(animated: false)
+//            
+//            DelayPerformedHelper.performAfterDelay(seconds: 0.3, completion: {
+//                self.tableView.alpha = 1.0
+//            })
         }
     }
     
@@ -79,9 +79,11 @@ extension NewChatTableDataSource {
             if let _ = mutableDataSourceItem.bubble {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "NewMessageTableViewCell", for: indexPath) as! NewMessageTableViewCell
                 cell.configureWith(messageCellState: dataSourceItem)
+                cell.contentView.transform = CGAffineTransform(scaleX: 1, y: -1)
                 return cell
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "MessageNoBubbleTableViewCell", for: indexPath) as! MessageNoBubbleTableViewCell
+                cell.contentView.transform = CGAffineTransform(scaleX: 1, y: -1)
                 return cell
             }
         }
@@ -91,7 +93,13 @@ extension NewChatTableDataSource {
 extension NewChatTableDataSource {
     
     func configureResultsController() {
-        let fetchRequest = TransactionMessage.getChatMessagesFetchRequest(for: chat, with: 100)
+        DelayPerformedHelper.performAfterDelay(seconds: 2.0, completion: {
+            self.configureResultsController(items: 500)
+        })
+    }
+    
+    func configureResultsController(items: Int? = nil) {
+        let fetchRequest = TransactionMessage.getChatMessagesFetchRequest(for: chat, with: items)
 
         messagesResultsController = NSFetchedResultsController(
             fetchRequest: fetchRequest,
@@ -119,7 +127,7 @@ extension NewChatTableDataSource {
         let admin = chat.getAdmin()
         let contact = chat.getConversationContact()
         
-        for message in messages.reversed() {
+        for message in messages {
             if message.isTextMessage() {
                 array.append(
                     MessageTableCellState(
@@ -137,6 +145,11 @@ extension NewChatTableDataSource {
         
         messageTableCellStateArray = array
         
+        preloaderHelper.add(
+            messageStateArray: array.subarray(size: 50),
+            for: chat.id
+        )
+        
         updateSnapshot()
     }
 }
@@ -151,8 +164,7 @@ extension NewChatTableDataSource : NSFetchedResultsControllerDelegate {
             let firstSection = resultController.sections?.first {
             
             if let messages = firstSection.objects as? [TransactionMessage] {
-                let dispatchQueue = DispatchQueue.global(qos: .userInitiated)
-                dispatchQueue.async {
+                DispatchQueue.global(qos: .userInitiated).async {
                     self.processMessages(messages: messages)
                 }
             }

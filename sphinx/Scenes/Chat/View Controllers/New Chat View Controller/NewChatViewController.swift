@@ -62,12 +62,12 @@ class NewChatViewController: NewKeyboardHandlerViewController {
         setDelegates()
         setupData()
         configureFetchResultsController()
+        configureTableView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        configureTableView()
         headerView.checkRoute()
     }
     

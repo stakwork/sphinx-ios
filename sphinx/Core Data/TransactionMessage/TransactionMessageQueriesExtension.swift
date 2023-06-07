@@ -28,9 +28,27 @@ extension TransactionMessage {
     static func getMessageWith(uuid: String) -> TransactionMessage? {
         let predicate = NSPredicate(format: "uuid == %@", uuid)
         let sortDescriptors = [NSSortDescriptor(key: "id", ascending: false)]
-        let message: TransactionMessage? = CoreDataManager.sharedManager.getObjectOfTypeWith(predicate: predicate, sortDescriptors: sortDescriptors, entityName: "TransactionMessage")
+        
+        let message: TransactionMessage? = CoreDataManager.sharedManager.getObjectOfTypeWith(
+            predicate: predicate,
+            sortDescriptors: sortDescriptors,
+            entityName: "TransactionMessage"
+        )
         
         return message
+    }
+    
+    static func getMessagesWith(uuids: [String]) -> [TransactionMessage] {
+        let predicate = NSPredicate(format: "uuid IN %@", uuids)
+        let sortDescriptors = [NSSortDescriptor(key: "id", ascending: false)]
+        
+        let messages: [TransactionMessage] = CoreDataManager.sharedManager.getObjectsOfTypeWith(
+            predicate: predicate,
+            sortDescriptors: sortDescriptors,
+            entityName: "TransactionMessage"
+        )
+        
+        return messages
     }
     
     //Added firstMessage param to the query method. If stored then chat will load all messages starting from that one and won't consider the limit param

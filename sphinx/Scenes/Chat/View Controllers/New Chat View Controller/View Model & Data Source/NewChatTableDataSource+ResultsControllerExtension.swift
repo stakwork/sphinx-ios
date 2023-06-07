@@ -127,9 +127,23 @@ extension NewChatTableDataSource {
         let admin = chat.getAdmin()
         let contact = chat.getConversationContact()
         
-        for message in messages {
+        let replyingMessagesMap = getReplyingMessagesMapFor(messages: messages)
+        
+        var groupingDate: Date? = nil
+
+        for (index, message) in messages.enumerated() {
             if message.isTextMessage() {
-                array.append(
+                
+                let bubbleState = getBubbleBackgroundForMessage(
+                    message: message,
+                    with: index,
+                    in: messages,
+                    groupingDate: &groupingDate
+                )
+                
+                let replyingMessage = (message.replyUUID != nil) ? replyingMessagesMap[message.replyUUID!] : nil
+                
+                array.insert(
                     MessageTableCellState(
                         message: message,
                         chat: chat,
@@ -137,9 +151,11 @@ extension NewChatTableDataSource {
                         contact: contact,
                         tribeAdmin: admin,
                         separatorDate: nil,
-                        bubbleState: MessageTableCellState.BubbleState.Isolated,
-                        contactImage: headerImage
-                    )
+                        bubbleState: bubbleState,
+                        contactImage: headerImage,
+                        replyingMessage: replyingMessage
+                    ),
+                    at: 0
                 )
             }
         }
@@ -153,6 +169,61 @@ extension NewChatTableDataSource {
         
         updateSnapshot()
     }
+    
+    private func getBubbleBackgroundForMessage(
+        message: TransactionMessage,
+        with index: Int,
+        in messages: [TransactionMessage],
+        groupingDate: inout Date?
+    ) -> MessageTableCellState.BubbleState {
+
+        let previousMessage = (index > 0) ? messages[index - 1] : nil
+        let nextMessage = (index < messages.count - 1) ? messages[index + 1] : nil
+        
+        let groupingMinutesLimit = 5
+        let messageDate = message.date ?? Date(timeIntervalSince1970: 0)
+        var date = groupingDate ?? messageDate
+
+        let shouldAvoidGroupingWithPrevious = (previousMessage?.shouldAvoidGrouping() ?? true) || message.shouldAvoidGrouping()
+        let isGroupedBySenderWithPrevious = previousMessage?.hasSameSenderThanMessage(message) ?? false
+        let isGroupedByDateWithPrevious = messageDate.getMinutesDifference(from: date) < groupingMinutesLimit
+        let groupedWithPrevious = (!shouldAvoidGroupingWithPrevious && isGroupedBySenderWithPrevious && isGroupedByDateWithPrevious)
+
+        date = (groupedWithPrevious) ? date : messageDate
+
+        let shouldAvoidGroupingWithNext = (nextMessage?.shouldAvoidGrouping() ?? true) || message.shouldAvoidGrouping()
+        let isGroupedBySenderWithNext = nextMessage?.hasSameSenderThanMessage(message) ?? false
+        let isGroupedByDateWithNext = (nextMessage != nil) ? (nextMessage?.date?.getMinutesDifference(from: date) ?? 0) < groupingMinutesLimit : false
+        let groupedWithNext = (!shouldAvoidGroupingWithNext && isGroupedBySenderWithNext && isGroupedByDateWithNext)
+
+        groupingDate = date
+        
+        if !groupedWithPrevious && !groupedWithNext {
+            return MessageTableCellState.BubbleState.Isolated
+        } else if groupedWithPrevious && !groupedWithNext {
+            return MessageTableCellState.BubbleState.Last
+        } else if !groupedWithPrevious && groupedWithNext {
+            return MessageTableCellState.BubbleState.First
+        } else if groupedWithPrevious && groupedWithNext {
+            return MessageTableCellState.BubbleState.Middle
+        }
+        return MessageTableCellState.BubbleState.Isolated
+    }
+    
+    func getReplyingMessagesMapFor(
+        messages: [TransactionMessage]
+    ) -> [String: TransactionMessage] {
+        
+        let replayingUUIDs: [String] = messages.map({ $0.replyUUID ?? "" }).filter({ $0.isNotEmpty })
+        let replyingMessages = TransactionMessage.getMessagesWith(uuids: replayingUUIDs)
+        var replyingMessagesMap: [String: TransactionMessage] = [:]
+        
+        replyingMessages.map({ ( ($0.uuid ?? "-"), $0) }).forEach {
+            replyingMessagesMap[$0.0] = $0.1
+        }
+        
+        return replyingMessagesMap
+    }
 }
 
 extension NewChatTableDataSource : NSFetchedResultsControllerDelegate {
@@ -160,13 +231,12 @@ extension NewChatTableDataSource : NSFetchedResultsControllerDelegate {
         _ controller: NSFetchedResultsController<NSFetchRequestResult>,
         didChangeContentWith snapshot: NSDiffableDataSourceSnapshotReference
     ) {
-        if
-            let resultController = controller as? NSFetchedResultsController<NSManagedObject>,
+        if let resultController = controller as? NSFetchedResultsController<NSManagedObject>,
             let firstSection = resultController.sections?.first {
             
             if let messages = firstSection.objects as? [TransactionMessage] {
                 DispatchQueue.global(qos: .userInitiated).async {
-                    self.processMessages(messages: messages)
+                    self.processMessages(messages: messages.reversed())
                 }
             }
         }

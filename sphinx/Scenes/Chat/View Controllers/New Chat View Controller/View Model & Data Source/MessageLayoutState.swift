@@ -77,6 +77,28 @@ struct BubbleMessageLayoutState: CommonLayoutState {
         }
     }
     
+    struct MessageReply {
+        var messageId: Int
+        var color: UIColor
+        var alias: String
+        var message: String?
+        var mediaType: Int?
+        
+        init(
+            messageId: Int,
+            color: UIColor,
+            alias: String,
+            message: String?,
+            mediaType: Int?
+        ) {
+            self.messageId = messageId
+            self.color = color
+            self.alias = alias
+            self.message = message
+            self.mediaType = mediaType
+        }
+    }
+    
     struct MessageContent {
         var text: String?
         var font: UIFont

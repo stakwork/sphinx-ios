@@ -22,10 +22,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NewMessageReplyView" customModule="sphinx" customModuleProvider="target">
             <connections>
-                <outlet property="audioIconLabel" destination="obf-7D-LQI" id="4um-1r-sm1"/>
                 <outlet property="coloredLineView" destination="4oQ-5f-XW8" id="doE-l8-PId"/>
                 <outlet property="contentView" destination="iN0-l3-epB" id="ts5-ev-lxE"/>
                 <outlet property="imageVideoView" destination="mly-pt-t6i" id="Isz-db-OYT"/>
+                <outlet property="mediaContainerView" destination="fu0-r9-uM1" id="EzD-QL-Trx"/>
+                <outlet property="mediaIconLabel" destination="obf-7D-LQI" id="dID-vi-SE6"/>
                 <outlet property="mediaImageView" destination="ojH-go-Ffd" id="zR6-mL-ajk"/>
                 <outlet property="messageLabel" destination="A20-Al-Drx" id="JwQ-Iq-Oa0"/>
                 <outlet property="senderLabel" destination="2y7-EG-iye" id="6Mt-R2-hgh"/>
@@ -100,7 +101,7 @@
                                         <constraint firstAttribute="bottom" secondItem="ojH-go-Ffd" secondAttribute="bottom" id="zYG-Gi-6fc"/>
                                     </constraints>
                                 </view>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="obf-7D-LQI">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="photo_library" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="obf-7D-LQI">
                                     <rect key="frame" x="0.0" y="0.0" width="20" height="39"/>
                                     <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="20"/>
                                     <color key="textColor" name="Text"/>
@@ -108,19 +109,19 @@
                                 </label>
                             </subviews>
                         </stackView>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="05K-OT-O3S">
+                        <view contentMode="scaleToFill" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="05K-OT-O3S">
                             <rect key="frame" x="49" y="0.0" width="326" height="39"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Bcf-vq-IeK">
                                     <rect key="frame" x="0.0" y="2" width="318" height="35"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Unknown" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2y7-EG-iye">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Unknown" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2y7-EG-iye">
                                             <rect key="frame" x="0.0" y="0.0" width="318" height="18.333333333333332"/>
                                             <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="12"/>
                                             <color key="textColor" name="sphinxOrange"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="This is a large test message to see how it works with large text" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A20-Al-Drx">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="This is a large test" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A20-Al-Drx">
                                             <rect key="frame" x="0.0" y="18.333333333333329" width="318" height="16.666666666666671"/>
                                             <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                                             <color key="textColor" name="Text"/>

@@ -999,4 +999,17 @@ extension TransactionMessage {
             
         }
     }
+    
+    //Grouping Logic
+    func shouldAvoidGrouping() -> Bool {
+        return pending() || failed() || isDeleted || isInvoice() || isPayment() || isGroupActionMessage() || isFlagged()
+    }
+    
+    func hasSameSenderThanMessage(_ message: TransactionMessage) -> Bool {
+        let hasSameSenderId = senderId == message.senderId
+        let hasSameSenderAlias = (senderAlias ?? "") == (message.senderAlias ?? "")
+        let hasSameSenderPicture = (senderPic ?? "") == (message.senderPic ?? "")
+
+        return hasSameSenderId && hasSameSenderAlias && hasSameSenderPicture
+    }
 }

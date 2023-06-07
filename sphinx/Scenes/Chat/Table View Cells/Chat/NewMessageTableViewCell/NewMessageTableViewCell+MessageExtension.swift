@@ -21,4 +21,16 @@ extension NewMessageTableViewCell {
             bubbleOnlyText.isHidden = false
         }
     }
+    
+    func configureWith(
+        messageReply: BubbleMessageLayoutState.MessageReply?,
+        and bubble: BubbleMessageLayoutState.Bubble
+    ) {
+        if let messageReply = messageReply {
+            messageReplyView.configureWith(messageReply: messageReply, and: bubble)
+            messageReplyView.isHidden = false
+            
+            bubbleAllView.isHidden = false
+        }
+    }
 }

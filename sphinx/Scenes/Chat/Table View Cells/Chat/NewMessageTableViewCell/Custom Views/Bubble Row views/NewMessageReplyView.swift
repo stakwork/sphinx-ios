@@ -14,11 +14,13 @@ class NewMessageReplyView: UIView {
     
     @IBOutlet weak var coloredLineView: UIView!
     
+    @IBOutlet weak var mediaContainerView: UIStackView!
+    
     @IBOutlet weak var imageVideoView: UIView!
     @IBOutlet weak var mediaImageView: UIImageView!
     @IBOutlet weak var videoOverlay: UIView!
     
-    @IBOutlet weak var audioIconLabel: UILabel!
+    @IBOutlet weak var mediaIconLabel: UILabel!
     
     @IBOutlet weak var senderLabel: UILabel!
     @IBOutlet weak var messageLabel: UILabel!
@@ -38,6 +40,48 @@ class NewMessageReplyView: UIView {
         addSubview(contentView)
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+    }
+    
+    func configureWith(
+        messageReply: BubbleMessageLayoutState.MessageReply,
+        and bubble: BubbleMessageLayoutState.Bubble
+    ) {
+        messageLabel.textColor = bubble.direction.isIncoming() ? UIColor.Sphinx.WashedOutReceivedText : UIColor.Sphinx.WashedOutSentText
+        
+        coloredLineView.backgroundColor = messageReply.color
+        senderLabel.textColor = messageReply.color
+        senderLabel.text = messageReply.alias
+        messageLabel.text = messageReply.message
+        
+        guard let mediaType = messageReply.mediaType else {
+            mediaContainerView.isHidden = true
+            imageVideoView.isHidden = true
+            mediaIconLabel.isHidden = true
+            return
+        }
+        
+        switch(mediaType) {
+        case TransactionMessage.TransactionMessageType.imageAttachment.rawValue:
+            mediaIconLabel.text = "photo_library"
+            break
+        case TransactionMessage.TransactionMessageType.videoAttachment.rawValue:
+            mediaIconLabel.text = "videocam"
+            break
+        case TransactionMessage.TransactionMessageType.audioAttachment.rawValue:
+            mediaIconLabel.text = "mic"
+            break
+        case TransactionMessage.TransactionMessageType.fileAttachment.rawValue:
+            mediaIconLabel.text = "description"
+            break
+        case TransactionMessage.TransactionMessageType.pdfAttachment.rawValue:
+            mediaIconLabel.text = "picture_as_pdf"
+            break
+        default:
+            break
+        }
+        
+        mediaContainerView.isHidden = false
+        mediaIconLabel.isHidden = false
     }
 
     @IBAction func buttonTouched() {

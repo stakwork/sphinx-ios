@@ -18,6 +18,7 @@ struct MessageTableCellState {
     var tribeAdmin: UserContact? = nil
     var bubbleState: MessageTableCellState.BubbleState? = nil
     var contactImage: UIImage? = nil
+    var replyingMessage: TransactionMessage? = nil
     
     //Generic rows Data
     var separatorDate: Date? = nil
@@ -30,7 +31,8 @@ struct MessageTableCellState {
         tribeAdmin: UserContact?,
         separatorDate: Date?,
         bubbleState: MessageTableCellState.BubbleState?,
-        contactImage: UIImage?
+        contactImage: UIImage?,
+        replyingMessage: TransactionMessage? = nil
     ) {
         self.message = message
         self.chat = chat
@@ -40,6 +42,7 @@ struct MessageTableCellState {
         self.separatorDate = separatorDate
         self.bubbleState = bubbleState
         self.contactImage = contactImage
+        self.replyingMessage = replyingMessage
     }
     
     lazy var bubble: BubbleMessageLayoutState.Bubble? = {
@@ -106,13 +109,51 @@ struct MessageTableCellState {
         return statusHeader
     }()
     
+    lazy var messageReply: BubbleMessageLayoutState.MessageReply? = {
+        
+        guard let message = message else {
+            return nil
+        }
+        
+        guard let replyingMessage = replyingMessage else {
+            return nil
+        }
+        
+        var senderInfo: (UIColor, String) = (UIColor.Sphinx.SecondaryText, "Unknow")
+        var isSent = replyingMessage.isOutgoing(ownerId: owner.id)
+        
+        if isSent {
+            senderInfo = (
+                owner.getColor(),
+                owner.nickname ?? "Unknow"
+            )
+        } else if chat.isPublicGroup() {
+            senderInfo = (
+                ChatHelper.getSenderColorFor(message: replyingMessage),
+                replyingMessage.senderAlias ?? "Unknow"
+            )
+        } else if let contact = contact {
+            senderInfo = (
+                contact.getColor(),
+                contact.nickname ?? "Unknow"
+            )
+        }
+        
+        return BubbleMessageLayoutState.MessageReply(
+            messageId: replyingMessage.id,
+            color: senderInfo.0,
+            alias: senderInfo.1,
+            message: replyingMessage.bubbleMessageContentString,
+            mediaType: replyingMessage.getMediaType()
+        )
+    }()
+    
     lazy var messageContent: BubbleMessageLayoutState.MessageContent? = {
         guard let message = message else {
             return nil
         }
         
         if let messageContent = message.bubbleMessageContentString, messageContent.isNotEmpty {
-            
             var message = BubbleMessageLayoutState.MessageContent(
                 text: messageContent,
                 font: message.bubbleMessageContentFont
@@ -146,6 +187,14 @@ extension MessageTableCellState {
     public enum MessageDirection {
         case Incoming
         case Outgoing
+        
+        func isIncoming() -> Bool {
+            return self == MessageDirection.Incoming
+        }
+        
+        func isOutgoing() -> Bool {
+            return self == MessageDirection.Outgoing
+        }
     }
     
     public enum BubbleState {

@@ -14,6 +14,8 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVM : NSObject{
     var vc : ProfileManageStorageSpecificChatOrContentFeedItemVC
     var tableView : UITableView
     var imageCollectionView : UICollectionView
+    
+    var teedUpIndex : Int? = nil
     var items : [StorageManagerItem] = []{
         didSet{
             selectedStatus = items.map({_ in return false})
@@ -227,31 +229,38 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVM : UICollectionView
 
 extension ProfileManageStorageSpecificChatOrContentFeedItemVM : MediaStorageSourceTableViewCellDelegate{
     func didTapItemDelete(index: Int) {
-        let item = items[index]
-        AlertHelper.showTwoOptionsAlert(title: "Delete Episode?", message: "Are you sure you want to delete the episode? This action cannot be undone.",confirm: { [self] in
-            if let sourcePath = item.sourceFilePath{
-                StorageManager.sharedManager.deletePodsWithID(
-                    fileName: sourcePath,
-                    successCompletion: {
-                        self.items.remove(at: index)
-                        if self.items.count == 0{
-                            StorageManager.sharedManager.refreshAllStoredData(completion: {
-                                self.vc.navigationController?.popViewController(animated: true)
-                                return
-                            })
-                        }
-                        self.finishSetup(items: self.items)
-                        self.vc.setupViewAndModels()
-                        self.tableView.reloadData()
-                        
-                        StorageManager.sharedManager.refreshAllStoredData(completion: {
-                        })
-                    },
-                    failureCompletion: {
-                        AlertHelper.showAlert(title: "Error", message: "Could not delete the content. Please try again later.")
-                    }
-                )
-            }
+        teedUpIndex = index
+        vc.mediaDeletionConfirmationView.batchState = .single
+        vc.mediaDeletionConfirmationView.source = self.sourceType
+        vc.showDeletionWarningAlert(type: .audio)
+    }
+    
+    func finalizeEpisodeDelete(){
+        if let index = teedUpIndex,
+           let sourcePath = items[index].sourceFilePath{
+            teedUpIndex = nil
+            vc.mediaDeletionConfirmationView.batchState = nil
+            StorageManager.sharedManager.deletePodsWithID(
+                fileName: sourcePath,
+                successCompletion: {
+                    self.handleConfirmDelete(index: index)
+                },
+                failureCompletion: {
+                    AlertHelper.showAlert(title: "Error", message: "Could not delete the content. Please try again later.")
+                }
+            )
+        }
+    }
+    
+    func handleConfirmDelete(index:Int){
+        vc.mediaDeletionConfirmationView.spaceFreedString = formatBytes(Int(items[index].sizeMB * 1e6))
+        self.items.remove(at: index)
+        self.vc.mediaDeletionConfirmationView.state = .finished
+        self.finishSetup(items: self.items)
+        self.vc.setupViewAndModels()
+        self.tableView.reloadData()
+        
+        StorageManager.sharedManager.refreshAllStoredData(completion: {
         })
     }
 }

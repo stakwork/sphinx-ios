@@ -33,7 +33,7 @@ class MediaDeletionConfirmationView: UIView {
     @IBOutlet weak var loadingCircularProgressView: CircularProgressView!
     @IBOutlet weak var gotItButton: UIButton!
     
-    
+    var batchState : ProfileManageStorageSpecificChatOrContentFeedItemVCState? = nil
     var spaceFreedString:String = "unknown"
     @IBOutlet weak var viewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var subtitleToTitleConstraintSpacing: NSLayoutConstraint!
@@ -82,7 +82,10 @@ class MediaDeletionConfirmationView: UIView {
     func getContentTypeString() ->String?{
         var typeString : String? = nil
         if source == .chats{
-            typeString = NSLocalizedString("storage.management.chat.media", comment: "")
+            typeString = (batchState == .single) ? NSLocalizedString("storage.management.selected.chat.media", comment: "") : (NSLocalizedString("storage.management.chat.media", comment: ""))
+        }
+        else if batchState == .single && source == .podcasts{
+            typeString = NSLocalizedString("storage.management.this.podcast", comment: "")
         }
         else if let type = type{
             switch type {
@@ -141,7 +144,7 @@ class MediaDeletionConfirmationView: UIView {
         },
         completion: { _ in
             self.startRotation()
-            self.loadingCircularProgressView.isHidden = true
+            self.loadingCircularProgressView.isHidden = false
             self.loadingCircularProgressView.setProgressStrokeColor(color: UIColor.Sphinx.PrimaryRed)
             self.loadingCircularProgressView.progressAnimation(to: 0.9, active: true)
             self.loadingCircularProgressView.playPauseLabel.isHidden = true
@@ -149,6 +152,12 @@ class MediaDeletionConfirmationView: UIView {
     }
     
     func moveToFinishedUI(){
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+            self.finalizeFinishedUIAfterDelay()
+        })
+    }
+    
+    func finalizeFinishedUIAfterDelay(){
         loadingCircularProgressView.stopRotation()
         self.loadingCircularProgressView.isHidden = true
         loadingCircularProgressView.setProgressStrokeColor(color: .clear)
@@ -165,20 +174,15 @@ class MediaDeletionConfirmationView: UIView {
         layoutIfNeeded()
         if let source = source,
            source == .chats{
-            let message = String(format: NSLocalizedString("storage.management.deletion.complete.title", comment: ""), "chat media")
+            let message = String(format: NSLocalizedString("storage.management.deletion.complete.title", comment: ""), "chat media").capitalized
             titleLabel.text = message
         }
         else if let typeString = getContentTypeString(){
-            let message = String(format: NSLocalizedString("storage.management.deletion.complete.title", comment: ""), typeString)
+            let message = String(format: NSLocalizedString("storage.management.deletion.complete.title", comment: ""), typeString).capitalized
             titleLabel.text = message
         }
         let subtitle = String(format: NSLocalizedString("storage.management.deletion.complete.subtitle", comment: ""), spaceFreedString)
         subtitleLabel.text = subtitle
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: {
-            self.loadingCircularProgressView.isHidden = true
-        })
-        
     }
     
     private func setup() {

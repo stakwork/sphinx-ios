@@ -83,6 +83,20 @@ class CircularProgressView: UIView {
         self.layer.speed = 2.0
     }
     
+    func stopRotation() {
+        // Remove the rotation animation from the view's layer
+        self.layer.removeAnimation(forKey: "rotationAnimation")
+
+        // Set the layer's transform to the current presentation layer transform
+        if let presentationLayer = self.layer.presentation() {
+            self.layer.transform = presentationLayer.transform
+        }
+
+        // Remove any pending animations
+        self.layer.removeAllAnimations()
+    }
+
+    
     func setProgressStrokeColor(color:UIColor){
         progressLayer.strokeColor = color.cgColor
     }

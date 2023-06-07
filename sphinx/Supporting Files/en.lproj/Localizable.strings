@@ -611,6 +611,7 @@
 "deletion.warning.title" = "You've chosen to delete all %@";
 "deletion.warning.subtitle" = "This action deletes all of the selected files permanently and cannot be undone.";
 "are.you.sure.deletion.warning" = "Continuing will delete all of your %@.";
+"storage.management.chat.media" = "chat media";
 "storage.management.audio.files" = "podcast episodes";
 "storage.management.video" = "video";
 "storage.management.images" = "images";

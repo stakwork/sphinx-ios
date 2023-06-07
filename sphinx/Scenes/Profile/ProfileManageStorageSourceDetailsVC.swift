@@ -82,7 +82,7 @@ class ProfileManageStorageSourceDetailsVC : UIViewController{
     func showDeletionWarningAlert(type:StorageManagerMediaType){
         setupDeletionWarningAlert()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.16, execute: {
-            //self.mediaDeletionConfirmationView.source == nil ? (self.mediaDeletionConfirmationView.type = type) : ()
+            self.mediaDeletionConfirmationView.type = type
             let size = StorageManager.sharedManager.getItemGroupTotalSize(items: self.vm.getSourceItems().filter({$0.type == type}))
             self.mediaDeletionConfirmationView.spaceFreedString = formatBytes(Int(1e6 * size))
         })

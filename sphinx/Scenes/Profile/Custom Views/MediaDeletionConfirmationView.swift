@@ -59,13 +59,7 @@ class MediaDeletionConfirmationView: UIView {
     var delegate : MediaDeletionConfirmationViewDelegate? = nil
     var type: StorageManagerMediaType? = nil {
         didSet{
-            if let source = source,
-               source == .chats{
-                let warningMessage = String(format: NSLocalizedString("deletion.warning.title", comment: ""), ("chat media"))
-                titleLabel.text = warningMessage
-            }
-            else if let typeString = getContentTypeString(),
-               state == .awaitingApproval{
+           if let typeString = getContentTypeString(){
                 let warningMessage = String(format: NSLocalizedString("deletion.warning.title", comment: ""), (typeString))
                 titleLabel.text = warningMessage
             }
@@ -87,7 +81,10 @@ class MediaDeletionConfirmationView: UIView {
     
     func getContentTypeString() ->String?{
         var typeString : String? = nil
-        if let type = type{
+        if source == .chats{
+            typeString = NSLocalizedString("storage.management.chat.media", comment: "")
+        }
+        else if let type = type{
             switch type {
             case .audio:
                 typeString = NSLocalizedString("storage.management.audio.files", comment: "")
@@ -104,6 +101,7 @@ class MediaDeletionConfirmationView: UIView {
     }
     
     func moveToAwaitingApproval(){
+        loadingCircularProgressView.stopRotation()
         gotItButton.isHidden = true
         cancelButton.isHidden = false
         deletionButton.isHidden = false
@@ -111,6 +109,7 @@ class MediaDeletionConfirmationView: UIView {
         imageViewWidth.constant = 35
         subtitleToTitleConstraintSpacing.constant = 14
         subtitleLeading.constant = 16
+        viewBottomConstraint.constant = 40
         loadingCircularProgressView.setProgressStrokeColor(color: .clear)
         
         layoutIfNeeded()
@@ -133,7 +132,7 @@ class MediaDeletionConfirmationView: UIView {
             self.deletionSymbol.tintColor = UIColor.Sphinx.BodyInverted
             self.titleLabel.text = "storage.management.loading.deletion".localized
             self.subtitleLabel.text = "storage.management.loading.deletion.subtitle".localized
-            self.viewBottomConstraint.constant -= 34
+            self.viewBottomConstraint.constant = 6
             self.subtitleToTitleConstraintSpacing.constant = -24.0
             self.layoutIfNeeded()
         },
@@ -148,8 +147,9 @@ class MediaDeletionConfirmationView: UIView {
     
     func moveToFinishedUI(){
         loadingCircularProgressView.setProgressStrokeColor(color: .clear)
+        loadingCircularProgressView.stopRotation()
         self.deletionSymbol.image = #imageLiteral(resourceName: "deletion_success")
-        viewBottomConstraint.constant += 34
+        viewBottomConstraint.constant = 40
         subtitleToTitleConstraintSpacing.constant += 18
         subtitleLeading.constant = 50.0
         imageViewWidth.constant = 68
@@ -194,12 +194,14 @@ class MediaDeletionConfirmationView: UIView {
     }
     
     @IBAction func deleteTapped(_ sender: Any) {
+        self.state = .loading
         delegate?.deleteTapped()
     }
     
     @IBAction func cancelTapped(_ sender: Any) {
         if let delegate = delegate{
             delegate.cancelTapped()
+            self.state = .awaitingApproval
         }
     }
     

@@ -23,7 +23,13 @@ extension NewMessageTableViewCell {
     }
 }
 
-class NewMessageTableViewCell: SwipableReplyCell {
+protocol ChatTableViewCellProtocol: class {
+    var contentView: UIView { get }
+    
+    func configureWith(messageCellState: MessageTableCellState)
+}
+
+class NewMessageTableViewCell: SwipableReplyCell, ChatTableViewCellProtocol {
     
     ///General views
     @IBOutlet weak var bubbleOnlyText: UIView!

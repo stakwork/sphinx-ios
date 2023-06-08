@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MessageNoBubbleTableViewCell: UITableViewCell {
+class MessageNoBubbleTableViewCell: UITableViewCell, ChatTableViewCellProtocol {
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -18,4 +18,7 @@ class MessageNoBubbleTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
+    func configureWith(messageCellState: MessageTableCellState) {
+        ///Implement
+    }
 }

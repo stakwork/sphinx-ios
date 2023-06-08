@@ -691,6 +691,8 @@
 		47FA44172374B6F7005D8C63 /* SubscriptionEndRuleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FA44162374B6F7005D8C63 /* SubscriptionEndRuleView.swift */; };
 		47FA44192375A682005D8C63 /* SubscriptionCommonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FA44182375A682005D8C63 /* SubscriptionCommonView.swift */; };
 		47FA72792A30E19300FB4535 /* MessagesPreloaderHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FA72782A30E19300FB4535 /* MessagesPreloaderHelper.swift */; };
+		47FA727C2A32373900FB4535 /* NewOnlyTextMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FA727A2A32373900FB4535 /* NewOnlyTextMessageTableViewCell.swift */; };
+		47FA727D2A32373900FB4535 /* NewOnlyTextMessageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47FA727B2A32373900FB4535 /* NewOnlyTextMessageTableViewCell.xib */; };
 		47FB189B23A299000097695B /* SignupHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FB189A23A299000097695B /* SignupHelper.swift */; };
 		47FDDB1C2562D77200BBF15F /* boost_animation.json in Resources */ = {isa = PBXBuildFile; fileRef = 47FDDB1B2562D77100BBF15F /* boost_animation.json */; };
 		47FE9A3C23BF751C0090913F /* ChatViewControllerAttachmentDelegateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FE9A3B23BF751C0090913F /* ChatViewControllerAttachmentDelegateExtension.swift */; };
@@ -1719,6 +1721,8 @@
 		47FA44162374B6F7005D8C63 /* SubscriptionEndRuleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionEndRuleView.swift; sourceTree = "<group>"; };
 		47FA44182375A682005D8C63 /* SubscriptionCommonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionCommonView.swift; sourceTree = "<group>"; };
 		47FA72782A30E19300FB4535 /* MessagesPreloaderHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesPreloaderHelper.swift; sourceTree = "<group>"; };
+		47FA727A2A32373900FB4535 /* NewOnlyTextMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewOnlyTextMessageTableViewCell.swift; sourceTree = "<group>"; };
+		47FA727B2A32373900FB4535 /* NewOnlyTextMessageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewOnlyTextMessageTableViewCell.xib; sourceTree = "<group>"; };
 		47FB189A23A299000097695B /* SignupHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupHelper.swift; sourceTree = "<group>"; };
 		47FDDB1B2562D77100BBF15F /* boost_animation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = boost_animation.json; sourceTree = "<group>"; };
 		47FE9A3B23BF751C0090913F /* ChatViewControllerAttachmentDelegateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewControllerAttachmentDelegateExtension.swift; sourceTree = "<group>"; };
@@ -2229,12 +2233,14 @@
 				4779247C2A28D19F00CD3CF1 /* Custom Views */,
 				472092C72A278B0400468796 /* NewMessageTableViewCell.swift */,
 				472092C82A278B0400468796 /* NewMessageTableViewCell.xib */,
-				47E6A4BF2A2E591900A9509E /* NewMessageTableViewCell+GeneralSetup.swift */,
-				47E6A4C12A2E65C700A9509E /* MessageNoBubbleTableViewCell.swift */,
-				47E6A4C22A2E65C700A9509E /* MessageNoBubbleTableViewCell.xib */,
 				47E6A4F82A2FB2FC00A9509E /* NewMessageTableViewCell+BubbleExtension.swift */,
 				47E6A4FA2A2FB3B100A9509E /* NewMessageTableViewCell+MessageTypesExtension.swift */,
 				47E6A4FC2A2FB45B00A9509E /* NewMessageTableViewCell+StatusHeaderExtension.swift */,
+				47E6A4BF2A2E591900A9509E /* NewMessageTableViewCell+GeneralSetup.swift */,
+				47E6A4C12A2E65C700A9509E /* MessageNoBubbleTableViewCell.swift */,
+				47E6A4C22A2E65C700A9509E /* MessageNoBubbleTableViewCell.xib */,
+				47FA727A2A32373900FB4535 /* NewOnlyTextMessageTableViewCell.swift */,
+				47FA727B2A32373900FB4535 /* NewOnlyTextMessageTableViewCell.xib */,
 			);
 			path = NewMessageTableViewCell;
 			sourceTree = "<group>";
@@ -4755,6 +4761,7 @@
 				474FE32723F588C000C06FC8 /* VideoSentTableViewCell.xib in Resources */,
 				47A79D402444EEFF005CD72F /* MessageOptionView.xib in Resources */,
 				F3CE638126AFF93F006E37A0 /* FeedFilterChipCollectionViewCell.xib in Resources */,
+				47FA727D2A32373900FB4535 /* NewOnlyTextMessageTableViewCell.xib in Resources */,
 				47F258CC253DD43400122A5A /* PinTimeSlider.xib in Resources */,
 				47E6A5022A30C68400A9509E /* ShimmeringTableView.xib in Resources */,
 				CE07B83729DC92F900A02652 /* ItemDescriptionTableViewCell.xib in Resources */,
@@ -5078,6 +5085,7 @@
 				F313024626BA62B300A1396E /* ChatsCollectionViewController.swift in Sources */,
 				CE51F350298870BF00ABBACB /* MemberBadgeDetailVM.swift in Sources */,
 				4705D39F2799C339009C0729 /* UITextField.swift in Sources */,
+				47FA727C2A32373900FB4535 /* NewOnlyTextMessageTableViewCell.swift in Sources */,
 				F32A697926D515AB0004B8B3 /* PodcastFeed+Computeds.swift in Sources */,
 				CE3133B32977747E00E91E3A /* BadgeAdminManagementListVC.swift in Sources */,
 				CE3D8CA329B10FA500EDB637 /* FeedItemDetailVM.swift in Sources */,

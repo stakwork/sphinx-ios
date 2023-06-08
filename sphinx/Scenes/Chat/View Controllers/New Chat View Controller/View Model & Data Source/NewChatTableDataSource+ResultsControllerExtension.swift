@@ -74,18 +74,32 @@ extension NewChatTableDataSource {
     ) -> DataSource.CellProvider {
         { (tableView, indexPath, dataSourceItem) -> UITableViewCell in
             
+            var cell: ChatTableViewCellProtocol? = nil
             var mutableDataSourceItem = dataSourceItem
             
             if let _ = mutableDataSourceItem.bubble {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "NewMessageTableViewCell", for: indexPath) as! NewMessageTableViewCell
-                cell.configureWith(messageCellState: dataSourceItem)
-                cell.contentView.transform = CGAffineTransform(scaleX: 1, y: -1)
-                return cell
+                if mutableDataSourceItem.isTextOnlyMessage {
+                    cell = tableView.dequeueReusableCell(
+                        withIdentifier: "NewOnlyTextMessageTableViewCell",
+                        for: indexPath
+                    ) as! NewOnlyTextMessageTableViewCell
+                } else {
+                    cell = tableView.dequeueReusableCell(
+                        withIdentifier: "NewMessageTableViewCell",
+                        for: indexPath
+                    ) as! NewMessageTableViewCell
+                }
             } else {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "MessageNoBubbleTableViewCell", for: indexPath) as! MessageNoBubbleTableViewCell
-                cell.contentView.transform = CGAffineTransform(scaleX: 1, y: -1)
-                return cell
+                cell = tableView.dequeueReusableCell(
+                    withIdentifier: "MessageNoBubbleTableViewCell",
+                    for: indexPath
+                ) as! MessageNoBubbleTableViewCell
             }
+            
+            cell?.configureWith(messageCellState: dataSourceItem)
+            cell?.contentView.transform = CGAffineTransform(scaleX: 1, y: -1)
+            
+            return (cell as? UITableViewCell) ?? UITableViewCell()
         }
     }
 }

@@ -77,7 +77,7 @@ class Constants {
             kChatListMessagePosition = 10.5
             break
         case MessagesSize.Medium.rawValue:
-            kMessageFont = UIFont(name: "Roboto-Regular", size: isIpad ? 18.0 : 14.0)!
+            kMessageFont = UIFont(name: "Roboto-Regular", size: isIpad ? 18.0 : 15.0)!
             kEmojisFont = UIFont(name: "Roboto-Regular", size: isIpad ? 35.0 : 33.0)!
             kMessagePreviewFont = UIFont(name: "Roboto-Regular", size: 13.0)!
             kNewMessagePreviewFont = UIFont(name: "Roboto-Bold", size: 13.0)!
@@ -95,7 +95,7 @@ class Constants {
             kChatListMessagePosition = 11.5
             break
         case MessagesSize.Big.rawValue:
-            kMessageFont = UIFont(name: "Roboto-Regular", size: isIpad ? 20.0 : 16.0)!
+            kMessageFont = UIFont(name: "Roboto-Regular", size: isIpad ? 20.0 : 18.0)!
             kEmojisFont = UIFont(name: "Roboto-Regular", size: isIpad ? 40.0 : 36.0)!
             kMessagePreviewFont = UIFont(name: "Roboto-Regular", size: 14.0)!
             kNewMessagePreviewFont = UIFont(name: "Roboto-Bold", size: 14.0)!

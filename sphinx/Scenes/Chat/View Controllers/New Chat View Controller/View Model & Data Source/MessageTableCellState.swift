@@ -186,6 +186,14 @@ struct MessageTableCellState {
         return nil
     }()
     
+    var isTextOnlyMessage: Bool {
+        mutating get {
+            return (self.messageContent != nil) &&
+                (self.messageReply == nil) &&
+                (self.callLink == nil) &&
+                (self.directPayment == nil)
+        }
+    }
 }
 
 extension MessageTableCellState : Hashable {

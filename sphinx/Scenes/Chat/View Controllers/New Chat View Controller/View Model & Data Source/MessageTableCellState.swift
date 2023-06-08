@@ -165,6 +165,23 @@ struct MessageTableCellState {
         }
     }()
     
+    lazy var directPayment: BubbleMessageLayoutState.DirectPayment? = {
+        guard let message = message else {
+            return nil
+        }
+        
+        if message.isDirectPayment() {
+            return BubbleMessageLayoutState.DirectPayment(
+                amount: message.amount?.intValue ?? 0,
+                isTribePmt: chat.isPublicGroup(),
+                recipientPic: message.recipientPic,
+                recipientAlias: message.recipientAlias,
+                recipientColor: ChatHelper.getRecipientColorFor(message: message)
+            )
+        }
+        
+        return nil
+    }()
     
 }
 

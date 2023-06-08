@@ -105,6 +105,8 @@ class NewMessageTableViewCell: SwipableReplyCell {
         configureWith(messageReply: mutableMessageCellState.messageReply, and: bubble)
         
         ///Other message types
+        configureWith(directPayment: mutableMessageCellState.directPayment, and: bubble)
+        
     }
     
 }

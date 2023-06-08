@@ -19,7 +19,6 @@ class DirectPaymentView: UIView {
     @IBOutlet weak var tribeReceivedPmtIconImageView: UIImageView!
     
     @IBOutlet weak var receivedPaymentContainer: UIView!
-    
     @IBOutlet weak var receivedPmtIconImageView: UIImageView!
     @IBOutlet weak var receivedPmtAmountLabel: UILabel!
     @IBOutlet weak var receivedPmtUnitLabel: UILabel!
@@ -44,6 +43,41 @@ class DirectPaymentView: UIView {
         addSubview(contentView)
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+    }
+    
+    func configureWith(
+        directPayment: BubbleMessageLayoutState.DirectPayment,
+        and bubble: BubbleMessageLayoutState.Bubble
+    ) {
+        let isIncoming = bubble.direction.isIncoming()
+        let isTribePmt = directPayment.isTribePmt
+        
+        tribeReceivedPaymentContainer.isHidden = !isIncoming || !isTribePmt
+        receivedPaymentContainer.isHidden = !isIncoming || isTribePmt
+        sentPaymentContainer.isHidden = isIncoming
+        
+        let amountString = directPayment.amount.formattedWithSeparator
+        tribeReceivedPmtAmountLabel.text = amountString
+        receivedPmtAmountLabel.text = amountString
+        sentPmtAmountLabel.text = amountString
+        
+        recipientAvatarView.isHidden = true
+        
+        if let recipientPic = directPayment.recipientPic {
+            recipientAvatarView.configureForUserWith(
+                color: directPayment.recipientColor ?? UIColor.Sphinx.SecondaryText,
+                alias: directPayment.recipientAlias ?? "Unknown",
+                picture: recipientPic
+            )
+            recipientAvatarView.isHidden = false
+        } else if let recipientAlias = directPayment.recipientAlias {
+            recipientAvatarView.configureForUserWith(
+                color: directPayment.recipientColor ?? UIColor.Sphinx.SecondaryText,
+                alias: recipientAlias,
+                picture: directPayment.recipientPic
+            )
+            recipientAvatarView.isHidden = false
+        }
     }
 
 }

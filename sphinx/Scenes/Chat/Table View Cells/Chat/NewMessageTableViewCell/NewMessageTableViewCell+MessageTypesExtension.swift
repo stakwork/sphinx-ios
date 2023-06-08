@@ -33,4 +33,16 @@ extension NewMessageTableViewCell {
             bubbleAllView.isHidden = false
         }
     }
+    
+    func configureWith(
+        directPayment: BubbleMessageLayoutState.DirectPayment?,
+        and bubble: BubbleMessageLayoutState.Bubble
+    ) {
+        if let directPayment = directPayment {
+            directPaymentView.configureWith(directPayment: directPayment, and: bubble)
+            directPaymentView.isHidden = false
+            
+            bubbleAllView.isHidden = false
+        }
+    }
 }

@@ -112,6 +112,29 @@ struct BubbleMessageLayoutState: CommonLayoutState {
         }
     }
     
+    struct DirectPayment {
+        var amount: Int
+        var isTribePmt: Bool
+        
+        var recipientPic: String?
+        var recipientAlias: String?
+        var recipientColor: UIColor?
+        
+        init(
+            amount: Int,
+            isTribePmt: Bool,
+            recipientPic: String?,
+            recipientAlias: String?,
+            recipientColor: UIColor?
+        ) {
+            self.amount = amount
+            self.isTribePmt = isTribePmt
+            self.recipientPic = recipientPic
+            self.recipientAlias = recipientAlias
+            self.recipientColor = recipientColor
+        }
+    }
+    
 }
 
 struct NoBubbleMessageLayoutState: CommonLayoutState {

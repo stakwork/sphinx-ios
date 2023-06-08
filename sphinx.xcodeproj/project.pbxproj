@@ -637,7 +637,7 @@
 		47E6A4F52A2F66BD00A9509E /* MessageLayoutState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E6A4F42A2F66BD00A9509E /* MessageLayoutState.swift */; };
 		47E6A4F72A2F788300A9509E /* NewChatTableDataSource+ResultsControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E6A4F62A2F788300A9509E /* NewChatTableDataSource+ResultsControllerExtension.swift */; };
 		47E6A4F92A2FB2FC00A9509E /* NewMessageTableViewCell+BubbleExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E6A4F82A2FB2FC00A9509E /* NewMessageTableViewCell+BubbleExtension.swift */; };
-		47E6A4FB2A2FB3B100A9509E /* NewMessageTableViewCell+MessageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E6A4FA2A2FB3B100A9509E /* NewMessageTableViewCell+MessageExtension.swift */; };
+		47E6A4FB2A2FB3B100A9509E /* NewMessageTableViewCell+MessageTypesExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E6A4FA2A2FB3B100A9509E /* NewMessageTableViewCell+MessageTypesExtension.swift */; };
 		47E6A4FD2A2FB45B00A9509E /* NewMessageTableViewCell+StatusHeaderExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E6A4FC2A2FB45B00A9509E /* NewMessageTableViewCell+StatusHeaderExtension.swift */; };
 		47E6A5002A30C67400A9509E /* ShimmeringTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E6A4FF2A30C67400A9509E /* ShimmeringTableView.swift */; };
 		47E6A5022A30C68400A9509E /* ShimmeringTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47E6A5012A30C68400A9509E /* ShimmeringTableView.xib */; };
@@ -1664,7 +1664,7 @@
 		47E6A4F42A2F66BD00A9509E /* MessageLayoutState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageLayoutState.swift; sourceTree = "<group>"; };
 		47E6A4F62A2F788300A9509E /* NewChatTableDataSource+ResultsControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewChatTableDataSource+ResultsControllerExtension.swift"; sourceTree = "<group>"; };
 		47E6A4F82A2FB2FC00A9509E /* NewMessageTableViewCell+BubbleExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewMessageTableViewCell+BubbleExtension.swift"; sourceTree = "<group>"; };
-		47E6A4FA2A2FB3B100A9509E /* NewMessageTableViewCell+MessageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewMessageTableViewCell+MessageExtension.swift"; sourceTree = "<group>"; };
+		47E6A4FA2A2FB3B100A9509E /* NewMessageTableViewCell+MessageTypesExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewMessageTableViewCell+MessageTypesExtension.swift"; sourceTree = "<group>"; };
 		47E6A4FC2A2FB45B00A9509E /* NewMessageTableViewCell+StatusHeaderExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewMessageTableViewCell+StatusHeaderExtension.swift"; sourceTree = "<group>"; };
 		47E6A4FF2A30C67400A9509E /* ShimmeringTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmeringTableView.swift; sourceTree = "<group>"; };
 		47E6A5012A30C68400A9509E /* ShimmeringTableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShimmeringTableView.xib; sourceTree = "<group>"; };
@@ -2233,7 +2233,7 @@
 				47E6A4C12A2E65C700A9509E /* MessageNoBubbleTableViewCell.swift */,
 				47E6A4C22A2E65C700A9509E /* MessageNoBubbleTableViewCell.xib */,
 				47E6A4F82A2FB2FC00A9509E /* NewMessageTableViewCell+BubbleExtension.swift */,
-				47E6A4FA2A2FB3B100A9509E /* NewMessageTableViewCell+MessageExtension.swift */,
+				47E6A4FA2A2FB3B100A9509E /* NewMessageTableViewCell+MessageTypesExtension.swift */,
 				47E6A4FC2A2FB45B00A9509E /* NewMessageTableViewCell+StatusHeaderExtension.swift */,
 			);
 			path = NewMessageTableViewCell;
@@ -5135,7 +5135,7 @@
 				F3DC6B23273F60FF00458E09 /* ContentFeedPaymentDestination+CoreDataClass.swift in Sources */,
 				47893A8B24095A30002F675B /* AudioSentTableViewCell.swift in Sources */,
 				47FA440223748EB6005D8C63 /* SubscriptionFormViewControllerExtensions.swift in Sources */,
-				47E6A4FB2A2FB3B100A9509E /* NewMessageTableViewCell+MessageExtension.swift in Sources */,
+				47E6A4FB2A2FB3B100A9509E /* NewMessageTableViewCell+MessageTypesExtension.swift in Sources */,
 				CE0C4676296DC5E200E82353 /* ContentFeedStatus+SupportingModels.swift in Sources */,
 				478DCF982343D24D009A03D6 /* SetProfileImageViewController.swift in Sources */,
 				F37D799B271E340900CAB15F /* YouTubeVideoFeedEpisodePlayerViewController.swift in Sources */,

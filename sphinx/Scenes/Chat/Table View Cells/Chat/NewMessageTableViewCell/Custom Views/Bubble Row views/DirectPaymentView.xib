@@ -46,7 +46,7 @@
                         <constraint firstAttribute="height" constant="36" id="nGH-4B-LkA"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qcj-iQ-kxe">
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qcj-iQ-kxe">
                     <rect key="frame" x="16" y="10" width="343" height="36"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="ye5-mB-jIw">

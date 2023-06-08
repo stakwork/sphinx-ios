@@ -218,7 +218,10 @@ extension TransactionMessage {
         return boostAndClips
     }
     
-    static func getReactionsOn(chat: Chat, for messages: [String]) -> [TransactionMessage] {
+    static func getBoostMessagesFor(
+        _ messages: [String],
+        on chat: Chat
+    ) -> [TransactionMessage] {
         let boostType = TransactionMessageType.boost.rawValue
         let predicate = NSPredicate(format: "chat == %@ AND type == %d AND replyUUID != nil AND (replyUUID IN %@)", chat, boostType, messages)
         let sortDescriptors = [NSSortDescriptor(key: "id", ascending: false)]

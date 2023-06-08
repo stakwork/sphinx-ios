@@ -16,6 +16,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NewMessageBoostView" customModule="sphinx" customModuleProvider="target">
             <connections>
                 <outlet property="amountLabel" destination="TTb-D0-GkU" id="fEq-yU-lVf"/>
+                <outlet property="boostIcon" destination="g37-cZ-hEe" id="1GG-xN-xJb"/>
                 <outlet property="boostIconView" destination="NfI-2t-U4y" id="G3y-Or-5eu"/>
                 <outlet property="boostUserCountLabel" destination="a2S-0U-xP1" id="x34-mK-VD8"/>
                 <outlet property="boostUserView1" destination="Dt7-FI-wfL" id="01E-Su-x5N"/>
@@ -59,7 +60,6 @@
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstItem="NfI-2t-U4y" firstAttribute="top" secondItem="ukm-pZ-7Hi" secondAttribute="top" constant="10" id="IaW-TU-Tav"/>
                                 <constraint firstAttribute="bottom" secondItem="NfI-2t-U4y" secondAttribute="bottom" constant="10" id="UfN-PS-p3D"/>
                                 <constraint firstItem="NfI-2t-U4y" firstAttribute="leading" secondItem="ukm-pZ-7Hi" secondAttribute="leading" id="lEj-EY-j8F"/>
                                 <constraint firstAttribute="trailing" secondItem="NfI-2t-U4y" secondAttribute="trailing" constant="4" id="pM7-1C-hih"/>
@@ -84,7 +84,7 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mXi-ca-KCL">
                             <rect key="frame" x="287.33333333333331" y="0.0" width="57" height="35"/>
                             <subviews>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dt7-FI-wfL" customClass="MessageBoostImageView" customModule="sphinx" customModuleProvider="target">
+                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dt7-FI-wfL" customClass="MessageBoostImageView" customModule="sphinx" customModuleProvider="target">
                                     <rect key="frame" x="32" y="5" width="25" height="25"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
@@ -92,7 +92,7 @@
                                         <constraint firstAttribute="width" constant="25" id="wGO-8a-rQV"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oOY-d4-wnc" customClass="MessageBoostImageView" customModule="sphinx" customModuleProvider="target">
+                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oOY-d4-wnc" customClass="MessageBoostImageView" customModule="sphinx" customModuleProvider="target">
                                     <rect key="frame" x="16" y="5" width="25" height="25"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
@@ -100,7 +100,7 @@
                                         <constraint firstAttribute="height" constant="25" id="xRd-Tz-Jn5"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2CO-qk-Nrr" customClass="MessageBoostImageView" customModule="sphinx" customModuleProvider="target">
+                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2CO-qk-Nrr" customClass="MessageBoostImageView" customModule="sphinx" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="5" width="25" height="25"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>

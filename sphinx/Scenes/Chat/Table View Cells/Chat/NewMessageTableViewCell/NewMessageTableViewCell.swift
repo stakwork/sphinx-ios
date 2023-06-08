@@ -75,7 +75,6 @@ class NewMessageTableViewCell: SwipableReplyCell, ChatTableViewCellProtocol {
     @IBOutlet weak var messageBoostView: NewMessageBoostView!
     @IBOutlet weak var paidAttachmentView: PaidAttachmentView!
     
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -111,12 +110,11 @@ class NewMessageTableViewCell: SwipableReplyCell, ChatTableViewCellProtocol {
         configureWith(callLink: mutableMessageCellState.callLink)
         
         //Bottom view
-        configureWith(boosts: mutableMessageCellState.boosts)
+        configureWith(boosts: mutableMessageCellState.boosts, and: bubble)
         
         ///Header and avatar
         configureWith(avatarImage: mutableMessageCellState.avatarImage)
         configureWith(bubble: bubble)
-        
     }
     
 }

@@ -142,6 +142,7 @@ extension NewChatTableDataSource {
         let contact = chat.getConversationContact()
         
         let replyingMessagesMap = getReplyingMessagesMapFor(messages: messages)
+        let boostMessagesMap = getBoostMessagesMapFor(messages: messages)
         
         var groupingDate: Date? = nil
 
@@ -157,6 +158,7 @@ extension NewChatTableDataSource {
                 )
                 
                 let replyingMessage = (message.replyUUID != nil) ? replyingMessagesMap[message.replyUUID!] : nil
+                let boostsMessages = (message.uuid != nil) ? (boostMessagesMap[message.uuid!] ?? []) : []
                 
                 array.insert(
                     MessageTableCellState(
@@ -169,7 +171,7 @@ extension NewChatTableDataSource {
                         bubbleState: bubbleState,
                         contactImage: headerImage,
                         replyingMessage: replyingMessage,
-                        boostMessages: []
+                        boostMessages: boostsMessages
                     ),
                     at: 0
                 )
@@ -239,6 +241,28 @@ extension NewChatTableDataSource {
         }
         
         return replyingMessagesMap
+    }
+    
+    func getBoostMessagesMapFor(
+        messages: [TransactionMessage]
+    ) -> [String: [TransactionMessage]] {
+        let messageUUIDs: [String] = messages.map({ $0.uuid ?? "" }).filter({ $0.isNotEmpty })
+        let boostMessages = TransactionMessage.getBoostMessagesFor(messageUUIDs, on: chat)
+        
+        var boostMessagesMap: [String: [TransactionMessage]] = [:]
+        
+        
+        for boostMessage in boostMessages {
+            if let replyUUID = boostMessage.replyUUID, replyUUID.isNotEmpty {
+                if let map = boostMessagesMap[replyUUID], map.count > 0 {
+                    boostMessagesMap[replyUUID]?.append(boostMessage)
+                } else {
+                    boostMessagesMap[replyUUID] = [boostMessage]
+                }
+            }
+        }
+        
+        return boostMessagesMap
     }
 }
 

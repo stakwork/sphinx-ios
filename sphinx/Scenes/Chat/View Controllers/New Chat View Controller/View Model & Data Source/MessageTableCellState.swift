@@ -208,7 +208,8 @@ struct MessageTableCellState {
             return (self.messageContent != nil) &&
                 (self.messageReply == nil) &&
                 (self.callLink == nil) &&
-                (self.directPayment == nil)
+                (self.directPayment == nil) &&
+                (self.boosts == nil)
         }
     }
 }

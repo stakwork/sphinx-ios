@@ -15,6 +15,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MessageBoostImageView" customModule="sphinx" customModuleProvider="target">
             <connections>
+                <outlet property="circularBorderView" destination="yvF-dV-ywI" id="nuu-eT-1rb"/>
                 <outlet property="circularView" destination="ZpX-sT-PER" id="Z0v-ZM-fJz"/>
                 <outlet property="contentView" destination="iN0-l3-epB" id="ebg-yg-HAw"/>
                 <outlet property="imageView" destination="CLw-9N-rdU" id="GWB-iq-DDq"/>
@@ -26,7 +27,7 @@
             <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yvF-dV-ywI">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yvF-dV-ywI">
                     <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZpX-sT-PER">
@@ -43,7 +44,7 @@
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="CLw-9N-rdU">
+                        <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="CLw-9N-rdU">
                             <rect key="frame" x="1.6666666666666661" y="1.6666666666666661" width="22" height="22"/>
                         </imageView>
                     </subviews>

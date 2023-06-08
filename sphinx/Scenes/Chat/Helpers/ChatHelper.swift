@@ -506,7 +506,7 @@ class ChatHelper {
         let messagesUUIDs: [String] = messagesArray.map { $0.uuid ?? "" }
         let emptyFilteredUUIDs = messagesUUIDs.filter { !$0.isEmpty }
         
-        for message in TransactionMessage.getReactionsOn(chat: chat, for: emptyFilteredUUIDs) {
+        for message in TransactionMessage.getBoostMessagesFor(emptyFilteredUUIDs, on: chat) {
             processMessageReaction(
                 message: message,
                 owner: UserContact.getOwner(),

@@ -81,25 +81,28 @@ extension TransactionMessage {
         
         var predicate : NSPredicate!
         
+        var typesToExclude = typesToExcludeFromChat
+        typesToExclude.append(TransactionMessageType.boost.rawValue)
+        
         if let f = firstMessage {
             predicate = NSPredicate(
-                format: "chat == %@ AND (date >= %@) AND NOT (type IN %@)",
+                format: "chat == %@ AND (date >= %@) AND (NOT (type IN %@) || (type == %d && replyUUID = nil))",
                 chat,
                 f.messageDate as NSDate,
-                typesToExcludeFromChat
+                typesToExclude
             )
         } else if let m = lastMessage {
             predicate = NSPredicate(
-                format: "chat == %@ AND (date <= %@) AND NOT (type IN %@)",
+                format: "chat == %@ AND (date <= %@) AND (NOT (type IN %@) || (type == %d && replyUUID = nil))",
                 chat,
                 m.messageDate as NSDate,
-                typesToExcludeFromChat
+                typesToExclude
             )
         } else {
             predicate = NSPredicate(
-                format: "chat == %@ AND NOT (type IN %@)",
+                format: "chat == %@ AND (NOT (type IN %@) || (type == %d && replyUUID = nil))",
                 chat,
-                typesToExcludeFromChat
+                typesToExclude
             )
         }
         

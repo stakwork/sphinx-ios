@@ -193,8 +193,12 @@ extension NewChatTableDataSource {
         with index: Int,
         in messages: [TransactionMessage],
         groupingDate: inout Date?
-    ) -> MessageTableCellState.BubbleState {
+    ) -> MessageTableCellState.BubbleState? {
 
+        if message.isDeleted() || message.isGroupActionMessage() {
+            return nil
+        }
+        
         let previousMessage = (index > 0) ? messages[index - 1] : nil
         let nextMessage = (index < messages.count - 1) ? messages[index + 1] : nil
         

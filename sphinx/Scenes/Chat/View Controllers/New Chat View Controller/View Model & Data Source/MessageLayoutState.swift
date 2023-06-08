@@ -182,10 +182,19 @@ struct BubbleMessageLayoutState: CommonLayoutState {
             self.senderColor = senderColor
         }
     }
-    
 }
 
 struct NoBubbleMessageLayoutState: CommonLayoutState {
+    
+    struct NoBubble {
+        var direction: MessageTableCellState.MessageDirection
+        
+        init(
+            direction: MessageTableCellState.MessageDirection
+        ) {
+            self.direction = direction
+        }
+    }
     
     struct DateSeparator {
         
@@ -195,6 +204,16 @@ struct NoBubbleMessageLayoutState: CommonLayoutState {
             date: Date
         ) {
             self.date = date
+        }
+    }
+    
+    struct Deleted {
+        var timestamp: String
+        
+        init(
+            timestamp: String
+        ) {
+            self.timestamp = timestamp
         }
     }
 }

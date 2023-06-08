@@ -48,6 +48,7 @@ struct MessageTableCellState {
         self.boostMessages = boostMessages
     }
     
+    ///Bubble States
     lazy var bubble: BubbleMessageLayoutState.Bubble? = {
         
         guard let message = message, let bubbleState = self.bubbleState else {
@@ -204,6 +205,32 @@ struct MessageTableCellState {
             boosts: boosts,
             totalAmount: totalAmount,
             boostedByMe: boostedByMe
+        )
+    }()
+    
+    
+    ///No Bubble States
+    lazy var noBubble: NoBubbleMessageLayoutState.NoBubble? = {
+        
+        guard let message = message, bubbleState == nil else {
+            return nil
+        }
+        
+        let isSent = message.isOutgoing(ownerId: owner.id)
+        
+        return NoBubbleMessageLayoutState.NoBubble(
+            direction: isSent ? .Outgoing : .Incoming
+        )
+    }()
+    
+    lazy var deleted: NoBubbleMessageLayoutState.Deleted? = {
+        
+        guard let message = message, message.isDeleted() else {
+            return nil
+        }
+        
+        return NoBubbleMessageLayoutState.Deleted(
+            timestamp: (message.date ?? Date()).getStringDate(format: "hh:mm a")
         )
     }()
     

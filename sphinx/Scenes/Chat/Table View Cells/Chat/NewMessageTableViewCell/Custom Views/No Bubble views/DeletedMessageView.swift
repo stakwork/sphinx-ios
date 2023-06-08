@@ -31,5 +31,15 @@ class DeletedMessageView: UIView {
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
     }
+    
+    func configureWith(
+        deleted: NoBubbleMessageLayoutState.Deleted,
+        direction: MessageTableCellState.MessageDirection
+    ) {
+        dateLabel.textAlignment = direction.isIncoming() ? .left : .right
+        deletedMessageLabel.textAlignment = direction.isIncoming() ? .left : .right
+        
+        dateLabel.text = deleted.timestamp
+    }
 
 }

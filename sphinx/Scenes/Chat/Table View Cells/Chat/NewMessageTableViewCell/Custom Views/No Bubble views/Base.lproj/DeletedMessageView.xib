@@ -25,18 +25,18 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="393" height="50"/>
+            <rect key="frame" x="0.0" y="0.0" width="393" height="62"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Monday 6:05 AM" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r5r-FZ-ppb">
-                    <rect key="frame" x="56" y="10" width="321" height="12"/>
+                    <rect key="frame" x="56" y="16" width="321" height="12"/>
                     <color key="backgroundColor" name="Body"/>
                     <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="10"/>
                     <color key="textColor" name="SecondaryText"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This message has been deleted" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ezk-g8-qUz">
-                    <rect key="frame" x="56" y="27" width="321" height="13"/>
+                    <rect key="frame" x="56" y="33" width="321" height="13"/>
                     <color key="backgroundColor" name="Body"/>
                     <fontDescription key="fontDescription" name="Roboto-Italic" family="Roboto" pointSize="11"/>
                     <color key="textColor" name="SecondaryText"/>
@@ -46,11 +46,12 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="r5r-FZ-ppb" secondAttribute="trailing" constant="16" id="3Mx-Dw-TWl"/>
-                <constraint firstItem="r5r-FZ-ppb" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="56" id="AE0-uH-ybm"/>
+                <constraint firstItem="r5r-FZ-ppb" firstAttribute="leading" relation="lessThanOrEqual" secondItem="iN0-l3-epB" secondAttribute="leading" constant="56" id="AE0-uH-ybm"/>
                 <constraint firstAttribute="trailing" secondItem="ezk-g8-qUz" secondAttribute="trailing" constant="16" id="IUU-Wt-9qn"/>
-                <constraint firstItem="ezk-g8-qUz" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="56" id="LTl-uj-MPV"/>
-                <constraint firstItem="r5r-FZ-ppb" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="Tbg-lN-lpe"/>
+                <constraint firstItem="ezk-g8-qUz" firstAttribute="leading" relation="lessThanOrEqual" secondItem="iN0-l3-epB" secondAttribute="leading" constant="56" id="LTl-uj-MPV"/>
+                <constraint firstItem="r5r-FZ-ppb" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="16" id="Tbg-lN-lpe"/>
                 <constraint firstItem="ezk-g8-qUz" firstAttribute="top" secondItem="r5r-FZ-ppb" secondAttribute="bottom" constant="5" id="cH7-Fi-ngQ"/>
+                <constraint firstAttribute="bottom" secondItem="ezk-g8-qUz" secondAttribute="bottom" constant="16" id="jql-Q2-6xB"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="10" y="20"/>

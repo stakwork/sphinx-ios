@@ -17,24 +17,24 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="zcj-ac-Z2o">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="127"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LiO-XQ-F15" customClass="DateSeparatorView" customModule="sphinx" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="30"/>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LiO-XQ-F15" customClass="DateSeparatorView" customModule="sphinx" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="-30" width="320" height="30"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="zEU-rU-76E"/>
                                 </constraints>
                             </view>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nm5-aL-s9u" customClass="DeletedMessageView" customModule="sphinx" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="30" width="320" height="50"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nm5-aL-s9u" customClass="DeletedMessageView" customModule="sphinx" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="62"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="Pgw-Fz-qfw"/>
+                                    <constraint firstAttribute="height" constant="62" id="Pgw-Fz-qfw"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q53-HF-veV" customClass="GroupActionsView" customModule="sphinx" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="30" width="320" height="70"/>
+                                <rect key="frame" x="0.0" y="62" width="320" height="65"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" priority="250" constant="65" id="PW7-vo-KPu"/>
@@ -59,6 +59,11 @@
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <connections>
+                <outlet property="dateSeparatorView" destination="LiO-XQ-F15" id="6gW-eV-KWz"/>
+                <outlet property="deletedMessageView" destination="nm5-aL-s9u" id="o4V-lJ-VFV"/>
+                <outlet property="groupActionsView" destination="Q53-HF-veV" id="JRa-nP-P04"/>
+            </connections>
             <point key="canvasLocation" x="32" y="20"/>
         </tableViewCell>
     </objects>

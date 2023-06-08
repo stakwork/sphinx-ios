@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NewOnlyTextMessageTableViewCell: SwipableCell, ChatTableViewCellProtocol {
+class NewOnlyTextMessageTableViewCell: SwipableReplyCell, ChatTableViewCellProtocol {
     
     ///General views
     @IBOutlet weak var bubbleOnlyText: UIView!

@@ -35,7 +35,9 @@ extension NewChatViewController {
             headerView.configurePinnedMessageViewWith(
                 chatId: chatId,
                 andDelegate: self
-            )
+            ) {
+                self.shouldAdjustTableViewTopInset()
+            }
         }
     }
 }

@@ -18,6 +18,9 @@ extension NewChatViewController {
             return
         }
         
+        setTableViewHeight()
+        shouldAdjustTableViewTopInset()
+        
         chatTableDataSource = NewChatTableDataSource(
             chat: chat,
             tableView: chatTableView,

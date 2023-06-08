@@ -15,6 +15,8 @@ class NewChatViewController: NewKeyboardHandlerViewController {
     @IBOutlet weak var headerView: NewChatHeaderView!
     @IBOutlet weak var chatTableView: UITableView!
     
+    @IBOutlet weak var chatTableViewHeightConstraint: NSLayoutConstraint!
+    
     @IBOutlet weak var mentionsAutocompleteTableView: UITableView!
     @IBOutlet weak var webAppContainerView: UIView!
     
@@ -69,6 +71,26 @@ class NewChatViewController: NewKeyboardHandlerViewController {
         super.viewWillAppear(animated)
         
         headerView.checkRoute()
+    }
+    
+    override func didToggleKeyboard() {
+        shouldAdjustTableViewTopInset()
+    }
+    
+    func shouldAdjustTableViewTopInset() {
+        DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: {
+            let newInset = Constants.kMargin + abs(self.chatTableView.frame.origin.y)
+            self.chatTableView.contentInset.bottom = newInset
+            self.chatTableView.verticalScrollIndicatorInsets.bottom = newInset
+        })
+    }
+    
+    func setTableViewHeight() {
+        let windowInsets = getWindowInsets()
+        let tableHeight = UIScreen.main.bounds.height - (windowInsets.bottom + windowInsets.top) - (headerView.bounds.height) - (bottomView.bounds.height)
+        
+        chatTableViewHeightConstraint.constant = tableHeight
+        chatTableView.layoutIfNeeded()
     }
     
     override func viewDidAppear(_ animated: Bool) {

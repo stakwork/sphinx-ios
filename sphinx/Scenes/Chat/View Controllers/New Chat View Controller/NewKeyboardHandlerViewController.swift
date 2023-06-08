@@ -81,10 +81,14 @@ class NewKeyboardHandlerViewController: PopHandlerViewController {
                 animations: {
                     self.view.layoutIfNeeded()
                 },
-                completion: { _ in }
+                completion: { _ in
+                    self.didToggleKeyboard()
+                }
             )
         }
     }
+    
+    func didToggleKeyboard() {}
     
     func getKeyboardActualHeight(notification: Notification) -> CGFloat? {
         if let keyboardEndSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {

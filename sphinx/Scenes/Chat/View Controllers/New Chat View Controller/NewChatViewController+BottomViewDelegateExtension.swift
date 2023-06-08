@@ -75,3 +75,13 @@ extension NewChatViewController : AttachmentsDelegate {
         
     }
 }
+
+extension NewChatViewController : MessageReplyViewDelegate {
+    func didCloseView() {
+        shouldAdjustTableViewTopInset()
+    }
+    
+    func shouldScrollTo(message: TransactionMessage) {
+//        chatDataSource?.scrollTo(message: message)
+    }
+}

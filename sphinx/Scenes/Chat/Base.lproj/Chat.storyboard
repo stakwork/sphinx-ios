@@ -349,7 +349,7 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="REQUEST AMOUNT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JH8-XK-2TQ">
-                                                <rect key="frame" x="119" y="16.5" width="137" height="17"/>
+                                                <rect key="frame" x="123" y="16.5" width="129" height="17"/>
                                                 <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="14"/>
                                                 <color key="textColor" name="Text"/>
                                                 <nil key="highlightedColor"/>
@@ -385,7 +385,7 @@
                                         <rect key="frame" x="0.0" y="50" width="375" height="283.5"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sOJ-Le-YKW">
-                                                <rect key="frame" x="107" y="15" width="161" height="35"/>
+                                                <rect key="frame" x="109" y="15" width="157" height="35"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Rwf-WC-328">
                                                         <rect key="frame" x="0.0" y="1.5" width="32" height="32"/>
@@ -402,7 +402,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tomas Timinskas" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="urZ-hI-Xh4">
-                                                        <rect key="frame" x="49" y="17" width="112" height="17"/>
+                                                        <rect key="frame" x="49" y="17" width="108" height="17"/>
                                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                                                         <color key="textColor" name="PrimaryText"/>
                                                         <nil key="highlightedColor"/>
@@ -457,7 +457,7 @@
                                                         <rect key="frame" x="305" y="21" width="70" height="65"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="sat" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FGz-cz-rkK">
-                                                                <rect key="frame" x="0.0" y="19" width="28" height="26.5"/>
+                                                                <rect key="frame" x="0.0" y="20.5" width="28" height="23.5"/>
                                                                 <fontDescription key="fontDescription" name="Roboto-Light" family="Roboto" pointSize="20"/>
                                                                 <color key="textColor" name="SecondaryText"/>
                                                                 <nil key="highlightedColor"/>
@@ -681,8 +681,11 @@
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </view>
                                             <tableView clipsSubviews="YES" alpha="0.0" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="7O1-jH-hsI">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="544"/>
+                                                <rect key="frame" x="0.0" y="-256" width="375" height="800"/>
                                                 <color key="backgroundColor" name="Body"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="800" id="zqK-vg-2JT"/>
+                                                </constraints>
                                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </tableView>
                                             <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="vlc-qx-DGF">
@@ -703,7 +706,6 @@
                                             <constraint firstAttribute="bottom" secondItem="2KA-H5-xSv" secondAttribute="bottom" id="Fkp-D7-VYl"/>
                                             <constraint firstAttribute="trailing" secondItem="2KA-H5-xSv" secondAttribute="trailing" id="ObL-ZX-59h"/>
                                             <constraint firstItem="7O1-jH-hsI" firstAttribute="leading" secondItem="oJ3-im-1f2" secondAttribute="leading" id="SRH-wR-6E3"/>
-                                            <constraint firstItem="7O1-jH-hsI" firstAttribute="top" secondItem="oJ3-im-1f2" secondAttribute="top" id="VFG-sn-Gft"/>
                                             <constraint firstItem="vlc-qx-DGF" firstAttribute="leading" secondItem="oJ3-im-1f2" secondAttribute="leading" id="YgL-On-hAi"/>
                                             <constraint firstItem="vlc-qx-DGF" firstAttribute="top" secondItem="oJ3-im-1f2" secondAttribute="top" id="Ygw-EN-M5q"/>
                                             <constraint firstAttribute="trailing" secondItem="mmA-5V-kTx" secondAttribute="trailing" id="cSv-vO-qL4"/>
@@ -760,6 +762,7 @@
                         <outlet property="bottomConstraint" destination="Ht8-VT-KjU" id="TvB-Xq-ofN"/>
                         <outlet property="bottomView" destination="adm-hA-lEF" id="hez-Vx-Rs8"/>
                         <outlet property="chatTableView" destination="7O1-jH-hsI" id="lkW-uB-74U"/>
+                        <outlet property="chatTableViewHeightConstraint" destination="zqK-vg-2JT" id="DVJ-2q-fhW"/>
                         <outlet property="headerView" destination="hMb-Ac-dRv" id="ANb-B8-g1N"/>
                         <outlet property="mentionsAutocompleteTableView" destination="vlc-qx-DGF" id="osS-rX-MO5"/>
                         <outlet property="webAppContainerView" destination="2KA-H5-xSv" id="uFC-DY-4Gs"/>

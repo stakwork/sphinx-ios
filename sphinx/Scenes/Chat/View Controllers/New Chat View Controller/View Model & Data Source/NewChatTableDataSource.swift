@@ -44,7 +44,7 @@ class NewChatTableDataSource : NSObject {
     func configureTableView() {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 200.0
-        tableView.contentInset = UIEdgeInsets(top: Constants.kMargin, left: 0, bottom: Constants.kMargin, right: 0)
+        tableView.contentInset.top = Constants.kMargin
         tableView.transform = CGAffineTransform(scaleX: 1, y: -1)
         
         tableView.registerCell(NewMessageTableViewCell.self)

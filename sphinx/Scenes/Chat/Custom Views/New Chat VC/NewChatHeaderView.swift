@@ -65,12 +65,13 @@ class NewChatHeaderView: UIView {
     
     func configurePinnedMessageViewWith(
         chatId: Int,
-        andDelegate delegate: PinnedMessageViewDelegate
+        andDelegate delegate: PinnedMessageViewDelegate,
+        completion: (() ->())? = nil
     ) {
         pinnedMessageView.configureWith(
             chatId: chatId,
             and: delegate,
-            completion: nil
+            completion: completion
         )
     }
 }

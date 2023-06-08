@@ -28,6 +28,8 @@ extension NewChatViewController {
             andKey: PodcastDelegateKeys.ChatSmallPlayerBar.rawValue
         )
         
+        shouldAdjustTableViewTopInset()
+        
         PodcastNewEpisodeViewController.checkForNewEpisode(chatId: chat?.id)
         headerView.updateSatsEarnedOnHeader()
     }
@@ -41,6 +43,8 @@ extension NewChatViewController : PodcastPlayerVCDelegate {
             podcastComment: comment,
             withDelegate: self
         )
+        
+        shouldAdjustTableViewTopInset()
     }
     
     func shouldGoToPlayer(podcast: PodcastFeed) {
@@ -88,11 +92,5 @@ extension NewChatViewController : CustomBoostDelegate {
 //            return
 //        }
 //        self.insertSentMessage(message: message, completion: { _ in })
-    }
-}
-
-extension NewChatViewController : MessageReplyViewDelegate {
-    func shouldScrollTo(message: TransactionMessage) {
-//        chatDataSource?.scrollTo(message: message)
     }
 }

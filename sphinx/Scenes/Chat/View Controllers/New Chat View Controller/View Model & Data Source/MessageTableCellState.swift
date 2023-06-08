@@ -194,6 +194,10 @@ struct MessageTableCellState {
                     senderColor: senderInfo.0
                 )
             )
+            
+            if !boostedByMe {
+                boostedByMe = boostMessage.senderId == owner.id
+            }
         }
         
         return BubbleMessageLayoutState.Boosts(

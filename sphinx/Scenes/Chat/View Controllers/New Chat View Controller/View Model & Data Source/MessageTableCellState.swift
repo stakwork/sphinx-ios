@@ -19,6 +19,7 @@ struct MessageTableCellState {
     var bubbleState: MessageTableCellState.BubbleState? = nil
     var contactImage: UIImage? = nil
     var replyingMessage: TransactionMessage? = nil
+    var boostMessages: [TransactionMessage] = []
     
     //Generic rows Data
     var separatorDate: Date? = nil
@@ -32,7 +33,8 @@ struct MessageTableCellState {
         separatorDate: Date?,
         bubbleState: MessageTableCellState.BubbleState?,
         contactImage: UIImage?,
-        replyingMessage: TransactionMessage? = nil
+        replyingMessage: TransactionMessage? = nil,
+        boostMessages: [TransactionMessage] = []
     ) {
         self.message = message
         self.chat = chat
@@ -43,6 +45,7 @@ struct MessageTableCellState {
         self.bubbleState = bubbleState
         self.contactImage = contactImage
         self.replyingMessage = replyingMessage
+        self.boostMessages = boostMessages
     }
     
     lazy var bubble: BubbleMessageLayoutState.Bubble? = {
@@ -111,25 +114,7 @@ struct MessageTableCellState {
             return nil
         }
         
-        var senderInfo: (UIColor, String) = (UIColor.Sphinx.SecondaryText, "Unknow")
-        var isSent = replyingMessage.isOutgoing(ownerId: owner.id)
-        
-        if isSent {
-            senderInfo = (
-                owner.getColor(),
-                owner.nickname ?? "Unknow"
-            )
-        } else if chat.isPublicGroup() {
-            senderInfo = (
-                ChatHelper.getSenderColorFor(message: replyingMessage),
-                replyingMessage.senderAlias ?? "Unknow"
-            )
-        } else if let contact = contact {
-            senderInfo = (
-                contact.getColor(),
-                contact.nickname ?? "Unknow"
-            )
-        }
+        let senderInfo: (UIColor, String, String?) = getSenderInfo(message: replyingMessage)
         
         return BubbleMessageLayoutState.MessageReply(
             messageId: replyingMessage.id,
@@ -186,6 +171,38 @@ struct MessageTableCellState {
         return nil
     }()
     
+    lazy var boosts: BubbleMessageLayoutState.Boosts? = {
+        
+        guard let message = message, boostMessages.count > 0 else {
+            return nil
+        }
+        
+        var boosts: [BubbleMessageLayoutState.Boost] = []
+        var boostedByMe = false
+        var totalAmount = 0
+
+        for boostMessage in boostMessages {
+            let senderInfo: (UIColor, String, String?) = getSenderInfo(message: boostMessage)
+
+            totalAmount += boostMessage.amount?.intValue ?? 0
+
+            boosts.append(
+                BubbleMessageLayoutState.Boost(
+                    amount: boostMessage.amount?.intValue ?? 0,
+                    senderPic: senderInfo.2,
+                    senderAlias: senderInfo.1,
+                    senderColor: senderInfo.0
+                )
+            )
+        }
+        
+        return BubbleMessageLayoutState.Boosts(
+            boosts: boosts,
+            totalAmount: totalAmount,
+            boostedByMe: boostedByMe
+        )
+    }()
+    
     var isTextOnlyMessage: Bool {
         mutating get {
             return (self.messageContent != nil) &&
@@ -196,13 +213,55 @@ struct MessageTableCellState {
     }
 }
 
+extension MessageTableCellState {
+    func getSenderInfo(
+        message: TransactionMessage
+    ) -> (UIColor, String, String?) {
+        
+        var senderInfo: (UIColor, String, String?) = (
+            UIColor.Sphinx.SecondaryText,
+            "Unknow",
+            nil
+        )
+        
+        let isSent = message.isOutgoing(ownerId: owner.id)
+        
+        if isSent {
+            senderInfo = (
+                owner.getColor(),
+                owner.nickname ?? "Unknow",
+                owner.avatarUrl
+            )
+        } else if chat.isPublicGroup() {
+            senderInfo = (
+                ChatHelper.getSenderColorFor(message: message),
+                message.senderAlias ?? "Unknow",
+                message.senderPic
+            )
+        } else if let contact = contact {
+            senderInfo = (
+                contact.getColor(),
+                contact.nickname ?? "Unknow",
+                contact.avatarUrl
+            )
+        }
+        
+        return senderInfo
+    }
+}
+
 extension MessageTableCellState : Hashable {
 
     static func == (lhs: MessageTableCellState, rhs: MessageTableCellState) -> Bool {
+        var mutableLhs = lhs
+        var mutableRhs = rhs
+        
         return
-            lhs.message?.id == rhs.message?.id &&
-            lhs.message?.status == rhs.message?.status &&
-            lhs.bubbleState == rhs.bubbleState
+            mutableLhs.message?.id           == mutableRhs.message?.id &&
+            mutableLhs.message?.status       == mutableRhs.message?.status &&
+            mutableLhs.bubbleState           == mutableRhs.bubbleState &&
+            mutableLhs.boostMessages.count   == mutableRhs.boostMessages.count &&
+            mutableLhs.isTextOnlyMessage     == mutableRhs.isTextOnlyMessage
             
     }
 

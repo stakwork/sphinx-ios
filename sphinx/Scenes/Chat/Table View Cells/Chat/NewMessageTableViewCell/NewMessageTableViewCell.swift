@@ -111,6 +111,9 @@ class NewMessageTableViewCell: SwipableReplyCell, ChatTableViewCellProtocol {
         configureWith(directPayment: mutableMessageCellState.directPayment, and: bubble)
         configureWith(callLink: mutableMessageCellState.callLink)
         
+        //Bottom view
+        configureWith(boosts: mutableMessageCellState.boosts)
+        
         ///Header and avatar
         configureWith(avatarImage: mutableMessageCellState.avatarImage)
         configureWith(bubble: bubble)

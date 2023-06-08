@@ -148,6 +148,41 @@ struct BubbleMessageLayoutState: CommonLayoutState {
         }
     }
     
+    struct Boosts {
+        var boosts: [Boost]
+        var totalAmount: Int
+        var boostedByMe: Bool
+        
+        init(
+            boosts: [Boost],
+            totalAmount: Int,
+            boostedByMe: Bool
+        ) {
+            self.boosts = boosts
+            self.totalAmount = totalAmount
+            self.boostedByMe = boostedByMe
+        }
+    }
+    
+    struct Boost {
+        var amount: Int
+        var senderPic: String?
+        var senderAlias: String?
+        var senderColor: UIColor?
+        
+        init(
+            amount: Int,
+            senderPic: String?,
+            senderAlias: String?,
+            senderColor: UIColor?
+        ) {
+            self.amount = amount
+            self.senderPic = senderPic
+            self.senderAlias = senderAlias
+            self.senderColor = senderColor
+        }
+    }
+    
 }
 
 struct NoBubbleMessageLayoutState: CommonLayoutState {

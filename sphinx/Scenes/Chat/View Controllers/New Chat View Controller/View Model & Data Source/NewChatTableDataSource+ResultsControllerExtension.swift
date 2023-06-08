@@ -146,7 +146,8 @@ extension NewChatTableDataSource {
         var groupingDate: Date? = nil
 
         for (index, message) in messages.enumerated() {
-            if message.isTextMessage() {
+            if message.isTextMessage() ||
+               message.isDirectPayment() {
                 
                 let bubbleState = getBubbleBackgroundForMessage(
                     message: message,
@@ -167,7 +168,8 @@ extension NewChatTableDataSource {
                         separatorDate: nil,
                         bubbleState: bubbleState,
                         contactImage: headerImage,
-                        replyingMessage: replyingMessage
+                        replyingMessage: replyingMessage,
+                        boostMessages: []
                     ),
                     at: 0
                 )

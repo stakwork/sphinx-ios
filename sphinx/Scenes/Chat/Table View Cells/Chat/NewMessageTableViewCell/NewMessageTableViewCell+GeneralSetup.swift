@@ -11,7 +11,6 @@ import UIKit
 extension NewMessageTableViewCell {
     
     func setupViews() {
-        bubbleOnlyText.layer.cornerRadius = 8.0
         bubbleAllView.layer.cornerRadius = 8.0
 
         paidAttachmentView.roundCorners(
@@ -31,9 +30,6 @@ extension NewMessageTableViewCell {
     }
     
     func hideAllSubviews() {
-        bubbleAllView.isHidden = true
-        bubbleOnlyText.isHidden = true
-        
         messageReplyView.isHidden = true
         sentPaidDetailsView.isHidden = true
         paidTextMessageView.isHidden = true

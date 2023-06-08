@@ -48,7 +48,6 @@ extension NewMessageTableViewCell {
         messageLabelTrailingConstraint.priority = UILayoutPriority(textRightAligned ? 1000 : 1)
         
         let bubbleColor = isOutgoing ? UIColor.Sphinx.SentMsgBG : UIColor.Sphinx.ReceivedMsgBG
-        bubbleOnlyText.backgroundColor = bubbleColor
         bubbleAllView.backgroundColor = bubbleColor
         
         statusHeaderView.configureWith(direction: direction)

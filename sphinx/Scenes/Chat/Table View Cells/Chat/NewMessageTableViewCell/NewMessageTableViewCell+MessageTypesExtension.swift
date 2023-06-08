@@ -18,7 +18,6 @@ extension NewMessageTableViewCell {
             messageLabel.font = messageContent.font
             
             textMessageView.isHidden = false
-            bubbleOnlyText.isHidden = false
         }
     }
     
@@ -29,8 +28,6 @@ extension NewMessageTableViewCell {
         if let messageReply = messageReply {
             messageReplyView.configureWith(messageReply: messageReply, and: bubble)
             messageReplyView.isHidden = false
-            
-            bubbleAllView.isHidden = false
         }
     }
     
@@ -41,8 +38,6 @@ extension NewMessageTableViewCell {
         if let directPayment = directPayment {
             directPaymentView.configureWith(directPayment: directPayment, and: bubble)
             directPaymentView.isHidden = false
-            
-            bubbleAllView.isHidden = false
         }
     }
     
@@ -52,8 +47,6 @@ extension NewMessageTableViewCell {
         if let callLink = callLink {
             callLinkView.configureWith(callLink: callLink)
             callLinkView.isHidden = false
-            
-            bubbleAllView.isHidden = false
         }
     }
     
@@ -63,7 +56,6 @@ extension NewMessageTableViewCell {
         if let boosts = boosts {
 //            callLinkView.configureWith(callLink: callLink)
             messageBoostView.isHidden = false
-            bubbleAllView.isHidden = false
         }
     }
 }

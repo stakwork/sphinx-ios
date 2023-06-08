@@ -28,10 +28,6 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Gp-CF-p7o">
                         <rect key="frame" x="0.0" y="0.0" width="378" height="1424"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kPT-TB-gta">
-                                <rect key="frame" x="55.999999999999986" y="744.66666666666663" width="247.66666666666663" height="156.33333333333337"/>
-                                <color key="backgroundColor" name="SentMsgBG"/>
-                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iIC-G3-A9L">
                                 <rect key="frame" x="55.999999999999986" y="27" width="247.66666666666663" height="1395"/>
                                 <color key="backgroundColor" name="SentMsgBG"/>
@@ -406,17 +402,13 @@
                         <constraints>
                             <constraint firstItem="mpu-Ww-LGT" firstAttribute="leading" secondItem="9Gp-CF-p7o" secondAttribute="leading" constant="15" id="0ZZ-B1-T4B"/>
                             <constraint firstItem="iIC-G3-A9L" firstAttribute="leading" secondItem="j6X-QF-M6e" secondAttribute="leading" id="2uI-SC-WMX"/>
-                            <constraint firstItem="kPT-TB-gta" firstAttribute="bottom" secondItem="pPY-Rf-UkB" secondAttribute="bottom" constant="16" id="GGc-ua-Pbe"/>
                             <constraint firstItem="5b0-1L-71y" firstAttribute="top" secondItem="iIC-G3-A9L" secondAttribute="top" id="Ip2-xd-QQn"/>
                             <constraint firstItem="iIC-G3-A9L" firstAttribute="bottom" secondItem="j6X-QF-M6e" secondAttribute="bottom" id="Ipw-9p-gOL"/>
-                            <constraint firstItem="kPT-TB-gta" firstAttribute="leading" secondItem="pPY-Rf-UkB" secondAttribute="leading" constant="-16" id="Jsi-k8-eJu"/>
                             <constraint firstAttribute="bottom" secondItem="mpu-Ww-LGT" secondAttribute="bottom" constant="2" id="Jvv-NQ-mkP"/>
                             <constraint firstItem="iIC-G3-A9L" firstAttribute="top" secondItem="j6X-QF-M6e" secondAttribute="top" id="KcZ-e9-C3W"/>
                             <constraint firstItem="iIC-G3-A9L" firstAttribute="trailing" secondItem="j6X-QF-M6e" secondAttribute="trailing" id="RHG-bl-5k2"/>
                             <constraint firstItem="5b0-1L-71y" firstAttribute="trailing" secondItem="iIC-G3-A9L" secondAttribute="trailing" constant="7" id="ZUM-gU-9u5"/>
                             <constraint firstAttribute="trailing" secondItem="mpu-Ww-LGT" secondAttribute="trailing" constant="9" id="fDD-q1-MrS"/>
-                            <constraint firstItem="kPT-TB-gta" firstAttribute="top" secondItem="pPY-Rf-UkB" secondAttribute="top" constant="-16" id="gK7-VK-j7c"/>
-                            <constraint firstItem="kPT-TB-gta" firstAttribute="trailing" secondItem="pPY-Rf-UkB" secondAttribute="trailing" constant="16" id="kGy-dD-3i0"/>
                             <constraint firstItem="mpu-Ww-LGT" firstAttribute="top" secondItem="9Gp-CF-p7o" secondAttribute="top" constant="2" id="tB7-il-Xvy"/>
                             <constraint firstItem="fdj-WN-CtK" firstAttribute="top" secondItem="iIC-G3-A9L" secondAttribute="top" id="xni-VS-emV"/>
                             <constraint firstItem="fdj-WN-CtK" firstAttribute="leading" secondItem="iIC-G3-A9L" secondAttribute="leading" constant="-4" id="yZ7-07-cIK"/>
@@ -449,7 +441,6 @@
                 <outlet property="audioMessageView" destination="SmW-PZ-3BF" id="ckR-Da-4Ey"/>
                 <outlet property="botResponseView" destination="8uW-aX-5nz" id="PbF-AM-0Ca"/>
                 <outlet property="bubbleAllView" destination="iIC-G3-A9L" id="NAB-O5-GMf"/>
-                <outlet property="bubbleOnlyText" destination="kPT-TB-gta" id="KIr-WV-sVS"/>
                 <outlet property="bubbleWidthConstraint" destination="o8z-eZ-1vd" id="M6u-ME-HoX"/>
                 <outlet property="button1" destination="gmq-0D-Jtd" id="TD3-C1-KTs"/>
                 <outlet property="callLinkView" destination="L6b-x8-zDV" id="CWV-JJ-puw"/>

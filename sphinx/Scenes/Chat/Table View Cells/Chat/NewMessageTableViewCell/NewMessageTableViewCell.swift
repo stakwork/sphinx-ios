@@ -32,7 +32,6 @@ protocol ChatTableViewCellProtocol: class {
 class NewMessageTableViewCell: SwipableReplyCell, ChatTableViewCellProtocol {
     
     ///General views
-    @IBOutlet weak var bubbleOnlyText: UIView!
     @IBOutlet weak var bubbleAllView: UIView!
     @IBOutlet weak var receivedArrow: UIView!
     @IBOutlet weak var sentArrow: UIView!

@@ -725,6 +725,10 @@ extension TransactionMessage {
                 }
             }
             
+            if isCallLink() {
+                return nil
+            }
+            
             if let messageC = self.messageContent {
                 if messageC.isEncryptedString() {
                     return "encryption.error".localized

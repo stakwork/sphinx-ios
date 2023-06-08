@@ -135,6 +135,19 @@ struct BubbleMessageLayoutState: CommonLayoutState {
         }
     }
     
+    struct CallLink {
+        var link: String
+        var callMode: VideoCallHelper.CallMode
+        
+        init(
+            link: String,
+            callMode: VideoCallHelper.CallMode
+        ) {
+            self.link = link
+            self.callMode = callMode
+        }
+    }
+    
 }
 
 struct NoBubbleMessageLayoutState: CommonLayoutState {

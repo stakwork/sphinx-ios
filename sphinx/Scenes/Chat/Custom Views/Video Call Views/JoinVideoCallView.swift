@@ -50,6 +50,12 @@ class JoinVideoCallView: UIView {
         videoButtonContainer.addShadow(location: VerticalLocation.bottom, color: UIColor.Sphinx.GreenBorder, opacity: 1, radius: 0.5, bottomhHeight: 1.5)
     }
     
+    func configureWith(
+        callLink: BubbleMessageLayoutState.CallLink
+    ) {
+        videoButtonContainer.isHidden = callLink.callMode == .Audio
+    }
+    
     func configure(delegate: JoinCallViewDelegate, link: String) {
         self.delegate = delegate
         

@@ -47,11 +47,7 @@ struct MessageTableCellState {
     
     lazy var bubble: BubbleMessageLayoutState.Bubble? = {
         
-        guard let message = message else {
-            return nil
-        }
-        
-        guard let bubbleState = self.bubbleState else {
+        guard let message = message, let bubbleState = self.bubbleState else {
             return nil
         }
         
@@ -111,11 +107,7 @@ struct MessageTableCellState {
     
     lazy var messageReply: BubbleMessageLayoutState.MessageReply? = {
         
-        guard let message = message else {
-            return nil
-        }
-        
-        guard let replyingMessage = replyingMessage else {
+        guard let message = message, let replyingMessage = replyingMessage else {
             return nil
         }
         
@@ -166,17 +158,28 @@ struct MessageTableCellState {
     }()
     
     lazy var directPayment: BubbleMessageLayoutState.DirectPayment? = {
-        guard let message = message else {
+        guard let message = message, message.isDirectPayment() else {
             return nil
         }
         
-        if message.isDirectPayment() {
-            return BubbleMessageLayoutState.DirectPayment(
-                amount: message.amount?.intValue ?? 0,
-                isTribePmt: chat.isPublicGroup(),
-                recipientPic: message.recipientPic,
-                recipientAlias: message.recipientAlias,
-                recipientColor: ChatHelper.getRecipientColorFor(message: message)
+        return BubbleMessageLayoutState.DirectPayment(
+            amount: message.amount?.intValue ?? 0,
+            isTribePmt: chat.isPublicGroup(),
+            recipientPic: message.recipientPic,
+            recipientAlias: message.recipientAlias,
+            recipientColor: ChatHelper.getRecipientColorFor(message: message)
+        )
+    }()
+    
+    lazy var callLink: BubbleMessageLayoutState.CallLink? = {
+        guard let message = message, message.isCallLink() else {
+            return nil
+        }
+        
+        if let link = message.messageContent, link.isNotEmpty {
+            return BubbleMessageLayoutState.CallLink(
+                link: link,
+                callMode: VideoCallHelper.getCallMode(link: link)
             )
         }
         

@@ -45,4 +45,15 @@ extension NewMessageTableViewCell {
             bubbleAllView.isHidden = false
         }
     }
+    
+    func configureWith(
+        callLink: BubbleMessageLayoutState.CallLink?
+    ) {
+        if let callLink = callLink {
+            callLinkView.configureWith(callLink: callLink)
+            callLinkView.isHidden = false
+            
+            bubbleAllView.isHidden = false
+        }
+    }
 }

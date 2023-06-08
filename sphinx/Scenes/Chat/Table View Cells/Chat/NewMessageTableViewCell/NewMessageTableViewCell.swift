@@ -92,9 +92,6 @@ class NewMessageTableViewCell: SwipableReplyCell {
             return
         }
         
-        configureWith(avatarImage: mutableMessageCellState.avatarImage)
-        configureWith(bubble: bubble)
-        
         if let statusHeader = mutableMessageCellState.statusHeader {
             configureWith(statusHeader: statusHeader)
         }
@@ -106,6 +103,11 @@ class NewMessageTableViewCell: SwipableReplyCell {
         
         ///Other message types
         configureWith(directPayment: mutableMessageCellState.directPayment, and: bubble)
+        configureWith(callLink: mutableMessageCellState.callLink)
+        
+        ///Header and avatar
+        configureWith(avatarImage: mutableMessageCellState.avatarImage)
+        configureWith(bubble: bubble)
         
     }
     

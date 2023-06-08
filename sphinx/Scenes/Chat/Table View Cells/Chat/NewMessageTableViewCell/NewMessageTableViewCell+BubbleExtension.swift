@@ -35,18 +35,19 @@ extension NewMessageTableViewCell {
     func configureWith(
         direction: MessageTableCellState.MessageDirection
     ) {
-        let outgoing = direction == .Outgoing
+        let isOutgoing = direction.isOutgoing()
+        let textRightAligned = isOutgoing && bubbleAllView.isHidden
         
-        sentMessageMargingView.isHidden = !outgoing
-        receivedMessageMarginView.isHidden = outgoing
+        sentMessageMargingView.isHidden = !isOutgoing
+        receivedMessageMarginView.isHidden = isOutgoing
         
-        receivedArrow.isHidden = outgoing
-        sentArrow.isHidden = !outgoing
+        receivedArrow.isHidden = isOutgoing
+        sentArrow.isHidden = !isOutgoing
         
-        messageLabelLeadingConstraint.priority = UILayoutPriority(outgoing ? 1 : 1000)
-        messageLabelTrailingConstraint.priority = UILayoutPriority(outgoing ? 1000 : 1)
+        messageLabelLeadingConstraint.priority = UILayoutPriority(textRightAligned ? 1 : 1000)
+        messageLabelTrailingConstraint.priority = UILayoutPriority(textRightAligned ? 1000 : 1)
         
-        let bubbleColor = outgoing ? UIColor.Sphinx.SentMsgBG : UIColor.Sphinx.ReceivedMsgBG
+        let bubbleColor = isOutgoing ? UIColor.Sphinx.SentMsgBG : UIColor.Sphinx.ReceivedMsgBG
         bubbleOnlyText.backgroundColor = bubbleColor
         bubbleAllView.backgroundColor = bubbleColor
         

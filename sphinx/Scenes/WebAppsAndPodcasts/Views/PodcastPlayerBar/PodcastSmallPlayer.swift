@@ -76,7 +76,7 @@ class PodcastSmallPlayer: UIView {
             return
         }
         
-        if let feed = ContentFeed.getFeedWith(feedId: podcastId) {
+        if let feed = ContentFeed.getFeedById(feedId: podcastId) {
             self.podcast = PodcastFeed.convertFrom(contentFeed: feed)
             self.delegate = delegate
         } else if podcastId == RecommendationsHelper.kRecommendationPodcastId {

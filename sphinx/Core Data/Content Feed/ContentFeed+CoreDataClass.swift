@@ -166,7 +166,7 @@ public class ContentFeed: NSManagedObject {
         context: NSManagedObjectContext,
         completion: @escaping (Result<ContentFeed, Error>) -> ()
     ) {
-        let backgroundContentFeed: ContentFeed? = ContentFeed.getFeedWith(feedId: contentFeedId, managedContext: context)
+        let backgroundContentFeed: ContentFeed? = ContentFeed.getFeedById(feedId: contentFeedId, managedContext: context)
         
         fetchContentFeedItems(
             at: feedUrl,

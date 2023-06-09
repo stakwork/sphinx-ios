@@ -35,6 +35,10 @@ extension DashboardFeedsContainerViewController {
             titleForDisplay: "dashboard.feeds.filters.play".localized,
             displayOrder: 5
         )
+        static var downloaded: Self = .init(
+            titleForDisplay: "Downloaded",
+            displayOrder: 6
+        )
     }
 }
 
@@ -47,6 +51,7 @@ extension DashboardFeedsContainerViewController.ContentFilterOption: CaseIterabl
             .watch,
             .read,
             .play,
+            .downloaded
         ]
     }
 }

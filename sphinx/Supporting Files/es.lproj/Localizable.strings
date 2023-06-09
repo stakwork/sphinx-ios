@@ -603,3 +603,16 @@
 "badges.deactivation-success" = "Insignias fueron desactivado exitosamente.";
 "member-profile.moderator" = "MODERADOR";
 "member-profile.tribe-member" = "MIEMBRO DE LA TRIBU";
+
+//STORAGE MANAGEMENT
+"storage.management.loading.deletion" = "Borrando";
+"storage.management.loading.deletion.subtitle" = "Puede tomar hasta un minuto";
+"saving.limit.warning" = "Guardar este límite eliminará al menos %@ de tus datos más antiguos.";
+"are.you.sure.deletion.warning" = "Continuar eliminará todos tus %@.";
+"deletion.warning.title" = "Has escogido eliminar todos tus %@";
+"deletion.warning.subtitle" = "Esta acción elimina permanentemente todos los archivos seleccionados y no se puede deshacer.";
+"storage.management.audio.files" = "archivos de audio";
+"storage.management.video" = "video";
+"storage.management.images" = "imágenes";
+"are.you.sure" = "Are you sure?";
+"chat.media" = "medios de chat";

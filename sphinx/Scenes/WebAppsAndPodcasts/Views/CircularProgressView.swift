@@ -70,6 +70,37 @@ class CircularProgressView: UIView {
         layer.addSublayer(progressLayer)
     }
     
+    func startRotation(){
+        // Create a CABasicAnimation for rotation
+        let rotationAnimation = CABasicAnimation(keyPath: "transform.rotation.z")
+        rotationAnimation.fromValue = 0.0
+        rotationAnimation.toValue = CGFloat.pi * 2.0 // 360 degrees
+        rotationAnimation.duration = 2.0  // Duration of one full rotation
+        rotationAnimation.repeatCount = .infinity  // Repeat indefinitely
+
+        // Add the animation to the view's layer
+        self.layer.add(rotationAnimation, forKey: "rotationAnimation")
+        self.layer.speed = 2.0
+    }
+    
+    func stopRotation() {
+        // Remove the rotation animation from the view's layer
+        self.layer.removeAnimation(forKey: "rotationAnimation")
+
+        // Set the layer's transform to the current presentation layer transform
+        if let presentationLayer = self.layer.presentation() {
+            self.layer.transform = presentationLayer.transform
+        }
+
+        // Remove any pending animations
+        self.layer.removeAllAnimations()
+    }
+
+    
+    func setProgressStrokeColor(color:UIColor){
+        progressLayer.strokeColor = color.cgColor
+    }
+    
     func progressAnimation(
         to: CGFloat,
         active: Bool

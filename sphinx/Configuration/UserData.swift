@@ -20,6 +20,28 @@ class UserData {
     let onionConnector = SphinxOnionConnector.sharedInstance
     
     public static let kMaximumPINHoursValue: Int = 25
+    public static let kMinimumMemoryFootprintGB : Int = 0
+    public static var kMaximumMemoryFootprintGB : Int = {
+        if let max = getTotalDiskStorage(){
+            return Int(Double(max)/1e9)
+        }
+        else{
+            return 100
+        }
+    }()
+    
+    static func getTotalDiskStorage() -> UInt64? {
+        do {
+            let resourceURL = URL(fileURLWithPath: "/")
+            let resourceValues = try resourceURL.resourceValues(forKeys: [.volumeTotalCapacityKey])
+            if let totalCapacity = resourceValues.volumeTotalCapacity {
+                return UInt64(totalCapacity)
+            }
+        } catch {
+            print("Error: \(error)")
+        }
+        return nil
+    }
     
     func isUserLogged() -> Bool {
         return getAppPin() != "" &&
@@ -293,6 +315,15 @@ class UserData {
         } else {
             UserDefaults.Keys.privacyPinHours.set(hours)
         }
+    }
+    
+    func getMaxMemoryGB() -> Int {
+        let result = UserDefaults.Keys.maxMemory.get(defaultValue: UserData.kMaximumMemoryFootprintGB)
+        return result
+    }
+    
+    func setMaxMemory(GB: Int) {
+        UserDefaults.Keys.maxMemory.set(GB)
     }
     
     func getUserId() -> Int {

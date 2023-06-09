@@ -39,7 +39,7 @@ class FeedsManager : NSObject {
     }
     
     func updateLastConsumedWithFeedID(feedID: String) {
-        if let feed = ContentFeed.getFeedWith(feedId: feedID) {
+        if let feed = ContentFeed.getFeedById(feedId: feedID) {
             feed.updateLastConsumed()
         }
     }
@@ -48,7 +48,7 @@ class FeedsManager : NSObject {
     func saveContentFeedStatus(
         for feedId: String
     ){
-        if let contentFeed = ContentFeed.getFeedWith(feedId: feedId) {
+        if let contentFeed = ContentFeed.getFeedById(feedId: feedId) {
             let contentFeedStatus = getContentFeedStatus(for: contentFeed)
             let contentFeedStatusParams = contentFeedStatus.toJSON()
          
@@ -303,7 +303,7 @@ class FeedsManager : NSObject {
         context: NSManagedObjectContext,
         completion: @escaping (ContentFeed?) -> ()
     ) {
-        if let existingContentFeed = ContentFeed.getFeedWith(feedId: feedId, managedContext: context) {
+        if let existingContentFeed = ContentFeed.getFeedById(feedId: feedId, managedContext: context) {
             completion(existingContentFeed)
         } else {
             ContentFeed.fetchContentFeed(at: feedUrl, chat: chat, persistingIn: context, then: { result in
@@ -434,7 +434,7 @@ class FeedsManager : NSObject {
         feedId: String,
         completion: @escaping () -> ()
     ) {
-        if let feed = ContentFeed.getFeedWith(feedId: feedId) {
+        if let feed = ContentFeed.getFeedById(feedId: feedId) {
             
             let podcast = PodcastFeed.convertFrom(contentFeed: feed)
             
@@ -606,9 +606,34 @@ class FeedsManager : NSObject {
     
     func getPodcastAndEpisodeFromGenericFeed(contentFeed:ContentFeed,itemID:String)->(PodcastFeed?,PodcastEpisode?){
         let pf = PodcastFeed.convertFrom(contentFeed: contentFeed)
+        return getPodcastAndEpisodeFromPodcastFeed(pf: pf, itemID: itemID)
+    }
+    
+    func getPodcastAndEpisodeFromPodcastFeed(pf:PodcastFeed,itemID:String)->(PodcastFeed?,PodcastEpisode?){
         if let episode = pf.episodes?.first(where: {$0.itemID == itemID}){
             return(pf,episode)
         }
         return(pf,nil)
     }
+    
+    func fetchPodcastEpisode(itemID: String) -> ContentFeedItem? {
+        let fetchRequest: NSFetchRequest<ContentFeedItem> = PodcastEpisode.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "itemID == %@", itemID)
+        
+        do {
+            let podcastFeedItems = try CoreDataManager.sharedManager.persistentContainer.viewContext.fetch(fetchRequest)
+            if let podcastFeedItem = podcastFeedItems.first{
+                return podcastFeedItem
+                //let convertedEpisode = PodcastEpisode.convertFrom(contentFeedItem: podcastFeedItem)
+                //return convertedEpisode
+            }
+            else{
+                return nil
+            }
+        } catch {
+            print("Error fetching podcast episode: \(error)")
+            return nil
+        }
+    }
+    
 }

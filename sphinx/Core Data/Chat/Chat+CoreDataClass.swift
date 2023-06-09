@@ -525,7 +525,7 @@ public class Chat: NSManagedObject {
                     if let feedUrl = self.tribeInfo?.feedUrl, !feedUrl.isEmpty {
                         ContentFeed.fetchChatFeedContentInBackground(feedUrl: feedUrl, chatId: self.id) { feedId in
                             if let feedId = feedId {
-                                self.contentFeed = ContentFeed.getFeedWith(feedId: feedId)
+                                self.contentFeed = ContentFeed.getFeedById(feedId: feedId)
                                 self.saveChat()
                             }
                             completion()

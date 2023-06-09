@@ -61,6 +61,22 @@ extension PodcastEpisode {
         return getRemoteAudioUrl()
     }
     
+    func getFileSizeMB() -> Double?{
+        if let path = getAudioUrl(){
+            do {
+                let attributes = try FileManager.default.attributesOfItem(atPath: path.path)
+                let fileSize = attributes[.size] as! UInt64
+                let sizeInMB = Double(fileSize) / 1048576.0 // Convert bytes to megabytes
+                print("File size: \(sizeInMB) MB")
+                return sizeInMB
+            } catch {
+                // Handle the error here
+                print("Error: \(error.localizedDescription)")
+            }
+        }
+        return nil
+    }
+    
     func shouldDeleteFile(deleteCompletion: @escaping () -> ()) {
         if let fileName = getLocalFileName() {
             

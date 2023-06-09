@@ -81,6 +81,12 @@ class NewPodcastPlayerViewController: UIViewController {
         }
     }
     
+    func loadEpisode(withID:String){
+        if let episodeIndex = self.tableDataSource.podcast.episodesArray.firstIndex(where: {$0.itemID == withID}){
+            didTapEpisodeAt(index: episodeIndex)
+        }
+    }
+    
     override func endAppearanceTransition() {
         super.endAppearanceTransition()
         
@@ -192,7 +198,7 @@ extension NewPodcastPlayerViewController : PodcastPlayerViewDelegate {
     func didTapSubscriptionToggleButton() {
         podcast.isSubscribedToFromSearch.toggle()
         
-        let contentFeed: ContentFeed? = ContentFeed.getFeedWith(feedId: podcast.feedID)
+        let contentFeed: ContentFeed? = ContentFeed.getFeedById(feedId: podcast.feedID)
         contentFeed?.isSubscribedToFromSearch.toggle()
         contentFeed?.managedObjectContext?.saveContext()
     }

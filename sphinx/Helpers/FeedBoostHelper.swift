@@ -18,7 +18,7 @@ class FeedBoostHelper : NSObject {
         with feedId: String,
         and chat: Chat?
     ) {
-        self.contentFeed = ContentFeed.getFeedWith(feedId: feedId)
+        self.contentFeed = ContentFeed.getFeedById(feedId: feedId)
         self.chat = chat
     }
     

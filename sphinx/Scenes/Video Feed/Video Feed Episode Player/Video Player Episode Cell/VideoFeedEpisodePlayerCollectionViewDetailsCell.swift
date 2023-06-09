@@ -68,7 +68,7 @@ extension VideoFeedEpisodePlayerCollectionViewDetailsCell {
         self.boostDelegate = boostDelegate
         
         if let feedId = videoEpisode.videoFeed?.feedID {
-            self.contentFeed = ContentFeed.getFeedWith(feedId: feedId)
+            self.contentFeed = ContentFeed.getFeedById(feedId: feedId)
         }
         
         setupActions()
@@ -106,7 +106,7 @@ extension VideoFeedEpisodePlayerCollectionViewDetailsCell {
             
             videoFeed.isSubscribedToFromSearch.toggle()
             
-            let contentFeed: ContentFeed? = ContentFeed.getFeedWith(feedId: videoFeed.feedID)
+            let contentFeed: ContentFeed? = ContentFeed.getFeedById(feedId: videoFeed.feedID)
             contentFeed?.isSubscribedToFromSearch.toggle()
             contentFeed?.managedObjectContext?.saveContext()
         }

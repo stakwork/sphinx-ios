@@ -80,7 +80,7 @@ extension NewsletterItemDetailViewController {
         viewController.boostDelegate = boostDelegate
         
         if let feedId = newsletterItem.newsletterFeed?.feedID {
-            viewController.contentFeed = ContentFeed.getFeedWith(feedId: feedId)
+            viewController.contentFeed = ContentFeed.getFeedById(feedId: feedId)
         }
         
         return viewController

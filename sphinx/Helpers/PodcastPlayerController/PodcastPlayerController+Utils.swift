@@ -48,7 +48,7 @@ extension PodcastPlayerController {
         if let pd = self.podcast, pd.feedID == podcastId {
             podcast = pd
         } else {
-            if let contentFeed = ContentFeed.getFeedWith(feedId: podcastId) {
+            if let contentFeed = ContentFeed.getFeedById(feedId: podcastId) {
                 let podcastFeed = PodcastFeed.convertFrom(contentFeed: contentFeed)
                 
                 podcast = podcastFeed

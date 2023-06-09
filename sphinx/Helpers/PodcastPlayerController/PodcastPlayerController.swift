@@ -107,7 +107,7 @@ class PodcastPlayerController {
     }
     
     func getPodcastFrom(podcastData: PodcastData?) -> PodcastFeed? {
-        if let contentFeed = ContentFeed.getFeedWith(feedId: podcastData?.podcastId ?? "") {
+        if let contentFeed = ContentFeed.getFeedById(feedId: podcastData?.podcastId ?? "") {
             return PodcastFeed.convertFrom(contentFeed: contentFeed)
         } else if podcastData?.podcastId == RecommendationsHelper.kRecommendationPodcastId {
             return RecommendationsHelper.sharedInstance.recommendationsPodcast

@@ -132,6 +132,16 @@ class DashboardFeedsContainerViewController: UIViewController {
         )
     }()
     
+    internal lazy var downloadedPodcastsVC : ProfileManageStorageSourceDetailsVC = {
+        let vc = ProfileManageStorageSourceDetailsVC.instantiate(
+            items: StorageManager.sharedManager.allItems,
+            source: .podcasts,
+            sourceTotalSize: 69420
+        )
+        vc.presentationContext = .downloadedPodcastList
+        return vc
+    }()
+    
     static func instantiate(
         managedObjectContext: NSManagedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext,
         feedsListContainerDelegate: DashboardFeedsListContainerViewControllerDelegate
@@ -218,6 +228,8 @@ extension DashboardFeedsContainerViewController {
             return newsletterFeedCollectionViewController
         case ContentFilterOption.play.id:
             return playFeedCollectionViewController
+        case ContentFilterOption.downloaded.id:
+            return downloadedPodcastsVC
         default:
             preconditionFailure()
         }
@@ -302,7 +314,7 @@ extension DashboardFeedsContainerViewController {
     private func handleAllFeedsCellSelection(
         _ feedId: String
     ) {
-        if let contentFeed = ContentFeed.getFeedWith(feedId: feedId) {
+        if let contentFeed = ContentFeed.getFeedById(feedId: feedId) {
             if contentFeed.isNewsletter {
                 feedsListContainerDelegate?.viewController(
                     self,

@@ -5,7 +5,7 @@ import CoreData
 extension DashboardRootViewController: DashboardFeedsListContainerViewControllerDelegate, NewsletterFeedContainerViewControllerDelegate {
     
     func viewController(_ viewController: UIViewController, didSelectFeedSearchResult feedId: String) {
-        if let contentFeed = ContentFeed.getFeedWith(feedId: feedId) {
+        if let contentFeed = ContentFeed.getFeedById(feedId: feedId) {
             if contentFeed.isPodcast {
                 let podcastFeed = PodcastFeed.convertFrom(contentFeed: contentFeed)
                 self.viewController(self, didSelectPodcastFeed: podcastFeed)
@@ -68,7 +68,7 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
         didSelectVideoFeedWithID videoFeedId: String
     ) {
         guard
-            let contentFeed = ContentFeed.getFeedWith(feedId: videoFeedId),
+            let contentFeed = ContentFeed.getFeedById(feedId: videoFeedId),
             contentFeed.isVideo
         else {
             preconditionFailure()
@@ -109,7 +109,7 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
         didSelectNewsletterFeedWithID newsletterFeedID: String
     ) {
         guard
-            let contentFeed = ContentFeed.getFeedWith(feedId: newsletterFeedID),
+            let contentFeed = ContentFeed.getFeedById(feedId: newsletterFeedID),
             contentFeed.isNewsletter
         else {
             preconditionFailure()

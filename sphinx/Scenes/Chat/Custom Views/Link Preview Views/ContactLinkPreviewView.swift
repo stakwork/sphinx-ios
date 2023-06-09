@@ -76,7 +76,7 @@ class ContactLinkPreviewView: LinkPreviewBubbleView {
             return
         }
         MediaLoader.asyncLoadImage(imageView: contactImageView, nsUrl: imageUrl, placeHolderImage: UIImage(named: "addContactIcon"), completion: { image in
-            MediaLoader.storeImageInCache(img: image, url: imageUrlString)
+            MediaLoader.storeImageInCache(img: image, url: imageUrlString, chat: contact.getChat())
             self.contactImageView.image = image
         }, errorCompletion: { _ in })
         

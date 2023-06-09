@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21507"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="StorageSummaryView" customModule="sphinx" customModuleProvider="target">
+            <connections>
+                <outlet property="additionFootprintView" destination="sdV-qp-H14" id="vQM-f4-qSA"/>
+                <outlet property="additionFootprintWidth" destination="Rz4-Ue-MDy" id="ZgD-Cy-24c"/>
+                <outlet property="additionLeadingEdge" destination="E6E-t4-HWH" id="Y7D-Hj-Xyz"/>
+                <outlet property="audioFootprintWidth" destination="dWz-zP-06H" id="25o-3f-9gO"/>
+                <outlet property="audioMemoryFootprintView" destination="6dI-dX-Lyl" id="EGg-eO-OaU"/>
+                <outlet property="contentView" destination="iN0-l3-epB" id="TdH-qE-RO0"/>
+                <outlet property="deletionFootprintView" destination="kFG-HU-PMi" id="DfM-kE-gyB"/>
+                <outlet property="deletionFootprintWidth" destination="VBe-Mk-rx2" id="0Fs-LG-qVT"/>
+                <outlet property="deletionTrailingEdge" destination="m41-Cp-dnf" id="tkv-8g-VkY"/>
+                <outlet property="imageFootprintWidth" destination="nuU-nu-fo5" id="btR-Mp-EWX"/>
+                <outlet property="imageToVideoHorizontalSpacing" destination="8jG-Rm-5Rk" id="XXc-fv-tf4"/>
+                <outlet property="imagesMemoryFootprintView" destination="UUc-NP-3O4" id="gGj-YS-kAp"/>
+                <outlet property="maxMemoryFootprintBackgroundView" destination="pA3-QN-pPT" id="mNk-wW-yAS"/>
+                <outlet property="totalMemoryFootprintView" destination="Wuu-OO-lkF" id="WCt-0h-1Sm"/>
+                <outlet property="totalMemoryFootprintWidth" destination="C2T-RH-KII" id="Vof-zz-4ft"/>
+                <outlet property="videoFootprintWidth" destination="rcV-U6-fU9" id="Qbd-3q-xQQ"/>
+                <outlet property="videoToAudioHorizontalSpacing" destination="4df-r3-Pcc" id="8p3-ek-RlR"/>
+                <outlet property="videosMemoryFootprintView" destination="xFX-Pj-wP8" id="fUK-7k-fBo"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="359" height="16"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pA3-QN-pPT">
+                    <rect key="frame" x="0.0" y="0.0" width="359" height="16"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wuu-OO-lkF">
+                            <rect key="frame" x="0.0" y="0.0" width="0.0" height="16"/>
+                            <color key="backgroundColor" name="PrimaryText"/>
+                            <constraints>
+                                <constraint firstAttribute="width" id="C2T-RH-KII"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kFG-HU-PMi">
+                            <rect key="frame" x="359" y="0.0" width="0.0" height="16"/>
+                            <color key="backgroundColor" name="PrimaryRed"/>
+                            <constraints>
+                                <constraint firstAttribute="width" id="VBe-Mk-rx2"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sdV-qp-H14">
+                            <rect key="frame" x="0.0" y="0.0" width="0.0" height="16"/>
+                            <color key="backgroundColor" name="PrimaryRed"/>
+                            <constraints>
+                                <constraint firstAttribute="width" id="Rz4-Ue-MDy"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UUc-NP-3O4">
+                            <rect key="frame" x="0.0" y="0.0" width="0.0" height="16"/>
+                            <color key="backgroundColor" name="PrimaryBlue"/>
+                            <constraints>
+                                <constraint firstAttribute="width" id="nuU-nu-fo5"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xFX-Pj-wP8">
+                            <rect key="frame" x="2" y="0.0" width="0.0" height="16"/>
+                            <color key="backgroundColor" red="0.65490196078431373" green="0.42352941176470588" blue="0.95294117647058818" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" id="rcV-U6-fU9"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6dI-dX-Lyl">
+                            <rect key="frame" x="4" y="0.0" width="0.0" height="16"/>
+                            <color key="backgroundColor" red="0.98039215686274506" green="0.90196078431372551" blue="0.46274509803921571" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" id="dWz-zP-06H"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" name="ReceivedMsgBG"/>
+                    <constraints>
+                        <constraint firstItem="6dI-dX-Lyl" firstAttribute="leading" secondItem="xFX-Pj-wP8" secondAttribute="trailing" constant="2" id="4df-r3-Pcc"/>
+                        <constraint firstItem="xFX-Pj-wP8" firstAttribute="leading" secondItem="UUc-NP-3O4" secondAttribute="trailing" constant="2" id="8jG-Rm-5Rk"/>
+                        <constraint firstItem="kFG-HU-PMi" firstAttribute="top" secondItem="pA3-QN-pPT" secondAttribute="top" id="AKF-QM-eka"/>
+                        <constraint firstItem="Wuu-OO-lkF" firstAttribute="top" secondItem="pA3-QN-pPT" secondAttribute="top" id="DYm-xR-8a8"/>
+                        <constraint firstItem="sdV-qp-H14" firstAttribute="leading" secondItem="pA3-QN-pPT" secondAttribute="leading" id="E6E-t4-HWH"/>
+                        <constraint firstItem="xFX-Pj-wP8" firstAttribute="bottom" secondItem="UUc-NP-3O4" secondAttribute="bottom" id="Etq-eF-5ou"/>
+                        <constraint firstItem="xFX-Pj-wP8" firstAttribute="top" secondItem="UUc-NP-3O4" secondAttribute="top" id="Fmz-wZ-W8a"/>
+                        <constraint firstItem="UUc-NP-3O4" firstAttribute="leading" secondItem="pA3-QN-pPT" secondAttribute="leading" id="K63-wM-hjs"/>
+                        <constraint firstItem="6dI-dX-Lyl" firstAttribute="top" secondItem="xFX-Pj-wP8" secondAttribute="top" id="Kj0-KT-Ukd"/>
+                        <constraint firstAttribute="bottom" secondItem="Wuu-OO-lkF" secondAttribute="bottom" id="Kjs-NK-gHw"/>
+                        <constraint firstAttribute="bottom" secondItem="kFG-HU-PMi" secondAttribute="bottom" id="Ky2-UQ-hxP"/>
+                        <constraint firstAttribute="height" constant="16" id="MiT-Vq-zxd"/>
+                        <constraint firstAttribute="bottom" secondItem="sdV-qp-H14" secondAttribute="bottom" id="SLl-lb-axW"/>
+                        <constraint firstItem="Wuu-OO-lkF" firstAttribute="leading" secondItem="pA3-QN-pPT" secondAttribute="leading" id="ZNq-JV-YJG"/>
+                        <constraint firstItem="6dI-dX-Lyl" firstAttribute="bottom" secondItem="xFX-Pj-wP8" secondAttribute="bottom" id="eWh-0F-g0l"/>
+                        <constraint firstItem="sdV-qp-H14" firstAttribute="top" secondItem="pA3-QN-pPT" secondAttribute="top" id="iPq-sx-Y5t"/>
+                        <constraint firstAttribute="trailing" secondItem="kFG-HU-PMi" secondAttribute="trailing" id="m41-Cp-dnf"/>
+                        <constraint firstAttribute="bottom" secondItem="UUc-NP-3O4" secondAttribute="bottom" id="oPc-YR-Mkg"/>
+                        <constraint firstItem="UUc-NP-3O4" firstAttribute="top" secondItem="pA3-QN-pPT" secondAttribute="top" id="uf8-PS-cyV"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="pA3-QN-pPT" secondAttribute="trailing" id="HJp-ve-bYs"/>
+                <constraint firstAttribute="bottom" secondItem="pA3-QN-pPT" secondAttribute="bottom" id="dtD-OL-MSk"/>
+                <constraint firstItem="pA3-QN-pPT" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="iUn-s1-rAd"/>
+                <constraint firstItem="pA3-QN-pPT" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="wBb-0k-izL"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="6.8702290076335872" y="-283.0985915492958"/>
+        </view>
+    </objects>
+    <resources>
+        <namedColor name="PrimaryBlue">
+            <color red="0.38039215686274508" green="0.54117647058823526" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="PrimaryRed">
+            <color red="0.92941176470588238" green="0.45490196078431372" blue="0.45490196078431372" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="PrimaryText">
+            <color red="0.16078431372549021" green="0.17254901960784313" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="ReceivedMsgBG">
+            <color red="0.94901960784313721" green="0.95294117647058818" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

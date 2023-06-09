@@ -11,7 +11,7 @@ import Foundation
 extension ContentFeedPaymentDestination {
     
     public static func deleteDestinationForFeedWith(id: String) {
-        if let feed = ContentFeed.getFeedWith(feedId: id) {
+        if let feed = ContentFeed.getFeedById(feedId: id) {
             for destination in  feed.destinationsArray {
                 CoreDataManager.sharedManager.deleteObject(object: destination)
             }

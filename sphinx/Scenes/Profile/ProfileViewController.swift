@@ -47,12 +47,19 @@ class ProfileViewController: NewKeyboardHandlerViewController {
     @IBOutlet weak var privacyPinLabel: UILabel!
     @IBOutlet weak var privacyPinGroupContainer: UIView!
     @IBOutlet weak var signingDeviceLabel: UILabel!
+    @IBOutlet weak var manageStorageChevronLabel: UILabel!
+    @IBOutlet weak var manageStorageView: UIView!
+    @IBOutlet weak var storageSumaryLabel: UILabel!
+    @IBOutlet weak var storageSummaryBarView: StorageSummaryView!
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
+    
     
     @IBOutlet var tabContainers: [UIScrollView]!
     
     @IBOutlet var keyboardAccessoryView: UIView!
     var currentField : UITextField?
     var previousFieldValue : String?
+    
     
     var uploading = false {
         didSet {
@@ -97,7 +104,7 @@ class ProfileViewController: NewKeyboardHandlerViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        advanceScrollView.isScrollEnabled = true
         SphinxSocketManager.sharedInstance.setDelegate(delegate: nil)
         
         setStatusBarColor()
@@ -119,6 +126,12 @@ class ProfileViewController: NewKeyboardHandlerViewController {
         configureProfile()
         configureServers()
         configureSigningDeviceButton()
+        showStorageSpinner()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setupMemoryManagement()
     }
     
     func setShadows() {
@@ -151,6 +164,7 @@ class ProfileViewController: NewKeyboardHandlerViewController {
         contentScrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         advanceScrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
+    
     
     func configureFields() {
         inviteServerTextField.delegate = self
@@ -211,6 +225,55 @@ class ProfileViewController: NewKeyboardHandlerViewController {
         relayUrlTextField.text = userData.getNodeIP()
     }
     
+    func showStorageSpinner() {
+        storageSumaryLabel.text = "Loading..."
+        storageSumaryLabel.textColor = UIColor.Sphinx.SecondaryText
+        
+        spinner.isHidden = false
+        spinner.tintColor = UIColor.Sphinx.Text
+        spinner.startAnimating()
+    }
+    
+    func hideStorageSpinner(){
+        spinner.isHidden = true
+        spinner.stopAnimating()
+    }
+    
+    func setupMemoryManagement(){
+        manageStorageView.isUserInteractionEnabled = true
+        manageStorageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showManageStorageVC)))
+        
+        updateStorageSummaryLabel(completion: {
+            self.storageSummaryBarView.summaryDict = StorageManager.sharedManager.getStorageItemSummaryByType()
+            self.hideStorageSpinner()
+        })
+    }
+    
+    func updateStorageSummaryLabel(completion:@escaping ()->()){
+        let max = UserData.sharedInstance.getMaxMemoryGB()
+
+        StorageManager.sharedManager.refreshAllStoredData(completion: {
+            let usage = StorageManager.sharedManager.getItemGroupTotalSize(items: StorageManager.sharedManager.allItems)
+            let maxInBytes = Int(Double(max) * 1e9)
+
+            let usageText = formatBytes(Int(usage * 1e6))
+            let remainingText = formatBytes(maxInBytes)
+
+            let fullText = "\(usageText) of \(remainingText)"
+
+            let attributedText = NSMutableAttributedString(string: fullText)
+            let usageRange = (fullText as NSString).range(of: usageText)
+
+            attributedText.addAttribute(.foregroundColor, value: UIColor.Sphinx.Text, range: usageRange)
+            attributedText.addAttribute(.foregroundColor, value: UIColor.Sphinx.SecondaryText, range: NSRange(location: usageRange.length, length: fullText.count - usageRange.length))
+
+            self.storageSumaryLabel.attributedText = attributedText
+            
+            completion()
+        })
+        
+    }
+    
     func configureServers() {
         inviteServerTextField.text = API.kHUBServerUrl
         memesServerTextField.text = API.kAttachmentsServerUrl
@@ -242,6 +305,17 @@ class ProfileViewController: NewKeyboardHandlerViewController {
     @IBAction func routeHintButtonTouched() {
         copyAddress()
     }
+    
+    @IBAction func manageStorageButtonTapped(_ sender: Any) {
+        showManageStorageVC()
+    }
+    
+    @objc func showManageStorageVC(){
+        let vc = ProfileManageStorageViewController.instantiate(storageStats: StorageManager.sharedManager.getStorageItemSummaryByType())
+        self.navigationController?.pushViewController(vc, animated: true)
+
+    }
+    
     
     func getAddress() -> String? {
         if let address = addressTextField.text, !address.isEmpty {

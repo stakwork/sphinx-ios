@@ -225,7 +225,7 @@ class AttachmentsManager {
             }
             
             if let image = uploadedImage {
-                MediaLoader.storeImageInCache(img: image, url: mediaUrl)
+                MediaLoader.storeImageInCache(img: image, url: mediaUrl, chat: message.chat)
             }
         }
     }

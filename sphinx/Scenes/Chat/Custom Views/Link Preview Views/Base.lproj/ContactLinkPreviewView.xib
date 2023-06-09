@@ -23,6 +23,7 @@
             <connections>
                 <outlet property="addContactButtonContainer" destination="c6K-Lw-fs8" id="RDS-PK-gBd"/>
                 <outlet property="addContactButtonView" destination="c1A-tr-zl7" id="GSf-uf-0Io"/>
+                <outlet property="borderView" destination="5gw-ht-cOg" id="Gt4-m5-7yC"/>
                 <outlet property="contactImageView" destination="tsW-J4-Jix" id="FhS-pz-cfe"/>
                 <outlet property="contactName" destination="usc-2z-GcC" id="y1Z-5b-J0u"/>
                 <outlet property="contactPubKey" destination="NIv-V5-Zzr" id="8uc-zI-Hsj"/>
@@ -33,14 +34,21 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="168"/>
+            <rect key="frame" x="0.0" y="0.0" width="414" height="200"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="BKe-s6-6kd">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="168"/>
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="171"/>
                     <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1NQ-CN-O31">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="3"/>
+                            <color key="backgroundColor" name="Body"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="3" id="GQ2-xd-fFT"/>
+                            </constraints>
+                        </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Xc-Bw-U9G">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="112"/>
+                            <rect key="frame" x="0.0" y="3" width="414" height="112"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="addContactIcon" translatesAutoresizingMaskIntoConstraints="NO" id="tsW-J4-Jix">
                                     <rect key="frame" x="16" y="16" width="80" height="80"/>
@@ -89,7 +97,7 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c6K-Lw-fs8">
-                            <rect key="frame" x="0.0" y="112" width="414" height="56"/>
+                            <rect key="frame" x="0.0" y="115" width="414" height="56"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c1A-tr-zl7">
                                     <rect key="frame" x="16" y="0.0" width="382" height="40"/>
@@ -118,17 +126,14 @@
                             </constraints>
                         </view>
                     </subviews>
-                    <constraints>
-                        <constraint firstItem="c6K-Lw-fs8" firstAttribute="leading" secondItem="BKe-s6-6kd" secondAttribute="leading" id="76N-cg-MrG"/>
-                        <constraint firstItem="8Xc-Bw-U9G" firstAttribute="leading" secondItem="BKe-s6-6kd" secondAttribute="leading" id="EdX-Bf-DXz"/>
-                        <constraint firstItem="c6K-Lw-fs8" firstAttribute="top" secondItem="8Xc-Bw-U9G" secondAttribute="bottom" id="Nb2-B1-K0G"/>
-                        <constraint firstAttribute="trailing" secondItem="8Xc-Bw-U9G" secondAttribute="trailing" id="Pct-if-x9d"/>
-                        <constraint firstItem="8Xc-Bw-U9G" firstAttribute="top" secondItem="BKe-s6-6kd" secondAttribute="top" id="eXR-1w-HLs"/>
-                        <constraint firstAttribute="trailing" secondItem="c6K-Lw-fs8" secondAttribute="trailing" id="xgw-JW-h9J"/>
-                    </constraints>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </stackView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5gw-ht-cOg">
+                    <rect key="frame" x="0.0" y="3" width="414" height="168"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4RN-Gs-Z8Q">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="168"/>
+                    <rect key="frame" x="0.0" y="3" width="414" height="168"/>
                     <connections>
                         <action selector="addContactButtonTapped" destination="-1" eventType="touchUpInside" id="Dlb-ge-9DY"/>
                     </connections>
@@ -137,13 +142,17 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="4RN-Gs-Z8Q" firstAttribute="bottom" secondItem="BKe-s6-6kd" secondAttribute="bottom" id="2kl-Tr-sWt"/>
+                <constraint firstItem="5gw-ht-cOg" firstAttribute="top" secondItem="BKe-s6-6kd" secondAttribute="top" constant="3" id="4P9-Nu-pQI"/>
                 <constraint firstItem="4RN-Gs-Z8Q" firstAttribute="leading" secondItem="BKe-s6-6kd" secondAttribute="leading" id="6ki-Cn-g3n"/>
                 <constraint firstAttribute="bottom" secondItem="BKe-s6-6kd" secondAttribute="bottom" priority="750" id="9sN-a7-oOA"/>
-                <constraint firstItem="4RN-Gs-Z8Q" firstAttribute="top" secondItem="BKe-s6-6kd" secondAttribute="top" id="B0U-Zi-NE2"/>
+                <constraint firstItem="4RN-Gs-Z8Q" firstAttribute="top" secondItem="BKe-s6-6kd" secondAttribute="top" constant="3" id="B0U-Zi-NE2"/>
+                <constraint firstItem="5gw-ht-cOg" firstAttribute="bottom" secondItem="BKe-s6-6kd" secondAttribute="bottom" id="Cwn-Bk-NHa"/>
+                <constraint firstItem="5gw-ht-cOg" firstAttribute="trailing" secondItem="BKe-s6-6kd" secondAttribute="trailing" id="HJ0-3e-Z8z"/>
                 <constraint firstItem="BKe-s6-6kd" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="VEG-ao-uBF"/>
                 <constraint firstAttribute="trailing" secondItem="BKe-s6-6kd" secondAttribute="trailing" id="fhm-r7-4iW"/>
                 <constraint firstItem="BKe-s6-6kd" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="jmm-xB-8Co"/>
                 <constraint firstItem="4RN-Gs-Z8Q" firstAttribute="trailing" secondItem="BKe-s6-6kd" secondAttribute="trailing" id="wJO-QO-VPG"/>
+                <constraint firstItem="5gw-ht-cOg" firstAttribute="leading" secondItem="BKe-s6-6kd" secondAttribute="leading" id="zUl-eG-4sX"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="137.68115942028987" y="152.67857142857142"/>
@@ -152,6 +161,9 @@
     <resources>
         <image name="addContactIcon" width="80" height="80"/>
         <image name="inviteQrCode" width="45" height="45"/>
+        <namedColor name="Body">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="PrimaryBlue">
             <color red="0.38039215686274508" green="0.54117647058823526" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

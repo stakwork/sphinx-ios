@@ -10,6 +10,14 @@ import UIKit
 
 struct MessageTableCellState {
     
+    ///Constants
+    static let kBubbleCornerRadius: CGFloat = 8.0
+    static let kRowLeftMargin: CGFloat = 15
+    static let kRowRightMargin: CGFloat = 9
+    static let kBubbleWidthPercentage: CGFloat = 0.7
+    static let kSmallBubbleDesiredWidth: CGFloat = 200
+    static let kSendPaidContentButtonHeight: CGFloat = 50.0
+    
     //Messages Data
     var message: TransactionMessage? = nil
     var chat: Chat
@@ -20,6 +28,7 @@ struct MessageTableCellState {
     var contactImage: UIImage? = nil
     var replyingMessage: TransactionMessage? = nil
     var boostMessages: [TransactionMessage] = []
+    var linkContact: (String, UserContact?)? = nil
     
     //Generic rows Data
     var separatorDate: Date? = nil
@@ -34,7 +43,8 @@ struct MessageTableCellState {
         bubbleState: MessageTableCellState.BubbleState? = nil,
         contactImage: UIImage? = nil,
         replyingMessage: TransactionMessage? = nil,
-        boostMessages: [TransactionMessage] = []
+        boostMessages: [TransactionMessage] = [],
+        linkContact: (String, UserContact?)? = nil
     ) {
         self.message = message
         self.chat = chat
@@ -46,6 +56,7 @@ struct MessageTableCellState {
         self.contactImage = contactImage
         self.replyingMessage = replyingMessage
         self.boostMessages = boostMessages
+        self.linkContact = linkContact
     }
     
     ///Bubble States
@@ -220,6 +231,22 @@ struct MessageTableCellState {
         return BubbleMessageLayoutState.PodcastBoost(amount: amount)
     }()
     
+    lazy var contactLink: BubbleMessageLayoutState.ContactLink? = {
+        guard let linkContact = linkContact else {
+            return nil
+        }
+        
+        return BubbleMessageLayoutState.ContactLink(
+            pubkey: linkContact.0,
+            imageUrl: linkContact.1?.avatarUrl,
+            alias: linkContact.1?.nickname,
+            color: linkContact.1?.getColor(),
+            isContact: linkContact.1 != nil,
+            bubbleWidth: (UIScreen.main.bounds.width - (MessageTableCellState.kRowLeftMargin + MessageTableCellState.kRowRightMargin)) * (MessageTableCellState.kBubbleWidthPercentage),
+            roundedBottom: false
+        )
+    }()
+    
     
     ///No Bubble States
     lazy var noBubble: NoBubbleMessageLayoutState.NoBubble? = {
@@ -273,6 +300,7 @@ struct MessageTableCellState {
     var isTextOnlyMessage: Bool {
         mutating get {
             return (self.messageContent != nil) &&
+                (self.messageContent?.text?.hasPubkeyLinks == false) &&
                 (self.messageReply == nil) &&
                 (self.callLink == nil) &&
                 (self.directPayment == nil) &&
@@ -330,7 +358,8 @@ extension MessageTableCellState : Hashable {
             mutableLhs.bubbleState           == mutableRhs.bubbleState &&
             mutableLhs.boostMessages.count   == mutableRhs.boostMessages.count &&
             mutableLhs.isTextOnlyMessage     == mutableRhs.isTextOnlyMessage &&
-            mutableLhs.separatorDate         == mutableRhs.separatorDate
+            mutableLhs.separatorDate         == mutableRhs.separatorDate &&
+            mutableLhs.linkContact?.0        == mutableRhs.linkContact?.0
             
     }
 

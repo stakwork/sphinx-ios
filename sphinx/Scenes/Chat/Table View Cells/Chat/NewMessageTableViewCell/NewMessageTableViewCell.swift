@@ -75,13 +75,6 @@ class NewMessageTableViewCell: SwipableReplyCell, ChatTableViewCellProtocol {
     @IBOutlet weak var messageBoostView: NewMessageBoostView!
     @IBOutlet weak var paidAttachmentView: PaidAttachmentView!
     
-    ///Constants
-    let kRowLeftMargin: CGFloat = 15
-    let kRowRightMargin: CGFloat = 9
-    let kBubbleWidthPercentage: CGFloat = 0.7
-    
-    let kSmallBubbleDesiredWidth: CGFloat = 200
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -122,6 +115,7 @@ class NewMessageTableViewCell: SwipableReplyCell, ChatTableViewCellProtocol {
         
         //Bottom view
         configureWith(boosts: mutableMessageCellState.boosts, and: bubble)
+        configureWith(contactLink: mutableMessageCellState.contactLink, and: bubble)
         
         ///Header and avatar
         configureWith(avatarImage: mutableMessageCellState.avatarImage)

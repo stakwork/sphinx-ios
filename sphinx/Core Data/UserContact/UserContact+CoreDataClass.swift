@@ -254,6 +254,19 @@ public class UserContact: NSManagedObject {
         return contact
     }
     
+    public static func getContactsWith(pubkeys: [String]) -> [UserContact] {
+        var predicate = NSPredicate(format: "publicKey IN %@ AND isOwner == %@", pubkeys, NSNumber(value: false))
+        let sortDescriptors = [NSSortDescriptor(key: "id", ascending: false)]
+        
+        let contacts: [UserContact] = CoreDataManager.sharedManager.getObjectsOfTypeWith(
+            predicate: predicate,
+            sortDescriptors: sortDescriptors,
+            entityName: "UserContact"
+        )
+        
+        return contacts
+    }
+    
     public static func getOwner() -> UserContact? {
         let predicate = NSPredicate(format: "isOwner == %@", NSNumber(value: true))
         let contact:UserContact? = CoreDataManager.sharedManager.getObjectOfTypeWith(

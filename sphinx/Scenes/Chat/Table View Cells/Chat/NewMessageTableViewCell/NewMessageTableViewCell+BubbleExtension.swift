@@ -18,7 +18,7 @@ extension NewMessageTableViewCell {
         let isEmptyDirectPayment = mutableMessageCellState.directPayment != nil &&
                                    mutableMessageCellState.messageContent == nil
         
-        let widthDifference = ((UIScreen.main.bounds.width - (kRowLeftMargin + kRowRightMargin)) * kBubbleWidthPercentage) - kSmallBubbleDesiredWidth
+        let widthDifference = ((UIScreen.main.bounds.width - (MessageTableCellState.kRowLeftMargin + MessageTableCellState.kRowRightMargin)) * MessageTableCellState.kBubbleWidthPercentage) - MessageTableCellState.kSmallBubbleDesiredWidth
         
         bubbleWidthConstraint.constant = (isPodcastBoost || isEmptyDirectPayment) ? -(widthDifference) : 0
     }

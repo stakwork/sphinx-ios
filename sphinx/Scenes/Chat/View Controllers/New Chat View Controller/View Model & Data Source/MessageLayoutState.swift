@@ -192,6 +192,34 @@ struct BubbleMessageLayoutState: CommonLayoutState {
             self.amount = amount
         }
     }
+    
+    struct ContactLink {
+        var pubkey: String
+        var imageUrl: String?
+        var alias: String?
+        var color: UIColor?
+        var isContact: Bool
+        var bubbleWidth: CGFloat
+        var roundedBottom: Bool
+        
+        init(
+            pubkey: String,
+            imageUrl: String?,
+            alias: String?,
+            color: UIColor?,
+            isContact: Bool,
+            bubbleWidth: CGFloat,
+            roundedBottom: Bool
+        ) {
+            self.pubkey = pubkey
+            self.imageUrl = imageUrl
+            self.alias = alias
+            self.color = color
+            self.isContact = isContact
+            self.bubbleWidth = bubbleWidth
+            self.roundedBottom = roundedBottom
+        }
+    }
 }
 
 struct NoBubbleMessageLayoutState: CommonLayoutState {

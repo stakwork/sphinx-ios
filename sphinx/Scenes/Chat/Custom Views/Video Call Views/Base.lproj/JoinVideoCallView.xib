@@ -32,7 +32,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="XAv-uq-Gfr">
-                    <rect key="frame" x="16" y="0.0" width="163" height="166"/>
+                    <rect key="frame" x="16" y="0.0" width="163" height="214"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A1T-U9-6Lv">
                             <rect key="frame" x="0.0" y="0.0" width="163" height="10"/>
@@ -67,7 +67,7 @@
                             </constraints>
                         </stackView>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="PgK-GT-ZBX">
-                            <rect key="frame" x="0.0" y="64" width="163" height="38"/>
+                            <rect key="frame" x="0.0" y="64" width="163" height="86"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EPz-lG-Tg1">
                                     <rect key="frame" x="0.0" y="0.0" width="163" height="38"/>
@@ -107,8 +107,8 @@
                                         <constraint firstAttribute="bottom" secondItem="EJJ-I7-Oqd" secondAttribute="bottom" id="yyr-vq-x54"/>
                                     </constraints>
                                 </view>
-                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z0L-0e-a37">
-                                    <rect key="frame" x="0.0" y="0.0" width="163" height="38"/>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z0L-0e-a37">
+                                    <rect key="frame" x="0.0" y="48" width="163" height="38"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="VIDEO" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1dd-eP-y7r">
                                             <rect key="frame" x="62" y="11.5" width="39" height="15"/>
@@ -149,7 +149,7 @@
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </stackView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o2x-o1-XLs">
-                            <rect key="frame" x="0.0" y="114" width="163" height="30"/>
+                            <rect key="frame" x="0.0" y="162" width="163" height="30"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="RD0-8J-JM2">
                                     <rect key="frame" x="0.0" y="0.0" width="163" height="30"/>
@@ -197,7 +197,7 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IpD-3r-ZbV">
-                            <rect key="frame" x="0.0" y="156" width="163" height="10"/>
+                            <rect key="frame" x="0.0" y="204" width="163" height="10"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="10" id="fZV-qK-6Jp"/>

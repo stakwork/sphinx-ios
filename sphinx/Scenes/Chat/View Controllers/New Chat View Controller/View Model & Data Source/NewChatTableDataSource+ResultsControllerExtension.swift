@@ -143,6 +143,7 @@ extension NewChatTableDataSource {
         
         let replyingMessagesMap = getReplyingMessagesMapFor(messages: messages)
         let boostMessagesMap = getBoostMessagesMapFor(messages: messages)
+        let linkContactsArray = getLinkContactsArrayFor(messages: messages)
         
         var groupingDate: Date? = nil
 
@@ -173,6 +174,7 @@ extension NewChatTableDataSource {
                 
                 let replyingMessage = (message.replyUUID != nil) ? replyingMessagesMap[message.replyUUID!] : nil
                 let boostsMessages = (message.uuid != nil) ? (boostMessagesMap[message.uuid!] ?? []) : []
+                let linkContact = linkContactsArray[message.id]
                 
                 array.insert(
                     MessageTableCellState(
@@ -185,7 +187,8 @@ extension NewChatTableDataSource {
                         bubbleState: bubbleStateAndDate.0,
                         contactImage: headerImage,
                         replyingMessage: replyingMessage,
-                        boostMessages: boostsMessages
+                        boostMessages: boostsMessages,
+                        linkContact: linkContact
                     ),
                     at: 0
                 )
@@ -279,7 +282,6 @@ extension NewChatTableDataSource {
         
         var boostMessagesMap: [String: [TransactionMessage]] = [:]
         
-        
         for boostMessage in boostMessages {
             if let replyUUID = boostMessage.replyUUID, replyUUID.isNotEmpty {
                 if let map = boostMessagesMap[replyUUID], map.count > 0 {
@@ -291,6 +293,28 @@ extension NewChatTableDataSource {
         }
         
         return boostMessagesMap
+    }
+    
+    func getLinkContactsArrayFor(
+        messages: [TransactionMessage]
+    ) -> [Int: (String, UserContact?)] {
+        
+        var pubkeys: [Int:String] = [:]
+        
+        messages.forEach({
+            if $0.messageContent?.hasPubkeyLinks == true {
+                pubkeys[$0.id] = $0.messageContent?.stringFirstPubKey.pubkeyComponents.0 ?? ""
+            }
+        })
+        
+        let contacts = UserContact.getContactsWith(pubkeys: Array(pubkeys.values))
+        var linkContactsMap: [Int: (String, UserContact?)] = [:]
+        
+        pubkeys.forEach({ (key, value) in
+            linkContactsMap[key] = (value, contacts.filter({ $0.publicKey == value }).first )
+        })
+        
+        return linkContactsMap
     }
 }
 

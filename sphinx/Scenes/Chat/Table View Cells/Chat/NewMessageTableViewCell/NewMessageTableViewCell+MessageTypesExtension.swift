@@ -68,4 +68,14 @@ extension NewMessageTableViewCell {
             messageBoostView.isHidden = false
         }
     }
+    
+    func configureWith(
+        contactLink: BubbleMessageLayoutState.ContactLink?,
+        and bubble: BubbleMessageLayoutState.Bubble
+    ) {
+        if let contactLink = contactLink {
+            contactLinkPreviewView.configureWith(contactLink: contactLink, and: bubble)
+            contactLinkPreviewView.isHidden = false
+        }
+    }
 }

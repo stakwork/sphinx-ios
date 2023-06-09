@@ -11,16 +11,16 @@ import UIKit
 extension NewMessageTableViewCell {
     
     func setupViews() {
-        bubbleAllView.layer.cornerRadius = 8.0
+        bubbleAllView.layer.cornerRadius = MessageTableCellState.kBubbleCornerRadius
 
         paidAttachmentView.roundCorners(
             corners: [.bottomLeft, .bottomRight],
-            radius: 8.0,
+            radius: MessageTableCellState.kBubbleCornerRadius,
             viewBounds: CGRect(
                 origin: CGPoint.zero,
                 size: CGSize(
-                    width: (UIScreen.main.bounds.width - 24.0) * 0.7,
-                    height: 50.0
+                    width: (UIScreen.main.bounds.width - (MessageTableCellState.kRowLeftMargin + MessageTableCellState.kRowRightMargin)) * (MessageTableCellState.kBubbleWidthPercentage),
+                    height: MessageTableCellState.kSendPaidContentButtonHeight
                 )
             )
         )

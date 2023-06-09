@@ -148,7 +148,8 @@ extension NewChatTableDataSource {
 
         for (index, message) in messages.enumerated() {
             if message.isTextMessage() ||
-               message.isDirectPayment() {
+               message.isDirectPayment() ||
+               message.isPodcastBoost() {
                 
                 let bubbleStateAndDate = getBubbleBackgroundForMessage(
                     message: message,

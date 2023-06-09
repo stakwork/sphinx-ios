@@ -170,17 +170,17 @@
                                                                         </constraints>
                                                                     </view>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L6b-x8-zDV" customClass="JoinVideoCallView" customModule="sphinx" customModuleProvider="target">
-                                                                        <rect key="frame" x="0.0" y="247.66666666666669" width="247.66666666666666" height="250"/>
+                                                                        <rect key="frame" x="0.0" y="247.66666666666669" width="247.66666666666666" height="238"/>
                                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" priority="750" constant="226" id="bhp-9d-29m"/>
                                                                         </constraints>
                                                                     </view>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u3B-p7-wwo" customClass="PodcastBoostView" customModule="sphinx" customModuleProvider="target">
-                                                                        <rect key="frame" x="0.0" y="497.66666666666663" width="247.66666666666666" height="40"/>
+                                                                        <rect key="frame" x="0.0" y="485.66666666666663" width="247.66666666666666" height="52"/>
                                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <constraints>
-                                                                            <constraint firstAttribute="height" constant="40" id="IPz-rO-Waf"/>
+                                                                            <constraint firstAttribute="height" constant="52" id="IPz-rO-Waf"/>
                                                                         </constraints>
                                                                     </view>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8uW-aX-5nz" customClass="BotResponseView" customModule="sphinx" customModuleProvider="target">

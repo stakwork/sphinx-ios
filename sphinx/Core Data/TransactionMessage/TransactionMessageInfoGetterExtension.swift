@@ -725,6 +725,10 @@ extension TransactionMessage {
                 }
             }
             
+            if isPodcastBoost() {
+                return nil
+            }
+            
             if isCallLink() {
                 return nil
             }

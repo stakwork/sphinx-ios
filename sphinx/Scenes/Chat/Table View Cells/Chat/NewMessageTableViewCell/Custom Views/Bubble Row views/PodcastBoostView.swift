@@ -33,4 +33,10 @@ class PodcastBoostView: UIView {
         
         boostIconView.layer.cornerRadius = boostIconView.bounds.height / 2
     }
+    
+    func configureWith(
+        podcastBoost: BubbleMessageLayoutState.PodcastBoost
+    ) {
+        amountLabel.text = podcastBoost.amount.formattedWithSeparator
+    }
 }

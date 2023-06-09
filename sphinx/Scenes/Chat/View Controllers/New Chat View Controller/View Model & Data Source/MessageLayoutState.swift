@@ -182,6 +182,16 @@ struct BubbleMessageLayoutState: CommonLayoutState {
             self.senderColor = senderColor
         }
     }
+    
+    struct PodcastBoost {
+        var amount: Int
+        
+        init(
+            amount: Int
+        ) {
+            self.amount = amount
+        }
+    }
 }
 
 struct NoBubbleMessageLayoutState: CommonLayoutState {

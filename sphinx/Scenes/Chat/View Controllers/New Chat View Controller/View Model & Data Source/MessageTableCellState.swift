@@ -208,6 +208,18 @@ struct MessageTableCellState {
         )
     }()
     
+    lazy var podcastBoost: BubbleMessageLayoutState.PodcastBoost? = {
+        guard let message = message, message.isPodcastBoost() else {
+            return nil
+        }
+        
+        guard let amount = message.amount?.intValue, amount > 0 else {
+            return nil
+        }
+        
+        return BubbleMessageLayoutState.PodcastBoost(amount: amount)
+    }()
+    
     
     ///No Bubble States
     lazy var noBubble: NoBubbleMessageLayoutState.NoBubble? = {

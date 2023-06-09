@@ -10,6 +10,19 @@ import UIKit
 
 extension NewMessageTableViewCell {
     
+    func configureWidthWith(
+        messageCellState: MessageTableCellState
+    ) {
+        var mutableMessageCellState = messageCellState
+        let isPodcastBoost = mutableMessageCellState.podcastBoost != nil
+        let isEmptyDirectPayment = mutableMessageCellState.directPayment != nil &&
+                                   mutableMessageCellState.messageContent == nil
+        
+        let widthDifference = ((UIScreen.main.bounds.width - (kRowLeftMargin + kRowRightMargin)) * kBubbleWidthPercentage) - kSmallBubbleDesiredWidth
+        
+        bubbleWidthConstraint.constant = (isPodcastBoost || isEmptyDirectPayment) ? -(widthDifference) : 0
+    }
+    
     func configureWith(
         avatarImage: BubbleMessageLayoutState.AvatarImage?
     ) {

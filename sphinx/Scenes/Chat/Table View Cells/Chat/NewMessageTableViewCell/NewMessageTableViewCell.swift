@@ -75,6 +75,13 @@ class NewMessageTableViewCell: SwipableReplyCell, ChatTableViewCellProtocol {
     @IBOutlet weak var messageBoostView: NewMessageBoostView!
     @IBOutlet weak var paidAttachmentView: PaidAttachmentView!
     
+    ///Constants
+    let kRowLeftMargin: CGFloat = 15
+    let kRowRightMargin: CGFloat = 9
+    let kBubbleWidthPercentage: CGFloat = 0.7
+    
+    let kSmallBubbleDesiredWidth: CGFloat = 200
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -96,10 +103,13 @@ class NewMessageTableViewCell: SwipableReplyCell, ChatTableViewCellProtocol {
             return
         }
         
-        if let statusHeader = mutableMessageCellState.statusHeader {
-            configureWith(statusHeader: statusHeader)
-        }
+        ///Bubble Width
+        configureWidthWith(messageCellState: mutableMessageCellState)
         
+        ///Status Header
+        configureWith(statusHeader: mutableMessageCellState.statusHeader)
+        
+        ///Message content
         configureWith(messageContent: mutableMessageCellState.messageContent)
         
         ///Message Reply
@@ -108,6 +118,7 @@ class NewMessageTableViewCell: SwipableReplyCell, ChatTableViewCellProtocol {
         ///Other message types
         configureWith(directPayment: mutableMessageCellState.directPayment, and: bubble)
         configureWith(callLink: mutableMessageCellState.callLink)
+        configureWith(podcastBoost: mutableMessageCellState.podcastBoost)
         
         //Bottom view
         configureWith(boosts: mutableMessageCellState.boosts, and: bubble)

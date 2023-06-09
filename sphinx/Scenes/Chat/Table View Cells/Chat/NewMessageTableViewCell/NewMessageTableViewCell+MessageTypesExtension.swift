@@ -51,6 +51,15 @@ extension NewMessageTableViewCell {
     }
     
     func configureWith(
+        podcastBoost: BubbleMessageLayoutState.PodcastBoost?
+    ) {
+        if let podcastBoost = podcastBoost {
+            podcastBoostView.configureWith(podcastBoost: podcastBoost)
+            podcastBoostView.isHidden = false
+        }
+    }
+    
+    func configureWith(
         boosts: BubbleMessageLayoutState.Boosts?,
         and bubble: BubbleMessageLayoutState.Bubble
     ) {

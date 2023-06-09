@@ -30,5 +30,10 @@ class DateSeparatorView: UIView {
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
     }
-
+    
+    func configureWith(
+        dateSeparator: NoBubbleMessageLayoutState.DateSeparator
+    ) {
+        dateLabel.text = dateSeparator.timestamp
+    }
 }

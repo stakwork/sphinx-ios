@@ -26,7 +26,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aaO-py-Y3K">
-                    <rect key="frame" x="16" y="14.666666666666666" width="148" height="1"/>
+                    <rect key="frame" x="16" y="22.666666666666668" width="148" height="1"/>
                     <viewLayoutGuide key="safeArea" id="n9T-l8-y7U"/>
                     <color key="backgroundColor" name="LightDivider"/>
                     <constraints>
@@ -34,13 +34,13 @@
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Today" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gtG-eC-0cO">
-                    <rect key="frame" x="180" y="8" width="33" height="14"/>
+                    <rect key="frame" x="180" y="16" width="33" height="14"/>
                     <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="12"/>
                     <color key="textColor" name="SecondaryText"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="elK-iz-GIR">
-                    <rect key="frame" x="229" y="14.666666666666666" width="148" height="1"/>
+                    <rect key="frame" x="229" y="22.666666666666668" width="148" height="1"/>
                     <viewLayoutGuide key="safeArea" id="Ia9-If-dFT"/>
                     <color key="backgroundColor" name="LightDivider"/>
                     <constraints>
@@ -51,12 +51,12 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="elK-iz-GIR" secondAttribute="trailing" constant="16" id="0KU-cX-bjU"/>
-                <constraint firstItem="gtG-eC-0cO" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="72i-04-7AR"/>
-                <constraint firstItem="aaO-py-Y3K" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="QfX-uz-Mdg"/>
-                <constraint firstItem="elK-iz-GIR" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="V9O-by-aGv"/>
                 <constraint firstItem="elK-iz-GIR" firstAttribute="leading" secondItem="gtG-eC-0cO" secondAttribute="trailing" constant="16" id="dSH-ua-qSE"/>
                 <constraint firstItem="gtG-eC-0cO" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="gVR-PS-dbs"/>
                 <constraint firstItem="aaO-py-Y3K" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="h3F-z0-qZ7"/>
+                <constraint firstAttribute="bottom" secondItem="gtG-eC-0cO" secondAttribute="bottom" id="lwV-Av-m2R"/>
+                <constraint firstItem="elK-iz-GIR" firstAttribute="centerY" secondItem="gtG-eC-0cO" secondAttribute="centerY" id="oyu-DR-wSd"/>
+                <constraint firstItem="aaO-py-Y3K" firstAttribute="centerY" secondItem="gtG-eC-0cO" secondAttribute="centerY" id="tGa-k3-0Fh"/>
                 <constraint firstItem="gtG-eC-0cO" firstAttribute="leading" secondItem="aaO-py-Y3K" secondAttribute="trailing" constant="16" id="tMi-ul-38o"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

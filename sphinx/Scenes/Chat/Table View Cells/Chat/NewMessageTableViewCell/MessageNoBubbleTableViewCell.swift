@@ -41,6 +41,8 @@ class MessageNoBubbleTableViewCell: UITableViewCell, ChatTableViewCellProtocol {
             deleted: mutableMessageCellState.deleted,
             direction: mutableMessageCellState.noBubble?.direction
         )
+        
+        configureWith(dateSeparator: mutableMessageCellState.dateSeparator)
     }
     
     func configureWith(
@@ -48,12 +50,22 @@ class MessageNoBubbleTableViewCell: UITableViewCell, ChatTableViewCellProtocol {
         direction: MessageTableCellState.MessageDirection?
     ) {
         if let deleted = deleted {
-            deletedMessageView.isHidden = false
-            
             deletedMessageView.configureWith(
                 deleted: deleted,
                 direction: direction ?? MessageTableCellState.MessageDirection.Outgoing
             )
+            deletedMessageView.isHidden = false
+        }
+    }
+    
+    func configureWith(
+        dateSeparator: NoBubbleMessageLayoutState.DateSeparator?
+    ) {
+        if let dateSeparator = dateSeparator {
+            dateSeparatorView.configureWith(
+                dateSeparator: dateSeparator
+            )
+            dateSeparatorView.isHidden = false
         }
     }
 }

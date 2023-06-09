@@ -150,12 +150,25 @@ extension NewChatTableDataSource {
             if message.isTextMessage() ||
                message.isDirectPayment() {
                 
-                let bubbleState = getBubbleBackgroundForMessage(
+                let bubbleStateAndDate = getBubbleBackgroundForMessage(
                     message: message,
                     with: index,
                     in: messages,
                     groupingDate: &groupingDate
                 )
+                
+                if let separatorDate = bubbleStateAndDate.1 {
+                    array.insert(
+                        MessageTableCellState(
+                            chat: chat,
+                            owner: owner,
+                            contact: contact,
+                            tribeAdmin: admin,
+                            separatorDate: separatorDate
+                        ),
+                        at: 0
+                    )
+                }
                 
                 let replyingMessage = (message.replyUUID != nil) ? replyingMessagesMap[message.replyUUID!] : nil
                 let boostsMessages = (message.uuid != nil) ? (boostMessagesMap[message.uuid!] ?? []) : []
@@ -168,7 +181,7 @@ extension NewChatTableDataSource {
                         contact: contact,
                         tribeAdmin: admin,
                         separatorDate: nil,
-                        bubbleState: bubbleState,
+                        bubbleState: bubbleStateAndDate.0,
                         contactImage: headerImage,
                         replyingMessage: replyingMessage,
                         boostMessages: boostsMessages
@@ -193,14 +206,24 @@ extension NewChatTableDataSource {
         with index: Int,
         in messages: [TransactionMessage],
         groupingDate: inout Date?
-    ) -> MessageTableCellState.BubbleState? {
-
-        if message.isDeleted() || message.isGroupActionMessage() {
-            return nil
-        }
+    ) -> (MessageTableCellState.BubbleState?, Date?) {
         
         let previousMessage = (index > 0) ? messages[index - 1] : nil
         let nextMessage = (index < messages.count - 1) ? messages[index + 1] : nil
+        
+        var separatorDate: Date? = nil
+        
+        if let previousMessageDate = previousMessage?.date, let date = message.date {
+            if Date.isDifferentDay(firstDate: previousMessageDate, secondDate: date) {
+                separatorDate = date
+            }
+        } else if previousMessage == nil {
+            separatorDate = message.date
+        }
+        
+        if message.isDeleted() || message.isGroupActionMessage() {
+            return (nil, separatorDate)
+        }
         
         let groupingMinutesLimit = 5
         let messageDate = message.date ?? Date(timeIntervalSince1970: 0)
@@ -221,15 +244,15 @@ extension NewChatTableDataSource {
         groupingDate = date
         
         if !groupedWithPrevious && !groupedWithNext {
-            return MessageTableCellState.BubbleState.Isolated
+            return (MessageTableCellState.BubbleState.Isolated, separatorDate)
         } else if groupedWithPrevious && !groupedWithNext {
-            return MessageTableCellState.BubbleState.Last
+            return (MessageTableCellState.BubbleState.Last, separatorDate)
         } else if !groupedWithPrevious && groupedWithNext {
-            return MessageTableCellState.BubbleState.First
+            return (MessageTableCellState.BubbleState.First, separatorDate)
         } else if groupedWithPrevious && groupedWithNext {
-            return MessageTableCellState.BubbleState.Middle
+            return (MessageTableCellState.BubbleState.Middle, separatorDate)
         }
-        return MessageTableCellState.BubbleState.Isolated
+        return (MessageTableCellState.BubbleState.Isolated, separatorDate)
     }
     
     func getReplyingMessagesMapFor(

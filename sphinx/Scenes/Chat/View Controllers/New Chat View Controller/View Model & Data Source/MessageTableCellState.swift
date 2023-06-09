@@ -25,14 +25,14 @@ struct MessageTableCellState {
     var separatorDate: Date? = nil
     
     init(
-        message: TransactionMessage?,
+        message: TransactionMessage? = nil,
         chat: Chat,
         owner: UserContact,
         contact: UserContact?,
         tribeAdmin: UserContact?,
         separatorDate: Date?,
-        bubbleState: MessageTableCellState.BubbleState?,
-        contactImage: UIImage?,
+        bubbleState: MessageTableCellState.BubbleState? = nil,
+        contactImage: UIImage? = nil,
         replyingMessage: TransactionMessage? = nil,
         boostMessages: [TransactionMessage] = []
     ) {
@@ -234,6 +234,30 @@ struct MessageTableCellState {
         )
     }()
     
+    lazy var dateSeparator: NoBubbleMessageLayoutState.DateSeparator? = {
+        
+        guard let separatorDate = separatorDate else {
+            return nil
+        }
+        
+        let (shouldShowMonth, shouldShowYear) = separatorDate.shouldShowMonthAndYear()
+        var timestamp = ""
+        
+        if separatorDate.isToday() {
+            timestamp = "today".localized
+        } else if shouldShowMonth && shouldShowYear {
+            timestamp = separatorDate.getStringDate(format: "EEEE MMMM dd, yyyy")
+        } else if shouldShowMonth {
+            timestamp = separatorDate.getStringDate(format: "EEEE MMMM dd")
+        } else {
+            timestamp = separatorDate.getStringDate(format: "EEEE dd")
+        }
+        
+        return NoBubbleMessageLayoutState.DateSeparator(
+            timestamp: timestamp
+        )
+    }()
+    
     var isTextOnlyMessage: Bool {
         mutating get {
             return (self.messageContent != nil) &&
@@ -293,7 +317,8 @@ extension MessageTableCellState : Hashable {
             mutableLhs.message?.status       == mutableRhs.message?.status &&
             mutableLhs.bubbleState           == mutableRhs.bubbleState &&
             mutableLhs.boostMessages.count   == mutableRhs.boostMessages.count &&
-            mutableLhs.isTextOnlyMessage     == mutableRhs.isTextOnlyMessage
+            mutableLhs.isTextOnlyMessage     == mutableRhs.isTextOnlyMessage &&
+            mutableLhs.separatorDate         == mutableRhs.separatorDate
             
     }
 

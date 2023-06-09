@@ -198,12 +198,12 @@ struct NoBubbleMessageLayoutState: CommonLayoutState {
     
     struct DateSeparator {
         
-        var date: Date
+        var timestamp: String
         
         init(
-            date: Date
+            timestamp: String
         ) {
-            self.date = date
+            self.timestamp = timestamp
         }
     }
     

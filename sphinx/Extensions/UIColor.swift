@@ -22,6 +22,7 @@ public extension UIColor {
     enum Sphinx {
         public static let Body = color("Body")
         public static let BodyInverted = color("BodyInverted")
+        public static let InputOutline1 = color("Input Outline 1")
         public static let HeaderBG = color("HeaderBG")
         public static let HeaderSemiTransparentBG = color("HeaderSemiTransparentBG")
         public static let ListBG = color("ListBG")

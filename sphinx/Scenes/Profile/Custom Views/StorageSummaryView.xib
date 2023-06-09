@@ -11,11 +11,15 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="StorageSummaryView" customModule="sphinx" customModuleProvider="target">
             <connections>
+                <outlet property="additionFootprintView" destination="sdV-qp-H14" id="vQM-f4-qSA"/>
+                <outlet property="additionFootprintWidth" destination="Rz4-Ue-MDy" id="ZgD-Cy-24c"/>
+                <outlet property="additionLeadingEdge" destination="E6E-t4-HWH" id="Y7D-Hj-Xyz"/>
                 <outlet property="audioFootprintWidth" destination="dWz-zP-06H" id="25o-3f-9gO"/>
                 <outlet property="audioMemoryFootprintView" destination="6dI-dX-Lyl" id="EGg-eO-OaU"/>
                 <outlet property="contentView" destination="iN0-l3-epB" id="TdH-qE-RO0"/>
                 <outlet property="deletionFootprintView" destination="kFG-HU-PMi" id="DfM-kE-gyB"/>
                 <outlet property="deletionFootprintWidth" destination="VBe-Mk-rx2" id="0Fs-LG-qVT"/>
+                <outlet property="deletionTrailingEdge" destination="m41-Cp-dnf" id="tkv-8g-VkY"/>
                 <outlet property="imageFootprintWidth" destination="nuU-nu-fo5" id="btR-Mp-EWX"/>
                 <outlet property="imageToVideoHorizontalSpacing" destination="8jG-Rm-5Rk" id="XXc-fv-tf4"/>
                 <outlet property="imagesMemoryFootprintView" destination="UUc-NP-3O4" id="gGj-YS-kAp"/>
@@ -49,6 +53,13 @@
                                 <constraint firstAttribute="width" id="VBe-Mk-rx2"/>
                             </constraints>
                         </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sdV-qp-H14">
+                            <rect key="frame" x="0.0" y="0.0" width="0.0" height="16"/>
+                            <color key="backgroundColor" name="PrimaryRed"/>
+                            <constraints>
+                                <constraint firstAttribute="width" id="Rz4-Ue-MDy"/>
+                            </constraints>
+                        </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UUc-NP-3O4">
                             <rect key="frame" x="0.0" y="0.0" width="0.0" height="16"/>
                             <color key="backgroundColor" name="PrimaryBlue"/>
@@ -77,6 +88,7 @@
                         <constraint firstItem="xFX-Pj-wP8" firstAttribute="leading" secondItem="UUc-NP-3O4" secondAttribute="trailing" constant="2" id="8jG-Rm-5Rk"/>
                         <constraint firstItem="kFG-HU-PMi" firstAttribute="top" secondItem="pA3-QN-pPT" secondAttribute="top" id="AKF-QM-eka"/>
                         <constraint firstItem="Wuu-OO-lkF" firstAttribute="top" secondItem="pA3-QN-pPT" secondAttribute="top" id="DYm-xR-8a8"/>
+                        <constraint firstItem="sdV-qp-H14" firstAttribute="leading" secondItem="pA3-QN-pPT" secondAttribute="leading" id="E6E-t4-HWH"/>
                         <constraint firstItem="xFX-Pj-wP8" firstAttribute="bottom" secondItem="UUc-NP-3O4" secondAttribute="bottom" id="Etq-eF-5ou"/>
                         <constraint firstItem="xFX-Pj-wP8" firstAttribute="top" secondItem="UUc-NP-3O4" secondAttribute="top" id="Fmz-wZ-W8a"/>
                         <constraint firstItem="UUc-NP-3O4" firstAttribute="leading" secondItem="pA3-QN-pPT" secondAttribute="leading" id="K63-wM-hjs"/>
@@ -84,8 +96,10 @@
                         <constraint firstAttribute="bottom" secondItem="Wuu-OO-lkF" secondAttribute="bottom" id="Kjs-NK-gHw"/>
                         <constraint firstAttribute="bottom" secondItem="kFG-HU-PMi" secondAttribute="bottom" id="Ky2-UQ-hxP"/>
                         <constraint firstAttribute="height" constant="16" id="MiT-Vq-zxd"/>
+                        <constraint firstAttribute="bottom" secondItem="sdV-qp-H14" secondAttribute="bottom" id="SLl-lb-axW"/>
                         <constraint firstItem="Wuu-OO-lkF" firstAttribute="leading" secondItem="pA3-QN-pPT" secondAttribute="leading" id="ZNq-JV-YJG"/>
                         <constraint firstItem="6dI-dX-Lyl" firstAttribute="bottom" secondItem="xFX-Pj-wP8" secondAttribute="bottom" id="eWh-0F-g0l"/>
+                        <constraint firstItem="sdV-qp-H14" firstAttribute="top" secondItem="pA3-QN-pPT" secondAttribute="top" id="iPq-sx-Y5t"/>
                         <constraint firstAttribute="trailing" secondItem="kFG-HU-PMi" secondAttribute="trailing" id="m41-Cp-dnf"/>
                         <constraint firstAttribute="bottom" secondItem="UUc-NP-3O4" secondAttribute="bottom" id="oPc-YR-Mkg"/>
                         <constraint firstItem="UUc-NP-3O4" firstAttribute="top" secondItem="pA3-QN-pPT" secondAttribute="top" id="uf8-PS-cyV"/>

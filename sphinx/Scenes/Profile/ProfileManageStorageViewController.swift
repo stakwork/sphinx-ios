@@ -26,6 +26,7 @@ class ProfileManageStorageViewController : UIViewController{
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     @IBOutlet weak var mediaSourceTableView: UITableView!
     
+    
     @IBOutlet weak var editingModeMaximumLabel: UILabel!
     @IBOutlet weak var editingModeUsedStorageLabel: UILabel!
     
@@ -121,7 +122,7 @@ class ProfileManageStorageViewController : UIViewController{
     
     func showDeletionWarningAlert(type:StorageManagerMediaType){
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15, execute: {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05, execute: {
             self.overlayView = UIView(frame: self.view.frame)
             if let overlayView = self.overlayView{
                 overlayView.backgroundColor = .black
@@ -133,9 +134,16 @@ class ProfileManageStorageViewController : UIViewController{
             self.view.bringSubviewToFront(self.mediaDeletionConfirmationView)
             self.mediaDeletionConfirmationView.layer.zPosition = 1000
             self.mediaDeletionConfirmationView.delegate = self
-            self.mediaDeletionConfirmationView.type = type
             self.mediaDeletionConfirmationView.isHidden = false
             //self.mediaDeletionConfirmationView.contentView.backgroundColor = .black
+            if(self.mediaDeletionConfirmationView.state == .awaitingApproval){
+                self.mediaDeletionConfirmationView.type = type
+            }
+            
+            if let typeStat = self.vm.typeStats[type] {
+                self.mediaDeletionConfirmationView.spaceFreedString = formatBytes(Int(1e6 * typeStat))
+            }
+            
         })
     }
     
@@ -147,11 +155,14 @@ class ProfileManageStorageViewController : UIViewController{
     }
     
     func setIsLoading(){
-        self.isLoading = true
+        //self.isLoading = true
+        mediaDeletionConfirmationView.state = .loading
     }
     
-    func resetIsLoading(){
-        self.isLoading = false
+    func resetIsLoading(type:StorageManagerMediaType){
+        //self.isLoading = false
+        mediaDeletionConfirmationView.state = .finished
+        //showDeletionWarningAlert(type: type)
     }
     
     lazy var vm : ProfileManageStorageViewModel = {
@@ -322,14 +333,10 @@ class ProfileManageStorageViewController : UIViewController{
         if(maxInBytes < usageInBytes){
             let differential = formatBytes(usageInBytes - maxInBytes)
             self.view.bringSubviewToFront(warningView)
-            let warningMessage = String(format: NSLocalizedString("saving.limit.warning", comment: ""), differential)
+            let warningMessage = String(format: NSLocalizedString("saving.limit.warning", comment: ""), differential)            
             self.warningLabel.text = warningMessage
             self.warningView.isHidden = false
             self.editingModeMaximumLabel.textColor = UIColor.Sphinx.PrimaryRed
-        }
-        else if(newMaxGB > UserData.sharedInstance.getMaxMemoryGB()){
-            self.warningView.isHidden = true
-            self.editingModeMaximumLabel.textColor = UIColor.Sphinx.MainBottomIcons
         }
         else{
             self.warningView.isHidden = true
@@ -371,10 +378,15 @@ extension ProfileManageStorageViewController : MediaDeletionConfirmationViewDele
         if let type = mediaDeletionConfirmationView.type{
             vm.handleDeletion(type: type)
         }
-        self.hideDeletionWarningAlert()
+        //
     }
     
     func cancelTapped() {
-        self.hideDeletionWarningAlert()
+        if(mediaDeletionConfirmationView.state == .finished){
+            mediaDeletionConfirmationView.state = .awaitingApproval
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.0501, execute: {
+            self.hideDeletionWarningAlert()
+        })
     }
 }

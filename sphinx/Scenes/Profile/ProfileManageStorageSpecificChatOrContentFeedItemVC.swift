@@ -13,6 +13,11 @@ protocol ProfileManageStorageSpecificChatOrContentFeedItemVCDelegate : NSObject{
     func finishedDeleteAll()
 }
 
+public enum ProfileManageStorageSpecificChatOrContentFeedItemVCState{
+    case single
+    case batch
+}
+
 class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
     
     @IBOutlet weak var headerTitleLabel: UILabel!
@@ -23,8 +28,10 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
     @IBOutlet weak var deletionSummaryCountLabel: UILabel!
     @IBOutlet weak var deletionSummarySizeLabel: UILabel!
     @IBOutlet weak var deletionSummaryButton: UIView!
-    
-    
+    @IBOutlet weak var mediaDeletionConfirmationView: MediaDeletionConfirmationView!
+
+    fileprivate var state : ProfileManageStorageSpecificChatOrContentFeedItemVCState = .single
+    var overlayView : UIView? = nil
     var sourceType : StorageManagerMediaSource = .chats
     var chat : Chat? = nil
     var podcastFeed: PodcastFeed? = nil
@@ -54,6 +61,7 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViewAndModels()
+        hideDeletionWarningAlert()
     }
     
     func setupViewAndModels(){
@@ -86,25 +94,20 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
     
     
     @objc func handleDeleteSelected(){
-        AlertHelper.showTwoOptionsAlert(title: "are.you.sure".localized, message: "Confirming will delete the selected chat images from cache. This cannot be undone.",confirm: {
-            self.processDeleteSelected {
-                //TODO update loading label here
-                
-            }
-        })
+        state = .single
+        mediaDeletionConfirmationView.delegate = self
+        mediaDeletionConfirmationView.source = self.sourceType
+        showDeletionWarningAlert(type: .audio)
     }
     
     
     @IBAction func deleteAllTapped(_ sender: Any) {
         print("deleteAllTapped")
-        let itemDescription = (sourceType == .chats) ? "chat.media".localized : "podcasts"
-        AlertHelper.showTwoOptionsAlert(title: "are.you.sure".localized, message: "Confirming will delete all of your \(itemDescription). This cannot be undone.",confirm: {
-            self.processDeleteAll {
-                //TODO update loading label here
-                self.delegate?.finishedDeleteAll()
-                self.navigationController?.popViewController(animated: true)
-            }
-        })
+        
+        state = .batch
+        mediaDeletionConfirmationView.delegate = self
+        mediaDeletionConfirmationView.source = self.sourceType
+        showDeletionWarningAlert(type: .audio)
     }
     
     @IBAction func deletionSummaryCloseTap(_ sender: Any) {
@@ -159,5 +162,129 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
             break
         }
     }
+    
+    func presentPodcastPlayerFor(
+        _ podcast: PodcastFeed,
+        itemID:String?=nil
+    ) {
+        let podcastFeedVC = NewPodcastPlayerViewController.instantiate(
+            podcast: podcast,
+            delegate: self,
+            boostDelegate: self,
+            fromDashboard: true
+        )
+        
+        let navController = UINavigationController()
+        
+        navController.viewControllers = [podcastFeedVC]
+        navController.modalPresentationStyle = .automatic
+        navController.isNavigationBarHidden = true
+        navigationController?.present(navController, animated: true)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.75, execute: {
+            if let itemID = itemID{
+                podcastFeedVC.loadEpisode(withID: itemID)
+            }
+        })
+        
+    }
+    
+    func showDeletionWarningAlert(type:StorageManagerMediaType){
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05, execute: {
+            self.overlayView = UIView(frame: self.view.frame)
+            if let overlayView = self.overlayView{
+                overlayView.backgroundColor = .black
+                overlayView.isUserInteractionEnabled = false
+                overlayView.alpha = 0.8
+                self.view.addSubview(overlayView)
+                self.view.bringSubviewToFront(overlayView)
+            }
+            self.view.bringSubviewToFront(self.mediaDeletionConfirmationView)
+            self.mediaDeletionConfirmationView.layer.zPosition = 1000
+            self.mediaDeletionConfirmationView.delegate = self
+            self.mediaDeletionConfirmationView.isHidden = false
+            //self.mediaDeletionConfirmationView.contentView.backgroundColor = .black
+            self.mediaDeletionConfirmationView.batchState = self.state
+            if(self.mediaDeletionConfirmationView.state == .awaitingApproval){
+                self.mediaDeletionConfirmationView.type = type
+            }
+            
+            if(self.state == .batch){
+                self.mediaDeletionConfirmationView.spaceFreedString = formatBytes(Int(StorageManager.sharedManager.getItemGroupTotalSize(items: self.vm.items) * 1e6))
+            }
+            else if(self.state == .single && self.sourceType == .chats){
+                self.mediaDeletionConfirmationView.spaceFreedString = formatBytes(Int(StorageManager.sharedManager.getItemGroupTotalSize(items: self.vm.getSelectedItems()) * 1e6))
+            }
+        })
+    }
+    
+    func hideDeletionWarningAlert(){
+        self.overlayView?.removeFromSuperview()
+        self.overlayView = nil
+        
+        self.mediaDeletionConfirmationView.isHidden = true
+    }
+    
+}
+
+extension ProfileManageStorageSpecificChatOrContentFeedItemVC : MediaDeletionConfirmationViewDelegate{
+    func cancelTapped() {
+        self.hideDeletionWarningAlert()
+        let existingState = mediaDeletionConfirmationView.state
+        mediaDeletionConfirmationView.state = .awaitingApproval
+        if(existingState == .finished){
+            if(self.vm.items.count > 0){
+                
+            }
+            else{
+                self.navigationController?.popViewController(animated: true)
+            }
+        }
+    }
+    
+    func deleteTapped() {
+        if(state == .batch){
+            self.processDeleteAll {
+                self.mediaDeletionConfirmationView.state = .finished
+                //TODO update loading label here
+                //self.delegate?.finishedDeleteAll()
+                //self.navigationController?.popViewController(animated: true)
+            }
+        }
+        else if sourceType == .chats{
+            self.processDeleteSelected {
+                self.mediaDeletionConfirmationView.state = .finished
+            }
+        }
+        else if sourceType == .podcasts{
+            vm.finalizeEpisodeDelete()
+        }
+        
+    }
+    
+    
+}
+
+extension ProfileManageStorageSpecificChatOrContentFeedItemVC : PodcastPlayerVCDelegate, CustomBoostDelegate{
+    func willDismissPlayer() {
+        
+    }
+    
+    func shouldShareClip(comment: PodcastComment) {
+        
+    }
+    
+    func shouldGoToPlayer(podcast: PodcastFeed) {
+        
+    }
+    
+    func didFailPlayingPodcast() {
+        
+    }
+    
+    func didSendBoostMessage(success: Bool, message: TransactionMessage?) {
+        
+    }
+    
     
 }

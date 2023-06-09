@@ -37,6 +37,7 @@ public enum StorageManagerMediaSource{
 
 class StorageManagerItem{
     var type : StorageManagerMediaType
+    var source: StorageManagerMediaSource
     var sizeMB : Double
     var label : String
     var date : Date
@@ -44,7 +45,7 @@ class StorageManagerItem{
     var cachedMedia:CachedMedia?
     var uid:String?=nil
     
-    init(type:StorageManagerMediaType,sizeMB:Double,label:String,date:Date,sourceFilePath:String?=nil,cachedMedia:CachedMedia?=nil,uid:String?=nil) {
+    init(source:StorageManagerMediaSource,type:StorageManagerMediaType,sizeMB:Double,label:String,date:Date,sourceFilePath:String?=nil,cachedMedia:CachedMedia?=nil,uid:String?=nil) {
         self.type = type
         self.sizeMB = sizeMB
         self.label = label
@@ -52,6 +53,7 @@ class StorageManagerItem{
         self.sourceFilePath = sourceFilePath
         self.cachedMedia = cachedMedia
         self.uid = uid
+        self.source = source
     }
     
     func isCachedMedia()->Bool{
@@ -278,7 +280,7 @@ class StorageManager {
                    let fileData = sc.value(forKey: key) {
                     size = UInt64(fileData.count)
                     
-                    let newItem = StorageManagerItem(type: .video, sizeMB: Double(size ?? 0) / 1e6, label: "", date: cm.creationDate ?? Date(), cachedMedia: cm)
+                    let newItem = StorageManagerItem(source: .chats, type: .video, sizeMB: Double(size ?? 0) / 1e6, label: "", date: cm.creationDate ?? Date(), cachedMedia: cm)
                     items.append(newItem)
                 }
             } catch {
@@ -367,7 +369,7 @@ class StorageManager {
                 
                 if let cm = (CachedMedia.getCachedMediaByFilePath(filePath: imagePath, isVideo: isVideo)){
                     cm.image = image
-                    let newItem = StorageManagerItem(type: .photo, sizeMB: Double(size ?? 0)/1e6, label: "", date:cm.creationDate ?? Date()  ,cachedMedia: cm)
+                    let newItem = StorageManagerItem(source: .chats, type: .photo, sizeMB: Double(size ?? 0)/1e6, label: "", date:cm.creationDate ?? Date()  ,cachedMedia: cm)
                     items.append(newItem)
                 }
                 
@@ -489,7 +491,7 @@ class StorageManager {
                 //2. Extract the size value in MB
                 for item in downloadedItems{
                     if let size = item.getFileSizeMB(){
-                        let newItem = StorageManagerItem(type: .audio, sizeMB: size, label: "\(item.feed?.title ?? "Unknown Feed")- \(item.title ?? "Unknown Episode Title")",date: item.datePublished ?? (Date()),sourceFilePath: item.getLocalFileName(),uid: item.itemID)
+                        let newItem = StorageManagerItem(source: .podcasts, type: .audio, sizeMB: size, label: "\(item.feed?.title ?? "Unknown Feed")- \(item.title ?? "Unknown Episode Title")",date: item.datePublished ?? (Date()),sourceFilePath: item.getLocalFileName(),uid: item.itemID)
                         storageItems.append(newItem)
                     }
                 }
@@ -504,8 +506,8 @@ class StorageManager {
         var results = [String: [String]]()
         for file in files{
             print(file.lastPathComponent)
-            let split = file.lastPathComponent.split(separator: "_")
-            if split.count > 1{
+            if let split = getFeedItemPairForString(string: file.lastPathComponent),
+               split.count > 1{
                 var feedID = String(split[0])
                 var itemID = String(split[1])
                 if var existingFeedArray = results[feedID]{
@@ -518,6 +520,18 @@ class StorageManager {
             }
         }
         return results
+    }
+    
+    func getFeedItemPairForString(string:String)->[String]?{
+        let split = string.split(separator: "_")
+        if split.count > 1{
+            var feedID = String(split[0])
+            var itemID = String(split[1])
+            
+            return [feedID,itemID]
+        }
+        
+        return nil
     }
     
     func scanDownloads()->[Foundation.URL] {

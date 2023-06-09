@@ -117,7 +117,7 @@ extension ProfileManageStorageViewModel : UITableViewDelegate,UITableViewDataSou
             StorageManager.sharedManager.deleteAllAudioFiles(completion: {
                 StorageManager.sharedManager.refreshAllStoredData(completion: {
                     self.refreshData()
-                    self.vc.resetIsLoading()
+                    self.vc.resetIsLoading(type: type)
                 })
             })
             break
@@ -125,7 +125,7 @@ extension ProfileManageStorageViewModel : UITableViewDelegate,UITableViewDataSou
             StorageManager.sharedManager.deleteAllVideos(completion: {
                 StorageManager.sharedManager.refreshAllStoredData(completion: {
                     self.refreshData()
-                    self.vc.resetIsLoading()
+                    self.vc.resetIsLoading(type: type)
                 })
             })
             break
@@ -133,7 +133,7 @@ extension ProfileManageStorageViewModel : UITableViewDelegate,UITableViewDataSou
             StorageManager.sharedManager.deleteAllImages(completion: {
                 StorageManager.sharedManager.refreshAllStoredData(completion: {
                     self.refreshData()
-                    self.vc.resetIsLoading()
+                    self.vc.resetIsLoading(type: type)
                 })
             })
             break

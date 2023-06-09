@@ -81,6 +81,12 @@ class NewPodcastPlayerViewController: UIViewController {
         }
     }
     
+    func loadEpisode(withID:String){
+        if let episodeIndex = self.tableDataSource.podcast.episodesArray.firstIndex(where: {$0.itemID == withID}){
+            didTapEpisodeAt(index: episodeIndex)
+        }
+    }
+    
     override func endAppearanceTransition() {
         super.endAppearanceTransition()
         

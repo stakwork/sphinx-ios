@@ -1694,6 +1694,7 @@
                                             <constraint firstItem="d8X-1o-dBj" firstAttribute="top" secondItem="djr-xM-hzO" secondAttribute="top" constant="48" id="H0Q-05-eZf"/>
                                             <constraint firstItem="9Ps-AU-MrU" firstAttribute="leading" secondItem="djr-xM-hzO" secondAttribute="leading" constant="15" id="PtS-qt-Wlk"/>
                                             <constraint firstItem="C8k-zY-74P" firstAttribute="leading" secondItem="k45-3g-3jv" secondAttribute="trailing" constant="13" id="S3X-2Y-Y2G"/>
+                                            <constraint firstAttribute="height" constant="91" id="Z42-iB-moY"/>
                                             <constraint firstItem="9Ps-AU-MrU" firstAttribute="top" secondItem="djr-xM-hzO" secondAttribute="top" constant="31" id="etr-jF-PWb"/>
                                             <constraint firstAttribute="trailing" secondItem="C8k-zY-74P" secondAttribute="trailing" constant="13" id="iHT-FD-iDr"/>
                                         </constraints>
@@ -1711,6 +1712,14 @@
                                 <rect key="frame" x="0.0" y="139" width="414" height="723"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9K1-Rh-x4n" customClass="MediaDeletionConfirmationView" customModule="sphinx" customModuleProvider="target">
+                                <rect key="frame" x="51" y="316.5" width="312" height="368"/>
+                                <color key="backgroundColor" name="HeaderBG"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="312" id="JdJ-ke-25O"/>
+                                    <constraint firstAttribute="height" constant="368" id="zo6-nt-i9D"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="yEH-ce-5p3"/>
                         <color key="backgroundColor" name="Body"/>
@@ -1723,12 +1732,18 @@
                             <constraint firstItem="adb-4g-dst" firstAttribute="top" secondItem="iwI-6f-Ciu" secondAttribute="bottom" id="c5e-Kf-Ihy"/>
                             <constraint firstItem="yEH-ce-5p3" firstAttribute="trailing" secondItem="iwI-6f-Ciu" secondAttribute="trailing" id="jaG-bx-pQ2"/>
                             <constraint firstAttribute="trailing" secondItem="adb-4g-dst" secondAttribute="trailing" id="vPF-w0-cBD"/>
+                            <constraint firstItem="9K1-Rh-x4n" firstAttribute="centerY" secondItem="adb-4g-dst" secondAttribute="centerY" id="y6w-JY-U9P"/>
+                            <constraint firstItem="9K1-Rh-x4n" firstAttribute="centerX" secondItem="adb-4g-dst" secondAttribute="centerX" id="yKx-9z-tLW"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="headerHeight" destination="Z42-iB-moY" id="7jn-v4-444"/>
                         <outlet property="headerLabel" destination="d8X-1o-dBj" id="tjG-zK-axR"/>
+                        <outlet property="headerView" destination="djr-xM-hzO" id="Adx-Sb-EmN"/>
+                        <outlet property="mediaDeletionConfirmationView" destination="9K1-Rh-x4n" id="V1J-4R-bpK"/>
                         <outlet property="mediaSourceDetailsTableView" destination="adb-4g-dst" id="Lsn-eS-3Pm"/>
                         <outlet property="mediaSourceTotalSizeLabel" destination="k45-3g-3jv" id="LBd-MD-lOA"/>
+                        <outlet property="tableYOffset" destination="Mey-qb-Db7" id="oPQ-Va-4Zp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gn2-j5-pII" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1936,6 +1951,14 @@
                                 <rect key="frame" x="0.0" y="138" width="414" height="724"/>
                                 <color key="backgroundColor" name="Body"/>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zJ6-mR-I1a" customClass="MediaDeletionConfirmationView" customModule="sphinx" customModuleProvider="target">
+                                <rect key="frame" x="51" y="316" width="312" height="368"/>
+                                <color key="backgroundColor" name="HeaderBG"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="368" id="9eC-o5-jaB"/>
+                                    <constraint firstAttribute="width" constant="312" id="Wil-cQ-oSZ"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="p11-et-PUn"/>
                         <color key="backgroundColor" name="Body"/>
@@ -1946,10 +1969,12 @@
                             <constraint firstItem="obv-nV-WGh" firstAttribute="top" secondItem="X0s-oe-X7g" secondAttribute="top" id="H4d-Sk-7Gg"/>
                             <constraint firstItem="lYg-nt-rdO" firstAttribute="leading" secondItem="X0s-oe-X7g" secondAttribute="leading" id="KfX-dJ-VZU"/>
                             <constraint firstItem="p11-et-PUn" firstAttribute="top" secondItem="o81-Av-GsP" secondAttribute="top" id="QMh-hn-5eX"/>
+                            <constraint firstItem="zJ6-mR-I1a" firstAttribute="centerX" secondItem="p11-et-PUn" secondAttribute="centerX" id="d31-bI-jOt"/>
                             <constraint firstItem="obv-nV-WGh" firstAttribute="trailing" secondItem="p11-et-PUn" secondAttribute="trailing" id="izm-DS-kvj"/>
                             <constraint firstAttribute="trailing" secondItem="lYg-nt-rdO" secondAttribute="trailing" id="nLZ-Gs-2eO"/>
                             <constraint firstItem="zTe-fP-Pcs" firstAttribute="bottom" secondItem="lYg-nt-rdO" secondAttribute="bottom" id="olM-D8-y8X"/>
                             <constraint firstItem="obv-nV-WGh" firstAttribute="leading" secondItem="p11-et-PUn" secondAttribute="leading" id="olW-cz-6Vp"/>
+                            <constraint firstItem="zJ6-mR-I1a" firstAttribute="centerY" secondItem="lYg-nt-rdO" secondAttribute="centerY" id="pI0-SQ-uzB"/>
                             <constraint firstItem="lYg-nt-rdO" firstAttribute="top" secondItem="obv-nV-WGh" secondAttribute="bottom" id="qVz-m8-Vmj"/>
                             <constraint firstItem="p11-et-PUn" firstAttribute="bottom" secondItem="lYg-nt-rdO" secondAttribute="bottom" id="rsu-vA-OIY"/>
                         </constraints>
@@ -1961,6 +1986,7 @@
                         <outlet property="deletionSummaryView" destination="Sas-1e-Npj" id="Ma8-YU-gFi"/>
                         <outlet property="headerTitleLabel" destination="aM6-lr-PWK" id="QhL-hY-05f"/>
                         <outlet property="imageCollectionView" destination="zTe-fP-Pcs" id="H6F-Zs-28k"/>
+                        <outlet property="mediaDeletionConfirmationView" destination="zJ6-mR-I1a" id="2h8-Z4-Dld"/>
                         <outlet property="tableView" destination="lYg-nt-rdO" id="nOy-97-czN"/>
                         <outlet property="totalSizeLabel" destination="sQx-Yb-g7e" id="b10-vh-RMe"/>
                     </connections>

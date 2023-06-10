@@ -614,5 +614,6 @@
 "storage.management.audio.files" = "archivos de audio";
 "storage.management.video" = "video";
 "storage.management.images" = "imágenes";
+"storage.management.other" = "otros";
 "are.you.sure" = "Are you sure?";
 "chat.media" = "medios de chat";

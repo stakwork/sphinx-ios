@@ -13,12 +13,14 @@ public enum StorageManagerMediaType{
     case audio
     case video
     case photo
+    case other
     
     static var allCases: [StorageManagerMediaType] {
         return [
             .photo,
             .video,
-            .audio
+            .audio,
+            .other
         ]
     }
 }
@@ -280,7 +282,21 @@ class StorageManager {
                    let fileData = sc.value(forKey: key) {
                     size = UInt64(fileData.count)
                     
-                    let newItem = StorageManagerItem(source: .chats, type: .video, sizeMB: Double(size ?? 0) / 1e6, label: "", date: cm.creationDate ?? Date(), cachedMedia: cm)
+                    var type = StorageManagerMediaType.video
+                    if(cm.fileExtension == "png"){
+                        type = .photo
+                    }
+                    else if(cm.fileExtension == "mp4"){
+                        type = .video
+                    }
+                    else if(cm.fileExtension == "mp3"){
+                        type = .audio
+                    }
+                    else{
+                        type = .other
+                    }
+                    
+                    let newItem = StorageManagerItem(source: .chats, type: type, sizeMB: Double(size ?? 0) / 1e6, label: "", date: cm.creationDate ?? Date(), cachedMedia: cm)
                     items.append(newItem)
                 }
             } catch {

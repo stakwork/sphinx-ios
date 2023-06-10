@@ -98,6 +98,9 @@ class MediaDeletionConfirmationView: UIView {
             case .photo:
                 typeString = NSLocalizedString("storage.management.images", comment: "")
                 break
+            case .other:
+                typeString = NSLocalizedString("storage.management.other", comment: "")
+                break
             }
         }
         return typeString

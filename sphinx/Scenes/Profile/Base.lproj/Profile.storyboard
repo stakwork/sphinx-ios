@@ -1517,14 +1517,14 @@
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="tn4-X7-Dcd">
-                                <rect key="frame" x="0.0" y="293.5" width="414" height="200"/>
+                                <rect key="frame" x="0.0" y="293.5" width="414" height="264"/>
                                 <color key="backgroundColor" name="Body"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="200" id="3Lg-KA-ynh"/>
+                                    <constraint firstAttribute="height" constant="264" id="3Lg-KA-ynh"/>
                                 </constraints>
                             </tableView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="m9b-2o-0MK">
-                                <rect key="frame" x="0.0" y="493.5" width="414" height="128"/>
+                                <rect key="frame" x="0.0" y="557.5" width="414" height="128"/>
                                 <color key="backgroundColor" name="Body"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="128" id="doI-Yy-OAe"/>

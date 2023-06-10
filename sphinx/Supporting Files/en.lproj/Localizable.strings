@@ -617,6 +617,7 @@
 "storage.management.audio.files" = "all podcast episodes";
 "storage.management.video" = "all video";
 "storage.management.images" = "all images";
+"storage.management.other" = "other";
 "are.you.sure" = "Are you sure?";
 "chat.media" = "chat media";
 "storage.management.deletion.complete.title" = "%@ successfully deleted";

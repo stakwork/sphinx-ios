@@ -130,6 +130,32 @@ class MediaLoader {
                 errorCompletion(messageId)
             }
         }
+        
+        if let chat = message.chat?.getChat(),
+           let path = getDiskImagePath(forKey: url.absoluteString){
+            let randomInt = Int.random(in: 0...Int(1e9))
+            var fileExtension = "png"
+            if(message.isPicture()){
+                fileExtension = "png"
+            }
+            else if(message.isVideo()){
+                fileExtension = "mp4"
+            }
+            else if(message.isAudio()){
+                fileExtension = "mp3"
+            }
+            else if(message.isGif()){
+                fileExtension = "gif"
+            }
+            else if(message.isPDF()){
+                
+            }
+            else if(message.isAttachment()){
+                fileExtension = "png"
+            }
+            let _ = CachedMedia.createObject(id: randomInt, chat: chat, filePath: path, fileExtension: fileExtension, key: url.absoluteString)
+            //StorageManager.sharedManager.processGarbageCleanup()
+        }
     }
     
     class func getImageFromData(_ data: Data, isPdf: Bool) -> UIImage? {
@@ -368,12 +394,12 @@ class MediaLoader {
     
     class func storeImageInCache(img: UIImage, url: String,chat:Chat?) {
         SDImageCache.shared.store(img, forKey: url, completion: nil)
-        if let chat = chat,
-           let path = getDiskImagePath(forKey: url){
-            let randomInt = Int.random(in: 0...Int(1e9))
-            let _ = CachedMedia.createObject(id: randomInt, chat: chat, filePath: path, fileExtension: "png", key: url)
-            StorageManager.sharedManager.processGarbageCleanup()
-        }
+//        if let chat = chat,
+//           let path = getDiskImagePath(forKey: url){
+//            let randomInt = Int.random(in: 0...Int(1e9))
+//            let _ = CachedMedia.createObject(id: randomInt, chat: chat, filePath: path, fileExtension: "png", key: url)
+//            StorageManager.sharedManager.processGarbageCleanup()
+//        }
     }
     
     class func getDiskImagePath(forKey key: String)->String? {

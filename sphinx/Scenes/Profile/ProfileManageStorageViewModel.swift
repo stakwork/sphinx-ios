@@ -137,6 +137,9 @@ extension ProfileManageStorageViewModel : UITableViewDelegate,UITableViewDataSou
                 })
             })
             break
+        case .other:
+            //TODO: do deletion for other
+            break
         }
         print("delete all of \(type)")
     }

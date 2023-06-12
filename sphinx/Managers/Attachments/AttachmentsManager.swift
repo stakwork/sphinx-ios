@@ -216,7 +216,7 @@ class AttachmentsManager {
     
     func cacheImageAndMediaData(message: TransactionMessage, attachmentObject: AttachmentObject) {
         if let mediaUrl = message.getMediaUrl()?.absoluteString {
-            if let data = attachmentObject.data, message.isVideo() || message.isAudio() || message.isGif() {
+            if let data = attachmentObject.data {
                 if let mediaKey = message.mediaKey {
                     if let decryptedData = SymmetricEncryptionManager.sharedInstance.decryptData(data: data, key: mediaKey) {
                         MediaLoader.storeMediaDataInCache(data: decryptedData, url: mediaUrl)

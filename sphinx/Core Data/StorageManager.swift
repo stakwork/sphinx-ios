@@ -83,6 +83,21 @@ class StorageManager {
         return downloadedPods + cachedMedia
     }
     
+    func getStorageManagerTypeFromExtension(cm:CachedMedia)->StorageManagerMediaType{
+        var type : StorageManagerMediaType = .other
+        if(cm.fileExtension == "png"){
+            type = .photo
+        }
+        else if(cm.fileExtension == "mp4"){
+            type = .video
+        }
+        else if(cm.fileExtension == "mp3"){
+            type = .audio
+        }
+        
+        return type
+    }
+    
     func getStorageItemSummaryByType()->[StorageManagerMediaType:Double]{
         var dict = [StorageManagerMediaType:Double]()
         let storedItemsByType = getStoredItemsByType()
@@ -282,19 +297,7 @@ class StorageManager {
                    let fileData = sc.value(forKey: key) {
                     size = UInt64(fileData.count)
                     
-                    var type = StorageManagerMediaType.video
-                    if(cm.fileExtension == "png"){
-                        type = .photo
-                    }
-                    else if(cm.fileExtension == "mp4"){
-                        type = .video
-                    }
-                    else if(cm.fileExtension == "mp3"){
-                        type = .audio
-                    }
-                    else{
-                        type = .other
-                    }
+                    let type = getStorageManagerTypeFromExtension(cm:cm)
                     
                     let newItem = StorageManagerItem(source: .chats, type: type, sizeMB: Double(size ?? 0) / 1e6, label: "", date: cm.creationDate ?? Date(), cachedMedia: cm)
                     items.append(newItem)
@@ -309,7 +312,7 @@ class StorageManager {
     }
     
     func populateVideoImages(){
-        let smis = allItems.filter({$0.type == .video})
+        let smis = allItems.filter({$0.type != .photo && $0.type != .audio})
         let sc = SphinxCache()
         for i in 0..<smis.count{
             let smi = smis[i]

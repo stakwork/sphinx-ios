@@ -155,6 +155,30 @@ public class TransactionMessage: NSManagedObject {
     func resetPreviousConsecutiveMessages() {
         consecutiveMessages.previousMessage = false
     }
+    
+    func getCMExtensionAssignment()->String{
+        var fileExtension = ""
+        if(self.isPicture()){
+            fileExtension = "png"
+        }
+        else if(self.isVideo()){
+            fileExtension = "mp4"
+        }
+        else if(self.isAudio()){
+            fileExtension = "mp3"
+        }
+        else if(self.isGif()){
+            fileExtension = "gif"
+        }
+        else if(self.isPDF()){
+            fileExtension = "pdf"
+        }
+        else if(self.isAttachment()){
+            fileExtension = "png"
+        }
+        
+        return fileExtension
+    }
 
     
     static func insertMessage(

@@ -135,24 +135,7 @@ class MediaLoader {
            let path = getDiskImagePath(forKey: url.absoluteString){
             let randomInt = Int.random(in: 0...Int(1e9))
             var fileExtension = "png"
-            if(message.isPicture()){
-                fileExtension = "png"
-            }
-            else if(message.isVideo()){
-                fileExtension = "mp4"
-            }
-            else if(message.isAudio()){
-                fileExtension = "mp3"
-            }
-            else if(message.isGif()){
-                fileExtension = "gif"
-            }
-            else if(message.isPDF()){
-                
-            }
-            else if(message.isAttachment()){
-                fileExtension = "png"
-            }
+            fileExtension = message.getCMExtensionAssignment()
             let _ = CachedMedia.createObject(id: randomInt, chat: chat, filePath: path, fileExtension: fileExtension, key: url.absoluteString)
             //StorageManager.sharedManager.processGarbageCleanup()
         }
@@ -288,7 +271,8 @@ class MediaLoader {
                 storeMediaDataInCache(data: decryptedData, url: url.absoluteString,isVideo:isVideo)
                 if let chat = message.chat{
                     let randomInt = Int.random(in: 0...Int(1e9))
-                    let _ = CachedMedia.createObject(id: randomInt, chat: chat, filePath: nil, fileExtension: "mp4", key: url.absoluteString)
+                    let ext = message.getCMExtensionAssignment()
+                    let _ = CachedMedia.createObject(id: randomInt, chat: chat, filePath: nil, fileExtension: ext, key: url.absoluteString)
                     print(chat.id)
                     print()
                 }

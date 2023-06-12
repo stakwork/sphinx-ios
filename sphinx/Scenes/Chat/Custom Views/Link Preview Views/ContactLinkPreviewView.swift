@@ -24,7 +24,7 @@ class ContactLinkPreviewView: LinkPreviewBubbleView {
     @IBOutlet weak var borderView: UIView!
     
     let kDashedLayerName = "dashed-layer"
-    let kNewContactBubbleHeight: CGFloat = 165
+    let kNewContactBubbleHeight: CGFloat = 168
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -124,7 +124,7 @@ class ContactLinkPreviewView: LinkPreviewBubbleView {
             
             contactImageView.sd_setImage(
                 with: url,
-                placeholderImage: UIImage(named: "profile_avatar"),
+                placeholderImage: UIImage(named: "addContactIcon"),
                 options: [.scaleDownLargeImages, .decodeFirstFrameOnly, .lowPriority],
                 context: [.imageTransformer: transformer],
                 progress: nil,

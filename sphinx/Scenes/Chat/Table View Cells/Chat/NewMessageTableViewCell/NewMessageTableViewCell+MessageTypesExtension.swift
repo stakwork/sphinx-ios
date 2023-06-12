@@ -78,4 +78,21 @@ extension NewMessageTableViewCell {
             contactLinkPreviewView.isHidden = false
         }
     }
+    
+    func configureWith(
+        tribeLink: BubbleMessageLayoutState.TribeLink?,
+        and bubble: BubbleMessageLayoutState.Bubble,
+        messageId: Int?
+    ) {
+        if let tribeLink = tribeLink {
+            if let tribeLinkLoaded = tribeLink.tribeLinkLoaded {
+                tribeLinkPreviewView.configureWith(tribeLink: tribeLinkLoaded, and: bubble)
+                tribeLinkPreviewView.isHidden = false
+            } else if let messageId = messageId {
+                DispatchQueue.global(qos: .userInitiated).async {
+                    self.delegate?.shouldLoadTribeInfoFor(link: tribeLink.link, with: messageId)
+                }
+            }
+        }
+    }
 }

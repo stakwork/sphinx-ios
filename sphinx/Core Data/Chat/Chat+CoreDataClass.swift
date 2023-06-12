@@ -302,6 +302,19 @@ public class Chat: NSManagedObject {
         return chat
     }
     
+    static func getChatsWith(uuids: [String]) -> [Chat] {
+        let predicate = NSPredicate(format: "uuid IN %@", uuids)
+        let sortDescriptors = [NSSortDescriptor(key: "id", ascending: false)]
+        
+        let chats: [Chat] = CoreDataManager.sharedManager.getObjectsOfTypeWith(
+            predicate: predicate,
+            sortDescriptors: sortDescriptors,
+            entityName: "Chat"
+        )
+        
+        return chats
+    }
+    
     //Added firstMessage param to the query method. If stored then chat will load all messages starting from that one and won't consider the limit param
     func getAllMessages(
         limit: Int? = 100,

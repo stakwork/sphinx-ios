@@ -220,6 +220,44 @@ struct BubbleMessageLayoutState: CommonLayoutState {
             self.roundedBottom = roundedBottom
         }
     }
+    
+    struct TribeLink {
+        var link: String
+        var tribeLinkLoaded: TribeLinkLoaded? = nil
+        
+        init(
+            link: String,
+            tribeLinkLoaded: TribeLinkLoaded? = nil
+        ) {
+            self.link = link
+            self.tribeLinkLoaded = tribeLinkLoaded
+        }
+    }
+    
+    struct TribeLinkLoaded {
+        var name: String
+        var description: String
+        var imageUrl: String?
+        var showJoinButton: Bool
+        var bubbleWidth: CGFloat
+        var roundedBottom: Bool
+        
+        init(
+            name: String,
+            description: String,
+            imageUrl: String?,
+            showJoinButton: Bool,
+            bubbleWidth: CGFloat,
+            roundedBottom: Bool
+        ) {
+            self.name = name
+            self.description = description
+            self.imageUrl = imageUrl
+            self.showJoinButton = showJoinButton
+            self.bubbleWidth = bubbleWidth
+            self.roundedBottom = roundedBottom
+        }
+    }
 }
 
 struct NoBubbleMessageLayoutState: CommonLayoutState {

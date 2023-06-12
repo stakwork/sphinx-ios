@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 protocol LinkPreviewDelegate: class {
     func didTapOnTribeButton()
@@ -24,6 +25,10 @@ class TribeLinkPreviewView: LinkPreviewBubbleView {
     @IBOutlet weak var containerButton: UIButton!
     @IBOutlet weak var tribeButtonContainer: UIView!
     @IBOutlet weak var tribeButtonView: UIView!
+    @IBOutlet weak var borderView: UIView!
+    
+    let kDashedLayerName = "dashed-layer"
+    let kNewTribeBubbleHeight: CGFloat = 165
     
     var messageId: Int = -1
     
@@ -56,10 +61,41 @@ class TribeLinkPreviewView: LinkPreviewBubbleView {
         tribeImageView.layer.borderColor = UIColor.Sphinx.SecondaryText.withAlphaComponent(0.5).resolvedCGColor(with: self)
     }
     
+    func configureWith(
+        tribeLink: BubbleMessageLayoutState.TribeLinkLoaded,
+        and bubble: BubbleMessageLayoutState.Bubble
+    ) {
+        configureColors(incoming: bubble.direction.isIncoming())
+        
+        tribeButtonContainer.isHidden = !tribeLink.showJoinButton
+        contentView.backgroundColor = tribeLink.showJoinButton ? UIColor.Sphinx.Body : UIColor.clear
+        
+        tribeNameLabel.text = tribeLink.name
+        tribeDescriptionTextView.text = tribeLink.description
+
+        loadImage(imageUrl: tribeLink.imageUrl)
+        
+        removeDashedLineBorder()
+        
+        if tribeLink.showJoinButton {
+            addDashedLineBorder(
+                color: bubble.direction.isIncoming() ? UIColor.Sphinx.ReceivedMsgBG : UIColor.Sphinx.SentMsgBG,
+                rect: CGRect(
+                    x: 0,
+                    y: 0,
+                    width: tribeLink.bubbleWidth,
+                    height: kNewTribeBubbleHeight
+                ),
+                roundedBottom: tribeLink.roundedBottom
+            )
+        }
+    }
+    
     func configurePreview(messageRow: TransactionMessageRow, delegate: LinkPreviewDelegate, doneCompletion: @escaping (Int) -> ()) {
         messageId = messageRow.transactionMessage.id
         
         let link = messageRow.getMessageContent().stringFirstTribeLink
+        
         loadTribeDetails(link: link, completion: { tribeInfo in
             if let tribeInfo = tribeInfo {
                 messageRow.transactionMessage.tribeInfo = tribeInfo
@@ -86,6 +122,10 @@ class TribeLinkPreviewView: LinkPreviewBubbleView {
     
     func configureColors(messageRow: TransactionMessageRow) {
         let incoming = messageRow.isIncoming()
+        configureColors(incoming: incoming)
+    }
+    
+    func configureColors(incoming: Bool) {
         let color = incoming ? UIColor.Sphinx.SecondaryText : UIColor.Sphinx.SecondaryTextSent
         tribeDescriptionTextView.textColor = color
         tribeImageView.tintColor = color
@@ -95,23 +135,32 @@ class TribeLinkPreviewView: LinkPreviewBubbleView {
         tribeButtonView.backgroundColor = buttonColor
     }
     
-    func loadImage(tribeInfo: GroupsManager.TribeInfo?) {
-        guard let tribeInfo = tribeInfo, let imageUrlString = tribeInfo.img, let imageUrl = URL(string: imageUrlString) else {
-            tribeImageView.contentMode = .center
-            tribeImageView.image = UIImage(named: "tribePlaceholder")
-            tribeImageView.layer.borderWidth = 1
-            return
-        }
-        MediaLoader.asyncLoadImage(imageView: tribeImageView, nsUrl: imageUrl, placeHolderImage: UIImage(named: "tribePlaceholder"), completion: { image in
-            MediaLoader.storeImageInCache(img: image, url: imageUrlString, chat: nil)
-            self.tribeImageView.image = image
-            self.tribeImageView.layer.borderWidth = 0
-            self.tribeImageView.contentMode = .scaleAspectFill
-        }, errorCompletion: { _ in
-            self.tribeImageView.image = UIImage(named: "tribePlaceholder")
-            self.tribeImageView.contentMode = .center
-        })
+    func loadImage(imageUrl: String?) {
+        tribeImageView.sd_cancelCurrentImageLoad()
         
+        if let image = imageUrl, let url = URL(string: image) {
+            let transformer = SDImageResizingTransformer(
+                size: tribeImageView.bounds.size,
+                scaleMode: .aspectFill
+            )
+            
+            tribeImageView.sd_setImage(
+                with: url,
+                placeholderImage: UIImage(named: "tribePlaceholder"),
+                options: [.scaleDownLargeImages, .decodeFirstFrameOnly, .lowPriority],
+                context: [.imageTransformer: transformer],
+                progress: nil,
+                completed: { (image, error, _, _) in
+                    self.tribeImageView.image = (error == nil) ? image : UIImage(named: "tribePlaceholder")
+                }
+            )
+        } else {
+            tribeImageView.image = UIImage(named: "tribePlaceholder")
+        }
+    }
+    
+    func loadImage(tribeInfo: GroupsManager.TribeInfo?) {
+        loadImage(imageUrl: tribeInfo?.img)
     }
     
     func loadTribeDetails(link: String, completion: @escaping (GroupsManager.TribeInfo?) -> ()) {
@@ -146,6 +195,36 @@ class TribeLinkPreviewView: LinkPreviewBubbleView {
         self.contentView.bringSubviewToFront(tribeDescriptionTextView)
         self.contentView.bringSubviewToFront(tribeButtonContainer)
         self.contentView.bringSubviewToFront(containerButton)
+    }
+    
+    func addDashedLineBorder(
+        color: UIColor,
+        rect: CGRect,
+        roundedBottom: Bool
+    ) {
+        let shapeLayer:CAShapeLayer = CAShapeLayer()
+        shapeLayer.cornerRadius = 8.0
+        shapeLayer.path = UIBezierPath(
+            roundedRect: rect,
+            byRoundingCorners: roundedBottom ? [.bottomLeft, .bottomRight] : [],
+            cornerRadii: CGSize(width: 8.0, height: 8.0)
+        ).cgPath
+        shapeLayer.fillColor = UIColor.clear.cgColor
+        shapeLayer.strokeColor = color.resolvedCGColor(with: contentView)
+        shapeLayer.lineWidth = 1.5
+        shapeLayer.lineJoin = .round
+        shapeLayer.lineDashPattern = [8,4]
+        shapeLayer.name = kDashedLayerName
+        
+        borderView.layer.addSublayer(shapeLayer)
+    }
+    
+    func removeDashedLineBorder() {
+        for sublayer in borderView.layer.sublayers ?? [] {
+            if sublayer.name == kDashedLayerName {
+                sublayer.removeFromSuperlayer()
+            }
+        }
     }
     
     @IBAction func seeTribeButtonTouched() {

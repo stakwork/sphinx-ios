@@ -33,12 +33,9 @@ extension NewChatTableDataSource {
     func configureDataSource() {
         dataSource = makeDataSource()
 
-        if let messagesStateArray = preloaderHelper.getMessageStateArray(for: chat.id) {
-            messageTableCellStateArray = messagesStateArray
-            updateSnapshot()
-        } else {
-            configureResultsController(items: 50)
-        }
+        restorePreloadedMessages()
+        
+        configureResultsController(items: 50)
     }
     
     func makeSnapshotForCurrentState() -> DataSourceSnapshot {
@@ -55,10 +52,13 @@ extension NewChatTableDataSource {
     }
     
     func updateSnapshot() {
+        saveMessagesToPreloader()
+        
         let snapshot = makeSnapshotForCurrentState()
+        let shouldAnimate = self.dataSource.snapshot().numberOfItems > 0
 
         DispatchQueue.main.async {
-            self.dataSource.apply(snapshot, animatingDifferences: false)
+            self.dataSource.apply(snapshot, animatingDifferences: shouldAnimate)
             self.tableView.alpha = 1.0
             
 //            self.tableView.scrollToBottom(animated: false)
@@ -96,7 +96,11 @@ extension NewChatTableDataSource {
                 ) as! MessageNoBubbleTableViewCell
             }
             
-            cell?.configureWith(messageCellState: dataSourceItem)
+            cell?.configureWith(
+                messageCellState: dataSourceItem,
+                delegate: self,
+                indexPath: indexPath.row
+            )
             cell?.contentView.transform = CGAffineTransform(scaleX: 1, y: -1)
             
             return (cell as? UITableViewCell) ?? UITableViewCell()
@@ -107,7 +111,8 @@ extension NewChatTableDataSource {
 extension NewChatTableDataSource {
     
     func configureResultsController() {
-        DelayPerformedHelper.performAfterDelay(seconds: 2.0, completion: {
+        DelayPerformedHelper.performAfterDelay(seconds: 2.0, completion: { [weak self] in
+            guard let self = self else { return }
             self.configureResultsController(items: 500)
         })
     }
@@ -124,9 +129,11 @@ extension NewChatTableDataSource {
         
         messagesResultsController.delegate = self
         
-        do {
-            try messagesResultsController.performFetch()
-        } catch {}
+        DispatchQueue.global(qos: .userInitiated).async {
+            do {
+                try self.messagesResultsController.performFetch()
+            } catch {}
+        }
     }
     
     func processMessages(
@@ -144,6 +151,7 @@ extension NewChatTableDataSource {
         let replyingMessagesMap = getReplyingMessagesMapFor(messages: messages)
         let boostMessagesMap = getBoostMessagesMapFor(messages: messages)
         let linkContactsArray = getLinkContactsArrayFor(messages: messages)
+        let linkTribesArray = getLinkTribesArrayFor(messages: messages)
         
         var groupingDate: Date? = nil
 
@@ -175,6 +183,7 @@ extension NewChatTableDataSource {
                 let replyingMessage = (message.replyUUID != nil) ? replyingMessagesMap[message.replyUUID!] : nil
                 let boostsMessages = (message.uuid != nil) ? (boostMessagesMap[message.uuid!] ?? []) : []
                 let linkContact = linkContactsArray[message.id]
+                let linkTribe = linkTribesArray[message.id]
                 
                 array.insert(
                     MessageTableCellState(
@@ -188,7 +197,8 @@ extension NewChatTableDataSource {
                         contactImage: headerImage,
                         replyingMessage: replyingMessage,
                         boostMessages: boostsMessages,
-                        linkContact: linkContact
+                        linkContact: linkContact,
+                        linkTribe: linkTribe
                     ),
                     at: 0
                 )
@@ -196,11 +206,6 @@ extension NewChatTableDataSource {
         }
         
         messageTableCellStateArray = array
-        
-        preloaderHelper.add(
-            messageStateArray: array.subarray(size: 50),
-            for: chat.id
-        )
         
         updateSnapshot()
     }
@@ -315,6 +320,42 @@ extension NewChatTableDataSource {
         })
         
         return linkContactsMap
+    }
+    
+    
+    func getLinkTribesArrayFor(
+        messages: [TransactionMessage]
+    ) -> [Int: (String, GroupsManager.TribeInfo?, Bool)] {
+        
+        var links: [Int: (String, GroupsManager.TribeInfo)] = [:]
+        
+        messages.forEach({
+            if $0.messageContent?.hasTribeLinks == true {
+                if let link = $0.messageContent?.stringFirstTribeLink {
+                    if let tribeInfo = GroupsManager.sharedInstance.getGroupInfo(query: link) {
+                        links[$0.id] = (link, tribeInfo)
+                    }
+                }
+            }
+        })
+        
+        let uuids: [String] = links.map({
+            $0.value.1.uuid
+        })
+        
+        let chats = Chat.getChatsWith(uuids: uuids)
+        
+        var linkTribesMap: [Int: (String, GroupsManager.TribeInfo?, Bool)] = [:]
+        
+        links.forEach({ (key, value) in
+            if let tribeLink = tribeLinks[key], tribeLink.isValid {
+                linkTribesMap[key] = (value.0, tribeLink, chats.filter({ $0.uuid == value.1.uuid }).count > 0 )
+            } else {
+                linkTribesMap[key] = (value.0, nil, chats.filter({ $0.uuid == value.1.uuid }).count > 0 )
+            }
+        })
+        
+        return linkTribesMap
     }
 }
 

@@ -29,6 +29,7 @@ struct MessageTableCellState {
     var replyingMessage: TransactionMessage? = nil
     var boostMessages: [TransactionMessage] = []
     var linkContact: (String, UserContact?)? = nil
+    var linkTribe: (String, GroupsManager.TribeInfo?, Bool)? = nil
     
     //Generic rows Data
     var separatorDate: Date? = nil
@@ -44,7 +45,8 @@ struct MessageTableCellState {
         contactImage: UIImage? = nil,
         replyingMessage: TransactionMessage? = nil,
         boostMessages: [TransactionMessage] = [],
-        linkContact: (String, UserContact?)? = nil
+        linkContact: (String, UserContact?)? = nil,
+        linkTribe: (String, GroupsManager.TribeInfo?, Bool)? = nil
     ) {
         self.message = message
         self.chat = chat
@@ -57,6 +59,7 @@ struct MessageTableCellState {
         self.replyingMessage = replyingMessage
         self.boostMessages = boostMessages
         self.linkContact = linkContact
+        self.linkTribe = linkTribe
     }
     
     ///Bubble States
@@ -247,6 +250,30 @@ struct MessageTableCellState {
         )
     }()
     
+    lazy var tribeLink: BubbleMessageLayoutState.TribeLink? = {
+        guard let linkTribe = linkTribe else {
+            return nil
+        }
+        
+        if let tribeInfo = linkTribe.1 {
+            return BubbleMessageLayoutState.TribeLink(
+                link: linkTribe.0,
+                tribeLinkLoaded: BubbleMessageLayoutState.TribeLinkLoaded(
+                    name: tribeInfo.name ?? "title.not.available".localized,
+                    description: tribeInfo.description ?? "description.not.available".localized,
+                    imageUrl: tribeInfo.img,
+                    showJoinButton: !linkTribe.2,
+                    bubbleWidth: (UIScreen.main.bounds.width - (MessageTableCellState.kRowLeftMargin + MessageTableCellState.kRowRightMargin)) * (MessageTableCellState.kBubbleWidthPercentage),
+                    roundedBottom: false
+                )
+            )
+        } else {
+            return BubbleMessageLayoutState.TribeLink(
+                link: linkTribe.0
+            )
+        }
+    }()
+    
     
     ///No Bubble States
     lazy var noBubble: NoBubbleMessageLayoutState.NoBubble? = {
@@ -304,7 +331,9 @@ struct MessageTableCellState {
                 (self.messageReply == nil) &&
                 (self.callLink == nil) &&
                 (self.directPayment == nil) &&
-                (self.boosts == nil)
+                (self.boosts == nil) &&
+                (self.contactLink == nil) &&
+                (self.tribeLink == nil)
         }
     }
 }
@@ -359,7 +388,8 @@ extension MessageTableCellState : Hashable {
             mutableLhs.boostMessages.count   == mutableRhs.boostMessages.count &&
             mutableLhs.isTextOnlyMessage     == mutableRhs.isTextOnlyMessage &&
             mutableLhs.separatorDate         == mutableRhs.separatorDate &&
-            mutableLhs.linkContact?.0        == mutableRhs.linkContact?.0
+            mutableLhs.linkContact?.0        == mutableRhs.linkContact?.0 &&
+            mutableLhs.linkTribe?.1          == mutableRhs.linkTribe?.1
             
     }
 

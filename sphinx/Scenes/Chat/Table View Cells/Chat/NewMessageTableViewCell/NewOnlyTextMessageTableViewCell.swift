@@ -49,7 +49,9 @@ class NewOnlyTextMessageTableViewCell: SwipableReplyCell, ChatTableViewCellProto
     }
     
     func configureWith(
-        messageCellState: MessageTableCellState
+        messageCellState: MessageTableCellState,
+        delegate: NewMessageTableViewCellDelegate,
+        indexPath: Int
     ) {
         var mutableMessageCellState = messageCellState
         

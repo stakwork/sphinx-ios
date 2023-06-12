@@ -577,6 +577,8 @@
 		47BE854A246492FD00BE4AE8 /* KeychainRestoreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47BE8548246492FD00BE4AE8 /* KeychainRestoreTableViewCell.swift */; };
 		47BE854B246492FD00BE4AE8 /* KeychainRestoreTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47BE8549246492FD00BE4AE8 /* KeychainRestoreTableViewCell.xib */; };
 		47BE85502465E09B00BE4AE8 /* BiometricAuthenticationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47BE854F2465E09B00BE4AE8 /* BiometricAuthenticationHelper.swift */; };
+		47BF27EF2A375EAA00F15EE9 /* NewChatTableDataSource+CellDelegateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47BF27EE2A375EAA00F15EE9 /* NewChatTableDataSource+CellDelegateExtension.swift */; };
+		47BF27F12A37782E00F15EE9 /* NewChatTableDataSource+PreloaderExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47BF27F02A37782E00F15EE9 /* NewChatTableDataSource+PreloaderExtension.swift */; };
 		47BF7D4B25A8A59100593489 /* API+VersionsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47BF7D4A25A8A59100593489 /* API+VersionsExtension.swift */; };
 		47C52C4527F49EA9007B43E2 /* HMACSigningManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C52C4427F49EA9007B43E2 /* HMACSigningManager.swift */; };
 		47C7C1782938E84D00264BF6 /* RecommendationResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C7C1772938E84D00264BF6 /* RecommendationResult.swift */; };
@@ -1613,6 +1615,8 @@
 		47BE8548246492FD00BE4AE8 /* KeychainRestoreTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainRestoreTableViewCell.swift; sourceTree = "<group>"; };
 		47BE8549246492FD00BE4AE8 /* KeychainRestoreTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KeychainRestoreTableViewCell.xib; sourceTree = "<group>"; };
 		47BE854F2465E09B00BE4AE8 /* BiometricAuthenticationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricAuthenticationHelper.swift; sourceTree = "<group>"; };
+		47BF27EE2A375EAA00F15EE9 /* NewChatTableDataSource+CellDelegateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewChatTableDataSource+CellDelegateExtension.swift"; sourceTree = "<group>"; };
+		47BF27F02A37782E00F15EE9 /* NewChatTableDataSource+PreloaderExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewChatTableDataSource+PreloaderExtension.swift"; sourceTree = "<group>"; };
 		47BF7D4A25A8A59100593489 /* API+VersionsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+VersionsExtension.swift"; sourceTree = "<group>"; };
 		47C52C4427F49EA9007B43E2 /* HMACSigningManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HMACSigningManager.swift; sourceTree = "<group>"; };
 		47C7C1772938E84D00264BF6 /* RecommendationResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationResult.swift; sourceTree = "<group>"; };
@@ -1651,6 +1655,7 @@
 		47E300DE234B81F800DB56DB /* LeftMenuAddFriendTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftMenuAddFriendTableViewCell.swift; sourceTree = "<group>"; };
 		47E300E3234B83EC00DB56DB /* AddFriendRowButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendRowButton.swift; sourceTree = "<group>"; };
 		47E61581237DC7F400630FD1 /* sphinx.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = sphinx.entitlements; sourceTree = "<group>"; };
+		47E6A4AA2A2A65F900A9509E /* sphinx 40.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 40.xcdatamodel"; sourceTree = "<group>"; };
 		47E6A4AB2A2E237400A9509E /* PodcastBoostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastBoostView.swift; sourceTree = "<group>"; };
 		47E6A4AD2A2E237F00A9509E /* PodcastBoostView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PodcastBoostView.xib; sourceTree = "<group>"; };
 		47E6A4AF2A2E275C00A9509E /* BotResponseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BotResponseView.swift; sourceTree = "<group>"; };
@@ -1690,7 +1695,6 @@
 		47E6A4FC2A2FB45B00A9509E /* NewMessageTableViewCell+StatusHeaderExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewMessageTableViewCell+StatusHeaderExtension.swift"; sourceTree = "<group>"; };
 		47E6A4FF2A30C67400A9509E /* ShimmeringTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmeringTableView.swift; sourceTree = "<group>"; };
 		47E6A5012A30C68400A9509E /* ShimmeringTableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShimmeringTableView.xib; sourceTree = "<group>"; };
-		47E6A4AA2A2A65F900A9509E /* sphinx 40.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 40.xcdatamodel"; sourceTree = "<group>"; };
 		47EB025A29BA343E0032CFB5 /* CircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressView.swift; sourceTree = "<group>"; };
 		47EB025C29BA37D50032CFB5 /* CircularProgressView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CircularProgressView.xib; sourceTree = "<group>"; };
 		47F2289D23672A5E001429A4 /* ImagePickerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerManager.swift; sourceTree = "<group>"; };
@@ -3986,6 +3990,8 @@
 			children = (
 				472092CD2A27987A00468796 /* NewChatTableDataSource.swift */,
 				47E6A4F62A2F788300A9509E /* NewChatTableDataSource+ResultsControllerExtension.swift */,
+				47BF27EE2A375EAA00F15EE9 /* NewChatTableDataSource+CellDelegateExtension.swift */,
+				47BF27F02A37782E00F15EE9 /* NewChatTableDataSource+PreloaderExtension.swift */,
 				47E6A4F22A2F642800A9509E /* MessageTableCellState.swift */,
 				47E6A4F42A2F66BD00A9509E /* MessageLayoutState.swift */,
 				47FA72782A30E19300FB4535 /* MessagesPreloaderHelper.swift */,
@@ -5341,6 +5347,7 @@
 				CEF821D62963B68600CBB28F /* DiscoverTribesWebViewController.swift in Sources */,
 				474A667D24929D45002C2D10 /* CommonReplyTableViewCell.swift in Sources */,
 				F3188B80271792CE00890DDD /* VideoFeed+Properties.swift in Sources */,
+				47BF27F12A37782E00F15EE9 /* NewChatTableDataSource+PreloaderExtension.swift in Sources */,
 				476EB47523C50662009745E2 /* GroupContactTableViewCell.swift in Sources */,
 				47183CB0254893B100E6FD19 /* NewPodcastPlayerViewController.swift in Sources */,
 				47E300DF234B81F800DB56DB /* LeftMenuAddFriendTableViewCell.swift in Sources */,
@@ -5399,6 +5406,7 @@
 				47AF0D31254B236C00C98398 /* BoostButtonView.swift in Sources */,
 				47822C70244A02010011D832 /* CommonPaidMessageTableViewCell.swift in Sources */,
 				47D46A33237C83900005A548 /* Chat+CoreDataClass.swift in Sources */,
+				47BF27EF2A375EAA00F15EE9 /* NewChatTableDataSource+CellDelegateExtension.swift in Sources */,
 				47D46A35237C83900005A548 /* Chat+CoreDataProperties.swift in Sources */,
 				4707089224AE16DF00A98DCA /* MediaDownloader.swift in Sources */,
 				F394ECA92682099000529038 /* NewUserSignupDescriptionViewController.swift in Sources */,

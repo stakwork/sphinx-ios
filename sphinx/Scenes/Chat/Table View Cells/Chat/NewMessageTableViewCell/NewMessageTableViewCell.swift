@@ -26,10 +26,22 @@ extension NewMessageTableViewCell {
 protocol ChatTableViewCellProtocol: class {
     var contentView: UIView { get }
     
-    func configureWith(messageCellState: MessageTableCellState)
+    func configureWith(
+        messageCellState: MessageTableCellState,
+        delegate: NewMessageTableViewCellDelegate,
+        indexPath: Int
+    )
+}
+
+protocol NewMessageTableViewCellDelegate: class {
+    func shouldLoadTribeInfoFor(link: String, with messageId: Int)
 }
 
 class NewMessageTableViewCell: SwipableReplyCell, ChatTableViewCellProtocol {
+    
+    weak var delegate: NewMessageTableViewCellDelegate!
+    
+    var indexPath: Int! =  nil
     
     ///General views
     @IBOutlet weak var bubbleAllView: UIView!
@@ -86,8 +98,13 @@ class NewMessageTableViewCell: SwipableReplyCell, ChatTableViewCellProtocol {
     }
     
     func configureWith(
-        messageCellState: MessageTableCellState
+        messageCellState: MessageTableCellState,
+        delegate: NewMessageTableViewCellDelegate,
+        indexPath: Int
     ) {
+        self.delegate = delegate
+        self.indexPath = indexPath
+        
         hideAllSubviews()
         
         var mutableMessageCellState = messageCellState
@@ -116,6 +133,7 @@ class NewMessageTableViewCell: SwipableReplyCell, ChatTableViewCellProtocol {
         //Bottom view
         configureWith(boosts: mutableMessageCellState.boosts, and: bubble)
         configureWith(contactLink: mutableMessageCellState.contactLink, and: bubble)
+        configureWith(tribeLink: mutableMessageCellState.tribeLink, and: bubble, messageId: mutableMessageCellState.message?.id)
         
         ///Header and avatar
         configureWith(avatarImage: mutableMessageCellState.avatarImage)

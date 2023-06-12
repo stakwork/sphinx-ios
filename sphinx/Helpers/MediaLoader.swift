@@ -119,8 +119,7 @@ class MediaLoader {
         }
         
         if let decryptedImage = decryptedImage {
-            print(message.chat?.getChat())
-            storeImageInCache(img: decryptedImage, url: url.absoluteString,chat: message.chat?.getChat())
+            storeImageInCache(img: decryptedImage, url: url.absoluteString, chat: message.chat?.getChat())
             
             DispatchQueue.main.async {
                 completion(messageId, decryptedImage)
@@ -210,10 +209,6 @@ class MediaLoader {
         MediaLoader.loadFileData(url: url, message: message, completion: completion, errorCompletion: errorCompletion)
     }
     
-    class func loadPDF(url: URL, message: TransactionMessage, completion: @escaping (Int, Data) -> (), errorCompletion: @escaping (Int) -> ()) {
-        MediaLoader.loadFileData(url: url, message: message, completion: completion, errorCompletion: errorCompletion)
-    }
-    
     class func loadFileData(url: URL, message: TransactionMessage, completion: @escaping (Int, Data) -> (), errorCompletion: @escaping (Int) -> ()) {
         let messageId = message.id
         
@@ -241,6 +236,58 @@ class MediaLoader {
         }
     }
     
+    class func loadPDFData(
+        url: URL,
+        message: TransactionMessage,
+        completion: @escaping (Int, Data, MessageTableCellState.FileInfo) -> (),
+        errorCompletion: @escaping (Int) -> ()
+    ) {
+        let messageId = message.id
+        
+        if message.isMediaExpired() {
+            clearMediaDataCacheFor(url: url.absoluteString)
+            errorCompletion(messageId)
+        } else if let data = getMediaDataFromCachedUrl(url: url.absoluteString) {
+            
+            let fileInfo = MessageTableCellState.FileInfo(
+                fileSize: message.mediaFileSize,
+                fileName: message.mediaFileName ?? "",
+                pagesCount: data.getPDFPagesCount(),
+                previewImage: data.getPDFThumbnail()
+            )
+            
+            DispatchQueue.main.async {
+                completion(
+                    messageId,
+                    data,
+                    fileInfo
+                )
+            }
+        } else {
+            loadDataFrom(URL: url, completion: { (data, fileName) in
+                message.saveFileName(fileName)
+                
+                self.loadMediaFromData(data: data, url: url, message: message, completion: { data in
+                    
+                    let fileInfo = MessageTableCellState.FileInfo(
+                        fileSize: message.mediaFileSize,
+                        fileName: message.mediaFileName ?? "",
+                        pagesCount: data.getPDFPagesCount(),
+                        previewImage: data.getPDFThumbnail()
+                    )
+                    
+                    DispatchQueue.main.async {
+                        completion(messageId, data, fileInfo)
+                    }
+                }, errorCompletion: errorCompletion)
+            }, errorCompletion: {
+                DispatchQueue.main.async {
+                    errorCompletion(messageId)
+                }
+            })
+        }
+    }
+    
     class func getFileAttachmentData(url: URL, message: TransactionMessage, completion: @escaping (Int, Data) -> (), errorCompletion: @escaping (Int) -> ()) {
         let messageId = message.id
         
@@ -255,16 +302,22 @@ class MediaLoader {
         }
     }
     
-    class func loadMediaFromData(data: Data, url: URL, message: TransactionMessage, isVideo:Bool=false,completion: @escaping (Data) -> (), errorCompletion: @escaping (Int) -> ()) {
+    class func loadMediaFromData(
+        data: Data,
+        url: URL, message: TransactionMessage,
+        isVideo: Bool = false,
+        completion: @escaping (Data) -> (),
+        errorCompletion: @escaping (Int) -> ()
+    ) {
         if let mediaKey = message.getMediaKey(), mediaKey != "" {
             if let decryptedData = SymmetricEncryptionManager.sharedInstance.decryptData(data: data, key: mediaKey) {
                 message.saveFileSize(decryptedData.count)
+                
                 storeMediaDataInCache(data: decryptedData, url: url.absoluteString,isVideo:isVideo)
+                
                 if let chat = message.chat{
                     let randomInt = Int.random(in: 0...Int(1e9))
                     let _ = CachedMedia.createObject(id: randomInt, chat: chat, filePath: nil, fileExtension: "mp4", key: url.absoluteString)
-                    print(chat.id)
-                    print()
                 }
                 DispatchQueue.main.async {
                     completion(decryptedData)

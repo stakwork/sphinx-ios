@@ -50,7 +50,7 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Xc-Bw-U9G">
                             <rect key="frame" x="0.0" y="3" width="414" height="112"/>
                             <subviews>
-                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="addContactIcon" translatesAutoresizingMaskIntoConstraints="NO" id="tsW-J4-Jix">
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="addContactIcon" translatesAutoresizingMaskIntoConstraints="NO" id="tsW-J4-Jix">
                                     <rect key="frame" x="16" y="16" width="80" height="80"/>
                                     <color key="tintColor" name="SecondaryText"/>
                                     <constraints>
@@ -59,13 +59,13 @@
                                     </constraints>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New Contact" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="usc-2z-GcC">
-                                    <rect key="frame" x="96" y="35" width="302" height="20"/>
+                                    <rect key="frame" x="104" y="35" width="294" height="20"/>
                                     <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="17"/>
                                     <color key="textColor" name="Text"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="askdjh12387sdhkasd79123h1238asdhad19823791283h" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NIv-V5-Zzr">
-                                    <rect key="frame" x="96" y="60.5" width="280" height="16.5"/>
+                                    <rect key="frame" x="104" y="60.5" width="272" height="16.5"/>
                                     <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                                     <color key="textColor" name="SecondaryText"/>
                                     <nil key="highlightedColor"/>
@@ -91,9 +91,9 @@
                                 <constraint firstAttribute="height" constant="112" id="ZeH-4m-Ddd"/>
                                 <constraint firstAttribute="bottom" secondItem="NIv-V5-Zzr" secondAttribute="bottom" constant="35" id="fm7-H0-M4m"/>
                                 <constraint firstItem="tsW-J4-Jix" firstAttribute="leading" secondItem="8Xc-Bw-U9G" secondAttribute="leading" constant="16" id="lqb-em-P4v"/>
-                                <constraint firstItem="NIv-V5-Zzr" firstAttribute="leading" secondItem="tsW-J4-Jix" secondAttribute="trailing" id="mdr-Xe-5O2"/>
+                                <constraint firstItem="NIv-V5-Zzr" firstAttribute="leading" secondItem="tsW-J4-Jix" secondAttribute="trailing" constant="8" id="mdr-Xe-5O2"/>
                                 <constraint firstItem="tsW-J4-Jix" firstAttribute="top" secondItem="8Xc-Bw-U9G" secondAttribute="top" constant="16" id="xdQ-Gz-jjb"/>
-                                <constraint firstItem="usc-2z-GcC" firstAttribute="leading" secondItem="tsW-J4-Jix" secondAttribute="trailing" id="ys3-Zo-4li"/>
+                                <constraint firstItem="usc-2z-GcC" firstAttribute="leading" secondItem="tsW-J4-Jix" secondAttribute="trailing" constant="8" id="ys3-Zo-4li"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c6K-Lw-fs8">

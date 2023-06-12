@@ -14,8 +14,15 @@ extension NewChatTableDataSource {
             messageTableCellStateArray = messagesStateArray
             
             for messageState in messagesStateArray {
-                if let messageId = messageState.message?.id, let tribeInfo = messageState.linkTribe?.1 {
-                    tribeLinks[messageId] = tribeInfo
+                if let messageId = messageState.message?.id {
+                    
+                    if let linkTribe = messageState.linkTribe {
+                        tribeLinks[messageId] = linkTribe
+                    }
+                    
+                    if let mediaData = messageState.mediaData {
+                        cachedMedia[messageId] = mediaData
+                    }
                 }
             }
             

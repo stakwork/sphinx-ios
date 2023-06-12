@@ -60,6 +60,37 @@ extension NewMessageTableViewCell {
     }
     
     func configureWith(
+        messageMedia: BubbleMessageLayoutState.MessageMedia?,
+        and messageId: Int?
+    ) {
+        if let messageMedia = messageMedia {
+            mediaContentView.configureWith(messageMedia: messageMedia)
+            mediaContentView.isHidden = false
+            
+            if let messageId = messageId, messageMedia.loading {
+                DispatchQueue.global(qos: .userInitiated).async {
+                    if messageMedia.isImage {
+                        self.delegate?.shouldLoadImageDataFor(
+                            url: messageMedia.url,
+                            with: messageId
+                        )
+                    } else if messageMedia.isPdf {
+                        self.delegate?.shouldLoadPdfDataFor(
+                            url: messageMedia.url,
+                            with: messageId
+                        )
+                    } else if messageMedia.isVideo {
+                        self.delegate?.shouldLoadVideoDataFor(
+                            url: messageMedia.url,
+                            with: messageId
+                        )
+                    }
+                }
+            }
+        }
+    }
+    
+    func configureWith(
         boosts: BubbleMessageLayoutState.Boosts?,
         and bubble: BubbleMessageLayoutState.Bubble
     ) {

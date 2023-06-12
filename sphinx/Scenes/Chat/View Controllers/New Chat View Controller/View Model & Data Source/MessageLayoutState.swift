@@ -148,6 +148,46 @@ struct BubbleMessageLayoutState: CommonLayoutState {
         }
     }
     
+    struct MessageMedia {
+        var url: URL?
+        var image: UIImage?
+        var gifData: Data?
+        var fileInfo: MessageTableCellState.FileInfo?
+        var loading: Bool
+        var failed: Bool
+        var isImage: Bool
+        var isVideo: Bool
+        var isGif: Bool
+        var isPdf: Bool
+        var isPaid: Bool
+        
+        init(
+            url: URL?,
+            image: UIImage?,
+            gifData: Data?,
+            fileInfo: MessageTableCellState.FileInfo?,
+            loading: Bool,
+            failed: Bool,
+            isImage: Bool,
+            isVideo: Bool,
+            isGif: Bool,
+            isPdf: Bool,
+            isPaid: Bool
+        ) {
+            self.url = url
+            self.image = image
+            self.gifData = gifData
+            self.fileInfo = fileInfo
+            self.loading = loading
+            self.failed = failed
+            self.isImage = isImage
+            self.isVideo = isVideo
+            self.isGif = isGif
+            self.isPdf = isPdf
+            self.isPaid = isPaid
+        }
+    }
+    
     struct Boosts {
         var boosts: [Boost]
         var totalAmount: Int

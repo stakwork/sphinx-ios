@@ -43,5 +43,33 @@ class MediaMessageView: UIView {
         mediaContainer.layer.cornerRadius = 8.0
         mediaContainer.clipsToBounds = true
     }
-
+    
+    func configureWith(
+        messageMedia: BubbleMessageLayoutState.MessageMedia
+    ) {
+        mediaImageView.image = messageMedia.image
+        
+        paidContentOverlay.isHidden = !messageMedia.isPaid
+        fileInfoView.isHidden = !messageMedia.isPdf || messageMedia.loading
+        gifOverlay.isHidden = !messageMedia.isGif || messageMedia.loading
+        videoOverlay.isHidden = !messageMedia.isVideo || messageMedia.loading
+        
+        loadingContainer.isHidden = !messageMedia.loading
+        
+        if messageMedia.loading {
+            loadingImageView.rotate()
+        } else {
+            loadingImageView.stopRotating()
+        }
+        
+        mediaNotAvailableView.isHidden = !messageMedia.failed
+        mediaNotAvailableIcon.isHidden = !messageMedia.failed
+        
+        if let fileInfo = messageMedia.fileInfo {
+            fileInfoView.configure(fileInfo: fileInfo)
+            fileInfoView.isHidden = false
+        } else {
+            fileInfoView.isHidden = true
+        }
+    }
 }

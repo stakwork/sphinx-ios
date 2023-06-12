@@ -300,7 +300,13 @@ extension TransactionMessage {
     }
     
     func isMediaAttachment() -> Bool {
-        return (isAttachment() && getType() != TransactionMessageType.textAttachment.rawValue) || isGiphy()
+        let mediaAttachmentTypes = [
+            TransactionMessageType.imageAttachment.rawValue,
+            TransactionMessageType.videoAttachment.rawValue,
+            TransactionMessageType.pdfAttachment.rawValue,
+        ]
+        
+        return mediaAttachmentTypes.contains(getType() ?? -1) || isGiphy()
     }
     
     func isPaidMessage() -> Bool {
@@ -328,6 +334,10 @@ extension TransactionMessage {
     
     func isVideo() -> Bool {
         return getMediaType() == TransactionMessage.TransactionMessageType.videoAttachment.rawValue
+    }
+    
+    func isImage() -> Bool {
+        return getMediaType() == TransactionMessage.TransactionMessageType.imageAttachment.rawValue
     }
     
     func isAudio() -> Bool {

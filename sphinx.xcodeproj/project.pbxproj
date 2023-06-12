@@ -579,6 +579,7 @@
 		47BE85502465E09B00BE4AE8 /* BiometricAuthenticationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47BE854F2465E09B00BE4AE8 /* BiometricAuthenticationHelper.swift */; };
 		47BF27EF2A375EAA00F15EE9 /* NewChatTableDataSource+CellDelegateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47BF27EE2A375EAA00F15EE9 /* NewChatTableDataSource+CellDelegateExtension.swift */; };
 		47BF27F12A37782E00F15EE9 /* NewChatTableDataSource+PreloaderExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47BF27F02A37782E00F15EE9 /* NewChatTableDataSource+PreloaderExtension.swift */; };
+		47BF27F32A3795CE00F15EE9 /* MessageTableCellState+DataTypeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47BF27F22A3795CE00F15EE9 /* MessageTableCellState+DataTypeExtension.swift */; };
 		47BF7D4B25A8A59100593489 /* API+VersionsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47BF7D4A25A8A59100593489 /* API+VersionsExtension.swift */; };
 		47C52C4527F49EA9007B43E2 /* HMACSigningManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C52C4427F49EA9007B43E2 /* HMACSigningManager.swift */; };
 		47C7C1782938E84D00264BF6 /* RecommendationResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C7C1772938E84D00264BF6 /* RecommendationResult.swift */; };
@@ -1617,6 +1618,7 @@
 		47BE854F2465E09B00BE4AE8 /* BiometricAuthenticationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricAuthenticationHelper.swift; sourceTree = "<group>"; };
 		47BF27EE2A375EAA00F15EE9 /* NewChatTableDataSource+CellDelegateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewChatTableDataSource+CellDelegateExtension.swift"; sourceTree = "<group>"; };
 		47BF27F02A37782E00F15EE9 /* NewChatTableDataSource+PreloaderExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewChatTableDataSource+PreloaderExtension.swift"; sourceTree = "<group>"; };
+		47BF27F22A3795CE00F15EE9 /* MessageTableCellState+DataTypeExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageTableCellState+DataTypeExtension.swift"; sourceTree = "<group>"; };
 		47BF7D4A25A8A59100593489 /* API+VersionsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+VersionsExtension.swift"; sourceTree = "<group>"; };
 		47C52C4427F49EA9007B43E2 /* HMACSigningManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HMACSigningManager.swift; sourceTree = "<group>"; };
 		47C7C1772938E84D00264BF6 /* RecommendationResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationResult.swift; sourceTree = "<group>"; };
@@ -3993,6 +3995,7 @@
 				47BF27EE2A375EAA00F15EE9 /* NewChatTableDataSource+CellDelegateExtension.swift */,
 				47BF27F02A37782E00F15EE9 /* NewChatTableDataSource+PreloaderExtension.swift */,
 				47E6A4F22A2F642800A9509E /* MessageTableCellState.swift */,
+				47BF27F22A3795CE00F15EE9 /* MessageTableCellState+DataTypeExtension.swift */,
 				47E6A4F42A2F66BD00A9509E /* MessageLayoutState.swift */,
 				47FA72782A30E19300FB4535 /* MessagesPreloaderHelper.swift */,
 			);
@@ -5244,6 +5247,7 @@
 				47935FB3249EC3BE00B39ADB /* OrientationHandlerViewController.swift in Sources */,
 				47357A192729A16C00A49EEE /* NewsletterItem+DisplayUtils.swift in Sources */,
 				F39F2C7C26E2363100D357F6 /* FeedSearchResultsCollectionViewController.swift in Sources */,
+				47BF27F32A3795CE00F15EE9 /* MessageTableCellState+DataTypeExtension.swift in Sources */,
 				475154BB2423FA4100477384 /* JoinVideoCallView.swift in Sources */,
 				47E6A4C02A2E591900A9509E /* NewMessageTableViewCell+GeneralSetup.swift in Sources */,
 				475BDD19232AC47C00C5BBD6 /* ChatViewController.swift in Sources */,

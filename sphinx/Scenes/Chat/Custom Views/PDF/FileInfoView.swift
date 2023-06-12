@@ -41,6 +41,14 @@ class FileInfoView: UIView {
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
     }
     
+    func configure(fileInfo: MessageTableCellState.FileInfo) {
+        contentView.backgroundColor = UIColor.black.withAlphaComponent(0.7)
+        iconLabel.text = "insert_drive_file"
+        
+        fileNameLabel.text = fileInfo.fileName
+        pagesLabel.text = "\(fileInfo.pagesCount ?? 0) \("pages".localized)"
+    }
+    
     func configure(message: TransactionMessage) {
         self.message = message
         

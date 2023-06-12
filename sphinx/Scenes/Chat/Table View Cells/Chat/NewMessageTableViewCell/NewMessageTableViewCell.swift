@@ -35,6 +35,10 @@ protocol ChatTableViewCellProtocol: class {
 
 protocol NewMessageTableViewCellDelegate: class {
     func shouldLoadTribeInfoFor(link: String, with messageId: Int)
+    
+    func shouldLoadImageDataFor(url: URL?, with messageId: Int)
+    func shouldLoadPdfDataFor(url: URL?, with messageId: Int)
+    func shouldLoadVideoDataFor(url: URL?, with messageId: Int)
 }
 
 class NewMessageTableViewCell: SwipableReplyCell, ChatTableViewCellProtocol {
@@ -129,6 +133,7 @@ class NewMessageTableViewCell: SwipableReplyCell, ChatTableViewCellProtocol {
         configureWith(directPayment: mutableMessageCellState.directPayment, and: bubble)
         configureWith(callLink: mutableMessageCellState.callLink)
         configureWith(podcastBoost: mutableMessageCellState.podcastBoost)
+        configureWith(messageMedia: mutableMessageCellState.messageMedia, and: mutableMessageCellState.message?.id)
         
         //Bottom view
         configureWith(boosts: mutableMessageCellState.boosts, and: bubble)

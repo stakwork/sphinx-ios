@@ -23,8 +23,8 @@ class NewChatTableDataSource : NSObject {
     var messageTableCellStateArray: [MessageTableCellState] = []
     var preloaderHelper = MessagesPreloaderHelper.sharedInstance
     
-    var cachedImages: [String: UIImage] = [:]
-    var tribeLinks: [Int: GroupsManager.TribeInfo] = [:]
+    var cachedMedia: [Int: MessageTableCellState.MediaData] = [:]
+    var tribeLinks: [Int: MessageTableCellState.LinkTribe] = [:]
     
     init(
         chat: Chat,

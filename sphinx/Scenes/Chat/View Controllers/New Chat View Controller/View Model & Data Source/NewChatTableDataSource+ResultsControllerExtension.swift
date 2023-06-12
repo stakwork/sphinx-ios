@@ -35,7 +35,10 @@ extension NewChatTableDataSource {
 
         restorePreloadedMessages()
         
-        configureResultsController(items: 50)
+        DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: { [weak self] in
+            guard let self = self else { return }
+            self.configureResultsController(items: 50)
+        })
     }
     
     func makeSnapshotForCurrentState() -> DataSourceSnapshot {
@@ -55,10 +58,10 @@ extension NewChatTableDataSource {
         saveMessagesToPreloader()
         
         let snapshot = makeSnapshotForCurrentState()
-        let shouldAnimate = self.dataSource.snapshot().numberOfItems > 0
+//        let shouldAnimate = self.dataSource.snapshot().numberOfItems > 0
 
         DispatchQueue.main.async {
-            self.dataSource.apply(snapshot, animatingDifferences: shouldAnimate)
+            self.dataSource.apply(snapshot, animatingDifferences: false)
             self.tableView.alpha = 1.0
             
 //            self.tableView.scrollToBottom(animated: false)
@@ -158,7 +161,8 @@ extension NewChatTableDataSource {
         for (index, message) in messages.enumerated() {
             if message.isTextMessage() ||
                message.isDirectPayment() ||
-               message.isPodcastBoost() {
+               message.isPodcastBoost() ||
+               message.isMediaAttachment() {
                 
                 let bubbleStateAndDate = getBubbleBackgroundForMessage(
                     message: message,
@@ -184,6 +188,7 @@ extension NewChatTableDataSource {
                 let boostsMessages = (message.uuid != nil) ? (boostMessagesMap[message.uuid!] ?? []) : []
                 let linkContact = linkContactsArray[message.id]
                 let linkTribe = linkTribesArray[message.id]
+                let mediaData = getMediaDataFor(message: message)
                 
                 array.insert(
                     MessageTableCellState(
@@ -198,7 +203,8 @@ extension NewChatTableDataSource {
                         replyingMessage: replyingMessage,
                         boostMessages: boostsMessages,
                         linkContact: linkContact,
-                        linkTribe: linkTribe
+                        linkTribe: linkTribe,
+                        mediaData: mediaData
                     ),
                     at: 0
                 )
@@ -302,7 +308,7 @@ extension NewChatTableDataSource {
     
     func getLinkContactsArrayFor(
         messages: [TransactionMessage]
-    ) -> [Int: (String, UserContact?)] {
+    ) -> [Int: MessageTableCellState.LinkContact] {
         
         var pubkeys: [Int:String] = [:]
         
@@ -313,10 +319,13 @@ extension NewChatTableDataSource {
         })
         
         let contacts = UserContact.getContactsWith(pubkeys: Array(pubkeys.values))
-        var linkContactsMap: [Int: (String, UserContact?)] = [:]
+        var linkContactsMap: [Int: MessageTableCellState.LinkContact] = [:]
         
         pubkeys.forEach({ (key, value) in
-            linkContactsMap[key] = (value, contacts.filter({ $0.publicKey == value }).first )
+            linkContactsMap[key] = MessageTableCellState.LinkContact(
+                link: value,
+                contact: contacts.filter({ $0.publicKey == value }).first
+            )
         })
         
         return linkContactsMap
@@ -325,7 +334,7 @@ extension NewChatTableDataSource {
     
     func getLinkTribesArrayFor(
         messages: [TransactionMessage]
-    ) -> [Int: (String, GroupsManager.TribeInfo?, Bool)] {
+    ) -> [Int: MessageTableCellState.LinkTribe] {
         
         var links: [Int: (String, GroupsManager.TribeInfo)] = [:]
         
@@ -345,17 +354,36 @@ extension NewChatTableDataSource {
         
         let chats = Chat.getChatsWith(uuids: uuids)
         
-        var linkTribesMap: [Int: (String, GroupsManager.TribeInfo?, Bool)] = [:]
+        var linkTribesMap: [Int: MessageTableCellState.LinkTribe] = [:]
         
         links.forEach({ (key, value) in
-            if let tribeLink = tribeLinks[key], tribeLink.isValid {
-                linkTribesMap[key] = (value.0, tribeLink, chats.filter({ $0.uuid == value.1.uuid }).count > 0 )
+            if let tribeLink = tribeLinks[key], tribeLink.tribeInfo?.isValid == true {
+                linkTribesMap[key] = tribeLink
             } else {
-                linkTribesMap[key] = (value.0, nil, chats.filter({ $0.uuid == value.1.uuid }).count > 0 )
+                linkTribesMap[key] = MessageTableCellState.LinkTribe(
+                    link: value.0,
+                    tribeInfo: nil,
+                    isJoined: chats.filter({ $0.uuid == value.1.uuid }).count > 0
+                )
             }
         })
         
         return linkTribesMap
+    }
+    
+    func getMediaDataFor(
+        message: TransactionMessage
+    ) -> MessageTableCellState.MediaData? {
+        if let mediaData = cachedMedia[message.id] {
+            return mediaData
+        } else if message.isMediaAttachment() {
+            return MessageTableCellState.MediaData(
+                image: nil,
+                gifData: nil,
+                failed: false
+            )
+        }
+        return nil
     }
 }
 

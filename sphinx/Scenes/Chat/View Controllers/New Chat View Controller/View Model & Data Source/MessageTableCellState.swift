@@ -28,8 +28,9 @@ struct MessageTableCellState {
     var contactImage: UIImage? = nil
     var replyingMessage: TransactionMessage? = nil
     var boostMessages: [TransactionMessage] = []
-    var linkContact: (String, UserContact?)? = nil
-    var linkTribe: (String, GroupsManager.TribeInfo?, Bool)? = nil
+    var linkContact: LinkContact? = nil
+    var linkTribe: LinkTribe? = nil
+    var mediaData: MediaData? = nil
     
     //Generic rows Data
     var separatorDate: Date? = nil
@@ -45,8 +46,9 @@ struct MessageTableCellState {
         contactImage: UIImage? = nil,
         replyingMessage: TransactionMessage? = nil,
         boostMessages: [TransactionMessage] = [],
-        linkContact: (String, UserContact?)? = nil,
-        linkTribe: (String, GroupsManager.TribeInfo?, Bool)? = nil
+        linkContact: LinkContact? = nil,
+        linkTribe: LinkTribe? = nil,
+        mediaData: MediaData? = nil
     ) {
         self.message = message
         self.chat = chat
@@ -60,6 +62,7 @@ struct MessageTableCellState {
         self.boostMessages = boostMessages
         self.linkContact = linkContact
         self.linkTribe = linkTribe
+        self.mediaData = mediaData
     }
     
     ///Bubble States
@@ -186,6 +189,28 @@ struct MessageTableCellState {
         return nil
     }()
     
+    lazy var messageMedia: BubbleMessageLayoutState.MessageMedia? = {
+        guard let message = message, let mediaData = mediaData, message.isMediaAttachment() else {
+            return nil
+        }
+        
+        let loading = (mediaData.image == nil && mediaData.gifData == nil)
+
+        return BubbleMessageLayoutState.MessageMedia(
+            url: message.getMediaUrlFromMediaToken(),
+            image: mediaData.image,
+            gifData: mediaData.gifData,
+            fileInfo: mediaData.fileInfo,
+            loading: loading,
+            failed: mediaData.failed,
+            isImage: message.isImage(),
+            isVideo: message.isVideo(),
+            isGif: message.isGif() || message.isGiphy(),
+            isPdf: message.isPDF(),
+            isPaid: message.isPaidAttachment()
+        )
+    }()
+    
     lazy var boosts: BubbleMessageLayoutState.Boosts? = {
         
         guard let message = message, boostMessages.count > 0 else {
@@ -240,11 +265,11 @@ struct MessageTableCellState {
         }
         
         return BubbleMessageLayoutState.ContactLink(
-            pubkey: linkContact.0,
-            imageUrl: linkContact.1?.avatarUrl,
-            alias: linkContact.1?.nickname,
-            color: linkContact.1?.getColor(),
-            isContact: linkContact.1 != nil,
+            pubkey: linkContact.link,
+            imageUrl: linkContact.contact?.avatarUrl,
+            alias: linkContact.contact?.nickname,
+            color: linkContact.contact?.getColor(),
+            isContact: linkContact.contact != nil,
             bubbleWidth: (UIScreen.main.bounds.width - (MessageTableCellState.kRowLeftMargin + MessageTableCellState.kRowRightMargin)) * (MessageTableCellState.kBubbleWidthPercentage),
             roundedBottom: false
         )
@@ -255,21 +280,21 @@ struct MessageTableCellState {
             return nil
         }
         
-        if let tribeInfo = linkTribe.1 {
+        if let tribeInfo = linkTribe.tribeInfo {
             return BubbleMessageLayoutState.TribeLink(
-                link: linkTribe.0,
+                link: linkTribe.link,
                 tribeLinkLoaded: BubbleMessageLayoutState.TribeLinkLoaded(
                     name: tribeInfo.name ?? "title.not.available".localized,
                     description: tribeInfo.description ?? "description.not.available".localized,
                     imageUrl: tribeInfo.img,
-                    showJoinButton: !linkTribe.2,
+                    showJoinButton: !linkTribe.isJoined,
                     bubbleWidth: (UIScreen.main.bounds.width - (MessageTableCellState.kRowLeftMargin + MessageTableCellState.kRowRightMargin)) * (MessageTableCellState.kBubbleWidthPercentage),
                     roundedBottom: false
                 )
             )
         } else {
             return BubbleMessageLayoutState.TribeLink(
-                link: linkTribe.0
+                link: linkTribe.link
             )
         }
     }()
@@ -333,7 +358,8 @@ struct MessageTableCellState {
                 (self.directPayment == nil) &&
                 (self.boosts == nil) &&
                 (self.contactLink == nil) &&
-                (self.tribeLink == nil)
+                (self.tribeLink == nil) &&
+                (self.messageMedia == nil)
         }
     }
 }
@@ -388,8 +414,9 @@ extension MessageTableCellState : Hashable {
             mutableLhs.boostMessages.count   == mutableRhs.boostMessages.count &&
             mutableLhs.isTextOnlyMessage     == mutableRhs.isTextOnlyMessage &&
             mutableLhs.separatorDate         == mutableRhs.separatorDate &&
-            mutableLhs.linkContact?.0        == mutableRhs.linkContact?.0 &&
-            mutableLhs.linkTribe?.1          == mutableRhs.linkTribe?.1
+            mutableLhs.linkContact           == mutableRhs.linkContact &&
+            mutableLhs.linkTribe             == mutableRhs.linkTribe &&
+            mutableLhs.mediaData             == mutableRhs.mediaData
             
     }
 

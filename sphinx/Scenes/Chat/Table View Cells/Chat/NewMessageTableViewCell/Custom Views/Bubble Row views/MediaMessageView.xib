@@ -5,7 +5,6 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -40,9 +39,10 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tgf-fN-vp1">
                     <rect key="frame" x="2" y="2" width="196" height="196"/>
                     <subviews>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="podcastTypeIcon" translatesAutoresizingMaskIntoConstraints="NO" id="xwX-jG-Ira">
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xwX-jG-Ira">
                             <rect key="frame" x="0.0" y="0.0" width="196" height="196"/>
-                            <color key="tintColor" name="WashedOutReceivedText"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </imageView>
                         <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O20-Bu-VeO" userLabel="Pay To Unlock Overlay ">
                             <rect key="frame" x="0.0" y="0.0" width="196" height="196"/>
@@ -70,7 +70,7 @@
                         </view>
                         <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nXK-yZ-qrD" customClass="FileInfoView" customModule="sphinx" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="136" width="196" height="60"/>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="60" id="lVP-8i-e4g"/>
                             </constraints>
@@ -79,7 +79,7 @@
                             <rect key="frame" x="0.0" y="0.0" width="196" height="196"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imagePreloader" translatesAutoresizingMaskIntoConstraints="NO" id="qdk-b7-RVv">
-                                    <rect key="frame" x="71" y="69" width="58" height="58"/>
+                                    <rect key="frame" x="69" y="69" width="58" height="58"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="58" id="0Jc-w2-zbS"/>
@@ -87,9 +87,9 @@
                                     </constraints>
                                 </imageView>
                             </subviews>
-                            <color key="backgroundColor" white="1" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstItem="qdk-b7-RVv" firstAttribute="centerX" secondItem="zIO-zy-uWs" secondAttribute="centerX" constant="2" id="Dzz-Hl-T1B"/>
+                                <constraint firstItem="qdk-b7-RVv" firstAttribute="centerX" secondItem="zIO-zy-uWs" secondAttribute="centerX" id="Dzz-Hl-T1B"/>
                                 <constraint firstItem="qdk-b7-RVv" firstAttribute="centerY" secondItem="zIO-zy-uWs" secondAttribute="centerY" id="UIG-mw-rhk"/>
                             </constraints>
                         </view>
@@ -113,7 +113,7 @@
                                     </state>
                                 </button>
                             </subviews>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstItem="mtB-hd-1Ow" firstAttribute="centerY" secondItem="7X3-Xp-rXY" secondAttribute="centerY" id="WKk-7q-Z9t"/>
                                 <constraint firstItem="mtB-hd-1Ow" firstAttribute="centerX" secondItem="7X3-Xp-rXY" secondAttribute="centerX" id="aSi-sy-kah"/>
@@ -137,6 +137,7 @@
                         </view>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="zIO-zy-uWs" secondAttribute="trailing" id="1jy-Cy-LTy"/>
                         <constraint firstAttribute="bottom" secondItem="Unv-gb-1Mk" secondAttribute="bottom" id="2Qs-tO-HMs"/>
@@ -181,15 +182,8 @@
     </objects>
     <resources>
         <image name="imagePreloader" width="58" height="58"/>
-        <image name="podcastTypeIcon" width="32" height="32"/>
         <namedColor name="MainBottomIcons">
             <color red="0.37254901960784315" green="0.38823529411764707" blue="0.40784313725490196" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="WashedOutReceivedText">
-            <color red="0.69019607843137254" green="0.71764705882352942" blue="0.73725490196078436" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
     </resources>
 </document>

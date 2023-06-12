@@ -174,7 +174,7 @@ public class TransactionMessage: NSManagedObject {
             fileExtension = "pdf"
         }
         else if(self.isAttachment()){
-            fileExtension = "png"
+            fileExtension = "other"
         }
         
         return fileExtension

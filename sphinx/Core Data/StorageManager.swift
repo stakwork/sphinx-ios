@@ -326,7 +326,13 @@ class StorageManager {
                         if let newImage = image {
                             smi.cachedMedia?.image = newImage
                         } else {
-                            smi.cachedMedia?.image = #imageLiteral(resourceName: "videoPlaceholder")
+                            var defaultImage = #imageLiteral(resourceName: "videoPlaceholder")
+                            if let cm = smi.cachedMedia
+                            {
+                                let ext = (self.getStorageManagerTypeFromExtension(cm: cm))
+                                defaultImage = (ext == .other) ?  #imageLiteral(resourceName: "fileOptionIcon") : defaultImage
+                                defaultImage = (ext == .audio) ?  #imageLiteral(resourceName: "playPodcastIcon") : defaultImage
+                            }
                         }
                     })
                 }

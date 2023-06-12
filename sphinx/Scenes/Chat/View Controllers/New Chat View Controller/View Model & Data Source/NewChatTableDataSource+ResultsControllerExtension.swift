@@ -104,6 +104,7 @@ extension NewChatTableDataSource {
                 delegate: self,
                 indexPath: indexPath.row
             )
+            
             cell?.contentView.transform = CGAffineTransform(scaleX: 1, y: -1)
             
             return (cell as? UITableViewCell) ?? UITableViewCell()

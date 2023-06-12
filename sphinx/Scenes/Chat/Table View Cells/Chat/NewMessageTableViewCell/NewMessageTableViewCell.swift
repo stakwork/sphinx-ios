@@ -67,15 +67,15 @@ class NewMessageTableViewCell: SwipableReplyCell, ChatTableViewCellProtocol {
     
     ///Second Container
     @IBOutlet weak var sentPaidDetailsView: SentPaidDetails!
-    @IBOutlet weak var paidTextMessageView: UIView!
+    @IBOutlet weak var paidTextMessageView: UIView! // PENDING
     @IBOutlet weak var directPaymentView: DirectPaymentView!
     @IBOutlet weak var mediaContentView: MediaMessageView!
-    @IBOutlet weak var fileDetailsView: FileDetailsView!
-    @IBOutlet weak var audioMessageView: AudioMessageView!
-    @IBOutlet weak var podcastAudioView: PodcastAudioView!
+    @IBOutlet weak var fileDetailsView: FileDetailsView! // PENDING
+    @IBOutlet weak var audioMessageView: AudioMessageView! // PENDING
+    @IBOutlet weak var podcastAudioView: PodcastAudioView! // PENDING
     @IBOutlet weak var callLinkView: JoinVideoCallView!
     @IBOutlet weak var podcastBoostView: PodcastBoostView!
-    @IBOutlet weak var botResponseView: BotResponseView!
+    @IBOutlet weak var botResponseView: BotResponseView! // PENDING
     
     ///Thirs Container
     @IBOutlet weak var textMessageView: UIView!
@@ -85,11 +85,11 @@ class NewMessageTableViewCell: SwipableReplyCell, ChatTableViewCellProtocol {
     
     @IBOutlet weak var tribeLinkPreviewView: TribeLinkPreviewView!
     @IBOutlet weak var contactLinkPreviewView: ContactLinkPreviewView!
-    @IBOutlet weak var linkPreviewView: NewLinkPreviewView!
+    @IBOutlet weak var linkPreviewView: NewLinkPreviewView! // PENDING
     
     ///Forth Container
     @IBOutlet weak var messageBoostView: NewMessageBoostView!
-    @IBOutlet weak var paidAttachmentView: PaidAttachmentView!
+    @IBOutlet weak var paidAttachmentView: PaidAttachmentView! // PENDING
     
     override func awakeFromNib() {
         super.awakeFromNib()

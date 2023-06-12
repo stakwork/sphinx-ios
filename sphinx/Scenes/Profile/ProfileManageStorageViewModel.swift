@@ -139,6 +139,10 @@ extension ProfileManageStorageViewModel : UITableViewDelegate,UITableViewDataSou
             break
         case .other:
             //TODO: do deletion for other
+            StorageManager.sharedManager.deleteAllOtherFiles(completion: {
+                self.refreshData()
+                self.vc.resetIsLoading(type: type)
+            })
             break
         }
         print("delete all of \(type)")

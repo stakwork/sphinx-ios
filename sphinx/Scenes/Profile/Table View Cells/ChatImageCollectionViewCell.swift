@@ -39,7 +39,7 @@ class ChatImageCollectionViewCell: UICollectionViewCell {
             imageView.image = image
         }
         else{
-            let placeholderImage = #imageLiteral(resourceName:"fileOptionIcon")
+            let placeholderImage = cachedMedia.fileExtension == "mp3" ? #imageLiteral(resourceName:"musicTagIcon") :  #imageLiteral(resourceName:"fileOptionIcon")
             imageView.contentMode = .scaleAspectFill
             imageView.clipsToBounds = true
             imageView.image = placeholderImage

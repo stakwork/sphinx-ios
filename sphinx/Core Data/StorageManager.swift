@@ -421,13 +421,20 @@ class StorageManager {
                     cmCounter > 0 ? () : (completion())
                 })
             }
-            else if cm.fileExtension == "mp4"{
+            else{
                 cm.removeVideoObject(completion: {
                     cmCounter -= 1
                     cmCounter > 0 ? () : (completion())
                 })
             }
         }
+    }
+    
+    func deleteAllOtherFiles(completion:@escaping ()->()){
+        let allVids = allItems.filter({$0.type == .other}).compactMap({$0.cachedMedia})
+        deleteCacheItems(cms: allVids, completion: {
+            completion()
+        })
     }
     
     func deleteAllVideos(completion:@escaping ()->()){
@@ -445,6 +452,21 @@ class StorageManager {
     }
     
     func deleteAllAudioFiles(completion: @escaping ()->()){
+        deleteAllPodcasts(completion: {
+            self.deleteAllAudioMessages(completion: {
+                completion()
+            })
+        })
+    }
+    
+    func deleteAllAudioMessages(completion: @escaping ()->()){
+        let allFiles = allItems.filter({$0.type == .audio}).compactMap({$0.cachedMedia})
+        deleteCacheItems(cms: allFiles,completion: {
+            completion()
+        })
+    }
+    
+    func deleteAllPodcasts(completion:@escaping ()->()){
         var podsCounter = downloadedPods.count
         podsCounter == 0 ? (completion()) : ()
         for pod in downloadedPods{

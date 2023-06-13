@@ -90,7 +90,7 @@ extension NewChatViewController : ChatHeaderViewDelegate {
                         title: "share.group".localized,
                         style: .default,
                         handler: { (UIAlertAction) in
-//                            self.goToShare()
+                            self.goToShare()
                         }
                     )
                 )
@@ -102,6 +102,24 @@ extension NewChatViewController : ChatHeaderViewDelegate {
         alert.popoverPresentationController?.sourceRect = sender.bounds
 
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    func goToShare() {
+        if let link = chat?.getJoinChatLink() {
+            
+            let qrCodeDetailViewModel = QRCodeDetailViewModel(
+                qrCodeString: link,
+                amount: 0,
+                viewTitle: "share.group.link".localized
+            )
+            
+            let viewController = QRCodeDetailViewController.instantiate(
+                with: qrCodeDetailViewModel,
+                presentedVCDelegate: nil
+            )
+            
+            self.present(viewController, animated: true, completion: nil)
+        }
     }
     
     func goToNotificationsLevel() {

@@ -674,8 +674,11 @@ public class Chat: NSManagedObject {
         }
     }
     
-    func getJoinChatLink() -> String {
-        return "sphinx.chat://?action=tribe&uuid=\(self.uuid ?? "")&host=\(self.host ?? "")"
+    func getJoinChatLink() -> String? {
+        if let uuid = self.uuid, let host = self.host, uuid.isNotEmpty && host.isNotEmpty {
+            return "sphinx.chat://?action=tribe&uuid=\(uuid)&host=\(host)"
+        }
+        return nil
     }
     
     func processAliases() {

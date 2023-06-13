@@ -221,10 +221,11 @@ class GroupDetailsViewController: UIViewController {
     }
     
     func goToShare() {
-        let link = chat.getJoinChatLink()
-        let qrCodeDetailViewModel = QRCodeDetailViewModel(qrCodeString: link, amount: 0, viewTitle: "share.group.link".localized)
-        let viewController = QRCodeDetailViewController.instantiate(with: qrCodeDetailViewModel)
-        self.present(viewController, animated: true, completion: nil)
+        if let link = chat.getJoinChatLink() {
+            let qrCodeDetailViewModel = QRCodeDetailViewModel(qrCodeString: link, amount: 0, viewTitle: "share.group.link".localized)
+            let viewController = QRCodeDetailViewController.instantiate(with: qrCodeDetailViewModel)
+            self.present(viewController, animated: true, completion: nil)
+        }
     }
     
     func goToAddMember() {

@@ -54,7 +54,7 @@ class NewMessagesIndicatorView: UIView {
             countLabel.isHidden = newMessagesCount == 0
         }
         
-        self.isHidden = firstVisibleRow <= 2
+        self.isHidden = firstVisibleRow <= 0
     }
 
     @IBAction func buttonTouched() {

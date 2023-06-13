@@ -13,11 +13,43 @@ extension NewMessageTableViewCell {
     func configureWith(
         messageContent: BubbleMessageLayoutState.MessageContent?
     ) {
+        urlRanges = []
+        
         if let messageContent = messageContent {
-            messageLabel.text = messageContent.text
-            messageLabel.font = messageContent.font
+            if messageContent.linkMatches.isEmpty {
+                messageLabel.attributedText = nil
+                
+                messageLabel.text = messageContent.text
+                messageLabel.font = messageContent.font
+            } else {
+                let attributedString = NSMutableAttributedString(string: messageContent.text ?? "")
+                
+                for match in messageContent.linkMatches {
+                    
+                    attributedString.setAttributes(
+                        [
+                            NSAttributedString.Key.foregroundColor: UIColor.Sphinx.PrimaryBlue,
+                            NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue
+                        ],
+                        range: match.range
+                    )
+                    
+                    urlRanges.append(match.range)
+                }
+                
+                messageLabel.attributedText = attributedString
+                messageLabel.isUserInteractionEnabled = true
+            }
             
             textMessageView.isHidden = false
+        }
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(labelTapped(gesture:)))
+        
+        if urlRanges.isEmpty {
+            messageLabel.removeGestureRecognizer(tap)
+        } else {
+            messageLabel.addGestureRecognizer(tap)
         }
     }
     
@@ -122,6 +154,31 @@ extension NewMessageTableViewCell {
             } else if let messageId = messageId {
                 DispatchQueue.global(qos: .userInitiated).async {
                     self.delegate?.shouldLoadTribeInfoFor(link: tribeLink.link, with: messageId)
+                }
+            }
+        }
+    }
+}
+
+extension NewMessageTableViewCell {
+    @objc func labelTapped(
+        gesture: UITapGestureRecognizer
+    ) {
+        if let label = gesture.view as? UILabel, let text = label.text {
+            for range in urlRanges {
+                if gesture.didTapAttributedTextInLabel(
+                    label,
+                    inRange: range
+                ) {
+                    let link = (text as NSString).substring(with: range)
+                    
+                    if link.stringLinks.count > 0, let url = URL(string: link.withProtocol(protocolString: "http")) {
+                        UIApplication.shared.open(
+                            url,
+                            options: [:],
+                            completionHandler: nil
+                        )
+                    }
                 }
             }
         }

@@ -102,13 +102,16 @@ struct BubbleMessageLayoutState: CommonLayoutState {
     struct MessageContent {
         var text: String?
         var font: UIFont
+        var linkMatches: [NSTextCheckingResult]
         
         init(
             text: String?,
-            font: UIFont
+            font: UIFont,
+            linkMatches: [NSTextCheckingResult]
         ) {
             self.text = text
             self.font = font
+            self.linkMatches = linkMatches
         }
     }
     

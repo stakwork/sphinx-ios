@@ -28,8 +28,7 @@ protocol ChatTableViewCellProtocol: class {
     
     func configureWith(
         messageCellState: MessageTableCellState,
-        delegate: NewMessageTableViewCellDelegate,
-        indexPath: Int
+        delegate: NewMessageTableViewCellDelegate
     )
 }
 
@@ -44,8 +43,6 @@ protocol NewMessageTableViewCellDelegate: class {
 class NewMessageTableViewCell: SwipableReplyCell, ChatTableViewCellProtocol {
     
     weak var delegate: NewMessageTableViewCellDelegate!
-    
-    var indexPath: Int! =  nil
     
     ///General views
     @IBOutlet weak var bubbleAllView: UIView!
@@ -91,6 +88,8 @@ class NewMessageTableViewCell: SwipableReplyCell, ChatTableViewCellProtocol {
     @IBOutlet weak var messageBoostView: NewMessageBoostView!
     @IBOutlet weak var paidAttachmentView: PaidAttachmentView! // PENDING
     
+    var urlRanges = [NSRange]()
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -103,11 +102,9 @@ class NewMessageTableViewCell: SwipableReplyCell, ChatTableViewCellProtocol {
     
     func configureWith(
         messageCellState: MessageTableCellState,
-        delegate: NewMessageTableViewCellDelegate,
-        indexPath: Int
+        delegate: NewMessageTableViewCellDelegate
     ) {
         self.delegate = delegate
-        self.indexPath = indexPath
         
         hideAllSubviews()
         

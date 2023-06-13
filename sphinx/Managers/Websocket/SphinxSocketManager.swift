@@ -266,6 +266,8 @@ extension SphinxSocketManager {
                 if message.isIncoming() && message.chat?.isPublicGroup() ?? false {
                     debounceMessageNotification(message: message, shouldSync: messageFromUpdatedContact)
                 } else {
+                    SoundsPlayer.playHaptic()
+                    
                     delegate?.didReceiveMessage?(message: message, shouldSync: messageFromUpdatedContact)
                 }
             }

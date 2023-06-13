@@ -30,6 +30,8 @@ class NewOnlyTextMessageTableViewCell: SwipableReplyCell, ChatTableViewCellProto
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var messageLabelLeadingConstraint: NSLayoutConstraint!
     @IBOutlet weak var messageLabelTrailingConstraint: NSLayoutConstraint!
+    
+    var urlRanges = [NSRange]()
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -50,8 +52,7 @@ class NewOnlyTextMessageTableViewCell: SwipableReplyCell, ChatTableViewCellProto
     
     func configureWith(
         messageCellState: MessageTableCellState,
-        delegate: NewMessageTableViewCellDelegate,
-        indexPath: Int
+        delegate: NewMessageTableViewCellDelegate
     ) {
         var mutableMessageCellState = messageCellState
         
@@ -82,9 +83,41 @@ class NewOnlyTextMessageTableViewCell: SwipableReplyCell, ChatTableViewCellProto
     func configureWith(
         messageContent: BubbleMessageLayoutState.MessageContent?
     ) {
+        urlRanges = []
+        
         if let messageContent = messageContent {
-            messageLabel.text = messageContent.text
-            messageLabel.font = messageContent.font
+            if messageContent.linkMatches.isEmpty {
+                messageLabel.attributedText = nil
+                
+                messageLabel.text = messageContent.text
+                messageLabel.font = messageContent.font
+            } else {
+                let attributedString = NSMutableAttributedString(string: messageContent.text ?? "")
+                
+                for match in messageContent.linkMatches {
+                    
+                    attributedString.setAttributes(
+                        [
+                            NSAttributedString.Key.foregroundColor: UIColor.Sphinx.PrimaryBlue,
+                            NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue
+                        ],
+                        range: match.range
+                    )
+                    
+                    urlRanges.append(match.range)
+                }
+                
+                messageLabel.attributedText = attributedString
+                messageLabel.isUserInteractionEnabled = true
+            }
+        }
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(labelTapped(gesture:)))
+        
+        if urlRanges.isEmpty {
+            messageLabel.removeGestureRecognizer(tap)
+        } else {
+            messageLabel.addGestureRecognizer(tap)
         }
     }
     
@@ -165,6 +198,29 @@ class NewOnlyTextMessageTableViewCell: SwipableReplyCell, ChatTableViewCellProto
             receivedArrow.alpha = 0.0
             sentArrow.alpha = 0.0
             break
+        }
+    }
+    
+    @objc func labelTapped(
+        gesture: UITapGestureRecognizer
+    ) {
+        if let label = gesture.view as? UILabel, let text = label.text {
+            for range in urlRanges {
+                if gesture.didTapAttributedTextInLabel(
+                    label,
+                    inRange: range
+                ) {
+                    let link = (text as NSString).substring(with: range)
+                    
+                    if link.stringLinks.count > 0, let url = URL(string: link.withProtocol(protocolString: "http")) {
+                        UIApplication.shared.open(
+                            url,
+                            options: [:],
+                            completionHandler: nil
+                        )
+                    }
+                }
+            }
         }
     }
 }

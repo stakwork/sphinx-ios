@@ -149,9 +149,11 @@ struct MessageTableCellState {
         }
         
         if let messageContent = message.bubbleMessageContentString, messageContent.isNotEmpty {
+            
             var message = BubbleMessageLayoutState.MessageContent(
                 text: messageContent,
-                font: message.bubbleMessageContentFont
+                font: message.bubbleMessageContentFont,
+                linkMatches: messageContent.stringLinks + messageContent.pubKeyMatches + messageContent.mentionMatches
             )
             
             return message

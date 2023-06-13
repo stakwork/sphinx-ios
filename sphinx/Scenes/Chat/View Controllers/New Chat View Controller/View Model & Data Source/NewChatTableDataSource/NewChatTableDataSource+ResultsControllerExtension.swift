@@ -94,8 +94,7 @@ extension NewChatTableDataSource {
             
             cell?.configureWith(
                 messageCellState: dataSourceItem,
-                delegate: self,
-                indexPath: indexPath.row
+                delegate: self
             )
             
             cell?.contentView.transform = CGAffineTransform(scaleX: 1, y: -1)

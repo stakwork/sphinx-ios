@@ -47,7 +47,7 @@ extension UILabel {
                 
                 for match in linkMatches {
                     URLRanges.append(match.range)
-                    
+
                     attributedString.setAttributes([NSAttributedString.Key.foregroundColor: linkColor, NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue], range: match.range)
                 }
                 

@@ -32,8 +32,7 @@ class MessageNoBubbleTableViewCell: UITableViewCell, ChatTableViewCellProtocol {
     
     func configureWith(
         messageCellState: MessageTableCellState,
-        delegate: NewMessageTableViewCellDelegate,
-        indexPath: Int
+        delegate: NewMessageTableViewCellDelegate
     ) {
         hideAllSubviews()
         

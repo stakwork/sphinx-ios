@@ -12,7 +12,7 @@ extension NewChatTableDataSource: UITableViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let difference: CGFloat = 16
         let scrolledToTop = tableView.contentOffset.y > tableView.contentSize.height - tableView.frame.size.height - difference
-        let scrolledToBottom = tableView.contentOffset.y < difference
+        let scrolledToBottom = tableView.contentOffset.y < 0
         let didMoveOutOfBottomArea = tableView.contentOffset.y > 0
                 
         if scrolledToTop {

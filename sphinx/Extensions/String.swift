@@ -230,7 +230,7 @@ extension String {
     var stringLinks: [NSTextCheckingResult] {
         let types: NSTextCheckingResult.CheckingType = .link
         let detector = try? NSDataDetector(types: types.rawValue)
-        let matches = detector!.matches(in: self, options: .reportCompletion, range: NSMakeRange(0, self.utf16.count))
+        let matches = detector!.matches(in: self, options: [], range: NSMakeRange(0, self.utf16.count))
         return matches
     }
     

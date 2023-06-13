@@ -35,9 +35,9 @@ extension NewChatTableDataSource {
 
         restorePreloadedMessages()
         
-        DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: { [weak self] in
+        DelayPerformedHelper.performAfterDelay(seconds: 0.1, completion: { [weak self] in
             guard let self = self else { return }
-            self.configureResultsController(items: 50)
+            self.configureResultsController(items: max(self.dataSource.snapshot().numberOfItems, 100))
         })
     }
     
@@ -55,20 +55,13 @@ extension NewChatTableDataSource {
     }
     
     func updateSnapshot() {
-        saveMessagesToPreloader()
-        
         let snapshot = makeSnapshotForCurrentState()
-//        let shouldAnimate = self.dataSource.snapshot().numberOfItems > 0
 
         DispatchQueue.main.async {
+            self.saveSnapshotCurrentState()
             self.dataSource.apply(snapshot, animatingDifferences: false)
             self.tableView.alpha = 1.0
-            
-//            self.tableView.scrollToBottom(animated: false)
-//            
-//            DelayPerformedHelper.performAfterDelay(seconds: 0.3, completion: {
-//                self.tableView.alpha = 1.0
-//            })
+            self.restoreScrollLastPosition()            
         }
     }
     
@@ -114,15 +107,11 @@ extension NewChatTableDataSource {
 
 extension NewChatTableDataSource {
     
-    func configureResultsController() {
-        DelayPerformedHelper.performAfterDelay(seconds: 2.0, completion: { [weak self] in
-            guard let self = self else { return }
-            self.configureResultsController(items: 500)
-        })
-    }
-    
     func configureResultsController(items: Int? = nil) {
-        let fetchRequest = TransactionMessage.getChatMessagesFetchRequest(for: chat, with: items)
+        let fetchRequest = TransactionMessage.getChatMessagesFetchRequest(
+            for: chat,
+            with: items
+        )
 
         messagesResultsController = NSFetchedResultsController(
             fetchRequest: fetchRequest,
@@ -133,11 +122,20 @@ extension NewChatTableDataSource {
         
         messagesResultsController.delegate = self
         
+        
         DispatchQueue.global(qos: .userInitiated).async {
             do {
                 try self.messagesResultsController.performFetch()
             } catch {}
         }
+    }
+    
+    func startListeningToResultsController() {
+        messagesResultsController?.delegate = self
+    }
+    
+    func stopListeningToResultsController() {
+        messagesResultsController?.delegate = nil
     }
     
     func processMessages(
@@ -402,5 +400,30 @@ extension NewChatTableDataSource : NSFetchedResultsControllerDelegate {
                 }
             }
         }
+    }
+}
+
+extension NewChatTableDataSource: UITableViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let difference: CGFloat = 16
+                
+        if tableView.contentOffset.y > tableView.contentSize.height - tableView.frame.size.height - difference {
+            loadMoreItems()
+        } else if tableView.contentOffset.y < difference {
+            print("SCROLL TO BOTTOM")
+        }
+    }
+    
+    func loadMoreItems() {
+        if loadingMoreItems {
+            return
+        }
+        
+        loadingMoreItems = true
+        
+        DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: { [weak self] in
+            guard let self = self else { return }
+            self.configureResultsController(items: self.dataSource.snapshot().numberOfItems + 50)
+        })
     }
 }

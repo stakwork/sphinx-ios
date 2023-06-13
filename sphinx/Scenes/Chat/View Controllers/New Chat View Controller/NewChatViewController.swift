@@ -71,6 +71,22 @@ class NewChatViewController: NewKeyboardHandlerViewController {
         super.viewWillAppear(animated)
         
         headerView.checkRoute()
+        chatTableDataSource?.startListeningToResultsController()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        fetchTribeData()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if self.isMovingFromParent {
+            chatTableDataSource?.saveSnapshotCurrentState()
+            chatTableDataSource?.stopListeningToResultsController()
+        }
     }
     
     override func didToggleKeyboard() {
@@ -91,12 +107,6 @@ class NewChatViewController: NewKeyboardHandlerViewController {
         
         chatTableViewHeightConstraint.constant = tableHeight
         chatTableView.layoutIfNeeded()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        fetchTribeData()
     }
     
     func setupLayouts() {

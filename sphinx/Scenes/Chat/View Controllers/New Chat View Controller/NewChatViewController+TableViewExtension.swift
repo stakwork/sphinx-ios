@@ -24,7 +24,8 @@ extension NewChatViewController {
         chatTableDataSource = NewChatTableDataSource(
             chat: chat,
             tableView: chatTableView,
-            headerImageView: getContactImageView()
+            headerImageView: getContactImageView(),
+            bottomView: bottomView
         )
     }
     

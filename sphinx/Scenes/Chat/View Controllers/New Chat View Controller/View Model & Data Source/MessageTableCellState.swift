@@ -422,6 +422,16 @@ extension MessageTableCellState : Hashable {
 
     func hash(into hasher: inout Hasher) {
         hasher.combine(self.message?.id)
+        hasher.combine(self.separatorDate)
+    }
+    
+    func getUniqueIdentifier() -> Int {
+        if let message = message {
+            return message.id
+        } else if let separatorDate = separatorDate {
+            return Int(separatorDate.timeIntervalSince1970)
+        }
+        return 0
     }
 }
 

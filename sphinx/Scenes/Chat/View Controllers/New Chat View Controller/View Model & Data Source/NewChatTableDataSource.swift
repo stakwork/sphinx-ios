@@ -13,6 +13,7 @@ class NewChatTableDataSource : NSObject {
     
     var tableView : UITableView!
     var headerImage: UIImage?
+    var bottomView: UIView?
     
     var chat: Chat!
     
@@ -26,20 +27,23 @@ class NewChatTableDataSource : NSObject {
     var cachedMedia: [Int: MessageTableCellState.MediaData] = [:]
     var tribeLinks: [Int: MessageTableCellState.LinkTribe] = [:]
     
+    var loadingMoreItems = false
+    
     init(
         chat: Chat,
         tableView: UITableView,
-        headerImageView: UIImageView?
+        headerImageView: UIImageView?,
+        bottomView: UIView
     ) {
         super.init()
         
         self.chat = chat
         self.tableView = tableView
         self.headerImage = headerImageView?.image
+        self.bottomView = bottomView
         
         configureTableView()
         configureDataSource()
-        configureResultsController()
     }    
     
     func configureTableView() {
@@ -47,6 +51,8 @@ class NewChatTableDataSource : NSObject {
         tableView.estimatedRowHeight = 200.0
         tableView.contentInset.top = Constants.kMargin
         tableView.transform = CGAffineTransform(scaleX: 1, y: -1)
+        tableView.delegate = self
+        tableView.contentInsetAdjustmentBehavior = .never
         
         tableView.registerCell(NewMessageTableViewCell.self)
         tableView.registerCell(MessageNoBubbleTableViewCell.self)

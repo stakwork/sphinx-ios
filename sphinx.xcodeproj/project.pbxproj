@@ -591,6 +591,8 @@
 		47CD9508265EC2A4009B06A4 /* CommonModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CD9507265EC2A4009B06A4 /* CommonModalView.swift */; };
 		47CD9510265EC70E009B06A4 /* API+PeopleExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CD950F265EC70E009B06A4 /* API+PeopleExtension.swift */; };
 		47CFA9462A38C5200030BC23 /* NewChatTableDataSource+ScrollExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CFA9452A38C5200030BC23 /* NewChatTableDataSource+ScrollExtension.swift */; };
+		47CFA94A2A38CA480030BC23 /* NewMessagesIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CFA9492A38CA480030BC23 /* NewMessagesIndicatorView.swift */; };
+		47CFA94C2A38CA4E0030BC23 /* NewMessagesIndicatorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47CFA94B2A38CA4E0030BC23 /* NewMessagesIndicatorView.xib */; };
 		47D0046125E7F3EC00E74063 /* Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D0046025E7F3EC00E74063 /* Download.swift */; };
 		47D0046325E7F66400E74063 /* DownloadService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D0046225E7F66400E74063 /* DownloadService.swift */; };
 		47D03DF42510ED9C0077A968 /* FileInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D03DF32510ED9C0077A968 /* FileInfoView.swift */; };
@@ -1633,6 +1635,8 @@
 		47CD9507265EC2A4009B06A4 /* CommonModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonModalView.swift; sourceTree = "<group>"; };
 		47CD950F265EC70E009B06A4 /* API+PeopleExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+PeopleExtension.swift"; sourceTree = "<group>"; };
 		47CFA9452A38C5200030BC23 /* NewChatTableDataSource+ScrollExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewChatTableDataSource+ScrollExtension.swift"; sourceTree = "<group>"; };
+		47CFA9492A38CA480030BC23 /* NewMessagesIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessagesIndicatorView.swift; sourceTree = "<group>"; };
+		47CFA94B2A38CA4E0030BC23 /* NewMessagesIndicatorView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewMessagesIndicatorView.xib; sourceTree = "<group>"; };
 		47D0045C25E690B700E74063 /* sphinx 27.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 27.xcdatamodel"; sourceTree = "<group>"; };
 		47D0046025E7F3EC00E74063 /* Download.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Download.swift; sourceTree = "<group>"; };
 		47D0046225E7F66400E74063 /* DownloadService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadService.swift; sourceTree = "<group>"; };
@@ -4026,6 +4030,8 @@
 			children = (
 				47E6A4FF2A30C67400A9509E /* ShimmeringTableView.swift */,
 				47E6A5012A30C68400A9509E /* ShimmeringTableView.xib */,
+				47CFA9492A38CA480030BC23 /* NewMessagesIndicatorView.swift */,
+				47CFA94B2A38CA4E0030BC23 /* NewMessagesIndicatorView.xib */,
 			);
 			path = "Custom Views";
 			sourceTree = "<group>";
@@ -4889,6 +4895,7 @@
 				47183CB42548AA5100E6FD19 /* PodcastPlayerView.xib in Resources */,
 				F3446B9426BABAB400855516 /* ChatListCollectionViewCell.xib in Resources */,
 				F3188BAE271CF20B00890DDD /* VideoFeedEpisodePlayerCollectionViewDetailsCell.xib in Resources */,
+				47CFA94C2A38CA4E0030BC23 /* NewMessagesIndicatorView.xib in Resources */,
 				F3197C0D267FA2C800330F79 /* ellipse.gif in Resources */,
 				47E6A4C42A2E65C700A9509E /* MessageNoBubbleTableViewCell.xib in Resources */,
 				F33119A0268E9C1B005082EB /* XcodeStoreKitConfiguration.storekit in Resources */,
@@ -5601,6 +5608,7 @@
 				47308E0724FEE6E600FFAC6F /* SocketManager.swift in Sources */,
 				473842F32391719500AA640F /* PictureBubbleView.swift in Sources */,
 				4779248E2A290A9700CD3CF1 /* MediaMessageView.swift in Sources */,
+				47CFA94A2A38CA480030BC23 /* NewMessagesIndicatorView.swift in Sources */,
 				47129951292297CB0049CBE3 /* TribeMemberProfile.swift in Sources */,
 				F3DC6B26273F60FF00458E09 /* ContentFeedPaymentModel+CoreDataProperties.swift in Sources */,
 				475BDD30232ACB3900C5BBD6 /* UITableView.swift in Sources */,

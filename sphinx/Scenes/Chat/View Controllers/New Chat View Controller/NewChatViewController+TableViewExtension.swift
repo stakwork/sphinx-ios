@@ -25,7 +25,8 @@ extension NewChatViewController {
             chat: chat,
             tableView: chatTableView,
             headerImageView: getContactImageView(),
-            bottomView: bottomView
+            bottomView: bottomView,
+            delegate: self
         )
     }
     
@@ -37,5 +38,34 @@ extension NewChatViewController {
         }
         
         return imageView
+    }
+}
+
+extension NewChatViewController : NewChatTableDataSourceDelegate {
+    func configureNewMessagesIndicatorWith(newMsgCount: Int) {
+        DispatchQueue.main.async {
+            self.newMsgsIndicatorView.configureWith(
+                firstVisibleRow: self.chatTableView.indexPathsForVisibleRows?.first?.row ?? 0,
+                newMessagesCount: newMsgCount,
+                andDelegate: self
+            )
+        }
+    }
+    
+    func didScrollToBottom() {
+        self.chat?.setChatMessagesAsSeen()
+        self.configureNewMessagesIndicatorWith(newMsgCount: 0)
+    }
+    
+    func didScrollOutOfBottomArea() {
+        newMsgsIndicatorView.configureWith(
+            firstVisibleRow: chatTableView.indexPathsForVisibleRows?.first?.row ?? 0
+        )
+    }
+}
+
+extension NewChatViewController : NewMessagesIndicatorViewDelegate {
+    func didTouchButton() {
+        chatTableView.scrollToRow(index: 0, animated: true)
     }
 }

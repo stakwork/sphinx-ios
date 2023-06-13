@@ -14,6 +14,7 @@ class NewChatViewController: NewKeyboardHandlerViewController {
     @IBOutlet weak var bottomView: NewChatAccessoryView!
     @IBOutlet weak var headerView: NewChatHeaderView!
     @IBOutlet weak var chatTableView: UITableView!
+    @IBOutlet weak var newMsgsIndicatorView: NewMessagesIndicatorView!
     
     @IBOutlet weak var chatTableViewHeightConstraint: NSLayoutConstraint!
     

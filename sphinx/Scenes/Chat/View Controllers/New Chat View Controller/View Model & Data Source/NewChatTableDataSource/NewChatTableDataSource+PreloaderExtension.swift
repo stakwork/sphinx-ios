@@ -58,6 +58,8 @@ extension NewChatTableDataSource {
     }
     
     func restoreScrollLastPosition() {
+        loadingMoreItems = false
+        
         if let scrollState = preloaderHelper.getScrollState(
             for: chat.id,
             with: dataSource.snapshot().itemIdentifiers
@@ -74,9 +76,10 @@ extension NewChatTableDataSource {
                 )
                 
                 tableView.contentOffset.y = tableView.contentOffset.y + (offset + tableView.contentInset.top)
+                return
             }
-            
-            loadingMoreItems = false
         }
+        
+        delegate?.didScrollToBottom()
     }
 }

@@ -114,6 +114,7 @@ extension NewChatTableDataSource {
             return
         }
         
+        var newMsgCount = 0
         var array: [MessageTableCellState] = []
         
         let admin = chat.getAdmin()
@@ -176,12 +177,18 @@ extension NewChatTableDataSource {
                     ),
                     at: 0
                 )
+                
+                if !message.seen {
+                    newMsgCount += 1
+                }
             }
         }
         
         messageTableCellStateArray = array
         
         updateSnapshot()
+        
+        delegate?.configureNewMessagesIndicatorWith(newMsgCount: newMsgCount)
     }
     
     private func getBubbleBackgroundForMessage(

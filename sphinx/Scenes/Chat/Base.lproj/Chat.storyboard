@@ -693,6 +693,14 @@
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </tableView>
+                                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WUJ-0a-zlK" customClass="NewMessagesIndicatorView" customModule="sphinx" customModuleProvider="target">
+                                                <rect key="frame" x="325" y="489" width="50" height="35"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" priority="750" constant="50" id="Ei1-cQ-yao"/>
+                                                    <constraint firstAttribute="height" constant="35" id="tJG-V1-ErF"/>
+                                                </constraints>
+                                            </view>
                                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2KA-H5-xSv">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="544"/>
                                                 <color key="backgroundColor" name="Body"/>
@@ -702,9 +710,11 @@
                                         <constraints>
                                             <constraint firstAttribute="bottom" secondItem="mmA-5V-kTx" secondAttribute="bottom" id="37i-oJ-9Os"/>
                                             <constraint firstAttribute="bottom" secondItem="7O1-jH-hsI" secondAttribute="bottom" id="4n5-mE-9yz"/>
+                                            <constraint firstAttribute="bottom" secondItem="WUJ-0a-zlK" secondAttribute="bottom" constant="20" id="Ahc-2C-vXG"/>
                                             <constraint firstAttribute="bottom" secondItem="vlc-qx-DGF" secondAttribute="bottom" id="Fiu-E4-Z6c"/>
                                             <constraint firstAttribute="bottom" secondItem="2KA-H5-xSv" secondAttribute="bottom" id="Fkp-D7-VYl"/>
                                             <constraint firstAttribute="trailing" secondItem="2KA-H5-xSv" secondAttribute="trailing" id="ObL-ZX-59h"/>
+                                            <constraint firstAttribute="trailing" secondItem="WUJ-0a-zlK" secondAttribute="trailing" id="QuJ-ev-Fae"/>
                                             <constraint firstItem="7O1-jH-hsI" firstAttribute="leading" secondItem="oJ3-im-1f2" secondAttribute="leading" id="SRH-wR-6E3"/>
                                             <constraint firstItem="vlc-qx-DGF" firstAttribute="leading" secondItem="oJ3-im-1f2" secondAttribute="leading" id="YgL-On-hAi"/>
                                             <constraint firstItem="vlc-qx-DGF" firstAttribute="top" secondItem="oJ3-im-1f2" secondAttribute="top" id="Ygw-EN-M5q"/>
@@ -765,6 +775,7 @@
                         <outlet property="chatTableViewHeightConstraint" destination="zqK-vg-2JT" id="DVJ-2q-fhW"/>
                         <outlet property="headerView" destination="hMb-Ac-dRv" id="ANb-B8-g1N"/>
                         <outlet property="mentionsAutocompleteTableView" destination="vlc-qx-DGF" id="osS-rX-MO5"/>
+                        <outlet property="newMsgsIndicatorView" destination="WUJ-0a-zlK" id="DkF-z3-PbA"/>
                         <outlet property="webAppContainerView" destination="2KA-H5-xSv" id="uFC-DY-4Gs"/>
                     </connections>
                 </viewController>

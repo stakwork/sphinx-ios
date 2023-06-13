@@ -347,6 +347,7 @@ public class Chat: NSManagedObject {
         shouldSave: Bool = true
     ) {
         let receivedUnseenMessages = self.getReceivedUnseenMessages()
+        
         if receivedUnseenMessages.count > 0 {
             for m in receivedUnseenMessages {
                 m.seen = true

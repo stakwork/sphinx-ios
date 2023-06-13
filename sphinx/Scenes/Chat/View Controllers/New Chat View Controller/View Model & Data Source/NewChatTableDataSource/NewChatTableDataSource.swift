@@ -9,7 +9,15 @@
 import UIKit
 import CoreData
 
+protocol NewChatTableDataSourceDelegate : class {
+    func configureNewMessagesIndicatorWith(newMsgCount: Int)
+    func didScrollToBottom()
+    func didScrollOutOfBottomArea()
+}
+
 class NewChatTableDataSource : NSObject {
+    
+    weak var delegate: NewChatTableDataSourceDelegate?
     
     var tableView : UITableView!
     var headerImage: UIImage?
@@ -28,12 +36,14 @@ class NewChatTableDataSource : NSObject {
     var tribeLinks: [Int: MessageTableCellState.LinkTribe] = [:]
     
     var loadingMoreItems = false
+    var scrolledAtBottom = false
     
     init(
         chat: Chat,
         tableView: UITableView,
         headerImageView: UIImageView?,
-        bottomView: UIView
+        bottomView: UIView,
+        delegate: NewChatTableDataSourceDelegate?
     ) {
         super.init()
         
@@ -41,6 +51,7 @@ class NewChatTableDataSource : NSObject {
         self.tableView = tableView
         self.headerImage = headerImageView?.image
         self.bottomView = bottomView
+        self.delegate = delegate
         
         configureTableView()
         configureDataSource()

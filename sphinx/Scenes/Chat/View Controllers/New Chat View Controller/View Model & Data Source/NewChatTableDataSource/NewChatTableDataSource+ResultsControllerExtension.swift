@@ -177,7 +177,7 @@ extension NewChatTableDataSource {
                     at: 0
                 )
                 
-                if !message.seen {
+                if !message.seen && !chat.seen {
                     newMsgCount += 1
                 }
             }

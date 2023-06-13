@@ -76,6 +76,9 @@ extension NewChatTableDataSource {
                 )
                 
                 tableView.contentOffset.y = tableView.contentOffset.y + (offset + tableView.contentInset.top)
+            }
+            
+            if scrollState.bottomFirstVisibleRow > 0 {
                 return
             }
         }
@@ -83,3 +86,4 @@ extension NewChatTableDataSource {
         delegate?.didScrollToBottom()
     }
 }
+

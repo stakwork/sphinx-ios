@@ -590,6 +590,7 @@
 		47CC7CE923E4718600730E6F /* ImageFullScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CC7CE823E4718600730E6F /* ImageFullScreenViewController.swift */; };
 		47CD9508265EC2A4009B06A4 /* CommonModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CD9507265EC2A4009B06A4 /* CommonModalView.swift */; };
 		47CD9510265EC70E009B06A4 /* API+PeopleExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CD950F265EC70E009B06A4 /* API+PeopleExtension.swift */; };
+		47CFA9462A38C5200030BC23 /* NewChatTableDataSource+ScrollExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CFA9452A38C5200030BC23 /* NewChatTableDataSource+ScrollExtension.swift */; };
 		47D0046125E7F3EC00E74063 /* Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D0046025E7F3EC00E74063 /* Download.swift */; };
 		47D0046325E7F66400E74063 /* DownloadService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D0046225E7F66400E74063 /* DownloadService.swift */; };
 		47D03DF42510ED9C0077A968 /* FileInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D03DF32510ED9C0077A968 /* FileInfoView.swift */; };
@@ -1631,6 +1632,7 @@
 		47CC7CE823E4718600730E6F /* ImageFullScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFullScreenViewController.swift; sourceTree = "<group>"; };
 		47CD9507265EC2A4009B06A4 /* CommonModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonModalView.swift; sourceTree = "<group>"; };
 		47CD950F265EC70E009B06A4 /* API+PeopleExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+PeopleExtension.swift"; sourceTree = "<group>"; };
+		47CFA9452A38C5200030BC23 /* NewChatTableDataSource+ScrollExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewChatTableDataSource+ScrollExtension.swift"; sourceTree = "<group>"; };
 		47D0045C25E690B700E74063 /* sphinx 27.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 27.xcdatamodel"; sourceTree = "<group>"; };
 		47D0046025E7F3EC00E74063 /* Download.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Download.swift; sourceTree = "<group>"; };
 		47D0046225E7F66400E74063 /* DownloadService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadService.swift; sourceTree = "<group>"; };
@@ -3883,6 +3885,28 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		47CFA9472A38C57B0030BC23 /* MessageTableCellState */ = {
+			isa = PBXGroup;
+			children = (
+				47E6A4F42A2F66BD00A9509E /* MessageLayoutState.swift */,
+				47E6A4F22A2F642800A9509E /* MessageTableCellState.swift */,
+				47BF27F22A3795CE00F15EE9 /* MessageTableCellState+DataTypeExtension.swift */,
+			);
+			path = MessageTableCellState;
+			sourceTree = "<group>";
+		};
+		47CFA9482A38C5860030BC23 /* NewChatTableDataSource */ = {
+			isa = PBXGroup;
+			children = (
+				472092CD2A27987A00468796 /* NewChatTableDataSource.swift */,
+				47E6A4F62A2F788300A9509E /* NewChatTableDataSource+ResultsControllerExtension.swift */,
+				47BF27EE2A375EAA00F15EE9 /* NewChatTableDataSource+CellDelegateExtension.swift */,
+				47BF27F02A37782E00F15EE9 /* NewChatTableDataSource+PreloaderExtension.swift */,
+				47CFA9452A38C5200030BC23 /* NewChatTableDataSource+ScrollExtension.swift */,
+			);
+			path = NewChatTableDataSource;
+			sourceTree = "<group>";
+		};
 		47D0045F25E7F3D300E74063 /* Downloads */ = {
 			isa = PBXGroup;
 			children = (
@@ -3990,13 +4014,8 @@
 		47E6A4F12A2F63C800A9509E /* View Model & Data Source */ = {
 			isa = PBXGroup;
 			children = (
-				472092CD2A27987A00468796 /* NewChatTableDataSource.swift */,
-				47E6A4F62A2F788300A9509E /* NewChatTableDataSource+ResultsControllerExtension.swift */,
-				47BF27EE2A375EAA00F15EE9 /* NewChatTableDataSource+CellDelegateExtension.swift */,
-				47BF27F02A37782E00F15EE9 /* NewChatTableDataSource+PreloaderExtension.swift */,
-				47E6A4F22A2F642800A9509E /* MessageTableCellState.swift */,
-				47BF27F22A3795CE00F15EE9 /* MessageTableCellState+DataTypeExtension.swift */,
-				47E6A4F42A2F66BD00A9509E /* MessageLayoutState.swift */,
+				47CFA9482A38C5860030BC23 /* NewChatTableDataSource */,
+				47CFA9472A38C57B0030BC23 /* MessageTableCellState */,
 				47FA72782A30E19300FB4535 /* MessagesPreloaderHelper.swift */,
 			);
 			path = "View Model & Data Source";
@@ -5364,6 +5383,7 @@
 				47308E0E24FEE6E700FFAC6F /* SocketIOClientConfiguration.swift in Sources */,
 				CE842DF12992D0F400620AD3 /* BadgeTemplate.swift in Sources */,
 				475DD30C2A1291F900F92173 /* NewChatViewController+ChatHeaderDelegateExtension.swift in Sources */,
+				47CFA9462A38C5200030BC23 /* NewChatTableDataSource+ScrollExtension.swift in Sources */,
 				477BCF322A0031060080ED65 /* TransactionTableViewCell.swift in Sources */,
 				47308E1124FEE6E700FFAC6F /* SocketIOClientOption.swift in Sources */,
 				47FB189B23A299000097695B /* SignupHelper.swift in Sources */,

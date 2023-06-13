@@ -107,37 +107,6 @@ extension NewChatTableDataSource {
 
 extension NewChatTableDataSource {
     
-    func configureResultsController(items: Int? = nil) {
-        let fetchRequest = TransactionMessage.getChatMessagesFetchRequest(
-            for: chat,
-            with: items
-        )
-
-        messagesResultsController = NSFetchedResultsController(
-            fetchRequest: fetchRequest,
-            managedObjectContext: CoreDataManager.sharedManager.persistentContainer.viewContext,
-            sectionNameKeyPath: nil,
-            cacheName: nil
-        )
-        
-        messagesResultsController.delegate = self
-        
-        
-        DispatchQueue.global(qos: .userInitiated).async {
-            do {
-                try self.messagesResultsController.performFetch()
-            } catch {}
-        }
-    }
-    
-    func startListeningToResultsController() {
-        messagesResultsController?.delegate = self
-    }
-    
-    func stopListeningToResultsController() {
-        messagesResultsController?.delegate = nil
-    }
-    
     func processMessages(
         messages: [TransactionMessage]
     ) {
@@ -387,6 +356,38 @@ extension NewChatTableDataSource {
 }
 
 extension NewChatTableDataSource : NSFetchedResultsControllerDelegate {
+    
+    func startListeningToResultsController() {
+        messagesResultsController?.delegate = self
+    }
+    
+    func stopListeningToResultsController() {
+        messagesResultsController?.delegate = nil
+    }
+    
+    func configureResultsController(items: Int? = nil) {
+        let fetchRequest = TransactionMessage.getChatMessagesFetchRequest(
+            for: chat,
+            with: items
+        )
+
+        messagesResultsController = NSFetchedResultsController(
+            fetchRequest: fetchRequest,
+            managedObjectContext: CoreDataManager.sharedManager.persistentContainer.viewContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil
+        )
+        
+        messagesResultsController.delegate = self
+        
+        
+        DispatchQueue.global(qos: .userInitiated).async {
+            do {
+                try self.messagesResultsController.performFetch()
+            } catch {}
+        }
+    }
+    
     func controller(
         _ controller: NSFetchedResultsController<NSFetchRequestResult>,
         didChangeContentWith snapshot: NSDiffableDataSourceSnapshotReference
@@ -400,30 +401,5 @@ extension NewChatTableDataSource : NSFetchedResultsControllerDelegate {
                 }
             }
         }
-    }
-}
-
-extension NewChatTableDataSource: UITableViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let difference: CGFloat = 16
-                
-        if tableView.contentOffset.y > tableView.contentSize.height - tableView.frame.size.height - difference {
-            loadMoreItems()
-        } else if tableView.contentOffset.y < difference {
-            print("SCROLL TO BOTTOM")
-        }
-    }
-    
-    func loadMoreItems() {
-        if loadingMoreItems {
-            return
-        }
-        
-        loadingMoreItems = true
-        
-        DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: { [weak self] in
-            guard let self = self else { return }
-            self.configureResultsController(items: self.dataSource.snapshot().numberOfItems + 50)
-        })
     }
 }

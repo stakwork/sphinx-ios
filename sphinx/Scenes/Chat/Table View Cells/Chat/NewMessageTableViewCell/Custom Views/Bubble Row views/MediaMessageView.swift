@@ -54,7 +54,7 @@ class MediaMessageView: UIView {
         gifOverlay.isHidden = !messageMedia.isGif || messageMedia.loading
         videoOverlay.isHidden = !messageMedia.isVideo || messageMedia.loading
         
-        loadingContainer.isHidden = !messageMedia.loading
+        loadingContainer.isHidden = !messageMedia.loading || messageMedia.failed
         
         if messageMedia.loading {
             loadingImageView.rotate()

@@ -61,7 +61,7 @@ public class CachedMedia: NSManagedObject {
         return cachedMedia
     }
     
-    func removeVideoObject(completion:@escaping ()->()){
+    func removeSphinxCacheObject(completion:@escaping ()->()){
         let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
         if let key = key{
             let _ = SphinxCache().removeFromDisk(forKey: key)

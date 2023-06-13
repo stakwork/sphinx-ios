@@ -422,7 +422,7 @@ class StorageManager {
                 })
             }
             else{
-                cm.removeVideoObject(completion: {
+                cm.removeSphinxCacheObject(completion: {
                     cmCounter -= 1
                     cmCounter > 0 ? () : (completion())
                 })

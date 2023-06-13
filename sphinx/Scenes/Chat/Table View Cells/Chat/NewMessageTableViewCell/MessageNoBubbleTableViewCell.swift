@@ -44,6 +44,7 @@ class MessageNoBubbleTableViewCell: UITableViewCell, ChatTableViewCellProtocol {
         )
         
         configureWith(dateSeparator: mutableMessageCellState.dateSeparator)
+        configureWith(groupMemberNotification: mutableMessageCellState.groupMemberNotification)
     }
     
     func configureWith(
@@ -67,6 +68,15 @@ class MessageNoBubbleTableViewCell: UITableViewCell, ChatTableViewCellProtocol {
                 dateSeparator: dateSeparator
             )
             dateSeparatorView.isHidden = false
+        }
+    }
+    
+    func configureWith(
+        groupMemberNotification: NoBubbleMessageLayoutState.GroupMemberNotification?
+    ) {
+        if let groupMemberNotification = groupMemberNotification {
+            groupActionsView.configureWith(groupMemberNotification: groupMemberNotification)
+            groupActionsView.isHidden = false
         }
     }
 }

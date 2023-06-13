@@ -351,6 +351,21 @@ struct MessageTableCellState {
         )
     }()
     
+    lazy var groupMemberNotification: NoBubbleMessageLayoutState.GroupMemberNotification? = {
+        
+        guard let message = message, message.isGroupLeaveOrJoinMessage() else {
+            return nil
+        }
+        
+        let senderInfo: (UIColor, String, String?) = getSenderInfo(message: message)
+        
+        return NoBubbleMessageLayoutState.GroupMemberNotification(
+            message: message.isGroupJoinMessage() ?
+                message.getGroupJoinMessageText(senderAlias: senderInfo.1) :
+                message.getGroupLeaveMessageText(senderAlias: senderInfo.1)
+        )
+    }()
+    
     var isTextOnlyMessage: Bool {
         mutating get {
             return (self.messageContent != nil) &&

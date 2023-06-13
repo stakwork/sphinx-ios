@@ -415,6 +415,19 @@ extension TransactionMessage {
                type == TransactionMessageType.memberReject.rawValue
     }
     
+    func isGroupLeaveMessage() -> Bool {
+        return type == TransactionMessageType.groupLeave.rawValue
+    }
+    
+    func isGroupJoinMessage() -> Bool {
+        return type == TransactionMessageType.groupJoin.rawValue
+    }
+    
+    func isGroupLeaveOrJoinMessage() -> Bool {
+        return type == TransactionMessageType.groupJoin.rawValue ||
+               type == TransactionMessageType.groupLeave.rawValue
+    }
+    
     func isDeleted() -> Bool {
         return status == TransactionMessageStatus.deleted.rawValue
     }
@@ -930,19 +943,19 @@ extension TransactionMessage {
     }
     
     func getGroupJoinMessageText() -> String {
-        if (self.chat?.isPublicGroup() ?? false) {
-            return String(format: "has.joined.tribe".localized, getMessageSenderNickname())
-        } else {
-            return String(format: "added.to.group".localized, getMessageSenderNickname())
-        }
+        return getGroupJoinMessageText(senderAlias: getMessageSenderNickname())
     }
     
     func getGroupLeaveMessageText() -> String {
-        if (self.chat?.isPublicGroup() ?? false) {
-            return String(format: "just.left.tribe".localized, getMessageSenderNickname())
-        } else {
-            return String(format: "just.left.group".localized, getMessageSenderNickname())
-        }
+        return getGroupLeaveMessageText(senderAlias: getMessageSenderNickname())
+    }
+    
+    func getGroupJoinMessageText(senderAlias: String) -> String {
+        return String(format: "has.joined.tribe".localized, senderAlias)
+    }
+    
+    func getGroupLeaveMessageText(senderAlias: String) -> String {
+        return String(format: "just.left.tribe".localized, senderAlias)
     }
     
     func processPodcastComment() {
@@ -1029,5 +1042,14 @@ extension TransactionMessage {
         let hasSameSenderPicture = (senderPic ?? "") == (message.senderPic ?? "")
 
         return hasSameSenderId && hasSameSenderAlias && hasSameSenderPicture
+    }
+    
+    //For new chat implementation
+    func shouldShowOnChat() -> Bool {
+        return isTextMessage() ||
+               isDirectPayment() ||
+               isPodcastBoost() ||
+               isMediaAttachment() ||
+               isGroupLeaveOrJoinMessage()
     }
 }

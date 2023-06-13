@@ -315,6 +315,17 @@ struct NoBubbleMessageLayoutState: CommonLayoutState {
         }
     }
     
+    struct GroupMemberNotification {
+        
+        var message: String
+        
+        init(
+            message: String
+        ) {
+            self.message = message
+        }
+    }
+    
     struct DateSeparator {
         
         var timestamp: String

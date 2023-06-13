@@ -22,14 +22,14 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="45"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oiu-OJ-GKT">
-                    <rect key="frame" x="105.66666666666667" y="10" width="163.66666666666663" height="20"/>
+                    <rect key="frame" x="117.66666666666667" y="12.666666666666664" width="139.66666666666663" height="20"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tomas just left the group" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tyx-Uj-8Mz">
-                            <rect key="frame" x="20.000000000000007" y="3.6666666666666661" width="123.66666666666669" height="12.999999999999998"/>
+                            <rect key="frame" x="8.0000000000000071" y="3.3333333333333339" width="123.66666666666669" height="13.000000000000002"/>
                             <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="11"/>
                             <color key="textColor" name="Text"/>
                             <nil key="highlightedColor"/>
@@ -37,10 +37,9 @@
                     </subviews>
                     <color key="backgroundColor" name="ReceivedMsgBG"/>
                     <constraints>
-                        <constraint firstItem="tyx-Uj-8Mz" firstAttribute="leading" secondItem="Oiu-OJ-GKT" secondAttribute="leading" constant="20" id="8KH-sZ-Ons"/>
-                        <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="tyx-Uj-8Mz" secondAttribute="trailing" constant="20" id="Mfw-rP-dHn"/>
+                        <constraint firstItem="tyx-Uj-8Mz" firstAttribute="leading" secondItem="Oiu-OJ-GKT" secondAttribute="leading" constant="8" id="8KH-sZ-Ons"/>
+                        <constraint firstAttribute="trailing" secondItem="tyx-Uj-8Mz" secondAttribute="trailing" constant="8" id="Mfw-rP-dHn"/>
                         <constraint firstItem="tyx-Uj-8Mz" firstAttribute="centerY" secondItem="Oiu-OJ-GKT" secondAttribute="centerY" id="b01-IC-usR"/>
-                        <constraint firstItem="tyx-Uj-8Mz" firstAttribute="centerX" secondItem="Oiu-OJ-GKT" secondAttribute="centerX" id="iiN-b8-Eee"/>
                         <constraint firstAttribute="height" constant="20" id="rUR-D8-XAN"/>
                     </constraints>
                 </view>

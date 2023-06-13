@@ -21,24 +21,24 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="gCg-Xh-oEB">
-                    <rect key="frame" x="0.0" y="0.0" width="393" height="170"/>
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="175"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aDQ-Zk-Phh" customClass="GroupActionMessageView" customModule="sphinx" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="40"/>
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="45"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="40" id="lU1-gK-Y05"/>
+                                <constraint firstAttribute="height" constant="45" id="lU1-gK-Y05"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZA5-sj-0DS" customClass="GroupRemovedView" customModule="sphinx" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="40" width="393" height="65"/>
+                            <rect key="frame" x="0.0" y="45" width="393" height="65"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="65" id="OXw-HP-zDn"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YNm-nU-BcO" customClass="GroupRequestView" customModule="sphinx" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="105" width="393" height="65"/>
+                            <rect key="frame" x="0.0" y="110" width="393" height="65"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="65" id="FTR-WR-dm7"/>

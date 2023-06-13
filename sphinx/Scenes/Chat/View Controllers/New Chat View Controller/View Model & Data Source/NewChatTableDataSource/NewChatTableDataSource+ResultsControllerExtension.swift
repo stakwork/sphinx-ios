@@ -127,10 +127,7 @@ extension NewChatTableDataSource {
         var groupingDate: Date? = nil
 
         for (index, message) in messages.enumerated() {
-            if message.isTextMessage() ||
-               message.isDirectPayment() ||
-               message.isPodcastBoost() ||
-               message.isMediaAttachment() {
+            if message.shouldShowOnChat() {
                 
                 let bubbleStateAndDate = getBubbleBackgroundForMessage(
                     message: message,

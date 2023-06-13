@@ -36,5 +36,11 @@ class GroupActionMessageView: UIView {
         messageView.layer.borderColor = UIColor.Sphinx.LightDivider.resolvedCGColor(with: self)
         messageView.layer.borderWidth = 1
     }
+    
+    func configureWith(
+        message: String
+    ) {
+        messageLabel.text = message
+    }
 
 }

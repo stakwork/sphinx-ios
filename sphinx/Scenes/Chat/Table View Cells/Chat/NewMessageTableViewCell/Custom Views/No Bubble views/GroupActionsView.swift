@@ -32,5 +32,20 @@ class GroupActionsView: UIView {
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
     }
+    
+    func hideAllSubviews() {
+        groupActionMessageView.isHidden = true
+        groupRemovedView.isHidden = true
+        groupRequestView.isHidden = true
+    }
+    
+    func configureWith(
+        groupMemberNotification: NoBubbleMessageLayoutState.GroupMemberNotification
+    ) {
+        hideAllSubviews()
+        
+        groupActionMessageView.configureWith(message: groupMemberNotification.message)
+        groupActionMessageView.isHidden = false
+    }
 
 }

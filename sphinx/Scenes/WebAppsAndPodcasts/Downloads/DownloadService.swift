@@ -37,6 +37,7 @@ class DownloadService : NSObject {
     }()
   
     var activeDownloads: [String: Download] = [:]
+    var activeVideoDownloads: [String: VideoDownload] = [:]
 
     let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
     
@@ -45,6 +46,47 @@ class DownloadService : NSObject {
         forKey key: DownloadServiceDelegateKeys
     ) {
         self.delegates[key.rawValue] = delegate
+    }
+    
+    func startDownload(video: Video) {
+//        guard let url = episode.getRemoteAudioUrl() else {
+//            return
+//        }
+//
+//        if episode.isDownloaded { return }
+        
+        guard let url = URL(string: "http://wilcal.test.website.bucket.s3-website-us-west-1.amazonaws.com/h.264/big_buck_bunny_h.264.mp4") else{
+            return
+        }
+
+        let download = activeVideoDownloads[url.absoluteString] ?? VideoDownload(video: video)
+        
+//        if download.isDownloading {
+//            pauseDownload(episode)
+//            return
+//        }
+//
+//        if let _ = download.resumeData {
+//            resumeDownload(episode)
+//            return
+//        }
+        
+        download.progress = 0
+        download.state = VideoDownload.State.downloading
+        activeVideoDownloads[url.absoluteString] = download
+        
+        for d in self.delegates.values {
+            //d.shouldReloadRowFor(download: download)
+        }
+        
+        DispatchQueue.global(qos: .utility).async {
+            self.downloadDispatchSemaphore.wait()
+            
+            download.task = self.downloadsSession.downloadTask(with: url)
+            download.task?.resume()
+        
+            self.activeVideoDownloads[download.task?.currentRequest?.url?.absoluteString ?? url.absoluteString] = download
+        }
     }
 
     func startDownload(_ episode: PodcastEpisode) {
@@ -188,10 +230,12 @@ extension DownloadService : URLSessionDownloadDelegate {
         return documentsPath.appendingPathComponent(fileName)
     }
     
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask,
-                    didWriteData bytesWritten: Int64, totalBytesWritten: Int64,
-                    totalBytesExpectedToWrite: Int64) {
-        
+    func handleVideoDownloadUpdate(downloadTask: URLSessionDownloadTask,totalBytesWritten: Int64,totalBytesExpectedToWrite: Int64){
+        let newProgress = Int(Float(totalBytesWritten) / Float(totalBytesExpectedToWrite) * 100)
+        print("Video Progress:\(newProgress)")
+    }
+    
+    func handlePodcastDownloadUpdate(downloadTask: URLSessionDownloadTask,totalBytesWritten: Int64,totalBytesExpectedToWrite: Int64){
         guard let url = downloadTask.originalRequest?.url ?? downloadTask.currentRequest?.url, let download = activeDownloads[url.absoluteString] else {
             return
         }
@@ -220,6 +264,22 @@ extension DownloadService : URLSessionDownloadDelegate {
                     d.shouldReloadRowFor(download: download)
                 }
             }
+        }
+    }
+    
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask,
+                    didWriteData bytesWritten: Int64, totalBytesWritten: Int64,
+                    totalBytesExpectedToWrite: Int64) {
+        
+        guard let url = downloadTask.originalRequest?.url ?? downloadTask.currentRequest?.url else {
+            return
+        }
+        
+        if let podcastDownload = activeDownloads[url.absoluteString]{
+            handlePodcastDownloadUpdate(downloadTask: downloadTask, totalBytesWritten: totalBytesWritten, totalBytesExpectedToWrite: totalBytesExpectedToWrite)
+        }
+        else if let videoDownload = activeVideoDownloads[url.absoluteString]{
+            handleVideoDownloadUpdate(downloadTask: downloadTask, totalBytesWritten: totalBytesWritten, totalBytesExpectedToWrite: totalBytesExpectedToWrite)
         }
     }
 }

@@ -258,7 +258,7 @@ extension String {
         return ""
     }
     
-    var stringFirstTribeLink : String {
+    var stringFirstTribeLink : String? {
         for link in self.stringLinks {
             let range = link.range
             let matchString = (self as NSString).substring(with: range) as String
@@ -266,15 +266,15 @@ extension String {
                 return matchString
             }
         }
-        return ""
+        return nil
     }
     
-    var stringFirstPubKey : String {
+    var stringFirstPubKey : String? {
         if let range = self.pubKeyMatches.first?.range {
             let matchString = (self as NSString).substring(with: range) as String
             return matchString
         }
-        return ""
+        return nil
     }
     
     func withProtocol(protocolString: String) -> String {
@@ -349,13 +349,14 @@ extension String {
     }
     
     func isExistingContactPubkey() -> (Bool, UserContact?) {
-        let pubkey = self.stringFirstPubKey
-        let (pk, _) = pubkey.pubkeyComponents
-        if let contact = UserContact.getContactWith(pubkey: pk), !contact.fromGroup {
-           return (true, contact)
-        }
-        if let owner = UserContact.getOwner(), owner.publicKey == pk {
-            return (true, owner)
+        if let pubkey = self.stringFirstPubKey {
+            let (pk, _) = pubkey.pubkeyComponents
+            if let contact = UserContact.getContactWith(pubkey: pk), !contact.fromGroup {
+               return (true, contact)
+            }
+            if let owner = UserContact.getOwner(), owner.publicKey == pk {
+                return (true, owner)
+            }
         }
         return (false, nil)
    }

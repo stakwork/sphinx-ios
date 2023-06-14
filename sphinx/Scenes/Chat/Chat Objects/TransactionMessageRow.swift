@@ -112,8 +112,10 @@ class TransactionMessageRow {
             }
         }
         
-        let tribeLink = getMessageContent().stringFirstTribeLink
-        if let tribeInfo = GroupsManager.sharedInstance.getGroupInfo(query: tribeLink), let uuid = tribeInfo.uuid, !uuid.isEmpty {
+        if let tribeLink = getMessageContent().stringFirstTribeLink,
+            let tribeInfo = GroupsManager.sharedInstance.getGroupInfo(query: tribeLink),
+            let uuid = tribeInfo.uuid, !uuid.isEmpty {
+            
             if let _ = Chat.getChatWith(uuid: uuid) {
                 return true
             }

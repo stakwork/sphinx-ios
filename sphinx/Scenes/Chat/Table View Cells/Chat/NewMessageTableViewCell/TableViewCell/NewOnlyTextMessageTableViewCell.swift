@@ -10,6 +10,8 @@ import UIKit
 
 class NewOnlyTextMessageTableViewCell: SwipableReplyCell, ChatTableViewCellProtocol {
     
+    weak var delegate: NewMessageTableViewCellDelegate!
+    
     var rowIndex: Int!
     
     ///General views
@@ -57,13 +59,14 @@ class NewOnlyTextMessageTableViewCell: SwipableReplyCell, ChatTableViewCellProto
         delegate: NewMessageTableViewCellDelegate,
         indexPath: IndexPath
     ) {
-        self.rowIndex = indexPath.row
-        
         var mutableMessageCellState = messageCellState
         
         guard let bubble = mutableMessageCellState.bubble else {
             return
         }
+        
+        self.delegate = delegate
+        self.rowIndex = indexPath.row
         
         if let statusHeader = mutableMessageCellState.statusHeader {
             configureWith(statusHeader: statusHeader)
@@ -216,14 +219,7 @@ class NewOnlyTextMessageTableViewCell: SwipableReplyCell, ChatTableViewCellProto
                     inRange: range
                 ) {
                     let link = (text as NSString).substring(with: range)
-                    
-                    if link.stringLinks.count > 0, let url = URL(string: link.withProtocol(protocolString: "http")) {
-                        UIApplication.shared.open(
-                            url,
-                            options: [:],
-                            completionHandler: nil
-                        )
-                    }
+                    delegate?.didTapOnLink(link)                    
                 }
             }
         }

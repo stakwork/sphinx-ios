@@ -48,6 +48,8 @@ protocol NewMessageTableViewCellDelegate: class {
     func didTapMediaButtonFor(messageId: Int, and rowIndex: Int)
     func didTapTribeButtonFor(messageId: Int, and rowIndex: Int)
     func didTapContactButtonFor(messageId: Int, and rowIndex: Int)
+    
+    func didTapOnLink(_ link: String)
 }
 
 class NewMessageTableViewCell: SwipableReplyCell, ChatTableViewCellProtocol {

@@ -295,8 +295,8 @@ extension NewChatTableDataSource {
         messages.forEach({
             if $0.messageContent?.hasPubkeyLinks == true {
                 pubkeys[$0.id] = (
-                    $0.messageContent?.stringFirstPubKey.pubkeyComponents.0 ?? "",
-                    $0.messageContent?.stringFirstPubKey.pubkeyComponents.1
+                    $0.messageContent?.stringFirstPubKey?.pubkeyComponents.0 ?? "",
+                    $0.messageContent?.stringFirstPubKey?.pubkeyComponents.1
                 )
             }
         })

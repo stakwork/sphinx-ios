@@ -6,7 +6,7 @@
 //  Copyright © 2023 sphinx. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 ///Loading content in background
 extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
@@ -268,11 +268,32 @@ extension NewChatTableDataSource {
             messageId: messageId,
             and: rowIndex
         ), let contactLink = tableCellState.1.linkContact {
-            
             delegate?.didTapOnContactWith(
                 pubkey: contactLink.pubkey,
                 and: contactLink.routeHint
             )
+        }
+    }
+    
+    func didTapOnLink(_ link: String) {
+        if
+            !link.stringLinks.isEmpty ||
+            !link.pubKeyMatches.isEmpty
+        {
+            if let joinLink = link.stringFirstTribeLink {
+                delegate?.didTapOnTribeWith(joinLink: joinLink)
+            } else if let contactLink = link.stringFirstPubKey {
+                delegate?.didTapOnContactWith(
+                    pubkey: contactLink.pubkeyComponents.0,
+                    and: contactLink.pubkeyComponents.1
+                )
+            } else if let url = URL(string: link.withProtocol(protocolString: "http")) {
+                UIApplication.shared.open(
+                    url,
+                    options: [:],
+                    completionHandler: nil
+                )
+            }
         }
     }
 }

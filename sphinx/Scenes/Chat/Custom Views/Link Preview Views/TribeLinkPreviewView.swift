@@ -97,14 +97,14 @@ class TribeLinkPreviewView: LinkPreviewBubbleView {
     func configurePreview(messageRow: TransactionMessageRow, delegate: LinkPreviewDelegate, doneCompletion: @escaping (Int) -> ()) {
         messageId = messageRow.transactionMessage.id
         
-        let link = messageRow.getMessageContent().stringFirstTribeLink
-        
-        loadTribeDetails(link: link, completion: { tribeInfo in
-            if let tribeInfo = tribeInfo {
-                messageRow.transactionMessage.tribeInfo = tribeInfo
-                doneCompletion(self.messageId)
-            }
-        })
+        if let link = messageRow.getMessageContent().stringFirstTribeLink {
+            loadTribeDetails(link: link, completion: { tribeInfo in
+                if let tribeInfo = tribeInfo {
+                    messageRow.transactionMessage.tribeInfo = tribeInfo
+                    doneCompletion(self.messageId)
+                }
+            })
+        }
     }
     
     func configureView(messageRow: TransactionMessageRow, tribeInfo: GroupsManager.TribeInfo?, delegate: LinkPreviewDelegate) {

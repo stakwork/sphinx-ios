@@ -172,14 +172,8 @@ extension NewMessageTableViewCell {
                     inRange: range
                 ) {
                     let link = (text as NSString).substring(with: range)
-                    
-                    if link.stringLinks.count > 0, let url = URL(string: link.withProtocol(protocolString: "http")) {
-                        UIApplication.shared.open(
-                            url,
-                            options: [:],
-                            completionHandler: nil
-                        )
-                    }
+                    delegate?.didTapOnLink(link)
+                    break
                 }
             }
         }

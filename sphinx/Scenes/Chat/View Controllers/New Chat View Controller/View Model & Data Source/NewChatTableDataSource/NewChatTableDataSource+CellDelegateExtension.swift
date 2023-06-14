@@ -11,22 +11,28 @@ import Foundation
 ///Loading content in background
 extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
     func shouldLoadTribeInfoFor(
-        link: String,
-        with messageId: Int,
+        messageId: Int,
         and rowIndex: Int
     ) {
-        if var tribeInfo = GroupsManager.sharedInstance.getGroupInfo(query: link) {
-            API.sharedInstance.getTribeInfo(host: tribeInfo.host, uuid: tribeInfo.uuid, callback: { groupInfo in
-                
-                GroupsManager.sharedInstance.update(tribeInfo: &tribeInfo, from: groupInfo)
-                
-                self.updateMessageTableCellStateFor(
-                    rowIndex: rowIndex,
-                    messageId: messageId,
-                    with: tribeInfo
-                )
-                
-            }, errorCallback: {})
+        if var tableCellState = getTableCellStateFor(
+            messageId: messageId,
+            and: rowIndex
+        ),
+           let link = tableCellState.1.tribeLink?.link
+        {
+            if var tribeInfo = GroupsManager.sharedInstance.getGroupInfo(query: link) {
+                API.sharedInstance.getTribeInfo(host: tribeInfo.host, uuid: tribeInfo.uuid, callback: { groupInfo in
+                    
+                    GroupsManager.sharedInstance.update(tribeInfo: &tribeInfo, from: groupInfo)
+                    
+                    self.updateMessageTableCellStateFor(
+                        rowIndex: rowIndex,
+                        messageId: messageId,
+                        with: tribeInfo
+                    )
+                    
+                }, errorCallback: {})
+            }
         }
     }
     
@@ -59,14 +65,15 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
     }
     
     func shouldLoadImageDataFor(
-        url: URL?,
-        with messageId: Int,
+        messageId: Int,
         and rowIndex: Int
     ) {
-        if let tableCellState = getTableCellStateFor(
+        if var tableCellState = getTableCellStateFor(
             messageId: messageId,
             and: rowIndex
-        ), let message = tableCellState.1.message, let imageUrl = url
+        ),
+            let message = tableCellState.1.message,
+           let imageUrl = tableCellState.1.messageMedia?.url
         {
             if message.isDirectPayment() {
                 MediaLoader.loadPaymentTemplateImage(url: imageUrl, message: message, completion: { messageId, image in
@@ -97,14 +104,15 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
     }
     
     func shouldLoadPdfDataFor(
-        url: URL?,
-        with messageId: Int,
+        messageId: Int,
         and rowIndex: Int
     ) {
-        if let tableCellState = getTableCellStateFor(
+        if var tableCellState = getTableCellStateFor(
             messageId: messageId,
             and: rowIndex
-        ), let message = tableCellState.1.message, let url = url
+        ),
+            let message = tableCellState.1.message,
+            let url = tableCellState.1.messageMedia?.url
         {
             MediaLoader.loadPDFData(url: url, message: message, completion: { (messageId, data, fileInfo) in
                 let updatedMediaData = MessageTableCellState.MediaData(
@@ -122,14 +130,15 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
     }
     
     func shouldLoadVideoDataFor(
-        url: URL?,
-        with messageId: Int,
+        messageId: Int,
         and rowIndex: Int
     ) {
-        if let tableCellState = getTableCellStateFor(
+        if var tableCellState = getTableCellStateFor(
             messageId: messageId,
             and: rowIndex
-        ), let message = tableCellState.1.message, let url = url
+        ),
+            let message = tableCellState.1.message,
+            let url = tableCellState.1.messageMedia?.url
         {
             MediaLoader.loadVideo(url: url, message: message, completion: { (messageId, data, image) in
                 let updatedMediaData = MessageTableCellState.MediaData(
@@ -169,7 +178,10 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
 
 ///Actions handling
 extension NewChatTableDataSource {
-    func didTapMessageReplyFor(messageId: Int, and rowIndex: Int) {
+    func didTapMessageReplyFor(
+        messageId: Int,
+        and rowIndex: Int
+    ) {
         if var tableCellState = getTableCellStateFor(
             messageId: messageId,
             and: rowIndex
@@ -184,6 +196,39 @@ extension NewChatTableDataSource {
                 }
             }
         }
+    }
+    
+    func didTapCallLinkCopyFor(messageId: Int, and rowIndex: Int) {
+        if var tableCellState = getTableCellStateFor(
+            messageId: messageId,
+            and: rowIndex
+        ), let link = tableCellState.1.callLink?.link {
+            ClipboardHelper.copyToClipboard(text: link, message: "call.link.copied.clipboard".localized)
+        }
+    }
+    
+    func didTapCallJoinAudioFor(messageId: Int, and rowIndex: Int) {
+        if var tableCellState = getTableCellStateFor(
+            messageId: messageId,
+            and: rowIndex
+        ), let link = tableCellState.1.callLink?.link {
+            startVideoCall(link: link, audioOnly: true)
+        }
+    }
+    
+    func didTapCallJoinVideoFor(messageId: Int, and rowIndex: Int) {
+        if var tableCellState = getTableCellStateFor(
+            messageId: messageId,
+            and: rowIndex
+        ), let link = tableCellState.1.callLink?.link {
+            startVideoCall(link: link, audioOnly: false)
+        }
+    }
+}
+
+extension NewChatTableDataSource {
+    func startVideoCall(link: String, audioOnly: Bool) {
+        VideoCallManager.sharedInstance.startVideoCall(link: link, audioOnly: audioOnly)
     }
 }
 

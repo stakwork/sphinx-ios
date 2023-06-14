@@ -181,7 +181,10 @@ struct MessageTableCellState {
             return nil
         }
         
-        if let link = message.messageContent, link.isNotEmpty {
+        if let messageContent = message.messageContent, messageContent.isNotEmpty {
+            
+            let link = VoIPRequestMessage.getFromString(messageContent)?.link ?? messageContent
+            
             return BubbleMessageLayoutState.CallLink(
                 link: link,
                 callMode: VideoCallHelper.getCallMode(link: link)

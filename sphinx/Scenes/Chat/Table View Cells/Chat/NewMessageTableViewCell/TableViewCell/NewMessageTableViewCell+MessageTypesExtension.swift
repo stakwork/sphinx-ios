@@ -77,7 +77,7 @@ extension NewMessageTableViewCell {
         callLink: BubbleMessageLayoutState.CallLink?
     ) {
         if let callLink = callLink {
-            callLinkView.configureWith(callLink: callLink)
+            callLinkView.configureWith(callLink: callLink, and: self)
             callLinkView.isHidden = false
         }
     }
@@ -102,20 +102,17 @@ extension NewMessageTableViewCell {
                 DispatchQueue.global(qos: .userInitiated).async {
                     if messageMedia.isImage {
                         self.delegate?.shouldLoadImageDataFor(
-                            url: messageMedia.url,
-                            with: messageId,
+                            messageId: messageId,
                             and: self.rowIndex
                         )
                     } else if messageMedia.isPdf {
                         self.delegate?.shouldLoadPdfDataFor(
-                            url: messageMedia.url,
-                            with: messageId,
+                            messageId: messageId,
                             and: self.rowIndex
                         )
                     } else if messageMedia.isVideo {
                         self.delegate?.shouldLoadVideoDataFor(
-                            url: messageMedia.url,
-                            with: messageId,
+                            messageId: messageId,
                             and: self.rowIndex
                         )
                     }
@@ -155,8 +152,7 @@ extension NewMessageTableViewCell {
             } else if let messageId = messageId {
                 DispatchQueue.global(qos: .userInitiated).async {
                     self.delegate?.shouldLoadTribeInfoFor(
-                        link: tribeLink.link,
-                        with: messageId,
+                        messageId: messageId,
                         and: self.rowIndex
                     )
                 }

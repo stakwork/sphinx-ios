@@ -51,8 +51,11 @@ class JoinVideoCallView: UIView {
     }
     
     func configureWith(
-        callLink: BubbleMessageLayoutState.CallLink
+        callLink: BubbleMessageLayoutState.CallLink,
+        and delegate: JoinCallViewDelegate
     ) {
+        self.delegate = delegate
+        
         videoButtonContainer.isHidden = callLink.callMode == .Audio
     }
     

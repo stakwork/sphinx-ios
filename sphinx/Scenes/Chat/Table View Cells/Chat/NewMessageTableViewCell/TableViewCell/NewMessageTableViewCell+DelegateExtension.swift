@@ -15,3 +15,23 @@ extension NewMessageTableViewCell : NewMessageReplyViewDelegate {
         }
     }
 }
+
+extension NewMessageTableViewCell : JoinCallViewDelegate {
+    func didTapCopyLink() {
+        if let messageId = messageId {
+            delegate?.didTapCallLinkCopyFor(messageId: messageId, and: rowIndex)
+        }
+    }
+    
+    func didTapAudioButton() {
+        if let messageId = messageId {
+            delegate?.didTapCallJoinAudioFor(messageId: messageId, and: rowIndex)
+        }
+    }
+    
+    func didTapVideoButton() {
+        if let messageId = messageId {
+            delegate?.didTapCallJoinVideoFor(messageId: messageId, and: rowIndex)
+        }
+    }
+}

@@ -35,13 +35,16 @@ protocol ChatTableViewCellProtocol: class {
 
 protocol NewMessageTableViewCellDelegate: class {
     ///Loading content in background
-    func shouldLoadTribeInfoFor(link: String, with messageId: Int, and rowIndex: Int)
-    func shouldLoadImageDataFor(url: URL?, with messageId: Int, and rowIndex: Int)
-    func shouldLoadPdfDataFor(url: URL?, with messageId: Int, and rowIndex: Int)
-    func shouldLoadVideoDataFor(url: URL?, with messageId: Int, and rowIndex: Int)
+    func shouldLoadTribeInfoFor(messageId: Int, and rowIndex: Int)
+    func shouldLoadImageDataFor(messageId: Int, and rowIndex: Int)
+    func shouldLoadPdfDataFor(messageId: Int, and rowIndex: Int)
+    func shouldLoadVideoDataFor(messageId: Int, and rowIndex: Int)
     
     ///Actions handling
     func didTapMessageReplyFor(messageId: Int, and rowIndex: Int)
+    func didTapCallLinkCopyFor(messageId: Int, and rowIndex: Int)
+    func didTapCallJoinAudioFor(messageId: Int, and rowIndex: Int)
+    func didTapCallJoinVideoFor(messageId: Int, and rowIndex: Int)
 }
 
 class NewMessageTableViewCell: SwipableReplyCell, ChatTableViewCellProtocol {

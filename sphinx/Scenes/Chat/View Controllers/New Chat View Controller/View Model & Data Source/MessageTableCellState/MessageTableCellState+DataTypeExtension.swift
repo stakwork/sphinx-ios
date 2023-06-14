@@ -11,19 +11,23 @@ import UIKit
 extension MessageTableCellState {
     
     struct LinkContact: Equatable {
-        var link: String
+        var pubkey: String
+        var routeHint: String?
         var contact: UserContact?
         
         init(
-            link: String,
+            pubkey: String,
+            routeHint: String?,
             contact: UserContact?
         ) {
-            self.link = link
+            self.pubkey = pubkey
+            self.routeHint = routeHint
             self.contact = contact
         }
         
         static func == (lhs: LinkContact, rhs: LinkContact) -> Bool {
-            return lhs.link           == rhs.link &&
+            return lhs.pubkey         == rhs.pubkey &&
+                   lhs.routeHint      == rhs.routeHint &&
                    lhs.contact?.id    == rhs.contact?.id
         }
     }

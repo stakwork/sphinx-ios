@@ -251,6 +251,30 @@ extension NewChatTableDataSource {
             }
         }
     }
+    
+    func didTapTribeButtonFor(messageId: Int, and rowIndex: Int) {
+        if let tableCellState = getTableCellStateFor(
+            messageId: messageId,
+            and: rowIndex
+        ), let tribeLink = tableCellState.1.linkTribe {
+            
+            let joinLink = tribeLink.link
+            delegate?.didTapOnTribeWith(joinLink: joinLink)
+        }
+    }
+    
+    func didTapContactButtonFor(messageId: Int, and rowIndex: Int) {
+        if let tableCellState = getTableCellStateFor(
+            messageId: messageId,
+            and: rowIndex
+        ), let contactLink = tableCellState.1.linkContact {
+            
+            delegate?.didTapOnContactWith(
+                pubkey: contactLink.pubkey,
+                and: contactLink.routeHint
+            )
+        }
+    }
 }
 
 extension NewChatTableDataSource {

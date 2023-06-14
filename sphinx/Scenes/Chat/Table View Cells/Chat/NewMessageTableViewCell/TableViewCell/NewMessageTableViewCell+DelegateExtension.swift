@@ -43,3 +43,17 @@ extension NewMessageTableViewCell : MediaMessageViewDelegate {
         }
     }
 }
+
+extension NewMessageTableViewCell : LinkPreviewDelegate {
+    func didTapOnTribeButton() {
+        if let messageId = messageId {
+            delegate?.didTapTribeButtonFor(messageId: messageId, and: rowIndex)
+        }
+    }
+    
+    func didTapOnContactButton() {
+        if let messageId = messageId {
+            delegate?.didTapContactButtonFor(messageId: messageId, and: rowIndex)
+        }
+    }
+}

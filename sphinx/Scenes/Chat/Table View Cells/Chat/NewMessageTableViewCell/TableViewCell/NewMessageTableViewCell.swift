@@ -46,6 +46,8 @@ protocol NewMessageTableViewCellDelegate: class {
     func didTapCallJoinAudioFor(messageId: Int, and rowIndex: Int)
     func didTapCallJoinVideoFor(messageId: Int, and rowIndex: Int)
     func didTapMediaButtonFor(messageId: Int, and rowIndex: Int)
+    func didTapTribeButtonFor(messageId: Int, and rowIndex: Int)
+    func didTapContactButtonFor(messageId: Int, and rowIndex: Int)
 }
 
 class NewMessageTableViewCell: SwipableReplyCell, ChatTableViewCellProtocol {

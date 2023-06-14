@@ -59,7 +59,10 @@ class JoinGroupDetailsViewController: KeyboardEventsViewController {
         }
     }
     
-    static func instantiate(qrString: String, delegate: NewContactVCDelegate) -> JoinGroupDetailsViewController {
+    static func instantiate(
+        qrString: String,
+        delegate: NewContactVCDelegate? = nil
+    ) -> JoinGroupDetailsViewController {
         let viewController = StoryboardScene.Groups.joinGroupDetailsViewController.instantiate()
         viewController.qrString = qrString
         viewController.delegate = delegate

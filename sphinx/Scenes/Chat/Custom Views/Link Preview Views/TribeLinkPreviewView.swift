@@ -63,8 +63,11 @@ class TribeLinkPreviewView: LinkPreviewBubbleView {
     
     func configureWith(
         tribeLink: BubbleMessageLayoutState.TribeLinkLoaded,
-        and bubble: BubbleMessageLayoutState.Bubble
+        and bubble: BubbleMessageLayoutState.Bubble,
+        delegate: LinkPreviewDelegate?
     ) {
+        self.delegate = delegate
+        
         configureColors(incoming: bubble.direction.isIncoming())
         
         tribeButtonContainer.isHidden = !tribeLink.showJoinButton

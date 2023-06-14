@@ -274,7 +274,7 @@ struct MessageTableCellState {
         }
         
         return BubbleMessageLayoutState.ContactLink(
-            pubkey: linkContact.link,
+            pubkey: linkContact.pubkey,
             imageUrl: linkContact.contact?.avatarUrl,
             alias: linkContact.contact?.nickname,
             color: linkContact.contact?.getColor(),

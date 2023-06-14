@@ -50,8 +50,11 @@ class ContactLinkPreviewView: LinkPreviewBubbleView {
     
     func configureWith(
         contactLink: BubbleMessageLayoutState.ContactLink,
-        and bubble: BubbleMessageLayoutState.Bubble
+        and bubble: BubbleMessageLayoutState.Bubble,
+        delegate: LinkPreviewDelegate?
     ) {
+        self.delegate = delegate
+        
         configureColors(incoming: bubble.direction.isIncoming())
         
         addContactButtonContainer.isHidden = contactLink.isContact

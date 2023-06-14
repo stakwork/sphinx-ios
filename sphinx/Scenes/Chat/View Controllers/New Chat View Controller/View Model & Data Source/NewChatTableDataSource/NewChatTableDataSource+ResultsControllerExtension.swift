@@ -290,21 +290,25 @@ extension NewChatTableDataSource {
         messages: [TransactionMessage]
     ) -> [Int: MessageTableCellState.LinkContact] {
         
-        var pubkeys: [Int:String] = [:]
+        var pubkeys: [Int: (String, String?)] = [:]
         
         messages.forEach({
             if $0.messageContent?.hasPubkeyLinks == true {
-                pubkeys[$0.id] = $0.messageContent?.stringFirstPubKey.pubkeyComponents.0 ?? ""
+                pubkeys[$0.id] = (
+                    $0.messageContent?.stringFirstPubKey.pubkeyComponents.0 ?? "",
+                    $0.messageContent?.stringFirstPubKey.pubkeyComponents.1
+                )
             }
         })
         
-        let contacts = UserContact.getContactsWith(pubkeys: Array(pubkeys.values))
+        let contacts = UserContact.getContactsWith(pubkeys: Array(pubkeys.values.map({ $0.0 })))
         var linkContactsMap: [Int: MessageTableCellState.LinkContact] = [:]
         
         pubkeys.forEach({ (key, value) in
             linkContactsMap[key] = MessageTableCellState.LinkContact(
-                link: value,
-                contact: contacts.filter({ $0.publicKey == value }).first
+                pubkey: value.0,
+                routeHint: value.1,
+                contact: contacts.filter({ $0.publicKey == value.0 }).first
             )
         })
         

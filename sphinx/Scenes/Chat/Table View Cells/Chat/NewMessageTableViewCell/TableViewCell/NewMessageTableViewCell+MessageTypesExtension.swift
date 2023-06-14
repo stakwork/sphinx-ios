@@ -136,7 +136,7 @@ extension NewMessageTableViewCell {
         and bubble: BubbleMessageLayoutState.Bubble
     ) {
         if let contactLink = contactLink {
-            contactLinkPreviewView.configureWith(contactLink: contactLink, and: bubble)
+            contactLinkPreviewView.configureWith(contactLink: contactLink, and: bubble, delegate: self)
             contactLinkPreviewView.isHidden = false
         }
     }
@@ -147,7 +147,7 @@ extension NewMessageTableViewCell {
     ) {
         if let tribeLink = tribeLink {
             if let tribeLinkLoaded = tribeLink.tribeLinkLoaded {
-                tribeLinkPreviewView.configureWith(tribeLink: tribeLinkLoaded, and: bubble)
+                tribeLinkPreviewView.configureWith(tribeLink: tribeLinkLoaded, and: bubble, delegate: self)
                 tribeLinkPreviewView.isHidden = false
             } else if let messageId = messageId {
                 DispatchQueue.global(qos: .userInitiated).async {

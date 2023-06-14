@@ -16,6 +16,9 @@ protocol NewChatTableDataSourceDelegate : class {
     
     func shouldGoToAttachmentViewFor(messageId: Int, isPdf: Bool)
     func shouldGoToVideoPlayerFor(messageId: Int, with data: Data)
+    
+    func didTapOnContactWith(pubkey: String, and routeHint: String?)
+    func didTapOnTribeWith(joinLink: String)
 }
 
 class NewChatTableDataSource : NSObject {

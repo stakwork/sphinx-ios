@@ -79,6 +79,37 @@ extension NewChatViewController : NewChatTableDataSourceDelegate {
         let avVC = AVViewController.instantiate(data: data)
         self.present(avVC, animated: true, completion: nil)
     }
+    
+    func didTapOnContactWith(pubkey: String, and routeHint: String?) {
+        if let contact = UserContact.getContactWith(pubkey: pubkey) {
+            let chat = contact.getChat()
+            goToChatWith(contactId: contact.id, chatId: chat?.id)
+        } else {
+            let routeHintString = (routeHint != nil && routeHint!.isNotEmpty) ? ":\(routeHint!)" : ""
+            let newContactVC = NewContactViewController.instantiate(pubkey: "\(pubkey)\(routeHintString)")
+            present(newContactVC, animated: true)
+        }
+    }
+    
+    func didTapOnTribeWith(joinLink: String) {
+        if let uuid = GroupsManager.sharedInstance.getGroupInfo(query: joinLink)?.uuid, let chat = Chat.getChatWith(uuid: uuid) {
+            goToChatWith(contactId: nil, chatId: chat.id)
+        } else {
+            let joinTribeVC = JoinGroupDetailsViewController.instantiate(qrString: joinLink)
+            present(joinTribeVC, animated: true)
+        }
+    }
+    
+    func goToChatWith(
+        contactId: Int?,
+        chatId: Int?
+    ) {
+        let chatVC = NewChatViewController.instantiate(
+            contactId: contactId,
+            chatId: chatId
+        )
+        navigationController?.pushViewController(chatVC, animated: true)
+    }
 }
 
 extension NewChatViewController : NewMessagesIndicatorViewDelegate {

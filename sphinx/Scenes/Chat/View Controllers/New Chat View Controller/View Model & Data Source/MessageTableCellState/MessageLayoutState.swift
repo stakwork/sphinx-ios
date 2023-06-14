@@ -154,7 +154,7 @@ struct BubbleMessageLayoutState: CommonLayoutState {
     struct MessageMedia {
         var url: URL?
         var image: UIImage?
-        var gifData: Data?
+        var videoData: Data?
         var fileInfo: MessageTableCellState.FileInfo?
         var loading: Bool
         var failed: Bool
@@ -167,7 +167,7 @@ struct BubbleMessageLayoutState: CommonLayoutState {
         init(
             url: URL?,
             image: UIImage?,
-            gifData: Data?,
+            videoData: Data?,
             fileInfo: MessageTableCellState.FileInfo?,
             loading: Bool,
             failed: Bool,
@@ -179,7 +179,7 @@ struct BubbleMessageLayoutState: CommonLayoutState {
         ) {
             self.url = url
             self.image = image
-            self.gifData = gifData
+            self.videoData = videoData
             self.fileInfo = fileInfo
             self.loading = loading
             self.failed = failed

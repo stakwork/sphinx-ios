@@ -359,13 +359,13 @@ extension NewChatTableDataSource {
         } else if message.isMediaAttachment() {
             return MessageTableCellState.MediaData(
                 image: nil,
-                gifData: nil,
+                videoData: nil,
                 failed: false
             )
         } else if message.isDirectPayment(), let _ = message.getTemplateURL() {
             return MessageTableCellState.MediaData(
                 image: nil,
-                gifData: nil,
+                videoData: nil,
                 failed: false
             )
         }

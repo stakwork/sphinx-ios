@@ -203,12 +203,12 @@ struct MessageTableCellState {
             return nil
         }
         
-        let loading = (mediaData.image == nil && mediaData.gifData == nil)
+        let loading = (mediaData.image == nil && mediaData.videoData == nil)
 
         return BubbleMessageLayoutState.MessageMedia(
             url: url,
             image: mediaData.image,
-            gifData: mediaData.gifData,
+            videoData: mediaData.videoData,
             fileInfo: mediaData.fileInfo,
             loading: loading,
             failed: mediaData.failed,

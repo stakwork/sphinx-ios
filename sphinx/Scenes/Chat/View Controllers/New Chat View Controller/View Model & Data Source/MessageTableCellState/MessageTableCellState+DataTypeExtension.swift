@@ -52,25 +52,25 @@ extension MessageTableCellState {
     
     struct MediaData: Equatable {
         var image: UIImage?
-        var gifData: Data?
+        var videoData: Data?
         var fileInfo: MessageTableCellState.FileInfo?
         var failed: Bool
         
         init(
             image: UIImage? = nil,
-            gifData: Data? = nil,
+            videoData: Data? = nil,
             fileInfo: MessageTableCellState.FileInfo? = nil,
             failed: Bool = false
         ) {
             self.image = image
-            self.gifData = gifData
+            self.videoData = videoData
             self.fileInfo = fileInfo
             self.failed = failed
         }
         
         static func == (lhs: MediaData, rhs: MediaData) -> Bool {
             return lhs.image           == rhs.image &&
-                   lhs.gifData         == rhs.gifData &&
+                   lhs.videoData       == rhs.videoData &&
                    lhs.fileInfo        == rhs.fileInfo &&
                    lhs.failed          == rhs.failed
         }

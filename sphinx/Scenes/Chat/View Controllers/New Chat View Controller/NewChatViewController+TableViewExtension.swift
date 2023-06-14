@@ -72,8 +72,12 @@ extension NewChatViewController : NewChatTableDataSourceDelegate {
         }
     }
     
-    func shouldGoToVideoPlayerFor(messageId: Int) {
-        
+    func shouldGoToVideoPlayerFor(
+        messageId: Int,
+        with data: Data
+    ) {
+        let avVC = AVViewController.instantiate(data: data)
+        self.present(avVC, animated: true, completion: nil)
     }
 }
 

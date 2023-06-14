@@ -142,7 +142,8 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
         {
             MediaLoader.loadVideo(url: url, message: message, completion: { (messageId, data, image) in
                 let updatedMediaData = MessageTableCellState.MediaData(
-                    image: image
+                    image: image,
+                    videoData: data
                 )
                 self.updateMessageTableCellStateFor(rowIndex: rowIndex, messageId: messageId, with: updatedMediaData)
             }, errorCompletion: { messageId in
@@ -243,8 +244,8 @@ extension NewChatTableDataSource {
             and: rowIndex
         ), let messageMedia = tableCellState.1.messageMedia {
             
-            if messageMedia.isVideo {
-                delegate?.shouldGoToVideoPlayerFor(messageId: messageId)
+            if messageMedia.isVideo, let data = messageMedia.videoData {
+                delegate?.shouldGoToVideoPlayerFor(messageId: messageId, with: data)
             } else {
                 delegate?.shouldGoToAttachmentViewFor(messageId: messageId, isPdf: messageMedia.isPdf)
             }

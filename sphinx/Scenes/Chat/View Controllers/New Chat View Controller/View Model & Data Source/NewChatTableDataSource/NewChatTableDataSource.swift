@@ -15,7 +15,7 @@ protocol NewChatTableDataSourceDelegate : class {
     func didScrollOutOfBottomArea()
     
     func shouldGoToAttachmentViewFor(messageId: Int, isPdf: Bool)
-    func shouldGoToVideoPlayerFor(messageId: Int)
+    func shouldGoToVideoPlayerFor(messageId: Int, with data: Data)
 }
 
 class NewChatTableDataSource : NSObject {

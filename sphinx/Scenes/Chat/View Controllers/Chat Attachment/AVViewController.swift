@@ -20,7 +20,11 @@ class AVViewController: AVPlayerViewController {
     
     var data: Data!
     
-    static func instantiate(data: Data, delegate: PresentedViewDelegate) -> AVViewController {
+    static func instantiate(
+        data: Data,
+        delegate: PresentedViewDelegate? = nil
+    ) -> AVViewController {
+        
         let viewController = StoryboardScene.Chat.avViewController.instantiate()
         viewController.data = data
         viewController.viewDelegate = delegate

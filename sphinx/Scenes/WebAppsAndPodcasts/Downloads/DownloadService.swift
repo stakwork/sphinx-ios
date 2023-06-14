@@ -49,12 +49,13 @@ class DownloadService : NSObject {
     }
     
     func startDownload(video: Video) {
-//        guard let url = episode.getRemoteAudioUrl() else {
+//        guard let url = video.getRemoteAudioUrl() else {
 //            return
 //        }
 //
-//        if episode.isDownloaded { return }
+        if video.isDownloaded { return }
         
+        //TODO: change to be the genuine raw mp4
         guard let url = URL(string: "http://wilcal.test.website.bucket.s3-website-us-west-1.amazonaws.com/h.264/big_buck_bunny_h.264.mp4") else{
             return
         }
@@ -190,8 +191,52 @@ extension DownloadService : URLSessionDownloadDelegate {
         }
         
         let urlString = url.absoluteString
-        let download = activeDownloads[urlString]
+        if let download = activeDownloads[urlString]{
+            handlePodcastDownloadCompletion(download: download, urlString: urlString,location:location)
+        }
+        else if let download = activeVideoDownloads[urlString]{
+            handleVideoDownloadCompletion(download: download, urlString: urlString, location: location)
+        }
         
+        
+        
+        downloadDispatchSemaphore.signal()
+    }
+    
+    func handleVideoDownloadCompletion(download:VideoDownload?,urlString:String,location:URL){
+        guard let fileName = download?.video.getLocalFileName() else {
+            return
+        }
+        
+        if let currentDownload = activeDownloads[urlString] {
+            activeVideoDownloads[urlString] = nil
+            
+            if let originalUrl = currentDownload.originalUrl {
+                activeVideoDownloads[originalUrl] = nil
+            }
+        }
+      
+        let destinationURL = localFilePath(for: fileName)
+
+        let fileManager = FileManager.default
+        try? fileManager.removeItem(at: destinationURL)
+
+        do {
+            try fileManager.copyItem(at: location, to: destinationURL)
+        } catch let error {
+            print("Could not copy file to disk: \(error.localizedDescription)")
+        }
+        
+//        if let download = download {
+//            DispatchQueue.main.async {
+//                for d in self.delegates.values {
+//                    d.shouldReloadRowFor(download: download)
+//                }
+//            }
+//        }
+    }
+    
+    func handlePodcastDownloadCompletion(download:Download?,urlString:String,location:URL){
         guard let fileName = download?.episode.getLocalFileName() else {
             return
         }
@@ -222,8 +267,6 @@ extension DownloadService : URLSessionDownloadDelegate {
                 }
             }
         }
-        
-        downloadDispatchSemaphore.signal()
     }
     
     func localFilePath(for fileName: String) -> URL {

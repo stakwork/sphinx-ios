@@ -215,8 +215,12 @@ extension AllTribeFeedsCollectionViewController {
             })
         })
         
-        let video = Video(NSManagedObjectID.init(), "")
-        DownloadService.sharedInstance.startDownload(video: video)
+        if let vf = VideoFeed.getAll().first,
+           let item = vf.itemsArray.first{
+            let video = Video.convertFrom(contentFeedItem: item)
+            video.videoFeed = VideoFeed.convertFrom(contentFeed: vf)
+            DownloadService.sharedInstance.startDownload(video: video)
+        }
     }
     
     func addTableBottomInset(for collectionView: UICollectionView) {

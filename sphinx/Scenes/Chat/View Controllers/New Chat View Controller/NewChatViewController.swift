@@ -27,8 +27,7 @@ class NewChatViewController: NewKeyboardHandlerViewController {
     var contactResultsController: NSFetchedResultsController<UserContact>!
     var chatResultsController: NSFetchedResultsController<Chat>!
     
-    var contactsService: ContactsService!
-    var chatViewModel: ChatViewModel!
+    var chatViewModel: NewChatViewModel!
     
     var chatTableDataSource: NewChatTableDataSource? = nil
     var chatMentionAutocompleteDataSource : ChatMentionAutocompleteDataSource? = nil
@@ -50,8 +49,7 @@ class NewChatViewController: NewKeyboardHandlerViewController {
             viewController.contact = UserContact.getContactWith(id: contactId)
         }
         
-        viewController.contactsService = ContactsService()
-        viewController.chatViewModel = ChatViewModel()
+        viewController.chatViewModel = NewChatViewModel()
         
         viewController.popOnSwipeEnabled = true
         

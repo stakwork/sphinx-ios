@@ -9,6 +9,8 @@
 import UIKit
 
 class MessageNoBubbleTableViewCell: UITableViewCell, ChatTableViewCellProtocol {
+    
+    var rowIndex: Int!
 
     @IBOutlet weak var dateSeparatorView: DateSeparatorView!
     @IBOutlet weak var deletedMessageView: DeletedMessageView!
@@ -32,8 +34,11 @@ class MessageNoBubbleTableViewCell: UITableViewCell, ChatTableViewCellProtocol {
     
     func configureWith(
         messageCellState: MessageTableCellState,
-        delegate: NewMessageTableViewCellDelegate
+        delegate: NewMessageTableViewCellDelegate,
+        indexPath: IndexPath
     ) {
+        self.rowIndex = indexPath.row
+        
         hideAllSubviews()
         
         var mutableMessageCellState = messageCellState

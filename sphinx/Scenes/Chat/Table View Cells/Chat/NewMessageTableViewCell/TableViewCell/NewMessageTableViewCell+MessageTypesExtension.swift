@@ -58,7 +58,7 @@ extension NewMessageTableViewCell {
         and bubble: BubbleMessageLayoutState.Bubble
     ) {
         if let messageReply = messageReply {
-            messageReplyView.configureWith(messageReply: messageReply, and: bubble)
+            messageReplyView.configureWith(messageReply: messageReply, and: bubble, delegate: self)
             messageReplyView.isHidden = false
         }
     }
@@ -92,8 +92,7 @@ extension NewMessageTableViewCell {
     }
     
     func configureWith(
-        messageMedia: BubbleMessageLayoutState.MessageMedia?,
-        and messageId: Int?
+        messageMedia: BubbleMessageLayoutState.MessageMedia?
     ) {
         if let messageMedia = messageMedia {
             mediaContentView.configureWith(messageMedia: messageMedia)
@@ -104,17 +103,20 @@ extension NewMessageTableViewCell {
                     if messageMedia.isImage {
                         self.delegate?.shouldLoadImageDataFor(
                             url: messageMedia.url,
-                            with: messageId
+                            with: messageId,
+                            and: self.rowIndex
                         )
                     } else if messageMedia.isPdf {
                         self.delegate?.shouldLoadPdfDataFor(
                             url: messageMedia.url,
-                            with: messageId
+                            with: messageId,
+                            and: self.rowIndex
                         )
                     } else if messageMedia.isVideo {
                         self.delegate?.shouldLoadVideoDataFor(
                             url: messageMedia.url,
-                            with: messageId
+                            with: messageId,
+                            and: self.rowIndex
                         )
                     }
                 }
@@ -144,8 +146,7 @@ extension NewMessageTableViewCell {
     
     func configureWith(
         tribeLink: BubbleMessageLayoutState.TribeLink?,
-        and bubble: BubbleMessageLayoutState.Bubble,
-        messageId: Int?
+        and bubble: BubbleMessageLayoutState.Bubble
     ) {
         if let tribeLink = tribeLink {
             if let tribeLinkLoaded = tribeLink.tribeLinkLoaded {
@@ -153,7 +154,11 @@ extension NewMessageTableViewCell {
                 tribeLinkPreviewView.isHidden = false
             } else if let messageId = messageId {
                 DispatchQueue.global(qos: .userInitiated).async {
-                    self.delegate?.shouldLoadTribeInfoFor(link: tribeLink.link, with: messageId)
+                    self.delegate?.shouldLoadTribeInfoFor(
+                        link: tribeLink.link,
+                        with: messageId,
+                        and: self.rowIndex
+                    )
                 }
             }
         }

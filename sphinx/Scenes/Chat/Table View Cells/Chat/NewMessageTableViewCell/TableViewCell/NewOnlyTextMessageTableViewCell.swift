@@ -10,6 +10,8 @@ import UIKit
 
 class NewOnlyTextMessageTableViewCell: SwipableReplyCell, ChatTableViewCellProtocol {
     
+    var rowIndex: Int!
+    
     ///General views
     @IBOutlet weak var bubbleOnlyText: UIView!
     @IBOutlet weak var receivedArrow: UIView!
@@ -52,8 +54,11 @@ class NewOnlyTextMessageTableViewCell: SwipableReplyCell, ChatTableViewCellProto
     
     func configureWith(
         messageCellState: MessageTableCellState,
-        delegate: NewMessageTableViewCellDelegate
+        delegate: NewMessageTableViewCellDelegate,
+        indexPath: IndexPath
     ) {
+        self.rowIndex = indexPath.row
+        
         var mutableMessageCellState = messageCellState
         
         guard let bubble = mutableMessageCellState.bubble else {

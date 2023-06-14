@@ -28,21 +28,28 @@ protocol ChatTableViewCellProtocol: class {
     
     func configureWith(
         messageCellState: MessageTableCellState,
-        delegate: NewMessageTableViewCellDelegate
+        delegate: NewMessageTableViewCellDelegate,
+        indexPath: IndexPath
     )
 }
 
 protocol NewMessageTableViewCellDelegate: class {
-    func shouldLoadTribeInfoFor(link: String, with messageId: Int)
+    ///Loading content in background
+    func shouldLoadTribeInfoFor(link: String, with messageId: Int, and rowIndex: Int)
+    func shouldLoadImageDataFor(url: URL?, with messageId: Int, and rowIndex: Int)
+    func shouldLoadPdfDataFor(url: URL?, with messageId: Int, and rowIndex: Int)
+    func shouldLoadVideoDataFor(url: URL?, with messageId: Int, and rowIndex: Int)
     
-    func shouldLoadImageDataFor(url: URL?, with messageId: Int)
-    func shouldLoadPdfDataFor(url: URL?, with messageId: Int)
-    func shouldLoadVideoDataFor(url: URL?, with messageId: Int)
+    ///Actions handling
+    func didTapMessageReplyFor(messageId: Int, and rowIndex: Int)
 }
 
 class NewMessageTableViewCell: SwipableReplyCell, ChatTableViewCellProtocol {
     
     weak var delegate: NewMessageTableViewCellDelegate!
+    
+    var rowIndex: Int!
+    var messageId: Int?
     
     ///General views
     @IBOutlet weak var bubbleAllView: UIView!
@@ -102,9 +109,9 @@ class NewMessageTableViewCell: SwipableReplyCell, ChatTableViewCellProtocol {
     
     func configureWith(
         messageCellState: MessageTableCellState,
-        delegate: NewMessageTableViewCellDelegate
+        delegate: NewMessageTableViewCellDelegate,
+        indexPath: IndexPath
     ) {
-        self.delegate = delegate
         
         hideAllSubviews()
         
@@ -113,6 +120,10 @@ class NewMessageTableViewCell: SwipableReplyCell, ChatTableViewCellProtocol {
         guard let bubble = mutableMessageCellState.bubble else {
             return
         }
+        
+        self.rowIndex = indexPath.row
+        self.messageId = mutableMessageCellState.message?.id
+        self.delegate = delegate
         
         ///Bubble Width
         configureWidthWith(messageCellState: mutableMessageCellState)
@@ -130,12 +141,12 @@ class NewMessageTableViewCell: SwipableReplyCell, ChatTableViewCellProtocol {
         configureWith(directPayment: mutableMessageCellState.directPayment, and: bubble)
         configureWith(callLink: mutableMessageCellState.callLink)
         configureWith(podcastBoost: mutableMessageCellState.podcastBoost)
-        configureWith(messageMedia: mutableMessageCellState.messageMedia, and: mutableMessageCellState.message?.id)
+        configureWith(messageMedia: mutableMessageCellState.messageMedia)
         
         //Bottom view
         configureWith(boosts: mutableMessageCellState.boosts, and: bubble)
         configureWith(contactLink: mutableMessageCellState.contactLink, and: bubble)
-        configureWith(tribeLink: mutableMessageCellState.tribeLink, and: bubble, messageId: mutableMessageCellState.message?.id)
+        configureWith(tribeLink: mutableMessageCellState.tribeLink, and: bubble)
         
         ///Header and avatar
         configureWith(avatarImage: mutableMessageCellState.avatarImage)

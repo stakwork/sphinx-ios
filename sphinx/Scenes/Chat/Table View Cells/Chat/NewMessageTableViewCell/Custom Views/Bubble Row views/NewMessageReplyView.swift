@@ -8,7 +8,13 @@
 
 import UIKit
 
+protocol NewMessageReplyViewDelegate: class {
+    func didTapMessageReplyView()
+}
+
 class NewMessageReplyView: UIView {
+    
+    weak var delegate: NewMessageReplyViewDelegate?
     
     @IBOutlet private var contentView: UIView!
     
@@ -44,8 +50,11 @@ class NewMessageReplyView: UIView {
     
     func configureWith(
         messageReply: BubbleMessageLayoutState.MessageReply,
-        and bubble: BubbleMessageLayoutState.Bubble
+        and bubble: BubbleMessageLayoutState.Bubble,
+        delegate: NewMessageReplyViewDelegate? = nil
     ) {
+        self.delegate = delegate
+        
         messageLabel.textColor = bubble.direction.isIncoming() ? UIColor.Sphinx.WashedOutReceivedText : UIColor.Sphinx.WashedOutSentText
         
         coloredLineView.backgroundColor = messageReply.color
@@ -85,5 +94,6 @@ class NewMessageReplyView: UIView {
     }
 
     @IBAction func buttonTouched() {
+        delegate?.didTapMessageReplyView()
     }
 }

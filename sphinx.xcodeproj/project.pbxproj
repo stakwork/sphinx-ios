@@ -587,7 +587,7 @@
 		47CBB4EB23E9D9BE00743CBE /* API+LogsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CBB4EA23E9D9BE00743CBE /* API+LogsExtension.swift */; };
 		47CC7CE223E3611600730E6F /* API+TransactionsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CC7CE123E3611600730E6F /* API+TransactionsExtension.swift */; };
 		47CC7CE523E361B800730E6F /* PaymentTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CC7CE423E361B800730E6F /* PaymentTransaction.swift */; };
-		47CC7CE923E4718600730E6F /* ImageFullScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CC7CE823E4718600730E6F /* ImageFullScreenViewController.swift */; };
+		47CC7CE923E4718600730E6F /* AttachmentFullScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CC7CE823E4718600730E6F /* AttachmentFullScreenViewController.swift */; };
 		47CD9508265EC2A4009B06A4 /* CommonModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CD9507265EC2A4009B06A4 /* CommonModalView.swift */; };
 		47CD9510265EC70E009B06A4 /* API+PeopleExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CD950F265EC70E009B06A4 /* API+PeopleExtension.swift */; };
 		47CFA9462A38C5200030BC23 /* NewChatTableDataSource+ScrollExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CFA9452A38C5200030BC23 /* NewChatTableDataSource+ScrollExtension.swift */; };
@@ -1633,7 +1633,7 @@
 		47CBB4EA23E9D9BE00743CBE /* API+LogsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+LogsExtension.swift"; sourceTree = "<group>"; };
 		47CC7CE123E3611600730E6F /* API+TransactionsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+TransactionsExtension.swift"; sourceTree = "<group>"; };
 		47CC7CE423E361B800730E6F /* PaymentTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentTransaction.swift; sourceTree = "<group>"; };
-		47CC7CE823E4718600730E6F /* ImageFullScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFullScreenViewController.swift; sourceTree = "<group>"; };
+		47CC7CE823E4718600730E6F /* AttachmentFullScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentFullScreenViewController.swift; sourceTree = "<group>"; };
 		47CD9507265EC2A4009B06A4 /* CommonModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonModalView.swift; sourceTree = "<group>"; };
 		47CD950F265EC70E009B06A4 /* API+PeopleExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+PeopleExtension.swift"; sourceTree = "<group>"; };
 		47CFA9452A38C5200030BC23 /* NewChatTableDataSource+ScrollExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewChatTableDataSource+ScrollExtension.swift"; sourceTree = "<group>"; };
@@ -3466,7 +3466,7 @@
 				477D9695244E0B5500830406 /* ChatAttachmentViewControllerExtension.swift */,
 				47FA18C92433AEDA00469C8F /* AttachmentPriceViewController.swift */,
 				479A39D9244F237F00A37899 /* PaidMessagePreviewViewController.swift */,
-				47CC7CE823E4718600730E6F /* ImageFullScreenViewController.swift */,
+				47CC7CE823E4718600730E6F /* AttachmentFullScreenViewController.swift */,
 				474FE33223F5A22A00C06FC8 /* AVViewController.swift */,
 				472092C42A268A1500468796 /* ChatAttachmentViewController+AnimatinsExtension.swift */,
 			);
@@ -5422,7 +5422,7 @@
 				475DD3082A0D729B00F92173 /* ChatMessageTextFieldView+Actions.swift in Sources */,
 				47AA08C5234B96BF002C69E2 /* ConfirmAddFriendViewController.swift in Sources */,
 				47EB025B29BA343E0032CFB5 /* CircularProgressView.swift in Sources */,
-				47CC7CE923E4718600730E6F /* ImageFullScreenViewController.swift in Sources */,
+				47CC7CE923E4718600730E6F /* AttachmentFullScreenViewController.swift in Sources */,
 				474FE32A23F588D400C06FC8 /* VideoReceivedTableViewCell.swift in Sources */,
 				4703CF9025190138007B685C /* CommonFileTableViewCell.swift in Sources */,
 				471940AA23393CE700F1BF5B /* LAContext.swift in Sources */,

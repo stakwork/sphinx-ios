@@ -67,7 +67,7 @@ class WindowsManager {
     }
     
     func showFullScreenImage(message: TransactionMessage) {
-        if let imageViewController = ImageFullScreenViewController.instantiate(messageId: message.id) {
+        if let imageViewController = AttachmentFullScreenViewController.instantiate(messageId: message.id) {
             showConveringWindowWith(rootVC: imageViewController)
         }
     }

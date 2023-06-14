@@ -67,7 +67,7 @@ extension NewChatViewController : NewChatTableDataSourceDelegate {
         messageId: Int,
         isPdf: Bool
     ) {
-        if let attachmentFullScreenVC = ImageFullScreenViewController.instantiate(messageId: messageId, animated: isPdf) {
+        if let attachmentFullScreenVC = AttachmentFullScreenViewController.instantiate(messageId: messageId, animated: isPdf) {
             self.navigationController?.present(attachmentFullScreenVC, animated: isPdf)
         }
     }

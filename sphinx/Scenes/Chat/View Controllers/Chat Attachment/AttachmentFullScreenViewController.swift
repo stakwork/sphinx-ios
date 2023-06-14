@@ -12,7 +12,7 @@ import MobileCoreServices
 
 protocol CanRotate {}
 
-class ImageFullScreenViewController: UIViewController, CanRotate {
+class AttachmentFullScreenViewController: UIViewController, CanRotate {
     
     @IBOutlet weak var fullScreenImageView: FullScreenImageView!
     @IBOutlet weak var backButton: UIButton!
@@ -28,10 +28,10 @@ class ImageFullScreenViewController: UIViewController, CanRotate {
     static func instantiate(
         messageId: Int,
         animated: Bool = true
-    ) -> ImageFullScreenViewController? {
+    ) -> AttachmentFullScreenViewController? {
         
         if let message = TransactionMessage.getMessageWith(id: messageId) {
-            let viewController = StoryboardScene.Chat.imageFullScreenViewController.instantiate()
+            let viewController = StoryboardScene.Chat.attachmentFullScreenViewController.instantiate()
             viewController.transactionMessage = message
             viewController.animated = animated
             return viewController

@@ -185,10 +185,10 @@
             </objects>
             <point key="canvasLocation" x="-2751.1999999999998" y="158.77061469265368"/>
         </scene>
-        <!--Image Full Screen View Controller-->
+        <!--Attachment Full Screen View Controller-->
         <scene sceneID="1Dr-PV-VdS">
             <objects>
-                <viewController storyboardIdentifier="ImageFullScreenViewController" modalPresentationStyle="overCurrentContext" id="tp7-xv-7Tb" customClass="ImageFullScreenViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AttachmentFullScreenViewController" modalPresentationStyle="overCurrentContext" id="tp7-xv-7Tb" customClass="AttachmentFullScreenViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="qMa-3i-plY">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -209,11 +209,11 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1xZ-F7-avR">
-                                <rect key="frame" x="0.0" y="0.0" width="55" height="55"/>
+                                <rect key="frame" x="0.0" y="0.0" width="55" height="65"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="55" id="izV-8Q-S2j"/>
-                                    <constraint firstAttribute="width" constant="55" id="xt3-oZ-Ssc"/>
+                                    <constraint firstAttribute="height" constant="65" id="izV-8Q-S2j"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="55" id="xt3-oZ-Ssc"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="21"/>
                                 <state key="normal" title="close">
@@ -224,15 +224,15 @@
                                 </connections>
                             </button>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pfD-9q-8na">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="55"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="65"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U43-0n-c62">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="55"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="65"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0QF-ep-utG">
-                                                <rect key="frame" x="0.0" y="0.0" width="55" height="55"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="55" height="65"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="55" id="slh-XM-b0o"/>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="55" id="slh-XM-b0o"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="21"/>
                                                 <state key="normal" title="close">
@@ -243,13 +243,13 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EfS-E1-otw">
-                                                <rect key="frame" x="187.5" y="27.5" width="0.0" height="0.0"/>
+                                                <rect key="frame" x="187.5" y="32.5" width="0.0" height="0.0"/>
                                                 <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="13"/>
                                                 <color key="textColor" name="Text"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OOb-Ll-9z2">
-                                                <rect key="frame" x="320" y="0.0" width="55" height="55"/>
+                                                <rect key="frame" x="320" y="0.0" width="55" height="65"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="55" id="oXU-cp-Edu"/>
                                                 </constraints>
@@ -264,7 +264,7 @@
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="55" id="456-ch-ZSo"/>
+                                            <constraint firstAttribute="height" constant="65" id="456-ch-ZSo"/>
                                             <constraint firstAttribute="bottom" secondItem="OOb-Ll-9z2" secondAttribute="bottom" id="CEt-Eo-zTt"/>
                                             <constraint firstAttribute="trailing" secondItem="OOb-Ll-9z2" secondAttribute="trailing" id="Ef2-9V-SBX"/>
                                             <constraint firstItem="OOb-Ll-9z2" firstAttribute="top" secondItem="U43-0n-c62" secondAttribute="top" id="EuL-mT-mLt"/>
@@ -291,6 +291,7 @@
                         <constraints>
                             <constraint firstItem="qCe-BX-iow" firstAttribute="leading" secondItem="qMa-3i-plY" secondAttribute="leading" id="23J-G6-9om"/>
                             <constraint firstItem="WfD-f8-WgH" firstAttribute="top" secondItem="eVU-Kq-I8w" secondAttribute="bottom" id="4Ly-Fa-LI2"/>
+                            <constraint firstItem="OXx-Fq-YSp" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="1xZ-F7-avR" secondAttribute="trailing" symbolic="YES" id="81w-eO-BhK"/>
                             <constraint firstAttribute="trailing" secondItem="eVU-Kq-I8w" secondAttribute="trailing" id="Kl1-tq-vco"/>
                             <constraint firstItem="pfD-9q-8na" firstAttribute="top" secondItem="qMa-3i-plY" secondAttribute="top" id="QvW-b8-T8j"/>
                             <constraint firstItem="WfD-f8-WgH" firstAttribute="leading" secondItem="qMa-3i-plY" secondAttribute="leading" id="R7W-Ad-Yf7"/>

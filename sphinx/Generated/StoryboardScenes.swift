@@ -37,7 +37,7 @@ internal enum StoryboardScene {
         
         internal static let attachmentPriceViewController = SceneType<AttachmentPriceViewController>(storyboard: Chat.self, identifier: "AttachmentPriceViewController")
         
-        internal static let imageFullScreenViewController = SceneType<ImageFullScreenViewController>(storyboard: Chat.self, identifier: "ImageFullScreenViewController")
+        internal static let attachmentFullScreenViewController = SceneType<AttachmentFullScreenViewController>(storyboard: Chat.self, identifier: "AttachmentFullScreenViewController")
         
         internal static let avViewController = SceneType<AVViewController>(storyboard: Chat.self, identifier: "AVViewController")
         

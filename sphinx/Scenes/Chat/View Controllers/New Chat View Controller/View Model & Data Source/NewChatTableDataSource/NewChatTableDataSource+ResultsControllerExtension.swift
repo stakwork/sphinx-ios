@@ -362,6 +362,12 @@ extension NewChatTableDataSource {
                 gifData: nil,
                 failed: false
             )
+        } else if message.isDirectPayment(), let _ = message.getTemplateURL() {
+            return MessageTableCellState.MediaData(
+                image: nil,
+                gifData: nil,
+                failed: false
+            )
         }
         return nil
     }

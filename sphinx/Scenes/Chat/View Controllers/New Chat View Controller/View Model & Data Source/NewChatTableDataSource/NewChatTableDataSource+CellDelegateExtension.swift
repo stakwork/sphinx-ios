@@ -68,17 +68,31 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
             and: rowIndex
         ), let message = tableCellState.1.message, let imageUrl = url
         {
-            MediaLoader.loadImage(url: imageUrl, message: message, completion: { messageId, image in
-                let updatedMediaData = MessageTableCellState.MediaData(
-                    image: image
-                )
-                self.updateMessageTableCellStateFor(rowIndex: rowIndex, messageId: messageId, with: updatedMediaData)
-            }, errorCompletion: { messageId in
-                let updatedMediaData = MessageTableCellState.MediaData(
-                    failed: true
-                )
-                self.updateMessageTableCellStateFor(rowIndex: rowIndex, messageId: messageId, with: updatedMediaData)
-            })
+            if message.isDirectPayment() {
+                MediaLoader.loadPaymentTemplateImage(url: imageUrl, message: message, completion: { messageId, image in
+                    let updatedMediaData = MessageTableCellState.MediaData(
+                        image: image
+                    )
+                    self.updateMessageTableCellStateFor(rowIndex: rowIndex, messageId: messageId, with: updatedMediaData)
+                }, errorCompletion: { messageId in
+                    let updatedMediaData = MessageTableCellState.MediaData(
+                        failed: true
+                    )
+                    self.updateMessageTableCellStateFor(rowIndex: rowIndex, messageId: messageId, with: updatedMediaData)
+                })
+            } else {
+                MediaLoader.loadImage(url: imageUrl, message: message, completion: { messageId, image in
+                    let updatedMediaData = MessageTableCellState.MediaData(
+                        image: image
+                    )
+                    self.updateMessageTableCellStateFor(rowIndex: rowIndex, messageId: messageId, with: updatedMediaData)
+                }, errorCompletion: { messageId in
+                    let updatedMediaData = MessageTableCellState.MediaData(
+                        failed: true
+                    )
+                    self.updateMessageTableCellStateFor(rowIndex: rowIndex, messageId: messageId, with: updatedMediaData)
+                })
+            }
         }
     }
     
@@ -145,7 +159,9 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
             self.messageTableCellStateArray[tableCellState.0] = tableCellState.1
             
             DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: {
-                self.updateSnapshot()
+                if (self.tableView.indexPathsForVisibleRows ?? []).map({ $0.row }).contains(rowIndex) {
+                    self.updateSnapshot()
+                }
             })
         }
     }

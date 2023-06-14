@@ -353,6 +353,27 @@ class MediaLoader {
         }
     }
     
+    class func loadPaymentTemplateImage(
+        url: URL,
+        message: TransactionMessage,
+        completion: @escaping (Int, UIImage) -> (), errorCompletion: @escaping (Int) -> ()
+    ) {
+        if let cachedImage = getImageFromCachedUrl(url: url.absoluteString) {
+            completion(message.id, cachedImage)
+        } else {
+            loadDataFrom(URL: url, includeToken: true, completion: { (data, _) in
+                if let image = UIImage(data: data) {
+                    self.storeImageInCache(img: image, url: url.absoluteString, chat: nil)
+                    
+                    DispatchQueue.main.async {
+                        completion(message.id, image)
+                    }
+                    return
+                }
+            }, errorCompletion: {})
+        }
+    }
+    
     class func getDataFromUrl(url: URL) -> Data? {
         var data: Data?
         do {

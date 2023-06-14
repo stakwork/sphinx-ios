@@ -192,20 +192,24 @@ struct MessageTableCellState {
     }()
     
     lazy var messageMedia: BubbleMessageLayoutState.MessageMedia? = {
-        guard let message = message, let mediaData = mediaData, message.isMediaAttachment() else {
+        guard let message = message, let mediaData = mediaData, message.isMediaAttachment() || message.isDirectPayment() else {
+            return nil
+        }
+        
+        guard let url = (message.isMediaAttachment() ? message.getMediaUrlFromMediaToken() : message.getTemplateURL()) else {
             return nil
         }
         
         let loading = (mediaData.image == nil && mediaData.gifData == nil)
 
         return BubbleMessageLayoutState.MessageMedia(
-            url: message.getMediaUrlFromMediaToken(),
+            url: url,
             image: mediaData.image,
             gifData: mediaData.gifData,
             fileInfo: mediaData.fileInfo,
             loading: loading,
             failed: mediaData.failed,
-            isImage: message.isImage(),
+            isImage: message.isImage() || message.isDirectPayment(),
             isVideo: message.isVideo(),
             isGif: message.isGif() || message.isGiphy(),
             isPdf: message.isPDF(),

@@ -95,7 +95,7 @@ extension NewMessageTableViewCell {
         messageMedia: BubbleMessageLayoutState.MessageMedia?
     ) {
         if let messageMedia = messageMedia {
-            mediaContentView.configureWith(messageMedia: messageMedia)
+            mediaContentView.configureWith(messageMedia: messageMedia, and: self)
             mediaContentView.isHidden = false
             
             if let messageId = messageId, messageMedia.loading {

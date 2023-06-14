@@ -135,6 +135,13 @@
                                 <constraint firstItem="FOC-nl-FwV" firstAttribute="centerX" secondItem="Ntf-VH-eNV" secondAttribute="centerX" id="xEY-JF-2zK"/>
                             </constraints>
                         </view>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lg5-xc-0yJ">
+                            <rect key="frame" x="0.0" y="0.0" width="196" height="196"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <connections>
+                                <action selector="mediaButtonTouched" destination="-1" eventType="touchUpInside" id="r6L-Gv-69R"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -147,6 +154,7 @@
                         <constraint firstItem="xwX-jG-Ira" firstAttribute="top" secondItem="Tgf-fN-vp1" secondAttribute="top" id="CsD-LF-YzS"/>
                         <constraint firstItem="nXK-yZ-qrD" firstAttribute="leading" secondItem="Tgf-fN-vp1" secondAttribute="leading" id="FPW-lc-BIr"/>
                         <constraint firstItem="xwX-jG-Ira" firstAttribute="leading" secondItem="Tgf-fN-vp1" secondAttribute="leading" id="Lm3-tn-nII"/>
+                        <constraint firstItem="Lg5-xc-0yJ" firstAttribute="top" secondItem="Tgf-fN-vp1" secondAttribute="top" id="Mu4-08-vTB"/>
                         <constraint firstItem="Ntf-VH-eNV" firstAttribute="top" secondItem="Tgf-fN-vp1" secondAttribute="top" id="PJn-Cr-HpL"/>
                         <constraint firstItem="Ntf-VH-eNV" firstAttribute="leading" secondItem="Tgf-fN-vp1" secondAttribute="leading" id="Pl1-ao-big"/>
                         <constraint firstItem="zIO-zy-uWs" firstAttribute="leading" secondItem="Tgf-fN-vp1" secondAttribute="leading" id="SYc-bB-lar"/>
@@ -156,14 +164,17 @@
                         <constraint firstAttribute="bottom" secondItem="O20-Bu-VeO" secondAttribute="bottom" id="Yyg-6U-xzl"/>
                         <constraint firstAttribute="trailing" secondItem="Ntf-VH-eNV" secondAttribute="trailing" id="aaf-uu-vcL"/>
                         <constraint firstItem="zIO-zy-uWs" firstAttribute="top" secondItem="Tgf-fN-vp1" secondAttribute="top" id="cRI-cJ-ob7"/>
+                        <constraint firstItem="Lg5-xc-0yJ" firstAttribute="leading" secondItem="Tgf-fN-vp1" secondAttribute="leading" id="dZa-sp-mN0"/>
                         <constraint firstAttribute="bottom" secondItem="zIO-zy-uWs" secondAttribute="bottom" id="dpD-c4-kos"/>
                         <constraint firstAttribute="trailing" secondItem="O20-Bu-VeO" secondAttribute="trailing" id="fzO-ev-obr"/>
                         <constraint firstAttribute="bottom" secondItem="Ntf-VH-eNV" secondAttribute="bottom" id="iDS-CO-pgL"/>
                         <constraint firstAttribute="trailing" secondItem="Unv-gb-1Mk" secondAttribute="trailing" id="jog-hm-f31"/>
                         <constraint firstAttribute="trailing" secondItem="xwX-jG-Ira" secondAttribute="trailing" id="mVy-cX-Yh0"/>
                         <constraint firstAttribute="bottom" secondItem="7X3-Xp-rXY" secondAttribute="bottom" id="nTZ-Es-uCP"/>
+                        <constraint firstAttribute="bottom" secondItem="Lg5-xc-0yJ" secondAttribute="bottom" id="rap-Wh-Xsd"/>
                         <constraint firstAttribute="trailing" secondItem="7X3-Xp-rXY" secondAttribute="trailing" id="s2M-Fv-MwE"/>
                         <constraint firstItem="7X3-Xp-rXY" firstAttribute="leading" secondItem="Tgf-fN-vp1" secondAttribute="leading" id="s4o-SC-cu3"/>
+                        <constraint firstAttribute="trailing" secondItem="Lg5-xc-0yJ" secondAttribute="trailing" id="vcw-MN-zUc"/>
                         <constraint firstItem="Unv-gb-1Mk" firstAttribute="top" secondItem="Tgf-fN-vp1" secondAttribute="top" id="yqf-ac-SXs"/>
                         <constraint firstItem="7X3-Xp-rXY" firstAttribute="top" secondItem="Tgf-fN-vp1" secondAttribute="top" id="zC7-Uy-iMc"/>
                     </constraints>

@@ -8,7 +8,13 @@
 
 import UIKit
 
+protocol MediaMessageViewDelegate: class {
+    func didTapMediaButton()
+}
+
 class MediaMessageView: UIView {
+    
+    weak var delegate: MediaMessageViewDelegate?
     
     @IBOutlet private var contentView: UIView!
     
@@ -45,8 +51,11 @@ class MediaMessageView: UIView {
     }
     
     func configureWith(
-        messageMedia: BubbleMessageLayoutState.MessageMedia
+        messageMedia: BubbleMessageLayoutState.MessageMedia,
+        and delegate: MediaMessageViewDelegate?
     ) {
+        self.delegate = delegate
+        
         mediaImageView.image = messageMedia.image
         
         paidContentOverlay.isHidden = !messageMedia.isPaid
@@ -71,5 +80,9 @@ class MediaMessageView: UIView {
         } else {
             fileInfoView.isHidden = true
         }
+    }
+    
+    @IBAction func mediaButtonTouched() {
+        delegate?.didTapMediaButton()
     }
 }

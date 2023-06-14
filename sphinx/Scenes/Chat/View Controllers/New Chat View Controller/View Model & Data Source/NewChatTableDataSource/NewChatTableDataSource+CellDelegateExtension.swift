@@ -198,7 +198,10 @@ extension NewChatTableDataSource {
         }
     }
     
-    func didTapCallLinkCopyFor(messageId: Int, and rowIndex: Int) {
+    func didTapCallLinkCopyFor(
+        messageId: Int,
+        and rowIndex: Int
+    ) {
         if var tableCellState = getTableCellStateFor(
             messageId: messageId,
             and: rowIndex
@@ -207,7 +210,10 @@ extension NewChatTableDataSource {
         }
     }
     
-    func didTapCallJoinAudioFor(messageId: Int, and rowIndex: Int) {
+    func didTapCallJoinAudioFor(
+        messageId: Int,
+        and rowIndex: Int
+    ) {
         if var tableCellState = getTableCellStateFor(
             messageId: messageId,
             and: rowIndex
@@ -216,12 +222,32 @@ extension NewChatTableDataSource {
         }
     }
     
-    func didTapCallJoinVideoFor(messageId: Int, and rowIndex: Int) {
+    func didTapCallJoinVideoFor(
+        messageId: Int,
+        and rowIndex: Int
+    ) {
         if var tableCellState = getTableCellStateFor(
             messageId: messageId,
             and: rowIndex
         ), let link = tableCellState.1.callLink?.link {
             startVideoCall(link: link, audioOnly: false)
+        }
+    }
+    
+    func didTapMediaButtonFor(
+        messageId: Int,
+        and rowIndex: Int
+    ) {
+        if var tableCellState = getTableCellStateFor(
+            messageId: messageId,
+            and: rowIndex
+        ), let messageMedia = tableCellState.1.messageMedia {
+            
+            if messageMedia.isVideo {
+                delegate?.shouldGoToVideoPlayerFor(messageId: messageId)
+            } else {
+                delegate?.shouldGoToAttachmentViewFor(messageId: messageId, isPdf: messageMedia.isPdf)
+            }
         }
     }
 }

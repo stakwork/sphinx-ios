@@ -216,7 +216,7 @@
                                     <constraint firstAttribute="width" constant="55" id="xt3-oZ-Ssc"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="21"/>
-                                <state key="normal" title="">
+                                <state key="normal" title="close">
                                     <color key="titleColor" name="WashedOutReceivedText"/>
                                 </state>
                                 <connections>
@@ -235,7 +235,7 @@
                                                     <constraint firstAttribute="width" constant="55" id="slh-XM-b0o"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="21"/>
-                                                <state key="normal" title="">
+                                                <state key="normal" title="close">
                                                     <color key="titleColor" name="WashedOutReceivedText"/>
                                                 </state>
                                                 <connections>

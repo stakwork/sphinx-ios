@@ -23,10 +23,21 @@ class ImageFullScreenViewController: UIViewController, CanRotate {
     var transactionMessage: TransactionMessage!
     var pdfDocument: PDFDocument? = nil
     
-    static func instantiate(transactionMessage: TransactionMessage) -> ImageFullScreenViewController {
-        let viewController = StoryboardScene.Chat.imageFullScreenViewController.instantiate()
-        viewController.transactionMessage = transactionMessage
-        return viewController
+    var animated = true
+    
+    static func instantiate(
+        messageId: Int,
+        animated: Bool = true
+    ) -> ImageFullScreenViewController? {
+        
+        if let message = TransactionMessage.getMessageWith(id: messageId) {
+            let viewController = StoryboardScene.Chat.imageFullScreenViewController.instantiate()
+            viewController.transactionMessage = message
+            viewController.animated = animated
+            return viewController
+        }
+        
+        return nil
     }
     
     override func viewDidLoad() {
@@ -65,9 +76,7 @@ class ImageFullScreenViewController: UIViewController, CanRotate {
                 self.fileNameLabel.text = self.transactionMessage.mediaFileName ?? "file.pdf"
                 self.pdfDocument = PDFDocument(data: data)
                 pdfView.document = self.pdfDocument
-            }, errorCompletion: { _ in
-                
-            })
+            }, errorCompletion: { _ in })
         }
     }
     
@@ -92,7 +101,9 @@ class ImageFullScreenViewController: UIViewController, CanRotate {
     }
     
     @IBAction func shareButtonTouched() {
-        if let pdfData = pdfDocument?.dataRepresentation(), let pdfUrl = MediaLoader.saveFileInMemory(data: pdfData, name: transactionMessage.mediaFileName ?? "file.pdf"){
+        if let pdfData = pdfDocument?.dataRepresentation(),
+            let pdfUrl = MediaLoader.saveFileInMemory(data: pdfData, name: transactionMessage.mediaFileName ?? "file.pdf") {
+            
             let activityVC = UIActivityViewController(activityItems: [pdfUrl], applicationActivities: nil)
             activityVC.popoverPresentationController?.sourceView = self.shareButton
             self.present(activityVC, animated: true, completion: nil)
@@ -102,9 +113,12 @@ class ImageFullScreenViewController: UIViewController, CanRotate {
     @IBAction func backButtonTouched() {
         deleteLocalPDF()
         
-        if !UIDevice.current.isIpad { UIDevice.current.setValue(Int(UIInterfaceOrientation.portrait.rawValue), forKey: "orientation") }
+        if !UIDevice.current.isIpad {
+            UIDevice.current.setValue(Int(UIInterfaceOrientation.portrait.rawValue), forKey: "orientation")
+            
+        }
         
-        self.dismiss(animated: true, completion: {
+        self.dismiss(animated: animated, completion: {
             WindowsManager.sharedInstance.removeCoveringWindow()
         })
     }

@@ -62,6 +62,19 @@ extension NewChatViewController : NewChatTableDataSourceDelegate {
             firstVisibleRow: chatTableView.indexPathsForVisibleRows?.first?.row ?? 0
         )
     }
+    
+    func shouldGoToAttachmentViewFor(
+        messageId: Int,
+        isPdf: Bool
+    ) {
+        if let attachmentFullScreenVC = ImageFullScreenViewController.instantiate(messageId: messageId, animated: isPdf) {
+            self.navigationController?.present(attachmentFullScreenVC, animated: isPdf)
+        }
+    }
+    
+    func shouldGoToVideoPlayerFor(messageId: Int) {
+        
+    }
 }
 
 extension NewChatViewController : NewMessagesIndicatorViewDelegate {

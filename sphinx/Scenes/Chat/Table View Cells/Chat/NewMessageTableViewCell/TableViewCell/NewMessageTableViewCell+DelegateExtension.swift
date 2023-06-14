@@ -35,3 +35,11 @@ extension NewMessageTableViewCell : JoinCallViewDelegate {
         }
     }
 }
+
+extension NewMessageTableViewCell : MediaMessageViewDelegate {
+    func didTapMediaButton() {
+        if let messageId = messageId {
+            delegate?.didTapMediaButtonFor(messageId: messageId, and: rowIndex)
+        }
+    }
+}

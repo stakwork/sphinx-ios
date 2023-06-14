@@ -215,7 +215,12 @@ extension AllTribeFeedsCollectionViewController {
             })
         })
         
-        if let vf = VideoFeed.getAll().first,
+        if let vf = VideoFeed.getAll().filter({
+            if let title = $0.title?.lowercased(){
+                return title.contains("tftc")
+            }
+            return false
+        }).first,
            let item = vf.itemsArray.first{
             let video = Video.convertFrom(contentFeedItem: item)
             video.videoFeed = VideoFeed.convertFrom(contentFeed: vf)

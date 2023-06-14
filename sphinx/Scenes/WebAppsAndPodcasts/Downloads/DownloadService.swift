@@ -56,7 +56,8 @@ class DownloadService : NSObject {
         if video.isDownloaded { return }
         
         //TODO: change to be the genuine raw mp4
-        guard let url = URL(string: "http://wilcal.test.website.bucket.s3-website-us-west-1.amazonaws.com/h.264/big_buck_bunny_h.264.mp4") else{
+        guard let url = URL(string: "https://s3.amazonaws.com/stakwork-uploads/uploads/customers/4291/media_to_local/cd7cae99-bb29-4f40-b050-4ade06b2fbf7/_-9RGlBIma8.mp4")//URL(string: "http://wilcal.test.website.bucket.s3-website-us-west-1.amazonaws.com/h.264/big_buck_bunny_h.264.mp4")
+        else{
             return
         }
 

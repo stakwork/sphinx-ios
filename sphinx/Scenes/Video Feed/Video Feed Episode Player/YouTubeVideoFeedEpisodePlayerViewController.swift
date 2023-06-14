@@ -18,6 +18,7 @@ class YouTubeVideoFeedEpisodePlayerViewController: UIViewController, VideoFeedEp
     @IBOutlet weak var episodeSubtitleCircularDivider: UIView!
     @IBOutlet private weak var episodePublishDateLabel: UILabel!
     @IBOutlet weak var localVideoPlayerContainer: UIView!
+    var avPlayer : AVPlayerViewController? = nil
     
     let actionsManager = ActionsManager.sharedInstance
     let podcastPlayerController = PodcastPlayerController.sharedInstance
@@ -130,11 +131,11 @@ extension YouTubeVideoFeedEpisodePlayerViewController {
         
         if videoPlayerEpisode.isDownloaded{
             localVideoPlayerContainer.isHidden = false
-            if let url = Bundle.main.url(forResource: "birds", withExtension: "mp4")
-                //URL(string: "http://wilcal.test.website.bucket.s3-website-us-west-1.amazonaws.com/h.264/big_buck_bunny_h.264.mp4")
-            //videoPlayerEpisode.getVideoUrl()
+            if let url = //URL(string: "http://wilcal.test.website.bucket.s3-website-us-west-1.amazonaws.com/h.264/big_buck_bunny_h.264.mp4")
+            videoPlayerEpisode.getVideoUrl()
             {
-                let avPlayer = createVideoPlayerView(withVideoURL: url)
+                avPlayer = createVideoPlayerView(withVideoURL: url)
+                avPlayer?.delegate = self
                 //avPlayer.player?.play()
             }
             
@@ -269,5 +270,15 @@ extension YouTubeVideoFeedEpisodePlayerViewController: YTPlayerViewDelegate {
             let time = Int(round(currentTime)) * 1000
             actionsManager.trackItemFinished(item: feedItem, timestamp: time, shouldSaveAction: shouldSaveAction)
         }
+    }
+}
+
+
+extension YouTubeVideoFeedEpisodePlayerViewController : AVPlayerViewControllerDelegate{
+    func playerViewController(
+        _ playerViewController: AVPlayerViewController,
+        willBeginFullScreenPresentationWithAnimationCoordinator coordinator: UIViewControllerTransitionCoordinator
+    ) {
+        playerViewController.player = avPlayer?.player
     }
 }

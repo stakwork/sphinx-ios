@@ -398,6 +398,10 @@ extension TransactionMessage {
                (!(replyUUID ?? "").isEmpty || (messageContent?.isEmpty ?? true))
     }
     
+    func isMemberRequest() -> Bool {
+        return type == TransactionMessageType.memberRequest.rawValue
+    }
+    
     func isApprovedRequest() -> Bool {
         return type == TransactionMessageType.memberApprove.rawValue
     }
@@ -410,6 +414,7 @@ extension TransactionMessage {
         return type == TransactionMessageType.groupJoin.rawValue ||
                type == TransactionMessageType.groupLeave.rawValue ||
                type == TransactionMessageType.groupKick.rawValue ||
+               type == TransactionMessageType.groupDelete.rawValue ||
                type == TransactionMessageType.memberRequest.rawValue ||
                type == TransactionMessageType.memberApprove.rawValue ||
                type == TransactionMessageType.memberReject.rawValue
@@ -421,6 +426,14 @@ extension TransactionMessage {
     
     func isGroupJoinMessage() -> Bool {
         return type == TransactionMessageType.groupJoin.rawValue
+    }
+    
+    func isGroupKickMessage() -> Bool {
+        return type == TransactionMessageType.groupKick.rawValue
+    }
+    
+    func isGroupDeletedMessage() -> Bool {
+        return type == TransactionMessageType.groupDelete.rawValue
     }
     
     func isGroupLeaveOrJoinMessage() -> Bool {
@@ -926,17 +939,23 @@ extension TransactionMessage {
         return message
     }
     
-    func getMemberDeclinedMessageText() -> String {
-        if self.chat?.isMyPublicGroup() ?? false {
-            return String(format: "admin.request.rejected".localized, getMessageSenderNickname())
+    func getMemberDeclinedMessageText(
+        ownerPubKey: String? = nil,
+        senderAlias: String? = nil
+    ) -> String {
+        if self.chat?.isMyPublicGroup(ownerPubKey: ownerPubKey) ?? false {
+            return String(format: "admin.request.rejected".localized, senderAlias ?? getMessageSenderNickname())
         } else {
             return "member.request.rejected".localized
         }
     }
     
-    func getMemberApprovedMessageText() -> String {
-        if self.chat?.isMyPublicGroup() ?? false {
-            return String(format: "admin.request.approved".localized, getMessageSenderNickname())
+    func getMemberApprovedMessageText(
+        ownerPubKey: String? = nil,
+        senderAlias: String? = nil
+    ) -> String {
+        if self.chat?.isMyPublicGroup(ownerPubKey: ownerPubKey) ?? false {
+            return String(format: "admin.request.approved".localized, senderAlias ?? getMessageSenderNickname())
         } else {
             return "member.request.approved".localized
         }
@@ -1050,6 +1069,7 @@ extension TransactionMessage {
                isDirectPayment() ||
                isPodcastBoost() ||
                isMediaAttachment() ||
-               isGroupLeaveOrJoinMessage()
+               isGroupActionMessage() ||
+               isCallLink()
     }
 }

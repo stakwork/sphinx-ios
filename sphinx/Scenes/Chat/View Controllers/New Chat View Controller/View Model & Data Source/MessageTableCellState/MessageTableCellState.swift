@@ -353,16 +353,67 @@ struct MessageTableCellState {
     
     lazy var groupMemberNotification: NoBubbleMessageLayoutState.GroupMemberNotification? = {
         
-        guard let message = message, message.isGroupLeaveOrJoinMessage() else {
+        guard let message = message, let ownerPubKey = owner.publicKey,
+                message.isGroupLeaveOrJoinMessage() ||
+                (message.isApprovedRequest() && !chat.isMyPublicGroup(ownerPubKey: ownerPubKey)) else {
+            
             return nil
         }
         
         let senderInfo: (UIColor, String, String?) = getSenderInfo(message: message)
         
-        return NoBubbleMessageLayoutState.GroupMemberNotification(
-            message: message.isGroupJoinMessage() ?
-                message.getGroupJoinMessageText(senderAlias: senderInfo.1) :
-                message.getGroupLeaveMessageText(senderAlias: senderInfo.1)
+        var messageString = ""
+        
+        if message.isGroupJoinMessage() {
+            messageString = message.getGroupJoinMessageText(senderAlias: senderInfo.1)
+        } else if message.isGroupLeaveMessage() {
+            messageString = message.getGroupLeaveMessageText(senderAlias: senderInfo.1)
+        } else if message.isApprovedRequest() {
+            messageString = "member.request.approved".localized
+        }
+        
+        return NoBubbleMessageLayoutState.GroupMemberNotification(message: messageString)
+    }()
+    
+    lazy var groupKickRemovedOrDeclined: NoBubbleMessageLayoutState.GroupKickRemovedOrDeclined? = {
+        
+        guard let message = message, let ownerPubKey = owner.publicKey,
+                message.isGroupKickMessage() ||
+                message.isGroupDeletedMessage() ||
+                (message.isDeclinedRequest() && !chat.isMyPublicGroup(ownerPubKey: ownerPubKey)) else {
+            
+            return nil
+        }
+        
+        var messageString = ""
+        
+        if message.isGroupKickMessage() {
+            messageString = "tribe.kick".localized
+        } else if message.isGroupDeletedMessage() {
+            messageString = "tribe.deleted".localized
+        } else if message.isDeclinedRequest() {
+            messageString = "member.request.rejected".localized
+        }
+        
+        return NoBubbleMessageLayoutState.GroupKickRemovedOrDeclined(message: messageString)
+    }()
+    
+    lazy var groupMemberRequest: NoBubbleMessageLayoutState.GroupMemberRequest? = {
+        
+        guard let message = message, let ownerPubKey = owner.publicKey,
+                chat.isMyPublicGroup(ownerPubKey: ownerPubKey),
+                message.isMemberRequest() || message.isApprovedRequest() || message.isDeclinedRequest() else {
+            return nil
+        }
+        
+        guard let memberRequestStatus = NoBubbleMessageLayoutState.GroupMemberRequest.MemberRequestStatus(rawValue: message.type) else {
+            return nil
+        }
+        
+        return NoBubbleMessageLayoutState.GroupMemberRequest(
+            status: memberRequestStatus,
+            isActiveMember: chat.isActiveMember(id: message.senderId),
+            senderAlias: message.senderAlias ?? "unknown".localized
         )
     }()
     
@@ -427,6 +478,7 @@ extension MessageTableCellState : Hashable {
         return
             mutableLhs.message?.id           == mutableRhs.message?.id &&
             mutableLhs.message?.status       == mutableRhs.message?.status &&
+            mutableLhs.message?.type         == mutableRhs.message?.type &&
             mutableLhs.bubbleState           == mutableRhs.bubbleState &&
             mutableLhs.boostMessages.count   == mutableRhs.boostMessages.count &&
             mutableLhs.isTextOnlyMessage     == mutableRhs.isTextOnlyMessage &&

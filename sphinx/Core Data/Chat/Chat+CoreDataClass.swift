@@ -662,8 +662,10 @@ public class Chat: NSManagedObject {
         return false
     }
     
-    func isMyPublicGroup() -> Bool {
-        return isPublicGroup() && ownerPubkey == UserData.sharedInstance.getUserPubKey()
+    func isMyPublicGroup(
+        ownerPubKey: String? = nil
+    ) -> Bool {
+        return isPublicGroup() && ownerPubkey == (ownerPubKey ?? UserData.sharedInstance.getUserPubKey())
     }
     
     

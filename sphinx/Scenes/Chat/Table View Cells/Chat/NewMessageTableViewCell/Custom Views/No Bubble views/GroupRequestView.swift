@@ -41,6 +41,30 @@ class GroupRequestView: UIView {
         cancelButton.layer.cornerRadius = cancelButton.bounds.height / 2
     }
     
+    func configureWith(
+        status: NoBubbleMessageLayoutState.GroupMemberRequest.MemberRequestStatus,
+        isActiveMember: Bool,
+        senderAlias: String
+    ) {
+        let rejected = status == NoBubbleMessageLayoutState.GroupMemberRequest.MemberRequestStatus.Rejected
+        let approved = status == NoBubbleMessageLayoutState.GroupMemberRequest.MemberRequestStatus.Approved
+        let pending = !rejected && !approved
+        
+        doneButton.isEnabled = !isActiveMember && pending
+        cancelButton.isEnabled = !isActiveMember && pending
+
+        doneButton.alpha = rejected ? 0.3 : 1.0
+        cancelButton.alpha = approved ? 0.3 : 1.0
+        
+        if approved {
+            messageLabel.text = String(format: "admin.request.approved".localized, senderAlias)
+        } else if rejected {
+            messageLabel.text = String(format: "admin.request.rejected".localized, senderAlias)
+        } else {
+            messageLabel.text = String(format: "member.request".localized, senderAlias)
+        }
+    }
+    
     @IBAction func doneButtonTouched() {
         
     }

@@ -40,6 +40,12 @@ class GroupRemovedView: UIView {
         deleteButton.layer.cornerRadius = 5
     }
     
+    func configureWith(
+        message: String
+    ) {
+        messageLabel.text = message
+    }
+    
     @IBAction func deleteButtonTouched() {
         
     }

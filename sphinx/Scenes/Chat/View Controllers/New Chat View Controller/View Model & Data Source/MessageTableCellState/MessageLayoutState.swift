@@ -326,6 +326,38 @@ struct NoBubbleMessageLayoutState: CommonLayoutState {
         }
     }
     
+    struct GroupKickRemovedOrDeclined {
+        var message: String
+        
+        init(
+            message: String
+        ) {
+            self.message = message
+        }
+    }
+    
+    struct GroupMemberRequest {
+        var status: MemberRequestStatus
+        var isActiveMember: Bool
+        var senderAlias: String
+        
+        enum MemberRequestStatus: Int {
+            case Pending = 19
+            case Approved = 20
+            case Rejected = 21
+        }
+        
+        init(
+            status: MemberRequestStatus,
+            isActiveMember: Bool,
+            senderAlias: String
+        ) {
+            self.status = status
+            self.isActiveMember = isActiveMember
+            self.senderAlias = senderAlias
+        }
+    }
+    
     struct DateSeparator {
         
         var timestamp: String

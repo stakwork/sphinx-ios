@@ -45,6 +45,8 @@ class MessageNoBubbleTableViewCell: UITableViewCell, ChatTableViewCellProtocol {
         
         configureWith(dateSeparator: mutableMessageCellState.dateSeparator)
         configureWith(groupMemberNotification: mutableMessageCellState.groupMemberNotification)
+        configureWith(groupKickRemovedOrDeclined: mutableMessageCellState.groupKickRemovedOrDeclined)
+        configureWith(groupMemberRequest: mutableMessageCellState.groupMemberRequest)
     }
     
     func configureWith(
@@ -75,7 +77,31 @@ class MessageNoBubbleTableViewCell: UITableViewCell, ChatTableViewCellProtocol {
         groupMemberNotification: NoBubbleMessageLayoutState.GroupMemberNotification?
     ) {
         if let groupMemberNotification = groupMemberNotification {
-            groupActionsView.configureWith(groupMemberNotification: groupMemberNotification)
+            groupActionsView.configureWith(
+                groupMemberNotification: groupMemberNotification
+            )
+            groupActionsView.isHidden = false
+        }
+    }
+    
+    func configureWith(
+        groupKickRemovedOrDeclined: NoBubbleMessageLayoutState.GroupKickRemovedOrDeclined?
+    ) {
+        if let groupKickRemovedOrDeclined = groupKickRemovedOrDeclined {
+            groupActionsView.configureWith(
+                groupKickRemovedOrDeclined: groupKickRemovedOrDeclined
+            )
+            groupActionsView.isHidden = false
+        }
+    }
+    
+    func configureWith(
+        groupMemberRequest: NoBubbleMessageLayoutState.GroupMemberRequest?
+    ) {
+        if let groupMemberRequest = groupMemberRequest {
+            groupActionsView.configureWith(
+                groupMemberRequest: groupMemberRequest
+            )
             groupActionsView.isHidden = false
         }
     }

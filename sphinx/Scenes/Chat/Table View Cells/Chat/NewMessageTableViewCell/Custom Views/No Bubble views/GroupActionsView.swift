@@ -47,5 +47,27 @@ class GroupActionsView: UIView {
         groupActionMessageView.configureWith(message: groupMemberNotification.message)
         groupActionMessageView.isHidden = false
     }
+    
+    func configureWith(
+        groupKickRemovedOrDeclined: NoBubbleMessageLayoutState.GroupKickRemovedOrDeclined
+    ) {
+        hideAllSubviews()
+        
+        groupRemovedView.configureWith(message: groupKickRemovedOrDeclined.message)
+        groupRemovedView.isHidden = false
+    }
+    
+    func configureWith(
+        groupMemberRequest: NoBubbleMessageLayoutState.GroupMemberRequest
+    ) {
+        hideAllSubviews()
+        
+        groupRequestView.configureWith(
+            status: groupMemberRequest.status,
+            isActiveMember: groupMemberRequest.isActiveMember,
+            senderAlias: groupMemberRequest.senderAlias
+        )
+        groupRequestView.isHidden = false
+    }
 
 }

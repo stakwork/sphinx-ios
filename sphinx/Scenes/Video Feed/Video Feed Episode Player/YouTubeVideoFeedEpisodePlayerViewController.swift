@@ -6,6 +6,7 @@
     
 import UIKit
 import youtube_ios_player_helper
+import AVKit
 
 
 class YouTubeVideoFeedEpisodePlayerViewController: UIViewController, VideoFeedEpisodePlayerViewController {
@@ -16,6 +17,7 @@ class YouTubeVideoFeedEpisodePlayerViewController: UIViewController, VideoFeedEp
     @IBOutlet private weak var episodeViewCountLabel: UILabel!
     @IBOutlet weak var episodeSubtitleCircularDivider: UIView!
     @IBOutlet private weak var episodePublishDateLabel: UILabel!
+    @IBOutlet weak var localVideoPlayerContainer: UIView!
     
     let actionsManager = ActionsManager.sharedInstance
     let podcastPlayerController = PodcastPlayerController.sharedInstance
@@ -125,7 +127,49 @@ extension YouTubeVideoFeedEpisodePlayerViewController {
         episodePublishDateLabel.text = videoPlayerEpisode.publishDateText
         
         setupDismissButton()
+        
+        if videoPlayerEpisode.isDownloaded{
+            localVideoPlayerContainer.isHidden = false
+            if let url = Bundle.main.url(forResource: "birds", withExtension: "mp4")
+                //URL(string: "http://wilcal.test.website.bucket.s3-website-us-west-1.amazonaws.com/h.264/big_buck_bunny_h.264.mp4")
+            //videoPlayerEpisode.getVideoUrl()
+            {
+                let avPlayer = createVideoPlayerView(withVideoURL: url)
+                //avPlayer.player?.play()
+            }
+            
+        }
     }
+    
+    func createVideoPlayerView(withVideoURL videoURL: URL) -> AVPlayerViewController {
+        let player = AVPlayer(url: videoURL)
+        let playerViewController = AVPlayerViewController()
+        playerViewController.player = player
+        playerViewController.videoGravity = .resizeAspectFill
+        playerViewController.showsPlaybackControls = true
+        
+        // Set the aspect ratio to 16:9
+        let aspectRatio = 16.0 / 9.0
+        let width = localVideoPlayerContainer.bounds.width
+        let height = width / CGFloat(aspectRatio)
+        playerViewController.view.frame = CGRect(x: 0, y: 0, width: width, height: height)
+        
+        // Add the video player view as a subview of localVideoPlayerContainer
+        localVideoPlayerContainer.addSubview(playerViewController.view)
+        playerViewController.view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            playerViewController.view.topAnchor.constraint(equalTo: localVideoPlayerContainer.topAnchor),
+            playerViewController.view.leadingAnchor.constraint(equalTo: localVideoPlayerContainer.leadingAnchor),
+            playerViewController.view.trailingAnchor.constraint(equalTo: localVideoPlayerContainer.trailingAnchor),
+            playerViewController.view.bottomAnchor.constraint(equalTo: localVideoPlayerContainer.bottomAnchor)
+        ])
+        
+        // Play the video
+        player.play()
+        
+        return playerViewController
+    }
+
     
     
     private func setupDismissButton() {

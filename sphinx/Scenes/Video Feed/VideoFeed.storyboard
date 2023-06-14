@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -28,14 +28,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="09p-ax-ldz">
-                                <rect key="frame" x="0.0" y="44" width="414" height="291"/>
+                                <rect key="frame" x="0.0" y="48" width="414" height="291"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="291" id="QAv-de-0Hl"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2M7-cJ-xnz">
-                                <rect key="frame" x="0.0" y="335" width="414" height="527"/>
+                                <rect key="frame" x="0.0" y="339" width="414" height="523"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                         </subviews>
@@ -154,11 +154,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4XN-jb-3A8" customClass="YTPlayerView">
-                                <rect key="frame" x="0.0" y="44" width="414" height="773"/>
+                                <rect key="frame" x="0.0" y="48" width="414" height="764"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SSC-f1-dNg" userLabel="Dismiss Button">
-                                <rect key="frame" x="20" y="54" width="50" height="50"/>
+                                <rect key="frame" x="20" y="58" width="50" height="41"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="0ES-gz-zdx"/>
                                     <constraint firstAttribute="height" constant="50" id="0qu-Vz-FAi"/>
@@ -175,7 +175,7 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zfq-pw-lha" userLabel="Episode Description Section">
-                                <rect key="frame" x="0.0" y="817" width="414" height="79"/>
+                                <rect key="frame" x="0.0" y="812" width="414" height="79"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="9Td-tb-X2c" userLabel="Episode Description Container">
                                         <rect key="frame" x="16" y="16" width="382" height="35.5"/>
@@ -222,13 +222,20 @@
                                     <constraint firstItem="9Td-tb-X2c" firstAttribute="leading" secondItem="Zfq-pw-lha" secondAttribute="leading" constant="16" id="qXj-R3-ZZY"/>
                                 </constraints>
                             </view>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vov-Hw-Tbm">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="891"/>
+                                <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ANf-hC-GBf"/>
                         <constraints>
                             <constraint firstItem="Zfq-pw-lha" firstAttribute="leading" secondItem="Xgb-0h-roT" secondAttribute="leading" id="2AK-SE-meP"/>
                             <constraint firstAttribute="trailing" secondItem="Zfq-pw-lha" secondAttribute="trailing" id="2hO-gT-4E9"/>
                             <constraint firstItem="4XN-jb-3A8" firstAttribute="leading" secondItem="ANf-hC-GBf" secondAttribute="leading" id="AQW-yr-Bbu"/>
+                            <constraint firstItem="Vov-Hw-Tbm" firstAttribute="leading" secondItem="Xgb-0h-roT" secondAttribute="leading" id="Dfi-i6-9S8"/>
                             <constraint firstItem="ANf-hC-GBf" firstAttribute="bottom" secondItem="SSC-f1-dNg" secondAttribute="bottom" constant="758" id="F6Y-R5-qoY"/>
+                            <constraint firstItem="Vov-Hw-Tbm" firstAttribute="top" secondItem="Xgb-0h-roT" secondAttribute="top" id="FzE-7o-6zN"/>
+                            <constraint firstAttribute="bottom" secondItem="Vov-Hw-Tbm" secondAttribute="bottom" id="LBq-mc-CNh"/>
                             <constraint firstItem="ANf-hC-GBf" firstAttribute="trailing" secondItem="4XN-jb-3A8" secondAttribute="trailing" id="NBi-6h-4Fo"/>
                             <constraint firstItem="ANf-hC-GBf" firstAttribute="trailing" secondItem="SSC-f1-dNg" secondAttribute="trailing" constant="344" id="Wh4-G9-vYv"/>
                             <constraint firstItem="Zfq-pw-lha" firstAttribute="top" secondItem="4XN-jb-3A8" secondAttribute="bottom" id="frw-1R-FLc"/>
@@ -236,6 +243,7 @@
                             <constraint firstItem="SSC-f1-dNg" firstAttribute="leading" secondItem="ANf-hC-GBf" secondAttribute="leading" constant="20" id="khn-Bt-AfB"/>
                             <constraint firstItem="SSC-f1-dNg" firstAttribute="top" secondItem="ANf-hC-GBf" secondAttribute="top" constant="10" id="rk1-qa-NnU"/>
                             <constraint firstAttribute="bottom" secondItem="Zfq-pw-lha" secondAttribute="bottom" id="slI-Kh-fkO"/>
+                            <constraint firstAttribute="trailing" secondItem="Vov-Hw-Tbm" secondAttribute="trailing" id="vlI-P7-2tu"/>
                         </constraints>
                     </view>
                     <connections>
@@ -244,6 +252,7 @@
                         <outlet property="episodeSubtitleCircularDivider" destination="c1P-JV-5jY" id="FUq-MQ-CBb"/>
                         <outlet property="episodeTitleLabel" destination="WWG-xL-NX5" id="ky2-3N-b4r"/>
                         <outlet property="episodeViewCountLabel" destination="z4A-6q-Ons" id="83j-ut-abS"/>
+                        <outlet property="localVideoPlayerContainer" destination="Vov-Hw-Tbm" id="zVE-Nb-MnV"/>
                         <outlet property="videoPlayerView" destination="4XN-jb-3A8" id="xWE-Kb-8ai"/>
                     </connections>
                 </viewController>
@@ -278,7 +287,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="chevron.down" catalog="system" width="128" height="72"/>
+        <image name="chevron.down" catalog="system" width="128" height="70"/>
         <namedColor name="HeaderBG">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
@@ -290,6 +299,9 @@
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemOrangeColor">
+            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

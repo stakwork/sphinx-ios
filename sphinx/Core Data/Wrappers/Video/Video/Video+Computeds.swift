@@ -47,4 +47,22 @@ extension Video {
         
         return "\(feedId)_\(itemID).mp4"
     }
+    
+    
+    func getVideoUrl() -> URL? {
+        if let fileName = getLocalFileName() {
+            
+            if let path = FileManager
+                .default
+                .urls(for: .documentDirectory, in: .userDomainMask)
+                .first?
+                .appendingPathComponent(fileName) {
+                
+                if FileManager.default.fileExists(atPath: path.path) {
+                    return path
+                }
+            }
+        }
+        return self.itemURL
+    }
 }

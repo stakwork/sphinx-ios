@@ -175,9 +175,7 @@ extension NewChatTableDataSource {
                     at: 0
                 )
                 
-                if !message.seen && !chat.seen {
-                    newMsgCount += 1
-                }
+                newMsgCount += getNewMessageCountFor(message: message, and: owner)
             }
         }
         
@@ -186,6 +184,16 @@ extension NewChatTableDataSource {
         updateSnapshot()
         
         delegate?.configureNewMessagesIndicatorWith(newMsgCount: newMsgCount)
+    }
+    
+    private func getNewMessageCountFor(
+        message: TransactionMessage,
+        and owner: UserContact
+    ) -> Int {
+        if (message.isIncoming(ownerId: owner.id) && !message.seen && !chat.seen) {
+            return 1
+        }
+        return 0
     }
     
     private func getBubbleBackgroundForMessage(

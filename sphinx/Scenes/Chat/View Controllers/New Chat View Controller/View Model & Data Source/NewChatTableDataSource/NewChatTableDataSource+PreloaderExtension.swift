@@ -37,7 +37,7 @@ extension NewChatTableDataSource {
                 bottomFirstVisibleRow: firstVisibleRow.row,
                 bottomFirstVisibleRowOffset: cellOffset.y,
                 bottomFirstVisibleRowUniqueID: dataSource.snapshot().itemIdentifiers.first?.getUniqueIdentifier(),
-                numberOfItems: dataSource.snapshot().numberOfItems,
+                numberOfItems: preloaderHelper.getPreloadedMessagesCount(for: chat.id),
                 for: chat.id
             )
         }
@@ -64,7 +64,7 @@ extension NewChatTableDataSource {
                 tableView.contentOffset.y = tableView.contentOffset.y + (offset + tableView.contentInset.top)
             }
             
-            if scrollState.bottomFirstVisibleRow > 0 {
+            if row > 0 || scrollState.shouldPreventSetMessagesAsSeen {
                 return
             }
         }

@@ -17,6 +17,8 @@ public enum MessagesSize: Int {
 class Constants {
     
     public static var kMargin: CGFloat = 16.0
+    public static var kChatTableContentInset: CGFloat = 16.0
+    
     //Fonts
     public static var kMessageFont = UIFont(name: "Roboto-Regular", size: UIDevice.current.isIpad ? 20.0 : 16.0)!
     public static var kEmojisFont = UIFont(name: "Roboto-Regular", size: UIDevice.current.isIpad ? 40.0 : 30.0)!

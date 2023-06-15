@@ -23,19 +23,22 @@ class MessagesPreloaderHelper {
         var bottomFirstVisibleRowUniqueID: Int?
         var numberOfItems: Int
         var shouldAdjustScroll: Bool
+        var shouldPreventSetMessagesAsSeen: Bool
         
         init(
             bottomFirstVisibleRow: Int,
             bottomFirstVisibleRowOffset: CGFloat,
             bottomFirstVisibleRowUniqueID: Int?,
             numberOfItems: Int,
-            shouldAdjustScroll: Bool
+            shouldAdjustScroll: Bool,
+            shouldPreventSetMessagesAsSeen: Bool
         ) {
             self.bottomFirstVisibleRow = bottomFirstVisibleRow
             self.bottomFirstVisibleRowOffset = bottomFirstVisibleRowOffset
             self.bottomFirstVisibleRowUniqueID = bottomFirstVisibleRowUniqueID
             self.numberOfItems = numberOfItems
             self.shouldAdjustScroll = shouldAdjustScroll
+            self.shouldPreventSetMessagesAsSeen = shouldPreventSetMessagesAsSeen
         }
     }
     
@@ -49,6 +52,10 @@ class MessagesPreloaderHelper {
         for chatId: Int
     ) {
         self.chatMessages[chatId] = messageStateArray
+    }
+    
+    func getPreloadedMessagesCount(for chatId: Int) -> Int {
+        return chatMessages[chatId]?.count ?? 0
     }
     
     func getMessageStateArray(for chatId: Int) -> [MessageTableCellState]? {
@@ -70,7 +77,8 @@ class MessagesPreloaderHelper {
             bottomFirstVisibleRowOffset: bottomFirstVisibleRowOffset,
             bottomFirstVisibleRowUniqueID: bottomFirstVisibleRowUniqueID,
             numberOfItems: numberOfItems,
-            shouldAdjustScroll: true
+            shouldAdjustScroll: true,
+            shouldPreventSetMessagesAsSeen: true
         )
     }
     
@@ -86,14 +94,15 @@ class MessagesPreloaderHelper {
                 let itemUniqueIdentifiers = newItemIdentifiers.map({ $0.getUniqueIdentifier() })
                 let difference = itemUniqueIdentifiers.index(of: firstItemBeforeUpdate) ?? 0
                 let destinationRow = scrollState.bottomFirstVisibleRow + difference
-                let shouldAdjustScroll = destinationRow > 0 && scrollState.numberOfItems != newItemIdentifiers.count
+                let shouldAdjustScroll = destinationRow > 1
                 
                 return ScrollState(
                     bottomFirstVisibleRow: destinationRow,
                     bottomFirstVisibleRowOffset: scrollState.bottomFirstVisibleRowOffset,
                     bottomFirstVisibleRowUniqueID: scrollState.bottomFirstVisibleRowUniqueID,
                     numberOfItems: scrollState.numberOfItems,
-                    shouldAdjustScroll: shouldAdjustScroll
+                    shouldAdjustScroll: shouldAdjustScroll,
+                    shouldPreventSetMessagesAsSeen: scrollState.numberOfItems == newItemIdentifiers.count
                 )
             }
         }

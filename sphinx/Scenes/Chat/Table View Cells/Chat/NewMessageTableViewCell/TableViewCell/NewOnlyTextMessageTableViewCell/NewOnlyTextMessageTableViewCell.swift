@@ -49,7 +49,7 @@ class NewOnlyTextMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableV
     }
     
     func setupViews() {
-        bubbleOnlyText.layer.cornerRadius = 8.0
+        bubbleOnlyText.layer.cornerRadius = MessageTableCellState.kBubbleCornerRadius
 
         receivedArrow.drawReceivedBubbleArrow(color: UIColor.Sphinx.ReceivedMsgBG)
         sentArrow.drawSentBubbleArrow(color: UIColor.Sphinx.SentMsgBG)

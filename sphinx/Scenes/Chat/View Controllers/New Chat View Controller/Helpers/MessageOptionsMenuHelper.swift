@@ -35,7 +35,7 @@ class MessageOptionsMenuHelper {
                 bubbleRect,
                 UIBezierPath(
                     roundedRect: CGRect(origin: CGPoint.zero, size: bubbleRect.size),
-                    cornerRadius: 8
+                    cornerRadius: MessageTableCellState.kBubbleCornerRadius
                 ).cgPath
             )
         }

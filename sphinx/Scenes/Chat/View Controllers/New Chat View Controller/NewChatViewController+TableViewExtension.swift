@@ -45,7 +45,7 @@ extension NewChatViewController : NewChatTableDataSourceDelegate {
     func configureNewMessagesIndicatorWith(newMsgCount: Int) {
         DispatchQueue.main.async {
             self.newMsgsIndicatorView.configureWith(
-                firstVisibleRow: self.chatTableView.indexPathsForVisibleRows?.first?.row ?? 0,
+                tableContentOffset: self.chatTableView.contentOffset.y,
                 newMessagesCount: newMsgCount,
                 andDelegate: self
             )
@@ -59,7 +59,7 @@ extension NewChatViewController : NewChatTableDataSourceDelegate {
     
     func didScrollOutOfBottomArea() {
         newMsgsIndicatorView.configureWith(
-            firstVisibleRow: chatTableView.indexPathsForVisibleRows?.first?.row ?? 0
+            tableContentOffset: self.chatTableView.contentOffset.y
         )
     }
     

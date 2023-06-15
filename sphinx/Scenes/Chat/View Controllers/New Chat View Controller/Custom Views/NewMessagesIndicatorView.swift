@@ -41,7 +41,7 @@ class NewMessagesIndicatorView: UIView {
     }
     
     func configureWith(
-        firstVisibleRow: Int,
+        tableContentOffset: CGFloat,
         newMessagesCount: Int? = nil,
         andDelegate delegate: NewMessagesIndicatorViewDelegate? = nil
     ) {
@@ -54,7 +54,7 @@ class NewMessagesIndicatorView: UIView {
             countLabel.isHidden = newMessagesCount == 0
         }
         
-        self.isHidden = firstVisibleRow <= 0
+        self.isHidden = tableContentOffset < -10
     }
 
     @IBAction func buttonTouched() {

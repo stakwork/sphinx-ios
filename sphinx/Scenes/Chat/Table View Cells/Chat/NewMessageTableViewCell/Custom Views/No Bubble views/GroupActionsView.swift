@@ -8,6 +8,12 @@
 
 import UIKit
 
+protocol GroupActionsViewDelegate: class {
+    func didTapDeleteTribeButton()
+    func didTapApproveRequestButton()
+    func didTapRejectRequestButton()
+}
+
 class GroupActionsView: UIView {
     
     @IBOutlet private var contentView: UIView!
@@ -49,23 +55,29 @@ class GroupActionsView: UIView {
     }
     
     func configureWith(
-        groupKickRemovedOrDeclined: NoBubbleMessageLayoutState.GroupKickRemovedOrDeclined
+        groupKickRemovedOrDeclined: NoBubbleMessageLayoutState.GroupKickRemovedOrDeclined,
+        andDelegate delegate: GroupActionsViewDelegate?
     ) {
         hideAllSubviews()
         
-        groupRemovedView.configureWith(message: groupKickRemovedOrDeclined.message)
+        groupRemovedView.configureWith(
+            message: groupKickRemovedOrDeclined.message,
+            andDelegate: delegate
+        )
         groupRemovedView.isHidden = false
     }
     
     func configureWith(
-        groupMemberRequest: NoBubbleMessageLayoutState.GroupMemberRequest
+        groupMemberRequest: NoBubbleMessageLayoutState.GroupMemberRequest,
+        andDelegate delegate: GroupActionsViewDelegate?
     ) {
         hideAllSubviews()
         
         groupRequestView.configureWith(
             status: groupMemberRequest.status,
             isActiveMember: groupMemberRequest.isActiveMember,
-            senderAlias: groupMemberRequest.senderAlias
+            senderAlias: groupMemberRequest.senderAlias,
+            andDelegate: delegate
         )
         groupRequestView.isHidden = false
     }

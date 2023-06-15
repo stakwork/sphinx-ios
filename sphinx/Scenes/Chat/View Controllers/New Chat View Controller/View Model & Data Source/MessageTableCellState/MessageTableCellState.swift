@@ -20,6 +20,9 @@ struct MessageTableCellState {
     
     //Messages Data
     var message: TransactionMessage? = nil
+    var messageId: Int? = nil
+    var messageType: Int? = nil
+    var messageStatus: Int? = nil
     var chat: Chat
     var owner: UserContact
     var contact: UserContact? = nil
@@ -51,6 +54,10 @@ struct MessageTableCellState {
         mediaData: MediaData? = nil
     ) {
         self.message = message
+        self.messageId = message?.id
+        self.messageType = message?.type
+        self.messageStatus = message?.status
+        
         self.chat = chat
         self.contact = contact
         self.owner = owner
@@ -483,9 +490,9 @@ extension MessageTableCellState : Hashable {
         var mutableRhs = rhs
         
         return
-            mutableLhs.message?.id           == mutableRhs.message?.id &&
-            mutableLhs.message?.status       == mutableRhs.message?.status &&
-            mutableLhs.message?.type         == mutableRhs.message?.type &&
+            mutableLhs.messageId             == mutableRhs.messageId &&
+            mutableLhs.messageStatus         == mutableRhs.messageStatus &&
+            mutableLhs.messageType           == mutableRhs.messageType &&
             mutableLhs.bubbleState           == mutableRhs.bubbleState &&
             mutableLhs.boostMessages.count   == mutableRhs.boostMessages.count &&
             mutableLhs.isTextOnlyMessage     == mutableRhs.isTextOnlyMessage &&
@@ -497,7 +504,9 @@ extension MessageTableCellState : Hashable {
     }
 
     func hash(into hasher: inout Hasher) {
-        hasher.combine(self.message?.id)
+        hasher.combine(self.messageId)
+        hasher.combine(self.messageType)
+        hasher.combine(self.messageStatus)
         hasher.combine(self.separatorDate)
     }
     

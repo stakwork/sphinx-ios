@@ -9,6 +9,8 @@
 import UIKit
 
 class GroupRequestView: UIView {
+    
+    weak var delegate: GroupActionsViewDelegate?
 
     @IBOutlet private var contentView: UIView!
     
@@ -44,8 +46,11 @@ class GroupRequestView: UIView {
     func configureWith(
         status: NoBubbleMessageLayoutState.GroupMemberRequest.MemberRequestStatus,
         isActiveMember: Bool,
-        senderAlias: String
+        senderAlias: String,
+        andDelegate delegate: GroupActionsViewDelegate?
     ) {
+        self.delegate = delegate
+        
         let rejected = status == NoBubbleMessageLayoutState.GroupMemberRequest.MemberRequestStatus.Rejected
         let approved = status == NoBubbleMessageLayoutState.GroupMemberRequest.MemberRequestStatus.Approved
         let pending = !rejected && !approved
@@ -66,11 +71,11 @@ class GroupRequestView: UIView {
     }
     
     @IBAction func doneButtonTouched() {
-        
+        delegate?.didTapApproveRequestButton()
     }
     
     @IBAction func cancelButtonTouched() {
-        
+        delegate?.didTapRejectRequestButton()
     }
     
 }

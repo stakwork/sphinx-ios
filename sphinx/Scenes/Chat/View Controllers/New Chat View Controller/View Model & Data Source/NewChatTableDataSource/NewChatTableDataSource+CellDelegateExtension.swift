@@ -36,34 +36,6 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
         }
     }
     
-    func updateMessageTableCellStateFor(
-        rowIndex: Int,
-        messageId: Int,
-        with tribeInfo: GroupsManager.TribeInfo
-    ) {
-        if var tableCellState = getTableCellStateFor(
-            messageId: messageId,
-            and: rowIndex
-        ), let linkTribe = tableCellState.1.linkTribe
-        {
-            let updatedLinkTribe = MessageTableCellState.LinkTribe(
-                link: linkTribe.link,
-                tribeInfo: tribeInfo,
-                isJoined: linkTribe.isJoined
-            )
-            
-            self.tribeLinks[messageId] = updatedLinkTribe
-            
-            tableCellState.1.linkTribe = updatedLinkTribe
-            
-            messageTableCellStateArray[tableCellState.0] = tableCellState.1
-        }
-        
-        DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: {
-            self.updateSnapshot()
-        })
-    }
-    
     func shouldLoadImageDataFor(
         messageId: Int,
         and rowIndex: Int
@@ -175,6 +147,34 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
             })
         }
     }
+    
+    func updateMessageTableCellStateFor(
+        rowIndex: Int,
+        messageId: Int,
+        with tribeInfo: GroupsManager.TribeInfo
+    ) {
+        if var tableCellState = getTableCellStateFor(
+            messageId: messageId,
+            and: rowIndex
+        ), let linkTribe = tableCellState.1.linkTribe
+        {
+            let updatedLinkTribe = MessageTableCellState.LinkTribe(
+                link: linkTribe.link,
+                tribeInfo: tribeInfo,
+                isJoined: linkTribe.isJoined
+            )
+            
+            self.tribeLinks[messageId] = updatedLinkTribe
+            
+            tableCellState.1.linkTribe = updatedLinkTribe
+            
+            messageTableCellStateArray[tableCellState.0] = tableCellState.1
+        }
+        
+        DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: {
+            self.updateSnapshot()
+        })
+    }
 }
 
 ///Actions handling
@@ -275,6 +275,28 @@ extension NewChatTableDataSource {
         }
     }
     
+    func didTapDeleteTribeButtonFor(messageId: Int, and rowIndex: Int) {
+        shouldDeleteGroup()
+    }
+    
+    func didTapApproveRequestButtonFor(messageId: Int, and rowIndex: Int) {
+        if let tableCellState = getTableCellStateFor(
+            messageId: messageId,
+            and: rowIndex
+        ), let message = tableCellState.1.message {
+            shouldApproveMember(message: message)
+        }
+    }
+    
+    func didTapRejectRequestButtonFor(messageId: Int, and rowIndex: Int) {
+        if let tableCellState = getTableCellStateFor(
+            messageId: messageId,
+            and: rowIndex
+        ), let message = tableCellState.1.message {
+            shouldRejectMember(message: message)
+        }
+    }
+    
     func didTapOnLink(_ link: String) {
         if
             !link.stringLinks.isEmpty ||
@@ -301,6 +323,82 @@ extension NewChatTableDataSource {
 extension NewChatTableDataSource {
     func startVideoCall(link: String, audioOnly: Bool) {
         VideoCallManager.sharedInstance.startVideoCall(link: link, audioOnly: audioOnly)
+    }
+}
+
+extension NewChatTableDataSource {
+    func shouldDeleteGroup() {
+        AlertHelper.showTwoOptionsAlert(
+            title: "delete.tribe".localized,
+            message: "confirm.delete.tribe".localized,
+            confirmButtonTitle: "delete".localized,
+            confirmStyle: .destructive,
+            confirm: {
+                self.deleteGroup()
+            }
+        )
+    }
+    
+    func deleteGroup() {
+        bubbleHelper.showLoadingWheel()
+        
+        GroupsManager.sharedInstance.deleteGroup(chat: self.chat, completion: { success in
+            self.bubbleHelper.hideLoadingWheel()
+            
+            if success {
+                self.delegate?.didDeleteTribe()
+            } else {
+                self.showGenericError()
+            }
+        })
+    }
+    
+    func shouldApproveMember(message: TransactionMessage) {
+        bubbleHelper.showLoadingWheel()
+        
+        GroupsManager.sharedInstance.respondToRequest(
+            message: message,
+            action: "approved",
+            completion: { (chat, _) in
+                self.requestResponseSucceddedWith(chat: chat)
+            },
+            errorCompletion: {
+                self.requestResponseFailed()
+            }
+        )
+    }
+    
+    func shouldRejectMember(message: TransactionMessage) {
+        bubbleHelper.showLoadingWheel()
+        
+        GroupsManager.sharedInstance.respondToRequest(
+            message: message,
+            action: "rejected",
+            completion: { (chat, _) in
+                self.requestResponseSucceddedWith(chat: chat)
+            },
+            errorCompletion: {
+                self.requestResponseFailed()
+            }
+        )
+    }
+    
+    func requestResponseSucceddedWith(chat: Chat) {
+        self.bubbleHelper.hideLoadingWheel()
+        self.chat = chat
+        self.delegate?.didUpdateChat(chat)
+    }
+    
+    func requestResponseFailed() {
+        self.bubbleHelper.hideLoadingWheel()
+        self.showGenericError()
+    }
+    
+    func showGenericError() {
+        AlertHelper.showAlert(
+            title: "generic.error.title".localized,
+            message: "generic.error.message".localized
+        )
     }
 }
 

@@ -12,6 +12,7 @@
 "save.upper" = "I-SAVE";
 "cancel" = "Kanselahin";
 "done" = "Tapos";
+"delete" = "Delete";
 "yes" = "Oo";
 "no" = "Hindi";
 "uploaded.progress" = "Na-upload: %d %%";

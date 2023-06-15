@@ -110,6 +110,14 @@ extension NewChatViewController : NewChatTableDataSourceDelegate {
         )
         navigationController?.pushViewController(chatVC, animated: true)
     }
+    
+    func didDeleteTribe() {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    func didUpdateChat(_ chat: Chat) {
+        self.chat = chat
+    }
 }
 
 extension NewChatViewController : NewMessagesIndicatorViewDelegate {

@@ -9,7 +9,9 @@
 import UIKit
 
 class GroupRemovedView: UIView {
-
+    
+    weak var delegate: GroupActionsViewDelegate?
+    
     @IBOutlet private var contentView: UIView!
     
     @IBOutlet weak var messageView: UIView!
@@ -41,12 +43,15 @@ class GroupRemovedView: UIView {
     }
     
     func configureWith(
-        message: String
+        message: String,
+        andDelegate delegate: GroupActionsViewDelegate?
     ) {
+        self.delegate = delegate
+        
         messageLabel.text = message
     }
     
     @IBAction func deleteButtonTouched() {
-        
+        delegate?.didTapDeleteTribeButton()
     }
 }

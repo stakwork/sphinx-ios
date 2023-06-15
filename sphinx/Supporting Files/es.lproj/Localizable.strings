@@ -21,6 +21,7 @@
 "save.upper" = "GUARDAR";
 "cancel" = "Cancelar";
 "done" = "Listo";
+"delete" = "Eliminar";
 "yes" = "Si";
 "no" = "No";
 "uploaded.progress" = "Subido: %d %%";

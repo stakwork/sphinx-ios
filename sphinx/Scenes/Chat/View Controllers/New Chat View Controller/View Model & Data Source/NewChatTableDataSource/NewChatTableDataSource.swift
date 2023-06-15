@@ -19,6 +19,9 @@ protocol NewChatTableDataSourceDelegate : class {
     
     func didTapOnContactWith(pubkey: String, and routeHint: String?)
     func didTapOnTribeWith(joinLink: String)
+    
+    func didDeleteTribe()
+    func didUpdateChat(_ chat: Chat)
 }
 
 class NewChatTableDataSource : NSObject {
@@ -43,6 +46,8 @@ class NewChatTableDataSource : NSObject {
     
     var loadingMoreItems = false
     var scrolledAtBottom = false
+    
+    let bubbleHelper = NewMessageBubbleHelper()
     
     init(
         chat: Chat,

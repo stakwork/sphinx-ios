@@ -34,21 +34,28 @@ protocol ChatTableViewCellProtocol: class {
 }
 
 protocol NewMessageTableViewCellDelegate: class {
-    ///Loading content in background
+    //Loading content in background
     func shouldLoadTribeInfoFor(messageId: Int, and rowIndex: Int)
     func shouldLoadImageDataFor(messageId: Int, and rowIndex: Int)
     func shouldLoadPdfDataFor(messageId: Int, and rowIndex: Int)
     func shouldLoadVideoDataFor(messageId: Int, and rowIndex: Int)
     
-    ///Actions handling
+    //Actions handling
     func didTapMessageReplyFor(messageId: Int, and rowIndex: Int)
+    ///Call Links
     func didTapCallLinkCopyFor(messageId: Int, and rowIndex: Int)
     func didTapCallJoinAudioFor(messageId: Int, and rowIndex: Int)
     func didTapCallJoinVideoFor(messageId: Int, and rowIndex: Int)
+    ///Media
     func didTapMediaButtonFor(messageId: Int, and rowIndex: Int)
+    ///Link Previews
     func didTapTribeButtonFor(messageId: Int, and rowIndex: Int)
     func didTapContactButtonFor(messageId: Int, and rowIndex: Int)
-    
+    ///Tribe actions
+    func didTapDeleteTribeButtonFor(messageId: Int, and rowIndex: Int)
+    func didTapApproveRequestButtonFor(messageId: Int, and rowIndex: Int)
+    func didTapRejectRequestButtonFor(messageId: Int, and rowIndex: Int)
+    ///Label Links
     func didTapOnLink(_ link: String)
 }
 

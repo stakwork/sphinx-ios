@@ -25,7 +25,7 @@ extension NewChatViewController {
     
     func showPendingApprovalMessage() {
         if chat?.isStatusPending() ?? false {
-            NewMessageBubbleHelper().showGenericMessageView(text: "waiting.admin.approval".localized)
+            messageBubbleHelper.showGenericMessageView(text: "waiting.admin.approval".localized)
         }
     }
     

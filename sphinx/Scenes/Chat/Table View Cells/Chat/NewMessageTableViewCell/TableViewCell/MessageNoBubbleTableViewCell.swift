@@ -10,7 +10,10 @@ import UIKit
 
 class MessageNoBubbleTableViewCell: UITableViewCell, ChatTableViewCellProtocol {
     
+    weak var delegate: NewMessageTableViewCellDelegate?
+    
     var rowIndex: Int!
+    var messageId: Int?
 
     @IBOutlet weak var dateSeparatorView: DateSeparatorView!
     @IBOutlet weak var deletedMessageView: DeletedMessageView!
@@ -37,11 +40,13 @@ class MessageNoBubbleTableViewCell: UITableViewCell, ChatTableViewCellProtocol {
         delegate: NewMessageTableViewCellDelegate,
         indexPath: IndexPath
     ) {
-        self.rowIndex = indexPath.row
-        
         hideAllSubviews()
         
         var mutableMessageCellState = messageCellState
+        
+        self.rowIndex = indexPath.row
+        self.messageId = mutableMessageCellState.message?.id
+        self.delegate = delegate
         
         configureWith(
             deleted: mutableMessageCellState.deleted,
@@ -94,7 +99,8 @@ class MessageNoBubbleTableViewCell: UITableViewCell, ChatTableViewCellProtocol {
     ) {
         if let groupKickRemovedOrDeclined = groupKickRemovedOrDeclined {
             groupActionsView.configureWith(
-                groupKickRemovedOrDeclined: groupKickRemovedOrDeclined
+                groupKickRemovedOrDeclined: groupKickRemovedOrDeclined,
+                andDelegate: self
             )
             groupActionsView.isHidden = false
         }
@@ -105,7 +111,8 @@ class MessageNoBubbleTableViewCell: UITableViewCell, ChatTableViewCellProtocol {
     ) {
         if let groupMemberRequest = groupMemberRequest {
             groupActionsView.configureWith(
-                groupMemberRequest: groupMemberRequest
+                groupMemberRequest: groupMemberRequest,
+                andDelegate: self
             )
             groupActionsView.isHidden = false
         }

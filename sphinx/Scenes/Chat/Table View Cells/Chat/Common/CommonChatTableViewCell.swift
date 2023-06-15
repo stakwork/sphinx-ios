@@ -359,7 +359,6 @@ class CommonChatTableViewCell: SwipableReplyCell, RowWithLinkPreviewProtocol {
         
         var dataDict: [String: AnyObject] = [String: AnyObject]()
         dataDict["bubbleShapeLayers"] = bubbleLayers as AnyObject
-        dataDict["tableCell"] = self as AnyObject
         
         if let messageId = self.messageRow?.getMessageId() {
             dataDict["messageId"] = messageId as AnyObject

@@ -90,6 +90,10 @@ class NewKeyboardHandlerViewController: PopHandlerViewController {
     
     func didToggleKeyboard() {}
     
+    func isKeyboardVisible() -> Bool {
+        return bottomConstraint.constant > 0
+    }
+    
     func getKeyboardActualHeight(notification: Notification) -> CGFloat? {
         if let keyboardEndSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             return keyboardEndSize.height

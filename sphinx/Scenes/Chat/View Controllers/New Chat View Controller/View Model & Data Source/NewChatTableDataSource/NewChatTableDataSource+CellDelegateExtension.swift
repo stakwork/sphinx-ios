@@ -159,8 +159,8 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
                 description: tribeInfo.description ?? "description.not.available".localized,
                 imageUrl: tribeInfo.img,
                 showJoinButton: !linkTribe.isJoined,
-                bubbleWidth: (UIScreen.main.bounds.width - (MessageTableCellState.kRowLeftMargin + MessageTableCellState.kRowRightMargin)) * (MessageTableCellState.kBubbleWidthPercentage),
-                roundedBottom: false
+                bubbleWidth:
+                    (UIScreen.main.bounds.width - (MessageTableCellState.kRowLeftMargin + MessageTableCellState.kRowRightMargin)) * (MessageTableCellState.kBubbleWidthPercentage)
             )
 
             var snapshot = dataSource.snapshot()
@@ -392,6 +392,15 @@ extension NewChatTableDataSource {
             title: "generic.error.title".localized,
             message: "generic.error.message".localized
         )
+    }
+}
+
+///Menu Long press
+extension NewChatTableDataSource {
+    func didLongPressOnCellWith(messageId: Int, and rowIndex: Int, bubbleViewRect: CGRect) {
+        SoundsPlayer.playHaptic()
+        
+        delegate?.didLongPressOnCellWith(messageId: messageId, and: rowIndex, bubbleViewRect: bubbleViewRect)
     }
 }
 

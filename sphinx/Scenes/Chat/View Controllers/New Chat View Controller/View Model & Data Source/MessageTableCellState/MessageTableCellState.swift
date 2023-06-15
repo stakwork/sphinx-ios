@@ -132,8 +132,6 @@ struct MessageTableCellState {
     
     lazy var messageReply: BubbleMessageLayoutState.MessageReply? = {
         
-        return nil
-        
         guard let message = message, let replyingMessage = replyingMessage else {
             return nil
         }
@@ -279,7 +277,7 @@ struct MessageTableCellState {
             color: linkContact.contact?.getColor(),
             isContact: linkContact.contact != nil,
             bubbleWidth: (UIScreen.main.bounds.width - (MessageTableCellState.kRowLeftMargin + MessageTableCellState.kRowRightMargin)) * (MessageTableCellState.kBubbleWidthPercentage),
-            roundedBottom: false
+            roundedBottom: true
         )
     }()
     

@@ -102,5 +102,5 @@ extension NewMessageTableViewCell {
             sentArrow.alpha = 0.0
             break
         }
-    }
+    }    
 }

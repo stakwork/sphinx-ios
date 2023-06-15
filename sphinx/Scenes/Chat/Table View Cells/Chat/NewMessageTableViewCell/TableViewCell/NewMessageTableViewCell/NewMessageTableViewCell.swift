@@ -59,9 +59,12 @@ protocol NewMessageTableViewCellDelegate: class {
     func didTapRejectRequestButtonFor(messageId: Int, and rowIndex: Int)
     ///Label Links
     func didTapOnLink(_ link: String)
+    
+    //Menu Long Press
+    func didLongPressOnCellWith(messageId: Int, and rowIndex: Int, bubbleViewRect: CGRect)
 }
 
-class NewMessageTableViewCell: SwipableReplyCell, ChatTableViewCellProtocol {
+class NewMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableViewCellProtocol {
     
     weak var delegate: NewMessageTableViewCellDelegate!
     
@@ -172,4 +175,13 @@ class NewMessageTableViewCell: SwipableReplyCell, ChatTableViewCellProtocol {
         configureWith(bubble: bubble)
     }
     
+    override func didLongPressOnCell() {
+        if let messageId = messageId {
+            delegate?.didLongPressOnCellWith(
+                messageId: messageId,
+                and: rowIndex,
+                bubbleViewRect: bubbleAllView.frame
+            )
+        }
+    }
 }

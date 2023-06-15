@@ -10,6 +10,9 @@
 		12075275C652A9404FC48EBC /* Pods_sphinx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 487E10CEB3D07B0840A84681 /* Pods_sphinx.framework */; };
 		470125C02373255C0013C57B /* TransactionMessage+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470125BF2373255C0013C57B /* TransactionMessage+CoreDataProperties.swift */; };
 		4701460A2A3B3F3700A00DF8 /* MessageNoBubbleTableViewCell+DelegateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470146092A3B3F3700A00DF8 /* MessageNoBubbleTableViewCell+DelegateExtension.swift */; };
+		4701460C2A3B787300A00DF8 /* CommonNewMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4701460B2A3B787300A00DF8 /* CommonNewMessageTableViewCell.swift */; };
+		470146112A3B79E300A00DF8 /* NewOnlyTextMessageTableViewCell+LayoutExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470146102A3B79E300A00DF8 /* NewOnlyTextMessageTableViewCell+LayoutExtension.swift */; };
+		470146142A3B856D00A00DF8 /* MessageOptionsMenuHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470146132A3B856D00A00DF8 /* MessageOptionsMenuHelper.swift */; };
 		47018F8127CFB7CE00797E0B /* pause_animation.json in Resources */ = {isa = PBXBuildFile; fileRef = 47018F8027CFB7CD00797E0B /* pause_animation.json */; };
 		47018F9227CFEEAF00797E0B /* skip30v1.caf in Resources */ = {isa = PBXBuildFile; fileRef = 47018F9127CFEDB400797E0B /* skip30v1.caf */; };
 		47018F9327CFEEAF00797E0B /* skip30v2.caf in Resources */ = {isa = PBXBuildFile; fileRef = 47018F8E27CFEDB300797E0B /* skip30v2.caf */; };
@@ -922,6 +925,9 @@
 /* Begin PBXFileReference section */
 		470125BF2373255C0013C57B /* TransactionMessage+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TransactionMessage+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		470146092A3B3F3700A00DF8 /* MessageNoBubbleTableViewCell+DelegateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageNoBubbleTableViewCell+DelegateExtension.swift"; sourceTree = "<group>"; };
+		4701460B2A3B787300A00DF8 /* CommonNewMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonNewMessageTableViewCell.swift; sourceTree = "<group>"; };
+		470146102A3B79E300A00DF8 /* NewOnlyTextMessageTableViewCell+LayoutExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewOnlyTextMessageTableViewCell+LayoutExtension.swift"; sourceTree = "<group>"; };
+		470146132A3B856D00A00DF8 /* MessageOptionsMenuHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageOptionsMenuHelper.swift; sourceTree = "<group>"; };
 		47018F8027CFB7CD00797E0B /* pause_animation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = pause_animation.json; sourceTree = "<group>"; };
 		47018F8E27CFEDB300797E0B /* skip30v2.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = skip30v2.caf; sourceTree = "<group>"; };
 		47018F8F27CFEDB300797E0B /* skip30v3.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = skip30v3.caf; sourceTree = "<group>"; };
@@ -2075,6 +2081,48 @@
 				FDF1E0A8EFE1D98BD5A99505 /* Pods-sphinx.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		4701460D2A3B79AD00A00DF8 /* NewMessageTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				472092C72A278B0400468796 /* NewMessageTableViewCell.swift */,
+				472092C82A278B0400468796 /* NewMessageTableViewCell.xib */,
+				47E6A4F82A2FB2FC00A9509E /* NewMessageTableViewCell+BubbleExtension.swift */,
+				47E6A4FA2A2FB3B100A9509E /* NewMessageTableViewCell+MessageTypesExtension.swift */,
+				47E6A4FC2A2FB45B00A9509E /* NewMessageTableViewCell+StatusHeaderExtension.swift */,
+				47E6A4BF2A2E591900A9509E /* NewMessageTableViewCell+GeneralSetup.swift */,
+			);
+			path = NewMessageTableViewCell;
+			sourceTree = "<group>";
+		};
+		4701460E2A3B79BB00A00DF8 /* MessageNoBubbleTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				47E6A4C12A2E65C700A9509E /* MessageNoBubbleTableViewCell.swift */,
+				470146092A3B3F3700A00DF8 /* MessageNoBubbleTableViewCell+DelegateExtension.swift */,
+				47E6A4C22A2E65C700A9509E /* MessageNoBubbleTableViewCell.xib */,
+			);
+			path = MessageNoBubbleTableViewCell;
+			sourceTree = "<group>";
+		};
+		4701460F2A3B79CA00A00DF8 /* NewOnlyTextMessageTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				47FA727A2A32373900FB4535 /* NewOnlyTextMessageTableViewCell.swift */,
+				47FA727B2A32373900FB4535 /* NewOnlyTextMessageTableViewCell.xib */,
+				47CFA9512A3A13630030BC23 /* NewMessageTableViewCell+DelegateExtension.swift */,
+				470146102A3B79E300A00DF8 /* NewOnlyTextMessageTableViewCell+LayoutExtension.swift */,
+			);
+			path = NewOnlyTextMessageTableViewCell;
+			sourceTree = "<group>";
+		};
+		470146122A3B855E00A00DF8 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				470146132A3B856D00A00DF8 /* MessageOptionsMenuHelper.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		470331B324E6C5D900224F25 /* Libraries Extensions */ = {
@@ -3256,6 +3304,7 @@
 		475DD3152A14156300F92173 /* New Chat View Controller */ = {
 			isa = PBXGroup;
 			children = (
+				470146122A3B855E00A00DF8 /* Helpers */,
 				47E6A4FE2A30C65900A9509E /* Custom Views */,
 				47E6A4F12A2F63C800A9509E /* View Model & Data Source */,
 				475DD30D2A1297C100F92173 /* PopHandlerViewController.swift */,
@@ -3919,18 +3968,10 @@
 		47CFA9502A3A134D0030BC23 /* TableViewCell */ = {
 			isa = PBXGroup;
 			children = (
-				472092C72A278B0400468796 /* NewMessageTableViewCell.swift */,
-				472092C82A278B0400468796 /* NewMessageTableViewCell.xib */,
-				47E6A4F82A2FB2FC00A9509E /* NewMessageTableViewCell+BubbleExtension.swift */,
-				47E6A4FA2A2FB3B100A9509E /* NewMessageTableViewCell+MessageTypesExtension.swift */,
-				47E6A4FC2A2FB45B00A9509E /* NewMessageTableViewCell+StatusHeaderExtension.swift */,
-				47E6A4BF2A2E591900A9509E /* NewMessageTableViewCell+GeneralSetup.swift */,
-				47E6A4C12A2E65C700A9509E /* MessageNoBubbleTableViewCell.swift */,
-				470146092A3B3F3700A00DF8 /* MessageNoBubbleTableViewCell+DelegateExtension.swift */,
-				47E6A4C22A2E65C700A9509E /* MessageNoBubbleTableViewCell.xib */,
-				47FA727A2A32373900FB4535 /* NewOnlyTextMessageTableViewCell.swift */,
-				47FA727B2A32373900FB4535 /* NewOnlyTextMessageTableViewCell.xib */,
-				47CFA9512A3A13630030BC23 /* NewMessageTableViewCell+DelegateExtension.swift */,
+				4701460D2A3B79AD00A00DF8 /* NewMessageTableViewCell */,
+				4701460E2A3B79BB00A00DF8 /* MessageNoBubbleTableViewCell */,
+				4701460F2A3B79CA00A00DF8 /* NewOnlyTextMessageTableViewCell */,
+				4701460B2A3B787300A00DF8 /* CommonNewMessageTableViewCell.swift */,
 			);
 			path = TableViewCell;
 			sourceTree = "<group>";
@@ -5487,11 +5528,13 @@
 				475043CB29719E5F00830E9E /* PodcastPlayerController+InfoCenter.swift in Sources */,
 				47AAFC80238EC5AA00E30BDA /* NewQRScannerProcessingCodeExtension.swift in Sources */,
 				471F3ABB255ADECB00E2AC79 /* PodcastLiveDataSource.swift in Sources */,
+				470146142A3B856D00A00DF8 /* MessageOptionsMenuHelper.swift in Sources */,
 				47308E1524FEE6E700FFAC6F /* SocketIOStatus.swift in Sources */,
 				473842F92391A9DF00AA640F /* KeyboardHelper.swift in Sources */,
 				4780783323916D4900187906 /* PictureReceivedTableViewCell.swift in Sources */,
 				473BC89A260238DC0070E519 /* JSON.swift in Sources */,
 				F3E357A8271E19EF00B91C54 /* VideoFeedEpisodePlayerContainerViewController.swift in Sources */,
+				470146112A3B79E300A00DF8 /* NewOnlyTextMessageTableViewCell+LayoutExtension.swift in Sources */,
 				F39F2C8526E2840500D357F6 /* FeedSearchResultsCollectionViewSectionHeader.swift in Sources */,
 				47F826702A0D2E3A002E81F0 /* ChatMessageTextFieldView.swift in Sources */,
 				4733C7E523C4DF4C006A2C51 /* GroupContactsViewController.swift in Sources */,
@@ -5503,6 +5546,7 @@
 				4754FAA1272B2040006295A5 /* NewsletterItemCollectionViewCell.swift in Sources */,
 				4703CF892518FFB1007B685C /* FileReceivedTableViewCell.swift in Sources */,
 				47AAFC85238F00AD00E30BDA /* AttachmentsManager.swift in Sources */,
+				4701460C2A3B787300A00DF8 /* CommonNewMessageTableViewCell.swift in Sources */,
 				4754FAA6272B2060006295A5 /* NewsletterItemsSectionCollectionReusableView.swift in Sources */,
 				471FACDA23E9BE48007DE1C8 /* SupportViewController.swift in Sources */,
 				47669F4423D1F93700C17A77 /* GroupDetailsViewController.swift in Sources */,

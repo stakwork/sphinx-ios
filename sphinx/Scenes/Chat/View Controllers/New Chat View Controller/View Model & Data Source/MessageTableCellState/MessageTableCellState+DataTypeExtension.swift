@@ -60,22 +60,19 @@ extension MessageTableCellState {
         var imageUrl: String?
         var showJoinButton: Bool
         var bubbleWidth: CGFloat
-        var roundedBottom: Bool
         
         init(
             name: String,
             description: String,
             imageUrl: String?,
             showJoinButton: Bool,
-            bubbleWidth: CGFloat,
-            roundedBottom: Bool
+            bubbleWidth: CGFloat
         ) {
             self.name = name
             self.description = description
             self.imageUrl = imageUrl
             self.showJoinButton = showJoinButton
             self.bubbleWidth = bubbleWidth
-            self.roundedBottom = roundedBottom
         }
     }
     
@@ -127,6 +124,22 @@ extension MessageTableCellState {
             return lhs.fileSize           == rhs.fileSize &&
                    lhs.fileName           == rhs.fileName &&
                    lhs.pagesCount         == rhs.pagesCount
+        }
+    }
+    
+    struct MessageMenuData {
+        var messageId: Int
+        var bubbleRect: CGRect
+        var indexPath: IndexPath
+        
+        init(
+            messageId: Int,
+            bubbleRect: CGRect,
+            indexPath: IndexPath
+        ) {
+            self.messageId = messageId
+            self.bubbleRect = bubbleRect
+            self.indexPath = indexPath
         }
     }
 }

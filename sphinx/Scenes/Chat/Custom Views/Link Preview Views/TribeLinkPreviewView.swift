@@ -89,7 +89,7 @@ class TribeLinkPreviewView: LinkPreviewBubbleView {
                     width: tribeData.bubbleWidth,
                     height: kNewTribeBubbleHeight
                 ),
-                roundedBottom: tribeData.roundedBottom
+                roundedBottom: true
             )
         }
     }

@@ -118,6 +118,52 @@ extension NewChatViewController : NewChatTableDataSourceDelegate {
     func didUpdateChat(_ chat: Chat) {
         self.chat = chat
     }
+    
+    func didLongPressOnCellWith(messageId: Int, and rowIndex: Int, bubbleViewRect: CGRect) {
+        let indexPath = IndexPath(row: rowIndex, section: 0)
+        
+        self.chatTableView.scrollToRow(at: indexPath, at: .top, animated: true)
+        
+        DelayPerformedHelper.performAfterDelay(seconds: 0.3, completion: {
+            if self.isKeyboardVisible() {
+                self.messageMenuData = MessageTableCellState.MessageMenuData(
+                    messageId: messageId,
+                    bubbleRect: bubbleViewRect,
+                    indexPath: indexPath
+                )
+                self.view.endEditing(true)
+            } else {
+                self.showMessageMenuFor(
+                    messageId: messageId,
+                    indexPath: indexPath,
+                    bubbleViewRect: bubbleViewRect
+                )
+            }
+        })
+    }
+}
+
+extension NewChatViewController {
+    func showMessageMenuFor(
+        messageId: Int,
+        indexPath: IndexPath,
+        bubbleViewRect: CGRect
+    ) {
+        if let bubbleRectAndPath = MessageOptionsMenuHelper().getMessageBubbleRectAndPath(
+            tableView: self.chatTableView,
+            indexPath: indexPath,
+            contentView: self.view,
+            bubbleViewRect: bubbleViewRect
+        ), let message = TransactionMessage.getMessageWith(id: messageId)
+        {
+            newMsgsIndicatorView.isHidden = true
+            
+            let messageOptionsVC = MessageOptionsViewController.instantiate(message: message, delegate: nil)
+            messageOptionsVC.setBubblePath(bubblePath: bubbleRectAndPath)
+            messageOptionsVC.modalPresentationStyle = .overCurrentContext
+            self.navigationController?.present(messageOptionsVC, animated: false)
+        }
+    }
 }
 
 extension NewChatViewController : NewMessagesIndicatorViewDelegate {

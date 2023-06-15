@@ -22,6 +22,8 @@ protocol NewChatTableDataSourceDelegate : class {
     
     func didDeleteTribe()
     func didUpdateChat(_ chat: Chat)
+    
+    func didLongPressOnCellWith(messageId: Int, and rowIndex: Int, bubbleViewRect: CGRect)
 }
 
 class NewChatTableDataSource : NSObject {

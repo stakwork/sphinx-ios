@@ -24,6 +24,8 @@ class NewChatViewController: NewKeyboardHandlerViewController {
     var contact: UserContact?
     var chat: Chat?
     
+    var messageMenuData: MessageTableCellState.MessageMenuData? = nil
+    
     var contactResultsController: NSFetchedResultsController<UserContact>!
     var chatResultsController: NSFetchedResultsController<Chat>!
     
@@ -90,6 +92,15 @@ class NewChatViewController: NewKeyboardHandlerViewController {
     
     override func didToggleKeyboard() {
         shouldAdjustTableViewTopInset()
+        
+        if let messageMenuData = messageMenuData {
+            showMessageMenuFor(
+                messageId: messageMenuData.messageId,
+                indexPath: messageMenuData.indexPath,
+                bubbleViewRect: messageMenuData.bubbleRect
+            )
+            self.messageMenuData = nil
+        }
     }
     
     func shouldAdjustTableViewTopInset() {

@@ -63,7 +63,7 @@ class MessageOptionsView : UIView {
         let (menuRect, verticalPosition, horizontalPosition) = getMenuRectAndPosition(coordinates: coordinates, optionsCount: optionsCount, incoming: incoming)
         self.frame = menuRect
         
-        let backColor = incoming ? UIColor.Sphinx.OldReceivedMsgBG : UIColor.Sphinx.OldSentMsgBG
+        let backColor = incoming ? UIColor.Sphinx.ReceivedMsgBG : UIColor.Sphinx.SentMsgBG
         addBackLayer(frame: menuRect, backColor: backColor, verticalPosition: verticalPosition, horizontalPosition: horizontalPosition)
         addMenuOptions(options: messageOptions)
     }

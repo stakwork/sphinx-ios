@@ -23,6 +23,8 @@ class MessageOptionsViewController: UIViewController {
     weak var delegate: MessageOptionsVCDelegate?
     
     var bubbleShapeLayers: [(CGRect, CAShapeLayer)] = [(CGRect, CAShapeLayer)]()
+    var bubblePath: (CGRect, CGPath)? = nil
+    
     var message: TransactionMessage? = nil
     
     static func instantiate(message: TransactionMessage, delegate: MessageOptionsVCDelegate?) -> MessageOptionsViewController {
@@ -34,6 +36,10 @@ class MessageOptionsViewController: UIViewController {
     
     func setBubbleShapesData(bubbleShapeLayers: [(CGRect, CAShapeLayer)]) {
         self.bubbleShapeLayers = bubbleShapeLayers
+    }
+    
+    func setBubblePath(bubblePath: (CGRect, CGPath)) {
+        self.bubblePath = bubblePath
     }
 
     override func viewDidLoad() {
@@ -65,22 +71,36 @@ class MessageOptionsViewController: UIViewController {
             rightBottomCorner.y = (rightBottomCorner.y == 0) ? newY2 : max(rightBottomCorner.y, newY2)
         }
         
-        for (rect, layer) in bubbleShapeLayers {
-            let messageShapeLayer = layer
-            let containerFrame = rect
+        if let bubblePath = bubblePath {
+            let rectangleMessageRect = CGRect(x: bubblePath.0.origin.x,
+                                              y: bubblePath.0.origin.y,
+                                              width: bubblePath.0.width,
+                                              height: bubblePath.0.height)
             
-            if let path = messageShapeLayer.path {
-                let rectangleMessageRect = CGRect(x: messageShapeLayer.frame.origin.x + containerFrame.origin.x,
-                                                  y: messageShapeLayer.frame.origin.y + containerFrame.origin.y,
-                                                  width: messageShapeLayer.frame.width,
-                                                  height: messageShapeLayer.frame.height)
+            saveRectPosition(bubbleRect: rectangleMessageRect)
+            
+            let messageViewPath = UIBezierPath(cgPath: bubblePath.1)
+            messageViewPath.apply(CGAffineTransform(translationX: rectangleMessageRect.origin.x, y: rectangleMessageRect.origin.y))
+            
+            entireViewPath.append(messageViewPath)
+        } else {
+            for (rect, layer) in bubbleShapeLayers {
+                let messageShapeLayer = layer
+                let containerFrame = rect
                 
-                saveRectPosition(bubbleRect: rectangleMessageRect)
-                
-                let messageViewPath = UIBezierPath(cgPath: path)
-                messageViewPath.apply(CGAffineTransform(translationX: rectangleMessageRect.origin.x, y: rectangleMessageRect.origin.y))
-                
-                entireViewPath.append(messageViewPath)
+                if let path = messageShapeLayer.path {
+                    let rectangleMessageRect = CGRect(x: messageShapeLayer.frame.origin.x + containerFrame.origin.x,
+                                                      y: messageShapeLayer.frame.origin.y + containerFrame.origin.y,
+                                                      width: messageShapeLayer.frame.width,
+                                                      height: messageShapeLayer.frame.height)
+                    
+                    saveRectPosition(bubbleRect: rectangleMessageRect)
+                    
+                    let messageViewPath = UIBezierPath(cgPath: path)
+                    messageViewPath.apply(CGAffineTransform(translationX: rectangleMessageRect.origin.x, y: rectangleMessageRect.origin.y))
+                    
+                    entireViewPath.append(messageViewPath)
+                }
             }
         }
         
@@ -115,7 +135,12 @@ class MessageOptionsViewController: UIViewController {
     }
     
     func addMenuView(leftTopCorner: CGPoint, rightBottomCorner: CGPoint) {
-        let menuView = MessageOptionsView(message: message, leftTopCorner: leftTopCorner, rightBottomCorner: rightBottomCorner, delegate: self)
+        let menuView = MessageOptionsView(
+            message: message,
+            leftTopCorner: leftTopCorner,
+            rightBottomCorner: rightBottomCorner,
+            delegate: self
+        )
         self.view.addSubview(menuView)
     }
     

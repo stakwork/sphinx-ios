@@ -72,6 +72,12 @@ extension RecommendationItemWUnifiedViewCollectionViewCell : PodcastEpisodeRowDe
 }
 
 extension RecommendationItemWUnifiedViewCollectionViewCell : VideoRowDelegate {
+    func shouldStartDownloading(video: Video) {
+        if let delegate = delegate as? VideoFeedEpisodePlayerCollectionViewController{
+            delegate.shouldDownloadVideo(video: video)
+        }
+    }
+    
     func shouldShowDescription(video: Video) {
         delegate?.shouldShowDescription(video: video)
     }
@@ -83,6 +89,7 @@ extension RecommendationItemWUnifiedViewCollectionViewCell : VideoRowDelegate {
     func shouldShare(video: Video) {
         delegate?.shouldShare(video: video)
     }
+    
 }
 
 // MARK: - Static Properties

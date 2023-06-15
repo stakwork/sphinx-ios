@@ -346,9 +346,10 @@ class UnifiedEpisodeView : UIView {
             podcastDelegate?.shouldStartDownloading(episode: episode)
         }
         else if let video = videoEpisode,
-                !video.isDownloaded{
-            print("downloaindg video!")
-            videoDelegate?.shouldStartDownloading(video: video)
+                !video.isDownloaded,
+            let vd = videoDelegate as? RecommendationItemWUnifiedViewCollectionViewCell{
+            print("downloading video!")
+            vd.shouldStartDownloading(video: video)
         }
     }
     

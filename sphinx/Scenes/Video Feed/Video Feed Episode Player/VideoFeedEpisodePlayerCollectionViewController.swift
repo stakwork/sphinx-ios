@@ -520,4 +520,13 @@ extension VideoFeedEpisodePlayerCollectionViewController:ItemDescriptionViewCont
     func didDismissDescriptionView(index:Int) {
         
     }
+    
+    func shouldDownloadVideo(video:Video){
+        DownloadService.sharedInstance.startDownload(video: video)
+//        if let index = videoFeedEpisodes.firstIndex(of: video) {
+//            let indexPath = IndexPath(item: index, section: 0)
+//            collectionView.reloadItems(at: [indexPath])
+//        }
+    }
+    
 }

@@ -24,10 +24,7 @@ class WindowsManager {
     weak var delegate : WindowsManagerDelegate?
     
     public static func getWindowSize() -> CGSize {
-        guard let window = UIApplication.shared.keyWindow else {
-            return UIScreen.main.bounds.size
-        }
-        return window.frame.size
+        return UIScreen.main.bounds.size
     }
     
     public static func getWindowWidth() -> CGFloat {

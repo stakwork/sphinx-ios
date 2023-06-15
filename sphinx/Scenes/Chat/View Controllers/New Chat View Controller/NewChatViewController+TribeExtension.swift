@@ -20,6 +20,8 @@ extension NewChatViewController {
             self.headerView.setChatInfoOnHeader()
             self.loadPodcastFeed()
             self.configurePinnedMessageView()
+            
+            self.chatViewModel.loadBadgesAndLeaderboard()
         }
     }    
     

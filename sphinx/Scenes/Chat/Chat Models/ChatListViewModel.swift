@@ -7,14 +7,10 @@
 
 import Foundation
 import SwiftyJSON
-import ObjectMapper
 
 final class ChatListViewModel: NSObject {
     
     var contactsService: ContactsService!
-    var chatLeaderboard : [ChatLeaderboardEntry] = [ChatLeaderboardEntry]()
-    var availableBadges : [Badge] = [Badge]()
-    var tribeUUID : String? = nil
     
     public static let kMessagesPerPage: Int = 200
     
@@ -184,40 +180,6 @@ final class ChatListViewModel: NSObject {
         }
         syncMessagesTask?.perform()
         
-        getChatLeaderboards()
-        
-    }
-    
-    func getChatLeaderboards(){
-        if let valid_uuid = tribeUUID{
-            DispatchQueue.main.async {
-                API.sharedInstance.getTribeLeaderboard(
-                    tribeUUID: valid_uuid,
-                    callback: { results in
-                        if var chatLeaderboardEntries = Mapper<ChatLeaderboardEntry>().mapArray(JSONObject: Array(results)){
-                            
-                            self.chatLeaderboard = chatLeaderboardEntries
-                        }
-                    },
-                    errorCallback: {
-                        
-                    })
-            }
-            
-        }
-    }
-    
-    func getChatBadges(chat:Chat?){
-        if let valid_chat = chat,
-           let valid_tribe = valid_chat.tribeInfo {
-            API.sharedInstance.getAssetsByID(
-                assetIDs: valid_tribe.badgeIds,
-                callback: { results in
-                    self.availableBadges = results
-            }, errorCallback: {
-                
-            })
-        }
     }
     
     func finishRestoring() {

@@ -31,7 +31,8 @@ extension NewMessageTableViewCell {
                 color: avatarImage.color,
                 alias: avatarImage.alias,
                 picture: avatarImage.imageUrl,
-                image: avatarImage.image
+                image: avatarImage.image,
+                and: self
             )
         } else {
             chatAvatarView.resetView()
@@ -102,5 +103,5 @@ extension NewMessageTableViewCell {
             sentArrow.alpha = 0.0
             break
         }
-    }    
+    }
 }

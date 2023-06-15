@@ -66,7 +66,8 @@ extension NewOnlyTextMessageTableViewCell {
                 color: avatarImage.color,
                 alias: avatarImage.alias,
                 picture: avatarImage.imageUrl,
-                image: avatarImage.image
+                image: avatarImage.image,
+                and: self
             )
         } else {
             chatAvatarView.resetView()

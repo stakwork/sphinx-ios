@@ -17,7 +17,7 @@ class TribeMemberPopupViewController: UIViewController {
     var message: TransactionMessage!
     
     static func instantiate(
-        message : TransactionMessage,
+        message: TransactionMessage,
         delegate: TribeMemberViewDelegate
     ) -> TribeMemberPopupViewController {
         let viewController = StoryboardScene.Chat.tribeMemberPopupViewController.instantiate()
@@ -29,7 +29,23 @@ class TribeMemberPopupViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tribeMemberPopupView.configureFor(message: message, with: delegate)
+        tribeMemberPopupView.configureFor(
+            message: message,
+            with: self
+        )
     }
+}
 
+extension TribeMemberPopupViewController : TribeMemberViewDelegate {
+    func shouldGoToSendPayment(message: TransactionMessage) {
+        delegate?.shouldGoToSendPayment(message: message)
+    }
+    
+    func shouldDismissMemberPopup() {
+        self.dismiss(animated: false)
+    }
+    
+    func shouldDisplayKnownBadges() {
+        delegate?.shouldDisplayKnownBadges()
+    }
 }

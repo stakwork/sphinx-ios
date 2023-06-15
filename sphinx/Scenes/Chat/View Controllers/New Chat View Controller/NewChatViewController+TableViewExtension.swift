@@ -141,6 +141,34 @@ extension NewChatViewController : NewChatTableDataSourceDelegate {
             }
         })
     }
+    
+    func shouldShowLeaderboardFor(
+        messageId: Int
+    ) {
+        guard let message = TransactionMessage.getMessageWith(id: messageId) else {
+            return
+        }
+        
+        if let matchedLeaderboardEntry = chatViewModel.getLeaderboardEntryFor(message: message) {
+            let vc = MemberBadgeDetailVC.instantiate(delegate: self)
+
+            let vm = MemberBadgeDetailVM(
+                vc: vc,
+                leaderBoardData: matchedLeaderboardEntry,
+                message: message,
+                knownTribeBadges: chatViewModel.availableBadges
+            )
+
+            vc.memberBadgeDetailVM = vm
+            
+            vc.modalPresentationStyle = .overCurrentContext
+            self.present(vc, animated: false)
+        } else {
+            let tribeMemberPopupVC = TribeMemberPopupViewController.instantiate(message: message, delegate: self)
+            tribeMemberPopupVC.modalPresentationStyle = .overCurrentContext
+            self.present(tribeMemberPopupVC, animated: false)
+        }
+    }
 }
 
 extension NewChatViewController {
@@ -170,4 +198,25 @@ extension NewChatViewController : NewMessagesIndicatorViewDelegate {
     func didTouchButton() {
         chatTableView.scrollToRow(index: 0, animated: true)
     }
+}
+
+extension NewChatViewController : TribeMemberViewDelegate {
+    func shouldGoToSendPayment(message: TransactionMessage) {
+        
+    }
+    
+    func shouldDisplayKnownBadges() {
+        guard let chatId = chat?.id else {
+            return
+        }
+        
+        let badgeVC = BadgeMemberKnownBadgesVC.instantiate(
+            chatID: chatId,
+            badges: chatViewModel.availableBadges
+        )
+        
+        self.navigationController?.pushViewController(badgeVC, animated: true)
+    }
+    
+    func shouldDismissMemberPopup() {}
 }

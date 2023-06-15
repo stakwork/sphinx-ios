@@ -14,6 +14,7 @@
 		470146112A3B79E300A00DF8 /* NewOnlyTextMessageTableViewCell+LayoutExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470146102A3B79E300A00DF8 /* NewOnlyTextMessageTableViewCell+LayoutExtension.swift */; };
 		470146142A3B856D00A00DF8 /* MessageOptionsMenuHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470146132A3B856D00A00DF8 /* MessageOptionsMenuHelper.swift */; };
 		470146162A3B962E00A00DF8 /* NewChatViewController+MessageMenuDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470146152A3B962E00A00DF8 /* NewChatViewController+MessageMenuDelegate.swift */; };
+		470146182A3BAE8F00A00DF8 /* NewOnlyTextMessageTableViewCell+DelegateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470146172A3BAE8F00A00DF8 /* NewOnlyTextMessageTableViewCell+DelegateExtension.swift */; };
 		47018F8127CFB7CE00797E0B /* pause_animation.json in Resources */ = {isa = PBXBuildFile; fileRef = 47018F8027CFB7CD00797E0B /* pause_animation.json */; };
 		47018F9227CFEEAF00797E0B /* skip30v1.caf in Resources */ = {isa = PBXBuildFile; fileRef = 47018F9127CFEDB400797E0B /* skip30v1.caf */; };
 		47018F9327CFEEAF00797E0B /* skip30v2.caf in Resources */ = {isa = PBXBuildFile; fileRef = 47018F8E27CFEDB300797E0B /* skip30v2.caf */; };
@@ -930,6 +931,7 @@
 		470146102A3B79E300A00DF8 /* NewOnlyTextMessageTableViewCell+LayoutExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewOnlyTextMessageTableViewCell+LayoutExtension.swift"; sourceTree = "<group>"; };
 		470146132A3B856D00A00DF8 /* MessageOptionsMenuHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageOptionsMenuHelper.swift; sourceTree = "<group>"; };
 		470146152A3B962E00A00DF8 /* NewChatViewController+MessageMenuDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewChatViewController+MessageMenuDelegate.swift"; sourceTree = "<group>"; };
+		470146172A3BAE8F00A00DF8 /* NewOnlyTextMessageTableViewCell+DelegateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewOnlyTextMessageTableViewCell+DelegateExtension.swift"; sourceTree = "<group>"; };
 		47018F8027CFB7CD00797E0B /* pause_animation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = pause_animation.json; sourceTree = "<group>"; };
 		47018F8E27CFEDB300797E0B /* skip30v2.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = skip30v2.caf; sourceTree = "<group>"; };
 		47018F8F27CFEDB300797E0B /* skip30v3.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = skip30v3.caf; sourceTree = "<group>"; };
@@ -2094,6 +2096,7 @@
 				47E6A4FA2A2FB3B100A9509E /* NewMessageTableViewCell+MessageTypesExtension.swift */,
 				47E6A4FC2A2FB45B00A9509E /* NewMessageTableViewCell+StatusHeaderExtension.swift */,
 				47E6A4BF2A2E591900A9509E /* NewMessageTableViewCell+GeneralSetup.swift */,
+				47CFA9512A3A13630030BC23 /* NewMessageTableViewCell+DelegateExtension.swift */,
 			);
 			path = NewMessageTableViewCell;
 			sourceTree = "<group>";
@@ -2113,8 +2116,8 @@
 			children = (
 				47FA727A2A32373900FB4535 /* NewOnlyTextMessageTableViewCell.swift */,
 				47FA727B2A32373900FB4535 /* NewOnlyTextMessageTableViewCell.xib */,
-				47CFA9512A3A13630030BC23 /* NewMessageTableViewCell+DelegateExtension.swift */,
 				470146102A3B79E300A00DF8 /* NewOnlyTextMessageTableViewCell+LayoutExtension.swift */,
+				470146172A3BAE8F00A00DF8 /* NewOnlyTextMessageTableViewCell+DelegateExtension.swift */,
 			);
 			path = NewOnlyTextMessageTableViewCell;
 			sourceTree = "<group>";
@@ -5440,6 +5443,7 @@
 				475154B32423E7FE00477384 /* VideoCallSentTableViewCell.swift in Sources */,
 				47AA08C3234B8CF2002C69E2 /* AddFriendViewController.swift in Sources */,
 				479608F4256EAEB400A68FC1 /* MessageBoostView.swift in Sources */,
+				470146182A3BAE8F00A00DF8 /* NewOnlyTextMessageTableViewCell+DelegateExtension.swift in Sources */,
 				472092C12A26516A00468796 /* NewChatViewController+WebAppExtension.swift in Sources */,
 				475154B62423F08A00477384 /* VideoCallBubbleView.swift in Sources */,
 				472782122729A547007D5F1F /* NewsletterFeed+FetchUtils.swift in Sources */,

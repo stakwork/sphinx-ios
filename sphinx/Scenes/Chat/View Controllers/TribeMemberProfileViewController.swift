@@ -105,7 +105,7 @@ class TribeMemberProfileViewController: UIViewController {
     
     func dismissView() {
         runDismissAnimation() {
-            self.delegate?.didDismissTribeMemberVC()
+//            self.delegate?.didDismissTribeMemberVC()
         }
     }
 }

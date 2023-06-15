@@ -478,28 +478,27 @@ extension ChatViewController : MessageCellDelegate {
     }
     
     func didTapAvatarView(message: TransactionMessage) {
-        if let _ = message.person,
-           let matchedLeaderboardEntry = chatListViewModel.chatLeaderboard.filter({$0.alias == message.senderAlias}).first {
-            
-            let vc = MemberBadgeDetailVC.instantiate(delegate: self)
-            
-            let vm = MemberBadgeDetailVM(
-                vc: vc,
-                leaderBoardData: matchedLeaderboardEntry,
-                message: message,
-                knownTribeBadges: chatListViewModel.availableBadges
-            )
-            
-            vc.memberBadgeDetailVM = vm
-            vc.modalPresentationStyle = .overCurrentContext
-            
-            self.definesPresentationContext = true
-            self.present(vc, animated: false)
-        } else {
-            let tribeMemberPopupVC = TribeMemberPopupViewController.instantiate(message: message, delegate: self)
-            WindowsManager.sharedInstance.showConveringWindowWith(rootVC: tribeMemberPopupVC)
-        }
-        
+//        if let _ = message.person,
+//           let matchedLeaderboardEntry = chatListViewModel.chatLeaderboard.filter({$0.alias == message.senderAlias}).first {
+//
+//            let vc = MemberBadgeDetailVC.instantiate(delegate: self)
+//
+//            let vm = MemberBadgeDetailVM(
+//                vc: vc,
+//                leaderBoardData: matchedLeaderboardEntry,
+//                message: message,
+//                knownTribeBadges: chatListViewModel.availableBadges
+//            )
+//
+//            vc.memberBadgeDetailVM = vm
+//            vc.modalPresentationStyle = .overCurrentContext
+//
+//            self.definesPresentationContext = true
+//            self.present(vc, animated: false)
+//        } else {
+//            let tribeMemberPopupVC = TribeMemberPopupViewController.instantiate(message: message, delegate: self)
+//            WindowsManager.sharedInstance.showConveringWindowWith(rootVC: tribeMemberPopupVC)
+//        }
     }
 }
 
@@ -519,17 +518,19 @@ extension ChatViewController : TribeMemberViewDelegate {
         presentNavigationControllerWith(vc: viewController)
     }
     
-    func displayKnownBadges(){
-        let badgeVC = BadgeMemberKnownBadgesVC.instantiate(
-            chatID: chat?.id,
-            badges: chatListViewModel.availableBadges
-        )
-        self.navigationController?.pushViewController(badgeVC, animated: true)
+    func shouldDismissMemberPopup() {}
+    
+    func shouldDisplayKnownBadges() {
+//        let badgeVC = BadgeMemberKnownBadgesVC.instantiate(
+//            chatID: chat?.id,
+//            badges: chatListViewModel.availableBadges
+//        )
+//        self.navigationController?.pushViewController(badgeVC, animated: true)
     }
     
-    func didDismissTribeMemberVC() {
-        accessoryView.show()
-    }
+//    func didDismissTribeMemberVC() {
+//        accessoryView.show()
+//    }
 }
 
 extension ChatViewController : PaymentInvoiceDelegate, GroupPaymentVCDelegate {    

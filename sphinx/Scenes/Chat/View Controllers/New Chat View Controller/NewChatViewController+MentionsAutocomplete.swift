@@ -22,18 +22,7 @@ extension NewChatViewController: ChatMentionAutocompleteDelegate {
             return
         }
         
-        var possibleMentions = [String]()
-        
-        if mentionText.count > 0 {
-            possibleMentions = self.chat?.aliases.filter({
-                if (mentionText.count > $0.count) {
-                    return false
-                }
-                let substring = $0.substring(range: NSRange(location: 0, length: mentionText.count))
-                return (substring.lowercased() == mentionText && mentionText != "")
-            }).sorted() ?? []
-        }
-        
+        var possibleMentions = chatViewModel.getMentionsFrom(mentionText: mentionText)
         mentionsDataSource.updateMentionSuggestions(suggestions: possibleMentions)
     }
     

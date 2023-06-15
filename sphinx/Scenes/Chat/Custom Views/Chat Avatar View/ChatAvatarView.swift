@@ -81,8 +81,11 @@ class ChatAvatarView: UIView {
         color: UIColor,
         alias: String?,
         picture: String?,
-        image: UIImage? = nil
+        image: UIImage? = nil,
+        and delegate: ChatAvatarViewDelegate? = nil
     ) {
+        self.delegate = delegate
+        
         profileImageView.sd_cancelCurrentImageLoad()
         
         profileImageView.isHidden = true

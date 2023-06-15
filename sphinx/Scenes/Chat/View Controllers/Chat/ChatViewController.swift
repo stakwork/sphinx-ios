@@ -230,12 +230,10 @@ class ChatViewController: KeyboardHandlerViewController {
     }
         
     func fetchNewData() {
-        chatListViewModel.tribeUUID = chat?.uuid
         DispatchQueue.global().async {
             self.chatListViewModel.syncMessages(chatId: self.chat?.id, progressCallback: { _ in }) { (chatNewMessagesCount, _) in
                 DispatchQueue.main.async {
                     self.reloadMessages(newMessageCount: chatNewMessagesCount)
-                    self.chatListViewModel.getChatBadges(chat: self.chat)
                 }
             }
         }

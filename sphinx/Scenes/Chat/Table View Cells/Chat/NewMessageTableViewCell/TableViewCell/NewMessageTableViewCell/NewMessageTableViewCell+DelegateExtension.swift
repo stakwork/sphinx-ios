@@ -57,3 +57,11 @@ extension NewMessageTableViewCell : LinkPreviewDelegate {
         }
     }
 }
+
+extension NewMessageTableViewCell : ChatAvatarViewDelegate {
+    func didTapAvatarView() {
+        if let messageId = messageId {
+            delegate?.didTapAvatarViewFor(messageId: messageId, and: rowIndex)
+        }
+    }
+}

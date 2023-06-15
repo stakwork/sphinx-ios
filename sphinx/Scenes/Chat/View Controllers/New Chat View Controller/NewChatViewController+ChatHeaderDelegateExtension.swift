@@ -39,8 +39,7 @@ extension NewChatViewController : ChatHeaderViewDelegate {
         if chat.isPublicGroup() {
             goToNotificationsLevel()
         } else {
-            chatViewModel.toggleVolumeOn(
-                chat: chat,
+            chatViewModel.toggleVolume(
                 completion: { chat in
                     if let chat = chat, chat.isMuted(){
                         self.messageBubbleHelper.showGenericMessageView(

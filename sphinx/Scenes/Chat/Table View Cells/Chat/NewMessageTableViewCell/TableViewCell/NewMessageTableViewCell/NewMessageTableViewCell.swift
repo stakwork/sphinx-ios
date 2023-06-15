@@ -43,7 +43,10 @@ protocol NewMessageTableViewCellDelegate: class {
     func shouldLoadVideoDataFor(messageId: Int, and rowIndex: Int)
     
     //Actions handling
+    ///Message reply
     func didTapMessageReplyFor(messageId: Int, and rowIndex: Int)
+    ///Avatar view
+    func didTapAvatarViewFor(messageId: Int, and rowIndex: Int)
     ///Call Links
     func didTapCallLinkCopyFor(messageId: Int, and rowIndex: Int)
     func didTapCallJoinAudioFor(messageId: Int, and rowIndex: Int)

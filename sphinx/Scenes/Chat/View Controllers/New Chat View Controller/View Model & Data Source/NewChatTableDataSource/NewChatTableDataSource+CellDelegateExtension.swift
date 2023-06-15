@@ -290,6 +290,12 @@ extension NewChatTableDataSource {
         }
     }
     
+    func didTapAvatarViewFor(messageId: Int, and rowIndex: Int) {
+        if chat.isPublicGroup() {
+            showLeaderboardFor(messageId: messageId)
+        }
+    }
+    
     func didTapOnLink(_ link: String) {
         if
             !link.stringLinks.isEmpty ||
@@ -392,6 +398,12 @@ extension NewChatTableDataSource {
             title: "generic.error.title".localized,
             message: "generic.error.message".localized
         )
+    }
+}
+
+extension NewChatTableDataSource {
+    func showLeaderboardFor(messageId: Int) {
+        delegate?.shouldShowLeaderboardFor(messageId: messageId)
     }
 }
 

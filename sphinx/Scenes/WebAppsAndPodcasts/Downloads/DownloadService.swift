@@ -10,12 +10,19 @@ import Foundation
 
 protocol DownloadServiceDelegate : class {
     func shouldReloadRowFor(download: Download)
+    func shouldReloadRowFor(download:VideoDownload)
+}
+
+extension DownloadServiceDelegate{
+    func shouldReloadRowFor(download: Download){}
+    func shouldReloadRowFor(download:VideoDownload){}//default implementation does nothing
 }
 
 enum DownloadServiceDelegateKeys: String {
     case PodcastPlayerDelegate = "PodcastPlayerDelegate"
     case FeedItemDetailsDelegate = "FeedItemDetailsDelegate"
     case ItemDescriptionDelegate = "ItemDescriptionDelegate"
+    case VideoFeedDelegate = "VideoFeedDelegate"
 }
 
 class DownloadService : NSObject {
@@ -78,7 +85,7 @@ class DownloadService : NSObject {
         activeVideoDownloads[url.absoluteString] = download
         
         for d in self.delegates.values {
-            //d.shouldReloadRowFor(download: download)
+            d.shouldReloadRowFor(download: download)
         }
         
         DispatchQueue.global(qos: .utility).async {
@@ -228,13 +235,13 @@ extension DownloadService : URLSessionDownloadDelegate {
             print("Could not copy file to disk: \(error.localizedDescription)")
         }
         
-//        if let download = download {
-//            DispatchQueue.main.async {
-//                for d in self.delegates.values {
-//                    d.shouldReloadRowFor(download: download)
-//                }
-//            }
-//        }
+        if let download = download {
+            DispatchQueue.main.async {
+                for d in self.delegates.values {
+                    d.shouldReloadRowFor(download: download)
+                }
+            }
+        }
     }
     
     func handlePodcastDownloadCompletion(download:Download?,urlString:String,location:URL){
@@ -275,8 +282,30 @@ extension DownloadService : URLSessionDownloadDelegate {
     }
     
     func handleVideoDownloadUpdate(downloadTask: URLSessionDownloadTask,totalBytesWritten: Int64,totalBytesExpectedToWrite: Int64){
+        guard let url = downloadTask.originalRequest?.url ?? downloadTask.currentRequest?.url, let download = activeVideoDownloads[url.absoluteString] else {
+            return
+        }
+        
         let newProgress = Int(Float(totalBytesWritten) / Float(totalBytesExpectedToWrite) * 100)
         print("Video Progress:\(newProgress)")
+        
+        if(newProgress >= 100){ //detect transition from downloading to download complete
+            StorageManager.sharedManager.processGarbageCleanup()
+        }
+        
+        if (download.progress == newProgress) {
+            return
+        }
+        
+        let shouldUpdateUI = abs(newProgress - download.progress) > 2
+        
+        if shouldUpdateUI {
+            download.progress = newProgress
+        }
+        
+        activeVideoDownloads[url.absoluteString] = download
+        
+// 
     }
     
     func handlePodcastDownloadUpdate(downloadTask: URLSessionDownloadTask,totalBytesWritten: Int64,totalBytesExpectedToWrite: Int64){
@@ -319,10 +348,11 @@ extension DownloadService : URLSessionDownloadDelegate {
             return
         }
         
-        if let podcastDownload = activeDownloads[url.absoluteString]{
+        if let _ = activeDownloads[url.absoluteString]{
             handlePodcastDownloadUpdate(downloadTask: downloadTask, totalBytesWritten: totalBytesWritten, totalBytesExpectedToWrite: totalBytesExpectedToWrite)
         }
-        else if let videoDownload = activeVideoDownloads[url.absoluteString]{
+        
+        if let _ = activeVideoDownloads[url.absoluteString]{
             handleVideoDownloadUpdate(downloadTask: downloadTask, totalBytesWritten: totalBytesWritten, totalBytesExpectedToWrite: totalBytesExpectedToWrite)
         }
     }

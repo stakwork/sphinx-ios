@@ -24,6 +24,7 @@ class VideoFeedEpisodePlayerCollectionViewController: UICollectionViewController
     
     private var currentDataSnapshot: DataSourceSnapshot!
     private var dataSource: DataSource!
+    let downloadService : DownloadService = DownloadService.sharedInstance
     
     weak var boostDelegate: CustomBoostDelegate?
     var delegate:VideoFeedEpisodePlayerCollectionViewControllerDelegate? = nil
@@ -265,6 +266,11 @@ extension VideoFeedEpisodePlayerCollectionViewController {
         let snapshot = makeSnapshotForCurrentState()
 
         dataSource.apply(snapshot, animatingDifferences: false)
+        
+        downloadService.setDelegate(
+            delegate: self,
+            forKey: DownloadServiceDelegateKeys.VideoFeedDelegate
+        )
     }
 }
 
@@ -522,11 +528,20 @@ extension VideoFeedEpisodePlayerCollectionViewController:ItemDescriptionViewCont
     }
     
     func shouldDownloadVideo(video:Video){
-        DownloadService.sharedInstance.startDownload(video: video)
+        downloadService.startDownload(video: video)
+        
 //        if let index = videoFeedEpisodes.firstIndex(of: video) {
 //            let indexPath = IndexPath(item: index, section: 0)
 //            collectionView.reloadItems(at: [indexPath])
 //        }
     }
     
+}
+
+
+extension VideoFeedEpisodePlayerCollectionViewController : DownloadServiceDelegate{
+    func shouldReloadRowFor(download: VideoDownload) {
+        //TODO: reload row
+        print("shouldReloadRowFor from VideoFeedEpisodePlayerCollectionViewController")
+    }
 }

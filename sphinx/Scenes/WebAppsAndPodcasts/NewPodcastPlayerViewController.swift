@@ -141,6 +141,7 @@ class NewPodcastPlayerViewController: UIViewController {
 }
 
 extension NewPodcastPlayerViewController : PodcastEpisodesDSDelegate {
+    
     func didDismiss() {}
     
     func didTapForDescriptionAt(episode: PodcastEpisode,cell:UITableViewCell) {
@@ -169,7 +170,8 @@ extension NewPodcastPlayerViewController : PodcastEpisodesDSDelegate {
         topFixingView.isHidden = !show
     }
 
-    func downloadTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {
+    func downloadTapped(_ indexPath: IndexPath, item: ContentFeedItem) {
+        let episode = PodcastEpisode.convertFrom(contentFeedItem: item)
         downloadService.startDownload(episode)
         reload(indexPath.row)
     }

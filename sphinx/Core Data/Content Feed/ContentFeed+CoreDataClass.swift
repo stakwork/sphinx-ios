@@ -210,6 +210,66 @@ public class ContentFeed: NSManagedObject {
     }
     
     var sortedItemsArray: [ContentFeedItem] = []
+    
+    public static func convertFrom(
+        podcastFeed: PodcastFeed
+    ) -> ContentFeed? {
+        
+        let contentFeed = ContentFeed(entity: ContentFeed.entity(), insertInto: podcastFeed.chat?.managedObjectContext)
+        
+        if let feedURL = URL(string: podcastFeed.feedURLPath ?? ""){
+            contentFeed.feedURL = feedURL
+        }
+        contentFeed.feedID = podcastFeed.feedID
+        contentFeed.title = podcastFeed.title
+        contentFeed.feedDescription = podcastFeed.podcastDescription
+        contentFeed.datePublished = podcastFeed.datePublished
+        contentFeed.dateUpdated = podcastFeed.dateUpdated
+        contentFeed.authorName = podcastFeed.author
+        contentFeed.imageURL = URL(string: podcastFeed.imageURLPath ?? "")
+        contentFeed.generator = podcastFeed.generator
+        contentFeed.chat = podcastFeed.chat
+        contentFeed.dateLastConsumed = podcastFeed.dateLastConsumed
+        
+//        contentFeed.items = Set(arrayLiteral: podcastFeed.episodes?.compactMap { episode in
+//            ContentFeedItem.convertFrom(podcastEpisode: episode)
+//        })
+        
+//        contentFeed.paymentDestinations = Set(podcastFeed.destinations.compactMap { destination in
+//            ContentFeedPaymentDestination.convertFrom(podcastDestination: destination, contentFeed: contentFeed)
+//        })
+//        
+//        if let model = podcastFeed.model {
+//            contentFeed.paymentModel = ContentFeedPaymentModel.convertFrom(podcastModel: model, contentFeed: contentFeed)
+//        }
+        
+        return contentFeed
+    }
+
+    
+    public static func convertFrom(
+        videoFeed: VideoFeed
+    ) -> ContentFeed? {
+        
+        let contentFeed = ContentFeed(entity: ContentFeed.entity(), insertInto: nil)
+        
+        contentFeed.title = videoFeed.title
+        contentFeed.feedID = videoFeed.feedID
+        contentFeed.generator = videoFeed.generator
+        contentFeed.chat = videoFeed.chat
+        contentFeed.datePublished = videoFeed.datePublished
+        contentFeed.dateUpdated = videoFeed.dateUpdated
+        contentFeed.ownerURL = videoFeed.feedOwnerURL
+        contentFeed.feedDescription = videoFeed.feedDescription
+        contentFeed.authorName = videoFeed.author
+        contentFeed.imageURL = videoFeed.imageURL
+        contentFeed.dateLastConsumed = videoFeed.dateLastConsumed
+        contentFeed.items = Set(videoFeed.videos?.compactMap({
+            ContentFeedItem.convertFrom(video: $0, videoFeed: videoFeed)
+        }) ?? [])
+        
+        return contentFeed
+    }
 }
 
 extension String {

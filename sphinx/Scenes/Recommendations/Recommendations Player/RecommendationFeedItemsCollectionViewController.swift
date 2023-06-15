@@ -368,14 +368,15 @@ extension RecommendationFeedItemsCollectionViewController : FeedItemRowDelegate 
         }
     }
     
-    func shouldStartDownloading(episode: PodcastEpisode, cell: UICollectionViewCell) {}
+    func shouldStartDownloading(item: ContentFeedItem, cell: UICollectionViewCell) {}
     func shouldDeleteFile(episode: PodcastEpisode, cell: UICollectionViewCell) {}
     func shouldDeleteFile(episode: PodcastEpisode, cell: UITableViewCell) {}
-    func shouldStartDownloading(episode: PodcastEpisode, cell: UITableViewCell) {}
+    func shouldStartDownloading(item: ContentFeedItem, cell: UITableViewCell) {}
     func shouldShowMore(episode: PodcastEpisode, cell: UITableViewCell){}
 }
 
 extension RecommendationFeedItemsCollectionViewController : PodcastEpisodesDSDelegate {
+    func downloadTapped(_ indexPath: IndexPath, item: ContentFeedItem) {}
     func didDismiss() {}
     func didTapForDescriptionAt(episode: PodcastEpisode,cell:UITableViewCell) {}
     func didTapForDescriptionAt(index: Int) {}

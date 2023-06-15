@@ -226,6 +226,13 @@ extension VideoFeedEpisodePlayerContainerViewController {
 }
 
 extension VideoFeedEpisodePlayerContainerViewController:VideoFeedEpisodePlayerCollectionViewControllerDelegate{
+    
+    func downloadTapped(_ indexPath: IndexPath,item: ContentFeedItem) {
+        let video = Video.convertFrom(contentFeedItem: item)
+        DownloadService.sharedInstance.startDownload(video: video)
+        collectionViewController.collectionView.reloadItems(at: [indexPath])
+    }
+    
     func requestPlay() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.25, execute: {
             self.youtubeVideoPlayerViewController.startPlay()

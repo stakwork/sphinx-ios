@@ -103,8 +103,9 @@ class FeedItemDetailVM : NSObject {
     ) {
         switch(action){
         case .download:
-            if let episode = episode {
-                self.delegate?.downloadTapped(self.indexPath, episode: episode)
+            if let episode = episode,
+               let item = ContentFeedItem.convertFrom(podcastEpisode: episode){
+                self.delegate?.downloadTapped(self.indexPath, item: item)
             }
             self.tableView?.reloadData()
             break

@@ -363,7 +363,8 @@ extension ItemDescriptionViewController:PodcastEpisodesDSDelegate{
     
     func didTapEpisodeAt(index: Int) {}
     
-    func downloadTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {
+    func downloadTapped(_ indexPath: IndexPath, item: ContentFeedItem) {
+        let episode = PodcastEpisode.convertFrom(contentFeedItem: item)
         itemDownloadTapped(episode: episode)
     }
     

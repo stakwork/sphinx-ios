@@ -11,12 +11,14 @@ import CoreData
 //.youtubeVideoPlayerViewController.startPlay()
 protocol VideoFeedEpisodePlayerCollectionViewControllerDelegate{
     func requestPlay()
+    func downloadTapped(_ indexPath: IndexPath,item: ContentFeedItem)
 }
 
 class VideoFeedEpisodePlayerCollectionViewController: UICollectionViewController {
     
     var videoPlayerEpisode: Video!
     var videoFeedEpisodes: [Video]!
+    let downloadService : DownloadService = DownloadService.sharedInstance
 
     var onVideoEpisodeCellSelected: ((NSManagedObjectID) -> Void)!
     var onFeedSubscriptionSelected: (() -> Void)!
@@ -388,12 +390,17 @@ extension VideoFeedEpisodePlayerCollectionViewController: FeedItemRowDelegate, P
     func didTapForDescriptionAt(episode: PodcastEpisode,cell:UITableViewCell) {}
     
     
-    func shouldStartDownloading(episode: PodcastEpisode, cell: UITableViewCell)  {}
+    func shouldStartDownloading(item: ContentFeedItem, cell: UICollectionViewCell) {
+        if let indexPath = collectionView.indexPath(for: cell){
+            delegate?.downloadTapped(indexPath, item: item)
+        }
+    }
+    
     func shouldDeleteFile(episode: PodcastEpisode, cell: UITableViewCell)  {}
     func shouldShowMore(episode: PodcastEpisode, cell: UITableViewCell)  {}
     func shouldShare(episode: PodcastEpisode)  {}
     
-    func shouldStartDownloading(episode: PodcastEpisode, cell: UICollectionViewCell)  {}
+    func shouldStartDownloading(item: ContentFeedItem, cell: UITableViewCell)  {}
     func shouldDeleteFile(episode: PodcastEpisode, cell: UICollectionViewCell)  {}
     
     func shouldShare(video: Video) {
@@ -421,7 +428,15 @@ extension VideoFeedEpisodePlayerCollectionViewController: FeedItemRowDelegate, P
     
     func didTapEpisodeAt(index: Int) {}
     
-    func downloadTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {}
+    func downloadTapped(_ indexPath: IndexPath, item: ContentFeedItem) {
+        let video = Video.convertFrom(contentFeedItem: item)
+        downloadService.startDownload(video: video)
+        reload(indexPath.row)
+    }
+    
+    func reload(_ row: Int) {
+        collectionView.reloadItems(at: [IndexPath(row: row, section: 0)])
+    }
     
     func deleteTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {}
     

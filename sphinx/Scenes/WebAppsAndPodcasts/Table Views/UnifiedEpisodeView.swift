@@ -11,12 +11,12 @@ import UIKit
 import Lottie
 
 protocol FeedItemRowDelegate : class {
-    func shouldStartDownloading(episode: PodcastEpisode, cell: UITableViewCell)
+    func shouldStartDownloading(item: ContentFeedItem, cell: UITableViewCell)
     func shouldDeleteFile(episode: PodcastEpisode, cell: UITableViewCell)
     func shouldShowMore(episode: PodcastEpisode, cell: UITableViewCell)
     func shouldShare(episode: PodcastEpisode)
     
-    func shouldStartDownloading(episode: PodcastEpisode, cell: UICollectionViewCell)
+    func shouldStartDownloading(item: ContentFeedItem, cell: UICollectionViewCell)
     func shouldDeleteFile(episode: PodcastEpisode, cell: UICollectionViewCell)
     func shouldShowMore(episode: PodcastEpisode,cell: UICollectionViewCell)
     func shouldShowDescription(episode: PodcastEpisode,cell:UITableViewCell)

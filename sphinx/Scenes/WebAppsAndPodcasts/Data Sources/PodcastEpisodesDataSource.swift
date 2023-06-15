@@ -11,7 +11,7 @@ import UIKit
 protocol PodcastEpisodesDSDelegate : class {
     func didTapForDescriptionAt(episode:PodcastEpisode,cell:UITableViewCell)
     func didTapEpisodeAt(index: Int)
-    func downloadTapped(_ indexPath: IndexPath, episode: PodcastEpisode)
+    func downloadTapped(_ indexPath: IndexPath, item: ContentFeedItem)
     func deleteTapped(_ indexPath: IndexPath, episode: PodcastEpisode)
     func shouldToggleTopView(show: Bool)
     func shareTapped(episode:PodcastEpisode)
@@ -143,7 +143,11 @@ extension PodcastEpisodesDataSource : FeedItemRowDelegate {
     
     func shouldShare(video: Video) {}
     
-    func shouldStartDownloading(episode: PodcastEpisode, cell: UICollectionViewCell) {}
+    func shouldStartDownloading(item: ContentFeedItem, cell: UITableViewCell) {
+        if let indexPath = tableView.indexPath(for: cell){
+            delegate?.downloadTapped(indexPath, item: item)
+        }
+    }
     
     func shouldDeleteFile(episode: PodcastEpisode, cell: UICollectionViewCell) {}
     
@@ -155,11 +159,7 @@ extension PodcastEpisodesDataSource : FeedItemRowDelegate {
         }
     }
     
-    func shouldStartDownloading(episode: PodcastEpisode, cell: UITableViewCell) {
-        if let indexPath = tableView.indexPath(for: cell){
-            delegate?.downloadTapped(indexPath, episode: episode)
-        }
-    }
+    func shouldStartDownloading(item: ContentFeedItem, cell: UICollectionViewCell) {}
     
     func shouldShare(episode: PodcastEpisode) {
         delegate?.shareTapped(episode: episode)

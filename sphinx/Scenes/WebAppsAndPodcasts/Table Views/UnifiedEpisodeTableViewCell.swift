@@ -52,7 +52,9 @@ extension UnifiedEpisodeTableViewCell : PodcastEpisodeRowDelegate {
     }
     
     func shouldStartDownloading(episode: PodcastEpisode) {
-        delegate?.shouldStartDownloading(episode: episode, cell: self)
+        if let item = ContentFeedItem.convertFrom(podcastEpisode: episode){
+            delegate?.shouldStartDownloading(item: item, cell: self)
+        }
     }
     
     func shouldDeleteFile(episode: PodcastEpisode) {

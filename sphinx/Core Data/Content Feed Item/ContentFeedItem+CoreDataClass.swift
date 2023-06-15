@@ -42,5 +42,53 @@ public final class ContentFeedItem: NSManagedObject {
         
         return contentFeedItem
     }
+    
+    public static func convertFrom(
+        podcastEpisode: PodcastEpisode,
+        feed: PodcastFeed? = nil
+    ) -> ContentFeedItem? {
+        
+        var json = JSON()
+        let feedItem = ContentFeedItem.createObjectFrom(json: json)
+        
+        feedItem?.itemID = podcastEpisode.itemID
+        feedItem?.title = podcastEpisode.title ?? ""
+        feedItem?.authorName = podcastEpisode.author
+        feedItem?.linkURL = URL(string: podcastEpisode.linkURLPath ?? "")
+        feedItem?.imageURL = URL(string: podcastEpisode.imageURLPath ?? "")
+        feedItem?.datePublished = podcastEpisode.datePublished
+        feedItem?.dateUpdated = podcastEpisode.dateUpdated
+        feedItem?.itemDescription = podcastEpisode.description
+        if let pf = podcastEpisode.feed,
+           let cf = ContentFeed.convertFrom(podcastFeed: pf){
+            feedItem?.contentFeed = cf
+        }
+        
+        return feedItem
+    }
+    
+    public static func convertFrom(
+        video: Video,
+        videoFeed: VideoFeed? = nil
+    ) -> ContentFeedItem? {
+        
+        let json = JSON()
+        let feedItem = ContentFeedItem.createObjectFrom(json: json)
+        
+        feedItem?.authorName = video.author
+        feedItem?.dateUpdated = video.dateUpdated
+        feedItem?.datePublished = video.datePublished
+        feedItem?.itemID = video.id
+        feedItem?.itemDescription = video.description
+        feedItem?.imageURL = video.thumbnailURL
+        feedItem?.enclosureURL = video.itemURL
+        feedItem?.title = video.title ?? ""
+        if let vf = videoFeed,
+           let cf = ContentFeed.convertFrom(videoFeed: vf){
+            feedItem?.contentFeed = cf
+        }
+        
+        return feedItem
+    }
 }
 

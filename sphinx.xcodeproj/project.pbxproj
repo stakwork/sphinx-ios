@@ -13,6 +13,7 @@
 		4701460C2A3B787300A00DF8 /* CommonNewMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4701460B2A3B787300A00DF8 /* CommonNewMessageTableViewCell.swift */; };
 		470146112A3B79E300A00DF8 /* NewOnlyTextMessageTableViewCell+LayoutExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470146102A3B79E300A00DF8 /* NewOnlyTextMessageTableViewCell+LayoutExtension.swift */; };
 		470146142A3B856D00A00DF8 /* MessageOptionsMenuHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470146132A3B856D00A00DF8 /* MessageOptionsMenuHelper.swift */; };
+		470146162A3B962E00A00DF8 /* NewChatViewController+MessageMenuDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470146152A3B962E00A00DF8 /* NewChatViewController+MessageMenuDelegate.swift */; };
 		47018F8127CFB7CE00797E0B /* pause_animation.json in Resources */ = {isa = PBXBuildFile; fileRef = 47018F8027CFB7CD00797E0B /* pause_animation.json */; };
 		47018F9227CFEEAF00797E0B /* skip30v1.caf in Resources */ = {isa = PBXBuildFile; fileRef = 47018F9127CFEDB400797E0B /* skip30v1.caf */; };
 		47018F9327CFEEAF00797E0B /* skip30v2.caf in Resources */ = {isa = PBXBuildFile; fileRef = 47018F8E27CFEDB300797E0B /* skip30v2.caf */; };
@@ -928,6 +929,7 @@
 		4701460B2A3B787300A00DF8 /* CommonNewMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonNewMessageTableViewCell.swift; sourceTree = "<group>"; };
 		470146102A3B79E300A00DF8 /* NewOnlyTextMessageTableViewCell+LayoutExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewOnlyTextMessageTableViewCell+LayoutExtension.swift"; sourceTree = "<group>"; };
 		470146132A3B856D00A00DF8 /* MessageOptionsMenuHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageOptionsMenuHelper.swift; sourceTree = "<group>"; };
+		470146152A3B962E00A00DF8 /* NewChatViewController+MessageMenuDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewChatViewController+MessageMenuDelegate.swift"; sourceTree = "<group>"; };
 		47018F8027CFB7CD00797E0B /* pause_animation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = pause_animation.json; sourceTree = "<group>"; };
 		47018F8E27CFEDB300797E0B /* skip30v2.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = skip30v2.caf; sourceTree = "<group>"; };
 		47018F8F27CFEDB300797E0B /* skip30v3.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = skip30v3.caf; sourceTree = "<group>"; };
@@ -3318,6 +3320,7 @@
 				472092BE2A26378900468796 /* NewChatViewController+MentionsAutocomplete.swift */,
 				472092C02A26516A00468796 /* NewChatViewController+WebAppExtension.swift */,
 				472092CB2A27985800468796 /* NewChatViewController+TableViewExtension.swift */,
+				470146152A3B962E00A00DF8 /* NewChatViewController+MessageMenuDelegate.swift */,
 			);
 			path = "New Chat View Controller";
 			sourceTree = "<group>";
@@ -5166,6 +5169,7 @@
 				4712BB4723D898DD00DDCC3B /* SoundsPlayer.swift in Sources */,
 				474FE33323F5A22A00C06FC8 /* AVViewController.swift in Sources */,
 				47904C1B24BF3C7A00710E7A /* NotificationSoundViewController.swift in Sources */,
+				470146162A3B962E00A00DF8 /* NewChatViewController+MessageMenuDelegate.swift in Sources */,
 				F394ECAB2682218F00529038 /* NewUserSignupFormViewController.swift in Sources */,
 				471D8D1027274AC80024AEAC /* GroupsManager+Tag.swift in Sources */,
 				47FA44192375A682005D8C63 /* SubscriptionCommonView.swift in Sources */,

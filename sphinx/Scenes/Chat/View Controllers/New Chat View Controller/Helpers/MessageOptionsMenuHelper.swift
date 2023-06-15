@@ -23,7 +23,6 @@ class MessageOptionsMenuHelper {
             let cellFrame = cell.frame
         
             let cellY = cellOffset.y - cellFrame.height
-            let cellX = cellOffset.x
         
             let bubbleRect = CGRect(
                 x: bubbleViewRect.origin.x,

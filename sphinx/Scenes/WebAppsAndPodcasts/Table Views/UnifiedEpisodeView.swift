@@ -38,6 +38,7 @@ protocol VideoRowDelegate : class {
     func shouldShowMore(video: Video)
     func shouldShare(video: Video)
     func shouldShowDescription(video:Video)
+    func shouldStartDownloading(video:Video)
 }
 
 class UnifiedEpisodeView : UIView {
@@ -162,6 +163,9 @@ class UnifiedEpisodeView : UIView {
         } else {
             episodeImageView.image = UIImage(named: "videoPlaceholder")
         }
+        
+        downloadButton.isEnabled = true
+        downloadButton.isHidden = false
 
         
         descriptionLabel.text = videoEpisode.videoDescription
@@ -335,9 +339,16 @@ class UnifiedEpisodeView : UIView {
     }
     
     @IBAction func downloadButtonTouched() {
-        if !episode.isDownloaded {
+        print("touched!")
+        if let episode = episode,
+           !episode.isDownloaded {
             downloadProgressBar.progressAnimation(to: 0, active: true)
             podcastDelegate?.shouldStartDownloading(episode: episode)
+        }
+        else if let video = videoEpisode,
+                !video.isDownloaded{
+            print("downloaindg video!")
+            videoDelegate?.shouldStartDownloading(video: video)
         }
     }
     

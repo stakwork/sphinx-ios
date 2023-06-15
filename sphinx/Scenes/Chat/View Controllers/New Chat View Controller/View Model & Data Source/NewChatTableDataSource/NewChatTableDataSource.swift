@@ -42,7 +42,6 @@ class NewChatTableDataSource : NSObject {
     var preloaderHelper = MessagesPreloaderHelper.sharedInstance
     
     var cachedMedia: [Int: MessageTableCellState.MediaData] = [:]
-    var tribeLinks: [Int: MessageTableCellState.LinkTribe] = [:]
     
     var loadingMoreItems = false
     var scrolledAtBottom = false

@@ -92,8 +92,13 @@ extension NewChatTableDataSource {
                 ) as! MessageNoBubbleTableViewCell
             }
             
+            let mediaData = (dataSourceItem.messageId != nil) ? self.cachedMedia[dataSourceItem.messageId!] : nil
+            let tribeData = (dataSourceItem.linkTribe?.uuid != nil) ? self.preloaderHelper.tribesData[dataSourceItem.linkTribe!.uuid] : nil
+            
             cell?.configureWith(
                 messageCellState: dataSourceItem,
+                mediaData: mediaData,
+                tribeData: tribeData,
                 delegate: self,
                 indexPath: indexPath
             )
@@ -154,7 +159,6 @@ extension NewChatTableDataSource {
                 let boostsMessages = (message.uuid != nil) ? (boostMessagesMap[message.uuid!] ?? []) : []
                 let linkContact = linkContactsArray[message.id]
                 let linkTribe = linkTribesArray[message.id]
-                let mediaData = getMediaDataFor(message: message)
                 
                 array.insert(
                     MessageTableCellState(
@@ -169,8 +173,7 @@ extension NewChatTableDataSource {
                         replyingMessage: replyingMessage,
                         boostMessages: boostsMessages,
                         linkContact: linkContact,
-                        linkTribe: linkTribe,
-                        mediaData: mediaData
+                        linkTribe: linkTribe
                     ),
                     at: 0
                 )
@@ -320,60 +323,31 @@ extension NewChatTableDataSource {
         messages: [TransactionMessage]
     ) -> [Int: MessageTableCellState.LinkTribe] {
         
-        var links: [Int: (String, GroupsManager.TribeInfo)] = [:]
+        var linksAndUUIDs: [Int: (String, String)] = [:]
         
         messages.forEach({
             if $0.messageContent?.hasTribeLinks == true {
                 if let link = $0.messageContent?.stringFirstTribeLink {
-                    if let tribeInfo = GroupsManager.sharedInstance.getGroupInfo(query: link) {
-                        links[$0.id] = (link, tribeInfo)
+                    if let uuid = GroupsManager.sharedInstance.getGroupInfo(query: link)?.uuid {
+                        linksAndUUIDs[$0.id] = (link, uuid)
                     }
                 }
             }
         })
         
-        let uuids: [String] = links.map({
-            $0.value.1.uuid
-        })
-        
-        let chats = Chat.getChatsWith(uuids: uuids)
+        let chats = Chat.getChatsWith(uuids: linksAndUUIDs.values.map({ $0.1 }))
         
         var linkTribesMap: [Int: MessageTableCellState.LinkTribe] = [:]
         
-        links.forEach({ (key, value) in
-            if let tribeLink = tribeLinks[key], tribeLink.tribeInfo?.isValid == true {
-                linkTribesMap[key] = tribeLink
-            } else {
-                linkTribesMap[key] = MessageTableCellState.LinkTribe(
-                    link: value.0,
-                    tribeInfo: nil,
-                    isJoined: chats.filter({ $0.uuid == value.1.uuid }).count > 0
-                )
-            }
+        linksAndUUIDs.forEach({ (key, value) in
+            linkTribesMap[key] = MessageTableCellState.LinkTribe(
+                link: value.0,
+                uuid: value.1,
+                isJoined: chats.filter({ $0.uuid == value.1 }).count > 0
+            )
         })
         
         return linkTribesMap
-    }
-    
-    func getMediaDataFor(
-        message: TransactionMessage
-    ) -> MessageTableCellState.MediaData? {
-        if let mediaData = cachedMedia[message.id] {
-            return mediaData
-        } else if message.isMediaAttachment() {
-            return MessageTableCellState.MediaData(
-                image: nil,
-                videoData: nil,
-                failed: false
-            )
-        } else if message.isDirectPayment(), let _ = message.getTemplateURL() {
-            return MessageTableCellState.MediaData(
-                image: nil,
-                videoData: nil,
-                failed: false
-            )
-        }
-        return nil
     }
 }
 

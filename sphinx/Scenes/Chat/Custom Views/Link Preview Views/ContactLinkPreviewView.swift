@@ -24,7 +24,7 @@ class ContactLinkPreviewView: LinkPreviewBubbleView {
     @IBOutlet weak var borderView: UIView!
     
     let kDashedLayerName = "dashed-layer"
-    let kNewContactBubbleHeight: CGFloat = 168
+    let kNewContactBubbleHeight: CGFloat = 156
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -62,12 +62,14 @@ class ContactLinkPreviewView: LinkPreviewBubbleView {
         
         contactPubKey.text = contactLink.pubkey
         contactName.text = contactLink.alias ?? "new.contact".localized
-
-        loadImage(imageUrl: contactLink.imageUrl)
         
         removeDashedLineBorder()
         
-        if !contactLink.isContact {
+        if contactLink.isContact {
+            loadImage(imageUrl: contactLink.imageUrl)
+        } else {
+            contactImageView.image = UIImage(named: "addContactIcon")
+            
             addDashedLineBorder(
                 color: bubble.direction.isIncoming() ? UIColor.Sphinx.ReceivedMsgBG : UIColor.Sphinx.SentMsgBG,
                 rect: CGRect(
@@ -113,7 +115,11 @@ class ContactLinkPreviewView: LinkPreviewBubbleView {
     }
     
     func loadImage(contact: UserContact?) {
-        loadImage(imageUrl: contact?.getPhotoUrl()?.removeDuplicatedProtocol())
+        if let contact = contact {
+            loadImage(imageUrl: contact.getPhotoUrl()?.removeDuplicatedProtocol())
+        } else {
+            contactImageView.image = UIImage(named: "addContactIcon")
+        }
     }
     
     func loadImage(imageUrl: String?) {
@@ -127,16 +133,17 @@ class ContactLinkPreviewView: LinkPreviewBubbleView {
             
             contactImageView.sd_setImage(
                 with: url,
-                placeholderImage: UIImage(named: "addContactIcon"),
+                placeholderImage: UIImage(named: "profile_avatar"),
                 options: [.scaleDownLargeImages, .decodeFirstFrameOnly, .lowPriority],
                 context: [.imageTransformer: transformer],
                 progress: nil,
                 completed: { (image, error, _, _) in
-                    self.contactImageView.image = (error == nil) ? image : UIImage(named: "addContactIcon")
+                    self.contactImageView.image = (error == nil) ? image : UIImage(named: "profile_avatar")
                 }
             )
         } else {
-            contactImageView.image = UIImage(named: "addContactIcon")
+            contactImageView.image = UIImage(named: "profile_avatar")
+            contactImageView.contentMode = .scaleAspectFill
         }
     }
     

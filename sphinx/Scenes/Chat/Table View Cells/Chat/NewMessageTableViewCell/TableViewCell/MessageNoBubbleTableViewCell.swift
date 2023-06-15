@@ -37,6 +37,8 @@ class MessageNoBubbleTableViewCell: UITableViewCell, ChatTableViewCellProtocol {
     
     func configureWith(
         messageCellState: MessageTableCellState,
+        mediaData: MessageTableCellState.MediaData?,
+        tribeData: MessageTableCellState.TribeData?,
         delegate: NewMessageTableViewCellDelegate,
         indexPath: IndexPath
     ) {

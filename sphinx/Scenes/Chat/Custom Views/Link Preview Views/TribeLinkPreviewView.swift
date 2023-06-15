@@ -62,7 +62,7 @@ class TribeLinkPreviewView: LinkPreviewBubbleView {
     }
     
     func configureWith(
-        tribeLink: BubbleMessageLayoutState.TribeLinkLoaded,
+        tribeData: MessageTableCellState.TribeData,
         and bubble: BubbleMessageLayoutState.Bubble,
         delegate: LinkPreviewDelegate?
     ) {
@@ -70,26 +70,26 @@ class TribeLinkPreviewView: LinkPreviewBubbleView {
         
         configureColors(incoming: bubble.direction.isIncoming())
         
-        tribeButtonContainer.isHidden = !tribeLink.showJoinButton
-        contentView.backgroundColor = tribeLink.showJoinButton ? UIColor.Sphinx.Body : UIColor.clear
+        tribeButtonContainer.isHidden = !tribeData.showJoinButton
+        contentView.backgroundColor = tribeData.showJoinButton ? UIColor.Sphinx.Body : UIColor.clear
         
-        tribeNameLabel.text = tribeLink.name
-        tribeDescriptionTextView.text = tribeLink.description
+        tribeNameLabel.text = tribeData.name
+        tribeDescriptionTextView.text = tribeData.description
 
-        loadImage(imageUrl: tribeLink.imageUrl)
+        loadImage(imageUrl: tribeData.imageUrl)
         
         removeDashedLineBorder()
         
-        if tribeLink.showJoinButton {
+        if tribeData.showJoinButton {
             addDashedLineBorder(
                 color: bubble.direction.isIncoming() ? UIColor.Sphinx.ReceivedMsgBG : UIColor.Sphinx.SentMsgBG,
                 rect: CGRect(
                     x: 0,
                     y: 0,
-                    width: tribeLink.bubbleWidth,
+                    width: tribeData.bubbleWidth,
                     height: kNewTribeBubbleHeight
                 ),
-                roundedBottom: tribeLink.roundedBottom
+                roundedBottom: tribeData.roundedBottom
             )
         }
     }

@@ -40,8 +40,9 @@ class MessagesPreloaderHelper {
     }
     
     var chatMessages: [Int: [MessageTableCellState]] = [:]
-    
     var chatLastPositions: [Int: ScrollState] = [:]
+    
+    var tribesData: [String: MessageTableCellState.TribeData] = [:]
     
     func add(
         messageStateArray: [MessageTableCellState],

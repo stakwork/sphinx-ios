@@ -56,6 +56,8 @@ class NewOnlyTextMessageTableViewCell: SwipableReplyCell, ChatTableViewCellProto
     
     func configureWith(
         messageCellState: MessageTableCellState,
+        mediaData: MessageTableCellState.MediaData?,
+        tribeData: MessageTableCellState.TribeData?,
         delegate: NewMessageTableViewCellDelegate,
         indexPath: IndexPath
     ) {

@@ -132,19 +132,15 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
         messageId: Int,
         with updatedMediaData: MessageTableCellState.MediaData
     ) {
-        if var tableCellState = getTableCellStateFor(
+        if let tableCellState = getTableCellStateFor(
             messageId: messageId,
             and: rowIndex
         ) {
-            self.cachedMedia[messageId] = updatedMediaData
-            tableCellState.1.mediaData = updatedMediaData
-            self.messageTableCellStateArray[tableCellState.0] = tableCellState.1
+            cachedMedia[messageId] = updatedMediaData
             
-            DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: {
-                if (self.tableView.indexPathsForVisibleRows ?? []).map({ $0.row }).contains(rowIndex) {
-                    self.updateSnapshot()
-                }
-            })
+            var snapshot = dataSource.snapshot()
+            snapshot.reloadItems([tableCellState.1])
+            dataSource.apply(snapshot, animatingDifferences: false)
         }
     }
     
@@ -153,27 +149,24 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
         messageId: Int,
         with tribeInfo: GroupsManager.TribeInfo
     ) {
-        if var tableCellState = getTableCellStateFor(
+        if let tableCellState = getTableCellStateFor(
             messageId: messageId,
             and: rowIndex
         ), let linkTribe = tableCellState.1.linkTribe
         {
-            let updatedLinkTribe = MessageTableCellState.LinkTribe(
-                link: linkTribe.link,
-                tribeInfo: tribeInfo,
-                isJoined: linkTribe.isJoined
+            preloaderHelper.tribesData[linkTribe.uuid] = MessageTableCellState.TribeData(
+                name: tribeInfo.name ?? "title.not.available".localized,
+                description: tribeInfo.description ?? "description.not.available".localized,
+                imageUrl: tribeInfo.img,
+                showJoinButton: !linkTribe.isJoined,
+                bubbleWidth: (UIScreen.main.bounds.width - (MessageTableCellState.kRowLeftMargin + MessageTableCellState.kRowRightMargin)) * (MessageTableCellState.kBubbleWidthPercentage),
+                roundedBottom: false
             )
-            
-            self.tribeLinks[messageId] = updatedLinkTribe
-            
-            tableCellState.1.linkTribe = updatedLinkTribe
-            
-            messageTableCellStateArray[tableCellState.0] = tableCellState.1
+
+            var snapshot = dataSource.snapshot()
+            snapshot.reloadItems([tableCellState.1])
+            dataSource.apply(snapshot, animatingDifferences: false)
         }
-        
-        DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: {
-            self.updateSnapshot()
-        })
     }
 }
 
@@ -242,9 +235,9 @@ extension NewChatTableDataSource {
         if var tableCellState = getTableCellStateFor(
             messageId: messageId,
             and: rowIndex
-        ), let messageMedia = tableCellState.1.messageMedia {
+        ), let messageMedia = tableCellState.1.messageMedia, let cacheMedia = cachedMedia[messageId] {
             
-            if messageMedia.isVideo, let data = messageMedia.videoData {
+            if messageMedia.isVideo, let data = cacheMedia.videoData {
                 delegate?.shouldGoToVideoPlayerFor(messageId: messageId, with: data)
             } else {
                 delegate?.shouldGoToAttachmentViewFor(messageId: messageId, isPdf: messageMedia.isPdf)

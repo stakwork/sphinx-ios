@@ -12,20 +12,6 @@ extension NewChatTableDataSource {
     func restorePreloadedMessages() {
         if let messagesStateArray = preloaderHelper.getMessageStateArray(for: chat.id) {
             messageTableCellStateArray = messagesStateArray
-            
-            for messageState in messagesStateArray {
-                if let messageId = messageState.message?.id {
-                    
-                    if let linkTribe = messageState.linkTribe {
-                        tribeLinks[messageId] = linkTribe
-                    }
-                    
-                    if let mediaData = messageState.mediaData {
-                        cachedMedia[messageId] = mediaData
-                    }
-                }
-            }
-            
             updateSnapshot()
         }
     }

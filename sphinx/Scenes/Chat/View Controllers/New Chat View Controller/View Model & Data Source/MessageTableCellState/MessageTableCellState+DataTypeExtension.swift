@@ -34,23 +34,48 @@ extension MessageTableCellState {
     
     struct LinkTribe: Equatable {
         var link: String
-        var tribeInfo: GroupsManager.TribeInfo?
+        var uuid: String
         var isJoined: Bool
         
         init(
             link: String,
-            tribeInfo: GroupsManager.TribeInfo?,
+            uuid: String,
             isJoined: Bool
         ) {
             self.link = link
-            self.tribeInfo = tribeInfo
+            self.uuid = uuid
             self.isJoined = isJoined
         }
         
         static func == (lhs: LinkTribe, rhs: LinkTribe) -> Bool {
             return lhs.link           == rhs.link &&
-                   lhs.tribeInfo      == rhs.tribeInfo &&
+                   lhs.uuid           == rhs.uuid &&
                    lhs.isJoined       == rhs.isJoined
+        }
+    }
+    
+    struct TribeData {
+        var name: String
+        var description: String
+        var imageUrl: String?
+        var showJoinButton: Bool
+        var bubbleWidth: CGFloat
+        var roundedBottom: Bool
+        
+        init(
+            name: String,
+            description: String,
+            imageUrl: String?,
+            showJoinButton: Bool,
+            bubbleWidth: CGFloat,
+            roundedBottom: Bool
+        ) {
+            self.name = name
+            self.description = description
+            self.imageUrl = imageUrl
+            self.showJoinButton = showJoinButton
+            self.bubbleWidth = bubbleWidth
+            self.roundedBottom = roundedBottom
         }
     }
     

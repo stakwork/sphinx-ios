@@ -38,7 +38,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="BKe-s6-6kd">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="171"/>
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="159"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1NQ-CN-O31">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="3"/>
@@ -48,30 +48,30 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Xc-Bw-U9G">
-                            <rect key="frame" x="0.0" y="3" width="414" height="112"/>
+                            <rect key="frame" x="0.0" y="3" width="414" height="100"/>
                             <subviews>
-                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="addContactIcon" translatesAutoresizingMaskIntoConstraints="NO" id="tsW-J4-Jix">
-                                    <rect key="frame" x="16" y="16" width="80" height="80"/>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="addContactIcon" translatesAutoresizingMaskIntoConstraints="NO" id="tsW-J4-Jix">
+                                    <rect key="frame" x="16" y="20" width="60" height="60"/>
                                     <color key="tintColor" name="SecondaryText"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="80" id="Kkr-VT-oLx"/>
-                                        <constraint firstAttribute="width" constant="80" id="l8c-HY-tOT"/>
+                                        <constraint firstAttribute="height" constant="60" id="Kkr-VT-oLx"/>
+                                        <constraint firstAttribute="width" constant="60" id="l8c-HY-tOT"/>
                                     </constraints>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New Contact" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="usc-2z-GcC">
-                                    <rect key="frame" x="104" y="35" width="294" height="20"/>
+                                    <rect key="frame" x="84" y="29" width="314" height="20"/>
                                     <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="17"/>
                                     <color key="textColor" name="Text"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="askdjh12387sdhkasd79123h1238asdhad19823791283h" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NIv-V5-Zzr">
-                                    <rect key="frame" x="104" y="60.5" width="272" height="16.5"/>
+                                    <rect key="frame" x="84" y="54.5" width="292" height="16.5"/>
                                     <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                                     <color key="textColor" name="SecondaryText"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="inviteQrCode" translatesAutoresizingMaskIntoConstraints="NO" id="KEr-U0-Zz2">
-                                    <rect key="frame" x="380" y="56" width="18" height="18"/>
+                                    <rect key="frame" x="380" y="50" width="18" height="18"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <color key="tintColor" name="SecondaryText"/>
                                     <constraints>
@@ -85,19 +85,18 @@
                                 <constraint firstAttribute="trailing" secondItem="KEr-U0-Zz2" secondAttribute="trailing" constant="16" id="2vx-2K-VNB"/>
                                 <constraint firstAttribute="trailing" secondItem="usc-2z-GcC" secondAttribute="trailing" constant="16" id="518-JV-nFj"/>
                                 <constraint firstItem="KEr-U0-Zz2" firstAttribute="bottom" secondItem="NIv-V5-Zzr" secondAttribute="bottom" constant="-3" id="8oq-qk-WZg"/>
-                                <constraint firstItem="usc-2z-GcC" firstAttribute="top" secondItem="8Xc-Bw-U9G" secondAttribute="top" constant="35" id="KNh-we-DEh"/>
-                                <constraint firstAttribute="bottom" secondItem="tsW-J4-Jix" secondAttribute="bottom" constant="16" id="W3v-45-bYz"/>
+                                <constraint firstItem="usc-2z-GcC" firstAttribute="top" secondItem="8Xc-Bw-U9G" secondAttribute="top" constant="29" id="KNh-we-DEh"/>
                                 <constraint firstItem="KEr-U0-Zz2" firstAttribute="leading" secondItem="NIv-V5-Zzr" secondAttribute="trailing" constant="4" id="ZEa-YO-vU7"/>
-                                <constraint firstAttribute="height" constant="112" id="ZeH-4m-Ddd"/>
-                                <constraint firstAttribute="bottom" secondItem="NIv-V5-Zzr" secondAttribute="bottom" constant="35" id="fm7-H0-M4m"/>
+                                <constraint firstAttribute="height" constant="100" id="ZeH-4m-Ddd"/>
+                                <constraint firstAttribute="bottom" secondItem="NIv-V5-Zzr" secondAttribute="bottom" constant="29" id="fm7-H0-M4m"/>
                                 <constraint firstItem="tsW-J4-Jix" firstAttribute="leading" secondItem="8Xc-Bw-U9G" secondAttribute="leading" constant="16" id="lqb-em-P4v"/>
                                 <constraint firstItem="NIv-V5-Zzr" firstAttribute="leading" secondItem="tsW-J4-Jix" secondAttribute="trailing" constant="8" id="mdr-Xe-5O2"/>
-                                <constraint firstItem="tsW-J4-Jix" firstAttribute="top" secondItem="8Xc-Bw-U9G" secondAttribute="top" constant="16" id="xdQ-Gz-jjb"/>
+                                <constraint firstItem="tsW-J4-Jix" firstAttribute="centerY" secondItem="8Xc-Bw-U9G" secondAttribute="centerY" id="pFG-Ou-UYd"/>
                                 <constraint firstItem="usc-2z-GcC" firstAttribute="leading" secondItem="tsW-J4-Jix" secondAttribute="trailing" constant="8" id="ys3-Zo-4li"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c6K-Lw-fs8">
-                            <rect key="frame" x="0.0" y="115" width="414" height="56"/>
+                            <rect key="frame" x="0.0" y="103" width="414" height="56"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c1A-tr-zl7">
                                     <rect key="frame" x="16" y="0.0" width="382" height="40"/>
@@ -129,11 +128,11 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </stackView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5gw-ht-cOg">
-                    <rect key="frame" x="0.0" y="3" width="414" height="168"/>
+                    <rect key="frame" x="0.0" y="3" width="414" height="156"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4RN-Gs-Z8Q">
-                    <rect key="frame" x="0.0" y="3" width="414" height="168"/>
+                    <rect key="frame" x="0.0" y="3" width="414" height="156"/>
                     <connections>
                         <action selector="addContactButtonTapped" destination="-1" eventType="touchUpInside" id="Dlb-ge-9DY"/>
                     </connections>
@@ -159,7 +158,7 @@
         </view>
     </objects>
     <resources>
-        <image name="addContactIcon" width="80" height="80"/>
+        <image name="addContactIcon" width="62" height="62"/>
         <image name="inviteQrCode" width="45" height="45"/>
         <namedColor name="Body">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

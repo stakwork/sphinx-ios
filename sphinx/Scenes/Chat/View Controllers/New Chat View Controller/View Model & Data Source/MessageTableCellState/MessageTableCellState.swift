@@ -18,7 +18,7 @@ struct MessageTableCellState {
     static let kSmallBubbleDesiredWidth: CGFloat = 200
     static let kSendPaidContentButtonHeight: CGFloat = 50.0
     
-    //Messages Data
+    ///Messages Data
     var message: TransactionMessage? = nil
     var messageId: Int? = nil
     var messageType: Int? = nil
@@ -33,9 +33,8 @@ struct MessageTableCellState {
     var boostMessages: [TransactionMessage] = []
     var linkContact: LinkContact? = nil
     var linkTribe: LinkTribe? = nil
-    var mediaData: MediaData? = nil
     
-    //Generic rows Data
+    ///Generic rows Data
     var separatorDate: Date? = nil
     
     init(
@@ -50,8 +49,7 @@ struct MessageTableCellState {
         replyingMessage: TransactionMessage? = nil,
         boostMessages: [TransactionMessage] = [],
         linkContact: LinkContact? = nil,
-        linkTribe: LinkTribe? = nil,
-        mediaData: MediaData? = nil
+        linkTribe: LinkTribe? = nil
     ) {
         self.message = message
         self.messageId = message?.id
@@ -69,7 +67,6 @@ struct MessageTableCellState {
         self.boostMessages = boostMessages
         self.linkContact = linkContact
         self.linkTribe = linkTribe
-        self.mediaData = mediaData
     }
     
     ///Bubble States
@@ -134,6 +131,8 @@ struct MessageTableCellState {
     }()
     
     lazy var messageReply: BubbleMessageLayoutState.MessageReply? = {
+        
+        return nil
         
         guard let message = message, let replyingMessage = replyingMessage else {
             return nil
@@ -202,7 +201,7 @@ struct MessageTableCellState {
     }()
     
     lazy var messageMedia: BubbleMessageLayoutState.MessageMedia? = {
-        guard let message = message, let mediaData = mediaData, message.isMediaAttachment() || message.isDirectPayment() else {
+        guard let message = message, message.isMediaAttachment() || message.isDirectPayment() else {
             return nil
         }
         
@@ -210,15 +209,8 @@ struct MessageTableCellState {
             return nil
         }
         
-        let loading = (mediaData.image == nil && mediaData.videoData == nil)
-
         return BubbleMessageLayoutState.MessageMedia(
             url: url,
-            image: mediaData.image,
-            videoData: mediaData.videoData,
-            fileInfo: mediaData.fileInfo,
-            loading: loading,
-            failed: mediaData.failed,
             isImage: message.isImage() || message.isDirectPayment(),
             isVideo: message.isVideo(),
             isGif: message.isGif() || message.isGiphy(),
@@ -296,23 +288,9 @@ struct MessageTableCellState {
             return nil
         }
         
-        if let tribeInfo = linkTribe.tribeInfo {
-            return BubbleMessageLayoutState.TribeLink(
-                link: linkTribe.link,
-                tribeLinkLoaded: BubbleMessageLayoutState.TribeLinkLoaded(
-                    name: tribeInfo.name ?? "title.not.available".localized,
-                    description: tribeInfo.description ?? "description.not.available".localized,
-                    imageUrl: tribeInfo.img,
-                    showJoinButton: !linkTribe.isJoined,
-                    bubbleWidth: (UIScreen.main.bounds.width - (MessageTableCellState.kRowLeftMargin + MessageTableCellState.kRowRightMargin)) * (MessageTableCellState.kBubbleWidthPercentage),
-                    roundedBottom: false
-                )
-            )
-        } else {
-            return BubbleMessageLayoutState.TribeLink(
-                link: linkTribe.link
-            )
-        }
+        return BubbleMessageLayoutState.TribeLink(
+            link: linkTribe.link
+        )
     }()
     
     
@@ -498,9 +476,7 @@ extension MessageTableCellState : Hashable {
             mutableLhs.isTextOnlyMessage     == mutableRhs.isTextOnlyMessage &&
             mutableLhs.separatorDate         == mutableRhs.separatorDate &&
             mutableLhs.linkContact           == mutableRhs.linkContact &&
-            mutableLhs.linkTribe             == mutableRhs.linkTribe &&
-            mutableLhs.mediaData             == mutableRhs.mediaData
-            
+            mutableLhs.linkTribe             == mutableRhs.linkTribe
     }
 
     func hash(into hasher: inout Hasher) {

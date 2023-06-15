@@ -153,11 +153,6 @@ struct BubbleMessageLayoutState: CommonLayoutState {
     
     struct MessageMedia {
         var url: URL?
-        var image: UIImage?
-        var videoData: Data?
-        var fileInfo: MessageTableCellState.FileInfo?
-        var loading: Bool
-        var failed: Bool
         var isImage: Bool
         var isVideo: Bool
         var isGif: Bool
@@ -166,11 +161,6 @@ struct BubbleMessageLayoutState: CommonLayoutState {
         
         init(
             url: URL?,
-            image: UIImage?,
-            videoData: Data?,
-            fileInfo: MessageTableCellState.FileInfo?,
-            loading: Bool,
-            failed: Bool,
             isImage: Bool,
             isVideo: Bool,
             isGif: Bool,
@@ -178,11 +168,6 @@ struct BubbleMessageLayoutState: CommonLayoutState {
             isPaid: Bool
         ) {
             self.url = url
-            self.image = image
-            self.videoData = videoData
-            self.fileInfo = fileInfo
-            self.loading = loading
-            self.failed = failed
             self.isImage = isImage
             self.isVideo = isVideo
             self.isGif = isGif
@@ -266,39 +251,11 @@ struct BubbleMessageLayoutState: CommonLayoutState {
     
     struct TribeLink {
         var link: String
-        var tribeLinkLoaded: TribeLinkLoaded? = nil
         
         init(
-            link: String,
-            tribeLinkLoaded: TribeLinkLoaded? = nil
+            link: String
         ) {
             self.link = link
-            self.tribeLinkLoaded = tribeLinkLoaded
-        }
-    }
-    
-    struct TribeLinkLoaded {
-        var name: String
-        var description: String
-        var imageUrl: String?
-        var showJoinButton: Bool
-        var bubbleWidth: CGFloat
-        var roundedBottom: Bool
-        
-        init(
-            name: String,
-            description: String,
-            imageUrl: String?,
-            showJoinButton: Bool,
-            bubbleWidth: CGFloat,
-            roundedBottom: Bool
-        ) {
-            self.name = name
-            self.description = description
-            self.imageUrl = imageUrl
-            self.showJoinButton = showJoinButton
-            self.bubbleWidth = bubbleWidth
-            self.roundedBottom = roundedBottom
         }
     }
 }

@@ -52,33 +52,39 @@ class MediaMessageView: UIView {
     
     func configureWith(
         messageMedia: BubbleMessageLayoutState.MessageMedia,
+        mediaData: MessageTableCellState.MediaData?,
         and delegate: MediaMessageViewDelegate?
     ) {
         self.delegate = delegate
         
-        mediaImageView.image = messageMedia.image
-        
-        paidContentOverlay.isHidden = !messageMedia.isPaid
-        fileInfoView.isHidden = !messageMedia.isPdf || messageMedia.loading
-        gifOverlay.isHidden = !messageMedia.isGif || messageMedia.loading
-        videoOverlay.isHidden = !messageMedia.isVideo || messageMedia.loading
-        
-        loadingContainer.isHidden = !messageMedia.loading || messageMedia.failed
-        
-        if messageMedia.loading {
-            loadingImageView.rotate()
-        } else {
+        if let mediaData = mediaData {
+            paidContentOverlay.isHidden = !messageMedia.isPaid
+            fileInfoView.isHidden = !messageMedia.isPdf
+            gifOverlay.isHidden = !messageMedia.isGif
+            videoOverlay.isHidden = !messageMedia.isVideo
+            
+            mediaImageView.image = mediaData.image
+            
+            if let fileInfo = mediaData.fileInfo {
+                fileInfoView.configure(fileInfo: fileInfo)
+                fileInfoView.isHidden = false
+            } else {
+                fileInfoView.isHidden = true
+            }
+            
+            loadingContainer.isHidden = true
             loadingImageView.stopRotating()
-        }
-        
-        mediaNotAvailableView.isHidden = !messageMedia.failed
-        mediaNotAvailableIcon.isHidden = !messageMedia.failed
-        
-        if let fileInfo = messageMedia.fileInfo {
-            fileInfoView.configure(fileInfo: fileInfo)
-            fileInfoView.isHidden = false
         } else {
+            let failed = mediaData?.failed == true
+            
+            mediaImageView.image = nil
             fileInfoView.isHidden = true
+            
+            loadingImageView.rotate()
+            loadingContainer.isHidden = failed
+            
+            mediaNotAvailableView.isHidden = !failed
+            mediaNotAvailableIcon.isHidden = !failed
         }
     }
     

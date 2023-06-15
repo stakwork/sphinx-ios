@@ -28,6 +28,8 @@ protocol ChatTableViewCellProtocol: class {
     
     func configureWith(
         messageCellState: MessageTableCellState,
+        mediaData: MessageTableCellState.MediaData?,
+        tribeData: MessageTableCellState.TribeData?,
         delegate: NewMessageTableViewCellDelegate,
         indexPath: IndexPath
     )
@@ -124,6 +126,8 @@ class NewMessageTableViewCell: SwipableReplyCell, ChatTableViewCellProtocol {
     
     func configureWith(
         messageCellState: MessageTableCellState,
+        mediaData: MessageTableCellState.MediaData?,
+        tribeData: MessageTableCellState.TribeData?,
         delegate: NewMessageTableViewCellDelegate,
         indexPath: IndexPath
     ) {
@@ -156,12 +160,12 @@ class NewMessageTableViewCell: SwipableReplyCell, ChatTableViewCellProtocol {
         configureWith(directPayment: mutableMessageCellState.directPayment, and: bubble)
         configureWith(callLink: mutableMessageCellState.callLink)
         configureWith(podcastBoost: mutableMessageCellState.podcastBoost)
-        configureWith(messageMedia: mutableMessageCellState.messageMedia)
+        configureWith(messageMedia: mutableMessageCellState.messageMedia, mediaData: mediaData)
         
         //Bottom view
         configureWith(boosts: mutableMessageCellState.boosts, and: bubble)
         configureWith(contactLink: mutableMessageCellState.contactLink, and: bubble)
-        configureWith(tribeLink: mutableMessageCellState.tribeLink, and: bubble)
+        configureWith(tribeLink: mutableMessageCellState.tribeLink, tribeData: tribeData, and: bubble)
         
         ///Header and avatar
         configureWith(avatarImage: mutableMessageCellState.avatarImage)

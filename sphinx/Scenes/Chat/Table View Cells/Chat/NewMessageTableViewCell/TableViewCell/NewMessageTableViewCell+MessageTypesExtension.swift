@@ -92,13 +92,19 @@ extension NewMessageTableViewCell {
     }
     
     func configureWith(
-        messageMedia: BubbleMessageLayoutState.MessageMedia?
+        messageMedia: BubbleMessageLayoutState.MessageMedia?,
+        mediaData: MessageTableCellState.MediaData?
     ) {
         if let messageMedia = messageMedia {
-            mediaContentView.configureWith(messageMedia: messageMedia, and: self)
+            
+            mediaContentView.configureWith(
+                messageMedia: messageMedia,
+                mediaData: mediaData,
+                and: self
+            )
             mediaContentView.isHidden = false
             
-            if let messageId = messageId, messageMedia.loading {
+            if let messageId = messageId, mediaData == nil {
                 DispatchQueue.global(qos: .userInitiated).async {
                     if messageMedia.isImage {
                         self.delegate?.shouldLoadImageDataFor(
@@ -143,11 +149,12 @@ extension NewMessageTableViewCell {
     
     func configureWith(
         tribeLink: BubbleMessageLayoutState.TribeLink?,
+        tribeData: MessageTableCellState.TribeData?,
         and bubble: BubbleMessageLayoutState.Bubble
     ) {
-        if let tribeLink = tribeLink {
-            if let tribeLinkLoaded = tribeLink.tribeLinkLoaded {
-                tribeLinkPreviewView.configureWith(tribeLink: tribeLinkLoaded, and: bubble, delegate: self)
+        if let _ = tribeLink {
+            if let tribeData = tribeData {
+                tribeLinkPreviewView.configureWith(tribeData: tribeData, and: bubble, delegate: self)
                 tribeLinkPreviewView.isHidden = false
             } else if let messageId = messageId {
                 DispatchQueue.global(qos: .userInitiated).async {

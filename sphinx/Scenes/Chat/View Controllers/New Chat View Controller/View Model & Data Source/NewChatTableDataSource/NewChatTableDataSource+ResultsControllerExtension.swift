@@ -61,7 +61,8 @@ extension NewChatTableDataSource {
             self.saveSnapshotCurrentState()
             self.dataSource.apply(snapshot, animatingDifferences: false)
             self.tableView.alpha = 1.0
-            self.restoreScrollLastPosition()            
+            self.restoreScrollLastPosition()
+            self.loadingMoreItems = false
         }
     }
     
@@ -361,7 +362,9 @@ extension NewChatTableDataSource : NSFetchedResultsControllerDelegate {
         messagesResultsController?.delegate = nil
     }
     
-    func configureResultsController(items: Int? = nil) {
+    func configureResultsController(items: Int) {
+        messagesCount = items
+        
         let fetchRequest = TransactionMessage.getChatMessagesFetchRequest(
             for: chat,
             with: items

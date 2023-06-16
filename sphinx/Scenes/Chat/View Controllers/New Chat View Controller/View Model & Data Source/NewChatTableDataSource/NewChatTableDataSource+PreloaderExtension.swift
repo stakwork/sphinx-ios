@@ -44,8 +44,6 @@ extension NewChatTableDataSource {
     }
     
     func restoreScrollLastPosition() {
-        loadingMoreItems = false
-        
         if let scrollState = preloaderHelper.getScrollState(
             for: chat.id,
             with: dataSource.snapshot().itemIdentifiers
@@ -53,15 +51,18 @@ extension NewChatTableDataSource {
             let row = scrollState.bottomFirstVisibleRow
             let offset = scrollState.bottomFirstVisibleRowOffset
             
-            if scrollState.shouldAdjustScroll {
+            if scrollState.shouldAdjustScroll && !loadingMoreItems {
                 
-                tableView.scrollToRow(
-                    at: IndexPath(row: row, section: 0),
-                    at: .top,
-                    animated: false
-                )
-                
-                tableView.contentOffset.y = tableView.contentOffset.y + (offset + tableView.contentInset.top)
+                if tableView.numberOfRows(inSection: 0) > row {
+                    
+                    tableView.scrollToRow(
+                        at: IndexPath(row: row, section: 0),
+                        at: .top,
+                        animated: false
+                    )
+                    
+                    tableView.contentOffset.y = tableView.contentOffset.y + (offset + tableView.contentInset.top)
+                }
             }
             
             if scrollState.shouldPreventSetMessagesAsSeen {

@@ -40,10 +40,10 @@ class NewChatTableDataSource : NSObject {
     var messagesResultsController: NSFetchedResultsController<TransactionMessage>!
     var currentDataSnapshot: DataSourceSnapshot!
     var dataSource: DataSource!
-    
-    var messageTableCellStateArray: [MessageTableCellState] = []
     var preloaderHelper = MessagesPreloaderHelper.sharedInstance
     
+    var messagesCount = 0
+    var messageTableCellStateArray: [MessageTableCellState] = []
     var cachedMedia: [Int: MessageTableCellState.MediaData] = [:]
     
     var loadingMoreItems = false

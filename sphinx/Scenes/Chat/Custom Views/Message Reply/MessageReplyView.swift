@@ -65,8 +65,6 @@ class MessageReplyView: UIView {
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         
         toggleMediaContainer(show: false, width: 0)
-        
-//        isHidden = true
     }
     
     func resetView() {
@@ -153,6 +151,12 @@ class MessageReplyView: UIView {
         toggleElements(isRow: false)
         
         isHidden = false
+    }
+    
+    func resetAndHideView() {
+        self.podcastComment = nil
+        self.message = nil
+        self.isHidden = true
     }
     
     func adjustMargins(isRow: Bool, isIncoming: Bool = false) {

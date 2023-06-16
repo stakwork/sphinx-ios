@@ -10,7 +10,21 @@ import UIKit
 
 extension NewChatViewController : ChatMessageTextFieldViewDelegate {
     func shouldSendMessage(text: String, type: Int, completion: @escaping (Bool) -> ()) {
-        
+        chatViewModel.shouldSendMessage(text: text, type: type, completion: { success in
+            
+            if success {
+                self.bottomView.resetReplyView()
+                self.scrollToBottomAfterSend()
+            }
+            
+            completion(success)
+        })
+    }
+    
+    func scrollToBottomAfterSend() {
+        DelayPerformedHelper.performAfterDelay(seconds: 0.1, completion: {
+            self.chatTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+        })
     }
     
     func didTapAttachmentsButton(text: String?) {
@@ -31,10 +45,6 @@ extension NewChatViewController : ChatMessageTextFieldViewDelegate {
             viewController,
             animated: false
         )
-    }
-    
-    func didTapSendBlueButton() {
-        
     }
     
     func shouldStartRecording() {
@@ -64,7 +74,8 @@ extension NewChatViewController : AttachmentsDelegate {
     }
     
     func didCloseReplyView() {
-        
+        chatViewModel.resetReply()
+        shouldAdjustTableViewTopInset()
     }
     
     func didTapSendButton() {
@@ -78,10 +89,9 @@ extension NewChatViewController : AttachmentsDelegate {
 
 extension NewChatViewController : MessageReplyViewDelegate {
     func didCloseView() {
+        chatViewModel.resetReply()
         shouldAdjustTableViewTopInset()
     }
     
-    func shouldScrollTo(message: TransactionMessage) {
-//        chatDataSource?.scrollTo(message: message)
-    }
+    func shouldScrollTo(message: TransactionMessage) {}
 }

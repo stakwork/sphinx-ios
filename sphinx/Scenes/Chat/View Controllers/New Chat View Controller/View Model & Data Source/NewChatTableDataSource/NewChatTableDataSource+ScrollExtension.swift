@@ -57,7 +57,7 @@ extension NewChatTableDataSource: UITableViewDelegate {
     func loadMoreItems() {
         DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: { [weak self] in
             guard let self = self else { return }
-            self.configureResultsController(items: self.dataSource.snapshot().numberOfItems + 50)
+            self.configureResultsController(items: self.messagesCount + 50)
         })
     }
 }

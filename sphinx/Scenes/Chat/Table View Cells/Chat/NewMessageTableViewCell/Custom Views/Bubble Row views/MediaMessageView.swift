@@ -58,7 +58,6 @@ class MediaMessageView: UIView {
         self.delegate = delegate
         
         if let mediaData = mediaData {
-            paidContentOverlay.isHidden = !messageMedia.isPaid
             fileInfoView.isHidden = !messageMedia.isPdf
             gifOverlay.isHidden = !messageMedia.isGif
             videoOverlay.isHidden = !messageMedia.isVideo
@@ -74,17 +73,20 @@ class MediaMessageView: UIView {
             
             loadingContainer.isHidden = true
             loadingImageView.stopRotating()
-        } else {
-            let failed = mediaData?.failed == true
             
+            mediaNotAvailableView.isHidden = !mediaData.failed
+            mediaNotAvailableIcon.isHidden = !mediaData.failed
+        } else {
             mediaImageView.image = nil
+            
             fileInfoView.isHidden = true
+            videoOverlay.isHidden = true
+            gifOverlay.isHidden = true
+            
+            paidContentOverlay.isHidden = !messageMedia.isPaid
             
             loadingImageView.rotate()
-            loadingContainer.isHidden = failed
-            
-            mediaNotAvailableView.isHidden = !failed
-            mediaNotAvailableIcon.isHidden = !failed
+            loadingContainer.isHidden = false
         }
     }
     

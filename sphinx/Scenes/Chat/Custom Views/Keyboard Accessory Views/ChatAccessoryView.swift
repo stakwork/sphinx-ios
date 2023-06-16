@@ -268,6 +268,7 @@ class ChatAccessoryView: UIView {
         clearMessage()
         
         let messageType = TransactionMessage.TransactionMessageType.message.rawValue
+        
         delegate?.shouldSendMessage(text: text, type: messageType, completion: { success in
             self.sendButton.isUserInteractionEnabled = true
         })

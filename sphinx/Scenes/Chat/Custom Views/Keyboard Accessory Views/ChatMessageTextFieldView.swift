@@ -9,10 +9,10 @@
 import UIKit
 
 @objc protocol ChatMessageTextFieldViewDelegate {
-    func didTapSendBlueButton()
     func didDetectPossibleMention(mentionText:String)
     func shouldSendMessage(text: String, type: Int, completion: @escaping (Bool) -> ())
     
+    @objc optional func didTapSendBlueButton()
     @objc optional func didTapAttachmentsButton(text: String?)
     @objc optional func shouldStartRecording()
     @objc optional func shouldStopAndSendAudio()
@@ -125,10 +125,13 @@ class ChatMessageTextFieldView: UIView {
     func createNewMessage(text: String) {
         clearMessage()
         
-//        let messageType = TransactionMessage.TransactionMessageType.message.rawValue
-//        delegate?.shouldSendMessage(text: text, type: messageType, completion: { success in
-//            self.sendButton.isUserInteractionEnabled = true
-//        })
+        let messageType = TransactionMessage.TransactionMessageType.message.rawValue
+        
+        SoundsPlayer.playHaptic()
+        
+        delegate?.shouldSendMessage(text: text, type: messageType, completion: { success in
+            self.sendButton.isUserInteractionEnabled = true
+        })
     }
     
     func clearMessage() {
@@ -145,5 +148,11 @@ class ChatMessageTextFieldView: UIView {
         
         self.isUserInteractionEnabled = active
         self.alpha = active ? 1.0 : 0.8
+    }
+    
+    func setTextBack(text: String) {
+        let updatedText = (text.trim().isEmpty && !textView.isFirstResponder) ? kFieldPlaceHolder : text
+        setOngoingMessage(text: updatedText)
+        sendButton.isUserInteractionEnabled = true
     }
 }

@@ -67,6 +67,10 @@ extension NewChatAccessoryView {
     func getMessage() -> String {
         messageFieldView.getMessage()
     }
+    
+    func setTextBack(text: String) {
+        messageFieldView.setTextBack(text: text)
+    }
 }
 
 //Podcast Player
@@ -102,5 +106,9 @@ extension NewChatAccessoryView {
                 and: delegate
             )
         }
+    }
+    
+    func resetReplyView() {
+        messageReplyView.resetAndHideView()
     }
 }

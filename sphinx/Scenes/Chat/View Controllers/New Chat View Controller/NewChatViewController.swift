@@ -51,7 +51,10 @@ class NewChatViewController: NewKeyboardHandlerViewController {
             viewController.contact = UserContact.getContactWith(id: contactId)
         }
         
-        viewController.chatViewModel = NewChatViewModel(chat: viewController.chat)
+        viewController.chatViewModel = NewChatViewModel(
+            chat: viewController.chat,
+            contact: viewController.contact
+        )
         
         viewController.popOnSwipeEnabled = true
         

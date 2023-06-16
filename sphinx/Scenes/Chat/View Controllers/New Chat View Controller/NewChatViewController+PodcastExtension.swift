@@ -39,6 +39,8 @@ extension NewChatViewController : PodcastPlayerVCDelegate {
     func willDismissPlayer() {}
     
     func shouldShareClip(comment: PodcastComment) {
+        chatViewModel.podcastComment = comment
+        
         bottomView.configureReplyViewFor(
             podcastComment: comment,
             withDelegate: self

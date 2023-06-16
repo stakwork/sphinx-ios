@@ -184,6 +184,10 @@ extension NewChatViewController {
             bubbleViewRect: bubbleViewRect
         ), let message = TransactionMessage.getMessageWith(id: messageId)
         {
+            if message.getActionsMenuOptions().isEmpty {
+                return
+            }
+            
             newMsgsIndicatorView.isHidden = true
             
             let messageOptionsVC = MessageOptionsViewController.instantiate(message: message, delegate: self)

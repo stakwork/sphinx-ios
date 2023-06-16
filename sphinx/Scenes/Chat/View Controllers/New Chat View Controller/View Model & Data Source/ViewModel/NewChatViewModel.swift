@@ -12,12 +12,26 @@ import ObjectMapper
 class NewChatViewModel {
     
     var chat: Chat?
+    var contact: UserContact?
     
     var chatLeaderboard : [ChatLeaderboardEntry] = [ChatLeaderboardEntry]()
     var availableBadges : [Badge] = [Badge]()
     
-    init(chat: Chat?) {
+    var podcastComment: PodcastComment? = nil
+    var replyingTo: TransactionMessage? = nil
+    
+    init(
+        chat: Chat?,
+        contact: UserContact?
+    ) {
         self.chat = chat
+        self.contact = contact
+    }
+    
+    ///Notifications
+    func askForNotificationPermissions() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.registerForPushNotifications()
     }
     
     ///Volume
@@ -50,7 +64,7 @@ class NewChatViewModel {
             API.sharedInstance.getTribeLeaderboard(
                 tribeUUID: uuid,
                 callback: { results in
-                    if var chatLeaderboardEntries = Mapper<ChatLeaderboardEntry>().mapArray(JSONObject: Array(results)) {
+                    if let chatLeaderboardEntries = Mapper<ChatLeaderboardEntry>().mapArray(JSONObject: Array(results)) {
                         self.chatLeaderboard = chatLeaderboardEntries
                     }
                 },
@@ -92,4 +106,9 @@ class NewChatViewModel {
         return possibleMentions
     }
     
+    ///Reply view
+    func resetReply() {
+        podcastComment = nil
+        replyingTo = nil
+    }
 }

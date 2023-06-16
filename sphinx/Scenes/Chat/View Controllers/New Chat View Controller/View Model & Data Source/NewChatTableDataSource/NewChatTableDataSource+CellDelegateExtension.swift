@@ -138,9 +138,11 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
         ) {
             cachedMedia[messageId] = updatedMediaData
             
-            var snapshot = dataSource.snapshot()
-            snapshot.reloadItems([tableCellState.1])
-            dataSource.apply(snapshot, animatingDifferences: false)
+            DispatchQueue.main.async {
+                var snapshot = self.dataSource.snapshot()
+                snapshot.reloadItems([tableCellState.1])
+                self.dataSource.apply(snapshot, animatingDifferences: false)
+            }
         }
     }
     
@@ -163,9 +165,11 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
                     (UIScreen.main.bounds.width - (MessageTableCellState.kRowLeftMargin + MessageTableCellState.kRowRightMargin)) * (MessageTableCellState.kBubbleWidthPercentage)
             )
 
-            var snapshot = dataSource.snapshot()
-            snapshot.reloadItems([tableCellState.1])
-            dataSource.apply(snapshot, animatingDifferences: false)
+            DispatchQueue.main.async {
+                var snapshot = self.dataSource.snapshot()
+                snapshot.reloadItems([tableCellState.1])
+                self.dataSource.apply(snapshot, animatingDifferences: false)
+            }
         }
     }
 }

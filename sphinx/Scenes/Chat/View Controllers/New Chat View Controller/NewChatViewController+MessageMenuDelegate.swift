@@ -14,7 +14,9 @@ extension NewChatViewController : MessageOptionsVCDelegate {
     }
     
     func shouldReplyToMessage(message: TransactionMessage) {
-        
+        chatViewModel.replyingTo = message
+        bottomView.configureReplyViewFor(message: message, withDelegate: self)
+        shouldAdjustTableViewTopInset()
     }
     
     func shouldBoostMessage(message: TransactionMessage) {

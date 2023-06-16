@@ -11,24 +11,25 @@ import UIKit
 extension ChatMessageTextFieldView {
     @IBAction func attachmentButtonTouched() {
         self.endEditing(true)
+        
         delegate?.didTapAttachmentsButton?(text: self.textView.text)
     }
     
     @IBAction func sendButtonTouched() {
-//        sendButton.isUserInteractionEnabled = false
-//
-//        let currentString = (textView.text ?? "").trim()
-//
-//        if currentString == "" || currentString == placeHolderText {
-//            if let didTapSendButton = delegate?.didTapSendBlueButton {
-//                didTapSendButton()
-//            } else {
-//                sendButton.isUserInteractionEnabled = true
-//            }
-//            return
-//        }
-//
-//        createNewMessage(text: currentString as String)
+        sendButton.isUserInteractionEnabled = false
+
+        let currentString = (textView.text ?? "").trim()
+
+        if currentString == "" || currentString == placeHolderText {
+            if let didTapSendButton = delegate?.didTapSendBlueButton {
+                didTapSendButton()
+            } else {
+                sendButton.isUserInteractionEnabled = true
+            }
+            return
+        }
+
+        createNewMessage(text: currentString as String)
     }
     
     @IBAction func audioButtonTouchDown(_ sender: Any) {

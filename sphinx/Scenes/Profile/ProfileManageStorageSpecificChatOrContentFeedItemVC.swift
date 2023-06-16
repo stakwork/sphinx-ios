@@ -29,7 +29,11 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
     @IBOutlet weak var deletionSummarySizeLabel: UILabel!
     @IBOutlet weak var deletionSummaryButton: UIView!
     @IBOutlet weak var mediaDeletionConfirmationView: MediaDeletionConfirmationView!
-
+    @IBOutlet weak var mediaVsFilesSegmentedControl: UISegmentedControl!
+    @IBOutlet weak var firstIndexUnderlineView: UIView!
+    @IBOutlet weak var secondIndexUnderlineView: UIView!
+    
+    
     fileprivate var state : ProfileManageStorageSpecificChatOrContentFeedItemVCState = .single
     var overlayView : UIView? = nil
     var sourceType : StorageManagerMediaSource = .chats
@@ -62,6 +66,7 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
         super.viewDidLoad()
         setupViewAndModels()
         hideDeletionWarningAlert()
+        setupSegmentedControl()
     }
     
     func setupViewAndModels(){
@@ -224,6 +229,64 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
         
         self.mediaDeletionConfirmationView.isHidden = true
     }
+    
+    func setupSegmentedControl(){
+        // Set the background color for the selected segment
+        mediaVsFilesSegmentedControl.selectedSegmentTintColor = .clear//UIColor.Sphinx.HeaderBG
+
+        // Customize the title attributes for the selected segment
+        let selectedSegmentAttributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.Sphinx.PrimaryText,
+            .font: UIFont(name: "Roboto-Bold", size: 16.0),
+            //.backgroundColor : UIColor.Sphinx.HeaderBG
+        ]
+        
+        let deSelectedSegmentAttributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.Sphinx.WashedOutReceivedText,
+            .font: UIFont(name: "Roboto", size: 16.0),
+            //.backgroundColor : UIColor.Sphinx.HeaderBG
+        ]
+
+        mediaVsFilesSegmentedControl.setTitleTextAttributes(selectedSegmentAttributes, for: .selected)
+        mediaVsFilesSegmentedControl.setTitleTextAttributes(deSelectedSegmentAttributes, for: .normal)
+
+        // Create a CALayer for the underline
+        let underlineLayer = CALayer()
+        underlineLayer.backgroundColor = UIColor.blue.cgColor  // Set the underline color
+
+        // Set the initial frame for the underline
+        let initialSelectedSegmentIndex = 0  // Replace with the desired initial selected segment index
+        let initialSegmentFrame = mediaVsFilesSegmentedControl.subviews[initialSelectedSegmentIndex].frame
+        let underlineHeight: CGFloat = 2.0  // Set the underline height
+
+        underlineLayer.frame = CGRect(
+            x: initialSegmentFrame.minX,
+            y: mediaVsFilesSegmentedControl.frame.height - underlineHeight,
+            width: initialSegmentFrame.width,
+            height: underlineHeight
+        )
+
+        // Add the underline layer to the segmented control's layer
+        mediaVsFilesSegmentedControl.layer.addSublayer(underlineLayer)
+
+        // Update the underline position when the selected segment changes
+        mediaVsFilesSegmentedControl.addTarget(self, action: #selector(segmentedControlChanged(_:)), for: .valueChanged)
+
+    }
+    
+    @IBAction func segmentedControlChanged(_ sender: UISegmentedControl) {
+        if(sender.selectedSegmentIndex == 0){
+            print("0")
+            firstIndexUnderlineView.isHidden = false
+            secondIndexUnderlineView.isHidden = true
+        }
+        else{
+            print("1")
+            secondIndexUnderlineView.isHidden = false
+            firstIndexUnderlineView.isHidden = true
+        }
+    }
+    
     
 }
 

@@ -126,6 +126,7 @@ class UnifiedEpisodeView : UIView {
     
     func configure(
         withVideoEpisode videoEpisode: Video,
+        download: VideoDownload?,
         and delegate: VideoRowDelegate
     ) {
         self.videoEpisode = videoEpisode
@@ -166,6 +167,8 @@ class UnifiedEpisodeView : UIView {
         
         downloadButton.isEnabled = true
         downloadButton.isHidden = false
+        
+        configureDownload(video: videoEpisode, download: download)
 
         
         descriptionLabel.text = videoEpisode.videoDescription
@@ -294,7 +297,9 @@ class UnifiedEpisodeView : UIView {
         durationView.isHidden = true
         progressView.isHidden = true
         
-        if let valid_duration = episode.duration, let valid_time = episode.currentTime, valid_time > 0 {
+        if let episode = episode,
+            let valid_duration = episode.duration,
+            let valid_time = episode.currentTime, valid_time > 0 {
             let percentage = max(Float(valid_time) / Float(valid_duration), Float(0.075))
             let newProgressWidth = (percentage * Float(fullWidth))
             progressWidthConstraint.constant = CGFloat(newProgressWidth)
@@ -325,7 +330,34 @@ class UnifiedEpisodeView : UIView {
         downloadButton.tintColorDidChange()
     }
     
+    func configureDownload(video: Video, download: VideoDownload?) {
+        downloadButtonImage.isHidden = true
+        downloadProgressBar.isHidden = true
+        
+        if video.isDownloaded {
+            downloadButtonImage.isHidden = false
+            downloadButtonImage.image = UIImage(named: "playerListDownloaded")
+            downloadButtonImage.tintColor = UIColor.Sphinx.ReceivedIcon
+        } else if let download = download {
+            downloadProgressBar.isHidden = false
+            updateDownloadState(download)
+        } else {
+            downloadButtonImage.isHidden = false
+            downloadButtonImage.image = UIImage(named: "playerListDownload")
+            downloadButtonImage.tintColor = UIColor.Sphinx.Text.withAlphaComponent(0.5)
+        }
+        
+        downloadButton.tintColorDidChange()
+    }
+    
+    //End Networking
+    
     func updateDownloadState(_ download: Download) {
+        let progress = CGFloat(download.progress) / CGFloat(100)
+        downloadProgressBar.progressAnimation(to: progress, active: download.isDownloading)
+    }
+    
+    func updateDownloadState(_ download: VideoDownload) {
         let progress = CGFloat(download.progress) / CGFloat(100)
         downloadProgressBar.progressAnimation(to: progress, active: download.isDownloading)
     }

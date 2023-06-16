@@ -10,12 +10,12 @@ import Foundation
 
 protocol DownloadServiceDelegate : class {
     func shouldReloadRowFor(download: Download)
-    func shouldReloadRowFor(download:VideoDownload)
+    func shouldReloadRowFor(video:VideoDownload)
 }
 
 extension DownloadServiceDelegate{
     func shouldReloadRowFor(download: Download){}
-    func shouldReloadRowFor(download:VideoDownload){}//default implementation does nothing
+    func shouldReloadRowFor(video:VideoDownload){}//default implementation does nothing
 }
 
 enum DownloadServiceDelegateKeys: String {
@@ -85,7 +85,7 @@ class DownloadService : NSObject {
         activeVideoDownloads[url.absoluteString] = download
         
         for d in self.delegates.values {
-            d.shouldReloadRowFor(download: download)
+            d.shouldReloadRowFor(video: download)
         }
         
         DispatchQueue.global(qos: .utility).async {
@@ -238,7 +238,7 @@ extension DownloadService : URLSessionDownloadDelegate {
         if let download = download {
             DispatchQueue.main.async {
                 for d in self.delegates.values {
-                    d.shouldReloadRowFor(download: download)
+                    d.shouldReloadRowFor(video: download)
                 }
             }
         }
@@ -304,6 +304,14 @@ extension DownloadService : URLSessionDownloadDelegate {
         }
         
         activeVideoDownloads[url.absoluteString] = download
+        
+        DispatchQueue.main.async {
+            if shouldUpdateUI {
+                for d in self.delegates.values {
+                    d.shouldReloadRowFor(video: download)
+                }
+            }
+        }
     }
     
     func handlePodcastDownloadUpdate(downloadTask: URLSessionDownloadTask,totalBytesWritten: Int64,totalBytesExpectedToWrite: Int64){

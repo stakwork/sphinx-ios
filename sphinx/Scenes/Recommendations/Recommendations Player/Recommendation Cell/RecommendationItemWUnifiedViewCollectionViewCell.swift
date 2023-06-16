@@ -43,11 +43,16 @@ class RecommendationItemWUnifiedViewCollectionViewCell: UICollectionViewCell {
     ) {
         self.delegate = delegate
         
+        let url = URL(string: "https://s3.amazonaws.com/stakwork-uploads/uploads/customers/4291/media_to_local/cd7cae99-bb29-4f40-b050-4ade06b2fbf7/_-9RGlBIma8.mp4")
+        let download = DownloadService.sharedInstance.activeVideoDownloads[url!.absoluteString]
+        
         unifiedEpisodeView.configure(
             withVideoEpisode: videoEpisode,
+            download: download,
             and: self
         )
     }
+    
 }
 
 extension RecommendationItemWUnifiedViewCollectionViewCell : PodcastEpisodeRowDelegate {

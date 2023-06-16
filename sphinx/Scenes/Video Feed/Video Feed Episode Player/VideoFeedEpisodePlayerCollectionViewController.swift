@@ -546,9 +546,9 @@ extension VideoFeedEpisodePlayerCollectionViewController:ItemDescriptionViewCont
 
 
 extension VideoFeedEpisodePlayerCollectionViewController : DownloadServiceDelegate{
-    func shouldReloadRowFor(download: VideoDownload) {
+    func shouldReloadRowFor(video: VideoDownload) {
         //TODO: reload row
         print("shouldReloadRowFor from VideoFeedEpisodePlayerCollectionViewController")
-        refreshCellForVideo(video: download.video)
+        refreshCellForVideo(video: video.video)
     }
 }

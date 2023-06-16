@@ -18,4 +18,6 @@ extension Notification.Name {
     static let onConnectionStatusChanged = Notification.Name("onConnectionStatusChanged")
     static let autocompleteMention = Notification.Name("autocompleteMention")
     static let refreshFeedUI = Notification.Name(rawValue: "refreshFeedUI")
+    static let onContactsAndChatsChanged = Notification.Name("onContactsAndChatsChanged")
+    static let onSizeConfigurationChanged = Notification.Name("onSizeConfigurationChanged")
 }

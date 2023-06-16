@@ -27,7 +27,6 @@ final class ChatViewModel: NSObject {
     }
     
     var currentPayment = PaymentModel()
-    let contactsService = ContactsService()
     
     func resetCurrentPayment() {
         self.currentPayment = PaymentModel()

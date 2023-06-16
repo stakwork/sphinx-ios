@@ -46,6 +46,7 @@ extension Chat {
     @NSManaged public var messages: NSSet?
     @NSManaged public var cachedMediaSet: NSSet?
     @NSManaged public var subscription: Subscription?
+    @NSManaged public var lastMessage: TransactionMessage?
 }
 
 

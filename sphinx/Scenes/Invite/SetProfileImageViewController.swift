@@ -24,9 +24,7 @@ class SetProfileImageViewController: SetDataViewController {
     
     static func instantiate(nickname: String?) -> SetProfileImageViewController {
         let viewController = StoryboardScene.Invite.setProfileImageViewController.instantiate()
-        viewController.contactsService = ContactsService()
         viewController.nickname = nickname
-        
         return viewController
     }
     
@@ -100,7 +98,7 @@ class SetProfileImageViewController: SetDataViewController {
         
         API.sharedInstance.updateUser(id: id, params: parameters, callback: { contact in
             self.loading = false
-            let _ = self.contactsService.insertContact(contact: contact)
+            let _ = UserContactsHelper.insertContact(contact: contact)
             self.goToSphinxDesktopAd()
         }, errorCallback: {
             self.loading = false

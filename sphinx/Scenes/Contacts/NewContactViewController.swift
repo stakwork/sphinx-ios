@@ -39,7 +39,6 @@ class NewContactViewController: KeyboardEventsViewController {
     @IBOutlet weak var nameFieldRightConstraint: NSLayoutConstraint!
     @IBOutlet weak var groupPinContainer: GroupPinView!
     
-    var contactsService : ContactsService!
     var contact : UserContact? = nil
     var pubkey : String? = nil
     
@@ -79,7 +78,6 @@ class NewContactViewController: KeyboardEventsViewController {
             viewController.contact = UserContact.getContactWith(id: contactId)
         }
         
-        viewController.contactsService = ContactsService()
         viewController.pubkey = pubkey
         
         return viewController
@@ -166,7 +164,7 @@ class NewContactViewController: KeyboardEventsViewController {
         if let contact = contact {
             setContactInfo(contact: contact)
             
-            contactsService.reloadSubscriptions(contact: contact, callback: { _ in
+            UserContactsHelper.reloadSubscriptions(contact: contact, callback: { _ in
                 self.setContactInfo(contact: contact)
             })
         } else if let pubkey = pubkey {

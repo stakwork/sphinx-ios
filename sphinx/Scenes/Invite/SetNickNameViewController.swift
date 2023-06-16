@@ -18,8 +18,6 @@ class SetNickNameViewController: SetDataViewController {
     
     static func instantiate() -> SetNickNameViewController {
         let viewController = StoryboardScene.Invite.setNickNameViewController.instantiate()
-        viewController.contactsService = ContactsService()
-        
         return viewController
     }
     
@@ -61,7 +59,7 @@ class SetNickNameViewController: SetDataViewController {
     }
     
     func insertAndUpdateOwner(contacts: [JSON]) {
-        contactsService.insertContacts(contacts: contacts)
+        UserContactsHelper.insertContacts(contacts: contacts)
         UserData.sharedInstance.saveNewNodeOnKeychain()
         
         let id = UserData.sharedInstance.getUserId()
@@ -69,7 +67,7 @@ class SetNickNameViewController: SetDataViewController {
         
         API.sharedInstance.updateUser(id: id, params: parameters, callback: { contact in
             self.loading = false
-            let _ = self.contactsService.insertContact(contact: contact)
+            let _ = UserContactsHelper.insertContact(contact: contact)
             self.goToProfilePicture()
         }, errorCallback: {
             AlertHelper.showAlert(title: "generic.error.title".localized, message: "generic.error.message".localized)

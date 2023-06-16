@@ -36,6 +36,23 @@ extension UserContact {
                 id
             )
         }
+        
+        public static func chatList() -> NSPredicate {
+            if GroupsPinManager.sharedInstance.isStandardPIN {
+                return NSPredicate(
+                    format: "isOwner == %@ AND fromGroup == %@ AND pin == null",
+                    NSNumber(value: false),
+                    NSNumber(value: false)
+                )
+            } else {
+                return NSPredicate(
+                    format: "isOwner == %@ AND fromGroup == %@ AND pin = %@",
+                    NSNumber(value: false),
+                    NSNumber(value: false),
+                    GroupsPinManager.sharedInstance.currentPin
+                )
+            }
+        }
     }
 }
 
@@ -87,6 +104,15 @@ extension UserContact {
 
             request.sortDescriptors = [UserContact.SortDescriptors.nameAscending]
             request.predicate = nil
+
+            return request
+        }
+        
+        public static func chatList() -> NSFetchRequest<UserContact> {
+            let request: NSFetchRequest<UserContact> = baseFetchRequest()
+
+            request.sortDescriptors = [UserContact.SortDescriptors.nameAscending]
+            request.predicate = Predicates.chatList()
 
             return request
         }

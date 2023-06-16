@@ -145,7 +145,7 @@ extension ProfileViewController : UITextFieldDelegate {
             }
             
             API.sharedInstance.updateUser(id: profile.id, params: parameters, callback: { contact in
-                let _ = self.contactsService.insertContact(contact: contact)
+                let _ = UserContactsHelper.insertContact(contact: contact)
                 self.configureProfile()
             }, errorCallback: {
                 self.configureProfile()

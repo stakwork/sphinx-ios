@@ -30,6 +30,8 @@ class ChatListCollectionViewCell: UICollectionViewCell {
             }
         }
     }
+    
+    var ownerId: Int!
 }
 
 
@@ -48,7 +50,7 @@ extension ChatListCollectionViewCell {
 extension ChatListCollectionViewCell {
     
     var unreadMessageCount: Int {
-        if chatListObject?.isSeen() == true {
+        if chatListObject?.isSeen(ownerId: ownerId) == true {
             return 0
         }
         return chatListObject?.getChat()?.getReceivedUnseenMessagesCount() ?? 0
@@ -57,7 +59,7 @@ extension ChatListCollectionViewCell {
     var hasUnreadMessages: Bool { unreadMessageCount > 0 }
     
     var unreadMentionsCount: Int {
-        if chatListObject?.isSeen() == true {
+        if chatListObject?.isSeen(ownerId: ownerId) == true {
             return 0
         }
         return chatListObject?.getChat()?.getReceivedUnseenMentionsCount() ?? 0
@@ -82,8 +84,9 @@ extension ChatListCollectionViewCell {
         
         contactImageView.makeCircular()
         contactInitialsLabel.makeCircular()
-        unreadMessageBadgeContainer.makeCircular()
-        mentionsBadgeContainer.makeCircular()
+        
+        unreadMessageBadgeContainer.layer.cornerRadius = unreadMessageBadgeContainer.frame.height/2
+        mentionsBadgeContainer.layer.cornerRadius = mentionsBadgeContainer.frame.height/2
         
         invitePriceContainer.layer.cornerRadius = 2
         invitePriceContainer.clipsToBounds = true
@@ -147,7 +150,9 @@ extension ChatListCollectionViewCell {
         }
         
         unreadMessageBadgeContainer.isHidden = false
-        unreadMessageBadgeLabel.text = unreadMessageCount > 99 ? "99+" : "\(unreadMessageCount)"
+        
+        let unreadMCount = unreadMessageCount
+        unreadMessageBadgeLabel.text = unreadMCount > 99 ? "99+" : "\(unreadMCount)"
         
         if chatListObject.getChat()?.isMuted() == true || chatListObject.getChat()?.isOnlyMentions() == true {
             unreadMessageBadgeContainer.alpha = 0.2
@@ -171,7 +176,8 @@ extension ChatListCollectionViewCell {
         
         mentionsBadgeContainer.isHidden = false
         
-        mentionsBadgeLabel.text = unreadMentionsCount > 99 ? "@ 99+" : "@ \(unreadMentionsCount)"
+        let unreadMCount = unreadMentionsCount
+        mentionsBadgeLabel.text = unreadMCount > 99 ? "@ 99+" : "@ \(unreadMCount)"
     }
     
     private func renderContactImageViews(for chatListObject: ChatListCommonObject) {

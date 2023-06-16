@@ -44,7 +44,6 @@ class ChatHeaderView: UIView {
     
     var chat: Chat? = nil
     var contact: UserContact? = nil
-//    var contactsService: ContactsService! = nil
     
     public enum RightButtons: Int {
         case WebApp
@@ -86,7 +85,6 @@ class ChatHeaderView: UIView {
     ) {
         self.chat = chat
         self.contact = contact
-//        self.contactsService = contactsService
         self.delegate = delegate
         
         setChatInfo()
@@ -103,9 +101,9 @@ class ChatHeaderView: UIView {
         setVolumeState(muted: chat?.isMuted() ?? false)
         configureImageOrInitials()
         
-//        if let contact = contact, !contact.hasEncryptionKey() {
-//            forceKeysExchange(contactId: contact.id)
-//        }
+        if let contact = contact, !contact.hasEncryptionKey() {
+            forceKeysExchange(contactId: contact.id)
+        }
     }
     
     func getHeaderName() -> String {
@@ -194,9 +192,9 @@ class ChatHeaderView: UIView {
         volumeButton.setImage(UIImage(named: muted ? "muteOnIcon" : "muteOffIcon"), for: .normal)
     }
     
-//    func forceKeysExchange(contactId: Int) {
-//        contactsService.exchangeKeys(id: contactId)
-//    }
+    func forceKeysExchange(contactId: Int) {
+        UserContactsHelper.exchangeKeys(id: contactId)
+    }
     
     func checkRoute() {
         API.sharedInstance.checkRoute(

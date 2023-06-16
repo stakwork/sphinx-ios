@@ -13,7 +13,6 @@ import GiphyUISDK
 
 class ChatViewController: KeyboardHandlerViewController {
     
-    var contactsService: ContactsService!
     var chatViewModel: ChatViewModel!
     var chatListViewModel: ChatListViewModel!
     
@@ -68,16 +67,14 @@ class ChatViewController: KeyboardHandlerViewController {
     
     static func instantiate(
         contact: UserContact? = nil,
-        chat: Chat? = nil,
-        contactsService: ContactsService
+        chat: Chat? = nil
     ) -> ChatViewController {
         let viewController = StoryboardScene.Chat.chatViewController.instantiate()
         
         viewController.contact = contact
         viewController.chat = chat ?? contact?.getChat()
-        viewController.contactsService = contactsService
         viewController.chatViewModel = ChatViewModel()
-        viewController.chatListViewModel = ChatListViewModel(contactsService: contactsService)
+        viewController.chatListViewModel = ChatListViewModel()
         
         return viewController
     }
@@ -89,7 +86,6 @@ class ChatViewController: KeyboardHandlerViewController {
         configureVideoCallManager()
         addShadows()
         
-//        chatHeaderView.configureWith(chat: chat, contact: contact, contactsService: contactsService, delegate: self)
         chatHeaderView.configureWith(chat: chat, contact: contact, delegate: self)
         
         accessoryView.delegate = self

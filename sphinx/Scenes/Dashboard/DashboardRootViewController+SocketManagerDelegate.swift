@@ -10,32 +10,26 @@ import UIKit
 extension DashboardRootViewController: SocketManagerDelegate {
     
     func didReceiveMessage(message: TransactionMessage, shouldSync: Bool) {
-        chatsListViewModel.updateContactsAndChats()
-        updateCurrentViewControllerData()
-    }
-    
+        ///Not needed anymore
+    }    
     
     func didReceiveConfirmation(message: TransactionMessage) {
-        chatsListViewModel.updateContactsAndChats()
-        updateCurrentViewControllerData()
+        ///Not needed anymore
     }
     
     func didReceivePurchaseUpdate(message: TransactionMessage) {
-        chatsListViewModel.updateContactsAndChats()
-        updateCurrentViewControllerData()
+        ///Not needed anymore
     }
     
-    
     func didUpdateContact(contact: UserContact) {
-        updateCurrentViewControllerData()
+        ///Not needed anymore
     }
     
     func didUpdateChat(chat: Chat) {
-        updateCurrentViewControllerData()
+        ///Not needed anymore
     }
     
-    
     func didReceiveOrUpdateGroup() {
-        loadContactsAndSyncMessages()
+        ///Not needed anymore
     }
 }

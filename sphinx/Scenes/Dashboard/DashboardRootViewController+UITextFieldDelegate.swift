@@ -63,13 +63,9 @@ extension DashboardRootViewController: UITextFieldDelegate {
                 presentRootFeedsListView()
             }
         case .friends:
-            contactChatsContainerViewController.updateWithNewChats(
-                chatsListViewModel.contactChats
-            )
+            contactsService.updateContactsSearchQuery(term: "")
         case .tribes:
-            tribeChatsContainerViewController.updateWithNewChats(
-                chatsListViewModel.tribeChats
-            )
+            contactsService.updateChatsSearchQuery(term: "")
         }
         
         return true
@@ -99,15 +95,9 @@ extension DashboardRootViewController: UITextFieldDelegate {
                 and: getSearchFeedType()
             )
         case .friends:
-            contactChatsContainerViewController.updateWithNewChats(
-                chatsListViewModel
-                    .contactChats(fromSearchQuery: queryString)
-            )
+            contactsService.updateContactsSearchQuery(term: queryString)
         case .tribes:
-            tribeChatsContainerViewController.updateWithNewChats(
-                chatsListViewModel
-                    .tribeChats(fromSearchQuery: queryString)
-            )
+            contactsService.updateChatsSearchQuery(term: queryString)
         }
             
         return true

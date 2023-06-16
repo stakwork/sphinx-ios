@@ -21,10 +21,7 @@ class DiscoverTribeTableViewDataSource : NSObject{
     
     private lazy var spinner: UIActivityIndicatorView = makeSpinner()
     lazy var joinedChatIds : [String] = {
-        let contactsService = ContactsService()
-        return contactsService
-            .getChatListObjects()
-            .filter { $0.isPublicGroup() }.compactMap({$0.getChat()?.uuid})
+        return Chat.getAllTribes().compactMap({ $0.uuid ?? "" }).filter({ $0.isNotEmpty })
     }()
     
     init(tableView:UITableView,vc:DiscoverTribesWebViewController){

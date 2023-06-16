@@ -14,8 +14,6 @@ class RootViewController: UIViewController, ContainerViewController {
     weak var currentViewController: UIViewController?
     var barStyle : UIStatusBarStyle = .lightContent
     
-    var contactsService = ContactsService()
-
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return barStyle
     }

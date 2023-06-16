@@ -15,6 +15,7 @@
 		470146142A3B856D00A00DF8 /* MessageOptionsMenuHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470146132A3B856D00A00DF8 /* MessageOptionsMenuHelper.swift */; };
 		470146162A3B962E00A00DF8 /* NewChatViewController+MessageMenuDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470146152A3B962E00A00DF8 /* NewChatViewController+MessageMenuDelegate.swift */; };
 		470146182A3BAE8F00A00DF8 /* NewOnlyTextMessageTableViewCell+DelegateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470146172A3BAE8F00A00DF8 /* NewOnlyTextMessageTableViewCell+DelegateExtension.swift */; };
+		4701461B2A3CA1AF00A00DF8 /* UserContactsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4701461A2A3CA1AF00A00DF8 /* UserContactsHelper.swift */; };
 		47018F8127CFB7CE00797E0B /* pause_animation.json in Resources */ = {isa = PBXBuildFile; fileRef = 47018F8027CFB7CD00797E0B /* pause_animation.json */; };
 		47018F9227CFEEAF00797E0B /* skip30v1.caf in Resources */ = {isa = PBXBuildFile; fileRef = 47018F9127CFEDB400797E0B /* skip30v1.caf */; };
 		47018F9327CFEEAF00797E0B /* skip30v2.caf in Resources */ = {isa = PBXBuildFile; fileRef = 47018F8E27CFEDB300797E0B /* skip30v2.caf */; };
@@ -932,6 +933,8 @@
 		470146132A3B856D00A00DF8 /* MessageOptionsMenuHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageOptionsMenuHelper.swift; sourceTree = "<group>"; };
 		470146152A3B962E00A00DF8 /* NewChatViewController+MessageMenuDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewChatViewController+MessageMenuDelegate.swift"; sourceTree = "<group>"; };
 		470146172A3BAE8F00A00DF8 /* NewOnlyTextMessageTableViewCell+DelegateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewOnlyTextMessageTableViewCell+DelegateExtension.swift"; sourceTree = "<group>"; };
+		470146192A3BB5D400A00DF8 /* sphinx 41.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 41.xcdatamodel"; sourceTree = "<group>"; };
+		4701461A2A3CA1AF00A00DF8 /* UserContactsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserContactsHelper.swift; sourceTree = "<group>"; };
 		47018F8027CFB7CD00797E0B /* pause_animation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = pause_animation.json; sourceTree = "<group>"; };
 		47018F8E27CFEDB300797E0B /* skip30v2.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = skip30v2.caf; sourceTree = "<group>"; };
 		47018F8F27CFEDB300797E0B /* skip30v3.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = skip30v3.caf; sourceTree = "<group>"; };
@@ -3240,6 +3243,7 @@
 				475BDD75232BF91A00C5BBD6 /* ContactsService.swift */,
 				479A03E82583A7180093DB30 /* LocalNetworkPermissionService.swift */,
 				477C57E6234785ED00BB4E04 /* WalletBalanceService.swift */,
+				4701461A2A3CA1AF00A00DF8 /* UserContactsHelper.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -5312,6 +5316,7 @@
 				475BDD5C232AE26E00C5BBD6 /* TransactionMessage+CoreDataClass.swift in Sources */,
 				478BD8B92829B70700C733FD /* TribeMemberPopupView.swift in Sources */,
 				472161D1293A67EA0088B87B /* RecommendationFeedItemsCollectionViewController.swift in Sources */,
+				4701461B2A3CA1AF00A00DF8 /* UserContactsHelper.swift in Sources */,
 				475723A9247EBB56001ADC7E /* CustomAudioPlayer.swift in Sources */,
 				47D76E6927F10D89000DC021 /* API+AuthenticationExtension.swift in Sources */,
 				473842F7239197E700AA640F /* FullScreenImageView.swift in Sources */,
@@ -6812,6 +6817,7 @@
 		47F35D4A2373156A0042A58F /* sphinx.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				470146192A3BB5D400A00DF8 /* sphinx 41.xcdatamodel */,
 				47E6A4AA2A2A65F900A9509E /* sphinx 40.xcdatamodel */,
 				CE80EF632A0D7FF2007ED3A3 /* sphinx 39.xcdatamodel */,
 				CE7F06EC29CE004E0076C8BC /* sphinx 38.xcdatamodel */,
@@ -6853,7 +6859,7 @@
 				475E4162238588A200928931 /* sphinx 2.xcdatamodel */,
 				47F35D4B2373156A0042A58F /* sphinx.xcdatamodel */,
 			);
-			currentVersion = 47E6A4AA2A2A65F900A9509E /* sphinx 40.xcdatamodel */;
+			currentVersion = 470146192A3BB5D400A00DF8 /* sphinx 41.xcdatamodel */;
 			path = sphinx.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

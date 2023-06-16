@@ -33,7 +33,7 @@ public protocol ChatListCommonObject: class {
     func hasEncryptionKey() -> Bool
     func subscribedToContact() -> Bool
     func isMuted() -> Bool
-    func isSeen() -> Bool
+    func isSeen(ownerId: Int) -> Bool
     
     func getChat() -> Chat?
     func getContact() -> UserContact?

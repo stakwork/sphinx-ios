@@ -9,140 +9,198 @@ import Foundation
 import SwiftyJSON
 import CoreData
 
-public final class ContactsService {
+class ContactsService: NSObject {
+    
+    class var sharedInstance : ContactsService {
+        struct Static {
+            static let instance = ContactsService()
+        }
+        return Static.instance
+    }
+    
+    var owner: UserContact!
 
-    public var contacts = [UserContact]()
-    public var chats = [Chat]()
-    public var chatListObjects = [ChatListCommonObject]()
-    public var chatsCount = 0
-    public var subscriptions = [Subscription]()
+    var contacts = [UserContact]()
+    var chats = [Chat]()
+    var subscriptions = [Subscription]()
+    
+    var chatListObjects = [ChatListCommonObject]()
+    var contactListObjects = [ChatListCommonObject]()
+    
+    var contactsHasNewMessages = false
+    var chatsHasNewMessages = false
+    
+    var contactsSearchQuery: String = ""
+    var chatsSearchQuery: String = ""
+    
+    var contactsResultsController: NSFetchedResultsController<UserContact>!
+    var chatsResultsController: NSFetchedResultsController<Chat>!
 
-    init() {
-        reload()
+    override init() {
+        super.init()
+        
+        updateOwner()
+        configureFetchResultsController()
+    }
+    
+    func isRestoring() -> Bool {
+        return API.sharedInstance.lastSeenMessagesDate == nil
+    }
+    
+    func configureFetchResultsController() {
+        if let _ = chatsResultsController, let _ = contactsResultsController {
+            return
+        }
+        
+        if isRestoring() {
+            return
+        }
+        
+        Chat.updateLastMessages()
+        
+        ///Chats results controller
+        let chatsFetchRequest = Chat.FetchRequests.all()
+
+        chatsResultsController = NSFetchedResultsController(
+            fetchRequest: chatsFetchRequest,
+            managedObjectContext: CoreDataManager.sharedManager.persistentContainer.viewContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil
+        )
+        
+        chatsResultsController.delegate = self
+        
+        do {
+            try chatsResultsController.performFetch()
+        } catch {}
+        
+        ///Contacts results controller
+        let contactsFetchRequest = UserContact.FetchRequests.chatList()
+
+        contactsResultsController = NSFetchedResultsController(
+            fetchRequest: contactsFetchRequest,
+            managedObjectContext: CoreDataManager.sharedManager.persistentContainer.viewContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil
+        )
+        
+        contactsResultsController.delegate = self
+        
+        do {
+            try contactsResultsController.performFetch()
+        } catch {}
     }
 
-    public func reload() {
-        updateContacts()
-        updateChats()
-        updateSubscriptions()
-    }
-
-    public func updateContacts() {
-        let contactIds = ((Chat.getAllConversations().map { $0.contactIds }).flatMap { $0 }).map { $0.intValue }
-        self.contacts = UserContact.getAllExcluding(ids: contactIds)
-    }
-
-    public func updateChats() {
-        self.chats = Chat.getAll()
-    }
-
-    public func updateSubscriptions() {
+    func updateSubscriptions() {
         self.subscriptions = Subscription.getAll()
     }
+}
 
-    public func insertObjects(contacts: [JSON], chats: [JSON], subscriptions: [JSON], invites: [JSON]) {
-        insertContacts(contacts: contacts)
-        insertChats(chats: chats)
-        insertSubscriptions(subscriptions: subscriptions)
-        insertInvites(invites: invites)
-    }
-    
-    public func insertInvites(invites: [JSON]) {
-        if invites.count > 0 {
+extension ContactsService : NSFetchedResultsControllerDelegate {
+    func controller(
+        _ controller: NSFetchedResultsController<NSFetchRequestResult>,
+        didChangeContentWith snapshot: NSDiffableDataSourceSnapshotReference
+    ) {
+        if
+            let resultController = controller as? NSFetchedResultsController<NSManagedObject>,
+            let firstSection = resultController.sections?.first {
             
-            for invite: JSON in invites {
-                let _ = UserInvite.insertInvite(invite: invite)
+            if let contacts = firstSection.objects as? [UserContact] {
+                self.contacts = contacts
             }
-        }
-    }
-    
-    public func insertContacts(contacts: [JSON]) {
-        if contacts.count > 0 {
-            for contact: JSON in contacts {
-                if let id = contact.getJSONId(), contact["deleted"].boolValue || contact["from_group"].boolValue {
-                    if let contact = UserContact.getContactWith(id: id) {
-                        CoreDataManager.sharedManager.deleteContactObjectsFor(contact)
-                    }
-                } else {
-                    let _ = UserContact.insertContact(contact: contact)
-                }
+            
+            if let chats = firstSection.objects as? [Chat] {
+                self.chats = chats
             }
-        }
-    }
-
-    public func insertContact(contact: JSON, pin: String? = nil) -> UserContact? {
-        let c = UserContact.insertContact(contact: contact)
-        c?.pin = pin
-        return c
-    }
-
-    func removeDeletedContacts(existingContactIds: [Int]) {
-        let contactsToDelete = UserContact.getAllExcluding(ids: existingContactIds)
-        for contact in contactsToDelete {
-            if !contact.isOwner {
-                CoreDataManager.sharedManager.deleteContactObjectsFor(contact)
-            }
-        }
-    }
-    
-    public func insertChats(chats: [JSON]) {
-        if chats.count > 0 {
-            for chat: JSON in chats {
-                if let id = chat.getJSONId(), chat["deleted"].boolValue {
-                    if let chat = Chat.getChatWith(id: id) {
-                        CoreDataManager.sharedManager.deleteChatObjectsFor(chat)
-                    }
-                } else {
-                    if let chat = Chat.insertChat(chat: chat) {
-                        if chat.seen {
-                            chat.setChatMessagesAsSeen(shouldSync: false, shouldSave: false)
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    public func insertSubscriptions(subscriptions: [JSON]) {
-        if subscriptions.count > 0 {
-            for subscription: JSON in subscriptions {
-                let _ = Subscription.insertSubscription(subscription: subscription)
-            }
-        }
-    }
-
-    public func getChatListObjects() -> [ChatListCommonObject] {
-        let filteredContacts =  contacts.filter { !$0.isOwner && !$0.shouldBeExcluded() && !$0.isBlocked()}
         
-        let filteredChats =  chats.filter {
-            let isConversation = $0.isConversation()
-            
-            if (!isConversation) {
-                return true
-            }
-            
-            let chatContact = $0.getContact()
-
-            return (chatContact != nil) && !(chatContact?.isBlocked() ?? false)
+            processContactsAndChats()
         }
-
-        chatsCount = filteredChats.count
-
-        let chatsWithLastMessages = filteredChats.map{ (chat) -> Chat in
-            chat.updateLastMessage()
-            return chat
+    }
+    
+    func forceUpdate() {
+        self.contacts = UserContact.chatList()
+        self.chats = Chat.getAll()
+        
+        processContactsAndChats()
+    }
+    
+    func updateOwner() {
+        if owner == nil {
+            owner = UserContact.getOwner()
         }
-
-        var allObject: [ChatListCommonObject] = []
-        allObject.append(contentsOf: filteredContacts)  
-        allObject.append(contentsOf: chatsWithLastMessages)
-
-        chatListObjects = orderChatListObjects(objects: allObject)
+    }
+    
+    func processContactsAndChats() {
+        updateOwner()
+        
+        if chats.count > 0 || contacts.count > 0 {
+            let blockedContactIds = self.contacts.filter({ $0.isBlocked() }).map({ $0.id })
+            self.chats = self.chats.filter({ !$0.isConversation() || !$0.contactIds.map({ $0.intValue }).contains(where: blockedContactIds.contains) })
+            
+            let conversations = chats.filter({ $0.isConversation() })
+            let contactIds = ((conversations.map { $0.contactIds }).flatMap { $0 }).map { $0.intValue }
+            self.contacts = self.contacts.filter({ !contactIds.contains($0.id) && !$0.isExpiredInvite() && !$0.isBlocked() })
+        }
+        
+        processChatListObjects()
+    }
+    
+    public func getChatListObjects() -> [ChatListCommonObject] {
         return chatListObjects
     }
+    
+    public func processChatListObjects() {
+        var allObject: [ChatListCommonObject] = []
+        allObject.append(contentsOf: self.contacts)
+        allObject.append(contentsOf: self.chats)
 
+        let allObjects = orderChatListObjects(objects: allObject)
+        
+        if chatsSearchQuery.isNotEmpty {
+            chatListObjects = allObjects.filter {
+                $0.isPublicGroup() &&
+                $0.getName().lowercased().contains(chatsSearchQuery.lowercased())
+            }
+        } else {
+            chatListObjects = allObjects.filter {
+                $0.isPublicGroup()
+            }
+            
+            chatsHasNewMessages = false
+            
+            for chat in chatListObjects {
+                if !chat.isSeen(ownerId: owner.id) {
+                    chatsHasNewMessages = true
+                    break
+                }
+            }
+        }
+        
+        if contactsSearchQuery.isNotEmpty {
+            contactListObjects = allObjects.filter {
+                $0.isConversation() &&
+                $0.getName().lowercased().contains(contactsSearchQuery.lowercased())
+            }
+        } else {
+            contactListObjects = allObjects.filter { $0.isConversation() }
+            
+            contactsHasNewMessages = false
+            
+            for contact in contactListObjects {
+                if !contact.isSeen(ownerId: owner.id) {
+                    contactsHasNewMessages = true
+                    break
+                }
+            }
+        }
+        
+        NotificationCenter.default.post(name: .onContactsAndChatsChanged, object: nil)
+    }
 
-    func orderChatListObjects(objects: [ChatListCommonObject]) -> [ChatListCommonObject] {
+    func orderChatListObjects(
+        objects: [ChatListCommonObject]
+    ) -> [ChatListCommonObject] {
+        
         let orderedObjects = objects.sorted(by: {
             let contact1 = $0 as ChatListCommonObject
             let contact2 = $1 as ChatListCommonObject
@@ -162,120 +220,26 @@ public final class ContactsService {
 
             return contact1.getName().lowercased() < contact2.getName().lowercased()
         })
+        
         return orderedObjects
     }
-
-
-    public func updateProfileImage(userId: Int, profilePicture: String){
-        if let contact = UserContact.getContactWith(id: userId) {
-            contact.avatarUrl = profilePicture
-        }
+    
+    func resetSearches() {
+        contactsSearchQuery = ""
+        chatsSearchQuery = ""
+        
+        processChatListObjects()
     }
-
-
-    public func getObjectsWith(
-        searchString: String
-    ) -> [ChatListCommonObject] {
-        var allChatListObject = getChatListObjects()
-
-        if searchString != "" {
-            allChatListObject =  allChatListObject.filter {
-                $0.getName().lowercased().contains(searchString.lowercased())
-            }
-        }
-        return allChatListObject
+    
+    func updateContactsSearchQuery(term: String) {
+        contactsSearchQuery = term
+        
+        processChatListObjects()
     }
-
-
-    public func getChatsWith(
-        searchString: String
-    ) -> [Chat] {
-        guard searchString != "" else {
-            return getChatListObjects().compactMap { $0 as? Chat }
-        }
-
-        return getChatListObjects()
-            .filter {
-                $0.getName().lowercased().contains(searchString.lowercased())
-            }
-            .compactMap {
-                $0 as? Chat
-            }
-    }
-
-
-    public func updateContact(contact: UserContact?, nickname: String? = nil, routeHint: String? = nil, contactKey: String? = nil, callback: @escaping (Bool) -> ()) {
-        guard let contact = contact else {
-            return
-        }
-
-        var parameters: [String : AnyObject] = [:]
-
-        if let nickname = nickname {
-            parameters["alias"] = nickname as AnyObject
-        }
-
-        if let routeHint = routeHint {
-            parameters["route_hint"] = routeHint as AnyObject
-        }
-
-        if let contactKey = contactKey {
-            parameters["contact_key"] = contactKey as AnyObject
-        }
-
-        API.sharedInstance.updateUser(id: contact.id, params: parameters, callback: { contact in
-            DispatchQueue.main.async {
-                let _ = self.insertContact(contact: contact)
-                callback(true)
-            }
-        }, errorCallback: {
-            callback(false)
-        })
-    }
-
-    public func createContact(nickname: String,
-                              pubKey: String,
-                              routeHint: String? = nil,
-                              photoUrl: String? = nil,
-                              pin: String? = nil,
-                              contactKey: String? = nil,
-                              callback: @escaping (Bool, UserContact?) -> ()) {
-
-        var parameters = [String : AnyObject]()
-        parameters["alias"] = nickname as AnyObject
-        parameters["public_key"] = pubKey as AnyObject
-        parameters["status"] = UserContact.Status.Confirmed.rawValue as AnyObject
-
-        if let photoUrl = photoUrl {
-            parameters["photo_url"] = photoUrl as AnyObject
-        }
-
-        if let routeHint = routeHint {
-            parameters["route_hint"] = routeHint as AnyObject
-        }
-
-        if let contactKey = contactKey {
-            parameters["contact_key"] = contactKey as AnyObject
-        }
-
-        API.sharedInstance.createContact(params: parameters, callback: { contact in
-            let c = self.insertContact(contact: contact, pin: pin)
-            callback(true, c)
-        }, errorCallback: {
-            callback(false, nil)
-        })
-    }
-
-    public func exchangeKeys(id: Int) {
-        API.sharedInstance.exchangeKeys(id: id, callback: { _ in }, errorCallback: {})
-    }
-
-    public func reloadSubscriptions(contact: UserContact, callback: @escaping (Bool) -> ()) {
-        API.sharedInstance.getSubscriptionsFor(contact: contact, callback: { subscriptions in
-            self.insertSubscriptions(subscriptions: subscriptions)
-            callback(true)
-        }, errorCallback: {
-            callback(false)
-        })
+    
+    func updateChatsSearchQuery(term: String) {
+        chatsSearchQuery = term
+        
+        processChatListObjects()
     }
 }

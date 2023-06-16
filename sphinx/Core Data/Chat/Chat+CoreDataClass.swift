@@ -43,7 +43,6 @@ public class Chat: NSManagedObject {
         }
     }
     
-    public var lastMessage : TransactionMessage? = nil
     public var conversationContact : UserContact? = nil
     
     var ongoingMessage : String? = nil
@@ -217,15 +216,7 @@ public class Chat: NSManagedObject {
     }
     
     static func getAll() -> [Chat] {
-        var predicate: NSPredicate! = nil
-        
-        if GroupsPinManager.sharedInstance.isStandardPIN {
-            predicate = NSPredicate(format: "pin == null")
-        } else {
-            let currentPin = GroupsPinManager.sharedInstance.currentPin
-            predicate = NSPredicate(format: "pin = %@", currentPin)
-        }
-        
+        let predicate: NSPredicate = Chat.Predicates.all()
         let chats:[Chat] = CoreDataManager.sharedManager.getObjectsOfTypeWith(predicate: predicate, sortDescriptors: [], entityName: "Chat")
         return chats
     }
@@ -244,14 +235,14 @@ public class Chat: NSManagedObject {
         return chats
     }
     
-    static func getAllGroups() -> [Chat] {
+    static func getAllTribes() -> [Chat] {
         var predicate: NSPredicate! = nil
         
         if GroupsPinManager.sharedInstance.isStandardPIN {
-            predicate = NSPredicate(format: "type IN %@ AND pin == null", [Chat.ChatType.privateGroup.rawValue, Chat.ChatType.publicGroup.rawValue])
+            predicate = NSPredicate(format: "type == %d AND pin == null", Chat.ChatType.publicGroup.rawValue)
         } else {
             let currentPin = GroupsPinManager.sharedInstance.currentPin
-            predicate = NSPredicate(format: "type IN %@ AND pin = %@", [Chat.ChatType.privateGroup.rawValue, Chat.ChatType.publicGroup.rawValue], currentPin)
+            predicate = NSPredicate(format: "type == %d AND pin = %@", Chat.ChatType.publicGroup.rawValue, currentPin)
         }
         
         let sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
@@ -418,7 +409,7 @@ public class Chat: NSManagedObject {
             NSNumber(booleanLiteral: false),
             NSNumber(booleanLiteral: false)
         )
-        unseenMessagesCount = CoreDataManager.sharedManager.getObjectsCountOfTypeWith(predicate: predicate, entityName: "TransactionMessage")
+        unseenMessagesCount = CoreDataManager.sharedManager.getObjectsCountOfTypeWith(predicate: predicate, entityName: "TransactionMessage")        
     }
     
     func calculateUnseenMentionsCount() {
@@ -441,16 +432,16 @@ public class Chat: NSManagedObject {
         return messages.first
     }
     
-    public static func updateLastMessageForChats(_ chatIds: [Int]) {
-        for id in chatIds {
-            if let chat = Chat.getChatWith(id: id) {
-                chat.calculateBadge()
+    public static func updateLastMessages() {
+        for chat in Chat.getAll() {
+            if chat.lastMessage == nil {
+                chat.updateLastMessage()
             }
         }
     }
     
     public func updateLastMessage() {
-        if lastMessage?.id ?? 0 <= 0 {
+        if lastMessage == nil {
             lastMessage = getLastMessageToShow()
             calculateBadge()
         }

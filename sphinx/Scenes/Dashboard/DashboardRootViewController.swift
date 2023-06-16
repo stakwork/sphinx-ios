@@ -53,6 +53,7 @@ class DashboardRootViewController: RootViewController {
     internal let onionConnector = SphinxOnionConnector.sharedInstance
     internal let socketManager = SphinxSocketManager.sharedInstance
     internal let actionsManager = ActionsManager.sharedInstance
+    internal let contactsService = ContactsService.sharedInstance
     internal let refreshControl = UIRefreshControl()
     
     internal let newBubbleHelper = NewMessageBubbleHelper()
@@ -60,7 +61,7 @@ class DashboardRootViewController: RootViewController {
     internal let podcastPlayerController = PodcastPlayerController.sharedInstance
 
     internal lazy var chatsListViewModel: ChatListViewModel = {
-        ChatListViewModel(contactsService: contactsService)
+        ChatListViewModel()
     }()
     
     
@@ -79,14 +80,14 @@ class DashboardRootViewController: RootViewController {
     
     internal lazy var contactChatsContainerViewController: ChatsContainerViewController = {
         ChatsContainerViewController.instantiate(
-            chats: chatsListViewModel.contactChats,
+            tab: ChatsContainerViewController.Tab.Friends,
             chatsListDelegate: self
         )
     }()
     
     internal lazy var tribeChatsContainerViewController: ChatsContainerViewController = {
         ChatsContainerViewController.instantiate(
-            chats: chatsListViewModel.tribeChats,
+            tab: ChatsContainerViewController.Tab.Tribes,
             chatsListDelegate: self
         )
     }()
@@ -161,21 +162,11 @@ class DashboardRootViewController: RootViewController {
     var indicesOfTabsWithNewMessages: [Int] {
         var indices = [Int]()
 
-        let contacts = chatsListViewModel.contactsService.chatListObjects.filter { $0.isConversation() }
-        if contacts
-            .contains(
-                where: { $0.getChat()?.getReceivedUnseenMessagesCount() ?? 0 > 0 }
-            )
-        {
+        if contactsService.contactsHasNewMessages {
             indices.append(1)
         }
         
-        let tribes = chatsListViewModel.contactsService.chatListObjects.filter { $0.isPublicGroup() }
-        if tribes
-            .contains(
-                where: { $0.getChat()?.getReceivedUnseenMessagesCount() ?? 0 > 0 }
-            )
-        {
+        if contactsService.chatsHasNewMessages {
             indices.append(2)
         }
         
@@ -223,6 +214,12 @@ extension DashboardRootViewController {
         activeTab = .friends
         
         loadLastPlayedPod()
+        
+        NotificationCenter.default.removeObserver(self, name: .onContactsAndChatsChanged, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .onSizeConfigurationChanged, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(dataDidChange), name: .onContactsAndChatsChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(sizeDidChange), name: .onSizeConfigurationChanged, object: nil)
     }
     
     func loadLastPlayedPod() {
@@ -454,6 +451,7 @@ extension DashboardRootViewController {
     internal func resetSearchField() {
         searchTextField?.text = ""
         view.endEditing(true)
+        contactsService.resetSearches()
     }
     
     
@@ -470,21 +468,19 @@ extension DashboardRootViewController {
     internal func loadContactsAndSyncMessages(
         shouldShowHeaderLoadingWheel: Bool = false
     ) {
-        updateCurrentViewControllerData()
-        
         self.shouldShowHeaderLoadingWheel = shouldShowHeaderLoadingWheel
         
         isLoading = true
         headerView.updateBalance()
-
+        
         chatsListViewModel.loadFriends() { [weak self] restoring in
             guard let self = self else { return }
             
             if restoring {
                 self.chatsListViewModel.askForNotificationPermissions()
-                
-                self.chatsListViewModel.updateContactsAndChats()
-                self.updateCurrentViewControllerData()
+                self.contactsService.forceUpdate()
+            } else {
+                self.contactsService.configureFetchResultsController()
             }
             
             var contentProgressShare : Float = 0.0
@@ -519,6 +515,7 @@ extension DashboardRootViewController {
                                     self.newBubbleHelper.showLoadingWheel(text: "fetching.old.messages".localized)
                                 }
                                 
+                                self.contactsService.forceUpdate()
                             }
                         },
                         completion: { (_,_) in
@@ -552,24 +549,21 @@ extension DashboardRootViewController {
         )
     }
     
+    @objc func sizeDidChange() {
+        contactChatsContainerViewController.reloadCollectionView()
+        tribeChatsContainerViewController.reloadCollectionView()
+    }
     
-    internal func updateCurrentViewControllerData() {
+    @objc func dataDidChange() {
         updateNewMessageBadges()
         
-        let queryString = searchTextField?.text ?? ""
+        contactChatsContainerViewController.updateWithNewChats(
+            contactsService.contactListObjects
+        )
         
-        switch activeTab {
-        case .feed:
-            break
-        case .friends:
-            contactChatsContainerViewController.updateWithNewChats(
-                chatsListViewModel.contactChats(fromSearchQuery: queryString)
-            )
-        case .tribes:
-            tribeChatsContainerViewController.updateWithNewChats(
-                chatsListViewModel.tribeChats(fromSearchQuery: queryString)
-            )
-        }
+        tribeChatsContainerViewController.updateWithNewChats(
+            contactsService.chatListObjects
+        )
     }
     
     
@@ -586,8 +580,6 @@ extension DashboardRootViewController {
     
     
     internal func finishLoading() {
-        updateCurrentViewControllerData()
-        
         newBubbleHelper.hideLoadingWheel()
         restoreProgressView.hideViewAnimated()
         
@@ -598,6 +590,7 @@ extension DashboardRootViewController {
         
         didFinishInitialLoading = true
         
+        contactsService.configureFetchResultsController()
     }
     
     
@@ -617,25 +610,10 @@ extension DashboardRootViewController {
         didRetry:Bool = false
     ) {
         let contact = contact ?? chat?.getContact()
-//
-//        if handleInvite(for: contact) {
-//            return
-//        }
-//
-//        if let topVC = topMostViewController() as? NewPodcastPlayerViewController, didRetry == false {
-//            topVC.dismiss(animated: false)
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
-//                self.presentChatDetailsVC(for: chat,didRetry: true)///retry
-//            })
-//            return
-//        }
-        
-//        let chatVC = ChatViewController.instantiate(
-//            contact: contact,
-//            chat: chat,
-//            contactsService: contactsService,
-//            rootViewController: rootViewController
-//        )
+
+        if handleInvite(for: contact) {
+            return
+        }
         
         let chatVC = NewChatViewController.instantiate(
             contactId: contact?.id,
@@ -643,8 +621,6 @@ extension DashboardRootViewController {
         )
         
         navigationController?.pushViewController(chatVC, animated: shouldAnimate)
-        
-        resetSearchField()
     }
     
     private func handleInvite(for contact: UserContact?) -> Bool {

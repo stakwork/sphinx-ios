@@ -10,8 +10,6 @@ import UIKit
 
 class SetDataViewController : UIViewController {
     
-    var contactsService : ContactsService!
-    
     @IBOutlet weak var nextButton: UIButton!
     
     override func viewDidLoad() {

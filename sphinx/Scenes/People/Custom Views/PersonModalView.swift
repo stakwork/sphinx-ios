@@ -109,8 +109,7 @@ class PersonModalView: CommonModalView {
             let routeHint = authInfo?.jsonBody["owner_route_hint"].string ?? ""
             let contactKey = authInfo?.jsonBody["owner_contact_key"].string ?? ""
             
-            let contactsService = ContactsService()
-            contactsService.createContact(nickname: nickname,pubKey: pubkey, routeHint: routeHint, contactKey: contactKey, callback: { (success, _) in
+            UserContactsHelper.createContact(nickname: nickname,pubKey: pubkey, routeHint: routeHint, contactKey: contactKey, callback: { (success, _) in
                 if success {
                     self.sendInitialMessage()
                     return

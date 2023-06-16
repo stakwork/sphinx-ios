@@ -4,19 +4,25 @@ import UIKit
 class ChatsContainerViewController: UIViewController {
     @IBOutlet weak var chatsListContainerView: UIView!
     
-    
     private var chatsCollectionViewController: ChatsCollectionViewController!
     private weak var chatsListDelegate: DashboardChatsListDelegate?
     
     private(set) var chats: [ChatListCommonObject] = []
+    
+    public enum Tab: Int {
+        case Friends
+        case Tribes
+    }
+    
+    var tab: Tab = Tab.Friends
 }
 
 
 // MARK: - Instantiation
 extension ChatsContainerViewController {
-    
+
     static func instantiate(
-        chats: [ChatListCommonObject] = [],
+        tab: Tab,
         chatsListDelegate: DashboardChatsListDelegate
     ) -> ChatsContainerViewController {
         
@@ -26,7 +32,7 @@ extension ChatsContainerViewController {
             .instantiate()
         
         viewController.chatsListDelegate = chatsListDelegate
-        viewController.chats = chats
+        viewController.tab = tab
         
         return viewController
     }
@@ -37,8 +43,8 @@ extension ChatsContainerViewController {
     ) {
         self.chats = chats
         
-        self.chatsCollectionViewController.chatListObjects = chats
-        self.chatsCollectionViewController.updateSnapshot()
+        self.chatsCollectionViewController?.chatListObjects = chats
+        self.chatsCollectionViewController?.updateSnapshot()
     }
 }
 
@@ -96,6 +102,12 @@ extension ChatsContainerViewController {
             child: chatsCollectionViewController,
             container: chatsListContainerView
         )
+        
+        chatsCollectionViewController?.updateSnapshot()
+    }
+    
+    func reloadCollectionView() {
+        chatsCollectionViewController?.loadChatsList()
     }
 }
 

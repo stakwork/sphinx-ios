@@ -247,6 +247,12 @@ extension TransactionMessage {
     }
     
     //Statues
+    func isSeen(
+        ownerId: Int
+    ) -> Bool {
+        return self.isOutgoing(ownerId: ownerId) || self.seen
+    }
+    
     func isFailedOrMediaExpired() -> Bool {
         let failed = self.failed()
         let expired = self.isMediaExpired()

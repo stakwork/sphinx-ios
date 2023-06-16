@@ -19,6 +19,7 @@ public class UserContact: NSManagedObject {
     }
     
     public var lastMessage : TransactionMessage? = nil
+    
     public var image : UIImage? = nil
     
     public static var kTipAmount : Int {
@@ -161,6 +162,13 @@ public class UserContact: NSManagedObject {
             predicate = NSPredicate(format: "pin = %@", currentPin)
         }
         
+        let sortDescriptors = [NSSortDescriptor(key: "status", ascending: true), NSSortDescriptor(key: "nickname", ascending: true)]
+        let contacts: [UserContact] = CoreDataManager.sharedManager.getObjectsOfTypeWith(predicate: predicate, sortDescriptors: sortDescriptors, entityName: "UserContact")
+        return contacts
+    }
+    
+    public static func chatList() -> [UserContact] {
+        let predicate: NSPredicate = UserContact.Predicates.chatList()
         let sortDescriptors = [NSSortDescriptor(key: "status", ascending: true), NSSortDescriptor(key: "nickname", ascending: true)]
         let contacts: [UserContact] = CoreDataManager.sharedManager.getObjectsOfTypeWith(predicate: predicate, sortDescriptors: sortDescriptors, entityName: "UserContact")
         return contacts
@@ -342,10 +350,18 @@ public class UserContact: NSManagedObject {
     
     public func shouldBeExcluded() -> Bool {
         if fromGroup { return true }
+        
         if let invite = self.invite {
             return self.status != UserContact.Status.Confirmed.rawValue && invite.status == UserInvite.Status.Expired.rawValue
         }
+        
         return false
+    }
+    
+    func isExpiredInvite() -> Bool {
+        return
+            self.status != UserContact.Status.Confirmed.rawValue &&
+            self.invite?.status == UserInvite.Status.Expired.rawValue
     }
 
     func isVirtualNode() -> Bool {

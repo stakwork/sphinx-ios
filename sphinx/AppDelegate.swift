@@ -37,7 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     let podcastPlayerController = PodcastPlayerController.sharedInstance
     
-    let chatListViewModel = ChatListViewModel(contactsService: ContactsService())
+    let chatListViewModel = ChatListViewModel()
 
     func application(
         _ application: UIApplication,

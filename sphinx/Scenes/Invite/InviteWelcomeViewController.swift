@@ -17,8 +17,6 @@ class InviteWelcomeViewController: UIViewController {
     @IBOutlet weak var nextButtonContainer: UIView!
     @IBOutlet weak var loadingWheel: UIActivityIndicatorView!
     
-    private var contactsService : ContactsService!
-    
     var loading = false {
         didSet {
             LoadingWheelHelper.toggleLoadingWheel(loading: loading, loadingWheel: loadingWheel, loadingWheelColor: UIColor.white, view: view)
@@ -29,7 +27,6 @@ class InviteWelcomeViewController: UIViewController {
     
     static func instantiate(inviter: SignupHelper.Inviter) -> InviteWelcomeViewController {
         let viewController = StoryboardScene.Invite.inviteWelcomeViewController.instantiate()
-        viewController.contactsService = ContactsService()
         viewController.currentInviter = inviter
         
         return viewController
@@ -69,8 +66,7 @@ class InviteWelcomeViewController: UIViewController {
         loading = true
         
         if let inviter = currentInviter, let pubkey = inviter.pubkey {
-            let contactsService = ContactsService()
-            contactsService.createContact(nickname: inviter.nickname, pubKey: pubkey, routeHint: inviter.routeHint, callback: { (success, _) in
+            UserContactsHelper.createContact(nickname: inviter.nickname, pubKey: pubkey, routeHint: inviter.routeHint, callback: { (success, _) in
                 if success {
                     self.continueToPinView()
                 } else {

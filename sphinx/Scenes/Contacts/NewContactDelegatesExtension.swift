@@ -19,7 +19,7 @@ extension NewContactViewController {
         if !routeHint.isEmpty && !routeHint.isRouteHint {
             showErrorAlert(message: "invalid.route.hint".localized)
         } else if let nickname = nickNameTextField.text, contact.id > 0 && nickname != "", nickname != contact.nickname {
-            contactsService.updateContact(contact: contact, nickname: nickname, routeHint: routeHintTextField.text, callback: { success in
+            UserContactsHelper.updateContact(contact: contact, nickname: nickname, routeHint: routeHintTextField.text, callback: { success in
                 self.loading = false
 
                 if success {
@@ -47,7 +47,7 @@ extension NewContactViewController {
             showErrorAlert(message: "nickname.address.required".localized)
         } else {
             let pin = groupPinContainer.getPin()
-            self.contactsService.createContact(nickname: nickname, pubKey: pubkey, routeHint: routeHint, pin: pin, callback: { (success, _) in
+            UserContactsHelper.createContact(nickname: nickname, pubKey: pubkey, routeHint: routeHint, pin: pin, callback: { (success, _) in
                 self.loading = false
 
                 if success {

@@ -370,7 +370,7 @@
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="WTi-oO-T6C"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="Body"/>
                         <constraints>
                             <constraint firstItem="hwZ-I8-IJL" firstAttribute="trailing" secondItem="XKi-k6-l8l" secondAttribute="trailing" id="HqO-ac-ImJ"/>
                             <constraint firstAttribute="trailing" secondItem="uch-ef-QEI" secondAttribute="trailing" id="JQo-3y-eJ0"/>
@@ -553,7 +553,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="D5f-b5-Sze"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="Body"/>
                     </view>
                     <connections>
                         <outlet property="chatsListContainerView" destination="aa3-I2-cdN" id="YKW-5N-C6w"/>
@@ -570,7 +570,7 @@
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="Q15-Ve-1KU">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="Body"/>
                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="8Ft-Ue-2TN">
                             <size key="itemSize" width="128" height="128"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -658,7 +658,7 @@
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="5V7-1u-a30">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="Body"/>
                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="LMw-0A-Y2N">
                             <size key="itemSize" width="128" height="128"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -683,6 +683,9 @@
         <image name="bottomBar3" width="25" height="25"/>
         <image name="bottomBar4" width="25" height="25"/>
         <image name="podcastIndexLogo" width="76" height="72"/>
+        <namedColor name="Body">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="DashboardHeader">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

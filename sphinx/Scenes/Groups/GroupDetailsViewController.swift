@@ -354,8 +354,7 @@ extension GroupDetailsViewController : AddFriendRowButtonDelegate {
 
 extension GroupDetailsViewController : NewContactVCDelegate {
     func shouldReloadChat(chat: Chat) {
-        let contactsService = ContactsService()
-        let chatListViewModel = ChatListViewModel(contactsService: contactsService)
+        let chatListViewModel = ChatListViewModel()
         
         chatListViewModel.loadFriends { _ in
             self.chat = chat

@@ -76,7 +76,6 @@ class ProfileViewController: NewKeyboardHandlerViewController {
         }
     }
     
-    var contactsService : ContactsService!
     let urlUpdateHelper = RelayURLUpdateHelper()
     let userData = UserData.sharedInstance
     
@@ -97,7 +96,6 @@ class ProfileViewController: NewKeyboardHandlerViewController {
     
     static func instantiate() -> ProfileViewController {
         let viewController = StoryboardScene.Profile.profileViewController.instantiate()
-        viewController.contactsService = ContactsService()
         viewController.popOnSwipeEnabled = true
         return viewController
     }

@@ -98,8 +98,6 @@ class DashboardRootViewController: RootViewController {
             let newViewController = mainContentViewController(forActiveTab: activeTab)
             let oldViewController = mainContentViewController(forActiveTab: oldValue)
             
-            removeChildVC(child: oldViewController)
-            
             addChildVC(
                 child: newViewController,
                 container: mainContentContainerView

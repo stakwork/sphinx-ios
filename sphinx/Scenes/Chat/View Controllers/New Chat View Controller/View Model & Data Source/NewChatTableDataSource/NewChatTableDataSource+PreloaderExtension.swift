@@ -19,7 +19,7 @@ extension NewChatTableDataSource {
     func saveMessagesToPreloader() {
         if let firstVisibleRow = tableView.indexPathsForVisibleRows?.last {
             preloaderHelper.add(
-                messageStateArray: messageTableCellStateArray.subarray(size: max(firstVisibleRow.row + 5, 30)),
+                messageStateArray: messageTableCellStateArray.subarray(size: firstVisibleRow.row + 10),
                 for: chat.id
             )
         }
@@ -64,12 +64,14 @@ extension NewChatTableDataSource {
                 tableView.contentOffset.y = tableView.contentOffset.y + (offset + tableView.contentInset.top)
             }
             
-            if row > 0 || scrollState.shouldPreventSetMessagesAsSeen {
+            if scrollState.shouldPreventSetMessagesAsSeen {
                 return
             }
         }
         
-        delegate?.didScrollToBottom()
+        if tableView.contentOffset.y <= Constants.kChatTableContentInset {
+            delegate?.didScrollToBottom()
+        }
     }
 }
 

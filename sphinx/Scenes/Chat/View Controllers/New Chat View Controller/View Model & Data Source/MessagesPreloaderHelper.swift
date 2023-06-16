@@ -94,7 +94,7 @@ class MessagesPreloaderHelper {
                 let itemUniqueIdentifiers = newItemIdentifiers.map({ $0.getUniqueIdentifier() })
                 let difference = itemUniqueIdentifiers.index(of: firstItemBeforeUpdate) ?? 0
                 let destinationRow = scrollState.bottomFirstVisibleRow + difference
-                let shouldAdjustScroll = destinationRow > 1
+                let shouldAdjustScroll = destinationRow > 1 || (destinationRow > 0 && scrollState.bottomFirstVisibleRowOffset > 0)
                 
                 return ScrollState(
                     bottomFirstVisibleRow: destinationRow,

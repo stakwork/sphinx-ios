@@ -34,6 +34,8 @@ class MediaLoader {
         let task = session.dataTask(with: request, completionHandler: { (data: Data?, response: URLResponse?, error: Error?) -> Void in
             if let _ = error {
                 errorCompletion()
+            } else if (response as? HTTPURLResponse)?.statusCode == API.sharedInstance.unauthorizedStatusCode {
+                errorCompletion()
             } else if let data = data {
                 completion(data, response?.getFileName())
             }

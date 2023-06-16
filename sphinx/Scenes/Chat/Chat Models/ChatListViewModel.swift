@@ -91,6 +91,7 @@ final class ChatListViewModel: NSObject {
                 )
                 
                 self.forceKeychainSync()
+                self.authenticateWithMemesServer()
                 
                 completion(restoring)
             })
@@ -118,6 +119,10 @@ final class ChatListViewModel: NSObject {
         UserData.sharedInstance.forcePINSyncOnKeychain()
         UserData.sharedInstance.saveNewNodeOnKeychain()
         EncryptionManager.sharedInstance.saveKeysOnKeychain()
+    }
+    
+    func authenticateWithMemesServer() {
+        AttachmentsManager.sharedInstance.runAuthentication()
     }
     
     func askForNotificationPermissions() {

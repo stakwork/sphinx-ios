@@ -61,7 +61,12 @@ class AttachmentsManager {
     }
     
     func authenticate(completion: @escaping (String) -> (), errorCompletion: @escaping () -> ()) {
-            API.sharedInstance.askAuthentication(callback: { id, challenge in
+        guard let pubkey = UserContact.getOwner()?.publicKey else {
+            errorCompletion()
+            return
+        }
+        
+        API.sharedInstance.askAuthentication(callback: { id, challenge in
             if let id = id, let challenge = challenge {
                 
                 self.delegate?.didUpdateUploadProgress?(progress: 10)
@@ -70,7 +75,7 @@ class AttachmentsManager {
                     if let sig = sig {
                         self.delegate?.didUpdateUploadProgress?(progress: 15)
                         
-                        API.sharedInstance.verifyAuthentication(id: id, sig: sig, callback: { token in
+                        API.sharedInstance.verifyAuthentication(id: id, sig: sig, pubkey: pubkey, callback: { token in
                             if let token = token {
                                 UserDefaults.Keys.attachmentsToken.set(token)
                                 completion(token)

@@ -57,10 +57,12 @@ class MediaMessageView: UIView {
     ) {
         self.delegate = delegate
         
+        configureMediaNotAvailableIconWith(messageMedia: messageMedia)
+        
         if let mediaData = mediaData {
-            fileInfoView.isHidden = !messageMedia.isPdf
-            gifOverlay.isHidden = !messageMedia.isGif
-            videoOverlay.isHidden = !messageMedia.isVideo
+            fileInfoView.isHidden = !messageMedia.isPdf || mediaData.failed
+            gifOverlay.isHidden = !messageMedia.isGif || mediaData.failed
+            videoOverlay.isHidden = !messageMedia.isVideo || mediaData.failed
             
             mediaImageView.image = mediaData.image
             
@@ -85,8 +87,20 @@ class MediaMessageView: UIView {
             
             paidContentOverlay.isHidden = !messageMedia.isPaid
             
-            loadingImageView.rotate()
             loadingContainer.isHidden = false
+            loadingImageView.rotate()
+        }
+    }
+    
+    func configureMediaNotAvailableIconWith(
+        messageMedia: BubbleMessageLayoutState.MessageMedia
+    ) {
+        if messageMedia.isPdf {
+            mediaNotAvailableIcon.text = "picture_as_pdf"
+        } else if messageMedia.isVideo {
+            mediaNotAvailableIcon.text = "videocam"
+        } else {
+            mediaNotAvailableIcon.text = "photo_library"
         }
     }
     

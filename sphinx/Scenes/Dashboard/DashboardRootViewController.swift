@@ -96,7 +96,7 @@ class DashboardRootViewController: RootViewController {
     internal var activeTab: DashboardTab = .friends {
         didSet {
             let newViewController = mainContentViewController(forActiveTab: activeTab)
-            let oldViewController = mainContentViewController(forActiveTab: oldValue)
+//            let oldViewController = mainContentViewController(forActiveTab: oldValue)
             
             addChildVC(
                 child: newViewController,

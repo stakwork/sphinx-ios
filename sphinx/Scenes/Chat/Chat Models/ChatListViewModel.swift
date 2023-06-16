@@ -24,25 +24,31 @@ final class ChatListViewModel {
             date: Date(),
             callback: {(contacts, chats, subscriptions, invites) -> () in
             
-            UserContactsHelper.insertObjects(
-                contacts: contacts,
-                chats: chats,
-                subscriptions: subscriptions,
-                invites: invites
-            )
+                UserContactsHelper.insertObjects(
+                    contacts: contacts,
+                    chats: chats,
+                    subscriptions: subscriptions,
+                    invites: invites
+                )
+                    
+                CoreDataManager.sharedManager.persistentContainer.viewContext.saveContext()
+                    
+                self.forceKeychainSync()
+                self.authenticateWithMemesServer()
                 
-            CoreDataManager.sharedManager.persistentContainer.viewContext.saveContext()
-            
-            self.forceKeychainSync()
-            
-            completion(restoring)
-        })
+                completion(restoring)
+            }
+        )
     }
     
     func forceKeychainSync() {
         UserData.sharedInstance.forcePINSyncOnKeychain()
         UserData.sharedInstance.saveNewNodeOnKeychain()
         EncryptionManager.sharedInstance.saveKeysOnKeychain()
+    }
+    
+    func authenticateWithMemesServer() {
+        AttachmentsManager.sharedInstance.runAuthentication()
     }
     
     func askForNotificationPermissions() {

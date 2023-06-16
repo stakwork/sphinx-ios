@@ -527,13 +527,19 @@ extension VideoFeedEpisodePlayerCollectionViewController:ItemDescriptionViewCont
         
     }
     
-    func shouldDownloadVideo(video:Video){
+    func shouldDownloadVideo(video: Video) {
         downloadService.startDownload(video: video)
-        
-//        if let index = videoFeedEpisodes.firstIndex(of: video) {
-//            let indexPath = IndexPath(item: index, section: 0)
-//            collectionView.reloadItems(at: [indexPath])
-//        }
+        refreshCellForVideo(video: video)
+    }
+
+    func refreshCellForVideo(video:Video){
+        // Update the data source snapshot with the new state
+        var snapshot = dataSource.snapshot()
+        if let _ = videoFeedEpisodes.firstIndex(of: video) {
+            let itemIdentifier = DataSourceItem.videoFeedEpisode(video)
+            snapshot.reloadItems([itemIdentifier])
+            dataSource.apply(snapshot, animatingDifferences: true)
+        }
     }
     
 }
@@ -543,5 +549,6 @@ extension VideoFeedEpisodePlayerCollectionViewController : DownloadServiceDelega
     func shouldReloadRowFor(download: VideoDownload) {
         //TODO: reload row
         print("shouldReloadRowFor from VideoFeedEpisodePlayerCollectionViewController")
+        refreshCellForVideo(video: download.video)
     }
 }

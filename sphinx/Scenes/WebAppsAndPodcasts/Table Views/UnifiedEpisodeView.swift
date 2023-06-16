@@ -218,7 +218,8 @@ class UnifiedEpisodeView : UIView {
         
         dateLabel.text = episode.dateString
         
-        if let playedStatus = episode.wasPlayed, playedStatus == true {
+        if let playedStatus = episode.wasPlayed,
+            playedStatus == true {
             setAsPlayed()
         } else {
             let duration = episode.duration ?? 0

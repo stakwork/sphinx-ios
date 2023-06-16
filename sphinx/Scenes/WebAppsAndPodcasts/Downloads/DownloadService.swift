@@ -304,8 +304,6 @@ extension DownloadService : URLSessionDownloadDelegate {
         }
         
         activeVideoDownloads[url.absoluteString] = download
-        
-// 
     }
     
     func handlePodcastDownloadUpdate(downloadTask: URLSessionDownloadTask,totalBytesWritten: Int64,totalBytesExpectedToWrite: Int64){

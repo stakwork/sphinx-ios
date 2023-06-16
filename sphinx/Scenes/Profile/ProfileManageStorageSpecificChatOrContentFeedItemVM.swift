@@ -12,8 +12,10 @@ import UIKit
 class ProfileManageStorageSpecificChatOrContentFeedItemVM : NSObject{
     
     var vc : ProfileManageStorageSpecificChatOrContentFeedItemVC
-    var tableView : UITableView
+    var podcastTableView : UITableView
     var imageCollectionView : UICollectionView
+    var filesTableView : UITableView
+    
     
     var teedUpIndex : Int? = nil
     var items : [StorageManagerItem] = []{
@@ -52,7 +54,7 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVM : NSObject{
         
         // Reload the collection view or table view if needed
         imageCollectionView.reloadData()
-        tableView.reloadData()
+        podcastTableView.reloadData()
     }
     
     func getSelectedCachedMedia()->[CachedMedia]{
@@ -91,11 +93,13 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVM : NSObject{
         vc: ProfileManageStorageSpecificChatOrContentFeedItemVC,
         tableView: UITableView,
         imageCollectionView: UICollectionView,
+        filesTableView : UITableView,
         source: StorageManagerMediaSource
     ) {
         self.vc = vc
-        self.tableView = tableView
+        self.podcastTableView = tableView
         self.imageCollectionView = imageCollectionView
+        self.filesTableView = filesTableView
         self.sourceType = source
     }
     
@@ -103,10 +107,10 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVM : NSObject{
         self.items = items.sorted(by: {$0.date > $1.date})
         
         if (sourceType == .podcasts) {
-            tableView.delegate = self
-            tableView.dataSource = self
+            podcastTableView.delegate = self
+            podcastTableView.dataSource = self
             
-            tableView.register(UINib(nibName: "MediaStorageSourceTableViewCell", bundle: nil), forCellReuseIdentifier: MediaStorageSourceTableViewCell.reuseID)
+            podcastTableView.register(UINib(nibName: "MediaStorageSourceTableViewCell", bundle: nil), forCellReuseIdentifier: MediaStorageSourceTableViewCell.reuseID)
         } else if (sourceType == .chats) {
             let flow = AlignedCollectionViewFlowLayout(horizontalAlignment: .left)
             flow.minimumLineSpacing = 0
@@ -116,7 +120,11 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVM : NSObject{
             imageCollectionView.delegate = self
             imageCollectionView.dataSource = self
             imageCollectionView.collectionViewLayout = flow
-            tableView.isHidden = true
+            podcastTableView.isHidden = true
+            
+            filesTableView.delegate = self
+            filesTableView.dataSource = self
+            filesTableView.register(UINib(nibName: "MediaStorageSourceTableViewCell", bundle: nil), forCellReuseIdentifier: MediaStorageSourceTableViewCell.reuseID)
         }
     }
     
@@ -140,26 +148,32 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVM : UITableViewDataS
             withIdentifier: MediaStorageSourceTableViewCell.reuseID,
             for: indexPath
         ) as! MediaStorageSourceTableViewCell
-        let item = items[indexPath.row]
+        
         switch(vc.sourceType){
         case .podcasts:
+            
+            let item = items[indexPath.row]
             if let episode = getEpisodeForItem(item: item){
                 cell.configure(podcastEpisode: episode, item: item, index: indexPath.row)
                 cell.delegate = self
             }
-            break
+            cell.selectionStyle = .none
+            return cell
         case .chats:
-            
-            break
+            return cell
         }
-        
-        cell.selectionStyle = .none
-        
-        return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return items.count
+        switch(vc.sourceType){
+        case .podcasts:
+            return items.count
+            break
+        case .chats:
+            return 3
+            break
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -258,7 +272,7 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVM : MediaStorageSour
         self.vc.mediaDeletionConfirmationView.state = .finished
         self.finishSetup(items: self.items)
         self.vc.setupViewAndModels()
-        self.tableView.reloadData()
+        self.podcastTableView.reloadData()
         
         StorageManager.sharedManager.refreshAllStoredData(completion: {
         })

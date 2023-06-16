@@ -1845,7 +1845,7 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RKJ-a1-az2">
-                                                <rect key="frame" x="53" y="97.5" width="10" height="12"/>
+                                                <rect key="frame" x="53" y="97.5" width="9.5" height="12"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="12" id="DQx-2p-Rt8"/>
                                                 </constraints>
@@ -1926,6 +1926,10 @@
                                     <constraint firstItem="Sas-1e-Npj" firstAttribute="top" secondItem="obv-nV-WGh" secondAttribute="top" id="oi5-Oj-vtJ"/>
                                 </constraints>
                             </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="mIQ-Sz-Z4r">
+                                <rect key="frame" x="0.0" y="178" width="414" height="684"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="zTe-fP-Pcs">
                                 <rect key="frame" x="0.0" y="178" width="409" height="684"/>
                                 <color key="backgroundColor" name="Body"/>
@@ -1975,17 +1979,10 @@
                                 </connections>
                             </segmentedControl>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="72H-hs-Bvk">
-                                <rect key="frame" x="0.0" y="176" width="207" height="2"/>
+                                <rect key="frame" x="0.0" y="177" width="207" height="1"/>
                                 <color key="backgroundColor" name="PrimaryBlue"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="2" id="hNt-pn-aqA"/>
-                                </constraints>
-                            </view>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T98-5F-tcd">
-                                <rect key="frame" x="207" y="176" width="207" height="2"/>
-                                <color key="backgroundColor" name="PrimaryBlue"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="2" id="TDz-wW-Th3"/>
+                                    <constraint firstAttribute="height" constant="1" id="hNt-pn-aqA"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -2000,12 +1997,12 @@
                             <constraint firstItem="72H-hs-Bvk" firstAttribute="leading" secondItem="6ey-nC-Kiu" secondAttribute="leading" id="F9g-mh-XjI"/>
                             <constraint firstItem="obv-nV-WGh" firstAttribute="top" secondItem="X0s-oe-X7g" secondAttribute="top" id="H4d-Sk-7Gg"/>
                             <constraint firstItem="lYg-nt-rdO" firstAttribute="leading" secondItem="X0s-oe-X7g" secondAttribute="leading" id="KfX-dJ-VZU"/>
+                            <constraint firstItem="mIQ-Sz-Z4r" firstAttribute="top" secondItem="lYg-nt-rdO" secondAttribute="top" id="OmW-ZX-quK"/>
                             <constraint firstItem="p11-et-PUn" firstAttribute="top" secondItem="o81-Av-GsP" secondAttribute="top" id="QMh-hn-5eX"/>
-                            <constraint firstItem="T98-5F-tcd" firstAttribute="trailing" secondItem="6ey-nC-Kiu" secondAttribute="trailing" id="Xkw-99-pOT"/>
+                            <constraint firstItem="mIQ-Sz-Z4r" firstAttribute="trailing" secondItem="lYg-nt-rdO" secondAttribute="trailing" id="Xx6-aM-1Se"/>
                             <constraint firstItem="lYg-nt-rdO" firstAttribute="top" secondItem="6ey-nC-Kiu" secondAttribute="bottom" id="Yzc-IJ-8OT"/>
+                            <constraint firstItem="mIQ-Sz-Z4r" firstAttribute="leading" secondItem="lYg-nt-rdO" secondAttribute="leading" id="cOl-wK-DfX"/>
                             <constraint firstItem="zJ6-mR-I1a" firstAttribute="centerX" secondItem="p11-et-PUn" secondAttribute="centerX" id="d31-bI-jOt"/>
-                            <constraint firstItem="T98-5F-tcd" firstAttribute="width" secondItem="72H-hs-Bvk" secondAttribute="width" id="hTz-qh-EU9"/>
-                            <constraint firstItem="T98-5F-tcd" firstAttribute="centerY" secondItem="72H-hs-Bvk" secondAttribute="centerY" id="igq-eg-qAQ"/>
                             <constraint firstItem="obv-nV-WGh" firstAttribute="trailing" secondItem="p11-et-PUn" secondAttribute="trailing" id="izm-DS-kvj"/>
                             <constraint firstItem="72H-hs-Bvk" firstAttribute="width" secondItem="6ey-nC-Kiu" secondAttribute="width" multiplier="0.5" id="jk3-ne-aAP"/>
                             <constraint firstAttribute="trailing" secondItem="lYg-nt-rdO" secondAttribute="trailing" id="nLZ-Gs-2eO"/>
@@ -2014,6 +2011,7 @@
                             <constraint firstItem="zJ6-mR-I1a" firstAttribute="centerY" secondItem="lYg-nt-rdO" secondAttribute="centerY" id="pI0-SQ-uzB"/>
                             <constraint firstItem="p11-et-PUn" firstAttribute="bottom" secondItem="lYg-nt-rdO" secondAttribute="bottom" id="rsu-vA-OIY"/>
                             <constraint firstItem="72H-hs-Bvk" firstAttribute="bottom" secondItem="6ey-nC-Kiu" secondAttribute="bottom" id="uMK-X2-p9O"/>
+                            <constraint firstItem="mIQ-Sz-Z4r" firstAttribute="bottom" secondItem="lYg-nt-rdO" secondAttribute="bottom" id="wGX-hH-qWl"/>
                             <constraint firstItem="6ey-nC-Kiu" firstAttribute="centerX" secondItem="p11-et-PUn" secondAttribute="centerX" id="xv4-Ry-fPc"/>
                         </constraints>
                     </view>
@@ -2022,13 +2020,14 @@
                         <outlet property="deletionSummaryCountLabel" destination="RKJ-a1-az2" id="AdM-hT-FVC"/>
                         <outlet property="deletionSummarySizeLabel" destination="hge-sK-3ik" id="j0u-1V-EAe"/>
                         <outlet property="deletionSummaryView" destination="Sas-1e-Npj" id="Ma8-YU-gFi"/>
-                        <outlet property="firstIndexUnderlineView" destination="72H-hs-Bvk" id="P5z-gx-7oe"/>
+                        <outlet property="filesListTableView" destination="mIQ-Sz-Z4r" id="dRa-Q6-vV3"/>
                         <outlet property="headerTitleLabel" destination="aM6-lr-PWK" id="QhL-hY-05f"/>
                         <outlet property="imageCollectionView" destination="zTe-fP-Pcs" id="H6F-Zs-28k"/>
                         <outlet property="mediaDeletionConfirmationView" destination="zJ6-mR-I1a" id="2h8-Z4-Dld"/>
                         <outlet property="mediaVsFilesSegmentedControl" destination="6ey-nC-Kiu" id="XFq-nG-dmx"/>
-                        <outlet property="secondIndexUnderlineView" destination="T98-5F-tcd" id="ifh-Ea-iz0"/>
-                        <outlet property="tableView" destination="lYg-nt-rdO" id="nOy-97-czN"/>
+                        <outlet property="podcastListTableView" destination="lYg-nt-rdO" id="nOy-97-czN"/>
+                        <outlet property="selectedIndexIndicatorLeadingEdge" destination="F9g-mh-XjI" id="hW6-Rc-Ooh"/>
+                        <outlet property="selectedIndexUnderlineView" destination="72H-hs-Bvk" id="P5z-gx-7oe"/>
                         <outlet property="totalSizeLabel" destination="sQx-Yb-g7e" id="b10-vh-RMe"/>
                     </connections>
                 </viewController>

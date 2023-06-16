@@ -22,7 +22,9 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
     
     @IBOutlet weak var headerTitleLabel: UILabel!
     @IBOutlet weak var totalSizeLabel: UILabel!
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var podcastListTableView: UITableView!
+    @IBOutlet weak var filesListTableView: UITableView!
+    
     @IBOutlet weak var deletionSummaryView: UIView!
     @IBOutlet weak var imageCollectionView: UICollectionView!
     @IBOutlet weak var deletionSummaryCountLabel: UILabel!
@@ -30,9 +32,8 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
     @IBOutlet weak var deletionSummaryButton: UIView!
     @IBOutlet weak var mediaDeletionConfirmationView: MediaDeletionConfirmationView!
     @IBOutlet weak var mediaVsFilesSegmentedControl: UISegmentedControl!
-    @IBOutlet weak var firstIndexUnderlineView: UIView!
-    @IBOutlet weak var secondIndexUnderlineView: UIView!
-    
+    @IBOutlet weak var selectedIndexUnderlineView: UIView!
+    @IBOutlet weak var selectedIndexIndicatorLeadingEdge: NSLayoutConstraint!
     
     fileprivate var state : ProfileManageStorageSpecificChatOrContentFeedItemVCState = .single
     var overlayView : UIView? = nil
@@ -44,7 +45,7 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
     var isFirstLoad:Bool = true
     
     lazy var vm : ProfileManageStorageSpecificChatOrContentFeedItemVM = {
-        ProfileManageStorageSpecificChatOrContentFeedItemVM(vc: self, tableView: self.tableView,imageCollectionView: self.imageCollectionView, source: self.sourceType)
+        ProfileManageStorageSpecificChatOrContentFeedItemVM(vc: self, tableView: self.podcastListTableView,imageCollectionView: self.imageCollectionView, filesTableView: filesListTableView, source: self.sourceType)
     }()
     
     static func instantiate(
@@ -275,15 +276,22 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
     }
     
     @IBAction func segmentedControlChanged(_ sender: UISegmentedControl) {
+        selectedIndexUnderlineView.translatesAutoresizingMaskIntoConstraints = false
         if(sender.selectedSegmentIndex == 0){
             print("0")
-            firstIndexUnderlineView.isHidden = false
-            secondIndexUnderlineView.isHidden = true
+            filesListTableView.isHidden = true
+            imageCollectionView.isHidden = false
+            UIView.animate(withDuration: 0.5, delay: 0.0, animations: {
+                self.selectedIndexIndicatorLeadingEdge.constant = 0
+            })
         }
         else{
             print("1")
-            secondIndexUnderlineView.isHidden = false
-            firstIndexUnderlineView.isHidden = true
+            filesListTableView.isHidden = false
+            imageCollectionView.isHidden = true
+            UIView.animate(withDuration: 0.5, delay: 0.0, animations: {
+                self.selectedIndexIndicatorLeadingEdge.constant = self.selectedIndexUnderlineView.frame.width
+            })
         }
     }
     

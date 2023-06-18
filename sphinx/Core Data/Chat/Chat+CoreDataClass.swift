@@ -432,21 +432,6 @@ public class Chat: NSManagedObject {
         return messages.first
     }
     
-    public static func updateLastMessages() {
-        for chat in Chat.getAll() {
-            if chat.lastMessage == nil {
-                chat.updateLastMessage()
-            }
-        }
-    }
-    
-    public func updateLastMessage() {
-        if lastMessage == nil {
-            lastMessage = getLastMessageToShow()
-            calculateBadge()
-        }
-    }
-    
     public func setLastMessage(_ message: TransactionMessage) {
         guard let lastM = lastMessage else {
             lastMessage = message
@@ -457,6 +442,12 @@ public class Chat: NSManagedObject {
         if (lastM.messageDate < message.messageDate) {
             lastMessage = message
             calculateBadge()
+        }
+    }
+    
+    public func updateLastMessage() {
+        if lastMessage == nil {
+            lastMessage = getLastMessageToShow()
         }
     }
     

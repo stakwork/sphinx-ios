@@ -56,7 +56,7 @@ class ContactsService: NSObject {
             return
         }
         
-        Chat.updateLastMessages()
+        updateLastMessages()
         
         ///Chats results controller
         let chatsFetchRequest = Chat.FetchRequests.all()
@@ -149,7 +149,21 @@ extension ContactsService : NSFetchedResultsControllerDelegate {
         return chatListObjects
     }
     
+    func calculateBadges() {
+        for chat in self.chats {
+            chat.calculateBadge()
+        }
+    }
+    
+    func updateLastMessages() {
+        for chat in Chat.getAll() {
+            chat.updateLastMessage()
+        }
+    }
+    
     public func processChatListObjects() {
+        calculateBadges()
+        
         var allObject: [ChatListCommonObject] = []
         allObject.append(contentsOf: self.contacts)
         allObject.append(contentsOf: self.chats)

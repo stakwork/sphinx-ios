@@ -23,7 +23,7 @@ class CommonPaymentViewController : UIViewController {
     var chat: Chat?
     var message: TransactionMessage?
     
-    var paymentsViewModel = PaymentsViewModel()
+    var paymentsViewModel: PaymentsViewModel!
     
     public weak var delegate: PaymentInvoiceDelegate?
     

@@ -65,6 +65,7 @@ class MediaMessageView: UIView {
             videoOverlay.isHidden = !messageMedia.isVideo || mediaData.failed
             
             mediaImageView.image = mediaData.image
+            mediaImageView.contentMode = messageMedia.isPaymentTemplate ? .scaleAspectFit : .scaleAspectFill
             
             if let fileInfo = mediaData.fileInfo {
                 fileInfoView.configure(fileInfo: fileInfo)

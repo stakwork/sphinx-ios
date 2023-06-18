@@ -158,6 +158,7 @@ struct BubbleMessageLayoutState: CommonLayoutState {
         var isGif: Bool
         var isPdf: Bool
         var isPaid: Bool
+        var isPaymentTemplate: Bool
         
         init(
             url: URL?,
@@ -165,7 +166,8 @@ struct BubbleMessageLayoutState: CommonLayoutState {
             isVideo: Bool,
             isGif: Bool,
             isPdf: Bool,
-            isPaid: Bool
+            isPaid: Bool,
+            isPaymentTemplate: Bool
         ) {
             self.url = url
             self.isImage = isImage
@@ -173,6 +175,7 @@ struct BubbleMessageLayoutState: CommonLayoutState {
             self.isGif = isGif
             self.isPdf = isPdf
             self.isPaid = isPaid
+            self.isPaymentTemplate = isPaymentTemplate
         }
     }
     

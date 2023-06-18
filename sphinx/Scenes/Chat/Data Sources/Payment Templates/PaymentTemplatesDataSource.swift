@@ -36,6 +36,7 @@ class PaymentTemplatesDataSource: NSObject {
     let kCellHeight: CGFloat = 85.0
     let kCellWidth: CGFloat = 78.0
     
+    var isDragging = false
     var images = [ImageTemplate]()
     var selectedRow = 0
     
@@ -94,20 +95,30 @@ extension PaymentTemplatesDataSource : UIScrollViewDelegate {
             if selectedRow == centerIndexPath.row {
                 return
             }
-            
+
             selectedRow = centerIndexPath.row
-            
+
             let image = (selectedRow > 0) ? images[selectedRow - 1] : nil
             delegate?.didSelectImage(image: image)
         }
     }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        scrollToClosest()
+        isDragging = false
+        
+        if !decelerate {
+            scrollToClosest()
+        }
+    }
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        isDragging = true
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        scrollToClosest()
+        if !isDragging {
+            scrollToClosest()
+        }
     }
     
     func scrollToClosest() {

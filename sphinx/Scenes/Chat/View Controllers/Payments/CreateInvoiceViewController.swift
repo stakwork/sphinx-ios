@@ -69,7 +69,7 @@ class CreateInvoiceViewController: CommonPaymentViewController {
             viewController.message = TransactionMessage.getMessageWith(uuid: messageUUID)
         }
         
-        viewController.paymentsViewModel.resetPayment()
+        viewController.paymentsViewModel = PaymentsViewModel()
         viewController.paymentsViewModel.setPreloadedPubKey(preloadedPubkey: preloadedPubkey)
         
         return viewController
@@ -293,7 +293,8 @@ class CreateInvoiceViewController: CommonPaymentViewController {
         let viewController = PaymentTemplateViewController.instantiate(
             contact: contact,
             chat: chat,
-            delegate: delegate
+            delegate: delegate,
+            paymentsViewModel: paymentsViewModel
         )
         
         self.navigationController?.pushViewController(viewController, animated: true)

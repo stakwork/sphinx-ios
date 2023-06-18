@@ -213,7 +213,8 @@ struct MessageTableCellState {
             isVideo: message.isVideo(),
             isGif: message.isGif() || message.isGiphy(),
             isPdf: message.isPDF(),
-            isPaid: message.isPaidAttachment()
+            isPaid: message.isPaidAttachment(),
+            isPaymentTemplate: message.isDirectPayment()
         )
     }()
     

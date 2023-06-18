@@ -43,7 +43,8 @@ class PaymentTemplateViewController: CommonPaymentViewController {
     static func instantiate(
         contact: UserContact,
         chat: Chat? = nil,
-        delegate: PaymentInvoiceDelegate?
+        delegate: PaymentInvoiceDelegate?,
+        paymentsViewModel: PaymentsViewModel
     ) -> PaymentTemplateViewController {
         
         let viewController = StoryboardScene.Chat.paymentTemplateViewController.instantiate()
@@ -51,6 +52,7 @@ class PaymentTemplateViewController: CommonPaymentViewController {
         viewController.contact = contact
         viewController.delegate = delegate
         viewController.chat = chat
+        viewController.paymentsViewModel = paymentsViewModel
         
         return viewController
     }
@@ -124,7 +126,12 @@ class PaymentTemplateViewController: CommonPaymentViewController {
     }
     
     func setSelectedImage(image: ImageTemplate?) {
+        if paymentsViewModel.payment.muid == image?.muid {
+            return
+        }
+        
         paymentsViewModel.payment.muid = image?.muid
+        
         var imageContentmode:UIView.ContentMode = .scaleAspectFit
         
         if let width = image?.width, let height = image?.height {

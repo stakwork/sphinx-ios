@@ -53,8 +53,11 @@ extension NewChatViewController : NewChatTableDataSourceDelegate {
     }
     
     func didScrollToBottom() {
-        self.chat?.setChatMessagesAsSeen()
         self.configureNewMessagesIndicatorWith(newMsgCount: 0)
+        
+        DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: {
+            self.chat?.setChatMessagesAsSeen()
+        })
     }
     
     func didScrollOutOfBottomArea() {

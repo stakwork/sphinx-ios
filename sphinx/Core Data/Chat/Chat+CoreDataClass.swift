@@ -337,7 +337,8 @@ public class Chat: NSManagedObject {
         shouldSync: Bool = true,
         shouldSave: Bool = true
     ) {
-        let receivedUnseenMessages = self.getReceivedUnseenMessages()
+        let backgroundContext = CoreDataManager.sharedManager.getBackgroundContext()
+        let receivedUnseenMessages = getReceivedUnseenMessages(context: backgroundContext)
         
         if receivedUnseenMessages.count > 0 {
             for m in receivedUnseenMessages {
@@ -345,13 +346,18 @@ public class Chat: NSManagedObject {
             }
         }
         
-        seen = true
+        if !self.seen {
+            seen = true
+        }
+        
         unseenMessagesCount = 0
         unseenMentionsCount = 0
-        
+
         if shouldSync && receivedUnseenMessages.count > 0 {
             API.sharedInstance.setChatMessagesAsSeen(chatId: self.id, callback: { _ in })
         }
+        
+        backgroundContext.saveContext()
     }
     
     func getGroupEncrypted(text: String) -> String {
@@ -362,10 +368,26 @@ public class Chat: NSManagedObject {
         return text
     }
     
-    func getReceivedUnseenMessages() -> [TransactionMessage] {
+    func getReceivedUnseenMessages(
+        context: NSManagedObjectContext? = nil
+    ) -> [TransactionMessage] {
+        
         let userId = UserData.sharedInstance.getUserId()
-        let predicate = NSPredicate(format: "senderId != %d AND chat == %@ AND seen == %@", userId, self, NSNumber(booleanLiteral: false))
-        let messages: [TransactionMessage] = CoreDataManager.sharedManager.getObjectsOfTypeWith(predicate: predicate, sortDescriptors: [], entityName: "TransactionMessage")
+        
+        let predicate = NSPredicate(
+            format: "senderId != %d AND chat == %@ AND seen == %@",
+            userId,
+            self,
+            NSNumber(booleanLiteral: false)
+        )
+        
+        let messages: [TransactionMessage] = CoreDataManager.sharedManager.getObjectsOfTypeWith(
+            predicate: predicate,
+            sortDescriptors: [],
+            entityName: "TransactionMessage",
+            context: context
+        )
+        
         return messages
     }
     

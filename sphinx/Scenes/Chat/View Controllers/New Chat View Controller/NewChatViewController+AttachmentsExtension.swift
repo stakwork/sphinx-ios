@@ -6,7 +6,7 @@
 //  Copyright © 2023 sphinx. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 extension NewChatViewController : AttachmentsDelegate {
     func willDismissPresentedVC() {}
@@ -42,7 +42,11 @@ extension NewChatViewController : AttachmentsDelegate {
     }
     
     func didTapReceiveButton() {
-        messageBubbleHelper.showGenericMessageView(text: "Feature not implemented yet")
+        messageBubbleHelper.showGenericMessageView(
+            text: "Feature not implemented yet",
+            textColor: UIColor.white,
+            backColor: UIColor.Sphinx.BadgeRed
+        )
         
 //        let viewController = CreateInvoiceViewController.instantiate(
 //            contact: contact,

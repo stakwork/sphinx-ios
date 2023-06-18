@@ -21,7 +21,7 @@ class NewMessageBubbleHelper {
     let font = UIFont(name: "Roboto-Regular", size: 13.0)!
     let titleFont = UIFont(name: "Roboto-Bold", size: 15.0)!
     let loadingWheelSize: CGFloat = 50.0
-    var genericMessageY: CGFloat = 110.0
+    var genericMessageY: CGFloat = 120.0
     
     var urlRanges = [NSRange]()
     

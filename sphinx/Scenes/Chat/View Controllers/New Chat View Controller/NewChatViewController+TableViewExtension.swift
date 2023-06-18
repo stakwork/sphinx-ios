@@ -207,6 +207,15 @@ extension NewChatViewController : NewMessagesIndicatorViewDelegate {
 extension NewChatViewController : TribeMemberViewDelegate {
     func shouldGoToSendPayment(message: TransactionMessage) {
         
+        let viewController : UIViewController! = CreateInvoiceViewController.instantiate(
+            contact: nil,
+            chat: chat,
+            messageUUID: message.uuid,
+            delegate: self,
+            paymentMode: PaymentsViewModel.PaymentMode.send
+        )
+
+        presentNavigationControllerWith(vc: viewController)
     }
     
     func shouldDisplayKnownBadges() {

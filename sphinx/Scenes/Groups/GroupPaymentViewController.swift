@@ -46,18 +46,18 @@ class GroupPaymentViewController: CommonGroupContactsViewController {
     }
      
     @IBAction func nextButtonTouched() {
-        groupsManager.setContactIds(contactIds: selectedContactIds)
-        let contacts = groupsManager.getSelectedContacts(contacts: getContactsToShow())
-        
-        let viewController = CreateInvoiceViewController.instantiate(
-            contacts: contacts,
-            chat: chat,
-            viewModel: ChatViewModel(),
-            delegate: paymentViewdelegate,
-            paymentMode: CreateInvoiceViewController.paymentMode.send
-        )
-        
-        self.navigationController?.pushViewController(viewController, animated: true)
+//        groupsManager.setContactIds(contactIds: selectedContactIds)
+//        let contacts = groupsManager.getSelectedContacts(contacts: getContactsToShow())
+//        
+//        let viewController = CreateInvoiceViewController.instantiate(
+//            contacts: contacts,
+//            chat: chat,
+//            viewModel: ChatViewModel(),
+//            delegate: paymentViewdelegate,
+//            paymentMode: CreateInvoiceViewController.paymentMode.send
+//        )
+//        
+//        self.navigationController?.pushViewController(viewController, animated: true)
     }
      
     @IBAction func closeButtonTouched() {

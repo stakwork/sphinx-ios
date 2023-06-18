@@ -54,18 +54,18 @@ extension ChatViewController : VideoCallDelegate {
     }
     
     func shouldSendPayment(amount: Int, callback: @escaping (Bool) -> ()) {
-        chatViewModel.resetCurrentPayment()
-        chatViewModel.currentPayment.amount = amount
-        
-        chatViewModel.shouldSendDirectPayment(parameters: chatViewModel.getParams(contacts: chat?.getContacts(includeOwner: false), chat: chat), callback: { message in
-            if let message = message {
-                self.didCreateMessage(message: message)
-                callback(true)
-            } else {
-                callback(false)
-            }
-        }, errorCallback: {
-            callback(false)
-        })
+//        chatViewModel.resetCurrentPayment()
+//        chatViewModel.currentPayment.amount = amount
+//        
+//        chatViewModel.shouldSendDirectPayment(parameters: chatViewModel.getParams(contacts: chat?.getContacts(includeOwner: false), chat: chat), callback: { message in
+//            if let message = message {
+//                self.didCreateMessage(message: message)
+//                callback(true)
+//            } else {
+//                callback(false)
+//            }
+//        }, errorCallback: {
+//            callback(false)
+//        })
     }
 }

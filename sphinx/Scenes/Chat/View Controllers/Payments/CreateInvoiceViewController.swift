@@ -16,13 +16,7 @@ class CreateInvoiceViewController: CommonPaymentViewController {
         case confirm
     }
     
-    enum paymentMode: Int {
-        case receive
-        case send
-        case sendOnchain
-    }
-    
-    var mode : paymentMode = paymentMode.receive
+    var mode = PaymentsViewModel.PaymentMode.receive
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var keyPadView: NewKeyPadView!
@@ -56,17 +50,17 @@ class CreateInvoiceViewController: CommonPaymentViewController {
     }
     
     static func instantiate(
-        contacts: [UserContact]? = nil,
+        contact: UserContact? = nil,
         chat: Chat? = nil,
         messageUUID: String? = nil,
-        viewModel: ChatViewModel,
         delegate: PaymentInvoiceDelegate? = nil,
-        paymentMode: paymentMode = paymentMode.receive,
-        preloadedPubkey:String?=nil
+        paymentMode: PaymentsViewModel.PaymentMode = PaymentsViewModel.PaymentMode.receive,
+        preloadedPubkey: String? = nil
     ) -> CreateInvoiceViewController {
+        
         let viewController = StoryboardScene.Chat.createInvoiceViewController.instantiate()
         viewController.mode = paymentMode
-        viewController.contacts = contacts
+        viewController.contact = contact
         viewController.chat = chat
         viewController.delegate = delegate
         viewController.preloadedPubkey = preloadedPubkey
@@ -75,19 +69,8 @@ class CreateInvoiceViewController: CommonPaymentViewController {
             viewController.message = TransactionMessage.getMessageWith(uuid: messageUUID)
         }
         
-        viewModel.resetCurrentPayment()
-        
-        viewController.chatViewModel = viewModel
-        
-        if let preloadedPubkey = preloadedPubkey {
-            if preloadedPubkey.isVirtualPubKey {
-                let (pk, rh) = preloadedPubkey.pubkeyComponents
-                viewController.chatViewModel.currentPayment.destinationKey = pk
-                viewController.chatViewModel.currentPayment.routeHint = rh
-            } else {
-                viewController.chatViewModel.currentPayment.destinationKey = preloadedPubkey
-            }
-        }
+        viewController.paymentsViewModel.resetPayment()
+        viewController.paymentsViewModel.setPreloadedPubKey(preloadedPubkey: preloadedPubkey)
         
         return viewController
     }
@@ -103,8 +86,8 @@ class CreateInvoiceViewController: CommonPaymentViewController {
     }
     
     private func setupView() {
-        let sending = mode == paymentMode.send
-        let sendingOnchain = mode == paymentMode.sendOnchain
+        let sending = mode == PaymentsViewModel.PaymentMode.send
+        let sendingOnchain = mode == PaymentsViewModel.PaymentMode.sendOnchain
         
         nextButton.layer.cornerRadius = nextButton.frame.size.height / 2
         nextButton.clipsToBounds = true
@@ -120,7 +103,7 @@ class CreateInvoiceViewController: CommonPaymentViewController {
         
         fromLabel.text = sending ? "to".localized : "from".localized
         titleLabel.text = getViewTitle()
-        messageFieldContainer.isHidden = sendingOnchain || (sending && contacts == nil)
+        messageFieldContainer.isHidden = sendingOnchain || (sending && contact == nil)
         
         titleLabel.addTextSpacing(value: 2)
     }
@@ -137,25 +120,18 @@ class CreateInvoiceViewController: CommonPaymentViewController {
     }
     
     @objc private func updateMemo(sender: UITextField) {
-        let sending = mode == paymentMode.send
+        let sending = mode == PaymentsViewModel.PaymentMode.send
         
         if sending {
-            chatViewModel.currentPayment.message = sender.text
+            paymentsViewModel.payment.message = sender.text
         } else {
-            chatViewModel.currentPayment.memo = sender.text
+            paymentsViewModel.payment.memo = sender.text
         }
     }
     
     private func setupContact() {
-        if let contacts = contacts, contacts.count > 0 {
-            let contact = contacts[0]
-            
-            if contacts.count > 1 {
-                nameLabel.text = "\(contacts.count) \("users")"
-            } else {
-                nameLabel.text = contact.nickname
-            }
-            
+        if let contact = contact {
+            nameLabel.text = contact.nickname
             showUserImage(avatarUrl: contact.avatarUrl)
         } else if let message = message, let senderAlias = message.senderAlias {
             nameLabel.text = senderAlias
@@ -166,8 +142,8 @@ class CreateInvoiceViewController: CommonPaymentViewController {
             profileImageView.isHidden = true
         }
         
-        let sending = mode == paymentMode.send
-        let chatPayment = (contacts?.count ?? 0) > 0
+        let sending = mode == PaymentsViewModel.PaymentMode.send
+        let chatPayment = contact != nil
         let nextButtonTitle = sending && chatPayment ? "continue.upper".localized : "confirm.upper".localized
         nextButton.setTitle(nextButtonTitle, for: .normal)
     }
@@ -188,13 +164,13 @@ class CreateInvoiceViewController: CommonPaymentViewController {
     
     private func updateKeyPadString(input: String) -> Bool {
         let amount = Int(input) ?? 0
+        
         if amount >= 0 && amount <= kMaximumAmount {
-            let contactsCount = (contacts?.count ?? 1).forcedNotZero
-            let totalAmount = amount * contactsCount
+            let contactsCount = 1
             let walletBalance = WalletBalanceService().balance
-            let sending = (mode == paymentMode.send || mode == paymentMode.sendOnchain)
+            let sending = (mode == PaymentsViewModel.PaymentMode.send || mode == PaymentsViewModel.PaymentMode.sendOnchain)
             
-            if totalAmount > walletBalance && sending {
+            if amount > walletBalance && sending {
                 NewMessageBubbleHelper().showGenericMessageView(text: "balance.too.low".localized)
                 return false
             }
@@ -203,12 +179,13 @@ class CreateInvoiceViewController: CommonPaymentViewController {
             nextButton.isHidden = amount == 0
             amountTextField.text = amount == 0 ? "" : amountString
             
-            let totalAmountString = totalAmount.formattedWithSeparator
+            let totalAmountString = amount.formattedWithSeparator
             groupTotalLabel.text = contactsCount > 1 ? "\("Total") \(totalAmountString)" : ""
             
-            chatViewModel.currentPayment.amount = amount
+            paymentsViewModel.payment.amount = amount
             return true
         }
+        
         NewMessageBubbleHelper().showGenericMessageView(text: "amount.too.high".localized)
         return false
     }
@@ -250,14 +227,23 @@ class CreateInvoiceViewController: CommonPaymentViewController {
     }
     
     private func presentInvoiceDetailsVC(invoiceString: String) {
-        let amount = chatViewModel.currentPayment.amount ?? 0
-        let qrCodeDetailViewModel = QRCodeDetailViewModel(qrCodeString: invoiceString, amount: amount, viewTitle: "payment.request".localized)
-        let viewController = QRCodeDetailViewController.instantiate(with: qrCodeDetailViewModel)
+        let amount = paymentsViewModel.payment.amount ?? 0
+        
+        let qrCodeDetailViewModel = QRCodeDetailViewModel(
+            qrCodeString: invoiceString,
+            amount: amount,
+            viewTitle: "payment.request".localized
+        )
+        
+        let viewController = QRCodeDetailViewController.instantiate(
+            with: qrCodeDetailViewModel
+        )
+        
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     private func processOnchainPayment() {
-        if let amt = chatViewModel.currentPayment.amount, amt < 250000 {
+        if let amt = paymentsViewModel.payment.amount, amt < 250000 {
             loading = false
             AlertHelper.showAlert(title: "generic.error.title".localized, message: "onchain.amount.too.low".localized)
             return
@@ -276,11 +262,11 @@ class CreateInvoiceViewController: CommonPaymentViewController {
     }
     
     private func shouldSendDirectPayment() {
-        if let contacts = self.contacts, contacts.count > 0 {
+        if let _ = self.contact {
             goToPaymentTemplate()
         } else if let _ = message {
             sendTribePayment()
-        } else if let _ = self.chatViewModel.currentPayment.destinationKey {
+        } else if let _ = paymentsViewModel.payment.destinationKey {
             sendDirectPayment()
         } else {
             goToScanner()
@@ -289,8 +275,8 @@ class CreateInvoiceViewController: CommonPaymentViewController {
     
     func sendTribePayment() {
         delegate?.shouldSendTribePayment?(
-            amount: chatViewModel.currentPayment.amount ?? 0,
-            message: chatViewModel.currentPayment.message ?? "",
+            amount: paymentsViewModel.payment.amount ?? 0,
+            message: paymentsViewModel.payment.message ?? "",
             messageUUID: message?.uuid ?? ""
         ) {
             self.shouldDismissView()
@@ -298,15 +284,15 @@ class CreateInvoiceViewController: CommonPaymentViewController {
     }
     
     func goToPaymentTemplate() {
-        guard let contacts = contacts else {
+        guard let contact = contact else {
             return
         }
+        
         loading = false
         
         let viewController = PaymentTemplateViewController.instantiate(
-            contacts: contacts,
+            contact: contact,
             chat: chat,
-            chatViewModel: chatViewModel,
             delegate: delegate
         )
         
@@ -314,7 +300,11 @@ class CreateInvoiceViewController: CommonPaymentViewController {
     }
     
     private func sendDirectPayment() {
-        let parameters = chatViewModel.getParams(contacts: contacts, chat: chat)
+        let parameters = TransactionMessage.getPaymentParamsFor(
+            payment: paymentsViewModel.payment,
+            contact: contact,
+            chat: chat
+        )
         
         API.sharedInstance.sendDirectPayment(params: parameters, callback: { payment in
             if let payment = payment {
@@ -335,13 +325,17 @@ class CreateInvoiceViewController: CommonPaymentViewController {
     }
     
     private func createPaymentRequest() {
-        if !chatViewModel.validateMemo(contacts: contacts) {
+        if !paymentsViewModel.validateMemo(contact: contact) {
             loading = false
             AlertHelper.showAlert(title: "generic.error.title".localized, message: "memo.too.large".localized)
             return
         }
             
-        let parameters = chatViewModel.getParams(contacts: contacts, chat: chat)
+        let parameters = TransactionMessage.getPaymentParamsFor(
+            payment: paymentsViewModel.payment,
+            contact: contact,
+            chat: chat
+        )
         
         API.sharedInstance.createInvoice(parameters: parameters, callback: { message, invoice in
             if let message = message {
@@ -380,7 +374,7 @@ extension CreateInvoiceViewController : QRCodeScannerDelegate {
             validateOnchainPmt(address: string)
             return
         }
-        chatViewModel.currentPayment.destinationKey = string
+        paymentsViewModel.payment.destinationKey = string
         shouldSendDirectPayment()
     }
     
@@ -388,7 +382,12 @@ extension CreateInvoiceViewController : QRCodeScannerDelegate {
         loading = true
         
         if address.isValidBitcoinAddress {
-            delegate?.shouldSendOnchain?(address: address.btcAddresWithoutPrefix, amount: chatViewModel.currentPayment.amount ?? 0)
+            
+            delegate?.shouldSendOnchain?(
+                address: address.btcAddresWithoutPrefix,
+                amount: paymentsViewModel.payment.amount ?? 0
+            )
+            
             shouldDismissView()
             return
         }

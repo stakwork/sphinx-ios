@@ -60,33 +60,6 @@ extension NewChatViewController : ChatMessageTextFieldViewDelegate {
     }
 }
 
-extension NewChatViewController : AttachmentsDelegate {
-    func willDismissPresentedVC() {
-        
-    }
-    
-    func shouldStartUploading(attachmentObject: AttachmentObject) {
-        
-    }
-    
-    func shouldSendGiphy(message: String) {
-        
-    }
-    
-    func didCloseReplyView() {
-        chatViewModel.resetReply()
-        shouldAdjustTableViewTopInset()
-    }
-    
-    func didTapSendButton() {
-        
-    }
-    
-    func didTapReceiveButton() {
-        
-    }
-}
-
 extension NewChatViewController : MessageReplyViewDelegate {
     func didCloseView() {
         chatViewModel.resetReply()

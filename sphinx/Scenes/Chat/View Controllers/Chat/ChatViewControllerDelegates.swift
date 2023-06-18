@@ -504,18 +504,18 @@ extension ChatViewController : MessageCellDelegate {
 
 extension ChatViewController : TribeMemberViewDelegate {
     func shouldGoToSendPayment(message: TransactionMessage) {
-        accessoryView.hide()
-
-        let viewController : UIViewController! = CreateInvoiceViewController.instantiate(
-            contacts: [],
-            chat: chat,
-            messageUUID: message.uuid,
-            viewModel: chatViewModel,
-            delegate: self,
-            paymentMode: .send
-        )
-
-        presentNavigationControllerWith(vc: viewController)
+//        accessoryView.hide()
+//
+//        let viewController : UIViewController! = CreateInvoiceViewController.instantiate(
+//            contact: nil,
+//            chat: chat,
+//            messageUUID: message.uuid,
+//            viewModel: chatViewModel,
+//            delegate: self,
+//            paymentMode: .send
+//        )
+//
+//        presentNavigationControllerWith(vc: viewController)
     }
     
     func shouldDismissMemberPopup() {}

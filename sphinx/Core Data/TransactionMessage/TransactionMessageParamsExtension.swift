@@ -68,10 +68,12 @@ extension TransactionMessage {
         return parameters
     }
     
-    static func addTextParams(parameters: inout [String : AnyObject],
-                              chat: Chat? = nil,
-                              contacts: [UserContact],
-                              text: String? = nil) -> Bool {
+    static func addTextParams(
+        parameters: inout [String : AnyObject],
+        chat: Chat? = nil,
+        contacts: [UserContact],
+        text: String? = nil
+    ) -> Bool {
         
         let encryptionManager = EncryptionManager.sharedInstance
         
@@ -102,12 +104,14 @@ extension TransactionMessage {
         return true
     }
     
-    static func addMediaParams(parameters: inout [String : AnyObject],
-                               chat: Chat? = nil,
-                               contacts: [UserContact],
-                               mediaKey: String? = nil,
-                               file: NSDictionary? = nil,
-                               price: Int? = nil) {
+    static func addMediaParams(
+        parameters: inout [String : AnyObject],
+        chat: Chat? = nil,
+        contacts: [UserContact],
+        mediaKey: String? = nil,
+        file: NSDictionary? = nil,
+        price: Int? = nil
+    ) {
         
         let encryptionManager = EncryptionManager.sharedInstance
         
@@ -146,9 +150,11 @@ extension TransactionMessage {
         }
     }
     
-    static func getPayAttachmentParams(message: TransactionMessage,
-                                       amount: Int,
-                                       chat: Chat? = nil) -> [String: AnyObject]? {
+    static func getPayAttachmentParams(
+        message: TransactionMessage,
+        amount: Int,
+        chat: Chat? = nil
+    ) -> [String: AnyObject]? {
         
         var parameters = [String : AnyObject]()
         
@@ -170,9 +176,11 @@ extension TransactionMessage {
         return parameters
     }
     
-    static func getBoostMessageParams(contact: UserContact? = nil,
-                                      chat: Chat? = nil,
-                                      replyingMessage: TransactionMessage? = nil) -> [String: AnyObject]? {
+    static func getBoostMessageParams(
+        contact: UserContact? = nil,
+        chat: Chat? = nil,
+        replyingMessage: TransactionMessage? = nil
+    ) -> [String: AnyObject]? {
         
         if let replyingMessage = replyingMessage, let replyUUID = replyingMessage.uuid, !replyUUID.isEmpty {
             var parameters = [String : AnyObject]()
@@ -223,6 +231,68 @@ extension TransactionMessage {
         
         if !addTextParams(parameters: &parameters, chat: chat, contacts: [], text: text) {
             return nil
+        }
+        
+        return parameters
+    }
+    
+    static func getPaymentParamsFor(
+        payment: PaymentsViewModel.Payment,
+        contact: UserContact?,
+        chat: Chat?
+    ) -> [String: AnyObject] {
+        
+        var parameters = [String : AnyObject]()
+        
+        if let amount = payment.amount {
+            parameters["amount"] = amount as AnyObject?
+        }
+        
+        if let encryptedMemo = payment.encryptedMemo, let remoteEncryptedMemo = payment.remoteEncryptedMemo {
+            parameters["memo"] = encryptedMemo as AnyObject?
+            parameters["remote_memo"] = remoteEncryptedMemo as AnyObject?
+        } else if let memo = payment.memo {
+            parameters["memo"] = memo as AnyObject?
+        }
+        
+        if let publicKey = payment.destinationKey {
+            parameters["destination_key"] = publicKey as AnyObject?
+        }
+        
+        if let routeHint = payment.routeHint {
+            parameters["route_hint"] = routeHint as AnyObject?
+        }
+        
+        if let muid = payment.muid {
+            parameters["muid"] = muid as AnyObject?
+            parameters["media_type"] = "image/png" as AnyObject?
+        }
+        
+        if let dim = payment.dim {
+            parameters["dimensions"] = dim as AnyObject?
+        }
+        
+        if let contact = contact {
+            
+            if let chat = chat {
+                parameters["chat_id"] = chat.id as AnyObject?
+            } else  {
+                parameters["contact_id"] = contact.id as AnyObject?
+            }
+            
+            if let text = payment.message {
+                
+                let encryptionManager = EncryptionManager.sharedInstance
+                let encryptedOwnMessage = encryptionManager.encryptMessageForOwner(message: text)
+                parameters["text"] = encryptedOwnMessage as AnyObject?
+                
+                let (_, encryptedContactMessage) = encryptionManager.encryptMessage(message: text, for: contact)
+                parameters["remote_text"] = encryptedContactMessage as AnyObject?
+            }
+        } else {
+            if let message = payment.message {
+                parameters["text"] = message as AnyObject?
+            }
         }
         
         return parameters

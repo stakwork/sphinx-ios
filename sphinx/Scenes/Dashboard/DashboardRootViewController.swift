@@ -376,9 +376,8 @@ extension DashboardRootViewController {
     
     func sendSatsButtonTouched(pubkey:String?=nil) {
         let viewController = CreateInvoiceViewController.instantiate(
-            viewModel: ChatViewModel(),
             delegate: self,
-            paymentMode: CreateInvoiceViewController.paymentMode.send,
+            paymentMode: PaymentsViewModel.PaymentMode.send,
             preloadedPubkey: pubkey
         )
         
@@ -388,7 +387,6 @@ extension DashboardRootViewController {
     
     func requestSatsButtonTouched() {
         let viewController = CreateInvoiceViewController.instantiate(
-            viewModel: ChatViewModel(),
             delegate: self
         )
         

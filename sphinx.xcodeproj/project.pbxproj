@@ -17,6 +17,10 @@
 		470146182A3BAE8F00A00DF8 /* NewOnlyTextMessageTableViewCell+DelegateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470146172A3BAE8F00A00DF8 /* NewOnlyTextMessageTableViewCell+DelegateExtension.swift */; };
 		4701461B2A3CA1AF00A00DF8 /* UserContactsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4701461A2A3CA1AF00A00DF8 /* UserContactsHelper.swift */; };
 		4701461D2A3D03E800A00DF8 /* NewChatViewModel+SendMessageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4701461C2A3D03E800A00DF8 /* NewChatViewModel+SendMessageExtension.swift */; };
+		4701461F2A3F939600A00DF8 /* NewChatViewModel+MessageMenuActionsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4701461E2A3F939600A00DF8 /* NewChatViewModel+MessageMenuActionsExtension.swift */; };
+		470146212A3F93B200A00DF8 /* NewChatViewModel+AttachmentsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470146202A3F93B200A00DF8 /* NewChatViewModel+AttachmentsExtension.swift */; };
+		470146232A3F93DA00A00DF8 /* NewChatViewController+AttachmentsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470146222A3F93DA00A00DF8 /* NewChatViewController+AttachmentsExtension.swift */; };
+		470146272A3F9AB500A00DF8 /* PaymentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470146262A3F9AB500A00DF8 /* PaymentsViewModel.swift */; };
 		47018F8127CFB7CE00797E0B /* pause_animation.json in Resources */ = {isa = PBXBuildFile; fileRef = 47018F8027CFB7CD00797E0B /* pause_animation.json */; };
 		47018F9227CFEEAF00797E0B /* skip30v1.caf in Resources */ = {isa = PBXBuildFile; fileRef = 47018F9127CFEDB400797E0B /* skip30v1.caf */; };
 		47018F9327CFEEAF00797E0B /* skip30v2.caf in Resources */ = {isa = PBXBuildFile; fileRef = 47018F8E27CFEDB300797E0B /* skip30v2.caf */; };
@@ -937,6 +941,10 @@
 		470146192A3BB5D400A00DF8 /* sphinx 41.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 41.xcdatamodel"; sourceTree = "<group>"; };
 		4701461A2A3CA1AF00A00DF8 /* UserContactsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserContactsHelper.swift; sourceTree = "<group>"; };
 		4701461C2A3D03E800A00DF8 /* NewChatViewModel+SendMessageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewChatViewModel+SendMessageExtension.swift"; sourceTree = "<group>"; };
+		4701461E2A3F939600A00DF8 /* NewChatViewModel+MessageMenuActionsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewChatViewModel+MessageMenuActionsExtension.swift"; sourceTree = "<group>"; };
+		470146202A3F93B200A00DF8 /* NewChatViewModel+AttachmentsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewChatViewModel+AttachmentsExtension.swift"; sourceTree = "<group>"; };
+		470146222A3F93DA00A00DF8 /* NewChatViewController+AttachmentsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewChatViewController+AttachmentsExtension.swift"; sourceTree = "<group>"; };
+		470146262A3F9AB500A00DF8 /* PaymentsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsViewModel.swift; sourceTree = "<group>"; };
 		47018F8027CFB7CD00797E0B /* pause_animation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = pause_animation.json; sourceTree = "<group>"; };
 		47018F8E27CFEDB300797E0B /* skip30v2.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = skip30v2.caf; sourceTree = "<group>"; };
 		47018F8F27CFEDB300797E0B /* skip30v3.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = skip30v3.caf; sourceTree = "<group>"; };
@@ -2135,6 +2143,25 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		470146242A3F9A9A00A00DF8 /* Payments */ = {
+			isa = PBXGroup;
+			children = (
+				470146252A3F9AA200A00DF8 /* View Model */,
+				475BDD10232AC47C00C5BBD6 /* CreateInvoiceViewController.swift */,
+				475BDD16232AC47C00C5BBD6 /* PayInvoiceViewController.swift */,
+				4734D3C8241AA24C00D6957E /* PaymentTemplateViewController.swift */,
+			);
+			path = Payments;
+			sourceTree = "<group>";
+		};
+		470146252A3F9AA200A00DF8 /* View Model */ = {
+			isa = PBXGroup;
+			children = (
+				470146262A3F9AB500A00DF8 /* PaymentsViewModel.swift */,
+			);
+			path = "View Model";
+			sourceTree = "<group>";
+		};
 		470331B324E6C5D900224F25 /* Libraries Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -2885,12 +2912,10 @@
 		475BDC93232AC15200C5BBD6 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				475BDD10232AC47C00C5BBD6 /* CreateInvoiceViewController.swift */,
+				470146242A3F9A9A00A00DF8 /* Payments */,
 				4789E25A24EF07E2003991BE /* KeyboardEventsViewController.swift */,
 				475BDD14232AC47C00C5BBD6 /* KeyboardHandlerViewController.swift */,
 				47352E492440F54300E5CC7F /* MessageOptionsViewController.swift */,
-				475BDD16232AC47C00C5BBD6 /* PayInvoiceViewController.swift */,
-				4734D3C8241AA24C00D6957E /* PaymentTemplateViewController.swift */,
 				477D9698244E0C0200830406 /* Chat */,
 				477D9699244E0C1B00830406 /* Chat Attachment */,
 				473258AA241BD6E7006E6602 /* Common */,
@@ -3330,6 +3355,7 @@
 				472092C02A26516A00468796 /* NewChatViewController+WebAppExtension.swift */,
 				472092CB2A27985800468796 /* NewChatViewController+TableViewExtension.swift */,
 				470146152A3B962E00A00DF8 /* NewChatViewController+MessageMenuDelegate.swift */,
+				470146222A3F93DA00A00DF8 /* NewChatViewController+AttachmentsExtension.swift */,
 			);
 			path = "New Chat View Controller";
 			sourceTree = "<group>";
@@ -3974,6 +4000,8 @@
 			children = (
 				47CFA94E2A3A12300030BC23 /* NewChatViewModel.swift */,
 				4701461C2A3D03E800A00DF8 /* NewChatViewModel+SendMessageExtension.swift */,
+				4701461E2A3F939600A00DF8 /* NewChatViewModel+MessageMenuActionsExtension.swift */,
+				470146202A3F93B200A00DF8 /* NewChatViewModel+AttachmentsExtension.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -5285,6 +5313,7 @@
 				F313024626BA62B300A1396E /* ChatsCollectionViewController.swift in Sources */,
 				CE51F350298870BF00ABBACB /* MemberBadgeDetailVM.swift in Sources */,
 				4705D39F2799C339009C0729 /* UITextField.swift in Sources */,
+				470146232A3F93DA00A00DF8 /* NewChatViewController+AttachmentsExtension.swift in Sources */,
 				47FA727C2A32373900FB4535 /* NewOnlyTextMessageTableViewCell.swift in Sources */,
 				F32A697926D515AB0004B8B3 /* PodcastFeed+Computeds.swift in Sources */,
 				CE3133B32977747E00E91E3A /* BadgeAdminManagementListVC.swift in Sources */,
@@ -5432,6 +5461,7 @@
 				F38744E527202DBC00E28C84 /* DashboardRootViewController+CustomSegmentedControlDelegate.swift in Sources */,
 				CEBF0D052975C367006C1F21 /* DiscoverTribesTagSelectionVM.swift in Sources */,
 				471940AF2339515A00F1BF5B /* QRCodeDetailViewController.swift in Sources */,
+				470146272A3F9AB500A00DF8 /* PaymentsViewModel.swift in Sources */,
 				4789E24D24EDB758003991BE /* AuthorizeAppView.swift in Sources */,
 				47CBB4EB23E9D9BE00743CBE /* API+LogsExtension.swift in Sources */,
 				475BDD5F232AE26E00C5BBD6 /* UserContact+CoreDataClass.swift in Sources */,
@@ -5478,6 +5508,7 @@
 				47308E1124FEE6E700FFAC6F /* SocketIOClientOption.swift in Sources */,
 				47FB189B23A299000097695B /* SignupHelper.swift in Sources */,
 				47669F3F23CF7CB300C17A77 /* ChatListCommonObject.swift in Sources */,
+				4701461F2A3F939600A00DF8 /* NewChatViewModel+MessageMenuActionsExtension.swift in Sources */,
 				475BDD1E232AC47C00C5BBD6 /* PayInvoiceViewController.swift in Sources */,
 				475DD3082A0D729B00F92173 /* ChatMessageTextFieldView+Actions.swift in Sources */,
 				47AA08C5234B96BF002C69E2 /* ConfirmAddFriendViewController.swift in Sources */,
@@ -5547,6 +5578,7 @@
 				470146142A3B856D00A00DF8 /* MessageOptionsMenuHelper.swift in Sources */,
 				47308E1524FEE6E700FFAC6F /* SocketIOStatus.swift in Sources */,
 				473842F92391A9DF00AA640F /* KeyboardHelper.swift in Sources */,
+				470146212A3F93B200A00DF8 /* NewChatViewModel+AttachmentsExtension.swift in Sources */,
 				4780783323916D4900187906 /* PictureReceivedTableViewCell.swift in Sources */,
 				473BC89A260238DC0070E519 /* JSON.swift in Sources */,
 				F3E357A8271E19EF00B91C54 /* VideoFeedEpisodePlayerContainerViewController.swift in Sources */,

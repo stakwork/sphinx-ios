@@ -41,16 +41,17 @@ class PaymentTemplateViewController: CommonPaymentViewController {
     var collectionDataSource : PaymentTemplatesDataSource!
     
     static func instantiate(
-        contacts : [UserContact],
+        contact: UserContact,
         chat: Chat? = nil,
-        chatViewModel: ChatViewModel,
         delegate: PaymentInvoiceDelegate?
     ) -> PaymentTemplateViewController {
+        
         let viewController = StoryboardScene.Chat.paymentTemplateViewController.instantiate()
-        viewController.contacts = contacts
-        viewController.chatViewModel = chatViewModel
+        
+        viewController.contact = contact
         viewController.delegate = delegate
         viewController.chat = chat
+        
         return viewController
     }
     
@@ -72,7 +73,7 @@ class PaymentTemplateViewController: CommonPaymentViewController {
     }
     
     @objc private func updateMessage(sender: UITextField) {
-        chatViewModel.currentPayment.message = sender.text
+        paymentsViewModel.payment.message = sender.text
     }
     
     func addCircleLine() {
@@ -81,16 +82,16 @@ class PaymentTemplateViewController: CommonPaymentViewController {
     }
     
     func configurePayment() {
-        if let amount = chatViewModel.currentPayment.amount {
+        if let amount = paymentsViewModel.payment.amount {
             let amountString = amount.formattedWithSeparator
             amountLabel.text = amountString
             
-            let contactsCount = (contacts?.count ?? 1)
-            let totalAmountString = (amount * contactsCount).formattedWithSeparator
-            groupTotalLabel.text = contactsCount > 1 ? " \("Total") \(totalAmountString)" : ""
+//            let totalAmountString = amount.formattedWithSeparator
+//            groupTotalLabel.text = contactsCount > 1 ? " \("Total") \(totalAmountString)" : ""
+//            groupTotalLabel.text = ""
         }
         
-        if let message = chatViewModel.currentPayment.message, !message.isEmpty {
+        if let message = paymentsViewModel.payment.message, !message.isEmpty {
             messageField.text = message
         }
     }
@@ -123,21 +124,21 @@ class PaymentTemplateViewController: CommonPaymentViewController {
     }
     
     func setSelectedImage(image: ImageTemplate?) {
-        chatViewModel.currentPayment.muid = image?.muid
+        paymentsViewModel.payment.muid = image?.muid
         var imageContentmode:UIView.ContentMode = .scaleAspectFit
         
         if let width = image?.width, let height = image?.height {
             imageContentmode = width > height ? .scaleAspectFill : .scaleAspectFit
-            chatViewModel.currentPayment.dim = "\(width)x\(height)"
+            paymentsViewModel.payment.dim = "\(width)x\(height)"
         } else {
-            chatViewModel.currentPayment.dim = nil
+            paymentsViewModel.payment.dim = nil
         }
         
         if let muid = image?.muid {
             setImage(image: nil, contentMode: imageContentmode)
             
             MediaLoader.loadTemplate(row: 0, muid: muid, completion: { (_, muid, image) in
-                if muid != self.chatViewModel.currentPayment.muid {
+                if muid != self.paymentsViewModel.payment.muid {
                     return
                 }
                 self.setImage(image: image, contentMode: imageContentmode)
@@ -158,13 +159,17 @@ class PaymentTemplateViewController: CommonPaymentViewController {
     @IBAction func proceedButtonTouched() {
         loading = true
         
-        if !chatViewModel.validatePayment(contacts: contacts) {
+        if !paymentsViewModel.validatePayment(contact: contact) {
             loading = false
             AlertHelper.showAlert(title: "generic.error.title".localized, message: "generic.error.message".localized)
             return
         }
         
-        let parameters = chatViewModel.getParams(contacts: contacts, chat: chat)
+        let parameters = TransactionMessage.getPaymentParamsFor(
+            payment: paymentsViewModel.payment,
+            contact: contact,
+            chat: chat
+        )
         
         API.sharedInstance.sendDirectPayment(params: parameters, callback: { payment in
             if let payment = payment {

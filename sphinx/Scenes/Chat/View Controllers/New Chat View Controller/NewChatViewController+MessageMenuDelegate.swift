@@ -10,7 +10,7 @@ import Foundation
 
 extension NewChatViewController : MessageOptionsVCDelegate {
     func shouldDeleteMessage(message: TransactionMessage) {
-        
+        chatViewModel.shouldDeleteMessage(message: message)
     }
     
     func shouldReplyToMessage(message: TransactionMessage) {
@@ -20,18 +20,17 @@ extension NewChatViewController : MessageOptionsVCDelegate {
     }
     
     func shouldBoostMessage(message: TransactionMessage) {
-        
+        chatViewModel.shouldBoostMessage(message: message)
     }
     
     func shouldResendMessage(message: TransactionMessage) {
-        
+        chatViewModel.shouldResendMessage(message: message)
     }
     
     func shouldFlagMessage(message: TransactionMessage) {
-        
+        chatViewModel.sendFlagMessageFor(message)
     }
     
-    func shouldRemoveWindow() {
-        
-    }
+    func shouldRemoveWindow() {}
 }
+

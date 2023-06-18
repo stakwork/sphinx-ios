@@ -92,7 +92,6 @@ extension NewChatViewModel {
             replyingMessage: replyingTo
         ) else {
             completion(false)
-//            self.didFailSendingMessage(provisionalMessage: provisionalMessage)
             return
         }
         sendMessage(

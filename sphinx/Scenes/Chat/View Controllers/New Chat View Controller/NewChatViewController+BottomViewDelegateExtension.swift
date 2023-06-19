@@ -10,10 +10,11 @@ import UIKit
 
 extension NewChatViewController : ChatMessageTextFieldViewDelegate {
     func shouldSendMessage(text: String, type: Int, completion: @escaping (Bool) -> ()) {
+        bottomView.resetReplyView()
+        
         chatViewModel.shouldSendMessage(text: text, type: type, completion: { success in
             
             if success {
-                self.bottomView.resetReplyView()
                 self.scrollToBottomAfterSend()
             }
             

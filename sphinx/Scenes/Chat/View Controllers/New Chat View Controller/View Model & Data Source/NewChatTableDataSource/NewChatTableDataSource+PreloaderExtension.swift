@@ -26,8 +26,6 @@ extension NewChatTableDataSource {
     }
     
     func saveSnapshotCurrentState() {
-        saveMessagesToPreloader()
-        
         if let firstVisibleRow = tableView.indexPathsForVisibleRows?.first {
             
             let cellRectInTable = tableView.rectForRow(at: firstVisibleRow)
@@ -41,6 +39,8 @@ extension NewChatTableDataSource {
                 for: chat.id
             )
         }
+        
+        saveMessagesToPreloader()
     }
     
     func restoreScrollLastPosition() {

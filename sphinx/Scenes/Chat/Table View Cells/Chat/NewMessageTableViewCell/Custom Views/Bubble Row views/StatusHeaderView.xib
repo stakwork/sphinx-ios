@@ -42,6 +42,25 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="17"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="DzI-Kn-kTP">
+                    <rect key="frame" x="0.0" y="0.0" width="68.333333333333329" height="17"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Uploading 0%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3F3-gL-YNH">
+                            <rect key="frame" x="0.0" y="0.0" width="61.333333333333336" height="17"/>
+                            <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="10"/>
+                            <color key="textColor" name="SecondaryText"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RsV-F8-8TE">
+                            <rect key="frame" x="63.333333333333343" y="0.0" width="5" height="17"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="5" id="WPW-Cs-xDq"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" name="Body"/>
+                </stackView>
                 <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="doW-39-j69">
                     <rect key="frame" x="0.0" y="0.0" width="116.66666666666667" height="17"/>
                     <subviews>
@@ -70,25 +89,6 @@
                 <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Atd-K5-zNf">
                     <rect key="frame" x="300.33333333333331" y="0.0" width="74.666666666666686" height="17"/>
                     <subviews>
-                        <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="DzI-Kn-kTP">
-                            <rect key="frame" x="-7" y="0.0" width="7" height="17"/>
-                            <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Uploading 0%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3F3-gL-YNH">
-                                    <rect key="frame" x="0.0" y="0.0" width="0.0" height="17"/>
-                                    <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="10"/>
-                                    <color key="textColor" name="SecondaryText"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RsV-F8-8TE">
-                                    <rect key="frame" x="2" y="0.0" width="5" height="17"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="5" id="WPW-Cs-xDq"/>
-                                    </constraints>
-                                </view>
-                            </subviews>
-                            <color key="backgroundColor" name="Body"/>
-                        </stackView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="flash_on" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5WX-MN-zYk">
                             <rect key="frame" x="0.0" y="0.0" width="12" height="17"/>
                             <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="12"/>
@@ -102,7 +102,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="06:05 AM" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Izc-1S-aLu">
-                            <rect key="frame" x="32" y="0.0" width="42.666666666666657" height="17"/>
+                            <rect key="frame" x="31.999999999999996" y="0.0" width="42.666666666666657" height="17"/>
                             <color key="backgroundColor" name="Body"/>
                             <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="10"/>
                             <color key="textColor" name="SecondaryText"/>
@@ -110,7 +110,7 @@
                         </label>
                     </subviews>
                 </stackView>
-                <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="RA9-ez-Aki">
+                <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="RA9-ez-Aki">
                     <rect key="frame" x="0.0" y="0.0" width="86.333333333333329" height="17"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="error" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DRW-Za-E1A">
@@ -135,12 +135,15 @@
                 <constraint firstAttribute="bottom" secondItem="RA9-ez-Aki" secondAttribute="bottom" id="1nK-Th-oNq"/>
                 <constraint firstAttribute="trailing" secondItem="Atd-K5-zNf" secondAttribute="trailing" id="8Qe-tS-KcY"/>
                 <constraint firstAttribute="bottom" secondItem="Atd-K5-zNf" secondAttribute="bottom" id="FhL-qG-lg4"/>
+                <constraint firstItem="DzI-Kn-kTP" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="GPa-ev-re9"/>
                 <constraint firstItem="Atd-K5-zNf" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="GbB-cs-Hyb"/>
                 <constraint firstItem="doW-39-j69" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Isg-Or-NQd"/>
+                <constraint firstItem="DzI-Kn-kTP" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="MzK-LV-PIa"/>
                 <constraint firstItem="RA9-ez-Aki" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Voy-z0-dof"/>
                 <constraint firstAttribute="bottom" secondItem="doW-39-j69" secondAttribute="bottom" id="aVy-nP-1oY"/>
                 <constraint firstItem="doW-39-j69" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="kyg-tm-EUz"/>
                 <constraint firstItem="RA9-ez-Aki" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="nnS-kE-Z1M"/>
+                <constraint firstAttribute="bottom" secondItem="DzI-Kn-kTP" secondAttribute="bottom" id="uQx-ni-vug"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="-56" y="20"/>

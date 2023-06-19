@@ -23,7 +23,6 @@ extension NewChatViewModel: AttachmentsManagerDelegate {
             chat: chat,
             replyUUID: replyingMessage?.uuid
         ) {
-            
             self.chatDataSource?.setMediaForProvisional(
                 messageId: message.id,
                 with: attachmentObject

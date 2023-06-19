@@ -18,7 +18,10 @@ extension NewChatViewModel {
             return
         }
         
-        sendMessage(provisionalMessage: nil, params: params, completion: {_ in })
+        sendMessage(provisionalMessage: nil, params: params, completion: { [weak self] success in
+            guard let self = self else { return }
+            self.chatDataSource?.forceReload()
+        })
     }
     
     func shouldResendMessage(message: TransactionMessage) {
@@ -111,7 +114,7 @@ extension NewChatViewModel {
         }
         
         API.sharedInstance.deleteMessage(messageId: message.id, callback: { (success, m) in
-            let updatedMessage = TransactionMessage.insertMessage(m: m).0
+            let _ = TransactionMessage.insertMessage(m: m).0
             
             if !success {
                 AlertHelper.showAlert(title: "generic.error.title".localized, message: "generic.error.message".localized)

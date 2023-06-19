@@ -203,9 +203,7 @@ struct MessageTableCellState {
             return nil
         }
         
-        guard let url = (message.isMediaAttachment() ? message.getMediaUrlFromMediaToken() : message.getTemplateURL()) else {
-            return nil
-        }
+        let url = (message.isMediaAttachment() ? message.getMediaUrlFromMediaToken() : message.getTemplateURL())
         
         return BubbleMessageLayoutState.MessageMedia(
             url: url,

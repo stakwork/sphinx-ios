@@ -144,7 +144,8 @@ extension NewChatViewModel {
     ) {
         chat?.resetOngoingMessage()
         joinIfCallMessage(message: message)
-        resetReply()
+        resetReply()        
+        
         completion(true)
     }
 

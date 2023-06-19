@@ -45,7 +45,7 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
             and: rowIndex
         ),
             let message = tableCellState.1.message,
-           let imageUrl = tableCellState.1.messageMedia?.url
+            let imageUrl = tableCellState.1.messageMedia?.url
         {
             if message.isDirectPayment() {
                 MediaLoader.loadPaymentTemplateImage(url: imageUrl, message: message, completion: { messageId, image in

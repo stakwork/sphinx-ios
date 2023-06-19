@@ -366,6 +366,10 @@ extension NewChatTableDataSource : NSFetchedResultsControllerDelegate {
         messagesResultsController?.delegate = nil
     }
     
+    func forceReload() {
+        configureResultsController(items: messagesCount)
+    }
+    
     func configureResultsController(items: Int) {
         messagesCount = items
         

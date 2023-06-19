@@ -1845,7 +1845,7 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RKJ-a1-az2">
-                                                <rect key="frame" x="53" y="97.5" width="9.5" height="12"/>
+                                                <rect key="frame" x="53" y="97.5" width="10" height="12"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="12" id="DQx-2p-Rt8"/>
                                                 </constraints>

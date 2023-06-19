@@ -6,6 +6,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -94,11 +95,34 @@
                             <action selector="deleteItemTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="rDO-Mf-nmX"/>
                         </connections>
                     </button>
+                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ECJ-4K-u72">
+                        <rect key="frame" x="12" y="19" width="26" height="26"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PDF" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XeQ-t7-eCN">
+                                <rect key="frame" x="5" y="8" width="16" height="10"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="10" id="RyG-oU-jeU"/>
+                                    <constraint firstAttribute="width" constant="16" id="uzb-Ux-cQ5"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Barlow-Bold" family="Barlow" pointSize="8"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemRedColor"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="26" id="5uD-iR-U85"/>
+                            <constraint firstAttribute="height" constant="26" id="HM3-lj-lXB"/>
+                            <constraint firstItem="XeQ-t7-eCN" firstAttribute="centerY" secondItem="ECJ-4K-u72" secondAttribute="centerY" id="MQB-yr-vpD"/>
+                            <constraint firstItem="XeQ-t7-eCN" firstAttribute="centerX" secondItem="ECJ-4K-u72" secondAttribute="centerX" id="eE5-FZ-m4v"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
                     <constraint firstItem="onY-YZ-XsQ" firstAttribute="leading" secondItem="Mep-cZ-dPt" secondAttribute="trailing" constant="16" id="4jp-pF-PQc"/>
                     <constraint firstItem="Mep-cZ-dPt" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="5DS-f8-Kbm"/>
+                    <constraint firstItem="onY-YZ-XsQ" firstAttribute="leading" secondItem="ECJ-4K-u72" secondAttribute="trailing" constant="26" id="73h-TU-54I"/>
                     <constraint firstItem="kPt-Dx-tgU" firstAttribute="leading" secondItem="M3f-CF-0aM" secondAttribute="trailing" constant="-15" id="7GV-6U-BVy"/>
                     <constraint firstItem="fSL-0q-N4u" firstAttribute="centerY" secondItem="c9l-Av-kpX" secondAttribute="centerY" id="92I-7e-lKY"/>
                     <constraint firstItem="kPt-Dx-tgU" firstAttribute="centerY" secondItem="M3f-CF-0aM" secondAttribute="centerY" id="9eZ-Mj-YiK"/>
@@ -115,6 +139,7 @@
                     <constraint firstItem="fSM-pR-XZX" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="lMq-XD-lZR"/>
                     <constraint firstItem="V1O-o7-wgg" firstAttribute="top" secondItem="Mep-cZ-dPt" secondAttribute="top" id="mLW-Xu-aHG"/>
                     <constraint firstItem="c9l-Av-kpX" firstAttribute="width" secondItem="c9l-Av-kpX" secondAttribute="height" multiplier="1:1" id="mWM-Lt-xJq"/>
+                    <constraint firstItem="ECJ-4K-u72" firstAttribute="centerY" secondItem="onY-YZ-XsQ" secondAttribute="centerY" id="owm-ZJ-rAA"/>
                     <constraint firstItem="Pue-7T-xlg" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="r1S-nw-KRh"/>
                     <constraint firstAttribute="bottom" secondItem="Pue-7T-xlg" secondAttribute="bottom" id="rcf-cG-uyc"/>
                     <constraint firstItem="V1O-o7-wgg" firstAttribute="bottom" secondItem="Mep-cZ-dPt" secondAttribute="bottom" id="rqr-Wg-7cX"/>
@@ -130,6 +155,8 @@
                 <outlet property="chatAvatarImageView3" destination="kPt-Dx-tgU" id="d8C-ep-02f"/>
                 <outlet property="deleteButton" destination="fSL-0q-N4u" id="Umj-D2-W7l"/>
                 <outlet property="disclosureImageView" destination="c9l-Av-kpX" id="vXd-Dk-cBY"/>
+                <outlet property="fileTypeLabel" destination="XeQ-t7-eCN" id="aAX-Gf-agv"/>
+                <outlet property="fileTypeView" destination="ECJ-4K-u72" id="b6o-0w-out"/>
                 <outlet property="initialsLabel" destination="V1O-o7-wgg" id="E3s-Bc-YUI"/>
                 <outlet property="mediaSourceLabel" destination="onY-YZ-XsQ" id="mYs-Uq-3AI"/>
                 <outlet property="mediaSourceSizeLabel" destination="Pue-7T-xlg" id="DfW-hk-yZG"/>
@@ -150,5 +177,8 @@
         <namedColor name="WashedOutReceivedText">
             <color red="0.69019607843137254" green="0.71764705882352942" blue="0.73725490196078436" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>

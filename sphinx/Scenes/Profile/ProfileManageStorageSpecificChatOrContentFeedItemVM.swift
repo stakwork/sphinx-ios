@@ -151,7 +151,6 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVM : UITableViewDataS
         
         switch(vc.sourceType){
         case .podcasts:
-            
             let item = items[indexPath.row]
             if let episode = getEpisodeForItem(item: item){
                 cell.configure(podcastEpisode: episode, item: item, index: indexPath.row)
@@ -160,6 +159,10 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVM : UITableViewDataS
             cell.selectionStyle = .none
             return cell
         case .chats:
+            let testFile = StorageManagerItem(source: .chats, type: .other, sizeMB: 150.0, label: "", date: Date())
+            let fileTypes = ["PDF", "DOC", "XLS", "ZIP"]
+            let randomIndex = Int.random(in: 0..<fileTypes.count)
+            cell.configure(fileName: "My File", fileType: fileTypes[randomIndex], item: testFile)
             return cell
         }
     }
@@ -170,7 +173,7 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVM : UITableViewDataS
             return items.count
             break
         case .chats:
-            return 3
+            return 100
             break
         }
         

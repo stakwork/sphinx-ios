@@ -21,6 +21,9 @@ class MediaStorageSourceTableViewCell: UITableViewCell {
     @IBOutlet weak var disclosureImageView: UIImageView!
     @IBOutlet weak var deleteButton: UIButton!
     
+    @IBOutlet weak var fileTypeLabel: UILabel!
+    @IBOutlet weak var fileTypeView: UIView!
+    
     @IBOutlet weak var chatAvatarImageView1: UIImageView!
     @IBOutlet weak var chatAvatarImageView2: UIImageView!
     @IBOutlet weak var chatAvatarImageView3: UIImageView!
@@ -33,6 +36,39 @@ class MediaStorageSourceTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+    }
+    
+    enum DocsColors {
+        case red
+        case green
+        case blue
+        case yellow
+        
+        var uiColor: UIColor {
+            switch self {
+            case .red:
+                return UIColor(hex: "#D84535")
+            case .green:
+                return UIColor(hex: "#49C998")
+            case .blue:
+                return UIColor(hex: "#618AFF")
+            case .yellow:
+                return UIColor(hex: "#D6AD31")
+            }
+        }
+    }
+    
+    func assignFileTypeColor(fileType:String)->UIColor{
+        switch(fileType.lowercased()){
+        case "pdf":
+            return DocsColors.red.uiColor
+        case "doc":
+            return DocsColors.blue.uiColor
+        case "xls":
+            return DocsColors.green.uiColor
+        default:
+            return DocsColors.yellow.uiColor
+        }
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -159,6 +195,20 @@ class MediaStorageSourceTableViewCell: UITableViewCell {
         
         disclosureImageView.isHidden = true
         deleteButton.isHidden = false
+    }
+    
+    func configure(fileName:String,fileType:String,item:StorageManagerItem){
+        initialsLabel.isHidden = true
+        mediaSourceLabel.text = fileName
+        mediaSourceSizeLabel.text = formatBytes(Int(StorageManager.sharedManager.getItemGroupTotalSize(items: [item])*1e6))
+        
+        disclosureImageView.isHidden = true
+        deleteButton.isHidden = false
+        
+        fileTypeLabel.text = fileType
+        fileTypeView.backgroundColor = assignFileTypeColor(fileType: fileType)
+        fileTypeView.isHidden = false
+        fileTypeView.layer.cornerRadius = 3.0
     }
     
     

@@ -15,12 +15,12 @@ extension NewChatViewController {
         }
         
         configureMentions()
-        
+
         chat?.updateTribeInfo() {
             self.headerView.setChatInfoOnHeader()
             self.loadPodcastFeed()
             self.configurePinnedMessageView()
-            
+
             self.chatViewModel.loadBadgesAndLeaderboard()
         }
     }    

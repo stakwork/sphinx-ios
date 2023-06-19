@@ -122,6 +122,8 @@ extension NewChatTableDataSource {
             return
         }
         
+        chat?.processAliasesFrom(messages: messages)
+        
         var newMsgCount = 0
         var array: [MessageTableCellState] = []
         

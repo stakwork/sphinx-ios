@@ -684,10 +684,8 @@ public class Chat: NSManagedObject {
         return nil
     }
     
-    func processAliases() {
-        if let messages = self.messages?.allObjects as? [TransactionMessage] {
-            aliases = Array(Set(messages.compactMap({$0.senderAlias})))
-        }
+    func processAliasesFrom(messages: [TransactionMessage]) {
+        aliases = Array(Set(messages.compactMap({$0.senderAlias})))
     }
     
     func saveChat() {

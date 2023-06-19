@@ -142,7 +142,7 @@ class ChatDataSource : NSObject {
     func processMessagesArray(newObjectsCount: Int) {
         chatHelper.processGroupedMessages(array: messagesArray, referenceMessageDate: &referenceMessageDate)
         
-        self.chat?.processAliases()
+//        self.chat?.processAliases()
         
         let limit = 0
         let start = newObjectsCount - 1

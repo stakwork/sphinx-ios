@@ -11,7 +11,6 @@ import UIKit
 extension NewChatViewController: ChatMentionAutocompleteDelegate {
     
     func configureMentions() {
-        chat?.processAliases()
         configureMentionAutocompleteTableView()
     }
     

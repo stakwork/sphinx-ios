@@ -96,13 +96,12 @@
                         </connections>
                     </button>
                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ECJ-4K-u72">
-                        <rect key="frame" x="12" y="19" width="26" height="26"/>
+                        <rect key="frame" x="22" y="22" width="20" height="20"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PDF" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XeQ-t7-eCN">
-                                <rect key="frame" x="5" y="8" width="16" height="10"/>
+                                <rect key="frame" x="0.0" y="5" width="20" height="10"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="10" id="RyG-oU-jeU"/>
-                                    <constraint firstAttribute="width" constant="16" id="uzb-Ux-cQ5"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Barlow-Bold" family="Barlow" pointSize="8"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -111,9 +110,10 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemRedColor"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="26" id="5uD-iR-U85"/>
-                            <constraint firstAttribute="height" constant="26" id="HM3-lj-lXB"/>
+                            <constraint firstAttribute="width" constant="20" id="5uD-iR-U85"/>
+                            <constraint firstAttribute="height" constant="20" id="HM3-lj-lXB"/>
                             <constraint firstItem="XeQ-t7-eCN" firstAttribute="centerY" secondItem="ECJ-4K-u72" secondAttribute="centerY" id="MQB-yr-vpD"/>
+                            <constraint firstItem="XeQ-t7-eCN" firstAttribute="leading" secondItem="ECJ-4K-u72" secondAttribute="leading" id="bRo-tL-i0N"/>
                             <constraint firstItem="XeQ-t7-eCN" firstAttribute="centerX" secondItem="ECJ-4K-u72" secondAttribute="centerX" id="eE5-FZ-m4v"/>
                         </constraints>
                     </view>
@@ -122,7 +122,7 @@
                 <constraints>
                     <constraint firstItem="onY-YZ-XsQ" firstAttribute="leading" secondItem="Mep-cZ-dPt" secondAttribute="trailing" constant="16" id="4jp-pF-PQc"/>
                     <constraint firstItem="Mep-cZ-dPt" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="5DS-f8-Kbm"/>
-                    <constraint firstItem="onY-YZ-XsQ" firstAttribute="leading" secondItem="ECJ-4K-u72" secondAttribute="trailing" constant="26" id="73h-TU-54I"/>
+                    <constraint firstItem="onY-YZ-XsQ" firstAttribute="leading" secondItem="ECJ-4K-u72" secondAttribute="trailing" constant="22" id="73h-TU-54I"/>
                     <constraint firstItem="kPt-Dx-tgU" firstAttribute="leading" secondItem="M3f-CF-0aM" secondAttribute="trailing" constant="-15" id="7GV-6U-BVy"/>
                     <constraint firstItem="fSL-0q-N4u" firstAttribute="centerY" secondItem="c9l-Av-kpX" secondAttribute="centerY" id="92I-7e-lKY"/>
                     <constraint firstItem="kPt-Dx-tgU" firstAttribute="centerY" secondItem="M3f-CF-0aM" secondAttribute="centerY" id="9eZ-Mj-YiK"/>

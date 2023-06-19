@@ -71,7 +71,8 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
     }
     
     func setupViewAndModels(){
-        
+        filesListTableView.isHidden = true
+        mediaVsFilesSegmentedControl.isHidden = (sourceType != .chats)
         if(isFirstLoad){
             vm.finishSetup(items: items)
             items = []
@@ -87,7 +88,7 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
             headerTitleLabel.text = podcastFeed.title
         }
         
-        totalSizeLabel.text = formatBytes(Int(StorageManager.sharedManager.getItemGroupTotalSize(items: vm.items) * 1e6))
+        totalSizeLabel.text = formatBytes(Int(StorageManager.sharedManager.getItemGroupTotalSize(items: vm.mediaItems) * 1e6))
         
         let gesture = UITapGestureRecognizer(target: self, action: #selector(handleDeleteSelected))
         deletionSummaryButton.addGestureRecognizer(gesture)
@@ -117,7 +118,7 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
     }
     
     @IBAction func deletionSummaryCloseTap(_ sender: Any) {
-        vm.selectedStatus = vm.items.map({_ in return false})
+        vm.selectedStatus = vm.mediaItems.map({_ in return false})
     }
     
     func updateDeletionSummaryLabel(){
@@ -133,7 +134,7 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
         StorageManager.sharedManager.deleteCacheItems(cms: cms, completion: {
             completion()
             self.vm.removeSelectedItems()
-            if (self.vm.items.count == 0){
+            if (self.vm.mediaItems.count == 0){
                 self.navigationController?.popViewController(animated: true)
             }
         })
@@ -216,7 +217,7 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
             }
             
             if(self.state == .batch){
-                self.mediaDeletionConfirmationView.spaceFreedString = formatBytes(Int(StorageManager.sharedManager.getItemGroupTotalSize(items: self.vm.items) * 1e6))
+                self.mediaDeletionConfirmationView.spaceFreedString = formatBytes(Int(StorageManager.sharedManager.getItemGroupTotalSize(items: self.vm.mediaItems) * 1e6))
             }
             else if(self.state == .single && self.sourceType == .chats){
                 self.mediaDeletionConfirmationView.spaceFreedString = formatBytes(Int(StorageManager.sharedManager.getItemGroupTotalSize(items: self.vm.getSelectedItems()) * 1e6))
@@ -277,6 +278,7 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
     
     @IBAction func segmentedControlChanged(_ sender: UISegmentedControl) {
         selectedIndexUnderlineView.translatesAutoresizingMaskIntoConstraints = false
+        let wasOnIndexZero = filesListTableView.isHidden == true
         if(sender.selectedSegmentIndex == 0){
             print("0")
             filesListTableView.isHidden = true
@@ -293,6 +295,14 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
                 self.selectedIndexIndicatorLeadingEdge.constant = self.selectedIndexUnderlineView.frame.width
             })
         }
+        
+        if((sender.selectedSegmentIndex == 0 && wasOnIndexZero == false) ||
+           (sender.selectedSegmentIndex != 0 && wasOnIndexZero == true)){
+            //detected change
+            deletionSummaryView.isHidden = true
+            vm.selectedStatus = vm.mediaItems.map({ _ in return false })
+        }
+        
     }
     
     
@@ -304,7 +314,7 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVC : MediaDeletionCon
         let existingState = mediaDeletionConfirmationView.state
         mediaDeletionConfirmationView.state = .awaitingApproval
         if(existingState == .finished){
-            if(self.vm.items.count > 0){
+            if(self.vm.mediaItems.count > 0){
                 
             }
             else{

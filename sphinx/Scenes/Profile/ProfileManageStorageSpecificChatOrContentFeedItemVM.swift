@@ -18,11 +18,18 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVM : NSObject{
     
     
     var teedUpIndex : Int? = nil
-    var items : [StorageManagerItem] = []{
+    var mediaItems : [StorageManagerItem] = []{
         didSet{
-            selectedStatus = items.map({_ in return false})
+            selectedStatus = mediaItems.map({_ in return false})
         }
     }
+    
+    var fileItems : [StorageManagerItem] = []{
+        didSet{
+            selectedStatus = mediaItems.map({_ in return false})
+        }
+    }
+    
     var selectedStatus : [Bool] = []{
         didSet{
             vc.deletionSummaryView.isHidden = (getIsSelectingImages()) ? false : true
@@ -46,11 +53,11 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVM : NSObject{
         
         // Remove the selected items from the items array
         for index in indicesToRemove {
-            items.remove(at: index)
+            mediaItems.remove(at: index)
         }
         
         // Reset the selected status
-        selectedStatus = items.map({ _ in return false })
+        selectedStatus = mediaItems.map({ _ in return false })
         
         // Reload the collection view or table view if needed
         imageCollectionView.reloadData()
@@ -66,7 +73,7 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVM : NSObject{
         
         for (index, isSelected) in selectedStatus.enumerated() {
             if isSelected {
-                selectedItems.append(items[index])
+                selectedItems.append(mediaItems[index])
             }
         }
         
@@ -82,7 +89,7 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVM : NSObject{
     func getSelectionSize()->Double{
         var result : Double = 0.0
         for i in 0..<selectedStatus.count{
-            result += (selectedStatus[i]) ? items[i].sizeMB : 0
+            result += (selectedStatus[i]) ? mediaItems[i].sizeMB : 0
         }
         return (result)
     }
@@ -104,7 +111,7 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVM : NSObject{
     }
     
     func finishSetup(items : [StorageManagerItem]){
-        self.items = items.sorted(by: {$0.date > $1.date})
+        self.mediaItems = items.sorted(by: {$0.date > $1.date})
         
         if (sourceType == .podcasts) {
             podcastTableView.delegate = self
@@ -151,7 +158,7 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVM : UITableViewDataS
         
         switch(vc.sourceType){
         case .podcasts:
-            let item = items[indexPath.row]
+            let item = mediaItems[indexPath.row]
             if let episode = getEpisodeForItem(item: item){
                 cell.configure(podcastEpisode: episode, item: item, index: indexPath.row)
                 cell.delegate = self
@@ -170,7 +177,7 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVM : UITableViewDataS
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch(vc.sourceType){
         case .podcasts:
-            return items.count
+            return mediaItems.count
             break
         case .chats:
             return 100
@@ -185,8 +192,8 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVM : UITableViewDataS
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if(sourceType == .podcasts){
-            print(items[indexPath.row])
-            if let sourcePath = items[indexPath.row].sourceFilePath{
+            print(mediaItems[indexPath.row])
+            if let sourcePath = mediaItems[indexPath.row].sourceFilePath{
                 if let pair = StorageManager.sharedManager.getFeedItemPairForString(string: sourcePath),
                 pair.count > 1{
                     let feedID = pair[0]
@@ -205,7 +212,7 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVM : UITableViewDataS
 
 extension ProfileManageStorageSpecificChatOrContentFeedItemVM : UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return items.count
+        return mediaItems.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -220,8 +227,8 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVM : UICollectionView
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         
         if let cell = cell as? ChatImageCollectionViewCell,
-           let cm = items[indexPath.row].cachedMedia{
-            cell.configure(cachedMedia: cm, size: getSize(),selectionStatus: selectedStatus[indexPath.row], memorySizeMB: items[indexPath.row].sizeMB)
+           let cm = mediaItems[indexPath.row].cachedMedia{
+            cell.configure(cachedMedia: cm, size: getSize(),selectionStatus: selectedStatus[indexPath.row], memorySizeMB: mediaItems[indexPath.row].sizeMB)
         }
     }
     
@@ -254,7 +261,7 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVM : MediaStorageSour
     
     func finalizeEpisodeDelete(){
         if let index = teedUpIndex,
-           let sourcePath = items[index].sourceFilePath{
+           let sourcePath = mediaItems[index].sourceFilePath{
             teedUpIndex = nil
             vc.mediaDeletionConfirmationView.batchState = nil
             StorageManager.sharedManager.deletePodsWithID(
@@ -270,10 +277,10 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVM : MediaStorageSour
     }
     
     func handleConfirmDelete(index:Int){
-        vc.mediaDeletionConfirmationView.spaceFreedString = formatBytes(Int(items[index].sizeMB * 1e6))
-        self.items.remove(at: index)
+        vc.mediaDeletionConfirmationView.spaceFreedString = formatBytes(Int(mediaItems[index].sizeMB * 1e6))
+        self.mediaItems.remove(at: index)
         self.vc.mediaDeletionConfirmationView.state = .finished
-        self.finishSetup(items: self.items)
+        self.finishSetup(items: self.mediaItems)
         self.vc.setupViewAndModels()
         self.podcastTableView.reloadData()
         

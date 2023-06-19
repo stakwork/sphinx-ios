@@ -203,7 +203,7 @@ extension AddressBookDataSource : ContactCellDelegate {
         
         deleteObjects(contact: contact)
         contacts = UserContact.getAll().filter { !$0.isOwner && !$0.shouldBeExcluded() }
-        processContacts()
+        processContacts(searchTerm: self.searchTerm)
         
         if contacts.count == contactsCount - 1 {
             deleteCell(cell: cell)

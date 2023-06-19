@@ -10,7 +10,7 @@ import UIKit
 import SwiftyJSON
 
 @objc protocol SocketManagerDelegate: class {
-    @objc optional func didUpdateChat(_ chat: Chat)
+    @objc optional func didUpdateChatFromMessage(_ chat: Chat)
     @objc optional func togglePaidContainer(invoice: String)
 }
 
@@ -235,7 +235,7 @@ extension SphinxSocketManager {
         if let message = TransactionMessage.insertMessage(m: messageJson).0 {
             
             if let chat = message.chat {
-                delegate?.didUpdateChat?(chat)
+                delegate?.didUpdateChatFromMessage?(chat)
             }
             
             setSeen(message: message, value: false)
@@ -370,6 +370,19 @@ extension SphinxSocketManager {
         if !outgoing && message.shouldAvoidShowingBubble() {
             return false
         }
+        
+        if let vc = delegate as? NewChatViewController {
+            if let chat = vc.chat, let messageChatId = message.chat?.id {
+                if chat.id == messageChatId {
+                    return false
+                }
+            }
+            
+            if let contact = vc.contact, message.senderId == contact.id {
+                return false
+            }
+        }
+
         
         return true
     }

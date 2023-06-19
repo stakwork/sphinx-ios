@@ -123,6 +123,10 @@ extension NewChatViewController : NewChatTableDataSourceDelegate, SocketManagerD
     }
     
     func didUpdateChat(_ chat: Chat) {
+        self.chat = chat
+    }
+    
+    func didUpdateChatFromMessage(_ chat: Chat) {
         if self.chat == nil {
             if let contact = self.contact, contact.id == chat.getContact()?.id {
                 self.chat = chat
@@ -130,8 +134,6 @@ extension NewChatViewController : NewChatTableDataSourceDelegate, SocketManagerD
                 configureFetchResultsController()
                 configureTableView()
             }
-        } else {
-            self.chat = chat
         }
     }
     

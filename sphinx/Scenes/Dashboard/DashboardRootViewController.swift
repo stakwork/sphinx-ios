@@ -656,7 +656,7 @@ extension DashboardRootViewController {
     private func payInvite(invite: UserInvite) {
         AlertHelper.showTwoOptionsAlert(title: "pay.invitation".localized, message: "", confirm: {
             self.chatsListViewModel.payInvite(invite: invite, completion: { contact in
-                guard let _ = contact else {
+                if let _ = contact {
                     return
                 }
                 AlertHelper.showAlert(title: "generic.error.title".localized, message: "payment.failed".localized)

@@ -591,65 +591,65 @@ extension ChatViewController : PaymentInvoiceDelegate, GroupPaymentVCDelegate {
     }
 }
 
-extension ChatViewController : SocketManagerDelegate {
-    func didReceivePurchaseUpdate(message: TransactionMessage) {
-        if let indexPath = chatDataSource?.reloadAttachmentRow(m: message) {
-            DelayPerformedHelper.performAfterDelay(seconds: 1.0, completion: {
-                self.chatTableView.shouldScrollToUpdatedRowAt(indexPath: indexPath)
-            })
-        }
-    }
-    
-    func didReceiveMessage(message: TransactionMessage, shouldSync: Bool) {
-        if WindowsManager.sharedInstance.isOnMessageOptionsMenu() {
-            return
-        }
-        
-        if self.chat == nil {
-            updateViewChat(updatedChat: message.chat)
-        }
-        
-        if message.isPayment() {
-            if shouldSync {
-                fetchNewData()
-            } else {
-                reloadMessages(newMessageCount: 1)
-            }
-            return
-        }
-        
-        chatDataSource?.addMessageAndReload(message: message)
-    }
-    
-    func didReceiveConfirmation(message: TransactionMessage) {
-        if WindowsManager.sharedInstance.isOnMessageOptionsMenu() {
-            return
-        }
-        
-        chatDataSource?.addMessageAndReload(message: message, confirmation: true)
-    }
-    
-    func didUpdateContact(contact: UserContact) {
-        self.contact = contact
-        updateViewChat(updatedChat: contact.getChat())
-        chatDataSource?.updateContact(contact: contact)
-        chatHeaderView.setChatInfo()
-    }
-    
-    func didUpdateChat(chat: Chat) {
-        updateViewChat(updatedChat: chat)
-        accessoryView.updateFromChat(chat)
-    }
-    
-    func scrollAfterInsert(count: Int = 1) {
-        if chatTableView.shouldScrollToBottom() {
-            scrollChatToBottom()
-        } else {
-            scrollDownLabel.text = chat?.unseenMessagesCountLabel ?? ""
-            scrollDownContainer.isHidden = false
-        }
-    }
-}
+//extension ChatViewController : SocketManagerDelegate {
+//    func didReceivePurchaseUpdate(message: TransactionMessage) {
+//        if let indexPath = chatDataSource?.reloadAttachmentRow(m: message) {
+//            DelayPerformedHelper.performAfterDelay(seconds: 1.0, completion: {
+//                self.chatTableView.shouldScrollToUpdatedRowAt(indexPath: indexPath)
+//            })
+//        }
+//    }
+//    
+//    func didReceiveMessage(message: TransactionMessage, shouldSync: Bool) {
+//        if WindowsManager.sharedInstance.isOnMessageOptionsMenu() {
+//            return
+//        }
+//        
+//        if self.chat == nil {
+//            updateViewChat(updatedChat: message.chat)
+//        }
+//        
+//        if message.isPayment() {
+//            if shouldSync {
+//                fetchNewData()
+//            } else {
+//                reloadMessages(newMessageCount: 1)
+//            }
+//            return
+//        }
+//        
+//        chatDataSource?.addMessageAndReload(message: message)
+//    }
+//    
+//    func didReceiveConfirmation(message: TransactionMessage) {
+//        if WindowsManager.sharedInstance.isOnMessageOptionsMenu() {
+//            return
+//        }
+//        
+//        chatDataSource?.addMessageAndReload(message: message, confirmation: true)
+//    }
+//    
+//    func didUpdateContact(contact: UserContact) {
+//        self.contact = contact
+//        updateViewChat(updatedChat: contact.getChat())
+//        chatDataSource?.updateContact(contact: contact)
+//        chatHeaderView.setChatInfo()
+//    }
+//    
+//    func didUpdateChat(chat: Chat) {
+//        updateViewChat(updatedChat: chat)
+//        accessoryView.updateFromChat(chat)
+//    }
+//    
+//    func scrollAfterInsert(count: Int = 1) {
+//        if chatTableView.shouldScrollToBottom() {
+//            scrollChatToBottom()
+//        } else {
+//            scrollDownLabel.text = chat?.unseenMessagesCountLabel ?? ""
+//            scrollDownContainer.isHidden = false
+//        }
+//    }
+//}
 
 extension ChatViewController : NewContactVCDelegate {
     func shouldReloadContacts(reload: Bool) {

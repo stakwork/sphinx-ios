@@ -41,8 +41,6 @@ class SupportViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        SphinxSocketManager.sharedInstance.setDelegate(delegate: nil)
-        
         setStatusBarColor()
         viewTitle.addTextSpacing(value: 2)
         textViewContainer.layer.borderWidth = 1

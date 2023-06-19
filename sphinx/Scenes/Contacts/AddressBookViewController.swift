@@ -27,8 +27,6 @@ class AddressBookViewController: PopHandlerViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        SphinxSocketManager.sharedInstance.setDelegate(delegate: nil)
-        
         setStatusBarColor()
         viewTitle.addTextSpacing(value: 2)
         

@@ -22,6 +22,7 @@
 		470146232A3F93DA00A00DF8 /* NewChatViewController+AttachmentsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470146222A3F93DA00A00DF8 /* NewChatViewController+AttachmentsExtension.swift */; };
 		470146272A3F9AB500A00DF8 /* PaymentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470146262A3F9AB500A00DF8 /* PaymentsViewModel.swift */; };
 		4701462B2A3FC0A900A00DF8 /* NewChatTableDataSource+AttachmentsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4701462A2A3FC0A900A00DF8 /* NewChatTableDataSource+AttachmentsExtension.swift */; };
+		4701462D2A4095DD00A00DF8 /* NewChatViewController+MessagesFetchExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4701462C2A4095DD00A00DF8 /* NewChatViewController+MessagesFetchExtension.swift */; };
 		47018F8127CFB7CE00797E0B /* pause_animation.json in Resources */ = {isa = PBXBuildFile; fileRef = 47018F8027CFB7CD00797E0B /* pause_animation.json */; };
 		47018F9227CFEEAF00797E0B /* skip30v1.caf in Resources */ = {isa = PBXBuildFile; fileRef = 47018F9127CFEDB400797E0B /* skip30v1.caf */; };
 		47018F9327CFEEAF00797E0B /* skip30v2.caf in Resources */ = {isa = PBXBuildFile; fileRef = 47018F8E27CFEDB300797E0B /* skip30v2.caf */; };
@@ -876,7 +877,6 @@
 		F39F2C8226E2805D00D357F6 /* FeedSearchResultCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F39F2C8026E2805D00D357F6 /* FeedSearchResultCollectionViewCell.xib */; };
 		F39F2C8526E2840500D357F6 /* FeedSearchResultsCollectionViewSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F39F2C8326E2840500D357F6 /* FeedSearchResultsCollectionViewSectionHeader.swift */; };
 		F39F2C8626E2840500D357F6 /* FeedSearchResultsCollectionViewSectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = F39F2C8426E2840500D357F6 /* FeedSearchResultsCollectionViewSectionHeader.xib */; };
-		F3A35CA826C43508007D35BD /* DashboardRootViewController+SocketManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3A35CA726C43508007D35BD /* DashboardRootViewController+SocketManagerDelegate.swift */; };
 		F3B2518D26D8DD1800C96D42 /* PodcastFeed+FetchUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B2518C26D8DD1800C96D42 /* PodcastFeed+FetchUtils.swift */; };
 		F3B2518F26DD3F4100C96D42 /* PodcastEpisode+Computeds.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B2518E26DD3F4000C96D42 /* PodcastEpisode+Computeds.swift */; };
 		F3B2519526DFA1E800C96D42 /* DashboardRootViewController+DashboardFeedsListContainerViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B2519426DFA1E800C96D42 /* DashboardRootViewController+DashboardFeedsListContainerViewControllerDelegate.swift */; };
@@ -947,6 +947,7 @@
 		470146222A3F93DA00A00DF8 /* NewChatViewController+AttachmentsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewChatViewController+AttachmentsExtension.swift"; sourceTree = "<group>"; };
 		470146262A3F9AB500A00DF8 /* PaymentsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsViewModel.swift; sourceTree = "<group>"; };
 		4701462A2A3FC0A900A00DF8 /* NewChatTableDataSource+AttachmentsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewChatTableDataSource+AttachmentsExtension.swift"; sourceTree = "<group>"; };
+		4701462C2A4095DD00A00DF8 /* NewChatViewController+MessagesFetchExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewChatViewController+MessagesFetchExtension.swift"; sourceTree = "<group>"; };
 		47018F8027CFB7CD00797E0B /* pause_animation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = pause_animation.json; sourceTree = "<group>"; };
 		47018F8E27CFEDB300797E0B /* skip30v2.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = skip30v2.caf; sourceTree = "<group>"; };
 		47018F8F27CFEDB300797E0B /* skip30v3.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = skip30v3.caf; sourceTree = "<group>"; };
@@ -2008,7 +2009,6 @@
 		F39F2C8026E2805D00D357F6 /* FeedSearchResultCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedSearchResultCollectionViewCell.xib; sourceTree = "<group>"; };
 		F39F2C8326E2840500D357F6 /* FeedSearchResultsCollectionViewSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedSearchResultsCollectionViewSectionHeader.swift; sourceTree = "<group>"; };
 		F39F2C8426E2840500D357F6 /* FeedSearchResultsCollectionViewSectionHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedSearchResultsCollectionViewSectionHeader.xib; sourceTree = "<group>"; };
-		F3A35CA726C43508007D35BD /* DashboardRootViewController+SocketManagerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DashboardRootViewController+SocketManagerDelegate.swift"; sourceTree = "<group>"; };
 		F3B2518C26D8DD1800C96D42 /* PodcastFeed+FetchUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PodcastFeed+FetchUtils.swift"; sourceTree = "<group>"; };
 		F3B2518E26DD3F4000C96D42 /* PodcastEpisode+Computeds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PodcastEpisode+Computeds.swift"; sourceTree = "<group>"; };
 		F3B2519426DFA1E800C96D42 /* DashboardRootViewController+DashboardFeedsListContainerViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DashboardRootViewController+DashboardFeedsListContainerViewControllerDelegate.swift"; sourceTree = "<group>"; };
@@ -3358,6 +3358,7 @@
 				472092CB2A27985800468796 /* NewChatViewController+TableViewExtension.swift */,
 				470146152A3B962E00A00DF8 /* NewChatViewController+MessageMenuDelegate.swift */,
 				470146222A3F93DA00A00DF8 /* NewChatViewController+AttachmentsExtension.swift */,
+				4701462C2A4095DD00A00DF8 /* NewChatViewController+MessagesFetchExtension.swift */,
 			);
 			path = "New Chat View Controller";
 			sourceTree = "<group>";
@@ -4558,7 +4559,6 @@
 				F3CE637626AFC44C006E37A0 /* DashboardRootViewController+MiscDelegateUtils.swift */,
 				F385D49A26ECFEC500A789E8 /* DashboardRootViewController+PodcastFeedSearchResultsViewControllerDelegate.swift */,
 				F360A42627030F4400097CE4 /* DashboardRootViewController+PodcastPlayerVCDelegate.swift */,
-				F3A35CA726C43508007D35BD /* DashboardRootViewController+SocketManagerDelegate.swift */,
 				F3B2519B26E118E600C96D42 /* DashboardRootViewController+UITextFieldDelegate.swift */,
 				F3188B98271CD36C00890DDD /* DashboardRootViewController+VideoPlayerViewControllerDelegate.swift */,
 				473C315A2798982D007735CD /* DashboardRootViewController+RestoreProgressViewDelegate.swift */,
@@ -5283,6 +5283,7 @@
 				F373BF0326A9CEDD0093C886 /* DashboardFeedsContainerViewController.swift in Sources */,
 				47468FDC233554680072124A /* ProfileViewController.swift in Sources */,
 				F3DC6B02273C9BD000458E09 /* ContentFeedItem+CoreDataProperties.swift in Sources */,
+				4701462D2A4095DD00A00DF8 /* NewChatViewController+MessagesFetchExtension.swift in Sources */,
 				47D46A2C237B1D140005A548 /* SubscriptionFormButtonTableViewCell.swift in Sources */,
 				CED14D78293CF683004B8B25 /* ChatMentionAutocompleteDataSource.swift in Sources */,
 				47893A9C240D8783002F675B /* Int.swift in Sources */,
@@ -5693,7 +5694,6 @@
 				47E6A4D82A2E701400A9509E /* GroupRemovedView.swift in Sources */,
 				F3531C3F26BD511300E9586C /* DashboardRootViewController+DashboardChatsListDelegate.swift in Sources */,
 				474FE32D23F588E400C06FC8 /* CommonVideoTableViewCell.swift in Sources */,
-				F3A35CA826C43508007D35BD /* DashboardRootViewController+SocketManagerDelegate.swift in Sources */,
 				47D3D8D7277220D7007C64F9 /* FeedSearchResult.swift in Sources */,
 				47308E0C24FEE6E700FFAC6F /* SocketEnginePacketType.swift in Sources */,
 				474A136324E5807C007C7528 /* SphinxOnionConnector.swift in Sources */,

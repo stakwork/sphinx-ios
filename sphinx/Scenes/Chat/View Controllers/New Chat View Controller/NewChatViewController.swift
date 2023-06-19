@@ -30,6 +30,7 @@ class NewChatViewController: NewKeyboardHandlerViewController {
     var chatResultsController: NSFetchedResultsController<Chat>!
     
     var chatViewModel: NewChatViewModel!
+    var chatListViewModel: ChatListViewModel? = nil
     
     var chatTableDataSource: NewChatTableDataSource? = nil
     var chatMentionAutocompleteDataSource : ChatMentionAutocompleteDataSource? = nil
@@ -39,7 +40,8 @@ class NewChatViewController: NewKeyboardHandlerViewController {
     
     static func instantiate(
         contactId: Int? = nil,
-        chatId: Int? = nil
+        chatId: Int? = nil,
+        chatListViewModel: ChatListViewModel? = nil
     ) -> NewChatViewController {
         let viewController = StoryboardScene.Chat.newChatViewController.instantiate()
         
@@ -50,6 +52,8 @@ class NewChatViewController: NewKeyboardHandlerViewController {
         if let contactId = contactId {
             viewController.contact = UserContact.getContactWith(id: contactId)
         }
+        
+        viewController.chatListViewModel = chatListViewModel
         
         viewController.chatViewModel = NewChatViewModel(
             chat: viewController.chat,
@@ -92,6 +96,8 @@ class NewChatViewController: NewKeyboardHandlerViewController {
             chatTableDataSource?.stopListeningToResultsController()
             
             chat?.setOngoingMessage(text: bottomView.getMessage())
+            
+            SphinxSocketManager.sharedInstance.setDelegate(delegate: nil)
         }
     }
     
@@ -145,5 +151,6 @@ class NewChatViewController: NewKeyboardHandlerViewController {
     
     func setDelegates() {
         bottomView.setDelegates(messageFieldDelegate: self)
+        SphinxSocketManager.sharedInstance.setDelegate(delegate: self)
     }
 }

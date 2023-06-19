@@ -103,7 +103,6 @@ class ProfileViewController: NewKeyboardHandlerViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         advanceScrollView.isScrollEnabled = true
-        SphinxSocketManager.sharedInstance.setDelegate(delegate: nil)
         
         setStatusBarColor()
         viewTitle.addTextSpacing(value: 2)

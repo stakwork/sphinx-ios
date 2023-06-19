@@ -239,6 +239,8 @@ class CreateInvoiceViewController: CommonPaymentViewController {
             with: qrCodeDetailViewModel
         )
         
+        SphinxSocketManager.sharedInstance.setDelegate(delegate: viewController)
+        
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     

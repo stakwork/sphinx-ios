@@ -274,7 +274,6 @@ extension DashboardRootViewController {
         
         setStatusBarColor()
         
-        socketManager.setDelegate(delegate: self)
         headerView.delegate = self
         
         podcastPlayerController.addDelegate(
@@ -613,7 +612,8 @@ extension DashboardRootViewController {
         
         let chatVC = NewChatViewController.instantiate(
             contactId: contact?.id,
-            chatId: chat?.id
+            chatId: chat?.id,
+            chatListViewModel: chatsListViewModel
         )
         
         navigationController?.pushViewController(chatVC, animated: shouldAnimate)
@@ -656,11 +656,10 @@ extension DashboardRootViewController {
     private func payInvite(invite: UserInvite) {
         AlertHelper.showTwoOptionsAlert(title: "pay.invitation".localized, message: "", confirm: {
             self.chatsListViewModel.payInvite(invite: invite, completion: { contact in
-                if let contact = contact {
-                    self.didUpdateContact(contact: contact)
-                } else {
-                    AlertHelper.showAlert(title: "generic.error.title".localized, message: "payment.failed".localized)
+                guard let _ = contact else {
+                    return
                 }
+                AlertHelper.showAlert(title: "generic.error.title".localized, message: "payment.failed".localized)
             })
         })
     }

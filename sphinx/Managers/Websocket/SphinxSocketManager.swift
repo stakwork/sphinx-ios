@@ -10,12 +10,8 @@ import UIKit
 import SwiftyJSON
 
 @objc protocol SocketManagerDelegate: class {
-    @objc optional func didReceiveMessage(message: TransactionMessage, shouldSync: Bool)
-    @objc optional func didReceivePurchaseUpdate(message: TransactionMessage)
-    @objc optional func didReceiveConfirmation(message: TransactionMessage)
-    @objc optional func didUpdateContact(contact: UserContact)
-    @objc optional func didUpdateChat(chat: Chat)
-    @objc optional func didReceiveOrUpdateGroup()
+    @objc optional func didUpdateChat(_ chat: Chat)
+    @objc optional func togglePaidContainer(invoice: String)
 }
 
 class SphinxSocketManager {
@@ -27,10 +23,7 @@ class SphinxSocketManager {
         return Static.instance
     }
     
-    var incomingMSGTimer : Timer? = nil
-    
     weak var delegate: SocketManagerDelegate?
-    
     var manager: SocketManager? = nil
     var socket: SocketIOClient? = nil
     var preventReconnection = false
@@ -224,65 +217,35 @@ extension SphinxSocketManager {
     }
     
     func togglePaidInvoiceIfNeeded(string: String) {
-        if
-            let vc = delegate as? DashboardRootViewController,
-            let presentedVC = vc.presentedViewController as? UINavigationController
-        {
-            let viewControllers = presentedVC.viewControllers
-            if viewControllers.count > 1 {
-                if let invoiceDetailsVC = viewControllers[1] as? QRCodeDetailViewController {
-                    invoiceDetailsVC.togglePaidContainer(invoice: string)
-                }
-            }
-        }
+        delegate?.togglePaidContainer?(invoice: string)
     }
     
     func didReceivePurchaseMessage(type: String, messageJson: JSON) {
-        if let message = TransactionMessage.insertMessage(m: messageJson).0 {
-            delegate?.didReceivePurchaseUpdate?(message: message)
-        }
+        let _ = TransactionMessage.insertMessage(m: messageJson)
         NotificationCenter.default.post(name: .onBalanceDidChange, object: nil)
     }
     
     func didReceiveMessage(type: String, messageJson: JSON) {
         let isConfirmation = type == "confirmation"
-        let messageFromUpdatedContact = didUpdateContact(messageJson: messageJson)
+        
+        if let contactJson = messageJson["contact"].dictionary {
+            let _ = UserContact.getOrCreateContact(contact: JSON(contactJson))
+        }
         
         if let message = TransactionMessage.insertMessage(m: messageJson).0 {
+            
+            if let chat = message.chat {
+                delegate?.didUpdateChat?(chat)
+            }
+            
             setSeen(message: message, value: false)
             updateBalanceIfNeeded(type: type)
             
             message.setPaymentInvoiceAsPaid()
             
-            if showBubbleIfNeeded(message: message) {
-                return
-            }
-            
-            if isConfirmation {
-                delegate?.didReceiveConfirmation?(message: message)
-            } else {
-                showBubbleOnCall(message: message)
-                
-                if message.isIncoming() && message.chat?.isPublicGroup() ?? false {
-                    debounceMessageNotification(message: message, shouldSync: messageFromUpdatedContact)
-                } else {
-                    SoundsPlayer.playHaptic()
-                    
-                    delegate?.didReceiveMessage?(message: message, shouldSync: messageFromUpdatedContact)
-                }
-            }
-        }
-    }
-    
-    func debounceMessageNotification(message: TransactionMessage, shouldSync: Bool) {
-        incomingMSGTimer?.invalidate()
-        incomingMSGTimer = Timer.scheduledTimer(timeInterval: 0.3, target: self, selector: #selector(shouldUpdateDashboard(timer:)), userInfo: ["message": message, "shouldSync" : shouldSync], repeats: false)
-    }
-    
-    @objc func shouldUpdateDashboard(timer: Timer) {
-        if let userInfo = timer.userInfo as? [String: Any] {
-            if let message = userInfo["message"] as? TransactionMessage, let shouldSync = userInfo["shouldSync"] as? Bool {
-                delegate?.didReceiveMessage?(message: message, shouldSync: shouldSync)
+            if !isConfirmation {
+                let _ = showBubbleIfNeeded(message: message)
+                SoundsPlayer.playHaptic()
             }
         }
     }
@@ -302,26 +265,11 @@ extension SphinxSocketManager {
         
         if let chat = Chat.insertChat(chat: chatJson) {
             chat.setChatMessagesAsSeen(shouldSync: false, shouldSave: false)
-            
-            if shouldUpdateObjectsOnView(chat: chat) {
-                delegate?.didUpdateChat?(chat: chat)
-            }
         }
-    }
-    
-    func didUpdateContact(messageJson: JSON) -> Bool {
-        if let contact = messageJson["contact"].dictionary {
-            return UserContact.getOrCreateContact(contact: JSON(contact)).1
-        }
-        return false
     }
     
     func didReceiveContact(contactJson: JSON) {
-        if let contact = UserContact.insertContact(contact: contactJson) {
-            if shouldUpdateObjectsOnView(contact: contact) {
-                delegate?.didUpdateContact?(contact: contact)
-            }
-        }
+        let _ = UserContact.insertContact(contact: contactJson)
     }
     
     func didReceiveGroup(groupJson: JSON) {
@@ -332,8 +280,6 @@ extension SphinxSocketManager {
         }
         
         let _ = Chat.getOrCreateChat(chat: groupJson["chat"])
-        
-        delegate?.didReceiveOrUpdateGroup?()
     }
     
     func tribeDeletedOrkickedFromGroup(type: String, json: JSON) {
@@ -351,21 +297,8 @@ extension SphinxSocketManager {
     }
     
     func didJoinOrLeaveGroup(type: String, json: JSON) {
-        var chat : Chat? = nil
-        
         if let _ = json["contact"].dictionary, let chatJson = json["chat"].dictionary {
-            if let chatObject = Chat.insertChat(chat: JSON(chatJson)) {
-                chat = chatObject
-                
-                if let chat = chat {
-                    if shouldUpdateObjectsOnView(chat: chat) {
-                        delegate?.didUpdateChat?(chat: chat)
-                    }
-                }
-            }
-        }
-        if let chat = chat, !chat.isPublicGroup() {
-            delegate?.didReceiveOrUpdateGroup?()
+            let _ = Chat.insertChat(chat: JSON(chatJson))
         }
         
         if let message = json["message"].dictionary {
@@ -383,40 +316,13 @@ extension SphinxSocketManager {
     func memberRequestResponse(type: String, json: JSON) {
         if let message = json["message"].dictionary {
             
-            if let chatObject = Chat.insertChat(chat: json["chat"]) {
-                delegate?.didUpdateChat?(chat: chatObject)
-            }
-            
+            let _ = Chat.insertChat(chat: json["chat"])
             didReceiveMessage(type: type, messageJson: JSON(message))
         }
     }
     
     func didReceiveInvite(inviteJson: JSON) {
-        if let invite = UserInvite.insertInvite(invite: inviteJson) {
-            if let contact = invite.contact {
-                if shouldUpdateObjectsOnView(contact: contact) {
-                    delegate?.didUpdateContact?(contact: contact)
-                }
-            }
-        }
-    }
-    
-    func shouldUpdateObjectsOnView(contact: UserContact? = nil, chat: Chat? = nil) -> Bool {
-        if delegate is DashboardRootViewController {
-            return true
-        }
-        
-        if let vc = delegate as? ChatViewController {
-            if let vcContact = vc.contact, let contact = contact, vcContact.id == contact.id {
-                return true
-            }
-            
-            if let vcChat = vc.chat, let chat = chat, vcChat.id == chat.id {
-                return true
-            }
-        }
-        
-        return false
+        let _ = UserInvite.insertInvite(invite: inviteJson)
     }
     
     func showBubbleIfNeeded(message: TransactionMessage) -> Bool {
@@ -437,7 +343,7 @@ extension SphinxSocketManager {
             return false
         }
         
-        if outgoing || delegate is DashboardRootViewController {
+        if outgoing {
             return false
         }
         
@@ -465,23 +371,7 @@ extension SphinxSocketManager {
             return false
         }
         
-        if delegate == nil || !(delegate is ChatViewController) {
-            return true
-        }
-        
-        if let vc = delegate as? ChatViewController {
-            if let chat = vc.chat, let messageChatId = message.chat?.id {
-                if chat.id != messageChatId {
-                    return true
-                }
-            }
-            
-            if let contact = vc.contact, message.senderId != contact.id {
-                return true
-            }
-        }
-        
-        return false
+        return true
     }
     
     func setSeen(
@@ -504,16 +394,6 @@ extension SphinxSocketManager {
                 newMessageBubbleHelper.showMessageView(title: "payment".localized, text: text)
             }
             updateBalanceIfNeeded(type: "keysend")
-        }
-    }
-    
-    func showBubbleOnCall(message: TransactionMessage) {
-        let outgoing = message.isOutgoing()
-        if let _ = delegate as? ChatViewController {
-            let onFullScreenCall = VideoCallManager.sharedInstance.activeFullScreenCall()
-            if onFullScreenCall && !outgoing {
-                newMessageBubbleHelper.showMessageView(message: message, onKeyWindow: false)
-            }
         }
     }
 }

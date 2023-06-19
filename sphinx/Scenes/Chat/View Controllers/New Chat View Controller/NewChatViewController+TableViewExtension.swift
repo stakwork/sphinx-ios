@@ -11,6 +11,7 @@ import UIKit
 extension NewChatViewController {
     func configureTableView() {
         guard let chat = chat else {
+            chatTableView.alpha = 1.0
             return
         }
         
@@ -43,7 +44,7 @@ extension NewChatViewController {
     }
 }
 
-extension NewChatViewController : NewChatTableDataSourceDelegate {
+extension NewChatViewController : NewChatTableDataSourceDelegate, SocketManagerDelegate {
     func configureNewMessagesIndicatorWith(newMsgCount: Int) {
         DispatchQueue.main.async {
             self.newMsgsIndicatorView.configureWith(
@@ -111,7 +112,8 @@ extension NewChatViewController : NewChatTableDataSourceDelegate {
     ) {
         let chatVC = NewChatViewController.instantiate(
             contactId: contactId,
-            chatId: chatId
+            chatId: chatId,
+            chatListViewModel: chatListViewModel
         )
         navigationController?.pushViewController(chatVC, animated: true)
     }
@@ -121,7 +123,16 @@ extension NewChatViewController : NewChatTableDataSourceDelegate {
     }
     
     func didUpdateChat(_ chat: Chat) {
-        self.chat = chat
+        if self.chat == nil {
+            if let contact = self.contact, contact.id == chat.getContact()?.id {
+                self.chat = chat
+                
+                configureFetchResultsController()
+                configureTableView()
+            }
+        } else {
+            self.chat = chat
+        }
     }
     
     func didLongPressOnCellWith(messageId: Int, and rowIndex: Int, bubbleViewRect: CGRect) {

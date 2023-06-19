@@ -118,7 +118,6 @@ class ChatViewController: KeyboardHandlerViewController {
            return
         }
         
-        socketManager.setDelegate(delegate: self)
         loadData()
     }
     

@@ -377,10 +377,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func reloadMessagesData() {
         if let currentVC = getCurrentVC() {
-            if let currentVC = currentVC as? ChatViewController {
-                currentVC.fetchNewData()
+            if let currentVC = currentVC as? NewChatViewController {
+                currentVC.fetchNewMessages()
             } else if let dashboardRootVC = currentVC as? DashboardRootViewController {
-                
                 dashboardRootVC.loadContactsAndSyncMessages(
                     shouldShowHeaderLoadingWheel: true
                 )
@@ -484,7 +483,8 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             
             let chatVC = NewChatViewController.instantiate(
                 contactId: chat.conversationContact?.id,
-                chatId: chat.id
+                chatId: chat.id,
+                chatListViewModel: chatListViewModel
             )
             
             if

@@ -67,14 +67,10 @@ protocol NewMessageTableViewCellDelegate: class {
     
     //Menu Long Press
     func didLongPressOnCellWith(messageId: Int, and rowIndex: Int, bubbleViewRect: CGRect)
+    func shouldReplyToMessageWith(messageId: Int, and rowIndex: Int)
 }
 
 class NewMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableViewCellProtocol {
-    
-    weak var delegate: NewMessageTableViewCellDelegate!
-    
-    var rowIndex: Int!
-    var messageId: Int?
     
     ///General views
     @IBOutlet weak var bubbleAllView: UIView!
@@ -119,8 +115,6 @@ class NewMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableViewCellP
     ///Forth Container
     @IBOutlet weak var messageBoostView: NewMessageBoostView!
     @IBOutlet weak var paidAttachmentView: PaidAttachmentView! // PENDING
-    
-    var urlRanges = [NSRange]()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -181,13 +175,7 @@ class NewMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableViewCellP
         configureWith(bubble: bubble)
     }
     
-    override func didLongPressOnCell() {
-        if let messageId = messageId {
-            delegate?.didLongPressOnCellWith(
-                messageId: messageId,
-                and: rowIndex,
-                bubbleViewRect: bubbleAllView.frame
-            )
-        }
+    override func getBubbleView() -> UIView? {
+        return bubbleAllView
     }
 }

@@ -10,11 +10,6 @@ import UIKit
 
 class NewOnlyTextMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableViewCellProtocol {
     
-    weak var delegate: NewMessageTableViewCellDelegate!
-    
-    var rowIndex: Int!
-    var messageId: Int?
-    
     ///General views
     @IBOutlet weak var bubbleOnlyText: UIView!
     @IBOutlet weak var receivedArrow: UIView!
@@ -35,8 +30,6 @@ class NewOnlyTextMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableV
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var messageLabelLeadingConstraint: NSLayoutConstraint!
     @IBOutlet weak var messageLabelTrailingConstraint: NSLayoutConstraint!
-    
-    var urlRanges = [NSRange]()
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -84,30 +77,8 @@ class NewOnlyTextMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableV
         configureWith(avatarImage: mutableMessageCellState.avatarImage)
         configureWith(bubble: bubble)
     }
-    
-    @objc func labelTapped(
-        gesture: UITapGestureRecognizer
-    ) {
-        if let label = gesture.view as? UILabel, let text = label.text {
-            for range in urlRanges {
-                if gesture.didTapAttributedTextInLabel(
-                    label,
-                    inRange: range
-                ) {
-                    let link = (text as NSString).substring(with: range)
-                    delegate?.didTapOnLink(link)                    
-                }
-            }
-        }
-    }
-    
-    override func didLongPressOnCell() {
-        if let messageId = messageId {
-            delegate?.didLongPressOnCellWith(
-                messageId: messageId,
-                and: rowIndex,
-                bubbleViewRect: bubbleOnlyText.frame
-            )
-        }
+
+    override func getBubbleView() -> UIView? {
+        return bubbleOnlyText
     }
 }

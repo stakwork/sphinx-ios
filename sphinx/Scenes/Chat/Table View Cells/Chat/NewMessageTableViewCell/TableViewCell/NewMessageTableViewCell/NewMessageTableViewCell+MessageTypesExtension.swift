@@ -174,22 +174,3 @@ extension NewMessageTableViewCell {
         }
     }
 }
-
-extension NewMessageTableViewCell {
-    @objc func labelTapped(
-        gesture: UITapGestureRecognizer
-    ) {
-        if let label = gesture.view as? UILabel, let text = label.text {
-            for range in urlRanges {
-                if gesture.didTapAttributedTextInLabel(
-                    label,
-                    inRange: range
-                ) {
-                    let link = (text as NSString).substring(with: range)
-                    delegate?.didTapOnLink(link)
-                    break
-                }
-            }
-        }
-    }
-}

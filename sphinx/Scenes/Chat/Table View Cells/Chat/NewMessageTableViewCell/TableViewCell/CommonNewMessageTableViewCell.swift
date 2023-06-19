@@ -10,10 +10,33 @@ import UIKit
 
 class CommonNewMessageTableViewCell : SwipableReplyCell {
     
+    weak var delegate: NewMessageTableViewCellDelegate!
+    
+    var rowIndex: Int!
+    var messageId: Int?
+    
+    var urlRanges = [NSRange]()
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
         addLongPressRescognizer()
+    }
+    
+    @objc func labelTapped(
+        gesture: UITapGestureRecognizer
+    ) {
+        if let label = gesture.view as? UILabel, let text = label.text {
+            for range in urlRanges {
+                if gesture.didTapAttributedTextInLabel(
+                    label,
+                    inRange: range
+                ) {
+                    let link = (text as NSString).substring(with: range)
+                    delegate?.didTapOnLink(link)
+                }
+            }
+        }
     }
     
     
@@ -34,5 +57,25 @@ class CommonNewMessageTableViewCell : SwipableReplyCell {
         }
     }
     
-    func didLongPressOnCell() {}
+    func getBubbleView() -> UIView? {
+        return nil
+    }
+    
+    func didLongPressOnCell() {
+        if let messageId = messageId, let bubbleView = getBubbleView() {
+            delegate?.didLongPressOnCellWith(
+                messageId: messageId,
+                and: rowIndex,
+                bubbleViewRect: bubbleView.frame
+            )
+        }
+    }
+    
+    override func didSwipeToReplay() {
+        if let messageId = messageId {
+            SoundsPlayer.playHaptic()
+            
+            delegate?.shouldReplyToMessageWith(messageId: messageId, and: rowIndex)
+        }
+    }
 }

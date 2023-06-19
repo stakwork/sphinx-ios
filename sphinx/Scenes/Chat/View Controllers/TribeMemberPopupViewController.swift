@@ -38,7 +38,9 @@ class TribeMemberPopupViewController: UIViewController {
 
 extension TribeMemberPopupViewController : TribeMemberViewDelegate {
     func shouldGoToSendPayment(message: TransactionMessage) {
-        delegate?.shouldGoToSendPayment(message: message)
+        self.dismiss(animated: false) {
+            self.delegate?.shouldGoToSendPayment(message: message)
+        }
     }
     
     func shouldDismissMemberPopup() {

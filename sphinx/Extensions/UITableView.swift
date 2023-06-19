@@ -75,6 +75,20 @@ extension UITableView {
     func scrollToOffset(yPosition: CGFloat) {
         self.contentOffset.y = yPosition
     }
+    
+    func isCellOutOfBounds(indexPath: IndexPath) -> (Bool, Bool) {
+        let cellRect = rectForRow(at: indexPath)
+        
+        if bounds.contains(cellRect) {
+            return (false, false)
+        } else {
+            if cellRect.origin.y == 0 {
+                return (false, true)
+            } else {
+                return (true, true)
+            }
+        }
+    }
 }
 
 extension UIScrollView {

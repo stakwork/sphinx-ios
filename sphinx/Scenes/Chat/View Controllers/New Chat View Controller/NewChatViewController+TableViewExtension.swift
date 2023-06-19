@@ -139,10 +139,13 @@ extension NewChatViewController : NewChatTableDataSourceDelegate, SocketManagerD
     
     func didLongPressOnCellWith(messageId: Int, and rowIndex: Int, bubbleViewRect: CGRect) {
         let indexPath = IndexPath(row: rowIndex, section: 0)
-        
-        self.chatTableView.scrollToRow(at: indexPath, at: .top, animated: true)
-        
-        DelayPerformedHelper.performAfterDelay(seconds: 0.3, completion: {
+        let cellOutOfBounds = chatTableView.isCellOutOfBounds(indexPath: indexPath)
+
+        if cellOutOfBounds.0 || cellOutOfBounds.1 {
+            chatTableView.scrollToRow(at: indexPath, at: cellOutOfBounds.0 ? .bottom : .top, animated: true)
+        }
+
+        DelayPerformedHelper.performAfterDelay(seconds: cellOutOfBounds.0 || cellOutOfBounds.1 ? 0.3 : 0.0, completion: {
             if self.isKeyboardVisible() {
                 self.messageMenuData = MessageTableCellState.MessageMenuData(
                     messageId: messageId,

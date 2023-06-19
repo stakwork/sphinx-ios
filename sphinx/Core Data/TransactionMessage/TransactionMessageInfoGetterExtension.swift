@@ -1062,7 +1062,7 @@ extension TransactionMessage {
     
     //Grouping Logic
     func shouldAvoidGrouping() -> Bool {
-        return pending() || failed() || isDeleted || isInvoice() || isPayment() || isGroupActionMessage() || isFlagged()
+        return pending() || failed() || isDeleted() || isInvoice() || isPayment() || isGroupActionMessage() || isFlagged()
     }
     
     func hasSameSenderThanMessage(_ message: TransactionMessage) -> Bool {

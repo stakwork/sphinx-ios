@@ -172,6 +172,25 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
             }
         }
     }
+    
+    func updateMessageTableCellStateFor(
+        rowIndex: Int?,
+        messageId: Int,
+        with updatedUploadProgressData: MessageTableCellState.UploadProgressData
+    ) {
+        if let tableCellState = getTableCellStateFor(
+            messageId: messageId,
+            and: rowIndex
+        ) {
+            uploadingProgress[messageId] = updatedUploadProgressData
+            
+            DispatchQueue.main.async {
+                var snapshot = self.dataSource.snapshot()
+                snapshot.reloadItems([tableCellState.1])
+                self.dataSource.apply(snapshot, animatingDifferences: false)
+            }
+        }
+    }
 }
 
 ///Actions handling

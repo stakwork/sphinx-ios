@@ -71,6 +71,10 @@ extension NewChatAccessoryView {
     func setTextBack(text: String) {
         messageFieldView.setTextBack(text: text)
     }
+    
+    func clearMessage() {
+        messageFieldView.clearMessage()
+    }
 }
 
 //Podcast Player

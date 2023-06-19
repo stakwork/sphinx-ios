@@ -142,4 +142,18 @@ extension MessageTableCellState {
             self.indexPath = indexPath
         }
     }
+    
+    struct UploadProgressData: Equatable {
+        var progress: Int
+        
+        init(
+            progress: Int
+        ) {
+            self.progress = progress
+        }
+        
+        static func == (lhs: UploadProgressData, rhs: UploadProgressData) -> Bool {
+            return lhs.progress       == rhs.progress
+        }
+    }
 }

@@ -190,12 +190,26 @@ extension TransactionMessage {
     }
     
     static func getProvisionalMessageId() -> Int {
+        
         let userId = UserData.sharedInstance.getUserId()
         let messageType = TransactionMessageType.message.rawValue
         let attachmentType = TransactionMessageType.attachment.rawValue
-        let predicate = NSPredicate(format: "(senderId == %d) AND (type == %d || type == %d) AND id < 0", userId, messageType, attachmentType)
+        
+        let predicate = NSPredicate(
+            format: "(senderId == %d) AND (type == %d || type == %d) AND id < 0",
+            userId,
+            messageType,
+            attachmentType
+        )
+        
         let sortDescriptors = [NSSortDescriptor(key: "id", ascending: true)]
-        let messages: [TransactionMessage] = CoreDataManager.sharedManager.getObjectsOfTypeWith(predicate: predicate, sortDescriptors: sortDescriptors, entityName: "TransactionMessage", fetchLimit: 1)
+        
+        let messages: [TransactionMessage] = CoreDataManager.sharedManager.getObjectsOfTypeWith(
+            predicate: predicate,
+            sortDescriptors: sortDescriptors,
+            entityName: "TransactionMessage",
+            fetchLimit: 1
+        )
         
         if messages.count > 0 {
             return messages[0].id - 1

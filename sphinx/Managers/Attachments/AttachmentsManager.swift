@@ -11,6 +11,7 @@ import SwiftyJSON
 import AVFoundation
 
 @objc protocol AttachmentsManagerDelegate: class {
+    @objc optional func didUpdateUploadProgressFor(messageId: Int, progress: Int)
     @objc optional func didUpdateUploadProgress(progress: Int)
     @objc optional func didFailSendingMessage(provisionalMessage: TransactionMessage?)
     @objc optional func didSuccessSendingAttachment(message: TransactionMessage, image: UIImage?)
@@ -60,7 +61,10 @@ class AttachmentsManager {
         self.authenticate(completion: {_ in }, errorCompletion: {})
     }
     
-    func authenticate(completion: @escaping (String) -> (), errorCompletion: @escaping () -> ()) {
+    func authenticate(
+        completion: @escaping (String) -> (),
+        errorCompletion: @escaping () -> ()
+    ) {
         guard let pubkey = UserContact.getOwner()?.publicKey else {
             errorCompletion()
             return
@@ -69,11 +73,19 @@ class AttachmentsManager {
         API.sharedInstance.askAuthentication(callback: { id, challenge in
             if let id = id, let challenge = challenge {
                 
-                self.delegate?.didUpdateUploadProgress?(progress: 10)
+                if let provisionalMessage = self.provisionalMessage {
+                    self.delegate?.didUpdateUploadProgressFor?(messageId: provisionalMessage.id, progress: 10)
+                } else {
+                    self.delegate?.didUpdateUploadProgress?(progress: 10)
+                }
                 
                 API.sharedInstance.signChallenge(challenge: challenge, callback: { sig in
                     if let sig = sig {
-                        self.delegate?.didUpdateUploadProgress?(progress: 15)
+                        if let provisionalMessage = self.provisionalMessage {
+                            self.delegate?.didUpdateUploadProgressFor?(messageId: provisionalMessage.id, progress: 15)
+                        } else {
+                            self.delegate?.didUpdateUploadProgress?(progress: 15)
+                        }
                         
                         API.sharedInstance.verifyAuthentication(id: id, sig: sig, pubkey: pubkey, callback: { token in
                             if let token = token {
@@ -170,11 +182,20 @@ class AttachmentsManager {
     func uploadData(attachmentObject: AttachmentObject, route: String, token: String, completion: @escaping (NSDictionary, AttachmentObject) -> ()) {
         API.sharedInstance.uploadData(attachmentObject: attachmentObject, route: route, token: token, progressCallback: { progress in
             let totalProgress = (progress * 85) / 100 + 10
-            self.delegate?.didUpdateUploadProgress?(progress: totalProgress)
+            if let provisionalMessage = self.provisionalMessage {
+                self.delegate?.didUpdateUploadProgressFor?(messageId: provisionalMessage.id, progress: totalProgress)
+            } else {
+                self.delegate?.didUpdateUploadProgress?(progress: totalProgress)
+            }
         }, callback: { success, fileJSON in
             if let fileJSON = fileJSON, success {
                 self.uploadedImage = attachmentObject.image
-                self.delegate?.didUpdateUploadProgress?(progress: 100)
+                
+                if let provisionalMessage = self.provisionalMessage {
+                    self.delegate?.didUpdateUploadProgressFor?(messageId: provisionalMessage.id, progress: 100)
+                } else {
+                    self.delegate?.didUpdateUploadProgress?(progress: 100)
+                }
                 completion(fileJSON, attachmentObject)
             } else {
                 self.uploadFailed()

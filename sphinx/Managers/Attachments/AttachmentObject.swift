@@ -9,6 +9,7 @@
 import UIKit
 
 public struct AttachmentObject {
+    
     var data: Data!
     var image: UIImage?
     var mediaKey: String?
@@ -18,14 +19,16 @@ public struct AttachmentObject {
     var price: Int = 0
     var fileName: String? = nil
     
-    init(data: Data,
-         fileName: String? = nil,
-         mediaKey: String? = nil,
-         type: AttachmentsManager.AttachmentType,
-         text: String? = nil,
-         paidMessage: String? = nil,
-         image: UIImage? = nil,
-         price: Int = 0) {
+    init(
+        data: Data,
+        fileName: String? = nil,
+        mediaKey: String? = nil,
+        type: AttachmentsManager.AttachmentType,
+        text: String? = nil,
+        paidMessage: String? = nil,
+        image: UIImage? = nil,
+        price: Int = 0
+    ) {
         
         self.data = data
         self.fileName = fileName
@@ -89,6 +92,30 @@ public struct AttachmentObject {
     
     func getFileAndMime() -> (String, String) {
         return AttachmentObject.getFileAndMime(type: self.type, fileName: self.fileName)
+    }
+    
+    func isPDFOrFile() -> Bool {
+        return type == AttachmentsManager.AttachmentType.PDF || type == AttachmentsManager.AttachmentType.GenericFile
+    }
+    
+    func isPDF() -> Bool {
+        return type == AttachmentsManager.AttachmentType.PDF
+    }
+    
+    func getFileInfo() -> MessageTableCellState.FileInfo? {
+        if !isPDFOrFile() {
+            return nil
+        }
+        
+        let pagesCount = isPDF() ? data.getPDFPagesCount() : 0
+        let previewImage = isPDF() ? data.getPDFThumbnail() : nil
+        
+        return MessageTableCellState.FileInfo(
+            fileSize: getDecryptedData()?.count ?? 0,
+            fileName: getFileName(),
+            pagesCount: pagesCount,
+            previewImage: previewImage
+        )
     }
     
     static func getFileAndMime(type: AttachmentsManager.AttachmentType, fileName: String?) -> (String, String) {

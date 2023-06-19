@@ -30,6 +30,7 @@ protocol ChatTableViewCellProtocol: class {
         messageCellState: MessageTableCellState,
         mediaData: MessageTableCellState.MediaData?,
         tribeData: MessageTableCellState.TribeData?,
+        uploadProgressData: MessageTableCellState.UploadProgressData?,
         delegate: NewMessageTableViewCellDelegate,
         indexPath: IndexPath
     )
@@ -134,6 +135,7 @@ class NewMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableViewCellP
         messageCellState: MessageTableCellState,
         mediaData: MessageTableCellState.MediaData?,
         tribeData: MessageTableCellState.TribeData?,
+        uploadProgressData: MessageTableCellState.UploadProgressData?,
         delegate: NewMessageTableViewCellDelegate,
         indexPath: IndexPath
     ) {
@@ -154,7 +156,7 @@ class NewMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableViewCellP
         configureWidthWith(messageCellState: mutableMessageCellState)
         
         ///Status Header
-        configureWith(statusHeader: mutableMessageCellState.statusHeader)
+        configureWith(statusHeader: mutableMessageCellState.statusHeader, uploadProgressData: uploadProgressData)
         
         ///Message content
         configureWith(messageContent: mutableMessageCellState.messageContent)

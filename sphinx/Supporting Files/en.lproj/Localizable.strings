@@ -24,7 +24,7 @@
 "delete" = "Delete";
 "yes" = "Yes";
 "no" = "No";
-"uploaded.progress" = "Uploaded: %d %%";
+"uploaded.progress" = "Uploading: %d %%";
 "public.key" = "Public Key";
 "route.hint" = "Route Hint";
 "name.you" = "You";

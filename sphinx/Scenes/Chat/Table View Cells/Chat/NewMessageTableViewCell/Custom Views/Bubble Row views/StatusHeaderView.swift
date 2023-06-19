@@ -26,6 +26,9 @@ class StatusHeaderView: UIView {
     @IBOutlet weak var sentErrorMessage: UILabel!
     @IBOutlet weak var sentErrorIcon: UILabel!
     
+    @IBOutlet weak var uploadingHeader: UIStackView!
+    @IBOutlet weak var uploadingLabel: UILabel!
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
@@ -54,10 +57,9 @@ class StatusHeaderView: UIView {
     }
     
     func configureWith(
-        statusHeader: BubbleMessageLayoutState.StatusHeader
+        statusHeader: BubbleMessageLayoutState.StatusHeader,
+        uploadProgressData: MessageTableCellState.UploadProgressData?
     ) {
-//        var showSendingIcon: Bool
-        
         receivedSenderLabel.text = statusHeader.senderName
         receivedSenderLabel.textColor = statusHeader.color
         
@@ -70,5 +72,12 @@ class StatusHeaderView: UIView {
         
         receivedDateLabel.text = statusHeader.timestamp
         sentDateLabel.text = statusHeader.timestamp
+        
+        if let uploadProgressData = uploadProgressData {
+            uploadingHeader.isHidden = false
+            uploadingLabel.text = String(format: "uploaded.progress".localized, uploadProgressData.progress)
+        } else {
+            uploadingHeader.isHidden = true
+        }
     }
 }

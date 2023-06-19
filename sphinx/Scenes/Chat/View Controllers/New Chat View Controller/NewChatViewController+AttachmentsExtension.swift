@@ -12,9 +12,13 @@ extension NewChatViewController : AttachmentsDelegate {
     func willDismissPresentedVC() {}
     
     func shouldStartUploading(attachmentObject: AttachmentObject) {
-//        accessoryView.clearMessage()
-//        accessoryView.togglePlaceHolder(editing: false)
-//        insertPrivisionalAttachmentMessageAndUpload(attachmentObject: attachmentObject, chat: chat)
+        bottomView.clearMessage()
+        bottomView.resetReplyView()
+        
+        chatViewModel.insertPrivisionalAttachmentMessageAndUpload(
+            attachmentObject: attachmentObject,
+            chat: chat
+        )
     }
     
     func shouldSendGiphy(message: String) {
@@ -83,7 +87,12 @@ extension NewChatViewController : PaymentInvoiceDelegate {
         messageUUID: String,
         callback: (() -> ())?
     ) {
-        
+        chatViewModel.shouldSendTribePayment(
+            amount: amount,
+            message: message,
+            messageUUID: messageUUID,
+            callback: callback
+        )
     }
     
 }

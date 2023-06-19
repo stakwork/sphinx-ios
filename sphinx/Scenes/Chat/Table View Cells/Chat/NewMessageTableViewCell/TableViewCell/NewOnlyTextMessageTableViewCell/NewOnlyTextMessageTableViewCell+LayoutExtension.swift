@@ -13,7 +13,7 @@ extension NewOnlyTextMessageTableViewCell {
         statusHeader: BubbleMessageLayoutState.StatusHeader?
     ) {
         if let statusHeader = statusHeader {
-            statusHeaderView.configureWith(statusHeader: statusHeader)
+            statusHeaderView.configureWith(statusHeader: statusHeader, uploadProgressData: nil)
         }
     }
     

@@ -28,6 +28,8 @@ extension NewChatViewController {
             bottomView: bottomView,
             delegate: self
         )
+        
+        chatViewModel.setDataSource(chatTableDataSource)
     }
     
     func getContactImageView() -> UIImageView? {

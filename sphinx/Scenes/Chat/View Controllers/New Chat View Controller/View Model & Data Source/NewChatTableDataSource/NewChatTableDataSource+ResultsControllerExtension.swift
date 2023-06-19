@@ -95,11 +95,13 @@ extension NewChatTableDataSource {
             
             let mediaData = (dataSourceItem.messageId != nil) ? self.cachedMedia[dataSourceItem.messageId!] : nil
             let tribeData = (dataSourceItem.linkTribe?.uuid != nil) ? self.preloaderHelper.tribesData[dataSourceItem.linkTribe!.uuid] : nil
+            let uploadProgressData = (dataSourceItem.messageId != nil) ? self.uploadingProgress[dataSourceItem.messageId!] : nil
             
             cell?.configureWith(
                 messageCellState: dataSourceItem,
                 mediaData: mediaData,
                 tribeData: tribeData,
+                uploadProgressData: uploadProgressData,
                 delegate: self,
                 indexPath: indexPath
             )

@@ -11,10 +11,14 @@ import UIKit
 extension NewMessageTableViewCell {
     
     func configureWith(
-        statusHeader: BubbleMessageLayoutState.StatusHeader?
+        statusHeader: BubbleMessageLayoutState.StatusHeader?,
+        uploadProgressData: MessageTableCellState.UploadProgressData?
     ) {
         if let statusHeader = statusHeader {
-            statusHeaderView.configureWith(statusHeader: statusHeader)
+            statusHeaderView.configureWith(
+                statusHeader: statusHeader,
+                uploadProgressData: uploadProgressData
+            )
         }
     }
 }

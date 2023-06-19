@@ -13,6 +13,7 @@ class NewChatViewModel {
     
     var chat: Chat?
     var contact: UserContact?
+    var chatDataSource: NewChatTableDataSource? = nil
     
     var chatLeaderboard : [ChatLeaderboardEntry] = [ChatLeaderboardEntry]()
     var availableBadges : [Badge] = [Badge]()
@@ -26,6 +27,10 @@ class NewChatViewModel {
     ) {
         self.chat = chat
         self.contact = contact
+    }
+    
+    func setDataSource(_ dataSource: NewChatTableDataSource?) {
+        self.chatDataSource = dataSource
     }
     
     ///Notifications

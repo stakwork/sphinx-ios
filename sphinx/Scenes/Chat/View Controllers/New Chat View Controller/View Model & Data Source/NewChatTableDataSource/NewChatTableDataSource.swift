@@ -43,8 +43,10 @@ class NewChatTableDataSource : NSObject {
     var preloaderHelper = MessagesPreloaderHelper.sharedInstance
     
     var messagesCount = 0
+    
     var messageTableCellStateArray: [MessageTableCellState] = []
     var cachedMedia: [Int: MessageTableCellState.MediaData] = [:]
+    var uploadingProgress: [Int: MessageTableCellState.UploadProgressData] = [:]
     
     var loadingMoreItems = false
     var scrolledAtBottom = false

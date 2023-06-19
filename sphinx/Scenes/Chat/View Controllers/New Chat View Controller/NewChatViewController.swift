@@ -90,6 +90,8 @@ class NewChatViewController: NewKeyboardHandlerViewController {
         if self.isMovingFromParent {
             chatTableDataSource?.saveSnapshotCurrentState()
             chatTableDataSource?.stopListeningToResultsController()
+            
+            chat?.setOngoingMessage(text: bottomView.getMessage())
         }
     }
     

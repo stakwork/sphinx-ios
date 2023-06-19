@@ -59,6 +59,7 @@ class NewOnlyTextMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableV
         messageCellState: MessageTableCellState,
         mediaData: MessageTableCellState.MediaData?,
         tribeData: MessageTableCellState.TribeData?,
+        uploadProgressData: MessageTableCellState.UploadProgressData?,
         delegate: NewMessageTableViewCellDelegate,
         indexPath: IndexPath
     ) {

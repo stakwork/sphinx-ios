@@ -170,4 +170,25 @@ extension NewChatViewModel {
         
         return (botAmount, false)
     }
+    
+    func shouldSendTribePayment(
+        amount: Int,
+        message: String,
+        messageUUID: String,
+        callback: (() -> ())?
+    ) {
+        guard let params = TransactionMessage.getTribePaymentParams(
+            chat: chat,
+            messageUUID: messageUUID,
+            amount: amount,
+            text: message
+        ) else {
+            callback?()
+            return
+        }
+        
+        sendMessage(provisionalMessage: nil, params: params, completion: { _ in
+            callback?()
+        })
+    }
 }

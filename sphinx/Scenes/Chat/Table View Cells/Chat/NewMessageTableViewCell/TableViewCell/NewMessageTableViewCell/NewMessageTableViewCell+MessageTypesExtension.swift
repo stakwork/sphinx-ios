@@ -105,7 +105,8 @@ extension NewMessageTableViewCell {
             mediaContentView.isHidden = false
             
             if let messageId = messageId, mediaData == nil {
-                DispatchQueue.global(qos: .userInitiated).async {
+                let delayTime = DispatchTime.now() + Double(Int64(0.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+                DispatchQueue.global().asyncAfter(deadline: delayTime) {
                     if messageMedia.isImage {
                         self.delegate?.shouldLoadImageDataFor(
                             messageId: messageId,
@@ -118,6 +119,11 @@ extension NewMessageTableViewCell {
                         )
                     } else if messageMedia.isVideo {
                         self.delegate?.shouldLoadVideoDataFor(
+                            messageId: messageId,
+                            and: self.rowIndex
+                        )
+                    } else if messageMedia.isGiphy {
+                        self.delegate?.shouldLoadGiphyDataFor(
                             messageId: messageId,
                             and: self.rowIndex
                         )
@@ -157,7 +163,8 @@ extension NewMessageTableViewCell {
                 tribeLinkPreviewView.configureWith(tribeData: tribeData, and: bubble, delegate: self)
                 tribeLinkPreviewView.isHidden = false
             } else if let messageId = messageId {
-                DispatchQueue.global(qos: .userInitiated).async {
+                let delayTime = DispatchTime.now() + Double(Int64(0.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+                DispatchQueue.global().asyncAfter(deadline: delayTime) {
                     self.delegate?.shouldLoadTribeInfoFor(
                         messageId: messageId,
                         and: self.rowIndex

@@ -312,7 +312,7 @@ extension TransactionMessage {
             TransactionMessageType.pdfAttachment.rawValue,
         ]
         
-        return mediaAttachmentTypes.contains(getType() ?? -1) || isGiphy()
+        return mediaAttachmentTypes.contains(getType() ?? -1)
     }
     
     func isPaidMessage() -> Bool {
@@ -1079,6 +1079,7 @@ extension TransactionMessage {
                isDirectPayment() ||
                isPodcastBoost() ||
                isMediaAttachment() ||
+               isGiphy() ||
                isGroupActionMessage() ||
                isCallLink()
     }

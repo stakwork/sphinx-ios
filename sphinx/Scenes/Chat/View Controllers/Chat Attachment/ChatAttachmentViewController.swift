@@ -18,7 +18,7 @@ protocol BackCameraVC {}
 protocol AttachmentsDelegate: class {
     func willDismissPresentedVC()
     func shouldStartUploading(attachmentObject: AttachmentObject)
-    func shouldSendGiphy(message: String)
+    func shouldSendGiphy(message: String, data: Data?)
     func didCloseReplyView()
     func didTapSendButton()
     func didTapReceiveButton()
@@ -66,7 +66,7 @@ class ChatAttachmentViewController: NewKeyboardHandlerViewController, BackCamera
     var selectedImage: UIImage?
     var selectedAnimatedImage: SDAnimatedImage?
     var selectedVideo: Data?
-    var selectedGiphy: GiphyUISDK.GPHMedia?
+    var selectedGiphy: (GiphyUISDK.GPHMedia, Data)?
     var selectedFileData: Data?
     var fileName: String?
     

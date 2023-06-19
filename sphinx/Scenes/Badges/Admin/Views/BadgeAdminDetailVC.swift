@@ -329,7 +329,7 @@ extension BadgeAdminDetailVC : AttachmentsDelegate{
         badgeImageView.image = attachmentObject.image
     }
     
-    func shouldSendGiphy(message: String) {
+    func shouldSendGiphy(message: String, data: Data?) {
         
     }
     

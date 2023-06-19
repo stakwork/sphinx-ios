@@ -99,7 +99,7 @@ class MessageReplyView: UIView {
         leftBar.backgroundColor = ChatHelper.getSenderColorFor(message: message)
         configureWith(title: message.getMessageSenderNickname(), message: message.getReplyMessageContent(), isIncoming: isIncoming)
         
-        if message.isMediaAttachment() {
+        if message.isMediaAttachment() || message.isGiphy() {
             configureMediaAttachment()
         }
     }

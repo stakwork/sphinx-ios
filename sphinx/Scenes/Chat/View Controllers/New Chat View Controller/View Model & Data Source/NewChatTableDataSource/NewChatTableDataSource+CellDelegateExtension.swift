@@ -127,6 +127,34 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
         }
     }
     
+    func shouldLoadGiphyDataFor(
+        messageId: Int,
+        and rowIndex: Int
+    ) {
+        if var tableCellState = getTableCellStateFor(
+            messageId: messageId,
+            and: rowIndex
+        ),
+            let url = tableCellState.1.messageMedia?.url
+        {
+            GiphyHelper.getGiphyDataFrom(url: url.absoluteString, messageId: messageId, completion: { (data, messageId) in
+                DispatchQueue.main.async {
+                    if let data = data {
+                        let updatedMediaData = MessageTableCellState.MediaData(
+                            image: data.gifImageFromData()
+                        )
+                        self.updateMessageTableCellStateFor(rowIndex: rowIndex, messageId: messageId, with: updatedMediaData)
+                    } else {
+                        let updatedMediaData = MessageTableCellState.MediaData(
+                            failed: true
+                        )
+                        self.updateMessageTableCellStateFor(rowIndex: rowIndex, messageId: messageId, with: updatedMediaData)
+                    }
+                }
+            })
+        }
+    }
+    
     func updateMessageTableCellStateFor(
         rowIndex: Int,
         messageId: Int,

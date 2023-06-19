@@ -18,7 +18,7 @@ extension ChatAttachmentViewController : AttachmentsDelegate {
     }
     
     func shouldStartUploading(attachmentObject: AttachmentObject) {}
-    func shouldSendGiphy(message: String) {}
+    func shouldSendGiphy(message: String, data: Data?) {}
     func didTapReceiveButton() {}
     func didTapSendButton() {}
 }
@@ -61,8 +61,8 @@ extension ChatAttachmentViewController: ChatMessageTextFieldViewDelegate {
     }
     
     func shouldSend(message: String? = nil) {
-        if let giphy = selectedGiphy, let messageString = giphyHelper.getMessageStringFrom(media: giphy, text: message) {
-            delegate?.shouldSendGiphy(message: messageString)
+        if let giphy = selectedGiphy, let messageString = giphyHelper.getMessageStringFrom(media: giphy.0, text: message) {
+            delegate?.shouldSendGiphy(message: messageString, data: giphy.1)
             dismissView()
             return
         }
@@ -247,7 +247,9 @@ extension ChatAttachmentViewController : GiphyDelegate {
                 if let data = data {
                     let animated = SDAnimatedImage(data: data)
                     let image = UIImage(data: data)
-                    self.selectedGiphy = media
+                    
+                    self.selectedGiphy = (media, data)
+                    
                     self.gifSelected(animatedImage: animated, staticImage: image, allowPrice: false)
                 }
             })
@@ -255,7 +257,6 @@ extension ChatAttachmentViewController : GiphyDelegate {
     }
     
     func hideAllGiphyView(giphyViewController: GiphyUISDK.GiphyViewController) {
-//        accessoryView.kCharacterLimit = 200
         hideOptionsContainer()
         showImagePreview(allowPrice: false)
         giphyViewController.dismiss(animated: true, completion: nil)

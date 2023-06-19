@@ -21,7 +21,7 @@ extension NewChatViewController : AttachmentsDelegate {
         )
     }
     
-    func shouldSendGiphy(message: String) {
+    func shouldSendGiphy(message: String, data: Data?) {
         chatViewModel.shouldSendMessage(
             text: message,
             type: TransactionMessage.TransactionMessageType.message.rawValue,

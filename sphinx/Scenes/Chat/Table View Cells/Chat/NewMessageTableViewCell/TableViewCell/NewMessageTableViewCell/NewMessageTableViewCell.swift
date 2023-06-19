@@ -42,6 +42,7 @@ protocol NewMessageTableViewCellDelegate: class {
     func shouldLoadImageDataFor(messageId: Int, and rowIndex: Int)
     func shouldLoadPdfDataFor(messageId: Int, and rowIndex: Int)
     func shouldLoadVideoDataFor(messageId: Int, and rowIndex: Int)
+    func shouldLoadGiphyDataFor(messageId: Int, and rowIndex: Int)
     
     //Actions handling
     ///Message reply

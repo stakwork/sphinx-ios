@@ -20,7 +20,7 @@ extension ChatViewController : AttachmentsDelegate, PinMessageDelegate {
         insertPrivisionalAttachmentMessageAndUpload(attachmentObject: attachmentObject, chat: chat)
     }
     
-    func shouldSendGiphy(message: String) {
+    func shouldSendGiphy(message: String, data: Data?) {
         let messageType = TransactionMessage.TransactionMessageType.message.rawValue
         shouldSendMessage(text: message, type: messageType, completion: { _ in })
     }

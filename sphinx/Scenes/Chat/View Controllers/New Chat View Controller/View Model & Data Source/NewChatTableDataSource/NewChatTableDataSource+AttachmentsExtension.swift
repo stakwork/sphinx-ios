@@ -11,13 +11,23 @@ import Foundation
 extension NewChatTableDataSource {
     func setMediaForProvisional(
         messageId: Int,
+        with messageMedia: MessageTableCellState.MediaData
+    ) {
+        cachedMedia[messageId] = messageMedia
+    }
+    
+    func setMediaForProvisional(
+        messageId: Int,
         with attachmentObject: AttachmentObject
     ) {
-        cachedMedia[messageId] = MessageTableCellState.MediaData(
-            image: attachmentObject.image,
-            videoData: attachmentObject.data,
-            fileInfo: attachmentObject.getFileInfo(),
-            failed: false
+        setMediaForProvisional(
+            messageId: messageId,
+            with: MessageTableCellState.MediaData(
+                image: attachmentObject.image,
+                videoData: attachmentObject.data,
+                fileInfo: attachmentObject.getFileInfo(),
+                failed: false
+            )
         )
     }
     

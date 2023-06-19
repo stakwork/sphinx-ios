@@ -168,6 +168,14 @@ extension TransactionMessage {
         return nil
     }
     
+    func getGiphyUrl() -> URL? {
+        if let messageContent = messageContent,
+            let urlString = GiphyHelper.getUrlFrom(message: messageContent, mobile: false) {
+            return URL(string: urlString)
+        }
+        return nil
+    }
+    
     func getHost() -> String? {
         if let host = getItemAtIndex(index: 0)?.base64Decoded {
             return host

@@ -12,6 +12,7 @@ extension NewChatViewModel {
     func shouldSendMessage(
         text: String,
         type: Int,
+        giphyData: Data? = nil,
         completion: @escaping (Bool) -> ()
     ) {
         var messageText = text
@@ -27,12 +28,22 @@ extension NewChatViewModel {
             return
         }
         
-        let _ = createProvisionalAndSend(
+        let provisionalMessage = createProvisionalAndSend(
             messageText: messageText,
             type: type,
             botAmount: botAmount,
             completion: completion
         )
+        
+        if let provisionalMessage = provisionalMessage, let giphyData = giphyData {
+            chatDataSource?.setMediaForProvisional(
+                messageId: provisionalMessage.id,
+                with: MessageTableCellState.MediaData(
+                    image: giphyData.gifImageFromData(),
+                    failed: false
+                )
+            )
+        }
     }
     
     func createProvisionalAndSend(

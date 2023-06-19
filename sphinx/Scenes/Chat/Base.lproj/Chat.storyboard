@@ -990,8 +990,11 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="544"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="y2W-O9-BIt" customClass="SDAnimatedImageView">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="544"/>
+                                                <rect key="frame" x="0.0" y="217" width="375" height="110"/>
                                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="750" constant="110" id="mpY-ur-2nO"/>
+                                                </constraints>
                                             </imageView>
                                             <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ysP-UC-48h" customClass="UIActivityIndicatorView">
                                                 <rect key="frame" x="162.5" y="247" width="50" height="50"/>
@@ -1076,7 +1079,6 @@
                                             <constraint firstItem="Qzm-RS-d8s" firstAttribute="leading" secondItem="zOW-hs-xqG" secondAttribute="leading" constant="10" id="7eW-U1-lEU"/>
                                             <constraint firstAttribute="trailing" secondItem="Er9-t6-GE3" secondAttribute="trailing" id="9SS-5D-Rs8"/>
                                             <constraint firstItem="EMn-y2-hY6" firstAttribute="top" secondItem="zOW-hs-xqG" secondAttribute="top" id="B8c-On-gA0"/>
-                                            <constraint firstItem="y2W-O9-BIt" firstAttribute="top" secondItem="EMn-y2-hY6" secondAttribute="top" id="HMO-41-EzZ"/>
                                             <constraint firstItem="ysP-UC-48h" firstAttribute="centerY" secondItem="zOW-hs-xqG" secondAttribute="centerY" id="JHz-fz-pT5"/>
                                             <constraint firstAttribute="trailing" secondItem="EMn-y2-hY6" secondAttribute="trailing" id="OLT-9u-VZe"/>
                                             <constraint firstAttribute="trailing" secondItem="y2W-O9-BIt" secondAttribute="trailing" id="Oa3-w1-INr"/>

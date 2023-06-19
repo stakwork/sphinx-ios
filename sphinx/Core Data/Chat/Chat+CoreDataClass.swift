@@ -337,8 +337,7 @@ public class Chat: NSManagedObject {
         shouldSync: Bool = true,
         shouldSave: Bool = true
     ) {
-        let backgroundContext = CoreDataManager.sharedManager.getBackgroundContext()
-        let receivedUnseenMessages = getReceivedUnseenMessages(context: backgroundContext)
+        let receivedUnseenMessages = getReceivedUnseenMessages()
         
         if receivedUnseenMessages.count > 0 {
             for m in receivedUnseenMessages {
@@ -356,8 +355,6 @@ public class Chat: NSManagedObject {
         if shouldSync && receivedUnseenMessages.count > 0 {
             API.sharedInstance.setChatMessagesAsSeen(chatId: self.id, callback: { _ in })
         }
-        
-        backgroundContext.saveContext()
     }
     
     func getGroupEncrypted(text: String) -> String {

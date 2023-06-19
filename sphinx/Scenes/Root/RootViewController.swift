@@ -50,14 +50,21 @@ class RootViewController: UIViewController, ContainerViewController {
     }
     
     func isChatVC() -> Bool {
-        if let centerVC = getLastCenterViewController(), centerVC.isKind(of: ChatViewController.self) {
+        if let centerVC = getLastCenterViewController(), centerVC.isKind(of: NewChatViewController.self) {
+            return true
+        }
+        return false
+    }
+    
+    func isDashboardVC() -> Bool {
+        if let centerVC = getLastCenterViewController(), centerVC.isKind(of: DashboardRootViewController.self) {
             return true
         }
         return false
     }
     
     func getChatVCId() -> Int? {
-        if let centerVC = getLastCenterViewController() as? ChatViewController {
+        if let centerVC = getLastCenterViewController() as? NewChatViewController {
             return centerVC.chat?.id
         }
         return nil

@@ -246,16 +246,28 @@ class NewMessageBubbleHelper {
         delay: Double = 2.5,
         onKeyWindow: Bool = true
     ) {
-        let screenSize = WindowsManager.getWindowSize()
-        let titleLabel = getTitleLabel(title: title, screenSize: screenSize)
-        let messageLabel = getMessageLabel(text: text, screenSize: screenSize)
-        let v = getBubbleView(label: messageLabel, chatId: chatId)
-        
-        v.addSubview(titleLabel)
-        v.addSubview(messageLabel)
-        
         if let window = UIApplication.shared.windows.last {
+            
+            if let rootVC = (window.rootViewController as? RootViewController) {
+                if rootVC.isDashboardVC() {
+                    return
+                }
+                
+                if let vcChatId = rootVC.getChatVCId(), vcChatId == chatId {
+                    return
+                }
+            }
+            
+            let screenSize = WindowsManager.getWindowSize()
+            let titleLabel = getTitleLabel(title: title, screenSize: screenSize)
+            let messageLabel = getMessageLabel(text: text, screenSize: screenSize)
+            let v = getBubbleView(label: messageLabel, chatId: chatId)
+            
+            v.addSubview(titleLabel)
+            v.addSubview(messageLabel)
+            
             window.addSubview(v)
+            
             toggleBubbleView(view: v, show: true)
             
             DelayPerformedHelper.performAfterDelay(seconds: delay) {

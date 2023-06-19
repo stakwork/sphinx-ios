@@ -371,19 +371,6 @@ extension SphinxSocketManager {
             return false
         }
         
-        if let vc = delegate as? NewChatViewController {
-            if let chat = vc.chat, let messageChatId = message.chat?.id {
-                if chat.id == messageChatId {
-                    return false
-                }
-            }
-            
-            if let contact = vc.contact, message.senderId == contact.id {
-                return false
-            }
-        }
-
-        
         return true
     }
     

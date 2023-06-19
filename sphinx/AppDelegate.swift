@@ -487,11 +487,15 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                 chatListViewModel: chatListViewModel
             )
             
-            if
-                let rootVC = getRootViewController(),
+            if let rootVC = getRootViewController() {
+                if let centerVC = rootVC.getLastCenterViewController() as? NewChatViewController {
+                    if centerVC.chat?.id == chatId {
+                        return
+                    }
+                }
+                
                 let navCenterController = rootVC.getCenterNavigationController()
-            {
-                navCenterController.pushViewController(chatVC, animated: true)
+                navCenterController?.pushViewController(chatVC, animated: true)
             }
         }
     }

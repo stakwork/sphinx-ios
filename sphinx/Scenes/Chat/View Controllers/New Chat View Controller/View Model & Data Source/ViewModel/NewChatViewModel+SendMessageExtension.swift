@@ -9,10 +9,30 @@
 import Foundation
 
 extension NewChatViewModel {
+    func shouldSendGiphyMessage(
+        text: String,
+        type: Int,
+        data: Data,
+        completion: @escaping (Bool) -> ()
+    ) {
+        chatDataSource?.setMediaDataForMessageWith(
+            messageId: TransactionMessage.getProvisionalMessageId(),
+            mediaData: MessageTableCellState.MediaData(
+                image: data.gifImageFromData(),
+                failed: false
+            )
+        )
+        
+        shouldSendMessage(
+            text: text,
+            type: type,
+            completion: completion
+        )
+    }
+    
     func shouldSendMessage(
         text: String,
         type: Int,
-        giphyData: Data? = nil,
         completion: @escaping (Bool) -> ()
     ) {
         var messageText = text
@@ -28,22 +48,12 @@ extension NewChatViewModel {
             return
         }
         
-        let provisionalMessage = createProvisionalAndSend(
+        let _ = createProvisionalAndSend(
             messageText: messageText,
             type: type,
             botAmount: botAmount,
             completion: completion
         )
-        
-        if let provisionalMessage = provisionalMessage, let giphyData = giphyData {
-            chatDataSource?.setMediaForProvisional(
-                messageId: provisionalMessage.id,
-                with: MessageTableCellState.MediaData(
-                    image: giphyData.gifImageFromData(),
-                    failed: false
-                )
-            )
-        }
     }
     
     func createProvisionalAndSend(
@@ -120,6 +130,13 @@ extension NewChatViewModel {
         askForNotificationPermissions()
         
         API.sharedInstance.sendMessage(params: params, callback: { m in
+            
+            if let provisionalMessage = provisionalMessage {
+                self.chatDataSource?.replaceMediaDataForMessageWith(
+                    provisionalMessageId: provisionalMessage.id,
+                    toMessageWith: m["id"].intValue
+                )
+            }
             
             if let message = TransactionMessage.insertMessage(m: m, existingMessage: provisionalMessage).0 {
                 message.setPaymentInvoiceAsPaid()

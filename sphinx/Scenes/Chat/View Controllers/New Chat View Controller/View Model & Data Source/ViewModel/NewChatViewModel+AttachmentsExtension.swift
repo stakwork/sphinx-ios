@@ -17,17 +17,22 @@ extension NewChatViewModel: AttachmentsManagerDelegate {
         let attachmentsManager = AttachmentsManager.sharedInstance
         let replyingMessage = replyingTo
         
+        chatDataSource?.setMediaDataForMessageWith(
+            messageId: TransactionMessage.getProvisionalMessageId(),
+            mediaData: MessageTableCellState.MediaData(
+                image: attachmentObject.image,
+                videoData: attachmentObject.data,
+                fileInfo: attachmentObject.getFileInfo(),
+                failed: false
+            )
+        )
+        
         if let message = TransactionMessage.createProvisionalAttachmentMessage(
             attachmentObject: attachmentObject,
             date: Date(),
             chat: chat,
             replyUUID: replyingMessage?.uuid
         ) {
-            self.chatDataSource?.setMediaForProvisional(
-                messageId: message.id,
-                with: attachmentObject
-            )
-            
             attachmentsManager.setData(
                 delegate: self,
                 contact: contact,
@@ -42,6 +47,13 @@ extension NewChatViewModel: AttachmentsManagerDelegate {
         }
         
         resetReply()
+    }
+    
+    func shouldReplaceMediaDataFor(provisionalMessageId: Int, and messageId: Int) {
+        chatDataSource?.replaceMediaDataForMessageWith(
+            provisionalMessageId: provisionalMessageId,
+            toMessageWith: messageId
+        )
     }
     
     func didFailSendingMessage(

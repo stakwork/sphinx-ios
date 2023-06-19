@@ -16,6 +16,7 @@ import AVFoundation
     @objc optional func didFailSendingMessage(provisionalMessage: TransactionMessage?)
     @objc optional func didSuccessSendingAttachment(message: TransactionMessage, image: UIImage?)
     @objc optional func didSuccessUploadingImage(url: String)
+    @objc optional func shouldReplaceMediaDataFor(provisionalMessageId: Int, and messageId: Int)
 }
 
 class AttachmentsManager {
@@ -233,6 +234,13 @@ class AttachmentsManager {
     }
     
     func createLocalMessage(message: JSON, attachmentObject: AttachmentObject) {
+        if let provisionalMessage = provisionalMessage {
+            delegate?.shouldReplaceMediaDataFor?(
+                provisionalMessageId: provisionalMessage.id,
+                and: message["id"].intValue
+            )
+        }
+        
         if let message = TransactionMessage.insertMessage(m: message, existingMessage: provisionalMessage).0 {
             delegate?.didUpdateUploadProgress?(progress: 100)
             cacheImageAndMediaData(message: message, attachmentObject: attachmentObject)

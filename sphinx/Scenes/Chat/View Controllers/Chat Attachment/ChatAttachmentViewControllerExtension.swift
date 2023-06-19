@@ -18,7 +18,7 @@ extension ChatAttachmentViewController : AttachmentsDelegate {
     }
     
     func shouldStartUploading(attachmentObject: AttachmentObject) {}
-    func shouldSendGiphy(message: String, data: Data?) {}
+    func shouldSendGiphy(message: String, data: Data) {}
     func didTapReceiveButton() {}
     func didTapSendButton() {}
 }

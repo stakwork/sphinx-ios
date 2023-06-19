@@ -9,32 +9,26 @@
 import Foundation
 
 extension NewChatTableDataSource {
-    func setMediaForProvisional(
+    func setMediaDataForMessageWith(
         messageId: Int,
-        with messageMedia: MessageTableCellState.MediaData
+        mediaData: MessageTableCellState.MediaData
     ) {
-        cachedMedia[messageId] = messageMedia
-    }
-    
-    func setMediaForProvisional(
-        messageId: Int,
-        with attachmentObject: AttachmentObject
-    ) {
-        setMediaForProvisional(
-            messageId: messageId,
-            with: MessageTableCellState.MediaData(
-                image: attachmentObject.image,
-                videoData: attachmentObject.data,
-                fileInfo: attachmentObject.getFileInfo(),
-                failed: false
-            )
-        )
+        cachedMedia[messageId] = mediaData
     }
     
     func resetMediaForProvisional(
         messageId: Int
     ) {
         cachedMedia.removeValue(forKey: messageId)
+    }
+    
+    func replaceMediaDataForMessageWith(
+        provisionalMessageId: Int,
+        toMessageWith messageId: Int
+    ) {
+        if let mediaData = cachedMedia[provisionalMessageId] {
+            cachedMedia[messageId] = mediaData
+        }
     }
     
     func setProgressForProvisional(

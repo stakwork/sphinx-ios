@@ -21,10 +21,11 @@ extension NewChatViewController : AttachmentsDelegate {
         )
     }
     
-    func shouldSendGiphy(message: String, data: Data?) {
-        chatViewModel.shouldSendMessage(
+    func shouldSendGiphy(message: String, data: Data) {
+        chatViewModel.shouldSendGiphyMessage(
             text: message,
             type: TransactionMessage.TransactionMessageType.message.rawValue,
+            data: data,
             completion: { _ in }
         )
     }

@@ -18,7 +18,7 @@ protocol BackCameraVC {}
 protocol AttachmentsDelegate: class {
     func willDismissPresentedVC()
     func shouldStartUploading(attachmentObject: AttachmentObject)
-    func shouldSendGiphy(message: String, data: Data?)
+    func shouldSendGiphy(message: String, data: Data)
     func didCloseReplyView()
     func didTapSendButton()
     func didTapReceiveButton()

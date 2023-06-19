@@ -11,7 +11,7 @@ import UIKit
 ///Loading content in background
 extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
     func shouldReplyToMessageWith(messageId: Int, and rowIndex: Int) {
-        if var tableCellState = getTableCellStateFor(
+        if let tableCellState = getTableCellStateFor(
             messageId: messageId,
             and: rowIndex
         ), let message = tableCellState.1.message {

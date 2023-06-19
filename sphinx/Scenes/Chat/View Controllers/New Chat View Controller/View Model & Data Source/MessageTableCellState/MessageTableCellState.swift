@@ -203,6 +203,10 @@ struct MessageTableCellState {
             return nil
         }
         
+        if message.isDirectPayment() && message.getTemplateURL() == nil {
+            return nil
+        }
+        
         var url: URL? = nil
         
         if message.isMediaAttachment() {

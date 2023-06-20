@@ -28,6 +28,9 @@ class MediaStorageSourceTableViewCell: UITableViewCell {
     @IBOutlet weak var chatAvatarImageView2: UIImageView!
     @IBOutlet weak var chatAvatarImageView3: UIImageView!
     
+    @IBOutlet weak var blueCheckmarkImageView: UIImageView!
+    
+    
     var index : Int? = nil
     var delegate: MediaStorageSourceTableViewCellDelegate? = nil
     
@@ -81,6 +84,7 @@ class MediaStorageSourceTableViewCell: UITableViewCell {
         self.mediaSourceLabel.text = ""
         self.mediaSourceSizeLabel.text = ""
         self.squareImageView.image = nil
+        self.blueCheckmarkImageView.isHidden = true
     }
     
     func configure(forSource:StorageManagerMediaSource){
@@ -197,7 +201,7 @@ class MediaStorageSourceTableViewCell: UITableViewCell {
         deleteButton.isHidden = false
     }
     
-    func configure(fileName:String,fileType:String,item:StorageManagerItem,index:Int){
+    func configure(fileName:String,fileType:String,item:StorageManagerItem,index:Int,isSelected:Bool){
         initialsLabel.isHidden = true
         mediaSourceLabel.text = fileName
         mediaSourceSizeLabel.text = formatBytes(Int(StorageManager.sharedManager.getItemGroupTotalSize(items: [item])*1e6))
@@ -212,6 +216,8 @@ class MediaStorageSourceTableViewCell: UITableViewCell {
         fileTypeView.layer.cornerRadius = 3.0
         
         self.index = index
+        blueCheckmarkImageView.isHidden = !isSelected
+        fileTypeView.isHidden = isSelected
     }
     
     

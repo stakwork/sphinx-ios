@@ -117,6 +117,13 @@
                             <constraint firstItem="XeQ-t7-eCN" firstAttribute="centerX" secondItem="ECJ-4K-u72" secondAttribute="centerX" id="eE5-FZ-m4v"/>
                         </constraints>
                     </view>
+                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bluecheckmark" translatesAutoresizingMaskIntoConstraints="NO" id="Nvi-dQ-oNK">
+                        <rect key="frame" x="18" y="18" width="28" height="28"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="28" id="LeP-XE-TnJ"/>
+                            <constraint firstAttribute="width" constant="28" id="cHx-cS-KD2"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
@@ -125,6 +132,7 @@
                     <constraint firstItem="onY-YZ-XsQ" firstAttribute="leading" secondItem="ECJ-4K-u72" secondAttribute="trailing" constant="22" id="73h-TU-54I"/>
                     <constraint firstItem="kPt-Dx-tgU" firstAttribute="leading" secondItem="M3f-CF-0aM" secondAttribute="trailing" constant="-15" id="7GV-6U-BVy"/>
                     <constraint firstItem="fSL-0q-N4u" firstAttribute="centerY" secondItem="c9l-Av-kpX" secondAttribute="centerY" id="92I-7e-lKY"/>
+                    <constraint firstItem="Nvi-dQ-oNK" firstAttribute="centerY" secondItem="ECJ-4K-u72" secondAttribute="centerY" id="9Pr-jl-AT2"/>
                     <constraint firstItem="kPt-Dx-tgU" firstAttribute="centerY" secondItem="M3f-CF-0aM" secondAttribute="centerY" id="9eZ-Mj-YiK"/>
                     <constraint firstItem="M3f-CF-0aM" firstAttribute="leading" secondItem="fSM-pR-XZX" secondAttribute="trailing" constant="-15" id="BeZ-vg-qf3"/>
                     <constraint firstItem="onY-YZ-XsQ" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="FxP-Or-NPb"/>
@@ -134,6 +142,7 @@
                     <constraint firstItem="V1O-o7-wgg" firstAttribute="leading" secondItem="Mep-cZ-dPt" secondAttribute="leading" id="Ylk-XA-qii"/>
                     <constraint firstAttribute="trailing" secondItem="fSL-0q-N4u" secondAttribute="trailing" constant="8" id="hCI-gt-esu"/>
                     <constraint firstItem="fSM-pR-XZX" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="i99-Xd-owJ"/>
+                    <constraint firstItem="Nvi-dQ-oNK" firstAttribute="centerX" secondItem="ECJ-4K-u72" secondAttribute="centerX" id="iKF-62-1m5"/>
                     <constraint firstItem="c9l-Av-kpX" firstAttribute="leading" secondItem="Pue-7T-xlg" secondAttribute="trailing" constant="10.67" id="jPu-x3-68H"/>
                     <constraint firstItem="fSL-0q-N4u" firstAttribute="centerX" secondItem="c9l-Av-kpX" secondAttribute="centerX" id="jRS-Rb-VSd"/>
                     <constraint firstItem="fSM-pR-XZX" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="lMq-XD-lZR"/>
@@ -150,6 +159,7 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
+                <outlet property="blueCheckmarkImageView" destination="Nvi-dQ-oNK" id="uWP-Ib-hf7"/>
                 <outlet property="chatAvatarImageView1" destination="fSM-pR-XZX" id="Apc-wy-hsS"/>
                 <outlet property="chatAvatarImageView2" destination="M3f-CF-0aM" id="wkn-Bh-dkA"/>
                 <outlet property="chatAvatarImageView3" destination="kPt-Dx-tgU" id="d8C-ep-02f"/>
@@ -166,6 +176,7 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="bluecheckmark" width="112" height="112"/>
         <image name="deleteIcon" width="38" height="38"/>
         <image name="disclosureIndicator" width="256" height="238"/>
         <namedColor name="SecondaryText">

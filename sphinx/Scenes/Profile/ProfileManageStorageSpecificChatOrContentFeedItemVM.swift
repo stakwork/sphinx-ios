@@ -41,10 +41,10 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVM : NSObject{
     
     var fileSelectedStatus : [Bool] = []{
         didSet{
-            vc.deletionSummaryView.isHidden = (getIsSelectingImages()) ? false : true
+            vc.deletionSummaryView.isHidden = (getIsSelectingFiles()) ? false : true
             vc.view.bringSubviewToFront(vc.deletionSummaryView)
             vc.updateDeletionSummaryLabel()
-            imageCollectionView.reloadData()
+            filesTableView.reloadData()
         }
     }
     
@@ -207,7 +207,8 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVM : UITableViewDataS
             return cell
         case .chats:
             let file = fileItems[indexPath.row]
-            cell.configure(fileName: file.cachedMedia?.fileName ?? (file.type == .audio ? "Audio Recording" : "Unknown File"), fileType: file.cachedMedia?.fileExtension ?? ".txt", item: file, index: indexPath.row)
+            let isSelected = fileSelectedStatus[indexPath.row]
+            cell.configure(fileName: file.cachedMedia?.fileName ?? (file.type == .audio ? "Audio Recording" : "Unknown File"), fileType: file.cachedMedia?.fileExtension ?? ".txt", item: file, index: indexPath.row,isSelected: isSelected)
             cell.delegate = self
             return cell
         }
@@ -244,6 +245,9 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVM : UITableViewDataS
                 }
             }
         }
+        else if(sourceType == .chats){
+            fileSelectedStatus[indexPath.row] = !fileSelectedStatus[indexPath.row]
+        }
     }
     
     
@@ -267,6 +271,8 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVM : UICollectionView
         
         if let cell = cell as? ChatImageCollectionViewCell,
            let cm = mediaItems[indexPath.row].cachedMedia{
+            print(cm.fileName)
+            print(mediaItems[indexPath.row].sizeMB)
             cell.configure(cachedMedia: cm, size: getSize(),selectionStatus: mediaSelectedStatus[indexPath.row], memorySizeMB: mediaItems[indexPath.row].sizeMB)
         }
     }

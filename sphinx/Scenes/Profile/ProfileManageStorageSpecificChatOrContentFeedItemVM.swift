@@ -126,7 +126,12 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVM : NSObject{
     
     func finishSetup(items : [StorageManagerItem]){
         self.mediaItems = items.sorted(by: {$0.date > $1.date}).filter({
-            return $0.type == .video || $0.type == .photo
+            if(sourceType == .chats){
+                return $0.type == .video || $0.type == .photo
+            }
+            else{
+                return true
+            }
         })
         self.fileItems = items.sorted(by: {$0.date > $1.date}).filter({
             return $0.type != .photo && $0.type != .video
@@ -137,6 +142,10 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVM : NSObject{
             podcastTableView.dataSource = self
             
             podcastTableView.register(UINib(nibName: "MediaStorageSourceTableViewCell", bundle: nil), forCellReuseIdentifier: MediaStorageSourceTableViewCell.reuseID)
+            filesTableView.isHidden = true
+            vc.selectedIndexUnderlineView.isHidden = true
+            vc.segmentedControlHeight.constant = 0.0
+            vc.view.layoutIfNeeded()
         } else if (sourceType == .chats) {
             let flow = AlignedCollectionViewFlowLayout(horizontalAlignment: .left)
             flow.minimumLineSpacing = 0

@@ -2026,6 +2026,7 @@
                         <outlet property="mediaDeletionConfirmationView" destination="zJ6-mR-I1a" id="2h8-Z4-Dld"/>
                         <outlet property="mediaVsFilesSegmentedControl" destination="6ey-nC-Kiu" id="XFq-nG-dmx"/>
                         <outlet property="podcastListTableView" destination="lYg-nt-rdO" id="nOy-97-czN"/>
+                        <outlet property="segmentedControlHeight" destination="kUp-ql-Fbb" id="p8E-9c-CVm"/>
                         <outlet property="selectedIndexIndicatorLeadingEdge" destination="F9g-mh-XjI" id="hW6-Rc-Ooh"/>
                         <outlet property="selectedIndexUnderlineView" destination="72H-hs-Bvk" id="P5z-gx-7oe"/>
                         <outlet property="totalSizeLabel" destination="sQx-Yb-g7e" id="b10-vh-RMe"/>

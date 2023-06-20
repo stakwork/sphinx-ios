@@ -34,6 +34,7 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
     @IBOutlet weak var mediaVsFilesSegmentedControl: UISegmentedControl!
     @IBOutlet weak var selectedIndexUnderlineView: UIView!
     @IBOutlet weak var selectedIndexIndicatorLeadingEdge: NSLayoutConstraint!
+    @IBOutlet weak var segmentedControlHeight: NSLayoutConstraint!
     
     fileprivate var state : ProfileManageStorageSpecificChatOrContentFeedItemVCState = .single
     var overlayView : UIView? = nil

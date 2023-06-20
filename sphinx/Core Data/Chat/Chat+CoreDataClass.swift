@@ -400,18 +400,12 @@ public class Chat: NSManagedObject {
     }
     
     func getReceivedUnseenMessagesCount() -> Int {
-        if unseenMessagesCount == 0 {
-            calculateUnseenMessagesCount()
-        }
         return unseenMessagesCount
     }
     
     var unseenMentionsCount: Int = 0
     
     func getReceivedUnseenMentionsCount() -> Int {
-        if unseenMentionsCount == 0 {
-            calculateUnseenMentionsCount()
-        }
         return unseenMentionsCount
     }
     

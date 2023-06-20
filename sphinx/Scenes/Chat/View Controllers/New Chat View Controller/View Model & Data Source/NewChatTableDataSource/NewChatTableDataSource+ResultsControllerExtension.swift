@@ -198,7 +198,11 @@ extension NewChatTableDataSource {
         message: TransactionMessage,
         and owner: UserContact
     ) -> Int {
-        if (message.isIncoming(ownerId: owner.id) && !message.seen && !chat.seen) {
+        if (
+            message.isIncoming(ownerId: owner.id) &&
+            message.seen == false &&
+            message.chat?.seen == false
+        ) {
             return 1
         }
         return 0

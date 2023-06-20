@@ -214,10 +214,11 @@ public class TransactionMessage: NSManagedObject {
             let _ = UserContact.getOrCreateContact(contact: JSON(contact))
         }
         
-        let (messageChat, chatError) = TransactionMessage.getChat(m: m)
-        if chatError && messageChat != nil {
+        guard let messageChat = TransactionMessage.getChat(m: m) else  {
             return (nil, false)
         }
+        
+        messageChat.seen = (m["chat"].dictionary)?["seen"]?.boolValue ?? messageChat.seen
         
         let (messageEncrypted, messageContent) = encryptionManager.decryptMessage(message: m["message_content"].stringValue)
         let status = TransactionMessage.TransactionMessageStatus(fromRawValue: (m["status"].intValue))
@@ -272,28 +273,15 @@ public class TransactionMessage: NSManagedObject {
     
     static func getChat(
         m: JSON
-    ) -> (Chat?, Bool) {
-        
-        var messageChatId : Int? = nil
-        var messageChat : Chat!
+    ) -> Chat? {
         
         if let chatId = m["chat_id"].int, let chatObject = Chat.getChatWith(id: chatId) {
-            messageChatId = chatId
-            messageChat = chatObject
+            return chatObject
         } else if let ch = m["chat"].dictionary, let chatObject = Chat.getOrCreateChat(chat: JSON(ch)) {
-            messageChatId = m["chat_id"].int
-            messageChat = chatObject
+            return chatObject
         }
         
-        if messageChat == nil {
-            return (nil, true)
-        } else if messageChat != nil && messageChatId != nil {
-            if messageChat.id != messageChatId {
-                return (messageChat, true)
-            }
-        }
-        
-        return (messageChat, false)
+        return nil
     }
     
     static func createObject(

@@ -13,14 +13,14 @@ public enum StorageManagerMediaType{
     case audio
     case video
     case photo
-    case other
+    case file
     
     static var allCases: [StorageManagerMediaType] {
         return [
             .photo,
             .video,
             .audio,
-            .other
+            .file
         ]
     }
 }
@@ -84,7 +84,7 @@ class StorageManager {
     }
     
     func getStorageManagerTypeFromExtension(cm:CachedMedia)->StorageManagerMediaType{
-        var type : StorageManagerMediaType = .other
+        var type : StorageManagerMediaType = .file
         if(cm.fileExtension == "png"){
             type = .photo
         }
@@ -330,7 +330,7 @@ class StorageManager {
                             if let cm = smi.cachedMedia
                             {
                                 let ext = (self.getStorageManagerTypeFromExtension(cm: cm))
-                                defaultImage = (ext == .other) ?  #imageLiteral(resourceName: "fileOptionIcon") : defaultImage
+                                defaultImage = (ext == .file) ?  #imageLiteral(resourceName: "fileOptionIcon") : defaultImage
                                 defaultImage = (ext == .audio) ?  #imageLiteral(resourceName: "playPodcastIcon") : defaultImage
                             }
                         }
@@ -431,7 +431,7 @@ class StorageManager {
     }
     
     func deleteAllOtherFiles(completion:@escaping ()->()){
-        let allVids = allItems.filter({$0.type == .other}).compactMap({$0.cachedMedia})
+        let allVids = allItems.filter({$0.type == .file}).compactMap({$0.cachedMedia})
         deleteCacheItems(cms: allVids, completion: {
             completion()
         })

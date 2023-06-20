@@ -45,7 +45,7 @@ class ChatImageCollectionViewCell: UICollectionViewCell {
             imageView.image = placeholderImage
         }
         
-        if(StorageManager.sharedManager.getStorageManagerTypeFromExtension(cm: cachedMedia) == .other
+        if(StorageManager.sharedManager.getStorageManagerTypeFromExtension(cm: cachedMedia) == .file
            && cachedMedia.fileExtension != "pdf"){
             //fileNameLabelContainer.isHidden = false
             print(cachedMedia.filePath)

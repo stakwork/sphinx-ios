@@ -137,7 +137,7 @@ extension ProfileManageStorageViewModel : UITableViewDelegate,UITableViewDataSou
                 })
             })
             break
-        case .other:
+        case .file:
             //TODO: do deletion for other
             StorageManager.sharedManager.deleteAllOtherFiles(completion: {
                 self.refreshData()

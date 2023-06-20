@@ -139,7 +139,7 @@ class StorageSummaryView: UIView {
             audioFootprintWidth.constant = 2
         }
         
-        if let size = dict[.other]{
+        if let size = dict[.file]{
             otherFootprintWidth.constant = size/Double(max) * maxMemoryFootprintBackgroundView.frame.width
         }
         else{

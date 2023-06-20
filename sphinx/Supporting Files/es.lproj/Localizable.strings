@@ -612,8 +612,8 @@
 "deletion.warning.title" = "Has escogido eliminar todos tus %@";
 "deletion.warning.subtitle" = "Esta acción elimina permanentemente todos los archivos seleccionados y no se puede deshacer.";
 "storage.management.audio.files" = "archivos de audio";
-"storage.management.video" = "video";
-"storage.management.images" = "imágenes";
-"storage.management.other" = "otros";
+"storage.management.video" = "todos los videos";
+"storage.management.images" = "todos los imágenes";
+"storage.management.files" = "todos los archivos";
 "are.you.sure" = "Are you sure?";
 "chat.media" = "medios de chat";

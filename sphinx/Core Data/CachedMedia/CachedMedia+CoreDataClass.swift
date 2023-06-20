@@ -41,7 +41,7 @@ public class CachedMedia: NSManagedObject {
         return nil
     }
     
-    public static func createObject(id: Int, chat: Chat?,filePath:String?,fileExtension:String?,key:String? ) -> CachedMedia? {
+    public static func createObject(id: Int, chat: Chat?,filePath:String?,fileExtension:String?,key:String?,fileName:String? ) -> CachedMedia? {
         let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
         
         let cachedMedia = getCachedMediaInstance(id: id, managedContext: managedContext)
@@ -55,6 +55,7 @@ public class CachedMedia: NSManagedObject {
         }
         cachedMedia.fileExtension = fileExtension
         cachedMedia.key = key
+        cachedMedia.fileName = fileName
         
         managedContext.saveContext()
         

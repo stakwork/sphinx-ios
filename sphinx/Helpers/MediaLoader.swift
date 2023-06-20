@@ -396,7 +396,8 @@ class MediaLoader {
             let randomInt = Int.random(in: 0...Int(1e9))
             var fileExtension = "png"
             fileExtension = message.getCMExtensionAssignment()
-            let _ = CachedMedia.createObject(id: randomInt, chat: chat, filePath: path, fileExtension: fileExtension, key: url)
+            let name = message.getFileName()
+            let _ = CachedMedia.createObject(id: randomInt, chat: chat, filePath: path, fileExtension: fileExtension, key: url, fileName: name)
             //StorageManager.sharedManager.processGarbageCleanup()
         }
     }

@@ -20,17 +20,26 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVM : NSObject{
     var teedUpIndex : Int? = nil
     var mediaItems : [StorageManagerItem] = []{
         didSet{
-            selectedStatus = mediaItems.map({_ in return false})
+            mediaSelectedStatus = mediaItems.map({_ in return false})
         }
     }
     
     var fileItems : [StorageManagerItem] = []{
         didSet{
-            selectedStatus = mediaItems.map({_ in return false})
+            fileSelectedStatus = fileItems.map({_ in return false})
         }
     }
     
-    var selectedStatus : [Bool] = []{
+    var mediaSelectedStatus : [Bool] = []{
+        didSet{
+            vc.deletionSummaryView.isHidden = (getIsSelectingImages()) ? false : true
+            vc.view.bringSubviewToFront(vc.deletionSummaryView)
+            vc.updateDeletionSummaryLabel()
+            imageCollectionView.reloadData()
+        }
+    }
+    
+    var fileSelectedStatus : [Bool] = []{
         didSet{
             vc.deletionSummaryView.isHidden = (getIsSelectingImages()) ? false : true
             vc.view.bringSubviewToFront(vc.deletionSummaryView)
@@ -42,7 +51,7 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVM : NSObject{
     func removeSelectedItems() {
         var indicesToRemove: [Int] = []
         
-        for (index, isSelected) in selectedStatus.enumerated() {
+        for (index, isSelected) in mediaSelectedStatus.enumerated() {
             if isSelected {
                 indicesToRemove.append(index)
             }
@@ -57,7 +66,7 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVM : NSObject{
         }
         
         // Reset the selected status
-        selectedStatus = mediaItems.map({ _ in return false })
+        mediaSelectedStatus = mediaItems.map({ _ in return false })
         
         // Reload the collection view or table view if needed
         imageCollectionView.reloadData()
@@ -71,7 +80,7 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVM : NSObject{
     func getSelectedItems() -> [StorageManagerItem] {
         var selectedItems: [StorageManagerItem] = []
         
-        for (index, isSelected) in selectedStatus.enumerated() {
+        for (index, isSelected) in mediaSelectedStatus.enumerated() {
             if isSelected {
                 selectedItems.append(mediaItems[index])
             }
@@ -82,14 +91,19 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVM : NSObject{
 
     
     func getIsSelectingImages()->Bool{
-        let isSelectingImages = selectedStatus.filter({$0 == true}).count > 0
+        let isSelectingImages = mediaSelectedStatus.filter({$0 == true}).count > 0
         return isSelectingImages
+    }
+    
+    func getIsSelectingFiles()->Bool{
+        let isSelectingFiles = fileSelectedStatus.filter({$0 == true}).count > 0
+        return isSelectingFiles
     }
     
     func getSelectionSize()->Double{
         var result : Double = 0.0
-        for i in 0..<selectedStatus.count{
-            result += (selectedStatus[i]) ? mediaItems[i].sizeMB : 0
+        for i in 0..<mediaSelectedStatus.count{
+            result += (mediaSelectedStatus[i]) ? mediaItems[i].sizeMB : 0
         }
         return (result)
     }
@@ -111,7 +125,12 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVM : NSObject{
     }
     
     func finishSetup(items : [StorageManagerItem]){
-        self.mediaItems = items.sorted(by: {$0.date > $1.date})
+        self.mediaItems = items.sorted(by: {$0.date > $1.date}).filter({
+            return $0.type == .video || $0.type == .photo
+        })
+        self.fileItems = items.sorted(by: {$0.date > $1.date}).filter({
+            return $0.type != .photo && $0.type != .video
+        })
         
         if (sourceType == .podcasts) {
             podcastTableView.delegate = self
@@ -166,10 +185,13 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVM : UITableViewDataS
             cell.selectionStyle = .none
             return cell
         case .chats:
-            let testFile = StorageManagerItem(source: .chats, type: .other, sizeMB: 150.0, label: "", date: Date())
-            let fileTypes = ["PDF", "DOC", "XLS", "ZIP"]
-            let randomIndex = Int.random(in: 0..<fileTypes.count)
-            cell.configure(fileName: "My File", fileType: fileTypes[randomIndex], item: testFile)
+            //DEBUG ONLY
+//            let testFile = StorageManagerItem(source: .chats, type: .other, sizeMB: 150.0, label: "", date: Date())
+//            let fileTypes = ["PDF", "DOC", "XLS", "ZIP"]
+//            let randomIndex = Int.random(in: 0..<fileTypes.count)
+            //END DEBUG ONLY
+            let file = fileItems[indexPath.row]
+            cell.configure(fileName: file.cachedMedia?.fileName ?? (file.type == .audio ? "Audio Recording" : "Unknown File"), fileType: file.cachedMedia?.fileExtension ?? ".txt", item: file)
             return cell
         }
     }
@@ -180,7 +202,7 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVM : UITableViewDataS
             return mediaItems.count
             break
         case .chats:
-            return 100
+            return fileItems.count
             break
         }
         
@@ -228,7 +250,7 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVM : UICollectionView
         
         if let cell = cell as? ChatImageCollectionViewCell,
            let cm = mediaItems[indexPath.row].cachedMedia{
-            cell.configure(cachedMedia: cm, size: getSize(),selectionStatus: selectedStatus[indexPath.row], memorySizeMB: mediaItems[indexPath.row].sizeMB)
+            cell.configure(cachedMedia: cm, size: getSize(),selectionStatus: mediaSelectedStatus[indexPath.row], memorySizeMB: mediaItems[indexPath.row].sizeMB)
         }
     }
     
@@ -246,7 +268,7 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVM : UICollectionView
 
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        selectedStatus[indexPath.row] = !selectedStatus[indexPath.row]
+        mediaSelectedStatus[indexPath.row] = !mediaSelectedStatus[indexPath.row]
     }
 }
 

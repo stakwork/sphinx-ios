@@ -118,12 +118,12 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
     }
     
     @IBAction func deletionSummaryCloseTap(_ sender: Any) {
-        vm.selectedStatus = vm.mediaItems.map({_ in return false})
+        vm.mediaSelectedStatus = vm.mediaItems.map({_ in return false})
     }
     
     func updateDeletionSummaryLabel(){
         deletionSummaryButton.layer.cornerRadius = deletionSummaryButton.frame.height/2.0
-        let count = vm.selectedStatus.filter({$0 == true}).count
+        let count = vm.mediaSelectedStatus.filter({$0 == true}).count
         deletionSummaryCountLabel.text = "\(String(describing: count))"
         
         deletionSummarySizeLabel.text = formatBytes(Int(1e6 * vm.getSelectionSize()))
@@ -300,7 +300,7 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
            (sender.selectedSegmentIndex != 0 && wasOnIndexZero == true)){
             //detected change
             deletionSummaryView.isHidden = true
-            vm.selectedStatus = vm.mediaItems.map({ _ in return false })
+            vm.mediaSelectedStatus = vm.mediaItems.map({ _ in return false })
         }
         
     }

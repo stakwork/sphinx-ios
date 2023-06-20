@@ -205,7 +205,7 @@ class MediaStorageSourceTableViewCell: UITableViewCell {
         disclosureImageView.isHidden = true
         deleteButton.isHidden = false
         
-        fileTypeLabel.text = fileType
+        fileTypeLabel.text = fileType.uppercased()
         fileTypeView.backgroundColor = assignFileTypeColor(fileType: fileType)
         fileTypeView.isHidden = false
         fileTypeView.layer.cornerRadius = 3.0

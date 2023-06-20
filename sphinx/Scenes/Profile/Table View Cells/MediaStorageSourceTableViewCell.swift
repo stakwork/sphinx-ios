@@ -197,7 +197,7 @@ class MediaStorageSourceTableViewCell: UITableViewCell {
         deleteButton.isHidden = false
     }
     
-    func configure(fileName:String,fileType:String,item:StorageManagerItem){
+    func configure(fileName:String,fileType:String,item:StorageManagerItem,index:Int){
         initialsLabel.isHidden = true
         mediaSourceLabel.text = fileName
         mediaSourceSizeLabel.text = formatBytes(Int(StorageManager.sharedManager.getItemGroupTotalSize(items: [item])*1e6))
@@ -205,10 +205,13 @@ class MediaStorageSourceTableViewCell: UITableViewCell {
         disclosureImageView.isHidden = true
         deleteButton.isHidden = false
         
-        fileTypeLabel.text = fileType.uppercased()
+        let displayType = fileType.uppercased()
+        fileTypeLabel.text = (displayType != "OTHER") ? (displayType) : "?"
         fileTypeView.backgroundColor = assignFileTypeColor(fileType: fileType)
         fileTypeView.isHidden = false
         fileTypeView.layer.cornerRadius = 3.0
+        
+        self.index = index
     }
     
     

@@ -326,6 +326,16 @@ extension TransactionMessage {
         return getMediaType() == TransactionMessage.TransactionMessageType.pdfAttachment.rawValue
     }
     
+    func isDoc() -> Bool {
+        let fileName = getFileName().lowercased()
+        return fileName.contains(".doc")
+    }
+    
+    func isSpreadsheet() -> Bool {
+        let fileName = getFileName().lowercased()
+        return fileName.contains(".xls") || fileName.contains(".csv")
+    }
+    
     func isFileAttachment() -> Bool {
         return getMediaType() == TransactionMessage.TransactionMessageType.fileAttachment.rawValue
     }

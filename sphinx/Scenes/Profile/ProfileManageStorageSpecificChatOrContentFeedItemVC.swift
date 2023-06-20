@@ -89,11 +89,15 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
             headerTitleLabel.text = podcastFeed.title
         }
         
-        totalSizeLabel.text = formatBytes(Int(StorageManager.sharedManager.getItemGroupTotalSize(items: vm.mediaItems) * 1e6))
+        setTotalSizeLabel()
         
         let gesture = UITapGestureRecognizer(target: self, action: #selector(handleDeleteSelected))
         deletionSummaryButton.addGestureRecognizer(gesture)
         
+    }
+    
+    func setTotalSizeLabel(){
+        totalSizeLabel.text = formatBytes(Int(StorageManager.sharedManager.getItemGroupTotalSize(items: vm.mediaItems + vm.fileItems) * 1e6))
     }
     
     @IBAction func backButtonTapped(_ sender: Any) {
@@ -312,6 +316,7 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
 extension ProfileManageStorageSpecificChatOrContentFeedItemVC : MediaDeletionConfirmationViewDelegate{
     func cancelTapped() {
         self.hideDeletionWarningAlert()
+        self.setTotalSizeLabel()
         let existingState = mediaDeletionConfirmationView.state
         mediaDeletionConfirmationView.state = .awaitingApproval
         if(existingState == .finished){

@@ -173,6 +173,12 @@ public class TransactionMessage: NSManagedObject {
         else if(self.isPDF()){
             fileExtension = "pdf"
         }
+        else if(self.isDoc()){
+            fileExtension = "doc"
+        }
+        else if(self.isSpreadsheet()){
+            fileExtension = "xls"
+        }
         else if(self.isAttachment()){
             fileExtension = "other"
         }

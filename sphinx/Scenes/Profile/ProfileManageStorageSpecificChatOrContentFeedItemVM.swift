@@ -50,8 +50,9 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVM : NSObject{
     
     func removeSelectedItems() {
         var indicesToRemove: [Int] = []
+        let statusArray = (vc.mediaVsFilesSegmentedControl.selectedSegmentIndex == 1) ? fileSelectedStatus : mediaSelectedStatus
         
-        for (index, isSelected) in mediaSelectedStatus.enumerated() {
+        for (index, isSelected) in statusArray.enumerated() {
             if isSelected {
                 indicesToRemove.append(index)
             }
@@ -62,7 +63,12 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVM : NSObject{
         
         // Remove the selected items from the items array
         for index in indicesToRemove {
-            mediaItems.remove(at: index)
+            if(vc.mediaVsFilesSegmentedControl.selectedSegmentIndex == 1){
+                fileItems.remove(at: index)
+            }
+            else{
+                mediaItems.remove(at: index)
+            }
         }
         
         // Reset the selected status
@@ -71,6 +77,7 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVM : NSObject{
         // Reload the collection view or table view if needed
         imageCollectionView.reloadData()
         podcastTableView.reloadData()
+        filesTableView.reloadData()
     }
     
     func getSelectedCachedMedia()->[CachedMedia]{
@@ -79,10 +86,11 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVM : NSObject{
     
     func getSelectedItems() -> [StorageManagerItem] {
         var selectedItems: [StorageManagerItem] = []
-        
-        for (index, isSelected) in mediaSelectedStatus.enumerated() {
+        let statusArray = (vc.mediaVsFilesSegmentedControl.selectedSegmentIndex == 1) ? fileSelectedStatus : mediaSelectedStatus
+        let mediaArray = (vc.mediaVsFilesSegmentedControl.selectedSegmentIndex == 1) ? fileItems : mediaItems
+        for (index, isSelected) in statusArray.enumerated() {
             if isSelected {
-                selectedItems.append(mediaItems[index])
+                selectedItems.append(mediaArray[index])
             }
         }
         
@@ -105,6 +113,10 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVM : NSObject{
         for i in 0..<mediaSelectedStatus.count{
             result += (mediaSelectedStatus[i]) ? mediaItems[i].sizeMB : 0
         }
+        for j in 0..<fileSelectedStatus.count{
+            result += (fileSelectedStatus[j]) ? fileItems[j].sizeMB : 0
+        }
+        
         return (result)
     }
     
@@ -194,13 +206,9 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVM : UITableViewDataS
             cell.selectionStyle = .none
             return cell
         case .chats:
-            //DEBUG ONLY
-//            let testFile = StorageManagerItem(source: .chats, type: .other, sizeMB: 150.0, label: "", date: Date())
-//            let fileTypes = ["PDF", "DOC", "XLS", "ZIP"]
-//            let randomIndex = Int.random(in: 0..<fileTypes.count)
-            //END DEBUG ONLY
             let file = fileItems[indexPath.row]
-            cell.configure(fileName: file.cachedMedia?.fileName ?? (file.type == .audio ? "Audio Recording" : "Unknown File"), fileType: file.cachedMedia?.fileExtension ?? ".txt", item: file)
+            cell.configure(fileName: file.cachedMedia?.fileName ?? (file.type == .audio ? "Audio Recording" : "Unknown File"), fileType: file.cachedMedia?.fileExtension ?? ".txt", item: file, index: indexPath.row)
+            cell.delegate = self
             return cell
         }
     }
@@ -286,8 +294,17 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVM : MediaStorageSour
     func didTapItemDelete(index: Int) {
         teedUpIndex = index
         vc.mediaDeletionConfirmationView.batchState = .single
-        vc.mediaDeletionConfirmationView.source = self.sourceType
-        vc.showDeletionWarningAlert(type: .audio)
+        if(sourceType == .podcasts){
+            vc.mediaDeletionConfirmationView.source = self.sourceType
+            vc.showDeletionWarningAlert(type: .audio)
+        }
+        else{
+            fileSelectedStatus = fileItems.map({_ in return false})
+            fileSelectedStatus[index] = true
+            vc.mediaDeletionConfirmationView.source = self.sourceType
+            vc.showDeletionWarningAlert(type: .file)
+        }
+        
     }
     
     func finalizeEpisodeDelete(){

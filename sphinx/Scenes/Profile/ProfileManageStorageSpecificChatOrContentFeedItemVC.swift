@@ -135,15 +135,27 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
         deletionSummarySizeLabel.text = formatBytes(Int(1e6 * vm.getSelectionSize()))
     }
     
+    func postProcessDeleteSelected(completion: @escaping ()->()){
+        self.vm.removeSelectedItems()
+        if (self.vm.mediaItems.count == 0){
+            StorageManager.sharedManager.refreshAllStoredData(completion: {
+                completion()
+                self.navigationController?.popViewController(animated: true)
+            })
+        }
+        else{
+            completion()
+        }
+    }
+    
     func processDeleteSelected(completion: @escaping ()->()){
         if(sourceType == .chats){
             let cms = self.vm.getSelectedCachedMedia()
             StorageManager.sharedManager.deleteCacheItems(cms: cms, completion: {
                 completion()
-                self.vm.removeSelectedItems()
-                if (self.vm.mediaItems.count == 0){
-                    self.navigationController?.popViewController(animated: true)
-                }
+                self.postProcessDeleteSelected(completion: {
+                    
+                })
             })
         }
         else if (sourceType == .podcasts){
@@ -155,20 +167,18 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
                     podCount -= 1
                     if((podCount > 0) == false){
                         completion()
-                        self.vm.removeSelectedItems()
-                        if (self.vm.mediaItems.count == 0){
-                            self.navigationController?.popViewController(animated: true)
-                        }
+                        self.postProcessDeleteSelected(completion: {
+                            
+                        })
                     }
                 },
                 failureCompletion: {
                     podCount -= 1
                     if((podCount > 0) == false){
                         completion()
-                        self.vm.removeSelectedItems()
-                        if (self.vm.mediaItems.count == 0){
-                            self.navigationController?.popViewController(animated: true)
-                        }
+                        self.postProcessDeleteSelected(completion: {
+
+                        })
                     }
                 })
             }

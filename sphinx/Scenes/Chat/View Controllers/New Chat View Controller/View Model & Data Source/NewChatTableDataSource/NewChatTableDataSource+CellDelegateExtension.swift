@@ -268,12 +268,14 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
             loadWebViewContent(
                 html,
                 completion: { height in
-                    self.botsWebViewData[messageId] = MessageTableCellState.BotWebViewData(height: height)
-                    
-                    DispatchQueue.main.async {
-                        var snapshot = self.dataSource.snapshot()
-                        snapshot.reloadItems([tableCellState.1])
-                        self.dataSource.apply(snapshot, animatingDifferences: false)
+                    if let height = height {
+                        self.botsWebViewData[messageId] = MessageTableCellState.BotWebViewData(height: height)
+                        
+                        DispatchQueue.main.async {
+                            var snapshot = self.dataSource.snapshot()
+                            snapshot.reloadItems([tableCellState.1])
+                            self.dataSource.apply(snapshot, animatingDifferences: false)
+                        }
                     }
                     
                     self.webViewSemaphore.signal()

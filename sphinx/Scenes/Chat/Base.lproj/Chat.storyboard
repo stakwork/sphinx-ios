@@ -785,6 +785,7 @@
                     </view>
                     <connections>
                         <outlet property="botWebView" destination="nyi-7s-N6q" id="dzU-QP-rzm"/>
+                        <outlet property="botWebViewWidthConstraint" destination="0vM-nC-iCA" id="lwn-mG-eQg"/>
                         <outlet property="bottomConstraint" destination="Ht8-VT-KjU" id="TvB-Xq-ofN"/>
                         <outlet property="bottomView" destination="adm-hA-lEF" id="hez-Vx-Rs8"/>
                         <outlet property="chatTableView" destination="7O1-jH-hsI" id="lkW-uB-74U"/>

@@ -17,6 +17,7 @@ class NewChatViewController: NewKeyboardHandlerViewController {
     @IBOutlet weak var chatTableView: UITableView!
     @IBOutlet weak var newMsgsIndicatorView: NewMessagesIndicatorView!
     @IBOutlet weak var botWebView: WKWebView!
+    @IBOutlet weak var botWebViewWidthConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var chatTableViewHeightConstraint: NSLayoutConstraint!
     
@@ -137,6 +138,9 @@ class NewChatViewController: NewKeyboardHandlerViewController {
         
         bottomView.addShadow(location: .top, color: UIColor.black, opacity: 0.1)
         headerView.addShadow(location: .bottom, color: UIColor.black, opacity: 0.1)
+        
+        botWebViewWidthConstraint.constant = ((UIScreen.main.bounds.width - (MessageTableCellState.kRowLeftMargin + MessageTableCellState.kRowRightMargin)) * MessageTableCellState.kBubbleWidthPercentage) - (MessageTableCellState.kLabelMargin * 2)
+        botWebView.layoutIfNeeded()
     }
     
     func setupData() {

@@ -24,8 +24,13 @@ extension NewChatTableDataSource : WKNavigationDelegate {
                 webView.evaluateJavaScript(
                     kGetContainerJSCommand,
                     completionHandler: { (height, error) in
-                        let height = ((height as? CGFloat) ?? 168.0) + 32
-                        self.webViewLoadingCompletion?(height)
+                        if let height = height as? CGFloat {
+                            self.webViewLoadingCompletion?(
+                                height + (MessageTableCellState.kLabelMargin * 2) + 10
+                            )
+                        } else {
+                            self.webViewLoadingCompletion?(nil)
+                        }
                     }
                 )
             }
@@ -34,7 +39,7 @@ extension NewChatTableDataSource : WKNavigationDelegate {
     
     func loadWebViewContent(
         _ content: String,
-        completion: @escaping (CGFloat) -> ()
+        completion: @escaping (CGFloat?) -> ()
     ) {
         self.webViewLoadingCompletion = completion
         

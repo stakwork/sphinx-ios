@@ -15,6 +15,7 @@ struct MessageTableCellState {
     static let kRowLeftMargin: CGFloat = 15
     static let kRowRightMargin: CGFloat = 9
     static let kBubbleWidthPercentage: CGFloat = 0.7
+    static let kLabelMargin: CGFloat = 16.0
     static let kSmallBubbleDesiredWidth: CGFloat = 200
     static let kSendPaidContentButtonHeight: CGFloat = 50.0
     

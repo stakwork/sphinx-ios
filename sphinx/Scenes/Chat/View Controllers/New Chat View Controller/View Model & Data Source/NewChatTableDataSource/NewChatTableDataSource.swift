@@ -69,7 +69,7 @@ class NewChatTableDataSource : NSObject {
     
     ///WebView Loading
     let webViewSemaphore = DispatchSemaphore(value: 1)
-    var webViewLoadingCompletion: ((CGFloat) -> ())? = nil
+    var webViewLoadingCompletion: ((CGFloat?) -> ())? = nil
     
     init(
         chat: Chat,

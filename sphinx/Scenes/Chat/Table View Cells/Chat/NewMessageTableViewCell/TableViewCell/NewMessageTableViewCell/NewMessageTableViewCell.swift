@@ -30,6 +30,7 @@ protocol ChatTableViewCellProtocol: class {
         messageCellState: MessageTableCellState,
         mediaData: MessageTableCellState.MediaData?,
         tribeData: MessageTableCellState.TribeData?,
+        linkData: MessageTableCellState.LinkData?,
         uploadProgressData: MessageTableCellState.UploadProgressData?,
         delegate: NewMessageTableViewCellDelegate,
         indexPath: IndexPath
@@ -44,6 +45,7 @@ protocol NewMessageTableViewCellDelegate: class {
     func shouldLoadFileDataFor(messageId: Int, and rowIndex: Int)
     func shouldLoadVideoDataFor(messageId: Int, and rowIndex: Int)
     func shouldLoadGiphyDataFor(messageId: Int, and rowIndex: Int)
+    func shouldLoadLinkDataFor(messageId: Int, and rowIndex: Int)
     
     //Actions handling
     ///Message reply
@@ -60,6 +62,7 @@ protocol NewMessageTableViewCellDelegate: class {
     ///Link Previews
     func didTapTribeButtonFor(messageId: Int, and rowIndex: Int)
     func didTapContactButtonFor(messageId: Int, and rowIndex: Int)
+    func didTapOnLinkButtonFor(messageId: Int, and rowIndex: Int)
     ///Tribe actions
     func didTapDeleteTribeButtonFor(messageId: Int, and rowIndex: Int)
     func didTapApproveRequestButtonFor(messageId: Int, and rowIndex: Int)
@@ -112,7 +115,7 @@ class NewMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableViewCellP
     
     @IBOutlet weak var tribeLinkPreviewView: TribeLinkPreviewView!
     @IBOutlet weak var contactLinkPreviewView: ContactLinkPreviewView!
-    @IBOutlet weak var linkPreviewView: NewLinkPreviewView! // PENDING
+    @IBOutlet weak var linkPreviewView: NewLinkPreviewView!
     
     ///Forth Container
     @IBOutlet weak var messageBoostView: NewMessageBoostView!
@@ -132,6 +135,7 @@ class NewMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableViewCellP
         messageCellState: MessageTableCellState,
         mediaData: MessageTableCellState.MediaData?,
         tribeData: MessageTableCellState.TribeData?,
+        linkData: MessageTableCellState.LinkData?,
         uploadProgressData: MessageTableCellState.UploadProgressData?,
         delegate: NewMessageTableViewCellDelegate,
         indexPath: IndexPath
@@ -172,6 +176,7 @@ class NewMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableViewCellP
         configureWith(boosts: mutableMessageCellState.boosts, and: bubble)
         configureWith(contactLink: mutableMessageCellState.contactLink, and: bubble)
         configureWith(tribeLink: mutableMessageCellState.tribeLink, tribeData: tribeData, and: bubble)
+        configureWith(webLink: mutableMessageCellState.webLink, linkData: linkData)
         
         ///Header and avatar
         configureWith(avatarImage: mutableMessageCellState.avatarImage)

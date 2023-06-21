@@ -274,6 +274,16 @@ struct BubbleMessageLayoutState: CommonLayoutState {
             self.link = link
         }
     }
+    
+    struct WebLink {
+        var link: String
+        
+        init(
+            link: String
+        ) {
+            self.link = link
+        }
+    }
 }
 
 struct NoBubbleMessageLayoutState: CommonLayoutState {

@@ -199,4 +199,26 @@ extension NewMessageTableViewCell {
             }
         }
     }
+    
+    func configureWith(
+        webLink: BubbleMessageLayoutState.WebLink?,
+        linkData: MessageTableCellState.LinkData?
+    ) {
+        if let _ = webLink {
+            if let linkData = linkData {
+                if !linkData.failed {
+                    linkPreviewView.configureWith(linkData: linkData, delegate: self)
+                    linkPreviewView.isHidden = false
+                }
+            } else if let messageId = messageId {
+                let delayTime = DispatchTime.now() + Double(Int64(0.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+                DispatchQueue.global().asyncAfter(deadline: delayTime) {
+                    self.delegate?.shouldLoadLinkDataFor(
+                        messageId: messageId,
+                        and: self.rowIndex
+                    )
+                }
+            }
+        }
+    }
 }

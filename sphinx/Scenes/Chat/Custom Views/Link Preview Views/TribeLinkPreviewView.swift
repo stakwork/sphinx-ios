@@ -12,6 +12,7 @@ import SDWebImage
 protocol LinkPreviewDelegate: class {
     func didTapOnTribeButton()
     func didTapOnContactButton()
+    func didTapOnWebLinkButton()
 }
 
 class TribeLinkPreviewView: LinkPreviewBubbleView {

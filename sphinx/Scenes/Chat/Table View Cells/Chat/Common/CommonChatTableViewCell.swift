@@ -406,6 +406,8 @@ extension CommonChatTableViewCell : LinkPreviewDelegate {
             delegate?.didTapOnPubKey(pubkey: link)
         }
     }
+    
+    func didTapOnWebLinkButton() {}
 }
 
 extension CommonChatTableViewCell : ChatAvatarViewDelegate {

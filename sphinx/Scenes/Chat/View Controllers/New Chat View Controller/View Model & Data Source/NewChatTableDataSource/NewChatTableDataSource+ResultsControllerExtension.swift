@@ -95,12 +95,14 @@ extension NewChatTableDataSource {
             
             let mediaData = (dataSourceItem.messageId != nil) ? self.cachedMedia[dataSourceItem.messageId!] : nil
             let tribeData = (dataSourceItem.linkTribe?.uuid != nil) ? self.preloaderHelper.tribesData[dataSourceItem.linkTribe!.uuid] : nil
+            let linkData = (dataSourceItem.linkWeb?.link != nil) ? self.preloaderHelper.linksData[dataSourceItem.linkWeb!.link] : nil
             let uploadProgressData = (dataSourceItem.messageId != nil) ? self.uploadingProgress[dataSourceItem.messageId!] : nil
             
             cell?.configureWith(
                 messageCellState: dataSourceItem,
                 mediaData: mediaData,
                 tribeData: tribeData,
+                linkData: linkData,
                 uploadProgressData: uploadProgressData,
                 delegate: self,
                 indexPath: indexPath
@@ -164,6 +166,7 @@ extension NewChatTableDataSource {
                 let boostsMessages = (message.uuid != nil) ? (boostMessagesMap[message.uuid!] ?? []) : []
                 let linkContact = linkContactsArray[message.id]
                 let linkTribe = linkTribesArray[message.id]
+                let linkWeb = getLinkWebFor(message: message)
                 
                 array.insert(
                     MessageTableCellState(
@@ -178,7 +181,8 @@ extension NewChatTableDataSource {
                         replyingMessage: replyingMessage,
                         boostMessages: boostsMessages,
                         linkContact: linkContact,
-                        linkTribe: linkTribe
+                        linkTribe: linkTribe,
+                        linkWeb: linkWeb
                     ),
                     at: 0
                 )
@@ -358,7 +362,21 @@ extension NewChatTableDataSource {
         
         return linkTribesMap
     }
+    
+    func getLinkWebFor(
+        message: TransactionMessage
+    ) -> MessageTableCellState.LinkWeb? {
+        
+        if message.messageContent?.hasLinks == true {
+            if let link = message.messageContent?.stringFirstLink {
+                return MessageTableCellState.LinkWeb(link: link)
+            }
+        }
+        return nil
+    }
 }
+
+
 
 extension NewChatTableDataSource : NSFetchedResultsControllerDelegate {
     

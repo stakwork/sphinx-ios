@@ -64,6 +64,12 @@ extension NewMessageTableViewCell : LinkPreviewDelegate {
             delegate?.didTapContactButtonFor(messageId: messageId, and: rowIndex)
         }
     }
+    
+    func didTapOnWebLinkButton() {
+        if let messageId = messageId {
+            delegate?.didTapOnLinkButtonFor(messageId: messageId, and: rowIndex)
+        }
+    }
 }
 
 extension NewMessageTableViewCell : ChatAvatarViewDelegate {

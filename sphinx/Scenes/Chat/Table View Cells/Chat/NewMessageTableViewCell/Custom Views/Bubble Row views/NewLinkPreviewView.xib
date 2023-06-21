@@ -30,6 +30,13 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="100"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZUU-QG-jPk">
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="3"/>
+                    <color key="backgroundColor" name="Body"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="3" id="llb-fH-2mB"/>
+                    </constraints>
+                </view>
                 <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ztd-js-HTm">
                     <rect key="frame" x="16" y="16" width="361" height="68"/>
                     <subviews>
@@ -82,19 +89,36 @@
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </stackView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="inC-kA-j3Z">
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="100"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <connections>
+                        <action selector="didTapButton" destination="-1" eventType="touchUpInside" id="MVE-R0-lrG"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="ztd-js-HTm" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="16" id="69I-lJ-Obc"/>
+                <constraint firstAttribute="trailing" secondItem="ZUU-QG-jPk" secondAttribute="trailing" id="B4d-pQ-Sae"/>
+                <constraint firstAttribute="trailing" secondItem="inC-kA-j3Z" secondAttribute="trailing" id="DFr-Xi-EVa"/>
+                <constraint firstItem="inC-kA-j3Z" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="JTe-A7-Chq"/>
                 <constraint firstAttribute="trailing" secondItem="ztd-js-HTm" secondAttribute="trailing" constant="16" id="NF0-Nh-hCW"/>
+                <constraint firstItem="ZUU-QG-jPk" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Nxl-E6-b8E"/>
                 <constraint firstItem="ztd-js-HTm" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="VeN-F1-9wh"/>
                 <constraint firstAttribute="bottom" secondItem="ztd-js-HTm" secondAttribute="bottom" constant="16" id="fVn-iW-YgW"/>
+                <constraint firstAttribute="bottom" secondItem="inC-kA-j3Z" secondAttribute="bottom" id="lGI-gL-rG2"/>
+                <constraint firstItem="ZUU-QG-jPk" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="oSe-ua-BRh"/>
+                <constraint firstItem="inC-kA-j3Z" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="w0V-DI-EPw"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="105" y="20"/>
         </view>
     </objects>
     <resources>
+        <namedColor name="Body">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="MainBottomIcons">
             <color red="0.37254901960784315" green="0.38823529411764707" blue="0.40784313725490196" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

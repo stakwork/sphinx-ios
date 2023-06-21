@@ -14,7 +14,7 @@ target 'sphinx' do
     pod 'KYDrawerController'
     pod 'SwiftyRSA'
     pod 'RNCryptor', '~> 5.0'
-    pod 'SwiftLinkPreview', '~> 3.1.0'
+    pod 'SwiftLinkPreview', '~> 3.4.0'
     pod 'JitsiMeetSDK', '~> 3.6.0'
     pod 'KeychainAccess'
     pod 'Giphy', '2.1.1'

@@ -32,29 +32,36 @@ protocol NewChatTableDataSourceDelegate : class {
 
 class NewChatTableDataSource : NSObject {
     
+    ///Delegate
     weak var delegate: NewChatTableDataSourceDelegate?
     
+    ///View references
     var tableView : UITableView!
     var headerImage: UIImage?
     var bottomView: UIView?
     
+    ///Chat
     var chat: Chat!
     
+    ///Data Source related
     var messagesResultsController: NSFetchedResultsController<TransactionMessage>!
     var currentDataSnapshot: DataSourceSnapshot!
     var dataSource: DataSource!
+    
+    ///Helpers
     var preloaderHelper = MessagesPreloaderHelper.sharedInstance
+    let linkPreviewsLoader = CustomSwiftLinkPreview.sharedInstance
+    let bubbleHelper = NewMessageBubbleHelper()
     
-    var messagesCount = 0
-    
+    ///Messages Data
     var messageTableCellStateArray: [MessageTableCellState] = []
     var cachedMedia: [Int: MessageTableCellState.MediaData] = [:]
     var uploadingProgress: [Int: MessageTableCellState.UploadProgressData] = [:]
     
+    ///Scroll and pagination
+    var messagesCount = 0
     var loadingMoreItems = false
     var scrolledAtBottom = false
-    
-    let bubbleHelper = NewMessageBubbleHelper()
     
     init(
         chat: Chat,

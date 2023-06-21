@@ -33,6 +33,7 @@ struct MessageTableCellState {
     var boostMessages: [TransactionMessage] = []
     var linkContact: LinkContact? = nil
     var linkTribe: LinkTribe? = nil
+    var linkWeb: LinkWeb? = nil
     
     ///Generic rows Data
     var separatorDate: Date? = nil
@@ -49,7 +50,8 @@ struct MessageTableCellState {
         replyingMessage: TransactionMessage? = nil,
         boostMessages: [TransactionMessage] = [],
         linkContact: LinkContact? = nil,
-        linkTribe: LinkTribe? = nil
+        linkTribe: LinkTribe? = nil,
+        linkWeb: LinkWeb? = nil
     ) {
         self.message = message
         self.messageId = message?.id
@@ -67,6 +69,7 @@ struct MessageTableCellState {
         self.boostMessages = boostMessages
         self.linkContact = linkContact
         self.linkTribe = linkTribe
+        self.linkWeb = linkWeb
     }
     
     ///Bubble States
@@ -315,6 +318,16 @@ struct MessageTableCellState {
         )
     }()
     
+    lazy var webLink: BubbleMessageLayoutState.WebLink? = {
+        guard let linkWeb = linkWeb else {
+            return nil
+        }
+
+        return BubbleMessageLayoutState.WebLink(
+            link: linkWeb.link
+        )
+    }()
+    
     
     ///No Bubble States
     lazy var noBubble: NoBubbleMessageLayoutState.NoBubble? = {
@@ -441,7 +454,8 @@ struct MessageTableCellState {
                 (self.boosts == nil) &&
                 (self.contactLink == nil) &&
                 (self.tribeLink == nil) &&
-                (self.messageMedia == nil)
+                (self.messageMedia == nil) &&
+                (self.webLink == nil)
         }
     }
 }

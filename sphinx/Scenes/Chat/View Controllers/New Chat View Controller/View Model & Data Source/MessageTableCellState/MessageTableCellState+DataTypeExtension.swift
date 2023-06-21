@@ -54,6 +54,54 @@ extension MessageTableCellState {
         }
     }
     
+    struct LinkWeb: Equatable {
+        var link: String
+        
+        init(
+            link: String
+        ) {
+            self.link = link
+        }
+        
+        static func == (lhs: LinkWeb, rhs: LinkWeb) -> Bool {
+                return lhs.link       == rhs.link
+        }
+    }
+    
+    struct LinkData: Equatable {
+        var link: String
+        var icon: String?
+        var title: String
+        var description: String
+        var image: String?
+        var failed: Bool
+        
+        init(
+            link: String,
+            icon: String? = nil,
+            title: String,
+            description: String,
+            image: String? = nil,
+            failed: Bool
+        ) {
+            self.link = link
+            self.icon = icon
+            self.title = title
+            self.description = description
+            self.image = image
+            self.failed = failed
+        }
+        
+        static func == (lhs: LinkData, rhs: LinkData) -> Bool {
+            return lhs.link           == rhs.link &&
+                   lhs.icon           == rhs.icon &&
+                   lhs.title          == rhs.title &&
+                   lhs.description    == rhs.description &&
+                   lhs.image          == rhs.image &&
+                   lhs.failed         == rhs.failed
+        }
+    }
+    
     struct TribeData {
         var name: String
         var description: String

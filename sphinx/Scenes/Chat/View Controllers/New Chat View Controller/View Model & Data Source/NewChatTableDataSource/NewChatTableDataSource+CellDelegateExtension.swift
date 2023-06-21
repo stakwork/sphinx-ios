@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftLinkPreview
 
 ///Loading content in background
 extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
@@ -41,6 +42,56 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
                     )
                     
                 }, errorCallback: {})
+            }
+        }
+    }
+    
+    func shouldLoadLinkDataFor(messageId: Int, and rowIndex: Int) {
+        if var tableCellState = getTableCellStateFor(
+            messageId: messageId,
+            and: rowIndex
+        ),
+           let link = tableCellState.1.webLink?.link
+        {
+            if let cached = linkPreviewsLoader.cache.slp_getCachedResponse(url: link) {
+                updateMessageTableCellStateFor(
+                    rowIndex: rowIndex,
+                    messageId: messageId,
+                    with: MessageTableCellState.LinkData(
+                        link: link,
+                        icon: cached.icon,
+                        title: cached.title ?? "",
+                        description: cached.description ?? "",
+                        image: cached.image,
+                        failed: (cached.title == nil || cached.description == nil)
+                    )
+                )
+            } else  {
+                linkPreviewsLoader.preview(link, onSuccess: { result in
+                    self.updateMessageTableCellStateFor(
+                        rowIndex: rowIndex,
+                        messageId: messageId,
+                        with: MessageTableCellState.LinkData(
+                            link: link,
+                            icon: result.icon,
+                            title: result.title ?? "",
+                            description: result.description ?? "",
+                            image: result.image,
+                            failed: (result.title == nil || result.description == nil)
+                        )
+                    )
+                }, onError: { error in
+                    self.updateMessageTableCellStateFor(
+                        rowIndex: rowIndex,
+                        messageId: messageId,
+                        with: MessageTableCellState.LinkData(
+                            link: link,
+                            title: "",
+                            description: "",
+                            failed: true
+                        )
+                    )
+                })
             }
         }
     }
@@ -269,6 +320,26 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
             }
         }
     }
+    
+    func updateMessageTableCellStateFor(
+        rowIndex: Int,
+        messageId: Int,
+        with linkData: MessageTableCellState.LinkData
+    ) {
+        if let tableCellState = getTableCellStateFor(
+            messageId: messageId,
+            and: rowIndex
+        ), let linkWeb = tableCellState.1.linkWeb
+        {
+            preloaderHelper.linksData[linkWeb.link] = linkData
+
+            DispatchQueue.main.async {
+                var snapshot = self.dataSource.snapshot()
+                snapshot.reloadItems([tableCellState.1])
+                self.dataSource.apply(snapshot, animatingDifferences: false)
+            }
+        }
+    }
 }
 
 ///Actions handling
@@ -378,6 +449,15 @@ extension NewChatTableDataSource {
                 pubkey: contactLink.pubkey,
                 and: contactLink.routeHint
             )
+        }
+    }
+    
+    func didTapOnLinkButtonFor(messageId: Int, and rowIndex: Int) {
+        if let tableCellState = getTableCellStateFor(
+            messageId: messageId,
+            and: rowIndex
+        ), let link = tableCellState.1.linkWeb?.link {
+            didTapOnLink(link)
         }
     }
     

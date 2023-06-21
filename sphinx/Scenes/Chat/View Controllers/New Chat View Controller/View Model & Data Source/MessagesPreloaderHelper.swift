@@ -46,6 +46,7 @@ class MessagesPreloaderHelper {
     var chatLastPositions: [Int: ScrollState] = [:]
     
     var tribesData: [String: MessageTableCellState.TribeData] = [:]
+    var linksData: [String: MessageTableCellState.LinkData] = [:]
     
     func add(
         messageStateArray: [MessageTableCellState],

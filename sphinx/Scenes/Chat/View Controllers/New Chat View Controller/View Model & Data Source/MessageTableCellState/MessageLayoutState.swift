@@ -203,6 +203,10 @@ struct BubbleMessageLayoutState: CommonLayoutState {
             self.isPaid = isPaid
             self.isPaymentTemplate = isPaymentTemplate
         }
+        
+        func isPendingPayment() -> Bool {
+            return isPaid && (url == nil || mediaKey == nil)
+        }
     }
     
     struct Boosts {

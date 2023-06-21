@@ -399,7 +399,7 @@
 "paid.message.capitalize" = "Paid Message";
 "message.not.supported" = "Message not supported";
 "from.lower" = "from";
-"purchase.item.description" = "Purchase item %@";
+"purchase.item.description" = "Purchase item";
 "item.purchased" = "Item purchased";
 "item.purchase.denied" = "Item purchase denied";
 "confirm.purchase" = "Confirm Purchase";

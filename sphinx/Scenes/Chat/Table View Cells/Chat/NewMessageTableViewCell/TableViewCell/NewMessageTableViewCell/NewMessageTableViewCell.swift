@@ -71,6 +71,8 @@ protocol NewMessageTableViewCellDelegate: class {
     func didTapRejectRequestButtonFor(messageId: Int, and rowIndex: Int)
     ///Label Links
     func didTapOnLink(_ link: String)
+    //Paid Content
+    func didTapPayButtonFor(messageId: Int, and rowIndex: Int)
     
     //Menu Long Press
     func didLongPressOnCellWith(messageId: Int, and rowIndex: Int, bubbleViewRect: CGRect)

@@ -932,6 +932,12 @@ extension TransactionMessage {
             return self.getGroupMessageText().withoutBreaklines
         case TransactionMessage.TransactionMessageType.boost.rawValue:
             return "\(self.getMessageSenderNickname(minimized: true)): Boost"
+        case TransactionMessage.TransactionMessageType.purchase.rawValue:
+            return "\("purchase.item.description".localized) \(directionString)"
+        case TransactionMessage.TransactionMessageType.purchaseAccept.rawValue:
+            return "item.purchased".localized
+        case TransactionMessage.TransactionMessageType.purchaseDeny.rawValue:
+            return "item.purchase.denied".localized
         default: break
         }
         return "\("message.not.supported".localized) \(directionString)"

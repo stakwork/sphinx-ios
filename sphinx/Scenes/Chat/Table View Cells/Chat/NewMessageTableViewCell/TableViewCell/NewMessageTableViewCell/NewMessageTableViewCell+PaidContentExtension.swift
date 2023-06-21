@@ -15,7 +15,7 @@ extension NewMessageTableViewCell {
     ) {
         if let paidContent = paidContent {
             if bubble.direction.isIncoming() {
-                paidAttachmentView.configure(paidContent: paidContent, and: nil)
+                paidAttachmentView.configure(paidContent: paidContent, and: self)
                 paidAttachmentView.isHidden = false
             } else {
                 sentPaidDetailsView.configureWith(paidContent: paidContent)

@@ -381,7 +381,7 @@
 "paid.message.capitalize" = "Bayad na Mensahe";
 "message.not.supported" = "Hindi suportado ang mensahe";
 "from.lower" = "mula sa";
-"purchase.item.description" = "Bumili ng item %@";
+"purchase.item.description" = "Bumili ng item";
 "item.purchased" = "Nabili ang item";
 "item.purchase.denied" = "Tinanggihan ang pagbili ng item";
 "confirm.purchase" = "Kumpirmahin ang Pagbili";

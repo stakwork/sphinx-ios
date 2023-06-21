@@ -18,10 +18,7 @@ extension NewChatViewModel {
             return
         }
         
-        sendMessage(provisionalMessage: nil, params: params, completion: { [weak self] success in
-            guard let self = self else { return }
-            self.chatDataSource?.forceReload()
-        })
+        sendMessage(provisionalMessage: nil, params: params, completion: { _ in })
     }
     
     func shouldResendMessage(message: TransactionMessage) {

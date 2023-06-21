@@ -541,6 +541,24 @@ extension NewChatTableDataSource {
             }
         }
     }
+    
+    func didTapPayButtonFor(messageId: Int, and rowIndex: Int) {
+        if let tableCellState = getTableCellStateFor(
+            messageId: messageId,
+            and: rowIndex
+        ), let message = tableCellState.1.message {
+            AttachmentsManager.sharedInstance.payAttachment(
+                message: message,
+                chat: chat,
+                callback: { purchaseMessage in
+                    if let _ = purchaseMessage {
+                        return
+                    }
+                    AlertHelper.showAlert(title: "generic.error.title".localized, message: "generic.error.message".localized)
+                }
+            )
+        }
+    }
 }
 
 extension NewChatTableDataSource {

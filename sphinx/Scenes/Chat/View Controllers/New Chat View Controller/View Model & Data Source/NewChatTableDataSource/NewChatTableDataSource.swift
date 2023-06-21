@@ -47,6 +47,8 @@ class NewChatTableDataSource : NSObject {
     
     ///Data Source related
     var messagesResultsController: NSFetchedResultsController<TransactionMessage>!
+    var additionMessagesResultsController: NSFetchedResultsController<TransactionMessage>!
+    
     var currentDataSnapshot: DataSourceSnapshot!
     var dataSource: DataSource!
     

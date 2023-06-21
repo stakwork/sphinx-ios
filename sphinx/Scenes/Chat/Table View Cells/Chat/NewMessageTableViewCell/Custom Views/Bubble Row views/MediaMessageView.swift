@@ -78,20 +78,26 @@ class MediaMessageView: UIView {
             loadingContainer.isHidden = true
             loadingImageView.stopRotating()
             
+            paidContentOverlay.isHidden = true
+            
             mediaNotAvailableView.isHidden = !mediaData.failed
             mediaNotAvailableIcon.isHidden = !mediaData.failed
         } else {
-            mediaImageView.image = nil
-            
             fileInfoView.isHidden = true
             videoOverlay.isHidden = true
             gifOverlay.isHidden = true
-            paidContentOverlay.isHidden = true
             
-            if messageMedia.isPaid && bubble.direction.isIncoming() {
+            if messageMedia.isPendingPayment() &&
+                bubble.direction.isIncoming()
+            {
                 paidContentOverlay.isHidden = false
-                mediaImageView.image = UIImage(named: "paidImageBlurredPlaceholder")
+                
+                mediaImageView.image = UIImage(
+                    named: messageMedia.isVideo ? "paidVideoBlurredPlaceholder" :  "paidImageBlurredPlaceholder"
+                )
             } else {
+                mediaImageView.image = nil
+                paidContentOverlay.isHidden = true
                 loadingContainer.isHidden = false
                 loadingImageView.rotate()
             }

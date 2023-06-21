@@ -79,3 +79,11 @@ extension NewMessageTableViewCell : ChatAvatarViewDelegate {
         }
     }
 }
+
+extension NewMessageTableViewCell : PaidAttachmentViewDelegate {
+    func didTapPayButton() {
+        if let messageId = messageId {
+            delegate?.didTapPayButtonFor(messageId: messageId, and: rowIndex)
+        }
+    }
+}

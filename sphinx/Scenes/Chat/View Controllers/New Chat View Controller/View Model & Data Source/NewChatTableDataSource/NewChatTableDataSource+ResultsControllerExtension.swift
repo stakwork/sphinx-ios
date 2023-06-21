@@ -297,8 +297,8 @@ extension NewChatTableDataSource {
         
         for purchaseMessage in purchaseMessages {
             if let muid = purchaseMessage.muid ?? purchaseMessage.originalMuid, muid.isNotEmpty {
-                if var purchaseItems = purchaseMessagesMap[muid] {
-                    purchaseItems[purchaseMessage.type] = purchaseMessage
+                if var _ = purchaseMessagesMap[muid] {
+                    purchaseMessagesMap[muid]![purchaseMessage.type] = purchaseMessage
                 } else {
                     purchaseMessagesMap[muid] = [purchaseMessage.type: purchaseMessage]
                 }
@@ -415,14 +415,6 @@ extension NewChatTableDataSource : NSFetchedResultsControllerDelegate {
         messagesResultsController?.delegate = nil
     }
     
-    func forceReload() {
-        if !messagesArray.isEmpty {
-            processMessages(messages: messagesArray)
-        } else {
-            configureResultsController(items: messagesCount)
-        }
-    }
-    
     func configureResultsController(items: Int) {
         messagesCount = items
         
@@ -448,6 +440,30 @@ extension NewChatTableDataSource : NSFetchedResultsControllerDelegate {
         }
     }
     
+    func configureBoostAndPurchaseResultsController() {
+        if let _ = additionMessagesResultsController {
+            return
+        }
+        
+        let fetchRequest = TransactionMessage.getBoostsAndPurchaseMessagesFetchRequestOn(chat: chat)
+
+        additionMessagesResultsController = NSFetchedResultsController(
+            fetchRequest: fetchRequest,
+            managedObjectContext: CoreDataManager.sharedManager.persistentContainer.viewContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil
+        )
+        
+        additionMessagesResultsController.delegate = self
+        
+        
+        DispatchQueue.global(qos: .userInitiated).async {
+            do {
+                try self.additionMessagesResultsController.performFetch()
+            } catch {}
+        }
+    }
+    
     func controller(
         _ controller: NSFetchedResultsController<NSFetchRequestResult>,
         didChangeContentWith snapshot: NSDiffableDataSourceSnapshotReference
@@ -455,10 +471,17 @@ extension NewChatTableDataSource : NSFetchedResultsControllerDelegate {
         if let resultController = controller as? NSFetchedResultsController<NSManagedObject>,
             let firstSection = resultController.sections?.first {
             
-            if let messages = firstSection.objects as? [TransactionMessage] {
+            if controller == messagesResultsController {
+                if let messages = firstSection.objects as? [TransactionMessage] {
+                    DispatchQueue.global(qos: .userInitiated).async {
+                        self.messagesArray = messages.reversed()
+                        self.processMessages(messages: messages.reversed())
+                        self.configureBoostAndPurchaseResultsController()
+                    }
+                }
+            } else {
                 DispatchQueue.global(qos: .userInitiated).async {
-                    self.messagesArray = messages.reversed()
-                    self.processMessages(messages: messages.reversed())
+                    self.processMessages(messages: self.messagesArray)
                 }
             }
         }

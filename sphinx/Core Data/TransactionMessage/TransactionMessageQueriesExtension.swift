@@ -127,6 +127,35 @@ extension TransactionMessage {
         return fetchRequest
     }
     
+    static func getBoostsAndPurchaseMessagesFetchRequestOn(
+        chat: Chat
+    ) -> NSFetchRequest<TransactionMessage> {
+        
+        let types = [
+            TransactionMessageType.boost.rawValue,
+            TransactionMessageType.purchase.rawValue,
+            TransactionMessageType.purchaseAccept.rawValue,
+            TransactionMessageType.purchaseDeny.rawValue
+        ]
+        
+        let predicate = NSPredicate(
+            format: "chat == %@ AND type IN %@",
+            chat,
+            types
+        )
+        
+        let sortDescriptors = [
+            NSSortDescriptor(key: "date", ascending: false),
+            NSSortDescriptor(key: "id", ascending: false)
+        ]
+        
+        let fetchRequest = NSFetchRequest<TransactionMessage>(entityName: "TransactionMessage")
+        fetchRequest.predicate = predicate
+        fetchRequest.sortDescriptors = sortDescriptors
+        
+        return fetchRequest
+    }
+    
     static func getAllMessagesCountFor(chat: Chat, lastMessageId: Int? = nil) -> Int {
         return CoreDataManager.sharedManager.getObjectsCountOfTypeWith(predicate: NSPredicate(format: "chat == %@ AND NOT (type IN %@)", chat, typesToExcludeFromChat), entityName: "TransactionMessage")
     }
@@ -257,8 +286,8 @@ extension TransactionMessage {
 
         let attachmentType = TransactionMessageType.attachment.rawValue
         
-        var predicate = NSPredicate(
-            format: "chat == %@  AND (muid IN %@ || originalMuid IN %@) AND type != %d",
+        let predicate = NSPredicate(
+            format: "chat == %@ AND (muid IN %@ || originalMuid IN %@) AND type != %d",
             chat,
             muids,
             muids,

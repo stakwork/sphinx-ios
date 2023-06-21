@@ -398,7 +398,7 @@
 "paid.message.capitalize" = "Mensaje Pago";
 "message.not.supported" = "Formato no válido";
 "from.lower" = "de";
-"purchase.item.description" = "Mensaje pago %@";
+"purchase.item.description" = "Mensaje pago";
 "item.purchased" = "Pago de artículo";
 "item.purchase.denied" = "Pago de artículo denegado";
 "confirm.purchase" = "Confirmar Compra";

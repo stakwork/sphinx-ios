@@ -97,7 +97,8 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
     }
     
     func setTotalSizeLabel(){
-        totalSizeLabel.text = formatBytes(Int(StorageManager.sharedManager.getItemGroupTotalSize(items: vm.mediaItems + vm.fileItems) * 1e6))
+        let allItems = (sourceType == .chats) ? (vm.mediaItems + vm.fileItems) : (vm.mediaItems)
+        totalSizeLabel.text = formatBytes(Int(StorageManager.sharedManager.getItemGroupTotalSize(items: allItems) * 1e6))
     }
     
     @IBAction func backButtonTapped(_ sender: Any) {
@@ -135,14 +136,44 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
     }
     
     func processDeleteSelected(completion: @escaping ()->()){
-        let cms = self.vm.getSelectedCachedMedia()
-        StorageManager.sharedManager.deleteCacheItems(cms: cms, completion: {
-            completion()
-            self.vm.removeSelectedItems()
-            if (self.vm.mediaItems.count == 0){
-                self.navigationController?.popViewController(animated: true)
+        if(sourceType == .chats){
+            let cms = self.vm.getSelectedCachedMedia()
+            StorageManager.sharedManager.deleteCacheItems(cms: cms, completion: {
+                completion()
+                self.vm.removeSelectedItems()
+                if (self.vm.mediaItems.count == 0){
+                    self.navigationController?.popViewController(animated: true)
+                }
+            })
+        }
+        else if (sourceType == .podcasts){
+            let podPaths = self.vm.getSelectedItems().compactMap({$0.sourceFilePath})
+            var podCount = podPaths.count
+            for podPath in podPaths{
+                StorageManager.sharedManager.deletePodEpisodeWithFileName(fileName: podPath,
+                successCompletion: {
+                    podCount -= 1
+                    if((podCount > 0) == false){
+                        completion()
+                        self.vm.removeSelectedItems()
+                        if (self.vm.mediaItems.count == 0){
+                            self.navigationController?.popViewController(animated: true)
+                        }
+                    }
+                },
+                failureCompletion: {
+                    podCount -= 1
+                    if((podCount > 0) == false){
+                        completion()
+                        self.vm.removeSelectedItems()
+                        if (self.vm.mediaItems.count == 0){
+                            self.navigationController?.popViewController(animated: true)
+                        }
+                    }
+                })
             }
-        })
+        }
+        
     }
     
     
@@ -314,7 +345,7 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
 }
 
 extension ProfileManageStorageSpecificChatOrContentFeedItemVC : MediaDeletionConfirmationViewDelegate{
-    func cancelTapped() {
+    func mediaDeletionCancelTapped() {
         self.hideDeletionWarningAlert()
         self.setTotalSizeLabel()
         let existingState = mediaDeletionConfirmationView.state
@@ -329,7 +360,7 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVC : MediaDeletionCon
         }
     }
     
-    func deleteTapped() {
+    func mediaDeletionConfirmTapped() {
         if(state == .batch){
             self.processDeleteAll {
                 self.mediaDeletionConfirmationView.state = .finished
@@ -344,7 +375,14 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVC : MediaDeletionCon
             }
         }
         else if sourceType == .podcasts{
-            vm.finalizeEpisodeDelete()
+            if(vm.getIsSelectingImagesOrPodcasts()){
+                self.processDeleteSelected(completion: {
+                    self.mediaDeletionConfirmationView.state = .finished
+                })
+            }
+            else{
+                vm.finalizeEpisodeDelete()
+            }
         }
         
     }

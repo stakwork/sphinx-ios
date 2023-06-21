@@ -39,6 +39,7 @@ class MediaStorageSourceTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        deleteButton.imageView?.contentMode = .scaleAspectFit
     }
     
     enum DocsColors {
@@ -182,7 +183,7 @@ class MediaStorageSourceTableViewCell: UITableViewCell {
         mediaSourceSizeLabel.text = (mediaSizeText == "0 MB") ? "<1MB" : mediaSizeText
     }
     
-    func configure(podcastEpisode:PodcastEpisode,item:StorageManagerItem,index:Int){
+    func configure(podcastEpisode:PodcastEpisode,item:StorageManagerItem,index:Int,isSelected:Bool){
         mediaSourceLabel.text = podcastEpisode.title
         initialsLabel.isHidden = true
         if let imageURL = URL(string: podcastEpisode.imageToShow ?? podcastEpisode.feed?.imageToShow ?? ""){
@@ -199,6 +200,9 @@ class MediaStorageSourceTableViewCell: UITableViewCell {
         
         disclosureImageView.isHidden = true
         deleteButton.isHidden = false
+        
+        blueCheckmarkImageView.isHidden = !isSelected
+        squareImageView.isHidden = isSelected
     }
     
     func configure(fileName:String,fileType:String,item:StorageManagerItem,index:Int,isSelected:Bool){

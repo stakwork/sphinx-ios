@@ -68,23 +68,22 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="751" text="15.1 GB" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pue-7T-xlg">
-                        <rect key="frame" x="220.66666666666666" y="0.0" width="52.999999999999972" height="64"/>
+                        <rect key="frame" x="216.66666666666666" y="0.0" width="52.999999999999972" height="64"/>
                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="15"/>
                         <color key="textColor" name="SecondaryText"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="disclosureIndicator" translatesAutoresizingMaskIntoConstraints="NO" id="c9l-Av-kpX">
-                        <rect key="frame" x="284.66666666666669" y="17" width="30" height="30"/>
+                        <rect key="frame" x="280.66666666666669" y="17" width="30" height="30"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="30" id="3dp-na-4FK"/>
                             <constraint firstAttribute="width" secondItem="c9l-Av-kpX" secondAttribute="height" multiplier="1:1" id="q6P-am-u9w"/>
                         </constraints>
                     </imageView>
                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fSL-0q-N4u">
-                        <rect key="frame" x="287" y="19.666666666666671" width="25" height="25"/>
+                        <rect key="frame" x="283" y="0.0" width="25" height="64"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="25" id="K7O-rA-VuT"/>
-                            <constraint firstAttribute="height" constant="25" id="V8x-xs-hOJ"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="14"/>
                         <color key="tintColor" name="SecondaryText"/>
@@ -140,7 +139,8 @@
                     <constraint firstItem="Mep-cZ-dPt" firstAttribute="centerY" secondItem="onY-YZ-XsQ" secondAttribute="centerY" id="Iz9-gX-Af5"/>
                     <constraint firstItem="V1O-o7-wgg" firstAttribute="trailing" secondItem="Mep-cZ-dPt" secondAttribute="trailing" id="N0H-7f-QcE"/>
                     <constraint firstItem="V1O-o7-wgg" firstAttribute="leading" secondItem="Mep-cZ-dPt" secondAttribute="leading" id="Ylk-XA-qii"/>
-                    <constraint firstAttribute="trailing" secondItem="fSL-0q-N4u" secondAttribute="trailing" constant="8" id="hCI-gt-esu"/>
+                    <constraint firstItem="fSL-0q-N4u" firstAttribute="height" secondItem="H2p-sc-9uM" secondAttribute="height" id="aF9-tn-exd"/>
+                    <constraint firstAttribute="trailing" secondItem="fSL-0q-N4u" secondAttribute="trailing" constant="12" id="hCI-gt-esu"/>
                     <constraint firstItem="fSM-pR-XZX" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="i99-Xd-owJ"/>
                     <constraint firstItem="Nvi-dQ-oNK" firstAttribute="centerX" secondItem="ECJ-4K-u72" secondAttribute="centerX" id="iKF-62-1m5"/>
                     <constraint firstItem="c9l-Av-kpX" firstAttribute="leading" secondItem="Pue-7T-xlg" secondAttribute="trailing" constant="10.67" id="jPu-x3-68H"/>

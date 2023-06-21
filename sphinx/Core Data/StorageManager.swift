@@ -268,7 +268,7 @@ class StorageManager {
         }
         else if(item.isPodcast()),
                let sourcePath = item.sourceFilePath{
-            deletePodsWithID(
+            deletePodEpisodeWithFileName(
                 fileName: sourcePath,
                 successCompletion: {
                     completion()
@@ -471,7 +471,7 @@ class StorageManager {
         podsCounter == 0 ? (completion()) : ()
         for pod in downloadedPods{
             if let sourcePath = pod.sourceFilePath{
-                deletePodsWithID(
+                deletePodEpisodeWithFileName(
                     fileName: sourcePath,
                     successCompletion: {
                     print("deleted pod with id:\(pod.uid)")
@@ -487,7 +487,7 @@ class StorageManager {
         }
     }
     
-    func deletePodsWithID(fileName:String,successCompletion: @escaping ()->(),failureCompletion: @escaping ()->()){
+    func deletePodEpisodeWithFileName(fileName:String,successCompletion: @escaping ()->(),failureCompletion: @escaping ()->()){
         if let path = FileManager
             .default
             .urls(for: .documentDirectory, in: .userDomainMask)

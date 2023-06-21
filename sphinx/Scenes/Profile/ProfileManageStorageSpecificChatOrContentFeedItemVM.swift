@@ -20,35 +20,37 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVM : NSObject{
     var teedUpIndex : Int? = nil
     var mediaItems: [StorageManagerItem] = [] {
         didSet {
-            var consolidatedItems: [StorageManagerItem] = []
+            if(sourceType == .chats){
+                var consolidatedItems: [StorageManagerItem] = []
 
-            // Dictionary to keep track of the total memory for each filePath and key combination
-            var memoryTotals: [String: Double] = [:]
+                // Dictionary to keep track of the total memory for each filePath and key combination
+                var memoryTotals: [String: Double] = [:]
 
-            for item in mediaItems {
-                // Check if the item's filePath and key combination already exists in the consolidatedItems array
-                if let existingIndex = consolidatedItems.firstIndex(where: { $0.cachedMedia?.filePath == item.cachedMedia?.filePath && $0.cachedMedia?.key == item.cachedMedia?.key }) {
-                    // If the combination exists, update the memory total by adding the current item's memory
-                    memoryTotals[item.cachedMedia?.filePath ?? ""]? += item.sizeMB
-                } else {
-                    // If the combination doesn't exist, add the item to the consolidatedItems array and initialize the memory total
-                    consolidatedItems.append(item)
-                    memoryTotals[item.cachedMedia?.filePath ?? ""] = item.sizeMB
+                for item in mediaItems {
+                    // Check if the item's filePath and key combination already exists in the consolidatedItems array
+                    if let existingIndex = consolidatedItems.firstIndex(where: { $0.cachedMedia?.filePath == item.cachedMedia?.filePath && $0.cachedMedia?.key == item.cachedMedia?.key }) {
+                        // If the combination exists, update the memory total by adding the current item's memory
+                        memoryTotals[item.cachedMedia?.filePath ?? ""]? += item.sizeMB
+                    } else {
+                        // If the combination doesn't exist, add the item to the consolidatedItems array and initialize the memory total
+                        consolidatedItems.append(item)
+                        memoryTotals[item.cachedMedia?.filePath ?? ""] = item.sizeMB
+                    }
                 }
+
+                // Update the mediaItems with the consolidated items
+                self.mediaItems = consolidatedItems
+
+                // Update the memory totals for the consolidated items
+                for item in mediaItems {
+                    let filePath = item.cachedMedia?.filePath ?? ""
+                    item.sizeMB = memoryTotals[filePath] ?? 0.0
+                }
+
+                imageCollectionView.reloadData()
             }
-
-            // Update the mediaItems with the consolidated items
-            self.mediaItems = consolidatedItems
-
-            // Update the memory totals for the consolidated items
-            for item in mediaItems {
-                let filePath = item.cachedMedia?.filePath ?? ""
-                item.sizeMB = memoryTotals[filePath] ?? 0.0
-            }
-
             // Update the selected status and reload the collection view or table view
             mediaSelectedStatus = mediaItems.map({ _ in return false })
-            imageCollectionView.reloadData()
         }
     }
     
@@ -60,10 +62,10 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVM : NSObject{
     
     var mediaSelectedStatus : [Bool] = []{
         didSet{
-            vc.deletionSummaryView.isHidden = (getIsSelectingImages()) ? false : true
+            vc.deletionSummaryView.isHidden = (getIsSelectingImagesOrPodcasts()) ? false : true
             vc.view.bringSubviewToFront(vc.deletionSummaryView)
             vc.updateDeletionSummaryLabel()
-            imageCollectionView.reloadData()
+            sourceType == .chats ? (imageCollectionView.reloadData()) : (podcastTableView.reloadData())
         }
     }
     
@@ -126,7 +128,7 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVM : NSObject{
     }
 
     
-    func getIsSelectingImages()->Bool{
+    func getIsSelectingImagesOrPodcasts()->Bool{
         let isSelectingImages = mediaSelectedStatus.filter({$0 == true}).count > 0
         return isSelectingImages
     }
@@ -224,18 +226,20 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVM : UITableViewDataS
             for: indexPath
         ) as! MediaStorageSourceTableViewCell
         
+        let isSelected = (vc.sourceType == .podcasts) ? mediaSelectedStatus[indexPath.row] : fileSelectedStatus[indexPath.row]
+        
         switch(vc.sourceType){
         case .podcasts:
             let item = mediaItems[indexPath.row]
             if let episode = getEpisodeForItem(item: item){
-                cell.configure(podcastEpisode: episode, item: item, index: indexPath.row)
+                cell.configure(podcastEpisode: episode, item: item, index: indexPath.row, isSelected: isSelected)
                 cell.delegate = self
             }
             cell.selectionStyle = .none
             return cell
         case .chats:
             let file = fileItems[indexPath.row]
-            let isSelected = fileSelectedStatus[indexPath.row]
+            
             cell.configure(fileName: file.cachedMedia?.fileName ?? (file.type == .audio ? "Audio Recording" : "Unknown File"), fileType: file.cachedMedia?.fileExtension ?? ".txt", item: file, index: indexPath.row,isSelected: isSelected)
             cell.delegate = self
             return cell
@@ -260,25 +264,28 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVM : UITableViewDataS
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if(sourceType == .podcasts){
-            print(mediaItems[indexPath.row])
-            if let sourcePath = mediaItems[indexPath.row].sourceFilePath{
-                if let pair = StorageManager.sharedManager.getFeedItemPairForString(string: sourcePath),
-                pair.count > 1{
-                    let feedID = pair[0]
-                    let itemID = pair[1].replacingOccurrences(of: ".mp3", with: "")
-                    if let feed = FeedsManager.sharedInstance.fetchFeeds().filter({$0.feedID == feedID}).first{
-                        let pf = PodcastFeed.convertFrom(contentFeed: feed)
-                        self.vc.presentPodcastPlayerFor(pf,itemID: itemID)
-                    }
-                }
-            }
+            //let item = mediaItems[indexPath.row]
+            //playPodcastItem(item: item)
+            mediaSelectedStatus[indexPath.row] = !mediaSelectedStatus[indexPath.row]
         }
         else if(sourceType == .chats){
             fileSelectedStatus[indexPath.row] = !fileSelectedStatus[indexPath.row]
         }
     }
     
-    
+    func playPodcastItem(item:StorageManagerItem){
+        if let sourcePath = item.sourceFilePath{
+            if let pair = StorageManager.sharedManager.getFeedItemPairForString(string: sourcePath),
+            pair.count > 1{
+                let feedID = pair[0]
+                let itemID = pair[1].replacingOccurrences(of: ".mp3", with: "")
+                if let feed = FeedsManager.sharedInstance.fetchFeeds().filter({$0.feedID == feedID}).first{
+                    let pf = PodcastFeed.convertFrom(contentFeed: feed)
+                    self.vc.presentPodcastPlayerFor(pf,itemID: itemID)
+                }
+            }
+        }
+    }
 }
 
 extension ProfileManageStorageSpecificChatOrContentFeedItemVM : UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
@@ -346,7 +353,7 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVM : MediaStorageSour
            let sourcePath = mediaItems[index].sourceFilePath{
             teedUpIndex = nil
             vc.mediaDeletionConfirmationView.batchState = nil
-            StorageManager.sharedManager.deletePodsWithID(
+            StorageManager.sharedManager.deletePodEpisodeWithFileName(
                 fileName: sourcePath,
                 successCompletion: {
                     self.handleConfirmDelete(index: index)

@@ -374,14 +374,14 @@ extension ProfileManageStorageViewController: MaxMemorySliderDelegate{
 }
 
 extension ProfileManageStorageViewController : MediaDeletionConfirmationViewDelegate{
-    func deleteTapped() {
+    func mediaDeletionConfirmTapped() {
         if let type = mediaDeletionConfirmationView.type{
             vm.handleDeletion(type: type)
         }
         //
     }
     
-    func cancelTapped() {
+    func mediaDeletionCancelTapped() {
         if(mediaDeletionConfirmationView.state == .finished){
             mediaDeletionConfirmationView.state = .awaitingApproval
         }

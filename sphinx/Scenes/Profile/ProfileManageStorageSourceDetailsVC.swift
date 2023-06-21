@@ -179,7 +179,7 @@ extension ProfileManageStorageSourceDetailsVC : ProfileManageStorageSpecificChat
 }
 
 extension ProfileManageStorageSourceDetailsVC : MediaDeletionConfirmationViewDelegate{
-    func cancelTapped() {
+    func mediaDeletionCancelTapped() {
         print("CANCEL TAPPED")
         self.hideDeletionWarningAlert()
         if(mediaDeletionConfirmationView.state == .finished){
@@ -189,7 +189,7 @@ extension ProfileManageStorageSourceDetailsVC : MediaDeletionConfirmationViewDel
         
     }
     
-    func deleteTapped() {
+    func mediaDeletionConfirmTapped() {
         mediaDeletionConfirmationView.state = .loading
         switch(source){
         case .chats:

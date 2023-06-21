@@ -190,6 +190,12 @@ extension NewChatViewController : NewChatTableDataSourceDelegate, SocketManagerD
             self.present(tribeMemberPopupVC, animated: false)
         }
     }
+    
+    func shouldOpenActivityVCFor(url: URL) {
+        let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+        activityVC.popoverPresentationController?.sourceView = self.bottomView
+        self.present(activityVC, animated: true, completion: nil)
+    }
 }
 
 extension NewChatViewController {

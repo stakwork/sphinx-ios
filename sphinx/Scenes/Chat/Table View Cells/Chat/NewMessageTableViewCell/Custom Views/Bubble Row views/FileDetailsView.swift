@@ -8,7 +8,13 @@
 
 import UIKit
 
+protocol FileDetailsViewDelegate: class {
+    func didTapDownloadButton()
+}
+
 class FileDetailsView: UIView {
+    
+    weak var delegate: FileDetailsViewDelegate?
 
     @IBOutlet private var contentView: UIView!
 
@@ -36,7 +42,32 @@ class FileDetailsView: UIView {
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
     }
     
+    func configureWith(
+        genericFile: BubbleMessageLayoutState.GenericFile,
+        mediaData: MessageTableCellState.MediaData?,
+        and delegate: FileDetailsViewDelegate
+    ) {
+        self.delegate = delegate
+        
+        fileNameLabel.text = mediaData?.fileInfo?.fileName ?? "file".localized
+        fileSizeLabel.text = mediaData?.fileInfo?.fileSize.formattedSize ?? "- kb"
+        
+        downloadFileButton.isHidden = mediaData == nil
+        downloadingWheel.isHidden = mediaData != nil
+        
+        if let _ = mediaData {
+            downloadFileButton.isHidden = false
+            downloadingWheel.isHidden = true
+            downloadingWheel.stopAnimating()
+        } else {
+            downloadFileButton.isHidden = true
+            downloadingWheel.isHidden = false
+            downloadingWheel.startAnimating()
+        }
+    }
+    
     @IBAction func downloadButtonTouched() {
+        delegate?.didTapDownloadButton()
     }
     
 }

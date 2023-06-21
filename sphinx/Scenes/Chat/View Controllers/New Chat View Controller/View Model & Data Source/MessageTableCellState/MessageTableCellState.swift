@@ -229,6 +229,18 @@ struct MessageTableCellState {
         )
     }()
     
+    lazy var genericFile: BubbleMessageLayoutState.GenericFile? = {
+        guard let message = message, message.isFileAttachment() else {
+            return nil
+        }
+        
+        var url = message.getMediaUrlFromMediaToken()
+        
+        return BubbleMessageLayoutState.GenericFile(
+            url: url
+        )
+    }()
+    
     lazy var boosts: BubbleMessageLayoutState.Boosts? = {
         
         guard let message = message, boostMessages.count > 0 else {

@@ -151,6 +151,16 @@ struct BubbleMessageLayoutState: CommonLayoutState {
         }
     }
     
+    struct GenericFile {
+        var url: URL?
+        
+        init(
+            url: URL?
+        ) {
+            self.url = url
+        }
+    }
+    
     struct MessageMedia {
         var url: URL?
         var isImage: Bool

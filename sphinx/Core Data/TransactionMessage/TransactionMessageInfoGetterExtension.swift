@@ -1079,6 +1079,7 @@ extension TransactionMessage {
                isDirectPayment() ||
                isPodcastBoost() ||
                isMediaAttachment() ||
+               isFileAttachment() ||
                isGiphy() ||
                isGroupActionMessage() ||
                isCallLink()

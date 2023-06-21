@@ -238,8 +238,9 @@ class MediaLoader {
         }
     }
     
-    class func loadPDFData(
+    class func loadFileData(
         url: URL,
+        isPdf: Bool,
         message: TransactionMessage,
         completion: @escaping (Int, Data, MessageTableCellState.FileInfo) -> (),
         errorCompletion: @escaping (Int) -> ()
@@ -254,8 +255,8 @@ class MediaLoader {
             let fileInfo = MessageTableCellState.FileInfo(
                 fileSize: message.mediaFileSize,
                 fileName: message.mediaFileName ?? "",
-                pagesCount: data.getPDFPagesCount(),
-                previewImage: data.getPDFThumbnail()
+                pagesCount: isPdf ? data.getPDFPagesCount() : nil,
+                previewImage: isPdf ? data.getPDFThumbnail() : nil
             )
             
             DispatchQueue.main.async {
@@ -274,8 +275,8 @@ class MediaLoader {
                     let fileInfo = MessageTableCellState.FileInfo(
                         fileSize: message.mediaFileSize,
                         fileName: message.mediaFileName ?? "",
-                        pagesCount: data.getPDFPagesCount(),
-                        previewImage: data.getPDFThumbnail()
+                        pagesCount: isPdf ? data.getPDFPagesCount() : nil,
+                        previewImage: isPdf ? data.getPDFThumbnail() : nil
                     )
                     
                     DispatchQueue.main.async {

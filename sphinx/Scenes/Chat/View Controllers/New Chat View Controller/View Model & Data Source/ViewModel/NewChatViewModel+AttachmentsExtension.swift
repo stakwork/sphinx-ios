@@ -21,7 +21,7 @@ extension NewChatViewModel: AttachmentsManagerDelegate {
             messageId: TransactionMessage.getProvisionalMessageId(),
             mediaData: MessageTableCellState.MediaData(
                 image: attachmentObject.image,
-                videoData: attachmentObject.data,
+                data: attachmentObject.data,
                 fileInfo: attachmentObject.getFileInfo(),
                 failed: false
             )

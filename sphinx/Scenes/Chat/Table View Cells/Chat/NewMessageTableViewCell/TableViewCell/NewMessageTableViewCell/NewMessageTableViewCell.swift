@@ -41,6 +41,7 @@ protocol NewMessageTableViewCellDelegate: class {
     func shouldLoadTribeInfoFor(messageId: Int, and rowIndex: Int)
     func shouldLoadImageDataFor(messageId: Int, and rowIndex: Int)
     func shouldLoadPdfDataFor(messageId: Int, and rowIndex: Int)
+    func shouldLoadFileDataFor(messageId: Int, and rowIndex: Int)
     func shouldLoadVideoDataFor(messageId: Int, and rowIndex: Int)
     func shouldLoadGiphyDataFor(messageId: Int, and rowIndex: Int)
     
@@ -55,6 +56,7 @@ protocol NewMessageTableViewCellDelegate: class {
     func didTapCallJoinVideoFor(messageId: Int, and rowIndex: Int)
     ///Media
     func didTapMediaButtonFor(messageId: Int, and rowIndex: Int)
+    func didTapFileDownloadButtonFor(messageId: Int, and rowIndex: Int)
     ///Link Previews
     func didTapTribeButtonFor(messageId: Int, and rowIndex: Int)
     func didTapContactButtonFor(messageId: Int, and rowIndex: Int)
@@ -95,7 +97,7 @@ class NewMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableViewCellP
     @IBOutlet weak var paidTextMessageView: UIView! // PENDING
     @IBOutlet weak var directPaymentView: DirectPaymentView!
     @IBOutlet weak var mediaContentView: MediaMessageView!
-    @IBOutlet weak var fileDetailsView: FileDetailsView! // PENDING
+    @IBOutlet weak var fileDetailsView: FileDetailsView!
     @IBOutlet weak var audioMessageView: AudioMessageView! // PENDING
     @IBOutlet weak var podcastAudioView: PodcastAudioView! // PENDING
     @IBOutlet weak var callLinkView: JoinVideoCallView!
@@ -164,6 +166,7 @@ class NewMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableViewCellP
         configureWith(callLink: mutableMessageCellState.callLink)
         configureWith(podcastBoost: mutableMessageCellState.podcastBoost)
         configureWith(messageMedia: mutableMessageCellState.messageMedia, mediaData: mediaData)
+        configureWith(genericFile: mutableMessageCellState.genericFile, mediaData: mediaData)
         
         //Bottom view
         configureWith(boosts: mutableMessageCellState.boosts, and: bubble)

@@ -44,6 +44,14 @@ extension NewMessageTableViewCell : MediaMessageViewDelegate {
     }
 }
 
+extension NewMessageTableViewCell : FileDetailsViewDelegate {
+    func didTapDownloadButton() {
+        if let messageId = messageId {
+            delegate?.didTapFileDownloadButtonFor(messageId: messageId, and: rowIndex)
+        }
+    }
+}
+
 extension NewMessageTableViewCell : LinkPreviewDelegate {
     func didTapOnTribeButton() {
         if let messageId = messageId {

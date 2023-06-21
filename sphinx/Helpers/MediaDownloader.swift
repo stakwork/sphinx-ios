@@ -6,7 +6,7 @@
 //  Copyright © 2020 Sphinx. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import Photos
 
 class MediaDownloader {
@@ -25,7 +25,10 @@ class MediaDownloader {
         }
     }
     
-    static func shouldSaveFile(message: TransactionMessage?, completion: @escaping (Bool, String) -> ()) {
+    static func shouldSaveFile(
+        message: TransactionMessage?,
+        completion: @escaping (Bool, String) -> ()
+    ) {
         askForLibraryPermissions(completion: { success in
             if !success {
                 completion(false, "photo.library.denied".localized)

@@ -27,6 +27,7 @@ protocol NewChatTableDataSourceDelegate : class {
     func shouldShowLeaderboardFor(messageId: Int)
     
     func shouldReplyToMessage(message: TransactionMessage)
+    func shouldOpenActivityVCFor(url: URL)
 }
 
 class NewChatTableDataSource : NSObject {

@@ -95,19 +95,60 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
             let message = tableCellState.1.message,
             let url = tableCellState.1.messageMedia?.url
         {
-            MediaLoader.loadPDFData(url: url, message: message, completion: { (messageId, data, fileInfo) in
+            shouldLoadFileDataFor(
+                messageId: messageId,
+                and: rowIndex,
+                message: message,
+                url: url,
+                isPdf: true
+            )
+        }
+    }
+    
+    func shouldLoadFileDataFor(messageId: Int, and rowIndex: Int) {
+        if var tableCellState = getTableCellStateFor(
+            messageId: messageId,
+            and: rowIndex
+        ),
+            let message = tableCellState.1.message,
+            let url = tableCellState.1.genericFile?.url
+        {
+            shouldLoadFileDataFor(
+                messageId: messageId,
+                and: rowIndex,
+                message: message,
+                url: url,
+                isPdf: false
+            )
+        }
+    }
+    
+    func shouldLoadFileDataFor(
+        messageId: Int,
+        and rowIndex: Int,
+        message: TransactionMessage,
+        url: URL,
+        isPdf: Bool
+    ) {
+        MediaLoader.loadFileData(
+            url: url,
+            isPdf: isPdf,
+            message: message,
+            completion: { (messageId, data, fileInfo) in
                 let updatedMediaData = MessageTableCellState.MediaData(
                     image: fileInfo.previewImage,
+                    data: data,
                     fileInfo: fileInfo
                 )
                 self.updateMessageTableCellStateFor(rowIndex: rowIndex, messageId: messageId, with: updatedMediaData)
-            }, errorCompletion: { messageId in
+            },
+            errorCompletion: { messageId in
                 let updatedMediaData = MessageTableCellState.MediaData(
                     failed: true
                 )
                 self.updateMessageTableCellStateFor(rowIndex: rowIndex, messageId: messageId, with: updatedMediaData)
-            })
-        }
+            }
+        )
     }
     
     func shouldLoadVideoDataFor(
@@ -124,7 +165,7 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
             MediaLoader.loadVideo(url: url, message: message, completion: { (messageId, data, image) in
                 let updatedMediaData = MessageTableCellState.MediaData(
                     image: image,
-                    videoData: data
+                    data: data
                 )
                 self.updateMessageTableCellStateFor(rowIndex: rowIndex, messageId: messageId, with: updatedMediaData)
             }, errorCompletion: { messageId in
@@ -297,10 +338,22 @@ extension NewChatTableDataSource {
             and: rowIndex
         ), let messageMedia = tableCellState.1.messageMedia, let cacheMedia = cachedMedia[messageId] {
             
-            if messageMedia.isVideo, let data = cacheMedia.videoData {
+            if messageMedia.isVideo, let data = cacheMedia.data {
                 delegate?.shouldGoToVideoPlayerFor(messageId: messageId, with: data)
             } else {
                 delegate?.shouldGoToAttachmentViewFor(messageId: messageId, isPdf: messageMedia.isPdf)
+            }
+        }
+    }
+    
+    func didTapFileDownloadButtonFor(messageId: Int, and rowIndex: Int) {
+        if
+           let cacheData = cachedMedia[messageId],
+           let data = cacheData.data,
+           let fileInfo = cacheData.fileInfo
+        {
+            if let url = MediaLoader.saveFileInMemory(data: data, name: fileInfo.fileName) {
+                delegate?.shouldOpenActivityVCFor(url: url)
             }
         }
     }

@@ -149,10 +149,10 @@
                                                                         </constraints>
                                                                     </view>
                                                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OFY-Bx-2Yr" customClass="FileDetailsView" customModule="sphinx" customModuleProvider="target">
-                                                                        <rect key="frame" x="0.0" y="247.66666666666669" width="247.66666666666666" height="60"/>
+                                                                        <rect key="frame" x="0.0" y="247.66666666666669" width="247.66666666666666" height="63"/>
                                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <constraints>
-                                                                            <constraint firstAttribute="height" constant="60" id="SDf-gc-EEC"/>
+                                                                            <constraint firstAttribute="height" constant="63" id="SDf-gc-EEC"/>
                                                                         </constraints>
                                                                     </view>
                                                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SmW-PZ-3BF" customClass="AudioMessageView" customModule="sphinx" customModuleProvider="target">

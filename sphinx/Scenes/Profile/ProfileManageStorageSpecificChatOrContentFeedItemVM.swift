@@ -18,9 +18,37 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVM : NSObject{
     
     
     var teedUpIndex : Int? = nil
-    var mediaItems : [StorageManagerItem] = []{
-        didSet{
-            mediaSelectedStatus = mediaItems.map({_ in return false})
+    var mediaItems: [StorageManagerItem] = [] {
+        didSet {
+            var consolidatedItems: [StorageManagerItem] = []
+
+            // Dictionary to keep track of the total memory for each filePath and key combination
+            var memoryTotals: [String: Double] = [:]
+
+            for item in mediaItems {
+                // Check if the item's filePath and key combination already exists in the consolidatedItems array
+                if let existingIndex = consolidatedItems.firstIndex(where: { $0.cachedMedia?.filePath == item.cachedMedia?.filePath && $0.cachedMedia?.key == item.cachedMedia?.key }) {
+                    // If the combination exists, update the memory total by adding the current item's memory
+                    memoryTotals[item.cachedMedia?.filePath ?? ""]? += item.sizeMB
+                } else {
+                    // If the combination doesn't exist, add the item to the consolidatedItems array and initialize the memory total
+                    consolidatedItems.append(item)
+                    memoryTotals[item.cachedMedia?.filePath ?? ""] = item.sizeMB
+                }
+            }
+
+            // Update the mediaItems with the consolidated items
+            self.mediaItems = consolidatedItems
+
+            // Update the memory totals for the consolidated items
+            for item in mediaItems {
+                let filePath = item.cachedMedia?.filePath ?? ""
+                item.sizeMB = memoryTotals[filePath] ?? 0.0
+            }
+
+            // Update the selected status and reload the collection view or table view
+            mediaSelectedStatus = mediaItems.map({ _ in return false })
+            imageCollectionView.reloadData()
         }
     }
     

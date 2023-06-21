@@ -27,6 +27,7 @@ extension NewChatViewController {
             tableView: chatTableView,
             headerImageView: getContactImageView(),
             bottomView: bottomView,
+            webView: botWebView,
             delegate: self
         )
         

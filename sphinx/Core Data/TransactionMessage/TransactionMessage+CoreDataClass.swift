@@ -95,7 +95,6 @@ public class TransactionMessage: NSManagedObject {
         TransactionMessageType.repayment.rawValue,
         TransactionMessageType.invoice.rawValue,
         TransactionMessageType.payment.rawValue,
-        TransactionMessageType.botResponse.rawValue
     ]
     
 //    static let typesToExcludeFromChat = [

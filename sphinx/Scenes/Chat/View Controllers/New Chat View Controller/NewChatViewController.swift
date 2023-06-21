@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import WebKit
 
 class NewChatViewController: NewKeyboardHandlerViewController {
     
@@ -15,6 +16,7 @@ class NewChatViewController: NewKeyboardHandlerViewController {
     @IBOutlet weak var headerView: NewChatHeaderView!
     @IBOutlet weak var chatTableView: UITableView!
     @IBOutlet weak var newMsgsIndicatorView: NewMessagesIndicatorView!
+    @IBOutlet weak var botWebView: WKWebView!
     
     @IBOutlet weak var chatTableViewHeightConstraint: NSLayoutConstraint!
     

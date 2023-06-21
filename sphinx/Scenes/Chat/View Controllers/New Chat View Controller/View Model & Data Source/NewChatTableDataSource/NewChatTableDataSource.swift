@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import WebKit
 
 protocol NewChatTableDataSourceDelegate : class {
     func configureNewMessagesIndicatorWith(newMsgCount: Int)
@@ -38,7 +39,8 @@ class NewChatTableDataSource : NSObject {
     ///View references
     var tableView : UITableView!
     var headerImage: UIImage?
-    var bottomView: UIView?
+    var bottomView: UIView!
+    var webView: WKWebView!
     
     ///Chat
     var chat: Chat!
@@ -54,8 +56,10 @@ class NewChatTableDataSource : NSObject {
     let bubbleHelper = NewMessageBubbleHelper()
     
     ///Messages Data
+    var messagesArray: [TransactionMessage] = []
     var messageTableCellStateArray: [MessageTableCellState] = []
     var cachedMedia: [Int: MessageTableCellState.MediaData] = [:]
+    var botsWebViewData: [Int: MessageTableCellState.BotWebViewData] = [:]
     var uploadingProgress: [Int: MessageTableCellState.UploadProgressData] = [:]
     
     ///Scroll and pagination
@@ -63,11 +67,16 @@ class NewChatTableDataSource : NSObject {
     var loadingMoreItems = false
     var scrolledAtBottom = false
     
+    ///WebView Loading
+    let webViewSemaphore = DispatchSemaphore(value: 1)
+    var webViewLoadingCompletion: ((CGFloat) -> ())? = nil
+    
     init(
         chat: Chat,
         tableView: UITableView,
         headerImageView: UIImageView?,
         bottomView: UIView,
+        webView: WKWebView,
         delegate: NewChatTableDataSourceDelegate?
     ) {
         super.init()
@@ -76,6 +85,8 @@ class NewChatTableDataSource : NSObject {
         self.tableView = tableView
         self.headerImage = headerImageView?.image
         self.bottomView = bottomView
+        self.webView = webView
+        
         self.delegate = delegate
         
         configureTableView()

@@ -155,6 +155,10 @@ struct MessageTableCellState {
             return nil
         }
         
+        if message.isBotHTMLResponse() {
+            return nil
+        }
+        
         if let messageContent = message.bubbleMessageContentString, messageContent.isNotEmpty {
             
             var message = BubbleMessageLayoutState.MessageContent(
@@ -242,6 +246,23 @@ struct MessageTableCellState {
         return BubbleMessageLayoutState.GenericFile(
             url: url
         )
+    }()
+    
+    lazy var botHTMLContent: BubbleMessageLayoutState.BotHTMLContent? = {
+        guard let message = message, message.isBotHTMLResponse() else {
+            return nil
+        }
+        
+        if let messageContent = message.bubbleMessageContentString, messageContent.isNotEmpty {
+            
+            var botContent = BubbleMessageLayoutState.BotHTMLContent(
+                html: messageContent
+            )
+            
+            return botContent
+        } else {
+            return nil
+        }
     }()
     
     lazy var boosts: BubbleMessageLayoutState.Boosts? = {
@@ -455,7 +476,8 @@ struct MessageTableCellState {
                 (self.contactLink == nil) &&
                 (self.tribeLink == nil) &&
                 (self.messageMedia == nil) &&
-                (self.webLink == nil)
+                (self.webLink == nil) &&
+                (self.botHTMLContent == nil)
         }
     }
 }
@@ -510,9 +532,7 @@ extension MessageTableCellState : Hashable {
             mutableLhs.bubbleState           == mutableRhs.bubbleState &&
             mutableLhs.boostMessages.count   == mutableRhs.boostMessages.count &&
             mutableLhs.isTextOnlyMessage     == mutableRhs.isTextOnlyMessage &&
-            mutableLhs.separatorDate         == mutableRhs.separatorDate &&
-            mutableLhs.linkContact           == mutableRhs.linkContact &&
-            mutableLhs.linkTribe             == mutableRhs.linkTribe
+            mutableLhs.separatorDate         == mutableRhs.separatorDate
     }
 
     func hash(into hasher: inout Hasher) {

@@ -115,6 +115,16 @@ struct BubbleMessageLayoutState: CommonLayoutState {
         }
     }
     
+    struct BotHTMLContent {
+        var html: String
+        
+        init(
+            html: String
+        ) {
+            self.html = html
+        }
+    }
+    
     struct DirectPayment {
         var amount: Int
         var isTribePmt: Bool

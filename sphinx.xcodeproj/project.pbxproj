@@ -604,6 +604,7 @@
 		47CC7CE923E4718600730E6F /* AttachmentFullScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CC7CE823E4718600730E6F /* AttachmentFullScreenViewController.swift */; };
 		47CD9508265EC2A4009B06A4 /* CommonModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CD9507265EC2A4009B06A4 /* CommonModalView.swift */; };
 		47CD9510265EC70E009B06A4 /* API+PeopleExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CD950F265EC70E009B06A4 /* API+PeopleExtension.swift */; };
+		47CEA4502A4369A000E936CB /* NewChatTableDataSource+BotWebViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CEA44F2A4369A000E936CB /* NewChatTableDataSource+BotWebViewExtension.swift */; };
 		47CFA9462A38C5200030BC23 /* NewChatTableDataSource+ScrollExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CFA9452A38C5200030BC23 /* NewChatTableDataSource+ScrollExtension.swift */; };
 		47CFA94A2A38CA480030BC23 /* NewMessagesIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CFA9492A38CA480030BC23 /* NewMessagesIndicatorView.swift */; };
 		47CFA94C2A38CA4E0030BC23 /* NewMessagesIndicatorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47CFA94B2A38CA4E0030BC23 /* NewMessagesIndicatorView.xib */; };
@@ -1664,6 +1665,7 @@
 		47CC7CE823E4718600730E6F /* AttachmentFullScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentFullScreenViewController.swift; sourceTree = "<group>"; };
 		47CD9507265EC2A4009B06A4 /* CommonModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonModalView.swift; sourceTree = "<group>"; };
 		47CD950F265EC70E009B06A4 /* API+PeopleExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+PeopleExtension.swift"; sourceTree = "<group>"; };
+		47CEA44F2A4369A000E936CB /* NewChatTableDataSource+BotWebViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewChatTableDataSource+BotWebViewExtension.swift"; sourceTree = "<group>"; };
 		47CFA9452A38C5200030BC23 /* NewChatTableDataSource+ScrollExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewChatTableDataSource+ScrollExtension.swift"; sourceTree = "<group>"; };
 		47CFA9492A38CA480030BC23 /* NewMessagesIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessagesIndicatorView.swift; sourceTree = "<group>"; };
 		47CFA94B2A38CA4E0030BC23 /* NewMessagesIndicatorView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewMessagesIndicatorView.xib; sourceTree = "<group>"; };
@@ -3995,6 +3997,7 @@
 				47BF27F02A37782E00F15EE9 /* NewChatTableDataSource+PreloaderExtension.swift */,
 				47CFA9452A38C5200030BC23 /* NewChatTableDataSource+ScrollExtension.swift */,
 				4701462A2A3FC0A900A00DF8 /* NewChatTableDataSource+AttachmentsExtension.swift */,
+				47CEA44F2A4369A000E936CB /* NewChatTableDataSource+BotWebViewExtension.swift */,
 			);
 			path = NewChatTableDataSource;
 			sourceTree = "<group>";
@@ -5609,6 +5612,7 @@
 				F33846EF267B15800041F1EA /* WelcomeCompleteViewController.swift in Sources */,
 				475BDD6A232BEFFC00C5BBD6 /* RootViewController.swift in Sources */,
 				47308E1724FEE6E700FFAC6F /* SocketAckEmitter.swift in Sources */,
+				47CEA4502A4369A000E936CB /* NewChatTableDataSource+BotWebViewExtension.swift in Sources */,
 				F34BFED9267B3522003F6D55 /* RestoreUserFormViewController.swift in Sources */,
 				47E6A4C82A2E66DB00A9509E /* DateSeparatorView.swift in Sources */,
 				47FA43FD23748A76005D8C63 /* SubscriptionFormDataSource.swift in Sources */,

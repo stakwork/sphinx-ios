@@ -160,6 +160,33 @@ extension NewMessageTableViewCell {
     }
     
     func configureWith(
+        botHTMLContent: BubbleMessageLayoutState.BotHTMLContent?,
+        botWebViewData: MessageTableCellState.BotWebViewData?
+    ) {
+        if let botHTMLContent = botHTMLContent {
+            
+            botResponseView.configureWith(
+                botHTMLContent: botHTMLContent,
+                botWebViewData: botWebViewData
+            )
+            botResponseView.isHidden = false
+            
+            if let botWebViewData = botWebViewData {
+                botResponseViewHeightConstraint.constant = botWebViewData.height
+                botResponseView.layoutIfNeeded()
+            } else if let messageId = messageId {
+                let delayTime = DispatchTime.now() + Double(Int64(0.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+                DispatchQueue.global().asyncAfter(deadline: delayTime) {
+                    self.delegate?.shouldLoadBotWebViewDataFor(
+                        messageId: messageId,
+                        and: self.rowIndex
+                    )
+                }
+            }
+        }
+    }
+    
+    func configureWith(
         boosts: BubbleMessageLayoutState.Boosts?,
         and bubble: BubbleMessageLayoutState.Bubble
     ) {

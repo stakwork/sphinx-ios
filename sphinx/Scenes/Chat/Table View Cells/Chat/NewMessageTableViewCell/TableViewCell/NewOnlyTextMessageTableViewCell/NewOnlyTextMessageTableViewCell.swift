@@ -53,6 +53,7 @@ class NewOnlyTextMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableV
         mediaData: MessageTableCellState.MediaData?,
         tribeData: MessageTableCellState.TribeData?,
         linkData: MessageTableCellState.LinkData?,
+        botWebViewData: MessageTableCellState.BotWebViewData?,
         uploadProgressData: MessageTableCellState.UploadProgressData?,
         delegate: NewMessageTableViewCellDelegate,
         indexPath: IndexPath

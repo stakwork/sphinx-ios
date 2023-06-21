@@ -391,6 +391,14 @@ extension TransactionMessage {
         return type == TransactionMessageType.botResponse.rawValue
     }
     
+    func isBotHTMLResponse() -> Bool {
+        return type == TransactionMessageType.botResponse.rawValue && self.messageContent?.isValidHTML == true
+    }
+    
+    func isBotTextResponse() -> Bool {
+        return type == TransactionMessageType.botResponse.rawValue && self.messageContent?.isValidHTML == false
+    }
+    
     func isBoosted() -> Bool {
         return self.reactions != nil && (self.reactions?.totalSats ?? 0) > 0
     }
@@ -1082,6 +1090,7 @@ extension TransactionMessage {
                isFileAttachment() ||
                isGiphy() ||
                isGroupActionMessage() ||
-               isCallLink()
+               isCallLink() ||
+               isBotResponse()
     }
 }

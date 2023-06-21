@@ -10,7 +10,7 @@ import UIKit
 
 extension MessageTableCellState {
     
-    struct LinkContact: Equatable {
+    struct LinkContact {
         var pubkey: String
         var routeHint: String?
         var contact: UserContact?
@@ -24,15 +24,9 @@ extension MessageTableCellState {
             self.routeHint = routeHint
             self.contact = contact
         }
-        
-        static func == (lhs: LinkContact, rhs: LinkContact) -> Bool {
-            return lhs.pubkey         == rhs.pubkey &&
-                   lhs.routeHint      == rhs.routeHint &&
-                   lhs.contact?.id    == rhs.contact?.id
-        }
     }
     
-    struct LinkTribe: Equatable {
+    struct LinkTribe {
         var link: String
         var uuid: String
         var isJoined: Bool
@@ -46,15 +40,9 @@ extension MessageTableCellState {
             self.uuid = uuid
             self.isJoined = isJoined
         }
-        
-        static func == (lhs: LinkTribe, rhs: LinkTribe) -> Bool {
-            return lhs.link           == rhs.link &&
-                   lhs.uuid           == rhs.uuid &&
-                   lhs.isJoined       == rhs.isJoined
-        }
     }
     
-    struct LinkWeb: Equatable {
+    struct LinkWeb {
         var link: String
         
         init(
@@ -62,13 +50,9 @@ extension MessageTableCellState {
         ) {
             self.link = link
         }
-        
-        static func == (lhs: LinkWeb, rhs: LinkWeb) -> Bool {
-                return lhs.link       == rhs.link
-        }
     }
     
-    struct LinkData: Equatable {
+    struct LinkData {
         var link: String
         var icon: String?
         var title: String
@@ -90,15 +74,6 @@ extension MessageTableCellState {
             self.description = description
             self.image = image
             self.failed = failed
-        }
-        
-        static func == (lhs: LinkData, rhs: LinkData) -> Bool {
-            return lhs.link           == rhs.link &&
-                   lhs.icon           == rhs.icon &&
-                   lhs.title          == rhs.title &&
-                   lhs.description    == rhs.description &&
-                   lhs.image          == rhs.image &&
-                   lhs.failed         == rhs.failed
         }
     }
     
@@ -124,7 +99,7 @@ extension MessageTableCellState {
         }
     }
     
-    struct MediaData: Equatable {
+    struct MediaData {
         var image: UIImage?
         var data: Data?
         var fileInfo: MessageTableCellState.FileInfo?
@@ -141,16 +116,9 @@ extension MessageTableCellState {
             self.fileInfo = fileInfo
             self.failed = failed
         }
-        
-        static func == (lhs: MediaData, rhs: MediaData) -> Bool {
-            return lhs.image           == rhs.image &&
-                   lhs.data            == rhs.data &&
-                   lhs.fileInfo        == rhs.fileInfo &&
-                   lhs.failed          == rhs.failed
-        }
     }
     
-    struct FileInfo: Equatable {
+    struct FileInfo {
         var fileSize: Int
         var fileName: String
         var pagesCount: Int?
@@ -166,12 +134,6 @@ extension MessageTableCellState {
             self.fileName = fileName
             self.pagesCount = pagesCount
             self.previewImage = previewImage
-        }
-        
-        static func == (lhs: FileInfo, rhs: FileInfo) -> Bool {
-            return lhs.fileSize           == rhs.fileSize &&
-                   lhs.fileName           == rhs.fileName &&
-                   lhs.pagesCount         == rhs.pagesCount
         }
     }
     
@@ -191,7 +153,7 @@ extension MessageTableCellState {
         }
     }
     
-    struct UploadProgressData: Equatable {
+    struct UploadProgressData {
         var progress: Int
         
         init(
@@ -199,9 +161,15 @@ extension MessageTableCellState {
         ) {
             self.progress = progress
         }
+    }
+    
+    struct BotWebViewData {
+        var height: CGFloat
         
-        static func == (lhs: UploadProgressData, rhs: UploadProgressData) -> Bool {
-            return lhs.progress       == rhs.progress
+        init(
+            height: CGFloat
+        ) {
+            self.height = height
         }
     }
 }

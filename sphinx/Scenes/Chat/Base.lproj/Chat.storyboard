@@ -664,6 +664,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nyi-7s-N6q">
+                                <rect key="frame" x="67.5" y="269.5" width="240" height="128"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="0vM-nC-iCA"/>
+                                    <constraint firstAttribute="height" constant="128" id="Tdp-5m-JyU"/>
+                                </constraints>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Qjl-UA-qWr">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
@@ -757,6 +769,7 @@
                         <constraints>
                             <constraint firstItem="JH0-65-MH3" firstAttribute="leading" secondItem="yYW-LQ-4iJ" secondAttribute="leading" id="2V7-Yh-Ig5"/>
                             <constraint firstAttribute="trailing" secondItem="vcO-XX-v5B" secondAttribute="trailing" id="43i-wm-NBZ"/>
+                            <constraint firstItem="nyi-7s-N6q" firstAttribute="centerX" secondItem="IFK-j2-YwY" secondAttribute="centerX" id="5NC-E9-mwN"/>
                             <constraint firstItem="vcO-XX-v5B" firstAttribute="leading" secondItem="yYW-LQ-4iJ" secondAttribute="leading" id="BIy-1O-kXz"/>
                             <constraint firstItem="Qjl-UA-qWr" firstAttribute="top" secondItem="vcO-XX-v5B" secondAttribute="bottom" id="BWN-h6-WNj"/>
                             <constraint firstItem="JH0-65-MH3" firstAttribute="bottom" secondItem="yYW-LQ-4iJ" secondAttribute="bottom" id="EyH-a4-Igb"/>
@@ -764,12 +777,14 @@
                             <constraint firstAttribute="top" secondItem="vcO-XX-v5B" secondAttribute="top" id="RCY-aa-Ja5"/>
                             <constraint firstAttribute="trailing" secondItem="JH0-65-MH3" secondAttribute="trailing" id="X6S-6A-dXa"/>
                             <constraint firstItem="JH0-65-MH3" firstAttribute="top" secondItem="Qjl-UA-qWr" secondAttribute="bottom" id="cJ7-Jt-rtp"/>
+                            <constraint firstItem="nyi-7s-N6q" firstAttribute="centerY" secondItem="IFK-j2-YwY" secondAttribute="centerY" id="iKO-OK-K6T"/>
                             <constraint firstItem="Qjl-UA-qWr" firstAttribute="leading" secondItem="IFK-j2-YwY" secondAttribute="leading" id="lrX-b3-WjB"/>
                             <constraint firstItem="Qjl-UA-qWr" firstAttribute="top" secondItem="IFK-j2-YwY" secondAttribute="top" id="n41-qS-QKn"/>
                             <constraint firstItem="Qjl-UA-qWr" firstAttribute="trailing" secondItem="IFK-j2-YwY" secondAttribute="trailing" id="pFP-or-dJh"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="botWebView" destination="nyi-7s-N6q" id="dzU-QP-rzm"/>
                         <outlet property="bottomConstraint" destination="Ht8-VT-KjU" id="TvB-Xq-ofN"/>
                         <outlet property="bottomView" destination="adm-hA-lEF" id="hez-Vx-Rs8"/>
                         <outlet property="chatTableView" destination="7O1-jH-hsI" id="lkW-uB-74U"/>

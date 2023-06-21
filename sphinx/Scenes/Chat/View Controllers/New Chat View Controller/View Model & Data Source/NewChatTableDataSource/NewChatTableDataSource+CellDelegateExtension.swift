@@ -104,8 +104,8 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
             messageId: messageId,
             and: rowIndex
         ),
-            let message = tableCellState.1.message,
-            let imageUrl = tableCellState.1.messageMedia?.url
+           let message = tableCellState.1.message,
+           let imageUrl = tableCellState.1.messageMedia?.url
         {
             if message.isDirectPayment() {
                 MediaLoader.loadPaymentTemplateImage(url: imageUrl, message: message, completion: { messageId, image in
@@ -143,8 +143,8 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
             messageId: messageId,
             and: rowIndex
         ),
-            let message = tableCellState.1.message,
-            let url = tableCellState.1.messageMedia?.url
+           let message = tableCellState.1.message,
+           let url = tableCellState.1.messageMedia?.url
         {
             shouldLoadFileDataFor(
                 messageId: messageId,
@@ -161,8 +161,8 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
             messageId: messageId,
             and: rowIndex
         ),
-            let message = tableCellState.1.message,
-            let url = tableCellState.1.genericFile?.url
+           let message = tableCellState.1.message,
+           let url = tableCellState.1.genericFile?.url
         {
             shouldLoadFileDataFor(
                 messageId: messageId,
@@ -210,8 +210,8 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
             messageId: messageId,
             and: rowIndex
         ),
-            let message = tableCellState.1.message,
-            let url = tableCellState.1.messageMedia?.url
+           let message = tableCellState.1.message,
+           let url = tableCellState.1.messageMedia?.url
         {
             MediaLoader.loadVideo(url: url, message: message, completion: { (messageId, data, image) in
                 let updatedMediaData = MessageTableCellState.MediaData(
@@ -236,7 +236,7 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
             messageId: messageId,
             and: rowIndex
         ),
-            let url = tableCellState.1.messageMedia?.url
+           let url = tableCellState.1.messageMedia?.url
         {
             GiphyHelper.getGiphyDataFrom(url: url.absoluteString, messageId: messageId, completion: { (data, messageId) in
                 DispatchQueue.main.async {
@@ -256,6 +256,35 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
         }
     }
     
+    func shouldLoadBotWebViewDataFor(messageId: Int, and rowIndex: Int) {
+        if var tableCellState = getTableCellStateFor(
+            messageId: messageId,
+            and: rowIndex
+        ),
+           let html = tableCellState.1.botHTMLContent?.html
+        {
+            webViewSemaphore.wait()
+            
+            loadWebViewContent(
+                html,
+                completion: { height in
+                    self.botsWebViewData[messageId] = MessageTableCellState.BotWebViewData(height: height)
+                    
+                    DispatchQueue.main.async {
+                        var snapshot = self.dataSource.snapshot()
+                        snapshot.reloadItems([tableCellState.1])
+                        self.dataSource.apply(snapshot, animatingDifferences: false)
+                    }
+                    
+                    self.webViewSemaphore.signal()
+                }
+            )
+        }
+    }
+}
+
+///Updating rows after content loaded
+extension NewChatTableDataSource {
     func updateMessageTableCellStateFor(
         rowIndex: Int,
         messageId: Int,

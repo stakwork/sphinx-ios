@@ -205,7 +205,15 @@ class AttachmentsManager {
     }
     
     func sendAttachment(file: NSDictionary, attachmentObject: AttachmentObject, replyingMessage: TransactionMessage? = nil) {
-        guard let params = TransactionMessage.getMessageParams(contact: contact, chat: chat, file: file, text: attachmentObject.text, mediaKey: attachmentObject.mediaKey, price: attachmentObject.price, replyingMessage: replyingMessage) else {
+        guard let params = TransactionMessage.getMessageParams(
+            contact: contact,
+            chat: chat,
+            file: file,
+            text: attachmentObject.text,
+            mediaKey: attachmentObject.mediaKey,
+            price: attachmentObject.price,
+            replyingMessage: replyingMessage
+        ) else {
             uploadFailed()
             return
         }

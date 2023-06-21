@@ -128,8 +128,7 @@ class ChatAttachmentViewController: NewKeyboardHandlerViewController, BackCamera
         self.view.alpha = 0.0
         viewTitle.addTextSpacing(value: 2)
         
-//        setupPriceViews()
-        disablePriceFunctionality()
+        setupPriceViews()
         
         headerContainer.addShadow(offset: CGSize(width: 0, height: 3), opacity: 0.2)
 
@@ -165,8 +164,7 @@ class ChatAttachmentViewController: NewKeyboardHandlerViewController, BackCamera
     }
     
     func showPriceContainer() {
-    //  ⚠️ Tentatively disabled in order to comply with our current App Store review approval needs.
-//        setPriceContainer.isHidden = false
+        setPriceContainer.isHidden = false
     }
     
     func setupForBadges(){
@@ -201,8 +199,19 @@ class ChatAttachmentViewController: NewKeyboardHandlerViewController, BackCamera
         
         if let data = data, isValid.0 {
             let (key, encryptedData) = SymmetricEncryptionManager.sharedInstance.encryptData(data: data)
+            
             if let encryptedData = encryptedData {
-                let attachmentObject = AttachmentObject(data: encryptedData, fileName: fileName, mediaKey: key, type: type, text: messageContent, paidMessage: paidMessage, image: fixedImage, price: price)
+                
+                let attachmentObject = AttachmentObject(
+                    data: encryptedData,
+                    fileName: fileName,
+                    mediaKey: key,
+                    type: type,
+                    text: messageContent,
+                    paidMessage: paidMessage,
+                    image: fixedImage,
+                    price: price
+                )
                 
                 delegate?.shouldStartUploading(attachmentObject: attachmentObject)
                 dismissView()
@@ -312,15 +321,6 @@ class ChatAttachmentViewController: NewKeyboardHandlerViewController, BackCamera
     
     @IBAction func closeButtonTouched() {
         dismissView()
-    }
-    
-    
-    /// Tentatively disables the visibility and functionality of the "Set Price"
-    /// button in order to comply with our current App Store review approval needs.
-    private func disablePriceFunctionality() {
-        attachmentPriceVCContainer.isHidden = true
-        setPriceContainer.isHidden = true
-        setPriceContainer.subviews.forEach { $0.isHidden = true }
     }
     
     private func setupPriceViews() {

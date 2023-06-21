@@ -1345,7 +1345,7 @@
                                                     <constraint firstAttribute="height" constant="1" id="Z9K-G0-0YJ"/>
                                                 </constraints>
                                             </view>
-                                            <button opaque="NO" userInteractionEnabled="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rFX-qw-uWn">
+                                            <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rFX-qw-uWn">
                                                 <rect key="frame" x="0.0" y="0.0" width="315" height="50"/>
                                                 <connections>
                                                     <action selector="optionButtonTouched:" destination="o9k-rj-cJf" eventType="touchUpInside" id="nTd-Yh-2cb"/>

@@ -477,6 +477,10 @@ extension TransactionMessage {
         return type == TransactionMessageType.directPayment.rawValue
     }
     
+    func isPurchaseAccept() -> Bool {
+        return type == TransactionMessageType.purchaseAccept.rawValue
+    }
+    
     func isPodcastPayment() -> Bool {
         let feedIDString1 = "{\"feedID\":"
         let feedIDString2 = "{\"feedID\":"

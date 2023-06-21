@@ -173,6 +173,7 @@ struct BubbleMessageLayoutState: CommonLayoutState {
     
     struct MessageMedia {
         var url: URL?
+        var mediaKey: String?
         var isImage: Bool
         var isVideo: Bool
         var isGif: Bool
@@ -183,6 +184,7 @@ struct BubbleMessageLayoutState: CommonLayoutState {
         
         init(
             url: URL?,
+            mediaKey: String?,
             isImage: Bool,
             isVideo: Bool,
             isGif: Bool,
@@ -192,6 +194,7 @@ struct BubbleMessageLayoutState: CommonLayoutState {
             isPaymentTemplate: Bool
         ) {
             self.url = url
+            self.mediaKey = mediaKey
             self.isImage = isImage
             self.isVideo = isVideo
             self.isGif = isGif
@@ -292,6 +295,22 @@ struct BubbleMessageLayoutState: CommonLayoutState {
             link: String
         ) {
             self.link = link
+        }
+    }
+    
+    struct PaidContent {
+        var price: Int
+        var statusTitle: String
+        var status: TransactionMessage.TransactionMessageType
+        
+        init(
+            price: Int,
+            statusTitle: String,
+            status: TransactionMessage.TransactionMessageType
+        ) {
+            self.price = price
+            self.statusTitle = statusTitle
+            self.status = status
         }
     }
 }

@@ -53,6 +53,7 @@ class MediaMessageView: UIView {
     func configureWith(
         messageMedia: BubbleMessageLayoutState.MessageMedia,
         mediaData: MessageTableCellState.MediaData?,
+        bubble: BubbleMessageLayoutState.Bubble,
         and delegate: MediaMessageViewDelegate?
     ) {
         self.delegate = delegate
@@ -85,11 +86,15 @@ class MediaMessageView: UIView {
             fileInfoView.isHidden = true
             videoOverlay.isHidden = true
             gifOverlay.isHidden = true
+            paidContentOverlay.isHidden = true
             
-            paidContentOverlay.isHidden = !messageMedia.isPaid
-            
-            loadingContainer.isHidden = false
-            loadingImageView.rotate()
+            if messageMedia.isPaid && bubble.direction.isIncoming() {
+                paidContentOverlay.isHidden = false
+                mediaImageView.image = UIImage(named: "paidImageBlurredPlaceholder")
+            } else {
+                loadingContainer.isHidden = false
+                loadingImageView.rotate()
+            }
         }
     }
     

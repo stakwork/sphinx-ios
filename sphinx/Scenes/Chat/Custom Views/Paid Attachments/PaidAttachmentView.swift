@@ -68,9 +68,6 @@ class PaidAttachmentView: UIView {
         let price = message.getAttachmentPrice() ?? 0
         let status = message.getPurchaseStatus(queryDB: false)
         
-        //  ⚠️ Tentatively denying purchase ability in order to comply with our current App Store review approval needs.
-//        let isDenied = status == TransactionMessage.TransactionMessageType.purchaseDeny
-//        let borderColor = isDenied ? UIColor.Sphinx.PrimaryRed : UIColor.Sphinx.PrimaryGreen
         let borderColor = UIColor.Sphinx.SecondaryText
         
         roundCorners(
@@ -88,34 +85,39 @@ class PaidAttachmentView: UIView {
     
     
     func configure(status: TransactionMessage.TransactionMessageType, price: Int) {
-        
         paymentsNotSupportedLabel.text = "paid-message.payment-not-supported".localized
+    }
+    
+    func configure(
+        paidContent: BubbleMessageLayoutState.PaidContent,
+        and delegate: PaidAttachmentViewDelegate?
+    ) {
+        self.delegate = delegate
         
-        //  ⚠️ Tentatively disabled in order to comply with our current App Store review approval needs.
-//        let priceString = price.formattedWithSeparator
-//        purchaseAmountLabel.text = "\(priceString) SAT"
-//
-//        payAttachmentContainer.isHidden = true
-//        processingPaymentContainer.isHidden = true
-//        purchaseAcceptContainer.isHidden = true
-//        purchaseDeniedContainer.isHidden = true
-//        loading = false
-//
-//        switch(status) {
-//        case TransactionMessage.TransactionMessageType.purchase:
-//            processingPaymentContainer.isHidden = false
-//            loading = true
-//            break
-//        case TransactionMessage.TransactionMessageType.purchaseAccept:
-//            purchaseAcceptContainer.isHidden = false
-//            break
-//        case TransactionMessage.TransactionMessageType.purchaseDeny:
-//            purchaseDeniedContainer.isHidden = false
-//            break
-//        default:
-//            payAttachmentContainer.isHidden = false
-//            break
-//        }
+        let priceString = paidContent.price.formattedWithSeparator
+        purchaseAmountLabel.text = "\(priceString) SAT"
+
+        payAttachmentContainer.isHidden = true
+        processingPaymentContainer.isHidden = true
+        purchaseAcceptContainer.isHidden = true
+        purchaseDeniedContainer.isHidden = true
+        loading = false
+
+        switch(paidContent.status) {
+        case TransactionMessage.TransactionMessageType.purchase:
+            processingPaymentContainer.isHidden = false
+            loading = true
+            break
+        case TransactionMessage.TransactionMessageType.purchaseAccept:
+            purchaseAcceptContainer.isHidden = false
+            break
+        case TransactionMessage.TransactionMessageType.purchaseDeny:
+            purchaseDeniedContainer.isHidden = false
+            break
+        default:
+            payAttachmentContainer.isHidden = false
+            break
+        }
     }
     
     @IBAction func payButtonTouched() {

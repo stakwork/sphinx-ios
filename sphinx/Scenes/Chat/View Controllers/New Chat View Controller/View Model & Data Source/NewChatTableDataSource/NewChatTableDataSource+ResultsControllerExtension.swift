@@ -136,6 +136,7 @@ extension NewChatTableDataSource {
         
         let replyingMessagesMap = getReplyingMessagesMapFor(messages: messages)
         let boostMessagesMap = getBoostMessagesMapFor(messages: messages)
+        let purchaseMessagesMap = getPurchaseMessagesMapFor(messages: messages)
         let linkContactsArray = getLinkContactsArrayFor(messages: messages)
         let linkTribesArray = getLinkTribesArrayFor(messages: messages)
         
@@ -166,6 +167,7 @@ extension NewChatTableDataSource {
                 
                 let replyingMessage = (message.replyUUID != nil) ? replyingMessagesMap[message.replyUUID!] : nil
                 let boostsMessages = (message.uuid != nil) ? (boostMessagesMap[message.uuid!] ?? []) : []
+                let purchaseMessages = purchaseMessagesMap[message.getMUID()] ?? [:]
                 let linkContact = linkContactsArray[message.id]
                 let linkTribe = linkTribesArray[message.id]
                 let linkWeb = getLinkWebFor(message: message)
@@ -182,6 +184,7 @@ extension NewChatTableDataSource {
                         contactImage: headerImage,
                         replyingMessage: replyingMessage,
                         boostMessages: boostsMessages,
+                        purchaseMessages: purchaseMessages,
                         linkContact: linkContact,
                         linkTribe: linkTribe,
                         linkWeb: linkWeb
@@ -281,6 +284,28 @@ extension NewChatTableDataSource {
         }
         
         return replyingMessagesMap
+    }
+    
+    func getPurchaseMessagesMapFor(
+        messages: [TransactionMessage]
+    ) -> [String: [Int: TransactionMessage]] {
+        
+        let messageMUIDs: [String] = messages.map({ $0.getMUID() }).filter({ $0.isNotEmpty })
+        let purchaseMessages = TransactionMessage.getPurchaseItemsFor(messageMUIDs, on: chat)
+        
+        var purchaseMessagesMap: [String: [Int: TransactionMessage]] = [:]
+        
+        for purchaseMessage in purchaseMessages {
+            if let muid = purchaseMessage.muid ?? purchaseMessage.originalMuid, muid.isNotEmpty {
+                if var purchaseItems = purchaseMessagesMap[muid] {
+                    purchaseItems[purchaseMessage.type] = purchaseMessage
+                } else {
+                    purchaseMessagesMap[muid] = [purchaseMessage.type: purchaseMessage]
+                }
+            }
+        }
+        
+        return purchaseMessagesMap
     }
     
     func getBoostMessagesMapFor(

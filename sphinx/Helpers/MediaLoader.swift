@@ -71,7 +71,13 @@ class MediaLoader {
         })
     }
     
-    class func loadImage(url: URL, message: TransactionMessage, completion: @escaping (Int, UIImage) -> (), errorCompletion: @escaping (Int) -> ()) {
+    class func loadImage(
+        url: URL,
+        message: TransactionMessage,
+        mediaKey: String? = nil,
+        completion: @escaping (Int, UIImage) -> (),
+        errorCompletion: @escaping (Int) -> ()
+    ) {
         let messageId = message.id
         let isGif = message.isGif()
         
@@ -92,7 +98,14 @@ class MediaLoader {
             message.saveFileName(fileName)
             
             DispatchQueue.main.async {
-                loadImageFromData(data: data, url: url, message: message, completion: completion, errorCompletion: errorCompletion)
+                loadImageFromData(
+                    data: data,
+                    url: url,
+                    message: message,
+                    mediaKey: mediaKey,
+                    completion: completion,
+                    errorCompletion: errorCompletion
+                )
             }
         }, errorCompletion: {
             DispatchQueue.main.async {
@@ -101,7 +114,14 @@ class MediaLoader {
         })
     }
     
-    class func loadImageFromData(data: Data, url: URL, message: TransactionMessage, completion: @escaping (Int, UIImage) -> (), errorCompletion: @escaping (Int) -> ()) {
+    class func loadImageFromData(
+        data: Data,
+        url: URL,
+        message: TransactionMessage,
+        mediaKey: String? = nil,
+        completion: @escaping (Int, UIImage) -> (),
+        errorCompletion: @escaping (Int) -> ()
+    ) {
         let messageId = message.id
         let isGif = message.isGif()
         let isPDF = message.isPDF()
@@ -109,7 +129,7 @@ class MediaLoader {
         
         if let image = UIImage(data: data) {
             decryptedImage = image
-        } else if let mediaKey = message.getMediaKey(), mediaKey != "" {
+        } else if let mediaKey = mediaKey ?? message.getMediaKey(), mediaKey != "" {
             if let decryptedData = SymmetricEncryptionManager.sharedInstance.decryptData(data: data, key: mediaKey) {
                 message.saveFileSize(decryptedData.count)
                 
@@ -168,7 +188,13 @@ class MediaLoader {
         })
     }
     
-    class func loadVideo(url: URL, message: TransactionMessage, completion: @escaping (Int, Data, UIImage?) -> (), errorCompletion: @escaping (Int) -> ()) {
+    class func loadVideo(
+        url: URL,
+        message: TransactionMessage,
+        mediaKey: String? = nil,
+        completion: @escaping (Int, Data, UIImage?) -> (),
+        errorCompletion: @escaping (Int) -> ()
+    ) {
         let messageId = message.id
         
         if message.isMediaExpired() {
@@ -192,13 +218,21 @@ class MediaLoader {
             loadDataFrom(URL: url, completion: { (data, fileName) in
                 message.saveFileName(fileName)
                 
-                self.loadMediaFromData(data: data, url: url, message: message, isVideo: true, completion: { data in
-                    self.getThumbnailImageFromVideoData(data: data, videoUrl: url.absoluteString, completion: { image in
-                        DispatchQueue.main.async {
-                            completion(messageId, data, image)
-                        }
-                    })
-                }, errorCompletion: errorCompletion)
+                self.loadMediaFromData(
+                    data: data,
+                    url: url,
+                    message: message,
+                    mediaKey: mediaKey,
+                    isVideo: true,
+                    completion: { data in
+                        self.getThumbnailImageFromVideoData(data: data, videoUrl: url.absoluteString, completion: { image in
+                            DispatchQueue.main.async {
+                                completion(messageId, data, image)
+                            }
+                        })
+                    },
+                    errorCompletion: errorCompletion
+                )
             }, errorCompletion: {
                 DispatchQueue.main.async {
                     errorCompletion(messageId)
@@ -211,7 +245,13 @@ class MediaLoader {
         MediaLoader.loadFileData(url: url, message: message, completion: completion, errorCompletion: errorCompletion)
     }
     
-    class func loadFileData(url: URL, message: TransactionMessage, completion: @escaping (Int, Data) -> (), errorCompletion: @escaping (Int) -> ()) {
+    class func loadFileData(
+        url: URL,
+        message: TransactionMessage,
+        mediaKey: String? = nil,
+        completion: @escaping (Int, Data) -> (),
+        errorCompletion: @escaping (Int) -> ()
+    ) {
         let messageId = message.id
         
         if message.isMediaExpired() {
@@ -225,11 +265,18 @@ class MediaLoader {
             loadDataFrom(URL: url, completion: { (data, fileName) in
                 message.saveFileName(fileName)
                 
-                self.loadMediaFromData(data: data, url: url, message: message, completion: { data in
-                    DispatchQueue.main.async {
-                        completion(messageId, data)
-                    }
-                }, errorCompletion: errorCompletion)
+                self.loadMediaFromData(
+                    data: data,
+                    url: url,
+                    message: message,
+                    mediaKey: mediaKey,
+                    completion: { data in
+                        DispatchQueue.main.async {
+                            completion(messageId, data)
+                        }
+                    },
+                    errorCompletion: errorCompletion
+                )
             }, errorCompletion: {
                 DispatchQueue.main.async {
                     errorCompletion(messageId)
@@ -242,6 +289,7 @@ class MediaLoader {
         url: URL,
         isPdf: Bool,
         message: TransactionMessage,
+        mediaKey: String? = nil,
         completion: @escaping (Int, Data, MessageTableCellState.FileInfo) -> (),
         errorCompletion: @escaping (Int) -> ()
     ) {
@@ -270,19 +318,25 @@ class MediaLoader {
             loadDataFrom(URL: url, completion: { (data, fileName) in
                 message.saveFileName(fileName)
                 
-                self.loadMediaFromData(data: data, url: url, message: message, completion: { data in
-                    
-                    let fileInfo = MessageTableCellState.FileInfo(
-                        fileSize: message.mediaFileSize,
-                        fileName: message.mediaFileName ?? "",
-                        pagesCount: isPdf ? data.getPDFPagesCount() : nil,
-                        previewImage: isPdf ? data.getPDFThumbnail() : nil
-                    )
-                    
-                    DispatchQueue.main.async {
-                        completion(messageId, data, fileInfo)
-                    }
-                }, errorCompletion: errorCompletion)
+                self.loadMediaFromData(
+                    data: data,
+                    url: url,
+                    message: message,
+                    mediaKey: mediaKey,
+                    completion: { data in
+                        let fileInfo = MessageTableCellState.FileInfo(
+                            fileSize: message.mediaFileSize,
+                            fileName: message.mediaFileName ?? "",
+                            pagesCount: isPdf ? data.getPDFPagesCount() : nil,
+                            previewImage: isPdf ? data.getPDFThumbnail() : nil
+                        )
+                        
+                        DispatchQueue.main.async {
+                            completion(messageId, data, fileInfo)
+                        }
+                    },
+                    errorCompletion: errorCompletion
+                )
             }, errorCompletion: {
                 DispatchQueue.main.async {
                     errorCompletion(messageId)
@@ -308,11 +362,12 @@ class MediaLoader {
     class func loadMediaFromData(
         data: Data,
         url: URL, message: TransactionMessage,
+        mediaKey: String? = nil,
         isVideo: Bool = false,
         completion: @escaping (Data) -> (),
         errorCompletion: @escaping (Int) -> ()
     ) {
-        if let mediaKey = message.getMediaKey(), mediaKey != "" {
+        if let mediaKey = mediaKey ?? message.getMediaKey(), mediaKey != "" {
             if let decryptedData = SymmetricEncryptionManager.sharedInstance.decryptData(data: data, key: mediaKey) {
                 message.saveFileSize(decryptedData.count)
                 

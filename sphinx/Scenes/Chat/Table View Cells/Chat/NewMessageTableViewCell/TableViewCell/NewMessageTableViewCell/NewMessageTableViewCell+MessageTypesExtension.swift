@@ -93,13 +93,15 @@ extension NewMessageTableViewCell {
     
     func configureWith(
         messageMedia: BubbleMessageLayoutState.MessageMedia?,
-        mediaData: MessageTableCellState.MediaData?
+        mediaData: MessageTableCellState.MediaData?,
+        and bubble: BubbleMessageLayoutState.Bubble
     ) {
         if let messageMedia = messageMedia {
             
             mediaContentView.configureWith(
                 messageMedia: messageMedia,
                 mediaData: mediaData,
+                bubble: bubble,
                 and: self
             )
             mediaContentView.isHidden = false

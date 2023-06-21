@@ -32,6 +32,7 @@ struct MessageTableCellState {
     var contactImage: UIImage? = nil
     var replyingMessage: TransactionMessage? = nil
     var boostMessages: [TransactionMessage] = []
+    var purchaseMessages: [Int: TransactionMessage] = [:]
     var linkContact: LinkContact? = nil
     var linkTribe: LinkTribe? = nil
     var linkWeb: LinkWeb? = nil
@@ -50,6 +51,7 @@ struct MessageTableCellState {
         contactImage: UIImage? = nil,
         replyingMessage: TransactionMessage? = nil,
         boostMessages: [TransactionMessage] = [],
+        purchaseMessages: [Int: TransactionMessage] = [:],
         linkContact: LinkContact? = nil,
         linkTribe: LinkTribe? = nil,
         linkWeb: LinkWeb? = nil
@@ -68,6 +70,7 @@ struct MessageTableCellState {
         self.contactImage = contactImage
         self.replyingMessage = replyingMessage
         self.boostMessages = boostMessages
+        self.purchaseMessages = purchaseMessages
         self.linkContact = linkContact
         self.linkTribe = linkTribe
         self.linkWeb = linkWeb
@@ -215,18 +218,11 @@ struct MessageTableCellState {
             return nil
         }
         
-        var url: URL? = nil
-        
-        if message.isMediaAttachment() {
-            url = message.getMediaUrlFromMediaToken()
-        } else if message.isDirectPayment() {
-            url = message.getTemplateURL()
-        } else if message.isGiphy() {
-            url = message.getGiphyUrl()
-        }
+        var urlAndKey = messageMediaUrlAndKey
         
         return BubbleMessageLayoutState.MessageMedia(
-            url: url,
+            url: urlAndKey.0,
+            mediaKey: urlAndKey.1,
             isImage: message.isImage() || message.isDirectPayment(),
             isVideo: message.isVideo(),
             isGif: message.isGif(),
@@ -235,6 +231,30 @@ struct MessageTableCellState {
             isPaid: message.isPaidAttachment(),
             isPaymentTemplate: message.isDirectPayment()
         )
+    }()
+    
+    lazy var messageMediaUrlAndKey: (URL?, String?) = {
+        guard let message = message else {
+            return (nil, nil)
+        }
+        
+        var urlAndKey: (URL?, String?) = (nil, nil)
+        
+        if message.isMediaAttachment() {
+            if message.isPaidAttachment() && bubble?.direction.isIncoming() == true {
+                if let purchaseAccept = purchaseMessages[TransactionMessage.TransactionMessageType.purchaseAccept.rawValue] {
+                    urlAndKey = (purchaseAccept.getMediaUrlFromMediaToken(), purchaseAccept.mediaKey)
+                }
+            } else {
+                urlAndKey = (message.getMediaUrlFromMediaToken(), message.mediaKey)
+            }
+        } else if message.isDirectPayment() {
+            urlAndKey = (message.getTemplateURL(), nil)
+        } else if message.isGiphy() {
+            urlAndKey = (message.getGiphyUrl(), nil)
+        }
+        
+        return urlAndKey
     }()
     
     lazy var genericFile: BubbleMessageLayoutState.GenericFile? = {
@@ -347,6 +367,30 @@ struct MessageTableCellState {
 
         return BubbleMessageLayoutState.WebLink(
             link: linkWeb.link
+        )
+    }()
+    
+    lazy var paidContent: BubbleMessageLayoutState.PaidContent? = {
+        guard let message = message, message.isPaidAttachment() else {
+            return nil
+        }
+        
+        var statusAndLabel: (TransactionMessage.TransactionMessageType, String)
+        
+        if let _ = purchaseMessages[TransactionMessage.TransactionMessageType.purchaseAccept.rawValue] {
+            statusAndLabel = (TransactionMessage.TransactionMessageType.purchaseAccept, "purchase.succeeded".localized)
+        } else if let _ = purchaseMessages[TransactionMessage.TransactionMessageType.purchaseDeny.rawValue] {
+            statusAndLabel = (TransactionMessage.TransactionMessageType.purchaseDeny, "purchase.succeeded".localized)
+        } else if let _ = purchaseMessages[TransactionMessage.TransactionMessageType.purchase.rawValue] {
+            statusAndLabel = (TransactionMessage.TransactionMessageType.purchase, "processing".localized)
+        } else {
+            statusAndLabel = (TransactionMessage.TransactionMessageType(fromRawValue: message.type), "pending".localized)
+        }
+        
+        return BubbleMessageLayoutState.PaidContent(
+            price: message.getAttachmentPrice() ?? 0,
+            statusTitle: statusAndLabel.1,
+            status: statusAndLabel.0
         )
     }()
     

@@ -122,7 +122,7 @@ class NewMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableViewCellP
     
     ///Forth Container
     @IBOutlet weak var messageBoostView: NewMessageBoostView!
-    @IBOutlet weak var paidAttachmentView: PaidAttachmentView! // PENDING
+    @IBOutlet weak var paidAttachmentView: PaidAttachmentView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -168,12 +168,13 @@ class NewMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableViewCellP
         
         ///Message Reply
         configureWith(messageReply: mutableMessageCellState.messageReply, and: bubble)
+        configureWith(paidContent: mutableMessageCellState.paidContent, and: bubble)
         
         ///Other message types
         configureWith(directPayment: mutableMessageCellState.directPayment, and: bubble)
         configureWith(callLink: mutableMessageCellState.callLink)
         configureWith(podcastBoost: mutableMessageCellState.podcastBoost)
-        configureWith(messageMedia: mutableMessageCellState.messageMedia, mediaData: mediaData)
+        configureWith(messageMedia: mutableMessageCellState.messageMedia, mediaData: mediaData, and: bubble)
         configureWith(genericFile: mutableMessageCellState.genericFile, mediaData: mediaData)
         configureWith(botHTMLContent: mutableMessageCellState.botHTMLContent, botWebViewData: botWebViewData)
         

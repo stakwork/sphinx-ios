@@ -40,4 +40,11 @@ class SentPaidDetails: UIView {
         priceView.layer.cornerRadius = 3
         statusView.layer.cornerRadius = 3
     }
+    
+    func configureWith(
+        paidContent: BubbleMessageLayoutState.PaidContent
+    ) {
+        priceLabel.text = "\(paidContent.price.formattedWithSeparator) SAT"
+        statusLabel.text = paidContent.statusTitle
+    }
 }

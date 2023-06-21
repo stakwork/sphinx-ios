@@ -605,6 +605,7 @@
 		47CD9508265EC2A4009B06A4 /* CommonModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CD9507265EC2A4009B06A4 /* CommonModalView.swift */; };
 		47CD9510265EC70E009B06A4 /* API+PeopleExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CD950F265EC70E009B06A4 /* API+PeopleExtension.swift */; };
 		47CEA4502A4369A000E936CB /* NewChatTableDataSource+BotWebViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CEA44F2A4369A000E936CB /* NewChatTableDataSource+BotWebViewExtension.swift */; };
+		47CEA4522A43943800E936CB /* NewMessageTableViewCell+PaidContentExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CEA4512A43943800E936CB /* NewMessageTableViewCell+PaidContentExtension.swift */; };
 		47CFA9462A38C5200030BC23 /* NewChatTableDataSource+ScrollExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CFA9452A38C5200030BC23 /* NewChatTableDataSource+ScrollExtension.swift */; };
 		47CFA94A2A38CA480030BC23 /* NewMessagesIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CFA9492A38CA480030BC23 /* NewMessagesIndicatorView.swift */; };
 		47CFA94C2A38CA4E0030BC23 /* NewMessagesIndicatorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47CFA94B2A38CA4E0030BC23 /* NewMessagesIndicatorView.xib */; };
@@ -1666,6 +1667,7 @@
 		47CD9507265EC2A4009B06A4 /* CommonModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonModalView.swift; sourceTree = "<group>"; };
 		47CD950F265EC70E009B06A4 /* API+PeopleExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+PeopleExtension.swift"; sourceTree = "<group>"; };
 		47CEA44F2A4369A000E936CB /* NewChatTableDataSource+BotWebViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewChatTableDataSource+BotWebViewExtension.swift"; sourceTree = "<group>"; };
+		47CEA4512A43943800E936CB /* NewMessageTableViewCell+PaidContentExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewMessageTableViewCell+PaidContentExtension.swift"; sourceTree = "<group>"; };
 		47CFA9452A38C5200030BC23 /* NewChatTableDataSource+ScrollExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewChatTableDataSource+ScrollExtension.swift"; sourceTree = "<group>"; };
 		47CFA9492A38CA480030BC23 /* NewMessagesIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessagesIndicatorView.swift; sourceTree = "<group>"; };
 		47CFA94B2A38CA4E0030BC23 /* NewMessagesIndicatorView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewMessagesIndicatorView.xib; sourceTree = "<group>"; };
@@ -2114,6 +2116,7 @@
 				47E6A4FC2A2FB45B00A9509E /* NewMessageTableViewCell+StatusHeaderExtension.swift */,
 				47E6A4BF2A2E591900A9509E /* NewMessageTableViewCell+GeneralSetup.swift */,
 				47CFA9512A3A13630030BC23 /* NewMessageTableViewCell+DelegateExtension.swift */,
+				47CEA4512A43943800E936CB /* NewMessageTableViewCell+PaidContentExtension.swift */,
 			);
 			path = NewMessageTableViewCell;
 			sourceTree = "<group>";
@@ -5483,6 +5486,7 @@
 				4789E24A24EDB73B003991BE /* WebAppViewController.swift in Sources */,
 				F3D04027268BABFF00D54A94 /* InviteActionsHelper.swift in Sources */,
 				47E6A4B82A2E406600A9509E /* NewMessageBoostView.swift in Sources */,
+				47CEA4522A43943800E936CB /* NewMessageTableViewCell+PaidContentExtension.swift in Sources */,
 				F3531C3D26BD505F00E9586C /* DashboardChatsListDelegate.swift in Sources */,
 				F3188B822717942000890DDD /* VideoFeed+Computeds.swift in Sources */,
 				F3D04020268BAB7500D54A94 /* InviteWelcomeViewController.swift in Sources */,

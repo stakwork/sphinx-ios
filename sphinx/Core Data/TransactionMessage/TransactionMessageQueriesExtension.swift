@@ -249,5 +249,30 @@ extension TransactionMessage {
         
         return reactions
     }
+    
+    static func getPurchaseItemsFor(
+        _ muids: [String],
+        on chat: Chat
+    ) -> [TransactionMessage] {
+
+        let attachmentType = TransactionMessageType.attachment.rawValue
+        
+        var predicate = NSPredicate(
+            format: "chat == %@  AND (muid IN %@ || originalMuid IN %@) AND type != %d",
+            chat,
+            muids,
+            muids,
+            attachmentType
+        )
+        let sortDescriptors = [NSSortDescriptor(key: "id", ascending: true)]
+        
+        let messages: [TransactionMessage] = CoreDataManager.sharedManager.getObjectsOfTypeWith(
+            predicate: predicate,
+            sortDescriptors: sortDescriptors,
+            entityName: "TransactionMessage"
+        )
+        
+        return messages
+    }
 
 }

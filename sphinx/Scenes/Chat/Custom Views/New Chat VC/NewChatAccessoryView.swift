@@ -68,10 +68,6 @@ extension NewChatAccessoryView {
         messageFieldView.getMessage()
     }
     
-    func setTextBack(text: String) {
-        messageFieldView.setTextBack(text: text)
-    }
-    
     func clearMessage() {
         messageFieldView.clearMessage()
     }

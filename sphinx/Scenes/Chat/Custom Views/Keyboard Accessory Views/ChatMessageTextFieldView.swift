@@ -107,22 +107,6 @@ class ChatMessageTextFieldView: UIView {
         textView.resignFirstResponder()
     }
     
-    func setOngoingMessage(text: String) {
-        if text.isEmpty {
-            return
-        }
-        textView.text = text
-        textView.textColor = UIColor.Sphinx.TextMessages
-        textViewDidChange(textView)
-    }
-    
-    func getMessage() -> String {
-        if textView.text == placeHolderText {
-            return ""
-        }
-        return textView.text
-    }
-    
     func createNewMessage(text: String) {
         let messageType = TransactionMessage.TransactionMessageType.message.rawValue
         
@@ -136,8 +120,16 @@ class ChatMessageTextFieldView: UIView {
         })
     }
     
+    func getMessage() -> String {
+        if textView.text == placeHolderText {
+            return ""
+        }
+        return textView.text
+    }
+    
     func clearMessage() {
         textView.text = ""
+        togglePlaceHolder(editing: textView.isFirstResponder)
         textViewDidChange(textView)
     }
     
@@ -152,9 +144,16 @@ class ChatMessageTextFieldView: UIView {
         self.alpha = active ? 1.0 : 0.8
     }
     
-    func setTextBack(text: String) {
-        let updatedText = (text.trim().isEmpty && !textView.isFirstResponder) ? kFieldPlaceHolder : text
-        setOngoingMessage(text: updatedText)
-        sendButton.isUserInteractionEnabled = true
+    func setOngoingMessage(text: String) {
+        if
+            text.isEmpty ||
+            textView.text.isNotEmptyField(with: kFieldPlaceHolder)
+        {
+            return
+        }
+        
+        textView.text = text
+        textView.textColor = UIColor.Sphinx.TextMessages
+        textViewDidChange(textView)
     }
 }

@@ -63,7 +63,12 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
                         title: cached.title ?? "",
                         description: cached.description ?? "",
                         image: cached.image,
-                        failed: (cached.title == nil || cached.description == nil)
+                        failed: (
+                            cached.title == nil ||
+                            cached.description == nil ||
+                            cached.title?.isEmpty == true ||
+                            cached.description?.isEmpty == true
+                        )
                     )
                 )
             } else  {
@@ -77,7 +82,12 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
                             title: result.title ?? "",
                             description: result.description ?? "",
                             image: result.image,
-                            failed: (result.title == nil || result.description == nil)
+                            failed: (
+                                result.title == nil ||
+                                result.description == nil ||
+                                result.title?.isEmpty == true ||
+                                result.description?.isEmpty == true
+                            )
                         )
                     )
                 }, onError: { error in

@@ -164,6 +164,9 @@ extension ContactsService : NSFetchedResultsControllerDelegate {
     public func processChatListObjects() {
         calculateBadges()
         
+        chatsHasNewMessages = false
+        contactsHasNewMessages = false
+        
         var allObject: [ChatListCommonObject] = []
         allObject.append(contentsOf: self.contacts)
         allObject.append(contentsOf: self.chats)
@@ -176,17 +179,13 @@ extension ContactsService : NSFetchedResultsControllerDelegate {
                 $0.getName().lowercased().contains(chatsSearchQuery.lowercased())
             }
         } else {
-            chatListObjects = allObjects.filter {
-                $0.isPublicGroup()
-            }
-            
-            chatsHasNewMessages = false
-            
-            for chat in chatListObjects {
-                if !chat.isSeen(ownerId: owner.id) {
-                    chatsHasNewMessages = true
-                    break
-                }
+            chatListObjects = allObjects.filter { $0.isPublicGroup()}
+        }
+        
+        for chat in allObjects.filter({ $0.isPublicGroup()}) {
+            if !chat.isSeen(ownerId: owner.id) {
+                chatsHasNewMessages = true
+                break
             }
         }
         
@@ -197,14 +196,12 @@ extension ContactsService : NSFetchedResultsControllerDelegate {
             }
         } else {
             contactListObjects = allObjects.filter { $0.isConversation() }
-            
-            contactsHasNewMessages = false
-            
-            for contact in contactListObjects {
-                if !contact.isSeen(ownerId: owner.id) {
-                    contactsHasNewMessages = true
-                    break
-                }
+        }
+        
+        for contact in allObjects.filter({ $0.isConversation() }) {
+            if !contact.isSeen(ownerId: owner.id) {
+                contactsHasNewMessages = true
+                break
             }
         }
         

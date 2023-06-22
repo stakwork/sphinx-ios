@@ -796,4 +796,8 @@ extension String {
     var isNotEmpty: Bool {
         return !isEmpty
     }
+    
+    func isNotEmptyField(with placeHolder: String) -> Bool {
+        return !isEmpty && self != placeHolder
+    }
 }

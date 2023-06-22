@@ -103,15 +103,18 @@ struct BubbleMessageLayoutState: CommonLayoutState {
         var text: String?
         var font: UIFont
         var linkMatches: [NSTextCheckingResult]
+        var shouldLoadPaidText: Bool
         
         init(
             text: String?,
             font: UIFont,
-            linkMatches: [NSTextCheckingResult]
+            linkMatches: [NSTextCheckingResult],
+            shouldLoadPaidText: Bool
         ) {
             self.text = text
             self.font = font
             self.linkMatches = linkMatches
+            self.shouldLoadPaidText = shouldLoadPaidText
         }
     }
     
@@ -306,15 +309,26 @@ struct BubbleMessageLayoutState: CommonLayoutState {
         var price: Int
         var statusTitle: String
         var status: TransactionMessage.TransactionMessageType
+        var isSentTextMessage: Bool
         
         init(
             price: Int,
             statusTitle: String,
-            status: TransactionMessage.TransactionMessageType
+            status: TransactionMessage.TransactionMessageType,
+            isSentTextMessage: Bool
         ) {
             self.price = price
             self.statusTitle = statusTitle
             self.status = status
+            self.isSentTextMessage = isSentTextMessage
+        }
+        
+        func isPurchaseAccepted() -> Bool {
+            return status == TransactionMessage.TransactionMessageType.purchaseAccept
+        }
+        
+        func isPurchaseDenied() -> Bool {
+            return status == TransactionMessage.TransactionMessageType.purchaseDeny
         }
     }
 }

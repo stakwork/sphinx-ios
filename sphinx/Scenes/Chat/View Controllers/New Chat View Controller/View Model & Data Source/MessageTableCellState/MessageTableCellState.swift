@@ -22,6 +22,7 @@ struct MessageTableCellState {
     ///Messages Data
     var message: TransactionMessage? = nil
     var messageId: Int? = nil
+    var messageString: String? = nil
     var messageType: Int? = nil
     var messageStatus: Int? = nil
     var chat: Chat
@@ -60,6 +61,7 @@ struct MessageTableCellState {
         self.messageId = message?.id
         self.messageType = message?.type
         self.messageStatus = message?.status
+        self.messageString = message?.messageContent
         
         self.chat = chat
         self.contact = contact
@@ -164,16 +166,35 @@ struct MessageTableCellState {
         }
         
         if let messageContent = message.bubbleMessageContentString, messageContent.isNotEmpty {
-            
-            var message = BubbleMessageLayoutState.MessageContent(
+            return BubbleMessageLayoutState.MessageContent(
                 text: messageContent,
-                font: message.bubbleMessageContentFont,
-                linkMatches: messageContent.stringLinks + messageContent.pubKeyMatches + messageContent.mentionMatches
+                font: UIFont.getMessageFont(),
+                linkMatches: messageContent.stringLinks + messageContent.pubKeyMatches + messageContent.mentionMatches,
+                shouldLoadPaidText: false
             )
-            
-            return message
-        } else {
+        } else if message.isPaidMessage() {
+            return BubbleMessageLayoutState.MessageContent(
+                text: paidMessageContent,
+                font: UIFont.getEncryptionErrorFont(),
+                linkMatches: [],
+                shouldLoadPaidText: message.messageContent == nil && paidContent?.isPurchaseAccepted() == true
+            )
+        }
+        
+        return nil
+    }()
+    
+    lazy var paidMessageContent: String? = {
+        guard let message = message else {
             return nil
+        }
+        
+        if paidContent?.isPurchaseAccepted() == true {
+            return "loading.paid.message".localized.uppercased()
+        } else if paidContent?.isPurchaseDenied() == true {
+            return "cannot.load.message.data".localized.uppercased()
+        } else {
+            return "pay.to.unlock.msg".localized.uppercased()
         }
     }()
     
@@ -240,7 +261,7 @@ struct MessageTableCellState {
         
         var urlAndKey: (URL?, String?) = (nil, nil)
         
-        if message.isMediaAttachment() {
+        if message.isMediaAttachment() || message.isPaidMessage() {
             if message.isPaidAttachment() && bubble?.direction.isIncoming() == true {
                 if let purchaseAccept = purchaseMessages[TransactionMessage.TransactionMessageType.purchaseAccept.rawValue] {
                     urlAndKey = (purchaseAccept.getMediaUrlFromMediaToken(), purchaseAccept.mediaKey)
@@ -390,7 +411,8 @@ struct MessageTableCellState {
         return BubbleMessageLayoutState.PaidContent(
             price: message.getAttachmentPrice() ?? 0,
             statusTitle: statusAndLabel.1,
-            status: statusAndLabel.0
+            status: statusAndLabel.0,
+            isSentTextMessage: message.isPaidMessage() && bubble?.direction.isOutgoing() == true
         )
     }()
     
@@ -512,7 +534,8 @@ struct MessageTableCellState {
     
     var isTextOnlyMessage: Bool {
         mutating get {
-            return (self.messageContent != nil) &&
+            return
+                (self.messageContent != nil) &&
                 (self.messageContent?.text?.hasPubkeyLinks == false) &&
                 (self.messageReply == nil) &&
                 (self.callLink == nil) &&
@@ -522,7 +545,8 @@ struct MessageTableCellState {
                 (self.tribeLink == nil) &&
                 (self.messageMedia == nil) &&
                 (self.webLink == nil) &&
-                (self.botHTMLContent == nil)
+                (self.botHTMLContent == nil) &&
+                (self.paidContent == nil)
         }
     }
 }
@@ -571,14 +595,15 @@ extension MessageTableCellState : Hashable {
         var mutableRhs = rhs
         
         return
-            mutableLhs.messageId             == mutableRhs.messageId &&
-            mutableLhs.messageStatus         == mutableRhs.messageStatus &&
-            mutableLhs.messageType           == mutableRhs.messageType &&
-            mutableLhs.bubbleState           == mutableRhs.bubbleState &&
-            mutableLhs.boostMessages.count   == mutableRhs.boostMessages.count &&
-            mutableLhs.isTextOnlyMessage     == mutableRhs.isTextOnlyMessage &&
-            mutableLhs.separatorDate         == mutableRhs.separatorDate &&
-            mutableLhs.paidContent?.status   == mutableRhs.paidContent?.status
+            mutableLhs.messageId              == mutableRhs.messageId &&
+            mutableLhs.messageStatus          == mutableRhs.messageStatus &&
+            mutableLhs.messageType            == mutableRhs.messageType &&
+            mutableLhs.bubbleState            == mutableRhs.bubbleState &&
+            mutableLhs.messageString          == mutableRhs.messageString &&
+            mutableLhs.boostMessages.count    == mutableRhs.boostMessages.count &&
+            mutableLhs.isTextOnlyMessage      == mutableRhs.isTextOnlyMessage &&
+            mutableLhs.separatorDate          == mutableRhs.separatorDate &&
+            mutableLhs.paidContent?.status    == mutableRhs.paidContent?.status
     }
 
     func hash(into hasher: inout Hasher) {

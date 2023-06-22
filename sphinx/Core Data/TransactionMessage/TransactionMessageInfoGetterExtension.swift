@@ -178,10 +178,6 @@ extension TransactionMessage {
             }
         }
         
-        if self.isPaidMessage() {
-            adjustedMC = getPaidMessageContent()
-        }
-        
         return adjustedMC
     }
     
@@ -317,6 +313,10 @@ extension TransactionMessage {
     
     func isPaidMessage() -> Bool {
         return isAttachment() && getType() == TransactionMessageType.textAttachment.rawValue
+    }
+    
+    func isPaidPendingMessage() -> Bool {
+        return isAttachment() && getType() == TransactionMessageType.textAttachment.rawValue && mediaKey == nil
     }
     
     func isPendingPaidMessage() -> Bool {
@@ -771,14 +771,14 @@ extension TransactionMessage {
     
     var bubbleMessageContentString: String? {
         get {
-            if isGiphy(), let message = GiphyHelper.getMessageFrom(message: self.messageContent ?? "") {
+            if isGiphy(), let message = GiphyHelper.getMessageFrom(message: messageContent ?? "") {
                 return message
             }
             
             if isPodcastComment() {
                 self.processPodcastComment()
                 
-                if let text = self.podcastComment?.text, !text.isEmpty {
+                if let text = podcastComment?.text, !text.isEmpty {
                     return text
                 }
             }
@@ -791,14 +791,10 @@ extension TransactionMessage {
                 return nil
             }
             
-            if let messageC = self.messageContent {
+            if let messageC = messageContent {
                 if messageC.isEncryptedString() {
                     return "encryption.error".localized
                 }
-            }
-            
-            if self.isPaidMessage() {
-                return getPaidMessageContent()
             }
             
             return self.messageContent
@@ -1098,6 +1094,7 @@ extension TransactionMessage {
                isPodcastBoost() ||
                isMediaAttachment() ||
                isFileAttachment() ||
+               isPaidMessage() ||
                isGiphy() ||
                isGroupActionMessage() ||
                isCallLink() ||

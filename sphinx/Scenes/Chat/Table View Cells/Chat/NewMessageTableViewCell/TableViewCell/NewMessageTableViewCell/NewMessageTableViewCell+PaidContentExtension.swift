@@ -21,6 +21,8 @@ extension NewMessageTableViewCell {
                 sentPaidDetailsView.configureWith(paidContent: paidContent)
                 sentPaidDetailsView.isHidden = false
             }
+            
+            paidTextMessageView.isHidden = !paidContent.isSentTextMessage
         }
     }
 }

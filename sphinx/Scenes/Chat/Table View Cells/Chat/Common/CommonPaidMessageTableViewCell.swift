@@ -28,13 +28,13 @@ class CommonPaidMessageTableViewCell : CommonReplyTableViewCell {
     }
     
     func loadData(url: URL, messageRow: TransactionMessageRow) {
-        MediaLoader.loadMessageData(url: url, messageRow: messageRow, completion: { messageId, message in
-            if self.isDifferentRow(messageId: messageId) { return }
-            self.delegate?.shouldReloadCell?(cell: self)
-        }, errorCompletion: { messageId in
-            if self.isDifferentRow(messageId: messageId) { return }
-            self.showBubble(messageRow: messageRow, error: true)
-        })
+//        MediaLoader.loadMessageData(url: url, messageRow: messageRow, completion: { messageId, message in
+//            if self.isDifferentRow(messageId: messageId) { return }
+//            self.delegate?.shouldReloadCell?(cell: self)
+//        }, errorCompletion: { messageId in
+//            if self.isDifferentRow(messageId: messageId) { return }
+//            self.showBubble(messageRow: messageRow, error: true)
+//        })
     }
     
     func showBubble(messageRow: TransactionMessageRow, error: Bool = false) {}

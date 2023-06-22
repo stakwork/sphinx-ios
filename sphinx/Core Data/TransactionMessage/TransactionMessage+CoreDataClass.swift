@@ -97,13 +97,6 @@ public class TransactionMessage: NSManagedObject {
         TransactionMessageType.payment.rawValue,
     ]
     
-//    static let typesToExcludeFromChat = [
-//        TransactionMessageType.purchase.rawValue,
-//        TransactionMessageType.purchaseAccept.rawValue,
-//        TransactionMessageType.purchaseDeny.rawValue,
-//        TransactionMessageType.repayment.rawValue
-//    ]
-    
     static let kCallRoomName = "/sphinx.call"
     
     var uploadingObject: AttachmentObject? = nil

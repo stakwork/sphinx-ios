@@ -162,28 +162,36 @@ class MediaLoader {
         return UIImage(data: data)
     }
     
-    class func loadMessageData(url: URL, messageRow: TransactionMessageRow, completion: @escaping (Int, String) -> (), errorCompletion: @escaping (Int) -> ()) {
-        let messageId = messageRow.transactionMessage.id
-        
+    class func loadMessageData(
+        url: URL,
+        message: TransactionMessage,
+        mediaKey: String? = nil,
+        completion: @escaping (Int, String) -> (),
+        errorCompletion: @escaping (Int) -> ()
+    ) {
         loadDataFrom(URL: url, completion: { (data, _) in
-            if let mediaKey = messageRow.transactionMessage.getMediaKey(), mediaKey != "" {
+            if let mediaKey = mediaKey, mediaKey.isNotEmpty {
                 if let data = SymmetricEncryptionManager.sharedInstance.decryptData(data: data, key: mediaKey) {
                     let str = String(decoding: data, as: UTF8.self)
                     if str != "" {
                         DispatchQueue.main.async {
-                            messageRow.transactionMessage.messageContent = str
-                            completion(messageId, str)
+                            message.messageContent = str
+                            
+                            completion(
+                                message.id,
+                                str
+                            )
                         }
                         return
                     }
                 }
             }
             DispatchQueue.main.async {
-                errorCompletion(messageId)
+                errorCompletion(message.id)
             }
         }, errorCompletion: {
             DispatchQueue.main.async {
-                errorCompletion(messageId)
+                errorCompletion(message.id)
             }
         })
     }

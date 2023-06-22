@@ -42,14 +42,24 @@ extension NewMessageTableViewCell {
             }
             
             textMessageView.isHidden = false
-        }
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(labelTapped(gesture:)))
-        
-        if urlRanges.isEmpty {
-            messageLabel.removeGestureRecognizer(tap)
-        } else {
-            messageLabel.addGestureRecognizer(tap)
+            
+            let tap = UITapGestureRecognizer(target: self, action: #selector(labelTapped(gesture:)))
+            
+            if urlRanges.isEmpty {
+                messageLabel.removeGestureRecognizer(tap)
+            } else {
+                messageLabel.addGestureRecognizer(tap)
+            }
+            
+            if let messageId = messageId, messageContent.shouldLoadPaidText {
+                let delayTime = DispatchTime.now() + Double(Int64(0.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+                DispatchQueue.global().asyncAfter(deadline: delayTime) {
+                    self.delegate?.shouldLoadTextDataFor(
+                        messageId: messageId,
+                        and: self.rowIndex
+                    )
+                }
+            }
         }
     }
     

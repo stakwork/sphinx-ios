@@ -256,7 +256,10 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
         }
     }
     
-    func shouldLoadBotWebViewDataFor(messageId: Int, and rowIndex: Int) {
+    func shouldLoadBotWebViewDataFor(
+        messageId: Int,
+        and rowIndex: Int
+    ) {
         if var tableCellState = getTableCellStateFor(
             messageId: messageId,
             and: rowIndex
@@ -281,6 +284,30 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
                     self.webViewSemaphore.signal()
                 }
             )
+        }
+    }
+    
+    func shouldLoadTextDataFor(
+        messageId: Int,
+        and rowIndex: Int
+    ) {
+        if var tableCellState = getTableCellStateFor(
+            messageId: messageId,
+            and: rowIndex
+        ),
+           let message = tableCellState.1.message
+        {
+            let urlAndMediaKey = tableCellState.1.messageMediaUrlAndKey
+            
+            if let url = urlAndMediaKey.0, let mediaKey = urlAndMediaKey.1 {
+                MediaLoader.loadMessageData(
+                    url: url,
+                    message: message,
+                    mediaKey: mediaKey,
+                    completion: { (_, _) in },
+                    errorCompletion: { _ in }
+                )
+            }
         }
     }
 }

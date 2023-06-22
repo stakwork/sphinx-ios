@@ -21,9 +21,10 @@ class Constants {
     
     //Fonts
     public static var kMessageFont = UIFont(name: "Roboto-Regular", size: UIDevice.current.isIpad ? 20.0 : 16.0)!
+    public static var kMessageBoldFont = UIFont(name: "Roboto-Regular", size: UIDevice.current.isIpad ? 20.0 : 16.0)!
     public static var kEmojisFont = UIFont(name: "Roboto-Regular", size: UIDevice.current.isIpad ? 40.0 : 30.0)!
     public static let kAmountFont = UIFont(name: "Roboto-Bold", size: UIDevice.current.isIpad ? 20.0 : 16.0)!
-    public static let kBoldSmallMessageFont = UIFont(name: "Roboto-Bold", size: UIDevice.current.isIpad ? 14.0 : 10.0)!
+    public static let kBoldSmallMessageFont = UIFont(name: "Roboto-Bold", size: UIDevice.current.isIpad ? 20.0 : 16.0)!
     public static var kMessagePreviewFont = UIFont(name: "Roboto-Regular", size: 14.0)!
     public static var kNewMessagePreviewFont = UIFont(name: "Roboto-Bold", size: 14.0)!
     public static var kChatNameFont = UIFont(name: "Roboto-Regular", size: 17.0)!

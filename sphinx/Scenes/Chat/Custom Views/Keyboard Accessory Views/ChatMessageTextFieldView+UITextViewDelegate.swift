@@ -56,8 +56,8 @@ extension ChatMessageTextFieldView : UITextViewDelegate {
         attachmentButton.backgroundColor = forceSendButtonVisible ? UIColor.Sphinx.ReceivedMsgBG : UIColor.Sphinx.PrimaryBlue
         attachmentButton.setTitleColor(forceSendButtonVisible ? UIColor.Sphinx.MainBottomIcons : UIColor.white, for: .normal)
         
-        sendButtonContainer.alpha = forceSendButtonVisible ? 1.0 : 0.0
-        audioButtonContainer.alpha = forceSendButtonVisible ? 0.0 : 1.0
+        sendButtonContainer.isHidden = !forceSendButtonVisible
+        audioButtonContainer.isHidden = forceSendButtonVisible
     }
 }
 

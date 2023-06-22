@@ -115,7 +115,7 @@
                                 <constraint firstAttribute="height" constant="58" id="FDX-Qg-DMK"/>
                             </constraints>
                         </stackView>
-                        <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Aqs-pb-zCH">
+                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Aqs-pb-zCH">
                             <rect key="frame" x="0.0" y="0.0" width="393" height="58"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l4v-3x-MSX">
@@ -186,7 +186,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="60" height="58"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yLv-Gf-Psf">
-                                            <rect key="frame" x="0.0" y="0.0" width="60" height="58"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="44" height="58"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="27"/>
                                             <state key="normal" title="mic">
@@ -211,7 +211,7 @@
                                         <constraint firstItem="yLv-Gf-Psf" firstAttribute="top" secondItem="PDF-iA-BMU" secondAttribute="top" id="BdO-w1-wyV"/>
                                         <constraint firstAttribute="bottom" secondItem="yLv-Gf-Psf" secondAttribute="bottom" id="fEk-lP-zsd"/>
                                         <constraint firstItem="yLv-Gf-Psf" firstAttribute="leading" secondItem="PDF-iA-BMU" secondAttribute="leading" id="guj-2y-7pZ"/>
-                                        <constraint firstAttribute="trailing" secondItem="yLv-Gf-Psf" secondAttribute="trailing" id="j5w-l4-Cec"/>
+                                        <constraint firstAttribute="trailing" secondItem="yLv-Gf-Psf" secondAttribute="trailing" constant="16" id="j5w-l4-Cec"/>
                                     </constraints>
                                 </view>
                             </subviews>
@@ -223,7 +223,7 @@
                                 <constraint firstItem="PDF-iA-BMU" firstAttribute="top" secondItem="VO2-BQ-HTF" secondAttribute="top" id="njh-CV-osP"/>
                             </constraints>
                         </view>
-                        <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="naq-qY-FAx">
+                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="naq-qY-FAx">
                             <rect key="frame" x="333" y="0.0" width="60" height="58"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ye0-Vh-tsW">
@@ -269,8 +269,8 @@
                         <constraint firstAttribute="trailing" secondItem="VO2-BQ-HTF" secondAttribute="trailing" id="zsW-Jf-aCT"/>
                     </constraints>
                 </view>
-                <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Eb-vE-kfY">
-                    <rect key="frame" x="311.66666666666669" y="-22.666666666666668" width="103" height="103.33333333333333"/>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Eb-vE-kfY">
+                    <rect key="frame" x="303.66666666666669" y="-22.666666666666668" width="103" height="103.33333333333333"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="mic" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AUK-RH-8T3">
                             <rect key="frame" x="26.333333333333314" y="26.666666666666671" width="50" height="50"/>
@@ -290,8 +290,8 @@
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="6Eb-vE-kfY" firstAttribute="centerY" secondItem="naq-qY-FAx" secondAttribute="centerY" id="PIC-ls-XCX"/>
-                <constraint firstItem="6Eb-vE-kfY" firstAttribute="centerX" secondItem="naq-qY-FAx" secondAttribute="centerX" id="PTO-zU-EZs"/>
+                <constraint firstItem="6Eb-vE-kfY" firstAttribute="centerY" secondItem="yLv-Gf-Psf" secondAttribute="centerY" id="7vb-FR-zA4"/>
+                <constraint firstItem="6Eb-vE-kfY" firstAttribute="centerX" secondItem="yLv-Gf-Psf" secondAttribute="centerX" id="8y7-Ky-nA0"/>
                 <constraint firstAttribute="trailing" secondItem="Tj3-Zh-OEz" secondAttribute="trailing" id="Qhp-YE-chz"/>
                 <constraint firstAttribute="bottom" secondItem="Tj3-Zh-OEz" secondAttribute="bottom" priority="750" id="lK3-1b-8H3"/>
                 <constraint firstItem="Tj3-Zh-OEz" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="mHj-j9-DCQ"/>

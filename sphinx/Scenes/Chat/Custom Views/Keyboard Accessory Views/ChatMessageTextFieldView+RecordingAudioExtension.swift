@@ -11,12 +11,13 @@ import UIKit
 extension ChatMessageTextFieldView {    
     func toggleAudioRecording(show: Bool) {
         recordingTimeLabel.text = "0:00"
-        recordingBlueCircle.alpha = show ? 1.0 : 0.0
         
         audioButton.titleLabel?.font = UIFont(name: "MaterialIcons-Regular", size: show ? 50 : 27)!
         
         animatedMicLabelView.toggleAnimation(animate: show)
-        recordingContainer.alpha = show ? 1.0 : 0.0
+        
+        recordingBlueCircle.isHidden = !show
+        recordingContainer.isHidden = !show
     }
     
     func updateRecordingAudio(minutes: String, seconds: String) {

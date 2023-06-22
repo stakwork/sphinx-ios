@@ -122,8 +122,6 @@ class AudioRecorderHelper : NSObject {
             startRecordingTime = Date()
             recordingTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(updateRecordingTime), userInfo: nil, repeats: true)
             
-            SoundsPlayer.playHaptic()
-            
             delegate?.didStartRecording(true)
         } catch {
             recordingDidFail()

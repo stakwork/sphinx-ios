@@ -29,14 +29,17 @@ extension NewOnlyTextMessageTableViewCell {
                 messageLabel.text = messageContent.text
                 messageLabel.font = messageContent.font
             } else {
-                let attributedString = NSMutableAttributedString(string: messageContent.text ?? "")
+                let messageC = messageContent.text ?? ""
+                let attributedString = NSMutableAttributedString(string: messageC)
+                attributedString.addAttributes([NSAttributedString.Key.font: messageContent.font], range: messageC.nsRange)
                 
                 for match in messageContent.linkMatches {
                     
                     attributedString.setAttributes(
                         [
                             NSAttributedString.Key.foregroundColor: UIColor.Sphinx.PrimaryBlue,
-                            NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue
+                            NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue,
+                            NSAttributedString.Key.font: messageContent.font
                         ],
                         range: match.range
                     )

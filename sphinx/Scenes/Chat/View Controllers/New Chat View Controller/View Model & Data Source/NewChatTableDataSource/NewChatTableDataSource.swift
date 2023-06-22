@@ -56,11 +56,12 @@ class NewChatTableDataSource : NSObject {
     var preloaderHelper = MessagesPreloaderHelper.sharedInstance
     let linkPreviewsLoader = CustomSwiftLinkPreview.sharedInstance
     let bubbleHelper = NewMessageBubbleHelper()
+    let audioPlayerHelper = AudioPlayerHelper()
     
     ///Messages Data
     var messagesArray: [TransactionMessage] = []
     var messageTableCellStateArray: [MessageTableCellState] = []
-    var cachedMedia: [Int: MessageTableCellState.MediaData] = [:]
+    var mediaCached: [Int: MessageTableCellState.MediaData] = [:]
     var botsWebViewData: [Int: MessageTableCellState.BotWebViewData] = [:]
     var uploadingProgress: [Int: MessageTableCellState.UploadProgressData] = [:]
     

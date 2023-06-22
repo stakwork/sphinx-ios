@@ -93,11 +93,15 @@ extension NewChatTableDataSource {
                 ) as! MessageNoBubbleTableViewCell
             }
             
-            let mediaData = (dataSourceItem.messageId != nil) ? self.cachedMedia[dataSourceItem.messageId!] : nil
+            let mediaData = (dataSourceItem.messageId != nil) ? self.mediaCached[dataSourceItem.messageId!] : nil
             let tribeData = (dataSourceItem.linkTribe?.uuid != nil) ? self.preloaderHelper.tribesData[dataSourceItem.linkTribe!.uuid] : nil
             let linkData = (dataSourceItem.linkWeb?.link != nil) ? self.preloaderHelper.linksData[dataSourceItem.linkWeb!.link] : nil
             let botWebViewData = (dataSourceItem.messageId != nil) ? self.botsWebViewData[dataSourceItem.messageId!] : nil
             let uploadProgressData = (dataSourceItem.messageId != nil) ? self.uploadingProgress[dataSourceItem.messageId!] : nil
+            
+            if (dataSourceItem.message?.isAudio() == true) {
+                print("AUDIO TIME RELOAD \(mediaData?.audioInfo?.currentTime ?? 0)")
+            }
             
             cell?.configureWith(
                 messageCellState: dataSourceItem,

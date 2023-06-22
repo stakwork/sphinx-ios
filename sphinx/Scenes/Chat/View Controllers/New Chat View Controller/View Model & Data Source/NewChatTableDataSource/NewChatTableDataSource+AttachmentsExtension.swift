@@ -13,21 +13,21 @@ extension NewChatTableDataSource {
         messageId: Int,
         mediaData: MessageTableCellState.MediaData
     ) {
-        cachedMedia[messageId] = mediaData
+        mediaCached[messageId] = mediaData
     }
     
     func resetMediaForProvisional(
         messageId: Int
     ) {
-        cachedMedia.removeValue(forKey: messageId)
+        mediaCached.removeValue(forKey: messageId)
     }
     
     func replaceMediaDataForMessageWith(
         provisionalMessageId: Int,
         toMessageWith messageId: Int
     ) {
-        if let mediaData = cachedMedia[provisionalMessageId] {
-            cachedMedia[messageId] = mediaData
+        if let mediaData = mediaCached[provisionalMessageId] {
+            mediaCached[messageId] = mediaData
         }
     }
     

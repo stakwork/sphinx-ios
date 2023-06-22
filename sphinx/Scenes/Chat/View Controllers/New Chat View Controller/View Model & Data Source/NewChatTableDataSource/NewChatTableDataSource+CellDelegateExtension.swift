@@ -130,7 +130,9 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
                     self.updateMessageTableCellStateFor(rowIndex: rowIndex, messageId: messageId, with: updatedMediaData)
                 })
             } else {
-                MediaLoader.loadImage(url: imageUrl, message: message, completion: { messageId, image in
+                let mediaKey = tableCellState.1.messageMedia?.mediaKey
+                
+                MediaLoader.loadImage(url: imageUrl, message: message, mediaKey: mediaKey, completion: { messageId, image in
                     let updatedMediaData = MessageTableCellState.MediaData(
                         image: image
                     )
@@ -154,13 +156,15 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
             and: rowIndex
         ),
            let message = tableCellState.1.message,
-           let url = tableCellState.1.messageMedia?.url
+           let url = tableCellState.1.messageMedia?.url,
+           let mediaKey = tableCellState.1.messageMedia?.mediaKey
         {
             shouldLoadFileDataFor(
                 messageId: messageId,
                 and: rowIndex,
                 message: message,
                 url: url,
+                mediaKey: mediaKey,
                 isPdf: true
             )
         }
@@ -172,14 +176,62 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
             and: rowIndex
         ),
            let message = tableCellState.1.message,
-           let url = tableCellState.1.genericFile?.url
+           let url = tableCellState.1.genericFile?.url,
+           let mediaKey = tableCellState.1.genericFile?.mediaKey
         {
             shouldLoadFileDataFor(
                 messageId: messageId,
                 and: rowIndex,
                 message: message,
                 url: url,
+                mediaKey: mediaKey,
                 isPdf: false
+            )
+        }
+    }
+    
+    func shouldLoadAudioDataFor(
+        messageId: Int,
+        and rowIndex: Int
+    ) {
+        if var tableCellState = getTableCellStateFor(
+            messageId: messageId,
+            and: rowIndex
+        ),
+           let message = tableCellState.1.message,
+           let url = tableCellState.1.audio?.url,
+           let mediaKey = tableCellState.1.audio?.mediaKey
+        {
+            
+            MediaLoader.loadFileData(
+                url: url,
+                isPdf: false,
+                message: message,
+                mediaKey: mediaKey,
+                completion: { (messageId, data, fileInfo) in
+                    
+                    if let duration = self.audioPlayerHelper.getAudioDuration(data: data) {
+                        
+                        let updatedMediaData = MessageTableCellState.MediaData(
+                            image: fileInfo.previewImage,
+                            data: data,
+                            fileInfo: fileInfo,
+                            audioInfo: MessageTableCellState.AudioInfo(
+                                playing: false,
+                                duration: duration,
+                                currentTime: 0
+                            )
+                        )
+                        
+                        self.updateMessageTableCellStateFor(rowIndex: rowIndex, messageId: messageId, with: updatedMediaData)
+                    }
+                },
+                errorCompletion: { messageId in
+                    let updatedMediaData = MessageTableCellState.MediaData(
+                        failed: true
+                    )
+                    self.updateMessageTableCellStateFor(rowIndex: rowIndex, messageId: messageId, with: updatedMediaData)
+                }
             )
         }
     }
@@ -189,12 +241,14 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
         and rowIndex: Int,
         message: TransactionMessage,
         url: URL,
+        mediaKey: String?,
         isPdf: Bool
     ) {
         MediaLoader.loadFileData(
             url: url,
             isPdf: isPdf,
             message: message,
+            mediaKey: mediaKey,
             completion: { (messageId, data, fileInfo) in
                 let updatedMediaData = MessageTableCellState.MediaData(
                     image: fileInfo.previewImage,
@@ -221,9 +275,10 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
             and: rowIndex
         ),
            let message = tableCellState.1.message,
-           let url = tableCellState.1.messageMedia?.url
+           let url = tableCellState.1.messageMedia?.url,
+           let mediaKey = tableCellState.1.messageMedia?.mediaKey
         {
-            MediaLoader.loadVideo(url: url, message: message, completion: { (messageId, data, image) in
+            MediaLoader.loadVideo(url: url, message: message, mediaKey: mediaKey, completion: { (messageId, data, image) in
                 let updatedMediaData = MessageTableCellState.MediaData(
                     image: image,
                     data: data
@@ -327,13 +382,13 @@ extension NewChatTableDataSource {
     func updateMessageTableCellStateFor(
         rowIndex: Int,
         messageId: Int,
-        with updatedMediaData: MessageTableCellState.MediaData
+        with updatedCachedMedia: MessageTableCellState.MediaData
     ) {
         if let tableCellState = getTableCellStateFor(
             messageId: messageId,
             and: rowIndex
         ) {
-            cachedMedia[messageId] = updatedMediaData
+            mediaCached[messageId] = updatedCachedMedia
             
             DispatchQueue.main.async {
                 var snapshot = self.dataSource.snapshot()
@@ -475,9 +530,9 @@ extension NewChatTableDataSource {
         if var tableCellState = getTableCellStateFor(
             messageId: messageId,
             and: rowIndex
-        ), let messageMedia = tableCellState.1.messageMedia, let cacheMedia = cachedMedia[messageId] {
+        ), let messageMedia = tableCellState.1.messageMedia, let mediaCached = mediaCached[messageId] {
             
-            if messageMedia.isVideo, let data = cacheMedia.data {
+            if messageMedia.isVideo, let data = mediaCached.data {
                 delegate?.shouldGoToVideoPlayerFor(messageId: messageId, with: data)
             } else {
                 delegate?.shouldGoToAttachmentViewFor(messageId: messageId, isPdf: messageMedia.isPdf)
@@ -487,7 +542,7 @@ extension NewChatTableDataSource {
     
     func didTapFileDownloadButtonFor(messageId: Int, and rowIndex: Int) {
         if
-           let cacheData = cachedMedia[messageId],
+           let cacheData = mediaCached[messageId],
            let data = cacheData.data,
            let fileInfo = cacheData.fileInfo
         {
@@ -594,6 +649,22 @@ extension NewChatTableDataSource {
                     AlertHelper.showAlert(title: "generic.error.title".localized, message: "generic.error.message".localized)
                 }
             )
+        }
+    }
+    
+    func didTapPlayPauseButtonFor(messageId: Int, and rowIndex: Int) {
+        if audioPlayerHelper.isPlayingMessageWith(messageId) {
+            audioPlayerHelper.pausePlayingAudio()
+        } else {
+            if let audioData = mediaCached[messageId], let data = audioData.data {
+                audioPlayerHelper.playAudioFrom(
+                    data: data,
+                    messageId: messageId,
+                    rowIndex: rowIndex,
+                    atTime: audioData.audioInfo?.currentTime,
+                    delegate: self
+                )
+            }
         }
     }
 }

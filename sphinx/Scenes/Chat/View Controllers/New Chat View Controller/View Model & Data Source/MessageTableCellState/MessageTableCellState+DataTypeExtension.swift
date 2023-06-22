@@ -103,17 +103,20 @@ extension MessageTableCellState {
         var image: UIImage?
         var data: Data?
         var fileInfo: MessageTableCellState.FileInfo?
+        var audioInfo: MessageTableCellState.AudioInfo?
         var failed: Bool
         
         init(
             image: UIImage? = nil,
             data: Data? = nil,
             fileInfo: MessageTableCellState.FileInfo? = nil,
+            audioInfo: MessageTableCellState.AudioInfo? = nil,
             failed: Bool = false
         ) {
             self.image = image
             self.data = data
             self.fileInfo = fileInfo
+            self.audioInfo = audioInfo
             self.failed = failed
         }
     }
@@ -134,6 +137,22 @@ extension MessageTableCellState {
             self.fileName = fileName
             self.pagesCount = pagesCount
             self.previewImage = previewImage
+        }
+    }
+    
+    struct AudioInfo {
+        var playing: Bool
+        var duration: Double
+        var currentTime: Double
+        
+        init(
+            playing: Bool,
+            duration: Double,
+            currentTime: Double
+        ) {
+            self.playing = playing
+            self.duration = duration
+            self.currentTime = currentTime
         }
     }
     

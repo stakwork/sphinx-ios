@@ -49,6 +49,7 @@ protocol NewMessageTableViewCellDelegate: class {
     func shouldLoadTextDataFor(messageId: Int, and rowIndex: Int)
     func shouldLoadLinkDataFor(messageId: Int, and rowIndex: Int)
     func shouldLoadBotWebViewDataFor(messageId: Int, and rowIndex: Int)
+    func shouldLoadAudioDataFor(messageId: Int, and rowIndex: Int)
     
     //Actions handling
     ///Message reply
@@ -74,6 +75,8 @@ protocol NewMessageTableViewCellDelegate: class {
     func didTapOnLink(_ link: String)
     //Paid Content
     func didTapPayButtonFor(messageId: Int, and rowIndex: Int)
+    //Audio
+    func didTapPlayPauseButtonFor(messageId: Int, and rowIndex: Int)
     
     //Menu Long Press
     func didLongPressOnCellWith(messageId: Int, and rowIndex: Int, bubbleViewRect: CGRect)
@@ -103,11 +106,11 @@ class NewMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableViewCellP
     
     ///Second Container
     @IBOutlet weak var sentPaidDetailsView: SentPaidDetails!
-    @IBOutlet weak var paidTextMessageView: UIView! // PENDING
+    @IBOutlet weak var paidTextMessageView: UIView!
     @IBOutlet weak var directPaymentView: DirectPaymentView!
     @IBOutlet weak var mediaContentView: MediaMessageView!
     @IBOutlet weak var fileDetailsView: FileDetailsView!
-    @IBOutlet weak var audioMessageView: AudioMessageView! // PENDING
+    @IBOutlet weak var audioMessageView: AudioMessageView!
     @IBOutlet weak var podcastAudioView: PodcastAudioView! // PENDING
     @IBOutlet weak var callLinkView: JoinVideoCallView!
     @IBOutlet weak var podcastBoostView: PodcastBoostView!
@@ -180,6 +183,7 @@ class NewMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableViewCellP
         configureWith(messageMedia: mutableMessageCellState.messageMedia, mediaData: mediaData, and: bubble)
         configureWith(genericFile: mutableMessageCellState.genericFile, mediaData: mediaData)
         configureWith(botHTMLContent: mutableMessageCellState.botHTMLContent, botWebViewData: botWebViewData)
+        configureWith(audio: mutableMessageCellState.audio, mediaData: mediaData, and: bubble)
         
         //Bottom view
         configureWith(boosts: mutableMessageCellState.boosts, and: bubble)

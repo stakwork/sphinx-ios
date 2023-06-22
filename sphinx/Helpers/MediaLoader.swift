@@ -249,8 +249,18 @@ class MediaLoader {
         }
     }
     
-    class func loadAudio(url: URL, message: TransactionMessage, completion: @escaping (Int, Data) -> (), errorCompletion: @escaping (Int) -> ()) {
-        MediaLoader.loadFileData(url: url, message: message, completion: completion, errorCompletion: errorCompletion)
+    class func loadAudio(
+        url: URL,
+        message: TransactionMessage,
+        completion: @escaping (Int, Data) -> (),
+        errorCompletion: @escaping (Int) -> ()
+    ) {
+        MediaLoader.loadFileData(
+            url: url,
+            message: message,
+            completion: completion,
+            errorCompletion: errorCompletion
+        )
     }
     
     class func loadFileData(

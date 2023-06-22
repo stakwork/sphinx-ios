@@ -139,13 +139,13 @@ class CommonAudioTableViewCell : CommonReplyTableViewCell, AudioCollectionViewIt
     }
     
     func setCurrentTime() {
-        if let audioPlayerHelper = messageRow?.audioHelper, audioPlayerHelper.currentTime > 0 {
-            updateControls(buttonTitle: "play_arrow", color: CommonAudioTableViewCell.kBlueControlsColor, dotVisible: true)
-            updateCurrentTime(duration: getAudioDuration(), currentTime: Double(audioPlayerHelper.currentTime), animated: false)
-        } else {
-            updateControls(buttonTitle: "play_arrow", color: CommonAudioTableViewCell.kGrayControlsColor, dotVisible: false)
-            updateTimeLabel(duration: getAudioDuration(), currentTime: 0.0)
-        }
+//        if let audioPlayerHelper = messageRow?.audioHelper, audioPlayerHelper.currentTime > 0 {
+//            updateControls(buttonTitle: "play_arrow", color: CommonAudioTableViewCell.kBlueControlsColor, dotVisible: true)
+//            updateCurrentTime(duration: getAudioDuration(), currentTime: Double(audioPlayerHelper.currentTime), animated: false)
+//        } else {
+//            updateControls(buttonTitle: "play_arrow", color: CommonAudioTableViewCell.kGrayControlsColor, dotVisible: false)
+//            updateTimeLabel(duration: getAudioDuration(), currentTime: 0.0)
+//        }
     }
     
     func getAudioDuration() -> Double {
@@ -172,20 +172,20 @@ class CommonAudioTableViewCell : CommonReplyTableViewCell, AudioCollectionViewIt
     }
     
     @IBAction func playButtonTouched() {
-        if let data = audioData, let messageId = self.messageRow?.transactionMessage.id, let audioPlayerHelper = messageRow?.audioHelper {
-            audioDelegate?.shouldStopPlayingAudios(cell: self)
-            
-            updateControls(buttonTitle: "pause", color: CommonAudioTableViewCell.kBlueControlsColor, dotVisible: true)
-         
-            setAudioPlayerInitialTime(messageId: messageId, data: data)
-            audioPlayerHelper.playAudioFrom(data: data, messageId: messageId, progressCallback: updateCurrentTime, endCallback: audioDidFinishPlaying, pauseCallback: audioDidPausePlaying)
-        }
+//        if let data = audioData, let messageId = self.messageRow?.transactionMessage.id, let audioPlayerHelper = messageRow?.audioHelper {
+//            audioDelegate?.shouldStopPlayingAudios(cell: self)
+//
+//            updateControls(buttonTitle: "pause", color: CommonAudioTableViewCell.kBlueControlsColor, dotVisible: true)
+//
+//            setAudioPlayerInitialTime(messageId: messageId, data: data)
+//            audioPlayerHelper.playAudioFrom(data: data, messageId: messageId, progressCallback: updateCurrentTime, endCallback: audioDidFinishPlaying, pauseCallback: audioDidPausePlaying)
+//        }
     }
     
     func setAudioPlayerInitialTime(messageId: Int, data: Data) {
-        if let audioPlayerHelper = messageRow?.audioHelper {
-            audioPlayerHelper.setInitialTime(messageId: messageId, data: data, startTimePercentage: getTimePercentage())
-        }
+//        if let audioPlayerHelper = messageRow?.audioHelper {
+//            audioPlayerHelper.setInitialTime(messageId: messageId, data: data, startTimePercentage: getTimePercentage())
+//        }
     }
     
     func getTimePercentage() -> Double {
@@ -208,9 +208,9 @@ class CommonAudioTableViewCell : CommonReplyTableViewCell, AudioCollectionViewIt
         if let audioPlayerHelper = messageRow?.audioHelper {
             audioPlayerHelper.stopPlaying()
             
-            if audioPlayerHelper.currentTime > 0 {
-                updateControls(buttonTitle: "play_arrow", color: CommonAudioTableViewCell.kBlueControlsColor, dotVisible: true)
-            }
+//            if audioPlayerHelper.currentTime > 0 {
+//                updateControls(buttonTitle: "play_arrow", color: CommonAudioTableViewCell.kBlueControlsColor, dotVisible: true)
+//            }
         }
     }
     

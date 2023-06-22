@@ -8,7 +8,13 @@
 
 import UIKit
 
+protocol AudioMessageViewDelegate: class {
+    func didTapPlayPauseButton()
+}
+
 class AudioMessageView: UIView {
+    
+    weak var delegate: AudioMessageViewDelegate?
 
     @IBOutlet private var contentView: UIView!
     
@@ -21,6 +27,9 @@ class AudioMessageView: UIView {
     @IBOutlet weak var tapHandlerView: UIView!
     
     @IBOutlet weak var progressViewWidthConstraint: NSLayoutConstraint!
+    
+    let kProgressBarLeftMargin: CGFloat = 60
+    let kProgressBarRightMargin: CGFloat = 66
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -41,6 +50,52 @@ class AudioMessageView: UIView {
         durationView.layer.cornerRadius = durationView.bounds.height / 2
         progressView.layer.cornerRadius = progressView.bounds.height / 2
         currentTimeView.layer.cornerRadius = currentTimeView.bounds.height / 2
+        
+        loadingWheel.tintColor = UIColor.Sphinx.Text
+    }
+    
+    func configureWith(
+        audio: BubbleMessageLayoutState.Audio,
+        mediaData: MessageTableCellState.MediaData?,
+        bubble: BubbleMessageLayoutState.Bubble,
+        and delegate: AudioMessageViewDelegate
+    ) {
+        
+        self.delegate = delegate
+        
+        durationView.backgroundColor = bubble.direction.isIncoming() ? UIColor.Sphinx.WashedOutReceivedText : UIColor.Sphinx.WashedOutSentText
+        
+        if let audioInfo = mediaData?.audioInfo {
+            playPauseButton.setTitle(
+                audioInfo.playing ? "pause" : "play_arrow",
+                for: .normal
+            )
+            
+            let progressBarWith = audio.bubbleWidth - kProgressBarLeftMargin - kProgressBarRightMargin
+            let progress = audioInfo.currentTime * 1 / audioInfo.duration
+            progressViewWidthConstraint.constant = progressBarWith * progress
+            
+            let current:Int = Int(audioInfo.duration - audioInfo.currentTime)
+            let minutes:Int = current / 60
+            let seconds:Int = current % 60
+            timeLabel.text = "\(minutes):\(seconds.timeString)"
+            
+            playPauseButton.isHidden = false
+            loadingWheel.isHidden = true
+            loadingWheel.stopAnimating()
+        } else {
+            playPauseButton.isHidden = true
+            loadingWheel.isHidden = false
+            loadingWheel.startAnimating()
+            
+            timeLabel.text = "00:00"
+            progressViewWidthConstraint.constant = 0
+        }
+        
+        progressView.layoutIfNeeded()
     }
 
+    @IBAction func playPauseButtonTouched() {
+        delegate?.didTapPlayPauseButton()
+    }
 }

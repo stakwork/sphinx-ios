@@ -87,3 +87,11 @@ extension NewMessageTableViewCell : PaidAttachmentViewDelegate {
         }
     }
 }
+
+extension NewMessageTableViewCell : AudioMessageViewDelegate {
+    func didTapPlayPauseButton() {
+        if let messageId = messageId {
+            delegate?.didTapPlayPauseButtonFor(messageId: messageId, and: rowIndex)
+        }
+    }
+}

@@ -1094,6 +1094,7 @@ extension TransactionMessage {
                isPodcastBoost() ||
                isMediaAttachment() ||
                isFileAttachment() ||
+               isAudio() ||
                isPaidMessage() ||
                isGiphy() ||
                isGroupActionMessage() ||

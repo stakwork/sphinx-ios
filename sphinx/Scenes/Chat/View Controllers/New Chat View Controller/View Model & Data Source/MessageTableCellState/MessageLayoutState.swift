@@ -166,11 +166,14 @@ struct BubbleMessageLayoutState: CommonLayoutState {
     
     struct GenericFile {
         var url: URL?
+        var mediaKey: String?
         
         init(
-            url: URL?
+            url: URL?,
+            mediaKey: String?
         ) {
             self.url = url
+            self.mediaKey = mediaKey
         }
     }
     
@@ -209,6 +212,22 @@ struct BubbleMessageLayoutState: CommonLayoutState {
         
         func isPendingPayment() -> Bool {
             return isPaid && (url == nil || mediaKey == nil)
+        }
+    }
+    
+    struct Audio {
+        var url: URL?
+        var mediaKey: String?
+        var bubbleWidth: CGFloat
+        
+        init(
+            url: URL?,
+            mediaKey: String?,
+            bubbleWidth: CGFloat
+        ) {
+            self.url = url
+            self.mediaKey = mediaKey
+            self.bubbleWidth = bubbleWidth
         }
     }
     

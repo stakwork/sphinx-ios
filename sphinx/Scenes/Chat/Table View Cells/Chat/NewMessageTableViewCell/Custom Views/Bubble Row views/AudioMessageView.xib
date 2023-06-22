@@ -49,8 +49,11 @@
                                     <state key="disabled">
                                         <color key="titleColor" name="SecondaryText"/>
                                     </state>
+                                    <connections>
+                                        <action selector="playPauseButtonTouched" destination="-1" eventType="touchUpInside" id="pcK-dj-36A"/>
+                                    </connections>
                                 </button>
-                                <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aYK-pD-v7O" customClass="UIActivityIndicatorView">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aYK-pD-v7O" customClass="UIActivityIndicatorView">
                                     <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </view>

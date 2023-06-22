@@ -50,7 +50,7 @@ class NewLinkPreviewView: UIView {
         
         loadImageOn(
             imageView: pictureImageView,
-            urlString: linkData.image
+            urlString: linkData.image ?? linkData.icon
         )
         
         titleLabel.text = linkData.title

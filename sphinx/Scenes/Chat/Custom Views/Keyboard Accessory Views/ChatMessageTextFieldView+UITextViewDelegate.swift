@@ -42,7 +42,7 @@ extension ChatMessageTextFieldView : UITextViewDelegate {
     }
     
     func textViewDidChange(_ textView: UITextView) {
-        animateElements(sendButtonVisible: !textView.text.isEmpty)
+        animateElements(sendButtonVisible: !textView.text.isEmpty && textView.text != kFieldPlaceHolder)
         delegate?.didChangeText?(text: textView.text)
         
         processMention(text: textView.text)
@@ -52,6 +52,7 @@ extension ChatMessageTextFieldView : UITextViewDelegate {
         sendButtonVisible: Bool
     ) {
         let forceSendButtonVisible = sendButtonVisible || (mode == .Attachment)
+        
         attachmentButton.backgroundColor = forceSendButtonVisible ? UIColor.Sphinx.ReceivedMsgBG : UIColor.Sphinx.PrimaryBlue
         attachmentButton.setTitleColor(forceSendButtonVisible ? UIColor.Sphinx.MainBottomIcons : UIColor.white, for: .normal)
         

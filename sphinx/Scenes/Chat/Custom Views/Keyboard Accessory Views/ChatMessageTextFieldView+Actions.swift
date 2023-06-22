@@ -32,7 +32,7 @@ extension ChatMessageTextFieldView {
         createNewMessage(text: currentString as String)
     }
     
-    @IBAction func audioButtonTouchDown(_ sender: Any) {
+    @IBAction func audioButtonTouchedDown() {
         toggleAudioRecording(show: true)
         delegate?.shouldStartRecording?()
     }

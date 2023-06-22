@@ -259,13 +259,9 @@ struct MessageTableCellState {
             return nil
         }
         
-        guard let url = message.getMediaUrlFromMediaToken(), let mediaKey = message.mediaKey else {
-            return nil
-        }
-        
         return BubbleMessageLayoutState.Audio(
-            url: url,
-            mediaKey: mediaKey,
+            url: message.getMediaUrlFromMediaToken(),
+            mediaKey: message.mediaKey,
             bubbleWidth: (UIScreen.main.bounds.width - (MessageTableCellState.kRowLeftMargin + MessageTableCellState.kRowRightMargin)) * (MessageTableCellState.kBubbleWidthPercentage)
         )
     }()
@@ -299,13 +295,9 @@ struct MessageTableCellState {
             return nil
         }
         
-        guard let url = message.getMediaUrlFromMediaToken(), let mediaKey = message.mediaKey else {
-            return nil
-        }
-        
         return BubbleMessageLayoutState.GenericFile(
-            url: url,
-            mediaKey: mediaKey
+            url: message.getMediaUrlFromMediaToken(),
+            mediaKey: message.mediaKey
         )
     }()
     

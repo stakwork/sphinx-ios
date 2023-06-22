@@ -49,15 +49,42 @@ extension NewChatViewController : ChatMessageTextFieldViewDelegate {
     }
     
     func shouldStartRecording() {
-        
+        chatViewModel.shouldStartRecordingWith(delegate: self)
     }
     
     func shouldStopAndSendAudio() {
-        
+        chatViewModel.shouldStopAndSendAudio()
     }
     
     func shouldCancelRecording() {
-        
+        chatViewModel.shouldCancelRecording()
+    }
+}
+
+extension NewChatViewController : AudioHelperDelegate {
+    func didStartRecording(_ success: Bool) {
+        if !success {
+            messageBubbleHelper.showGenericMessageView(text: "microphone.permission.denied".localized, delay: 5)
+        }
+    }
+    
+    func didFinishRecording(_ success: Bool) {
+        if success {
+            bottomView.clearMessage()
+            bottomView.resetReplyView()
+            
+            chatViewModel.didFinishRecording()
+        }
+    }
+    
+    func audioTooShort() {
+        let windowInset = getWindowInsets()
+        let y = WindowsManager.getWindowHeight() - windowInset.bottom - bottomView.frame.size.height
+        messageBubbleHelper.showAudioTooltip(y: y)
+    }
+    
+    func recordingProgress(minutes: String, seconds: String) {
+        bottomView.updateRecordingAudio(minutes: minutes, seconds: seconds)
     }
 }
 

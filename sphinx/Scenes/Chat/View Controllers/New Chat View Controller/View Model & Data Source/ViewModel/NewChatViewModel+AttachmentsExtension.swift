@@ -12,7 +12,8 @@ import UIKit
 extension NewChatViewModel: AttachmentsManagerDelegate {
     func insertPrivisionalAttachmentMessageAndUpload(
         attachmentObject: AttachmentObject,
-        chat: Chat?
+        chat: Chat?,
+        audioDuration: Double? = nil
     ) {
         let attachmentsManager = AttachmentsManager.sharedInstance
         let replyingMessage = replyingTo
@@ -21,8 +22,9 @@ extension NewChatViewModel: AttachmentsManagerDelegate {
             messageId: TransactionMessage.getProvisionalMessageId(),
             mediaData: MessageTableCellState.MediaData(
                 image: attachmentObject.image,
-                data: attachmentObject.data,
+                data: attachmentObject.getDecryptedData(),
                 fileInfo: attachmentObject.getFileInfo(),
+                audioInfo: attachmentObject.getAudioInfo(duration: audioDuration),
                 failed: false
             )
         )
@@ -75,5 +77,55 @@ extension NewChatViewModel: AttachmentsManagerDelegate {
             message: message,
             completion: { _ in }
         )
+    }
+}
+
+extension NewChatViewModel {
+    func shouldStartRecordingWith(
+        delegate: AudioHelperDelegate
+    ) {
+        let didAskForPermissions = configureAudioSession(delegate: delegate)
+        
+        if !didAskForPermissions {
+            audioRecorderHelper.shouldStartRecording()
+        }
+    }
+    
+    func shouldStopAndSendAudio() {
+        audioRecorderHelper.shouldFinishRecording()
+    }
+    
+    func shouldCancelRecording() {
+        audioRecorderHelper.shouldCancelRecording()
+    }
+    
+    func configureAudioSession(
+        delegate: AudioHelperDelegate
+    ) -> Bool {
+        let didAskForPermissions = audioRecorderHelper.configureAudioSession(delegate: delegate)
+        return didAskForPermissions
+    }
+    
+    func didFinishRecording() {
+        let audioData = audioRecorderHelper.getAudioData()
+        
+        if let data = audioData.0 {
+            let (key, encryptedData) = SymmetricEncryptionManager.sharedInstance.encryptData(data: data)
+            
+            if let encryptedData = encryptedData {
+                
+                let attachmentObject = AttachmentObject(
+                    data: encryptedData,
+                    mediaKey: key,
+                    type: AttachmentsManager.AttachmentType.Audio
+                )
+                
+                insertPrivisionalAttachmentMessageAndUpload(
+                    attachmentObject: attachmentObject,
+                    chat: chat,
+                    audioDuration: audioData.1
+                )
+            }
+        }
     }
 }

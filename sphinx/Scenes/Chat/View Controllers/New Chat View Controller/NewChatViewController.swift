@@ -41,6 +41,12 @@ class NewChatViewController: NewKeyboardHandlerViewController {
     
     var webAppVC : WebAppViewController? = nil
     
+    override var preferredScreenEdgesDeferringSystemGestures: UIRectEdge {
+        get {
+            return [.bottom, .right]
+        }
+    }
+    
     static func instantiate(
         contactId: Int? = nil,
         chatId: Int? = nil,

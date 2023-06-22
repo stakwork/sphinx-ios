@@ -676,8 +676,10 @@ extension ChatViewController : AudioHelperDelegate {
     
     func didFinishRecording(_ success: Bool) {
         if success {
-            if let audio = audioHelper.getAudioData() {
-                let (key, encryptedData) = SymmetricEncryptionManager.sharedInstance.encryptData(data: audio)
+            let audioData = audioHelper.getAudioData()
+            
+            if let data = audioData.0 {
+                let (key, encryptedData) = SymmetricEncryptionManager.sharedInstance.encryptData(data: data)
                 if let encryptedData = encryptedData {
                     let attachmentObject = AttachmentObject(data: encryptedData, mediaKey: key, type: AttachmentsManager.AttachmentType.Audio)
                     shouldStartUploading(attachmentObject: attachmentObject)

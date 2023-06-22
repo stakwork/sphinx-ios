@@ -78,9 +78,17 @@ class AudioRecorderHelper : NSObject {
         return paths[0]
     }
     
-    func getAudioData() -> Data? {
+    func getAudioData() -> (Data?, Double?) {
         let audioFilename = getDocumentsDirectory().appendingPathComponent("recording.wav")
-        return MediaLoader.getDataFromUrl(url: audioFilename)
+        
+        var lengthAudioPlayer : AVAudioPlayer?
+        do  {
+            lengthAudioPlayer = try AVAudioPlayer(contentsOf: audioFilename)
+        } catch {
+            lengthAudioPlayer = nil
+        }
+        
+        return (MediaLoader.getDataFromUrl(url: audioFilename), lengthAudioPlayer?.duration)
     }
     
     func startRecording() {
@@ -114,6 +122,8 @@ class AudioRecorderHelper : NSObject {
             startRecordingTime = Date()
             recordingTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(updateRecordingTime), userInfo: nil, repeats: true)
             
+            SoundsPlayer.playHaptic()
+            
             delegate?.didStartRecording(true)
         } catch {
             recordingDidFail()
@@ -134,8 +144,9 @@ class AudioRecorderHelper : NSObject {
             recordingTimer?.invalidate()
             recordingTimer = nil
             
+            SoundsPlayer.playHaptic()
+            
             if Date().timeIntervalSince(startRecordingTime) > 1 {
-                SoundsPlayer.playHaptic()
                 delegate?.didFinishRecording(success)
             } else {
                 delegate?.audioTooShort()

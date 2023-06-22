@@ -73,6 +73,17 @@ extension NewChatAccessoryView {
     }
 }
 
+//Audio Recorder
+extension NewChatAccessoryView {
+    func toggleAudioRecording(show: Bool) {
+        messageFieldView.toggleAudioRecording(show: show)
+    }
+    
+    func updateRecordingAudio(minutes: String, seconds: String) {
+        messageFieldView.updateRecordingAudio(minutes: minutes, seconds: seconds)
+    }
+}
+
 //Podcast Player
 extension NewChatAccessoryView {
     func configurePlayerWith(

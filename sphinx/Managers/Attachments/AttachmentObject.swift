@@ -59,7 +59,11 @@ public struct AttachmentObject {
     }
     
     func getDecryptedData() -> Data? {
-        if let data = getUploadData(), let mediaKey = mediaKey, let decryptedData = SymmetricEncryptionManager.sharedInstance.decryptData(data: data, key: mediaKey) {
+        if
+            let data = getUploadData(),
+            let mediaKey = mediaKey,
+            let decryptedData = SymmetricEncryptionManager.sharedInstance.decryptData(data: data, key: mediaKey)
+        {
             return decryptedData
         }
         return nil
@@ -102,6 +106,10 @@ public struct AttachmentObject {
         return type == AttachmentsManager.AttachmentType.PDF
     }
     
+    func isAudio() -> Bool {
+        return type == AttachmentsManager.AttachmentType.Audio
+    }
+    
     func getFileInfo() -> MessageTableCellState.FileInfo? {
         if !isPDFOrFile() {
             return nil
@@ -115,6 +123,18 @@ public struct AttachmentObject {
             fileName: getFileName(),
             pagesCount: pagesCount,
             previewImage: previewImage
+        )
+    }
+    
+    func getAudioInfo(duration: Double?) -> MessageTableCellState.AudioInfo? {
+        if !isAudio() {
+            return nil
+        }
+        
+        return MessageTableCellState.AudioInfo(
+            playing: false,
+            duration: duration ?? 0.0,
+            currentTime: 0.0
         )
     }
     

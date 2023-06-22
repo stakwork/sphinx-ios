@@ -21,6 +21,8 @@ class NewChatViewModel {
     var podcastComment: PodcastComment? = nil
     var replyingTo: TransactionMessage? = nil
     
+    var audioRecorderHelper = AudioRecorderHelper()
+    
     init(
         chat: Chat?,
         contact: UserContact?

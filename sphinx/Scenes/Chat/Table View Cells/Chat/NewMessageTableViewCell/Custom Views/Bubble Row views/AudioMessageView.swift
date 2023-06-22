@@ -94,6 +94,29 @@ class AudioMessageView: UIView {
         
         progressView.layoutIfNeeded()
     }
+    
+//    func addDotGesture() {
+//        let gesture = UIPanGestureRecognizer(target: self, action: #selector(wasDragged))
+//        tapHandlerView.addGestureRecognizer(gesture)
+//        tapHandlerView.isUserInteractionEnabled = true
+//    }
+//    
+//    @objc func wasDragged(gestureRecognizer: UIPanGestureRecognizer) {
+//        switch(gestureRecognizer.state) {
+//        case .began:
+//            shouldPreventOtherGestures = true
+//            setPorgressOnDrag(gestureRecognizer)
+//            break
+//        case .changed:
+//            setPorgressOnDrag(gestureRecognizer)
+//            break
+//        case .ended:
+//            shouldPreventOtherGestures = false
+//            break
+//        default:
+//            break
+//        }
+//    }
 
     @IBAction func playPauseButtonTouched() {
         delegate?.didTapPlayPauseButton()

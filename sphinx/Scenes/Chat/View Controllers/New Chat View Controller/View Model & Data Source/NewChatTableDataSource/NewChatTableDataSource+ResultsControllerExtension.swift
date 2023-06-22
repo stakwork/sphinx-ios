@@ -198,9 +198,16 @@ extension NewChatTableDataSource {
         
         messageTableCellStateArray = array
         
-        updateSnapshot()
-        
+        updateSnapshotIfPossible()
         delegate?.configureNewMessagesIndicatorWith(newMsgCount: newMsgCount)
+    }
+    
+    func updateSnapshotIfPossible() {
+        ///Avoid reloading until message menu is hidden
+        let isMessageMenuVisible = delegate?.isMessageMenuVisible() ?? false
+        if !isMessageMenuVisible {
+            updateSnapshot()
+        }
     }
     
     private func getNewMessageCountFor(

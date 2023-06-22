@@ -867,10 +867,10 @@ extension NewChatTableDataSource {
 
 ///Menu Long press
 extension NewChatTableDataSource {
-    func didLongPressOnCellWith(messageId: Int, and rowIndex: Int, bubbleViewRect: CGRect) {
+    func didLongPressOn(cell: UITableViewCell, with messageId: Int, bubbleViewRect: CGRect) {
         SoundsPlayer.playHaptic()
         
-        delegate?.didLongPressOnCellWith(messageId: messageId, and: rowIndex, bubbleViewRect: bubbleViewRect)
+        delegate?.didLongPressOn(cell: cell, with: messageId, bubbleViewRect: bubbleViewRect)
     }
 }
 

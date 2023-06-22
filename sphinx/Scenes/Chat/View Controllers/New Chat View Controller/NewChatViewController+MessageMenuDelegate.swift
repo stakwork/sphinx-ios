@@ -31,6 +31,8 @@ extension NewChatViewController : MessageOptionsVCDelegate {
         chatViewModel.sendFlagMessageFor(message)
     }
     
-    func shouldRemoveWindow() {}
+    func shouldReloadChat() {
+        chatTableDataSource?.updateSnapshotIfPossible()
+    }
 }
 

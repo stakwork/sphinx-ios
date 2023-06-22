@@ -81,7 +81,7 @@ protocol NewMessageTableViewCellDelegate: class {
     ///Podcast CLip
     func didTapClipPlayPauseButtonFor(messageId: Int, and rowIndex: Int)
     ///Menu Long Press
-    func didLongPressOnCellWith(messageId: Int, and rowIndex: Int, bubbleViewRect: CGRect)
+    func didLongPressOn(cell: UITableViewCell, with messageId: Int, bubbleViewRect: CGRect)
     ///Reply on Swipe
     func shouldReplyToMessageWith(messageId: Int, and rowIndex: Int)
 }

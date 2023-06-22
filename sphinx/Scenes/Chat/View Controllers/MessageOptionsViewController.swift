@@ -15,7 +15,7 @@ import UIKit
     func shouldResendMessage(message: TransactionMessage)
     func shouldFlagMessage(message: TransactionMessage)
     func shouldTogglePinState(message: TransactionMessage, pin: Bool)
-    func shouldRemoveWindow()
+    func shouldReloadChat()
 }
 
 class MessageOptionsViewController: UIViewController {
@@ -161,7 +161,7 @@ class MessageOptionsViewController: UIViewController {
         SoundsPlayer.playHaptic()
         
         self.dismiss(animated: false, completion: {
-            self.delegate?.shouldRemoveWindow()
+            self.delegate?.shouldReloadChat()
             
             completion?()
         })

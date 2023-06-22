@@ -138,8 +138,11 @@ extension NewChatViewController : NewChatTableDataSourceDelegate, SocketManagerD
         }
     }
     
-    func didLongPressOnCellWith(messageId: Int, and rowIndex: Int, bubbleViewRect: CGRect) {
-        let indexPath = IndexPath(row: rowIndex, section: 0)
+    func didLongPressOn(cell: UITableViewCell, with messageId: Int, bubbleViewRect: CGRect) {
+        guard let indexPath = chatTableView.indexPath(for: cell) else {
+            return
+        }
+                
         let cellOutOfBounds = chatTableView.isCellOutOfBounds(indexPath: indexPath)
 
         if cellOutOfBounds.0 || cellOutOfBounds.1 {
@@ -196,6 +199,13 @@ extension NewChatViewController : NewChatTableDataSourceDelegate, SocketManagerD
         let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
         activityVC.popoverPresentationController?.sourceView = self.bottomView
         self.present(activityVC, animated: true, completion: nil)
+    }
+    
+    func isMessageMenuVisible() -> Bool {
+        if let _ = self.navigationController?.presentedViewController as? MessageOptionsViewController {
+            return true
+        }
+        return false
     }
 }
 

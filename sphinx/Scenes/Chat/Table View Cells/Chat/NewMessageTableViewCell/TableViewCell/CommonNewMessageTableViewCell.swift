@@ -63,9 +63,9 @@ class CommonNewMessageTableViewCell : SwipableReplyCell {
     
     func didLongPressOnCell() {
         if let messageId = messageId, let bubbleView = getBubbleView() {
-            delegate?.didLongPressOnCellWith(
-                messageId: messageId,
-                and: rowIndex,
+            delegate?.didLongPressOn(
+                cell: self,
+                with: messageId,
                 bubbleViewRect: bubbleView.frame
             )
         }

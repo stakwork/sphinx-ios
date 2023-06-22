@@ -734,7 +734,7 @@ extension ChatViewController : MessageOptionsVCDelegate {
         AlertHelper.showAlert(title: "generic.error.title".localized, message: "generic.error.message".localized)
     }
     
-    func shouldRemoveWindow() {
+    func shouldReloadChat() {
         WindowsManager.sharedInstance.removeMessageOptions()
         fetchNewData()
     }

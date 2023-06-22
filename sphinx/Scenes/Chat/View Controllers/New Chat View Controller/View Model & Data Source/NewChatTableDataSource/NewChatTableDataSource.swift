@@ -24,11 +24,13 @@ protocol NewChatTableDataSourceDelegate : class {
     func didDeleteTribe()
     func didUpdateChat(_ chat: Chat)
     
-    func didLongPressOnCellWith(messageId: Int, and rowIndex: Int, bubbleViewRect: CGRect)
+    func didLongPressOn(cell: UITableViewCell, with messageId: Int, bubbleViewRect: CGRect)
     func shouldShowLeaderboardFor(messageId: Int)
     
     func shouldReplyToMessage(message: TransactionMessage)
     func shouldOpenActivityVCFor(url: URL)
+    
+    func isMessageMenuVisible() -> Bool
 }
 
 class NewChatTableDataSource : NSObject {

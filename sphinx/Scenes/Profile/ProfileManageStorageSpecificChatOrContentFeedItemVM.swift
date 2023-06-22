@@ -46,6 +46,8 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVM : NSObject{
                     let filePath = item.cachedMedia?.filePath ?? ""
                     item.sizeMB = memoryTotals[filePath] ?? 0.0
                 }
+                
+                self.mediaItems.sort(by: {$0.date < $1.date})
 
                 imageCollectionView.reloadData()
             }

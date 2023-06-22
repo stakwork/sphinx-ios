@@ -47,7 +47,7 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVM : NSObject{
                     item.sizeMB = memoryTotals[filePath] ?? 0.0
                 }
                 
-                self.mediaItems.sort(by: {$0.date < $1.date})
+                self.mediaItems.sort(by: getSortingRule)
 
                 imageCollectionView.reloadData()
             }
@@ -58,6 +58,7 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVM : NSObject{
     
     var fileItems : [StorageManagerItem] = []{
         didSet{
+            fileItems.sort(by: getSortingRule)
             fileSelectedStatus = fileItems.map({_ in return false})
         }
     }
@@ -78,6 +79,11 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVM : NSObject{
             vc.updateDeletionSummaryLabel()
             filesTableView.reloadData()
         }
+    }
+    
+    func getSortingRule(_ item1: StorageManagerItem, _ item2: StorageManagerItem) -> Bool {
+        // Define your sorting logic here
+        return item1.date < item2.date
     }
     
     func removeSelectedItems() {

@@ -72,17 +72,17 @@ protocol NewMessageTableViewCellDelegate: class {
     func didTapDeleteTribeButtonFor(messageId: Int, and rowIndex: Int)
     func didTapApproveRequestButtonFor(messageId: Int, and rowIndex: Int)
     func didTapRejectRequestButtonFor(messageId: Int, and rowIndex: Int)
-    ///Label Links
+    ////Label Links
     func didTapOnLink(_ link: String)
-    //Paid Content
+    ///Paid Content
     func didTapPayButtonFor(messageId: Int, and rowIndex: Int)
-    //Audio
+    ///Audio
     func didTapPlayPauseButtonFor(messageId: Int, and rowIndex: Int)
-    //Podcast CLip
+    ///Podcast CLip
     func didTapClipPlayPauseButtonFor(messageId: Int, and rowIndex: Int)
-    
-    //Menu Long Press
+    ///Menu Long Press
     func didLongPressOnCellWith(messageId: Int, and rowIndex: Int, bubbleViewRect: CGRect)
+    ///Reply on Swipe
     func shouldReplyToMessageWith(messageId: Int, and rowIndex: Int)
 }
 
@@ -177,9 +177,11 @@ class NewMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableViewCellP
         
         ///Message Reply
         configureWith(messageReply: mutableMessageCellState.messageReply, and: bubble)
+        
+        ///Paid Content
         configureWith(paidContent: mutableMessageCellState.paidContent, and: bubble)
         
-        ///Other message types
+        ///Message types
         configureWith(directPayment: mutableMessageCellState.directPayment, and: bubble)
         configureWith(callLink: mutableMessageCellState.callLink)
         configureWith(podcastBoost: mutableMessageCellState.podcastBoost)
@@ -189,14 +191,16 @@ class NewMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableViewCellP
         configureWith(audio: mutableMessageCellState.audio, mediaData: mediaData, and: bubble)
         configureWith(podcastComment: mutableMessageCellState.podcastComment, mediaData: mediaData, and: bubble)
         
-        //Bottom view
+        ///Bottom view
         configureWith(boosts: mutableMessageCellState.boosts, and: bubble)
         configureWith(contactLink: mutableMessageCellState.contactLink, and: bubble)
         configureWith(tribeLink: mutableMessageCellState.tribeLink, tribeData: tribeData, and: bubble)
         configureWith(webLink: mutableMessageCellState.webLink, linkData: linkData)
         
-        ///Header and avatar
+        ///Avatar
         configureWith(avatarImage: mutableMessageCellState.avatarImage)
+        
+        ///Direction and grouping
         configureWith(bubble: bubble)
     }
     

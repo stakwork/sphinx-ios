@@ -192,7 +192,10 @@ class ChatAttachmentViewController: NewKeyboardHandlerViewController, BackCamera
         return (true, "")
     }
     
-    func uploadAndSend(message: String? = nil) {
+    func uploadAndSend(
+        message: String? = nil,
+        completion: ((Bool) -> ())? = nil
+    ) {
         let fixedImage = selectedImage?.fixedOrientation()
         let (data, type, messageContent, paidMessage) = getDataAndType(text: message)
         let isValid = isValidAttachment(type: type, text: paidMessage)
@@ -215,8 +218,10 @@ class ChatAttachmentViewController: NewKeyboardHandlerViewController, BackCamera
                 
                 delegate?.shouldStartUploading(attachmentObject: attachmentObject)
                 dismissView()
+                completion?(true)
             }
         } else {
+            completion?(false)
             NewMessageBubbleHelper().showGenericMessageView(text: isValid.1)
         }
     }

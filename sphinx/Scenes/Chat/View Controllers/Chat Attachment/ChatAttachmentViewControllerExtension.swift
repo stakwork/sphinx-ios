@@ -46,25 +46,35 @@ extension ChatAttachmentViewController {
 }
 
 extension ChatAttachmentViewController: ChatMessageTextFieldViewDelegate {
-    func didDetectPossibleMention(mentionText:String) {
-        //Implement
+    func didDetectPossibleMention(mentionText: String) {
+        //Implement mentions
+    }
+    
+    func didChangeText(text: String) {
+        updatePreview(message: text, price: price)
     }
     
     func shouldSendMessage(text: String, type: Int, completion: @escaping (Bool) -> ()) {
-        shouldSend(message: text)
+        shouldSend(message: text, completion: completion)
     }
     
     func didTapSendBlueButton() {
         shouldSend()
     }
     
-    func shouldSend(message: String? = nil) {
-        if let giphy = selectedGiphy, let messageString = giphyHelper.getMessageStringFrom(media: giphy.0, text: message) {
+    func shouldSend(
+        message: String? = nil,
+        completion: ((Bool) -> ())? = nil
+    ) {
+        if let giphy = selectedGiphy,
+            let messageString = giphyHelper.getMessageStringFrom(media: giphy.0, text: message) {
             delegate?.shouldSendGiphy(message: messageString, data: giphy.1)
             dismissView()
+            completion?(true)
+            
             return
         }
-        uploadAndSend(message: message)
+        uploadAndSend(message: message, completion: completion)
     }
     
     func didChangeAccessoryViewHeight(heightDiff: CGFloat, updatedText: String) {

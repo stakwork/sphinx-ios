@@ -9,9 +9,10 @@
 import UIKit
 
 @objc protocol ChatMessageTextFieldViewDelegate {
-    func didDetectPossibleMention(mentionText:String)
+    func didDetectPossibleMention(mentionText: String)
     func shouldSendMessage(text: String, type: Int, completion: @escaping (Bool) -> ())
     
+    @objc optional func didChangeText(text: String)
     @objc optional func didTapSendBlueButton()
     @objc optional func didTapAttachmentsButton(text: String?)
     @objc optional func shouldStartRecording()
@@ -123,13 +124,14 @@ class ChatMessageTextFieldView: UIView {
     }
     
     func createNewMessage(text: String) {
-        clearMessage()
-        
         let messageType = TransactionMessage.TransactionMessageType.message.rawValue
         
         SoundsPlayer.playHaptic()
         
         delegate?.shouldSendMessage(text: text, type: messageType, completion: { success in
+            if success {
+                self.clearMessage()
+            }
             self.sendButton.isUserInteractionEnabled = true
         })
     }

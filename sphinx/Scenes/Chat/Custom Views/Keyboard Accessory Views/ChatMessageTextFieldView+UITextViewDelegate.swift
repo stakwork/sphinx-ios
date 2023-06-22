@@ -43,6 +43,8 @@ extension ChatMessageTextFieldView : UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
         animateElements(sendButtonVisible: !textView.text.isEmpty)
+        delegate?.didChangeText?(text: textView.text)
+        
         processMention(text: textView.text)
     }
     

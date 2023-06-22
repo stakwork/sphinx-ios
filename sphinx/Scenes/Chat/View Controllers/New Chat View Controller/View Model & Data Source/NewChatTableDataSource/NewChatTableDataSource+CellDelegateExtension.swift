@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftLinkPreview
+import AVKit
 
 ///Loading content in background
 extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
@@ -202,7 +203,6 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
            let url = tableCellState.1.audio?.url,
            let mediaKey = tableCellState.1.audio?.mediaKey
         {
-            
             MediaLoader.loadFileData(
                 url: url,
                 isPdf: false,
@@ -213,7 +213,7 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
                     if let duration = self.audioPlayerHelper.getAudioDuration(data: data) {
                         
                         let updatedMediaData = MessageTableCellState.MediaData(
-                            image: fileInfo.previewImage,
+                            image: nil,
                             data: data,
                             fileInfo: fileInfo,
                             audioInfo: MessageTableCellState.AudioInfo(
@@ -373,6 +373,65 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
                     errorCompletion: { _ in }
                 )
             }
+        }
+    }
+    
+    func shouldPodcastCommentDataFor(
+        messageId: Int,
+        and rowIndex: Int
+    ) {
+        if var tableCellState = getTableCellStateFor(
+            messageId: messageId,
+            and: rowIndex
+        ),
+           let message = tableCellState.1.message,
+           let podcastComment = message.getPodcastComment()
+        {
+            if
+                let feedId = podcastComment.feedId,
+                let episodeId = podcastComment.itemId,
+                let feed = ContentFeed.getFeedById(feedId: feedId)
+            {
+                let podcast = PodcastFeed.convertFrom(contentFeed: feed)
+                    
+                if let episode = podcast.getEpisodeWith(id: episodeId) {
+                    if let duration = episode.duration {
+                        updateWith(
+                            duration: Double(duration),
+                            currentTime: Double(podcastComment.timestamp ?? 0)
+                        )
+                    } else if let url = episode.getAudioUrl() {
+                        let asset = AVAsset(url: url)
+                        asset.loadValuesAsynchronously(forKeys: ["duration"], completionHandler: {
+                            let duration = Int(Double(asset.duration.value) / Double(asset.duration.timescale))
+                            episode.duration = duration
+                            
+                            updateWith(
+                                duration: Double(duration),
+                                currentTime: Double(podcastComment.timestamp ?? 0)
+                            )
+                        })
+                    }
+                }
+            }
+        }
+        
+        func updateWith(
+            duration: Double,
+            currentTime: Double
+        ) {
+            let updatedMediaData = MessageTableCellState.MediaData(
+                image: nil,
+                data: nil,
+                fileInfo: nil,
+                audioInfo: MessageTableCellState.AudioInfo(
+                    playing: false,
+                    duration: duration,
+                    currentTime: currentTime
+                )
+            )
+            
+            self.updateMessageTableCellStateFor(rowIndex: rowIndex, messageId: messageId, with: updatedMediaData)
         }
     }
 }

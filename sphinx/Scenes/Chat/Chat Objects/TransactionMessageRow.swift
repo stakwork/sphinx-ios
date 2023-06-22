@@ -182,8 +182,7 @@ class TransactionMessageRow {
     }
     
     func getPodcastComment() -> PodcastComment? {
-        transactionMessage?.processPodcastComment()
-        return transactionMessage?.podcastComment
+        return transactionMessage?.getPodcastComment()
     }
     
     var isDayHeader: Bool {

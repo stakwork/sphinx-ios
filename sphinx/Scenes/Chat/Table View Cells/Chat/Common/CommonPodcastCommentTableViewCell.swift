@@ -102,7 +102,7 @@ class CommonPodcastCommentTableViewCell : CommonReplyTableViewCell, AudioCollect
         self.configureRow(messageRow: messageRow, contact: contact, chat: chat)
         messageRow.configurePodcastPlayer()
         
-        titleLabel.text = messageRow.transactionMessage.podcastComment?.title ?? "title.not.available".localized
+        titleLabel.text = messageRow.transactionMessage.getPodcastComment()?.title ?? "title.not.available".localized
         
         resetPlayer()
     }
@@ -173,7 +173,7 @@ class CommonPodcastCommentTableViewCell : CommonReplyTableViewCell, AudioCollect
     
     func setAudioPlayerInitialTime() {
         if let audioPlayerHelper = messageRow?.podcastPlayerHelper {
-            let ts = messageRow?.transactionMessage.podcastComment?.timestamp ?? 0
+            let ts = messageRow?.transactionMessage.getPodcastComment()?.timestamp ?? 0
             audioPlayerHelper.setInitialTime(startTime: Double(ts))
         }
     }

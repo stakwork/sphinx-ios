@@ -107,7 +107,6 @@ public class TransactionMessage: NSManagedObject {
     
     var replyingMessage: TransactionMessage? = nil
     var linkHasPreview: Bool = false
-    var podcastComment: PodcastComment? = nil
     var tribeInfo: GroupsManager.TribeInfo? = nil
     
     var reactions: Reactions? = nil

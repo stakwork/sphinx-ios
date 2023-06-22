@@ -350,6 +350,25 @@ struct BubbleMessageLayoutState: CommonLayoutState {
             return status == TransactionMessage.TransactionMessageType.purchaseDeny
         }
     }
+    
+    struct PodcastComment {
+        var title: String
+        var timestamp: Int
+        var url: URL
+        var bubbleWidth: CGFloat
+        
+        init(
+            title: String,
+            timestamp: Int,
+            url: URL,
+            bubbleWidth: CGFloat
+        ) {
+            self.title = title
+            self.timestamp = timestamp
+            self.url = url
+            self.bubbleWidth = bubbleWidth
+        }
+    }
 }
 
 struct NoBubbleMessageLayoutState: CommonLayoutState {

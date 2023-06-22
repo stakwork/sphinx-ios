@@ -228,6 +228,31 @@ extension NewMessageTableViewCell {
     }
     
     func configureWith(
+        podcastComment: BubbleMessageLayoutState.PodcastComment?,
+        mediaData: MessageTableCellState.MediaData?,
+        and bubble: BubbleMessageLayoutState.Bubble
+    ) {
+        if let podcastComment = podcastComment {
+            podcastAudioView.configureWith(
+                podcastComment: podcastComment,
+                mediaData: mediaData,
+                and: bubble
+            )
+            podcastAudioView.isHidden = false
+            
+            if let messageId = messageId, mediaData == nil {
+                let delayTime = DispatchTime.now() + Double(Int64(0.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+                DispatchQueue.global().asyncAfter(deadline: delayTime) {
+                    self.delegate?.shouldPodcastCommentDataFor(
+                        messageId: messageId,
+                        and: self.rowIndex
+                    )
+                }
+            }
+        }
+    }
+    
+    func configureWith(
         boosts: BubbleMessageLayoutState.Boosts?,
         and bubble: BubbleMessageLayoutState.Bubble
     ) {

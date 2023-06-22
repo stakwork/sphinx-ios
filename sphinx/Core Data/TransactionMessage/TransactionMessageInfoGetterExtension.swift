@@ -138,8 +138,7 @@ extension TransactionMessage {
         }
         
         if isPodcastComment() {
-            self.processPodcastComment()
-            return self.podcastComment?.text != nil
+            return self.getPodcastComment()?.text != nil
         }
         
         if isPodcastBoost() {
@@ -156,12 +155,8 @@ extension TransactionMessage {
             return message
         }
         
-        if isPodcastComment() {
-            self.processPodcastComment()
-            
-            if let text = self.podcastComment?.text, !text.isEmpty {
-                return text
-            }
+        if isPodcastComment(), let podcastComment = self.getPodcastComment() {
+            return podcastComment.text ?? ""
         }
         
         if isPodcastBoost() {
@@ -775,12 +770,8 @@ extension TransactionMessage {
                 return message
             }
             
-            if isPodcastComment() {
-                self.processPodcastComment()
-                
-                if let text = podcastComment?.text, !text.isEmpty {
-                    return text
-                }
+            if isPodcastComment(), let podcastComment = self.getPodcastComment() {
+                return podcastComment.text
             }
             
             if isPodcastBoost() {
@@ -1001,17 +992,19 @@ extension TransactionMessage {
         return String(format: "just.left.tribe".localized, senderAlias)
     }
     
-    func processPodcastComment() {
-        if let _ = self.podcastComment {
-            return
-        }
-        
+    func getPodcastComment() -> PodcastComment? {
         let messageC = (messageContent ?? "")
         
         if messageC.isPodcastComment {
-            let stringWithoutPrefix = messageC.replacingOccurrences(of: PodcastFeed.kClipPrefix, with: "")
+            let stringWithoutPrefix = messageC.replacingOccurrences(
+                of: PodcastFeed.kClipPrefix,
+                with: ""
+            )
+            
             if let data = stringWithoutPrefix.data(using: .utf8) {
+                
                 if let jsonObject = try? JSON(data: data) {
+                    
                     var podcastComment = PodcastComment()
                     podcastComment.feedId = jsonObject["feedID"].stringValue
                     podcastComment.itemId = jsonObject["itemID"].stringValue
@@ -1022,10 +1015,14 @@ extension TransactionMessage {
                     podcastComment.pubkey = jsonObject["pubkey"].stringValue
                     podcastComment.uuid = self.uuid ?? ""
                     
-                    self.podcastComment = podcastComment
+                    if podcastComment.isValid() {
+                        return podcastComment
+                    }
                 }
             }
         }
+        
+        return nil
     }
     
     func getBoostAmount() -> Int {

@@ -24,6 +24,11 @@ class PodcastAudioView: UIView {
     @IBOutlet weak var currentTimeView: UIView!
     @IBOutlet weak var tapHandlerView: UIView!
     
+    @IBOutlet weak var progressViewWidthConstraint: NSLayoutConstraint!
+    
+    let kProgressBarLeftMargin: CGFloat = 108
+    let kProgressBarRightMargin: CGFloat = 73
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
@@ -44,6 +49,48 @@ class PodcastAudioView: UIView {
         durationView.layer.cornerRadius = durationView.bounds.height / 2
         progressView.layer.cornerRadius = progressView.bounds.height / 2
         currentTimeView.layer.cornerRadius = currentTimeView.bounds.height / 2
+        
+        loadingWheel.tintColor = UIColor.Sphinx.Text
+    }
+    
+    func configureWith(
+        podcastComment: BubbleMessageLayoutState.PodcastComment,
+        mediaData: MessageTableCellState.MediaData?,
+        and bubble: BubbleMessageLayoutState.Bubble
+    ) {
+        
+        durationView.backgroundColor = bubble.direction.isIncoming() ? UIColor.Sphinx.WashedOutReceivedText : UIColor.Sphinx.WashedOutSentText
+        
+        episodeTitleLabel.text = podcastComment.title
+        
+        if let mediaData = mediaData, let audioInfo = mediaData.audioInfo {
+            
+            playButton.setTitle(audioInfo.playing ? "pause" : "play_arrow", for: .normal)
+            
+            startTimeLabel.text = Int(audioInfo.currentTime).getPodcastTimeString()
+            endTimeLabel.text = Int(audioInfo.duration).getPodcastTimeString()
+            
+            playButton.isHidden = false
+            playButtonView.isHidden = false
+            loadingWheel.isHidden = true
+            loadingWheel.stopAnimating()
+            
+            let progressBarWith = podcastComment.bubbleWidth - kProgressBarLeftMargin - kProgressBarRightMargin
+            let progress = audioInfo.currentTime * 1 / audioInfo.duration
+            progressViewWidthConstraint.constant = progressBarWith * progress
+            
+        } else {
+            startTimeLabel.text = Int(podcastComment.timestamp).getPodcastTimeString()
+            
+            playButton.isHidden = true
+            playButtonView.isHidden = true
+            loadingWheel.isHidden = false
+            loadingWheel.startAnimating()
+            
+            progressViewWidthConstraint.constant = 0
+        }
+        
+        progressView.layoutIfNeeded()
     }
 
 }

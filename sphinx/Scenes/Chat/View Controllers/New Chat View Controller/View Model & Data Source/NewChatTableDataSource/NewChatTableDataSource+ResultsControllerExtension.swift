@@ -336,7 +336,7 @@ extension NewChatTableDataSource {
         var pubkeys: [Int: (String, String?)] = [:]
         
         messages.forEach({
-            if $0.messageContent?.hasPubkeyLinks == true {
+            if $0.bubbleMessageContentString?.hasPubkeyLinks == true {
                 pubkeys[$0.id] = (
                     $0.messageContent?.stringFirstPubKey?.pubkeyComponents.0 ?? "",
                     $0.messageContent?.stringFirstPubKey?.pubkeyComponents.1
@@ -366,7 +366,7 @@ extension NewChatTableDataSource {
         var linksAndUUIDs: [Int: (String, String)] = [:]
         
         messages.forEach({
-            if $0.messageContent?.hasTribeLinks == true {
+            if $0.bubbleMessageContentString?.hasTribeLinks == true {
                 if let link = $0.messageContent?.stringFirstTribeLink {
                     if let uuid = GroupsManager.sharedInstance.getGroupInfo(query: link)?.uuid {
                         linksAndUUIDs[$0.id] = (link, uuid)

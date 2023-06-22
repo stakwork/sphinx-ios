@@ -50,6 +50,7 @@ protocol NewMessageTableViewCellDelegate: class {
     func shouldLoadLinkDataFor(messageId: Int, and rowIndex: Int)
     func shouldLoadBotWebViewDataFor(messageId: Int, and rowIndex: Int)
     func shouldLoadAudioDataFor(messageId: Int, and rowIndex: Int)
+    func shouldPodcastCommentDataFor(messageId: Int, and rowIndex: Int)
     
     //Actions handling
     ///Message reply
@@ -111,7 +112,7 @@ class NewMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableViewCellP
     @IBOutlet weak var mediaContentView: MediaMessageView!
     @IBOutlet weak var fileDetailsView: FileDetailsView!
     @IBOutlet weak var audioMessageView: AudioMessageView!
-    @IBOutlet weak var podcastAudioView: PodcastAudioView! // PENDING
+    @IBOutlet weak var podcastAudioView: PodcastAudioView!
     @IBOutlet weak var callLinkView: JoinVideoCallView!
     @IBOutlet weak var podcastBoostView: PodcastBoostView!
     @IBOutlet weak var botResponseView: BotResponseView!
@@ -184,6 +185,7 @@ class NewMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableViewCellP
         configureWith(genericFile: mutableMessageCellState.genericFile, mediaData: mediaData)
         configureWith(botHTMLContent: mutableMessageCellState.botHTMLContent, botWebViewData: botWebViewData)
         configureWith(audio: mutableMessageCellState.audio, mediaData: mediaData, and: bubble)
+        configureWith(podcastComment: mutableMessageCellState.podcastComment, mediaData: mediaData, and: bubble)
         
         //Bottom view
         configureWith(boosts: mutableMessageCellState.boosts, and: bubble)

@@ -31,6 +31,7 @@
                 <outlet property="playButton" destination="5Cd-bU-cA9" id="0Kn-kr-ax1"/>
                 <outlet property="playButtonView" destination="G7u-9k-vDp" id="4Q2-jD-7vJ"/>
                 <outlet property="progressView" destination="Al4-d4-slO" id="rSB-dN-4Cg"/>
+                <outlet property="progressViewWidthConstraint" destination="bDb-wF-p0z" id="pEa-SP-vqL"/>
                 <outlet property="startTimeLabel" destination="2Ei-du-cAm" id="oW0-sk-dMf"/>
                 <outlet property="tapHandlerView" destination="d4l-Lo-bhJ" id="wDe-7n-Mdk"/>
             </connections>
@@ -73,7 +74,7 @@
                                                 <color key="titleColor" name="SecondaryText"/>
                                             </state>
                                         </button>
-                                        <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fO1-iK-xcD" customClass="UIActivityIndicatorView">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fO1-iK-xcD" customClass="UIActivityIndicatorView">
                                             <rect key="frame" x="0.0" y="0.0" width="28" height="28"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </view>

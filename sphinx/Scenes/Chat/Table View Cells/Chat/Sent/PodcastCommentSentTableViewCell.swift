@@ -57,7 +57,7 @@ class PodcastCommentSentTableViewCell: CommonPodcastCommentTableViewCell, Messag
     }
 
     func tryLoadingAudio(messageRow: TransactionMessageRow, podcast: PodcastFeed?, bubbleSize: CGSize) {
-        if let podcastComment = messageRow.transactionMessage.podcastComment, let _ = podcastComment.url {
+        if let podcastComment = messageRow.transactionMessage.getPodcastComment(), let _ = podcastComment.url {
             loadAudio(podcastComment: podcastComment, podcast: podcast, messageRow: messageRow, bubbleSize: bubbleSize)
         } else {
             audioLoadingFailed()

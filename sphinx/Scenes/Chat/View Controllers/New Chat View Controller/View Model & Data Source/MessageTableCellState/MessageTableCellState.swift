@@ -427,6 +427,23 @@ struct MessageTableCellState {
         )
     }()
     
+    lazy var podcastComment: BubbleMessageLayoutState.PodcastComment? = {
+        guard let message = message, let podcastComment = message.getPodcastComment(), podcastComment.isValid() else {
+            return nil
+        }
+        
+        guard let urlString = podcastComment.url, let url = URL(string: urlString) else {
+            return nil
+        }
+        
+        return BubbleMessageLayoutState.PodcastComment(
+            title: podcastComment.title!,
+            timestamp: podcastComment.timestamp!,
+            url: url,
+            bubbleWidth: (UIScreen.main.bounds.width - (MessageTableCellState.kRowLeftMargin + MessageTableCellState.kRowRightMargin)) * (MessageTableCellState.kBubbleWidthPercentage)
+        )
+    }()
+    
     
     ///No Bubble States
     lazy var noBubble: NoBubbleMessageLayoutState.NoBubble? = {
@@ -547,7 +564,6 @@ struct MessageTableCellState {
         mutating get {
             return
                 (self.messageContent != nil) &&
-                (self.messageContent?.text?.hasPubkeyLinks == false) &&
                 (self.messageReply == nil) &&
                 (self.callLink == nil) &&
                 (self.directPayment == nil) &&
@@ -557,7 +573,8 @@ struct MessageTableCellState {
                 (self.messageMedia == nil) &&
                 (self.webLink == nil) &&
                 (self.botHTMLContent == nil) &&
-                (self.paidContent == nil)
+                (self.paidContent == nil) &&
+                (self.podcastComment == nil)
         }
     }
 }

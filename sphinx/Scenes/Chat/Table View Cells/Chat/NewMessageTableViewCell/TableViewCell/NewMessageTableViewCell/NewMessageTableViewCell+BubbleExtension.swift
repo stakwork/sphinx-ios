@@ -14,13 +14,25 @@ extension NewMessageTableViewCell {
         messageCellState: MessageTableCellState
     ) {
         var mutableMessageCellState = messageCellState
+        
+        let isPodcastComment = mutableMessageCellState.podcastComment != nil
         let isPodcastBoost = mutableMessageCellState.podcastBoost != nil
         let isEmptyDirectPayment = mutableMessageCellState.directPayment != nil &&
                                    mutableMessageCellState.messageContent == nil
         
-        let widthDifference = ((UIScreen.main.bounds.width - (MessageTableCellState.kRowLeftMargin + MessageTableCellState.kRowRightMargin)) * MessageTableCellState.kBubbleWidthPercentage) - MessageTableCellState.kSmallBubbleDesiredWidth
+        let defaultWith = ((UIScreen.main.bounds.width - (MessageTableCellState.kRowLeftMargin + MessageTableCellState.kRowRightMargin)) * MessageTableCellState.kBubbleWidthPercentage)
         
-        bubbleWidthConstraint.constant = (isPodcastBoost || isEmptyDirectPayment) ? -(widthDifference) : 0
+        if isPodcastBoost || isEmptyDirectPayment {
+            let widthDifference = defaultWith - MessageTableCellState.kSmallBubbleDesiredWidth
+            
+            bubbleWidthConstraint.constant = -(widthDifference)
+        } else if isPodcastComment {
+            let widthDiference = (defaultWith / 7 * 8.5) - defaultWith
+            
+            bubbleWidthConstraint.constant = widthDiference
+        } else {
+            bubbleWidthConstraint.constant = 0
+        }
     }
     
     func configureWith(

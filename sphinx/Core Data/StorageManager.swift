@@ -255,9 +255,14 @@ class StorageManager {
             }
             wdt_flag = (i >= choppingBlockSnapshot.count - 1) ? false : wdt_flag
         }
-        wdt_flag = false
-        garbageCleanIsInProgress = false
-        completion()
+        
+        //now cleanup old chat media
+        self.deleteAllOldChatMedia(completion: {
+            wdt_flag = false
+            self.garbageCleanIsInProgress = false
+            completion()
+        })
+        
     }
     
     func deleteItem(item:StorageManagerItem,completion: @escaping ()->()){
@@ -510,7 +515,7 @@ class StorageManager {
     func deleteAllOldChatMedia(completion: @escaping ()->()){
         let now = Date()
         //TODO: Pull from memory and assign based on slider selection in user's profile
-        if let cutoffDatetime = Calendar.current.date(byAdding: .minute, value: -1, to: now){
+        if let cutoffDatetime = Calendar.current.date(byAdding: .day, value: -30, to: now){
             let oldMediaOnChoppingBlock = allItems.filter({$0.source == .chats && $0.date < cutoffDatetime}).compactMap({$0.cachedMedia})
             deleteCacheItems(cms: oldMediaOnChoppingBlock, completion: {
                 print("done")

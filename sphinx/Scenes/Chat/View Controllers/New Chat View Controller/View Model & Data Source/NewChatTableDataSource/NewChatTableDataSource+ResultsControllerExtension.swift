@@ -204,9 +204,11 @@ extension NewChatTableDataSource {
     
     func updateSnapshotIfPossible() {
         ///Avoid reloading until message menu is hidden
-        let isMessageMenuVisible = delegate?.isMessageMenuVisible() ?? false
-        if !isMessageMenuVisible {
-            updateSnapshot()
+        DispatchQueue.main.async {
+            let isMessageMenuVisible = self.delegate?.isMessageMenuVisible() ?? false
+            if !isMessageMenuVisible {
+                self.updateSnapshot()
+            }
         }
     }
     

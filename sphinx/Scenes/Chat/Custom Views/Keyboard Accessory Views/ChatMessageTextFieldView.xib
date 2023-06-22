@@ -111,9 +111,6 @@
                                 </view>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="58" id="FDX-Qg-DMK"/>
-                            </constraints>
                         </stackView>
                         <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Aqs-pb-zCH">
                             <rect key="frame" x="0.0" y="0.0" width="393" height="58"/>
@@ -126,13 +123,13 @@
                                             <color key="backgroundColor" red="1" green="0.32156862749999998" blue="0.32156862749999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="20" id="Azm-ek-ddw"/>
-                                                <constraint firstAttribute="height" constant="20" id="N3w-aw-FOE"/>
+                                                <constraint firstAttribute="height" constant="20" id="skG-Oh-Rrv"/>
                                             </constraints>
                                         </view>
                                     </subviews>
                                     <color key="backgroundColor" name="HeaderBG"/>
                                     <constraints>
-                                        <constraint firstItem="Zen-xR-cfv" firstAttribute="centerY" secondItem="l4v-3x-MSX" secondAttribute="centerY" id="66l-bO-dg5"/>
+                                        <constraint firstItem="Zen-xR-cfv" firstAttribute="centerY" secondItem="l4v-3x-MSX" secondAttribute="centerY" id="5QY-OW-801"/>
                                         <constraint firstItem="Zen-xR-cfv" firstAttribute="centerX" secondItem="l4v-3x-MSX" secondAttribute="centerX" id="8NM-vv-LBc"/>
                                         <constraint firstAttribute="width" constant="60" id="SOQ-DK-nJA"/>
                                     </constraints>
@@ -167,13 +164,13 @@
                                 <constraint firstItem="bRr-89-mn9" firstAttribute="centerY" secondItem="1Oy-zi-yG4" secondAttribute="centerY" id="0Oy-xo-4Au"/>
                                 <constraint firstItem="bRr-89-mn9" firstAttribute="leading" secondItem="1Oy-zi-yG4" secondAttribute="trailing" constant="-12" id="3as-d2-6Nt"/>
                                 <constraint firstAttribute="bottom" secondItem="l4v-3x-MSX" secondAttribute="bottom" id="Cyl-M1-dYn"/>
+                                <constraint firstAttribute="height" constant="58" id="HNt-gI-dqn"/>
                                 <constraint firstItem="bax-cO-uwT" firstAttribute="centerY" secondItem="l4v-3x-MSX" secondAttribute="centerY" id="MiS-bC-Xii"/>
                                 <constraint firstItem="l4v-3x-MSX" firstAttribute="leading" secondItem="Aqs-pb-zCH" secondAttribute="leading" id="N2m-6Y-S4W"/>
                                 <constraint firstItem="1Oy-zi-yG4" firstAttribute="centerY" secondItem="bax-cO-uwT" secondAttribute="centerY" id="TAU-Lg-kMZ"/>
                                 <constraint firstItem="l4v-3x-MSX" firstAttribute="top" secondItem="Aqs-pb-zCH" secondAttribute="top" id="ZZb-FZ-idQ"/>
                                 <constraint firstItem="1Oy-zi-yG4" firstAttribute="leading" secondItem="bax-cO-uwT" secondAttribute="trailing" constant="15" id="ZfP-ql-RgJ"/>
                                 <constraint firstAttribute="trailing" secondItem="NAe-W4-CcI" secondAttribute="trailing" constant="10" id="bO4-He-2to"/>
-                                <constraint firstAttribute="height" constant="58" id="nYB-5c-fsq"/>
                                 <constraint firstItem="NAe-W4-CcI" firstAttribute="leading" secondItem="bRr-89-mn9" secondAttribute="trailing" constant="2" id="wX3-Uj-7z9"/>
                                 <constraint firstItem="bax-cO-uwT" firstAttribute="leading" secondItem="l4v-3x-MSX" secondAttribute="trailing" id="xHK-bp-kt9"/>
                                 <constraint firstItem="NAe-W4-CcI" firstAttribute="centerY" secondItem="bax-cO-uwT" secondAttribute="centerY" id="z5A-AS-1Uu"/>
@@ -260,7 +257,6 @@
                         <constraint firstItem="2vY-QW-gxs" firstAttribute="top" secondItem="Tj3-Zh-OEz" secondAttribute="top" id="QGY-eP-BAx"/>
                         <constraint firstAttribute="trailing" secondItem="Aqs-pb-zCH" secondAttribute="trailing" id="Z5W-OC-Oz1"/>
                         <constraint firstAttribute="bottom" secondItem="DQt-3u-cWP" secondAttribute="bottom" id="jCx-RP-gHo"/>
-                        <constraint firstItem="Aqs-pb-zCH" firstAttribute="top" secondItem="Tj3-Zh-OEz" secondAttribute="top" id="pnK-7g-Xcq"/>
                         <constraint firstAttribute="bottom" secondItem="naq-qY-FAx" secondAttribute="bottom" id="qkQ-SH-g1s"/>
                         <constraint firstItem="naq-qY-FAx" firstAttribute="top" secondItem="Tj3-Zh-OEz" secondAttribute="top" id="rds-Wu-ey7"/>
                         <constraint firstItem="2vY-QW-gxs" firstAttribute="leading" secondItem="Tj3-Zh-OEz" secondAttribute="leading" id="sZU-Qj-yCj"/>

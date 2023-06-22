@@ -12,8 +12,6 @@ extension ChatMessageTextFieldView {
     func toggleAudioRecording(show: Bool) {
         recordingTimeLabel.text = "0:00"
         
-        audioButton.titleLabel?.font = UIFont(name: "MaterialIcons-Regular", size: show ? 50 : 27)!
-        
         animatedMicLabelView.toggleAnimation(animate: show)
         
         recordingBlueCircle.isHidden = !show

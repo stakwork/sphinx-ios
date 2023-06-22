@@ -99,10 +99,6 @@ extension NewChatTableDataSource {
             let botWebViewData = (dataSourceItem.messageId != nil) ? self.botsWebViewData[dataSourceItem.messageId!] : nil
             let uploadProgressData = (dataSourceItem.messageId != nil) ? self.uploadingProgress[dataSourceItem.messageId!] : nil
             
-            if (dataSourceItem.message?.isAudio() == true) {
-                print("AUDIO TIME RELOAD \(mediaData?.audioInfo?.currentTime ?? 0)")
-            }
-            
             cell?.configureWith(
                 messageCellState: dataSourceItem,
                 mediaData: mediaData,

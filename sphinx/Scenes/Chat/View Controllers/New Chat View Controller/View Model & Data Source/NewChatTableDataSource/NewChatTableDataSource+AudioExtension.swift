@@ -67,8 +67,6 @@ extension NewChatTableDataSource : AudioPlayerHelperDelegate {
         ) {
             if let audioData = mediaCached[messageId], let audioInfo = audioData.audioInfo {
                 
-                print("AUDIO TIME \(currentTime ?? 0)")
-                
                 mediaCached[messageId] = MessageTableCellState.MediaData(
                     data: audioData.data,
                     audioInfo: MessageTableCellState.AudioInfo(

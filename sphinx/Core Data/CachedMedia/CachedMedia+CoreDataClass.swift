@@ -56,6 +56,7 @@ public class CachedMedia: NSManagedObject {
         cachedMedia.fileExtension = fileExtension
         cachedMedia.key = key
         cachedMedia.fileName = fileName
+        cachedMedia.creationDate = Date()
         
         managedContext.saveContext()
         

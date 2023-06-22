@@ -195,6 +195,9 @@ class ProfileManageStorageViewController : UIViewController{
             setupStorageViewsAndModels()
         }
         hideDeletionWarningAlert()
+        StorageManager.sharedManager.deleteAllOldChatMedia(completion: {
+          print("done")
+        })
     }
     
     override func viewWillAppear(_ animated: Bool) {

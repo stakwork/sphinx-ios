@@ -8,7 +8,13 @@
 
 import UIKit
 
+protocol PodcastAudioViewDelegate: class {
+    func didTapClipPlayPauseButton()
+}
+
 class PodcastAudioView: UIView {
+    
+    weak var delegate: PodcastAudioViewDelegate?
     
     @IBOutlet private var contentView: UIView!
     
@@ -56,8 +62,10 @@ class PodcastAudioView: UIView {
     func configureWith(
         podcastComment: BubbleMessageLayoutState.PodcastComment,
         mediaData: MessageTableCellState.MediaData?,
-        and bubble: BubbleMessageLayoutState.Bubble
+        bubble: BubbleMessageLayoutState.Bubble,
+        and delegate: PodcastAudioViewDelegate?
     ) {
+        self.delegate = delegate
         
         durationView.backgroundColor = bubble.direction.isIncoming() ? UIColor.Sphinx.WashedOutReceivedText : UIColor.Sphinx.WashedOutSentText
         
@@ -70,10 +78,9 @@ class PodcastAudioView: UIView {
             startTimeLabel.text = Int(audioInfo.currentTime).getPodcastTimeString()
             endTimeLabel.text = Int(audioInfo.duration).getPodcastTimeString()
             
-            playButton.isHidden = false
-            playButtonView.isHidden = false
-            loadingWheel.isHidden = true
-            loadingWheel.stopAnimating()
+            configureLoadingWheel(
+                loading: audioInfo.loading && !audioInfo.playing
+            )
             
             let progressBarWith = podcastComment.bubbleWidth - kProgressBarLeftMargin - kProgressBarRightMargin
             let progress = audioInfo.currentTime * 1 / audioInfo.duration
@@ -82,15 +89,30 @@ class PodcastAudioView: UIView {
         } else {
             startTimeLabel.text = Int(podcastComment.timestamp).getPodcastTimeString()
             
-            playButton.isHidden = true
-            playButtonView.isHidden = true
-            loadingWheel.isHidden = false
-            loadingWheel.startAnimating()
+            configureLoadingWheel(loading: true)
             
             progressViewWidthConstraint.constant = 0
         }
         
         progressView.layoutIfNeeded()
     }
-
+    
+    func configureLoadingWheel(
+        loading: Bool
+    ) {
+        playButton.isHidden = loading
+        playButtonView.isHidden = loading
+        loadingWheel.isHidden = !loading
+        
+        if loading {
+            loadingWheel.startAnimating()
+        } else {
+            loadingWheel.stopAnimating()
+        }
+    }
+    
+    @IBAction func playPauseButtonTouched() {
+        delegate?.didTapClipPlayPauseButton()
+    }
+    
 }

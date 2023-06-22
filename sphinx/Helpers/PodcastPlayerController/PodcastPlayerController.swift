@@ -31,6 +31,7 @@ enum PodcastDelegateKeys: String {
     case DashboardView = "DashboardView"
     case DashboardSmallPlayerBar = "DashboardSmallPlayerBar"
     case RecommendationsPlayerView = "RecommendationsPlayerView"
+    case ChatDataSource = "ChatDataSource"
 }
 
 let kSecondsBeforePMT = 60

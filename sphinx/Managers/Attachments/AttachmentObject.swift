@@ -132,6 +132,7 @@ public struct AttachmentObject {
         }
         
         return MessageTableCellState.AudioInfo(
+            loading: false,
             playing: false,
             duration: duration ?? 0.0,
             currentTime: 0.0

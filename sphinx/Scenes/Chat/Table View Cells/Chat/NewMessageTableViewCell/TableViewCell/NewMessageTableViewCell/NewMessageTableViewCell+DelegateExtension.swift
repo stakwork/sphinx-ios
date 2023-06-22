@@ -95,3 +95,11 @@ extension NewMessageTableViewCell : AudioMessageViewDelegate {
         }
     }
 }
+
+extension NewMessageTableViewCell : PodcastAudioViewDelegate {
+    func didTapClipPlayPauseButton() {
+        if let messageId = messageId {
+            delegate?.didTapClipPlayPauseButtonFor(messageId: messageId, and: rowIndex)
+        }
+    }
+}

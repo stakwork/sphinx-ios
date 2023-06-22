@@ -236,7 +236,8 @@ extension NewMessageTableViewCell {
             podcastAudioView.configureWith(
                 podcastComment: podcastComment,
                 mediaData: mediaData,
-                and: bubble
+                bubble: bubble,
+                and: self
             )
             podcastAudioView.isHidden = false
             

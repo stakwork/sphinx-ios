@@ -141,15 +141,18 @@ extension MessageTableCellState {
     }
     
     struct AudioInfo {
+        var loading: Bool
         var playing: Bool
         var duration: Double
         var currentTime: Double
         
         init(
+            loading: Bool,
             playing: Bool,
             duration: Double,
             currentTime: Double
         ) {
+            self.loading = loading
             self.playing = playing
             self.duration = duration
             self.currentTime = currentTime

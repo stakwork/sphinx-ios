@@ -78,6 +78,8 @@ protocol NewMessageTableViewCellDelegate: class {
     func didTapPayButtonFor(messageId: Int, and rowIndex: Int)
     //Audio
     func didTapPlayPauseButtonFor(messageId: Int, and rowIndex: Int)
+    //Podcast CLip
+    func didTapClipPlayPauseButtonFor(messageId: Int, and rowIndex: Int)
     
     //Menu Long Press
     func didLongPressOnCellWith(messageId: Int, and rowIndex: Int, bubbleViewRect: CGRect)

@@ -57,6 +57,7 @@ class NewChatTableDataSource : NSObject {
     let linkPreviewsLoader = CustomSwiftLinkPreview.sharedInstance
     let bubbleHelper = NewMessageBubbleHelper()
     let audioPlayerHelper = AudioPlayerHelper()
+    var podcastPlayerController = PodcastPlayerController.sharedInstance
     
     ///Messages Data
     var messagesArray: [TransactionMessage] = []

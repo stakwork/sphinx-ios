@@ -107,7 +107,15 @@ class NewChatViewController: NewKeyboardHandlerViewController {
             chat?.setOngoingMessage(text: bottomView.getMessage())
             
             SphinxSocketManager.sharedInstance.setDelegate(delegate: nil)
+            
+            stopPlayingClip()
         }
+    }
+    
+    func stopPlayingClip() {
+        let podcastPlayerController = PodcastPlayerController.sharedInstance
+        podcastPlayerController.removeFromDelegatesWith(key: PodcastDelegateKeys.ChatDataSource.rawValue)
+        podcastPlayerController.pausePlayingClip()
     }
     
     override func didToggleKeyboard() {

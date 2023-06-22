@@ -217,6 +217,7 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
                             data: data,
                             fileInfo: fileInfo,
                             audioInfo: MessageTableCellState.AudioInfo(
+                                loading: false,
                                 playing: false,
                                 duration: duration,
                                 currentTime: 0
@@ -380,7 +381,7 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
         messageId: Int,
         and rowIndex: Int
     ) {
-        if var tableCellState = getTableCellStateFor(
+        if let tableCellState = getTableCellStateFor(
             messageId: messageId,
             and: rowIndex
         ),
@@ -425,13 +426,18 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
                 data: nil,
                 fileInfo: nil,
                 audioInfo: MessageTableCellState.AudioInfo(
+                    loading: false,
                     playing: false,
                     duration: duration,
                     currentTime: currentTime
                 )
             )
             
-            self.updateMessageTableCellStateFor(rowIndex: rowIndex, messageId: messageId, with: updatedMediaData)
+            self.updateMessageTableCellStateFor(
+                rowIndex: rowIndex,
+                messageId: messageId,
+                with: updatedMediaData
+            )
         }
     }
 }
@@ -726,6 +732,49 @@ extension NewChatTableDataSource {
             }
         }
     }
+    
+    func didTapClipPlayPauseButtonFor(messageId: Int, and rowIndex: Int) {
+        podcastPlayerController.addDelegate(
+            self,
+            withKey: PodcastDelegateKeys.ChatDataSource.rawValue
+        )
+        
+        if let tableCellState = getTableCellStateFor(
+            messageId: messageId,
+            and: rowIndex
+        ),
+           let message = tableCellState.1.message,
+           let podcastComment = message.getPodcastComment()
+        {
+            if
+                let feedId = podcastComment.feedId,
+                let episodeId = podcastComment.itemId,
+                let feed = ContentFeed.getFeedById(feedId: feedId)
+            {
+                let audioInfo = mediaCached[messageId]?.audioInfo
+                let podcast = PodcastFeed.convertFrom(contentFeed: feed)
+                
+                let startTime = (audioInfo?.currentTime != nil) ? Int(audioInfo!.currentTime) : podcastComment.timestamp
+                
+                if let podcastData = podcast.getPodcastData(
+                    episodeId: episodeId,
+                    currentTime: startTime,
+                    messageId: messageId,
+                    rowIndex: rowIndex
+                ) {
+                    if podcastPlayerController.isPlaying(messageId: messageId) {
+                        podcastPlayerController.submitAction(
+                            UserAction.Pause(podcastData)
+                        )
+                    } else {
+                        podcastPlayerController.submitAction(
+                            UserAction.Play(podcastData)
+                        )
+                    }
+                }
+            }
+        }
+    }
 }
 
 extension NewChatTableDataSource {
@@ -833,7 +882,9 @@ extension NewChatTableDataSource {
         
         var tableCellState: (Int, MessageTableCellState)? = nil
         
-        if let rowIndex = rowIndex, messageTableCellStateArray[rowIndex].message?.id == messageId {
+        
+        
+        if let rowIndex = rowIndex, messageTableCellStateArray.count > rowIndex, messageTableCellStateArray[rowIndex].message?.id == messageId {
             return (rowIndex, messageTableCellStateArray[rowIndex])
         }
         

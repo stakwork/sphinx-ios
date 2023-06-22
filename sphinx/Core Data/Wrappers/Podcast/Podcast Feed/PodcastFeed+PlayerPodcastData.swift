@@ -18,6 +18,8 @@ struct PodcastData {
     var duration: Int? = nil
     var speed: Float = 1
     var downloaded: Bool = false
+    var messageId: Int? = nil
+    var rowIndex: Int? = nil
     
     init(
         _ chatId: Int?,
@@ -27,7 +29,9 @@ struct PodcastData {
         _ currentTime: Int? = nil,
         _ duration: Int? = nil,
         _ speed: Float = 1,
-        _ downloaded: Bool = false
+        _ downloaded: Bool = false,
+        _ messageId: Int? = nil,
+        _ rowIndex: Int? = nil
     ) {
         self.chatId = chatId
         self.podcastId = podcastId
@@ -37,6 +41,8 @@ struct PodcastData {
         self.duration = duration
         self.speed = speed
         self.downloaded = downloaded
+        self.messageId = messageId
+        self.rowIndex = rowIndex
     }
 }
 
@@ -45,7 +51,9 @@ extension PodcastFeed {
     func getPodcastData(
         episodeId: String? = nil,
         currentTime: Int? = nil,
-        playerSpeed: Float? = nil
+        playerSpeed: Float? = nil,
+        messageId: Int? = nil,
+        rowIndex: Int? = nil
     ) -> PodcastData? {
         
         var episode: PodcastEpisode? = nil
@@ -70,7 +78,9 @@ extension PodcastFeed {
             currentTime,
             episode.duration,
             playerSpeed ?? self.playerSpeed,
-            episode.isDownloaded
+            episode.isDownloaded,
+            messageId,
+            rowIndex
         )
     }
 }

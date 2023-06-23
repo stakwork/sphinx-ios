@@ -347,6 +347,7 @@
 "payment.failed" = "Payment failed, try again later";
 "expires.in" = "Expires in %@ minutes";
 "invoice.paid.on" = "Invoice Paid on %@";
+"invoice.amount.paid.on" = "Invoice of %@ sats Paid on %@";
 "media.terms.expired" = "Media terms expired";
 "message.failed" = "Message Failed";
 "invite.name" = "Invite: %@";

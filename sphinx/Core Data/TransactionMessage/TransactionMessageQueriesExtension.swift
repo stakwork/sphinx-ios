@@ -76,7 +76,7 @@ extension TransactionMessage {
         var typesToExclude = typesToExcludeFromChat
         typesToExclude.append(TransactionMessageType.boost.rawValue)
         
-        var predicate : NSPredicate = NSPredicate(
+        let predicate : NSPredicate = NSPredicate(
             format: "chat == %@ AND (NOT (type IN %@) || (type == %d && replyUUID = nil))",
             chat,
             typesToExclude,

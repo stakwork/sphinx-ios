@@ -60,7 +60,14 @@ class StatusHeaderView: UIView {
         statusHeader: BubbleMessageLayoutState.StatusHeader,
         uploadProgressData: MessageTableCellState.UploadProgressData?
     ) {
-        receivedSenderLabel.text = statusHeader.senderName
+        if let senderName = statusHeader.senderName {
+            receivedSenderLabel.isHidden = false
+            receivedSenderLabel.text =
+            senderName
+        } else {
+            receivedSenderLabel.isHidden = true
+        }
+        
         receivedSenderLabel.textColor = statusHeader.color
         
         sentLightningIcon.isHidden = !statusHeader.showBoltIcon

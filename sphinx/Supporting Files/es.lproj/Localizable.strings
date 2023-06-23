@@ -346,6 +346,7 @@
 "payment.failed" = "Pago fallido, inténtalo nuevamente más tarde";
 "expires.in" = "Caduca en %@ minutos";
 "invoice.paid.on" = "Solicitud pagada el %@";
+"invoice.amount.paid.on" = "Solicitud de %@ sats pagada el %@";
 "media.terms.expired" = "Archivo caducado";
 "message.failed" = "Mensaje fallido";
 "invite.name" = "Invitación: %@";

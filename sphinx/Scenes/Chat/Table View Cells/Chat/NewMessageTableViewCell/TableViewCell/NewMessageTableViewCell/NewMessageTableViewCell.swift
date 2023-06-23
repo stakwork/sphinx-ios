@@ -108,6 +108,7 @@ class NewMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableViewCellP
     @IBOutlet weak var messageReplyView: NewMessageReplyView!
     
     ///Second Container
+    @IBOutlet weak var invoicePaymentView: InvoicePaymentView!
     @IBOutlet weak var sentPaidDetailsView: SentPaidDetails!
     @IBOutlet weak var paidTextMessageView: UIView!
     @IBOutlet weak var directPaymentView: DirectPaymentView!
@@ -185,6 +186,7 @@ class NewMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableViewCellP
         configureWith(paidContent: mutableMessageCellState.paidContent, and: bubble)
         
         ///Message types
+        configureWith(payment: mutableMessageCellState.payment, and: bubble)
         configureWith(directPayment: mutableMessageCellState.directPayment, and: bubble)
         configureWith(callLink: mutableMessageCellState.callLink)
         configureWith(podcastBoost: mutableMessageCellState.podcastBoost)

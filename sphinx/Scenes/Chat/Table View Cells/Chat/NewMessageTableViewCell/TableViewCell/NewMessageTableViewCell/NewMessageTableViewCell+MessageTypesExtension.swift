@@ -254,6 +254,16 @@ extension NewMessageTableViewCell {
     }
     
     func configureWith(
+        payment: BubbleMessageLayoutState.Payment?,
+        and bubble: BubbleMessageLayoutState.Bubble
+    ) {
+        if let payment = payment {
+            invoicePaymentView.configureWith(payment: payment, and: bubble)
+            invoicePaymentView.isHidden = false
+        }
+    }
+    
+    func configureWith(
         boosts: BubbleMessageLayoutState.Boosts?,
         and bubble: BubbleMessageLayoutState.Bubble
     ) {

@@ -526,6 +526,8 @@
 		47D4DE7E2A45CA85004B03AF /* LoadingMoreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D4DE7C2A45CA85004B03AF /* LoadingMoreTableViewCell.swift */; };
 		47D4DE7F2A45CA85004B03AF /* LoadingMoreTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47D4DE7D2A45CA85004B03AF /* LoadingMoreTableViewCell.xib */; };
 		47D4DE832A45CD44004B03AF /* ChatHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D4DE822A45CD44004B03AF /* ChatHelper.swift */; };
+		47D4DE852A4608C3004B03AF /* InvoicePaymentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D4DE842A4608C3004B03AF /* InvoicePaymentView.swift */; };
+		47D4DE872A4608CD004B03AF /* InvoicePaymentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47D4DE862A4608CD004B03AF /* InvoicePaymentView.xib */; };
 		47D76E6927F10D89000DC021 /* API+AuthenticationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D76E6827F10D89000DC021 /* API+AuthenticationExtension.swift */; };
 		47DAABCB24913E6E00EF38B0 /* SwipableReplyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47DAABCA24913E6E00EF38B0 /* SwipableReplyCell.swift */; };
 		47DAABCE2491410900EF38B0 /* MessageReplyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47DAABCD2491410900EF38B0 /* MessageReplyView.swift */; };
@@ -1472,6 +1474,8 @@
 		47D4DE7C2A45CA85004B03AF /* LoadingMoreTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingMoreTableViewCell.swift; sourceTree = "<group>"; };
 		47D4DE7D2A45CA85004B03AF /* LoadingMoreTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingMoreTableViewCell.xib; sourceTree = "<group>"; };
 		47D4DE822A45CD44004B03AF /* ChatHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatHelper.swift; path = Helpers/ChatHelper.swift; sourceTree = "<group>"; };
+		47D4DE842A4608C3004B03AF /* InvoicePaymentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoicePaymentView.swift; sourceTree = "<group>"; };
+		47D4DE862A4608CD004B03AF /* InvoicePaymentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InvoicePaymentView.xib; sourceTree = "<group>"; };
 		47D76E6827F10D89000DC021 /* API+AuthenticationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+AuthenticationExtension.swift"; sourceTree = "<group>"; };
 		47DAABC92491320600EF38B0 /* sphinx 15.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 15.xcdatamodel"; sourceTree = "<group>"; };
 		47DAABCA24913E6E00EF38B0 /* SwipableReplyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipableReplyCell.swift; sourceTree = "<group>"; };
@@ -3741,6 +3745,8 @@
 		47E6A4C52A2E66B400A9509E /* Bubble Row views */ = {
 			isa = PBXGroup;
 			children = (
+				47D4DE842A4608C3004B03AF /* InvoicePaymentView.swift */,
+				47D4DE862A4608CD004B03AF /* InvoicePaymentView.xib */,
 				47FA18D52434E31D00469C8F /* PaidAttachmentView.swift */,
 				4797E7A724B8F06A00D13270 /* PaidAttachmentView.xib */,
 				47D03DF32510ED9C0077A968 /* FileInfoView.swift */,
@@ -4606,6 +4612,7 @@
 				47BE854B246492FD00BE4AE8 /* KeychainRestoreTableViewCell.xib in Resources */,
 				4797E75E24B8DDE400D13270 /* LeftMenu.storyboard in Resources */,
 				4779F16C232AA0F300D35E81 /* Assets.xcassets in Resources */,
+				47D4DE872A4608CD004B03AF /* InvoicePaymentView.xib in Resources */,
 				F39F2C8226E2805D00D357F6 /* FeedSearchResultCollectionViewCell.xib in Resources */,
 				4787F87E24745BBD00CCE8B9 /* GroupTagView.xib in Resources */,
 				47904C1024BF352300710E7A /* synth.caf in Resources */,
@@ -4793,6 +4800,7 @@
 				4712994329227B450049CBE3 /* TribeMemberProfileViewController.swift in Sources */,
 				4779248A2A28F53E00CD3CF1 /* DirectPaymentView.swift in Sources */,
 				F39F2C7E26E2367B00D357F6 /* FeedSearchEmptyStateViewController.swift in Sources */,
+				47D4DE852A4608C3004B03AF /* InvoicePaymentView.swift in Sources */,
 				475BDCD0232AC23100C5BBD6 /* ExpiredInvoiceCommonTableViewCell.swift in Sources */,
 				47308E1024FEE6E700FFAC6F /* SocketIOClient.swift in Sources */,
 				47308E0624FEE6E600FFAC6F /* SocketManagerSpec.swift in Sources */,

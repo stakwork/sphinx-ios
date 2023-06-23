@@ -26,10 +26,10 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Gp-CF-p7o">
-                        <rect key="frame" x="0.0" y="0.0" width="378" height="1432.6666666666667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="378" height="1452.6666666666667"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iIC-G3-A9L">
-                                <rect key="frame" x="55.999999999999986" y="27" width="247.66666666666663" height="1403.6666666666667"/>
+                                <rect key="frame" x="55.999999999999986" y="27" width="247.66666666666663" height="1423.6666666666667"/>
                                 <color key="backgroundColor" name="SentMsgBG"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fdj-WN-CtK">
@@ -49,7 +49,7 @@
                                 </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="mpu-Ww-LGT">
-                                <rect key="frame" x="15" y="2" width="354" height="1428.6666666666667"/>
+                                <rect key="frame" x="15" y="2" width="354" height="1448.6666666666667"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ezO-Vc-nm0">
                                         <rect key="frame" x="0.0" y="8" width="37" height="37"/>
@@ -79,7 +79,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="sqg-oz-09Q">
-                                        <rect key="frame" x="37" y="0.0" width="4" height="1428.6666666666667"/>
+                                        <rect key="frame" x="37" y="0.0" width="4" height="1448.6666666666667"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KVb-uY-P1s">
                                                 <rect key="frame" x="0.0" y="25" width="4" height="10"/>
@@ -97,7 +97,7 @@
                                         </constraints>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="mD1-rC-VsJ">
-                                        <rect key="frame" x="40.999999999999986" y="0.0" width="247.66666666666663" height="1428.6666666666667"/>
+                                        <rect key="frame" x="40.999999999999986" y="0.0" width="247.66666666666663" height="1448.6666666666667"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Idp-LW-sQE">
                                                 <rect key="frame" x="0.0" y="0.0" width="247.66666666666666" height="25"/>
@@ -119,7 +119,7 @@
                                                 </constraints>
                                             </view>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="j6X-QF-M6e">
-                                                <rect key="frame" x="0.0" y="25" width="247.66666666666666" height="1403.6666666666667"/>
+                                                <rect key="frame" x="0.0" y="25" width="247.66666666666666" height="1423.6666666666667"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xkZ-Ex-rUP" customClass="NewMessageReplyView" customModule="sphinx" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="247.66666666666666" height="50"/>
@@ -129,69 +129,76 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AwX-c7-kjq">
-                                                        <rect key="frame" x="0.0" y="50" width="247.66666666666666" height="761.66666666666663"/>
+                                                        <rect key="frame" x="0.0" y="50" width="247.66666666666666" height="781.66666666666663"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Nu8-Rz-zye">
-                                                                <rect key="frame" x="0.0" y="0.0" width="247.66666666666666" height="761.66666666666663"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="247.66666666666666" height="781.66666666666663"/>
                                                                 <subviews>
+                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eyt-ZL-bXL" customClass="InvoicePaymentView" customModule="sphinx" customModuleProvider="target">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="247.66666666666666" height="20"/>
+                                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="height" constant="20" id="w5z-Ih-Se7"/>
+                                                                        </constraints>
+                                                                    </view>
                                                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RmC-3X-VVX" customClass="DirectPaymentView" customModule="sphinx" customModuleProvider="target">
-                                                                        <rect key="frame" x="0.0" y="-56" width="247.66666666666666" height="56"/>
+                                                                        <rect key="frame" x="0.0" y="20" width="247.66666666666666" height="56"/>
                                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="56" id="uuv-DQ-e0a"/>
                                                                         </constraints>
                                                                     </view>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9An-1l-E7B" customClass="MediaMessageView" customModule="sphinx" customModuleProvider="target">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="247.66666666666666" height="247.66666666666666"/>
+                                                                        <rect key="frame" x="0.0" y="19.999999999999986" width="247.66666666666666" height="247.66666666666663"/>
                                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" secondItem="9An-1l-E7B" secondAttribute="height" multiplier="1:1" id="WM2-Tr-lMc"/>
                                                                         </constraints>
                                                                     </view>
                                                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OFY-Bx-2Yr" customClass="FileDetailsView" customModule="sphinx" customModuleProvider="target">
-                                                                        <rect key="frame" x="0.0" y="247.66666666666669" width="247.66666666666666" height="63"/>
+                                                                        <rect key="frame" x="0.0" y="267.66666666666669" width="247.66666666666666" height="63"/>
                                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="63" id="SDf-gc-EEC"/>
                                                                         </constraints>
                                                                     </view>
                                                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SmW-PZ-3BF" customClass="AudioMessageView" customModule="sphinx" customModuleProvider="target">
-                                                                        <rect key="frame" x="0.0" y="247.66666666666669" width="247.66666666666666" height="60"/>
+                                                                        <rect key="frame" x="0.0" y="267.66666666666669" width="247.66666666666666" height="60"/>
                                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="60" id="nVF-R3-yj8"/>
                                                                         </constraints>
                                                                     </view>
                                                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P8Z-Ei-Ouo" customClass="PodcastAudioView" customModule="sphinx" customModuleProvider="target">
-                                                                        <rect key="frame" x="0.0" y="247.66666666666669" width="247.66666666666666" height="80"/>
+                                                                        <rect key="frame" x="0.0" y="267.66666666666669" width="247.66666666666666" height="80"/>
                                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="80" id="AP4-ct-CE6"/>
                                                                         </constraints>
                                                                     </view>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L6b-x8-zDV" customClass="JoinVideoCallView" customModule="sphinx" customModuleProvider="target">
-                                                                        <rect key="frame" x="0.0" y="247.66666666666669" width="247.66666666666666" height="226"/>
+                                                                        <rect key="frame" x="0.0" y="267.66666666666669" width="247.66666666666666" height="226"/>
                                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" priority="750" constant="226" id="bhp-9d-29m"/>
                                                                         </constraints>
                                                                     </view>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u3B-p7-wwo" customClass="PodcastBoostView" customModule="sphinx" customModuleProvider="target">
-                                                                        <rect key="frame" x="0.0" y="473.66666666666663" width="247.66666666666666" height="52"/>
+                                                                        <rect key="frame" x="0.0" y="493.66666666666663" width="247.66666666666666" height="52"/>
                                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="52" id="IPz-rO-Waf"/>
                                                                         </constraints>
                                                                     </view>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8uW-aX-5nz" customClass="BotResponseView" customModule="sphinx" customModuleProvider="target">
-                                                                        <rect key="frame" x="0.0" y="525.66666666666663" width="247.66666666666666" height="200"/>
+                                                                        <rect key="frame" x="0.0" y="545.66666666666663" width="247.66666666666666" height="200"/>
                                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="200" id="LIu-ON-FFb"/>
                                                                         </constraints>
                                                                     </view>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jJ6-bu-xAX">
-                                                                        <rect key="frame" x="0.0" y="725.66666666666663" width="247.66666666666666" height="36"/>
+                                                                        <rect key="frame" x="0.0" y="745.66666666666663" width="247.66666666666666" height="36"/>
                                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="36" id="EoY-8X-w9H"/>
@@ -201,9 +208,11 @@
                                                                 <constraints>
                                                                     <constraint firstAttribute="trailing" secondItem="u3B-p7-wwo" secondAttribute="trailing" id="0RX-SY-6fN"/>
                                                                     <constraint firstAttribute="trailing" secondItem="L6b-x8-zDV" secondAttribute="trailing" id="99W-Q6-1TP"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="eyt-ZL-bXL" secondAttribute="trailing" id="9Ae-EH-xjL"/>
                                                                     <constraint firstAttribute="trailing" secondItem="OFY-Bx-2Yr" secondAttribute="trailing" id="9ku-FT-HWA"/>
                                                                     <constraint firstItem="RmC-3X-VVX" firstAttribute="leading" secondItem="Nu8-Rz-zye" secondAttribute="leading" id="CIi-UG-JPK"/>
                                                                     <constraint firstAttribute="trailing" secondItem="8uW-aX-5nz" secondAttribute="trailing" id="CaC-zc-vMX"/>
+                                                                    <constraint firstItem="eyt-ZL-bXL" firstAttribute="leading" secondItem="Nu8-Rz-zye" secondAttribute="leading" id="Gbm-AW-xB2"/>
                                                                     <constraint firstAttribute="trailing" secondItem="P8Z-Ei-Ouo" secondAttribute="trailing" id="K7O-Jq-a5o"/>
                                                                     <constraint firstAttribute="trailing" secondItem="jJ6-bu-xAX" secondAttribute="trailing" id="Svl-uq-FLX"/>
                                                                     <constraint firstItem="jJ6-bu-xAX" firstAttribute="leading" secondItem="Nu8-Rz-zye" secondAttribute="leading" id="XpI-45-IaW"/>
@@ -237,7 +246,7 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="roq-OQ-TDc">
-                                                        <rect key="frame" x="0.0" y="811.66666666666663" width="247.66666666666666" height="65"/>
+                                                        <rect key="frame" x="0.0" y="831.66666666666663" width="247.66666666666666" height="65"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="This is a large text to see how it works" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pPY-Rf-UkB">
                                                                 <rect key="frame" x="16" y="16" width="215.66666666666666" height="33"/>
@@ -258,7 +267,7 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KdK-Vt-n6p">
-                                                        <rect key="frame" x="0.0" y="876.66666666666652" width="247.66666666666666" height="436"/>
+                                                        <rect key="frame" x="0.0" y="896.66666666666652" width="247.66666666666666" height="436"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="bK1-jn-cVw">
                                                                 <rect key="frame" x="0.0" y="0.0" width="247.66666666666666" height="436"/>
@@ -271,7 +280,7 @@
                                                                         </constraints>
                                                                     </view>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n1d-L6-630" customClass="ContactLinkPreviewView" customModule="sphinx" customModuleProvider="target">
-                                                                        <rect key="frame" x="0.0" y="112" width="247.66666666666666" height="224"/>
+                                                                        <rect key="frame" x="0.0" y="112.00000000000011" width="247.66666666666666" height="224"/>
                                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" priority="749" constant="168" id="U4J-zK-vxf"/>
@@ -304,7 +313,7 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tYh-r6-dPW">
-                                                        <rect key="frame" x="0.0" y="1312.6666666666667" width="247.66666666666666" height="91"/>
+                                                        <rect key="frame" x="0.0" y="1332.6666666666667" width="247.66666666666666" height="91"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="iVZ-Ay-PLH">
                                                                 <rect key="frame" x="0.0" y="0.0" width="247.66666666666666" height="91"/>
@@ -358,7 +367,7 @@
                                         </constraints>
                                     </stackView>
                                     <view contentMode="scaleToFill" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="31v-lQ-g2m">
-                                        <rect key="frame" x="288.66666666666669" y="8" width="7" height="1420.6666666666667"/>
+                                        <rect key="frame" x="288.66666666666669" y="8" width="7" height="1440.6666666666667"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HSy-2h-42y">
                                                 <rect key="frame" x="0.0" y="17" width="7" height="10"/>
@@ -415,7 +424,7 @@
                         </constraints>
                     </view>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gmq-0D-Jtd">
-                        <rect key="frame" x="378" y="0.0" width="50" height="1432.6666666666667"/>
+                        <rect key="frame" x="378" y="0.0" width="50" height="1452.6666666666667"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="50" id="LbG-7V-cmi"/>
                         </constraints>
@@ -451,6 +460,7 @@
                 <outlet property="contactLinkPreviewView" destination="n1d-L6-630" id="OuR-4C-mSS"/>
                 <outlet property="directPaymentView" destination="RmC-3X-VVX" id="YoI-5x-0iM"/>
                 <outlet property="fileDetailsView" destination="OFY-Bx-2Yr" id="d47-N4-NqV"/>
+                <outlet property="invoicePaymentView" destination="eyt-ZL-bXL" id="g8b-GH-6HE"/>
                 <outlet property="leftConstraint" destination="FqN-F6-2QS" id="SLO-0K-YI5"/>
                 <outlet property="linkPreviewView" destination="cr4-Hz-n4T" id="Y9q-Jl-Ugd"/>
                 <outlet property="mediaContentView" destination="9An-1l-E7B" id="GZX-9A-KCU"/>

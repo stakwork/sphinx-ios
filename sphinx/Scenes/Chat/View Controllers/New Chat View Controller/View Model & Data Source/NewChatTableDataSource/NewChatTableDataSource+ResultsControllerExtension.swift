@@ -143,57 +143,54 @@ extension NewChatTableDataSource {
         var groupingDate: Date? = nil
 
         for (index, message) in messages.enumerated() {
-            if message.shouldShowOnChat() {
-                
-                let bubbleStateAndDate = getBubbleBackgroundForMessage(
-                    message: message,
-                    with: index,
-                    in: messages,
-                    groupingDate: &groupingDate
-                )
-                
-                if let separatorDate = bubbleStateAndDate.1 {
-                    array.insert(
-                        MessageTableCellState(
-                            chat: chat,
-                            owner: owner,
-                            contact: contact,
-                            tribeAdmin: admin,
-                            separatorDate: separatorDate
-                        ),
-                        at: 0
-                    )
-                }
-                
-                let replyingMessage = (message.replyUUID != nil) ? replyingMessagesMap[message.replyUUID!] : nil
-                let boostsMessages = (message.uuid != nil) ? (boostMessagesMap[message.uuid!] ?? []) : []
-                let purchaseMessages = purchaseMessagesMap[message.getMUID()] ?? [:]
-                let linkContact = linkContactsArray[message.id]
-                let linkTribe = linkTribesArray[message.id]
-                let linkWeb = getLinkWebFor(message: message)
-                
+            let bubbleStateAndDate = getBubbleBackgroundForMessage(
+                message: message,
+                with: index,
+                in: messages,
+                groupingDate: &groupingDate
+            )
+            
+            if let separatorDate = bubbleStateAndDate.1 {
                 array.insert(
                     MessageTableCellState(
-                        message: message,
                         chat: chat,
                         owner: owner,
                         contact: contact,
                         tribeAdmin: admin,
-                        separatorDate: nil,
-                        bubbleState: bubbleStateAndDate.0,
-                        contactImage: headerImage,
-                        replyingMessage: replyingMessage,
-                        boostMessages: boostsMessages,
-                        purchaseMessages: purchaseMessages,
-                        linkContact: linkContact,
-                        linkTribe: linkTribe,
-                        linkWeb: linkWeb
+                        separatorDate: separatorDate
                     ),
                     at: 0
                 )
-                
-                newMsgCount += getNewMessageCountFor(message: message, and: owner)
             }
+            
+            let replyingMessage = (message.replyUUID != nil) ? replyingMessagesMap[message.replyUUID!] : nil
+            let boostsMessages = (message.uuid != nil) ? (boostMessagesMap[message.uuid!] ?? []) : []
+            let purchaseMessages = purchaseMessagesMap[message.getMUID()] ?? [:]
+            let linkContact = linkContactsArray[message.id]
+            let linkTribe = linkTribesArray[message.id]
+            let linkWeb = getLinkWebFor(message: message)
+            
+            array.insert(
+                MessageTableCellState(
+                    message: message,
+                    chat: chat,
+                    owner: owner,
+                    contact: contact,
+                    tribeAdmin: admin,
+                    separatorDate: nil,
+                    bubbleState: bubbleStateAndDate.0,
+                    contactImage: headerImage,
+                    replyingMessage: replyingMessage,
+                    boostMessages: boostsMessages,
+                    purchaseMessages: purchaseMessages,
+                    linkContact: linkContact,
+                    linkTribe: linkTribe,
+                    linkWeb: linkWeb
+                ),
+                at: 0
+            )
+            
+            newMsgCount += getNewMessageCountFor(message: message, and: owner)
         }
         
         messageTableCellStateArray = array
@@ -248,6 +245,10 @@ extension NewChatTableDataSource {
         
         if message.isDeleted() || message.isGroupActionMessage() {
             return (nil, separatorDate)
+        }
+        
+        if message.isPayment() {
+            return (MessageTableCellState.BubbleState.Empty, separatorDate)
         }
         
         let groupingMinutesLimit = 5

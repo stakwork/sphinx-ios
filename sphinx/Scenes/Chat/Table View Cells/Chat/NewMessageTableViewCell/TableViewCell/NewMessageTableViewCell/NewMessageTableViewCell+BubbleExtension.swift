@@ -99,30 +99,25 @@ extension NewMessageTableViewCell {
         case .Isolated:
             chatAvatarContainerView.alpha = outgoing ? 0.0 : 1.0
             statusHeaderViewContainer.isHidden = false
-            
-            receivedArrow.alpha = 1.0
-            sentArrow.alpha = 1.0
             break
         case .First:
             chatAvatarContainerView.alpha = outgoing ? 0.0 : 1.0
             statusHeaderViewContainer.isHidden = false
-            
-            receivedArrow.alpha = 1.0
-            sentArrow.alpha = 1.0
             break
         case .Middle:
             chatAvatarContainerView.alpha = 0.0
             statusHeaderViewContainer.isHidden = true
-            
-            receivedArrow.alpha = 0.0
-            sentArrow.alpha = 0.0
             break
         case .Last:
             chatAvatarContainerView.alpha = 0.0
             statusHeaderViewContainer.isHidden = true
-            
-            receivedArrow.alpha = 0.0
-            sentArrow.alpha = 0.0
+            break
+        case .Empty:
+            chatAvatarContainerView.alpha = outgoing ? 0.0 : 1.0
+            statusHeaderViewContainer.isHidden = false
+            bubbleAllView.backgroundColor = UIColor.clear
+            receivedArrow.isHidden = true
+            sentArrow.isHidden = true
             break
         }
     }

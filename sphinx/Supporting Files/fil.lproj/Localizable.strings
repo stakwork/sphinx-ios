@@ -329,6 +329,7 @@
 "payment.failed" = "Nabigo ang pagbabayad, subukang muli sa ibang pagkakataon";
 "expires.in" = "Mag-e-expire sa %@ minuto";
 "invoice.paid.on" = "Nagbayad ng Invoice sa %@";
+"invoice.amount.paid.on" = "Invoice of %@ sats Paid on %@";
 "media.terms.expired" = "Nag-expire ang mga termino ng media";
 "message.failed" = "Nabigo ang Mensahe";
 "invite.name" = "Paanyaya: %@";

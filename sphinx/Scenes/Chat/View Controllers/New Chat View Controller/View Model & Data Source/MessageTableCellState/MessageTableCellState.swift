@@ -171,7 +171,7 @@ struct MessageTableCellState {
             return nil
         }
         
-        if message.isBotHTMLResponse() {
+        if message.isBotHTMLResponse() || message.isPayment() {
             return nil
         }
         
@@ -456,6 +456,18 @@ struct MessageTableCellState {
         )
     }()
     
+    lazy var payment: BubbleMessageLayoutState.Payment? = {
+        
+        guard let message = message, message.isPayment(), let date = message.date, let amount = message.amount?.intValue else {
+            return nil
+        }
+        
+        return BubbleMessageLayoutState.Payment(
+            date: date,
+            amount: amount
+        )
+    }()
+    
     
     ///No Bubble States
     lazy var noBubble: NoBubbleMessageLayoutState.NoBubble? = {
@@ -683,5 +695,6 @@ extension MessageTableCellState {
         case First
         case Middle
         case Last
+        case Empty
     }
 }

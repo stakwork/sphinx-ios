@@ -969,17 +969,17 @@ extension TransactionMessage {
     }
     
     //For new chat implementation
-    func shouldShowOnChat() -> Bool {
-        return isTextMessage() ||
-               isDirectPayment() ||
-               isPodcastBoost() ||
-               isMediaAttachment() ||
-               isFileAttachment() ||
-               isAudio() ||
-               isPaidMessage() ||
-               isGiphy() ||
-               isGroupActionMessage() ||
-               isCallLink() ||
-               isBotResponse()
-    }
+//    func shouldShowOnChat() -> Bool {
+//        return isTextMessage() ||
+//               isDirectPayment() ||
+//               isPodcastBoost() ||
+//               isMediaAttachment() ||
+//               isFileAttachment() ||
+//               isAudio() ||
+//               isPaidMessage() ||
+//               isGiphy() ||
+//               isGroupActionMessage() ||
+//               isCallLink() ||
+//               isBotResponse()
+//    }
 }

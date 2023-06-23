@@ -371,6 +371,19 @@ struct BubbleMessageLayoutState: CommonLayoutState {
             self.bubbleWidth = bubbleWidth
         }
     }
+    
+    struct Payment {
+        var date: Date
+        var amount: Int
+        
+        init(
+            date: Date,
+            amount: Int
+        ) {
+            self.date = date
+            self.amount = amount
+        }
+    }
 }
 
 struct NoBubbleMessageLayoutState: CommonLayoutState {

@@ -139,6 +139,8 @@ extension NewOnlyTextMessageTableViewCell {
             receivedArrow.alpha = 0.0
             sentArrow.alpha = 0.0
             break
+        case .Empty:
+            break
         }
     }
 }

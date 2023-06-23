@@ -6,7 +6,7 @@
 //  Copyright © 2023 sphinx. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 extension NewChatViewModel {
     func shouldSendGiphyMessage(
@@ -218,6 +218,33 @@ extension NewChatViewModel {
         
         sendMessage(provisionalMessage: nil, params: params, completion: { _ in
             callback?()
+        })
+    }
+    
+    func createCallMessage(sender: UIButton) {
+        VideoCallHelper.createCallMessage(button: sender, callback: { link in
+            
+            let type = (self.chat?.isGroup() == false) ?
+                TransactionMessage.TransactionMessageType.call.rawValue :
+                TransactionMessage.TransactionMessageType.message.rawValue
+            
+            var messageText = link
+            
+            if type == TransactionMessage.TransactionMessageType.call.rawValue {
+                
+                let voipRequestMessage = VoIPRequestMessage()
+                voipRequestMessage.recurring = false
+                voipRequestMessage.link = link
+                voipRequestMessage.cron = ""
+                
+                messageText = voipRequestMessage.getCallLinkMessage() ?? link
+            }
+            
+            self.shouldSendMessage(
+                text: messageText,
+                type: type,
+                completion: { _ in }
+            )
         })
     }
 }

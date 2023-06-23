@@ -41,6 +41,8 @@ struct MessageTableCellState {
     ///Generic rows Data
     var separatorDate: Date? = nil
     
+    let bubbleWidth = (UIScreen.main.bounds.width - (MessageTableCellState.kRowLeftMargin + MessageTableCellState.kRowRightMargin)) * (MessageTableCellState.kBubbleWidthPercentage)
+    
     init(
         message: TransactionMessage? = nil,
         chat: Chat,
@@ -95,7 +97,11 @@ struct MessageTableCellState {
             return nil
         }
         
-        let isSent = message.isOutgoing(ownerId: owner.id)
+        var isSent = message.isOutgoing(ownerId: owner.id)
+        
+        if (message.isInvoice() && message.isPaid()) {
+            isSent = !isSent
+        }
         
         return BubbleMessageLayoutState.Bubble(
             direction: isSent ? .Outgoing : .Incoming,
@@ -116,12 +122,20 @@ struct MessageTableCellState {
                 alias: message.senderAlias ?? "Unknown"
             )
         } else if let contact = contact {
-            return BubbleMessageLayoutState.AvatarImage(
-                imageUrl: contact.avatarUrl,
-                color: contact.getColor(),
-                alias: contact.nickname ?? "Unknown",
-                image: contactImage
-            )
+            if (message.isInvoice() && message.isPaid() && message.isOutgoing(ownerId: owner.id)) {
+                return BubbleMessageLayoutState.AvatarImage(
+                    imageUrl: owner.avatarUrl,
+                    color: owner.getColor(),
+                    alias: owner.nickname ?? "Unknown"
+                )
+            } else {
+                return BubbleMessageLayoutState.AvatarImage(
+                    imageUrl: contact.avatarUrl,
+                    color: contact.getColor(),
+                    alias: contact.nickname ?? "Unknown",
+                    image: contactImage
+                )
+            }
         }
         
         return nil
@@ -171,7 +185,7 @@ struct MessageTableCellState {
             return nil
         }
         
-        if message.isBotHTMLResponse() || message.isPayment() {
+        if message.isBotHTMLResponse() || message.isPayment() || message.isInvoice() {
             return nil
         }
         
@@ -272,7 +286,7 @@ struct MessageTableCellState {
         return BubbleMessageLayoutState.Audio(
             url: message.getMediaUrlFromMediaToken(),
             mediaKey: message.mediaKey,
-            bubbleWidth: (UIScreen.main.bounds.width - (MessageTableCellState.kRowLeftMargin + MessageTableCellState.kRowRightMargin)) * (MessageTableCellState.kBubbleWidthPercentage)
+            bubbleWidth: bubbleWidth
         )
     }()
     
@@ -389,7 +403,7 @@ struct MessageTableCellState {
             alias: linkContact.contact?.nickname,
             color: linkContact.contact?.getColor(),
             isContact: linkContact.contact != nil,
-            bubbleWidth: (UIScreen.main.bounds.width - (MessageTableCellState.kRowLeftMargin + MessageTableCellState.kRowRightMargin)) * (MessageTableCellState.kBubbleWidthPercentage),
+            bubbleWidth: bubbleWidth,
             roundedBottom: true
         )
     }()
@@ -452,7 +466,7 @@ struct MessageTableCellState {
             title: podcastComment.title!,
             timestamp: podcastComment.timestamp!,
             url: url,
-            bubbleWidth: (UIScreen.main.bounds.width - (MessageTableCellState.kRowLeftMargin + MessageTableCellState.kRowRightMargin)) * (MessageTableCellState.kBubbleWidthPercentage)
+            bubbleWidth: bubbleWidth
         )
     }()
     
@@ -465,6 +479,22 @@ struct MessageTableCellState {
         return BubbleMessageLayoutState.Payment(
             date: date,
             amount: amount
+        )
+    }()
+    
+    lazy var invoice: BubbleMessageLayoutState.Invoice? = {
+        
+        guard let message = message, message.isInvoice(), let date = message.date, let amount = message.amount?.intValue else {
+            return nil
+        }
+        
+        return BubbleMessageLayoutState.Invoice(
+            date: date,
+            amount: amount,
+            memo: message.messageContent,
+            font: UIFont.getMessageFont(),
+            isPaid: message.isPaid(),
+            bubbleWidth: bubbleWidth
         )
     }()
     

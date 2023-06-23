@@ -264,6 +264,16 @@ extension NewMessageTableViewCell {
     }
     
     func configureWith(
+        invoice: BubbleMessageLayoutState.Invoice?,
+        and bubble: BubbleMessageLayoutState.Bubble
+    ) {
+        if let invoice = invoice {
+            invoiceView.configureWith(invoice: invoice, bubble: bubble, and: self)
+            invoiceView.isHidden = false
+        }
+    }
+    
+    func configureWith(
         boosts: BubbleMessageLayoutState.Boosts?,
         and bubble: BubbleMessageLayoutState.Bubble
     ) {

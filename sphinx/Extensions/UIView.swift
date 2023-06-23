@@ -259,4 +259,52 @@ extension UIView {
         
         self.layer.addSublayer(messageArrowLayer)
     }
+    
+    func addDashedLineBorder(
+        color: UIColor,
+        rect: CGRect,
+        roundedBottom: Bool,
+        roundedTop: Bool,
+        name: String
+    ) {
+        let shapeLayer:CAShapeLayer = CAShapeLayer()
+        shapeLayer.cornerRadius = 8.0
+        
+        var rounded: UIRectCorner! = nil
+        
+        if roundedBottom && roundedTop {
+            rounded = [.bottomLeft, .bottomRight, .topRight, .topLeft]
+        } else if roundedBottom {
+            rounded = [.bottomLeft, .bottomRight]
+        } else if roundedTop {
+            rounded = [.topLeft, .topRight]
+        } else {
+            rounded = []
+        }
+        
+        shapeLayer.path = UIBezierPath(
+            roundedRect: rect,
+            byRoundingCorners: rounded,
+            cornerRadii: CGSize(width: 8.0, height: 8.0)
+        ).cgPath
+        
+        shapeLayer.fillColor = UIColor.clear.cgColor
+        shapeLayer.strokeColor = color.resolvedCGColor(with: self)
+        shapeLayer.lineWidth = 1.5
+        shapeLayer.lineJoin = .round
+        shapeLayer.lineDashPattern = [8,4]
+        shapeLayer.name = name
+
+        self.layer.addSublayer(shapeLayer)
+    }
+
+    func removeDashedLineBorderWith(
+        name: String
+    ) {
+        for sublayer in self.layer.sublayers ?? [] {
+            if sublayer.name == name {
+                sublayer.removeFromSuperlayer()
+            }
+        }
+    }
 }

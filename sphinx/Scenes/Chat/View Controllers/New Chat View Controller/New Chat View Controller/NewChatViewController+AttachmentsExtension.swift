@@ -47,18 +47,12 @@ extension NewChatViewController : AttachmentsDelegate {
     }
     
     func didTapReceiveButton() {
-        messageBubbleHelper.showGenericMessageView(
-            text: "Feature not implemented yet",
-            textColor: UIColor.white,
-            backColor: UIColor.Sphinx.BadgeRed
+        let viewController = CreateInvoiceViewController.instantiate(
+            contact: contact,
+            chat: chat,
+            delegate: self
         )
-        
-//        let viewController = CreateInvoiceViewController.instantiate(
-//            contact: contact,
-//            chat: chat,
-//            delegate: self
-//        )
-//        self.presentNavigationControllerWith(vc: viewController)
+        self.presentNavigationControllerWith(vc: viewController)
     }
     
     func didCloseReplyView() {
@@ -70,18 +64,6 @@ extension NewChatViewController : AttachmentsDelegate {
 }
 
 extension NewChatViewController : PaymentInvoiceDelegate {
-    func didCreateMessage(message: TransactionMessage) {
-        
-    }
-    
-    func didFailCreatingInvoice() {
-        
-    }
-    
-    func shouldSendOnchain(address: String, amount: Int) {
-        
-    }
-    
     func shouldSendTribePayment(
         amount: Int,
         message: String,

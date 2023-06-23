@@ -31,6 +31,7 @@ extension NewMessageTableViewCell {
     
     func hideAllSubviews() {
         invoicePaymentView.isHidden = true
+        invoiceView.isHidden = true
         messageReplyView.isHidden = true
         sentPaidDetailsView.isHidden = true
         paidTextMessageView.isHidden = true

@@ -34,7 +34,10 @@ class PayInvoiceViewController: UIViewController {
         }
     }
     
-    static func instantiate(message: TransactionMessage, delegate: PaymentInvoiceDelegate) -> PayInvoiceViewController {
+    static func instantiate(
+        message: TransactionMessage,
+        delegate: PaymentInvoiceDelegate
+    ) -> PayInvoiceViewController {
         let viewController = StoryboardScene.Chat.payInvoiceViewController.instantiate()
         viewController.delegate = delegate
         viewController.message = message

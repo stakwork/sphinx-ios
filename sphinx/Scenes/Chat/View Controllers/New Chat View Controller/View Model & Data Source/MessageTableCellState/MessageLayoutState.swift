@@ -372,6 +372,31 @@ struct BubbleMessageLayoutState: CommonLayoutState {
         }
     }
     
+    struct Invoice {
+        var date: Date
+        var amount: Int
+        var memo: String?
+        var font: UIFont
+        var isPaid: Bool
+        var bubbleWidth: CGFloat
+        
+        init(
+            date: Date,
+            amount: Int,
+            memo: String?,
+            font: UIFont,
+            isPaid: Bool,
+            bubbleWidth: CGFloat
+        ) {
+            self.date = date
+            self.amount = amount
+            self.memo = memo
+            self.font = font
+            self.isPaid = isPaid
+            self.bubbleWidth = bubbleWidth
+        }
+    }
+    
     struct Payment {
         var date: Date
         var amount: Int

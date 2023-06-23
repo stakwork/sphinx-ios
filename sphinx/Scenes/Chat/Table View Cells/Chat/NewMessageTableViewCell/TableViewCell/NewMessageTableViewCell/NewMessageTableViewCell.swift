@@ -80,6 +80,8 @@ protocol NewMessageTableViewCellDelegate: class {
     func didTapPlayPauseButtonFor(messageId: Int, and rowIndex: Int)
     ///Podcast CLip
     func didTapClipPlayPauseButtonFor(messageId: Int, and rowIndex: Int)
+    ///Invoices
+    func didTapInvoicePayButtonFor(messageId: Int, and rowIndex: Int)
     ///Menu Long Press
     func didLongPressOn(cell: UITableViewCell, with messageId: Int, bubbleViewRect: CGRect)
     ///Reply on Swipe
@@ -109,6 +111,7 @@ class NewMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableViewCellP
     
     ///Second Container
     @IBOutlet weak var invoicePaymentView: InvoicePaymentView!
+    @IBOutlet weak var invoiceView: InvoiceView!
     @IBOutlet weak var sentPaidDetailsView: SentPaidDetails!
     @IBOutlet weak var paidTextMessageView: UIView!
     @IBOutlet weak var directPaymentView: DirectPaymentView!
@@ -187,6 +190,7 @@ class NewMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableViewCellP
         
         ///Message types
         configureWith(payment: mutableMessageCellState.payment, and: bubble)
+        configureWith(invoice: mutableMessageCellState.invoice, and: bubble)
         configureWith(directPayment: mutableMessageCellState.directPayment, and: bubble)
         configureWith(callLink: mutableMessageCellState.callLink)
         configureWith(podcastBoost: mutableMessageCellState.podcastBoost)

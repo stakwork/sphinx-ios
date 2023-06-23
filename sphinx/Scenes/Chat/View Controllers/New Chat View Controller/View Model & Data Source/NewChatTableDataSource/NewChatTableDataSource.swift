@@ -30,6 +30,8 @@ protocol NewChatTableDataSourceDelegate : class {
     func shouldReplyToMessage(message: TransactionMessage)
     func shouldOpenActivityVCFor(url: URL)
     
+    func shouldPayInvoiceFor(messageId: Int)
+    
     func isMessageMenuVisible() -> Bool
 }
 

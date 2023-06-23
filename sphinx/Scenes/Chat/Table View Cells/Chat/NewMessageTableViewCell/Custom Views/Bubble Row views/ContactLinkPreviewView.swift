@@ -63,14 +63,14 @@ class ContactLinkPreviewView: UIView {
         contactPubKey.text = contactLink.pubkey
         contactName.text = contactLink.alias ?? "new.contact".localized
         
-        removeDashedLineBorder()
+        borderView.removeDashedLineBorderWith(name: kDashedLayerName)
         
         if contactLink.isContact {
             loadImage(imageUrl: contactLink.imageUrl)
         } else {
             contactImageView.image = UIImage(named: "addContactIcon")
             
-            addDashedLineBorder(
+            borderView.addDashedLineBorder(
                 color: bubble.direction.isIncoming() ? UIColor.Sphinx.ReceivedMsgBG : UIColor.Sphinx.SentMsgBG,
                 rect: CGRect(
                     x: 0,
@@ -78,7 +78,9 @@ class ContactLinkPreviewView: UIView {
                     width: contactLink.bubbleWidth,
                     height: kNewContactBubbleHeight
                 ),
-                roundedBottom: contactLink.roundedBottom
+                roundedBottom: contactLink.roundedBottom,
+                roundedTop: false,
+                name: kDashedLayerName
             )
         }
     }
@@ -125,36 +127,6 @@ class ContactLinkPreviewView: UIView {
         } else {
             contactImageView.image = UIImage(named: "profile_avatar")
             contactImageView.contentMode = .scaleAspectFill
-        }
-    }
-    
-    func addDashedLineBorder(
-        color: UIColor,
-        rect: CGRect,
-        roundedBottom: Bool
-    ) {
-        let shapeLayer:CAShapeLayer = CAShapeLayer()
-        shapeLayer.cornerRadius = 8.0
-        shapeLayer.path = UIBezierPath(
-            roundedRect: rect,
-            byRoundingCorners: roundedBottom ? [.bottomLeft, .bottomRight] : [],
-            cornerRadii: CGSize(width: 8.0, height: 8.0)
-        ).cgPath
-        shapeLayer.fillColor = UIColor.clear.cgColor
-        shapeLayer.strokeColor = color.resolvedCGColor(with: contentView)
-        shapeLayer.lineWidth = 1.5
-        shapeLayer.lineJoin = .round
-        shapeLayer.lineDashPattern = [8,4]
-        shapeLayer.name = kDashedLayerName
-        
-        borderView.layer.addSublayer(shapeLayer)
-    }
-    
-    func removeDashedLineBorder() {
-        for sublayer in borderView.layer.sublayers ?? [] {
-            if sublayer.name == kDashedLayerName {
-                sublayer.removeFromSuperlayer()
-            }
         }
     }
     

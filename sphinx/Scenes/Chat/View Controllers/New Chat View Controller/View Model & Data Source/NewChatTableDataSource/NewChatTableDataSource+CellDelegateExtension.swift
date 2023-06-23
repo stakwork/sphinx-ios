@@ -778,6 +778,10 @@ extension NewChatTableDataSource {
             }
         }
     }
+    
+    func didTapInvoicePayButtonFor(messageId: Int, and rowIndex: Int) {
+        delegate?.shouldPayInvoiceFor(messageId: messageId)
+    }
 }
 
 extension NewChatTableDataSource {
@@ -871,6 +875,19 @@ extension NewChatTableDataSource {
 ///Menu Long press
 extension NewChatTableDataSource {
     func didLongPressOn(cell: UITableViewCell, with messageId: Int, bubbleViewRect: CGRect) {
+        if let indexPath = tableView.indexPath(for: cell) {
+            if let tableCellState = getTableCellStateFor(
+                messageId: messageId,
+                and: indexPath.row
+            ){
+                var mutableTableCellState = tableCellState.1
+                
+                if mutableTableCellState.bubble?.grouping == .Empty {
+                    return
+                }
+            }
+        }
+        
         SoundsPlayer.playHaptic()
         
         delegate?.didLongPressOn(cell: cell, with: messageId, bubbleViewRect: bubbleViewRect)
@@ -884,8 +901,6 @@ extension NewChatTableDataSource {
     ) -> (Int, MessageTableCellState)? {
         
         var tableCellState: (Int, MessageTableCellState)? = nil
-        
-        
         
         if let rowIndex = rowIndex, messageTableCellStateArray.count > rowIndex, messageTableCellStateArray[rowIndex].message?.id == messageId {
             return (rowIndex, messageTableCellStateArray[rowIndex])

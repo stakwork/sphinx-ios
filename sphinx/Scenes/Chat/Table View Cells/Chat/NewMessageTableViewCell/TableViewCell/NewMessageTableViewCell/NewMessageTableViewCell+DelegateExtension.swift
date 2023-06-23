@@ -103,3 +103,11 @@ extension NewMessageTableViewCell : PodcastAudioViewDelegate {
         }
     }
 }
+
+extension NewMessageTableViewCell : InvoiceViewDelegate {
+    func didTapInvoicePayButton() {
+        if let messageId = messageId {
+            delegate?.didTapInvoicePayButtonFor(messageId: messageId, and: rowIndex)
+        }
+    }
+}

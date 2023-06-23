@@ -79,10 +79,10 @@ class TribeLinkPreviewView: UIView {
 
         loadImage(imageUrl: tribeData.imageUrl)
         
-        removeDashedLineBorder()
+        borderView.removeDashedLineBorderWith(name: kDashedLayerName)
         
         if tribeData.showJoinButton {
-            addDashedLineBorder(
+            borderView.addDashedLineBorder(
                 color: bubble.direction.isIncoming() ? UIColor.Sphinx.ReceivedMsgBG : UIColor.Sphinx.SentMsgBG,
                 rect: CGRect(
                     x: 0,
@@ -90,7 +90,9 @@ class TribeLinkPreviewView: UIView {
                     width: tribeData.bubbleWidth,
                     height: kNewTribeBubbleHeight
                 ),
-                roundedBottom: true
+                roundedBottom: true,
+                roundedTop: false,
+                name: kDashedLayerName
             )
         }
     }
@@ -126,36 +128,6 @@ class TribeLinkPreviewView: UIView {
             )
         } else {
             tribeImageView.image = UIImage(named: "tribePlaceholder")
-        }
-    }
-    
-    func addDashedLineBorder(
-        color: UIColor,
-        rect: CGRect,
-        roundedBottom: Bool
-    ) {
-        let shapeLayer:CAShapeLayer = CAShapeLayer()
-        shapeLayer.cornerRadius = 8.0
-        shapeLayer.path = UIBezierPath(
-            roundedRect: rect,
-            byRoundingCorners: roundedBottom ? [.bottomLeft, .bottomRight] : [],
-            cornerRadii: CGSize(width: 8.0, height: 8.0)
-        ).cgPath
-        shapeLayer.fillColor = UIColor.clear.cgColor
-        shapeLayer.strokeColor = color.resolvedCGColor(with: contentView)
-        shapeLayer.lineWidth = 1.5
-        shapeLayer.lineJoin = .round
-        shapeLayer.lineDashPattern = [8,4]
-        shapeLayer.name = kDashedLayerName
-        
-        borderView.layer.addSublayer(shapeLayer)
-    }
-    
-    func removeDashedLineBorder() {
-        for sublayer in borderView.layer.sublayers ?? [] {
-            if sublayer.name == kDashedLayerName {
-                sublayer.removeFromSuperlayer()
-            }
         }
     }
     

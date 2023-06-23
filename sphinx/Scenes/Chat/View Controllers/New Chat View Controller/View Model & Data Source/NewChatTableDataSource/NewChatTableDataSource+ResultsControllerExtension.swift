@@ -251,6 +251,10 @@ extension NewChatTableDataSource {
             return (MessageTableCellState.BubbleState.Empty, separatorDate)
         }
         
+        if message.isInvoice() && !message.isPaid() {
+            return (MessageTableCellState.BubbleState.Empty, separatorDate)
+        }
+        
         let groupingMinutesLimit = 5
         let messageDate = message.date ?? Date(timeIntervalSince1970: 0)
         var date = groupingDate ?? messageDate

@@ -207,6 +207,13 @@ extension NewChatViewController : NewChatTableDataSourceDelegate, SocketManagerD
         }
         return false
     }
+    
+    func shouldPayInvoiceFor(messageId: Int) {
+        if let message = TransactionMessage.getMessageWith(id: messageId) {
+            let viewController = PayInvoiceViewController.instantiate(message: message, delegate: self)
+            self.present(viewController, animated: false)
+        }
+    }
 }
 
 extension NewChatViewController {

@@ -286,7 +286,7 @@ extension ChatsCollectionViewController {
                     for: indexPath
                 ) as? CollectionViewCell else { return nil }
 
-                cell.ownerId = self.owner.id
+                cell.owner = self.owner
                 cell.chatListObject = self.chatListObjects[indexPath.row]
 
                 return cell

@@ -166,6 +166,9 @@ class NewMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableViewCellP
         self.messageId = mutableMessageCellState.message?.id
         self.delegate = delegate
         
+        ///Swipe Reply
+        configureSwipeWith(swipeReply: mutableMessageCellState.swipeReply)
+        
         ///Bubble Width
         configureWidthWith(messageCellState: mutableMessageCellState)
         

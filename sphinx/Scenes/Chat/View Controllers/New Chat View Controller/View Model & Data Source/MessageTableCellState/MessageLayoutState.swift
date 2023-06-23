@@ -14,6 +14,8 @@ protocol CommonLayoutState {
 
 struct BubbleMessageLayoutState: CommonLayoutState {
     
+    struct SwipeReply {}
+    
     struct Bubble {
         var direction: MessageTableCellState.MessageDirection
         var grouping: MessageTableCellState.BubbleState

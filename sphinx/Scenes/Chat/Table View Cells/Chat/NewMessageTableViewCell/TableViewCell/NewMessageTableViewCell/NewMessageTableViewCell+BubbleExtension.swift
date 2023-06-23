@@ -10,6 +10,16 @@ import UIKit
 
 extension NewMessageTableViewCell {
     
+    func configureSwipeWith(
+        swipeReply: BubbleMessageLayoutState.SwipeReply?
+    ) {
+        if let _ = swipeReply {
+            isSwipeAllowed = true
+        } else {
+            isSwipeAllowed = false
+        }
+    }
+    
     func configureWidthWith(
         messageCellState: MessageTableCellState
     ) {

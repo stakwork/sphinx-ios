@@ -59,14 +59,22 @@ extension TransactionMessage {
     
     func getMessageSenderNickname(
         minimized: Bool = false,
-        forceNickname: Bool = false
+        forceNickname: Bool = false,
+        owner: UserContact,
+        contact: UserContact?
     ) -> String {
         var alias = "name.unknown".localized
         
         if let senderAlias = senderAlias {
             alias = senderAlias
-        } else if let sender = getMessageSender() {
-            alias = sender.getUserName(forceNickname: forceNickname)
+        } else {
+            if isIncoming(ownerId: owner.id) {
+                if let sender = (contact ?? getMessageSender()) {
+                    alias = sender.getUserName(forceNickname: forceNickname)
+                }
+            } else {
+                alias = owner.getUserName(forceNickname: forceNickname)
+            }
         }
         
         if let first = alias.components(separatedBy: " ").first, minimized {
@@ -136,7 +144,7 @@ extension TransactionMessage {
         return messageC != ""
     }
     
-    func getMessageContent(dashboard: Bool = false) -> String {
+    func getMessageDescription() -> String {
         var adjustedMC = self.messageContent ?? ""
         
         if isGiphy(), let message = GiphyHelper.getMessageFrom(message: adjustedMC) {
@@ -155,37 +163,18 @@ extension TransactionMessage {
             adjustedMC = "join.call".localized
         }
         
-        if let messageC = self.messageContent {
-            if messageC.isEncryptedString() {
-                adjustedMC = getDecrytedMessage(dashboard: dashboard)
-            }
-        }
-        
         return adjustedMC
     }
     
     func getReplyMessageContent() -> String {
         if hasMessageContent() {
-            let messageContent = getMessageContent()
+            let messageContent = bubbleMessageContentString ?? ""
             return messageContent.isValidHTML ? "bot.response.preview".localized : messageContent
         }
         if let fileName = self.mediaFileName {
             return fileName
         }
         return ""
-    }
-    
-    func getDecrytedMessage(dashboard: Bool = false) -> String {
-        if let messageC = self.messageContent, UIApplication.shared.isActive() {
-            if messageC.isEncryptedString() {
-                let (decrypted, message) = EncryptionManager.sharedInstance.decryptMessage(message: messageC)
-                if decrypted {
-                    self.messageContent = message
-                    return message
-                }
-            }
-        }
-        return dashboard ? "decrypting.message".localized : "encryption.error".localized.uppercased()
     }
     
     //Direction
@@ -606,12 +595,12 @@ extension TransactionMessage {
     }
     
     func messageContainText() -> Bool {
-        return messageContent != nil && messageContent != "" && !isGiphy()
+        return bubbleMessageContentString != nil && bubbleMessageContentString != ""
     }
     
     var isCopyTextActionAllowed: Bool {
         get {
-            if let messageContent = messageContent {
+            if let messageContent = bubbleMessageContentString {
                 return !self.isCallLink() && !messageContent.isEncryptedString()
             }
             return false
@@ -620,8 +609,8 @@ extension TransactionMessage {
     
     var isCopyLinkActionAllowed: Bool {
         get {
-            if let messageContent = messageContent {
-                return !self.isCallLink() && messageContent.stringLinks.count > 0
+            if let messageContent = bubbleMessageContentString {
+                return messageContent.stringLinks.count > 0
             }
             return false
         }
@@ -629,7 +618,7 @@ extension TransactionMessage {
     
     var isCopyPublicKeyActionAllowed: Bool {
         get {
-            if let messageContent = messageContent {
+            if let messageContent = bubbleMessageContentString {
                 return messageContent.pubKeyMatches.count > 0
             }
             return false
@@ -729,11 +718,16 @@ extension TransactionMessage {
     }
     
     //Message description
-    func getMessageDescription(dashboard: Bool = false) -> String {
+    func getMessageContentPreview(
+        owner: UserContact,
+        contact: UserContact?
+    ) -> String {
         let amount = self.amount ?? NSDecimalNumber(value: 0)
         let amountString = Int(truncating: amount).formattedWithSeparator
-        let incoming = self.isIncoming()
+        
+        let incoming = self.isIncoming(ownerId: owner.id)
         let directionString = incoming ? "received".localized : "sent".localized
+        let senderAlias = self.getMessageSenderNickname(minimized: true, owner: owner, contact: contact)
         
         if isDeleted() {
             return "message.x.deleted".localized
@@ -745,7 +739,7 @@ extension TransactionMessage {
             if self.isGiphy() {
                 return "\("gif.capitalize".localized) \(directionString)"
             } else {
-                return "\(self.getMessageSenderNickname(minimized: true)): \(self.getMessageContent(dashboard: dashboard))"
+                return "\(senderAlias): \(self.getMessageDescription())"
             }
         case TransactionMessage.TransactionMessageType.invoice.rawValue:
             return  "\("invoice".localized) \(directionString): \(amountString) sats"
@@ -791,9 +785,9 @@ extension TransactionMessage {
              TransactionMessage.TransactionMessageType.memberRequest.rawValue,
              TransactionMessage.TransactionMessageType.memberApprove.rawValue,
              TransactionMessage.TransactionMessageType.memberReject.rawValue:
-            return self.getGroupMessageText().withoutBreaklines
+            return self.getGroupMessageText(owner: owner, contact: contact).withoutBreaklines
         case TransactionMessage.TransactionMessageType.boost.rawValue:
-            return "\(self.getMessageSenderNickname(minimized: true)): Boost"
+            return "\(self.getMessageSenderNickname(minimized: true, owner: owner, contact: contact)): Boost"
         case TransactionMessage.TransactionMessageType.purchase.rawValue:
             return "\("purchase.item.description".localized) \(directionString)"
         case TransactionMessage.TransactionMessageType.purchaseAccept.rawValue:
@@ -805,24 +799,27 @@ extension TransactionMessage {
         return "\("message.not.supported".localized) \(directionString)"
     }
     
-    func getGroupMessageText() -> String {
+    func getGroupMessageText(
+        owner: UserContact,
+        contact: UserContact?
+    ) -> String {
         var message = "message.not.supported"
         
         switch(type) {
         case TransactionMessageType.groupJoin.rawValue:
-            message = getGroupJoinMessageText()
+            message = getGroupJoinMessageText(owner: owner, contact: contact)
         case TransactionMessageType.groupLeave.rawValue:
-            message = getGroupLeaveMessageText()
+            message = getGroupLeaveMessageText(owner: owner, contact: contact)
         case TransactionMessageType.groupKick.rawValue:
             message = "tribe.kick".localized
         case TransactionMessageType.groupDelete.rawValue:
             message = "tribe.deleted".localized
         case TransactionMessageType.memberRequest.rawValue:
-            message = String(format: "member.request".localized, getMessageSenderNickname())
+            message = String(format: "member.request".localized, getMessageSenderNickname(owner: owner, contact: contact))
         case TransactionMessageType.memberApprove.rawValue:
-            message = getMemberApprovedMessageText()
+            message = getMemberApprovedMessageText(owner: owner, contact: contact)
         case TransactionMessageType.memberReject.rawValue:
-            message = getMemberDeclinedMessageText()
+            message = getMemberDeclinedMessageText(owner: owner, contact: contact)
         default:
             break
         }
@@ -830,33 +827,49 @@ extension TransactionMessage {
     }
     
     func getMemberDeclinedMessageText(
-        ownerPubKey: String? = nil,
-        senderAlias: String? = nil
+        owner: UserContact,
+        contact: UserContact?
     ) -> String {
-        if self.chat?.isMyPublicGroup(ownerPubKey: ownerPubKey) ?? false {
-            return String(format: "admin.request.rejected".localized, senderAlias ?? getMessageSenderNickname())
+        if self.chat?.isMyPublicGroup(ownerPubKey: owner.publicKey) ?? false {
+            return String(format: "admin.request.rejected".localized, getMessageSenderNickname(owner: owner, contact: contact))
         } else {
             return "member.request.rejected".localized
         }
     }
     
     func getMemberApprovedMessageText(
-        ownerPubKey: String? = nil,
-        senderAlias: String? = nil
+        owner: UserContact,
+        contact: UserContact?
     ) -> String {
-        if self.chat?.isMyPublicGroup(ownerPubKey: ownerPubKey) ?? false {
-            return String(format: "admin.request.approved".localized, senderAlias ?? getMessageSenderNickname())
+        if self.chat?.isMyPublicGroup(ownerPubKey: owner.publicKey) ?? false {
+            return String(format: "admin.request.approved".localized, getMessageSenderNickname(owner: owner, contact: contact))
         } else {
             return "member.request.approved".localized
         }
     }
     
-    func getGroupJoinMessageText() -> String {
-        return getGroupJoinMessageText(senderAlias: getMessageSenderNickname())
+    func getGroupJoinMessageText(
+        owner: UserContact,
+        contact: UserContact?
+    ) -> String {
+        return getGroupJoinMessageText(
+            senderAlias: getMessageSenderNickname(
+                owner: owner,
+                contact: contact
+            )
+        )
     }
     
-    func getGroupLeaveMessageText() -> String {
-        return getGroupLeaveMessageText(senderAlias: getMessageSenderNickname())
+    func getGroupLeaveMessageText(
+        owner: UserContact,
+        contact: UserContact?
+    ) -> String {
+        return getGroupLeaveMessageText(
+            senderAlias: getMessageSenderNickname(
+                owner: owner,
+                contact: contact
+            )
+        )
     }
     
     func getGroupJoinMessageText(senderAlias: String) -> String {

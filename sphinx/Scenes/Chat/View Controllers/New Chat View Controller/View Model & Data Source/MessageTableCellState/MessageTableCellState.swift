@@ -78,6 +78,16 @@ struct MessageTableCellState {
         self.linkWeb = linkWeb
     }
     
+    ///Reply
+    lazy var swipeReply: BubbleMessageLayoutState.SwipeReply? = {
+    
+        guard let message = message, message.isReplyActionAllowed else {
+            return nil
+        }
+        
+        return BubbleMessageLayoutState.SwipeReply()
+    }()
+    
     ///Bubble States
     lazy var bubble: BubbleMessageLayoutState.Bubble? = {
         

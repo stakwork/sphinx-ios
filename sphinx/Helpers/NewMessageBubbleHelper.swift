@@ -281,11 +281,23 @@ class NewMessageBubbleHelper {
         message: TransactionMessage,
         delay: Double = 2.5,
         onKeyWindow: Bool = true
-    ) {    
+    ) {
+        let contactsService = ContactsService.sharedInstance
         let chatName = message.chat?.name ?? ""
-        let text = message.getMessageDescription()
+        let sender = contactsService.getContactWith(id: message.senderId)
+        
+        let text = message.getMessageContentPreview(
+            owner: contactsService.owner,
+            contact: sender
+        )
+        
         if text.isNotSupportedMessage { return }
-        let senderNickname = message.getMessageSenderNickname()
+        
+        let senderNickname = message.getMessageSenderNickname(
+            owner: contactsService.owner,
+            contact: sender
+        )
+        
         let bubbleTitle = (chatName != "") ? "\(senderNickname) on \(chatName)" : senderNickname
         
         if let chat = message.chat {

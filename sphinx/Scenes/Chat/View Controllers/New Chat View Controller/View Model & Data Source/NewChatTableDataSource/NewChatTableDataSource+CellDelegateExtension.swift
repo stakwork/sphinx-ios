@@ -17,7 +17,10 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
             messageId: messageId,
             and: rowIndex
         ), let message = tableCellState.1.message {
-            delegate?.shouldReplyToMessage(message: message)
+            
+            if message.isReplyActionAllowed {
+                delegate?.shouldReplyToMessage(message: message)
+            }
         }
     }
     

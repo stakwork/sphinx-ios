@@ -35,7 +35,8 @@ extension Chat: ChatListCommonObject {
     
     func getConversationContact() -> UserContact? {
         if conversationContact == nil {
-            conversationContact = getContact()
+            let contacts = getContacts(includeOwner: false)
+            conversationContact = contacts.first
         }
         return conversationContact
     }

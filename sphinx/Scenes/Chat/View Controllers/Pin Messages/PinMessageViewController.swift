@@ -156,7 +156,7 @@ extension PinMessageViewController {
             usernameLabel.textColor = ChatHelper.getSenderColorFor(message: message)
         }
         
-        messageLabel.text = message.getMessageContent()
+        messageLabel.text = message.bubbleMessageContentString ?? ""
         unpinButtonView.isHidden = message.chat?.isMyPublicGroup() == false
     }
 }

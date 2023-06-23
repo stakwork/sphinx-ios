@@ -235,11 +235,11 @@ extension MessageOptionsView : MessageOptionViewDelegate {
         
         switch(option) {
         case .Copy:
-            ClipboardHelper.copyToClipboard(text: message.getMessageContent(), message: "text.copied.clipboard".localized)
+            ClipboardHelper.copyToClipboard(text: message.bubbleMessageContentString ?? "", message: "text.copied.clipboard".localized)
         case .CopyLink:
-            ClipboardHelper.copyToClipboard(text: message.messageContent?.stringFirstLink ?? "", message: "link.copied.clipboard".localized)
+            ClipboardHelper.copyToClipboard(text: message.bubbleMessageContentString?.stringFirstLink ?? "", message: "link.copied.clipboard".localized)
         case .CopyPubKey:
-            ClipboardHelper.copyToClipboard(text: message.messageContent?.stringFirstPubKey ?? "", message: "pub.key.copied.clipboard".localized)
+            ClipboardHelper.copyToClipboard(text: message.bubbleMessageContentString?.stringFirstPubKey ?? "", message: "pub.key.copied.clipboard".localized)
         case .CopyCallLink:
             if let link = message.messageContent {
                 let link_url = VoIPRequestMessage.getFromString(link)?.link ?? link

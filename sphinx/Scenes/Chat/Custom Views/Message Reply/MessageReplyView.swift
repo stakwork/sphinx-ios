@@ -104,8 +104,13 @@ class MessageReplyView: UIView {
         
         leftBar.backgroundColor = ChatHelper.getSenderColorFor(message: message)
         
+        let senderAlias = message.getMessageSenderNickname(
+            owner: ContactsService.sharedInstance.owner,
+            contact: ContactsService.sharedInstance.getContactWith(id: message.senderId)
+        )
+        
         configureWith(
-            title: message.getMessageSenderNickname(),
+            title: senderAlias,
             message: message.getReplyMessageContent(),
             isIncoming: isIncoming
         )
@@ -130,20 +135,6 @@ class MessageReplyView: UIView {
         bottomDivider.backgroundColor = isIncoming ? UIColor.Sphinx.ReplyDividerReceived : UIColor.Sphinx.ReplyDividerSent
         messageLabel.textColor = isIncoming ? UIColor.Sphinx.WashedOutReceivedText : UIColor.Sphinx.WashedOutSentText
         messageLabel.text = message
-    }
-    
-    func configureForRow(
-        with message: TransactionMessage?,
-        isIncoming: Bool,
-        delegate: MessageReplyViewDelegate
-    ) {
-        self.backgroundColor = UIColor.clear
-        
-        commonConfiguration(message: message, delegate: delegate, isIncoming: isIncoming)
-        adjustMargins(isRow: true, isIncoming: isIncoming)
-        toggleElements(isRow: true)
-        
-        isHidden = false
     }
     
     func configureForKeyboard(

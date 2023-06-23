@@ -18,11 +18,19 @@ extension NewChatViewModel {
             return
         }
         
-        sendMessage(provisionalMessage: nil, params: params, completion: { _ in })
+        sendMessage(
+            provisionalMessage: nil,
+            params: params,
+            completion: { _ in }
+        )
     }
     
     func shouldResendMessage(message: TransactionMessage) {
-        sendMessage(provisionalMessage: message, text: message.getMessageContent(), completion: { _ in })
+        sendMessage(
+            provisionalMessage: message,
+            text: message.messageContent ?? "",
+            completion: { _ in }
+        )
     }
 }
 

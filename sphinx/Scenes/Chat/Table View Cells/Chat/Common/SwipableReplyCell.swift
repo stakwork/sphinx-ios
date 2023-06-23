@@ -21,6 +21,7 @@ class SwipableReplyCell: UITableViewCell {
     var startingRightLayoutConstraintConstant: CGFloat?
     
     var shouldPreventOtherGestures = false
+    var isSwipeAllowed = true
     
     enum PanState: Int {
         case none, panningRow, scrollingTable
@@ -53,6 +54,10 @@ class SwipableReplyCell: UITableViewCell {
     
     @objc func panAction(_ sender: UIPanGestureRecognizer) {
         if shouldPreventOtherGestures {
+            return
+        }
+        
+        if !isSwipeAllowed {
             return
         }
         

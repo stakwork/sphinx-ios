@@ -20,6 +20,7 @@ class ContactsService: NSObject {
     
     var owner: UserContact!
 
+    var allContacts = [UserContact]()
     var contacts = [UserContact]()
     var chats = [Chat]()
     var subscriptions = [Subscription]()
@@ -35,6 +36,9 @@ class ContactsService: NSObject {
     
     var contactsResultsController: NSFetchedResultsController<UserContact>!
     var chatsResultsController: NSFetchedResultsController<Chat>!
+    
+    var didCollectContacts = false
+    var didCollectChats = false
 
     override init() {
         super.init()
@@ -58,22 +62,6 @@ class ContactsService: NSObject {
         
         updateLastMessages()
         
-        ///Chats results controller
-        let chatsFetchRequest = Chat.FetchRequests.all()
-
-        chatsResultsController = NSFetchedResultsController(
-            fetchRequest: chatsFetchRequest,
-            managedObjectContext: CoreDataManager.sharedManager.persistentContainer.viewContext,
-            sectionNameKeyPath: nil,
-            cacheName: nil
-        )
-        
-        chatsResultsController.delegate = self
-        
-        do {
-            try chatsResultsController.performFetch()
-        } catch {}
-        
         ///Contacts results controller
         let contactsFetchRequest = UserContact.FetchRequests.chatList()
 
@@ -88,6 +76,22 @@ class ContactsService: NSObject {
         
         do {
             try contactsResultsController.performFetch()
+        } catch {}
+        
+        ///Chats results controller
+        let chatsFetchRequest = Chat.FetchRequests.all()
+
+        chatsResultsController = NSFetchedResultsController(
+            fetchRequest: chatsFetchRequest,
+            managedObjectContext: CoreDataManager.sharedManager.persistentContainer.viewContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil
+        )
+        
+        chatsResultsController.delegate = self
+        
+        do {
+            try chatsResultsController.performFetch()
         } catch {}
     }
 
@@ -105,15 +109,23 @@ extension ContactsService : NSFetchedResultsControllerDelegate {
             let resultController = controller as? NSFetchedResultsController<NSManagedObject>,
             let firstSection = resultController.sections?.first {
             
+            if resultController == contactsResultsController {
+                didCollectContacts = true
+            } else if resultController == chatsResultsController {
+                didCollectChats = true
+            }
+            
             if let contacts = firstSection.objects as? [UserContact] {
-                self.contacts = contacts
+                self.allContacts = contacts
             }
             
             if let chats = firstSection.objects as? [Chat] {
                 self.chats = chats
             }
         
-            processContactsAndChats()
+            if didCollectChats && didCollectContacts {
+                processContactsAndChats()
+            }
         }
     }
     
@@ -133,13 +145,21 @@ extension ContactsService : NSFetchedResultsControllerDelegate {
     func processContactsAndChats() {
         updateOwner()
         
-        if chats.count > 0 || contacts.count > 0 {
-            let blockedContactIds = self.contacts.filter({ $0.isBlocked() }).map({ $0.id })
+        for chat in chats {
+            if chat.isConversation() {
+                if let contactId = chat.contactIds.filter({ $0.intValue != owner.id }).first?.intValue {
+                    chat.conversationContact = getContactWith(id: contactId)
+                }
+            }
+        }
+        
+        if chats.count > 0 || allContacts.count > 0 {
+            let blockedContactIds = self.allContacts.filter({ $0.isBlocked() }).map({ $0.id })
             self.chats = self.chats.filter({ !$0.isConversation() || !$0.contactIds.map({ $0.intValue }).contains(where: blockedContactIds.contains) })
             
             let conversations = chats.filter({ $0.isConversation() })
             let contactIds = ((conversations.map { $0.contactIds }).flatMap { $0 }).map { $0.intValue }
-            self.contacts = self.contacts.filter({ !contactIds.contains($0.id) && !$0.isExpiredInvite() && !$0.isBlocked() })
+            self.contacts = self.allContacts.filter({ !contactIds.contains($0.id) && !$0.isExpiredInvite() && !$0.isBlocked() })
         }
         
         processChatListObjects()
@@ -252,5 +272,9 @@ extension ContactsService : NSFetchedResultsControllerDelegate {
         chatsSearchQuery = term
         
         processChatListObjects()
+    }
+    
+    func getContactWith(id: Int) -> UserContact? {
+        return allContacts.filter({$0.id == id}).first
     }
 }

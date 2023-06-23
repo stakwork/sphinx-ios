@@ -31,7 +31,7 @@ class ChatListCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    var ownerId: Int!
+    var owner: UserContact!
 }
 
 
@@ -50,7 +50,7 @@ extension ChatListCollectionViewCell {
 extension ChatListCollectionViewCell {
     
     var unreadMessageCount: Int {
-        if chatListObject?.isSeen(ownerId: ownerId) == true {
+        if chatListObject?.isSeen(ownerId: owner.id) == true {
             return 0
         }
         return chatListObject?.getChat()?.getReceivedUnseenMessagesCount() ?? 0
@@ -59,7 +59,7 @@ extension ChatListCollectionViewCell {
     var hasUnreadMessages: Bool { unreadMessageCount > 0 }
     
     var unreadMentionsCount: Int {
-        if chatListObject?.isSeen(ownerId: ownerId) == true {
+        if chatListObject?.isSeen(ownerId: owner.id) == true {
             return 0
         }
         return chatListObject?.getChat()?.getReceivedUnseenMentionsCount() ?? 0
@@ -271,7 +271,10 @@ extension ChatListCollectionViewCell {
                     .Sphinx.TextMessages
                     : .Sphinx.SecondaryText
                 
-                messageLabel.text = lastMessage.getMessageDescription(dashboard: true)
+                messageLabel.text = lastMessage.getMessageContentPreview(
+                    owner: self.owner,
+                    contact: chatListObject.getContact()
+                )
                 dateLabel.text = lastMessage.messageDate.getLastMessageDateFormat()
                 
                 messageLabel.superview?.isHidden = false

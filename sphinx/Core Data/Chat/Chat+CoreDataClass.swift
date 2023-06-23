@@ -456,8 +456,7 @@ public class Chat: NSManagedObject {
     
     public func getContact() -> UserContact? {
         if self.type == Chat.ChatType.conversation.rawValue {
-            let contacts = getContacts(includeOwner: false)
-            return contacts.first
+            return getConversationContact()
         }
         return nil
     }

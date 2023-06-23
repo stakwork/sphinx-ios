@@ -330,7 +330,10 @@ extension SphinxSocketManager {
         let onFullScreenCall = VideoCallManager.sharedInstance.activeFullScreenCall()
         
         if showBubble {
-            newMessageBubbleHelper.showMessageView(message: message, onKeyWindow: !onFullScreenCall)
+            newMessageBubbleHelper.showMessageView(
+                message: message,
+                onKeyWindow: !onFullScreenCall
+            )
         }
         
         return showBubble

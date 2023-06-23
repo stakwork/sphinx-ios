@@ -359,7 +359,9 @@ struct MessageTableCellState {
             return nil
         }
         
-        guard let amount = message.amount?.intValue, amount > 0 else {
+        let amount = message.getBoostAmount()
+        
+        guard amount > 0 else {
             return nil
         }
         

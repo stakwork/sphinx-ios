@@ -37,7 +37,13 @@ class VideoCallHelper {
             callback(room)
         }
         
-        AlertHelper.showOptionsPopup(title: "create.call".localized, message: "select.call.mode".localized, options: ["audio".localized, "video.or.audio".localized], callbacks: [audioCallback, videoCallback], sourceView: button)
+        AlertHelper.showOptionsPopup(
+            title: "create.call".localized,
+            message: "select.call.mode".localized,
+            options: ["audio".localized, "video.or.audio".localized],
+            callbacks: [audioCallback, videoCallback],
+            sourceView: button
+        )
     }
     
 }

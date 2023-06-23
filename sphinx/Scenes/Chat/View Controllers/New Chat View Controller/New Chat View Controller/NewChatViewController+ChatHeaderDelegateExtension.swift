@@ -67,7 +67,7 @@ extension NewChatViewController : ChatHeaderViewDelegate {
                 title: "create.call".localized,
                 style: .default,
                 handler: { (UIAlertAction) in
-//                    self.sendCallMessage(sender: sender)
+                    self.chatViewModel.createCallMessage(sender: sender)
                 }
             )
         )

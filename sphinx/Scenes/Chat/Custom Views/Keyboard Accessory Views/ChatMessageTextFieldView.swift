@@ -112,10 +112,9 @@ class ChatMessageTextFieldView: UIView {
         
         SoundsPlayer.playHaptic()
         
-        delegate?.shouldSendMessage(text: text, type: messageType, completion: { success in
-            if success {
-                self.clearMessage()
-            }
+        clearMessage()
+        
+        delegate?.shouldSendMessage(text: text, type: messageType, completion: { _ in
             self.sendButton.isUserInteractionEnabled = true
         })
     }

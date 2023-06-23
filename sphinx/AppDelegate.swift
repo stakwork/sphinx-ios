@@ -242,7 +242,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         callLink:String,
         audioOnly: Bool
     ){
-        hideAccessoryView()
         VideoCallManager.sharedInstance.startVideoCall(link: callLink, audioOnly: audioOnly)
     }
 
@@ -319,8 +318,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func takeUserToInitialVC(
         isUserLogged: Bool
     ) {
-        hideAccessoryView()
-
         let rootViewController = StoryboardScene.Root.initialScene.instantiate()
         let mainCoordinator = MainCoordinator(rootViewController: rootViewController)
 
@@ -348,12 +345,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func isOnChatList() -> Bool {
         getCurrentVC() is DashboardRootViewController
-    }
-
-    func hideAccessoryView() {
-        if let currentVC = getCurrentVC() as? ChatViewController {
-            currentVC.accessoryView.hide()
-        }
     }
 
     func getCurrentVC() -> UIViewController? {
@@ -393,14 +384,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application: UIApplication
     ) {
         application.applicationIconBadgeNumber = TransactionMessage.getReceivedUnseenMessagesCount()
-    }
-
-    func setMessagesAsSeen() {
-        if let rootVController = window?.rootViewController as? RootViewController,
-           let currentVC = rootVController.getLastCenterViewController() as? ChatViewController,
-           let currentChat = currentVC.chat {
-            currentChat.setChatMessagesAsSeen()
-        }
     }
 }
 

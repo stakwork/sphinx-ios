@@ -106,38 +106,6 @@ class ChatAvatarView: UIView {
         }
     }
     
-    func configureFor(
-        messageRow: TransactionMessageRow,
-        contact: UserContact?,
-        chat: Chat?,
-        with delegate: ChatAvatarViewDelegate? = nil
-    ) {
-        self.delegate = delegate
-        
-        profileImageView.sd_cancelCurrentImageLoad()
-        
-        profileImageView.isHidden = true
-        profileInitialContainer.isHidden = true
-        profileImageView.layer.borderWidth = 0
-        
-        let message = messageRow.transactionMessage!
-        
-        if !messageRow.getConsecutiveMessages().previousMessage {
-            
-            showInitialsWith(
-                alias: message.getMessageSenderNickname(),
-                color: ChatHelper.getSenderColorFor(message: message)
-            )
-            
-            let senderAvatarURL = message.getMessageSenderProfilePic(chat: chat, contact: contact)
-            
-            if let senderAvatarURL = senderAvatarURL, let url = URL(string: senderAvatarURL) {
-                
-                showImageWith(url: url)
-            }
-        }
-    }
-    
     func showImageWith(
         url: URL
     ) {

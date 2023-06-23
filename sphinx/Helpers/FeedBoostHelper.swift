@@ -146,10 +146,22 @@ class FeedBoostHelper : NSObject {
     ) {
         if let chat = chat {
             let boostType = TransactionMessage.TransactionMessageType.boost.rawValue
-            let provisionalMessage = TransactionMessage.createProvisionalMessage(messageContent: message, type: boostType, date: Date(), chat: chat)
             
-            let messageType = TransactionMessage.TransactionMessageType(fromRawValue: provisionalMessage?.type ?? 0)
-            guard let params = TransactionMessage.getMessageParams(contact: nil, chat: chat, type: messageType, text: message) else {
+            let provisionalMessage = TransactionMessage.createProvisionalMessage(
+                messageContent: message,
+                type: boostType,
+                date: Date(),
+                chat: chat
+            )
+            
+            let messageType = TransactionMessage.TransactionMessageType.boost
+            
+            guard let params = TransactionMessage.getMessageParams(
+                contact: nil,
+                chat: chat,
+                type: messageType,
+                text: message
+            ) else {
                 completion(provisionalMessage, false)
                 return
             }
@@ -160,7 +172,6 @@ class FeedBoostHelper : NSObject {
                     
                     completion(message, true)
                     self.trackBoostAction(itemId: itemId, amount: amount)
-                    
                 }
             }, errorCallback: {
                  if let provisionalMessage = provisionalMessage {

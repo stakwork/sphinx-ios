@@ -156,10 +156,6 @@ extension NewPodcastPlayerViewController : PodcastEpisodesDSDelegate {
         }
     }
     
-    func didTapForDescriptionAt(index: Int) {
-        
-    }
-    
     func didTapEpisodeAt(index: Int) {
         tableHeaderView?.didTapEpisodeAt(index: index)
     }

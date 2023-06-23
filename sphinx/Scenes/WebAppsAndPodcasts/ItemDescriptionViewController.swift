@@ -354,7 +354,7 @@ extension ItemDescriptionViewController : ItemDescriptionTableViewHeaderCellDele
     
 }
 
-extension ItemDescriptionViewController:PodcastEpisodesDSDelegate{
+extension ItemDescriptionViewController: PodcastEpisodesDSDelegate {
     func didDismiss() {
         self.tableView.reloadData()
     }

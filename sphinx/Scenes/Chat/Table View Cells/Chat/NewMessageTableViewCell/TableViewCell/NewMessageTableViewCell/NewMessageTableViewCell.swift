@@ -33,7 +33,7 @@ protocol ChatTableViewCellProtocol: class {
         linkData: MessageTableCellState.LinkData?,
         botWebViewData: MessageTableCellState.BotWebViewData?,
         uploadProgressData: MessageTableCellState.UploadProgressData?,
-        delegate: NewMessageTableViewCellDelegate,
+        delegate: NewMessageTableViewCellDelegate?,
         indexPath: IndexPath
     )
 }
@@ -150,7 +150,7 @@ class NewMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableViewCellP
         linkData: MessageTableCellState.LinkData?,
         botWebViewData: MessageTableCellState.BotWebViewData?,
         uploadProgressData: MessageTableCellState.UploadProgressData?,
-        delegate: NewMessageTableViewCellDelegate,
+        delegate: NewMessageTableViewCellDelegate?,
         indexPath: IndexPath
     ) {
         

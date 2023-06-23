@@ -54,19 +54,6 @@ extension UITableView {
         }
     }
     
-    func isPositionAtBottom(
-        yPosition: CGFloat,
-        accessoryViewHeight: CGFloat
-    ) -> Bool {
-        let tableViewHeight = UIScreen.main.bounds.height
-        let bottomInset = getWindowInsets().bottom + accessoryViewHeight + ChatAccessoryView.kTableBottomPadding
-        let contentHeight = (self.contentSize.height - tableViewHeight + bottomInset)
-
-        let difference = contentHeight - yPosition
-        
-        return round(difference) <= 0
-    }
-    
     func scrollToRow(index:Int, animated:Bool = true){
         let indexPath = IndexPath(row: index, section: self.numberOfSections - 1)
         self.scrollToRow(at: indexPath, at: .bottom, animated: animated)

@@ -55,7 +55,7 @@ class NewOnlyTextMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableV
         linkData: MessageTableCellState.LinkData?,
         botWebViewData: MessageTableCellState.BotWebViewData?,
         uploadProgressData: MessageTableCellState.UploadProgressData?,
-        delegate: NewMessageTableViewCellDelegate,
+        delegate: NewMessageTableViewCellDelegate?,
         indexPath: IndexPath
     ) {
         var mutableMessageCellState = messageCellState

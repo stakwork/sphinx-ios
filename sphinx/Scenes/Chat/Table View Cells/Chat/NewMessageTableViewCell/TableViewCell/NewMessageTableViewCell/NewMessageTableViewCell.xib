@@ -425,7 +425,7 @@
                         </state>
                     </button>
                 </subviews>
-                <color key="backgroundColor" name="Body"/>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="9Gp-CF-p7o" secondAttribute="trailing" id="020-5M-yOJ"/>
                     <constraint firstItem="gmq-0D-Jtd" firstAttribute="bottom" secondItem="9Gp-CF-p7o" secondAttribute="bottom" id="2a2-Jk-bWL"/>
@@ -436,6 +436,7 @@
                     <constraint firstAttribute="bottom" secondItem="9Gp-CF-p7o" secondAttribute="bottom" priority="750" id="gSx-J9-eHr"/>
                 </constraints>
             </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
                 <outlet property="allContentView" destination="9Gp-CF-p7o" id="qQN-eC-7il"/>
                 <outlet property="audioMessageView" destination="SmW-PZ-3BF" id="ckR-Da-4Ey"/>
@@ -477,9 +478,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <namedColor name="Body">
-            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="SecondaryText">
             <color red="0.55686274509803924" green="0.58823529411764708" blue="0.61176470588235299" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

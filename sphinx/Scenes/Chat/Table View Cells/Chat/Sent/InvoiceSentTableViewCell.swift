@@ -7,7 +7,7 @@
 
 import UIKit
 
-class InvoiceSentTableViewCell: InvoiceCommonChatTableViewCell, MessageRowProtocol {
+class InvoiceSentTableViewCell {
 
     @IBOutlet weak var qrCodeIcon: UIImageView!
     @IBOutlet weak var invoiceContainerView: InvoiceContainerView!
@@ -19,62 +19,62 @@ class InvoiceSentTableViewCell: InvoiceCommonChatTableViewCell, MessageRowProtoc
     @IBOutlet weak var seenSign: UILabel!
     
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
-        memoLabel.font = UIFont.getMessageFont()
-        amountLabel.font = UIFont.getAmountFont()
-        qrCodeIcon.tintColorDidChange()
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
+//    override func awakeFromNib() {
+//        super.awakeFromNib()
+//
+//        memoLabel.font = UIFont.getMessageFont()
+//        amountLabel.font = UIFont.getAmountFont()
+//        qrCodeIcon.tintColorDidChange()
+//    }
+//
+//    override func setSelected(_ selected: Bool, animated: Bool) {
+//        super.setSelected(selected, animated: animated)
+//    }
     
-    func configureMessageRow(messageRow: TransactionMessageRow, contact: UserContact?, chat: Chat?) {
-        super.configureRow(messageRow: messageRow, contact: contact, chat: chat)
-
-        commonConfigurationForMessages()
-        
-        let received = messageRow.transactionMessage.received()
-        seenSign.text = received ? "flash_on" : ""
-        lockSign.text = messageRow.transactionMessage.encrypted ? "lock" : ""
-
-        let text = messageRow.transactionMessage.messageContent ?? ""
-        var labelHeight = UILabel.getLabelSize(width: InvoiceReceivedTableViewCell.kLabelWidth, text: text, font: UIFont.getMessageFont()).height
-        labelHeight = text.isEmpty ? -17 : labelHeight
-
-        let bubbleHeight = labelHeight + InvoiceReceivedTableViewCell.kLabelTopMargin + InvoiceReceivedTableViewCell.kLabelBottomMarginWithoutButton
-        let bubbleSize = CGSize(width: InvoiceReceivedTableViewCell.kBubbleWidth, height: bubbleHeight)
-        invoiceContainerView.addDashedBorder(color: UIColor.Sphinx.SecondaryText, size: bubbleSize)
-        invoiceContainerView.layer.cornerRadius = 10
-        invoiceContainerView.backgroundColor = UIColor.Sphinx.Body
-
-        let result = messageRow.transactionMessage.amount ?? NSDecimalNumber(value: 0)
-        let amountString = Int(truncating: result).formattedWithSeparator
-        amountLabel.text = "\(amountString)"
-
-        memoLabel.text = text
-        addLinksOnLabel(label: memoLabel)
-
-        configureExpiry()
-
-        if messageRow.shouldShowRightLine {
-            addRightLine()
-        }
-
-        if messageRow.shouldShowLeftLine {
-            addLeftLine()
-        }
-    }
-    
-    public static func getRowHeight(messageRow: TransactionMessageRow) -> CGFloat {
-        let text = messageRow.transactionMessage.messageContent ?? ""
-        var labelHeight = UILabel.getLabelSize(width: kLabelWidth, text: text, font: UIFont.getMessageFont()).height
-        labelHeight = text.isEmpty ? -17 : labelHeight
-
-        return labelHeight + kLabelTopMargin + kLabelBottomMarginWithoutButton + kBubbleTopMargin + kBubbleBottomMargin
-    }
+//    func configureMessageRow(messageRow: TransactionMessageRow, contact: UserContact?, chat: Chat?) {
+//        super.configureRow(messageRow: messageRow, contact: contact, chat: chat)
+//
+//        commonConfigurationForMessages()
+//
+//        let received = messageRow.transactionMessage.received()
+//        seenSign.text = received ? "flash_on" : ""
+//        lockSign.text = messageRow.transactionMessage.encrypted ? "lock" : ""
+//
+//        let text = messageRow.transactionMessage.messageContent ?? ""
+//        var labelHeight = UILabel.getLabelSize(width: InvoiceReceivedTableViewCell.kLabelWidth, text: text, font: UIFont.getMessageFont()).height
+//        labelHeight = text.isEmpty ? -17 : labelHeight
+//
+//        let bubbleHeight = labelHeight + InvoiceReceivedTableViewCell.kLabelTopMargin + InvoiceReceivedTableViewCell.kLabelBottomMarginWithoutButton
+//        let bubbleSize = CGSize(width: InvoiceReceivedTableViewCell.kBubbleWidth, height: bubbleHeight)
+//        invoiceContainerView.addDashedBorder(color: UIColor.Sphinx.SecondaryText, size: bubbleSize)
+//        invoiceContainerView.layer.cornerRadius = 10
+//        invoiceContainerView.backgroundColor = UIColor.Sphinx.Body
+//
+//        let result = messageRow.transactionMessage.amount ?? NSDecimalNumber(value: 0)
+//        let amountString = Int(truncating: result).formattedWithSeparator
+//        amountLabel.text = "\(amountString)"
+//
+//        memoLabel.text = text
+//        addLinksOnLabel(label: memoLabel)
+//
+//        configureExpiry()
+//
+//        if messageRow.shouldShowRightLine {
+//            addRightLine()
+//        }
+//
+//        if messageRow.shouldShowLeftLine {
+//            addLeftLine()
+//        }
+//    }
+//
+//    public static func getRowHeight(messageRow: TransactionMessageRow) -> CGFloat {
+//        let text = messageRow.transactionMessage.messageContent ?? ""
+//        var labelHeight = UILabel.getLabelSize(width: kLabelWidth, text: text, font: UIFont.getMessageFont()).height
+//        labelHeight = text.isEmpty ? -17 : labelHeight
+//
+//        return labelHeight + kLabelTopMargin + kLabelBottomMarginWithoutButton + kBubbleTopMargin + kBubbleBottomMargin
+//    }
     
     @IBAction func cancelButtonSelected() {
 //        cancelButtonContainer.backgroundColor = UIColor(hex: "#ffc7c0")

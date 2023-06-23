@@ -215,7 +215,7 @@ extension ChatAttachmentViewController {
     func updatePreview(message: String, price: Int) {
         if let previewVC = previewVC {
             let previewMessage = message == ChatAttachmentViewController.kFieldPlaceHolder ? "" : message
-            previewVC.configureMessageRow(text: previewMessage, price: price)
+            previewVC.configureMessageWith(text: previewMessage, andPrice: price)
         }
     }
 }

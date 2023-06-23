@@ -70,8 +70,6 @@ extension UIView {
         mask.path = path.cgPath
         
         if let borderColor = borderColor {
-            removeBorderLayer()
-            
             let shapeLayer = CAShapeLayer()
             shapeLayer.frame = viewBounds ?? bounds
             shapeLayer.path = path.cgPath
@@ -79,19 +77,10 @@ extension UIView {
             shapeLayer.fillColor = UIColor.clear.resolvedCGColor(with: self)
             shapeLayer.lineWidth = 2
             shapeLayer.masksToBounds = false
-            shapeLayer.name = CommonBubbleView.kBubbleLayerName
 
             layer.addSublayer(shapeLayer)
         }
         layer.mask = mask
-    }
-    
-    func removeBorderLayer() {
-        layer.sublayers?.forEach {
-            if $0.name == CommonBubbleView.kBubbleLayerName {
-                $0.removeFromSuperlayer()
-            }
-        }
     }
     
     func addShadow(location: VerticalLocation, color: UIColor = UIColor.Sphinx.Shadow, opacity: Float = 0.5, radius: CGFloat = 5.0, bottomhHeight: CGFloat = 3) {
@@ -119,32 +108,6 @@ extension UIView {
         self.layer.shadowColor = UIColor.clear.cgColor
         self.layer.shadowOpacity = 0.0
         self.layer.shadowRadius = 0.0
-    }
-    
-    func addDashedBorder(color: UIColor, size: CGSize) {
-        self.layer.sublayers?.forEach {
-            if $0.name == CommonBubbleView.kInvoiceDashedLayerName {
-                $0.removeFromSuperlayer()
-            }
-        }
-        
-        let color = color.resolvedCGColor(with: self)
-        
-        let shapeLayer:CAShapeLayer = CAShapeLayer()
-        let frameSize = size
-        let shapeRect = CGRect(x: 0, y: 0, width: frameSize.width, height: frameSize.height)
-        
-        shapeLayer.bounds = shapeRect
-        shapeLayer.position = CGPoint(x: frameSize.width/2, y: frameSize.height/2)
-        shapeLayer.fillColor = UIColor.clear.resolvedCGColor(with: self)
-        shapeLayer.strokeColor = color
-        shapeLayer.lineWidth = 1.5
-        shapeLayer.lineJoin = .round
-        shapeLayer.lineDashPattern = [8,4]
-        shapeLayer.name = CommonBubbleView.kInvoiceDashedLayerName
-        shapeLayer.path = UIBezierPath(roundedRect: shapeRect, cornerRadius: 10).cgPath
-        
-        self.layer.addSublayer(shapeLayer)
     }
     
     private static let kRotationAnimationKey = "rotationanimationkey"

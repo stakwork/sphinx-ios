@@ -95,7 +95,7 @@ class MessageOptionsView : UIView {
         
         var verticalPosition = VerticalPosition.Top
         
-        if screenSize.height - coordinates.y2 > coordinates.y1 && !KeyboardHandlerViewController.keyboardVisible {
+        if screenSize.height - coordinates.y2 > coordinates.y1 {
             y = coordinates.y2
             verticalPosition = VerticalPosition.Bottom
         } else {

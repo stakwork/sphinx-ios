@@ -91,14 +91,17 @@ class MediaMessageView: UIView {
                 bubble.direction.isIncoming()
             {
                 paidContentOverlay.isHidden = false
+                loadingContainer.isHidden = true
                 
                 mediaImageView.image = UIImage(
                     named: messageMedia.isVideo ? "paidVideoBlurredPlaceholder" :  "paidImageBlurredPlaceholder"
                 )
             } else {
-                mediaImageView.image = nil
                 paidContentOverlay.isHidden = true
                 loadingContainer.isHidden = false
+                
+                mediaImageView.image = nil
+                
                 loadingImageView.rotate()
             }
         }

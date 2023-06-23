@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -53,7 +53,7 @@
                     </constraints>
                 </imageView>
                 <tableView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="P08-M5-arT">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="414"/>
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="354"/>
                     <color key="backgroundColor" white="0.0" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </tableView>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imageFullScreenShadow" translatesAutoresizingMaskIntoConstraints="NO" id="Bkm-ne-hyH">
@@ -289,6 +289,7 @@
                 <constraint firstItem="0uE-RU-E2n" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="E3E-nG-WCH"/>
                 <constraint firstItem="9rE-5F-wP7" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="22" id="JPc-oQ-yMH"/>
                 <constraint firstAttribute="trailing" secondItem="DK5-KL-hVN" secondAttribute="trailing" id="JWg-FU-hZF"/>
+                <constraint firstItem="0uE-RU-E2n" firstAttribute="top" secondItem="P08-M5-arT" secondAttribute="bottom" id="Lk1-md-hLP"/>
                 <constraint firstAttribute="bottom" secondItem="yFL-Ym-JIV" secondAttribute="bottom" id="R9j-2d-yZW"/>
                 <constraint firstItem="DK5-KL-hVN" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="XLc-B4-Eus"/>
                 <constraint firstItem="P08-M5-arT" firstAttribute="top" secondItem="DK5-KL-hVN" secondAttribute="top" id="Z0h-kf-Gsg"/>
@@ -296,7 +297,6 @@
                 <constraint firstItem="Bkm-ne-hyH" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="aH4-dp-Qar"/>
                 <constraint firstItem="P08-M5-arT" firstAttribute="trailing" secondItem="DK5-KL-hVN" secondAttribute="trailing" id="jFW-wA-m9P"/>
                 <constraint firstItem="0uE-RU-E2n" firstAttribute="bottom" secondItem="DK5-KL-hVN" secondAttribute="bottom" id="qnu-tJ-DLy"/>
-                <constraint firstItem="P08-M5-arT" firstAttribute="bottom" secondItem="DK5-KL-hVN" secondAttribute="bottom" id="se2-JK-1TA"/>
                 <constraint firstAttribute="trailing" secondItem="Bkm-ne-hyH" secondAttribute="trailing" id="u5z-oJ-eM4"/>
                 <constraint firstItem="yFL-Ym-JIV" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="vVN-5L-IdK"/>
                 <constraint firstItem="P08-M5-arT" firstAttribute="leading" secondItem="DK5-KL-hVN" secondAttribute="leading" id="zVx-Ui-gi0"/>

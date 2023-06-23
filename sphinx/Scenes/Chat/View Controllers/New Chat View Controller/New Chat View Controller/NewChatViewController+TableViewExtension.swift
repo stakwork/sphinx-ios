@@ -228,7 +228,12 @@ extension NewChatViewController {
             
             newMsgsIndicatorView.isHidden = true
             
-            let messageOptionsVC = MessageOptionsViewController.instantiate(message: message, delegate: self)
+            let messageOptionsVC = MessageOptionsViewController.instantiate(
+                message: message,
+                purchaseAcceptMessage: message.getPurchaseAcceptItem(),
+                delegate: self
+            )
+            
             messageOptionsVC.setBubblePath(bubblePath: bubbleRectAndPath)
             messageOptionsVC.modalPresentationStyle = .overCurrentContext
             self.navigationController?.present(messageOptionsVC, animated: false)

@@ -70,7 +70,6 @@ class PaidMessagePreviewViewController: UIViewController {
         message!.encrypted = false
         message!.senderId = UserData.sharedInstance.getUserId()
         message!.date = Date()
-        message!.uploadingObject = AttachmentObject(data: Data(), mediaKey: "", type: .Text, paidMessage: text, price: price)
         message!.type = TransactionMessage.TransactionMessageType.attachment.rawValue
         message!.mediaType = "sphinx/text"
         message!.mediaToken = "test.test.test.test.\(mediaTokenPrice)"

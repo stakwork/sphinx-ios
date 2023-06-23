@@ -99,65 +99,6 @@ public class TransactionMessage: NSManagedObject {
     
     static let kCallRoomName = "/sphinx.call"
     
-    var uploadingObject: AttachmentObject? = nil
-    var uploadingProgress: Int? = nil
-    
-    var purchaseItems: [TransactionMessage] = []
-    var paidMessageError = false
-    
-    var replyingMessage: TransactionMessage? = nil
-    var linkHasPreview: Bool = false
-    var tribeInfo: GroupsManager.TribeInfo? = nil
-    
-    var reactions: Reactions? = nil
-       
-    public struct Reactions {
-        var boosted: Bool = false
-        var totalSats: Int? = nil
-        var messageIds: [Int] = []
-        var users: [String: (UIColor, String?)] = [:]
-       
-        init(totalSats: Int, users: [String: (UIColor, String?)], boosted: Bool, id: Int) {
-            self.totalSats = totalSats
-            self.users = users
-            self.boosted = boosted
-            self.messageIds = [id]
-        }
-       
-        mutating func add(sats: Int, user: (String, UIColor, String?)?, id: Int) {
-            if !self.messageIds.contains(id) {
-                self.messageIds.append(id)
-                
-                self.totalSats = (self.totalSats ?? 0) + sats
-                
-                if let user = user {
-                    self.users[user.0] = (user.1, user.2)
-                }
-            }
-        }
-    }
-    
-    public struct ConsecutiveMessages {
-        var previousMessage: Bool
-        var nextMessage: Bool
-        
-        init(previousMessage: Bool, nextMessage: Bool) {
-            self.previousMessage = previousMessage
-            self.nextMessage = nextMessage
-        }
-    }
-    
-    var consecutiveMessages = ConsecutiveMessages(previousMessage: false, nextMessage: false)
-    
-    func resetNextConsecutiveMessages() {
-        consecutiveMessages.nextMessage = false
-    }
-    
-    func resetPreviousConsecutiveMessages() {
-        consecutiveMessages.previousMessage = false
-    }
-
-    
     static func insertMessage(
         m: JSON,
         existingMessage: TransactionMessage? = nil
@@ -406,7 +347,6 @@ public class TransactionMessage: NSManagedObject {
             message.mediaType = attachmentObject.getMimeType()
             message.mediaFileName = attachmentObject.getFileName()
             message.mediaFileSize = attachmentObject.getDecryptedData()?.count ?? 0
-            message.uploadingObject = attachmentObject
         }
         
         if let chat = chat {
@@ -414,37 +354,6 @@ public class TransactionMessage: NSManagedObject {
         }
         
         return message
-    }
-    
-    static func isDifferentDayMessage(
-        lastMessage: TransactionMessage?,
-        newMessage: TransactionMessage?
-    ) -> Bool {
-        
-        if let newMessageDate = newMessage?.date as Date? {
-            return isDifferentDay(
-                lastMessage: lastMessage,
-                newMessageDate: newMessageDate
-            )
-        }
-        return false
-    }
-    
-    static func isDifferentDay(
-        lastMessage: TransactionMessage?,
-        newMessageDate: Date?
-    ) -> Bool {
-        
-        guard let lastMessage = lastMessage else {
-            return true
-        }
-        if let newMessageDate = newMessageDate,
-            let lastMessageDate = lastMessage.date as Date?,
-            Date.isDifferentDay(firstDate: lastMessageDate, secondDate: newMessageDate) {
-            
-            return true
-        }
-        return false
     }
     
     func setPaymentInvoiceAsPaid() {

@@ -57,14 +57,10 @@ extension TransactionMessage {
         return nil
     }
     
-    func getMessageReceiverNickname() -> String {
-        if let receiver = getMessageReceiver() {
-            return receiver.getName()
-        }
-        return "name.unknown".localized
-    }
-    
-    func getMessageSenderNickname(minimized: Bool = false, forceNickname: Bool = false) -> String {
+    func getMessageSenderNickname(
+        minimized: Bool = false,
+        forceNickname: Bool = false
+    ) -> String {
         var alias = "name.unknown".localized
         
         if let senderAlias = senderAlias {
@@ -118,14 +114,6 @@ extension TransactionMessage {
             return mediaKey != nil && mediaKey != ""
         }
         return messageEncrypted
-    }
-    
-    func canBeDecrypted() -> Bool {
-        if let messageC = self.messageContent, messageC.isEncryptedString() {
-            return false
-        }
-        
-        return true
     }
     
     func hasMessageContent() -> Bool {
@@ -200,22 +188,6 @@ extension TransactionMessage {
         return dashboard ? "decrypting.message".localized : "encryption.error".localized.uppercased()
     }
     
-    func getPaidMessageContent() -> String {
-        var adjustedMC = self.messageContent ?? ""
-        
-        if self.isPendingPaidMessage() {
-            if paidMessageError {
-                adjustedMC = "cannot.load.message.data".localized.uppercased()
-            } else {
-                adjustedMC = "pay.to.unlock.msg".localized.uppercased()
-            }
-        } else if self.isLoadingPaidMessage() {
-            adjustedMC = "loading.paid.message".localized.uppercased()
-        }
-        
-        return adjustedMC
-    }
-    
     //Direction
     func getDirection(id: Int) -> TransactionMessageDirection {
         if Int(self.senderId) == id {
@@ -242,13 +214,6 @@ extension TransactionMessage {
         ownerId: Int
     ) -> Bool {
         return self.isOutgoing(ownerId: ownerId) || self.seen
-    }
-    
-    func isFailedOrMediaExpired() -> Bool {
-        let failed = self.failed()
-        let expired = self.isMediaExpired()
-        
-        return failed || expired
     }
     
     func isProvisional() -> Bool {
@@ -314,21 +279,6 @@ extension TransactionMessage {
         return isAttachment() && getType() == TransactionMessageType.textAttachment.rawValue && mediaKey == nil
     }
     
-    func isPendingPaidMessage() -> Bool {
-        return isPaidMessage() && isIncoming() && getMediaUrl(queryDB: false) == nil && (messageContent?.isEmpty ?? true)
-    }
-    
-    func isLoadingPaidMessage() -> Bool {
-        if let _ = getMediaUrl(), (messageContent?.isEmpty ?? true) && isPaidMessage() {
-            return true
-        }
-        return false
-    }
-    
-    func isMessageUploadingAttachment() -> Bool {
-        return isAttachment() && getType() == TransactionMessageType.textAttachment.rawValue && messageContent == nil && !isIncoming()
-    }
-    
     func isAttachment() -> Bool {
         return type == TransactionMessageType.attachment.rawValue
     }
@@ -392,10 +342,6 @@ extension TransactionMessage {
     
     func isBotTextResponse() -> Bool {
         return type == TransactionMessageType.botResponse.rawValue && self.messageContent?.isValidHTML == false
-    }
-    
-    func isBoosted() -> Bool {
-        return self.reactions != nil && (self.reactions?.totalSats ?? 0) > 0
     }
     
     func isUnknownType() -> Bool {
@@ -501,17 +447,6 @@ extension TransactionMessage {
             return true
         }
         return false
-    }
-    
-    func getReplyingTo() -> TransactionMessage? {
-        if let replyUUID = replyUUID, !replyUUID.isEmpty {
-            if let replyingMessage = replyingMessage {
-                return replyingMessage
-            }
-            replyingMessage = TransactionMessage.getMessageWith(uuid: replyUUID)
-            return replyingMessage
-        }
-        return nil
     }
     
     func getAmountString() -> String {
@@ -719,15 +654,6 @@ extension TransactionMessage {
         }
     }
     
-    var shouldInitiateCallAlert : Bool{
-        if let content = self.messageContent,
-           self.chat?.isGroup() == false,
-           content.contains("https://jitsi"){
-            return true
-        }
-        return false
-    }
-    
     var isResendActionAllowed: Bool {
         get {
             return (isTextMessage() && status == TransactionMessageStatus.failed.rawValue)
@@ -792,25 +718,6 @@ extension TransactionMessage {
         }
     }
     
-    var bubbleMessageContentFont: UIFont {
-        get {
-            let regularFont = UIFont.getMessageFont()
-            let errorFont = UIFont.getEncryptionErrorFont()
-            
-            if let messageC = self.messageContent {
-                if messageC.isEncryptedString() {
-                    return errorFont
-                }
-            }
-            
-            if self.isPaidMessage() {
-                return errorFont
-            }
-            
-            return regularFont
-        }
-    }
-    
     var isBoostActionAllowed: Bool {
         get {
             return isIncoming() &&
@@ -819,38 +726,6 @@ extension TransactionMessage {
             !isCallLink() &&
             !(uuid ?? "").isEmpty
         }
-    }
-    
-    func isNewUnseenMessage() -> Bool {
-        let chatSeen = (self.chat?.seen ?? false)
-        var newMessage = !chatSeen && !seen && !failed() && isIncoming()
-        
-        let (purchaseStateItem, seen) = getPurchaseStateItem()
-        if let _ = purchaseStateItem {
-            newMessage = !seen
-        }
-        
-        return newMessage
-    }
-    
-    func isUniqueOnChat() -> Bool {
-        return (self.chat?.messages?.count ?? 0) == 1
-    }
-    
-    func save(webViewHeight height: CGFloat) {
-        if var heighs: [Int: CGFloat] = UserDefaults.Keys.webViewsHeight.getObject() {
-            heighs[self.id] = height
-            UserDefaults.Keys.webViewsHeight.setObject(heighs)
-        } else {
-            UserDefaults.Keys.webViewsHeight.setObject([self.id: height])
-        }
-    }
-    
-    func getWebViewHeight() -> CGFloat? {
-        if let heighs: [Int: CGFloat] = UserDefaults.Keys.webViewsHeight.getObject() {
-            return heighs[self.id]
-        }
-        return nil
     }
     
     //Message description
@@ -1058,16 +933,12 @@ extension TransactionMessage {
         let messageSender = getMessageSender()
         
         if isPrivateConversation {
-            
             return (isStandardPIN && !(messageSender?.pin ?? "").isEmpty) ||
                    (!isStandardPIN && (messageSender?.pin ?? "").isEmpty) ||
                    messageSender?.isBlocked() == true
-            
         } else {
-            
             return (isStandardPIN && !(chat?.pin ?? "").isEmpty) ||
                    (!isStandardPIN && (chat?.pin ?? "").isEmpty)
-            
         }
     }
     

@@ -26,10 +26,16 @@ class MessageOptionsViewController: UIViewController {
     var bubblePath: (CGRect, CGPath)? = nil
     
     var message: TransactionMessage? = nil
+    var purchaseAcceptMessage: TransactionMessage? = nil
     
-    static func instantiate(message: TransactionMessage, delegate: MessageOptionsVCDelegate?) -> MessageOptionsViewController {
+    static func instantiate(
+        message: TransactionMessage,
+        purchaseAcceptMessage: TransactionMessage?,
+        delegate: MessageOptionsVCDelegate?
+    ) -> MessageOptionsViewController {
         let viewController = StoryboardScene.Chat.messageOptionsViewController.instantiate()
         viewController.message = message
+        viewController.purchaseAcceptMessage = purchaseAcceptMessage
         viewController.delegate = delegate
         return viewController
     }
@@ -192,9 +198,16 @@ extension MessageOptionsViewController : MessageOptionsDelegate {
     }
     
     func shouldSaveFile() {
-        MediaDownloader.shouldSaveFile(message: message, completion: { success, alertMessage in
-            self.showMediaSaveAlert(success: success, alertMessage: alertMessage)
-        })
+        MediaDownloader.shouldSaveFile(
+            message: message,
+            purchaseAcceptMessage: purchaseAcceptMessage,
+            completion: { success, alertMessage in
+                self.showMediaSaveAlert(
+                    success: success,
+                    
+                    alertMessage: alertMessage)
+            }
+        )
     }
     
     func shouldResendMessage() {

@@ -20,7 +20,9 @@ class AttachmentFullScreenViewController: UIViewController, CanRotate {
     @IBOutlet weak var shareButton: UIButton!
     @IBOutlet weak var fileNameLabel: UILabel!
     
-    var transactionMessage: TransactionMessage!
+    var message: TransactionMessage!
+    var purchaseAcceptMessage: TransactionMessage?
+    
     var pdfDocument: PDFDocument? = nil
     
     var animated = true
@@ -31,9 +33,11 @@ class AttachmentFullScreenViewController: UIViewController, CanRotate {
     ) -> AttachmentFullScreenViewController? {
         
         if let message = TransactionMessage.getMessageWith(id: messageId) {
+            
             let viewController = StoryboardScene.Chat.attachmentFullScreenViewController.instantiate()
-            viewController.transactionMessage = message
+            viewController.message = message
             viewController.animated = animated
+            viewController.purchaseAcceptMessage = message.getPurchaseAcceptItem()
             return viewController
         }
         
@@ -43,7 +47,7 @@ class AttachmentFullScreenViewController: UIViewController, CanRotate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if transactionMessage.isPDF() {
+        if message.isPDF() {
             showPDF()
         } else {
             showImage()
@@ -56,7 +60,7 @@ class AttachmentFullScreenViewController: UIViewController, CanRotate {
         
         self.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
         fullScreenImageView.configureImageScrollView()
-        fullScreenImageView.showImage(message: transactionMessage)
+        fullScreenImageView.showImage(message: message)
         
         let tap = TouchUpGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
         self.view.addGestureRecognizer(tap)
@@ -66,17 +70,24 @@ class AttachmentFullScreenViewController: UIViewController, CanRotate {
         fullScreenImageView.isHidden = true
         pdfHeaderView.isHidden = false
         
-        if let url = transactionMessage.getMediaUrl() {
+        if let url = purchaseAcceptMessage?.getMediaUrlFromMediaToken() ?? message.getMediaUrlFromMediaToken() {
+            
             let pdfView = PDFView(frame: getPDFViewFrame())
             pdfView.autoScales = true
             self.view.addSubview(pdfView)
             self.view.sendSubviewToBack(pdfView)
             
-            MediaLoader.loadFileData(url: url, message: transactionMessage, completion: { (_, data) in
-                self.fileNameLabel.text = self.transactionMessage.mediaFileName ?? "file.pdf"
-                self.pdfDocument = PDFDocument(data: data)
-                pdfView.document = self.pdfDocument
-            }, errorCompletion: { _ in })
+            MediaLoader.loadFileData(
+                url: url,
+                message: message,
+                mediaKey: purchaseAcceptMessage?.mediaKey ?? message.mediaKey,
+                completion: { (_, data) in
+                    self.fileNameLabel.text = self.message.mediaFileName ?? "file.pdf"
+                    self.pdfDocument = PDFDocument(data: data)
+                    pdfView.document = self.pdfDocument
+                },
+                errorCompletion: { _ in }
+            )
         }
     }
     
@@ -87,7 +98,7 @@ class AttachmentFullScreenViewController: UIViewController, CanRotate {
     }
     
     func deleteLocalPDF() {
-        if let _ = pdfDocument, let url = URL(string: transactionMessage.mediaFileName ?? "file.pdf") {
+        if let _ = pdfDocument, let url = URL(string: message.mediaFileName ?? "file.pdf") {
             do {
                 try FileManager.default.removeItem(at: url)
             } catch let error {
@@ -102,12 +113,14 @@ class AttachmentFullScreenViewController: UIViewController, CanRotate {
     
     @IBAction func shareButtonTouched() {
         if let pdfData = pdfDocument?.dataRepresentation(),
-            let pdfUrl = MediaLoader.saveFileInMemory(data: pdfData, name: transactionMessage.mediaFileName ?? "file.pdf") {
-            
-            let activityVC = UIActivityViewController(activityItems: [pdfUrl], applicationActivities: nil)
-            activityVC.popoverPresentationController?.sourceView = self.shareButton
-            self.present(activityVC, animated: true, completion: nil)
-        }
+            let pdfUrl = MediaLoader.saveFileInMemory(
+                data: pdfData,
+                name: message.mediaFileName ?? "file.pdf"
+            ) {
+                let activityVC = UIActivityViewController(activityItems: [pdfUrl], applicationActivities: nil)
+                activityVC.popoverPresentationController?.sourceView = self.shareButton
+                self.present(activityVC, animated: true, completion: nil)
+            }
     }
     
     @IBAction func backButtonTouched() {

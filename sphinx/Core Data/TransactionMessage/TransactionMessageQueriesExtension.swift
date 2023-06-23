@@ -15,11 +15,6 @@ extension TransactionMessage {
         return messages
     }
     
-    static func getAllMesagesCount() -> Int {
-        let messagesCount:Int = CoreDataManager.sharedManager.getObjectsCountOfTypeWith(entityName: "TransactionMessage")
-        return messagesCount
-    }
-    
     static func getMessageWith(id: Int) -> TransactionMessage? {
         let message: TransactionMessage? = CoreDataManager.sharedManager.getObjectOfTypeWith(id: id, entityName: "TransactionMessage")
         return message
@@ -51,15 +46,16 @@ extension TransactionMessage {
         return messages
     }
     
-    //Added firstMessage param to the query method. If stored then chat will load all messages starting from that one and won't consider the limit param
     static func getAllMessagesFor(
         chat: Chat,
-        limit: Int? = nil,
-        lastMessage: TransactionMessage? = nil,
-        firstMessage: TransactionMessage? = nil
+        limit: Int? = nil
     ) -> [TransactionMessage] {
         
-        let fetchRequest = getChatMessagesFetchRequest(for: chat, with: limit, lastMessage: lastMessage, firstMessage: firstMessage)
+        let fetchRequest = getChatMessagesFetchRequest(
+            for: chat,
+            with: limit
+        )
+        
         var messages: [TransactionMessage] = []
         let context = CoreDataManager.sharedManager.persistentContainer.viewContext
         
@@ -74,54 +70,30 @@ extension TransactionMessage {
     
     static func getChatMessagesFetchRequest(
         for chat: Chat,
-        with limit: Int? = nil,
-        lastMessage: TransactionMessage? = nil,
-        firstMessage: TransactionMessage? = nil
+        with limit: Int? = nil
     ) -> NSFetchRequest<TransactionMessage> {
-        
-        var predicate : NSPredicate!
         
         var typesToExclude = typesToExcludeFromChat
         typesToExclude.append(TransactionMessageType.boost.rawValue)
         
-        if let f = firstMessage {
-            predicate = NSPredicate(
-                format: "chat == %@ AND (date >= %@) AND (NOT (type IN %@) || (type == %d && replyUUID = nil))",
-                chat,
-                f.messageDate as NSDate,
-                typesToExclude,
-                TransactionMessageType.boost.rawValue
-            )
-        } else if let m = lastMessage {
-            predicate = NSPredicate(
-                format: "chat == %@ AND (date <= %@) AND (NOT (type IN %@) || (type == %d && replyUUID = nil))",
-                chat,
-                m.messageDate as NSDate,
-                typesToExclude,
-                TransactionMessageType.boost.rawValue
-            )
-        } else {
-            predicate = NSPredicate(
-                format: "chat == %@ AND (NOT (type IN %@) || (type == %d && replyUUID = nil))",
-                chat,
-                typesToExclude,
-                TransactionMessageType.boost.rawValue
-            )
-        }
+        var predicate : NSPredicate = NSPredicate(
+            format: "chat == %@ AND (NOT (type IN %@) || (type == %d && replyUUID = nil))",
+            chat,
+            typesToExclude,
+            TransactionMessageType.boost.rawValue
+        )
         
         let sortDescriptors = [
             NSSortDescriptor(key: "date", ascending: false),
             NSSortDescriptor(key: "id", ascending: false)
         ]
         
-        let fetchLimit = (firstMessage == nil) ? limit : nil
-        
         let fetchRequest = NSFetchRequest<TransactionMessage>(entityName: "TransactionMessage")
         fetchRequest.predicate = predicate
         fetchRequest.sortDescriptors = sortDescriptors
         
-        if let fetchLimit = fetchLimit {
-            fetchRequest.fetchLimit = fetchLimit
+        if let limit = limit {
+            fetchRequest.fetchLimit = limit
         }
         
         return fetchRequest
@@ -156,10 +128,6 @@ extension TransactionMessage {
         return fetchRequest
     }
     
-    static func getAllMessagesCountFor(chat: Chat, lastMessageId: Int? = nil) -> Int {
-        return CoreDataManager.sharedManager.getObjectsCountOfTypeWith(predicate: NSPredicate(format: "chat == %@ AND NOT (type IN %@)", chat, typesToExcludeFromChat), entityName: "TransactionMessage")
-    }
-    
     static func getNewMessagesCountFor(chat: Chat, lastMessageId: Int) -> Int {
         return CoreDataManager.sharedManager.getObjectsCountOfTypeWith(predicate: NSPredicate(format: "chat == %@ AND id > %d", chat, lastMessageId), entityName: "TransactionMessage")
     }
@@ -178,14 +146,6 @@ extension TransactionMessage {
         let invoice: TransactionMessage? = CoreDataManager.sharedManager.getObjectOfTypeWith(predicate: predicate, sortDescriptors: sortDescriptors, entityName: "TransactionMessage")
         
         return invoice
-    }
-    
-    static func getMessagesFor(userId: Int, contactId: Int) -> [TransactionMessage] {
-        let predicate = NSPredicate(format: "((senderId == %d AND receiverId == %d) OR (senderId == %d AND receiverId == %d)) AND id >= 0 AND NOT (type IN %@)", contactId, userId, userId, contactId, typesToExcludeFromChat)
-        let sortDescriptors = [NSSortDescriptor(key: "id", ascending: false)]
-        let messages: [TransactionMessage] = CoreDataManager.sharedManager.getObjectsOfTypeWith(predicate: predicate, sortDescriptors: sortDescriptors, entityName: "TransactionMessage")
-        
-        return messages
     }
     
     static func getLastGroupRequestFor(contactId: Int, in chat: Chat) -> TransactionMessage? {

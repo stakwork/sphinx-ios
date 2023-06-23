@@ -38,6 +38,7 @@ class MessageReplyView: UIView {
     @IBOutlet weak var rowButton: UIButton!
     
     var message: TransactionMessage? = nil
+    var purchaseAcceptMessage: TransactionMessage? = nil
     var podcastComment: PodcastComment? = nil
     
     static let kMessageReplyHeight: CGFloat = 50
@@ -86,25 +87,42 @@ class MessageReplyView: UIView {
         rowButton.isHidden = !isRow
     }
     
-    func commonConfiguration(message: TransactionMessage?, delegate: MessageReplyViewDelegate, isIncoming: Bool = true) {
+    func commonConfiguration(
+        message: TransactionMessage?,
+        delegate: MessageReplyViewDelegate,
+        isIncoming: Bool = true
+    ) {
         guard let message = message else {
             return
         }
         
         self.delegate = delegate
         self.message = message
+        self.purchaseAcceptMessage = message.getPurchaseAcceptItem()
         
         resetView()
         
         leftBar.backgroundColor = ChatHelper.getSenderColorFor(message: message)
-        configureWith(title: message.getMessageSenderNickname(), message: message.getReplyMessageContent(), isIncoming: isIncoming)
         
-        if message.isMediaAttachment() || message.isGiphy() {
+        configureWith(
+            title: message.getMessageSenderNickname(),
+            message: message.getReplyMessageContent(),
+            isIncoming: isIncoming
+        )
+        
+        if
+            message.isMediaAttachment() ||
+            message.isGiphy()
+        {
             configureMediaAttachment()
         }
     }
     
-    func configureWith(title: String, message: String, isIncoming: Bool = true) {
+    func configureWith(
+        title: String,
+        message: String,
+        isIncoming: Bool = true
+    ) {
         senderLabel.text = title
         senderLabelYConstraint.constant = message.isEmpty ? 0 : -9
         senderLabel.superview?.layoutIfNeeded()
@@ -114,7 +132,11 @@ class MessageReplyView: UIView {
         messageLabel.text = message
     }
     
-    func configureForRow(with message: TransactionMessage?, isIncoming: Bool, delegate: MessageReplyViewDelegate) {
+    func configureForRow(
+        with message: TransactionMessage?,
+        isIncoming: Bool,
+        delegate: MessageReplyViewDelegate
+    ) {
         self.backgroundColor = UIColor.clear
         
         commonConfiguration(message: message, delegate: delegate, isIncoming: isIncoming)
@@ -124,7 +146,10 @@ class MessageReplyView: UIView {
         isHidden = false
     }
     
-    func configureForKeyboard(with message: TransactionMessage, delegate: MessageReplyViewDelegate) {
+    func configureForKeyboard(
+        with message: TransactionMessage,
+        delegate: MessageReplyViewDelegate
+    ) {
         self.backgroundColor = UIColor.Sphinx.HeaderBG
         
         commonConfiguration(message: message, delegate: delegate)
@@ -134,7 +159,10 @@ class MessageReplyView: UIView {
         isHidden = false
     }
     
-    func configureForKeyboard(with podcastComment: PodcastComment, and delegate: MessageReplyViewDelegate) {
+    func configureForKeyboard(
+        with podcastComment: PodcastComment,
+        and delegate: MessageReplyViewDelegate
+    ) {
         self.backgroundColor = UIColor.Sphinx.HeaderBG
         
         self.delegate = delegate
@@ -159,7 +187,10 @@ class MessageReplyView: UIView {
         self.isHidden = true
     }
     
-    func adjustMargins(isRow: Bool, isIncoming: Bool = false) {
+    func adjustMargins(
+        isRow: Bool,
+        isIncoming: Bool = false
+    ) {
         if isRow {
             let defaultMargin: CGFloat = 10
             messageLabelTrailingConstraint.constant = defaultMargin
@@ -200,15 +231,20 @@ class MessageReplyView: UIView {
             return
         }
         let messageContent = message.messageContent ?? ""
+        
         if let url = GiphyHelper.getUrlFrom(message: messageContent) {
-            GiphyHelper.getGiphyDataFrom(url: url, messageId: message.id, completion: { (data, messageId) in
-                if let data = data, let img = UIImage.sd_image(withGIFData: data) {
-                    self.imageView.image = img
-                    self.toggleImageContainer(show: true)
-                } else {
-                    self.toggleImageContainer(show: false)
+            GiphyHelper.getGiphyDataFrom(
+                url: url,
+                messageId: message.id,
+                completion: { (data, messageId) in
+                    if let data = data, let img = UIImage.sd_image(withGIFData: data) {
+                        self.imageView.image = img
+                        self.toggleImageContainer(show: true)
+                    } else {
+                        self.toggleImageContainer(show: false)
+                    }
                 }
-            })
+            )
             return
         }
         
@@ -222,15 +258,21 @@ class MessageReplyView: UIView {
         
         toggleImageContainer(show: true)
         
-        if let url = message.getMediaUrl() {
-            MediaLoader.loadImage(url: url, message: message, completion: { messageId, image in
-                if messageId != message.id {
-                    return
+        if let url = purchaseAcceptMessage?.getMediaUrlFromMediaToken() ?? message.getMediaUrlFromMediaToken() {
+            MediaLoader.loadImage(
+                url: url,
+                message: message,
+                mediaKey: purchaseAcceptMessage?.mediaKey ?? message.mediaKey,
+                completion: { messageId, image in
+                    if messageId != message.id {
+                        return
+                    }
+                    self.imageView.image = image
+                },
+                errorCompletion: { messageId in
+                    self.toggleImageContainer(show: false)
                 }
-                self.imageView.image = image
-            }, errorCompletion: { messageId in
-                self.toggleImageContainer(show: false)
-            })
+            )
         } else {
             toggleImageContainer(show: false)
         }
@@ -243,7 +285,7 @@ class MessageReplyView: UIView {
         
         toggleVideoContainer(show: true)
         
-        if let url = message.getMediaUrl() {
+        if let url = purchaseAcceptMessage?.getMediaUrlFromMediaToken() ?? message.getMediaUrlFromMediaToken() {
             if let image = MediaLoader.getImageFromCachedUrl(url: url.absoluteString) {
                 self.imageView.image = image
                 return

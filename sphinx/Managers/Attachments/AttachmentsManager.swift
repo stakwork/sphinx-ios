@@ -241,7 +241,10 @@ class AttachmentsManager {
         })
     }
     
-    func createLocalMessage(message: JSON, attachmentObject: AttachmentObject) {
+    func createLocalMessage(
+        message: JSON,
+        attachmentObject: AttachmentObject
+    ) {
         if let provisionalMessage = provisionalMessage {
             delegate?.shouldReplaceMediaDataFor?(
                 provisionalMessageId: provisionalMessage.id,
@@ -256,8 +259,11 @@ class AttachmentsManager {
         }
     }
     
-    func cacheImageAndMediaData(message: TransactionMessage, attachmentObject: AttachmentObject) {
-        if let mediaUrl = message.getMediaUrl()?.absoluteString {
+    func cacheImageAndMediaData(
+        message: TransactionMessage,
+        attachmentObject: AttachmentObject
+    ) {
+        if let mediaUrl = message.getMediaUrlFromMediaToken()?.absoluteString {
             if let data = attachmentObject.data, message.isVideo() || message.isAudio() || message.isGif() {
                 if let mediaKey = message.mediaKey {
                     if let decryptedData = SymmetricEncryptionManager.sharedInstance.decryptData(data: data, key: mediaKey) {

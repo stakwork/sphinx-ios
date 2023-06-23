@@ -192,7 +192,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication
     ) {
         saveCurrentStyle()
-        WindowsManager.sharedInstance.removeMessageOptions()
         setBadge(application: application)
         
         podcastPlayerController.finishAndSaveContentConsumed()

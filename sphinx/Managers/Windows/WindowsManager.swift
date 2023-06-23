@@ -69,43 +69,6 @@ class WindowsManager {
         }
     }
     
-    func showMessageOptions(_ notification: Notification, delegate: MessageOptionsVCDelegate) {
-        if let bubbleShapeLayers = notification.userInfo?["bubbleShapeLayers"] as? [(CGRect, CAShapeLayer)], bubbleShapeLayers.count > 0 {
-            if let messageId = notification.userInfo?["messageId"] as? Int,
-               let message = TransactionMessage.getMessageWith(id: messageId), message.getActionsMenuOptions().count > 0 {
-                
-                SoundsPlayer.playHaptic()
-                NotificationCenter.default.post(name: .onMessageMenuShow, object: nil)
-                
-                let messageOptionsVC = MessageOptionsViewController.instantiate(message: message, delegate: delegate)
-                messageOptionsVC.setBubbleShapesData(bubbleShapeLayers: bubbleShapeLayers)
-                showConveringWindowWith(rootVC: messageOptionsVC)
-            }
-        }
-    }
-    
-    func showMessageOptions(
-        bubbleShapeLayers: [(CGRect, CAShapeLayer)],
-        messageId: Int,
-        delegate: MessageOptionsVCDelegate?
-    ) {
-        if let message = TransactionMessage.getMessageWith(id: messageId), message.getActionsMenuOptions().count > 0 {
-             let messageOptionsVC = MessageOptionsViewController.instantiate(message: message, delegate: delegate)
-             messageOptionsVC.setBubbleShapesData(bubbleShapeLayers: bubbleShapeLayers)
-             showConveringWindowWith(rootVC: messageOptionsVC)
-        }
-    }
-    
-    func removeMessageOptions() {
-        if let coveringWindow = coveringWindow, let rootVC = coveringWindow.rootViewController, rootVC.isKind(of: MessageOptionsViewController.self) {
-            NotificationCenter.default.post(name: .onMessageMenuHide, object: nil)
-            
-            coveringWindow.isHidden = true
-            coveringWindow.resignKey()
-            self.coveringWindow = nil
-        }
-    }
-    
     func showStakworkAuthorizeWith() -> Bool {
         if let challengeQuery = UserDefaults.Keys.challengeQuery.get(defaultValue: ""), challengeQuery != "" {
             UserDefaults.Keys.challengeQuery.removeValue()

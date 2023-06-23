@@ -41,7 +41,9 @@ class FileInfoView: UIView {
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
     }
     
-    func configure(fileInfo: MessageTableCellState.FileInfo) {
+    func configure(
+        fileInfo: MessageTableCellState.FileInfo
+    ) {
         contentView.backgroundColor = UIColor.black.withAlphaComponent(0.7)
         iconLabel.text = "insert_drive_file"
         
@@ -49,60 +51,10 @@ class FileInfoView: UIView {
         pagesLabel.text = "\(fileInfo.pagesCount ?? 0) \("pages".localized)"
     }
     
-    func configure(message: TransactionMessage) {
-        self.message = message
-        
-        if let data = message.uploadingObject?.getDecryptedData(), let fileName = message.uploadingObject?.fileName {
-            showPDFInfo(data: data, fileName: fileName)
-        } else {
-            fileNameLabel.text = "file.pdf"
-            pagesLabel.text = "- \("pages".localized)"
-        }
-        
-        roundCorners()
-        
-        if let url = message.getMediaUrl(), message.isPDF() {
-            if let data = MediaLoader.getMediaDataFromCachedUrl(url: url.absoluteString) {
-                self.showPDFInfo(data: data, fileName: message.mediaFileName)
-            } else {
-                MediaLoader.loadFileData(url: url, message: message, completion: { _, data in
-                    DispatchQueue.main.async {
-                        self.showPDFInfo(data: data, fileName: message.mediaFileName)
-                    }
-                }, errorCompletion: { _ in
-                    DispatchQueue.main.async {
-                        self.isHidden = true
-                    }
-                })
-            }
-        }
-    }
-    
-    func roundCorners() {
-        if message.hasMessageContent() {
-            self.roundCorners(corners: [.bottomLeft, .bottomRight], radius: 0)
-        } else {
-            if message.consecutiveMessages.nextMessage {
-                if message.isOutgoing() {
-                    self.roundCorners(corners: [.bottomLeft], radius: 6)
-                } else {
-                    self.roundCorners(corners: [.bottomRight], radius: 6)
-                }
-            } else {
-                self.roundCorners(corners: [.bottomLeft, .bottomRight], radius: 6)
-            }
-        }
-    }
-    
-    func showPDFInfo(data: Data, fileName: String?) {
-        if let pagesCount = data.getPDFPagesCount() {
-            let pagesText = (pagesCount > 1 ? "pages" : "page").localized
-            pagesLabel.text = "\(pagesCount) \(pagesText)"
-        }
-        fileNameLabel.text = fileName ?? "file.pdf"
-    }
-    
-    func configure(data: Data, fileName: String) {
+    func configure(
+        data: Data,
+        fileName: String
+    ) {
         contentView.backgroundColor = UIColor.black.withAlphaComponent(0.3)
         iconLabel.text = "insert_drive_file"
         fileNameLabel.text = fileName

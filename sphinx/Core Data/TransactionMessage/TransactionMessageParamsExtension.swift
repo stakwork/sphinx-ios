@@ -10,6 +10,7 @@ import Foundation
 import CoreData
 
 extension TransactionMessage {
+    
     static func getMessageParams(
         contact: UserContact? = nil,
         chat: Chat? = nil,
@@ -59,11 +60,23 @@ extension TransactionMessage {
             parameters["reply_uuid"] = replyUUID as AnyObject?
         }
         
-        if !addTextParams(parameters: &parameters, chat: chat, contacts: contacts, text: text) {
+        if !addTextParams(
+            parameters: &parameters,
+            chat: chat,
+            contacts: contacts,
+            text: text
+        ) {
             return nil
         }
         
-        addMediaParams(parameters: &parameters, chat: chat, contacts: contacts, mediaKey: mediaKey, file: file, price: price)
+        addMediaParams(
+            parameters: &parameters,
+            chat: chat,
+            contacts: contacts,
+            mediaKey: mediaKey,
+            file: file,
+            price: price
+        )
         
         return parameters
     }

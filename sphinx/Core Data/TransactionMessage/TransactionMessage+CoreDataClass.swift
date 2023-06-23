@@ -347,6 +347,11 @@ public class TransactionMessage: NSManagedObject {
             message.mediaType = attachmentObject.getMimeType()
             message.mediaFileName = attachmentObject.getFileName()
             message.mediaFileSize = attachmentObject.getDecryptedData()?.count ?? 0
+            
+            if attachmentObject.price > 0 {
+                let mediaTokenPrice = "amt=\(attachmentObject.price)&ttl=undefined".base64Encoded ?? ""
+                message.mediaToken = "x.x.x.x.\(mediaTokenPrice)"
+            }
         }
         
         if let chat = chat {

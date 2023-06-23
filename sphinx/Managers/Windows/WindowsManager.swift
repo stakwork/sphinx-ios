@@ -63,12 +63,6 @@ class WindowsManager {
         delegate?.didDismissCoveringWindows()
     }
     
-    func showFullScreenImage(message: TransactionMessage) {
-        if let imageViewController = AttachmentFullScreenViewController.instantiate(messageId: message.id) {
-            showConveringWindowWith(rootVC: imageViewController)
-        }
-    }
-    
     func showStakworkAuthorizeWith() -> Bool {
         if let challengeQuery = UserDefaults.Keys.challengeQuery.get(defaultValue: ""), challengeQuery != "" {
             UserDefaults.Keys.challengeQuery.removeValue()
@@ -134,13 +128,6 @@ class WindowsManager {
         
         let coveringWindow = getCoveringWindowWith(rootVC: rootVC)
         coveringWindow?.isHidden = false
-    }
-    
-    func isOnMessageOptionsMenu() -> Bool {
-        if let coveringWindow = coveringWindow, let rootVC = coveringWindow.rootViewController, rootVC.isKind(of: MessageOptionsViewController.self) {
-            return true
-        }
-        return false
     }
     
     func shouldRotateOrientation() -> Bool {

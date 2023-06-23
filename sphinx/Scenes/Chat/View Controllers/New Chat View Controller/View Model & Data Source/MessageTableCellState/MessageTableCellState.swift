@@ -576,7 +576,8 @@ struct MessageTableCellState {
                 (self.webLink == nil) &&
                 (self.botHTMLContent == nil) &&
                 (self.paidContent == nil) &&
-                (self.podcastComment == nil)
+                (self.podcastComment == nil) &&
+                (self.genericFile == nil)
         }
     }
 }

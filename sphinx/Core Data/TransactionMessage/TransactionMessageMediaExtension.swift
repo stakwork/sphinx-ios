@@ -87,38 +87,6 @@ extension TransactionMessage {
         return false
     }
     
-//    func getMediaUrl(queryDB: Bool = true) -> URL? {
-//        let incoming = isIncoming()
-//
-//        if let price = getAttachmentPrice(), price > 0 && incoming {
-//            if let purchaseAcceptItem = getPurchaseAcceptItem(queryDB: queryDB), let _ = purchaseAcceptItem.mediaToken {
-//                return purchaseAcceptItem.getMediaUrlFromMediaToken()
-//            } else {
-//                return nil
-//            }
-//        }
-//
-//        if let url = getMediaUrlFromMediaToken() {
-//            return url
-//        }
-//
-//        return nil
-//    }
-//
-//    func getMediaKey() -> String? {
-//        let incoming = isIncoming()
-//
-//        if let price = getAttachmentPrice(), price > 0 && incoming {
-//            if let purchaseAcceptItem = getPurchaseAcceptItem(), let mediaKey = purchaseAcceptItem.mediaKey {
-//                return mediaKey
-//            } else {
-//                return nil
-//            }
-//        }
-//
-//        return self.mediaKey
-//    }
-    
     func getMediaUrlFromMediaToken() -> URL? {
         if let mediaToken = mediaToken, let host = getHost() {
             let mediaUrl = "https://\(host)/file/\(mediaToken)".trim()
@@ -214,26 +182,7 @@ extension TransactionMessage {
         }
         return nil
     }
-    
-//    func getPurchaseItems(includeAttachment: Bool = false) -> [TransactionMessage] {
-//        let muid = self.getMUID()
-//        if muid.isEmpty || isDirectPayment() {
-//            return []
-//        }
-//
-//        let attachmentType = TransactionMessageType.attachment.rawValue
-//        var predicate : NSPredicate!
-//        if includeAttachment {
-//            predicate = NSPredicate(format: "(muid == %@ || originalMuid == %@)", muid, muid)
-//        } else {
-//            predicate = NSPredicate(format: "(muid == %@ || originalMuid == %@) AND type != %d", muid, muid, attachmentType)
-//        }
-//        let sortDescriptors = [NSSortDescriptor(key: "id", ascending: true)]
-//        let messages: [TransactionMessage] = CoreDataManager.sharedManager.getObjectsOfTypeWith(predicate: predicate, sortDescriptors: sortDescriptors, entityName: "TransactionMessage")
-//
-//        return messages
-//    }
-//
+
     func getPurchaseItemWith(type: Int) -> TransactionMessage? {
         guard let muid = self.muid else {
             return nil
@@ -255,85 +204,10 @@ extension TransactionMessage {
 
         return message
     }
-    
-//    func getPurchaseStateItem() -> (TransactionMessage?, Bool) {
-//        let purchaseItems = getPurchaseItems(includeAttachment: true)
-//        for item in purchaseItems {
-//            if item.isIncoming() {
-//                return (purchaseItems.last, item.seen)
-//            }
-//        }
-//        return (purchaseItems.last, true)
-//    }
-//
-//    func addPurchaseItems() {
-//        if self.type != TransactionMessageType.attachment.rawValue {
-//            self.purchaseItems = []
-//            return
-//        }
-//        self.purchaseItems = getPurchaseItems()
-//    }
-//
-//    func getPurchaseItem(queryDB: Bool = true) -> TransactionMessage? {
-//        return getPurchaseItemWith(type: TransactionMessageType.purchase.rawValue, queryDB: queryDB)
-//    }
-//
+
     func getPurchaseAcceptItem() -> TransactionMessage? {
         return getPurchaseItemWith(type: TransactionMessageType.purchaseAccept.rawValue)
     }
-//
-//    func getPurchaseDenyItem(queryDB: Bool = true) -> TransactionMessage? {
-//        return getPurchaseItemWith(type: TransactionMessageType.purchaseDeny.rawValue, queryDB: queryDB)
-//    }
-//
-//    func getPurchaseItemWith(type: Int, queryDB: Bool = true) -> TransactionMessage? {
-//        for item in purchaseItems {
-//            if item.type == type {
-//                return item
-//            }
-//        }
-//
-//        if !queryDB {
-//            return nil
-//        }
-//
-//        if let item = getPurchaseItemWithType(type: type) {
-//            purchaseItems.append(item)
-//            return item
-//        }
-//
-//        return nil
-//    }
-//
-//    func getPurchaseStatus(queryDB: Bool = true) -> TransactionMessageType {
-//        if let _ = getPurchaseAcceptItem(queryDB: queryDB) {
-//            return TransactionMessageType.purchaseAccept
-//        }
-//
-//        if let _ = getPurchaseDenyItem(queryDB: queryDB) {
-//            return TransactionMessageType.purchaseDeny
-//        }
-//
-//        if let _ = getPurchaseItem(queryDB: queryDB) {
-//            return TransactionMessageType.purchase
-//        }
-//
-//        return TransactionMessageType(fromRawValue: self.type)
-//    }
-//
-//    func getPurchaseStatusLabel(queryDB: Bool = true) -> (String, UIColor) {
-//        let status = getPurchaseStatus(queryDB: queryDB)
-//        switch(status) {
-//        case TransactionMessageType.purchaseAccept:
-//            return ("purchase.succeeded".localized, UIColor.Sphinx.PrimaryGreen)
-//        case TransactionMessageType.purchaseDeny:
-//            return ("purchase.denied".localized, UIColor.Sphinx.PrimaryRed)
-//        case TransactionMessageType.purchase:
-//            return ("processing".localized, UIColor.Sphinx.PrimaryGreen)
-//        default:
-//            return ("pending".localized, UIColor.Sphinx.PrimaryGreen)
-//        }
-//    }
     
     func saveFileName(_ fileName: String?) {
         guard let fileName = fileName, !fileName.isEmpty else {

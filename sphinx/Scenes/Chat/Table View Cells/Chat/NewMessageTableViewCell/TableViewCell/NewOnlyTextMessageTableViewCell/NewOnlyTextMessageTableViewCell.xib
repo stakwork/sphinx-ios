@@ -38,8 +38,22 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2th-kr-yxW">
                         <rect key="frame" x="0.0" y="0.0" width="378" height="300"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ynD-k1-AHM">
+                                <rect key="frame" x="75.666666666666671" y="0.0" width="3" height="300"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="3" id="oHs-1A-Oli"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K3y-OO-urs">
+                                <rect key="frame" x="347" y="0.0" width="3" height="300"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="3" id="W3X-6v-8Ju"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ppO-Na-VYs">
-                                <rect key="frame" x="56" y="27" width="247.66666666666663" height="271"/>
+                                <rect key="frame" x="55.999999999999986" y="27" width="247.66666666666663" height="271"/>
                                 <color key="backgroundColor" name="SentMsgBG"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tTy-XL-aqw">
@@ -199,16 +213,22 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstAttribute="bottom" secondItem="K3y-OO-urs" secondAttribute="bottom" id="0Qv-Cn-5sJ"/>
+                            <constraint firstAttribute="bottom" secondItem="ynD-k1-AHM" secondAttribute="bottom" id="3FW-va-0gQ"/>
+                            <constraint firstItem="K3y-OO-urs" firstAttribute="top" secondItem="2th-kr-yxW" secondAttribute="top" id="6rv-iq-vk8"/>
                             <constraint firstAttribute="trailing" secondItem="ciK-GH-T3T" secondAttribute="trailing" constant="9" id="9Rn-IB-T5g"/>
                             <constraint firstItem="G0G-6Y-44r" firstAttribute="trailing" secondItem="ppO-Na-VYs" secondAttribute="trailing" constant="7" id="9yO-3k-IQg"/>
                             <constraint firstItem="G0G-6Y-44r" firstAttribute="top" secondItem="ppO-Na-VYs" secondAttribute="top" id="F1Q-d9-wIb"/>
                             <constraint firstItem="tTy-XL-aqw" firstAttribute="leading" secondItem="ppO-Na-VYs" secondAttribute="leading" constant="-4" id="JhR-OA-LhM"/>
                             <constraint firstItem="tTy-XL-aqw" firstAttribute="top" secondItem="ppO-Na-VYs" secondAttribute="top" id="SMv-GL-nnY"/>
+                            <constraint firstItem="ynD-k1-AHM" firstAttribute="leading" secondItem="2th-kr-yxW" secondAttribute="leading" constant="75.5" id="UeX-Hj-ajF"/>
                             <constraint firstItem="ppO-Na-VYs" firstAttribute="trailing" secondItem="fTP-2x-xVV" secondAttribute="trailing" constant="16" id="VSu-6M-fpq"/>
                             <constraint firstItem="ppO-Na-VYs" firstAttribute="bottom" secondItem="fTP-2x-xVV" secondAttribute="bottom" constant="16" id="XSl-d5-K3S"/>
+                            <constraint firstAttribute="trailing" secondItem="K3y-OO-urs" secondAttribute="trailing" constant="28" id="bUH-hO-Sfd"/>
                             <constraint firstItem="ciK-GH-T3T" firstAttribute="leading" secondItem="2th-kr-yxW" secondAttribute="leading" constant="15" id="jSY-0n-pdZ"/>
                             <constraint firstItem="ppO-Na-VYs" firstAttribute="leading" secondItem="fTP-2x-xVV" secondAttribute="leading" constant="-16" id="k6E-ek-26X"/>
                             <constraint firstItem="ppO-Na-VYs" firstAttribute="top" secondItem="fTP-2x-xVV" secondAttribute="top" constant="-16" id="kGH-ka-X9R"/>
+                            <constraint firstItem="ynD-k1-AHM" firstAttribute="top" secondItem="2th-kr-yxW" secondAttribute="top" id="laa-yf-JyR"/>
                             <constraint firstAttribute="bottom" secondItem="ciK-GH-T3T" secondAttribute="bottom" constant="2" id="oDM-2s-1mH"/>
                             <constraint firstItem="ciK-GH-T3T" firstAttribute="top" secondItem="2th-kr-yxW" secondAttribute="top" constant="2" id="uAF-Ih-36F"/>
                         </constraints>
@@ -233,12 +253,14 @@
                 <outlet property="chatAvatarContainerView" destination="apC-Wd-hgc" id="hKZ-i4-MMB"/>
                 <outlet property="chatAvatarView" destination="Ezp-Yw-rgR" id="evL-7K-U1A"/>
                 <outlet property="leftConstraint" destination="UQq-ww-MFa" id="t5Y-av-Aff"/>
+                <outlet property="leftLineContainer" destination="ynD-k1-AHM" id="Hwb-bV-K4s"/>
                 <outlet property="messageLabel" destination="fTP-2x-xVV" id="w7b-hD-V4t"/>
                 <outlet property="messageLabelLeadingConstraint" destination="pmN-Ar-9dc" id="7UF-BY-6MB"/>
                 <outlet property="messageLabelTrailingConstraint" destination="aFV-3N-Clz" id="cTQ-8K-8A3"/>
                 <outlet property="receivedArrow" destination="tTy-XL-aqw" id="ll3-nM-Byq"/>
                 <outlet property="receivedMessageMarginView" destination="vYP-Ys-cll" id="00Q-qa-qKo"/>
                 <outlet property="rightConstraint" destination="SXM-Uy-xnI" id="p6s-dh-MHl"/>
+                <outlet property="rightLineContainer" destination="K3y-OO-urs" id="3I5-HP-vGl"/>
                 <outlet property="sentArrow" destination="G0G-6Y-44r" id="raP-dM-gFL"/>
                 <outlet property="sentMessageMargingView" destination="ZEF-0M-XiI" id="0tN-49-IW7"/>
                 <outlet property="statusHeaderView" destination="0Ro-Us-cz5" id="ZUa-S8-20S"/>

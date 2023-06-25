@@ -12,6 +12,8 @@ extension NewMessageTableViewCell {
     
     func setupViews() {
         bubbleAllView.layer.cornerRadius = MessageTableCellState.kBubbleCornerRadius
+        leftPaymentDot.layer.cornerRadius = leftPaymentDot.frame.height / 2
+        rightPaymentDot.layer.cornerRadius = rightPaymentDot.frame.height / 2
 
         paidAttachmentView.roundCorners(
             corners: [.bottomLeft, .bottomRight],
@@ -27,6 +29,14 @@ extension NewMessageTableViewCell {
 
         receivedArrow.drawReceivedBubbleArrow(color: UIColor.Sphinx.ReceivedMsgBG)
         sentArrow.drawSentBubbleArrow(color: UIColor.Sphinx.SentMsgBG)
+        
+        let lineFrame = CGRect(x: 0.0, y: 0, width: 3, height: contentView.frame.size.height)
+        
+        let rightLineLayer = rightLineContainer.getVerticalDottedLine(color: UIColor.Sphinx.WashedOutReceivedText, frame: lineFrame)
+        rightLineContainer.layer.addSublayer(rightLineLayer)
+        
+        let leftLineLayer = leftLineContainer.getVerticalDottedLine(color: UIColor.Sphinx.WashedOutReceivedText, frame: lineFrame)
+        leftLineContainer.layer.addSublayer(leftLineLayer)
     }
     
     func hideAllSubviews() {

@@ -141,8 +141,16 @@ extension NewChatTableDataSource {
         let linkTribesArray = getLinkTribesArrayFor(messages: messages)
         
         var groupingDate: Date? = nil
+        
+        var invoiceData: (Int, Int) = (0, 0)
 
         for (index, message) in messages.enumerated() {
+            
+            invoiceData = (
+                invoiceData.0 + ((message.isPayment() && message.isIncoming(ownerId: owner.id)) ? -1 : 0),
+                invoiceData.1 + ((message.isPayment() && message.isOutgoing(ownerId: owner.id)) ? -1 : 0)
+            )
+            
             let bubbleStateAndDate = getBubbleBackgroundForMessage(
                 message: message,
                 with: index,
@@ -157,7 +165,8 @@ extension NewChatTableDataSource {
                         owner: owner,
                         contact: contact,
                         tribeAdmin: admin,
-                        separatorDate: separatorDate
+                        separatorDate: separatorDate,
+                        invoiceData: (invoiceData.0 > 0, invoiceData.1 > 0)
                     ),
                     at: 0
                 )
@@ -185,9 +194,15 @@ extension NewChatTableDataSource {
                     purchaseMessages: purchaseMessages,
                     linkContact: linkContact,
                     linkTribe: linkTribe,
-                    linkWeb: linkWeb
+                    linkWeb: linkWeb,
+                    invoiceData: (invoiceData.0 > 0, invoiceData.1 > 0)
                 ),
                 at: 0
+            )
+            
+            invoiceData = (
+                invoiceData.0 + ((message.isInvoice() && message.isPaid() && message.isOutgoing(ownerId: owner.id)) ? 1 : 0),
+                invoiceData.1 + ((message.isInvoice() && message.isPaid() && message.isIncoming(ownerId: owner.id)) ? 1 : 0)
             )
             
             newMsgCount += getNewMessageCountFor(message: message, and: owner)

@@ -29,6 +29,16 @@ struct BubbleMessageLayoutState: CommonLayoutState {
         }
     }
     
+    struct InvoiceLines {
+        var linesState: MessageTableCellState.InvoiceLinesState
+        
+        init(
+            linesState: MessageTableCellState.InvoiceLinesState
+        ) {
+            self.linesState = linesState
+        }
+    }
+    
     struct AvatarImage {
         var imageUrl: String?
         var color: UIColor

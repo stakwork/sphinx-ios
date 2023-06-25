@@ -260,6 +260,12 @@ extension NewMessageTableViewCell {
         if let payment = payment {
             invoicePaymentView.configureWith(payment: payment, and: bubble)
             invoicePaymentView.isHidden = false
+            
+            rightPaymentDot.isHidden = bubble.direction.isIncoming()
+            leftPaymentDot.isHidden = bubble.direction.isOutgoing()
+        } else {
+            rightPaymentDot.isHidden = true
+            leftPaymentDot.isHidden = true
         }
     }
     

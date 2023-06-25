@@ -90,7 +90,8 @@ class PodcastLiveDataSource : NSObject {
                 purchaseMessages: [:],
                 linkContact: nil,
                 linkTribe: nil,
-                linkWeb: nil
+                linkWeb: nil,
+                invoiceData: (false, false)
             )
             
             messagesTableCellStates.append(celState)

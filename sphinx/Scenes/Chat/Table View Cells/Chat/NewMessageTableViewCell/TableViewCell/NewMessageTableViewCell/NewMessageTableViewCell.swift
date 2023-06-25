@@ -137,6 +137,12 @@ class NewMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableViewCellP
     @IBOutlet weak var messageBoostView: NewMessageBoostView!
     @IBOutlet weak var paidAttachmentView: PaidAttachmentView!
     
+    ///Invoice Lines
+    @IBOutlet weak var leftLineContainer: UIView!
+    @IBOutlet weak var rightLineContainer: UIView!
+    @IBOutlet weak var leftPaymentDot: UIView!
+    @IBOutlet weak var rightPaymentDot: UIView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -211,6 +217,9 @@ class NewMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableViewCellP
         
         ///Direction and grouping
         configureWith(bubble: bubble)
+        
+        ///Invoice Lines
+        configureWith(invoiceLines: mutableMessageCellState.invoicesLines)
     }
     
     override func getBubbleView() -> UIView? {

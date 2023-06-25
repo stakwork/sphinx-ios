@@ -19,10 +19,14 @@ class MessageNoBubbleTableViewCell: UITableViewCell, ChatTableViewCellProtocol {
     @IBOutlet weak var deletedMessageView: DeletedMessageView!
     @IBOutlet weak var groupActionsView: GroupActionsView!
     
+    @IBOutlet weak var leftLineContainer: UIView!
+    @IBOutlet weak var rightLineContainer: UIView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
         hideAllSubviews()
+        setupViews()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -33,6 +37,16 @@ class MessageNoBubbleTableViewCell: UITableViewCell, ChatTableViewCellProtocol {
         dateSeparatorView.isHidden = true
         deletedMessageView.isHidden = true
         groupActionsView.isHidden = true
+    }
+    
+    func setupViews() {
+        let lineFrame = CGRect(x: 0.0, y: 0, width: 3, height: contentView.frame.size.height)
+        
+        let rightLineLayer = rightLineContainer.getVerticalDottedLine(color: UIColor.Sphinx.WashedOutReceivedText, frame: lineFrame)
+        rightLineContainer.layer.addSublayer(rightLineLayer)
+        
+        let leftLineLayer = leftLineContainer.getVerticalDottedLine(color: UIColor.Sphinx.WashedOutReceivedText, frame: lineFrame)
+        leftLineContainer.layer.addSublayer(leftLineLayer)
     }
     
     func configureWith(
@@ -58,10 +72,16 @@ class MessageNoBubbleTableViewCell: UITableViewCell, ChatTableViewCellProtocol {
             direction: mutableMessageCellState.noBubble?.direction
         )
         
+        ///Date separator
         configureWith(dateSeparator: mutableMessageCellState.dateSeparator)
+        
+        ///Group notifications
         configureWith(groupMemberNotification: mutableMessageCellState.groupMemberNotification)
         configureWith(groupKickRemovedOrDeclined: mutableMessageCellState.groupKickRemovedOrDeclined)
         configureWith(groupMemberRequest: mutableMessageCellState.groupMemberRequest)
+        
+        ///Invoice Lines
+        configureWith(invoiceLines: mutableMessageCellState.invoicesLines)
     }
     
     func configureWith(
@@ -120,6 +140,29 @@ class MessageNoBubbleTableViewCell: UITableViewCell, ChatTableViewCellProtocol {
                 andDelegate: self
             )
             groupActionsView.isHidden = false
+        }
+    }
+    
+    func configureWith(
+        invoiceLines: BubbleMessageLayoutState.InvoiceLines
+    ) {
+        switch (invoiceLines.linesState) {
+        case .None:
+            leftLineContainer.isHidden = true
+            rightLineContainer.isHidden = true
+            break
+        case .Left:
+            leftLineContainer.isHidden = false
+            rightLineContainer.isHidden = true
+            break
+        case .Right:
+            leftLineContainer.isHidden = true
+            rightLineContainer.isHidden = false
+            break
+        case .Both:
+            leftLineContainer.isHidden = false
+            rightLineContainer.isHidden = false
+            break
         }
     }
 }

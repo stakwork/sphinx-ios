@@ -81,7 +81,8 @@ class PaidMessagePreviewViewController: UIViewController {
             contact: nil,
             tribeAdmin: nil,
             separatorDate: nil,
-            bubbleState: MessageTableCellState.BubbleState.Isolated
+            bubbleState: MessageTableCellState.BubbleState.Isolated,
+            invoiceData: (false, false)
         )
 
         previewTableView.rowHeight = UITableView.automaticDimension

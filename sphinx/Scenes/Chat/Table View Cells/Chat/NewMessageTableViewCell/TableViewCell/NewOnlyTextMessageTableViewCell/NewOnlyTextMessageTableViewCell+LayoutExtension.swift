@@ -143,4 +143,27 @@ extension NewOnlyTextMessageTableViewCell {
             break
         }
     }
+    
+    func configureWith(
+        invoiceLines: BubbleMessageLayoutState.InvoiceLines
+    ) {
+        switch (invoiceLines.linesState) {
+        case .None:
+            leftLineContainer.isHidden = true
+            rightLineContainer.isHidden = true
+            break
+        case .Left:
+            leftLineContainer.isHidden = false
+            rightLineContainer.isHidden = true
+            break
+        case .Right:
+            leftLineContainer.isHidden = true
+            rightLineContainer.isHidden = false
+            break
+        case .Both:
+            leftLineContainer.isHidden = false
+            rightLineContainer.isHidden = false
+            break
+        }
+    }
 }

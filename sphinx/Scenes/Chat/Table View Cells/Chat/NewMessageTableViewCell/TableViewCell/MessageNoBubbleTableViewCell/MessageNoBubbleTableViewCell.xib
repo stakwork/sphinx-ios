@@ -16,6 +16,20 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gyn-Nf-fhF">
+                        <rect key="frame" x="75.666666666666671" y="0.0" width="3" height="100"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="3" id="3az-Iz-GIv"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aIm-f0-aCX">
+                        <rect key="frame" x="289" y="0.0" width="3" height="100"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="3" id="whv-22-ykf"/>
+                        </constraints>
+                    </view>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="zcj-ac-Z2o">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="127"/>
                         <subviews>
@@ -52,10 +66,16 @@
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
+                    <constraint firstItem="Gyn-Nf-fhF" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="75.5" id="197-1j-kpm"/>
                     <constraint firstAttribute="bottom" secondItem="zcj-ac-Z2o" secondAttribute="bottom" priority="750" id="EJm-LU-zzj"/>
+                    <constraint firstAttribute="bottom" secondItem="Gyn-Nf-fhF" secondAttribute="bottom" id="R3c-r9-rzi"/>
+                    <constraint firstItem="aIm-f0-aCX" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="ZgL-7H-NAn"/>
+                    <constraint firstAttribute="bottom" secondItem="aIm-f0-aCX" secondAttribute="bottom" id="eCU-ZF-gFZ"/>
                     <constraint firstItem="zcj-ac-Z2o" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="iZ3-nm-9lE"/>
+                    <constraint firstItem="Gyn-Nf-fhF" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="mFA-wl-RiX"/>
                     <constraint firstItem="zcj-ac-Z2o" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="mLy-k4-o85"/>
                     <constraint firstAttribute="trailing" secondItem="zcj-ac-Z2o" secondAttribute="trailing" id="ucX-j9-596"/>
+                    <constraint firstAttribute="trailing" secondItem="aIm-f0-aCX" secondAttribute="trailing" constant="28" id="zOt-wT-G9g"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -63,6 +83,8 @@
                 <outlet property="dateSeparatorView" destination="LiO-XQ-F15" id="6gW-eV-KWz"/>
                 <outlet property="deletedMessageView" destination="nm5-aL-s9u" id="o4V-lJ-VFV"/>
                 <outlet property="groupActionsView" destination="Q53-HF-veV" id="JRa-nP-P04"/>
+                <outlet property="leftLineContainer" destination="Gyn-Nf-fhF" id="vzh-rz-hfx"/>
+                <outlet property="rightLineContainer" destination="aIm-f0-aCX" id="nlI-38-wih"/>
             </connections>
             <point key="canvasLocation" x="32" y="20"/>
         </tableViewCell>

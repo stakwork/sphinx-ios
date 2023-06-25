@@ -30,7 +30,11 @@ class NewOnlyTextMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableV
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var messageLabelLeadingConstraint: NSLayoutConstraint!
     @IBOutlet weak var messageLabelTrailingConstraint: NSLayoutConstraint!
-
+    
+    ///Invoice Lines
+    @IBOutlet weak var leftLineContainer: UIView!
+    @IBOutlet weak var rightLineContainer: UIView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -46,6 +50,14 @@ class NewOnlyTextMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableV
 
         receivedArrow.drawReceivedBubbleArrow(color: UIColor.Sphinx.ReceivedMsgBG)
         sentArrow.drawSentBubbleArrow(color: UIColor.Sphinx.SentMsgBG)
+        
+        let lineFrame = CGRect(x: 0.0, y: 0, width: 3, height: contentView.frame.size.height)
+        
+        let rightLineLayer = rightLineContainer.getVerticalDottedLine(color: UIColor.Sphinx.WashedOutReceivedText, frame: lineFrame)
+        rightLineContainer.layer.addSublayer(rightLineLayer)
+        
+        let leftLineLayer = leftLineContainer.getVerticalDottedLine(color: UIColor.Sphinx.WashedOutReceivedText, frame: lineFrame)
+        leftLineContainer.layer.addSublayer(leftLineLayer)
     }
     
     func configureWith(
@@ -78,6 +90,9 @@ class NewOnlyTextMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableV
         ///Header and avatar
         configureWith(avatarImage: mutableMessageCellState.avatarImage)
         configureWith(bubble: bubble)
+        
+        ///Invoice Lines
+        configureWith(invoiceLines: mutableMessageCellState.invoicesLines)
     }
 
     override func getBubbleView() -> UIView? {

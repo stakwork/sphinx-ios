@@ -37,6 +37,7 @@ struct MessageTableCellState {
     var linkContact: LinkContact? = nil
     var linkTribe: LinkTribe? = nil
     var linkWeb: LinkWeb? = nil
+    var invoiceData: (Bool, Bool) = (false, false)
     
     ///Generic rows Data
     var separatorDate: Date? = nil
@@ -57,7 +58,8 @@ struct MessageTableCellState {
         purchaseMessages: [Int: TransactionMessage] = [:],
         linkContact: LinkContact? = nil,
         linkTribe: LinkTribe? = nil,
-        linkWeb: LinkWeb? = nil
+        linkWeb: LinkWeb? = nil,
+        invoiceData: (Bool, Bool)
     ) {
         self.message = message
         self.messageId = message?.id
@@ -78,6 +80,7 @@ struct MessageTableCellState {
         self.linkContact = linkContact
         self.linkTribe = linkTribe
         self.linkWeb = linkWeb
+        self.invoiceData = invoiceData
     }
     
     ///Reply
@@ -106,6 +109,24 @@ struct MessageTableCellState {
         return BubbleMessageLayoutState.Bubble(
             direction: isSent ? .Outgoing : .Incoming,
             grouping: bubbleState
+        )
+    }()
+    
+    ///Invoice Lines State
+    lazy var invoicesLines: BubbleMessageLayoutState.InvoiceLines = {
+        
+        var lineState = InvoiceLinesState.None
+        
+        if invoiceData.0 && invoiceData.1 {
+            lineState = InvoiceLinesState.Both
+        } else if invoiceData.0 {
+            lineState = InvoiceLinesState.Left
+        } else if invoiceData.1 {
+            lineState = InvoiceLinesState.Right
+        }
+        
+        return BubbleMessageLayoutState.InvoiceLines(
+            linesState: lineState
         )
     }()
     
@@ -726,5 +747,12 @@ extension MessageTableCellState {
         case Middle
         case Last
         case Empty
+    }
+    
+    public enum InvoiceLinesState {
+        case Left
+        case Right
+        case Both
+        case None
     }
 }

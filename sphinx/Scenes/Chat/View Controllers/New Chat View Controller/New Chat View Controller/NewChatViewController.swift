@@ -97,17 +97,17 @@ class NewChatViewController: NewKeyboardHandlerViewController {
         fetchTribeData()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
         
         if self.isMovingFromParent {
             chatTableDataSource?.saveSnapshotCurrentState()
             chatTableDataSource?.stopListeningToResultsController()
-            
+
             chat?.setOngoingMessage(text: bottomView.getMessage())
-            
+
             SphinxSocketManager.sharedInstance.setDelegate(delegate: nil)
-            
+
             stopPlayingClip()
         }
     }

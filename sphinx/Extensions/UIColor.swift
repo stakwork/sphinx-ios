@@ -97,6 +97,7 @@ public extension UIColor {
         public static let OnboardingPlaceholderText = color("OnboardingPlaceholderText")
         
         public static let FeedItemDetailDivider = color("FeedItemDetailDivider")
+        public static let RowViewsDivider = color("RowViewsDivider")
         
         private static func color(_ name: String) -> UIColor {
             return UIColor(named: name, in: Bundle.main, compatibleWith: nil) ?? UIColor.magenta

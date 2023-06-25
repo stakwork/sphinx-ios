@@ -187,11 +187,11 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </stackView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="msZ-x5-FnR">
-                    <rect key="frame" x="0.0" y="79.666666666666671" width="393" height="0.3333333333333286"/>
+                    <rect key="frame" x="0.0" y="79" width="393" height="1"/>
                     <viewLayoutGuide key="safeArea" id="zNQ-qQ-36n"/>
-                    <color key="backgroundColor" name="ReplyDividerSent"/>
+                    <color key="backgroundColor" name="Body"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="0.5" id="OmU-jV-Qrq"/>
+                        <constraint firstAttribute="height" constant="1" id="OmU-jV-Qrq"/>
                     </constraints>
                 </view>
             </subviews>
@@ -210,11 +210,11 @@
         </view>
     </objects>
     <resources>
+        <namedColor name="Body">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="ReceivedIcon">
             <color red="0.50980392156862742" green="0.70588235294117652" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="ReplyDividerSent">
-            <color red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="SecondaryText">
             <color red="0.55686274509803924" green="0.58823529411764708" blue="0.61176470588235299" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -565,8 +565,6 @@
 		47EB025D29BA37D50032CFB5 /* CircularProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47EB025C29BA37D50032CFB5 /* CircularProgressView.xib */; };
 		47F2289E23672A5E001429A4 /* ImagePickerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F2289D23672A5E001429A4 /* ImagePickerManager.swift */; };
 		47F228A0236872E8001429A4 /* SwipableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F2289F236872E8001429A4 /* SwipableCell.swift */; };
-		47F258C52539F39800122A5A /* PodcastRowPlayerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F258C42539F39800122A5A /* PodcastRowPlayerHelper.swift */; };
-		47F258C72539F57E00122A5A /* PodcastRowAudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F258C62539F57E00122A5A /* PodcastRowAudioPlayer.swift */; };
 		47F258C8253A292B00122A5A /* SocketPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47308DE824FEE6E300FFAC6F /* SocketPacket.swift */; };
 		47F258CA253DD42500122A5A /* PinTimeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F258C9253DD42500122A5A /* PinTimeSlider.swift */; };
 		47F258CC253DD43400122A5A /* PinTimeSlider.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47F258CB253DD43400122A5A /* PinTimeSlider.xib */; };
@@ -1509,8 +1507,6 @@
 		47EB025C29BA37D50032CFB5 /* CircularProgressView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CircularProgressView.xib; sourceTree = "<group>"; };
 		47F2289D23672A5E001429A4 /* ImagePickerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerManager.swift; sourceTree = "<group>"; };
 		47F2289F236872E8001429A4 /* SwipableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipableCell.swift; sourceTree = "<group>"; };
-		47F258C42539F39800122A5A /* PodcastRowPlayerHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastRowPlayerHelper.swift; sourceTree = "<group>"; };
-		47F258C62539F57E00122A5A /* PodcastRowAudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastRowAudioPlayer.swift; sourceTree = "<group>"; };
 		47F258C9253DD42500122A5A /* PinTimeSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinTimeSlider.swift; sourceTree = "<group>"; };
 		47F258CB253DD43400122A5A /* PinTimeSlider.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PinTimeSlider.xib; sourceTree = "<group>"; };
 		47F258CD253F6B0100122A5A /* PodcastSmallPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastSmallPlayer.swift; sourceTree = "<group>"; };
@@ -2032,13 +2028,6 @@
 				473842F42391970B00AA640F /* FullScreenImageView.xib */,
 			);
 			path = "Media Full Screen Views";
-			sourceTree = "<group>";
-		};
-		4711B2B824522BD30056ED25 /* Link Preview Views */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "Link Preview Views";
 			sourceTree = "<group>";
 		};
 		4711B2B924522BDC0056ED25 /* Audio Views */ = {
@@ -2627,8 +2616,6 @@
 				475723A6247EB5DA001ADC7E /* AudioPlayerHelper.swift */,
 				475723A8247EBB56001ADC7E /* CustomAudioPlayer.swift */,
 				47904C2124BF54DA00710E7A /* NotificationSoundHelper.swift */,
-				47F258C42539F39800122A5A /* PodcastRowPlayerHelper.swift */,
-				47F258C62539F57E00122A5A /* PodcastRowAudioPlayer.swift */,
 			);
 			path = Audio;
 			sourceTree = "<group>";
@@ -2670,16 +2657,13 @@
 			children = (
 				476AAAA32A24FF0D0092AC87 /* New Chat VC */,
 				478BD8B72829B6F400C733FD /* Tribe Member */,
-				47D03DF22510ED840077A968 /* PDF */,
 				4726A40B24C09C23005A66B4 /* Chat */,
 				47DAABCC249140E900EF38B0 /* Message Reply */,
 				4787F8962478110900CCE8B9 /* Chat Avatar View */,
 				475154B92423F8DA00477384 /* Bubble Views */,
-				47FA18DD24362F2D00469C8F /* Paid Attachments */,
 				4711B2B524522BA70056ED25 /* Keyboard Accessory Views */,
 				4711B2B624522BB60056ED25 /* Amount Key Pad Views */,
 				4711B2B724522BC50056ED25 /* Media Full Screen Views */,
-				4711B2B824522BD30056ED25 /* Link Preview Views */,
 				4711B2B924522BDC0056ED25 /* Audio Views */,
 				4711B2BA24522BE70056ED25 /* Video Call Views */,
 				4711B2BB24522BF50056ED25 /* Gif Support Views */,
@@ -3585,13 +3569,6 @@
 			path = Downloads;
 			sourceTree = "<group>";
 		};
-		47D03DF22510ED840077A968 /* PDF */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = PDF;
-			sourceTree = "<group>";
-		};
 		47D3D8D52772205F007C64F9 /* FeedSearchResult */ = {
 			isa = PBXGroup;
 			children = (
@@ -3813,13 +3790,6 @@
 				47FA18D32434D47D00469C8F /* TransactionMessageInfoGetterExtension.swift */,
 			);
 			path = TransactionMessage;
-			sourceTree = "<group>";
-		};
-		47FA18DD24362F2D00469C8F /* Paid Attachments */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "Paid Attachments";
 			sourceTree = "<group>";
 		};
 		47FA43F723748828005D8C63 /* Subscriptions */ = {
@@ -4715,7 +4685,6 @@
 				47F258C8253A292B00122A5A /* SocketPacket.swift in Sources */,
 				CECFBF062965C8E600BAD935 /* DiscoverTribeData.swift in Sources */,
 				47E6A4D02A2E6F8500A9509E /* GroupActionsView.swift in Sources */,
-				47F258C52539F39800122A5A /* PodcastRowPlayerHelper.swift in Sources */,
 				CE6784602968B0E000342905 /* FeedsManager.swift in Sources */,
 				CE2585E929A3FE7300130641 /* JitsiIncomingCallManager.swift in Sources */,
 				CE842DE8298C67A500620AD3 /* KnownBadgeCell.swift in Sources */,
@@ -4723,7 +4692,6 @@
 				475DD3042A0D6A9D00F92173 /* ChatMessageTextFieldView+UITextViewDelegate.swift in Sources */,
 				CE30D95B2A0C09DE00C83555 /* MaxMemorySlider.swift in Sources */,
 				F3B2518D26D8DD1800C96D42 /* PodcastFeed+FetchUtils.swift in Sources */,
-				47F258C72539F57E00122A5A /* PodcastRowAudioPlayer.swift in Sources */,
 				F394ECB12683CF5E00529038 /* NewUserGreetingViewController.swift in Sources */,
 				CE80EF672A0D8140007ED3A3 /* CachedMedia+CoreDataProperties.swift in Sources */,
 				CE3133AF2977747E00E91E3A /* BadgeAdminListTableViewCell.swift in Sources */,

@@ -31,6 +31,8 @@ class NewMessageReplyView: UIView {
     @IBOutlet weak var senderLabel: UILabel!
     @IBOutlet weak var messageLabel: UILabel!
     
+    @IBOutlet weak var replyDivider: UIView!
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()

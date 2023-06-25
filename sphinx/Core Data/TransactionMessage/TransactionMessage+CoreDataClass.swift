@@ -13,15 +13,6 @@ import SwiftyJSON
 @objc(TransactionMessage)
 public class TransactionMessage: NSManagedObject {
     
-    enum TransactionMessageRowType {
-        case incomingMessage
-        case outgoingMessage
-        case incomingPayment
-        case outgoingPayment
-        case incomingInvoice
-        case outgoingInvoice
-    }
-    
     enum TransactionMessageType: Int {
         case message = 0
         case confirmation = 1

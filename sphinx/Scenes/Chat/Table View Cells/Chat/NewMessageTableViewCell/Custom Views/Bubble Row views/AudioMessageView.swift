@@ -51,7 +51,7 @@ class AudioMessageView: UIView {
         progressView.layer.cornerRadius = progressView.bounds.height / 2
         currentTimeView.layer.cornerRadius = currentTimeView.bounds.height / 2
         
-        loadingWheel.tintColor = UIColor.Sphinx.Text
+        loadingWheel.color = UIColor.Sphinx.Text
     }
     
     func configureWith(

@@ -445,6 +445,10 @@ extension NewChatTableDataSource : NSFetchedResultsControllerDelegate {
     }
     
     func configureResultsController(items: Int) {
+        if messagesArray.count < messagesCount {
+            return
+        }
+        
         messagesCount = items
         
         let fetchRequest = TransactionMessage.getChatMessagesFetchRequest(

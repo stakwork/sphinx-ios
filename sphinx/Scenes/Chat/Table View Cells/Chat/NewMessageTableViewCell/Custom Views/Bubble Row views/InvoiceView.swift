@@ -57,6 +57,10 @@ class InvoiceView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
+        buildDashesBorder()
+    }
+    
+    func buildDashesBorder() {
         borderView.removeDashedLineBorderWith(name: kDashedLayerName)
         
         if let borderColor = borderColor, shouldDrawBorder {
@@ -82,8 +86,11 @@ class InvoiceView: UIView {
     ) {
         self.delegate = delegate
         
+        self.alpha = (invoice.isExpired && !invoice.isPaid) ? 0.4 : 1.0
+        
         borderColor = bubble.direction.isIncoming() ? UIColor.Sphinx.PrimaryGreen : UIColor.Sphinx.SecondaryText
-        shouldDrawBorder = !invoice.isPaid
+        shouldDrawBorder = !invoice.isPaid && !invoice.isExpired
+        buildDashesBorder()
         
         memoLabel.font = invoice.font
         unitLabel.textColor = bubble.direction.isIncoming() ? UIColor.Sphinx.WashedOutReceivedText : UIColor.Sphinx.WashedOutSentText

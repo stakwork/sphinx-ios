@@ -235,7 +235,15 @@ extension TransactionMessage {
     }
     
     public func isConfirmedAsReceived() -> Bool {
-        return self.status == TransactionMessageStatus.received.rawValue
+        return
+            self.status == TransactionMessageStatus.received.rawValue ||
+            (
+                self.status == TransactionMessageStatus.confirmed.rawValue &&
+                (
+                    self.type == TransactionMessageType.payment.rawValue ||
+                    self.type == TransactionMessageType.invoice.rawValue
+                )
+            )
     }
     
     //Message type
@@ -967,19 +975,4 @@ extension TransactionMessage {
 
         return hasSameSenderId && hasSameSenderAlias && hasSameSenderPicture
     }
-    
-    //For new chat implementation
-//    func shouldShowOnChat() -> Bool {
-//        return isTextMessage() ||
-//               isDirectPayment() ||
-//               isPodcastBoost() ||
-//               isMediaAttachment() ||
-//               isFileAttachment() ||
-//               isAudio() ||
-//               isPaidMessage() ||
-//               isGiphy() ||
-//               isGroupActionMessage() ||
-//               isCallLink() ||
-//               isBotResponse()
-//    }
 }

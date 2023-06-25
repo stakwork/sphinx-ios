@@ -318,6 +318,7 @@
 "sorry" = "Paumanhin";
 "code.not.recognized" = "Hindi namin nakikilala ang ganitong uri ng code.";
 "expired" = "Nag-expire na: ";
+"expired.invoice" = "Expired Invoice";
 "invoice" = "Invoice";
 "confirm.pay.invoice" = "Sigurado ka bang gusto mong bayaran ang invoice na ito?";
 
@@ -327,7 +328,7 @@
 "chat.muted.message" = "Naka-mute na ang chat. Hindi ka makakatanggap ng mga push notipikasyon para sa mga papasok na mensahe sa chat na ito";
 "pay.invitation" = "Magbayad para sa imbitasyon";
 "payment.failed" = "Nabigo ang pagbabayad, subukang muli sa ibang pagkakataon";
-"expires.in" = "Mag-e-expire sa %@ minuto";
+"expires.in" = "Mag-e-expire sa %d minuto";
 "invoice.paid.on" = "Nagbayad ng Invoice sa %@";
 "invoice.amount.paid.on" = "Invoice of %@ sats Paid on %@";
 "media.terms.expired" = "Nag-expire ang mga termino ng media";

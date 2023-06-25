@@ -66,6 +66,9 @@ struct BubbleMessageLayoutState: CommonLayoutState {
         var showBoltIcon: Bool
         var showFailedContainer: Bool
         var showLockIcon: Bool
+        var showExpiredSent: Bool
+        var showExpiredReceived: Bool
+        var expirationTimestamp: String?
         var timestamp: String
         
         init(
@@ -76,6 +79,9 @@ struct BubbleMessageLayoutState: CommonLayoutState {
             showBoltIcon: Bool,
             showFailedContainer: Bool,
             showLockIcon: Bool,
+            showExpiredSent: Bool,
+            showExpiredReceived: Bool,
+            expirationTimestamp: String?,
             timestamp: String
         ) {
             self.senderName = senderName
@@ -85,6 +91,9 @@ struct BubbleMessageLayoutState: CommonLayoutState {
             self.showBoltIcon = showBoltIcon
             self.showFailedContainer = showFailedContainer
             self.showLockIcon = showLockIcon
+            self.showExpiredSent = showExpiredSent
+            self.showExpiredReceived = showExpiredReceived
+            self.expirationTimestamp = expirationTimestamp
             self.timestamp = timestamp
         }
     }
@@ -388,6 +397,7 @@ struct BubbleMessageLayoutState: CommonLayoutState {
         var memo: String?
         var font: UIFont
         var isPaid: Bool
+        var isExpired: Bool
         var bubbleWidth: CGFloat
         
         init(
@@ -396,6 +406,7 @@ struct BubbleMessageLayoutState: CommonLayoutState {
             memo: String?,
             font: UIFont,
             isPaid: Bool,
+            isExpired: Bool,
             bubbleWidth: CGFloat
         ) {
             self.date = date
@@ -403,6 +414,7 @@ struct BubbleMessageLayoutState: CommonLayoutState {
             self.memo = memo
             self.font = font
             self.isPaid = isPaid
+            self.isExpired = isExpired
             self.bubbleWidth = bubbleWidth
         }
     }

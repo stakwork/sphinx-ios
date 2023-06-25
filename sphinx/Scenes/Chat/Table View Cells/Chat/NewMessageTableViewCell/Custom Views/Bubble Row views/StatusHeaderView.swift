@@ -29,6 +29,12 @@ class StatusHeaderView: UIView {
     @IBOutlet weak var uploadingHeader: UIStackView!
     @IBOutlet weak var uploadingLabel: UILabel!
     
+    @IBOutlet weak var expiredInvoiceSentHeader: UIStackView!
+    @IBOutlet weak var expiredInvoiceSentLabel: UILabel!
+    
+    @IBOutlet weak var expiredInvoiceReceivedHeader: UIStackView!
+    @IBOutlet weak var expiredInvoiceReceivedLabel: UILabel!
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
@@ -80,11 +86,27 @@ class StatusHeaderView: UIView {
         receivedDateLabel.text = statusHeader.timestamp
         sentDateLabel.text = statusHeader.timestamp
         
+        expiredInvoiceSentHeader.isHidden = !statusHeader.showExpiredSent
+        expiredInvoiceReceivedHeader.isHidden = !statusHeader.showExpiredReceived
+        configureWith(expirationTimestamp: statusHeader.expirationTimestamp)
+        
         if let uploadProgressData = uploadProgressData {
             uploadingHeader.isHidden = false
             uploadingLabel.text = String(format: "uploaded.progress".localized, uploadProgressData.progress)
         } else {
             uploadingHeader.isHidden = true
+        }
+    }
+    
+    func configureWith(
+        expirationTimestamp: String?
+    ) {
+        if let expirationTimestamp = expirationTimestamp {
+            expiredInvoiceSentLabel.text = expirationTimestamp
+            expiredInvoiceReceivedLabel.text = expirationTimestamp
+        } else {
+            expiredInvoiceSentLabel.text = "expired.invoice".localized
+            expiredInvoiceReceivedLabel.text = "expired.invoice".localized
         }
     }
 }

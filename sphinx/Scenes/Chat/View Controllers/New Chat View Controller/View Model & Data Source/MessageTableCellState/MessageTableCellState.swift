@@ -170,6 +170,14 @@ struct MessageTableCellState {
         
         var isSent = message.isOutgoing(ownerId: owner.id)
         
+        var expirationTimestamp: String? = nil
+        
+        if let expiryDate = message.expirationDate, Date().timeIntervalSince1970 < expiryDate.timeIntervalSince1970 {
+            let secondsDiff = expiryDate.timeIntervalSince1970 - Date().timeIntervalSince1970
+            let minutes = (Int(secondsDiff) % 3600) / 60
+            expirationTimestamp = String(format: "expires.in".localized, minutes)
+        }
+        
         var statusHeader = BubbleMessageLayoutState.StatusHeader(
             senderName: (chat.isConversation() ? nil : message.senderAlias),
             color: ChatHelper.getSenderColorFor(message: message),
@@ -178,6 +186,9 @@ struct MessageTableCellState {
             showBoltIcon: isSent && message.isConfirmedAsReceived(),
             showFailedContainer: isSent && message.failed(),
             showLockIcon: true,
+            showExpiredSent: message.isInvoice() && !message.isPaid() && !isSent,
+            showExpiredReceived: message.isInvoice() && !message.isPaid() && isSent,
+            expirationTimestamp: expirationTimestamp,
             timestamp: (message.date ?? Date()).getStringDate(format: "hh:mm a")
         )
         
@@ -515,6 +526,7 @@ struct MessageTableCellState {
             memo: message.messageContent,
             font: UIFont.getMessageFont(),
             isPaid: message.isPaid(),
+            isExpired: message.isExpired(),
             bubbleWidth: bubbleWidth
         )
     }()

@@ -333,6 +333,7 @@
 "sorry" = "Sorry";
 "code.not.recognized" = "We don't recognize this type of code.";
 "expired" = "Expired: ";
+"expired.invoice" = "Expired Invoice";
 "invoice" = "Invoice";
 "confirm.pay.invoice" = "Are you sure you want to pay this invoice?";
 "pub.key.options" = "Public Key Options";
@@ -345,7 +346,7 @@
 "chat.muted.message" = "Chat is now muted. You won't get push notifications for incoming messages on this chat";
 "pay.invitation" = "Pay for invitation";
 "payment.failed" = "Payment failed, try again later";
-"expires.in" = "Expires in %@ minutes";
+"expires.in" = "Expires in %d minutes";
 "invoice.paid.on" = "Invoice Paid on %@";
 "invoice.amount.paid.on" = "Invoice of %@ sats Paid on %@";
 "media.terms.expired" = "Media terms expired";

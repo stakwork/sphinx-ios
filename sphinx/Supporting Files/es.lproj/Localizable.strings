@@ -332,6 +332,7 @@
 "sorry" = "Lo lamentamos";
 "code.not.recognized" = "No podemos reconocer este tipo de código.";
 "expired" = "Caducado: ";
+"expired.invoice" = "Solicitud caducada";
 "invoice" = "Solicitud";
 "confirm.pay.invoice" = "¿Estás seguro que deseas pagar esta solicitud?";
 "pub.key.options" = "Opciones de Public Key";
@@ -344,7 +345,7 @@
 "chat.muted.message" = "La conversación está ahora silenciada. No recibirás notificaciones para las mensajes entrantes en esta conversación.";
 "pay.invitation" = "Pagar la invitación";
 "payment.failed" = "Pago fallido, inténtalo nuevamente más tarde";
-"expires.in" = "Caduca en %@ minutos";
+"expires.in" = "Caduca en %d minutos";
 "invoice.paid.on" = "Solicitud pagada el %@";
 "invoice.amount.paid.on" = "Solicitud de %@ sats pagada el %@";
 "media.terms.expired" = "Archivo caducado";

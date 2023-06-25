@@ -266,7 +266,7 @@ extension NewChatTableDataSource {
             return (MessageTableCellState.BubbleState.Empty, separatorDate)
         }
         
-        if message.isInvoice() && !message.isPaid() {
+        if message.isInvoice() && !message.isPaid() && !message.isExpired() {
             return (MessageTableCellState.BubbleState.Empty, separatorDate)
         }
         

@@ -131,7 +131,7 @@
                                             </constraints>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wkx-aV-97B">
-                                            <rect key="frame" x="50" y="8.6666666666666643" width="11" height="11"/>
+                                            <rect key="frame" x="44.666666666666657" y="8.6666666666666643" width="11" height="11"/>
                                             <color key="backgroundColor" name="ReceivedIcon"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="11" id="3Y3-HZ-xMq"/>
@@ -139,7 +139,7 @@
                                             </constraints>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d4l-Lo-bhJ">
-                                            <rect key="frame" x="40" y="-1.3333333333333357" width="31" height="31"/>
+                                            <rect key="frame" x="34.666666666666657" y="-1.3333333333333357" width="31" height="31"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="31" id="Mez-Zz-O5Q"/>
@@ -152,7 +152,7 @@
                                         <constraint firstItem="Al4-d4-slO" firstAttribute="centerY" secondItem="ZBi-Pd-LzZ" secondAttribute="centerY" id="0R4-m8-kho"/>
                                         <constraint firstItem="ZBi-Pd-LzZ" firstAttribute="centerY" secondItem="cLb-p5-wHd" secondAttribute="centerY" id="755-PX-Ufc"/>
                                         <constraint firstItem="ZBi-Pd-LzZ" firstAttribute="leading" secondItem="cLb-p5-wHd" secondAttribute="leading" id="B9I-hD-Ler"/>
-                                        <constraint firstItem="Wkx-aV-97B" firstAttribute="leading" secondItem="Al4-d4-slO" secondAttribute="trailing" id="GHA-IW-Yax"/>
+                                        <constraint firstItem="Wkx-aV-97B" firstAttribute="leading" secondItem="Al4-d4-slO" secondAttribute="trailing" constant="-5.5" id="GHA-IW-Yax"/>
                                         <constraint firstItem="Al4-d4-slO" firstAttribute="leading" secondItem="ZBi-Pd-LzZ" secondAttribute="leading" id="NWW-PI-wcj"/>
                                         <constraint firstItem="d4l-Lo-bhJ" firstAttribute="centerY" secondItem="Wkx-aV-97B" secondAttribute="centerY" id="Ocd-sa-0BD"/>
                                         <constraint firstItem="Wkx-aV-97B" firstAttribute="centerY" secondItem="Al4-d4-slO" secondAttribute="centerY" id="ii6-sx-qQ9"/>

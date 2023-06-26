@@ -79,7 +79,8 @@ protocol NewMessageTableViewCellDelegate: class {
     ///Audio
     func didTapPlayPauseButtonFor(messageId: Int, and rowIndex: Int)
     ///Podcast CLip
-    func didTapClipPlayPauseButtonFor(messageId: Int, and rowIndex: Int)
+    func didTapClipPlayPauseButtonFor(messageId: Int, and rowIndex: Int, atTime time: Double)
+    func shouldSeekClipFor(messageId: Int, and rowIndex: Int, atTime time: Double)
     ///Invoices
     func didTapInvoicePayButtonFor(messageId: Int, and rowIndex: Int)
     ///Menu Long Press

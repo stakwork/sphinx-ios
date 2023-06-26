@@ -97,10 +97,20 @@ extension NewMessageTableViewCell : AudioMessageViewDelegate {
 }
 
 extension NewMessageTableViewCell : PodcastAudioViewDelegate {
-    func didTapClipPlayPauseButton() {
+    func didTapClipPlayPauseButtonAt(time: Double) {
         if let messageId = messageId {
-            delegate?.didTapClipPlayPauseButtonFor(messageId: messageId, and: rowIndex)
+            delegate?.didTapClipPlayPauseButtonFor(messageId: messageId, and: rowIndex, atTime: time)
         }
+    }
+    
+    func shouldSeekTo(time: Double) {
+        if let messageId = messageId {
+            delegate?.shouldSeekClipFor(messageId: messageId, and: rowIndex, atTime: time)
+        }
+    }
+    
+    func shouldToggleReplyGesture(enable: Bool) {
+        shouldPreventOtherGestures = !enable
     }
 }
 

@@ -71,9 +71,9 @@ class AudioMessageView: UIView {
                 for: .normal
             )
             
-            let progressBarWith = audio.bubbleWidth - kProgressBarLeftMargin - kProgressBarRightMargin
+            let progressBarWidth = audio.bubbleWidth - kProgressBarLeftMargin - kProgressBarRightMargin
             let progress = audioInfo.currentTime * 1 / audioInfo.duration
-            progressViewWidthConstraint.constant = progressBarWith * progress
+            progressViewWidthConstraint.constant = progressBarWidth * progress
             
             let current:Int = Int(audioInfo.duration - audioInfo.currentTime)
             let minutes:Int = current / 60

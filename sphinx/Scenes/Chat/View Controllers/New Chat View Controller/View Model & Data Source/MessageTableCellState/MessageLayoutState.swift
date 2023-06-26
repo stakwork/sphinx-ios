@@ -8,11 +8,7 @@
 
 import UIKit
 
-protocol CommonLayoutState {
-    
-}
-
-struct BubbleMessageLayoutState: CommonLayoutState {
+struct BubbleMessageLayoutState {
     
     struct SwipeReply {}
     
@@ -433,7 +429,7 @@ struct BubbleMessageLayoutState: CommonLayoutState {
     }
 }
 
-struct NoBubbleMessageLayoutState: CommonLayoutState {
+struct NoBubbleMessageLayoutState {
     
     struct NoBubble {
         var direction: MessageTableCellState.MessageDirection

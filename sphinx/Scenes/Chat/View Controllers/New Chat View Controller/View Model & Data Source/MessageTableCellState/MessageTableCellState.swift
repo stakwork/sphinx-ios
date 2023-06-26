@@ -15,6 +15,7 @@ struct MessageTableCellState {
     static let kRowLeftMargin: CGFloat = 15
     static let kRowRightMargin: CGFloat = 9
     static let kBubbleWidthPercentage: CGFloat = 0.7
+    static let kPodcastClipBubbleWidthPercentage: CGFloat = 0.85
     static let kLabelMargin: CGFloat = 16.0
     static let kSmallBubbleDesiredWidth: CGFloat = 200
     static let kSendPaidContentButtonHeight: CGFloat = 50.0
@@ -43,6 +44,8 @@ struct MessageTableCellState {
     var separatorDate: Date? = nil
     
     let bubbleWidth = (UIScreen.main.bounds.width - (MessageTableCellState.kRowLeftMargin + MessageTableCellState.kRowRightMargin)) * (MessageTableCellState.kBubbleWidthPercentage)
+    
+    let podcastClipBubbleWidth = (UIScreen.main.bounds.width - (MessageTableCellState.kRowLeftMargin + MessageTableCellState.kRowRightMargin)) * (MessageTableCellState.kPodcastClipBubbleWidthPercentage)
     
     init(
         message: TransactionMessage? = nil,
@@ -498,7 +501,7 @@ struct MessageTableCellState {
             title: podcastComment.title!,
             timestamp: podcastComment.timestamp!,
             url: url,
-            bubbleWidth: bubbleWidth
+            bubbleWidth: podcastClipBubbleWidth
         )
     }()
     

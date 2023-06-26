@@ -736,11 +736,69 @@ extension NewChatTableDataSource {
         }
     }
     
-    func didTapClipPlayPauseButtonFor(messageId: Int, and rowIndex: Int) {
+    func didTapClipPlayPauseButtonFor(
+        messageId: Int,
+        and rowIndex: Int,
+        atTime time: Double
+    ) {
         podcastPlayerController.addDelegate(
             self,
             withKey: PodcastDelegateKeys.ChatDataSource.rawValue
         )
+        
+        updatePodcastInfoFor(
+            loading: true,
+            playing: false,
+            duration: nil,
+            currentTime: nil,
+            messageId: messageId,
+            rowIndex: rowIndex
+        )
+        
+        if let podcastData = getPodcastDataFrom(
+            messageId: messageId,
+            and: rowIndex,
+            atTime: time
+        ) {
+            if podcastPlayerController.isPlaying(messageId: messageId) {
+                podcastPlayerController.submitAction(
+                    UserAction.Pause(podcastData)
+                )
+            } else {
+                podcastPlayerController.submitAction(
+                    UserAction.Play(podcastData)
+                )
+            }
+        }
+    }
+    
+    func shouldSeekClipFor(
+        messageId: Int,
+        and rowIndex: Int,
+        atTime time: Double
+    ) {
+        updatePodcastInfoFor(
+            currentTime: time,
+            messageId: messageId,
+            rowIndex: rowIndex
+        )
+        
+        if let podcastData = getPodcastDataFrom(
+            messageId: messageId,
+            and: rowIndex,
+            atTime: time
+        ) {
+            podcastPlayerController.submitAction(
+                UserAction.Seek(podcastData)
+            )
+        }
+    }
+    
+    func getPodcastDataFrom(
+        messageId: Int,
+        and rowIndex: Int,
+        atTime time: Double
+    ) -> PodcastData? {
         
         if let tableCellState = getTableCellStateFor(
             messageId: messageId,
@@ -757,8 +815,6 @@ extension NewChatTableDataSource {
                 let audioInfo = mediaCached[messageId]?.audioInfo
                 let podcast = PodcastFeed.convertFrom(contentFeed: feed)
                 
-                let startTime = (audioInfo?.currentTime != nil) ? Int(audioInfo!.currentTime) : podcastComment.timestamp
-                
                 let clipInfo = PodcastData.ClipInfo(
                     messageId,
                     rowIndex,
@@ -766,23 +822,14 @@ extension NewChatTableDataSource {
                     podcastComment.pubkey
                 )
                 
-                if let podcastData = podcast.getPodcastData(
+                return podcast.getPodcastData(
                     episodeId: episodeId,
-                    currentTime: startTime,
+                    currentTime: Int(time),
                     clipInfo: clipInfo
-                ) {
-                    if podcastPlayerController.isPlaying(messageId: messageId) {
-                        podcastPlayerController.submitAction(
-                            UserAction.Pause(podcastData)
-                        )
-                    } else {
-                        podcastPlayerController.submitAction(
-                            UserAction.Play(podcastData)
-                        )
-                    }
-                }
+                )
             }
         }
+        return nil
     }
     
     func didTapInvoicePayButtonFor(messageId: Int, and rowIndex: Int) {

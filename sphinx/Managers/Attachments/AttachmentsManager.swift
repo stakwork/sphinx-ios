@@ -264,10 +264,10 @@ class AttachmentsManager {
         attachmentObject: AttachmentObject
     ) {
         if let mediaUrl = message.getMediaUrlFromMediaToken()?.absoluteString {
-            if let data = attachmentObject.data, message.isVideo() || message.isAudio() || message.isGif() {
+            if let data = attachmentObject.data {
                 if let mediaKey = message.mediaKey {
                     if let decryptedData = SymmetricEncryptionManager.sharedInstance.decryptData(data: data, key: mediaKey) {
-                        MediaLoader.storeMediaDataInCache(data: decryptedData, url: mediaUrl)
+                        MediaLoader.storeMediaDataInCache(data: decryptedData, url: mediaUrl,message: message)
                     }
                 }
             }

@@ -72,24 +72,48 @@
                             <constraint firstItem="egw-7j-Rwb" firstAttribute="leading" secondItem="afw-XI-wQp" secondAttribute="leading" constant="6" id="fcR-9c-VA6"/>
                         </constraints>
                     </view>
+                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Jv-N5-stq">
+                        <rect key="frame" x="12" y="52.666666666666664" width="96" height="14.999999999999993"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="test.png" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0EH-5f-xBH">
+                                <rect key="frame" x="6" y="0.0" width="84" height="15"/>
+                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="11"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="0EH-5f-xBH" secondAttribute="bottom" id="FUD-W7-Ibi"/>
+                            <constraint firstItem="0EH-5f-xBH" firstAttribute="leading" secondItem="8Jv-N5-stq" secondAttribute="leading" constant="6" id="JGT-m8-4lS"/>
+                            <constraint firstItem="0EH-5f-xBH" firstAttribute="top" secondItem="8Jv-N5-stq" secondAttribute="top" id="Jwq-Xb-u9S"/>
+                            <constraint firstAttribute="height" constant="15" id="R0W-vJ-qqT"/>
+                            <constraint firstAttribute="trailing" secondItem="0EH-5f-xBH" secondAttribute="trailing" constant="6" id="mLN-bf-0KP"/>
+                        </constraints>
+                    </view>
                 </subviews>
             </view>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="O5k-yO-GUb" firstAttribute="top" secondItem="LEC-h3-vKQ" secondAttribute="top" id="83F-CC-yXW"/>
                 <constraint firstItem="LEC-h3-vKQ" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="8Ro-hM-HDq"/>
+                <constraint firstAttribute="trailing" secondItem="8Jv-N5-stq" secondAttribute="trailing" constant="12" id="A2K-Ri-BSL"/>
                 <constraint firstAttribute="trailing" secondItem="LEC-h3-vKQ" secondAttribute="trailing" id="AhF-er-LCl"/>
                 <constraint firstItem="O5k-yO-GUb" firstAttribute="bottom" secondItem="LEC-h3-vKQ" secondAttribute="bottom" id="Llc-aY-ntI"/>
                 <constraint firstAttribute="bottom" secondItem="LEC-h3-vKQ" secondAttribute="bottom" id="Lrw-iU-jWq"/>
+                <constraint firstItem="8Jv-N5-stq" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="M5k-yh-Pve"/>
                 <constraint firstAttribute="trailing" secondItem="afw-XI-wQp" secondAttribute="trailing" constant="4" id="fqA-k0-fJ0"/>
                 <constraint firstItem="LEC-h3-vKQ" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="l9q-EY-cSp"/>
                 <constraint firstItem="O5k-yO-GUb" firstAttribute="leading" secondItem="LEC-h3-vKQ" secondAttribute="leading" id="obv-61-Vnu"/>
+                <constraint firstItem="8Jv-N5-stq" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="rgo-Sl-bge"/>
                 <constraint firstItem="afw-XI-wQp" firstAttribute="top" secondItem="LEC-h3-vKQ" secondAttribute="top" constant="4" id="vAM-Tq-BQ4"/>
                 <constraint firstItem="O5k-yO-GUb" firstAttribute="trailing" secondItem="LEC-h3-vKQ" secondAttribute="trailing" id="zjp-a3-bpU"/>
             </constraints>
             <size key="customSize" width="116" height="118"/>
             <connections>
                 <outlet property="checkmarkView" destination="7MP-nI-eGW" id="jkG-qT-jjf"/>
+                <outlet property="fileNameLabel" destination="0EH-5f-xBH" id="fvv-vL-oh7"/>
+                <outlet property="fileNameLabelContainer" destination="8Jv-N5-stq" id="ehB-Ju-0dv"/>
                 <outlet property="imageView" destination="LEC-h3-vKQ" id="SU2-Qp-P6o"/>
                 <outlet property="labelContainerView" destination="afw-XI-wQp" id="NA9-QM-0FU"/>
                 <outlet property="overlay" destination="O5k-yO-GUb" id="Buc-B1-LcI"/>

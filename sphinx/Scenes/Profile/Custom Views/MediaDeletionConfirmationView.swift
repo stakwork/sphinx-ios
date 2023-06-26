@@ -11,8 +11,8 @@ import UIKit
 
 
 protocol MediaDeletionConfirmationViewDelegate : NSObject{
-    func cancelTapped()
-    func deleteTapped()
+    func mediaDeletionCancelTapped()
+    func mediaDeletionConfirmTapped()
 }
 
 public enum MediaDeletionConfirmationViewState{
@@ -97,6 +97,9 @@ class MediaDeletionConfirmationView: UIView {
                 break
             case .photo:
                 typeString = NSLocalizedString("storage.management.images", comment: "")
+                break
+            case .file:
+                typeString = NSLocalizedString("storage.management.files", comment: "")
                 break
             }
         }
@@ -204,12 +207,12 @@ class MediaDeletionConfirmationView: UIView {
     
     @IBAction func deleteTapped(_ sender: Any) {
         self.state = .loading
-        delegate?.deleteTapped()
+        delegate?.mediaDeletionConfirmTapped()
     }
     
     @IBAction func cancelTapped(_ sender: Any) {
         if let delegate = delegate{
-            delegate.cancelTapped()
+            delegate.mediaDeletionCancelTapped()
             self.state = .awaitingApproval
         }
     }

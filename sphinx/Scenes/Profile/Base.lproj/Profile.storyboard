@@ -1486,14 +1486,14 @@
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="tn4-X7-Dcd">
-                                <rect key="frame" x="0.0" y="293.5" width="414" height="200"/>
+                                <rect key="frame" x="0.0" y="293.5" width="414" height="264"/>
                                 <color key="backgroundColor" name="Body"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="200" id="3Lg-KA-ynh"/>
+                                    <constraint firstAttribute="height" constant="264" id="3Lg-KA-ynh"/>
                                 </constraints>
                             </tableView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="m9b-2o-0MK">
-                                <rect key="frame" x="0.0" y="493.5" width="414" height="128"/>
+                                <rect key="frame" x="0.0" y="557.5" width="414" height="128"/>
                                 <color key="backgroundColor" name="Body"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="128" id="doI-Yy-OAe"/>
@@ -1895,8 +1895,12 @@
                                     <constraint firstItem="Sas-1e-Npj" firstAttribute="top" secondItem="obv-nV-WGh" secondAttribute="top" id="oi5-Oj-vtJ"/>
                                 </constraints>
                             </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="mIQ-Sz-Z4r">
+                                <rect key="frame" x="0.0" y="178" width="414" height="684"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="zTe-fP-Pcs">
-                                <rect key="frame" x="0.0" y="138" width="409" height="724"/>
+                                <rect key="frame" x="0.0" y="178" width="409" height="684"/>
                                 <color key="backgroundColor" name="Body"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="Qn2-sR-3W9">
                                     <size key="itemSize" width="128" height="128"/>
@@ -1917,15 +1921,37 @@
                                 </cells>
                             </collectionView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="lYg-nt-rdO">
-                                <rect key="frame" x="0.0" y="138" width="414" height="724"/>
+                                <rect key="frame" x="0.0" y="178" width="414" height="684"/>
                                 <color key="backgroundColor" name="Body"/>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zJ6-mR-I1a" customClass="MediaDeletionConfirmationView" customModule="sphinx" customModuleProvider="target">
-                                <rect key="frame" x="51" y="316" width="312" height="368"/>
+                                <rect key="frame" x="51" y="336" width="312" height="368"/>
                                 <color key="backgroundColor" name="HeaderBG"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="368" id="9eC-o5-jaB"/>
                                     <constraint firstAttribute="width" constant="312" id="Wil-cQ-oSZ"/>
+                                </constraints>
+                            </view>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="6ey-nC-Kiu">
+                                <rect key="frame" x="0.0" y="138" width="414" height="41"/>
+                                <color key="backgroundColor" name="HeaderBG"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="kUp-ql-Fbb"/>
+                                </constraints>
+                                <segments>
+                                    <segment title="Media"/>
+                                    <segment title="Files"/>
+                                </segments>
+                                <color key="selectedSegmentTintColor" name="HeaderBG"/>
+                                <connections>
+                                    <action selector="segmentedControlChanged:" destination="qnq-FW-gcV" eventType="valueChanged" id="A70-Iu-Dyx"/>
+                                </connections>
+                            </segmentedControl>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="72H-hs-Bvk">
+                                <rect key="frame" x="0.0" y="177" width="207" height="1"/>
+                                <color key="backgroundColor" name="PrimaryBlue"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="hNt-pn-aqA"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -1934,18 +1960,28 @@
                         <constraints>
                             <constraint firstItem="zTe-fP-Pcs" firstAttribute="leading" secondItem="lYg-nt-rdO" secondAttribute="leading" id="0R4-zv-bAc"/>
                             <constraint firstItem="zTe-fP-Pcs" firstAttribute="top" secondItem="lYg-nt-rdO" secondAttribute="top" id="4Ga-yw-0g4"/>
+                            <constraint firstItem="6ey-nC-Kiu" firstAttribute="top" secondItem="obv-nV-WGh" secondAttribute="bottom" id="Csi-DK-izH"/>
                             <constraint firstItem="lYg-nt-rdO" firstAttribute="trailing" secondItem="zTe-fP-Pcs" secondAttribute="trailing" constant="5" id="DC1-Q8-T3E"/>
+                            <constraint firstItem="6ey-nC-Kiu" firstAttribute="leading" secondItem="p11-et-PUn" secondAttribute="leading" id="Dwh-7X-gbV"/>
+                            <constraint firstItem="72H-hs-Bvk" firstAttribute="leading" secondItem="6ey-nC-Kiu" secondAttribute="leading" id="F9g-mh-XjI"/>
                             <constraint firstItem="obv-nV-WGh" firstAttribute="top" secondItem="X0s-oe-X7g" secondAttribute="top" id="H4d-Sk-7Gg"/>
                             <constraint firstItem="lYg-nt-rdO" firstAttribute="leading" secondItem="X0s-oe-X7g" secondAttribute="leading" id="KfX-dJ-VZU"/>
+                            <constraint firstItem="mIQ-Sz-Z4r" firstAttribute="top" secondItem="lYg-nt-rdO" secondAttribute="top" id="OmW-ZX-quK"/>
                             <constraint firstItem="p11-et-PUn" firstAttribute="top" secondItem="o81-Av-GsP" secondAttribute="top" id="QMh-hn-5eX"/>
+                            <constraint firstItem="mIQ-Sz-Z4r" firstAttribute="trailing" secondItem="lYg-nt-rdO" secondAttribute="trailing" id="Xx6-aM-1Se"/>
+                            <constraint firstItem="lYg-nt-rdO" firstAttribute="top" secondItem="6ey-nC-Kiu" secondAttribute="bottom" id="Yzc-IJ-8OT"/>
+                            <constraint firstItem="mIQ-Sz-Z4r" firstAttribute="leading" secondItem="lYg-nt-rdO" secondAttribute="leading" id="cOl-wK-DfX"/>
                             <constraint firstItem="zJ6-mR-I1a" firstAttribute="centerX" secondItem="p11-et-PUn" secondAttribute="centerX" id="d31-bI-jOt"/>
                             <constraint firstItem="obv-nV-WGh" firstAttribute="trailing" secondItem="p11-et-PUn" secondAttribute="trailing" id="izm-DS-kvj"/>
+                            <constraint firstItem="72H-hs-Bvk" firstAttribute="width" secondItem="6ey-nC-Kiu" secondAttribute="width" multiplier="0.5" id="jk3-ne-aAP"/>
                             <constraint firstAttribute="trailing" secondItem="lYg-nt-rdO" secondAttribute="trailing" id="nLZ-Gs-2eO"/>
                             <constraint firstItem="zTe-fP-Pcs" firstAttribute="bottom" secondItem="lYg-nt-rdO" secondAttribute="bottom" id="olM-D8-y8X"/>
                             <constraint firstItem="obv-nV-WGh" firstAttribute="leading" secondItem="p11-et-PUn" secondAttribute="leading" id="olW-cz-6Vp"/>
                             <constraint firstItem="zJ6-mR-I1a" firstAttribute="centerY" secondItem="lYg-nt-rdO" secondAttribute="centerY" id="pI0-SQ-uzB"/>
-                            <constraint firstItem="lYg-nt-rdO" firstAttribute="top" secondItem="obv-nV-WGh" secondAttribute="bottom" id="qVz-m8-Vmj"/>
                             <constraint firstItem="p11-et-PUn" firstAttribute="bottom" secondItem="lYg-nt-rdO" secondAttribute="bottom" id="rsu-vA-OIY"/>
+                            <constraint firstItem="72H-hs-Bvk" firstAttribute="bottom" secondItem="6ey-nC-Kiu" secondAttribute="bottom" id="uMK-X2-p9O"/>
+                            <constraint firstItem="mIQ-Sz-Z4r" firstAttribute="bottom" secondItem="lYg-nt-rdO" secondAttribute="bottom" id="wGX-hH-qWl"/>
+                            <constraint firstItem="6ey-nC-Kiu" firstAttribute="centerX" secondItem="p11-et-PUn" secondAttribute="centerX" id="xv4-Ry-fPc"/>
                         </constraints>
                     </view>
                     <connections>
@@ -1953,10 +1989,15 @@
                         <outlet property="deletionSummaryCountLabel" destination="RKJ-a1-az2" id="AdM-hT-FVC"/>
                         <outlet property="deletionSummarySizeLabel" destination="hge-sK-3ik" id="j0u-1V-EAe"/>
                         <outlet property="deletionSummaryView" destination="Sas-1e-Npj" id="Ma8-YU-gFi"/>
+                        <outlet property="filesListTableView" destination="mIQ-Sz-Z4r" id="dRa-Q6-vV3"/>
                         <outlet property="headerTitleLabel" destination="aM6-lr-PWK" id="QhL-hY-05f"/>
                         <outlet property="imageCollectionView" destination="zTe-fP-Pcs" id="H6F-Zs-28k"/>
                         <outlet property="mediaDeletionConfirmationView" destination="zJ6-mR-I1a" id="2h8-Z4-Dld"/>
-                        <outlet property="tableView" destination="lYg-nt-rdO" id="nOy-97-czN"/>
+                        <outlet property="mediaVsFilesSegmentedControl" destination="6ey-nC-Kiu" id="XFq-nG-dmx"/>
+                        <outlet property="podcastListTableView" destination="lYg-nt-rdO" id="nOy-97-czN"/>
+                        <outlet property="segmentedControlHeight" destination="kUp-ql-Fbb" id="p8E-9c-CVm"/>
+                        <outlet property="selectedIndexIndicatorLeadingEdge" destination="F9g-mh-XjI" id="hW6-Rc-Ooh"/>
+                        <outlet property="selectedIndexUnderlineView" destination="72H-hs-Bvk" id="P5z-gx-7oe"/>
                         <outlet property="totalSizeLabel" destination="sQx-Yb-g7e" id="b10-vh-RMe"/>
                     </connections>
                 </viewController>

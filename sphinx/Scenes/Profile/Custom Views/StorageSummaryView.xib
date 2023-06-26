@@ -16,6 +16,7 @@
                 <outlet property="additionLeadingEdge" destination="E6E-t4-HWH" id="Y7D-Hj-Xyz"/>
                 <outlet property="audioFootprintWidth" destination="dWz-zP-06H" id="25o-3f-9gO"/>
                 <outlet property="audioMemoryFootprintView" destination="6dI-dX-Lyl" id="EGg-eO-OaU"/>
+                <outlet property="audioToOtherHorizontalSpacing" destination="kVS-2T-2Sa" id="v71-jY-qIV"/>
                 <outlet property="contentView" destination="iN0-l3-epB" id="TdH-qE-RO0"/>
                 <outlet property="deletionFootprintView" destination="kFG-HU-PMi" id="DfM-kE-gyB"/>
                 <outlet property="deletionFootprintWidth" destination="VBe-Mk-rx2" id="0Fs-LG-qVT"/>
@@ -24,6 +25,8 @@
                 <outlet property="imageToVideoHorizontalSpacing" destination="8jG-Rm-5Rk" id="XXc-fv-tf4"/>
                 <outlet property="imagesMemoryFootprintView" destination="UUc-NP-3O4" id="gGj-YS-kAp"/>
                 <outlet property="maxMemoryFootprintBackgroundView" destination="pA3-QN-pPT" id="mNk-wW-yAS"/>
+                <outlet property="otherFootprintWidth" destination="AvE-rg-O4J" id="Z2r-z5-mWP"/>
+                <outlet property="otherMemoryFootprintView" destination="qXe-a6-6on" id="Zbj-U0-vDR"/>
                 <outlet property="totalMemoryFootprintView" destination="Wuu-OO-lkF" id="WCt-0h-1Sm"/>
                 <outlet property="totalMemoryFootprintWidth" destination="C2T-RH-KII" id="Vof-zz-4ft"/>
                 <outlet property="videoFootprintWidth" destination="rcV-U6-fU9" id="Qbd-3q-xQQ"/>
@@ -81,10 +84,18 @@
                                 <constraint firstAttribute="width" id="dWz-zP-06H"/>
                             </constraints>
                         </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qXe-a6-6on">
+                            <rect key="frame" x="4" y="0.0" width="0.0" height="16"/>
+                            <color key="backgroundColor" name="PrimaryGreen"/>
+                            <constraints>
+                                <constraint firstAttribute="width" id="AvE-rg-O4J"/>
+                            </constraints>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" name="ReceivedMsgBG"/>
                     <constraints>
                         <constraint firstItem="6dI-dX-Lyl" firstAttribute="leading" secondItem="xFX-Pj-wP8" secondAttribute="trailing" constant="2" id="4df-r3-Pcc"/>
+                        <constraint firstAttribute="bottom" secondItem="qXe-a6-6on" secondAttribute="bottom" id="6OZ-hP-DdI"/>
                         <constraint firstItem="xFX-Pj-wP8" firstAttribute="leading" secondItem="UUc-NP-3O4" secondAttribute="trailing" constant="2" id="8jG-Rm-5Rk"/>
                         <constraint firstItem="kFG-HU-PMi" firstAttribute="top" secondItem="pA3-QN-pPT" secondAttribute="top" id="AKF-QM-eka"/>
                         <constraint firstItem="Wuu-OO-lkF" firstAttribute="top" secondItem="pA3-QN-pPT" secondAttribute="top" id="DYm-xR-8a8"/>
@@ -97,9 +108,11 @@
                         <constraint firstAttribute="bottom" secondItem="kFG-HU-PMi" secondAttribute="bottom" id="Ky2-UQ-hxP"/>
                         <constraint firstAttribute="height" constant="16" id="MiT-Vq-zxd"/>
                         <constraint firstAttribute="bottom" secondItem="sdV-qp-H14" secondAttribute="bottom" id="SLl-lb-axW"/>
+                        <constraint firstItem="qXe-a6-6on" firstAttribute="top" secondItem="pA3-QN-pPT" secondAttribute="top" id="Tn3-kg-1vF"/>
                         <constraint firstItem="Wuu-OO-lkF" firstAttribute="leading" secondItem="pA3-QN-pPT" secondAttribute="leading" id="ZNq-JV-YJG"/>
                         <constraint firstItem="6dI-dX-Lyl" firstAttribute="bottom" secondItem="xFX-Pj-wP8" secondAttribute="bottom" id="eWh-0F-g0l"/>
                         <constraint firstItem="sdV-qp-H14" firstAttribute="top" secondItem="pA3-QN-pPT" secondAttribute="top" id="iPq-sx-Y5t"/>
+                        <constraint firstItem="qXe-a6-6on" firstAttribute="leading" secondItem="6dI-dX-Lyl" secondAttribute="trailing" id="kVS-2T-2Sa"/>
                         <constraint firstAttribute="trailing" secondItem="kFG-HU-PMi" secondAttribute="trailing" id="m41-Cp-dnf"/>
                         <constraint firstAttribute="bottom" secondItem="UUc-NP-3O4" secondAttribute="bottom" id="oPc-YR-Mkg"/>
                         <constraint firstItem="UUc-NP-3O4" firstAttribute="top" secondItem="pA3-QN-pPT" secondAttribute="top" id="uf8-PS-cyV"/>
@@ -120,6 +133,9 @@
     <resources>
         <namedColor name="PrimaryBlue">
             <color red="0.38039215686274508" green="0.54117647058823526" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="PrimaryGreen">
+            <color red="0.28627450980392155" green="0.78823529411764703" blue="0.59607843137254901" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="PrimaryRed">
             <color red="0.92941176470588238" green="0.45490196078431372" blue="0.45490196078431372" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

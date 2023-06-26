@@ -88,6 +88,37 @@ public class TransactionMessage: NSManagedObject {
     
     static let kCallRoomName = "/sphinx.call"
     
+    func getCMExtensionAssignment() -> String? {
+        var fileExtension:String? = nil
+        
+        if(self.isPicture()){
+            fileExtension = "png"
+        }
+        else if(self.isVideo()){
+            fileExtension = "mp4"
+        }
+        else if(self.isAudio()){
+            fileExtension = "mp3"
+        }
+        else if(self.isGif()){
+            fileExtension = "gif"
+        }
+        else if(self.isPDF()){
+            fileExtension = "pdf"
+        }
+        else if(self.isDoc()){
+            fileExtension = "doc"
+        }
+        else if(self.isSpreadsheet()){
+            fileExtension = "xls"
+        }
+        else if(self.isAttachment()){
+            fileExtension = "other"
+        }
+        
+        return fileExtension
+    }
+
     static func insertMessage(
         m: JSON,
         existingMessage: TransactionMessage? = nil

@@ -614,12 +614,13 @@
 "deletion.warning.title" = "You've chosen to delete %@";
 "deletion.warning.subtitle" = "This action deletes all of the selected files permanently and cannot be undone.";
 "are.you.sure.deletion.warning" = "Continuing will delete all of your %@.";
-"storage.management.this.podcast" = "this podcast episode";
+"storage.management.this.podcast" = "the selected podcast episode(s)";
 "storage.management.chat.media" = "all chat media";
 "storage.management.selected.chat.media" = "the selected chat media";
 "storage.management.audio.files" = "all podcast episodes";
 "storage.management.video" = "all video";
 "storage.management.images" = "all images";
+"storage.management.files" = "all files";
 "are.you.sure" = "Are you sure?";
 "chat.media" = "chat media";
 "storage.management.deletion.complete.title" = "%@ successfully deleted";

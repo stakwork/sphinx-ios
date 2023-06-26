@@ -15,6 +15,9 @@ class ChatImageCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var checkmarkView: UIView!
     @IBOutlet weak var sizeLabel: UILabel!
     @IBOutlet weak var labelContainerView: UIView!
+    @IBOutlet weak var fileNameLabel: UILabel!
+    @IBOutlet weak var fileNameLabelContainer: UIView!
+    
     
     static let reuseID = "ChatImageCollectionViewCell"
     
@@ -35,6 +38,20 @@ class ChatImageCollectionViewCell: UICollectionViewCell {
             imageView.clipsToBounds = true
             imageView.image = image
         }
+        else{
+            let placeholderImage = cachedMedia.fileExtension == "mp3" ? #imageLiteral(resourceName:"musicTagIcon") :  #imageLiteral(resourceName:"fileOptionIcon")
+            imageView.contentMode = .scaleAspectFill
+            imageView.clipsToBounds = true
+            imageView.image = placeholderImage
+        }
+        
+        if(StorageManager.sharedManager.getStorageManagerTypeFromExtension(cm: cachedMedia) == .file
+           && cachedMedia.fileExtension != "pdf"){
+            //fileNameLabelContainer.isHidden = false
+            print(cachedMedia.filePath)
+            fileNameLabel.text = cachedMedia.filePath
+        }
+        
         if(selectionStatus){
             overlay.backgroundColor = UIColor.Sphinx.Body
             overlay.alpha = 0.75

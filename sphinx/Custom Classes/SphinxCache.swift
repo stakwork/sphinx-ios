@@ -23,7 +23,7 @@ final class SphinxCache {
     func removeValue(forKey key: String,completion:(() -> Void)?=nil) {
         let _ = removeFromDisk(forKey: key)
         if let cmReference = CachedMedia.getCachedMediaByKey(key: key){
-            cmReference.removeVideoObject(completion: {
+            cmReference.removeSphinxCacheObject(completion: {
                 if let completion = completion{
                     completion()
                 }

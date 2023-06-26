@@ -196,6 +196,15 @@ class MediaLoader {
                 errorCompletion(messageId)
             }
         }
+        
+//        if let chat = message.chat?.getChat(),
+//           let path = getDiskImagePath(forKey: url.absoluteString){
+//            let randomInt = Int.random(in: 0...Int(1e9))
+//            var fileExtension = "png"
+//            fileExtension = message.getCMExtensionAssignment()
+//            let _ = CachedMedia.createObject(id: randomInt, chat: chat, filePath: path, fileExtension: fileExtension, key: url.absoluteString)
+//            //StorageManager.sharedManager.processGarbageCleanup()
+//        }
     }
     
     class func getImageFromData(
@@ -406,26 +415,30 @@ class MediaLoader {
         errorCompletion: @escaping (Int) -> ()
     ) {
         if let mediaKey = mediaKey, mediaKey != "" {
-            if let decryptedData = SymmetricEncryptionManager.sharedInstance.decryptData(data: data, key: mediaKey) {
+            
+            if let decryptedData = SymmetricEncryptionManager.sharedInstance.decryptData(
+                data: data,
+                key: mediaKey
+            ) {
                 message.saveFileSize(decryptedData.count)
-                
+
                 storeMediaDataInCache(
                     data: decryptedData,
                     url: url.absoluteString,
-                    isVideo: isVideo
+                    message: message
                 )
-                
-                if let chat = message.chat{
-                    let randomInt = Int.random(in: 0...Int(1e9))
-                    let _ = CachedMedia.createObject(id: randomInt, chat: chat, filePath: nil, fileExtension: "mp4", key: url.absoluteString)
-                }
+
                 DispatchQueue.main.async {
                     completion(decryptedData)
                 }
                 return
             }
         } else {
-            storeMediaDataInCache(data: data, url: url.absoluteString)
+            storeMediaDataInCache(
+                data: data,
+                url: url.absoluteString
+            )
+            
             DispatchQueue.main.async {
                 completion(data)
             }
@@ -555,12 +568,6 @@ class MediaLoader {
     
     class func storeImageInCache(img: UIImage, url: String,chat:Chat?) {
         SDImageCache.shared.store(img, forKey: url, completion: nil)
-        if let chat = chat,
-           let path = getDiskImagePath(forKey: url){
-            let randomInt = Int.random(in: 0...Int(1e9))
-            let _ = CachedMedia.createObject(id: randomInt, chat: chat, filePath: path, fileExtension: "png", key: url)
-            StorageManager.sharedManager.processGarbageCleanup()
-        }
     }
     
     class func getDiskImagePath(forKey key: String)->String? {
@@ -571,9 +578,26 @@ class MediaLoader {
         return SDImageCache.shared.imageFromCache(forKey: url)
     }
     
-    class func storeMediaDataInCache(data: Data, url: String,isVideo:Bool=false) {
+    class func storeMediaDataInCache(data: Data, url: String,message:TransactionMessage?=nil) {
         cache[url] = data
-        StorageManager.sharedManager.processGarbageCleanup()
+        
+        if let message = message,
+           let chat = message.chat?.getChat(),
+           let path = getDiskImagePath(forKey: url)
+        {
+            let randomInt = Int.random(in: 0...Int(1e9))
+            var fileExtension = message.getCMExtensionAssignment() ?? "png"
+            let name = message.getFileName()
+            
+            let _ = CachedMedia.createObject(
+                id: randomInt,
+                chat: chat,
+                filePath: path,
+                fileExtension: fileExtension,
+                key: url,
+                fileName: name
+            )
+        }
     }
     
     class func getMediaDataFromCachedUrl(url: String) -> Data? {

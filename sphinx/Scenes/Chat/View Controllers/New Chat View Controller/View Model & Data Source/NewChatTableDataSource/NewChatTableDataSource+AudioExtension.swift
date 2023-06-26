@@ -90,93 +90,87 @@ extension NewChatTableDataSource : AudioPlayerHelperDelegate {
 extension NewChatTableDataSource : PlayerDelegate {
     func loadingState(_ podcastData: PodcastData) {
         updatePodcastInfoFor(
-            messageId: podcastData.messageId,
-            rowIndex: podcastData.rowIndex,
             loading: true,
             playing: true,
             duration: Double(podcastData.duration ?? 0),
-            currentTime: Double(podcastData.currentTime ?? 0)
+            currentTime: Double(podcastData.currentTime ?? 0),
+            clipInfo: podcastData.clipInfo
         )
     }
     
     func playingState(_ podcastData: PodcastData) {
         updatePodcastInfoFor(
-            messageId: podcastData.messageId,
-            rowIndex: podcastData.rowIndex,
             loading: false,
             playing: true,
             duration: Double(podcastData.duration ?? 0),
-            currentTime: Double(podcastData.currentTime ?? 0)
+            currentTime: Double(podcastData.currentTime ?? 0),
+            clipInfo: podcastData.clipInfo
         )
     }
     
     func pausedState(_ podcastData: PodcastData) {
         updatePodcastInfoFor(
-            messageId: podcastData.messageId,
-            rowIndex: podcastData.rowIndex,
             loading: false,
             playing: false,
             duration: Double(podcastData.duration ?? 0),
-            currentTime: Double(podcastData.currentTime ?? 0)
+            currentTime: Double(podcastData.currentTime ?? 0),
+            clipInfo: podcastData.clipInfo
         )
     }
     
     func endedState(_ podcastData: PodcastData) {
         updatePodcastInfoFor(
-            messageId: podcastData.messageId,
-            rowIndex: podcastData.rowIndex,
             loading: false,
             playing: false,
             duration: Double(podcastData.duration ?? 0),
-            currentTime: Double(0)
+            currentTime: Double(0),
+            clipInfo: podcastData.clipInfo
         )
     }
     
     func errorState(_ podcastData: PodcastData) {
         updatePodcastInfoFor(
-            messageId: podcastData.messageId,
-            rowIndex: podcastData.rowIndex,
             loading: false,
             playing: false,
             duration: Double(podcastData.duration ?? 0),
-            currentTime: Double(0)
+            currentTime: Double(0),
+            clipInfo: podcastData.clipInfo
         )
     }
     
     func updatePodcastInfoFor(
-        messageId: Int?,
-        rowIndex: Int?,
         loading: Bool,
         playing: Bool,
         duration: Double?,
-        currentTime: Double?
+        currentTime: Double?,
+        clipInfo: PodcastData.ClipInfo? = nil
     ) {
-        guard let messageId = messageId, let rowIndex = rowIndex else {
+        guard let clipInfo = clipInfo else {
             return
         }
         
-        if let tableCellState = getTableCellStateFor(
-            messageId: messageId,
-            and: rowIndex
-        ) {
-            if let audioData = mediaCached[messageId], let audioInfo = audioData.audioInfo {
-                
-                mediaCached[messageId] = MessageTableCellState.MediaData(
-                    data: nil,
-                    audioInfo: MessageTableCellState.AudioInfo(
-                        loading: loading,
-                        playing: playing,
-                        duration: duration ?? audioInfo.duration,
-                        currentTime: currentTime ?? audioInfo.currentTime
-                    )
-                )
-                
-                DispatchQueue.main.async {
-                    var snapshot = self.dataSource.snapshot()
-                    snapshot.reloadItems([tableCellState.1])
-                    self.dataSource.apply(snapshot, animatingDifferences: false)
-                }
-            }
-        }
+//        if let tableCellState = getTableCellStateFor(
+//            messageId: messageId,
+//            and: rowIndex
+//        ) {
+//            if let audioData = mediaCached[messageId], let audioInfo = audioData.audioInfo {
+//
+//                mediaCached[messageId] = MessageTableCellState.MediaData(
+//                    data: nil,
+//                    audioInfo: MessageTableCellState.AudioInfo(
+//                        loading: loading,
+//                        playing: playing,
+//                        duration: duration ?? audioInfo.duration,
+//                        currentTime: currentTime ?? audioInfo.currentTime
+//                    )
+//                )
+//
+//                DispatchQueue.main.async {
+//                    var snapshot = self.dataSource.snapshot()
+//                    snapshot.reloadItems([tableCellState.1])
+//                    self.dataSource.apply(snapshot, animatingDifferences: false)
+//                }
+//            }
+//        }
     }
 }

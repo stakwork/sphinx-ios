@@ -759,11 +759,17 @@ extension NewChatTableDataSource {
                 
                 let startTime = (audioInfo?.currentTime != nil) ? Int(audioInfo!.currentTime) : podcastComment.timestamp
                 
+                let clipInfo = PodcastData.ClipInfo(
+                    messageId,
+                    rowIndex,
+                    message.uuid,
+                    podcastComment.pubkey
+                )
+                
                 if let podcastData = podcast.getPodcastData(
                     episodeId: episodeId,
                     currentTime: startTime,
-                    messageId: messageId,
-                    rowIndex: rowIndex
+                    clipInfo: clipInfo
                 ) {
                     if podcastPlayerController.isPlaying(messageId: messageId) {
                         podcastPlayerController.submitAction(

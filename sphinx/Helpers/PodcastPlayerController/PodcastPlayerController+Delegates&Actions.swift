@@ -35,7 +35,7 @@ extension PodcastPlayerController {
             if (
                 isPlaying &&
                 podcastData.episodeId == self.podcastData?.episodeId &&
-                podcastData.messageId == self.podcastData?.messageId
+                podcastData.clipInfo?.messageId == self.podcastData?.clipInfo?.messageId
             ) {
                 pause(podcastData)
             } else {
@@ -117,7 +117,10 @@ extension PodcastPlayerController {
         setAudioSession()
         
         if let pd = self.podcastData, isPlaying {
-            if podcastData.episodeId == pd.episodeId, podcastData.messageId == pd.messageId {
+            if
+                podcastData.episodeId == pd.episodeId,
+                podcastData.clipInfo?.messageId == pd.clipInfo?.messageId
+            {
                 ///If playing same episode, then return
                 return
             } else {
@@ -139,7 +142,7 @@ extension PodcastPlayerController {
             currentTime: podcastData.currentTime,
             duration: podcastData.duration,
             playerSpeed: podcastData.speed,
-            messageId: podcastData.messageId
+            clipInfo: podcastData.clipInfo
         )
         
         if !ConnectivityHelper.isConnectedToInternet && !podcastData.downloaded {
@@ -225,7 +228,7 @@ extension PodcastPlayerController {
         updatePodcastObject(
             podcastId: podcastData.podcastId,
             duration: duration,
-            messageId: podcastData.messageId
+            clipInfo: podcastData.clipInfo
         )
         
         if (duration > 0) {
@@ -273,7 +276,7 @@ extension PodcastPlayerController {
             podcastId: podcastData.podcastId,
             currentTime: currentTime,
             duration: duration,
-            messageId: podcastData.messageId
+            clipInfo: podcastData.clipInfo
         )
 
         runPausedStateUpdate()
@@ -285,7 +288,7 @@ extension PodcastPlayerController {
     }
     
     func pausePlayingClip() {
-        if let podcastData = podcastData, let _ = podcastData.messageId {
+        if let podcastData = podcastData, let _ = podcastData.clipInfo?.messageId {
             pausePlaying()
         }
     }
@@ -302,7 +305,7 @@ extension PodcastPlayerController {
         updatePodcastObject(
             podcastId: podcastData.podcastId,
             currentTime: currentTime,
-            messageId: podcastData.messageId
+            clipInfo: podcastData.clipInfo
         )
         
         if self.podcastData?.podcastId != podcastData.podcastId {
@@ -311,7 +314,7 @@ extension PodcastPlayerController {
             return
         }
         
-        if let messageId = self.podcastData?.messageId, messageId != podcastData.messageId {
+        if let messageId = self.podcastData?.clipInfo?.messageId, messageId != podcastData.clipInfo?.messageId {
             runPausedStateUpdateFor(podcastData: podcastData)
             ///Avoid player actions if performing actions for a podcast that is not the current set on player controller
             return
@@ -348,7 +351,7 @@ extension PodcastPlayerController {
         updatePodcastObject(
             podcastId: podcastData.podcastId,
             playerSpeed: podcastData.speed,
-            messageId: podcastData.messageId
+            clipInfo: podcastData.clipInfo
         )
         
         if self.podcastData?.podcastId != podcastData.podcastId {
@@ -356,7 +359,7 @@ extension PodcastPlayerController {
             return
         }
         
-        if let messageId = self.podcastData?.messageId, messageId != podcastData.messageId {
+        if let messageId = self.podcastData?.clipInfo?.messageId, messageId != podcastData.clipInfo?.messageId {
             ///Avoid player actions if performing actions for a podcast that is not the current set on player controller
             return
         }
@@ -381,7 +384,7 @@ extension PodcastPlayerController {
         for (k, d) in self.delegates {
             
             ///Avoid calling delegates when playing chat clip
-            if let _ = podcastData.messageId, k != PodcastDelegateKeys.ChatDataSource.rawValue {
+            if let _ = podcastData.clipInfo?.messageId, k != PodcastDelegateKeys.ChatDataSource.rawValue {
                 continue
             }
             
@@ -399,7 +402,7 @@ extension PodcastPlayerController {
         for (k, d) in self.delegates {
             
             ///Avoid calling delegates when playing chat clip
-            if let _ = podcastData.messageId, k != PodcastDelegateKeys.ChatDataSource.rawValue {
+            if let _ = podcastData.clipInfo?.messageId, k != PodcastDelegateKeys.ChatDataSource.rawValue {
                 continue
             }
             
@@ -417,7 +420,7 @@ extension PodcastPlayerController {
         for (k, d) in self.delegates {
             
             ///Avoid calling delegates when playing chat clip
-            if let _ = podcastData.messageId, k != PodcastDelegateKeys.ChatDataSource.rawValue {
+            if let _ = podcastData.clipInfo?.messageId, k != PodcastDelegateKeys.ChatDataSource.rawValue {
                 continue
             }
             
@@ -431,7 +434,7 @@ extension PodcastPlayerController {
         for (k, d) in self.delegates {
             
             ///Avoid calling delegates when playing chat clip
-            if let _ = podcastData.messageId, k != PodcastDelegateKeys.ChatDataSource.rawValue {
+            if let _ = podcastData.clipInfo?.messageId, k != PodcastDelegateKeys.ChatDataSource.rawValue {
                 continue
             }
             
@@ -449,7 +452,7 @@ extension PodcastPlayerController {
         for (k, d) in self.delegates {
             
             ///Avoid calling delegates when playing chat clip
-            if let _ = podcastData.messageId, k != PodcastDelegateKeys.ChatDataSource.rawValue {
+            if let _ = podcastData.clipInfo?.messageId, k != PodcastDelegateKeys.ChatDataSource.rawValue {
                 continue
             }
             
@@ -469,7 +472,7 @@ extension PodcastPlayerController {
         for (k, d) in self.delegates {
             
             ///Avoid calling delegates when playing chat clip
-            if let _ = podcastData.messageId, k != PodcastDelegateKeys.ChatDataSource.rawValue {
+            if let _ = podcastData.clipInfo?.messageId, k != PodcastDelegateKeys.ChatDataSource.rawValue {
                 continue
             }
             

@@ -16,14 +16,14 @@ extension PodcastPlayerController {
         currentTime: Int? = nil,
         duration: Int? = nil,
         playerSpeed: Float? = nil,
-        messageId: Int? = nil
+        clipInfo: PodcastData.ClipInfo? = nil
     ) {
-        guard let podcast = getPodcastWith(podcastId: podcastId) else {
+        if let _ = clipInfo {
+            ///Avoid persisting state data when playing chat clips
             return
         }
         
-        if let _ = messageId {
-            ///Avoid persisting state data when playing chat clips
+        guard let podcast = getPodcastWith(podcastId: podcastId) else {
             return
         }
         
@@ -148,7 +148,7 @@ extension PodcastPlayerController {
             podcastId: podcastData.podcastId,
             currentTime: roundedCurrentTime,
             duration: duration,
-            messageId: podcastData.messageId
+            clipInfo: podcastData.clipInfo
         )
 
         runPlayingStateUpdate()
@@ -171,7 +171,7 @@ extension PodcastPlayerController {
         updatePodcastObject(
             podcastId: podcastData.podcastId,
             currentTime: 0,
-            messageId: podcastData.messageId
+            clipInfo: podcastData.clipInfo
         )
         
         markEpisodeAsPlayed()
@@ -216,7 +216,7 @@ extension PodcastPlayerController {
     func isPlaying(
         podcastId: String
     ) -> Bool {
-        if let _ = podcastData?.messageId {
+        if let _ = podcastData?.clipInfo {
             return false
         }
         
@@ -226,7 +226,7 @@ extension PodcastPlayerController {
     func isPlaying(
         episodeId: String
     ) -> Bool {
-        if let _ = podcastData?.messageId {
+        if let _ = podcastData?.clipInfo {
             return false
         }
         
@@ -236,7 +236,7 @@ extension PodcastPlayerController {
     func isPlaying(
         messageId: Int
     ) -> Bool {
-        return isPlaying && podcastData?.messageId == messageId
+        return isPlaying && podcastData?.clipInfo?.messageId == messageId
     }
     
     func isPlayerItemSetWith(

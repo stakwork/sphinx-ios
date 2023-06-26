@@ -306,6 +306,11 @@ extension TransactionMessage {
         return fileName.contains(".xls") || fileName.contains(".csv")
     }
     
+    func getFileExtension() -> String {
+        let fileName = getFileName().lowercased()
+        return fileName.substringAfterLastOccurenceOf(".") ?? "txt"
+    }
+    
     func isFileAttachment() -> Bool {
         return getMediaType() == TransactionMessage.TransactionMessageType.fileAttachment.rawValue
     }

@@ -47,12 +47,15 @@ public class CachedMedia: NSManagedObject {
         let cachedMedia = getCachedMediaInstance(id: id, managedContext: managedContext)
 
         cachedMedia.id = id
-        if let chat = chat{
+        
+        if let chat = chat {
             cachedMedia.chat = chat
         }
+        
         if let truncatedPath = CachedMedia.getTruncatedFilePath(filePath: filePath){
             cachedMedia.filePath = truncatedPath
         }
+        
         cachedMedia.fileExtension = fileExtension
         cachedMedia.key = key
         cachedMedia.fileName = fileName

@@ -113,7 +113,7 @@ public class TransactionMessage: NSManagedObject {
             fileExtension = "xls"
         }
         else if(self.isAttachment()){
-            fileExtension = "other"
+            fileExtension = self.getFileExtension()
         }
         
         return fileExtension

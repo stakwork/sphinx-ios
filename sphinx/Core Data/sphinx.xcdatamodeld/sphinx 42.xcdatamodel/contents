@@ -8,6 +8,7 @@
     <entity name="CachedMedia" representedClassName="CachedMedia" syncable="YES">
         <attribute name="creationDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="fileExtension" optional="YES" attributeType="String"/>
+        <attribute name="fileName" optional="YES" attributeType="String"/>
         <attribute name="filePath" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="key" optional="YES" attributeType="String"/>
@@ -41,6 +42,7 @@
         <attribute name="webAppLastDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <relationship name="cachedMediaSet" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CachedMedia" inverseName="chat" inverseEntity="CachedMedia"/>
         <relationship name="contentFeed" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="ContentFeed" inverseName="chat" inverseEntity="ContentFeed"/>
+        <relationship name="lastMessage" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TransactionMessage"/>
         <relationship name="messages" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TransactionMessage" inverseName="chat" inverseEntity="TransactionMessage"/>
         <relationship name="subscription" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Subscription" inverseName="chat" inverseEntity="Subscription"/>
         <uniquenessConstraints>

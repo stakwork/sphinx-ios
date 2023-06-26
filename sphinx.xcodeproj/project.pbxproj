@@ -1049,6 +1049,7 @@
 		474C7A5228D3A7A1007A3E17 /* sphinxrs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = sphinxrs.swift; sourceTree = "<group>"; };
 		474C7A5328D3A7A1007A3E17 /* Sphinxrs-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Sphinxrs-Bridging-Header.h"; sourceTree = "<group>"; };
 		474C7A5428D3A7A1007A3E17 /* sphinxrsFFI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sphinxrsFFI.h; sourceTree = "<group>"; };
+		474CA9082A4A21E300AA9218 /* sphinx 42.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 42.xcdatamodel"; sourceTree = "<group>"; };
 		474CC56D2900880300B68F08 /* sphinx 35.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 35.xcdatamodel"; sourceTree = "<group>"; };
 		474CCFA8291560DA0037E1D4 /* sphinx 36.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 36.xcdatamodel"; sourceTree = "<group>"; };
 		474CCFA9291562180037E1D4 /* API+ActionsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+ActionsExtension.swift"; sourceTree = "<group>"; };
@@ -6243,6 +6244,7 @@
 		47F35D4A2373156A0042A58F /* sphinx.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				474CA9082A4A21E300AA9218 /* sphinx 42.xcdatamodel */,
 				470146192A3BB5D400A00DF8 /* sphinx 41.xcdatamodel */,
 				47E6A4AA2A2A65F900A9509E /* sphinx 40.xcdatamodel */,
 				CE80EF632A0D7FF2007ED3A3 /* sphinx 39.xcdatamodel */,
@@ -6285,7 +6287,7 @@
 				475E4162238588A200928931 /* sphinx 2.xcdatamodel */,
 				47F35D4B2373156A0042A58F /* sphinx.xcdatamodel */,
 			);
-			currentVersion = 470146192A3BB5D400A00DF8 /* sphinx 41.xcdatamodel */;
+			currentVersion = 474CA9082A4A21E300AA9218 /* sphinx 42.xcdatamodel */;
 			path = sphinx.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

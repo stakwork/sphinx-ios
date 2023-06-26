@@ -196,15 +196,6 @@ class MediaLoader {
                 errorCompletion(messageId)
             }
         }
-        
-//        if let chat = message.chat?.getChat(),
-//           let path = getDiskImagePath(forKey: url.absoluteString){
-//            let randomInt = Int.random(in: 0...Int(1e9))
-//            var fileExtension = "png"
-//            fileExtension = message.getCMExtensionAssignment()
-//            let _ = CachedMedia.createObject(id: randomInt, chat: chat, filePath: path, fileExtension: fileExtension, key: url.absoluteString)
-//            //StorageManager.sharedManager.processGarbageCleanup()
-//        }
     }
     
     class func getImageFromData(

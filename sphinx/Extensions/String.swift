@@ -62,6 +62,14 @@ extension String {
     func substring(fromIndex: Int, toIndexIncluded: Int) -> String {
       return self[fromIndex ..< toIndexIncluded]
     }
+    
+    func substringAfterLastOccurenceOf(_ char: Character) -> String? {
+        if let lastIndex = self.lastIndex(of: char) {
+            let index: Int = self.distance(from: self.startIndex, to: lastIndex)
+            return substring(fromIndex: index)
+        }
+        return nil
+    }
 
     subscript (r: Range<Int>) -> String {
       let range = Range(uncheckedBounds: (lower: max(0, min(length, r.lowerBound)),

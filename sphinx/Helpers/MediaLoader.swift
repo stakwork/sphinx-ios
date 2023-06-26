@@ -599,7 +599,6 @@ class MediaLoader {
                 key: url,
                 fileName: name
             )
-//            StorageManager.sharedManager.processGarbageCleanup()
         }
     }
     
@@ -635,7 +634,6 @@ class MediaLoader {
                 key: url,
                 fileName: name
             )
-//            StorageManager.sharedManager.processGarbageCleanup()
         }
     }
     

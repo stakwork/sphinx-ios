@@ -34,6 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     let actionsManager = ActionsManager.sharedInstance
     let feedsManager = FeedsManager.sharedInstance
+    let storageManager = StorageManager.sharedManager
     
     let podcastPlayerController = PodcastPlayerController.sharedInstance
     
@@ -198,6 +199,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         actionsManager.syncActionsInBackground()
         feedsManager.saveContentFeedStatus()
+        storageManager.processGarbageCleanup()
         
         CoreDataManager.sharedManager.saveContext()
         

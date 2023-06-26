@@ -184,7 +184,7 @@ extension PodcastPlayerController {
         }
         
         if let podcast = getPodcastWith(podcastId: podcastData.podcastId) {
-            if let episode = podcast.getEpisodeWith(id: podcastData.podcastId) {
+            if let episode = podcast.getEpisodeWith(id: podcastData.episodeId) {
                 episode.wasPlayed = true
             }
         }

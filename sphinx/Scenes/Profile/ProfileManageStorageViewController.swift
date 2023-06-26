@@ -298,7 +298,6 @@ class ProfileManageStorageViewController : UIViewController{
     }
     
     @IBAction func changeButtonTap(_ sender: Any) {
-        print("changeButtonTap")
         isEditingMaxMemory = true
         maxSliderView.setSlider()
         editingModeMaximumLabel.text = formatBytes(Int(Double(maxSliderView.sliderControl.value) * 1e9))
@@ -307,15 +306,12 @@ class ProfileManageStorageViewController : UIViewController{
     
     
     @IBAction func saveTapped(_ sender: Any) {
-        print("saveTapped")
         UserData.sharedInstance.setMaxMemory(GB: Int(maxSliderView.sliderControl.value))
         isEditingMaxMemory = false
         maxGB = Int(maxSliderView.sliderControl.value)
         updateUsageLabels()
         storageSummaryView.summaryDict = vm.typeStats
         StorageManager.sharedManager.cleanupGarbage {
-            //stop loading
-            print("done cleaning up garbage")
             StorageManager.sharedManager.refreshAllStoredData(completion: {
                 self.setupStorageViewsAndModels()
             })

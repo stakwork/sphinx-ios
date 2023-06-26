@@ -485,6 +485,7 @@
 		47BF27F12A37782E00F15EE9 /* NewChatTableDataSource+PreloaderExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47BF27F02A37782E00F15EE9 /* NewChatTableDataSource+PreloaderExtension.swift */; };
 		47BF27F32A3795CE00F15EE9 /* MessageTableCellState+DataTypeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47BF27F22A3795CE00F15EE9 /* MessageTableCellState+DataTypeExtension.swift */; };
 		47BF7D4B25A8A59100593489 /* API+VersionsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47BF7D4A25A8A59100593489 /* API+VersionsExtension.swift */; };
+		47C0613B2A4A1BAA00CEF221 /* UISegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C0613A2A4A1BAA00CEF221 /* UISegmentedControl.swift */; };
 		47C52C4527F49EA9007B43E2 /* HMACSigningManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C52C4427F49EA9007B43E2 /* HMACSigningManager.swift */; };
 		47C7C1782938E84D00264BF6 /* RecommendationResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C7C1772938E84D00264BF6 /* RecommendationResult.swift */; };
 		47C7D704278749CF006D2809 /* PeopleTorActionsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47C7D706278749CF006D2809 /* PeopleTorActionsView.xib */; };
@@ -1413,6 +1414,7 @@
 		47BF27F02A37782E00F15EE9 /* NewChatTableDataSource+PreloaderExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewChatTableDataSource+PreloaderExtension.swift"; sourceTree = "<group>"; };
 		47BF27F22A3795CE00F15EE9 /* MessageTableCellState+DataTypeExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageTableCellState+DataTypeExtension.swift"; sourceTree = "<group>"; };
 		47BF7D4A25A8A59100593489 /* API+VersionsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+VersionsExtension.swift"; sourceTree = "<group>"; };
+		47C0613A2A4A1BAA00CEF221 /* UISegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISegmentedControl.swift; sourceTree = "<group>"; };
 		47C52C4427F49EA9007B43E2 /* HMACSigningManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HMACSigningManager.swift; sourceTree = "<group>"; };
 		47C7C1772938E84D00264BF6 /* RecommendationResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationResult.swift; sourceTree = "<group>"; };
 		47C7D705278749CF006D2809 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PeopleTorActionsView.xib; sourceTree = "<group>"; };
@@ -2732,6 +2734,7 @@
 				4705D39E2799C339009C0729 /* UITextField.swift */,
 				471161DE29156480008EAFF2 /* NSObject.swift */,
 				471161E92915937A008EAFF2 /* Array.swift */,
+				47C0613A2A4A1BAA00CEF221 /* UISegmentedControl.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -4802,6 +4805,7 @@
 				478B05C829786F8900A1B254 /* PodcastPlayerController+ActionsTracking.swift in Sources */,
 				F32A696126CFEF600004B8B3 /* PodcastEpisode+Properties.swift in Sources */,
 				CECFBEFE2965C84400BAD935 /* DiscoverTribesTableViewDataSource.swift in Sources */,
+				47C0613B2A4A1BAA00CEF221 /* UISegmentedControl.swift in Sources */,
 				47B9A648233BB6AE00D2B022 /* AddressBookHeaderView.swift in Sources */,
 				472161DC293A686A0088B87B /* RecommendationsHeaderCollectionReusableView.swift in Sources */,
 				479A39D7244E26FA00A37899 /* AttachmentObject.swift in Sources */,

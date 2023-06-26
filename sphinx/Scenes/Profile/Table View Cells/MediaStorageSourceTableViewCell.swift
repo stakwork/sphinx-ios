@@ -24,10 +24,6 @@ class MediaStorageSourceTableViewCell: UITableViewCell {
     @IBOutlet weak var fileTypeLabel: UILabel!
     @IBOutlet weak var fileTypeView: UIView!
     
-    @IBOutlet weak var chatAvatarImageView1: UIImageView!
-    @IBOutlet weak var chatAvatarImageView2: UIImageView!
-    @IBOutlet weak var chatAvatarImageView3: UIImageView!
-    
     @IBOutlet weak var blueCheckmarkImageView: UIImageView!
     
     
@@ -92,45 +88,8 @@ class MediaStorageSourceTableViewCell: UITableViewCell {
         switch(forSource){
         case .chats:
             mediaSourceLabel.text = "Chats"
-            squareImageView.isHidden = true
-            
-            chatAvatarImageView1.image = #imageLiteral(resourceName: "appPinIcon")
-            chatAvatarImageView2.image = #imageLiteral(resourceName: "appPinIcon")
-            chatAvatarImageView3.image = #imageLiteral(resourceName: "appPinIcon")
-            
-            let urls = StorageManager.sharedManager.getTop3ChatImages()
-            if let url = URL(string: urls[0]){
-                chatAvatarImageView1.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "appPinIcon"), context: nil)
-                chatAvatarImageView1.layer.borderWidth = 2.0
-                chatAvatarImageView1.layer.borderColor = UIColor.Sphinx.Body.cgColor
-                chatAvatarImageView1.makeCircular()
-                chatAvatarImageView1.isHidden = false
-            }
-            
-            if let url2 = URL(string: urls[1]){
-                chatAvatarImageView2.sd_setImage(with: url2, placeholderImage: #imageLiteral(resourceName: "appPinIcon"), context: nil)
-                chatAvatarImageView2.layer.borderWidth = 2.0
-                chatAvatarImageView2.layer.borderColor = UIColor.Sphinx.Body.cgColor
-                chatAvatarImageView2.makeCircular()
-                chatAvatarImageView2.isHidden = false
-            }
-            if let url3 = URL(string: urls[2]){
-                chatAvatarImageView3.sd_setImage(with: url3, placeholderImage: #imageLiteral(resourceName: "appPinIcon"), context: nil)
-                chatAvatarImageView3.layer.borderWidth = 2.0
-                chatAvatarImageView3.layer.borderColor = UIColor.Sphinx.Body.cgColor
-                chatAvatarImageView3.makeCircular()
-                chatAvatarImageView3.isHidden = false
-            }
-            
-            if(chatAvatarImageView1.isHidden == true &&
-               chatAvatarImageView2.isHidden == true &&
-               chatAvatarImageView3.isHidden == true
-            ){
-                squareImageView.image = #imageLiteral(resourceName: "appPinIcon")
-                squareImageView.isHidden = false
-            }
-            
-            //squareImageView.image = StorageManager.sharedManager.getTop3ChatImages()// #imageLiteral(resourceName: "appPinIcon")
+            squareImageView.image = #imageLiteral(resourceName: "appPinIcon")
+            squareImageView.isHidden = false
             initialsLabel.isHidden = true
             squareImageView.makeCircular()
             break

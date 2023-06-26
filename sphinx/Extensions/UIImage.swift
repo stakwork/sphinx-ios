@@ -11,6 +11,20 @@ import UIKit
 import AVFoundation
 
 extension UIImage {
+    
+    convenience init(color: UIColor, size: CGSize) {
+        UIGraphicsBeginImageContextWithOptions(size, false, 1)
+        color.set()
+        
+        let context = UIGraphicsGetCurrentContext()!
+        context.fill(CGRect(origin: .zero, size: size))
+        
+        
+        let image = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        self.init(data: image.pngData()!)!
+    }
+    
     static func qrCode(from string: String) -> UIImage? {
         let stringData = string.data(using: .isoLatin1)
         let filter = CIFilter(name: "CIQRCodeGenerator")

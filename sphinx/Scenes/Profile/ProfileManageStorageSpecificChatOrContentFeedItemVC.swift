@@ -280,19 +280,17 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
     
     func setupSegmentedControl(){
         // Set the background color for the selected segment
-        mediaVsFilesSegmentedControl.selectedSegmentTintColor = .clear//UIColor.Sphinx.HeaderBG
+        mediaVsFilesSegmentedControl.setLayout(tintColor: UIColor.Sphinx.HeaderBG)
 
         // Customize the title attributes for the selected segment
         let selectedSegmentAttributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.Sphinx.PrimaryText,
-            .font: UIFont(name: "Roboto-Bold", size: 16.0),
-            //.backgroundColor : UIColor.Sphinx.HeaderBG
+            .font: UIFont(name: "Roboto-Bold", size: 16.0)!
         ]
         
         let deSelectedSegmentAttributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.Sphinx.WashedOutReceivedText,
-            .font: UIFont(name: "Roboto", size: 16.0),
-            //.backgroundColor : UIColor.Sphinx.HeaderBG
+            .font: UIFont(name: "Roboto-Bold", size: 16.0)!
         ]
 
         mediaVsFilesSegmentedControl.setTitleTextAttributes(selectedSegmentAttributes, for: .selected)
@@ -300,7 +298,7 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
 
         // Create a CALayer for the underline
         let underlineLayer = CALayer()
-        underlineLayer.backgroundColor = UIColor.blue.cgColor  // Set the underline color
+        underlineLayer.backgroundColor = UIColor.Sphinx.PrimaryBlue.cgColor  // Set the underline color
 
         // Set the initial frame for the underline
         let initialSelectedSegmentIndex = 0  // Replace with the desired initial selected segment index
@@ -325,16 +323,13 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
     @IBAction func segmentedControlChanged(_ sender: UISegmentedControl) {
         selectedIndexUnderlineView.translatesAutoresizingMaskIntoConstraints = false
         let wasOnIndexZero = filesListTableView.isHidden == true
-        if(sender.selectedSegmentIndex == 0){
-            print("0")
+        if (sender.selectedSegmentIndex == 0) {
             filesListTableView.isHidden = true
             imageCollectionView.isHidden = false
             UIView.animate(withDuration: 0.5, delay: 0.0, animations: {
                 self.selectedIndexIndicatorLeadingEdge.constant = 0
             })
-        }
-        else{
-            print("1")
+        } else {
             filesListTableView.isHidden = false
             imageCollectionView.isHidden = true
             UIView.animate(withDuration: 0.5, delay: 0.0, animations: {
@@ -344,7 +339,6 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
         
         if((sender.selectedSegmentIndex == 0 && wasOnIndexZero == false) ||
            (sender.selectedSegmentIndex != 0 && wasOnIndexZero == true)){
-            //detected change
             deletionSummaryView.isHidden = true
             vm.mediaSelectedStatus = vm.mediaItems.map({ _ in return false })
         }
@@ -374,9 +368,6 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVC : MediaDeletionCon
         if(state == .batch){
             self.processDeleteAll {
                 self.mediaDeletionConfirmationView.state = .finished
-                //TODO update loading label here
-                //self.delegate?.finishedDeleteAll()
-                //self.navigationController?.popViewController(animated: true)
             }
         }
         else if sourceType == .chats{
@@ -400,7 +391,7 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVC : MediaDeletionCon
     
 }
 
-extension ProfileManageStorageSpecificChatOrContentFeedItemVC : PodcastPlayerVCDelegate, CustomBoostDelegate{
+extension ProfileManageStorageSpecificChatOrContentFeedItemVC : PodcastPlayerVCDelegate, CustomBoostDelegate {
     func willDismissPlayer() {
         
     }
@@ -420,6 +411,4 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVC : PodcastPlayerVCD
     func didSendBoostMessage(success: Bool, message: TransactionMessage?) {
         
     }
-    
-    
 }

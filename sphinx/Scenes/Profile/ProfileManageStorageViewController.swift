@@ -135,7 +135,6 @@ class ProfileManageStorageViewController : UIViewController{
             self.mediaDeletionConfirmationView.layer.zPosition = 1000
             self.mediaDeletionConfirmationView.delegate = self
             self.mediaDeletionConfirmationView.isHidden = false
-            //self.mediaDeletionConfirmationView.contentView.backgroundColor = .black
             if(self.mediaDeletionConfirmationView.state == .awaitingApproval){
                 self.mediaDeletionConfirmationView.type = type
             }
@@ -155,14 +154,11 @@ class ProfileManageStorageViewController : UIViewController{
     }
     
     func setIsLoading(){
-        //self.isLoading = true
         mediaDeletionConfirmationView.state = .loading
     }
     
     func resetIsLoading(type:StorageManagerMediaType){
-        //self.isLoading = false
         mediaDeletionConfirmationView.state = .finished
-        //showDeletionWarningAlert(type: type)
     }
     
     lazy var vm : ProfileManageStorageViewModel = {
@@ -374,7 +370,6 @@ extension ProfileManageStorageViewController : MediaDeletionConfirmationViewDele
         if let type = mediaDeletionConfirmationView.type{
             vm.handleDeletion(type: type)
         }
-        //
     }
     
     func mediaDeletionCancelTapped() {

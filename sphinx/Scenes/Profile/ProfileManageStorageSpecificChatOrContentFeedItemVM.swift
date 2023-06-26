@@ -282,8 +282,6 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVM : UITableViewDataS
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if(sourceType == .podcasts){
-            //let item = mediaItems[indexPath.row]
-            //playPodcastItem(item: item)
             mediaSelectedStatus[indexPath.row] = !mediaSelectedStatus[indexPath.row]
         }
         else if(sourceType == .chats){

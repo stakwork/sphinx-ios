@@ -46,7 +46,6 @@ class ProfileManageStorageSourceDetailsVC : UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //view.backgroundColor = .magenta
         if(isFirstLoad == true){
             setupView()
             vm.finishSetup()
@@ -108,7 +107,6 @@ class ProfileManageStorageSourceDetailsVC : UIViewController{
     }
     
     func setupDeletionWarningAlert(){
-        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.15, execute: {
             self.overlayView = UIView(frame: self.view.frame)
             if let overlayView = self.overlayView{
@@ -122,9 +120,6 @@ class ProfileManageStorageSourceDetailsVC : UIViewController{
             self.mediaDeletionConfirmationView.layer.zPosition = 1000
             self.mediaDeletionConfirmationView.delegate = self
             self.mediaDeletionConfirmationView.isHidden = false
-//            let size = StorageManager.sharedManager.getItemGroupTotalSize(items: self.vm.getSourceItems().filter({$0.type == type}))
-//            self.mediaDeletionConfirmationView.spaceFreedString = formatBytes(Int(1e6 * size))
-            //self.mediaDeletionConfirmationView.contentView.backgroundColor = .black
         })
     }
     

@@ -65,7 +65,7 @@ extension String {
     
     func substringAfterLastOccurenceOf(_ char: Character) -> String? {
         if let lastIndex = self.lastIndex(of: char) {
-            let index: Int = self.distance(from: self.startIndex, to: lastIndex)
+            let index: Int = self.distance(from: self.startIndex, to: lastIndex) + 1
             return substring(fromIndex: index)
         }
         return nil

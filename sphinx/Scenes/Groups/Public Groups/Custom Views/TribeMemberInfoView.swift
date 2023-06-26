@@ -196,7 +196,7 @@ extension TribeMemberInfoView : AttachmentsManagerDelegate {
     
     func didSuccessUploadingImage(url: String) {
         if let image = pictureImageView.image?.fixedOrientation() {
-            MediaLoader.storeImageInCache(img: image, url: url, chat: nil)
+            MediaLoader.storeImageInCache(img: image, url: url, message: nil)
         }
         pictureTextField.text = url
         

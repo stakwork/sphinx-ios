@@ -186,7 +186,11 @@ class MediaLoader {
         }
         
         if let decryptedImage = decryptedImage {
-            storeImageInCache(img: decryptedImage, url: url.absoluteString, chat: message.chat?.getChat())
+            storeImageInCache(
+                img: decryptedImage,
+                url: url.absoluteString,
+                message: message
+            )
             
             DispatchQueue.main.async {
                 completion(messageId, decryptedImage)
@@ -449,7 +453,11 @@ class MediaLoader {
             } else {
                 loadDataFrom(URL: url, includeToken: true, completion: { (data, _) in
                     if let image = UIImage(data: data) {
-                        self.storeImageInCache(img: image, url: url.absoluteString, chat: nil)
+                        self.storeImageInCache(
+                            img: image,
+                            url: url.absoluteString,
+                            message: nil
+                        )
                         
                         DispatchQueue.main.async {
                             completion(row, muid, image)
@@ -471,7 +479,11 @@ class MediaLoader {
         } else {
             loadDataFrom(URL: url, includeToken: true, completion: { (data, _) in
                 if let image = UIImage(data: data) {
-                    self.storeImageInCache(img: image, url: url.absoluteString, chat: nil)
+                    self.storeImageInCache(
+                        img: image,
+                        url: url.absoluteString,
+                        message: nil
+                    )
                     
                     DispatchQueue.main.async {
                         completion(message.id, image)
@@ -528,7 +540,13 @@ class MediaLoader {
                     let cgThumbImage = try avAssetImageGenerator.copyCGImage(at: thumnailTime, actualTime: nil)
                     let thumbImage = UIImage(cgImage: cgThumbImage)
                     deleteItemAt(url: url)
-                    storeImageInCache(img: thumbImage, url: videoUrl,chat:nil)
+                    
+                    storeImageInCache(
+                        img: thumbImage,
+                        url: videoUrl,
+                        message: nil
+                    )
+                    
                     DispatchQueue.main.async {
                         completion(thumbImage)
                     }
@@ -557,8 +575,32 @@ class MediaLoader {
         
     }
     
-    class func storeImageInCache(img: UIImage, url: String,chat:Chat?) {
+    class func storeImageInCache(
+        img: UIImage,
+        url: String,
+        message: TransactionMessage? = nil
+    ) {
         SDImageCache.shared.store(img, forKey: url, completion: nil)
+        
+        if
+            let message = message,
+            let chat = message.chat?.getChat(),
+            let path = getDiskImagePath(forKey: url)
+        {
+            
+            let randomInt = Int.random(in: 0...Int(1e9))
+            let name = message.getFileName()
+            
+            let _ = CachedMedia.createObject(
+                id: randomInt,
+                chat: chat,
+                filePath: path,
+                fileExtension: "png",
+                key: url,
+                fileName: name
+            )
+//            StorageManager.sharedManager.processGarbageCleanup()
+        }
     }
     
     class func getDiskImagePath(forKey key: String)->String? {
@@ -569,15 +611,20 @@ class MediaLoader {
         return SDImageCache.shared.imageFromCache(forKey: url)
     }
     
-    class func storeMediaDataInCache(data: Data, url: String,message:TransactionMessage?=nil) {
+    class func storeMediaDataInCache(
+        data: Data,
+        url: String,
+        message: TransactionMessage? = nil
+    ) {
         cache[url] = data
         
-        if let message = message,
-           let chat = message.chat?.getChat(),
-           let path = getDiskImagePath(forKey: url)
+        if
+            let message = message,
+            let chat = message.chat?.getChat(),
+            let path = getDiskImagePath(forKey: url)
         {
             let randomInt = Int.random(in: 0...Int(1e9))
-            var fileExtension = message.getCMExtensionAssignment() ?? "png"
+            let fileExtension = message.getCMExtensionAssignment()
             let name = message.getFileName()
             
             let _ = CachedMedia.createObject(
@@ -588,6 +635,7 @@ class MediaLoader {
                 key: url,
                 fileName: name
             )
+//            StorageManager.sharedManager.processGarbageCleanup()
         }
     }
     

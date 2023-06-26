@@ -223,7 +223,7 @@ extension ProfileViewController : AttachmentsManagerDelegate {
     
     func didSuccessUploadingImage(url: String) {
         if let image = profileImageView.image {
-            MediaLoader.storeImageInCache(img: image, url: url, chat: nil)
+            MediaLoader.storeImageInCache(img: image, url: url, message: nil)
         }
         updateProfile(photoUrl: url)
     }

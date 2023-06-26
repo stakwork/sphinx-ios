@@ -270,7 +270,7 @@ class GroupDetailsViewController: UIViewController {
             self.loading = false
             
             if let fileUrl = fileUrl, success {
-                MediaLoader.storeImageInCache(img: image, url: fileUrl, chat: self.chat)
+                MediaLoader.storeImageInCache(img: image, url: fileUrl, message: nil)
                 self.imageUploaded(photoUrl: fileUrl)
             } else {
                 self.imageUploaded(photoUrl: nil)

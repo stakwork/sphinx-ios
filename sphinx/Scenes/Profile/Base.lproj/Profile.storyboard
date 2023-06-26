@@ -1807,7 +1807,7 @@
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="21"/>
                                                 <state key="normal" title="close">
-                                                    <color key="titleColor" name="WashedOutReceivedText"/>
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <connections>
                                                     <action selector="deletionSummaryCloseTap:" destination="qnq-FW-gcV" eventType="touchUpInside" id="RpG-xk-zGT"/>

@@ -66,8 +66,10 @@ class MediaStorageSourceTableViewCell: UITableViewCell {
             return DocsColors.blue.uiColor
         case "xls":
             return DocsColors.green.uiColor
-        default:
+        case "wav", "mp3":
             return DocsColors.yellow.uiColor
+        default:
+            return UIColor.purple
         }
     }
 

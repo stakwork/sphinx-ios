@@ -88,8 +88,8 @@ public class TransactionMessage: NSManagedObject {
     
     static let kCallRoomName = "/sphinx.call"
     
-    func getCMExtensionAssignment() -> String? {
-        var fileExtension:String? = nil
+    func getCMExtensionAssignment() -> String {
+        var fileExtension: String = "txt"
         
         if(self.isPicture()){
             fileExtension = "png"
@@ -98,7 +98,7 @@ public class TransactionMessage: NSManagedObject {
             fileExtension = "mp4"
         }
         else if(self.isAudio()){
-            fileExtension = "mp3"
+            fileExtension = "wav"
         }
         else if(self.isGif()){
             fileExtension = "gif"

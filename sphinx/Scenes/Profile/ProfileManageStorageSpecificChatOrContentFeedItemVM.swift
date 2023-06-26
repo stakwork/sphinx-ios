@@ -28,7 +28,7 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVM : NSObject{
 
                 for item in mediaItems {
                     // Check if the item's filePath and key combination already exists in the consolidatedItems array
-                    if let existingIndex = consolidatedItems.firstIndex(where: { $0.cachedMedia?.filePath == item.cachedMedia?.filePath && $0.cachedMedia?.key == item.cachedMedia?.key }) {
+                    if let _ = consolidatedItems.firstIndex(where: { $0.cachedMedia?.filePath == item.cachedMedia?.filePath && $0.cachedMedia?.key == item.cachedMedia?.key }) {
                         // If the combination exists, update the memory total by adding the current item's memory
                         memoryTotals[item.cachedMedia?.filePath ?? ""]? += item.sizeMB
                     } else {
@@ -53,6 +53,7 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVM : NSObject{
             }
             // Update the selected status and reload the collection view or table view
             mediaSelectedStatus = mediaItems.map({ _ in return false })
+            fileSelectedStatus = fileItems.map({ _ in return false })
         }
     }
     
@@ -78,6 +79,16 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVM : NSObject{
             vc.view.bringSubviewToFront(vc.deletionSummaryView)
             vc.updateDeletionSummaryLabel()
             filesTableView.reloadData()
+        }
+    }
+    
+    var selectedStatus : [Bool] {
+        get {
+            if (vc.mediaVsFilesSegmentedControl.selectedSegmentIndex == 1) {
+                return fileSelectedStatus
+            } else {
+                return mediaSelectedStatus
+            }
         }
     }
     
@@ -111,6 +122,7 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVM : NSObject{
         
         // Reset the selected status
         mediaSelectedStatus = mediaItems.map({ _ in return false })
+        fileSelectedStatus = fileItems.map({ _ in return false })
         
         // Reload the collection view or table view if needed
         imageCollectionView.reloadData()
@@ -258,10 +270,8 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVM : UITableViewDataS
         switch(vc.sourceType){
         case .podcasts:
             return mediaItems.count
-            break
         case .chats:
             return fileItems.count
-            break
         }
         
     }
@@ -314,8 +324,6 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVM : UICollectionView
         
         if let cell = cell as? ChatImageCollectionViewCell,
            let cm = mediaItems[indexPath.row].cachedMedia{
-            print(cm.fileName)
-            print(mediaItems[indexPath.row].sizeMB)
             cell.configure(cachedMedia: cm, size: getSize(),selectionStatus: mediaSelectedStatus[indexPath.row], memorySizeMB: mediaItems[indexPath.row].sizeMB)
         }
     }

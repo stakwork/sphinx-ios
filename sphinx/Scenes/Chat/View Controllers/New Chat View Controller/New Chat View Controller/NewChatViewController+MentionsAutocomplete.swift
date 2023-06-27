@@ -10,6 +10,46 @@ import UIKit
 
 extension NewChatViewController: ChatMentionAutocompleteDelegate {
     
+    func initializeMacros() {
+        self.macros = [
+               MentionOrMacroItem(type: .macro, displayText: "Find and Share a Gif",
+                    image: #imageLiteral(resourceName: "giphy"),
+                    action: {
+                        print("get giphy")
+               }),
+//               MentionOrMacroItem(type: .macro, displayText: "Start Audio Call",
+//                image: #imageLiteral(resourceName: "phone_call_icon"),
+//                action: {
+//                   //self.shouldCreateCall(mode: .Audio)
+//               }),
+//               MentionOrMacroItem(type: .macro, displayText: "Start Video Call",
+//                image: #imageLiteral(resourceName:"video_call_icon"),
+//                action: {
+//                   //self.shouldCreateCall(mode: .All)
+//               }),
+               MentionOrMacroItem(type: .macro, displayText: "Send Payment (Sats)",
+                image: #imageLiteral(resourceName: "payment-sent-arrow")
+                ,action: {
+                   //self.macroDoPayment(buttonTag: ChildVCContainer.ChildVCOptionsMenuButton.Send)
+               }),
+               MentionOrMacroItem(type: .macro, displayText: "Request Sats (Send Invoice)",
+                image: #imageLiteral(resourceName: "payment-received-arrow"),
+                action: {
+                   //self.macroDoPayment(buttonTag: ChildVCContainer.ChildVCOptionsMenuButton.Request)
+               }),
+//               MentionOrMacroItem(type: .macro, displayText: "Send Emoji",
+//                image: #imageLiteral(resourceName: "emojiIcon"),
+//                action: {
+//                   //self.emojiButtonClicked(self)
+//               }),
+//               MentionOrMacroItem(type: .macro, displayText: "Record Voice Memo",
+//                    image: #imageLiteral(resourceName:"microphone_icon") ,
+//                    action: {
+//                   //self.micButtonClicked(self)
+//               })
+           ]
+       }
+    
     func configureMentions() {
         configureMentionAutocompleteTableView()
     }
@@ -21,8 +61,27 @@ extension NewChatViewController: ChatMentionAutocompleteDelegate {
             return
         }
         
-        var possibleMentions = chatViewModel.getMentionsFrom(mentionText: mentionText)
+        let possibleMentions = chatViewModel.getMentionsFrom(mentionText: mentionText)
         mentionsDataSource.updateMentionSuggestions(suggestions: possibleMentions)
+    }
+    
+    func didDetectPossibleMacro(macro: String) {
+        var localMacros : [MentionOrMacroItem] = []
+        let macrosText = String(macro).replacingOccurrences(of: "/", with: "").lowercased()
+        var possibleMacros = (macrosText != "") ? self.macros.compactMap({$0.displayText}).filter(
+        {
+            let actionText = $0.lowercased()
+            return actionText.contains(macrosText.lowercased()) || macrosText == ""
+        }).sorted()
+        :
+        self.macros.compactMap({$0.displayText})
+
+        localMacros  = macros.filter({macroObject in
+            return possibleMacros.contains(macroObject.displayText)
+        })
+        if(chatMentionAutocompleteDataSource?.mentionSuggestions.count == 0){
+            chatMentionAutocompleteDataSource?.updateMacroSuggestions(macros: localMacros)
+        }
     }
     
     func configureMentionAutocompleteTableView() {
@@ -30,7 +89,7 @@ extension NewChatViewController: ChatMentionAutocompleteDelegate {
         
         chatMentionAutocompleteDataSource = ChatMentionAutocompleteDataSource(
             tableView: mentionsAutocompleteTableView,
-            delegate: self, chat: self.chat
+            delegate: self, chat: self.chat, macros: self.macros
         )
         
         mentionsAutocompleteTableView.delegate = chatMentionAutocompleteDataSource
@@ -39,5 +98,13 @@ extension NewChatViewController: ChatMentionAutocompleteDelegate {
     
     func processAutocomplete(text: String) {
         bottomView.populateMentionAutocomplete(mention: text)
+    }
+    
+    func processGeneralPurposeMacro(action: @escaping () -> ()) {
+        action()
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01, execute: {
+//            self.messageTextView.string = ""
+//            self.textDidChange(Notification(name: Notification.Name(rawValue: "")))
+//        })
     }
 }

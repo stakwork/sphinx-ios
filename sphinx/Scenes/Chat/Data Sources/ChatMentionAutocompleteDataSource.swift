@@ -12,6 +12,7 @@ import UIKit
 
 protocol ChatMentionAutocompleteDelegate{
     func processAutocomplete(text:String)
+    func processGeneralPurposeMacro(action: @escaping ()->())
 }
 
 class ChatMentionAutocompleteDataSource : NSObject {
@@ -20,12 +21,14 @@ class ChatMentionAutocompleteDataSource : NSObject {
     var delegate: ChatMentionAutocompleteDelegate!
     let mentionCellHeight :CGFloat = 50.0
     var chat : Chat?
+    var macros : [MentionOrMacroItem]!
     
-    init(tableView:UITableView,delegate:ChatMentionAutocompleteDelegate,chat:Chat?){
+    init(tableView:UITableView,delegate:ChatMentionAutocompleteDelegate,chat:Chat?,macros:[MentionOrMacroItem]){
         super.init()
         self.tableView = tableView
         self.delegate = delegate
         self.chat = chat
+        self.macros = macros
         tableView.backgroundColor = .clear
         tableView.separatorColor = UIColor.Sphinx.Divider
         tableView.estimatedRowHeight = mentionCellHeight
@@ -52,7 +55,21 @@ class ChatMentionAutocompleteDataSource : NSObject {
             )
             tableView.scrollToRow(at: bottom, at: .bottom, animated: true)
         }
+    }
+    
+    func updateMacroSuggestions(macros:[MentionOrMacroItem]){
+        tableView.isHidden = (macros.isEmpty == true)
+        mentionSuggestions = macros
         
+        tableView.reloadData()
+        
+        if (macros.isEmpty == false) {
+            let bottom = IndexPath(
+                row: 0,
+                section: 0
+            )
+            tableView.scrollToRow(at: bottom, at: .bottom, animated: true)
+        }
     }
     
 }
@@ -67,7 +84,7 @@ extension ChatMentionAutocompleteDataSource : UITableViewDataSource{
             withIdentifier: ChatMentionAutocompleteTableViewCell.reuseID,
             for: indexPath
         ) as! ChatMentionAutocompleteTableViewCell
-        
+        cell.delegate = self
         return cell
     }
     
@@ -75,7 +92,7 @@ extension ChatMentionAutocompleteDataSource : UITableViewDataSource{
         if let mentionCell = cell as? ChatMentionAutocompleteTableViewCell//,
            //let valid_vc = vc
         {
-            mentionCell.configureWith(mentionOrMacro: mentionSuggestions[indexPath.item], delegate: nil)
+            mentionCell.configureWith(mentionOrMacro: mentionSuggestions[indexPath.item])
         }
     }
     
@@ -84,11 +101,25 @@ extension ChatMentionAutocompleteDataSource : UITableViewDataSource{
 extension ChatMentionAutocompleteDataSource : UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //self.delegate?.processAutocomplete(text: mentionSuggestions[indexPath.row])
         self.tableView.isHidden = true
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return mentionCellHeight
     }
+}
+
+
+extension ChatMentionAutocompleteDataSource : ChatMentionAutocompleteDelegate{
+    func processAutocomplete(text: String) {
+        self.delegate?.processAutocomplete(text: text)
+    }
+    func processGeneralPurposeMacro(action: @escaping () -> ()) {
+        action()
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01, execute: {
+//            self.messageTextView.string = ""
+//            self.textDidChange(Notification(name: Notification.Name(rawValue: "")))
+//        })
+    }
+    
 }

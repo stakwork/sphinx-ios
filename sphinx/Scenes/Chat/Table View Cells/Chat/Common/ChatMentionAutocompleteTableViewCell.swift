@@ -31,17 +31,17 @@ class ChatMentionAutocompleteTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        self.mentionTextField.layer.borderWidth = 0.0
+        self.contentView.layer.borderWidth = 0.0
         // Configure the view for the selected state
     }
     
-    func configureWith(mentionOrMacro:MentionOrMacroItem,delegate:ChatMentionAutocompleteDelegate?){
-        self.delegate = delegate
+    func configureWith(mentionOrMacro:MentionOrMacroItem){
         self.mentionTextField.text = mentionOrMacro.displayText
         self.alias = mentionOrMacro.displayText
         self.type = mentionOrMacro.type
         self.action = mentionOrMacro.action
-        //self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleClick)))
+        self.contentView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleClick)))
         mentionTextField.backgroundColor = .clear
         mentionTextField.isUserInteractionEnabled = false
         
@@ -58,6 +58,7 @@ class ChatMentionAutocompleteTableViewCell: UITableViewCell {
         else{
             avatarImage.layer.contentsGravity = .resizeAspectFill
             avatarImage.sd_setImage(with: mentionOrMacro.imageLink, placeholderImage: #imageLiteral(resourceName: "appPinIcon"), context: nil)
+            avatarImage.contentMode = .scaleAspectFit
             avatarImage.makeCircular()
         }
         avatarImage.tintColor = UIColor.Sphinx.BodyInverted
@@ -71,13 +72,15 @@ class ChatMentionAutocompleteTableViewCell: UITableViewCell {
     }
     
     @objc func handleClick(){
-        if let valid_alias = alias, type == .mention{
-            //self.delegate?.processAutocomplete(text: valid_alias + " ")
+        if let valid_alias = alias,
+            type == .mention,
+         let delegate = delegate{
+            delegate.processAutocomplete(text: valid_alias + " ")
         }
         else if type == .macro,
         let action = action{
             print("MACRO")
-            //self.delegate?.processGeneralPurposeMacro(action: action)
+            self.delegate?.processGeneralPurposeMacro(action: action)
         }
     }
     

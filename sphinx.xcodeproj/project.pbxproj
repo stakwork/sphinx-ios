@@ -654,6 +654,9 @@
 		CE842DEF298D61CF00620AD3 /* BadgeAdminListHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE842DED298D61CF00620AD3 /* BadgeAdminListHeaderCell.xib */; };
 		CE842DF12992D0F400620AD3 /* BadgeTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE842DF02992D0F400620AD3 /* BadgeTemplate.swift */; };
 		CE91E59A29885175008BA6EA /* MemberBadgeDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE91E59929885175008BA6EA /* MemberBadgeDetailVC.swift */; };
+		CE94A50D2A4B2BF6001EDF7E /* MentionOrMacroItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE94A50C2A4B2BF6001EDF7E /* MentionOrMacroItem.swift */; };
+		CE94A5102A4B2DF3001EDF7E /* ChatMentionAutocompleteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE94A50E2A4B2DF3001EDF7E /* ChatMentionAutocompleteTableViewCell.swift */; };
+		CE94A5112A4B2DF3001EDF7E /* ChatMentionAutocompleteTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE94A50F2A4B2DF3001EDF7E /* ChatMentionAutocompleteTableViewCell.xib */; };
 		CE9A18572A1D6AC900F176DE /* MediaStorageSourceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9A18552A1D6AC900F176DE /* MediaStorageSourceTableViewCell.swift */; };
 		CE9A18582A1D6AC900F176DE /* MediaStorageSourceTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE9A18562A1D6AC900F176DE /* MediaStorageSourceTableViewCell.xib */; };
 		CE9A185A2A1D736700F176DE /* ProfileManageStorageSourceDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9A18592A1D736700F176DE /* ProfileManageStorageSourceDetailsVC.swift */; };
@@ -1602,6 +1605,9 @@
 		CE842DED298D61CF00620AD3 /* BadgeAdminListHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BadgeAdminListHeaderCell.xib; sourceTree = "<group>"; };
 		CE842DF02992D0F400620AD3 /* BadgeTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeTemplate.swift; sourceTree = "<group>"; };
 		CE91E59929885175008BA6EA /* MemberBadgeDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberBadgeDetailVC.swift; sourceTree = "<group>"; };
+		CE94A50C2A4B2BF6001EDF7E /* MentionOrMacroItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MentionOrMacroItem.swift; sourceTree = "<group>"; };
+		CE94A50E2A4B2DF3001EDF7E /* ChatMentionAutocompleteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMentionAutocompleteTableViewCell.swift; sourceTree = "<group>"; };
+		CE94A50F2A4B2DF3001EDF7E /* ChatMentionAutocompleteTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatMentionAutocompleteTableViewCell.xib; sourceTree = "<group>"; };
 		CE9985B629D70CCF007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		CE9985B729D70CCF007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/RecommendationsHeaderCollectionReusableView.strings; sourceTree = "<group>"; };
 		CE9985B829D70CCF007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/Chat.strings; sourceTree = "<group>"; };
@@ -3356,6 +3362,8 @@
 				47D4DE7C2A45CA85004B03AF /* LoadingMoreTableViewCell.swift */,
 				47D4DE7D2A45CA85004B03AF /* LoadingMoreTableViewCell.xib */,
 				47DAABCA24913E6E00EF38B0 /* SwipableReplyCell.swift */,
+				CE94A50E2A4B2DF3001EDF7E /* ChatMentionAutocompleteTableViewCell.swift */,
+				CE94A50F2A4B2DF3001EDF7E /* ChatMentionAutocompleteTableViewCell.xib */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -3960,6 +3968,7 @@
 			children = (
 				F3446B9126BABAB400855516 /* ChatListCollectionViewCell.swift */,
 				F313024526BA62B200A1396E /* ChatsCollectionViewController.swift */,
+				CE94A50C2A4B2BF6001EDF7E /* MentionOrMacroItem.swift */,
 				F313024726BA994B00A1396E /* ChatsContainerViewController.swift */,
 				F3446B9226BABAB400855516 /* ChatListCollectionViewCell.xib */,
 			);
@@ -4493,6 +4502,7 @@
 				47ACBC3E265EA69200D2FE47 /* PersonModalView.xib in Resources */,
 				4787F8822474623F00CCE8B9 /* GroupTagCollectionViewCell.xib in Resources */,
 				475BDD4D232AD00D00C5BBD6 /* Roboto-Medium.ttf in Resources */,
+				CE94A5112A4B2DF3001EDF7E /* ChatMentionAutocompleteTableViewCell.xib in Resources */,
 				47183CB82548B75B00E6FD19 /* EpisodesHeaderView.xib in Resources */,
 				47904C0924BF352300710E7A /* note.caf in Resources */,
 				475BDD4E232AD00D00C5BBD6 /* Roboto-Regular.ttf in Resources */,
@@ -4777,6 +4787,7 @@
 				47E6A4CC2A2E68A700A9509E /* DeletedMessageView.swift in Sources */,
 				47308E0824FEE6E600FFAC6F /* SocketEngineClient.swift in Sources */,
 				475BDD89232C086C00C5BBD6 /* HistoryViewController.swift in Sources */,
+				CE94A50D2A4B2BF6001EDF7E /* MentionOrMacroItem.swift in Sources */,
 				F36C5EC027315EBB00F3D944 /* GeneralVideoFeedEpisodePlayerViewController GeneralVideoFeedEpisodePlayerViewController.swift in Sources */,
 				F3DC6B06273C9D8600458E09 /* ContentFeedKind.swift in Sources */,
 				47FA44132374B6D4005D8C63 /* SubscriptionAmountView.swift in Sources */,
@@ -4879,6 +4890,7 @@
 				F313024826BA994B00A1396E /* ChatsContainerViewController.swift in Sources */,
 				CEEBBB4229DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.swift in Sources */,
 				472092BF2A26378900468796 /* NewChatViewController+MentionsAutocomplete.swift in Sources */,
+				CE94A5102A4B2DF3001EDF7E /* ChatMentionAutocompleteTableViewCell.swift in Sources */,
 				4789E26E24F406F3003991BE /* RelayURLUpdateHelper.swift in Sources */,
 				475BDD5C232AE26E00C5BBD6 /* TransactionMessage+CoreDataClass.swift in Sources */,
 				478BD8B92829B70700C733FD /* TribeMemberPopupView.swift in Sources */,

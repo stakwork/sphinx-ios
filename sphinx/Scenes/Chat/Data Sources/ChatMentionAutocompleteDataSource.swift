@@ -15,7 +15,7 @@ protocol ChatMentionAutocompleteDelegate{
 }
 
 class ChatMentionAutocompleteDataSource : NSObject {
-    var mentionSuggestions : [String] = [String]()
+    var mentionSuggestions : [MentionOrMacroItem] = [MentionOrMacroItem]()
     var tableView : UITableView!
     var delegate: ChatMentionAutocompleteDelegate!
     let mentionCellHeight :CGFloat = 50.0
@@ -29,11 +29,17 @@ class ChatMentionAutocompleteDataSource : NSObject {
         tableView.estimatedRowHeight = mentionCellHeight
         tableView.rowHeight = UITableView.automaticDimension
         tableView.transform = CGAffineTransform(scaleX: 1, y: -1)
+        tableView.register(UINib(nibName: "ChatMentionAutocompleteTableViewCell", bundle: nil), forCellReuseIdentifier: ChatMentionAutocompleteTableViewCell.reuseID)
     }
     
     func updateMentionSuggestions(suggestions:[String]){
         tableView.isHidden = (suggestions.isEmpty == true)
-        mentionSuggestions = suggestions
+        let suggestionObjects = suggestions.compactMap({
+            let result = MentionOrMacroItem(type: .mention, displayText: $0, action: nil)
+            return result
+        })
+        mentionSuggestions = suggestionObjects
+        
         tableView.reloadData()
         
         if (suggestions.isEmpty == false) {
@@ -54,20 +60,20 @@ extension ChatMentionAutocompleteDataSource : UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        
-        let labelXOffset : CGFloat = 20.0
-        let label = UILabel(frame: CGRect(origin: CGPoint(x: labelXOffset, y: 0.0), size: CGSize(width: cell.frame.width - labelXOffset, height: mentionCellHeight)))
-        label.text = mentionSuggestions[indexPath.row]
-        label.font = UIFont(name: "Roboto", size: label.font.pointSize)
-        label.textColor = UIColor.Sphinx.SecondaryText
-        
-        cell.addSubview(label)
-        cell.transform = CGAffineTransform(scaleX: 1, y: -1)
-        cell.backgroundColor = UIColor.Sphinx.HeaderBG
-        cell.selectionStyle = .none
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: ChatMentionAutocompleteTableViewCell.reuseID,
+            for: indexPath
+        ) as! ChatMentionAutocompleteTableViewCell
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let mentionCell = cell as? ChatMentionAutocompleteTableViewCell//,
+           //let valid_vc = vc
+        {
+            mentionCell.configureWith(mentionOrMacro: mentionSuggestions[indexPath.item], delegate: nil)
+        }
     }
     
 }
@@ -75,7 +81,7 @@ extension ChatMentionAutocompleteDataSource : UITableViewDataSource{
 extension ChatMentionAutocompleteDataSource : UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.delegate?.processAutocomplete(text: mentionSuggestions[indexPath.row])
+        //self.delegate?.processAutocomplete(text: mentionSuggestions[indexPath.row])
         self.tableView.isHidden = true
     }
     

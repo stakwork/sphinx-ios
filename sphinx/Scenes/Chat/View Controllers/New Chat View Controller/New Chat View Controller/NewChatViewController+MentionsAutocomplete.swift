@@ -30,7 +30,7 @@ extension NewChatViewController: ChatMentionAutocompleteDelegate {
         
         chatMentionAutocompleteDataSource = ChatMentionAutocompleteDataSource(
             tableView: mentionsAutocompleteTableView,
-            delegate: self
+            delegate: self, chat: self.chat
         )
         
         mentionsAutocompleteTableView.delegate = chatMentionAutocompleteDataSource

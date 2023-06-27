@@ -199,6 +199,12 @@ public class Chat: NSManagedObject {
         return self.status == ChatStatus.rejected.rawValue
     }
     
+    func findImageURLByAlias(alias:String)->URL?{
+        let allMessages = self.getAllMessages()
+        guard let picURLString = allMessages.first(where: {$0.senderAlias == alias})?.senderPic else { return nil }
+        return URL(string: picURLString)
+    }
+    
     func getContactIdsArray() -> [Int] {
         var ids:[Int] = []
         for contactId in self.contactIds {

@@ -19,11 +19,13 @@ class ChatMentionAutocompleteDataSource : NSObject {
     var tableView : UITableView!
     var delegate: ChatMentionAutocompleteDelegate!
     let mentionCellHeight :CGFloat = 50.0
+    var chat : Chat?
     
-    init(tableView:UITableView,delegate:ChatMentionAutocompleteDelegate){
+    init(tableView:UITableView,delegate:ChatMentionAutocompleteDelegate,chat:Chat?){
         super.init()
         self.tableView = tableView
         self.delegate = delegate
+        self.chat = chat
         tableView.backgroundColor = .clear
         tableView.separatorColor = UIColor.Sphinx.Divider
         tableView.estimatedRowHeight = mentionCellHeight
@@ -36,6 +38,7 @@ class ChatMentionAutocompleteDataSource : NSObject {
         tableView.isHidden = (suggestions.isEmpty == true)
         let suggestionObjects = suggestions.compactMap({
             let result = MentionOrMacroItem(type: .mention, displayText: $0, action: nil)
+            result.imageLink = chat?.findImageURLByAlias(alias: $0)
             return result
         })
         mentionSuggestions = suggestionObjects

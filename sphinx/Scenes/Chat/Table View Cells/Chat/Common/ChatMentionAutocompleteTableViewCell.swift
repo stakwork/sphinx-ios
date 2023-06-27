@@ -42,6 +42,8 @@ class ChatMentionAutocompleteTableViewCell: UITableViewCell {
         self.type = mentionOrMacro.type
         self.action = mentionOrMacro.action
         //self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleClick)))
+        mentionTextField.backgroundColor = .clear
+        mentionTextField.isUserInteractionEnabled = false
         
         mentionTextField.font = UIFont(name: "Roboto", size: mentionTextField.font?.pointSize ?? 14.0)
         mentionTextField.textColor = UIColor.Sphinx.SecondaryText

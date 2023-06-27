@@ -44,6 +44,9 @@ class ChatSearchTextFieldView: UIView {
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         self.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         
+        textFieldContainer.layer.cornerRadius = textFieldContainer.frame.size.height/2
+        textFieldContainer.clipsToBounds = true
+        
         textField.delegate = self
     }
     

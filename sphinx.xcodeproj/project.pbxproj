@@ -490,6 +490,7 @@
 		47BF27F32A3795CE00F15EE9 /* MessageTableCellState+DataTypeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47BF27F22A3795CE00F15EE9 /* MessageTableCellState+DataTypeExtension.swift */; };
 		47BF7D4B25A8A59100593489 /* API+VersionsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47BF7D4A25A8A59100593489 /* API+VersionsExtension.swift */; };
 		47C0613B2A4A1BAA00CEF221 /* UISegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C0613A2A4A1BAA00CEF221 /* UISegmentedControl.swift */; };
+		47C3DB712A4B5CB400F0557A /* NewChatViewController+SearchMessagesExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C3DB702A4B5CB400F0557A /* NewChatViewController+SearchMessagesExtension.swift */; };
 		47C52C4527F49EA9007B43E2 /* HMACSigningManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C52C4427F49EA9007B43E2 /* HMACSigningManager.swift */; };
 		47C7C1782938E84D00264BF6 /* RecommendationResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C7C1772938E84D00264BF6 /* RecommendationResult.swift */; };
 		47C7D704278749CF006D2809 /* PeopleTorActionsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47C7D706278749CF006D2809 /* PeopleTorActionsView.xib */; };
@@ -1424,6 +1425,7 @@
 		47BF27F22A3795CE00F15EE9 /* MessageTableCellState+DataTypeExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageTableCellState+DataTypeExtension.swift"; sourceTree = "<group>"; };
 		47BF7D4A25A8A59100593489 /* API+VersionsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+VersionsExtension.swift"; sourceTree = "<group>"; };
 		47C0613A2A4A1BAA00CEF221 /* UISegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISegmentedControl.swift; sourceTree = "<group>"; };
+		47C3DB702A4B5CB400F0557A /* NewChatViewController+SearchMessagesExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewChatViewController+SearchMessagesExtension.swift"; sourceTree = "<group>"; };
 		47C52C4427F49EA9007B43E2 /* HMACSigningManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HMACSigningManager.swift; sourceTree = "<group>"; };
 		47C7C1772938E84D00264BF6 /* RecommendationResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationResult.swift; sourceTree = "<group>"; };
 		47C7D705278749CF006D2809 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PeopleTorActionsView.xib; sourceTree = "<group>"; };
@@ -3630,6 +3632,7 @@
 			isa = PBXGroup;
 			children = (
 				47F826692A0C150B002E81F0 /* NewChatViewController.swift */,
+				47C3DB702A4B5CB400F0557A /* NewChatViewController+SearchMessagesExtension.swift */,
 				475DD30B2A1291F900F92173 /* NewChatViewController+ChatHeaderDelegateExtension.swift */,
 				475DD3112A13FBAB00F92173 /* NewChatViewController+FetchControllerExtension.swift */,
 				475DD3132A14151E00F92173 /* NewChatViewController+BottomViewDelegateExtension.swift */,
@@ -5098,6 +5101,7 @@
 				F3DC6B28273FABDB00458E09 /* ContentFeedPaymentModel+Computeds.swift in Sources */,
 				477924942A29149E00CD3CF1 /* FileDetailsView.swift in Sources */,
 				471161EA2915937A008EAFF2 /* Array.swift in Sources */,
+				47C3DB712A4B5CB400F0557A /* NewChatViewController+SearchMessagesExtension.swift in Sources */,
 				47FE9A3E23C381A20090913F /* UITapGestureRecognizer.swift in Sources */,
 				477B319223B10FC30081413E /* NewMessageBubbleHelper.swift in Sources */,
 				475DD3102A13E21A00F92173 /* UserContact+FetchUtils.swift in Sources */,

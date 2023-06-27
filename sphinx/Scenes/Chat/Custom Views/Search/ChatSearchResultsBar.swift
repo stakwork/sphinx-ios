@@ -52,6 +52,14 @@ class ChatSearchResultsBar: UIView {
         delegate: ChatSearchResultsBarDelegate?
     ) {
         self.delegate = delegate
+        
+        matchesCountLabel.text = matchesCount.searchMatchesString
+        
+        arrowUpButton.isEnabled = matchesCount > 0
+        arrowUpButton.alpha = matchesCount > 0 ? 1.0 : 0.5
+        
+        arrowDownButton.isEnabled = matchesCount > 0
+        arrowDownButton.alpha = matchesCount > 0 ? 1.0 : 0.5
     }
 
     @IBAction func navigateArrowButtonTouched(_ sender: UIButton) {

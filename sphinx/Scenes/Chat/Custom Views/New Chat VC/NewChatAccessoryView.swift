@@ -133,23 +133,24 @@ extension NewChatAccessoryView {
 
 //Search Mode
 extension NewChatAccessoryView {
-    func configureWith(
+    func configureSearchWith(
         active: Bool,
-        matchesCount: Int?,
-        matchIndex: Int?,
-        delegate: ChatSearchResultsBarDelegate?
+        matchesCount: Int = 0,
+        matchIndex: Int = 0
     ) {
         normalModeStackView.isHidden = active
         chatSearchView.isHidden = !active
         
-        guard let matchesCount = matchesCount, let matchIndex = matchIndex, active else {
-            return
-        }
-        
         chatSearchView.configureWith(
             matchesCount: matchesCount,
             matchIndex: matchIndex,
-            delegate: delegate
+            delegate: self
         )
+    }
+}
+
+extension NewChatAccessoryView : ChatSearchResultsBarDelegate {
+    func didTapNavigateArrowButton(button: ChatSearchResultsBar.NavigateArrowButton) {
+        searchDelegate?.didTapNavigateArrowButton(button: button)
     }
 }

@@ -68,6 +68,7 @@ class NewChatHeaderView: UIView {
         )
         
         self.searchDelegate = searchDelegate
+        chatSearchView.setDelegate(self)
     }
     
     func configurePinnedMessageViewWith(

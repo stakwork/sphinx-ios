@@ -29,16 +29,16 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a9L-Mr-si2">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="58"/>
+                    <rect key="frame" x="0.0" y="-2" width="375" height="60"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UAN-QO-MwZ">
-                            <rect key="frame" x="0.0" y="0.0" width="295" height="58"/>
+                            <rect key="frame" x="0.0" y="0.0" width="295" height="60"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SFq-V5-6kH">
-                                    <rect key="frame" x="16" y="10" width="279" height="38"/>
+                                    <rect key="frame" x="16" y="10" width="279" height="40"/>
                                     <subviews>
                                         <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="8jx-kP-fYi">
-                                            <rect key="frame" x="12" y="8.6666666666666661" width="255" height="20.666666666666671"/>
+                                            <rect key="frame" x="16" y="9.6666666666666661" width="247" height="20.666666666666671"/>
                                             <color key="textColor" name="Text"/>
                                             <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
                                             <textInputTraits key="textInputTraits"/>
@@ -46,8 +46,8 @@
                                     </subviews>
                                     <color key="backgroundColor" name="ReceivedMsgBG"/>
                                     <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="8jx-kP-fYi" secondAttribute="trailing" constant="12" id="6m0-d4-huc"/>
-                                        <constraint firstItem="8jx-kP-fYi" firstAttribute="leading" secondItem="SFq-V5-6kH" secondAttribute="leading" constant="12" id="MU1-0e-tlH"/>
+                                        <constraint firstAttribute="trailing" secondItem="8jx-kP-fYi" secondAttribute="trailing" constant="16" id="6m0-d4-huc"/>
+                                        <constraint firstItem="8jx-kP-fYi" firstAttribute="leading" secondItem="SFq-V5-6kH" secondAttribute="leading" constant="16" id="MU1-0e-tlH"/>
                                         <constraint firstItem="8jx-kP-fYi" firstAttribute="centerY" secondItem="SFq-V5-6kH" secondAttribute="centerY" id="moY-W2-R90"/>
                                     </constraints>
                                 </view>
@@ -61,10 +61,10 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Osd-6c-zgR">
-                            <rect key="frame" x="295" y="0.0" width="80" height="58"/>
+                            <rect key="frame" x="295" y="0.0" width="80" height="60"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F9q-qV-TaJ">
-                                    <rect key="frame" x="0.0" y="15" width="80" height="28"/>
+                                    <rect key="frame" x="0.0" y="16" width="80" height="28"/>
                                     <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="13"/>
                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                     <state key="normal" title="CANCEL">
@@ -85,11 +85,13 @@
                         </view>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="60" id="puZ-05-QJC"/>
+                    </constraints>
                 </stackView>
             </subviews>
             <color key="backgroundColor" name="HeaderBG"/>
             <constraints>
-                <constraint firstItem="a9L-Mr-si2" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="AOY-rH-y7e"/>
                 <constraint firstAttribute="bottom" secondItem="a9L-Mr-si2" secondAttribute="bottom" id="By4-Fm-vRb"/>
                 <constraint firstAttribute="trailing" secondItem="a9L-Mr-si2" secondAttribute="trailing" id="d8c-Tg-zhU"/>
                 <constraint firstItem="a9L-Mr-si2" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="guf-bb-ge9"/>

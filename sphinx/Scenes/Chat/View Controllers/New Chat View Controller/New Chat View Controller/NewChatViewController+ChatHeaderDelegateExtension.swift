@@ -71,6 +71,16 @@ extension NewChatViewController : ChatHeaderViewDelegate {
                 }
             )
         )
+        
+        alert.addAction(
+            UIAlertAction(
+                title: "search.messages".localized,
+                style: .default,
+                handler: { (UIAlertAction) in
+                    self.toggleSearchMode(active: true)
+                }
+            )
+        )
 
         if isPublicGroup {
             alert.addAction(
@@ -130,21 +140,5 @@ extension NewChatViewController : ChatHeaderViewDelegate {
             
             self.present(notificationsVC, animated: true)
         }
-    }
-}
-
-extension NewChatViewController : ChatSearchTextFieldViewDelegate {
-    func shouldSearchFor(term: String) {
-        
-    }
-    
-    func didTapSearchCancelButton() {
-        
-    }
-}
-
-extension NewChatViewController : ChatSearchResultsBarDelegate {
-    func didTapNavigateArrowButton(button: ChatSearchResultsBar.NavigateArrowButton) {
-        
     }
 }

@@ -167,7 +167,7 @@ extension String {
         get {
             return self.length > 3000
         }
-    }
+    }    
     
     func getRestoreKeys() -> String? {
         if let decodedString = self.base64Decoded, decodedString.starts(with: "keys::") {

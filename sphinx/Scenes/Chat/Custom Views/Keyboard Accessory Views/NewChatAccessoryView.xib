@@ -51,10 +51,10 @@
                             </subviews>
                         </stackView>
                         <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TMk-zV-V4x" customClass="ChatSearchResultsBar" customModule="sphinx" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="58"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="40" id="VA7-31-6Kz"/>
+                                <constraint firstAttribute="height" constant="58" id="VA7-31-6Kz"/>
                             </constraints>
                         </view>
                     </subviews>

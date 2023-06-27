@@ -24,10 +24,10 @@
                         <textInputTraits key="textInputTraits"/>
                     </textField>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BSP-Qj-gRe">
-                        <rect key="frame" x="0.0" y="39" width="320" height="5"/>
+                        <rect key="frame" x="0.0" y="43" width="320" height="1"/>
                         <color key="backgroundColor" name="BodyInverted"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="5" id="rfL-TU-g2G"/>
+                            <constraint firstAttribute="height" constant="1" id="rfL-TU-g2G"/>
                         </constraints>
                     </view>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dlG-ss-ggw">

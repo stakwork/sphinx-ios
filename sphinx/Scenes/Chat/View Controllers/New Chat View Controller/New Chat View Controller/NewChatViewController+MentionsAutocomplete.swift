@@ -15,7 +15,7 @@ extension NewChatViewController: ChatMentionAutocompleteDelegate {
                MentionOrMacroItem(type: .macro, displayText: "Find and Share a Gif",
                     image: #imageLiteral(resourceName: "giphy"),
                     action: {
-                        print("get giphy")
+                        
                }),
 //               MentionOrMacroItem(type: .macro, displayText: "Start Audio Call",
 //                image: #imageLiteral(resourceName: "phone_call_icon"),
@@ -27,16 +27,6 @@ extension NewChatViewController: ChatMentionAutocompleteDelegate {
 //                action: {
 //                   //self.shouldCreateCall(mode: .All)
 //               }),
-               MentionOrMacroItem(type: .macro, displayText: "Send Payment (Sats)",
-                image: #imageLiteral(resourceName: "payment-sent-arrow")
-                ,action: {
-                   //self.macroDoPayment(buttonTag: ChildVCContainer.ChildVCOptionsMenuButton.Send)
-               }),
-               MentionOrMacroItem(type: .macro, displayText: "Request Sats (Send Invoice)",
-                image: #imageLiteral(resourceName: "payment-received-arrow"),
-                action: {
-                   //self.macroDoPayment(buttonTag: ChildVCContainer.ChildVCOptionsMenuButton.Request)
-               }),
 //               MentionOrMacroItem(type: .macro, displayText: "Send Emoji",
 //                image: #imageLiteral(resourceName: "emojiIcon"),
 //                action: {
@@ -48,6 +38,21 @@ extension NewChatViewController: ChatMentionAutocompleteDelegate {
 //                   //self.micButtonClicked(self)
 //               })
            ]
+        
+        if self.chat?.isGroup() == false{
+            macros.append(contentsOf: [
+                MentionOrMacroItem(type: .macro, displayText: "Send Payment (Sats)",
+                 image: #imageLiteral(resourceName: "invoice-pay-button")
+                 ,action: {
+                     self.didTapSendButton()
+                }),
+                MentionOrMacroItem(type: .macro, displayText: "Request Sats (Send Invoice)",
+                 image: #imageLiteral(resourceName: "invoice-receive-icon"),
+                 action: {
+                     self.didTapReceiveButton()
+                })
+            ])
+        }
        }
     
     func configureMentions() {

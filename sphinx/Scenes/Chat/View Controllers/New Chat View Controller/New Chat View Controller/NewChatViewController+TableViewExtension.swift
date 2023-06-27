@@ -201,11 +201,16 @@ extension NewChatViewController : NewChatTableDataSourceDelegate, SocketManagerD
         self.present(activityVC, animated: true, completion: nil)
     }
     
-    func isMessageMenuVisible() -> Bool {
+    func isOnStandardMode() -> Bool {
         if let _ = self.navigationController?.presentedViewController as? MessageOptionsViewController {
-            return true
+            ///Is on Message menu mode
+            return false
         }
-        return false
+        if !self.headerView.chatSearchView.isHidden {
+            ///Is on Search mode
+            return false
+        }
+        return true
     }
     
     func shouldPayInvoiceFor(messageId: Int) {

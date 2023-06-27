@@ -32,7 +32,7 @@ extension NewChatViewController : MessageOptionsVCDelegate {
     }
     
     func shouldReloadChat() {
-        chatTableDataSource?.updateSnapshotIfPossible()
+        chatTableDataSource?.forceReload()
     }
 }
 

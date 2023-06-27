@@ -216,18 +216,12 @@ extension NewChatTableDataSource {
         
         messageTableCellStateArray = array
         
-        updateSnapshotIfPossible()
+        updateSnapshot()
         delegate?.configureNewMessagesIndicatorWith(newMsgCount: newMsgCount)
     }
     
-    func updateSnapshotIfPossible() {
-        ///Avoid reloading until message menu is hidden
-        DispatchQueue.main.async {
-            let isMessageMenuVisible = self.delegate?.isMessageMenuVisible() ?? false
-            if !isMessageMenuVisible {
-                self.updateSnapshot()
-            }
-        }
+    func forceReload() {
+        processMessages(messages: messagesArray)
     }
     
     private func getNewMessageCountFor(
@@ -531,12 +525,21 @@ extension NewChatTableDataSource : NSFetchedResultsControllerDelegate {
                 if let messages = firstSection.objects as? [TransactionMessage] {
                     DispatchQueue.global(qos: .userInitiated).async {
                         self.messagesArray = messages.reversed()
+                        
+                        if !(self.delegate?.isOnStandardMode() ?? true) {
+                            return
+                        }
+                        
                         self.processMessages(messages: messages.reversed())
                         self.configureBoostAndPurchaseResultsController()
                     }
                 }
             } else {
                 DispatchQueue.global(qos: .userInitiated).async {
+                    if !(self.delegate?.isOnStandardMode() ?? true) {
+                        return
+                    }
+                    
                     self.processMessages(messages: self.messagesArray)
                 }
             }

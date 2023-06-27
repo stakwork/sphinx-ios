@@ -32,7 +32,7 @@ protocol NewChatTableDataSourceDelegate : class {
     
     func shouldPayInvoiceFor(messageId: Int)
     
-    func isMessageMenuVisible() -> Bool
+    func isOnStandardMode() -> Bool
 }
 
 class NewChatTableDataSource : NSObject {

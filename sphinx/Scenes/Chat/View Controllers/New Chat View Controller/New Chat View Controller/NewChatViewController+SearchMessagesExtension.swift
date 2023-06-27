@@ -27,6 +27,7 @@ extension NewChatViewController : ChatSearchTextFieldViewDelegate {
     
     func didTapSearchCancelButton() {
         toggleSearchMode(active: false)
+        chatTableDataSource?.forceReload()
     }
 }
 

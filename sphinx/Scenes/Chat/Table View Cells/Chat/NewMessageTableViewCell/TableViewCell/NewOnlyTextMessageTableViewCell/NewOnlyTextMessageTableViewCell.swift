@@ -68,6 +68,7 @@ class NewOnlyTextMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableV
         botWebViewData: MessageTableCellState.BotWebViewData?,
         uploadProgressData: MessageTableCellState.UploadProgressData?,
         delegate: NewMessageTableViewCellDelegate?,
+        searchingTerm: String?,
         indexPath: IndexPath
     ) {
         var mutableMessageCellState = messageCellState
@@ -85,7 +86,10 @@ class NewOnlyTextMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableV
         }
         
         ///Text message content
-        configureWith(messageContent: mutableMessageCellState.messageContent)
+        configureWith(
+            messageContent: mutableMessageCellState.messageContent,
+            searchingTerm: searchingTerm
+        )
         
         ///Header and avatar
         configureWith(avatarImage: mutableMessageCellState.avatarImage)

@@ -128,6 +128,7 @@ extension PaidMessagePreviewViewController : UITableViewDataSource, UITableViewD
                 botWebViewData: nil,
                 uploadProgressData: nil,
                 delegate: nil,
+                searchingTerm: nil,
                 indexPath: indexPath
             )
         }

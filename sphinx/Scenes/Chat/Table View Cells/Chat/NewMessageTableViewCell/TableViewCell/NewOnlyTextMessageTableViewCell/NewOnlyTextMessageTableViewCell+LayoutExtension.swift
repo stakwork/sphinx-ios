@@ -18,20 +18,26 @@ extension NewOnlyTextMessageTableViewCell {
     }
     
     func configureWith(
-        messageContent: BubbleMessageLayoutState.MessageContent?
+        messageContent: BubbleMessageLayoutState.MessageContent?,
+        searchingTerm: String?
     ) {
         urlRanges = []
         
         if let messageContent = messageContent {
-            if messageContent.linkMatches.isEmpty {
+            if messageContent.linkMatches.isEmpty && searchingTerm == nil {
                 messageLabel.attributedText = nil
                 
                 messageLabel.text = messageContent.text
                 messageLabel.font = messageContent.font
             } else {
                 let messageC = messageContent.text ?? ""
+                let term = searchingTerm ?? ""
+                
                 let attributedString = NSMutableAttributedString(string: messageC)
                 attributedString.addAttributes([NSAttributedString.Key.font: messageContent.font], range: messageC.nsRange)
+                
+                let searchingTermRange = (messageC.lowercased() as NSString).range(of: term.lowercased())
+                attributedString.addAttributes([NSAttributedString.Key.backgroundColor: UIColor.Sphinx.PrimaryGreen], range: searchingTermRange)
                 
                 for match in messageContent.linkMatches {
                     

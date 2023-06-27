@@ -57,6 +57,7 @@ class MessageNoBubbleTableViewCell: UITableViewCell, ChatTableViewCellProtocol {
         botWebViewData: MessageTableCellState.BotWebViewData?,
         uploadProgressData: MessageTableCellState.UploadProgressData?,
         delegate: NewMessageTableViewCellDelegate?,
+        searchingTerm: String?,
         indexPath: IndexPath
     ) {
         hideAllSubviews()

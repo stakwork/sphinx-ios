@@ -34,6 +34,7 @@ protocol ChatTableViewCellProtocol: class {
         botWebViewData: MessageTableCellState.BotWebViewData?,
         uploadProgressData: MessageTableCellState.UploadProgressData?,
         delegate: NewMessageTableViewCellDelegate?,
+        searchingTerm: String?,
         indexPath: IndexPath
     )
 }
@@ -162,6 +163,7 @@ class NewMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableViewCellP
         botWebViewData: MessageTableCellState.BotWebViewData?,
         uploadProgressData: MessageTableCellState.UploadProgressData?,
         delegate: NewMessageTableViewCellDelegate?,
+        searchingTerm: String?,
         indexPath: IndexPath
     ) {
         
@@ -187,7 +189,10 @@ class NewMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableViewCellP
         configureWith(statusHeader: mutableMessageCellState.statusHeader, uploadProgressData: uploadProgressData)
         
         ///Message content
-        configureWith(messageContent: mutableMessageCellState.messageContent)
+        configureWith(
+            messageContent: mutableMessageCellState.messageContent,
+            searchingTerm: searchingTerm
+        )
         
         ///Message Reply
         configureWith(messageReply: mutableMessageCellState.messageReply, and: bubble)

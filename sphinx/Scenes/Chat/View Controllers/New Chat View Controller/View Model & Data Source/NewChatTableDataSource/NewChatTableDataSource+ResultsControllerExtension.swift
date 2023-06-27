@@ -107,6 +107,7 @@ extension NewChatTableDataSource {
                 botWebViewData: botWebViewData,
                 uploadProgressData: uploadProgressData,
                 delegate: self,
+                searchingTerm: nil,
                 indexPath: indexPath
             )
             

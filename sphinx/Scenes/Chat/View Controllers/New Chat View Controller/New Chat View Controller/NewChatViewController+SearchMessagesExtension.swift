@@ -10,6 +10,10 @@ import UIKit
 
 extension NewChatViewController {
     func toggleSearchMode(active: Bool) {
+        SoundsPlayer.playHaptic()
+        
+        viewMode = active ? ViewMode.Search : ViewMode.Standard
+        
         bottomView.configureSearchWith(
             active: active
         )

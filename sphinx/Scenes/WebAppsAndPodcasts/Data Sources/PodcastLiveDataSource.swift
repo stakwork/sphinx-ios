@@ -132,6 +132,7 @@ extension PodcastLiveDataSource : UITableViewDataSource, UITableViewDelegate {
             botWebViewData: nil,
             uploadProgressData: nil,
             delegate: nil,
+            searchingTerm: nil,
             indexPath: indexPath
         )
         

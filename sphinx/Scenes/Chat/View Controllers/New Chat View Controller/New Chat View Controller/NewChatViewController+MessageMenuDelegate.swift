@@ -32,6 +32,7 @@ extension NewChatViewController : MessageOptionsVCDelegate {
     }
     
     func shouldReloadChat() {
+        viewMode = ViewMode.Standard
         chatTableDataSource?.forceReload()
     }
 }

@@ -41,6 +41,14 @@ class NewChatViewController: NewKeyboardHandlerViewController {
     
     var webAppVC : WebAppViewController? = nil
     
+    enum ViewMode: Int {
+        case Standard
+        case MessageMenu
+        case Search
+    }
+    
+    var viewMode = ViewMode.Standard
+    
     override var preferredScreenEdgesDeferringSystemGestures: UIRectEdge {
         get {
             return [.bottom, .right]

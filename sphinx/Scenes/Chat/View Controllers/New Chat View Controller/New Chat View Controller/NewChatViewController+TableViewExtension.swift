@@ -202,15 +202,7 @@ extension NewChatViewController : NewChatTableDataSourceDelegate, SocketManagerD
     }
     
     func isOnStandardMode() -> Bool {
-        if let _ = self.navigationController?.presentedViewController as? MessageOptionsViewController {
-            ///Is on Message menu mode
-            return false
-        }
-        if !self.headerView.chatSearchView.isHidden {
-            ///Is on Search mode
-            return false
-        }
-        return true
+        return viewMode == ViewMode.Standard
     }
     
     func shouldPayInvoiceFor(messageId: Int) {
@@ -249,6 +241,8 @@ extension NewChatViewController {
             messageOptionsVC.setBubblePath(bubblePath: bubbleRectAndPath)
             messageOptionsVC.modalPresentationStyle = .overCurrentContext
             self.navigationController?.present(messageOptionsVC, animated: false)
+            
+            viewMode = ViewMode.MessageMenu
         }
     }
 }

@@ -10,6 +10,10 @@ import Foundation
 
 extension NewChatTableDataSource {
     func restorePreloadedMessages() {
+        guard let chat = chat else {
+            return
+        }
+        
         if let messagesStateArray = preloaderHelper.getMessageStateArray(for: chat.id) {
             messageTableCellStateArray = messagesStateArray
             updateSnapshot()
@@ -17,6 +21,10 @@ extension NewChatTableDataSource {
     }
     
     func saveMessagesToPreloader() {
+        guard let chat = chat else {
+            return
+        }
+        
         if let firstVisibleRow = tableView.indexPathsForVisibleRows?.last {
             preloaderHelper.add(
                 messageStateArray: messageTableCellStateArray.subarray(size: firstVisibleRow.row + 10),
@@ -26,6 +34,10 @@ extension NewChatTableDataSource {
     }
     
     func saveSnapshotCurrentState() {
+        guard let chat = chat else {
+            return
+        }
+        
         if let firstVisibleRow = tableView.indexPathsForVisibleRows?.first {
             
             let cellRectInTable = tableView.rectForRow(at: firstVisibleRow)
@@ -44,6 +56,10 @@ extension NewChatTableDataSource {
     }
     
     func restoreScrollLastPosition() {
+        guard let chat = chat else {
+            return
+        }
+        
         if let scrollState = preloaderHelper.getScrollState(
             for: chat.id,
             with: dataSource.snapshot().itemIdentifiers

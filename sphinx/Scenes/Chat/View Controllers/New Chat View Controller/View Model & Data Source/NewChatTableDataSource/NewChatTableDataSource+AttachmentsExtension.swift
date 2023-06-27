@@ -9,6 +9,16 @@
 import Foundation
 
 extension NewChatTableDataSource {
+    func updateSnapshotWith(
+        message: TransactionMessage
+    ) {
+        if messagesArray.isEmpty {
+            processMessages(messages: [message])
+        }
+    }
+}
+
+extension NewChatTableDataSource {
     func setMediaDataForMessageWith(
         messageId: Int,
         mediaData: MessageTableCellState.MediaData

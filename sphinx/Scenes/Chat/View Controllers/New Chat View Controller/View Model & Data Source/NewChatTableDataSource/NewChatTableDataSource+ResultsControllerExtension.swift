@@ -122,11 +122,17 @@ extension NewChatTableDataSource {
     func processMessages(
         messages: [TransactionMessage]
     ) {
+        let chat = chat ?? contact?.getFakeChat()
+        
+        guard let chat = chat else {
+            return
+        }
+        
         guard let owner = UserContact.getOwner() else {
             return
         }
         
-        chat?.processAliasesFrom(messages: messages)
+        chat.processAliasesFrom(messages: messages)
         
         var newMsgCount = 0
         var array: [MessageTableCellState] = []
@@ -319,6 +325,10 @@ extension NewChatTableDataSource {
         messages: [TransactionMessage]
     ) -> [String: [Int: TransactionMessage]] {
         
+        guard let chat = chat else {
+            return [:]
+        }
+        
         let messageMUIDs: [String] = messages.map({ $0.getMUID() }).filter({ $0.isNotEmpty })
         let purchaseMessages = TransactionMessage.getPurchaseItemsFor(messageMUIDs, on: chat)
         
@@ -340,6 +350,11 @@ extension NewChatTableDataSource {
     func getBoostMessagesMapFor(
         messages: [TransactionMessage]
     ) -> [String: [TransactionMessage]] {
+        
+        guard let chat = chat else {
+            return [:]
+        }
+        
         let messageUUIDs: [String] = messages.map({ $0.uuid ?? "" }).filter({ $0.isNotEmpty })
         let boostMessages = TransactionMessage.getBoostMessagesFor(messageUUIDs, on: chat)
         
@@ -445,6 +460,10 @@ extension NewChatTableDataSource : NSFetchedResultsControllerDelegate {
     }
     
     func configureResultsController(items: Int) {
+        guard let chat = chat else {
+            return
+        }
+        
         if messagesArray.count < messagesCount {
             return
         }
@@ -474,6 +493,10 @@ extension NewChatTableDataSource : NSFetchedResultsControllerDelegate {
     }
     
     func configureBoostAndPurchaseResultsController() {
+        guard let chat = chat else {
+            return
+        }
+        
         if let _ = additionMessagesResultsController {
             return
         }

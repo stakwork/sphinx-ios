@@ -10,13 +10,12 @@ import UIKit
 
 extension NewChatViewController {
     func configureTableView() {
-        guard let chat = chat else {
+        if let ds = chatTableDataSource {
+            if ds.isFinalDS() {
+                return
+            }
+        } else {
             chatTableView.alpha = 1.0
-            return
-        }
-        
-        if let _ = chatTableDataSource {
-            return
         }
         
         setTableViewHeight()
@@ -24,6 +23,7 @@ extension NewChatViewController {
         
         chatTableDataSource = NewChatTableDataSource(
             chat: chat,
+            contact: contact,
             tableView: chatTableView,
             headerImageView: getContactImageView(),
             bottomView: bottomView,

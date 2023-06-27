@@ -47,7 +47,8 @@ class NewChatTableDataSource : NSObject {
     var webView: WKWebView!
     
     ///Chat
-    var chat: Chat!
+    var chat: Chat?
+    var contact: UserContact?
     
     ///Data Source related
     var messagesResultsController: NSFetchedResultsController<TransactionMessage>!
@@ -80,7 +81,8 @@ class NewChatTableDataSource : NSObject {
     var webViewLoadingCompletion: ((CGFloat?) -> ())? = nil
     
     init(
-        chat: Chat,
+        chat: Chat?,
+        contact: UserContact?,
         tableView: UITableView,
         headerImageView: UIImageView?,
         bottomView: UIView,
@@ -90,6 +92,8 @@ class NewChatTableDataSource : NSObject {
         super.init()
         
         self.chat = chat
+        self.contact = contact
+        
         self.tableView = tableView
         self.headerImage = headerImageView?.image
         self.bottomView = bottomView
@@ -99,7 +103,11 @@ class NewChatTableDataSource : NSObject {
         
         configureTableView()
         configureDataSource()
-    }    
+    }
+    
+    func isFinalDS() -> Bool {
+        return self.chat != nil
+    }
     
     func configureTableView() {
         tableView.rowHeight = UITableView.automaticDimension

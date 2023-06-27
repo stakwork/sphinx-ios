@@ -20,6 +20,20 @@ public class UserContact: NSManagedObject {
     
     public var lastMessage : TransactionMessage? = nil
     
+    func getFakeChat() -> Chat {
+        let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+        context.parent = CoreDataManager.sharedManager.persistentContainer.viewContext
+        
+        let chat = Chat(context: context)
+        chat.name = self.getName()
+        chat.id = -1
+        chat.photoUrl = self.avatarUrl
+        chat.type = Chat.ChatType.conversation.rawValue
+        chat.status = Chat.ChatStatus.approved.rawValue
+        
+        return chat
+    }
+    
     public var image : UIImage? = nil
     
     public static var kTipAmount : Int {

@@ -24,7 +24,9 @@ extension NewChatViewController : ChatMessageTextFieldViewDelegate {
     
     func scrollToBottomAfterSend() {
         DelayPerformedHelper.performAfterDelay(seconds: 0.1, completion: {
-            self.chatTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+            if self.chatTableView.numberOfRows(inSection: 0) > 0 {
+                self.chatTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+            }
         })
     }
     

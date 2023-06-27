@@ -93,7 +93,22 @@ extension NewChatViewModel {
             replyUUID: replyingTo?.uuid
         )
         
+        if chat == nil {
+            ///Sending first message. Chat does not exist yet
+            updateSnapshotWith(message: message)
+        }
+        
         return message
+    }
+    
+    func updateSnapshotWith(
+        message: TransactionMessage?
+    ) {
+        guard let message = message else {
+            return
+        }
+        
+        chatDataSource?.updateSnapshotWith(message: message)
     }
     
     func sendMessage(

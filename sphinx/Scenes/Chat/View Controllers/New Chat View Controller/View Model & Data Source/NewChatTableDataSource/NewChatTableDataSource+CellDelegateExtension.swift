@@ -675,6 +675,10 @@ extension NewChatTableDataSource {
     }
     
     func didTapAvatarViewFor(messageId: Int, and rowIndex: Int) {
+        guard let chat = chat else {
+            return
+        }
+        
         if chat.isPublicGroup() {
             showLeaderboardFor(messageId: messageId)
         }

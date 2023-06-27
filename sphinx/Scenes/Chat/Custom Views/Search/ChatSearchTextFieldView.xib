@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Montserrat-SemiBold.otf">
+            <string>Montserrat-SemiBold</string>
+        </array>
+        <array key="Roboto-Regular.ttf">
+            <string>Roboto-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ChatSearchTextFieldView" customModule="sphinx" customModuleProvider="target">
+            <connections>
+                <outlet property="contentView" destination="iN0-l3-epB" id="63a-dS-hg1"/>
+                <outlet property="textField" destination="8jx-kP-fYi" id="nk3-to-28L"/>
+                <outlet property="textFieldContainer" destination="SFq-V5-6kH" id="ITd-Kf-S5i"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="58"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a9L-Mr-si2">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="58"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UAN-QO-MwZ">
+                            <rect key="frame" x="0.0" y="0.0" width="295" height="58"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SFq-V5-6kH">
+                                    <rect key="frame" x="16" y="10" width="279" height="38"/>
+                                    <subviews>
+                                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="8jx-kP-fYi">
+                                            <rect key="frame" x="12" y="8.6666666666666661" width="255" height="20.666666666666671"/>
+                                            <color key="textColor" name="Text"/>
+                                            <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                        </textField>
+                                    </subviews>
+                                    <color key="backgroundColor" name="ReceivedMsgBG"/>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="8jx-kP-fYi" secondAttribute="trailing" constant="12" id="6m0-d4-huc"/>
+                                        <constraint firstItem="8jx-kP-fYi" firstAttribute="leading" secondItem="SFq-V5-6kH" secondAttribute="leading" constant="12" id="MU1-0e-tlH"/>
+                                        <constraint firstItem="8jx-kP-fYi" firstAttribute="centerY" secondItem="SFq-V5-6kH" secondAttribute="centerY" id="moY-W2-R90"/>
+                                    </constraints>
+                                </view>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstItem="SFq-V5-6kH" firstAttribute="leading" secondItem="UAN-QO-MwZ" secondAttribute="leading" constant="16" id="3hC-XF-dsN"/>
+                                <constraint firstItem="SFq-V5-6kH" firstAttribute="top" secondItem="UAN-QO-MwZ" secondAttribute="top" constant="10" id="NCZ-pg-mYN"/>
+                                <constraint firstAttribute="trailing" secondItem="SFq-V5-6kH" secondAttribute="trailing" id="P3a-JR-CTD"/>
+                                <constraint firstAttribute="bottom" secondItem="SFq-V5-6kH" secondAttribute="bottom" constant="10" id="Rxo-Lt-WJM"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Osd-6c-zgR">
+                            <rect key="frame" x="295" y="0.0" width="80" height="58"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F9q-qV-TaJ">
+                                    <rect key="frame" x="0.0" y="15" width="80" height="28"/>
+                                    <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="13"/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" title="CANCEL">
+                                        <color key="titleColor" name="PrimaryBlue"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="cancelButtonTouched" destination="-1" eventType="touchUpInside" id="Vtr-8E-tbH"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstItem="F9q-qV-TaJ" firstAttribute="centerY" secondItem="Osd-6c-zgR" secondAttribute="centerY" id="LPE-nb-zwf"/>
+                                <constraint firstAttribute="trailing" secondItem="F9q-qV-TaJ" secondAttribute="trailing" id="Zt3-WI-7RB"/>
+                                <constraint firstAttribute="width" constant="80" id="aUa-h8-vVy"/>
+                                <constraint firstItem="F9q-qV-TaJ" firstAttribute="leading" secondItem="Osd-6c-zgR" secondAttribute="leading" id="yhE-Ab-foO"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </stackView>
+            </subviews>
+            <color key="backgroundColor" name="HeaderBG"/>
+            <constraints>
+                <constraint firstItem="a9L-Mr-si2" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="AOY-rH-y7e"/>
+                <constraint firstAttribute="bottom" secondItem="a9L-Mr-si2" secondAttribute="bottom" id="By4-Fm-vRb"/>
+                <constraint firstAttribute="trailing" secondItem="a9L-Mr-si2" secondAttribute="trailing" id="d8c-Tg-zhU"/>
+                <constraint firstItem="a9L-Mr-si2" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="guf-bb-ge9"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="139" y="21"/>
+        </view>
+    </objects>
+    <resources>
+        <namedColor name="HeaderBG">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="PrimaryBlue">
+            <color red="0.38039215686274508" green="0.54117647058823526" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="ReceivedMsgBG">
+            <color red="0.94901960784313721" green="0.95294117647058818" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Text">
+            <color red="0.23529411764705882" green="0.24705882352941178" blue="0.25490196078431371" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

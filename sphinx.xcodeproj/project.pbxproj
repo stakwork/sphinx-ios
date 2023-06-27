@@ -166,6 +166,10 @@
 		473633E625558EFE007405F2 /* PodcastSatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473633E525558EFE007405F2 /* PodcastSatsView.swift */; };
 		473633E825558F0B007405F2 /* PodcastSatsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 473633E725558F0B007405F2 /* PodcastSatsView.xib */; };
 		473633EA25559945007405F2 /* LogarithmicSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473633E925559945007405F2 /* LogarithmicSlider.swift */; };
+		47363CF82A4B269700C295D4 /* ChatSearchTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47363CF72A4B269700C295D4 /* ChatSearchTextFieldView.swift */; };
+		47363CFA2A4B26A300C295D4 /* ChatSearchTextFieldView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47363CF92A4B26A300C295D4 /* ChatSearchTextFieldView.xib */; };
+		47363D002A4B374600C295D4 /* ChatSearchResultsBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47363CFF2A4B374600C295D4 /* ChatSearchResultsBar.swift */; };
+		47363D022A4B375000C295D4 /* ChatSearchResultsBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47363D012A4B375000C295D4 /* ChatSearchResultsBar.xib */; };
 		473842F52391970B00AA640F /* FullScreenImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 473842F42391970B00AA640F /* FullScreenImageView.xib */; };
 		473842F7239197E700AA640F /* FullScreenImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473842F6239197E700AA640F /* FullScreenImageView.swift */; };
 		473842F92391A9DF00AA640F /* KeyboardHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473842F82391A9DF00AA640F /* KeyboardHelper.swift */; };
@@ -1005,6 +1009,10 @@
 		473633E525558EFE007405F2 /* PodcastSatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastSatsView.swift; sourceTree = "<group>"; };
 		473633E725558F0B007405F2 /* PodcastSatsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PodcastSatsView.xib; sourceTree = "<group>"; };
 		473633E925559945007405F2 /* LogarithmicSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogarithmicSlider.swift; sourceTree = "<group>"; };
+		47363CF72A4B269700C295D4 /* ChatSearchTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSearchTextFieldView.swift; sourceTree = "<group>"; };
+		47363CF92A4B26A300C295D4 /* ChatSearchTextFieldView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatSearchTextFieldView.xib; sourceTree = "<group>"; };
+		47363CFF2A4B374600C295D4 /* ChatSearchResultsBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSearchResultsBar.swift; sourceTree = "<group>"; };
+		47363D012A4B375000C295D4 /* ChatSearchResultsBar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatSearchResultsBar.xib; sourceTree = "<group>"; };
 		473842F42391970B00AA640F /* FullScreenImageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FullScreenImageView.xib; sourceTree = "<group>"; };
 		473842F6239197E700AA640F /* FullScreenImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenImageView.swift; sourceTree = "<group>"; };
 		473842F82391A9DF00AA640F /* KeyboardHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHelper.swift; sourceTree = "<group>"; };
@@ -2342,6 +2350,17 @@
 			path = "Custom Views";
 			sourceTree = "<group>";
 		};
+		47363CF62A4B268400C295D4 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				47363CF72A4B269700C295D4 /* ChatSearchTextFieldView.swift */,
+				47363CF92A4B26A300C295D4 /* ChatSearchTextFieldView.xib */,
+				47363CFF2A4B374600C295D4 /* ChatSearchResultsBar.swift */,
+				47363D012A4B375000C295D4 /* ChatSearchResultsBar.xib */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
 		47393E662461F6E600E6F93E /* Keychain */ = {
 			isa = PBXGroup;
 			children = (
@@ -2658,6 +2677,7 @@
 		475BDC96232AC15C00C5BBD6 /* Custom Views */ = {
 			isa = PBXGroup;
 			children = (
+				47363CF62A4B268400C295D4 /* Search */,
 				476AAAA32A24FF0D0092AC87 /* New Chat VC */,
 				478BD8B72829B6F400C733FD /* Tribe Member */,
 				4726A40B24C09C23005A66B4 /* Chat */,
@@ -4447,6 +4467,7 @@
 				47FDDB1C2562D77200BBF15F /* boost_animation.json in Resources */,
 				475BDD46232AD00D00C5BBD6 /* Montserrat-ExtraBold.otf in Resources */,
 				475BDD47232AD00D00C5BBD6 /* Montserrat-Light.otf in Resources */,
+				47363CFA2A4B26A300C295D4 /* ChatSearchTextFieldView.xib in Resources */,
 				47FA440723749D02005D8C63 /* SubscriptionFormTableHeaderView.xib in Resources */,
 				4797E7AC24B8F13800D13270 /* JoinVideoCallView.xib in Resources */,
 				4797E7BA24B8F3B600D13270 /* History.storyboard in Resources */,
@@ -4570,6 +4591,7 @@
 				47904C2024BF403400710E7A /* NotificationSoundTableViewCell.xib in Resources */,
 				47E6A4B22A2E276500A9509E /* BotResponseView.xib in Resources */,
 				478BD8BC282AA6C600C733FD /* TribeMemberPopupView.xib in Resources */,
+				47363D022A4B375000C295D4 /* ChatSearchResultsBar.xib in Resources */,
 				47904C0D24BF352300710E7A /* bells.caf in Resources */,
 				475BDD23232AC71000C5BBD6 /* Colors.xcassets in Resources */,
 				CEE49BF42A1BBC70009E0EC4 /* MediaStorageTypeSummaryTableViewCell.xib in Resources */,
@@ -4770,6 +4792,7 @@
 				F32A696526CFEF600004B8B3 /* PodcastFeed+Properties.swift in Sources */,
 				475043C82971956D00830E9E /* PodcastPlayerController.swift in Sources */,
 				47D4DE7E2A45CA85004B03AF /* LoadingMoreTableViewCell.swift in Sources */,
+				47363D002A4B374600C295D4 /* ChatSearchResultsBar.swift in Sources */,
 				F38744E1271FD7CB00E28C84 /* Video+DisplayUtils.swift in Sources */,
 				F358212F2698BE6800A314F1 /* API+HubError.swift in Sources */,
 				472161CD293A67A50088B87B /* YoutubeRecommendationFeedPlayerViewController.swift in Sources */,
@@ -4865,6 +4888,7 @@
 				475E416C23858D4900928931 /* Subscription+CoreDataClass.swift in Sources */,
 				477924822A28DF6700CD3CF1 /* NewMessageReplyView.swift in Sources */,
 				473633EA25559945007405F2 /* LogarithmicSlider.swift in Sources */,
+				47363CF82A4B269700C295D4 /* ChatSearchTextFieldView.swift in Sources */,
 				47CFA9522A3A13630030BC23 /* NewMessageTableViewCell+DelegateExtension.swift in Sources */,
 				47AA08C7234BB8E0002C69E2 /* ShareInviteCodeViewController.swift in Sources */,
 				F3DC6B2A273FB3A400458E09 /* ContentFeedItem+Computeds.swift in Sources */,

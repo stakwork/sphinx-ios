@@ -131,5 +131,20 @@ extension NewChatViewController : ChatHeaderViewDelegate {
             self.present(notificationsVC, animated: true)
         }
     }
+}
+
+extension NewChatViewController : ChatSearchTextFieldViewDelegate {
+    func shouldSearchFor(term: String) {
+        
+    }
     
+    func didTapSearchCancelButton() {
+        
+    }
+}
+
+extension NewChatViewController : ChatSearchResultsBarDelegate {
+    func didTapNavigateArrowButton(button: ChatSearchResultsBar.NavigateArrowButton) {
+        
+    }
 }

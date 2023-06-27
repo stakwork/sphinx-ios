@@ -9,11 +9,16 @@
 import UIKit
 
 protocol ChatHeaderViewDelegate : class {
+    ///Chat header
     func didTapHeaderButton()
     func didTapBackButton()
     func didTapWebAppButton()
     func didTapMuteButton()
     func didTapMoreOptionsButton(sender: UIButton)
+    
+    ///Chat search header
+    func shouldSearchFor(term: String)
+    func didTapSearchCancelButton()
 }
 
 class ChatHeaderView: UIView {

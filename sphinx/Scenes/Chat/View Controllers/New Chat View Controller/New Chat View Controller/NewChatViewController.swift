@@ -161,7 +161,8 @@ class NewChatViewController: NewKeyboardHandlerViewController {
         headerView.configureHeaderWith(
             chat: chat,
             contact: contact,
-            andDelegate: self
+            andDelegate: self,
+            searchDelegate: self
         )
         
         configurePinnedMessageView()
@@ -170,7 +171,11 @@ class NewChatViewController: NewKeyboardHandlerViewController {
     }
     
     func setDelegates() {
-        bottomView.setDelegates(messageFieldDelegate: self)
+        bottomView.setDelegates(
+            messageFieldDelegate: self,
+            searchDelegate: self
+        )
+        
         SphinxSocketManager.sharedInstance.setDelegate(delegate: self)
     }
 }

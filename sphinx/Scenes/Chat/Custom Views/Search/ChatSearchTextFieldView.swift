@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol ChatSearchTextFieldViewDelegate {
+protocol ChatSearchTextFieldViewDelegate : class {
     func shouldSearchFor(term: String)
     func didTapSearchCancelButton()
 }
@@ -45,6 +45,12 @@ class ChatSearchTextFieldView: UIView {
         self.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         
         textField.delegate = self
+    }
+    
+    func setDelegate(
+        _ delegate: ChatSearchTextFieldViewDelegate?
+    ) {
+        self.delegate = delegate
     }
     
     @IBAction func cancelButtonTouched() {

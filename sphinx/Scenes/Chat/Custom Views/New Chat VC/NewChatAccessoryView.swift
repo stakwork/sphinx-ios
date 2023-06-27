@@ -10,12 +10,16 @@ import UIKit
 
 
 class NewChatAccessoryView: UIView {
+    
+    weak var searchDelegate: ChatSearchResultsBarDelegate?
 
     @IBOutlet var contentView: UIView!
     
+    @IBOutlet weak var normalModeStackView: UIStackView!
     @IBOutlet weak var podcastPlayerView: PodcastSmallPlayer!
     @IBOutlet weak var messageReplyView: MessageReplyView!
     @IBOutlet weak var messageFieldView: ChatMessageTextFieldView!
+    @IBOutlet weak var chatSearchView: ChatSearchResultsBar!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -45,9 +49,12 @@ extension NewChatAccessoryView {
     }
     
     func setDelegates(
-        messageFieldDelegate: ChatMessageTextFieldViewDelegate
+        messageFieldDelegate: ChatMessageTextFieldViewDelegate,
+        searchDelegate: ChatSearchResultsBarDelegate? = nil
     ) {
         messageFieldView.delegate = messageFieldDelegate
+        
+        self.searchDelegate = searchDelegate
     }
     
     func populateMentionAutocomplete(
@@ -121,5 +128,28 @@ extension NewChatAccessoryView {
     
     func resetReplyView() {
         messageReplyView.resetAndHideView()
+    }
+}
+
+//Search Mode
+extension NewChatAccessoryView {
+    func configureWith(
+        active: Bool,
+        matchesCount: Int?,
+        matchIndex: Int?,
+        delegate: ChatSearchResultsBarDelegate?
+    ) {
+        normalModeStackView.isHidden = active
+        chatSearchView.isHidden = !active
+        
+        guard let matchesCount = matchesCount, let matchIndex = matchIndex, active else {
+            return
+        }
+        
+        chatSearchView.configureWith(
+            matchesCount: matchesCount,
+            matchIndex: matchIndex,
+            delegate: delegate
+        )
     }
 }

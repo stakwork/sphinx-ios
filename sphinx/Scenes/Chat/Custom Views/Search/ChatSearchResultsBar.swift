@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol ChatSearchResultsBarDelegate {
+protocol ChatSearchResultsBarDelegate : class {
     func didTapNavigateArrowButton(button: ChatSearchResultsBar.NavigateArrowButton)
 }
 
@@ -48,9 +48,10 @@ class ChatSearchResultsBar: UIView {
     
     func configureWith(
         matchesCount: Int,
-        matchIndex: Int
+        matchIndex: Int,
+        delegate: ChatSearchResultsBarDelegate?
     ) {
-        
+        self.delegate = delegate
     }
 
     @IBAction func navigateArrowButtonTouched(_ sender: UIButton) {

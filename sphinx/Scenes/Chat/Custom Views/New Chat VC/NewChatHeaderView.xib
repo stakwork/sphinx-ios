@@ -10,34 +10,52 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NewChatHeaderView" customModule="sphinx" customModuleProvider="target">
             <connections>
                 <outlet property="chatHeaderView" destination="mGe-uW-Fbg" id="Pph-rq-IGQ"/>
+                <outlet property="chatSearchView" destination="UhC-rO-mzO" id="fxz-Fi-kEa"/>
                 <outlet property="contentView" destination="iN0-l3-epB" id="VHz-ui-zC2"/>
+                <outlet property="normalModeStackView" destination="aVm-18-CwF" id="8vW-00-o9g"/>
                 <outlet property="pinnedMessageView" destination="yU6-b4-LJg" id="LkC-LT-nV9"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="393" height="115"/>
+            <rect key="frame" x="0.0" y="0.0" width="393" height="200"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="FI6-aK-lAW">
                     <rect key="frame" x="0.0" y="0.0" width="393" height="65"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mGe-uW-Fbg" customClass="ChatHeaderView" customModule="sphinx" customModuleProvider="target">
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="aVm-18-CwF">
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="65"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mGe-uW-Fbg" customClass="ChatHeaderView" customModule="sphinx" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="65"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="65" id="lOP-hO-KsQ"/>
+                                    </constraints>
+                                </view>
+                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yU6-b4-LJg" customClass="PinnedMessageView" customModule="sphinx" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="50"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="50" id="zm0-Ou-ACw"/>
+                                    </constraints>
+                                </view>
+                            </subviews>
+                        </stackView>
+                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UhC-rO-mzO" customClass="ChatSearchTextFieldView" customModule="sphinx" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="393" height="65"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="65" id="lOP-hO-KsQ"/>
-                            </constraints>
-                        </view>
-                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yU6-b4-LJg" customClass="PinnedMessageView" customModule="sphinx" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="50"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="50" id="zm0-Ou-ACw"/>
+                                <constraint firstAttribute="height" constant="65" id="DZj-Zc-Pbe"/>
                             </constraints>
                         </view>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="UhC-rO-mzO" secondAttribute="trailing" id="2fC-aD-OAH"/>
+                        <constraint firstItem="UhC-rO-mzO" firstAttribute="leading" secondItem="FI6-aK-lAW" secondAttribute="leading" id="Czu-Yn-ySJ"/>
+                    </constraints>
                 </stackView>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

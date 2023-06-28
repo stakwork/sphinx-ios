@@ -114,12 +114,10 @@ extension ChatMentionAutocompleteDataSource : ChatMentionAutocompleteDelegate{
     func processAutocomplete(text: String) {
         self.delegate?.processAutocomplete(text: text)
     }
+    
+    
     func processGeneralPurposeMacro(action: @escaping () -> ()) {
-        action()
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01, execute: {
-//            self.messageTextView.string = ""
-//            self.textDidChange(Notification(name: Notification.Name(rawValue: "")))
-//        })
+        delegate.processGeneralPurposeMacro(action: action)
     }
     
 }

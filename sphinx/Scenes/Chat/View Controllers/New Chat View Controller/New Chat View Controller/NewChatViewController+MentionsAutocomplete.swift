@@ -116,10 +116,8 @@ extension NewChatViewController: ChatMentionAutocompleteDelegate {
     func processGeneralPurposeMacro(action: @escaping () -> ()) {
         action()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.01, execute: {
-            if let bottomTextView = self.bottomView.messageFieldView.textView{
-                bottomTextView.text = ""
-                self.bottomView.messageFieldView.textViewDidChange(bottomTextView)
-            }
+            self.chatMentionAutocompleteDataSource?.updateMacroSuggestions(macros: [])
+            self.bottomView.clearMessage()
         })
     }
 }

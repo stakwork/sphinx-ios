@@ -149,6 +149,10 @@ extension NewChatAccessoryView {
             delegate: self
         )
     }
+    
+    func shouldToggleSearchLoadingWheel(active: Bool) {
+        chatSearchView.toggleLoadingWheel(active: active)
+    }
 }
 
 extension NewChatAccessoryView : ChatSearchResultsBarDelegate {

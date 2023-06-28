@@ -11,29 +11,46 @@ import CoreData
 import WebKit
 
 protocol NewChatTableDataSourceDelegate : class {
+    ///New msgs indicator
     func configureNewMessagesIndicatorWith(newMsgCount: Int)
+    
+    ///Scrolling
     func didScrollToBottom()
     func didScrollOutOfBottomArea()
     
+    ///Attachments
     func shouldGoToAttachmentViewFor(messageId: Int, isPdf: Bool)
     func shouldGoToVideoPlayerFor(messageId: Int, with data: Data)
     
+    ///LinkPreviews
     func didTapOnContactWith(pubkey: String, and routeHint: String?)
     func didTapOnTribeWith(joinLink: String)
     
+    ///Tribes
     func didDeleteTribe()
+    
+    ///First messages / Socket
     func didUpdateChat(_ chat: Chat)
     
+    ///Message menu
     func didLongPressOn(cell: UITableViewCell, with messageId: Int, bubbleViewRect: CGRect)
+    
+    ///Leaderboard
     func shouldShowLeaderboardFor(messageId: Int)
     
+    ///Message reply
     func shouldReplyToMessage(message: TransactionMessage)
+    
+    ///File download
     func shouldOpenActivityVCFor(url: URL)
     
+    ///Invoices
     func shouldPayInvoiceFor(messageId: Int)
     
+    ///Messages search
     func isOnStandardMode() -> Bool
     func didFinishSearchingWith(matchesCount: Int, index: Int)
+    func shouldToggleSearchLoadingWheel(active: Bool)
 }
 
 class NewChatTableDataSource : NSObject {
@@ -75,6 +92,7 @@ class NewChatTableDataSource : NSObject {
     var searchingTerm: String? = nil
     var searchMatches: [(Int, MessageTableCellState)] = []
     var currentSearchMatchIndex: Int = 0
+    var isLastSearchPage = false
     
     ///Scroll and pagination
     var messagesCount = 0

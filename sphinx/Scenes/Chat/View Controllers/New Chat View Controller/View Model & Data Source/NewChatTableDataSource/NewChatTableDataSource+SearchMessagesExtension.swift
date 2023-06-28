@@ -13,7 +13,10 @@ extension NewChatTableDataSource {
         let searchTerm = term.trim()
         
         if searchTerm.isNotEmpty && searchTerm.count > 2 {
-            performSearch(term: searchTerm)
+            performSearch(
+                term: searchTerm,
+                itemsCount: max(500, self.messagesArray.count)
+            )
         } else {
             
             if searchTerm.count > 0 {
@@ -24,20 +27,28 @@ extension NewChatTableDataSource {
         }
     }
     
-    func performSearch(term: String) {
+    func performSearch(
+        term: String,
+        itemsCount: Int
+    ) {
         guard let chat = chat else {
             return
         }
         
+        let isNewSearch = searchingTerm != term
+        
         searchingTerm = term
         
-        DispatchQueue.global(qos: .userInitiated).async {
-            if self.messagesArray.count < 1000 {
-                ///Start listening with this limit to prevent scroll jump on search cancel
-                self.configureResultsController(items: 1000)
-            }
-            self.messagesArray = TransactionMessage.getAllMessagesFor(chat: chat, limit: 1000).reversed()
+        if (itemsCount > self.messagesArray.count) {
+            ///Start listening with this limit to prevent scroll jump on search cancel
+            ///If listening was set with lower count, then on cancel could jump since less items are available
+            self.configureResultsController(items: itemsCount)
+        }
+        if (itemsCount > self.messagesArray.count || isNewSearch) {
+            ///Process messages if loading more items or doing a new search
+            self.messagesArray = TransactionMessage.getAllMessagesFor(chat: chat, limit: itemsCount).reversed()
             self.processMessages(messages: self.messagesArray)
+            self.isLastSearchPage = self.messagesArray.count < itemsCount
         }
     }
     
@@ -104,7 +115,7 @@ extension NewChatTableDataSource {
         DispatchQueue.main.async {
             self.delegate?.didFinishSearchingWith(
                 matchesCount: self.searchMatches.count,
-                index: 0
+                index: self.currentSearchMatchIndex
             )
             
             self.reloadAllVisibleRows()
@@ -121,7 +132,26 @@ extension NewChatTableDataSource {
                 at: .top,
                 animated: true
             )
+            
+            if index + 1 == searchMatches.count {
+                loadMoreItemForSearch()
+            }
         }
+    }
+    
+    func loadMoreItemForSearch() {
+        if isLastSearchPage {
+            return
+        }
+        
+        delegate?.shouldToggleSearchLoadingWheel(active: true)
+        
+        DelayPerformedHelper.performAfterDelay(seconds: 1.0, completion: {
+            self.performSearch(
+                term: self.searchingTerm ?? "",
+                itemsCount: self.messagesArray.count + 500
+            )
+        })
     }
     
     func reloadAllVisibleRows() {

@@ -62,4 +62,8 @@ extension NewChatViewController {
             matchIndex: index
         )
     }
+    
+    func shouldToggleSearchLoadingWheel(active: Bool) {
+        bottomView.shouldToggleSearchLoadingWheel(active: active)
+    }
 }

@@ -64,6 +64,7 @@ class ChatSearchTextFieldView: UIView {
     
     @IBAction func cancelButtonTouched() {
         textField.text = ""
+        textField.resignFirstResponder()
         
         delegate?.didTapSearchCancelButton()
     }

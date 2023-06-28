@@ -90,18 +90,20 @@ class NewChatHeaderView: UIView {
         normalModeStackView.isHidden = active
         chatSearchView.isHidden = !active
         
-        chatSearchView.makeFieldActive()
+        if active {
+            chatSearchView.makeFieldActive()
+        }
     }
 }
 
 extension NewChatHeaderView : ChatSearchTextFieldViewDelegate {
     func shouldSearchFor(term: String) {
-        self.searchDelegate?.shouldSearchFor(term: term)
+        searchDelegate?.shouldSearchFor(term: term)
     }
     
     func didTapSearchCancelButton() {
         configureSearchMode(active: false)
         
-        self.searchDelegate?.didTapSearchCancelButton()
+        searchDelegate?.didTapSearchCancelButton()
     }
 }

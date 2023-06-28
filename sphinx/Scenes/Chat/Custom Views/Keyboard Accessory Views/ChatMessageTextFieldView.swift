@@ -99,14 +99,6 @@ class ChatMessageTextFieldView: UIView {
         attachmentButton.tintColorDidChange()
     }
     
-    func shouldExpandKeyboard() {
-        textView.becomeFirstResponder()
-    }
-    
-    func shouldDismissKeyboard() {
-        textView.resignFirstResponder()
-    }
-    
     func createNewMessage(text: String) {
         let messageType = TransactionMessage.TransactionMessageType.message.rawValue
         

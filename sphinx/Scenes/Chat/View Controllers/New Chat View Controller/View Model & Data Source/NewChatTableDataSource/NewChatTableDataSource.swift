@@ -73,7 +73,8 @@ class NewChatTableDataSource : NSObject {
     var uploadingProgress: [Int: MessageTableCellState.UploadProgressData] = [:]
     
     var searchingTerm: String? = nil
-    var searchMatches: [Int: MessageTableCellState] = [:]
+    var searchMatches: [(Int, MessageTableCellState)] = []
+    var currentSearchMatchIndex: Int = 0
     
     ///Scroll and pagination
     var messagesCount = 0

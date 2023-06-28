@@ -18,6 +18,7 @@ class ChatSearchResultsBar: UIView {
     
     @IBOutlet var contentView: UIView!
 
+    @IBOutlet weak var matchIndexLabel: UILabel!
     @IBOutlet weak var matchesCountLabel: UILabel!
     @IBOutlet weak var arrowUpButton: UIButton!
     @IBOutlet weak var arrowDownButton: UIButton!
@@ -27,6 +28,9 @@ class ChatSearchResultsBar: UIView {
         case Up
         case Down
     }
+    
+    var matchesCount: Int = 0
+    var matchIndex: Int = 0
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -66,30 +70,52 @@ class ChatSearchResultsBar: UIView {
         delegate: ChatSearchResultsBarDelegate?
     ) {
         self.delegate = delegate
+        self.matchesCount = matchesCount ?? 0
+        self.matchIndex = matchIndex
         
-        if let matchesCount = matchesCount {
-            matchesCountLabel.text = matchesCount.searchMatchesString
-        }
-        
-        let matchesC = matchesCount ?? 0
-        
-        arrowUpButton.isEnabled = matchesC > 0
-        arrowUpButton.alpha = (matchesC > 0 && matchIndex < (matchesC - 1)) ? 1.0 : 0.5
-        
-        arrowDownButton.isEnabled = matchesC > 0
-        arrowDownButton.alpha = (matchesC > 0 && matchIndex > 0) ? 1.0 : 0.5
+        configureArrowsWith(
+            matchesCount: matchesCount ?? 0,
+            matchIndex: matchIndex
+        )
         
         toggleLoadingWheel(active: loading)
+    }
+    
+    func configureArrowsWith(
+        matchesCount: Int,
+        matchIndex: Int
+    ) {
+        matchIndexLabel.isHidden = matchesCount <= 0
+        matchIndexLabel.text = "\(matchIndex+1)\\"
+        matchesCountLabel.text = matchesCount.searchMatchesString
+        
+        arrowUpButton.isEnabled = (matchesCount > 0 && matchIndex < (matchesCount - 1))
+        arrowUpButton.alpha = (matchesCount > 0 && matchIndex < (matchesCount - 1)) ? 1.0 : 0.3
+        
+        arrowDownButton.isEnabled = (matchesCount > 0 && matchIndex > 0)
+        arrowDownButton.alpha = (matchesCount > 0 && matchIndex > 0) ? 1.0 : 0.3
     }
 
     @IBAction func navigateArrowButtonTouched(_ sender: UIButton) {
         switch(sender.tag) {
         case NavigateArrowButton.Up.rawValue:
+            matchIndex = matchIndex + 1
+            
+            configureArrowsWith(
+                matchesCount: matchesCount,
+                matchIndex: matchIndex
+            )
+            
             delegate?.didTapNavigateArrowButton(button: NavigateArrowButton.Up)
-            break
         case NavigateArrowButton.Down.rawValue:
+            matchIndex = matchIndex - 1
+            
+            configureArrowsWith(
+                matchesCount: matchesCount,
+                matchIndex: matchIndex
+            )
+            
             delegate?.didTapNavigateArrowButton(button: NavigateArrowButton.Down)
-            break
         default:
             break
         }

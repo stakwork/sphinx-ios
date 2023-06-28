@@ -37,21 +37,16 @@ extension NewChatViewController : ChatSearchTextFieldViewDelegate {
     }
     
     func didTapSearchCancelButton() {
-        toggleSearchMode(active: false)
         chatTableDataSource?.shouldEndSearch()
+        toggleSearchMode(active: false)
     }
 }
 
 extension NewChatViewController : ChatSearchResultsBarDelegate {
-    func didTapNavigateArrowButton(button: ChatSearchResultsBar.NavigateArrowButton) {
-        switch(button) {
-        case ChatSearchResultsBar.NavigateArrowButton.Up:
-            
-            break
-        case ChatSearchResultsBar.NavigateArrowButton.Down:
-            
-            break
-        }
+    func didTapNavigateArrowButton(
+        button: ChatSearchResultsBar.NavigateArrowButton
+    ) {
+        chatTableDataSource?.shouldNavigateOnSearchResultsWith(button: button)
     }
 }
 

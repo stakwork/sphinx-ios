@@ -668,6 +668,9 @@ public class Chat: NSManagedObject {
     }
     
     func processAliasesFrom(messages: [TransactionMessage]) {
+        if aliases.count == messages.count {
+            return
+        }
         aliases = Array(Set(messages.compactMap({$0.senderAlias})))
     }
     

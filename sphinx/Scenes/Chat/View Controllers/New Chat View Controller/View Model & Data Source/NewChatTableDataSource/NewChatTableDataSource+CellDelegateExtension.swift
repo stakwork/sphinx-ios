@@ -972,4 +972,18 @@ extension NewChatTableDataSource {
         
         return tableCellState
     }
+    
+    func getTableCellStatesForVisibleRows() -> [MessageTableCellState] {
+        let rowIndexes = (tableView.indexPathsForVisibleRows ?? []).map({ $0.row })
+        
+        var tableCellStates: [MessageTableCellState] = []
+        
+        for rowIndex in rowIndexes {
+            tableCellStates.append(
+                messageTableCellStateArray[rowIndex]
+            )
+        }
+        
+        return tableCellStates
+    }
 }

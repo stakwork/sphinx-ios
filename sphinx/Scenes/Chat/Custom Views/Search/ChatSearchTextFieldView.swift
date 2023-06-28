@@ -83,6 +83,11 @@ extension ChatSearchTextFieldView : UITextFieldDelegate {
         return true
     }
     
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        self.delegate?.shouldSearchFor(term: "")
+        return true
+    }
+    
     func performSearchWithDelay(
         term: String
     ) {

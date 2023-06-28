@@ -59,7 +59,7 @@ extension NewChatTableDataSource {
         
         delegate?.didFinishSearchingWith(
             matchesCount: 0,
-            index: 0
+            index: currentSearchMatchIndex
         )
         
         reloadAllVisibleRows()
@@ -101,6 +101,7 @@ extension NewChatTableDataSource {
             return
         }
         
+        ///Invert indexes
         let itemsCount = messageTableCellStateArray.count
         
         for (index, indexAndMessageTableCellState) in searchMatches.enumerated() {
@@ -112,6 +113,10 @@ extension NewChatTableDataSource {
         
         searchMatches = searchMatches.reversed()
         
+        ///should scroll to first results after current scroll position
+        currentSearchMatchIndex = searchMatches.firstIndex(where: { $0.0 >= (tableView.indexPathsForVisibleRows?.first?.row ?? 0) }) ?? 0
+        
+        ///Show search results
         DispatchQueue.main.async {
             self.delegate?.didFinishSearchingWith(
                 matchesCount: self.searchMatches.count,

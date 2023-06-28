@@ -21,6 +21,7 @@ class ChatSearchResultsBar: UIView {
     @IBOutlet weak var matchesCountLabel: UILabel!
     @IBOutlet weak var arrowUpButton: UIButton!
     @IBOutlet weak var arrowDownButton: UIButton!
+    @IBOutlet weak var loadingWheel: UIActivityIndicatorView!
     
     public enum NavigateArrowButton: Int {
         case Up
@@ -46,20 +47,39 @@ class ChatSearchResultsBar: UIView {
         self.autoresizingMask = [.flexibleHeight, .flexibleWidth]
     }
     
+    func toggleLoadingWheel(
+        active: Bool
+    ) {
+        loadingWheel.isHidden = !active
+        
+        if active {
+            loadingWheel.startAnimating()
+        } else {
+            loadingWheel.stopAnimating()
+        }
+    }
+    
     func configureWith(
-        matchesCount: Int,
+        matchesCount: Int? = nil,
         matchIndex: Int,
+        loading: Bool,
         delegate: ChatSearchResultsBarDelegate?
     ) {
         self.delegate = delegate
         
-        matchesCountLabel.text = matchesCount.searchMatchesString
+        if let matchesCount = matchesCount {
+            matchesCountLabel.text = matchesCount.searchMatchesString
+        }
         
-        arrowUpButton.isEnabled = matchesCount > 0
-        arrowUpButton.alpha = matchesCount > 0 ? 1.0 : 0.5
+        let matchesC = matchesCount ?? 0
         
-        arrowDownButton.isEnabled = matchesCount > 0
-        arrowDownButton.alpha = matchesCount > 0 ? 1.0 : 0.5
+        arrowUpButton.isEnabled = matchesC > 0
+        arrowUpButton.alpha = (matchesC > 0 && matchIndex < (matchesC - 1)) ? 1.0 : 0.5
+        
+        arrowDownButton.isEnabled = matchesC > 0
+        arrowDownButton.alpha = (matchesC > 0 && matchIndex > 0) ? 1.0 : 0.5
+        
+        toggleLoadingWheel(active: loading)
     }
 
     @IBAction func navigateArrowButtonTouched(_ sender: UIButton) {

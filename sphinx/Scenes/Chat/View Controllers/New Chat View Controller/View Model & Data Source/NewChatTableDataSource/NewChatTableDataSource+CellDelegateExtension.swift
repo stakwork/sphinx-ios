@@ -861,10 +861,10 @@ extension NewChatTableDataSource {
     }
     
     func deleteGroup() {
-        bubbleHelper.showLoadingWheel()
+        messageBubbleHelper.showLoadingWheel()
         
         GroupsManager.sharedInstance.deleteGroup(chat: self.chat, completion: { success in
-            self.bubbleHelper.hideLoadingWheel()
+            self.messageBubbleHelper.hideLoadingWheel()
             
             if success {
                 self.delegate?.didDeleteTribe()
@@ -875,7 +875,7 @@ extension NewChatTableDataSource {
     }
     
     func shouldApproveMember(message: TransactionMessage) {
-        bubbleHelper.showLoadingWheel()
+        messageBubbleHelper.showLoadingWheel()
         
         GroupsManager.sharedInstance.respondToRequest(
             message: message,
@@ -890,7 +890,7 @@ extension NewChatTableDataSource {
     }
     
     func shouldRejectMember(message: TransactionMessage) {
-        bubbleHelper.showLoadingWheel()
+        messageBubbleHelper.showLoadingWheel()
         
         GroupsManager.sharedInstance.respondToRequest(
             message: message,
@@ -905,13 +905,13 @@ extension NewChatTableDataSource {
     }
     
     func requestResponseSucceddedWith(chat: Chat) {
-        self.bubbleHelper.hideLoadingWheel()
+        self.messageBubbleHelper.hideLoadingWheel()
         self.chat = chat
         self.delegate?.didUpdateChat(chat)
     }
     
     func requestResponseFailed() {
-        self.bubbleHelper.hideLoadingWheel()
+        self.messageBubbleHelper.hideLoadingWheel()
         self.showGenericError()
     }
     

@@ -33,6 +33,7 @@ protocol NewChatTableDataSourceDelegate : class {
     func shouldPayInvoiceFor(messageId: Int)
     
     func isOnStandardMode() -> Bool
+    func didFinishSearchingWith(matchesCount: Int, index: Int)
 }
 
 class NewChatTableDataSource : NSObject {
@@ -60,7 +61,7 @@ class NewChatTableDataSource : NSObject {
     ///Helpers
     var preloaderHelper = MessagesPreloaderHelper.sharedInstance
     let linkPreviewsLoader = CustomSwiftLinkPreview.sharedInstance
-    let bubbleHelper = NewMessageBubbleHelper()
+    let messageBubbleHelper = NewMessageBubbleHelper()
     let audioPlayerHelper = AudioPlayerHelper()
     var podcastPlayerController = PodcastPlayerController.sharedInstance
     
@@ -70,6 +71,9 @@ class NewChatTableDataSource : NSObject {
     var mediaCached: [Int: MessageTableCellState.MediaData] = [:]
     var botsWebViewData: [Int: MessageTableCellState.BotWebViewData] = [:]
     var uploadingProgress: [Int: MessageTableCellState.UploadProgressData] = [:]
+    
+    var searchingTerm: String? = nil
+    var searchMatches: [Int: MessageTableCellState] = [:]
     
     ///Scroll and pagination
     var messagesCount = 0

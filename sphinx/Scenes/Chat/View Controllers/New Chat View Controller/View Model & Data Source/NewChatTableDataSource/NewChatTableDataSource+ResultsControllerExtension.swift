@@ -107,7 +107,7 @@ extension NewChatTableDataSource {
                 botWebViewData: botWebViewData,
                 uploadProgressData: uploadProgressData,
                 delegate: self,
-                searchingTerm: nil,
+                searchingTerm: self.searchingTerm,
                 indexPath: indexPath
             )
             
@@ -186,26 +186,25 @@ extension NewChatTableDataSource {
             let linkTribe = linkTribesArray[message.id]
             let linkWeb = getLinkWebFor(message: message)
             
-            array.insert(
-                MessageTableCellState(
-                    message: message,
-                    chat: chat,
-                    owner: owner,
-                    contact: contact,
-                    tribeAdmin: admin,
-                    separatorDate: nil,
-                    bubbleState: bubbleStateAndDate.0,
-                    contactImage: headerImage,
-                    replyingMessage: replyingMessage,
-                    boostMessages: boostsMessages,
-                    purchaseMessages: purchaseMessages,
-                    linkContact: linkContact,
-                    linkTribe: linkTribe,
-                    linkWeb: linkWeb,
-                    invoiceData: (invoiceData.0 > 0, invoiceData.1 > 0)
-                ),
-                at: 0
+            let messageTableCellState = MessageTableCellState(
+                message: message,
+                chat: chat,
+                owner: owner,
+                contact: contact,
+                tribeAdmin: admin,
+                separatorDate: nil,
+                bubbleState: bubbleStateAndDate.0,
+                contactImage: headerImage,
+                replyingMessage: replyingMessage,
+                boostMessages: boostsMessages,
+                purchaseMessages: purchaseMessages,
+                linkContact: linkContact,
+                linkTribe: linkTribe,
+                linkWeb: linkWeb,
+                invoiceData: (invoiceData.0 > 0, invoiceData.1 > 0)
             )
+            
+            array.insert(messageTableCellState, at: 0)
             
             invoiceData = (
                 invoiceData.0 + ((message.isInvoice() && message.isPaid() && message.isOutgoing(ownerId: owner.id)) ? 1 : 0),
@@ -213,12 +212,20 @@ extension NewChatTableDataSource {
             )
             
             newMsgCount += getNewMessageCountFor(message: message, and: owner)
+            
+            processForSearch(
+                message: message,
+                messageTableCellState: messageTableCellState,
+                index: array.count - 1
+            )
         }
         
         messageTableCellStateArray = array
         
         updateSnapshot()
         delegate?.configureNewMessagesIndicatorWith(newMsgCount: newMsgCount)
+        
+        finishSearchProcess()
     }
     
     func forceReload() {
@@ -531,7 +538,7 @@ extension NewChatTableDataSource : NSFetchedResultsControllerDelegate {
                             return
                         }
                         
-                        self.processMessages(messages: messages.reversed())
+                        self.processMessages(messages: self.messagesArray)
                         self.configureBoostAndPurchaseResultsController()
                     }
                 }

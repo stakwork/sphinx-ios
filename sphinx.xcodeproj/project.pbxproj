@@ -198,6 +198,7 @@
 		47468FDC233554680072124A /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47468FDB233554680072124A /* ProfileViewController.swift */; };
 		47468FEB233905AD0072124A /* NewContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47468FEA233905AD0072124A /* NewContactViewController.swift */; };
 		47484B972512690D00F82AAC /* BotWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47484B962512690D00F82AAC /* BotWebView.swift */; };
+		474934142A4C66AD0048C560 /* NewChatTableDataSource+SearchMessagesExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474934132A4C66AD0048C560 /* NewChatTableDataSource+SearchMessagesExtension.swift */; };
 		474935642A2919CE00AB5FFA /* AudioMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474935632A2919CE00AB5FFA /* AudioMessageView.swift */; };
 		474935662A2919D600AB5FFA /* AudioMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 474935652A2919D600AB5FFA /* AudioMessageView.xib */; };
 		474935682A2924FB00AB5FFA /* PodcastAudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474935672A2924FB00AB5FFA /* PodcastAudioView.swift */; };
@@ -1047,6 +1048,7 @@
 		47468FDB233554680072124A /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		47468FEA233905AD0072124A /* NewContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewContactViewController.swift; sourceTree = "<group>"; };
 		47484B962512690D00F82AAC /* BotWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BotWebView.swift; sourceTree = "<group>"; };
+		474934132A4C66AD0048C560 /* NewChatTableDataSource+SearchMessagesExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewChatTableDataSource+SearchMessagesExtension.swift"; sourceTree = "<group>"; };
 		474935632A2919CE00AB5FFA /* AudioMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMessageView.swift; sourceTree = "<group>"; };
 		474935652A2919D600AB5FFA /* AudioMessageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AudioMessageView.xib; sourceTree = "<group>"; };
 		474935672A2924FB00AB5FFA /* PodcastAudioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastAudioView.swift; sourceTree = "<group>"; };
@@ -3560,6 +3562,7 @@
 				4701462A2A3FC0A900A00DF8 /* NewChatTableDataSource+AttachmentsExtension.swift */,
 				47CEA44F2A4369A000E936CB /* NewChatTableDataSource+BotWebViewExtension.swift */,
 				47CEA4532A449D6D00E936CB /* NewChatTableDataSource+AudioExtension.swift */,
+				474934132A4C66AD0048C560 /* NewChatTableDataSource+SearchMessagesExtension.swift */,
 			);
 			path = NewChatTableDataSource;
 			sourceTree = "<group>";
@@ -4933,6 +4936,7 @@
 				47FA440923749D0B005D8C63 /* SubscriptionFormTableHeaderView.swift in Sources */,
 				47E6A4B02A2E275C00A9509E /* BotResponseView.swift in Sources */,
 				F3DC6B23273F60FF00458E09 /* ContentFeedPaymentDestination+CoreDataClass.swift in Sources */,
+				474934142A4C66AD0048C560 /* NewChatTableDataSource+SearchMessagesExtension.swift in Sources */,
 				47FA440223748EB6005D8C63 /* SubscriptionFormViewControllerExtensions.swift in Sources */,
 				47E6A4FB2A2FB3B100A9509E /* NewMessageTableViewCell+MessageTypesExtension.swift in Sources */,
 				CE0C4676296DC5E200E82353 /* ContentFeedStatus+SupportingModels.swift in Sources */,

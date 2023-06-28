@@ -21,6 +21,7 @@
                 <outlet property="arrowDownButton" destination="Bmx-6a-pbg" id="kq2-a5-Sjd"/>
                 <outlet property="arrowUpButton" destination="veF-xp-yE9" id="XgC-RJ-HYY"/>
                 <outlet property="contentView" destination="iN0-l3-epB" id="nDD-cl-m3n"/>
+                <outlet property="loadingWheel" destination="FdC-1d-lwA" id="q87-8m-Qd1"/>
                 <outlet property="matchesCountLabel" destination="WTc-Fz-yPg" id="ar2-l3-ZB3"/>
             </connections>
         </placeholder>
@@ -30,15 +31,15 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 match" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WTc-Fz-yPg">
-                    <rect key="frame" x="171" y="11.333333333333334" width="51.333333333333343" height="17.666666666666664"/>
+                    <rect key="frame" x="170.66666666666666" y="11.666666666666664" width="52" height="17"/>
                     <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                     <color key="textColor" name="Text"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="veF-xp-yE9">
-                    <rect key="frame" x="12" y="0.0" width="35" height="40"/>
+                    <rect key="frame" x="16" y="0.0" width="40" height="40"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="35" id="XUX-KH-AcB"/>
+                        <constraint firstAttribute="width" constant="40" id="XUX-KH-AcB"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="35"/>
                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -50,9 +51,9 @@
                     </connections>
                 </button>
                 <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bmx-6a-pbg">
-                    <rect key="frame" x="47" y="0.0" width="35" height="40"/>
+                    <rect key="frame" x="56" y="0.0" width="40" height="40"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="35" id="9b7-zm-gDK"/>
+                        <constraint firstAttribute="width" constant="40" id="9b7-zm-gDK"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="35"/>
                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -63,12 +64,17 @@
                         <action selector="navigateArrowButtonTouched:" destination="-1" eventType="touchUpInside" id="R1z-Cw-rfu"/>
                     </connections>
                 </button>
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="FdC-1d-lwA">
+                    <rect key="frame" x="357" y="10" width="20" height="20"/>
+                </activityIndicatorView>
             </subviews>
             <color key="backgroundColor" name="HeaderBG"/>
             <constraints>
                 <constraint firstItem="WTc-Fz-yPg" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="1k3-hR-Nk5"/>
-                <constraint firstItem="veF-xp-yE9" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="12" id="68a-dv-302"/>
+                <constraint firstItem="veF-xp-yE9" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="68a-dv-302"/>
                 <constraint firstItem="veF-xp-yE9" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Du7-nh-afN"/>
+                <constraint firstAttribute="trailing" secondItem="FdC-1d-lwA" secondAttribute="trailing" constant="16" id="HHr-Gx-ItI"/>
+                <constraint firstItem="FdC-1d-lwA" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="KaS-Hs-fbz"/>
                 <constraint firstAttribute="bottom" secondItem="Bmx-6a-pbg" secondAttribute="bottom" id="NTe-VG-jQ5"/>
                 <constraint firstItem="WTc-Fz-yPg" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="cii-qD-L6M"/>
                 <constraint firstItem="Bmx-6a-pbg" firstAttribute="leading" secondItem="veF-xp-yE9" secondAttribute="trailing" id="qn4-vT-Cfx"/>

@@ -135,7 +135,8 @@ extension NewChatAccessoryView {
 extension NewChatAccessoryView {
     func configureSearchWith(
         active: Bool,
-        matchesCount: Int = 0,
+        loading: Bool,
+        matchesCount: Int? = nil,
         matchIndex: Int = 0
     ) {
         normalModeStackView.isHidden = active
@@ -144,6 +145,7 @@ extension NewChatAccessoryView {
         chatSearchView.configureWith(
             matchesCount: matchesCount,
             matchIndex: matchIndex,
+            loading: loading,
             delegate: self
         )
     }

@@ -26,6 +26,8 @@ class ChatSearchTextFieldView: UIView {
     let kFieldPlaceHolderColor = UIColor.Sphinx.PlaceholderText
     let kTextColor = UIColor.Sphinx.Text
     
+    var timer: Timer?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
@@ -57,6 +59,8 @@ class ChatSearchTextFieldView: UIView {
     }
     
     @IBAction func cancelButtonTouched() {
+        textField.text = ""
+        
         delegate?.didTapSearchCancelButton()
     }
 }
@@ -70,9 +74,19 @@ extension ChatSearchTextFieldView : UITextFieldDelegate {
         let currentString = textField.text! as NSString
         let currentChangedString = currentString.replacingCharacters(in: range, with: string)
         
-        delegate?.shouldSearchFor(term: currentChangedString)
+        performSearchWithDelay(term: currentChangedString)
         
         return true
+    }
+    
+    func performSearchWithDelay(
+        term: String
+    ) {
+        timer?.invalidate()
+        
+        timer = Timer.scheduledTimer(withTimeInterval: 0.75, repeats: false, block: { (timer) in
+            self.delegate?.shouldSearchFor(term: term)
+        })
     }
 }
 

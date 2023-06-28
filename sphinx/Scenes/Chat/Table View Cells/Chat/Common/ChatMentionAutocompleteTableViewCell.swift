@@ -37,6 +37,7 @@ class ChatMentionAutocompleteTableViewCell: UITableViewCell {
     }
     
     func configureWith(mentionOrMacro:MentionOrMacroItem){
+        self.dividerLine.isHidden = true
         self.mentionTextField.text = mentionOrMacro.displayText
         self.alias = mentionOrMacro.displayText
         self.type = mentionOrMacro.type
@@ -79,7 +80,6 @@ class ChatMentionAutocompleteTableViewCell: UITableViewCell {
         }
         else if type == .macro,
         let action = action{
-            print("MACRO")
             self.delegate?.processGeneralPurposeMacro(action: action)
         }
     }

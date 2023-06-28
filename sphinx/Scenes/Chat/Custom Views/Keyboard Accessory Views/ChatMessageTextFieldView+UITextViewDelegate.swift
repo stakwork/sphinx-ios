@@ -138,7 +138,8 @@ extension ChatMessageTextFieldView {
     }
     
     func processMacro(text:String,cursorPosition:Int?){
-        self.delegate?.didDetectPossibleMacro(macro: getMacro(text: text, cursorPosition: cursorPosition) ?? "")
-        
+        if let macroText = getMacro(text: text, cursorPosition: cursorPosition){
+            self.delegate?.didDetectPossibleMacro(macro: macroText)
+        }
     }
 }

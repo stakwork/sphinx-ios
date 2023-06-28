@@ -15,7 +15,10 @@ extension NewChatTableDataSource {
         if searchTerm.isNotEmpty && searchTerm.count > 2 {
             performSearch(term: searchTerm)
         } else {
-            messageBubbleHelper.showGenericMessageView(text: "Search term must be longer than 3 characters")
+            
+            if searchTerm.count > 0 {
+                messageBubbleHelper.showGenericMessageView(text: "Search term must be longer than 3 characters")
+            }
             
             searchingTerm = nil
             searchMatches = [:]

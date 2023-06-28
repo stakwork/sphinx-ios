@@ -58,6 +58,10 @@ class ChatSearchTextFieldView: UIView {
         self.delegate = delegate
     }
     
+    func makeFieldActive() {
+        textField.becomeFirstResponder()
+    }
+    
     @IBAction func cancelButtonTouched() {
         textField.text = ""
         

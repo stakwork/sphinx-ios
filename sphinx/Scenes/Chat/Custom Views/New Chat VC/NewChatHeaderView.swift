@@ -68,6 +68,7 @@ class NewChatHeaderView: UIView {
         )
         
         self.searchDelegate = searchDelegate
+        
         chatSearchView.setDelegate(self)
     }
     
@@ -88,6 +89,8 @@ class NewChatHeaderView: UIView {
     ) {
         normalModeStackView.isHidden = active
         chatSearchView.isHidden = !active
+        
+        chatSearchView.makeFieldActive()
     }
 }
 

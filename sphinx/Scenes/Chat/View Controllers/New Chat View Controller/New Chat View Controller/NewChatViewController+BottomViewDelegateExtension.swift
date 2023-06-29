@@ -44,10 +44,12 @@ extension NewChatViewController : ChatMessageTextFieldViewDelegate {
         
         viewController.modalPresentationStyle = .overCurrentContext
         
-        self.present(
-            viewController,
-            animated: false
-        )
+        DispatchQueue.main.async {
+            self.present(
+                viewController,
+                animated: false
+            )
+        }
     }
     
     func shouldStartRecording() {

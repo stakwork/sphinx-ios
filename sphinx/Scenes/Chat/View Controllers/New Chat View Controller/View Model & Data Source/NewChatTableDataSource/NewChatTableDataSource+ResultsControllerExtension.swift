@@ -533,25 +533,21 @@ extension NewChatTableDataSource : NSFetchedResultsControllerDelegate {
             
             if controller == messagesResultsController {
                 if let messages = firstSection.objects as? [TransactionMessage] {
-                    DispatchQueue.global(qos: .userInitiated).async {
-                        self.messagesArray = messages.reversed()
-                        
-                        if !(self.delegate?.isOnStandardMode() ?? true) {
-                            return
-                        }
-                        
-                        self.processMessages(messages: self.messagesArray)
-                        self.configureBoostAndPurchaseResultsController()
-                    }
-                }
-            } else {
-                DispatchQueue.global(qos: .userInitiated).async {
+                    self.messagesArray = messages.reversed()
+                    
                     if !(self.delegate?.isOnStandardMode() ?? true) {
                         return
                     }
                     
                     self.processMessages(messages: self.messagesArray)
+                    self.configureBoostAndPurchaseResultsController()
                 }
+            } else {
+                if !(self.delegate?.isOnStandardMode() ?? true) {
+                    return
+                }
+                
+                self.processMessages(messages: self.messagesArray)
             }
         }
     }

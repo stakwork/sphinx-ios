@@ -79,9 +79,9 @@ extension Int {
     var searchMatchesString : String {
         get {
             if self == 1 {
-                return "\(self) match"
+                return "\(self) \("match".localized)"
             } else {
-                return "\(self) matches"
+                return "\(self) \("matches".localized)"
             }
         }
     }

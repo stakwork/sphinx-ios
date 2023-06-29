@@ -207,15 +207,6 @@ extension AllTribeFeedsCollectionViewController {
         loadRecommendations()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-
-        StorageManager.sharedManager.refreshAllStoredData(completion: {
-            StorageManager.sharedManager.getSphinxCacheVideos(completion: {
-                _ in
-            })
-        })
-    }
-    
     func addTableBottomInset(for collectionView: UICollectionView) {
         let windowInsets = getWindowInsets()
         let bottomBarHeight:CGFloat = 64

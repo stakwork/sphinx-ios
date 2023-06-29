@@ -179,7 +179,11 @@ class LeftMenuViewController: UIViewController {
     public func push(vc: UIViewController) {
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate, let rootVC = appDelegate.getRootViewController() {
             if let navVC = rootVC.getCenterNavigationController() {
-                navVC.pushViewController(vc, animated: true)
+                
+                DispatchQueue.main.async {
+                    navVC.pushViewController(vc, animated: true)
+                }
+                
                 self.closeLeftMenu()
             }
         }
@@ -300,7 +304,10 @@ extension LeftMenuViewController : AddFriendRowButtonDelegate {
     func present(vc: UIViewController, in centerVC: UIViewController) {
         let newNC = UINavigationController(rootViewController: vc)
         newNC.isNavigationBarHidden = true
-        centerVC.present(newNC, animated: true, completion: nil)
+        
+        DispatchQueue.main.async {
+            centerVC.present(newNC, animated: true, completion: nil)
+        }
     }
 }
 

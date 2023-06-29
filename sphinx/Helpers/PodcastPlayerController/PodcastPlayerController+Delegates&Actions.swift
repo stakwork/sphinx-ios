@@ -99,12 +99,9 @@ extension PodcastPlayerController {
         dispatchSemaphore.wait()
 
         let asset = AVURLAsset(url: url)
-
-        asset.loadValuesAsynchronously(forKeys: ["playable"]) {
-            let item = CachingPlayerItem(asset: asset, automaticallyLoadedAssetKeys: nil)
-            self.allItems[urlPath] = item
-            self.dispatchSemaphore.signal()
-        }
+        let item = CachingPlayerItem(asset: asset, automaticallyLoadedAssetKeys: ["playable"])
+        self.allItems[urlPath] = item
+        self.dispatchSemaphore.signal()
     }
     
     func getPreloadedItem(url: String) -> CachingPlayerItem? {
@@ -248,7 +245,7 @@ extension PodcastPlayerController {
     
     func preloadNextEpisode() {
         if let nextEpisode = podcast?.getNextEpisode() {
-            let dispatchQueue = DispatchQueue.global(qos: .background)
+            let dispatchQueue = DispatchQueue.global(qos: .userInitiated)
             dispatchQueue.async {
                 self.preloadEpisode(nextEpisode)
             }

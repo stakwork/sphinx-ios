@@ -42,6 +42,8 @@ extension NewChatViewModel: AttachmentsManagerDelegate {
                 provisionalMessage: message
             )
             
+            chatDataSource?.setProgressForProvisional(messageId: message.id, progress: 0)
+            
             attachmentsManager.uploadAndSendAttachment(
                 attachmentObject: attachmentObject,
                 replyingMessage: replyingMessage

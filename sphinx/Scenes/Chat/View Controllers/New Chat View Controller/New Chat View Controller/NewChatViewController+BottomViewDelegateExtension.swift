@@ -37,10 +37,12 @@ extension NewChatViewController : ChatMessageTextFieldViewDelegate {
         
         let viewController = getChatAttachmentVC(text:text)
         
-        self.present(
-            viewController,
-            animated: false
-        )
+        DispatchQueue.main.async {
+            self.present(
+                viewController,
+                animated: false
+            )
+        }
     }
     
     func shouldStartRecording() {

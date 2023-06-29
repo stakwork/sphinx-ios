@@ -668,6 +668,10 @@ public class Chat: NSManagedObject {
     }
     
     func processAliasesFrom(messages: [TransactionMessage]) {
+        if self.isConversation() {
+            return
+        }
+        
         var aliases: [String] = []
         
         aliasesAndPics = []

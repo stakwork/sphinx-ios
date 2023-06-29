@@ -14,9 +14,36 @@ import CoreLocation
 
 class CrypterManager : NSObject {
     
+    struct HardwareLink {
+        var mqtt: String? = nil
+        var network: String? = nil
+        
+        init(
+            mqtt: String,
+            network: String
+        ) {
+            self.mqtt = mqtt
+            self.network = network
+        }
+        
+        static func getHardwareLinkFrom(query: String) -> HardwareLink? {
+            guard let mqtt = query.getLinkComponentWith(key: "mqtt"), mqtt.isNotEmpty else {
+                return nil
+            }
+            
+            guard let network = query.getLinkComponentWith(key: "network"), network.isNotEmpty else {
+                return nil
+            }
+            
+            return HardwareLink(
+                mqtt: mqtt,
+                network: network
+            )
+        }
+    }
+    
     struct HardwarePostDto {
-        var lightningNodePort:String? = nil
-        var lightningNodeIP:String? = nil
+        var lightningNodeUrl:String? = nil
         var networkName:String? = nil
         var networkPassword:String? = nil
         var publicKey: String? = nil
@@ -32,12 +59,18 @@ class CrypterManager : NSObject {
     
     func setupSigningDevice(
         vc: UIViewController,
+        hardwareLink: HardwareLink? = nil,
         callback: @escaping () -> ()
     ) {
         self.vc = vc
         self.endCallback = callback
-        
         self.hardwarePostDto = HardwarePostDto()
+        
+        if let hardwareLink = hardwareLink {
+            hardwarePostDto.lightningNodeUrl = hardwareLink.mqtt
+            hardwarePostDto.bitcoinNetwork = hardwareLink.network
+        }
+        
         self.setupSigningDevice()
     }
     
@@ -45,11 +78,9 @@ class CrypterManager : NSObject {
         self.checkNetwork {
             self.promptForNetworkName() { networkName in
                 self.promptForNetworkPassword(networkName) {
-                    self.promptForHardwareIP() {
-                        self.promptForHardwarePort {
-                            self.promptForBitcoinNetwork {
-                                self.testCrypter()
-                            }
+                    self.promptForHardwareUrl() {
+                        self.promptForBitcoinNetwork {
+                            self.testCrypter()
                         }
                     }
                 }
@@ -101,39 +132,36 @@ class CrypterManager : NSObject {
         )
     }
     
-    func promptForHardwareIP(callback: @escaping () -> ()) {
+    func promptForHardwareUrl(callback: @escaping () -> ()) {
+        if let url = self.hardwarePostDto.lightningNodeUrl, url.isNotEmpty {
+            callback()
+            return
+        }
+        
         promptFor(
-            "profile.lightning-ip-title".localized,
-            message: "profile.lightning-ip-message".localized,
-            errorMessage: "profile.lightning-ip-error".localized,
+            "profile.lightning-url-title".localized,
+            message: "profile.lightning-url-message".localized,
+            errorMessage: "profile.lightning-url-error".localized,
             callback: { value in
-                self.hardwarePostDto.lightningNodeIP = value
-                callback()
-            }
-        )
-    }
-    
-    func promptForHardwarePort(callback: @escaping () -> ()) {
-        promptFor(
-            "profile.lightning-port-title".localized,
-            message: "profile.lightning-port-message".localized,
-            errorMessage: "profile.lightning-port-error".localized,
-            textFieldText: "1883",
-            callback: { value in
-                self.hardwarePostDto.lightningNodePort = value
+                self.hardwarePostDto.lightningNodeUrl = value
                 callback()
             }
         )
     }
     
     func promptForBitcoinNetwork(callback: @escaping () -> ()) {
+        if let net = self.hardwarePostDto.bitcoinNetwork, net.isNotEmpty {
+            callback()
+            return
+        }
+        
         let regtestCallbak: (() -> ()) = {
             self.hardwarePostDto.bitcoinNetwork = "regtest"
             callback()
         }
         
         let mainnetCallback: (() -> ()) = {
-            self.hardwarePostDto.bitcoinNetwork = "mainnet"
+            self.hardwarePostDto.bitcoinNetwork = "bitcoin"
             callback()
         }
         
@@ -200,7 +228,7 @@ class CrypterManager : NSObject {
             return
         }
         
-        guard let _ = hardwarePostDto.lightningNodeIP, let _ = hardwarePostDto.lightningNodePort else {
+        guard let _ = hardwarePostDto.lightningNodeUrl else {
             self.showSuccessWithMessage("There was an error. Please try again later")
             return
         }

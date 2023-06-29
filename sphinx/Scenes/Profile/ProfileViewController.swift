@@ -313,7 +313,6 @@ class ProfileViewController: NewKeyboardHandlerViewController {
 
     }
     
-    
     func getAddress() -> String? {
         if let address = addressTextField.text, !address.isEmpty {
             let routeHint = (routeHintTextField.text ?? "").isEmpty ? "" : ":\((routeHintTextField.text ?? ""))"
@@ -331,6 +330,7 @@ class ProfileViewController: NewKeyboardHandlerViewController {
     @IBAction func sharePhotoSwitchChanged(_ sender: UISwitch) {
         updateProfile()
     }
+    
     @IBAction func trackRecommendationsSwitchChanged(_ sender: Any) {
         print("Changed")
         UserDefaults.Keys.shouldTrackActions.set(trackRecommendationsSwitch.isOn)
@@ -339,7 +339,6 @@ class ProfileViewController: NewKeyboardHandlerViewController {
     @IBAction func autoDownloadSubscribedPodsChanged(_ sender: Any) {
         UserDefaults.Keys.shouldAutoDownloadSubscribedPods.set(autoDownloadSubscribedPodsSwitch.isOn)
     }
-    
     
     @IBAction func qrCodeButtonTouched() {
         if let profile = UserContact.getOwner(), let qrCodeString = profile.getAddress(), !qrCodeString.isEmpty {
@@ -395,12 +394,6 @@ class ProfileViewController: NewKeyboardHandlerViewController {
             },
             cancel: {}
         )
-    }
-    
-    @IBAction func setupSigningDevice() {
-        cryptedManager.setupSigningDevice(vc: self) {
-            self.configureSigningDeviceButton()
-        }
     }
     
     func sendGithubPAT(
@@ -462,6 +455,14 @@ class ProfileViewController: NewKeyboardHandlerViewController {
             if self.traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
                 setShadows()
             }
+        }
+    }
+    
+    @IBAction func setupSigningDevice() {
+        cryptedManager.setupSigningDevice(
+            vc: self
+        ) {
+            self.configureSigningDeviceButton()
         }
     }
 }

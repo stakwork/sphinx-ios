@@ -24,6 +24,10 @@ class SettingsTabsView: CommonTabsView {
         toggleAll(selectedTag: 0)
     }
     
+    func setSelectedTabWith(index: Int) {
+        toggleAll(selectedTag: index)
+    }
+    
     override func setViewBorder() {
         container.layer.borderColor = UIColor.Sphinx.LightDivider.resolvedCGColor(with: self)
         container.layer.borderWidth = 1

@@ -56,8 +56,7 @@ extension API {
         guard let encryptedSeed = hardwarePostDto.encryptedSeed,
               let networkName = hardwarePostDto.networkName,
               let networkPassword = hardwarePostDto.networkPassword,
-              let lightnignIp = hardwarePostDto.lightningNodeIP,
-              let lightnignPort = hardwarePostDto.lightningNodePort,
+              let lightnigUrl = hardwarePostDto.lightningNodeUrl,
               let bitcoinNetwork = hardwarePostDto.bitcoinNetwork,
               let publicKey = hardwarePostDto.publicKey else {
             
@@ -65,9 +64,7 @@ extension API {
             return
         }
         
-        let broker = "\(lightnignIp):\(lightnignPort)"
-        
-        let params = "{\"seed\":\"\(encryptedSeed)\",\"ssid\":\"\(networkName)\",\"pass\":\"\(networkPassword)\",\"broker\":\"\(broker)\",\"pubkey\":\"\(publicKey)\",\"network\":\"\(bitcoinNetwork)\"}"
+        let params = "{\"seed\":\"\(encryptedSeed)\",\"ssid\":\"\(networkName)\",\"pass\":\"\(networkPassword)\",\"broker\":\"\(lightnigUrl)\",\"pubkey\":\"\(publicKey)\",\"network\":\"\(bitcoinNetwork)\"}"
         
         let url = "\(ip)/config?config=\(params.urlEncode()!)"
         let request : URLRequest? = createRequest(url, bodyParams: nil, method: "POST")

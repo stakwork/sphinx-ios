@@ -174,10 +174,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         open url: URL,
         options: [UIApplication.OpenURLOptionsKey : Any] = [:]
     ) -> Bool {
-        
+                
         if DeepLinksHandlerHelper.storeLinkQueryFrom(url: url) {
-            setInitialVC(launchingApp: false, deepLink: true)
+            if let currentVC = getCurrentVC() {
+                if let currentVC = currentVC as? DashboardRootViewController {
+                    if let presentedVC = currentVC.navigationController?.presentedViewController {
+                        presentedVC.dismiss(animated: true) {
+                            currentVC.handleLinkQueries()
+                        }
+                    } else {
+                        currentVC.handleLinkQueries()
+                    }
+                } else {
+                    currentVC.navigationController?.popToRootViewController(animated: true)
+                }
+            } else {
+                setInitialVC(launchingApp: false, deepLink: true)
+            }
         }
+        
         return true
     }
 
@@ -466,22 +481,29 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     
     func goToChat(chatId: Int) {
         if let chat = Chat.getChatWith(id: chatId) {
-            
-            let chatVC = NewChatViewController.instantiate(
-                contactId: chat.conversationContact?.id,
-                chatId: chat.id,
-                chatListViewModel: chatListViewModel
-            )
-            
             if let rootVC = getRootViewController() {
-                if let centerVC = rootVC.getLastCenterViewController() as? NewChatViewController {
-                    if centerVC.chat?.id == chatId {
+                if let centerVC = rootVC.getLastCenterViewController() {
+                    
+                    if let centerVC = centerVC as? NewChatViewController, centerVC.chat?.id == chatId {
                         return
                     }
+                    
+                    let chatVC = NewChatViewController.instantiate(
+                        contactId: chat.conversationContact?.id,
+                        chatId: chat.id,
+                        chatListViewModel: chatListViewModel
+                    )
+                    
+                    let navCenterController: UINavigationController? = centerVC.navigationController
+                    
+                    if let presentedVC = navCenterController?.presentedViewController {
+                        presentedVC.dismiss(animated: true) {
+                            navCenterController?.pushViewController(chatVC, animated: true)
+                        }
+                    } else {
+                        navCenterController?.pushViewController(chatVC, animated: true)
+                    }
                 }
-                
-                let navCenterController = rootVC.getCenterNavigationController()
-                navCenterController?.pushViewController(chatVC, animated: true)
             }
         }
     }

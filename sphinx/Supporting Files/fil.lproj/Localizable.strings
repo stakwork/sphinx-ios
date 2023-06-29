@@ -264,9 +264,9 @@
 "profile.github-pat.success" = "Matagumpay na naitakda ang Github Personal Access Token";
 "profile.setup-signing-device" = "I-setup ang Signing Device";
 "profile.configure-signing-device" = "I-configure ang Signing Device";
-"profile.lightning-ip-title" = "IP ng lightning node";
-"profile.lightning-ip-message" = "Ilagay ang IP ng iyong lightning node";
-"profile.lightning-ip-error" = "Hindi maaaring walang laman ang Lightning node IP";
+"profile.lightning-url-title" = "URL ng lightning node";
+"profile.lightning-url-message" = "Ilagay ang URL ng iyong lightning node";
+"profile.lightning-url-error" = "Hindi maaaring walang laman ang Lightning node URL";
 "profile.lightning-port-title" = "Lightning node Port";
 "profile.lightning-port-message" = "Ilagay ang numbero ng Port ng iyong lightning node";
 "profile.lightning-port-error" = "Hindi maaaring walang laman ang port";

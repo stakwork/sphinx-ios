@@ -138,7 +138,6 @@ extension ProfileManageStorageViewModel : UITableViewDelegate,UITableViewDataSou
             })
             break
         case .file:
-            //TODO: do deletion for other
             StorageManager.sharedManager.deleteAllOtherFiles(completion: {
                 self.refreshData()
                 self.vc.resetIsLoading(type: type)
@@ -149,17 +148,15 @@ extension ProfileManageStorageViewModel : UITableViewDelegate,UITableViewDataSou
     }
     
     func refreshData(){
-        //DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
-            self.typeStats = StorageManager.sharedManager.getStorageItemSummaryByType()
-            self.vc.storageSummaryView.summaryDict = self.typeStats
-            self.sourceStats = StorageManager.sharedManager.getStorageItemSummaryBySource()
-            self.vc.usageKB = StorageManager.sharedManager.getItemGroupTotalSize(items: StorageManager.sharedManager.allItems)
-            
-            self.vc.updateUsageLabels()
-            
-            self.mediaTypeTableView.reloadData()
-            self.mediaSourceTableView.reloadData()
-        //})
+        self.typeStats = StorageManager.sharedManager.getStorageItemSummaryByType()
+        self.vc.storageSummaryView.summaryDict = self.typeStats
+        self.sourceStats = StorageManager.sharedManager.getStorageItemSummaryBySource()
+        self.vc.usageKB = StorageManager.sharedManager.getItemGroupTotalSize(items: StorageManager.sharedManager.allItems)
         
+        self.vc.updateUsageLabels()
+        
+        self.mediaTypeTableView.reloadData()
+        self.mediaSourceTableView.reloadData()
+    
     }
 }

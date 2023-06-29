@@ -257,7 +257,6 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
             self.mediaDeletionConfirmationView.layer.zPosition = 1000
             self.mediaDeletionConfirmationView.delegate = self
             self.mediaDeletionConfirmationView.isHidden = false
-            //self.mediaDeletionConfirmationView.contentView.backgroundColor = .black
             self.mediaDeletionConfirmationView.batchState = self.state
             if(self.mediaDeletionConfirmationView.state == .awaitingApproval){
                 self.mediaDeletionConfirmationView.type = type

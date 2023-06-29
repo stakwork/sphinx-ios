@@ -195,7 +195,9 @@ class NewQRScannerViewController: KeyboardEventsViewController {
             let fixedCode = code.fixInvoiceString().trim()
             confirmButton.isHidden = fixedCode == ""
             
-            if currentMode == .ScanAndProcessPayment || currentMode == .ScanAndProcessGeneric {
+            if currentMode == .ScanAndProcessPayment ||
+                currentMode == .ScanAndProcessGeneric
+            {
                 validateQRString(string: fixedCode)
             } else {
                 delegate?.didScanQRCode?(string: code)

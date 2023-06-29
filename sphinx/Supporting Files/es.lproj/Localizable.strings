@@ -277,9 +277,9 @@
 "profile.github-pat.success" = "El Personal Access Token de Github ha sido establecido con éxito";
 "profile.setup-signing-device" = "Configurar Dispositivo de firma";
 "profile.configure-signing-device" = "Configurar Dispositivo de firma";
-"profile.lightning-ip-title" = "IP del nodo de lightning";
-"profile.lightning-ip-message" = "Ingresa la IP de tu nodo de lightning";
-"profile.lightning-ip-error" = "La IP no puede ser vacía";
+"profile.lightning-url-title" = "URL del nodo de lightning";
+"profile.lightning-url-message" = "Ingresa la URL de tu nodo de lightning";
+"profile.lightning-url-error" = "La URL no puede ser vacía";
 "profile.lightning-port-title" = "Puerto del nodo de lightning";
 "profile.lightning-port-message" = "Ingresa el número de puerto de tu nodo de lightning";
 "profile.lightning-port-error" = "El Puerto no puede ser vacío";

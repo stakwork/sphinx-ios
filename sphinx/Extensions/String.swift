@@ -674,6 +674,29 @@ extension String {
 
         return result
     }
+    
+    func getLinkComponentWith(key: String) -> String? {
+        let components = self.components(separatedBy: "&")
+        
+        if components.count > 0 {
+            for component in components {
+                let elements = component.components(separatedBy: "=")
+                if elements.count > 1 {
+                    let componentKey = elements[0]
+                    let value = component.replacingOccurrences(of: "\(componentKey)=", with: "")
+                    
+                    switch(componentKey) {
+                    case key:
+                        return value
+                    default:
+                        break
+                    }
+                }
+            }
+        }
+        
+        return nil
+    }
 }
 
 extension Character {

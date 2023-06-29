@@ -278,9 +278,9 @@
 "profile.github-pat.success" = "Github Personal Access Token successfully set";
 "profile.setup-signing-device" = "Setup Signing Device";
 "profile.configure-signing-device" = "Configure Signing Device";
-"profile.lightning-ip-title" = "Lightning node IP";
-"profile.lightning-ip-message" = "Enter the IP of your lightning node";
-"profile.lightning-ip-error" = "Lightning node IP can not be empty";
+"profile.lightning-url-title" = "Lightning node URL";
+"profile.lightning-url-message" = "Enter the URL of your lightning node";
+"profile.lightning-url-error" = "Lightning node URL can not be empty";
 "profile.lightning-port-title" = "Lightning node Port";
 "profile.lightning-port-message" = "Enter the Port number of your lightning node";
 "profile.lightning-port-error" = "Port can not be empty";

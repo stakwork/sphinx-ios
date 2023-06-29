@@ -90,7 +90,7 @@ class ChatMentionAutocompleteTableViewCell: UITableViewCell {
     @objc func handleClick() {
         if let valid_alias = alias, type == .mention, let delegate = delegate {
             delegate.processAutocomplete(
-                text: valid_alias + " "
+                text: valid_alias
             )
         } else if type == .macro, let action = action {
             self.delegate?.processGeneralPurposeMacro(

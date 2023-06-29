@@ -81,7 +81,9 @@ extension ChatMessageTextFieldView {
             return nil
         }
         
-        if let lastWord = relevantText.split(separator: " ").last {
+        if let lastLine = relevantText.split(separator: "\n").last,
+           let lastWord = lastLine.split(separator: " ").last {
+            
             if let firstLetter = lastWord.first, firstLetter == "@" && lastWord != "@" {
                 return String(lastWord)
             }

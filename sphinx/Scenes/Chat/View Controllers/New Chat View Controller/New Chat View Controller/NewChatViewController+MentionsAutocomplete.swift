@@ -12,12 +12,12 @@ extension NewChatViewController: ChatMentionAutocompleteDelegate {
     
     func initializeMacros() {
         self.macros = [
-               MentionOrMacroItem(type: .macro, displayText: "Find and Share a Gif",
+            MentionOrMacroItem(type: .macro, displayText: "find.and.share.gif".localized,
                     image: #imageLiteral(resourceName: "giphy"),
                     action: {
                         self.shouldStartGiphy()
                }),
-               MentionOrMacroItem(type: .macro, displayText: "Start Audio Call",
+               MentionOrMacroItem(type: .macro, displayText: "start.audio.call".localized,
                 image: #imageLiteral(resourceName: "phone_call_icon"),
                 action: {
                     let time = Date.timeIntervalSinceReferenceDate
@@ -26,7 +26,7 @@ extension NewChatViewController: ChatMentionAutocompleteDelegate {
                     self.chatViewModel.sendCallMessage(link: link)
                     self.bottomView.messageFieldView.shouldDismissKeyboard()
                }),
-               MentionOrMacroItem(type: .macro, displayText: "Start Video Call",
+               MentionOrMacroItem(type: .macro, displayText: "start.video.call".localized,
                 image: #imageLiteral(resourceName:"video_call_icon"),
                 action: {
                     let time = Date.timeIntervalSinceReferenceDate
@@ -34,27 +34,16 @@ extension NewChatViewController: ChatMentionAutocompleteDelegate {
                     self.chatViewModel.sendCallMessage(link: link)
                     self.bottomView.messageFieldView.shouldDismissKeyboard()
                }),
-//               MentionOrMacroItem(type: .macro, displayText: "Send Emoji",
-//                image: #imageLiteral(resourceName: "emojiIcon"),
-//                action: {
-//                   //self.emojiButtonClicked(self)
-//               }),
-//               MentionOrMacroItem(type: .macro, displayText: "Record Voice Memo",
-//                    image: #imageLiteral(resourceName:"microphone_icon") ,
-//                    action: {
-//                        self.bottomView.toggleAudioRecording(show: true)
-//                        self.shouldStartRecording()
-//               })
            ]
         
         if self.chat?.isGroup() == false{
             macros.append(contentsOf: [
-                MentionOrMacroItem(type: .macro, displayText: "Send Payment (Sats)",
+                MentionOrMacroItem(type: .macro, displayText: "pub.key.options-send.payment".localized,
                  image: #imageLiteral(resourceName: "invoice-pay-button")
                  ,action: {
                      self.didTapSendButton()
                 }),
-                MentionOrMacroItem(type: .macro, displayText: "Request Sats (Send Invoice)",
+                MentionOrMacroItem(type: .macro, displayText: "request.payment.create.invoice".localized,
                  image: #imageLiteral(resourceName: "invoice-receive-icon"),
                  action: {
                      self.didTapReceiveButton()

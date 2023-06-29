@@ -169,6 +169,7 @@
 //INVOICE DETAILS
 "x.copied.clipboard" = "%@ copied to clipboard";
 "payment.request" = "Payment Request";
+"request.payment.create.invoice" = "Request Payment (Create Invoice)"
 
 //ADDRESS BOOK
 "edit.contact.upper" = "EDIT CONTACT";
@@ -418,6 +419,7 @@
 "price.required" = "Price is required";
 "message.required" = "Message is required";
 "send.gif.upper" = "SEND GIF";
+"find.and.share.gif"="Find and share a gif";
 "send.image.upper" = "SEND IMAGE";
 "send.paid.message.upper" = "SEND PAID MESSAGE";
 "send.video.upper" = "SEND VIDEO";
@@ -451,6 +453,8 @@
 //OTHER
 "create.call" = "Create Call";
 "select.call.mode" = "Select call mode";
+"start.audio.call" = "Start audio call";
+"start.video.call" = "Start video call";
 "audio" = "Audio";
 "video.or.audio" = "Video or Audio";
 "log.into.your.account" = "Log in to your account";

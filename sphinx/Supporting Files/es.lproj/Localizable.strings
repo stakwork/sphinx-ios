@@ -417,6 +417,7 @@
 "price.required" = "Precio requerido";
 "message.required" = "Mensaje requerido";
 "send.gif.upper" = "ENVIAR GIF";
+"find.and.share.gif" ="Buscar y enviar un gif";
 "send.image.upper" = "ENVIAR IMAGEN";
 "send.paid.message.upper" = "ENVIAR MENSAJE PAGO";
 "send.video.upper" = "ENVIAR VIDEO";
@@ -426,6 +427,7 @@
 "send.payment.upper" = "ENVIAR PAGO";
 "send.onchain.upper" = "ENVIAR ONCHAIN";
 "request.amount.upper" = "SOLICITAR PAGO";
+"request.payment.create.invoice" = "Solicitar Pago (Crear Pagada)"
 "balance.too.low" = "Balance demasiado bajo";
 "total" = "Total";
 "payment.successfully.sent" = "Tu pago fue enviado con éxito.";
@@ -449,6 +451,8 @@
 
 //OTHER
 "create.call" = "Crear Llamada";
+"start.audio.call" = "Crear Llamada";
+"start.video.call" = "Crear Llamada con Video";
 "select.call.mode" = "Seleccionar Tipo de Llamada";
 "audio" = "Audio";
 "video.or.audio" = "Video o Audio";

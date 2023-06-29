@@ -65,11 +65,15 @@ class ChatMentionAutocompleteTableViewCell: UITableViewCell {
             avatarImage.isHidden = false
             iconLabel.isHidden = true
             
-            avatarImage.sd_setImage(
-                with: mentionOrMacro.imageLink,
-                placeholderImage: UIImage(named: "profile_avatar"),
-                context: nil
-            )
+            if let imageLink = mentionOrMacro.imageLink, let url = URL(string: imageLink) {
+                avatarImage.sd_setImage(
+                    with: url,
+                    placeholderImage: UIImage(named: "profile_avatar"),
+                    context: nil
+                )
+            } else {
+                avatarImage.image = UIImage(named: "profile_avatar")
+            }
             
             avatarImage.contentMode = .scaleAspectFill
         }

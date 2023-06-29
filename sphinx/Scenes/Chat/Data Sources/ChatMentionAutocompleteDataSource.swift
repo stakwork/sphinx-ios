@@ -52,7 +52,7 @@ class ChatMentionAutocompleteDataSource : NSObject {
                 type: .mention,
                 displayText: $0.0,
                 imageLink: $0.1,
-                action: nil,
+                action: nil
             )
             return result
         })

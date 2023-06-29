@@ -101,7 +101,7 @@ class NewChatViewModel {
         var possibleMentions: [(String, String)] = []
         
         if mentionText.count > 0 {
-            for alias in self.chat?.aliases ?? [] {
+            for alias in self.chat?.aliasesAndPics ?? [] {
                 if (mentionText.count > alias.0.count) {
                     continue
                 }

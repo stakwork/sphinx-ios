@@ -22,14 +22,14 @@ class MentionOrMacroItem: NSObject{
     var image: UIImage? = nil
     var imageContentMode: UIView.ContentMode? = nil
     var icon: String? = nil
-    var imageLink: URL? = nil
+    var imageLink: String? = nil
     
     init(
         type: MentionOrMacroType,
         displayText: String,
         image: UIImage? = nil,
         imageContentMode: UIView.ContentMode? = nil,
-        imageLink: URL? = nil,
+        imageLink: String? = nil,
         icon: String? = nil,
         action: (() -> ())?
     ) {

@@ -79,7 +79,7 @@ extension NewChatTableDataSource {
             return
         }
         
-        if message.isBotHTMLResponse() || message.isPayment() || message.isInvoice() {
+        if message.isBotHTMLResponse() || message.isPayment() || message.isInvoice() || message.isDeleted() || message.isFlagged() {
             return
         }
         
@@ -129,7 +129,7 @@ extension NewChatTableDataSource {
     }
 
     func scrollToSearchAt(index: Int) {
-        if searchMatches.count > index {
+        if searchMatches.count > index && index >= 0 {
             let searchMatchIndex = searchMatches[index].0
             
             tableView.scrollToRow(

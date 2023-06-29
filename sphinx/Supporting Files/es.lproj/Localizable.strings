@@ -33,6 +33,8 @@
 "today" = "Hoy";
 "join" = "Unirse";
 "open" = "Abrir";
+"match" = "coincidencia";
+"matches" = "coincidencias";
 "connected.to.node" = "Conectado al Nodo";
 "socket.disconnected" = "Actualizaciones en tiempo real\nno disponibles";
 "unable.to.connect" = "No es posible conectarse al Nodo";

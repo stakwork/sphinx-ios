@@ -97,6 +97,8 @@ class ChatSearchResultsBar: UIView {
     }
 
     @IBAction func navigateArrowButtonTouched(_ sender: UIButton) {
+        sender.isUserInteractionEnabled = false
+        
         switch(sender.tag) {
         case NavigateArrowButton.Up.rawValue:
             matchIndex = matchIndex + 1
@@ -119,5 +121,9 @@ class ChatSearchResultsBar: UIView {
         default:
             break
         }
+        
+        DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: {
+            sender.isUserInteractionEnabled = true
+        })
     }
 }

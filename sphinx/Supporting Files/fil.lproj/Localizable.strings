@@ -24,6 +24,8 @@
 "today" = "Ngayon";
 "join" = "Sumali";
 "open" = "Buksan";
+"match" = "match";
+"matches" = "matches";
 "connected.to.node" = "Kumunekta sa Node";
 "socket.disconnected" = "Hindi available ang Live updates";
 "unable.to.connect" = "HIndi makakunekta sa Node";

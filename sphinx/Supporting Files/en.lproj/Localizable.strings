@@ -33,6 +33,8 @@
 "today" = "Today";
 "join" = "Join";
 "open" = "Open";
+"match" = "match";
+"matches" = "matches";
 "connected.to.node" = "Connected to Node";
 "socket.disconnected" = "Live updates unavailable";
 "unable.to.connect" = "Unable to connect to Node";

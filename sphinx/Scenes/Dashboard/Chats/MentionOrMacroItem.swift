@@ -14,26 +14,31 @@ public enum MentionOrMacroType{
     case macro
 }
 
-
-class MentionOrMacroItem:NSObject{
+class MentionOrMacroItem: NSObject{
     
-    var type : MentionOrMacroType
-    var displayText : String =  ""
-    var action : (()->())?
-    var image : UIImage? = nil
-    var imageLink : URL? = nil
+    var type: MentionOrMacroType
+    var displayText: String =  ""
+    var action: (()->())?
+    var image: UIImage? = nil
+    var imageContentMode: UIView.ContentMode? = nil
+    var icon: String? = nil
+    var imageLink: URL? = nil
     
     init(
         type: MentionOrMacroType,
-         displayText: String,
-         image:UIImage?=nil,
-        imageLink : URL?=nil,
-         action: (() -> ())?
+        displayText: String,
+        image: UIImage? = nil,
+        imageContentMode: UIView.ContentMode? = nil,
+        imageLink: URL? = nil,
+        icon: String? = nil,
+        action: (() -> ())?
     ) {
         self.type = type
         self.displayText = displayText
         self.action = action
         self.image = image
+        self.imageContentMode = imageContentMode
+        self.icon = icon
         self.imageLink = imageLink
     }
     

@@ -48,7 +48,7 @@ public class Chat: NSManagedObject {
     var ongoingMessage : String? = nil
     var image : UIImage? = nil
     var tribeInfo: GroupsManager.TribeInfo? = nil
-    var aliases : [String] = [String]()
+    var aliases: [(String, String)] = []
     
     
     static func getChatInstance(id: Int, managedContext: NSManagedObjectContext) -> Chat {
@@ -197,12 +197,6 @@ public class Chat: NSManagedObject {
     
     func isStatusRejected() -> Bool {
         return self.status == ChatStatus.rejected.rawValue
-    }
-    
-    func findImageURLByAlias(alias:String)->URL?{
-        let allMessages = self.getAllMessages()
-        guard let picURLString = allMessages.first(where: {$0.senderAlias == alias})?.senderPic else { return nil }
-        return URL(string: picURLString)
     }
     
     func getContactIdsArray() -> [Int] {
@@ -674,7 +668,15 @@ public class Chat: NSManagedObject {
     }
     
     func processAliasesFrom(messages: [TransactionMessage]) {
-        aliases = Array(Set(messages.compactMap({$0.senderAlias})))
+        aliases = []
+        
+        for message in messages {
+            if let alias = message.senderAlias, alias.isNotEmpty {
+                aliases.append(
+                    (alias, message.senderPic ?? "")
+                )
+            }
+        }
     }
     
     func saveChat() {

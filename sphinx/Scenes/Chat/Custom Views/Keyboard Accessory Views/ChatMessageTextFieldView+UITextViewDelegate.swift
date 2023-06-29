@@ -128,7 +128,10 @@ extension ChatMessageTextFieldView {
         }
     }
     
-    func getMacro(text:String,cursorPosition:Int?)->String?{
+    func getMacro(
+        text: String,
+        cursorPosition: Int?
+    ) -> String? {
         let relevantText = text[0..<(cursorPosition ?? text.count)]
         if let firstLetter = relevantText.first, firstLetter == "/" {
             return relevantText
@@ -137,8 +140,11 @@ extension ChatMessageTextFieldView {
         return nil
     }
     
-    func processMacro(text:String,cursorPosition:Int?){
-        if let macroText = getMacro(text: text, cursorPosition: cursorPosition){
+    func processMacro(
+        text: String,
+        cursorPosition: Int?
+    ) {
+        if let macroText = getMacro(text: text, cursorPosition: cursorPosition) {
             self.delegate?.didDetectPossibleMacro(macro: macroText)
         }
     }

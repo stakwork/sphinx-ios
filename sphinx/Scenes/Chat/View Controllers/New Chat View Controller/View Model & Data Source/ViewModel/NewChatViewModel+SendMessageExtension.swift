@@ -238,11 +238,11 @@ extension NewChatViewModel {
     
     func createCallMessage(sender: UIButton) {
         VideoCallHelper.createCallMessage(button: sender, callback: { link in
-                self.sendCallMessage(link: link)
+            self.sendCallMessage(link: link)
         })
     }
     
-    func sendCallMessage(link:String){
+    func sendCallMessage(link: String) {
         let type = (self.chat?.isGroup() == false) ?
             TransactionMessage.TransactionMessageType.call.rawValue :
             TransactionMessage.TransactionMessageType.message.rawValue

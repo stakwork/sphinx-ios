@@ -11,7 +11,7 @@ import UIKit
 
 
 protocol ChatMentionAutocompleteDelegate{
-    func processAutocomplete(text:String)
+    func processAutocomplete(text: String )
     func processGeneralPurposeMacro(action: @escaping ()->())
 }
 
@@ -23,12 +23,19 @@ class ChatMentionAutocompleteDataSource : NSObject {
     var chat : Chat?
     var macros : [MentionOrMacroItem]!
     
-    init(tableView:UITableView,delegate:ChatMentionAutocompleteDelegate,chat:Chat?,macros:[MentionOrMacroItem]){
+    init(
+        tableView: UITableView,
+        delegate: ChatMentionAutocompleteDelegate,
+        chat: Chat?,
+        macros: [MentionOrMacroItem]
+    ){
         super.init()
+        
         self.tableView = tableView
         self.delegate = delegate
         self.chat = chat
         self.macros = macros
+        
         tableView.backgroundColor = .clear
         tableView.separatorColor = UIColor.Sphinx.Divider
         tableView.estimatedRowHeight = mentionCellHeight
@@ -37,11 +44,16 @@ class ChatMentionAutocompleteDataSource : NSObject {
         tableView.register(UINib(nibName: "ChatMentionAutocompleteTableViewCell", bundle: nil), forCellReuseIdentifier: ChatMentionAutocompleteTableViewCell.reuseID)
     }
     
-    func updateMentionSuggestions(suggestions:[String]){
+    func updateMentionSuggestions(suggestions: [(String, String)]){
         tableView.isHidden = (suggestions.isEmpty == true)
+        
         let suggestionObjects = suggestions.compactMap({
-            let result = MentionOrMacroItem(type: .mention, displayText: $0, action: nil)
-            result.imageLink = chat?.findImageURLByAlias(alias: $0)
+            let result = MentionOrMacroItem(
+                type: .mention,
+                displayText: $0.0,
+                imageLink: $0.1,
+                action: nil,
+            )
             return result
         })
         mentionSuggestions = suggestionObjects
@@ -89,9 +101,7 @@ extension ChatMentionAutocompleteDataSource : UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let mentionCell = cell as? ChatMentionAutocompleteTableViewCell//,
-           //let valid_vc = vc
-        {
+        if let mentionCell = cell as? ChatMentionAutocompleteTableViewCell {
             mentionCell.configureWith(mentionOrMacro: mentionSuggestions[indexPath.item])
         }
     }

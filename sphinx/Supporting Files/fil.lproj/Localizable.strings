@@ -581,3 +581,29 @@
 "badges.deactivation-success" = "Matagumpay na na-deactivate ang mga badge";
 "member-profile.moderator" = "MODERATOR";
 "member-profile.tribe-member" = "MIYEMBRO NG TRIBU";
+
+//STORAGE MANAGEMENT
+"storage.management.loading.deletion" = "Deleting";
+"storage.management.loading.deletion.subtitle" = "It may take up to a minute...";
+"saving.limit.warning" = "Saving this limit will delete at least %@ of your oldest data";
+"deletion.warning.title" = "You've chosen to delete %@";
+"deletion.warning.subtitle" = "This action deletes all of the selected files permanently and cannot be undone.";
+"are.you.sure.deletion.warning" = "Continuing will delete all of your %@.";
+"storage.management.this.podcast" = "the selected podcast episode(s)";
+"storage.management.chat.media" = "all chat media";
+"storage.management.selected.chat.media" = "the selected chat media";
+"storage.management.audio.files" = "all podcast episodes";
+"storage.management.video" = "all video";
+"storage.management.images" = "all images";
+"storage.management.files" = "all files";
+"are.you.sure" = "Are you sure?";
+"chat.media" = "chat media";
+"storage.management.deletion.complete.title" = "%@ successfully deleted";
+"storage.management.deletion.complete.subtitle" = "You have freed up %@ storage space";
+
+//MACRO
+"send.giphy" = "Send Giphy";
+"start.audio.call" = "Start Audio Call";
+"start.video.call" = "Start Video Call";
+"send.payment" = "Send Payment";
+"request.payment" = "Request Payment";

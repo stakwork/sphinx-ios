@@ -13,6 +13,7 @@ class ChatMentionAutocompleteTableViewCell: UITableViewCell {
     @IBOutlet weak var mentionTextField: UITextField!
     @IBOutlet weak var dividerLine: UIView!
     @IBOutlet weak var avatarImage: UIImageView!
+    @IBOutlet weak var iconLabel: UILabel!
     
     static let reuseID = "ChatMentionAutocompleteTableViewCell"
     static let nib: UINib = {
@@ -26,61 +27,71 @@ class ChatMentionAutocompleteTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+        self.transform = CGAffineTransform(scaleX: 1, y: -1)
+        self.contentView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleClick)))
+        avatarImage.makeCircular()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        self.mentionTextField.layer.borderWidth = 0.0
-        self.contentView.layer.borderWidth = 0.0
-        // Configure the view for the selected state
     }
     
-    func configureWith(mentionOrMacro:MentionOrMacroItem){
-        self.dividerLine.isHidden = true
-        self.mentionTextField.text = mentionOrMacro.displayText
+    func configureWith(mentionOrMacro: MentionOrMacroItem){
         self.alias = mentionOrMacro.displayText
         self.type = mentionOrMacro.type
         self.action = mentionOrMacro.action
-        self.contentView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleClick)))
-        mentionTextField.backgroundColor = .clear
-        mentionTextField.isUserInteractionEnabled = false
         
-        mentionTextField.font = UIFont(name: "Roboto", size: mentionTextField.font?.pointSize ?? 14.0)
-        mentionTextField.textColor = UIColor.Sphinx.SecondaryText
+        mentionTextField.text = mentionOrMacro.displayText
         
-        self.transform = CGAffineTransform(scaleX: 1, y: -1)
-        self.backgroundColor = UIColor.Sphinx.HeaderBG
-        self.selectionStyle = .none
+        avatarImage?.sd_cancelCurrentImageLoad()
         
-        if(mentionOrMacro.type == .macro){
-            avatarImage.image = mentionOrMacro.image ?? #imageLiteral(resourceName: "appPinIcon")
+        if (mentionOrMacro.type == .macro) {
+            
+            if let icon = mentionOrMacro.icon {
+                iconLabel.text = icon
+                
+                avatarImage.isHidden = true
+                iconLabel.isHidden = false
+            } else {
+                avatarImage.image = mentionOrMacro.image ?? UIImage(named: "appPinIcon")
+                avatarImage.contentMode = mentionOrMacro.imageContentMode ?? .center
+                
+                avatarImage.isHidden = false
+                iconLabel.isHidden = true
+            }
+            
+        } else {
+            avatarImage.isHidden = false
+            iconLabel.isHidden = true
+            
+            avatarImage.sd_setImage(
+                with: mentionOrMacro.imageLink,
+                placeholderImage: UIImage(named: "profile_avatar"),
+                context: nil
+            )
+            
+            avatarImage.contentMode = .scaleAspectFill
         }
-        else{
-            avatarImage.layer.contentsGravity = .resizeAspectFill
-            avatarImage.sd_setImage(with: mentionOrMacro.imageLink, placeholderImage: #imageLiteral(resourceName: "appPinIcon"), context: nil)
-            avatarImage.contentMode = .scaleAspectFit
-            avatarImage.makeCircular()
-        }
-        avatarImage.tintColor = UIColor.Sphinx.BodyInverted
-        
+        avatarImage.tintColor = UIColor.Sphinx.SecondaryText
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        
         avatarImage?.image = nil
-        contentView.layer.backgroundColor = UIColor.clear.cgColor
+        avatarImage?.sd_cancelCurrentImageLoad()
     }
     
-    @objc func handleClick(){
-        if let valid_alias = alias,
-            type == .mention,
-         let delegate = delegate{
-            delegate.processAutocomplete(text: valid_alias + " ")
-        }
-        else if type == .macro,
-        let action = action{
-            self.delegate?.processGeneralPurposeMacro(action: action)
+    @objc func handleClick() {
+        if let valid_alias = alias, type == .mention, let delegate = delegate {
+            delegate.processAutocomplete(
+                text: valid_alias + " "
+            )
+        } else if type == .macro, let action = action {
+            self.delegate?.processGeneralPurposeMacro(
+                action: action
+            )
         }
     }
     

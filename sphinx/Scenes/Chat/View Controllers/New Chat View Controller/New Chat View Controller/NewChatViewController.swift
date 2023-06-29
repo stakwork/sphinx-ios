@@ -48,6 +48,7 @@ class NewChatViewController: NewKeyboardHandlerViewController {
     }
     
     var viewMode = ViewMode.Standard
+    var macros = [MentionOrMacroItem]()
     
     override var preferredScreenEdgesDeferringSystemGestures: UIRectEdge {
         get {
@@ -90,6 +91,7 @@ class NewChatViewController: NewKeyboardHandlerViewController {
         setupData()
         configureFetchResultsController()
         configureTableView()
+        initializeMacros()
     }
     
     override func viewWillAppear(_ animated: Bool) {

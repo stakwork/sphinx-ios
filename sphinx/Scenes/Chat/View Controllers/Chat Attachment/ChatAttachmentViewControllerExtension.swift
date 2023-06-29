@@ -46,6 +46,10 @@ extension ChatAttachmentViewController {
 }
 
 extension ChatAttachmentViewController: ChatMessageTextFieldViewDelegate {
+    func didDetectPossibleMacro(macro: String) {
+        //
+    }
+    
     func didDetectPossibleMention(mentionText: String) {
         //Implement mentions
     }

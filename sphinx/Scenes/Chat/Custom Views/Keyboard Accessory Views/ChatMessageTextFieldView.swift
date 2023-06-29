@@ -10,6 +10,7 @@ import UIKit
 
 @objc protocol ChatMessageTextFieldViewDelegate {
     func didDetectPossibleMention(mentionText: String)
+    func didDetectPossibleMacro(macro:String)
     func shouldSendMessage(text: String, type: Int, completion: @escaping (Bool) -> ())
     
     @objc optional func didChangeText(text: String)
@@ -97,6 +98,10 @@ class ChatMessageTextFieldView: UIView {
         recordingBlueCircle.layer.cornerRadius = recordingBlueCircle.frame.size.height / 2
         
         attachmentButton.tintColorDidChange()
+    }
+    
+    func shouldDismissKeyboard() {
+        textView.resignFirstResponder()
     }
     
     func createNewMessage(text: String) {

@@ -58,13 +58,13 @@
                                         <rect key="frame" x="0.0" y="10" width="375" height="50"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="REQUEST: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ypU-tY-BWb">
-                                                <rect key="frame" x="30" y="15.5" width="80.5" height="19"/>
+                                                <rect key="frame" x="30" y="16" width="80.5" height="18"/>
                                                 <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="15"/>
                                                 <color key="textColor" name="PrimaryBlue"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kBS-JQ-INj">
-                                                <rect key="frame" x="113.5" y="15.5" width="9.5" height="19"/>
+                                                <rect key="frame" x="113.5" y="16" width="9.5" height="18"/>
                                                 <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="15"/>
                                                 <color key="textColor" name="TextMessages"/>
                                                 <nil key="highlightedColor"/>
@@ -686,7 +686,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="65"/>
                                         <color key="backgroundColor" name="HeaderBG"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" priority="250" constant="115" id="RJD-IB-RJo"/>
+                                            <constraint firstAttribute="height" priority="250" constant="65" id="RJD-IB-RJo"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oJ3-im-1f2">
@@ -704,7 +704,7 @@
                                                 </constraints>
                                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </tableView>
-                                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="vlc-qx-DGF">
+                                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="vlc-qx-DGF">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="544"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -859,17 +859,17 @@
                                 <rect key="frame" x="0.0" y="65" width="375" height="602"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zOW-hs-xqG">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="544"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="410"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="y2W-O9-BIt" customClass="SDAnimatedImageView">
-                                                <rect key="frame" x="0.0" y="217" width="375" height="110"/>
+                                                <rect key="frame" x="0.0" y="150" width="375" height="110"/>
                                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="750" constant="110" id="mpY-ur-2nO"/>
                                                 </constraints>
                                             </imageView>
                                             <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ysP-UC-48h" customClass="UIActivityIndicatorView">
-                                                <rect key="frame" x="162.5" y="247" width="50" height="50"/>
+                                                <rect key="frame" x="162.5" y="180" width="50" height="50"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="50" id="raL-yp-SyO"/>
@@ -877,14 +877,14 @@
                                                 </constraints>
                                             </view>
                                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Er9-t6-GE3">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="544"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="410"/>
                                                 <color key="backgroundColor" name="Body"/>
                                             </view>
                                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EMn-y2-hY6">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="544"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="410"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Crj-K4-L6e" customClass="FileInfoView" customModule="sphinx" customModuleProvider="target">
-                                                        <rect key="frame" x="82.5" y="242" width="210" height="60"/>
+                                                        <rect key="frame" x="82.5" y="175" width="210" height="60"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="210" id="Ve6-gX-YnV"/>
@@ -967,7 +967,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OpW-cd-PgG" customClass="NewChatAccessoryView" customModule="sphinx" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="544" width="375" height="58"/>
+                                        <rect key="frame" x="0.0" y="410" width="375" height="192"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" priority="250" constant="500" id="uJs-jh-kvf"/>
@@ -2020,7 +2020,7 @@
                                         <rect key="frame" x="305" y="-2.5" width="70" height="65"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="sat" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GLN-cw-ioq">
-                                                <rect key="frame" x="0.0" y="19" width="28" height="27"/>
+                                                <rect key="frame" x="0.0" y="19.5" width="28" height="26.5"/>
                                                 <fontDescription key="fontDescription" name="Roboto-Light" family="Roboto" pointSize="20"/>
                                                 <color key="textColor" name="SecondaryText"/>
                                                 <nil key="highlightedColor"/>
@@ -2264,7 +2264,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NOTIFICATIONS LEVEL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SpZ-Zf-bcC">
-                                        <rect key="frame" x="108" y="18.5" width="159" height="18"/>
+                                        <rect key="frame" x="108" y="19" width="159.5" height="17.5"/>
                                         <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="14"/>
                                         <color key="textColor" name="Text"/>
                                         <nil key="highlightedColor"/>

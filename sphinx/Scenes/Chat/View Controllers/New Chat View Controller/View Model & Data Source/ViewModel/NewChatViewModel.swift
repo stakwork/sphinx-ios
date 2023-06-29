@@ -97,17 +97,19 @@ class NewChatViewModel {
     }
     
     ///Mentions
-    func getMentionsFrom(mentionText: String) -> [String] {
-        var possibleMentions = [String]()
+    func getMentionsFrom(mentionText: String) -> [(String, String)] {
+        var possibleMentions: [(String, String)] = []
         
         if mentionText.count > 0 {
-            possibleMentions = self.chat?.aliases.filter({
-                if (mentionText.count > $0.count) {
-                    return false
+            for alias in self.chat?.aliasesAndPics ?? [] {
+                if (mentionText.count > alias.0.count) {
+                    continue
                 }
-                let substring = $0.substring(range: NSRange(location: 0, length: mentionText.count))
-                return (substring.lowercased() == mentionText && mentionText != "")
-            }).sorted() ?? []
+                let substring = alias.0.substring(range: NSRange(location: 0, length: mentionText.count))
+                if (substring.lowercased() == mentionText && mentionText.isNotEmpty) {
+                    possibleMentions.append(alias)
+                }
+            }
         }
         
         return possibleMentions

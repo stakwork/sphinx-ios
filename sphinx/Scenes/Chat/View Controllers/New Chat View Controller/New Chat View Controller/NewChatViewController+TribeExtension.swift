@@ -10,11 +10,12 @@ import UIKit
 
 extension NewChatViewController {
     func fetchTribeData() {
+        configureMentions()
         if chat?.isPublicGroup() == false {
             return
         }
         
-        configureMentions()
+        
 
         chat?.updateTribeInfo() {
             self.headerView.setChatInfoOnHeader()

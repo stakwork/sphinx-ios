@@ -48,7 +48,7 @@ public class Chat: NSManagedObject {
     var ongoingMessage : String? = nil
     var image : UIImage? = nil
     var tribeInfo: GroupsManager.TribeInfo? = nil
-    var aliases : [String] = [String]()
+    var aliasesAndPics: [(String, String)] = []
     
     
     static func getChatInstance(id: Int, managedContext: NSManagedObjectContext) -> Chat {
@@ -668,10 +668,20 @@ public class Chat: NSManagedObject {
     }
     
     func processAliasesFrom(messages: [TransactionMessage]) {
-        if aliases.count == messages.count {
-            return
+        var aliases: [String] = []
+        
+        aliasesAndPics = []
+        
+        for message in messages {
+            if let alias = message.senderAlias, alias.isNotEmpty {
+                if !aliases.contains(alias) {
+                    aliasesAndPics.append(
+                        (alias, message.senderPic ?? "")
+                    )
+                    aliases.append(alias)
+                }
+            }
         }
-        aliases = Array(Set(messages.compactMap({$0.senderAlias})))
     }
     
     func saveChat() {

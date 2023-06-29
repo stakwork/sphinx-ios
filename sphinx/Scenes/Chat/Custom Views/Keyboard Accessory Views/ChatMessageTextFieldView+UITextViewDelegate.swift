@@ -46,6 +46,7 @@ extension ChatMessageTextFieldView : UITextViewDelegate {
         delegate?.didChangeText?(text: textView.text)
         
         processMention(text: textView.text)
+        processMacro(text: textView.text, cursorPosition: textView.text.length)
     }
     
     func animateElements(
@@ -124,6 +125,27 @@ extension ChatMessageTextFieldView {
             self.delegate?.didDetectPossibleMention(mentionText: mentionValue)
         } else {
             self.delegate?.didDetectPossibleMention(mentionText: "")
+        }
+    }
+    
+    func getMacro(
+        text: String,
+        cursorPosition: Int?
+    ) -> String? {
+        let relevantText = text[0..<(cursorPosition ?? text.count)]
+        if let firstLetter = relevantText.first, firstLetter == "/" {
+            return relevantText
+        }
+
+        return nil
+    }
+    
+    func processMacro(
+        text: String,
+        cursorPosition: Int?
+    ) {
+        if let macroText = getMacro(text: text, cursorPosition: cursorPosition) {
+            self.delegate?.didDetectPossibleMacro(macro: macroText)
         }
     }
 }

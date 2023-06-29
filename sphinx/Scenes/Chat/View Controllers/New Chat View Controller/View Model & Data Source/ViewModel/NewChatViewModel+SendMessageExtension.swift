@@ -238,28 +238,31 @@ extension NewChatViewModel {
     
     func createCallMessage(sender: UIButton) {
         VideoCallHelper.createCallMessage(button: sender, callback: { link in
-            
-            let type = (self.chat?.isGroup() == false) ?
-                TransactionMessage.TransactionMessageType.call.rawValue :
-                TransactionMessage.TransactionMessageType.message.rawValue
-            
-            var messageText = link
-            
-            if type == TransactionMessage.TransactionMessageType.call.rawValue {
-                
-                let voipRequestMessage = VoIPRequestMessage()
-                voipRequestMessage.recurring = false
-                voipRequestMessage.link = link
-                voipRequestMessage.cron = ""
-                
-                messageText = voipRequestMessage.getCallLinkMessage() ?? link
-            }
-            
-            self.shouldSendMessage(
-                text: messageText,
-                type: type,
-                completion: { _ in }
-            )
+            self.sendCallMessage(link: link)
         })
+    }
+    
+    func sendCallMessage(link: String) {
+        let type = (self.chat?.isGroup() == false) ?
+            TransactionMessage.TransactionMessageType.call.rawValue :
+            TransactionMessage.TransactionMessageType.message.rawValue
+        
+        var messageText = link
+        
+        if type == TransactionMessage.TransactionMessageType.call.rawValue {
+            
+            let voipRequestMessage = VoIPRequestMessage()
+            voipRequestMessage.recurring = false
+            voipRequestMessage.link = link
+            voipRequestMessage.cron = ""
+            
+            messageText = voipRequestMessage.getCallLinkMessage() ?? link
+        }
+        
+        self.shouldSendMessage(
+            text: messageText,
+            type: type,
+            completion: { _ in }
+        )
     }
 }

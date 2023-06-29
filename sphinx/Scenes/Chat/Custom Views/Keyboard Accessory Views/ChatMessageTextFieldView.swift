@@ -10,6 +10,7 @@ import UIKit
 
 @objc protocol ChatMessageTextFieldViewDelegate {
     func didDetectPossibleMention(mentionText: String)
+    func didDetectPossibleMacro(macro:String)
     func shouldSendMessage(text: String, type: Int, completion: @escaping (Bool) -> ())
     
     @objc optional func didChangeText(text: String)

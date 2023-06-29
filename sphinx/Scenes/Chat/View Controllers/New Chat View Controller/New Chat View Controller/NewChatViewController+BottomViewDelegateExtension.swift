@@ -35,14 +35,7 @@ extension NewChatViewController : ChatMessageTextFieldViewDelegate {
             return
         }
         
-        let viewController = ChatAttachmentViewController.instantiate(
-            delegate: self,
-            chatId: self.chat?.id,
-            text: text,
-            replyingMessageId: nil
-        )
-        
-        viewController.modalPresentationStyle = .overCurrentContext
+        let viewController = getChatAttachmentVC(text:text)
         
         DispatchQueue.main.async {
             self.present(
@@ -62,6 +55,24 @@ extension NewChatViewController : ChatMessageTextFieldViewDelegate {
     
     func shouldCancelRecording() {
         chatViewModel.shouldCancelRecording()
+    }
+    
+    func shouldStartGiphy(){
+        let vc = getChatAttachmentVC(text: nil)
+        self.present(vc,animated:false)
+        vc.presentGiphy()
+    }
+    
+    func getChatAttachmentVC(text:String?)->ChatAttachmentViewController{
+        let viewController = ChatAttachmentViewController.instantiate(
+            delegate: self,
+            chatId: self.chat?.id,
+            text: text,
+            replyingMessageId: nil
+        )
+        
+        viewController.modalPresentationStyle = .overCurrentContext
+        return viewController
     }
 }
 

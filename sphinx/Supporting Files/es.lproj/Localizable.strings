@@ -621,3 +621,10 @@
 "storage.management.files" = "todos los archivos";
 "are.you.sure" = "Are you sure?";
 "chat.media" = "medios de chat";
+
+//MACRO
+"send.giphy" = "Enviar Giphy";
+"start.audio.call" = "Iniciar llamada de audio";
+"start.video.call" = "Iniciar video llamada";
+"send.payment" = "Enviar pago";
+"request.payment" = "Solicitar pago";

@@ -5,6 +5,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -52,6 +53,22 @@
                             <constraint firstAttribute="height" constant="30" id="xKE-5U-5Vl"/>
                         </constraints>
                     </imageView>
+                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nee-Xz-hdG">
+                        <rect key="frame" x="16" y="7" width="30" height="30"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TT" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aSd-ki-V1m">
+                                <rect key="frame" x="6" y="6.3333333333333339" width="18.333333333333332" height="17.666666666666664"/>
+                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="15"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="aSd-ki-V1m" firstAttribute="centerY" secondItem="nee-Xz-hdG" secondAttribute="centerY" id="ioH-n3-WEP"/>
+                            <constraint firstItem="aSd-ki-V1m" firstAttribute="centerX" secondItem="nee-Xz-hdG" secondAttribute="centerX" id="nqy-CG-coh"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <color key="backgroundColor" name="HeaderBG"/>
                 <constraints>
@@ -60,19 +77,25 @@
                     <constraint firstItem="BSP-Qj-gRe" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="5oh-ZK-mGF"/>
                     <constraint firstItem="6Hv-TP-hYj" firstAttribute="bottom" secondItem="dlG-ss-ggw" secondAttribute="bottom" id="7wT-tC-3FZ"/>
                     <constraint firstItem="dlG-ss-ggw" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="DNH-fG-P5m"/>
+                    <constraint firstItem="nee-Xz-hdG" firstAttribute="top" secondItem="dlG-ss-ggw" secondAttribute="top" id="G25-aD-8yA"/>
                     <constraint firstItem="U20-KQ-zY2" firstAttribute="leading" secondItem="dlG-ss-ggw" secondAttribute="trailing" constant="8" id="H9G-bI-V27"/>
                     <constraint firstAttribute="bottom" secondItem="BSP-Qj-gRe" secondAttribute="bottom" id="HBf-2k-aX3"/>
                     <constraint firstItem="6Hv-TP-hYj" firstAttribute="trailing" secondItem="dlG-ss-ggw" secondAttribute="trailing" id="R2Q-00-eYi"/>
                     <constraint firstItem="6Hv-TP-hYj" firstAttribute="top" secondItem="dlG-ss-ggw" secondAttribute="top" id="V6D-E2-PkP"/>
                     <constraint firstItem="dlG-ss-ggw" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="VYt-H0-gBN"/>
                     <constraint firstItem="U20-KQ-zY2" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="gMB-Ls-FQH"/>
+                    <constraint firstItem="nee-Xz-hdG" firstAttribute="bottom" secondItem="dlG-ss-ggw" secondAttribute="bottom" id="hVv-7x-Mcg"/>
+                    <constraint firstItem="nee-Xz-hdG" firstAttribute="trailing" secondItem="dlG-ss-ggw" secondAttribute="trailing" id="hp7-b5-hpX"/>
                     <constraint firstItem="U20-KQ-zY2" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="qe3-kd-B50"/>
+                    <constraint firstItem="nee-Xz-hdG" firstAttribute="leading" secondItem="dlG-ss-ggw" secondAttribute="leading" id="vJy-X4-fJv"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="avatarImage" destination="dlG-ss-ggw" id="UZx-SB-2Sj"/>
                 <outlet property="dividerLine" destination="BSP-Qj-gRe" id="a2l-ew-S7n"/>
                 <outlet property="iconLabel" destination="6Hv-TP-hYj" id="wls-VH-AWI"/>
+                <outlet property="initialsLabel" destination="aSd-ki-V1m" id="fV7-2f-wev"/>
+                <outlet property="initialsView" destination="nee-Xz-hdG" id="tKL-4O-sZn"/>
                 <outlet property="mentionTextField" destination="U20-KQ-zY2" id="4LP-bM-xXG"/>
             </connections>
             <point key="canvasLocation" x="-50.381679389312978" y="-12.67605633802817"/>
@@ -91,5 +114,8 @@
         <namedColor name="Text">
             <color red="0.23529411764705882" green="0.24705882352941178" blue="0.25490196078431371" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

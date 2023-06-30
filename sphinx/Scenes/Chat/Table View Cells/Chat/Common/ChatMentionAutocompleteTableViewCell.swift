@@ -14,6 +14,8 @@ class ChatMentionAutocompleteTableViewCell: UITableViewCell {
     @IBOutlet weak var dividerLine: UIView!
     @IBOutlet weak var avatarImage: UIImageView!
     @IBOutlet weak var iconLabel: UILabel!
+    @IBOutlet weak var initialsView: UIView!
+    @IBOutlet weak var initialsLabel: UILabel!
     
     static let reuseID = "ChatMentionAutocompleteTableViewCell"
     static let nib: UINib = {
@@ -30,7 +32,9 @@ class ChatMentionAutocompleteTableViewCell: UITableViewCell {
         
         self.transform = CGAffineTransform(scaleX: 1, y: -1)
         self.contentView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleClick)))
+        
         avatarImage.makeCircular()
+        initialsView.makeCircular()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -41,6 +45,10 @@ class ChatMentionAutocompleteTableViewCell: UITableViewCell {
         self.alias = mentionOrMacro.displayText
         self.type = mentionOrMacro.type
         self.action = mentionOrMacro.action
+        
+        avatarImage.isHidden = true
+        iconLabel.isHidden = true
+        initialsView.isHidden = true
         
         mentionTextField.text = mentionOrMacro.displayText
         
@@ -62,17 +70,19 @@ class ChatMentionAutocompleteTableViewCell: UITableViewCell {
             }
             
         } else {
-            avatarImage.isHidden = false
-            iconLabel.isHidden = true
-            
             if let imageLink = mentionOrMacro.imageLink, let url = URL(string: imageLink) {
+                avatarImage.isHidden = false
+                
                 avatarImage.sd_setImage(
                     with: url,
                     placeholderImage: UIImage(named: "profile_avatar"),
                     context: nil
                 )
             } else {
-                avatarImage.image = UIImage(named: "profile_avatar")
+                initialsView.isHidden = false
+                
+                initialsView.backgroundColor = UIColor.getColorFor(key: "\(mentionOrMacro.displayText)-color")
+                initialsLabel.text = mentionOrMacro.displayText.getInitialsFromName()
             }
             
             avatarImage.contentMode = .scaleAspectFill

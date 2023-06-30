@@ -59,7 +59,6 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
         }
         
         feedsManager.restoreContentFeedStatusInBackgroundFor(feedId: podcastFeed.feedID)
-        
         presentPodcastPlayerFor(podcastFeed)
     }
     

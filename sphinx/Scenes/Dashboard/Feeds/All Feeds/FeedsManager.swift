@@ -21,6 +21,8 @@ class FeedsManager : NSObject {
     
     let podcastPlayerController = PodcastPlayerController.sharedInstance
     
+    var isPresentingDownloadedContent : Bool = false
+    
     // MARK: - Content Feed fetch requests
     
     func fetchFeeds(

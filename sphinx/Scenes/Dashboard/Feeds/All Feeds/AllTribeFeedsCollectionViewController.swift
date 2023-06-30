@@ -14,6 +14,7 @@ class AllTribeFeedsCollectionViewController: UICollectionViewController {
     var followedFeeds : [ContentFeed] = []
     
     var recommendedFeeds: [RecommendationResult] = []
+    var downloadedFeedsTapped: Bool = false
     
     var interSectionSpacing: CGFloat = 10.0
     var interCellSpacing: CGFloat = 6.0
@@ -721,6 +722,10 @@ extension AllTribeFeedsCollectionViewController {
             let dataSourceItem = dataSource.itemIdentifier(for: indexPath)
         else {
             return
+        }
+        
+        if indexPath.section ==  2 {
+            FeedsManager.sharedInstance.isPresentingDownloadedContent = true
         }
 
         if let feedEntity = dataSourceItem.feedEntity as? ContentFeed {

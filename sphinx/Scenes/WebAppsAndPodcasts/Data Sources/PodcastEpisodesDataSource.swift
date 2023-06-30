@@ -35,7 +35,7 @@ class PodcastEpisodesDataSource : NSObject {
     
     let downloadService = DownloadService.sharedInstance
     
-    var isFromDownloadsFeed : Bool = true
+    var isFromDownloadsFeed : Bool = false
     
     init(
         tableView: UITableView,
@@ -48,6 +48,15 @@ class PodcastEpisodesDataSource : NSObject {
         self.tableView = tableView
         self.podcast = podcast
         self.delegate = delegate
+        self.isFromDownloadsFeed = isFromDownloadsFeed
+        if(isFromDownloadsFeed){
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {//toggle such that it selects the first podcast in the downloaded section
+                self.delegate?.didTapEpisodeAt(index: 0)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.01, execute: {
+                    self.delegate?.didTapEpisodeAt(index: 0)
+                })
+            })
+        }
         
         self.tableView.registerCell(UnifiedEpisodeTableViewCell.self)
         self.tableView.delegate = self

@@ -102,8 +102,7 @@ class NewPodcastPlayerViewController: UIViewController {
         podcast: PodcastFeed,
         delegate: PodcastPlayerVCDelegate,
         boostDelegate: CustomBoostDelegate,
-        fromDashboard: Bool,
-        isFromDownloadsFeed: Bool = false
+        fromDashboard: Bool
     ) -> NewPodcastPlayerViewController {
         let viewController = StoryboardScene.WebApps.newPodcastPlayerViewController.instantiate()
         
@@ -111,7 +110,10 @@ class NewPodcastPlayerViewController: UIViewController {
         viewController.delegate = delegate
         viewController.boostDelegate = boostDelegate
         viewController.fromDashboard = fromDashboard
-        viewController.isFromDownloadsFeed = isFromDownloadsFeed
+        viewController.isFromDownloadsFeed = FeedsManager.sharedInstance.isPresentingDownloadedContent
+        if(viewController.isFromDownloadsFeed == true){
+            FeedsManager.sharedInstance.isPresentingDownloadedContent = false
+        }
     
         return viewController
     }

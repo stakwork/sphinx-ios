@@ -307,12 +307,14 @@ public class Chat: NSManagedObject {
     }
     
     func getAllMessages(
-        limit: Int? = 100
+        limit: Int? = nil,
+        context: NSManagedObjectContext? = nil
     ) -> [TransactionMessage] {
         
         return TransactionMessage.getAllMessagesFor(
             chat: self,
-            limit: limit
+            limit: limit,
+            context: context
         )
     }
     
@@ -667,22 +669,40 @@ public class Chat: NSManagedObject {
         return nil
     }
     
-    func processAliasesFrom(messages: [TransactionMessage]) {
+    func processAliases() {
         if self.isConversation() {
             return
         }
         
-        var aliases: [String] = []
+        let backgroundContext = CoreDataManager.sharedManager.getBackgroundContext()
         
-        aliasesAndPics = []
-        
+        backgroundContext.perform {
+            let messages = self.getAllMessages(
+                limit: 2000,
+                context: backgroundContext
+            )
+            
+            for message in messages {
+                if let alias = message.senderAlias, alias.isNotEmpty {
+                    if !self.aliasesAndPics.contains(where: {$0.0 == alias}) {
+                        self.aliasesAndPics.append(
+                            (alias, message.senderPic ?? "")
+                        )
+                    }
+                }
+            }
+        }
+    }
+    
+    func processAliasesFrom(
+        messages: [TransactionMessage]
+    ) {
         for message in messages {
             if let alias = message.senderAlias, alias.isNotEmpty {
-                if !aliases.contains(alias) {
-                    aliasesAndPics.append(
+                if !aliasesAndPics.contains(where: {$0.0 == alias}) {
+                    self.aliasesAndPics.append(
                         (alias, message.senderPic ?? "")
                     )
-                    aliases.append(alias)
                 }
             }
         }

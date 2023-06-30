@@ -48,7 +48,8 @@ extension TransactionMessage {
     
     static func getAllMessagesFor(
         chat: Chat,
-        limit: Int? = nil
+        limit: Int? = nil,
+        context: NSManagedObjectContext? = nil
     ) -> [TransactionMessage] {
         
         let fetchRequest = getChatMessagesFetchRequest(
@@ -57,7 +58,7 @@ extension TransactionMessage {
         )
         
         var messages: [TransactionMessage] = []
-        let context = CoreDataManager.sharedManager.persistentContainer.viewContext
+        let context = context ?? CoreDataManager.sharedManager.persistentContainer.viewContext
         
         do {
             try messages = context.fetch(fetchRequest)

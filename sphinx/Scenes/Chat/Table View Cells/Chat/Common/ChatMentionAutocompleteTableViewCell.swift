@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class ChatMentionAutocompleteTableViewCell: UITableViewCell {
     
@@ -70,19 +71,22 @@ class ChatMentionAutocompleteTableViewCell: UITableViewCell {
             }
             
         } else {
+            initialsView.isHidden = false
+            initialsView.backgroundColor = UIColor.getColorFor(key: "\(mentionOrMacro.displayText)-color")
+            initialsLabel.text = mentionOrMacro.displayText.getInitialsFromName()
+            
             if let imageLink = mentionOrMacro.imageLink, let url = URL(string: imageLink) {
-                avatarImage.isHidden = false
-                
                 avatarImage.sd_setImage(
                     with: url,
                     placeholderImage: UIImage(named: "profile_avatar"),
-                    context: nil
+                    options: SDWebImageOptions.progressiveLoad,
+                    completed: { (image, error, _, _) in
+                        if let image = image {
+                            self.avatarImage.image = image
+                            self.avatarImage.isHidden = false
+                        }
+                    }
                 )
-            } else {
-                initialsView.isHidden = false
-                
-                initialsView.backgroundColor = UIColor.getColorFor(key: "\(mentionOrMacro.displayText)-color")
-                initialsLabel.text = mentionOrMacro.displayText.getInitialsFromName()
             }
             
             avatarImage.contentMode = .scaleAspectFill

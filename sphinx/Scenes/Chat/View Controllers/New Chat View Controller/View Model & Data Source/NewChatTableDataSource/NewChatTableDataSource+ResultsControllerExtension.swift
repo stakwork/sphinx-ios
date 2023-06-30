@@ -131,9 +131,7 @@ extension NewChatTableDataSource {
         
         guard let owner = UserContact.getOwner() else {
             return
-        }
-        
-        chat.processAliasesFrom(messages: messages)
+        }        
         
         startSearchProcess()
         
@@ -152,6 +150,8 @@ extension NewChatTableDataSource {
         var groupingDate: Date? = nil
         
         var invoiceData: (Int, Int) = (0, 0)
+        
+        chat.processAliasesFrom(messages: messages)
 
         for (index, message) in messages.enumerated() {
             

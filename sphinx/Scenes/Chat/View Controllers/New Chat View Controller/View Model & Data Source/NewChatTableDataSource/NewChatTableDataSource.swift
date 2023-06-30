@@ -126,6 +126,13 @@ class NewChatTableDataSource : NSObject {
         
         configureTableView()
         configureDataSource()
+        processChatAliases()
+    }
+    
+    func processChatAliases() {
+        DispatchQueue.global(qos: .background).async {
+            self.chat?.processAliases()
+        }
     }
     
     func isFinalDS() -> Bool {

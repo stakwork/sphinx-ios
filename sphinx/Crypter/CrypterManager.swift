@@ -201,16 +201,12 @@ class CrypterManager : NSObject {
         
     }
     
-    public func generateAndPersistWalletMnemonic() -> String {
-//        let mnemonic = UserData.sharedInstance.getMnemonic() ?? Mnemonic.create()
-//        UserData.sharedInstance.save(walletMnemonic: mnemonic)
-        
+    public func generateAndPersistWalletMnemonic() -> (String, String) {
         let mnemonic = Mnemonic.create()
-        
         let seed = Mnemonic.createSeed(mnemonic: mnemonic)
         let seed32Bytes = seed.bytes[0..<32]
         
-        return seed32Bytes.hexString
+        return (mnemonic, seed32Bytes.hexString)
     }
     
     func testCrypter() {
@@ -244,9 +240,11 @@ class CrypterManager : NSObject {
                 print(error.localizedDescription)
             }
             
-            let seed = self.generateAndPersistWalletMnemonic()
+            let (mnemonic, seed) = self.generateAndPersistWalletMnemonic()
             
-            self.showMnemonicToUser() {
+            self.newMessageBubbleHelper.hideLoadingWheel()
+            
+            self.showMnemonicToUser(mnemonic: mnemonic) {
                 guard let sec1 = sec1 else {
                     self.showSuccessWithMessage("There was an error. Please try again later")
                     return
@@ -290,18 +288,24 @@ class CrypterManager : NSObject {
         })
     }
     
-    func showMnemonicToUser(callback: @escaping () -> ()) {
-        self.newMessageBubbleHelper.hideLoadingWheel()
-        
-        if let mnemonic = UserData.sharedInstance.getMnemonic() {
-            let copyAction = UIAlertAction(title: "Copy", style: .default, handler: { _ in
+    func showMnemonicToUser(mnemonic: String, callback: @escaping () -> ()) {
+        let copyAction = UIAlertAction(
+            title: "Copy",
+            style: .default,
+            handler: { _ in
                 ClipboardHelper.copyToClipboard(text: mnemonic, message: "profile.mnemonic-copied".localized)
                 callback()
-            })
-            AlertHelper.showAlert(title: "profile.store-mnemonic".localized, message: mnemonic, on: vc, additionAlertAction: copyAction, completion: {
+            }
+        )
+        AlertHelper.showAlert(
+            title: "profile.store-mnemonic".localized,
+            message: mnemonic,
+            on: vc,
+            additionAlertAction: copyAction,
+            completion: {
                 callback()
-            })
-        }
+            }
+        )
     }
     
     func getUrl(route: String) -> String {

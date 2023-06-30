@@ -14,7 +14,7 @@ extension NewChatViewController {
             if ds.isFinalDS() {
                 return
             }
-        } else {
+        } else if chat == nil {
             chatTableView.alpha = 1.0
         }
         

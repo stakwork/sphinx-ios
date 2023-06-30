@@ -411,6 +411,7 @@
 "bot.response" = "Respuesta de Bot";
 "file" = "Archivo";
 "downloading.file" = "Descargando archivo...";
+"downloaded.content" = "Contenido Descargado";
 "amount.too.low" = "Importe demasiado bajo";
 "amount.too.high" = "Importe demasiado alto";
 "onchain.amount.too.low" = "Importe demasiado bajo. Mínimo 250000 sats";

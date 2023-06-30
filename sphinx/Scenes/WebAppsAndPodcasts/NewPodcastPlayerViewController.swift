@@ -40,6 +40,8 @@ class NewPodcastPlayerViewController: UIViewController {
     
     var fromDashboard = false
     
+    var isFromDownloadsFeed = false
+    
     var podcastPlayerController = PodcastPlayerController.sharedInstance
     
     let downloadService = DownloadService.sharedInstance
@@ -100,7 +102,8 @@ class NewPodcastPlayerViewController: UIViewController {
         podcast: PodcastFeed,
         delegate: PodcastPlayerVCDelegate,
         boostDelegate: CustomBoostDelegate,
-        fromDashboard: Bool
+        fromDashboard: Bool,
+        isFromDownloadsFeed: Bool = false
     ) -> NewPodcastPlayerViewController {
         let viewController = StoryboardScene.WebApps.newPodcastPlayerViewController.instantiate()
         
@@ -108,6 +111,7 @@ class NewPodcastPlayerViewController: UIViewController {
         viewController.delegate = delegate
         viewController.boostDelegate = boostDelegate
         viewController.fromDashboard = fromDashboard
+        viewController.isFromDownloadsFeed = isFromDownloadsFeed
     
         return viewController
     }
@@ -125,7 +129,8 @@ class NewPodcastPlayerViewController: UIViewController {
         tableDataSource = PodcastEpisodesDataSource(
             tableView: tableView,
             podcast: podcast,
-            delegate: self
+            delegate: self,
+            isFromDownloadsFeed: self.isFromDownloadsFeed
         )
         
         podcastPlayerController.addDelegate(tableHeaderView!, withKey: PodcastDelegateKeys.PodcastPlayerView.rawValue)

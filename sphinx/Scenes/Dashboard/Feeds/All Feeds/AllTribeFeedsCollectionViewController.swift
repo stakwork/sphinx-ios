@@ -119,7 +119,7 @@ extension AllTribeFeedsCollectionViewController {
                 case .recentlyPlayed:
                     return "recently.played".localized
                 case .downloaded:
-                    return "downloaded".localized
+                    return "downloaded.content".localized
             }
         }
     }
@@ -525,13 +525,13 @@ extension AllTribeFeedsCollectionViewController {
             if contentFeed.isPodcast,
                let pf = PodcastFeed.convertFrom(contentFeed: contentFeed) as? PodcastFeed,
                pf.episodesArray.filter({$0.isDownloaded == true}).count > 0{
-                return DataSourceItem.tribePodcastFeed(contentFeed, CollectionViewSection.recentlyPlayed.rawValue)
+                return DataSourceItem.tribePodcastFeed(contentFeed, CollectionViewSection.downloaded.rawValue)
             }
             return nil
         })
 
         if followedSourceItems.count > 0 {
-            snapshot.appendSections([CollectionViewSection.followedFeeds, CollectionViewSection.recentlyPlayed])
+            snapshot.appendSections([CollectionViewSection.followedFeeds, CollectionViewSection.recentlyPlayed, CollectionViewSection.downloaded])
 
             snapshot.appendItems(
                 followedSourceItems,
@@ -553,6 +553,7 @@ extension AllTribeFeedsCollectionViewController {
         
         return snapshot
     }
+
 
 
     func updateSnapshot() {

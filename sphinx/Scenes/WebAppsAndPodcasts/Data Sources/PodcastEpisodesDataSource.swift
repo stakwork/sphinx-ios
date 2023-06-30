@@ -35,10 +35,13 @@ class PodcastEpisodesDataSource : NSObject {
     
     let downloadService = DownloadService.sharedInstance
     
+    var isFromDownloadsFeed : Bool = true
+    
     init(
         tableView: UITableView,
         podcast: PodcastFeed,
-        delegate: PodcastEpisodesDSDelegate
+        delegate: PodcastEpisodesDSDelegate,
+        isFromDownloadsFeed:Bool=false
     ) {
         super.init()
         
@@ -61,7 +64,7 @@ extension PodcastEpisodesDataSource : UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? UnifiedEpisodeTableViewCell {
             
-            let episodes = podcast.episodesArray
+            let episodes = isFromDownloadsFeed ? podcast.episodesArray.filter({$0.isDownloaded == true}) : podcast.episodesArray 
             let episode = episodes[indexPath.row]
             let download = downloadService.activeDownloads[episode.getRemoteAudioUrl()?.absoluteString ?? ""]
             
@@ -107,7 +110,7 @@ extension PodcastEpisodesDataSource : UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let episodes = podcast.episodes ?? []
-        return episodes.count
+        return isFromDownloadsFeed ? podcast.episodesArray.filter({$0.isDownloaded == true}).count : podcast.episodesArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

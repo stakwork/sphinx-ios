@@ -412,6 +412,7 @@
 "bot.response" = "Bot response";
 "file" = "File";
 "downloading.file" = "Downloading file...";
+"downloaded.content" = "Downloaded Content";
 "amount.too.low" = "Amount too low";
 "amount.too.high" = "Amount too high";
 "onchain.amount.too.low" = "Amount too low. Minimum 250000 sats";

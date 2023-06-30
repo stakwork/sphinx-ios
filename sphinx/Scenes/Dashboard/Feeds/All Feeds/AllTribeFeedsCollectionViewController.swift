@@ -108,6 +108,7 @@ extension AllTribeFeedsCollectionViewController {
         case recommendations
         case followedFeeds
         case recentlyPlayed
+        case downloaded
         
         var titleForDisplay: String {
             switch self {
@@ -117,6 +118,8 @@ extension AllTribeFeedsCollectionViewController {
                     return "feed.following".localized
                 case .recentlyPlayed:
                     return "recently.played".localized
+                case .downloaded:
+                    return "downloaded".localized
             }
         }
     }
@@ -363,7 +366,7 @@ extension AllTribeFeedsCollectionViewController {
             }
             
             switch section {
-            case .followedFeeds, .recommendations, .recentlyPlayed:
+            case .followedFeeds, .recommendations, .recentlyPlayed,.downloaded:
                 if dataSourceItem.isLoading {
                     guard
                         let loadingCell = collectionView.dequeueReusableCell(
@@ -431,6 +434,9 @@ extension AllTribeFeedsCollectionViewController {
                         section = .followedFeeds
                     } else if (section == .followedFeeds){
                         section = .recentlyPlayed
+                    }
+                    else if(section == .recentlyPlayed){
+                        section = .downloaded
                     }
                 }
                 
@@ -514,6 +520,15 @@ extension AllTribeFeedsCollectionViewController {
             }
             return nil
         }
+        
+        let downloadedFeed = allFeeds.compactMap({contentFeed -> DataSourceItem? in
+            if contentFeed.isPodcast,
+               let pf = PodcastFeed.convertFrom(contentFeed: contentFeed) as? PodcastFeed,
+               pf.episodesArray.filter({$0.isDownloaded == true}).count > 0{
+                return DataSourceItem.tribePodcastFeed(contentFeed, CollectionViewSection.recentlyPlayed.rawValue)
+            }
+            return nil
+        })
 
         if followedSourceItems.count > 0 {
             snapshot.appendSections([CollectionViewSection.followedFeeds, CollectionViewSection.recentlyPlayed])
@@ -526,6 +541,11 @@ extension AllTribeFeedsCollectionViewController {
             snapshot.appendItems(
                 recentlyPlayedFeed,
                 toSection: CollectionViewSection.recentlyPlayed
+            )
+            
+            snapshot.appendItems(
+                downloadedFeed,
+                toSection: CollectionViewSection.downloaded
             )
         }
         

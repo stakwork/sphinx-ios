@@ -40,7 +40,7 @@ class NewPodcastPlayerViewController: UIViewController {
     
     var fromDashboard = false
     
-    var isFromDownloadsFeed = false
+    var downloadedFeedEpisodeID : String? = nil
     
     var podcastPlayerController = PodcastPlayerController.sharedInstance
     
@@ -110,9 +110,9 @@ class NewPodcastPlayerViewController: UIViewController {
         viewController.delegate = delegate
         viewController.boostDelegate = boostDelegate
         viewController.fromDashboard = fromDashboard
-        viewController.isFromDownloadsFeed = FeedsManager.sharedInstance.isPresentingDownloadedContent
-        if(viewController.isFromDownloadsFeed == true){
-            FeedsManager.sharedInstance.isPresentingDownloadedContent = false
+        viewController.downloadedFeedEpisodeID = FeedsManager.sharedInstance.isPresentingDownloadedContentWithID
+        if(viewController.downloadedFeedEpisodeID != nil){
+            FeedsManager.sharedInstance.isPresentingDownloadedContentWithID = nil
         }
     
         return viewController
@@ -132,7 +132,7 @@ class NewPodcastPlayerViewController: UIViewController {
             tableView: tableView,
             podcast: podcast,
             delegate: self,
-            isFromDownloadsFeed: self.isFromDownloadsFeed
+            isFromDownloadsFeedWithID: downloadedFeedEpisodeID
         )
         
         podcastPlayerController.addDelegate(tableHeaderView!, withKey: PodcastDelegateKeys.PodcastPlayerView.rawValue)

@@ -127,7 +127,7 @@ extension AllTribeFeedsCollectionViewController {
     
     
     enum DataSourceItem: Hashable {
-        
+        case listenNowEpisode(PodcastEpisode, Int)
         case tribePodcastFeed(ContentFeed, Int)
         case tribeVideoFeed(ContentFeed, Int)
         case tribeNewsletterFeed(ContentFeed, Int)
@@ -404,7 +404,10 @@ extension AllTribeFeedsCollectionViewController {
                     feedCell.configure(withItem: feedEntity)
                 } else if let resultEntity = dataSourceItem.resultEntity {
                     feedCell.configure(withItem: resultEntity as DashboardFeedSquaredThumbnailCollectionViewItem)
-                } else {
+                } else if let episodeEntity = dataSourceItem.episodeEntity{
+                    feedCell.configure(withItem: episodeEntity.0)
+                }
+                else {
                     preconditionFailure("Failed to find entity that conforms to `DashboardFeedSquaredThumbnailCollectionViewItem`")
                 }
                 
@@ -522,14 +525,20 @@ extension AllTribeFeedsCollectionViewController {
             return nil
         }
         
-        let downloadedFeed = allFeeds.compactMap({contentFeed -> DataSourceItem? in
-            if contentFeed.isPodcast,
-               let pf = PodcastFeed.convertFrom(contentFeed: contentFeed) as? PodcastFeed,
-               pf.episodesArray.filter({$0.isDownloaded == true}).count > 0{
-                return DataSourceItem.tribePodcastFeed(contentFeed, CollectionViewSection.downloaded.rawValue)
+        var downloadedFeed = [DataSourceItem]()
+        for feed in allFeeds{
+            if feed.isPodcast,
+               let pf = PodcastFeed.convertFrom(contentFeed: feed) as? PodcastFeed
+            {
+                let downloadedEpisodes = pf.episodesArray.filter({ $0.isDownloaded })
+                for episode in downloadedEpisodes{
+                    let item = DataSourceItem.listenNowEpisode(episode, episode.currentTime ?? 0)
+                    
+                    downloadedFeed.append(item)
+                }
             }
-            return nil
-        })
+        }
+        
 
         if followedSourceItems.count > 0 {
             snapshot.appendSections([CollectionViewSection.followedFeeds, CollectionViewSection.recentlyPlayed, CollectionViewSection.downloaded])
@@ -724,15 +733,20 @@ extension AllTribeFeedsCollectionViewController {
             return
         }
         
-        if indexPath.section ==  2 {
-            FeedsManager.sharedInstance.isPresentingDownloadedContent = true
-        }
 
         if let feedEntity = dataSourceItem.feedEntity as? ContentFeed {
             onCellSelected?(feedEntity.id)
             scrollBackMostRecentFeed()
         } else if let recommendation = dataSourceItem.resultEntity {
             onRecommendationSelected?(recommendedFeeds, recommendation.id)
+        }
+        else if let episode = dataSourceItem.episodeEntity{
+            if let feed = episode.0.feed{
+                onCellSelected?(feed.feedID)
+            }
+            if indexPath.section ==  2 {
+                FeedsManager.sharedInstance.isPresentingDownloadedContentWithID = episode.0.itemID
+            }
         }
     }
 }
@@ -794,6 +808,15 @@ extension AllTribeFeedsCollectionViewController.DataSourceItem {
         }
     }
     
+    var episodeEntity: (PodcastEpisode, Int)? {
+        switch self {
+        case .listenNowEpisode(let podcastEpisode, let currentTime):
+            return (podcastEpisode, currentTime)
+        default:
+            return nil
+        }
+    }
+    
     var sectionEntity: Int? {
         switch self {
             case .tribePodcastFeed(_, let section):
@@ -815,6 +838,7 @@ extension AllTribeFeedsCollectionViewController.DataSourceItem {
                 return nil
         }
     }
+    
     
     var isLoading: Bool {
         switch self {

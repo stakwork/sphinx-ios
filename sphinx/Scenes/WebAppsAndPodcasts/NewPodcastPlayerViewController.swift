@@ -85,7 +85,7 @@ class NewPodcastPlayerViewController: UIViewController {
     
     func loadEpisode(withID:String){
         if let episodeIndex = self.tableDataSource.podcast.episodesArray.firstIndex(where: {$0.itemID == withID}){
-            didTapEpisodeAt(index: episodeIndex)
+            didTapEpisodeAt(index: episodeIndex, lookupById: nil)
         }
     }
     
@@ -163,8 +163,8 @@ extension NewPodcastPlayerViewController : PodcastEpisodesDSDelegate {
         }
     }
     
-    func didTapEpisodeAt(index: Int) {
-        tableHeaderView?.didTapEpisodeAt(index: index)
+    func didTapEpisodeAt(index: Int,lookupById:String?) {
+        tableHeaderView?.didTapEpisodeAt(index: index,lookupByID: lookupById)
     }
     
     func shouldToggleTopView(show: Bool) {

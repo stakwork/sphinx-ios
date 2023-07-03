@@ -10,7 +10,7 @@ import UIKit
 
 protocol PodcastEpisodesDSDelegate : class {
     func didTapForDescriptionAt(episode:PodcastEpisode,cell:UITableViewCell)
-    func didTapEpisodeAt(index: Int)
+    func didTapEpisodeAt(index: Int,lookupById:String?)
     func downloadTapped(_ indexPath: IndexPath, episode: PodcastEpisode)
     func deleteTapped(_ indexPath: IndexPath, episode: PodcastEpisode)
     func shouldToggleTopView(show: Bool)
@@ -49,19 +49,25 @@ class PodcastEpisodesDataSource : NSObject {
         self.podcast = podcast
         self.delegate = delegate
         self.isFromDownloadsFeed = isFromDownloadsFeed
-        if(isFromDownloadsFeed){
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {//toggle such that it selects the first podcast in the downloaded section
-                self.delegate?.didTapEpisodeAt(index: 0)
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.01, execute: {
-                    self.delegate?.didTapEpisodeAt(index: 0)
-                })
-            })
-        }
         
         self.tableView.registerCell(UnifiedEpisodeTableViewCell.self)
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.reloadData()
+        
+        setupDownloadFeedCase()
+    }
+    
+    func setupDownloadFeedCase(){
+        if(isFromDownloadsFeed){//make the first view work
+            let episodeID = getEpisodes()[0].itemID
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+                self.delegate?.didTapEpisodeAt(index: 0, lookupById: episodeID)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.01, execute: {
+                    self.delegate?.didTapEpisodeAt(index: 0, lookupById: episodeID)
+                })
+            })
+        }
     }
 }
 
@@ -70,10 +76,14 @@ extension PodcastEpisodesDataSource : UITableViewDelegate {
         return kRowHeight
     }
     
+    func getEpisodes()->[PodcastEpisode]{
+        return isFromDownloadsFeed ? podcast.episodesArray.filter({$0.isDownloaded == true}) : podcast.episodesArray
+    }
+    
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? UnifiedEpisodeTableViewCell {
             
-            let episodes = isFromDownloadsFeed ? podcast.episodesArray.filter({$0.isDownloaded == true}) : podcast.episodesArray 
+            let episodes = getEpisodes()
             let episode = episodes[indexPath.row]
             let download = downloadService.activeDownloads[episode.getRemoteAudioUrl()?.absoluteString ?? ""]
             
@@ -118,8 +128,7 @@ extension PodcastEpisodesDataSource : UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let episodes = podcast.episodes ?? []
-        return isFromDownloadsFeed ? podcast.episodesArray.filter({$0.isDownloaded == true}).count : podcast.episodesArray.count
+        return getEpisodes().count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -130,7 +139,12 @@ extension PodcastEpisodesDataSource : UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        delegate?.didTapEpisodeAt(index: indexPath.row)
+        if isFromDownloadsFeed{
+            let id = getEpisodes()[indexPath.row].itemID
+            delegate?.didTapEpisodeAt(index: 0,lookupById: id)
+            return
+        }
+        delegate?.didTapEpisodeAt(index: indexPath.row, lookupById: nil)
     }
 }
 

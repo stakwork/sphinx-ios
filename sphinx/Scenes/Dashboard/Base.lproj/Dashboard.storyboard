@@ -46,13 +46,13 @@
                                         <rect key="frame" x="16" y="16" width="383" height="44"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lwz-zX-pkx">
-                                                <rect key="frame" x="16" y="11.5" width="21" height="21"/>
+                                                <rect key="frame" x="16" y="10" width="24.5" height="24.5"/>
                                                 <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="21"/>
                                                 <color key="textColor" name="PlaceholderText"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ef7-It-4Rs">
-                                                <rect key="frame" x="47" y="0.0" width="320" height="44"/>
+                                                <rect key="frame" x="50.5" y="0.0" width="316.5" height="44"/>
                                                 <color key="textColor" name="Text"/>
                                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
@@ -368,22 +368,41 @@
                                 <rect key="frame" x="0.0" y="60" width="414" height="836"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fXF-wy-MQF">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <subviews>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="mlM-0z-xmH">
+                                        <rect key="frame" x="197" y="438" width="20" height="20"/>
+                                    </activityIndicatorView>
+                                </subviews>
+                                <color key="backgroundColor" name="Body"/>
+                                <constraints>
+                                    <constraint firstItem="mlM-0z-xmH" firstAttribute="centerX" secondItem="fXF-wy-MQF" secondAttribute="centerX" id="XFD-b2-tMZ"/>
+                                    <constraint firstItem="mlM-0z-xmH" firstAttribute="centerY" secondItem="fXF-wy-MQF" secondAttribute="centerY" id="YIp-Mg-jFU"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="WTi-oO-T6C"/>
                         <color key="backgroundColor" name="Body"/>
                         <constraints>
                             <constraint firstItem="hwZ-I8-IJL" firstAttribute="trailing" secondItem="XKi-k6-l8l" secondAttribute="trailing" id="HqO-ac-ImJ"/>
                             <constraint firstAttribute="trailing" secondItem="uch-ef-QEI" secondAttribute="trailing" id="JQo-3y-eJ0"/>
+                            <constraint firstItem="fXF-wy-MQF" firstAttribute="trailing" secondItem="WTi-oO-T6C" secondAttribute="trailing" id="L9Z-tY-cHY"/>
                             <constraint firstItem="uch-ef-QEI" firstAttribute="top" secondItem="XKi-k6-l8l" secondAttribute="top" id="LEy-IU-cng"/>
                             <constraint firstAttribute="bottom" secondItem="hwZ-I8-IJL" secondAttribute="bottom" id="OeK-DB-JwB"/>
                             <constraint firstItem="hwZ-I8-IJL" firstAttribute="top" secondItem="uch-ef-QEI" secondAttribute="bottom" id="SaV-S8-dfI"/>
                             <constraint firstItem="hwZ-I8-IJL" firstAttribute="leading" secondItem="XKi-k6-l8l" secondAttribute="leading" id="ZVQ-eT-xbl"/>
+                            <constraint firstItem="fXF-wy-MQF" firstAttribute="leading" secondItem="WTi-oO-T6C" secondAttribute="leading" id="csb-eD-aST"/>
+                            <constraint firstItem="fXF-wy-MQF" firstAttribute="top" secondItem="XKi-k6-l8l" secondAttribute="top" id="suc-P6-Asp"/>
+                            <constraint firstAttribute="bottom" secondItem="fXF-wy-MQF" secondAttribute="bottom" id="tY0-cg-yuk"/>
                             <constraint firstItem="uch-ef-QEI" firstAttribute="leading" secondItem="XKi-k6-l8l" secondAttribute="leading" id="vbS-Dv-mch"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="feedContentCollectionViewContainer" destination="hwZ-I8-IJL" id="2cP-rV-d8t"/>
                         <outlet property="filterChipCollectionViewContainer" destination="uch-ef-QEI" id="9F2-yw-j0X"/>
+                        <outlet property="loadingWheel" destination="mlM-0z-xmH" id="oIn-kX-Ehj"/>
+                        <outlet property="loadingWheelContainerView" destination="fXF-wy-MQF" id="MTT-Gh-g9u"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="N05-mx-jox" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

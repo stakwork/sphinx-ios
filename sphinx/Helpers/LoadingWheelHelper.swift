@@ -10,11 +10,13 @@ import UIKit
 
 class LoadingWheelHelper {
     
-    public static func toggleLoadingWheel(loading: Bool,
-                                          loadingWheel: UIActivityIndicatorView,
-                                          loadingWheelColor: UIColor? = nil,
-                                          view: UIView? = nil,
-                                          views: [UIView] = []) {
+    public static func toggleLoadingWheel(
+        loading: Bool,
+        loadingWheel: UIActivityIndicatorView,
+        loadingWheelColor: UIColor? = nil,
+        view: UIView? = nil,
+        views: [UIView] = []
+    ) {
         
         view?.isUserInteractionEnabled = !loading
         

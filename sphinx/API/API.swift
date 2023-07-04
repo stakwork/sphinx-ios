@@ -413,7 +413,7 @@ class API {
 
     func reloadDashboard() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        appDelegate.reloadDashboard()
+        appDelegate.reloadContactsAndMessages()
     }
 
     

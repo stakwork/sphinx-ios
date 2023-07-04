@@ -21,7 +21,6 @@
 		470146232A3F93DA00A00DF8 /* NewChatViewController+AttachmentsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470146222A3F93DA00A00DF8 /* NewChatViewController+AttachmentsExtension.swift */; };
 		470146272A3F9AB500A00DF8 /* PaymentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470146262A3F9AB500A00DF8 /* PaymentsViewModel.swift */; };
 		4701462B2A3FC0A900A00DF8 /* NewChatTableDataSource+AttachmentsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4701462A2A3FC0A900A00DF8 /* NewChatTableDataSource+AttachmentsExtension.swift */; };
-		4701462D2A4095DD00A00DF8 /* NewChatViewController+MessagesFetchExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4701462C2A4095DD00A00DF8 /* NewChatViewController+MessagesFetchExtension.swift */; };
 		47018F8127CFB7CE00797E0B /* pause_animation.json in Resources */ = {isa = PBXBuildFile; fileRef = 47018F8027CFB7CD00797E0B /* pause_animation.json */; };
 		47018F9227CFEEAF00797E0B /* skip30v1.caf in Resources */ = {isa = PBXBuildFile; fileRef = 47018F9127CFEDB400797E0B /* skip30v1.caf */; };
 		47018F9327CFEEAF00797E0B /* skip30v2.caf in Resources */ = {isa = PBXBuildFile; fileRef = 47018F8E27CFEDB300797E0B /* skip30v2.caf */; };
@@ -842,7 +841,6 @@
 		470146222A3F93DA00A00DF8 /* NewChatViewController+AttachmentsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewChatViewController+AttachmentsExtension.swift"; sourceTree = "<group>"; };
 		470146262A3F9AB500A00DF8 /* PaymentsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsViewModel.swift; sourceTree = "<group>"; };
 		4701462A2A3FC0A900A00DF8 /* NewChatTableDataSource+AttachmentsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewChatTableDataSource+AttachmentsExtension.swift"; sourceTree = "<group>"; };
-		4701462C2A4095DD00A00DF8 /* NewChatViewController+MessagesFetchExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewChatViewController+MessagesFetchExtension.swift"; sourceTree = "<group>"; };
 		47018F8027CFB7CD00797E0B /* pause_animation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = pause_animation.json; sourceTree = "<group>"; };
 		47018F8E27CFEDB300797E0B /* skip30v2.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = skip30v2.caf; sourceTree = "<group>"; };
 		47018F8F27CFEDB300797E0B /* skip30v3.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = skip30v3.caf; sourceTree = "<group>"; };
@@ -3654,7 +3652,6 @@
 				472092CB2A27985800468796 /* NewChatViewController+TableViewExtension.swift */,
 				470146152A3B962E00A00DF8 /* NewChatViewController+MessageMenuDelegate.swift */,
 				470146222A3F93DA00A00DF8 /* NewChatViewController+AttachmentsExtension.swift */,
-				4701462C2A4095DD00A00DF8 /* NewChatViewController+MessagesFetchExtension.swift */,
 			);
 			path = "New Chat View Controller";
 			sourceTree = "<group>";
@@ -4859,7 +4856,6 @@
 				F373BF0326A9CEDD0093C886 /* DashboardFeedsContainerViewController.swift in Sources */,
 				47468FDC233554680072124A /* ProfileViewController.swift in Sources */,
 				F3DC6B02273C9BD000458E09 /* ContentFeedItem+CoreDataProperties.swift in Sources */,
-				4701462D2A4095DD00A00DF8 /* NewChatViewController+MessagesFetchExtension.swift in Sources */,
 				47D46A2C237B1D140005A548 /* SubscriptionFormButtonTableViewCell.swift in Sources */,
 				CED14D78293CF683004B8B25 /* ChatMentionAutocompleteDataSource.swift in Sources */,
 				47893A9C240D8783002F675B /* Int.swift in Sources */,

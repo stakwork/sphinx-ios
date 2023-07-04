@@ -106,7 +106,9 @@ extension AddressBookViewController : NewContactVCDelegate {
         }
         
         DispatchQueue.main.async {
-            self.tableDataSource.reloadContacts()
+            self.tableDataSource.reloadContacts(
+                searchTerm: self.searchTextField.text
+            )
             self.contactsTableView.reloadData()
         }
     }

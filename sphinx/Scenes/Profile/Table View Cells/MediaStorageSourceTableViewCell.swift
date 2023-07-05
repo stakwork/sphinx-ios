@@ -136,7 +136,7 @@ class MediaStorageSourceTableViewCell: UITableViewCell {
         self.mediaSourceLabel.text = "storage.management.delete.old.content".localized
         mediaSourceLabelLeading.constant = -33.0
         initialsLabel.isHidden = true
-        mediaSourceSizeLabel.text = "Never"
+        mediaSourceSizeLabel.text = UserData.sharedInstance.getMaxAge().localizedDescription
         self.layoutIfNeeded()
     }
     

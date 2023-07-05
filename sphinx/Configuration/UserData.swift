@@ -317,6 +317,28 @@ class UserData {
         }
     }
     
+    func getMaxAge() -> MessageAgePossibilities {
+        let intValue = UserDefaults.Keys.maxAge.get(defaultValue: 0)
+        let possibility = MessageAgePossibilities.allCases[intValue]
+        return possibility
+    }
+
+    
+    func setMaxAge(possibility: MessageAgePossibilities) {
+        if let intValue = MessageAgePossibilities.allCases.firstIndex(where: { $0 == possibility }) {
+            UserDefaults.Keys.maxAge.set(intValue)
+        }
+    }
+    
+    func getCustomMaxAgeValueInDays()-> Int{
+        let result = UserDefaults.Keys.customMaxAge.get(defaultValue: 100)
+        return result
+    }
+    
+    func setCustomMaxAgeValueInDays(days: Int) {
+        UserDefaults.Keys.customMaxAge.set(days)
+    }
+    
     func getMaxMemoryGB() -> Int {
         let result = UserDefaults.Keys.maxMemory.get(defaultValue: UserData.kMaximumMemoryFootprintGB)
         return result

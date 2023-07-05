@@ -4,9 +4,15 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="Roboto-Regular.ttf">
+            <string>Roboto-Regular</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -24,17 +30,57 @@
                             <constraint firstAttribute="height" constant="20" id="bxK-G8-EIx"/>
                         </constraints>
                     </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Never" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bEJ-lC-4UX">
+                        <rect key="frame" x="53" y="0.0" width="251" height="44"/>
+                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
+                        <color key="textColor" name="TextMessages"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Days" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oC3-XZ-fnj">
+                        <rect key="frame" x="171" y="12" width="133" height="20"/>
+                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
+                        <color key="textColor" name="TextMessages"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <textField hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UuU-NW-hnq">
+                        <rect key="frame" x="53" y="8" width="114" height="28"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="114" id="12m-cP-gRX"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <textInputTraits key="textInputTraits"/>
+                    </textField>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="bEJ-lC-4UX" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="3by-gZ-dPw"/>
                     <constraint firstItem="tPm-ac-4TF" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Aee-Pw-JwE"/>
+                    <constraint firstItem="oC3-XZ-fnj" firstAttribute="leading" secondItem="UuU-NW-hnq" secondAttribute="trailing" constant="4" id="K4N-WL-pmR"/>
                     <constraint firstItem="tPm-ac-4TF" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="Omn-LI-tdh"/>
+                    <constraint firstAttribute="trailing" secondItem="bEJ-lC-4UX" secondAttribute="trailing" constant="16" id="PaK-4w-gzI"/>
+                    <constraint firstItem="bEJ-lC-4UX" firstAttribute="leading" secondItem="tPm-ac-4TF" secondAttribute="trailing" constant="17" id="Qvf-qC-eHJ"/>
+                    <constraint firstAttribute="trailing" secondItem="oC3-XZ-fnj" secondAttribute="trailing" constant="16" id="UTb-di-rcV"/>
+                    <constraint firstItem="oC3-XZ-fnj" firstAttribute="centerY" secondItem="bEJ-lC-4UX" secondAttribute="centerY" id="XJp-qO-Vgp"/>
+                    <constraint firstItem="UuU-NW-hnq" firstAttribute="centerY" secondItem="bEJ-lC-4UX" secondAttribute="centerY" id="fpa-xS-BrG"/>
+                    <constraint firstAttribute="bottom" secondItem="bEJ-lC-4UX" secondAttribute="bottom" id="hYc-IH-kUh"/>
+                    <constraint firstItem="bEJ-lC-4UX" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="pTJ-Lg-c4Y"/>
+                    <constraint firstItem="UuU-NW-hnq" firstAttribute="leading" secondItem="bEJ-lC-4UX" secondAttribute="leading" id="qXX-lh-wtz"/>
+                    <constraint firstItem="UuU-NW-hnq" firstAttribute="top" secondItem="bEJ-lC-4UX" secondAttribute="top" constant="8" id="sbk-q5-O2C"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
-            <point key="canvasLocation" x="-24" y="-12"/>
+            <connections>
+                <outlet property="customAgeTextField" destination="UuU-NW-hnq" id="Ca1-ni-djV"/>
+                <outlet property="daysLabel" destination="oC3-XZ-fnj" id="hIj-1y-bbp"/>
+                <outlet property="durationLabel" destination="bEJ-lC-4UX" id="0ji-uk-Oaa"/>
+                <outlet property="selectedDeselectedImageView" destination="tPm-ac-4TF" id="Ypy-fG-7IP"/>
+            </connections>
+            <point key="canvasLocation" x="25.954198473282442" y="-2.1126760563380285"/>
         </tableViewCell>
     </objects>
     <resources>
         <image name="unselected-radio-button" width="20" height="20"/>
+        <namedColor name="TextMessages">
+            <color red="0.11764705882352941" green="0.12156862745098039" blue="0.14509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>

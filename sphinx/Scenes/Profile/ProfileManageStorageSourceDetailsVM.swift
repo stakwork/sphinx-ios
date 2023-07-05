@@ -23,6 +23,7 @@ class ProfileManageStorageSourceDetailsVM : NSObject{
         }
     }
     
+    var selectedRow : Int = 0
     var podsDict : [PodcastFeed:[StorageManagerItem]]? = nil
     var podsArray = [PodcastFeed](){
         didSet{
@@ -97,7 +98,7 @@ extension ProfileManageStorageSourceDetailsVM : UITableViewDelegate,UITableViewD
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if(vc.isFromDeleteOldContent == true){
-            return messageAgePossibilities.allCases.count
+            return MessageAgePossibilities.allCases.count
         }
         
         if source == .chats,
@@ -118,6 +119,10 @@ extension ProfileManageStorageSourceDetailsVM : UITableViewDelegate,UITableViewD
                 withIdentifier: MaxContentAgeTableViewCell.reuseID,
                 for: indexPath
             ) as! MaxContentAgeTableViewCell
+            optionCell.backgroundColor = self.vc.view.backgroundColor
+            optionCell.selectionStyle = .none
+            optionCell.isSelectedRow = selectedRow == indexPath.row
+            optionCell.configureWithDuration(age: MessageAgePossibilities.allCases[indexPath.row])
             return optionCell
         }
         
@@ -139,7 +144,19 @@ extension ProfileManageStorageSourceDetailsVM : UITableViewDelegate,UITableViewD
         return cell
     }
     
+    func handleMaxAgeSelection(index:Int){
+        selectedRow = index
+        UserData.sharedInstance.setMaxAge(possibility: MessageAgePossibilities.allCases[index])
+        self.tableView.reloadData()
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if(vc.isFromDeleteOldContent){
+            handleMaxAgeSelection(index: indexPath.row)
+            return
+        }
+        
         switch(source){
         case .chats:
             let chat = chatsArray[indexPath.row]

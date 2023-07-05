@@ -14,14 +14,14 @@ public enum PMSSDVCPresentationContext{
     case downloadedPodcastList
 }
 
-public enum messageAgePossibilities{
+public enum MessageAgePossibilities{
     case never
     case thirtyDays
     case sixMonths
     case oneYear
     case customDays
     
-    static var allCases: [messageAgePossibilities]{
+    static var allCases: [MessageAgePossibilities]{
         return [
             .never,
             .thirtyDays,
@@ -29,6 +29,36 @@ public enum messageAgePossibilities{
             .oneYear,
             .customDays
         ]
+    }
+    
+    var localizedDescription: String {
+        switch self {
+        case .never:
+            return "storage.management.never".localized
+        case .oneYear:
+            return "storage.management.one.year.old".localized
+        case .thirtyDays:
+            return "storage.management.thirty.days.old".localized
+        case .sixMonths:
+            return "storage.management.six.months.old".localized
+        case .customDays:
+            return ""
+        }
+    }
+    
+    var valueInDays : Int{
+        switch self {
+        case .never:
+            return 365 * 1000
+        case .oneYear:
+            return 365
+        case .thirtyDays:
+            return 30
+        case .sixMonths:
+            return 180
+        case .customDays:
+            return 20
+        }
     }
 }
 
@@ -85,6 +115,10 @@ class ProfileManageStorageSourceDetailsVC : UIViewController{
         isFirstLoad = false
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        StorageManager.sharedManager.deleteAllOldChatMedia(completion: {})
+    }
+    
     func setupView(){
         switch(source){
         case .chats:
@@ -98,6 +132,9 @@ class ProfileManageStorageSourceDetailsVC : UIViewController{
             headerLabel.text = "storage.management.delete.old.content".localized
             mediaSourceTotalSizeLabel.isHidden = true
             deleteButton.isHidden = true
+            if let selectedIndex = MessageAgePossibilities.allCases.firstIndex(where: {$0 == UserData.sharedInstance.getMaxAge()}){
+                vm.selectedRow = selectedIndex
+            }
         }
         mediaSourceTotalSizeLabel.text = formatBytes(Int(totalSize*1e6))
         hideDeletionWarningAlert()

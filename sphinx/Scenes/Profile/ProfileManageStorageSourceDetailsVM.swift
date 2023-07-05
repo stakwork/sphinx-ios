@@ -56,6 +56,7 @@ class ProfileManageStorageSourceDetailsVM : NSObject{
         tableView.dataSource = self
         
         tableView.register(UINib(nibName: "MediaStorageSourceTableViewCell", bundle: nil), forCellReuseIdentifier: MediaStorageSourceTableViewCell.reuseID)
+        tableView.register(UINib(nibName: "MaxContentAgeTableViewCell", bundle: nil), forCellReuseIdentifier: MaxContentAgeTableViewCell.reuseID)
     }
     
     func getDataSource(){
@@ -95,6 +96,10 @@ class ProfileManageStorageSourceDetailsVM : NSObject{
 extension ProfileManageStorageSourceDetailsVM : UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
+        if(vc.isFromDeleteOldContent == true){
+            return messageAgePossibilities.allCases.count
+        }
+        
         if source == .chats,
            let chatData = chatDict{
             return chatsArray.count
@@ -108,10 +113,19 @@ extension ProfileManageStorageSourceDetailsVM : UITableViewDelegate,UITableViewD
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if(vc.isFromDeleteOldContent){
+            let optionCell = tableView.dequeueReusableCell(
+                withIdentifier: MaxContentAgeTableViewCell.reuseID,
+                for: indexPath
+            ) as! MaxContentAgeTableViewCell
+            return optionCell
+        }
+        
         let cell = tableView.dequeueReusableCell(
             withIdentifier: MediaStorageSourceTableViewCell.reuseID,
             for: indexPath
         ) as! MediaStorageSourceTableViewCell
+        
         if source == .chats{
             let chosenChat = chatsArray[indexPath.row]
             let items = chatDict?[chosenChat] ?? []

@@ -247,9 +247,14 @@ class ProfileManageStorageViewController : UIViewController{
         }
         if let valid_items = items,
         let size = vm.sourceStats[source]{
-            let vc = ProfileManageStorageSourceDetailsVC.instantiate(items: valid_items, source: source,sourceTotalSize: size)
+            let vc = ProfileManageStorageSourceDetailsVC.instantiate(items: valid_items, source: source,sourceTotalSize: size, isFromDeleteOldContent: false)
             self.navigationController?.pushViewController(vc, animated: true)
         }
+    }
+    
+    func showDeleteOldContent(){
+        let vc = ProfileManageStorageSourceDetailsVC.instantiate(items: [], source: .chats,sourceTotalSize: 69420, isFromDeleteOldContent: true)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     

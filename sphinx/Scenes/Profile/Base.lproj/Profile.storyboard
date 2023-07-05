@@ -1695,6 +1695,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="deleteButton" destination="C8k-zY-74P" id="7qM-5p-2bX"/>
                         <outlet property="headerHeight" destination="Z42-iB-moY" id="7jn-v4-444"/>
                         <outlet property="headerLabel" destination="d8X-1o-dBj" id="tjG-zK-axR"/>
                         <outlet property="headerView" destination="djr-xM-hzO" id="Adx-Sb-EmN"/>

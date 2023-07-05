@@ -85,6 +85,9 @@ extension ProfileManageStorageViewModel : UITableViewDelegate,UITableViewDataSou
             vc.showSourceDetailsVC(source: sourceType)
             tableView.deselectRow(at: indexPath, animated: true)
         }
+        else if(indexPath.row >= mediaTypes.count + sourceTypes.count){
+            vc.showDeleteOldContent()
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

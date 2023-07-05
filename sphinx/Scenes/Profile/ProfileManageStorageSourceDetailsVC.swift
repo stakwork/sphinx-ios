@@ -14,6 +14,24 @@ public enum PMSSDVCPresentationContext{
     case downloadedPodcastList
 }
 
+public enum messageAgePossibilities{
+    case never
+    case thirtyDays
+    case sixMonths
+    case oneYear
+    case customDays
+    
+    static var allCases: [messageAgePossibilities]{
+        return [
+            .never,
+            .thirtyDays,
+            .sixMonths,
+            .oneYear,
+            .customDays
+        ]
+    }
+}
+
 class ProfileManageStorageSourceDetailsVC : UIViewController{
     
     
@@ -24,9 +42,12 @@ class ProfileManageStorageSourceDetailsVC : UIViewController{
     @IBOutlet weak var mediaSourceDetailsTableView: UITableView!
     @IBOutlet weak var mediaSourceTotalSizeLabel: UILabel!
     @IBOutlet weak var mediaDeletionConfirmationView: MediaDeletionConfirmationView!
+    @IBOutlet weak var deleteButton: UIButton!
+    
     var overlayView : UIView? = nil
     
     var source : StorageManagerMediaSource = .chats
+    var isFromDeleteOldContent : Bool = false
     var totalSize : Double = 0.0
     var isFirstLoad : Bool = true
     var presentationContext : PMSSDVCPresentationContext = .memoryManagement
@@ -37,10 +58,13 @@ class ProfileManageStorageSourceDetailsVC : UIViewController{
     
     static func instantiate(items:[StorageManagerItem],
                             source:StorageManagerMediaSource,
-                            sourceTotalSize:Double)->ProfileManageStorageSourceDetailsVC{
+                            sourceTotalSize:Double,
+                            isFromDeleteOldContent:Bool
+    )->ProfileManageStorageSourceDetailsVC{
         let viewController = StoryboardScene.Profile.profileManageStorageSourceDetailsVC.instantiate()
         viewController.source = source
         viewController.totalSize = sourceTotalSize
+        viewController.isFromDeleteOldContent = isFromDeleteOldContent
         return viewController
     }
     
@@ -69,6 +93,11 @@ class ProfileManageStorageSourceDetailsVC : UIViewController{
         case .podcasts:
             headerLabel.text = "Podcasts"
             break
+        }
+        if(isFromDeleteOldContent == true){
+            headerLabel.text = "storage.management.delete.old.content".localized
+            mediaSourceTotalSizeLabel.isHidden = true
+            deleteButton.isHidden = true
         }
         mediaSourceTotalSizeLabel.text = formatBytes(Int(totalSize*1e6))
         hideDeletionWarningAlert()

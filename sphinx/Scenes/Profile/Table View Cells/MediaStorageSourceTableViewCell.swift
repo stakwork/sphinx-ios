@@ -20,11 +20,10 @@ class MediaStorageSourceTableViewCell: UITableViewCell {
     @IBOutlet weak var squareImageView: UIImageView!
     @IBOutlet weak var disclosureImageView: UIImageView!
     @IBOutlet weak var deleteButton: UIButton!
-    
     @IBOutlet weak var fileTypeLabel: UILabel!
     @IBOutlet weak var fileTypeView: UIView!
-    
     @IBOutlet weak var blueCheckmarkImageView: UIImageView!
+    @IBOutlet weak var mediaSourceLabelLeading: NSLayoutConstraint!
     
     
     var index : Int? = nil
@@ -131,6 +130,14 @@ class MediaStorageSourceTableViewCell: UITableViewCell {
         squareImageView.makeCircular()
         let mediaSizeText = formatBytes(Int(StorageManager.sharedManager.getItemGroupTotalSize(items: items)*1e6))
         mediaSourceSizeLabel.text = (mediaSizeText == "0 MB") ? "<1MB" : mediaSizeText
+    }
+    
+    func configureAsDeletionByAge(){
+        self.mediaSourceLabel.text = "storage.management.delete.old.content".localized
+        mediaSourceLabelLeading.constant = -33.0
+        initialsLabel.isHidden = true
+        mediaSourceSizeLabel.text = "Never"
+        self.layoutIfNeeded()
     }
     
     

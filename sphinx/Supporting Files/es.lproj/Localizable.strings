@@ -624,6 +624,7 @@
 "storage.management.files" = "todos los archivos";
 "are.you.sure" = "Are you sure?";
 "chat.media" = "medios de chat";
+"storage.management.delete.old.content" = "Eliminar contenido viejo";
 
 //MACRO
 "send.giphy" = "Enviar Giphy";

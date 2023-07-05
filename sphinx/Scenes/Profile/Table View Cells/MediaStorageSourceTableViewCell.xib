@@ -139,6 +139,7 @@
                 <outlet property="fileTypeView" destination="ECJ-4K-u72" id="b6o-0w-out"/>
                 <outlet property="initialsLabel" destination="V1O-o7-wgg" id="E3s-Bc-YUI"/>
                 <outlet property="mediaSourceLabel" destination="onY-YZ-XsQ" id="mYs-Uq-3AI"/>
+                <outlet property="mediaSourceLabelLeading" destination="4jp-pF-PQc" id="Ku6-K4-Gbv"/>
                 <outlet property="mediaSourceSizeLabel" destination="Pue-7T-xlg" id="DfW-hk-yZG"/>
                 <outlet property="squareImageView" destination="Mep-cZ-dPt" id="e9k-d5-Xd7"/>
             </connections>

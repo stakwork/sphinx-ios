@@ -628,6 +628,7 @@
 "chat.media" = "chat media";
 "storage.management.deletion.complete.title" = "%@ successfully deleted";
 "storage.management.deletion.complete.subtitle" = "You have freed up %@ storage space";
+"storage.management.delete.old.content" = "Delete old content";
 
 //MACRO
 "send.giphy" = "Send Giphy";

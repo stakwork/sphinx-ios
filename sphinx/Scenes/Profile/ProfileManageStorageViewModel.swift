@@ -64,8 +64,14 @@ extension ProfileManageStorageViewModel : UITableViewDelegate,UITableViewDataSou
                 withIdentifier: MediaStorageSourceTableViewCell.reuseID,
                 for: indexPath
             ) as! MediaStorageSourceTableViewCell
-            cell.configure(forSource: sourceTypes[indexPath.row])
-            cell.mediaSourceSizeLabel.text = formatBytes(Int(loadMediaSize(forSource: sourceTypes[indexPath.row]) ?? 0))
+            if(indexPath.row < sourceTypes.count){
+                cell.configure(forSource: sourceTypes[indexPath.row])
+                cell.mediaSourceSizeLabel.text = formatBytes(Int(loadMediaSize(forSource: sourceTypes[indexPath.row]) ?? 0))
+            }
+            else{
+                cell.configureAsDeletionByAge()
+            }
+            
             return cell
         }
         
@@ -84,7 +90,7 @@ extension ProfileManageStorageViewModel : UITableViewDelegate,UITableViewDataSou
             return mediaTypes.count
         }
         else{
-            return sourceTypes.count
+            return sourceTypes.count + 1
         }
     }
     

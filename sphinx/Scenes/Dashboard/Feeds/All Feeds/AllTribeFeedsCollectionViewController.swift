@@ -741,12 +741,14 @@ extension AllTribeFeedsCollectionViewController {
             onRecommendationSelected?(recommendedFeeds, recommendation.id)
         }
         else if let episode = dataSourceItem.episodeEntity{
-            if let feed = episode.0.feed{
-                onCellSelected?(feed.feedID)
-            }
             if indexPath.section ==  2 {
                 FeedsManager.sharedInstance.isPresentingDownloadedContentWithID = episode.0.itemID
             }
+            
+            if let feed = episode.0.feed{
+                onCellSelected?(feed.feedID)
+            }
+            
         }
     }
 }

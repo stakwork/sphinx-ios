@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol MaxContentAgeTableViewCellDelegate{
+    func didChangeCustomLength(value:Int)
+}
+
 class MaxContentAgeTableViewCell: UITableViewCell {
 
     @IBOutlet weak var selectedDeselectedImageView: UIImageView!
@@ -15,6 +19,7 @@ class MaxContentAgeTableViewCell: UITableViewCell {
     @IBOutlet weak var customAgeTextField: UITextField!
     @IBOutlet weak var daysLabel: UILabel!
     
+    var delegate : MaxContentAgeTableViewCellDelegate? = nil
     static let reuseID = "MaxContentAgeTableViewCell"
     var isSelectedRow: Bool = false{
         didSet{
@@ -55,5 +60,18 @@ class MaxContentAgeTableViewCell: UITableViewCell {
             break
         }
         daysLabel.isHidden = customAgeTextField.isHidden
+        customAgeTextField.delegate = self
+    }
+}
+
+extension MaxContentAgeTableViewCell : UITextFieldDelegate{
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if let text = textField.text,
+           let intValue = Int(text){
+            delegate?.didChangeCustomLength(value: intValue)
+        }
+//        else{
+//            textField.text = textField.text?.remove(at: textField.text?.count)
+//        }
     }
 }

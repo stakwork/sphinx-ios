@@ -626,10 +626,10 @@
 "chat.media" = "medios de chat";
 "storage.management.delete.old.content" = "Eliminar contenido viejo";
 "storage.management.never" = "Nunca";
-"storage.management.thirty.days.old" = "Con 30 meses de antigüedad";
+"storage.management.thirty.days.old" = "Con 30 dias de antigüedad";
 "storage.management.thirty.days.old" = "Con 6 meses de antigüedad";
 "storage.management.thirty.days.old" = "Con 1 año de antigüedad";
-
+"storage.management.days" = "dias";
 
 //MACRO
 "send.giphy" = "Enviar Giphy";

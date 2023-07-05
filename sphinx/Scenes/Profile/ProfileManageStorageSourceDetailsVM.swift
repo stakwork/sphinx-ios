@@ -119,6 +119,7 @@ extension ProfileManageStorageSourceDetailsVM : UITableViewDelegate,UITableViewD
                 withIdentifier: MaxContentAgeTableViewCell.reuseID,
                 for: indexPath
             ) as! MaxContentAgeTableViewCell
+            optionCell.delegate = self.vc
             optionCell.backgroundColor = self.vc.view.backgroundColor
             optionCell.selectionStyle = .none
             optionCell.isSelectedRow = selectedRow == indexPath.row
@@ -178,6 +179,10 @@ extension ProfileManageStorageSourceDetailsVM : UITableViewDelegate,UITableViewD
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         // Specify the desired height for your cells
+        if(vc.isFromDeleteOldContent){
+            return 80.0
+        }
+        
         return 64.0 // Adjust this value according to your requirements
     }
 }

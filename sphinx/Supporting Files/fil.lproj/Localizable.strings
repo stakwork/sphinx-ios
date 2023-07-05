@@ -608,6 +608,7 @@
 "storage.management.thirty.days.old" = "30 days old";
 "storage.management.thirty.days.old" = "6 months old";
 "storage.management.thirty.days.old" = "1 year old";
+"storage.management.days" = "days";
 
 //MACRO
 "send.giphy" = "Send Giphy";

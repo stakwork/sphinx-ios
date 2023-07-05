@@ -42,7 +42,7 @@ public enum MessageAgePossibilities{
         case .sixMonths:
             return "storage.management.six.months.old".localized
         case .customDays:
-            return ""
+            return String(UserData.sharedInstance.getCustomMaxAgeValueInDays()) + " " + "storage.management.days".localized
         }
     }
     
@@ -57,7 +57,7 @@ public enum MessageAgePossibilities{
         case .sixMonths:
             return 180
         case .customDays:
-            return 20
+            return UserData.sharedInstance.getCustomMaxAgeValueInDays()
         }
     }
 }
@@ -81,6 +81,7 @@ class ProfileManageStorageSourceDetailsVC : UIViewController{
     var totalSize : Double = 0.0
     var isFirstLoad : Bool = true
     var presentationContext : PMSSDVCPresentationContext = .memoryManagement
+    var customLengthValue : Int? = nil
     
     lazy var vm : ProfileManageStorageSourceDetailsVM = {
         return ProfileManageStorageSourceDetailsVM(vc: self, tableView: mediaSourceDetailsTableView, source: self.source)
@@ -116,6 +117,12 @@ class ProfileManageStorageSourceDetailsVC : UIViewController{
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+            if let newValue = self.customLengthValue{
+                UserData.sharedInstance.setCustomMaxAgeValueInDays(days: newValue)
+            }
+        })
+        
         StorageManager.sharedManager.deleteAllOldChatMedia(completion: {})
     }
     
@@ -276,4 +283,11 @@ extension ProfileManageStorageSourceDetailsVC : MediaDeletionConfirmationViewDel
     }
     
     
+}
+
+
+extension ProfileManageStorageSourceDetailsVC : MaxContentAgeTableViewCellDelegate{
+    func didChangeCustomLength(value: Int) {
+        self.customLengthValue = value
+    }
 }

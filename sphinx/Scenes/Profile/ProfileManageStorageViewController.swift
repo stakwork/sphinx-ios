@@ -24,7 +24,6 @@ class ProfileManageStorageViewController : UIViewController{
     @IBOutlet weak var mediaTypeTableView: UITableView!
     @IBOutlet weak var loadingLabel: UILabel!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
-    @IBOutlet weak var mediaSourceTableView: UITableView!
     
     
     @IBOutlet weak var editingModeMaximumLabel: UILabel!
@@ -69,7 +68,6 @@ class ProfileManageStorageViewController : UIViewController{
                     self.cancelButton.alpha = 1.0
                     self.saveButton.alpha = 1.0
                     self.mediaTypeTableView.isHidden = true
-                    self.mediaSourceTableView.isHidden = true
                     self.usedStorageLabel.isHidden = true
                     self.freeStorageLabel.isHidden = true
                 },completion: {_ in
@@ -87,7 +85,6 @@ class ProfileManageStorageViewController : UIViewController{
                     self.titleLabel.text = "Manage Storage"
                     
                     self.mediaTypeTableView.isHidden = false
-                    self.mediaSourceTableView.isHidden = false
                     self.changeStorageButton.alpha = 1.0
                     self.changeStorageLabel.alpha = 1.0
                     self.maxSliderView.alpha = 0.0
@@ -164,8 +161,7 @@ class ProfileManageStorageViewController : UIViewController{
     lazy var vm : ProfileManageStorageViewModel = {
         return ProfileManageStorageViewModel(
             vc: self,
-            mediaTypeTableView: mediaTypeTableView,
-            mediaSourceTableView: mediaSourceTableView
+            mediaTypeTableView: mediaTypeTableView
         )
     }()
     

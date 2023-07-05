@@ -657,7 +657,7 @@
                                                 <rect key="frame" x="0.0" y="1017" width="414" height="160"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sync more devices" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aS3-Fj-p1j">
-                                                        <rect key="frame" x="135.5" y="30" width="143.5" height="20"/>
+                                                        <rect key="frame" x="135.5" y="30" width="143" height="20"/>
                                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
                                                         <color key="textColor" name="Text"/>
                                                         <nil key="highlightedColor"/>
@@ -873,7 +873,7 @@
                                                 <rect key="frame" x="0.0" y="410" width="414" height="80"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Change App PIN" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2YG-L7-D9J">
-                                                        <rect key="frame" x="163.5" y="33" width="87.5" height="14"/>
+                                                        <rect key="frame" x="163.5" y="33" width="87" height="14"/>
                                                         <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="12"/>
                                                         <color key="textColor" name="PrimaryBlue"/>
                                                         <nil key="highlightedColor"/>
@@ -1001,7 +1001,7 @@
                                         </connections>
                                     </button>
                                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eZu-9D-OrY">
-                                        <rect key="frame" x="66.5" y="160" width="14.5" height="13"/>
+                                        <rect key="frame" x="66.5" y="160" width="14" height="13"/>
                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="11"/>
                                         <color key="textColor" name="SecondaryText"/>
                                         <nil key="highlightedColor"/>
@@ -1486,17 +1486,10 @@
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="tn4-X7-Dcd">
-                                <rect key="frame" x="0.0" y="293.5" width="414" height="264"/>
+                                <rect key="frame" x="0.0" y="293.5" width="414" height="392"/>
                                 <color key="backgroundColor" name="Body"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="264" id="3Lg-KA-ynh"/>
-                                </constraints>
-                            </tableView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="m9b-2o-0MK">
-                                <rect key="frame" x="0.0" y="557.5" width="414" height="128"/>
-                                <color key="backgroundColor" name="Body"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="128" id="doI-Yy-OAe"/>
+                                    <constraint firstAttribute="height" constant="392" id="3Lg-KA-ynh"/>
                                 </constraints>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AJI-on-VIe" customClass="MediaDeletionConfirmationView" customModule="sphinx" customModuleProvider="target">
@@ -1518,7 +1511,6 @@
                             <constraint firstItem="tn4-X7-Dcd" firstAttribute="top" secondItem="h59-t6-zfg" secondAttribute="bottom" id="3Ut-gE-OD2"/>
                             <constraint firstItem="MBC-sr-yDr" firstAttribute="leading" secondItem="R4S-en-fKP" secondAttribute="leading" constant="15" id="4gV-OB-cq9"/>
                             <constraint firstItem="Ngf-yd-OIl" firstAttribute="leading" secondItem="n7u-9a-5PX" secondAttribute="leading" id="4t8-tf-cmb"/>
-                            <constraint firstItem="m9b-2o-0MK" firstAttribute="leading" secondItem="1Ap-Ee-cOT" secondAttribute="leading" id="4yu-ca-pzo"/>
                             <constraint firstItem="7C5-MF-uCe" firstAttribute="top" secondItem="bTv-6h-5tO" secondAttribute="top" id="5sG-Zd-jwe"/>
                             <constraint firstItem="Na3-Le-Hwn" firstAttribute="centerY" secondItem="ojg-wh-9EL" secondAttribute="centerY" id="8C0-hL-NGp"/>
                             <constraint firstItem="n7u-9a-5PX" firstAttribute="leading" secondItem="4T3-f8-3JX" secondAttribute="leading" id="8wY-uY-sld"/>
@@ -1529,13 +1521,11 @@
                             <constraint firstItem="DzR-Mi-Rn7" firstAttribute="centerY" secondItem="aZn-Kj-YV3" secondAttribute="centerY" id="G9r-PS-Hjh"/>
                             <constraint firstItem="Ngf-yd-OIl" firstAttribute="trailing" secondItem="n7u-9a-5PX" secondAttribute="trailing" id="Gve-mY-5rW"/>
                             <constraint firstItem="aZn-Kj-YV3" firstAttribute="top" secondItem="Fvo-5a-xTT" secondAttribute="bottom" constant="2" id="OAZ-yi-8km"/>
-                            <constraint firstItem="m9b-2o-0MK" firstAttribute="top" secondItem="tn4-X7-Dcd" secondAttribute="bottom" id="QCX-fV-3db"/>
                             <constraint firstItem="h59-t6-zfg" firstAttribute="top" secondItem="MBC-sr-yDr" secondAttribute="bottom" constant="20" id="QhP-dQ-dvm"/>
                             <constraint firstItem="tn4-X7-Dcd" firstAttribute="leading" secondItem="1Ap-Ee-cOT" secondAttribute="leading" id="Sn5-tI-Cew"/>
                             <constraint firstItem="Fvo-5a-xTT" firstAttribute="leading" secondItem="1Ap-Ee-cOT" secondAttribute="leading" id="TOb-Yo-dQI"/>
                             <constraint firstItem="7C5-MF-uCe" firstAttribute="leading" secondItem="GVU-Ph-hS4" secondAttribute="trailing" constant="8" id="UgK-VD-VNV"/>
                             <constraint firstItem="4T3-f8-3JX" firstAttribute="top" secondItem="ojg-wh-9EL" secondAttribute="bottom" constant="40" id="UiE-5G-YR2"/>
-                            <constraint firstAttribute="trailing" secondItem="m9b-2o-0MK" secondAttribute="trailing" id="W2Q-Gg-GLy"/>
                             <constraint firstItem="InT-v9-FcK" firstAttribute="centerY" secondItem="myU-eK-pqV" secondAttribute="centerY" id="WS7-cl-Mjg"/>
                             <constraint firstItem="R4S-en-fKP" firstAttribute="trailing" secondItem="fkk-rM-43k" secondAttribute="trailing" id="Wxx-UT-CbO"/>
                             <constraint firstItem="bTv-6h-5tO" firstAttribute="top" secondItem="MBC-sr-yDr" secondAttribute="bottom" constant="32" id="X8g-W5-Uoa"/>
@@ -1575,7 +1565,6 @@
                         <outlet property="loadingLabel" destination="7C5-MF-uCe" id="6ml-cv-gxd"/>
                         <outlet property="maxSliderView" destination="Fvo-5a-xTT" id="Pw9-YR-TRh"/>
                         <outlet property="mediaDeletionConfirmationView" destination="AJI-on-VIe" id="LKB-A2-93H"/>
-                        <outlet property="mediaSourceTableView" destination="m9b-2o-0MK" id="EOt-wP-pnG"/>
                         <outlet property="mediaTypeTableView" destination="tn4-X7-Dcd" id="Ko3-aR-13E"/>
                         <outlet property="saveButton" destination="aZn-Kj-YV3" id="Uzk-Oy-chb"/>
                         <outlet property="sliderVerticalSpacing" destination="ask-JB-c7C" id="95t-fd-6rF"/>

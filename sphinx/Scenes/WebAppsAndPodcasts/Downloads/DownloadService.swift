@@ -199,6 +199,12 @@ extension DownloadService : URLSessionDownloadDelegate {
         let newProgress = Int(Float(totalBytesWritten) / Float(totalBytesExpectedToWrite) * 100)
         
         if (newProgress >= 100) { //detect transition from downloading to download complete
+            FeedsManager.sharedInstance.fetchContentFeedItemFromPodcastEpisode(episode: download.episode, completion: { matchedItem in
+                if let matchedItem = matchedItem{
+                    matchedItem.downloaded_at = Date()
+                    CoreDataManager.sharedManager.saveContext()
+                }
+            })
             StorageManager.sharedManager.processGarbageCleanup()
         }
         

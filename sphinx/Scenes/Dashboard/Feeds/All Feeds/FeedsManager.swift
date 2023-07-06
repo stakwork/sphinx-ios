@@ -493,6 +493,24 @@ class FeedsManager : NSObject {
         return nil
     }
     
+    func fetchContentFeedItemFromPodcastEpisode(episode:PodcastEpisode,completion: @escaping (ContentFeedItem?)->()){
+        if let feedID = episode.feed?.feedID,
+           let feedURL = episode.feed?.feedURLPath{
+            FeedsManager.sharedInstance.getContentFeedFor(feedId: feedID, feedUrl: feedURL, chat: nil, context: CoreDataManager.sharedManager.persistentContainer.viewContext, completion: {matchingFeed in
+                if let feed = matchingFeed,
+                   let matchedItem = feed.items?.first(where: {$0.itemID == episode.itemID}){
+                    completion(matchedItem)
+                }
+                else{
+                    completion(nil)
+                }
+            })
+        }
+        else{
+            completion(nil)
+        }
+    }
+    
     //Navigate methods
     func goToContentFeed(vc: UIViewController) -> Bool {
         if let shareContentQuery = UserDefaults.Keys.shareContentQuery.get(defaultValue: ""), shareContentQuery != "" {

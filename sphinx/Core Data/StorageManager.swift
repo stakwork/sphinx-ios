@@ -553,8 +553,13 @@ class StorageManager {
                 //2. Extract the size value in MB
                 for item in downloadedItems{
                     if let size = item.getFileSizeMB(){
-                        let newItem = StorageManagerItem(source: .podcasts, type: .audio, sizeMB: size, label: "\(item.feed?.title ?? "Unknown Feed")- \(item.title ?? "Unknown Episode Title")",date: item.datePublished ?? (Date()),sourceFilePath: item.getLocalFileName(),uid: item.itemID)
+                        let newItem = StorageManagerItem(source: .podcasts, type: .audio, sizeMB: size, label: "\(item.feed?.title ?? "Unknown Feed")- \(item.title ?? "Unknown Episode Title")",date: Date(),sourceFilePath: item.getLocalFileName(),uid: item.itemID)
                         storageItems.append(newItem)
+                        FeedsManager.sharedInstance.fetchContentFeedItemFromPodcastEpisode(episode: item, completion: { matchedItem in
+                            if let matchedItem = matchedItem{
+                                newItem.date = matchedItem.downloaded_at ?? item.datePublished ?? (Date())
+                            }
+                        })
                     }
                 }
             }

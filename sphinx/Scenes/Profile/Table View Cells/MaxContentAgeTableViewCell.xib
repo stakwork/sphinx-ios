@@ -6,6 +6,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -42,33 +43,45 @@
                         <color key="textColor" name="TextMessages"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <textField hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UuU-NW-hnq">
+                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KfZ-NX-tjM">
                         <rect key="frame" x="53" y="16" width="114" height="48"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="100" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UuU-NW-hnq">
+                                <rect key="frame" x="16" y="0.0" width="90" height="48"/>
+                                <color key="textColor" name="TextMessages"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad" textContentType="one-time-code"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="114" id="12m-cP-gRX"/>
+                            <constraint firstItem="UuU-NW-hnq" firstAttribute="top" secondItem="KfZ-NX-tjM" secondAttribute="top" id="748-hx-4V0"/>
+                            <constraint firstAttribute="width" constant="114" id="AhG-3B-Lkb"/>
+                            <constraint firstAttribute="bottom" secondItem="UuU-NW-hnq" secondAttribute="bottom" id="Iwi-3W-e3f"/>
+                            <constraint firstItem="UuU-NW-hnq" firstAttribute="leading" secondItem="KfZ-NX-tjM" secondAttribute="leading" constant="16" id="RHb-HX-AEW"/>
+                            <constraint firstAttribute="trailing" secondItem="UuU-NW-hnq" secondAttribute="trailing" constant="8" id="n7u-Xt-reS"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <textInputTraits key="textInputTraits" textContentType="one-time-code"/>
-                    </textField>
+                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstItem="bEJ-lC-4UX" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="3by-gZ-dPw"/>
                     <constraint firstItem="tPm-ac-4TF" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Aee-Pw-JwE"/>
-                    <constraint firstItem="oC3-XZ-fnj" firstAttribute="leading" secondItem="UuU-NW-hnq" secondAttribute="trailing" constant="4" id="K4N-WL-pmR"/>
                     <constraint firstItem="tPm-ac-4TF" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="Omn-LI-tdh"/>
                     <constraint firstAttribute="trailing" secondItem="bEJ-lC-4UX" secondAttribute="trailing" constant="16" id="PaK-4w-gzI"/>
                     <constraint firstItem="bEJ-lC-4UX" firstAttribute="leading" secondItem="tPm-ac-4TF" secondAttribute="trailing" constant="17" id="Qvf-qC-eHJ"/>
+                    <constraint firstItem="KfZ-NX-tjM" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="TlT-aM-Nzh"/>
                     <constraint firstAttribute="trailing" secondItem="oC3-XZ-fnj" secondAttribute="trailing" constant="16" id="UTb-di-rcV"/>
                     <constraint firstItem="oC3-XZ-fnj" firstAttribute="centerY" secondItem="bEJ-lC-4UX" secondAttribute="centerY" id="XJp-qO-Vgp"/>
-                    <constraint firstItem="UuU-NW-hnq" firstAttribute="centerY" secondItem="bEJ-lC-4UX" secondAttribute="centerY" id="fpa-xS-BrG"/>
                     <constraint firstAttribute="bottom" secondItem="bEJ-lC-4UX" secondAttribute="bottom" id="hYc-IH-kUh"/>
+                    <constraint firstItem="KfZ-NX-tjM" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="hh4-3O-aqU"/>
+                    <constraint firstItem="oC3-XZ-fnj" firstAttribute="leading" secondItem="KfZ-NX-tjM" secondAttribute="trailing" constant="4" id="l5F-9y-fEA"/>
                     <constraint firstItem="bEJ-lC-4UX" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="pTJ-Lg-c4Y"/>
-                    <constraint firstItem="UuU-NW-hnq" firstAttribute="leading" secondItem="bEJ-lC-4UX" secondAttribute="leading" id="qXX-lh-wtz"/>
-                    <constraint firstItem="UuU-NW-hnq" firstAttribute="top" secondItem="bEJ-lC-4UX" secondAttribute="top" constant="16" id="sbk-q5-O2C"/>
+                    <constraint firstItem="KfZ-NX-tjM" firstAttribute="leading" secondItem="bEJ-lC-4UX" secondAttribute="leading" id="y1d-mo-FxJ"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="customAgeContainerView" destination="KfZ-NX-tjM" id="ePi-dB-a7B"/>
                 <outlet property="customAgeTextField" destination="UuU-NW-hnq" id="Ca1-ni-djV"/>
                 <outlet property="daysLabel" destination="oC3-XZ-fnj" id="hIj-1y-bbp"/>
                 <outlet property="durationLabel" destination="bEJ-lC-4UX" id="0ji-uk-Oaa"/>
@@ -82,5 +95,8 @@
         <namedColor name="TextMessages">
             <color red="0.11764705882352941" green="0.12156862745098039" blue="0.14509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>
